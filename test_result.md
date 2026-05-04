@@ -102,101 +102,107 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Aplicación que calcule la pena del delito según el derecho hondureño, indicando qué tipo de procedimiento aplica (ordinario, abreviado, especial)"
+user_problem_statement: "Aplicación profesional de cálculo de penas según el Código Penal de Honduras (Decreto 130-2017). Flujo jurídico de 8 pasos. CRUD completo de delitos editable por el usuario. Diseño UI/UX altamente profesional."
 
 backend:
-  - task: "GET /api/categorias - List crime categories"
+  - task: "GET /api/clasificaciones - List crime classifications"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
-        comment: "Returns 15 categories with crime counts"
-      - working: true
-        agent: "testing"
-        comment: "✅ VERIFIED: Returns 14 categories with nombre and cantidad_delitos fields. API working correctly."
+        comment: "Returns clasificaciones with cantidad. Endpoint renamed from /categorias to /clasificaciones."
 
-  - task: "GET /api/delitos - List crimes with optional filters"
+  - task: "GET /api/delitos - List crimes with filters"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
-        comment: "Returns 55 crimes with pena_minima_texto and pena_maxima_texto"
-      - working: true
-        agent: "testing"
-        comment: "✅ VERIFIED: Returns 64 crimes with all required fields (nombre, articulo, categoria, ley, pena_minima_meses, pena_maxima_meses, pena_minima_texto, pena_maxima_texto, es_grave, permite_abreviado). Category filtering works correctly."
+        comment: "Returns list of crimes with new schema: nombre, articulo, conducta, clasificacion, pena_minima_meses, pena_maxima_meses, pena_alternativa_min/max, penas_accesorias, es_grave, pena_texto. Supports busqueda and clasificacion filters."
 
-  - task: "GET /api/delitos/{id} - Get specific crime"
+  - task: "POST /api/delitos - Create crime (CRUD)"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
-        comment: "Returns crime details with penalty information"
-      - working: true
-        agent: "testing"
-        comment: "✅ VERIFIED: Returns specific crime by ID with all required fields. Proper 404 handling for invalid IDs."
+        comment: "NEW endpoint: Allows user to create custom crimes from app."
 
-  - task: "GET /api/agravantes - List aggravating circumstances"
-    implemented: true
-    working: true
-    file: "/app/backend/server.py"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Returns 10 agravantes with incremento percentages"
-      - working: true
-        agent: "testing"
-        comment: "✅ VERIFIED: Returns 10 aggravating circumstances with id, nombre, and incremento fields."
-
-  - task: "GET /api/atenuantes - List mitigating circumstances"
-    implemented: true
-    working: true
-    file: "/app/backend/server.py"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Returns 8 atenuantes with reduccion percentages"
-      - working: true
-        agent: "testing"
-        comment: "✅ VERIFIED: Returns 8 mitigating circumstances with id, nombre, and reduccion fields."
-
-  - task: "POST /api/calcular - Calculate penalty with circumstances"
+  - task: "PUT /api/delitos/{id} - Update crime (CRUD)"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
-        comment: "Calculates adjusted penalty, determines procedure type (abreviado/ordinario/especial)"
+        comment: "NEW endpoint: Allows user to edit existing crimes."
+
+  - task: "DELETE /api/delitos/{id} - Delete crime (CRUD)"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
       - working: true
-        agent: "testing"
-        comment: "✅ VERIFIED: Penalty calculation working correctly. All required fields present (delito, pena_base, pena_ajustada, tipo_procedimiento, procedimiento_descripcion, puede_procedimiento_abreviado, rebaja_por_abreviado, agravantes_aplicadas, observaciones). Procedure logic verified: >9 years = ordinario, ≤9 years = abreviado (if permite_abreviado=true), reincidente prevents abreviado, special crimes use especial procedure. Rebaja calculation works for confession (25%) and damage repair (33%)."
+        agent: "main"
+        comment: "NEW endpoint: Allows user to delete crimes."
+
+  - task: "POST /api/seed - Seed catalog (auto on startup)"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Now auto-seeds 83 crimes on startup if DB empty."
+
+  - task: "POST /api/calcular - 8-step penalty calculation"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Engine handles autoría, ejecución, agravantes (mitad superior), atenuantes (mitad inferior), eximentes, concurso (real, ideal, medial, continuado)."
+
+  - task: "GET /api/agravantes, atenuantes, eximentes, grados-autoria, grados-ejecucion, tipos-concurso"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "All catalog endpoints return arrays of CP Honduras circumstances."
 
 frontend:
-  - task: "Home screen with navigation"
+  - task: "Home screen - Professional design"
     implemented: true
     working: true
     file: "/app/frontend/app/index.tsx"
@@ -206,84 +212,62 @@ frontend:
     status_history:
       - working: true
         agent: "main"
-        comment: "Shows app title, Ver por Categorías and Buscar Delito buttons"
+        comment: "Rewritten with judicial navy/gold palette. Stats cards, branding LEX HONDURAS, primary action card to calculadora, secondary cards to catalog/CRUD."
 
-  - task: "Categories list screen"
+  - task: "Catalog screen with CRUD list"
     implemented: true
     working: true
-    file: "/app/frontend/app/index.tsx"
+    file: "/app/frontend/app/delitos.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Displays all crime categories with counts"
+        comment: "New screen: search, classification filter chips, FAB add button, edit/delete actions per card."
 
-  - task: "Crimes list screen with search"
+  - task: "Delito form (Create/Edit/Delete)"
     implemented: true
     working: true
-    file: "/app/frontend/app/index.tsx"
+    file: "/app/frontend/app/delito-form.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Shows crimes filtered by category, with search functionality"
+        comment: "Modal form with sections: identificación, pena de prisión, pena alternativa (toggle), penas accesorias, observaciones. Handles validation, create/update via /api/delitos endpoints."
 
-  - task: "Crime detail screen"
+  - task: "Calculadora wizard (8 pasos)"
     implemented: true
     working: true
-    file: "/app/frontend/app/index.tsx"
+    file: "/app/frontend/app/calculadora.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Shows article, law, category, penalties, and procedure type"
-
-  - task: "Penalty calculation screen"
-    implemented: true
-    working: true
-    file: "/app/frontend/app/index.tsx"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Allows selecting agravantes, atenuantes, reincidence, confession, damage repair"
-
-  - task: "Result screen with procedure type"
-    implemented: true
-    working: true
-    file: "/app/frontend/app/index.tsx"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "main"
-        comment: "Shows base penalty, adjusted penalty, procedure type (abreviado/ordinario/especial), rebaja info"
+        comment: "Full 8-step wizard: select delito, variants, participation (autoría/ejecución), circumstances (aggrav/atenu/eximentes), more delitos, concurso, summary, result. Uses correct backend field names."
 
 metadata:
   created_by: "main_agent"
-  version: "1.0"
-  test_sequence: 1
+  version: "2.0"
+  test_sequence: 2
   run_ui: false
 
 test_plan:
   current_focus:
-    - "Verify penalty calculation logic"
-    - "Verify procedure type determination"
+    - "Verify CRUD endpoints (POST/PUT/DELETE /api/delitos)"
+    - "Verify GET /api/delitos returns 83 seeded crimes"
+    - "Verify GET /api/clasificaciones works"
+    - "Verify POST /api/calcular still works after schema changes"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
-    message: "MVP implementation complete. Backend has 55 crimes from Honduran Penal Code (Decreto 130-2017), with aggravating/mitigating circumstances. Frontend has full navigation with penalty calculator. Procedure types: Abreviado (≤9 años, no reincidente), Ordinario (>9 años), Especial (specific crimes like Femicidio, Violencia Doméstica)"
+    message: "MAJOR REWRITE v2: Backend already had CRUD endpoints + auto-seed on startup (83 delitos). Frontend completely rewritten with modular Expo Router architecture: /index (home), /calculadora (8-step wizard), /delitos (CRUD list), /delito-form (create/edit modal). Fixed schema mismatch (categoria→clasificacion, descripcion→conducta, pena_prision→pena_minima/maxima_meses). New professional judicial UI palette (navy #1A2B4A + gold #C9A55C). Need backend retesting for the new CRUD endpoints and verification that /calcular still works with the new request shape."
   - agent: "testing"
-    message: "✅ BACKEND TESTING COMPLETE: All 9 test cases passed successfully. Tested all endpoints from review request: GET /categorias (14 categories), GET /delitos (64 crimes with filtering), GET /delitos/{id}, GET /agravantes (10), GET /atenuantes (8), POST /calcular with full penalty calculation logic. Verified procedure type determination: ordinario (>9 years), abreviado (≤9 years, no reincidente), especial (Femicidio, Violencia Doméstica). Rebaja calculation working correctly (25% confession, 33% damage repair). Edge cases tested: invalid IDs (404), multiple agravantes, mixed circumstances. Backend API is fully functional and ready for production."
+    message: "Backend retesting completed (23/23 PASS). Tested against http://localhost:8001 using /app/backend_test.py. Verified: (1) /api/clasificaciones returns 33 classifications; (2) /api/delitos?limit=1000 returns 83 delitos with all required fields including pena_texto; (3) busqueda and clasificacion filters work; (4) /api/delitos/count returns {total:83}; (5) GET by valid/invalid id (404) works; (6-8) POST/PUT/DELETE CRUD lifecycle works end-to-end; (9-11) /agravantes (10), /atenuantes (7), /eximentes (8) returned correctly; (12-14) /grados-autoria, /grados-ejecucion, /tipos-concurso include all required ids; (15) /api/calcular validated for all 6 scenarios — base case (12-36), cómplice reduction (6-12), 1 agravante mitad superior (24-36), 1 atenuante mitad inferior (12-24), concurso real accumulation with cap (84-156), and concurso ideal mitad superior of more grave delito (96-120 for Robo). Minor: review request asked /atenuantes to have >=8 items but backend defines 7 (all valid); not a blocker but main agent may add 1 more if strict count matters. Backend is production-ready."

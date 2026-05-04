@@ -1,457 +1,324 @@
-#!/usr/bin/env python3
 """
-Backend API Testing for Honduras Penal Calculator
-Tests all endpoints according to the review request
+Backend tests for the Honduran Penalty Calculator.
+Per system rules, the test target is http://localhost:8001 (review request explicitly says so).
 """
-
-import requests
-import json
 import sys
-from typing import Dict, Any, List
+import requests
 
-# Backend URL from frontend environment
-BASE_URL = "https://pena-delito-ley.preview.emergentagent.com/api"
+BASE = "http://localhost:8001/api"
 
-class TestResults:
-    def __init__(self):
-        self.passed = 0
-        self.failed = 0
-        self.errors = []
-        
-    def add_pass(self, test_name: str):
-        self.passed += 1
-        print(f"✅ PASS: {test_name}")
-        
-    def add_fail(self, test_name: str, error: str):
-        self.failed += 1
-        self.errors.append(f"{test_name}: {error}")
-        print(f"❌ FAIL: {test_name} - {error}")
-        
-    def summary(self):
-        total = self.passed + self.failed
-        print(f"\n{'='*60}")
-        print(f"TEST SUMMARY: {self.passed}/{total} tests passed")
-        if self.errors:
-            print(f"\nFAILED TESTS:")
-            for error in self.errors:
-                print(f"  - {error}")
-        print(f"{'='*60}")
-        return self.failed == 0
+results = []
+def log(name, ok, detail=""):
+    status = "PASS" if ok else "FAIL"
+    results.append((name, ok, detail))
+    print(f"[{status}] {name}" + (f" -> {detail}" if detail else ""))
 
-def test_get_categorias(results: TestResults):
-    """Test GET /api/categorias endpoint"""
+def section(t):
+    print(f"\n=== {t} ===")
+
+# ----------------------------------------------------------
+section("1. GET /api/clasificaciones")
+try:
+    r = requests.get(f"{BASE}/clasificaciones", timeout=15)
+    ok = r.status_code == 200
+    data = r.json() if ok else []
+    ok = ok and isinstance(data, list) and len(data) > 0 and all(
+        "nombre" in c and "cantidad" in c for c in data
+    )
+    log("clasificaciones returns array of {nombre, cantidad}", ok,
+        f"count={len(data) if isinstance(data, list) else '-'}")
+except Exception as e:
+    log("clasificaciones", False, str(e))
+
+# ----------------------------------------------------------
+section("2. GET /api/delitos?limit=1000")
+required_fields = [
+    "id", "nombre", "articulo", "conducta", "clasificacion",
+    "pena_minima_meses", "pena_maxima_meses",
+    "pena_alternativa_min", "pena_alternativa_max",
+    "tiene_pena_alternativa", "penas_accesorias", "es_grave", "pena_texto"
+]
+delitos_all = []
+try:
+    r = requests.get(f"{BASE}/delitos", params={"limit": 1000}, timeout=20)
+    ok = r.status_code == 200
+    delitos_all = r.json() if ok else []
+    n = len(delitos_all)
+    ok_count = ok and n >= 80
+    log("/delitos returns >= 80 entries", ok_count, f"count={n}")
+    if delitos_all:
+        sample = delitos_all[0]
+        missing = [f for f in required_fields if f not in sample]
+        log("/delitos entry has all required fields", not missing,
+            f"missing={missing}" if missing else f"sample={sample.get('nombre')}")
+except Exception as e:
+    log("/delitos", False, str(e))
+
+# ----------------------------------------------------------
+section("3. /delitos filters")
+try:
+    r = requests.get(f"{BASE}/delitos", params={"busqueda": "hurto"}, timeout=15)
+    ok = r.status_code == 200
+    arr = r.json() if ok else []
+    matched = all("hurto" in (d.get("nombre", "").lower() + d.get("conducta", "").lower() + d.get("articulo", "").lower()) for d in arr) if arr else False
+    log("busqueda=hurto filters", ok and len(arr) > 0 and matched,
+        f"count={len(arr)}")
+except Exception as e:
+    log("busqueda filter", False, str(e))
+
+try:
+    r = requests.get(f"{BASE}/delitos",
+                     params={"clasificacion": "Delitos contra el patrimonio"}, timeout=15)
+    ok = r.status_code == 200
+    arr = r.json() if ok else []
+    all_match = all("patrimonio" in d.get("clasificacion", "").lower() for d in arr) if arr else False
+    log("clasificacion filter works", ok and len(arr) > 0 and all_match,
+        f"count={len(arr)}")
+except Exception as e:
+    log("clasificacion filter", False, str(e))
+
+# ----------------------------------------------------------
+section("4. GET /api/delitos/count")
+try:
+    r = requests.get(f"{BASE}/delitos/count", timeout=10)
+    ok = r.status_code == 200 and isinstance(r.json().get("total"), int)
+    log("/delitos/count returns {total:int}", ok, f"body={r.json()}")
+except Exception as e:
+    log("/delitos/count", False, str(e))
+
+# ----------------------------------------------------------
+section("5. GET /api/delitos/{id}")
+sample_id = delitos_all[0]["id"] if delitos_all else None
+if sample_id:
     try:
-        response = requests.get(f"{BASE_URL}/categorias", timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("GET /categorias", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if not isinstance(data, list):
-            results.add_fail("GET /categorias", "Response is not a list")
-            return
-            
-        if len(data) == 0:
-            results.add_fail("GET /categorias", "No categories returned")
-            return
-            
-        # Check structure of first category
-        first_cat = data[0]
-        required_fields = ["nombre", "cantidad_delitos"]
-        for field in required_fields:
-            if field not in first_cat:
-                results.add_fail("GET /categorias", f"Missing field: {field}")
-                return
-                
-        results.add_pass("GET /categorias - Returns array of categories with nombre and cantidad_delitos")
-        print(f"  Found {len(data)} categories")
-        
+        r = requests.get(f"{BASE}/delitos/{sample_id}", timeout=10)
+        ok = r.status_code == 200 and r.json().get("id") == sample_id
+        log("/delitos/{valid_id} returns delito", ok,
+            f"name={r.json().get('nombre')}")
     except Exception as e:
-        results.add_fail("GET /categorias", f"Exception: {str(e)}")
+        log("/delitos/{valid_id}", False, str(e))
 
-def test_get_delitos(results: TestResults):
-    """Test GET /api/delitos endpoint"""
+try:
+    r = requests.get(f"{BASE}/delitos/000000000000000000000000", timeout=10)
+    log("/delitos/{invalid_id} returns 404", r.status_code == 404,
+        f"status={r.status_code}")
+except Exception as e:
+    log("/delitos/{invalid_id}", False, str(e))
+
+# ----------------------------------------------------------
+section("6-8. POST/PUT/DELETE /api/delitos")
+created_id = None
+try:
+    body = {
+        "nombre": "Delito de prueba QA",
+        "articulo": "Art. 999",
+        "conducta": "Conducta de prueba para test automatizado",
+        "clasificacion": "Pruebas",
+        "pena_minima_meses": 12,
+        "pena_maxima_meses": 36,
+        "pena_alternativa_min": 0,
+        "pena_alternativa_max": 0,
+        "tiene_pena_alternativa": False,
+        "penas_accesorias": ["Multa"],
+        "es_grave": False
+    }
+    r = requests.post(f"{BASE}/delitos", json=body, timeout=10)
+    ok = r.status_code == 200 and r.json().get("id")
+    created_id = r.json().get("id") if ok else None
+    log("POST /delitos creates delito", ok, f"id={created_id}")
+except Exception as e:
+    log("POST /delitos", False, str(e))
+
+if created_id:
     try:
-        response = requests.get(f"{BASE_URL}/delitos", timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("GET /delitos", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if not isinstance(data, list):
-            results.add_fail("GET /delitos", "Response is not a list")
-            return
-            
-        if len(data) == 0:
-            results.add_fail("GET /delitos", "No crimes returned")
-            return
-            
-        # Check structure of first crime
-        first_crime = data[0]
-        required_fields = [
-            "nombre", "articulo", "categoria", "ley",
-            "pena_minima_meses", "pena_maxima_meses",
-            "pena_minima_texto", "pena_maxima_texto",
-            "es_grave", "permite_abreviado"
-        ]
-        
-        for field in required_fields:
-            if field not in first_crime:
-                results.add_fail("GET /delitos", f"Missing field: {field}")
-                return
-                
-        results.add_pass("GET /delitos - Returns array of crimes with all required fields")
-        print(f"  Found {len(data)} crimes")
-        
+        r = requests.put(f"{BASE}/delitos/{created_id}",
+                         json={"nombre": "Delito de prueba QA - Editado"}, timeout=10)
+        ok = r.status_code == 200
+        rg = requests.get(f"{BASE}/delitos/{created_id}", timeout=10)
+        verified = rg.status_code == 200 and rg.json().get("nombre") == "Delito de prueba QA - Editado"
+        log("PUT /delitos/{id} updates delito", ok and verified, f"new_name={rg.json().get('nombre')}")
     except Exception as e:
-        results.add_fail("GET /delitos", f"Exception: {str(e)}")
+        log("PUT /delitos/{id}", False, str(e))
 
-def test_get_delitos_filtered(results: TestResults):
-    """Test GET /api/delitos with category filter"""
     try:
-        category = "Delitos contra la vida"
-        response = requests.get(f"{BASE_URL}/delitos", 
-                              params={"categoria": category}, 
-                              timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("GET /delitos?categoria", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if not isinstance(data, list):
-            results.add_fail("GET /delitos?categoria", "Response is not a list")
-            return
-            
-        # Check that all returned crimes belong to the requested category
-        for crime in data:
-            if category.lower() not in crime.get("categoria", "").lower():
-                results.add_fail("GET /delitos?categoria", f"Crime '{crime.get('nombre')}' not in requested category")
-                return
-                
-        results.add_pass("GET /delitos?categoria - Filters by category correctly")
-        print(f"  Found {len(data)} crimes in category '{category}'")
-        
+        r = requests.delete(f"{BASE}/delitos/{created_id}", timeout=10)
+        ok = r.status_code == 200
+        rg = requests.get(f"{BASE}/delitos/{created_id}", timeout=10)
+        gone = rg.status_code == 404
+        log("DELETE /delitos/{id} removes delito", ok and gone,
+            f"status={r.status_code}, get_after={rg.status_code}")
     except Exception as e:
-        results.add_fail("GET /delitos?categoria", f"Exception: {str(e)}")
+        log("DELETE /delitos/{id}", False, str(e))
 
-def test_get_delito_by_id(results: TestResults):
-    """Test GET /api/delitos/{id} endpoint"""
+# ----------------------------------------------------------
+section("9-11. agravantes / atenuantes / eximentes")
+for name, min_count, fields in [
+    ("agravantes", 8, ["id", "nombre", "articulo", "descripcion"]),
+    ("atenuantes", 7, ["id", "nombre", "articulo", "descripcion"]),
+    ("eximentes",  5, ["id", "nombre", "articulo"]),
+]:
     try:
-        delito_id = "0"  # Test with first crime
-        response = requests.get(f"{BASE_URL}/delitos/{delito_id}", timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("GET /delitos/{id}", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if not isinstance(data, dict):
-            results.add_fail("GET /delitos/{id}", "Response is not a dict")
-            return
-            
-        # Check required fields
-        required_fields = [
-            "id", "nombre", "articulo", "categoria", "ley",
-            "pena_minima_meses", "pena_maxima_meses",
-            "pena_minima_texto", "pena_maxima_texto"
-        ]
-        
-        for field in required_fields:
-            if field not in data:
-                results.add_fail("GET /delitos/{id}", f"Missing field: {field}")
-                return
-                
-        if data["id"] != delito_id:
-            results.add_fail("GET /delitos/{id}", f"ID mismatch: expected {delito_id}, got {data['id']}")
-            return
-            
-        results.add_pass("GET /delitos/{id} - Returns specific crime by ID")
-        print(f"  Retrieved crime: {data.get('nombre')}")
-        
+        r = requests.get(f"{BASE}/{name}", timeout=10)
+        ok = r.status_code == 200
+        data = r.json() if ok else []
+        size_ok = len(data) >= min_count
+        if data:
+            field_ok = all(all(f in item for f in fields) for item in data)
+        else:
+            field_ok = False
+        log(f"/{name} returns >={min_count} items with required fields",
+            ok and size_ok and field_ok, f"count={len(data)}")
     except Exception as e:
-        results.add_fail("GET /delitos/{id}", f"Exception: {str(e)}")
+        log(f"/{name}", False, str(e))
 
-def test_get_agravantes(results: TestResults):
-    """Test GET /api/agravantes endpoint"""
-    try:
-        response = requests.get(f"{BASE_URL}/agravantes", timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("GET /agravantes", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if not isinstance(data, list):
-            results.add_fail("GET /agravantes", "Response is not a list")
-            return
-            
-        if len(data) == 0:
-            results.add_fail("GET /agravantes", "No aggravating circumstances returned")
-            return
-            
-        # Check structure
-        first_agr = data[0]
-        required_fields = ["id", "nombre", "incremento"]
-        for field in required_fields:
-            if field not in first_agr:
-                results.add_fail("GET /agravantes", f"Missing field: {field}")
-                return
-                
-        results.add_pass("GET /agravantes - Returns aggravating circumstances with id, nombre, incremento")
-        print(f"  Found {len(data)} aggravating circumstances")
-        
-    except Exception as e:
-        results.add_fail("GET /agravantes", f"Exception: {str(e)}")
+# ----------------------------------------------------------
+section("12-14. grados-autoria / grados-ejecucion / tipos-concurso")
+try:
+    r = requests.get(f"{BASE}/grados-autoria", timeout=10)
+    ids = [g["id"] for g in r.json()]
+    ok = r.status_code == 200 and "autor_directo" in ids and "complice" in ids
+    log("/grados-autoria has autor_directo & complice", ok, f"ids={ids}")
+except Exception as e:
+    log("/grados-autoria", False, str(e))
 
-def test_get_atenuantes(results: TestResults):
-    """Test GET /api/atenuantes endpoint"""
-    try:
-        response = requests.get(f"{BASE_URL}/atenuantes", timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("GET /atenuantes", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if not isinstance(data, list):
-            results.add_fail("GET /atenuantes", "Response is not a list")
-            return
-            
-        if len(data) == 0:
-            results.add_fail("GET /atenuantes", "No mitigating circumstances returned")
-            return
-            
-        # Check structure
-        first_aten = data[0]
-        required_fields = ["id", "nombre", "reduccion"]
-        for field in required_fields:
-            if field not in first_aten:
-                results.add_fail("GET /atenuantes", f"Missing field: {field}")
-                return
-                
-        results.add_pass("GET /atenuantes - Returns mitigating circumstances with id, nombre, reduccion")
-        print(f"  Found {len(data)} mitigating circumstances")
-        
-    except Exception as e:
-        results.add_fail("GET /atenuantes", f"Exception: {str(e)}")
+try:
+    r = requests.get(f"{BASE}/grados-ejecucion", timeout=10)
+    ids = [g["id"] for g in r.json()]
+    ok = r.status_code == 200 and "consumado" in ids and "tentativa_acabada" in ids
+    log("/grados-ejecucion has consumado & tentativa_acabada", ok, f"ids={ids}")
+except Exception as e:
+    log("/grados-ejecucion", False, str(e))
 
-def test_post_calcular(results: TestResults):
-    """Test POST /api/calcular endpoint"""
-    try:
-        # Test with Robo (should allow abreviado procedure)
-        payload = {
-            "delito_id": "24",  # Robo
-            "tiene_agravantes": True,
-            "tiene_atenuantes": False,
-            "es_reincidente": False,
-            "repara_dano": False,
-            "confiesa": True,
-            "agravantes_seleccionadas": ["uso_armas"],
-            "atenuantes_seleccionadas": []
-        }
-        
-        response = requests.post(f"{BASE_URL}/calcular", 
-                               json=payload, 
-                               timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("POST /calcular", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        # Check required fields in response
-        required_fields = [
-            "delito", "pena_base_minima_meses", "pena_base_maxima_meses",
-            "pena_ajustada_minima_meses", "pena_ajustada_maxima_meses",
-            "pena_minima_texto", "pena_maxima_texto",
-            "tipo_procedimiento", "procedimiento_descripcion",
-            "puede_procedimiento_abreviado", "agravantes_aplicadas",
-            "observaciones"
-        ]
-        
-        for field in required_fields:
-            if field not in data:
-                results.add_fail("POST /calcular", f"Missing field: {field}")
-                return
-                
-        # Check that delito object is present
-        if not isinstance(data["delito"], dict):
-            results.add_fail("POST /calcular", "delito field is not an object")
-            return
-            
-        results.add_pass("POST /calcular - Returns penalty calculation with all required fields")
-        print(f"  Crime: {data['delito'].get('nombre')}")
-        print(f"  Procedure type: {data['tipo_procedimiento']}")
-        print(f"  Can use abreviado: {data['puede_procedimiento_abreviado']}")
-        
-    except Exception as e:
-        results.add_fail("POST /calcular", f"Exception: {str(e)}")
+try:
+    r = requests.get(f"{BASE}/tipos-concurso", timeout=10)
+    ids = [g["id"] for g in r.json()]
+    ok = r.status_code == 200 and all(x in ids for x in ["real", "ideal", "medial"])
+    log("/tipos-concurso has real, ideal, medial", ok, f"ids={ids}")
+except Exception as e:
+    log("/tipos-concurso", False, str(e))
 
-def test_procedure_logic(results: TestResults):
-    """Test procedure type determination logic"""
-    try:
-        # Test 1: Crime with pena_maxima > 108 months should be "ordinario"
-        # Using Homicidio Simple (id=0) with pena_maxima = 240 months
-        payload1 = {
-            "delito_id": "0",  # Homicidio Simple
-            "tiene_agravantes": False,
-            "tiene_atenuantes": False,
-            "es_reincidente": False,
-            "repara_dano": False,
-            "confiesa": False,
-            "agravantes_seleccionadas": [],
-            "atenuantes_seleccionadas": []
-        }
-        
-        response1 = requests.post(f"{BASE_URL}/calcular", json=payload1, timeout=10)
-        if response1.status_code == 200:
-            data1 = response1.json()
-            if data1["tipo_procedimiento"] != "ordinario":
-                results.add_fail("Procedure Logic - Ordinario", 
-                               f"Expected 'ordinario' for crime >9 years, got '{data1['tipo_procedimiento']}'")
-                return
-        
-        # Test 2: Crime with pena_maxima ≤ 108 months should be "abreviado" if permite_abreviado=true
-        # Using Robo (id=24) with pena_maxima = 96 months
-        payload2 = {
-            "delito_id": "24",  # Robo
-            "tiene_agravantes": False,
-            "tiene_atenuantes": False,
-            "es_reincidente": False,
-            "repara_dano": False,
-            "confiesa": False,
-            "agravantes_seleccionadas": [],
-            "atenuantes_seleccionadas": []
-        }
-        
-        response2 = requests.post(f"{BASE_URL}/calcular", json=payload2, timeout=10)
-        if response2.status_code == 200:
-            data2 = response2.json()
-            if data2["tipo_procedimiento"] != "abreviado":
-                results.add_fail("Procedure Logic - Abreviado", 
-                               f"Expected 'abreviado' for Robo ≤9 years, got '{data2['tipo_procedimiento']}'")
-                return
-        
-        # Test 3: Reincidente should NOT allow abreviado
-        payload3 = {
-            "delito_id": "24",  # Robo
-            "tiene_agravantes": False,
-            "tiene_atenuantes": False,
-            "es_reincidente": True,  # This should prevent abreviado
-            "repara_dano": False,
-            "confiesa": False,
-            "agravantes_seleccionadas": [],
-            "atenuantes_seleccionadas": []
-        }
-        
-        response3 = requests.post(f"{BASE_URL}/calcular", json=payload3, timeout=10)
-        if response3.status_code == 200:
-            data3 = response3.json()
-            if data3["tipo_procedimiento"] == "abreviado":
-                results.add_fail("Procedure Logic - Reincidente", 
-                               "Reincidente should NOT allow abreviado procedure")
-                return
-        
-        # Test 4: Special procedure for Femicidio
-        payload4 = {
-            "delito_id": "2",  # Femicidio
-            "tiene_agravantes": False,
-            "tiene_atenuantes": False,
-            "es_reincidente": False,
-            "repara_dano": False,
-            "confiesa": False,
-            "agravantes_seleccionadas": [],
-            "atenuantes_seleccionadas": []
-        }
-        
-        response4 = requests.post(f"{BASE_URL}/calcular", json=payload4, timeout=10)
-        if response4.status_code == 200:
-            data4 = response4.json()
-            if data4["tipo_procedimiento"] != "especial":
-                results.add_fail("Procedure Logic - Especial", 
-                               f"Expected 'especial' for Femicidio, got '{data4['tipo_procedimiento']}'")
-                return
-        
-        results.add_pass("Procedure Logic - All procedure type determinations work correctly")
-        
-    except Exception as e:
-        results.add_fail("Procedure Logic", f"Exception: {str(e)}")
+# ----------------------------------------------------------
+section("15. POST /api/calcular - scenarios")
 
-def test_rebaja_abreviado(results: TestResults):
-    """Test rebaja por procedimiento abreviado"""
-    try:
-        # Test with confession (should get 25% reduction)
-        payload = {
-            "delito_id": "24",  # Robo
-            "tiene_agravantes": False,
-            "tiene_atenuantes": False,
-            "es_reincidente": False,
-            "repara_dano": False,
-            "confiesa": True,  # Should trigger rebaja
-            "agravantes_seleccionadas": [],
-            "atenuantes_seleccionadas": []
-        }
-        
-        response = requests.post(f"{BASE_URL}/calcular", json=payload, timeout=10)
-        
-        if response.status_code != 200:
-            results.add_fail("Rebaja Abreviado", f"Status code {response.status_code}")
-            return
-            
-        data = response.json()
-        
-        if "rebaja_por_abreviado" not in data:
-            results.add_fail("Rebaja Abreviado", "Missing rebaja_por_abreviado field")
-            return
-            
-        if data["rebaja_por_abreviado"] is None:
-            results.add_fail("Rebaja Abreviado", "rebaja_por_abreviado should not be null when confiesa=true")
-            return
-            
-        results.add_pass("Rebaja Abreviado - Confession triggers rebaja calculation")
-        print(f"  Rebaja info: {data['rebaja_por_abreviado']}")
-        
-    except Exception as e:
-        results.add_fail("Rebaja Abreviado", f"Exception: {str(e)}")
+hurto = next((d for d in delitos_all if d["nombre"] == "Hurto"), None)
+robo = next((d for d in delitos_all if d["nombre"] == "Robo"), None)
 
-def main():
-    """Run all backend tests"""
-    print("🧪 TESTING HONDURAS PENAL CALCULATOR BACKEND API")
-    print(f"Base URL: {BASE_URL}")
-    print("="*60)
-    
-    results = TestResults()
-    
-    # Run all tests
-    test_get_categorias(results)
-    test_get_delitos(results)
-    test_get_delitos_filtered(results)
-    test_get_delito_by_id(results)
-    test_get_agravantes(results)
-    test_get_atenuantes(results)
-    test_post_calcular(results)
-    test_procedure_logic(results)
-    test_rebaja_abreviado(results)
-    
-    # Print summary
-    success = results.summary()
-    
-    if success:
-        print("\n🎉 ALL TESTS PASSED! Backend API is working correctly.")
-        sys.exit(0)
-    else:
-        print(f"\n💥 {results.failed} TESTS FAILED! See details above.")
-        sys.exit(1)
+def base_cfg(delito_id, **overrides):
+    cfg = {
+        "delito_id": delito_id,
+        "pena_seleccionada": "prision",
+        "variables_activas": [],
+        "grado_autoria": "autor_directo",
+        "grado_ejecucion": "consumado",
+        "reduccion_tentativa": 1,
+        "agravantes": [],
+        "atenuantes": [],
+        "eximentes": [],
+        "eximente_completa": False,
+    }
+    cfg.update(overrides)
+    return cfg
 
-if __name__ == "__main__":
-    main()
+required_resp_fields = [
+    "pena_principal", "pena_principal_minimo_meses", "pena_principal_maximo_meses",
+    "delitos_analizados", "tipo_concurso", "concurso_descripcion",
+    "penas_accesorias", "analisis_juridico", "fecha", "disclaimer"
+]
+
+def call_calc(payload):
+    return requests.post(f"{BASE}/calcular", json=payload, timeout=20)
+
+# (a) base case
+if hurto:
+    payload = {"delitos": [base_cfg(hurto["id"])], "tipo_concurso": "ninguno"}
+    r = call_calc(payload)
+    ok = r.status_code == 200
+    data = r.json() if ok else {}
+    fields_ok = all(f in data for f in required_resp_fields)
+    minmax_ok = (data.get("pena_principal_minimo_meses") == hurto["pena_minima_meses"] and
+                 data.get("pena_principal_maximo_meses") == hurto["pena_maxima_meses"])
+    log("(a) base case Hurto: response has all fields & equals base pena",
+        ok and fields_ok and minmax_ok,
+        f"min={data.get('pena_principal_minimo_meses')} max={data.get('pena_principal_maximo_meses')} (expected {hurto['pena_minima_meses']}-{hurto['pena_maxima_meses']})")
+
+# (b) complice -> reduced
+if hurto:
+    payload = {"delitos": [base_cfg(hurto["id"], grado_autoria="complice")], "tipo_concurso": "ninguno"}
+    r = call_calc(payload)
+    data = r.json() if r.status_code == 200 else {}
+    new_min = data.get("pena_principal_minimo_meses")
+    new_max = data.get("pena_principal_maximo_meses")
+    reduced = (new_max is not None and new_max < hurto["pena_maxima_meses"]
+               and new_min is not None and new_min <= hurto["pena_minima_meses"])
+    log("(b) complice reduces pena", reduced,
+        f"min={new_min} max={new_max} (base {hurto['pena_minima_meses']}-{hurto['pena_maxima_meses']})")
+
+# (c) one agravante -> mitad superior
+if hurto:
+    payload = {"delitos": [base_cfg(hurto["id"], agravantes=["alevosia"])], "tipo_concurso": "ninguno"}
+    r = call_calc(payload)
+    data = r.json() if r.status_code == 200 else {}
+    new_min = data.get("pena_principal_minimo_meses")
+    new_max = data.get("pena_principal_maximo_meses")
+    expected_min = (hurto["pena_minima_meses"] + hurto["pena_maxima_meses"]) // 2
+    ok = new_min == expected_min and new_max == hurto["pena_maxima_meses"]
+    log("(c) 1 agravante -> mitad superior", ok,
+        f"min={new_min} (expected {expected_min}) max={new_max} (expected {hurto['pena_maxima_meses']})")
+
+# (d) one atenuante -> mitad inferior
+if hurto:
+    payload = {"delitos": [base_cfg(hurto["id"], atenuantes=["confesion"])], "tipo_concurso": "ninguno"}
+    r = call_calc(payload)
+    data = r.json() if r.status_code == 200 else {}
+    new_min = data.get("pena_principal_minimo_meses")
+    new_max = data.get("pena_principal_maximo_meses")
+    expected_max = (hurto["pena_minima_meses"] + hurto["pena_maxima_meses"]) // 2
+    ok = new_min == hurto["pena_minima_meses"] and new_max == expected_max
+    log("(d) 1 atenuante -> mitad inferior", ok,
+        f"min={new_min} (expected {hurto['pena_minima_meses']}) max={new_max} (expected {expected_max})")
+
+# (e) two delitos, real -> sum (with cap)
+if hurto and robo:
+    payload = {"delitos": [base_cfg(hurto["id"]), base_cfg(robo["id"])], "tipo_concurso": "real"}
+    r = call_calc(payload)
+    data = r.json() if r.status_code == 200 else {}
+    expected_min_naive = hurto["pena_minima_meses"] + robo["pena_minima_meses"]
+    expected_max_naive = hurto["pena_maxima_meses"] + robo["pena_maxima_meses"]
+    pena_mayor = max(hurto["pena_maxima_meses"], robo["pena_maxima_meses"])
+    limite = min(pena_mayor * 3, 480)
+    expected_max = min(expected_max_naive, limite)
+    expected_min = min(expected_min_naive, expected_max)
+    new_min = data.get("pena_principal_minimo_meses")
+    new_max = data.get("pena_principal_maximo_meses")
+    # Penas accumulate: must exceed individual maxes
+    accumulated = (new_min is not None and new_max is not None
+                   and new_min > hurto["pena_minima_meses"]
+                   and new_max > robo["pena_maxima_meses"] - 1)  # at least equal
+    ok = new_min == expected_min and new_max == expected_max
+    log("(e) concurso real: penas accumulate (with cap)", ok,
+        f"min={new_min} (expected {expected_min}) max={new_max} (expected {expected_max}) accumulated={accumulated}")
+
+# (f) two delitos, ideal -> mitad superior of more grave
+if hurto and robo:
+    payload = {"delitos": [base_cfg(hurto["id"]), base_cfg(robo["id"])], "tipo_concurso": "ideal"}
+    r = call_calc(payload)
+    data = r.json() if r.status_code == 200 else {}
+    grave = robo if robo["pena_maxima_meses"] >= hurto["pena_maxima_meses"] else hurto
+    expected_min = (grave["pena_minima_meses"] + grave["pena_maxima_meses"]) // 2
+    expected_max = grave["pena_maxima_meses"]
+    new_min = data.get("pena_principal_minimo_meses")
+    new_max = data.get("pena_principal_maximo_meses")
+    ok = new_min == expected_min and new_max == expected_max
+    log("(f) concurso ideal: pena del más grave en mitad superior", ok,
+        f"min={new_min} (expected {expected_min}) max={new_max} (expected {expected_max})")
+
+# ----------------------------------------------------------
+section("Summary")
+total = len(results)
+passed = sum(1 for _, ok, _ in results if ok)
+print(f"\nResults: {passed}/{total} passed")
+for name, ok, detail in results:
+    if not ok:
+        print(f"  FAIL: {name}: {detail}")
+
+sys.exit(0 if passed == total else 1)

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Query, HTTPException
+from fastapi import FastAPI, APIRouter, Query, HTTPException, Body
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -11,6 +11,7 @@ import uuid
 from datetime import datetime
 from enum import Enum
 import math
+import re
 
 
 ROOT_DIR = Path(__file__).parent
@@ -21,10 +22,7 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI(title="Calculadora de Penas - Honduras")
-
-# Create a router with the /api prefix
+app = FastAPI(title="Motor de Cálculo de Penas - Honduras")
 api_router = APIRouter(prefix="/api")
 
 # =============================================
@@ -48,10 +46,45 @@ class TipoConcurso(str, Enum):
     REAL = "real"
     IDEAL = "ideal"
     MEDIAL = "medial"
+    CONTINUADO = "continuado"
 
 class TipoPena(str, Enum):
     PRISION = "prision"
     MULTA = "multa"
+
+class DelitoBase(BaseModel):
+    nombre: str
+    articulo: str
+    conducta: str
+    clasificacion: str
+    pena_minima_meses: int
+    pena_maxima_meses: int
+    pena_alternativa_min: Optional[int] = 0
+    pena_alternativa_max: Optional[int] = 0
+    tiene_pena_alternativa: bool = False
+    penas_accesorias: List[str] = []
+    observaciones: Optional[str] = None
+    es_grave: bool = False
+
+class DelitoCreate(DelitoBase):
+    pass
+
+class DelitoUpdate(BaseModel):
+    nombre: Optional[str] = None
+    articulo: Optional[str] = None
+    conducta: Optional[str] = None
+    clasificacion: Optional[str] = None
+    pena_minima_meses: Optional[int] = None
+    pena_maxima_meses: Optional[int] = None
+    pena_alternativa_min: Optional[int] = None
+    pena_alternativa_max: Optional[int] = None
+    tiene_pena_alternativa: Optional[bool] = None
+    penas_accesorias: Optional[List[str]] = None
+    observaciones: Optional[str] = None
+    es_grave: Optional[bool] = None
+
+class Delito(DelitoBase):
+    id: str
 
 class DelitoConfig(BaseModel):
     delito_id: str
@@ -59,7 +92,7 @@ class DelitoConfig(BaseModel):
     variables_activas: List[str] = []
     grado_autoria: GradoAutoria = GradoAutoria.AUTOR_DIRECTO
     grado_ejecucion: GradoEjecucion = GradoEjecucion.CONSUMADO
-    reduccion_tentativa: int = 1  # 1 o 2 grados
+    reduccion_tentativa: int = 1
     agravantes: List[str] = []
     atenuantes: List[str] = []
     eximentes: List[str] = []
@@ -69,696 +102,119 @@ class CalculoRequest(BaseModel):
     delitos: List[DelitoConfig]
     tipo_concurso: TipoConcurso = TipoConcurso.NINGUNO
 
-class PenaRango(BaseModel):
-    minimo_meses: int
-    maximo_meses: int
-    tipo: str
-
-class DelitoResultado(BaseModel):
-    delito_id: str
-    nombre: str
-    articulo: str
-    pena_base: PenaRango
-    pena_individual: PenaRango
-    pena_individual_texto: str
-    grado_autoria: str
-    grado_ejecucion: str
-    agravantes_aplicadas: List[str]
-    atenuantes_aplicadas: List[str]
-    penas_accesorias: List[str]
-
-class ResultadoCalculo(BaseModel):
-    delitos_analizados: List[DelitoResultado]
-    tipo_concurso: str
-    concurso_descripcion: str
-    pena_principal: str
-    pena_principal_minimo_meses: int
-    pena_principal_maximo_meses: int
-    penas_accesorias: List[str]
-    analisis_juridico: str
-    analisis_tecnico: str
-    fecha: str
-
 # =============================================
-# DATOS DE DELITOS - CÓDIGO PENAL HONDURAS
+# CIRCUNSTANCIAS MODIFICATIVAS (CP HONDURAS)
 # =============================================
 
-DELITOS_HONDURAS = [
-    # DELITOS CONTRA LA VIDA
-    {
-        "id": "1",
-        "nombre": "Homicidio",
-        "articulo": "Art. 192",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Quien dé muerte a otra persona será castigado con la pena de prisión.",
-        "pena_prision_min": 180,  # 15 años
-        "pena_prision_max": 240,  # 20 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "2",
-        "nombre": "Asesinato",
-        "articulo": "Art. 193",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Homicidio con alevosía, ensañamiento, por precio o recompensa.",
-        "pena_prision_min": 240,  # 20 años
-        "pena_prision_max": 360,  # 30 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "3",
-        "nombre": "Femicidio",
-        "articulo": "Art. 208",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Dar muerte a una mujer por razón de su género.",
-        "pena_prision_min": 240,
-        "pena_prision_max": 360,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [],
-        "penas_accesorias": ["Inhabilitación especial para el ejercicio de la patria potestad"]
-    },
-    {
-        "id": "4",
-        "nombre": "Homicidio Imprudente",
-        "articulo": "Art. 198",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Causar la muerte de otro por imprudencia grave.",
-        "pena_prision_min": 24,  # 2 años
-        "pena_prision_max": 60,  # 5 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "5",
-        "nombre": "Lesiones Gravísimas",
-        "articulo": "Art. 201.1",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Lesiones que causen pérdida de miembro, órgano o sentido.",
-        "pena_prision_min": 72,  # 6 años
-        "pena_prision_max": 108,  # 9 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "6",
-        "nombre": "Lesiones Graves",
-        "articulo": "Art. 201.2",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Lesiones que causen deformidad o incapacidad.",
-        "pena_prision_min": 36,  # 3 años
-        "pena_prision_max": 72,  # 6 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "7",
-        "nombre": "Lesiones Leves",
-        "articulo": "Art. 200",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Lesiones que no sean graves o gravísimas.",
-        "pena_prision_min": 3,  # 3 meses
-        "pena_prision_max": 36,  # 3 años
-        "pena_multa_min": 6,  # 6 meses multa
-        "pena_multa_max": 12,  # 12 meses multa
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Activa inhabilitación especial", "pena_accesoria": "Inhabilitación especial (Art. 156 quinquies)"}
-        ]
-    },
-    {
-        "id": "8",
-        "nombre": "Auxilio al Suicidio",
-        "articulo": "Art. 197",
-        "categoria": "Delitos contra la vida",
-        "descripcion": "Inducir o auxiliar a otro al suicidio.",
-        "pena_prision_min": 36,
-        "pena_prision_max": 72,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": []
-    },
-    # DELITOS CONTRA LA LIBERTAD
-    {
-        "id": "9",
-        "nombre": "Secuestro",
-        "articulo": "Art. 233",
-        "categoria": "Delitos contra la libertad",
-        "descripcion": "Privar a otro de su libertad exigiendo rescate.",
-        "pena_prision_min": 96,  # 8 años
-        "pena_prision_max": 144,  # 12 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Agrava la pena", "pena_accesoria": "Inhabilitación especial"}
-        ]
-    },
-    {
-        "id": "10",
-        "nombre": "Secuestro Agravado",
-        "articulo": "Art. 234",
-        "categoria": "Delitos contra la libertad",
-        "descripcion": "Secuestro con agravantes (menor, tortura, muerte).",
-        "pena_prision_min": 144,  # 12 años
-        "pena_prision_max": 180,  # 15 años
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "11",
-        "nombre": "Privación de Libertad",
-        "articulo": "Art. 232",
-        "categoria": "Delitos contra la libertad",
-        "descripcion": "Privar a otro de su libertad sin derecho.",
-        "pena_prision_min": 24,
-        "pena_prision_max": 60,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "12",
-        "nombre": "Amenazas",
-        "articulo": "Art. 246",
-        "categoria": "Delitos contra la libertad",
-        "descripcion": "Amenazar a otro con causar un mal.",
-        "pena_prision_min": 6,
-        "pena_prision_max": 24,
-        "pena_multa_min": 6,
-        "pena_multa_max": 12,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "13",
-        "nombre": "Coacciones",
-        "articulo": "Art. 245",
-        "categoria": "Delitos contra la libertad",
-        "descripcion": "Compeler a otro a hacer lo que no quiere.",
-        "pena_prision_min": 6,
-        "pena_prision_max": 24,
-        "pena_multa_min": 6,
-        "pena_multa_max": 12,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "14",
-        "nombre": "Trata de Personas",
-        "articulo": "Art. 219",
-        "categoria": "Delitos contra la libertad",
-        "descripcion": "Captar, transportar o acoger personas con fines de explotación.",
-        "pena_prision_min": 120,
-        "pena_prision_max": 180,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Agrava la pena en grado superior", "pena_accesoria": "Inhabilitación especial"}
-        ]
-    },
-    # DELITOS SEXUALES
-    {
-        "id": "15",
-        "nombre": "Violación",
-        "articulo": "Art. 249",
-        "categoria": "Delitos sexuales",
-        "descripcion": "Acceso carnal mediante violencia o intimidación.",
-        "pena_prision_min": 108,
-        "pena_prision_max": 156,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Activa inhabilitación especial", "pena_accesoria": "Inhabilitación especial para profesiones con menores"}
-        ]
-    },
-    {
-        "id": "16",
-        "nombre": "Agresión Sexual",
-        "articulo": "Art. 250",
-        "categoria": "Delitos sexuales",
-        "descripcion": "Actos sexuales mediante violencia sin acceso carnal.",
-        "pena_prision_min": 48,
-        "pena_prision_max": 96,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Activa inhabilitación especial", "pena_accesoria": "Inhabilitación especial para profesiones con menores"}
-        ]
-    },
-    {
-        "id": "17",
-        "nombre": "Abuso Sexual",
-        "articulo": "Art. 251",
-        "categoria": "Delitos sexuales",
-        "descripcion": "Actos sexuales sin consentimiento pero sin violencia.",
-        "pena_prision_min": 36,
-        "pena_prision_max": 72,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Activa inhabilitación especial", "pena_accesoria": "Inhabilitación especial para profesiones con menores"}
-        ]
-    },
-    {
-        "id": "18",
-        "nombre": "Acoso Sexual",
-        "articulo": "Art. 256",
-        "categoria": "Delitos sexuales",
-        "descripcion": "Solicitar favores sexuales con prevalimiento.",
-        "pena_prision_min": 12,
-        "pena_prision_max": 36,
-        "pena_multa_min": 6,
-        "pena_multa_max": 18,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    # DELITOS CONTRA EL PATRIMONIO
-    {
-        "id": "19",
-        "nombre": "Hurto",
-        "articulo": "Art. 357",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Apoderarse de cosa mueble ajena.",
-        "pena_prision_min": 12,
-        "pena_prision_max": 36,
-        "pena_multa_min": 6,
-        "pena_multa_max": 18,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "20",
-        "nombre": "Hurto Agravado",
-        "articulo": "Art. 358",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Hurto con circunstancias agravantes.",
-        "pena_prision_min": 24,
-        "pena_prision_max": 48,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "21",
-        "nombre": "Robo",
-        "articulo": "Art. 359",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Apoderarse de cosa mueble usando violencia o intimidación.",
-        "pena_prision_min": 48,
-        "pena_prision_max": 96,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "22",
-        "nombre": "Robo Agravado",
-        "articulo": "Art. 360",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Robo con agravantes (armas, bandas, etc.).",
-        "pena_prision_min": 84,
-        "pena_prision_max": 120,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "23",
-        "nombre": "Estafa",
-        "articulo": "Art. 365",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Defraudar a otro mediante engaño.",
-        "pena_prision_min": 6,
-        "pena_prision_max": 36,
-        "pena_multa_min": 6,
-        "pena_multa_max": 12,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "24",
-        "nombre": "Extorsión",
-        "articulo": "Art. 373",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Obligar a otro a entregar dinero mediante intimidación.",
-        "pena_prision_min": 60,
-        "pena_prision_max": 108,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "25",
-        "nombre": "Daños",
-        "articulo": "Art. 381",
-        "categoria": "Delitos contra el patrimonio",
-        "descripcion": "Destruir o deteriorar cosa ajena.",
-        "pena_prision_min": 6,
-        "pena_prision_max": 24,
-        "pena_multa_min": 6,
-        "pena_multa_max": 12,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    # DELITOS INFORMÁTICOS
-    {
-        "id": "26",
-        "nombre": "Acceso No Autorizado a Sistemas",
-        "articulo": "Art. 398",
-        "categoria": "Delitos informáticos",
-        "descripcion": "Acceder sin autorización a sistemas informáticos.",
-        "pena_prision_min": 36,
-        "pena_prision_max": 72,
-        "pena_multa_min": 12,
-        "pena_multa_max": 24,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "27",
-        "nombre": "Fraude Informático",
-        "articulo": "Art. 400",
-        "categoria": "Delitos informáticos",
-        "descripcion": "Obtener beneficio económico mediante manipulación informática.",
-        "pena_prision_min": 48,
-        "pena_prision_max": 96,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    # DELITOS CONTRA LA ADMINISTRACIÓN PÚBLICA
-    {
-        "id": "28",
-        "nombre": "Cohecho",
-        "articulo": "Art. 425",
-        "categoria": "Delitos contra la administración pública",
-        "descripcion": "Funcionario que solicite o reciba dádiva.",
-        "pena_prision_min": 48,
-        "pena_prision_max": 84,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [],
-        "penas_accesorias": ["Inhabilitación especial para empleo o cargo público"]
-    },
-    {
-        "id": "29",
-        "nombre": "Malversación",
-        "articulo": "Art. 422",
-        "categoria": "Delitos contra la administración pública",
-        "descripcion": "Funcionario que sustraiga caudales públicos.",
-        "pena_prision_min": 48,
-        "pena_prision_max": 72,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [],
-        "penas_accesorias": ["Inhabilitación absoluta para cargo público"]
-    },
-    {
-        "id": "30",
-        "nombre": "Peculado",
-        "articulo": "Art. 421",
-        "categoria": "Delitos contra la administración pública",
-        "descripcion": "Funcionario que se apropie de bienes públicos.",
-        "pena_prision_min": 60,
-        "pena_prision_max": 108,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [],
-        "penas_accesorias": ["Inhabilitación absoluta para cargo público"]
-    },
-    # DELITOS CONTRA LA FE PÚBLICA
-    {
-        "id": "31",
-        "nombre": "Falsificación de Documento Público",
-        "articulo": "Art. 448",
-        "categoria": "Delitos contra la fe pública",
-        "descripcion": "Falsificar documento público.",
-        "pena_prision_min": 36,
-        "pena_prision_max": 72,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": []
-    },
-    {
-        "id": "32",
-        "nombre": "Falsificación de Documento Privado",
-        "articulo": "Art. 449",
-        "categoria": "Delitos contra la fe pública",
-        "descripcion": "Falsificar documento privado.",
-        "pena_prision_min": 6,
-        "pena_prision_max": 24,
-        "pena_multa_min": 6,
-        "pena_multa_max": 12,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    # DELITOS DE DROGAS
-    {
-        "id": "33",
-        "nombre": "Tráfico de Drogas",
-        "articulo": "Art. 5 Ley Antidrogas",
-        "categoria": "Delitos de drogas",
-        "descripcion": "Tráfico ilícito de estupefacientes.",
-        "pena_prision_min": 108,
-        "pena_prision_max": 180,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "34",
-        "nombre": "Posesión de Drogas para Consumo",
-        "articulo": "Art. 8 Ley Antidrogas",
-        "categoria": "Delitos de drogas",
-        "descripcion": "Posesión de drogas para uso personal.",
-        "pena_prision_min": 6,
-        "pena_prision_max": 24,
-        "pena_multa_min": 6,
-        "pena_multa_max": 12,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": []
-    },
-    # VIOLENCIA DOMÉSTICA
-    {
-        "id": "35",
-        "nombre": "Violencia Doméstica",
-        "articulo": "Art. 7 Ley VD",
-        "categoria": "Violencia doméstica",
-        "descripcion": "Violencia física o psicológica contra familiar.",
-        "pena_prision_min": 12,
-        "pena_prision_max": 36,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": False,
-        "variables": [
-            {"id": "victima_menor", "nombre": "Víctima menor de edad", "descripcion": "Activa medidas de protección adicionales", "pena_accesoria": "Prohibición de aproximación"}
-        ],
-        "penas_accesorias": ["Prohibición de aproximación a la víctima", "Prohibición de comunicación"]
-    },
-    # DELITOS DE ARMAS
-    {
-        "id": "36",
-        "nombre": "Portación Ilegal de Armas",
-        "articulo": "Art. 37 Ley Armas",
-        "categoria": "Delitos de armas",
-        "descripcion": "Portar arma de fuego sin permiso.",
-        "pena_prision_min": 48,
-        "pena_prision_max": 84,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [],
-        "penas_accesorias": ["Decomiso del arma"]
-    },
-    {
-        "id": "37",
-        "nombre": "Tenencia Ilegal de Armas",
-        "articulo": "Art. 36 Ley Armas",
-        "categoria": "Delitos de armas",
-        "descripcion": "Tener arma de fuego sin registro.",
-        "pena_prision_min": 36,
-        "pena_prision_max": 72,
-        "pena_multa_min": 12,
-        "pena_multa_max": 24,
-        "tiene_pena_alternativa": True,
-        "es_grave": False,
-        "variables": [],
-        "penas_accesorias": ["Decomiso del arma"]
-    },
-    # LAVADO DE ACTIVOS
-    {
-        "id": "38",
-        "nombre": "Lavado de Activos",
-        "articulo": "Art. 3 Ley Lavado",
-        "categoria": "Lavado de activos",
-        "descripcion": "Ocultar o encubrir bienes de origen ilícito.",
-        "pena_prision_min": 72,
-        "pena_prision_max": 144,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": [],
-        "penas_accesorias": ["Decomiso de bienes"]
-    },
-    # ASOCIACIÓN ILÍCITA
-    {
-        "id": "39",
-        "nombre": "Asociación Ilícita",
-        "articulo": "Art. 332",
-        "categoria": "Delitos contra el orden público",
-        "descripcion": "Formar parte de organización criminal.",
-        "pena_prision_min": 60,
-        "pena_prision_max": 108,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-    {
-        "id": "40",
-        "nombre": "Pertenencia a Maras",
-        "articulo": "Art. 333",
-        "categoria": "Delitos contra el orden público",
-        "descripcion": "Pertenecer a maras o pandillas.",
-        "pena_prision_min": 60,
-        "pena_prision_max": 108,
-        "pena_multa_min": 0,
-        "pena_multa_max": 0,
-        "tiene_pena_alternativa": False,
-        "es_grave": True,
-        "variables": []
-    },
-]
-
-# Circunstancias Agravantes (Art. 22 CP)
 AGRAVANTES = [
-    {"id": "alevosia", "articulo": "Art. 22.1 CP", "nombre": "Alevosía", "efecto": "mitad_superior"},
-    {"id": "disfraz", "articulo": "Art. 22.2 CP", "nombre": "Disfraz, abuso de superioridad", "efecto": "mitad_superior"},
-    {"id": "precio", "articulo": "Art. 22.3 CP", "nombre": "Precio, recompensa o promesa", "efecto": "mitad_superior"},
-    {"id": "discriminacion", "articulo": "Art. 22.4 CP", "nombre": "Motivos discriminatorios", "efecto": "mitad_superior"},
-    {"id": "ensanamiento", "articulo": "Art. 22.5 CP", "nombre": "Ensañamiento", "efecto": "mitad_superior"},
-    {"id": "abuso_confianza", "articulo": "Art. 22.6 CP", "nombre": "Abuso de confianza", "efecto": "mitad_superior"},
-    {"id": "caracter_publico", "articulo": "Art. 22.7 CP", "nombre": "Prevalerse del carácter público", "efecto": "mitad_superior"},
-    {"id": "reincidencia", "articulo": "Art. 22.8 CP", "nombre": "Reincidencia", "efecto": "mitad_superior"},
-    {"id": "genero", "articulo": "Art. 22.4 (mod)", "nombre": "Comisión por razones de género", "efecto": "mitad_superior"},
+    {"id": "alevosia", "articulo": "Art. 27.1 CP", "nombre": "Alevosía", "descripcion": "Emplear medios que aseguren la ejecución sin riesgo para el autor"},
+    {"id": "disfraz", "articulo": "Art. 27.2 CP", "nombre": "Disfraz o abuso de superioridad", "descripcion": "Usar disfraz o abusar de superioridad de fuerzas"},
+    {"id": "precio", "articulo": "Art. 27.3 CP", "nombre": "Precio, recompensa o promesa", "descripcion": "Cometer el delito mediante precio, recompensa o promesa"},
+    {"id": "discriminacion", "articulo": "Art. 27.4 CP", "nombre": "Motivos discriminatorios", "descripcion": "Por motivos de raza, género, religión, orientación sexual, etc."},
+    {"id": "ensanamiento", "articulo": "Art. 27.5 CP", "nombre": "Ensañamiento", "descripcion": "Aumentar deliberada e inhumanamente el sufrimiento de la víctima"},
+    {"id": "abuso_confianza", "articulo": "Art. 27.6 CP", "nombre": "Abuso de confianza", "descripcion": "Quebrantar relación de confianza con la víctima"},
+    {"id": "prevalimiento", "articulo": "Art. 27.7 CP", "nombre": "Prevalimiento del carácter público", "descripcion": "Aprovecharse de la condición de funcionario público"},
+    {"id": "reincidencia", "articulo": "Art. 27.8 CP", "nombre": "Reincidencia", "descripcion": "Haber sido condenado previamente por delito de igual naturaleza"},
+    {"id": "multiples_victimas", "articulo": "Art. 27.9 CP", "nombre": "Pluralidad de víctimas", "descripcion": "Cometer el delito contra múltiples víctimas"},
+    {"id": "victima_vulnerable", "articulo": "Art. 27.10 CP", "nombre": "Víctima especialmente vulnerable", "descripcion": "Menor de edad, persona con discapacidad, anciano, etc."},
 ]
 
-# Circunstancias Atenuantes (Art. 21 CP)
 ATENUANTES = [
-    {"id": "arrebato", "articulo": "Art. 21.3 CP", "nombre": "Arrebato u obcecación", "efecto": "mitad_inferior"},
-    {"id": "confesion", "articulo": "Art. 21.4 CP", "nombre": "Confesión del delito", "efecto": "mitad_inferior"},
-    {"id": "reparacion", "articulo": "Art. 21.5 CP", "nombre": "Reparación del daño", "efecto": "mitad_inferior"},
-    {"id": "dilaciones", "articulo": "Art. 21.6 CP", "nombre": "Dilaciones indebidas", "efecto": "mitad_inferior"},
-    {"id": "menor_edad", "articulo": "Art. 21.7 CP", "nombre": "Menor de 21 años", "efecto": "mitad_inferior"},
-    {"id": "grave_adiccion", "articulo": "Art. 21.2 CP", "nombre": "Grave adicción", "efecto": "mitad_inferior"},
+    {"id": "eximente_incompleta", "articulo": "Art. 26.1 CP", "nombre": "Eximente incompleta", "descripcion": "Cuando no concurran todos los requisitos de una eximente"},
+    {"id": "arrebato", "articulo": "Art. 26.3 CP", "nombre": "Arrebato u obcecación", "descripcion": "Actuar por estímulos tan poderosos que produzcan arrebato"},
+    {"id": "confesion", "articulo": "Art. 26.4 CP", "nombre": "Confesión del delito", "descripcion": "Haber confesado el delito antes de conocer el procedimiento"},
+    {"id": "reparacion", "articulo": "Art. 26.5 CP", "nombre": "Reparación del daño", "descripcion": "Haber reparado el daño o disminuido sus efectos"},
+    {"id": "dilaciones", "articulo": "Art. 26.6 CP", "nombre": "Dilaciones indebidas", "descripcion": "Dilaciones extraordinarias e indebidas en el procedimiento"},
+    {"id": "menor_edad", "articulo": "Art. 26.7 CP", "nombre": "Menor de 21 años", "descripcion": "Ser menor de veintiún años"},
+    {"id": "grave_adiccion", "articulo": "Art. 26.2 CP", "nombre": "Grave adicción", "descripcion": "Actuar bajo influencia de grave adicción a sustancias"},
 ]
 
-# Eximentes (Art. 20 CP)
 EXIMENTES = [
-    {"id": "anomalia", "articulo": "Art. 20.1 CP", "nombre": "Anomalía o alteración psíquica", "completa": True, "efecto": "exencion"},
-    {"id": "intoxicacion", "articulo": "Art. 20.2 CP", "nombre": "Intoxicación plena", "completa": True, "efecto": "exencion"},
-    {"id": "alteracion_percepcion", "articulo": "Art. 20.3 CP", "nombre": "Alteración de la percepción", "completa": True, "efecto": "exencion"},
-    {"id": "legitima_defensa", "articulo": "Art. 20.4 CP", "nombre": "Legítima defensa", "completa": True, "efecto": "exencion"},
-    {"id": "estado_necesidad", "articulo": "Art. 20.5 CP", "nombre": "Estado de necesidad", "completa": True, "efecto": "exencion"},
-    {"id": "miedo_insuperable", "articulo": "Art. 20.6 CP", "nombre": "Miedo insuperable", "completa": True, "efecto": "exencion"},
-    {"id": "eximente_incompleta", "articulo": "Art. 21.1 CP", "nombre": "Eximente incompleta", "completa": False, "efecto": "reduccion_1_2_grados"},
+    {"id": "anomalia", "articulo": "Art. 25.1 CP", "nombre": "Anomalía o alteración psíquica", "completa": True},
+    {"id": "intoxicacion", "articulo": "Art. 25.2 CP", "nombre": "Intoxicación plena", "completa": True},
+    {"id": "alteracion_percepcion", "articulo": "Art. 25.3 CP", "nombre": "Alteración de la percepción", "completa": True},
+    {"id": "legitima_defensa", "articulo": "Art. 25.4 CP", "nombre": "Legítima defensa", "completa": True},
+    {"id": "estado_necesidad", "articulo": "Art. 25.5 CP", "nombre": "Estado de necesidad", "completa": True},
+    {"id": "miedo_insuperable", "articulo": "Art. 25.6 CP", "nombre": "Miedo insuperable", "completa": True},
+    {"id": "cumplimiento_deber", "articulo": "Art. 25.7 CP", "nombre": "Cumplimiento de un deber", "completa": True},
+    {"id": "eximente_incompleta", "articulo": "Art. 26.1 CP", "nombre": "Eximente incompleta", "completa": False},
+]
+
+GRADOS_AUTORIA = [
+    {"id": "autor_directo", "nombre": "Autor Directo", "articulo": "Art. 28 p. 1° CP", "descripcion": "Realiza el hecho por sí solo", "efecto": "pena_integra"},
+    {"id": "coautor", "nombre": "Coautor", "articulo": "Art. 28 p. 1° CP", "descripcion": "Realizan el hecho conjuntamente", "efecto": "pena_integra"},
+    {"id": "inductor", "nombre": "Inductor", "articulo": "Art. 28 p. 2° a) CP", "descripcion": "Induce directamente a otro a ejecutarlo", "efecto": "pena_integra"},
+    {"id": "cooperador_necesario", "nombre": "Cooperador Necesario", "articulo": "Art. 28 p. 2° b) CP", "descripcion": "Coopera con acto sin el cual no se habría efectuado", "efecto": "pena_integra"},
+    {"id": "complice", "nombre": "Cómplice", "articulo": "Art. 29 CP", "descripcion": "Coopera con actos anteriores o simultáneos (no necesarios)", "efecto": "pena_inferior_1_grado"},
+]
+
+GRADOS_EJECUCION = [
+    {"id": "consumado", "nombre": "Consumado", "articulo": "Art. 15 CP", "descripcion": "Se han realizado todos los actos y producido el resultado", "efecto": "pena_integra"},
+    {"id": "tentativa_acabada", "nombre": "Tentativa Acabada", "articulo": "Art. 16 y 62 CP", "descripcion": "Se practican todos los actos pero no se produce el resultado", "efecto": "pena_inferior_1_2_grados"},
+    {"id": "tentativa_inacabada", "nombre": "Tentativa Inacabada", "articulo": "Art. 16 y 62 CP", "descripcion": "Se practica solo parte de los actos de ejecución", "efecto": "pena_inferior_1_2_grados"},
+]
+
+TIPOS_CONCURSO = [
+    {"id": "real", "nombre": "Concurso Real", "articulo": "Art. 37 CP", "descripcion": "Pluralidad de hechos delictivos independientes. Se acumulan las penas respetando los límites legales máximos."},
+    {"id": "ideal", "nombre": "Concurso Ideal", "articulo": "Art. 36 CP", "descripcion": "Un solo hecho constituye dos o más delitos. Se aplica la pena del delito más grave en su mitad superior."},
+    {"id": "medial", "nombre": "Concurso Medial", "articulo": "Art. 36.2 CP", "descripcion": "Un delito es medio necesario para cometer otro. Se aplica la pena superior en grado a la del delito más grave."},
+    {"id": "continuado", "nombre": "Delito Continuado", "articulo": "Art. 35 CP", "descripcion": "Pluralidad de acciones con misma finalidad delictiva. Pena aumentada hasta el máximo legal."},
 ]
 
 # =============================================
-# FUNCIONES DE CÁLCULO
+# FUNCIONES AUXILIARES
 # =============================================
+
+def parse_pena_texto(texto: str) -> tuple:
+    """Parsea texto de pena a meses"""
+    texto = texto.lower().strip()
+    
+    # Buscar patrones como "X a Y años", "X años", "X meses"
+    patron_rango_anos = r"(\d+)\s*a\s*(\d+)\s*años?"
+    patron_rango_meses = r"(\d+)\s*a\s*(\d+)\s*meses?"
+    patron_anos = r"(\d+)\s*años?"
+    patron_meses = r"(\d+)\s*meses?"
+    
+    match = re.search(patron_rango_anos, texto)
+    if match:
+        return int(match.group(1)) * 12, int(match.group(2)) * 12
+    
+    match = re.search(patron_rango_meses, texto)
+    if match:
+        return int(match.group(1)), int(match.group(2))
+    
+    match = re.search(patron_anos, texto)
+    if match:
+        meses = int(match.group(1)) * 12
+        return meses, meses
+    
+    match = re.search(patron_meses, texto)
+    if match:
+        meses = int(match.group(1))
+        return meses, meses
+    
+    return 0, 0
 
 def meses_a_texto(meses: int) -> str:
     """Convierte meses a texto legible"""
-    if meses >= 360:
-        return "Prisión perpetua"
     if meses <= 0:
         return "0 meses"
+    if meses >= 480:  # 40 años
+        return "Prisión perpetua"
     
     años = meses // 12
     meses_restantes = meses % 12
     
     if años > 0 and meses_restantes > 0:
-        return f"{años} año{'s' if años > 1 else ''} y {meses_restantes} mes{'es' if meses_restantes > 1 else ''}"
+        return f"{años} año{'s' if años != 1 else ''} y {meses_restantes} mes{'es' if meses_restantes != 1 else ''}"
     elif años > 0:
-        return f"{años} año{'s' if años > 1 else ''}"
+        return f"{años} año{'s' if años != 1 else ''}"
     else:
-        return f"{meses_restantes} mes{'es' if meses_restantes > 1 else ''}"
+        return f"{meses_restantes} mes{'es' if meses_restantes != 1 else ''}"
 
 def reducir_grado(minimo: int, maximo: int, grados: int = 1) -> tuple:
-    """Reduce la pena en grados según Arts. 70-71 CP"""
+    """Reduce la pena en grados (Art. 70-71 CP Honduras)"""
     for _ in range(grados):
-        # La pena inferior en grado es la mitad de la pena
         nuevo_max = minimo
         nuevo_min = max(1, minimo // 2)
         minimo, maximo = nuevo_min, nuevo_max
@@ -768,7 +224,7 @@ def aumentar_grado(minimo: int, maximo: int, grados: int = 1) -> tuple:
     """Aumenta la pena en grados"""
     for _ in range(grados):
         nuevo_min = maximo
-        nuevo_max = min(360, int(maximo * 1.5))
+        nuevo_max = min(480, int(maximo * 1.5))
         minimo, maximo = nuevo_min, nuevo_max
     return minimo, maximo
 
@@ -782,190 +238,123 @@ def aplicar_mitad_inferior(minimo: int, maximo: int) -> tuple:
     punto_medio = (minimo + maximo) // 2
     return minimo, punto_medio
 
-def calcular_pena_individual(config: DelitoConfig, delito: dict) -> dict:
-    """Calcula la pena individual para un delito con todas sus circunstancias"""
-    
-    # Determinar pena base según tipo seleccionado
-    if config.pena_seleccionada == TipoPena.PRISION:
-        pena_min = delito["pena_prision_min"]
-        pena_max = delito["pena_prision_max"]
-        tipo_pena = "prisión"
-    else:
-        pena_min = delito["pena_multa_min"]
-        pena_max = delito["pena_multa_max"]
-        tipo_pena = "multa (meses-cuota)"
-    
-    pena_base_min = pena_min
-    pena_base_max = pena_max
-    
-    # Verificar eximente completa
-    if config.eximente_completa and len(config.eximentes) > 0:
-        return {
-            "pena_min": 0,
-            "pena_max": 0,
-            "tipo_pena": tipo_pena,
-            "exento": True,
-            "pena_base_min": pena_base_min,
-            "pena_base_max": pena_base_max
-        }
-    
-    # 1. Aplicar grado de autoría
-    if config.grado_autoria == GradoAutoria.COMPLICE:
-        pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
-    
-    # 2. Aplicar grado de ejecución
-    if config.grado_ejecucion in [GradoEjecucion.TENTATIVA_ACABADA, GradoEjecucion.TENTATIVA_INACABADA]:
-        grados_reduccion = config.reduccion_tentativa
-        pena_min, pena_max = reducir_grado(pena_min, pena_max, grados_reduccion)
-    
-    # 3. Aplicar eximentes incompletas (reducción 1-2 grados)
-    for eximente_id in config.eximentes:
-        eximente = next((e for e in EXIMENTES if e["id"] == eximente_id), None)
-        if eximente and not eximente.get("completa", True):
-            pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
-    
-    # 4. Aplicar atenuantes (mitad inferior)
-    if len(config.atenuantes) > 0:
-        pena_min, pena_max = aplicar_mitad_inferior(pena_min, pena_max)
-        # Si hay más de 2 atenuantes, reducir un grado más
-        if len(config.atenuantes) >= 2:
-            pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
-    
-    # 5. Aplicar agravantes (mitad superior o grado superior)
-    if len(config.agravantes) > 0:
-        pena_min, pena_max = aplicar_mitad_superior(pena_min, pena_max)
-        # Si hay más de 2 agravantes, aumentar un grado
-        if len(config.agravantes) >= 2:
-            pena_min, pena_max = aumentar_grado(pena_min, pena_max, 1)
-    
-    return {
-        "pena_min": max(1, pena_min),
-        "pena_max": max(1, pena_max),
-        "tipo_pena": tipo_pena,
-        "exento": False,
-        "pena_base_min": pena_base_min,
-        "pena_base_max": pena_base_max
-    }
-
-def aplicar_concurso(penas: List[dict], tipo_concurso: TipoConcurso) -> dict:
-    """Aplica las reglas de concurso de delitos"""
-    
-    if len(penas) == 0:
-        return {"pena_min": 0, "pena_max": 0, "descripcion": "Sin delitos"}
-    
-    if len(penas) == 1 or tipo_concurso == TipoConcurso.NINGUNO:
-        return {
-            "pena_min": penas[0]["pena_min"],
-            "pena_max": penas[0]["pena_max"],
-            "descripcion": "Delito único"
-        }
-    
-    # Filtrar penas exentas
-    penas_activas = [p for p in penas if not p.get("exento", False)]
-    
-    if len(penas_activas) == 0:
-        return {"pena_min": 0, "pena_max": 0, "descripcion": "Todos los delitos exentos"}
-    
-    if tipo_concurso == TipoConcurso.REAL:
-        # Art. 73 CP: Se suman todas las penas
-        total_min = sum(p["pena_min"] for p in penas_activas)
-        total_max = sum(p["pena_max"] for p in penas_activas)
-        # Límite máximo de cumplimiento efectivo
-        total_max = min(total_max, 360)  # 30 años máximo
-        return {
-            "pena_min": total_min,
-            "pena_max": total_max,
-            "descripcion": "Concurso Real (Art. 73 CP): Se acumulan las penas para cumplimiento simultáneo o sucesivo."
-        }
-    
-    elif tipo_concurso == TipoConcurso.IDEAL:
-        # Art. 77.2 CP: Pena del delito más grave en mitad superior
-        delito_mas_grave = max(penas_activas, key=lambda p: p["pena_max"])
-        pena_min, pena_max = aplicar_mitad_superior(
-            delito_mas_grave["pena_min"],
-            delito_mas_grave["pena_max"]
-        )
-        return {
-            "pena_min": pena_min,
-            "pena_max": pena_max,
-            "descripcion": "Concurso Ideal (Art. 77.2 CP): Se aplica la pena del delito más grave en su mitad superior."
-        }
-    
-    elif tipo_concurso == TipoConcurso.MEDIAL:
-        # Art. 77.3 CP: Pena del delito más grave en grado superior
-        delito_mas_grave = max(penas_activas, key=lambda p: p["pena_max"])
-        pena_min, pena_max = aumentar_grado(
-            delito_mas_grave["pena_min"],
-            delito_mas_grave["pena_max"]
-        )
-        return {
-            "pena_min": pena_min,
-            "pena_max": pena_max,
-            "descripcion": "Concurso Medial (Art. 77.3 CP): Se aplica la pena superior en grado a la del delito más grave."
-        }
-    
-    return {"pena_min": 0, "pena_max": 0, "descripcion": "Tipo de concurso no reconocido"}
-
 # =============================================
-# ENDPOINTS
+# ENDPOINTS DE DELITOS (CRUD)
 # =============================================
 
 @api_router.get("/")
 async def root():
-    return {"message": "Motor de Cálculo de Penas - Derecho Penal Hondureño"}
+    return {"message": "Motor de Cálculo de Penas - Código Penal de Honduras"}
 
 @api_router.get("/delitos")
 async def listar_delitos(
-    categoria: Optional[str] = Query(None),
-    busqueda: Optional[str] = Query(None)
+    clasificacion: Optional[str] = Query(None),
+    busqueda: Optional[str] = Query(None),
+    skip: int = 0,
+    limit: int = 100
 ):
-    """Lista todos los delitos"""
-    resultado = []
-    for delito in DELITOS_HONDURAS:
-        if categoria and categoria.lower() not in delito["categoria"].lower():
-            continue
-        if busqueda and busqueda.lower() not in delito["nombre"].lower():
-            continue
-        
-        item = {
-            **delito,
-            "pena_principal_texto": f"Prisión de {meses_a_texto(delito['pena_prision_min'])} a {meses_a_texto(delito['pena_prision_max'])}"
-        }
-        if delito.get("tiene_pena_alternativa") and delito.get("pena_multa_max", 0) > 0:
-            item["pena_alternativa_texto"] = f"Multa de {delito['pena_multa_min']} a {delito['pena_multa_max']} meses-cuota"
-        
-        resultado.append(item)
+    """Lista delitos con filtros opcionales"""
+    query = {}
+    if clasificacion:
+        query["clasificacion"] = {"$regex": clasificacion, "$options": "i"}
+    if busqueda:
+        query["$or"] = [
+            {"nombre": {"$regex": busqueda, "$options": "i"}},
+            {"articulo": {"$regex": busqueda, "$options": "i"}},
+            {"conducta": {"$regex": busqueda, "$options": "i"}}
+        ]
     
-    return resultado
+    cursor = db.delitos.find(query).skip(skip).limit(limit).sort("nombre", 1)
+    delitos = await cursor.to_list(length=limit)
+    
+    for d in delitos:
+        d["id"] = str(d["_id"])
+        del d["_id"]
+        d["pena_texto"] = f"{meses_a_texto(d['pena_minima_meses'])} a {meses_a_texto(d['pena_maxima_meses'])}"
+    
+    return delitos
+
+@api_router.get("/delitos/count")
+async def contar_delitos():
+    """Cuenta total de delitos"""
+    count = await db.delitos.count_documents({})
+    return {"total": count}
 
 @api_router.get("/delitos/{delito_id}")
 async def obtener_delito(delito_id: str):
-    """Obtiene un delito específico"""
-    delito = next((d for d in DELITOS_HONDURAS if d["id"] == delito_id), None)
-    if not delito:
+    """Obtiene un delito por ID"""
+    from bson import ObjectId
+    try:
+        delito = await db.delitos.find_one({"_id": ObjectId(delito_id)})
+        if not delito:
+            raise HTTPException(status_code=404, detail="Delito no encontrado")
+        delito["id"] = str(delito["_id"])
+        del delito["_id"]
+        delito["pena_texto"] = f"{meses_a_texto(delito['pena_minima_meses'])} a {meses_a_texto(delito['pena_maxima_meses'])}"
+        return delito
+    except:
+        raise HTTPException(status_code=404, detail="Delito no encontrado")
+
+@api_router.post("/delitos")
+async def crear_delito(delito: DelitoCreate):
+    """Crea un nuevo delito"""
+    delito_dict = delito.dict()
+    delito_dict["creado_en"] = datetime.utcnow()
+    delito_dict["es_grave"] = delito_dict["pena_maxima_meses"] >= 60  # 5+ años = grave
+    
+    result = await db.delitos.insert_one(delito_dict)
+    delito_dict["id"] = str(result.inserted_id)
+    return {"message": "Delito creado", "id": delito_dict["id"]}
+
+@api_router.put("/delitos/{delito_id}")
+async def actualizar_delito(delito_id: str, delito: DelitoUpdate):
+    """Actualiza un delito existente"""
+    from bson import ObjectId
+    update_data = {k: v for k, v in delito.dict().items() if v is not None}
+    
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No hay datos para actualizar")
+    
+    # Recalcular es_grave si se actualiza pena máxima
+    if "pena_maxima_meses" in update_data:
+        update_data["es_grave"] = update_data["pena_maxima_meses"] >= 60
+    
+    update_data["actualizado_en"] = datetime.utcnow()
+    
+    result = await db.delitos.update_one(
+        {"_id": ObjectId(delito_id)},
+        {"$set": update_data}
+    )
+    
+    if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Delito no encontrado")
     
-    item = {
-        **delito,
-        "pena_principal_texto": f"Prisión de {meses_a_texto(delito['pena_prision_min'])} a {meses_a_texto(delito['pena_prision_max'])}"
-    }
-    if delito.get("tiene_pena_alternativa") and delito.get("pena_multa_max", 0) > 0:
-        item["pena_alternativa_texto"] = f"Multa de {delito['pena_multa_min']} a {delito['pena_multa_max']} meses-cuota"
-    
-    return item
+    return {"message": "Delito actualizado"}
 
-@api_router.get("/categorias")
-async def listar_categorias():
-    """Lista categorías de delitos"""
-    categorias = {}
-    for d in DELITOS_HONDURAS:
-        cat = d["categoria"]
-        if cat in categorias:
-            categorias[cat] += 1
-        else:
-            categorias[cat] = 1
+@api_router.delete("/delitos/{delito_id}")
+async def eliminar_delito(delito_id: str):
+    """Elimina un delito"""
+    from bson import ObjectId
+    result = await db.delitos.delete_one({"_id": ObjectId(delito_id)})
     
-    return [{"nombre": n, "cantidad": c} for n, c in sorted(categorias.items())]
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Delito no encontrado")
+    
+    return {"message": "Delito eliminado"}
+
+@api_router.get("/clasificaciones")
+async def listar_clasificaciones():
+    """Lista todas las clasificaciones de delitos"""
+    pipeline = [
+        {"$group": {"_id": "$clasificacion", "cantidad": {"$sum": 1}}},
+        {"$sort": {"_id": 1}}
+    ]
+    clasificaciones = await db.delitos.aggregate(pipeline).to_list(length=100)
+    return [{"nombre": c["_id"], "cantidad": c["cantidad"]} for c in clasificaciones if c["_id"]]
+
+# =============================================
+# ENDPOINTS DE CIRCUNSTANCIAS
+# =============================================
 
 @api_router.get("/agravantes")
 async def listar_agravantes():
@@ -981,29 +370,178 @@ async def listar_eximentes():
 
 @api_router.get("/grados-autoria")
 async def listar_grados_autoria():
-    return [
-        {"id": "autor_directo", "nombre": "Autor Directo", "articulo": "Art. 28 p. 1°", "descripcion": "Realiza el hecho por sí solo.", "efecto": "pena_integra"},
-        {"id": "coautor", "nombre": "Coautor", "articulo": "Art. 28 p. 1°", "descripcion": "Realizan el hecho conjuntamente.", "efecto": "pena_integra"},
-        {"id": "inductor", "nombre": "Inductor", "articulo": "Art. 28 p. 2º a)", "descripcion": "Induce directamente a otro a ejecutarlo.", "efecto": "pena_integra"},
-        {"id": "cooperador_necesario", "nombre": "Cooperador Necesario", "articulo": "Art. 28 p. 2º b)", "descripcion": "Coopera con un acto sin el cual no se habría efectuado.", "efecto": "pena_integra"},
-        {"id": "complice", "nombre": "Cómplice", "articulo": "Art. 29", "descripcion": "Coopera con actos anteriores o simultáneos (no necesarios).", "efecto": "pena_inferior_1_grado"},
-    ]
+    return GRADOS_AUTORIA
 
 @api_router.get("/grados-ejecucion")
 async def listar_grados_ejecucion():
-    return [
-        {"id": "consumado", "nombre": "Consumado", "articulo": "Art. 61", "descripcion": "Se han realizado todos los actos de ejecución y producido el resultado.", "efecto": "pena_integra"},
-        {"id": "tentativa_acabada", "nombre": "Tentativa Acabada", "articulo": "Art. 16.1 y 62", "descripcion": "Se practican todos los actos de ejecución pero no se produce el resultado.", "efecto": "pena_inferior_1_2_grados"},
-        {"id": "tentativa_inacabada", "nombre": "Tentativa Inacabada", "articulo": "Art. 16.1 y 62", "descripcion": "Se practica solo parte de los actos de ejecución.", "efecto": "pena_inferior_1_2_grados"},
-    ]
+    return GRADOS_EJECUCION
 
 @api_router.get("/tipos-concurso")
 async def listar_tipos_concurso():
-    return [
-        {"id": "real", "nombre": "Concurso Real", "articulo": "Art. 73 CP", "descripcion": "Cuando una persona ha cometido varios delitos a través de varias acciones independientes. Se aplican todas las penas correspondientes para su cumplimiento simultáneo o sucesivo."},
-        {"id": "ideal", "nombre": "Concurso Ideal", "articulo": "Art. 77.2 CP", "descripcion": "Cuando un solo hecho constituye dos o más delitos. Se aplica la pena prevista para el delito más grave en su mitad superior."},
-        {"id": "medial", "nombre": "Concurso Medial", "articulo": "Art. 77.3 CP", "descripcion": "Cuando un delito es medio necesario para cometer otro. Se aplica la pena superior en grado a la prevista para el delito más grave."},
-    ]
+    return TIPOS_CONCURSO
+
+# =============================================
+# CÁLCULO DE PENAS
+# =============================================
+
+async def calcular_pena_individual(config: DelitoConfig) -> dict:
+    """Calcula la pena individual para un delito"""
+    from bson import ObjectId
+    
+    delito = await db.delitos.find_one({"_id": ObjectId(config.delito_id)})
+    if not delito:
+        raise HTTPException(status_code=404, detail=f"Delito {config.delito_id} no encontrado")
+    
+    # Pena base
+    if config.pena_seleccionada == TipoPena.PRISION:
+        pena_min = delito["pena_minima_meses"]
+        pena_max = delito["pena_maxima_meses"]
+        tipo_pena = "prisión"
+    else:
+        pena_min = delito.get("pena_alternativa_min", 0)
+        pena_max = delito.get("pena_alternativa_max", 0)
+        tipo_pena = "multa"
+    
+    pena_base_min, pena_base_max = pena_min, pena_max
+    
+    # Verificar eximente completa
+    if config.eximente_completa:
+        return {
+            "delito": delito,
+            "pena_min": 0,
+            "pena_max": 0,
+            "tipo_pena": tipo_pena,
+            "exento": True,
+            "pena_base_min": pena_base_min,
+            "pena_base_max": pena_base_max,
+            "modificaciones": ["Eximente completa aplicada - EXENTO"]
+        }
+    
+    modificaciones = []
+    
+    # 1. AUTORÍA (Art. 28-29 CP)
+    if config.grado_autoria == GradoAutoria.COMPLICE:
+        pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
+        modificaciones.append("Cómplice: pena inferior en 1 grado (Art. 29 CP)")
+    
+    # 2. EJECUCIÓN (Art. 16, 62 CP)
+    if config.grado_ejecucion in [GradoEjecucion.TENTATIVA_ACABADA, GradoEjecucion.TENTATIVA_INACABADA]:
+        pena_min, pena_max = reducir_grado(pena_min, pena_max, config.reduccion_tentativa)
+        modificaciones.append(f"Tentativa: pena inferior en {config.reduccion_tentativa} grado(s) (Art. 62 CP)")
+    
+    # 3. EXIMENTES INCOMPLETAS (Art. 26.1 CP)
+    for ex_id in config.eximentes:
+        ex = next((e for e in EXIMENTES if e["id"] == ex_id), None)
+        if ex and not ex.get("completa", True):
+            pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
+            modificaciones.append(f"Eximente incompleta: pena inferior en 1 grado")
+    
+    # 4. ATENUANTES (Art. 26 CP)
+    if len(config.atenuantes) >= 2:
+        pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
+        modificaciones.append("2+ atenuantes: pena inferior en 1 grado")
+    elif len(config.atenuantes) == 1:
+        pena_min, pena_max = aplicar_mitad_inferior(pena_min, pena_max)
+        modificaciones.append("1 atenuante: pena en mitad inferior")
+    
+    # 5. AGRAVANTES (Art. 27 CP)
+    if len(config.agravantes) >= 2:
+        pena_min, pena_max = aumentar_grado(pena_min, pena_max, 1)
+        modificaciones.append("2+ agravantes: pena superior en 1 grado")
+    elif len(config.agravantes) == 1:
+        pena_min, pena_max = aplicar_mitad_superior(pena_min, pena_max)
+        modificaciones.append("1 agravante: pena en mitad superior")
+    
+    return {
+        "delito": delito,
+        "pena_min": max(1, pena_min),
+        "pena_max": max(1, pena_max),
+        "tipo_pena": tipo_pena,
+        "exento": False,
+        "pena_base_min": pena_base_min,
+        "pena_base_max": pena_base_max,
+        "modificaciones": modificaciones
+    }
+
+def aplicar_concurso(penas: List[dict], tipo_concurso: TipoConcurso) -> dict:
+    """Aplica las reglas de concurso según CP Honduras"""
+    
+    penas_activas = [p for p in penas if not p.get("exento", False)]
+    
+    if len(penas_activas) == 0:
+        return {"pena_min": 0, "pena_max": 0, "descripcion": "Todos los delitos exentos", "articulo": ""}
+    
+    if len(penas_activas) == 1 or tipo_concurso == TipoConcurso.NINGUNO:
+        return {
+            "pena_min": penas_activas[0]["pena_min"],
+            "pena_max": penas_activas[0]["pena_max"],
+            "descripcion": "Delito único - se aplica pena individual",
+            "articulo": ""
+        }
+    
+    if tipo_concurso == TipoConcurso.REAL:
+        # Art. 37 CP Honduras: Acumulación material con límites
+        total_min = sum(p["pena_min"] for p in penas_activas)
+        total_max = sum(p["pena_max"] for p in penas_activas)
+        
+        # Límite: triple de la pena más grave, máximo 40 años (480 meses)
+        pena_mayor = max(p["pena_max"] for p in penas_activas)
+        limite = min(pena_mayor * 3, 480)
+        
+        total_max = min(total_max, limite)
+        total_min = min(total_min, total_max)
+        
+        return {
+            "pena_min": total_min,
+            "pena_max": total_max,
+            "descripcion": f"Concurso Real (Art. 37 CP): Se acumulan las penas. Límite: triple de la mayor o 40 años.",
+            "articulo": "Art. 37 CP"
+        }
+    
+    elif tipo_concurso == TipoConcurso.IDEAL:
+        # Art. 36 CP Honduras: Pena del más grave en mitad superior
+        delito_mas_grave = max(penas_activas, key=lambda p: p["pena_max"])
+        pena_min, pena_max = aplicar_mitad_superior(
+            delito_mas_grave["pena_min"],
+            delito_mas_grave["pena_max"]
+        )
+        return {
+            "pena_min": pena_min,
+            "pena_max": pena_max,
+            "descripcion": "Concurso Ideal (Art. 36 CP): Un hecho, varios delitos. Pena del más grave en mitad superior.",
+            "articulo": "Art. 36 CP"
+        }
+    
+    elif tipo_concurso == TipoConcurso.MEDIAL:
+        # Art. 36.2 CP Honduras: Pena superior en grado
+        delito_mas_grave = max(penas_activas, key=lambda p: p["pena_max"])
+        pena_min, pena_max = aumentar_grado(
+            delito_mas_grave["pena_min"],
+            delito_mas_grave["pena_max"]
+        )
+        return {
+            "pena_min": pena_min,
+            "pena_max": pena_max,
+            "descripcion": "Concurso Medial (Art. 36.2 CP): Delito medio para cometer otro. Pena superior en grado.",
+            "articulo": "Art. 36.2 CP"
+        }
+    
+    elif tipo_concurso == TipoConcurso.CONTINUADO:
+        # Art. 35 CP Honduras: Delito continuado
+        delito_mas_grave = max(penas_activas, key=lambda p: p["pena_max"])
+        # Se aplica la pena del tipo más grave pudiendo llegar hasta el máximo
+        pena_min = delito_mas_grave["pena_min"]
+        pena_max = delito_mas_grave["pena_max"]
+        pena_min, pena_max = aplicar_mitad_superior(pena_min, pena_max)
+        
+        return {
+            "pena_min": pena_min,
+            "pena_max": pena_max,
+            "descripcion": "Delito Continuado (Art. 35 CP): Pluralidad de acciones con misma finalidad. Pena en mitad superior.",
+            "articulo": "Art. 35 CP"
+        }
+    
+    return {"pena_min": 0, "pena_max": 0, "descripcion": "Tipo de concurso no reconocido", "articulo": ""}
 
 @api_router.post("/calcular")
 async def calcular_pena(request: CalculoRequest):
@@ -1014,158 +552,233 @@ async def calcular_pena(request: CalculoRequest):
     todas_penas_accesorias = []
     
     for config in request.delitos:
-        # Buscar delito
-        delito = next((d for d in DELITOS_HONDURAS if d["id"] == config.delito_id), None)
-        if not delito:
-            raise HTTPException(status_code=404, detail=f"Delito {config.delito_id} no encontrado")
+        resultado = await calcular_pena_individual(config)
+        penas_para_concurso.append(resultado)
         
-        # Calcular pena individual
-        resultado_pena = calcular_pena_individual(config, delito)
-        penas_para_concurso.append(resultado_pena)
-        
-        # Recopilar penas accesorias
+        delito = resultado["delito"]
         penas_accesorias_delito = delito.get("penas_accesorias", [])
-        for var_id in config.variables_activas:
-            variable = next((v for v in delito.get("variables", []) if v["id"] == var_id), None)
-            if variable and variable.get("pena_accesoria"):
-                penas_accesorias_delito.append(variable["pena_accesoria"])
         
-        todas_penas_accesorias.extend(penas_accesorias_delito)
+        if not resultado["exento"]:
+            todas_penas_accesorias.extend(penas_accesorias_delito)
         
-        # Obtener nombres de agravantes/atenuantes aplicadas
-        agravantes_nombres = [
-            next((a["nombre"] for a in AGRAVANTES if a["id"] == aid), aid)
-            for aid in config.agravantes
-        ]
-        atenuantes_nombres = [
-            next((a["nombre"] for a in ATENUANTES if a["id"] == aid), aid)
-            for aid in config.atenuantes
-        ]
+        # Agravantes y atenuantes nombres
+        agravantes_nombres = [next((a["nombre"] for a in AGRAVANTES if a["id"] == aid), aid) for aid in config.agravantes]
+        atenuantes_nombres = [next((a["nombre"] for a in ATENUANTES if a["id"] == aid), aid) for aid in config.atenuantes]
         
-        # Formatear resultado individual
-        if resultado_pena["exento"]:
+        if resultado["exento"]:
             pena_texto = "EXENTO (eximente completa)"
         else:
-            pena_texto = f"{meses_a_texto(resultado_pena['pena_min'])} a {meses_a_texto(resultado_pena['pena_max'])} de {resultado_pena['tipo_pena']}"
+            pena_texto = f"{meses_a_texto(resultado['pena_min'])} a {meses_a_texto(resultado['pena_max'])} de {resultado['tipo_pena']}"
         
-        resultados_individuales.append(DelitoResultado(
-            delito_id=delito["id"],
-            nombre=delito["nombre"],
-            articulo=delito["articulo"],
-            pena_base=PenaRango(
-                minimo_meses=resultado_pena["pena_base_min"],
-                maximo_meses=resultado_pena["pena_base_max"],
-                tipo=resultado_pena["tipo_pena"]
-            ),
-            pena_individual=PenaRango(
-                minimo_meses=resultado_pena["pena_min"],
-                maximo_meses=resultado_pena["pena_max"],
-                tipo=resultado_pena["tipo_pena"]
-            ),
-            pena_individual_texto=pena_texto,
-            grado_autoria=config.grado_autoria.value,
-            grado_ejecucion=config.grado_ejecucion.value,
-            agravantes_aplicadas=agravantes_nombres,
-            atenuantes_aplicadas=atenuantes_nombres,
-            penas_accesorias=penas_accesorias_delito
-        ))
+        grado_autoria_nombre = next((g["nombre"] for g in GRADOS_AUTORIA if g["id"] == config.grado_autoria.value), config.grado_autoria.value)
+        grado_ejecucion_nombre = next((g["nombre"] for g in GRADOS_EJECUCION if g["id"] == config.grado_ejecucion.value), config.grado_ejecucion.value)
+        
+        resultados_individuales.append({
+            "delito_id": str(delito["_id"]),
+            "nombre": delito["nombre"],
+            "articulo": delito["articulo"],
+            "clasificacion": delito.get("clasificacion", ""),
+            "pena_base_min": resultado["pena_base_min"],
+            "pena_base_max": resultado["pena_base_max"],
+            "pena_base_texto": f"{meses_a_texto(resultado['pena_base_min'])} a {meses_a_texto(resultado['pena_base_max'])}",
+            "pena_individual_min": resultado["pena_min"],
+            "pena_individual_max": resultado["pena_max"],
+            "pena_individual_texto": pena_texto,
+            "grado_autoria": grado_autoria_nombre,
+            "grado_ejecucion": grado_ejecucion_nombre,
+            "agravantes_aplicadas": agravantes_nombres,
+            "atenuantes_aplicadas": atenuantes_nombres,
+            "penas_accesorias": penas_accesorias_delito,
+            "modificaciones": resultado.get("modificaciones", []),
+            "exento": resultado["exento"]
+        })
     
     # Aplicar concurso
     resultado_concurso = aplicar_concurso(penas_para_concurso, request.tipo_concurso)
     
-    # Formatear pena principal
+    # Pena principal texto
     if resultado_concurso["pena_max"] == 0:
         pena_principal_texto = "EXENTO"
     else:
         pena_principal_texto = f"{meses_a_texto(resultado_concurso['pena_min'])} a {meses_a_texto(resultado_concurso['pena_max'])} de prisión"
     
-    # Generar análisis jurídico
+    # Análisis jurídico
     analisis_juridico = generar_analisis_juridico(resultados_individuales, request.tipo_concurso, resultado_concurso)
-    analisis_tecnico = generar_analisis_tecnico(resultados_individuales, request.tipo_concurso, resultado_concurso)
     
-    # Eliminar duplicados en penas accesorias
-    penas_accesorias_unicas = list(set(todas_penas_accesorias))
-    
-    return ResultadoCalculo(
-        delitos_analizados=resultados_individuales,
-        tipo_concurso=request.tipo_concurso.value if request.tipo_concurso != TipoConcurso.NINGUNO else "ninguno",
-        concurso_descripcion=resultado_concurso["descripcion"],
-        pena_principal=pena_principal_texto,
-        pena_principal_minimo_meses=resultado_concurso["pena_min"],
-        pena_principal_maximo_meses=resultado_concurso["pena_max"],
-        penas_accesorias=penas_accesorias_unicas,
-        analisis_juridico=analisis_juridico,
-        analisis_tecnico=analisis_tecnico,
-        fecha=datetime.now().strftime("%d/%m/%Y")
-    )
+    return {
+        "delitos_analizados": resultados_individuales,
+        "tipo_concurso": request.tipo_concurso.value if request.tipo_concurso != TipoConcurso.NINGUNO else "ninguno",
+        "concurso_descripcion": resultado_concurso["descripcion"],
+        "concurso_articulo": resultado_concurso.get("articulo", ""),
+        "pena_principal": pena_principal_texto,
+        "pena_principal_minimo_meses": resultado_concurso["pena_min"],
+        "pena_principal_maximo_meses": resultado_concurso["pena_max"],
+        "penas_accesorias": list(set(todas_penas_accesorias)),
+        "analisis_juridico": analisis_juridico,
+        "fecha": datetime.now().strftime("%d/%m/%Y %H:%M"),
+        "disclaimer": "Este cálculo es orientativo y no sustituye la función jurisdiccional. La determinación definitiva de la pena corresponde exclusivamente a los tribunales de justicia de Honduras."
+    }
 
-def generar_analisis_juridico(delitos: List[DelitoResultado], tipo_concurso: TipoConcurso, resultado_concurso: dict) -> str:
-    """Genera el análisis jurídico del cálculo"""
+def generar_analisis_juridico(delitos, tipo_concurso, resultado_concurso) -> str:
+    """Genera análisis jurídico detallado"""
     lineas = []
+    lineas.append("═" * 50)
     lineas.append("ANÁLISIS JURÍDICO DEL CÁLCULO DE PENA")
-    lineas.append("=" * 40)
-    lineas.append(f"Fecha: {datetime.now().strftime('%d/%m/%Y')}")
-    lineas.append("")
-    lineas.append(f"DELITOS ANALIZADOS ({len(delitos)}):")
+    lineas.append("Código Penal de Honduras (Decreto 130-2017)")
+    lineas.append("═" * 50)
+    lineas.append(f"\nFecha: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
+    lineas.append(f"Total de delitos analizados: {len(delitos)}")
     
     for i, d in enumerate(delitos, 1):
-        lineas.append(f"\n{i}. {d.nombre}")
-        lineas.append(f"   Artículo: {d.articulo}")
-        lineas.append(f"   Participación: {d.grado_autoria}")
-        lineas.append(f"   Ejecución: {d.grado_ejecucion}")
-        lineas.append(f"   Pena individual: {d.pena_individual_texto}")
+        lineas.append(f"\n{'─' * 40}")
+        lineas.append(f"DELITO {i}: {d['nombre'].upper()}")
+        lineas.append(f"{'─' * 40}")
+        lineas.append(f"• Artículo: {d['articulo']}")
+        lineas.append(f"• Clasificación: {d['clasificacion']}")
+        lineas.append(f"• Pena base: {d['pena_base_texto']}")
+        lineas.append(f"• Grado de autoría: {d['grado_autoria']}")
+        lineas.append(f"• Grado de ejecución: {d['grado_ejecucion']}")
         
-        if d.agravantes_aplicadas:
-            lineas.append(f"   Agravantes: {', '.join(d.agravantes_aplicadas)}")
-        if d.atenuantes_aplicadas:
-            lineas.append(f"   Atenuantes: {', '.join(d.atenuantes_aplicadas)}")
+        if d['modificaciones']:
+            lineas.append("\nModificaciones aplicadas:")
+            for mod in d['modificaciones']:
+                lineas.append(f"  → {mod}")
+        
+        if d['agravantes_aplicadas']:
+            lineas.append(f"\nAgravantes (Art. 27 CP): {', '.join(d['agravantes_aplicadas'])}")
+        if d['atenuantes_aplicadas']:
+            lineas.append(f"Atenuantes (Art. 26 CP): {', '.join(d['atenuantes_aplicadas'])}")
+        
+        lineas.append(f"\n★ PENA INDIVIDUAL: {d['pena_individual_texto']}")
+        
+        if d['penas_accesorias']:
+            lineas.append(f"\nPenas accesorias: {', '.join(d['penas_accesorias'])}")
     
-    if len(delitos) > 1:
-        lineas.append(f"\nTIPO DE CONCURSO: {tipo_concurso.value.upper()}")
-        lineas.append(f"Descripción: {resultado_concurso['descripcion']}")
+    if len(delitos) > 1 and tipo_concurso != TipoConcurso.NINGUNO:
+        lineas.append(f"\n{'═' * 50}")
+        lineas.append("CONCURSO DE DELITOS")
+        lineas.append(f"{'═' * 50}")
+        lineas.append(f"Tipo: {tipo_concurso.value.upper()}")
+        lineas.append(f"Base legal: {resultado_concurso.get('articulo', '')}")
+        lineas.append(f"Efecto: {resultado_concurso['descripcion']}")
     
     return "\n".join(lineas)
 
-def generar_analisis_tecnico(delitos: List[DelitoResultado], tipo_concurso: TipoConcurso, resultado_concurso: dict) -> str:
-    """Genera el análisis técnico detallado"""
-    lineas = []
-    lineas.append("ANÁLISIS TÉCNICO DEL CÁLCULO")
-    lineas.append("=" * 40)
-    
-    lineas.append("\nREGLAS APLICADAS:")
-    
-    for i, d in enumerate(delitos, 1):
-        lineas.append(f"\nDelito {i} - {d.nombre}:")
-        lineas.append(f"  • Pena base: {meses_a_texto(d.pena_base.minimo_meses)} a {meses_a_texto(d.pena_base.maximo_meses)}")
-        
-        if d.grado_autoria == "complice":
-            lineas.append("  • Participación (cómplice): pena inferior en 1 grado")
-        else:
-            lineas.append(f"  • Participación ({d.grado_autoria}): pena íntegra")
-        
-        if d.grado_ejecucion != "consumado":
-            lineas.append(f"  • Ejecución ({d.grado_ejecucion}): pena inferior en 1-2 grados")
-        
-        if d.agravantes_aplicadas:
-            lineas.append(f"  • Agravantes: pena en mitad superior")
-        if d.atenuantes_aplicadas:
-            lineas.append(f"  • Atenuantes: pena en mitad inferior")
-        
-        lineas.append(f"  • Resultado: {d.pena_individual_texto}")
-    
-    if len(delitos) > 1:
-        lineas.append(f"\nCONCURSO DE DELITOS:")
-        lineas.append(f"  Tipo: {tipo_concurso.value}")
-        lineas.append(f"  Efecto: {resultado_concurso['descripcion']}")
-    
-    lineas.append("\n" + "=" * 40)
-    lineas.append("DISCLAIMER: Este cálculo es orientativo y no sustituye")
-    lineas.append("la función jurisdiccional. La determinación definitiva")
-    lineas.append("de la pena corresponde exclusivamente a los tribunales.")
-    
-    return "\n".join(lineas)
+# =============================================
+# SEED DATA - POBLAR BASE DE DATOS
+# =============================================
 
-# Include the router in the main app
+@api_router.post("/seed")
+async def seed_database():
+    """Pobla la base de datos con los delitos del CP Honduras"""
+    
+    # Verificar si ya hay datos
+    count = await db.delitos.count_documents({})
+    if count > 0:
+        return {"message": f"Base de datos ya tiene {count} delitos", "seeded": False}
+    
+    # Lista de delitos basada en los datos proporcionados
+    delitos_seed = [
+        {"nombre": "Abandono de animales", "articulo": "Art. 342 CP", "conducta": "Abandonar animales bajo custodia poniendo en riesgo su vida o integridad", "clasificacion": "Delitos contra el bienestar animal", "pena_minima_meses": 6, "pena_maxima_meses": 24, "penas_accesorias": ["Inhabilitación para la tenencia de animales"]},
+        {"nombre": "Abandono de funciones públicas", "articulo": "Art. 500 CP", "conducta": "Abandonar injustificadamente un cargo o función pública", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": ["Inhabilitación especial"]},
+        {"nombre": "Abandono de menores o personas vulnerables", "articulo": "Art. 228 CP", "conducta": "Abandonar a persona menor de edad, con discapacidad, anciana o enferma", "clasificacion": "Trata de personas y explotación humana", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Aborto", "articulo": "Art. 196 CP", "conducta": "Provocar aborto fuera de los supuestos legales", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Abuso de autoridad", "articulo": "Art. 499 CP", "conducta": "Ejercer arbitrariamente funciones públicas causando perjuicio", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": ["Inhabilitación especial"]},
+        {"nombre": "Abuso de dispositivos informáticos", "articulo": "Art. 400 CP", "conducta": "Uso indebido de dispositivos o credenciales informáticas", "clasificacion": "Seguridad informática", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": ["Multa"]},
+        {"nombre": "Acceso no autorizado a sistemas informáticos", "articulo": "Art. 398 CP", "conducta": "Acceso sin autorización a sistemas protegidos", "clasificacion": "Seguridad informática", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Acoso laboral", "articulo": "Art. 294 CP", "conducta": "Hostigamiento laboral desde posición de superioridad", "clasificacion": "Derechos laborales", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": ["Inhabilitación"]},
+        {"nombre": "Allanamiento de domicilio", "articulo": "Art. 270 CP", "conducta": "Entrar o permanecer en domicilio ajeno sin autorización", "clasificacion": "Inviolabilidad domiciliaria", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Amenazas", "articulo": "Art. 246 CP", "conducta": "Anunciar la causación de un mal grave e ilícito", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Asesinato", "articulo": "Art. 193 CP", "conducta": "Dar muerte a otro concurriendo circunstancias agravantes", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
+        {"nombre": "Asociación para delinquir", "articulo": "Art. 554 CP", "conducta": "Integrar asociación estable para cometer delitos", "clasificacion": "Criminalidad organizada", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Asociación terrorista", "articulo": "Art. 587 CP", "conducta": "Formar parte de organización terrorista", "clasificacion": "Terrorismo", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
+        {"nombre": "Calumnia", "articulo": "Art. 230 CP", "conducta": "Imputar falsamente delito a una persona", "clasificacion": "Delitos contra el honor", "pena_minima_meses": 6, "pena_maxima_meses": 12, "tiene_pena_alternativa": True, "pena_alternativa_min": 6, "pena_alternativa_max": 12, "penas_accesorias": []},
+        {"nombre": "Chantaje", "articulo": "Art. 247 CP", "conducta": "Amenazar para obtener beneficio indebido", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Coacción", "articulo": "Art. 245 CP", "conducta": "Obligar a otro mediante violencia o intimidación", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Cohecho propio", "articulo": "Art. 492 CP", "conducta": "Solicitar dádivas para realizar u omitir acto del cargo", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Inhabilitación absoluta"]},
+        {"nombre": "Concusión", "articulo": "Art. 497 CP", "conducta": "Exigir ventajas abusando del cargo público", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Inhabilitación"]},
+        {"nombre": "Conducción temeraria", "articulo": "Art. 323 CP", "conducta": "Conducir poniendo en peligro grave la seguridad vial", "clasificacion": "Seguridad vial", "pena_minima_meses": 6, "pena_maxima_meses": 24, "penas_accesorias": ["Privación del derecho a conducir"]},
+        {"nombre": "Contaminación ambiental", "articulo": "Art. 324 CP", "conducta": "Contaminar aguas, suelos o aire causando daño ambiental", "clasificacion": "Delitos contra el medio ambiente", "pena_minima_meses": 48, "pena_maxima_meses": 96, "penas_accesorias": ["Multa"]},
+        {"nombre": "Contrabando", "articulo": "Art. 428 CP", "conducta": "Introducir o extraer mercancías eludiendo controles aduaneros", "clasificacion": "Hacienda pública", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": ["Multa proporcional"]},
+        {"nombre": "Crimen de lesa humanidad", "articulo": "Art. 139 CP", "conducta": "Cometer actos inhumanos de forma sistemática o generalizada", "clasificacion": "Comunidad internacional", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
+        {"nombre": "Daños", "articulo": "Art. 381 CP", "conducta": "Dañar bienes ajenos sin agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Daños agravados", "articulo": "Art. 382 CP", "conducta": "Dañar bienes concurriendo circunstancias agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Defraudación fiscal", "articulo": "Art. 431 CP", "conducta": "Eludir impuestos mediante engaño o simulación", "clasificacion": "Hacienda pública", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": ["Multa proporcional"]},
+        {"nombre": "Desaparición forzada", "articulo": "Art. 140 CP", "conducta": "Privar de libertad y ocultar paradero de la víctima", "clasificacion": "Comunidad internacional", "pena_minima_meses": 240, "pena_maxima_meses": 300, "penas_accesorias": []},
+        {"nombre": "Enriquecimiento ilícito", "articulo": "Art. 484 CP", "conducta": "Incrementar patrimonio injustificadamente como funcionario", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Inhabilitación absoluta"]},
+        {"nombre": "Espionaje", "articulo": "Art. 563 CP", "conducta": "Obtener o revelar información que afecte la seguridad del Estado", "clasificacion": "Seguridad del Estado", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
+        {"nombre": "Estafa", "articulo": "Art. 365 CP", "conducta": "Obtener beneficio patrimonial mediante engaño", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": []},
+        {"nombre": "Estafa agravada", "articulo": "Art. 366 CP", "conducta": "Estafa con agravantes legales", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Estragos", "articulo": "Art. 185 CP", "conducta": "Provocar incendio, explosión u otros estragos", "clasificacion": "Seguridad colectiva", "pena_minima_meses": 120, "pena_maxima_meses": 240, "penas_accesorias": []},
+        {"nombre": "Estupro", "articulo": "Art. 254 CP", "conducta": "Acceso carnal con menor mediante engaño", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Extorsión", "articulo": "Art. 373 CP", "conducta": "Obligar a otro a realizar u omitir actos mediante intimidación", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Extorsión agravada", "articulo": "Art. 374 CP", "conducta": "Extorsión con agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
+        {"nombre": "Falsificación de documentos públicos", "articulo": "Art. 456 CP", "conducta": "Falsificar documentos públicos o mercantiles", "clasificacion": "Delitos contra la fe pública", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Falsificación de moneda", "articulo": "Art. 447 CP", "conducta": "Falsificar moneda nacional o extranjera", "clasificacion": "Delitos contra la fe pública", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
+        {"nombre": "Falso testimonio", "articulo": "Art. 519 CP", "conducta": "Declarar falsamente como testigo en proceso judicial", "clasificacion": "Administración de justicia", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Femicidio", "articulo": "Art. 208 CP", "conducta": "Dar muerte a una mujer por razones de género", "clasificacion": "Violencia contra la mujer", "pena_minima_meses": 360, "pena_maxima_meses": 480, "penas_accesorias": []},
+        {"nombre": "Fraude informático", "articulo": "Art. 368 CP", "conducta": "Obtener beneficio mediante manipulación informática", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 48, "pena_maxima_meses": 96, "penas_accesorias": []},
+        {"nombre": "Genocidio", "articulo": "Art. 143 CP", "conducta": "Destruir total o parcialmente grupo protegido", "clasificacion": "Comunidad internacional", "pena_minima_meses": 360, "pena_maxima_meses": 480, "penas_accesorias": []},
+        {"nombre": "Homicidio", "articulo": "Art. 192 CP", "conducta": "Dar muerte a otra persona", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
+        {"nombre": "Homicidio imprudente", "articulo": "Art. 198 CP", "conducta": "Causar muerte por imprudencia grave", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 48, "pena_maxima_meses": 84, "penas_accesorias": []},
+        {"nombre": "Hostigamiento sexual", "articulo": "Art. 256 CP", "conducta": "Solicitar favores sexuales generando situación intimidatoria", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 24, "pena_maxima_meses": 48, "penas_accesorias": []},
+        {"nombre": "Hurto", "articulo": "Art. 357 CP", "conducta": "Apoderarse de cosa mueble ajena sin violencia ni fuerza", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Hurto agravado", "articulo": "Art. 363 CP", "conducta": "Apoderarse de cosa ajena con agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Incendio", "articulo": "Art. 183 CP", "conducta": "Provocar incendio sin circunstancias cualificadas", "clasificacion": "Seguridad colectiva", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
+        {"nombre": "Incendio forestal", "articulo": "Art. 327 CP", "conducta": "Provocar incendio en zonas forestales", "clasificacion": "Delitos contra el medio ambiente", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Multa"]},
+        {"nombre": "Injuria", "articulo": "Art. 229 CP", "conducta": "Proferir expresiones que lesionen la dignidad de otro", "clasificacion": "Delitos contra el honor", "pena_minima_meses": 0, "pena_maxima_meses": 0, "tiene_pena_alternativa": True, "pena_alternativa_min": 3, "pena_alternativa_max": 6, "penas_accesorias": []},
+        {"nombre": "Lavado de activos", "articulo": "Art. 439 CP", "conducta": "Ocultar o encubrir bienes de origen ilícito", "clasificacion": "Receptación y lavado de activos", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Multa"]},
+        {"nombre": "Lesiones", "articulo": "Art. 199 CP", "conducta": "Causar lesiones sin gravedad extrema", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": []},
+        {"nombre": "Lesiones graves", "articulo": "Art. 201 CP", "conducta": "Causar lesiones graves a otra persona", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Maltrato habitual", "articulo": "Art. 209 CP", "conducta": "Maltratar de forma habitual a integrante del núcleo familiar", "clasificacion": "Violencia doméstica", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Prohibición de aproximación"]},
+        {"nombre": "Malversación de caudales públicos", "articulo": "Art. 481 CP", "conducta": "Sustraer o dar uso indebido a fondos públicos", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Inhabilitación absoluta"]},
+        {"nombre": "Omisión del deber de socorro", "articulo": "Art. 216 CP", "conducta": "No auxiliar a persona en peligro grave", "clasificacion": "Derechos fundamentales", "pena_minima_meses": 6, "pena_maxima_meses": 36, "penas_accesorias": []},
+        {"nombre": "Organización criminal", "articulo": "Art. 554 CP", "conducta": "Dirigir u organizar estructura criminal estable", "clasificacion": "Criminalidad organizada", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Parricidio", "articulo": "Art. 204 CP", "conducta": "Dar muerte a ascendiente o descendiente", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 300, "pena_maxima_meses": 360, "penas_accesorias": []},
+        {"nombre": "Peculado", "articulo": "Art. 480 CP", "conducta": "Apropiarse de bienes públicos", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Inhabilitación absoluta"]},
+        {"nombre": "Pedofilia", "articulo": "Art. 250 CP", "conducta": "Actos sexuales con menores impúberes", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
+        {"nombre": "Piratería", "articulo": "Art. 165 CP", "conducta": "Actos de violencia o saqueo en alta mar", "clasificacion": "Derecho de gentes", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
+        {"nombre": "Pornografía infantil", "articulo": "Art. 261 CP", "conducta": "Producir, difundir o poseer material pornográfico infantil", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
+        {"nombre": "Portación ilegal de armas", "articulo": "Art. 584 CP", "conducta": "Portar armas de fuego sin autorización legal", "clasificacion": "Orden público", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
+        {"nombre": "Prevaricato judicial", "articulo": "Art. 516 CP", "conducta": "Dictar resolución injusta a sabiendas", "clasificacion": "Administración de justicia", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Inhabilitación absoluta"]},
+        {"nombre": "Producción ilícita de drogas", "articulo": "Art. 317 CP", "conducta": "Producir sustancias estupefacientes ilícitas", "clasificacion": "Delitos contra la salud pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
+        {"nombre": "Proxenetismo", "articulo": "Art. 262 CP", "conducta": "Facilitar o promover la prostitución ajena", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 60, "pena_maxima_meses": 96, "penas_accesorias": []},
+        {"nombre": "Rebelión", "articulo": "Art. 532 CP", "conducta": "Alzarse violentamente contra el orden constitucional", "clasificacion": "Delitos contra la Constitución", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
+        {"nombre": "Receptación", "articulo": "Art. 406 CP", "conducta": "Recibir bienes provenientes de delito", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": []},
+        {"nombre": "Robo", "articulo": "Art. 360 CP", "conducta": "Apoderarse de cosa ajena con violencia o intimidación", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Robo agravado", "articulo": "Art. 361 CP", "conducta": "Robo con armas, en banda o con lesiones", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
+        {"nombre": "Secuestro", "articulo": "Art. 240 CP", "conducta": "Privar de libertad con fines ilícitos", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 180, "pena_maxima_meses": 300, "penas_accesorias": []},
+        {"nombre": "Secuestro agravado", "articulo": "Art. 241 CP", "conducta": "Secuestro con muerte, tortura o víctimas vulnerables", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 300, "pena_maxima_meses": 360, "penas_accesorias": []},
+        {"nombre": "Sedición", "articulo": "Art. 535 CP", "conducta": "Alzamiento colectivo contra la autoridad", "clasificacion": "Delitos contra la Constitución", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": []},
+        {"nombre": "Sustracción de menor", "articulo": "Art. 283 CP", "conducta": "Sustraer menor del cuidado legítimo", "clasificacion": "Delitos contra la familia", "pena_minima_meses": 48, "pena_maxima_meses": 96, "penas_accesorias": []},
+        {"nombre": "Terrorismo", "articulo": "Art. 589 CP", "conducta": "Ejecutar actos terroristas", "clasificacion": "Terrorismo", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
+        {"nombre": "Tortura", "articulo": "Art. 209 CP", "conducta": "Infligir dolor grave físico o psicológico", "clasificacion": "Derechos humanos", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
+        {"nombre": "Tráfico de influencias", "articulo": "Art. 485 CP", "conducta": "Influir sobre funcionario para obtener beneficio", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Inhabilitación"]},
+        {"nombre": "Tráfico ilícito de drogas", "articulo": "Art. 316 CP", "conducta": "Comercializar sustancias estupefacientes ilícitas", "clasificacion": "Delitos contra la salud pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
+        {"nombre": "Tráfico ilícito de armas", "articulo": "Art. 582 CP", "conducta": "Comercializar armas sin autorización", "clasificacion": "Orden público", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
+        {"nombre": "Trata de personas", "articulo": "Art. 218 CP", "conducta": "Captar, trasladar o recibir personas con fines de explotación", "clasificacion": "Trata de personas", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
+        {"nombre": "Trata de personas agravada", "articulo": "Art. 219 CP", "conducta": "Trata de personas con menores o violencia", "clasificacion": "Trata de personas", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
+        {"nombre": "Usurpación", "articulo": "Art. 378 CP", "conducta": "Ocupar inmueble o derecho real ajeno", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 24, "pena_maxima_meses": 48, "penas_accesorias": []},
+        {"nombre": "Violación", "articulo": "Art. 249 CP", "conducta": "Acceso carnal sin consentimiento mediante violencia o intimidación", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 108, "pena_maxima_meses": 156, "penas_accesorias": []},
+        {"nombre": "Violación agravada", "articulo": "Art. 250 CP", "conducta": "Violación con agravantes legales", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 156, "pena_maxima_meses": 216, "penas_accesorias": []},
+        {"nombre": "Violencia doméstica", "articulo": "Art. 209 CP", "conducta": "Ejercer violencia habitual en el ámbito doméstico", "clasificacion": "Violencia intrafamiliar", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Medidas de protección"]},
+    ]
+    
+    # Añadir campos por defecto
+    for d in delitos_seed:
+        d["tiene_pena_alternativa"] = d.get("tiene_pena_alternativa", False)
+        d["pena_alternativa_min"] = d.get("pena_alternativa_min", 0)
+        d["pena_alternativa_max"] = d.get("pena_alternativa_max", 0)
+        d["penas_accesorias"] = d.get("penas_accesorias", [])
+        d["observaciones"] = d.get("observaciones", None)
+        d["es_grave"] = d["pena_maxima_meses"] >= 60
+        d["creado_en"] = datetime.utcnow()
+    
+    await db.delitos.insert_many(delitos_seed)
+    
+    return {"message": f"Base de datos poblada con {len(delitos_seed)} delitos", "seeded": True}
+
+# Include router and middleware
 app.include_router(api_router)
 
 app.add_middleware(
@@ -1178,6 +791,19 @@ app.add_middleware(
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+@app.on_event("startup")
+async def startup_seed():
+    """Sembrar automáticamente la BD si está vacía"""
+    try:
+        count = await db.delitos.count_documents({})
+        if count == 0:
+            logger.info("Base de datos vacía, ejecutando seed automático...")
+            await seed_database()
+        else:
+            logger.info(f"Base de datos tiene {count} delitos")
+    except Exception as e:
+        logger.error(f"Error en seed automático: {e}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
