@@ -314,6 +314,7 @@ async def listar_delitos(
             "id": str(d.id),
             "nombre": d.nombre,
             "articulo": d.articulo,
+            "clasificacion": d.clasificacion,
             "conducta": d.conducta,
             "rama_id": d.rama_id,
             "constitucion_articulo_id": d.constitucion_articulo_id,
