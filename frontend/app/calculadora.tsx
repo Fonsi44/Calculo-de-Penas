@@ -779,6 +779,15 @@ function Step7({
 
 /* ---------- STEP 8: RESULT ---------- */
 function Step8({ resultado }: any) {
+  const gravedadColor = (g: string) => {
+    switch (g) {
+      case 'Muy grave': return COLORS.danger;
+      case 'Grave': return '#D49B3F';
+      case 'Menos grave': return COLORS.warning;
+      default: return COLORS.success;
+    }
+  };
+
   return (
     <View>
       <View style={styles.resultBanner}>
@@ -787,6 +796,11 @@ function Step8({ resultado }: any) {
         </View>
         <Text style={styles.resultLabel}>PENA APLICABLE</Text>
         <Text style={styles.resultValue}>{resultado.pena_principal}</Text>
+        {resultado.delitos_analizados?.[0]?.pena_recomendada_texto && (
+          <Text style={[styles.summaryRowVal, { marginTop: scale(4), color: COLORS.primary }]}>
+            Recomendación: {resultado.delitos_analizados[0].pena_recomendada_texto}
+          </Text>
+        )}
         <Text style={styles.resultDate}>{resultado.fecha}</Text>
       </View>
 
@@ -806,11 +820,23 @@ function Step8({ resultado }: any) {
         <Text style={styles.summaryNum}>Detalle por delito</Text>
         {resultado.delitos_analizados?.map((d: any, i: number) => (
           <View key={i} style={{ marginTop: i === 0 ? scale(6) : scale(12) }}>
-            <Text style={[styles.summaryTitle, { fontSize: fontScale(14) }]}>
-              {i + 1}. {d.nombre}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6) }}>
+              <Text style={[styles.summaryTitle, { fontSize: fontScale(14), flex: 1 }]}>
+                {i + 1}. {d.nombre}
+              </Text>
+              {d.gravedad && (
+                <View style={{ backgroundColor: gravedadColor(d.gravedad) + '20', paddingHorizontal: scale(8), paddingVertical: scale(2), borderRadius: RADIUS.pill }}>
+                  <Text style={{ fontSize: fontScale(9), fontWeight: '800', color: gravedadColor(d.gravedad) }}>{d.gravedad}</Text>
+                </View>
+              )}
+            </View>
             <Text style={styles.summarySub}>{d.articulo}</Text>
             <Text style={[styles.summaryRowVal, { marginTop: scale(4) }]}>{d.pena_individual_texto}</Text>
+            {d.pena_recomendada_texto && (
+              <Text style={{ fontSize: fontScale(11), color: COLORS.primary, fontWeight: '600', marginTop: scale(2) }}>
+                Recomendado: {d.pena_recomendada_texto}
+              </Text>
+            )}
             {d.modificaciones?.length > 0 &&
               d.modificaciones.map((m: string, j: number) => (
                 <Text key={j} style={{ fontSize: fontScale(11), color: COLORS.textSecondary, marginTop: scale(2) }}>

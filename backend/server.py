@@ -551,21 +551,41 @@ async def calcular_pena_individual(config: DelitoConfig, session: AsyncSession) 
             pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
             modificaciones.append(f"Eximente incompleta: pena inferior en 1 grado")
     
-    # 4. ATENUANTES (Art. 26 CP)
-    if len(config.atenuantes) >= 2:
-        pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
-        modificaciones.append("2+ atenuantes: pena inferior en 1 grado")
-    elif len(config.atenuantes) == 1:
-        pena_min, pena_max = aplicar_mitad_inferior(pena_min, pena_max)
-        modificaciones.append("1 atenuante: pena en mitad inferior")
+    # 4. COMPENSACION AGRAVANTES-ATENUANTES (Art. 26-27 CP)
+    neto = len(config.agravantes) - len(config.atenuantes)
+    if neto > 0:
+        if neto >= 2:
+            pena_min, pena_max = aumentar_grado(pena_min, pena_max, 1)
+            modificaciones.append(f"Saldo de {neto} agravante(s): pena superior en 1 grado")
+        else:
+            pena_min, pena_max = aplicar_mitad_superior(pena_min, pena_max)
+            modificaciones.append("Saldo de 1 agravante: pena en mitad superior")
+    elif neto < 0:
+        neto_abs = abs(neto)
+        if neto_abs >= 2:
+            pena_min, pena_max = reducir_grado(pena_min, pena_max, 1)
+            modificaciones.append(f"Saldo de {neto_abs} atenuante(s): pena inferior en 1 grado")
+        else:
+            pena_min, pena_max = aplicar_mitad_inferior(pena_min, pena_max)
+            modificaciones.append("Saldo de 1 atenuante: pena en mitad inferior")
+    else:
+        if len(config.agravantes) > 0 or len(config.atenuantes) > 0:
+            modificaciones.append(f"Agravantes y atenuantes compensados: se aplica pena base")
     
-    # 5. AGRAVANTES (Art. 27 CP)
-    if len(config.agravantes) >= 2:
-        pena_min, pena_max = aumentar_grado(pena_min, pena_max, 1)
-        modificaciones.append("2+ agravantes: pena superior en 1 grado")
-    elif len(config.agravantes) == 1:
-        pena_min, pena_max = aplicar_mitad_superior(pena_min, pena_max)
-        modificaciones.append("1 agravante: pena en mitad superior")
+    # Calcular pena recomendada y gravedad expandida
+    p_min = max(1, pena_min)
+    p_max = max(1, pena_max)
+    medio = (p_min + p_max) // 2
+    
+    # Gravedad expandida
+    if p_max >= 360:
+        gravedad = "Muy grave"
+    elif p_max >= 120:
+        gravedad = "Grave"
+    elif p_max >= 36:
+        gravedad = "Menos grave"
+    else:
+        gravedad = "Leve"
     
     return {
         "delito": {
@@ -575,8 +595,10 @@ async def calcular_pena_individual(config: DelitoConfig, session: AsyncSession) 
             "clasificacion": delito.clasificacion,
             "penas_accesorias": delito.penas_accesorias or [],
         },
-        "pena_min": max(1, pena_min),
-        "pena_max": max(1, pena_max),
+        "pena_min": p_min,
+        "pena_max": p_max,
+        "pena_recomendada": medio,
+        "gravedad": gravedad,
         "tipo_pena": tipo_pena,
         "exento": False,
         "pena_base_min": pena_base_min,
@@ -705,6 +727,9 @@ async def calcular_pena(request: CalculoRequest, session: AsyncSession = Depends
             "pena_individual_min": resultado["pena_min"],
             "pena_individual_max": resultado["pena_max"],
             "pena_individual_texto": pena_texto,
+            "pena_recomendada_meses": resultado["pena_recomendada"],
+            "pena_recomendada_texto": meses_a_texto(resultado["pena_recomendada"]),
+            "gravedad": resultado["gravedad"],
             "grado_autoria": grado_autoria_nombre,
             "grado_ejecucion": grado_ejecucion_nombre,
             "agravantes_aplicadas": agravantes_nombres,
@@ -757,6 +782,8 @@ def generar_analisis_juridico(delitos, tipo_concurso, resultado_concurso) -> str
         lineas.append(f"• Artículo: {d['articulo']}")
         lineas.append(f"• Clasificación: {d['clasificacion']}")
         lineas.append(f"• Pena base: {d['pena_base_texto']}")
+        lineas.append(f"• Gravedad: {d.get('gravedad', 'No determinada')}")
+        lineas.append(f"• Pena recomendada: {d.get('pena_recomendada_texto', d['pena_individual_texto'])}")
         lineas.append(f"• Grado de autoría: {d['grado_autoria']}")
         lineas.append(f"• Grado de ejecución: {d['grado_ejecucion']}")
         
