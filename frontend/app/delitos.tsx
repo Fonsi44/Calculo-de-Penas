@@ -173,7 +173,7 @@ export default function DelitosCatalog() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => router.canGoBack() ? router.back() : router.replace('/')}>
           <Ionicons name="chevron-back" size={scale(26)} color={COLORS.white} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>

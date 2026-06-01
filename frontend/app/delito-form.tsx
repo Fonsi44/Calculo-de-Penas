@@ -192,7 +192,7 @@ export default function DelitoForm() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => router.canGoBack() ? router.back() : router.replace('/')}>
           <Ionicons name="close" size={scale(24)} color={COLORS.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
@@ -411,7 +411,7 @@ export default function DelitoForm() {
       <View style={[styles.footer, { paddingBottom: insets.bottom + SPACING.sm }]}>
         <TouchableOpacity
           style={styles.cancelBtn}
-          onPress={() => router.back()}
+          onPress={() => router.canGoBack() ? router.back() : router.replace('/')}
         >
           <Text style={styles.cancelText}>Cancelar</Text>
         </TouchableOpacity>
