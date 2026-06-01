@@ -1,9 +1,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from backend.server import app
 from mangum import Mangum
+from backend.server import app
 
 handler = Mangum(app, lifespan="off")
