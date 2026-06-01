@@ -1,26 +1,61 @@
-from fastapi import FastAPI, APIRouter, Query, HTTPException, Body
+from fastapi import FastAPI, APIRouter, Query, HTTPException, Body, Depends
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 import math
 import re
+
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import (
+    select, func, text, String, Integer, Boolean,
+    DateTime, Text, ARRAY
+)
 
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql+asyncpg://localhost:5432/penas')
+engine = create_async_engine(DATABASE_URL, echo=False, pool_size=5, max_overflow=10)
+async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class DelitoDB(Base):
+    __tablename__ = 'delitos'
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    nombre: Mapped[str] = mapped_column(String(500), nullable=False, index=True)
+    articulo: Mapped[str] = mapped_column(String(100), nullable=False)
+    conducta: Mapped[Optional[str]] = mapped_column(Text)
+    clasificacion: Mapped[Optional[str]] = mapped_column(String(200), index=True)
+    pena_minima_meses: Mapped[int] = mapped_column(Integer, nullable=False)
+    pena_maxima_meses: Mapped[int] = mapped_column(Integer, nullable=False)
+    tiene_pena_alternativa: Mapped[bool] = mapped_column(Boolean, default=False)
+    pena_alternativa_min: Mapped[int] = mapped_column(Integer, default=0)
+    pena_alternativa_max: Mapped[int] = mapped_column(Integer, default=0)
+    penas_accesorias: Mapped[Optional[List[str]]] = mapped_column(ARRAY(Text), default=list)
+    observaciones: Mapped[Optional[str]] = mapped_column(Text)
+    es_grave: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
+    creado_en: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    actualizado_en: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+async def get_db():
+    async with async_session() as session:
+        yield session
+
 
 app = FastAPI(title="Motor de Cálculo de Penas - Honduras")
 api_router = APIRouter(prefix="/api")
@@ -251,106 +286,149 @@ async def listar_delitos(
     clasificacion: Optional[str] = Query(None),
     busqueda: Optional[str] = Query(None),
     skip: int = 0,
-    limit: int = 100
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db)
 ):
     """Lista delitos con filtros opcionales"""
-    query = {}
+    stmt = select(DelitoDB).order_by(DelitoDB.nombre)
+
     if clasificacion:
-        query["clasificacion"] = {"$regex": clasificacion, "$options": "i"}
+        stmt = stmt.where(DelitoDB.clasificacion.ilike(f"%{clasificacion}%"))
     if busqueda:
-        query["$or"] = [
-            {"nombre": {"$regex": busqueda, "$options": "i"}},
-            {"articulo": {"$regex": busqueda, "$options": "i"}},
-            {"conducta": {"$regex": busqueda, "$options": "i"}}
-        ]
-    
-    cursor = db.delitos.find(query).skip(skip).limit(limit).sort("nombre", 1)
-    delitos = await cursor.to_list(length=limit)
-    
-    for d in delitos:
-        d["id"] = str(d["_id"])
-        del d["_id"]
-        d["pena_texto"] = f"{meses_a_texto(d['pena_minima_meses'])} a {meses_a_texto(d['pena_maxima_meses'])}"
-    
-    return delitos
+        stmt = stmt.where(
+            DelitoDB.nombre.ilike(f"%{busqueda}%")
+            | DelitoDB.articulo.ilike(f"%{busqueda}%")
+            | DelitoDB.conducta.ilike(f"%{busqueda}%")
+        )
+
+    stmt = stmt.offset(skip).limit(limit)
+    result = await session.execute(stmt)
+    delitos = result.scalars().all()
+
+    return [
+        {
+            "id": str(d.id),
+            "nombre": d.nombre,
+            "articulo": d.articulo,
+            "conducta": d.conducta,
+            "clasificacion": d.clasificacion,
+            "pena_minima_meses": d.pena_minima_meses,
+            "pena_maxima_meses": d.pena_maxima_meses,
+            "tiene_pena_alternativa": d.tiene_pena_alternativa,
+            "pena_alternativa_min": d.pena_alternativa_min,
+            "pena_alternativa_max": d.pena_alternativa_max,
+            "penas_accesorias": d.penas_accesorias or [],
+            "observaciones": d.observaciones,
+            "es_grave": d.es_grave,
+            "pena_texto": f"{meses_a_texto(d.pena_minima_meses)} a {meses_a_texto(d.pena_maxima_meses)}"
+        }
+        for d in delitos
+    ]
 
 @api_router.get("/delitos/count")
-async def contar_delitos():
+async def contar_delitos(session: AsyncSession = Depends(get_db)):
     """Cuenta total de delitos"""
-    count = await db.delitos.count_documents({})
-    return {"total": count}
+    result = await session.execute(select(func.count(DelitoDB.id)))
+    total = result.scalar()
+    return {"total": total}
 
 @api_router.get("/delitos/{delito_id}")
-async def obtener_delito(delito_id: str):
+async def obtener_delito(delito_id: str, session: AsyncSession = Depends(get_db)):
     """Obtiene un delito por ID"""
-    from bson import ObjectId
     try:
-        delito = await db.delitos.find_one({"_id": ObjectId(delito_id)})
-        if not delito:
+        d = await session.get(DelitoDB, uuid.UUID(delito_id))
+        if not d:
             raise HTTPException(status_code=404, detail="Delito no encontrado")
-        delito["id"] = str(delito["_id"])
-        del delito["_id"]
-        delito["pena_texto"] = f"{meses_a_texto(delito['pena_minima_meses'])} a {meses_a_texto(delito['pena_maxima_meses'])}"
-        return delito
-    except:
+        return {
+            "id": str(d.id),
+            "nombre": d.nombre,
+            "articulo": d.articulo,
+            "conducta": d.conducta,
+            "clasificacion": d.clasificacion,
+            "pena_minima_meses": d.pena_minima_meses,
+            "pena_maxima_meses": d.pena_maxima_meses,
+            "tiene_pena_alternativa": d.tiene_pena_alternativa,
+            "pena_alternativa_min": d.pena_alternativa_min,
+            "pena_alternativa_max": d.pena_alternativa_max,
+            "penas_accesorias": d.penas_accesorias or [],
+            "observaciones": d.observaciones,
+            "es_grave": d.es_grave,
+            "pena_texto": f"{meses_a_texto(d.pena_minima_meses)} a {meses_a_texto(d.pena_maxima_meses)}"
+        }
+    except (ValueError, Exception):
         raise HTTPException(status_code=404, detail="Delito no encontrado")
 
 @api_router.post("/delitos")
-async def crear_delito(delito: DelitoCreate):
+async def crear_delito(delito: DelitoCreate, session: AsyncSession = Depends(get_db)):
     """Crea un nuevo delito"""
-    delito_dict = delito.dict()
-    delito_dict["creado_en"] = datetime.utcnow()
-    delito_dict["es_grave"] = delito_dict["pena_maxima_meses"] >= 60  # 5+ años = grave
-    
-    result = await db.delitos.insert_one(delito_dict)
-    delito_dict["id"] = str(result.inserted_id)
-    return {"message": "Delito creado", "id": delito_dict["id"]}
+    db_delito = DelitoDB(
+        nombre=delito.nombre,
+        articulo=delito.articulo,
+        conducta=delito.conducta,
+        clasificacion=delito.clasificacion,
+        pena_minima_meses=delito.pena_minima_meses,
+        pena_maxima_meses=delito.pena_maxima_meses,
+        tiene_pena_alternativa=delito.tiene_pena_alternativa,
+        pena_alternativa_min=delito.pena_alternativa_min,
+        pena_alternativa_max=delito.pena_alternativa_max,
+        penas_accesorias=delito.penas_accesorias or [],
+        observaciones=delito.observaciones,
+        es_grave=delito.pena_maxima_meses >= 60,
+    )
+    session.add(db_delito)
+    await session.commit()
+    return {"message": "Delito creado", "id": str(db_delito.id)}
 
 @api_router.put("/delitos/{delito_id}")
-async def actualizar_delito(delito_id: str, delito: DelitoUpdate):
+async def actualizar_delito(delito_id: str, delito: DelitoUpdate, session: AsyncSession = Depends(get_db)):
     """Actualiza un delito existente"""
-    from bson import ObjectId
-    update_data = {k: v for k, v in delito.dict().items() if v is not None}
-    
+    try:
+        db_delito = await session.get(DelitoDB, uuid.UUID(delito_id))
+    except ValueError:
+        raise HTTPException(status_code=400, detail="ID de delito inválido")
+
+    if not db_delito:
+        raise HTTPException(status_code=404, detail="Delito no encontrado")
+
+    update_data = {k: v for k, v in delito.model_dump().items() if v is not None}
     if not update_data:
         raise HTTPException(status_code=400, detail="No hay datos para actualizar")
-    
-    # Recalcular es_grave si se actualiza pena máxima
+
     if "pena_maxima_meses" in update_data:
         update_data["es_grave"] = update_data["pena_maxima_meses"] >= 60
-    
-    update_data["actualizado_en"] = datetime.utcnow()
-    
-    result = await db.delitos.update_one(
-        {"_id": ObjectId(delito_id)},
-        {"$set": update_data}
-    )
-    
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail="Delito no encontrado")
-    
+    update_data["actualizado_en"] = datetime.now(timezone.utc)
+
+    for key, value in update_data.items():
+        setattr(db_delito, key, value)
+
+    await session.commit()
     return {"message": "Delito actualizado"}
 
 @api_router.delete("/delitos/{delito_id}")
-async def eliminar_delito(delito_id: str):
+async def eliminar_delito(delito_id: str, session: AsyncSession = Depends(get_db)):
     """Elimina un delito"""
-    from bson import ObjectId
-    result = await db.delitos.delete_one({"_id": ObjectId(delito_id)})
-    
-    if result.deleted_count == 0:
+    try:
+        db_delito = await session.get(DelitoDB, uuid.UUID(delito_id))
+    except ValueError:
+        raise HTTPException(status_code=400, detail="ID de delito inválido")
+
+    if not db_delito:
         raise HTTPException(status_code=404, detail="Delito no encontrado")
-    
+
+    await session.delete(db_delito)
+    await session.commit()
     return {"message": "Delito eliminado"}
 
 @api_router.get("/clasificaciones")
-async def listar_clasificaciones():
+async def listar_clasificaciones(session: AsyncSession = Depends(get_db)):
     """Lista todas las clasificaciones de delitos"""
-    pipeline = [
-        {"$group": {"_id": "$clasificacion", "cantidad": {"$sum": 1}}},
-        {"$sort": {"_id": 1}}
-    ]
-    clasificaciones = await db.delitos.aggregate(pipeline).to_list(length=100)
-    return [{"nombre": c["_id"], "cantidad": c["cantidad"]} for c in clasificaciones if c["_id"]]
+    stmt = select(DelitoDB.clasificacion, func.count(DelitoDB.id).label("cantidad")).where(
+        DelitoDB.clasificacion.isnot(None)
+    ).group_by(DelitoDB.clasificacion).order_by(DelitoDB.clasificacion)
+
+    result = await session.execute(stmt)
+    rows = result.all()
+    return [{"nombre": row.clasificacion, "cantidad": row.cantidad} for row in rows]
 
 # =============================================
 # ENDPOINTS DE CIRCUNSTANCIAS
@@ -384,22 +462,24 @@ async def listar_tipos_concurso():
 # CÁLCULO DE PENAS
 # =============================================
 
-async def calcular_pena_individual(config: DelitoConfig) -> dict:
+async def calcular_pena_individual(config: DelitoConfig, session: AsyncSession) -> dict:
     """Calcula la pena individual para un delito"""
-    from bson import ObjectId
-    
-    delito = await db.delitos.find_one({"_id": ObjectId(config.delito_id)})
+    try:
+        delito = await session.get(DelitoDB, uuid.UUID(config.delito_id))
+    except ValueError:
+        raise HTTPException(status_code=400, detail=f"ID de delito inválido: {config.delito_id}")
+
     if not delito:
         raise HTTPException(status_code=404, detail=f"Delito {config.delito_id} no encontrado")
     
     # Pena base
     if config.pena_seleccionada == TipoPena.PRISION:
-        pena_min = delito["pena_minima_meses"]
-        pena_max = delito["pena_maxima_meses"]
+        pena_min = delito.pena_minima_meses
+        pena_max = delito.pena_maxima_meses
         tipo_pena = "prisión"
     else:
-        pena_min = delito.get("pena_alternativa_min", 0)
-        pena_max = delito.get("pena_alternativa_max", 0)
+        pena_min = delito.pena_alternativa_min or 0
+        pena_max = delito.pena_alternativa_max or 0
         tipo_pena = "multa"
     
     pena_base_min, pena_base_max = pena_min, pena_max
@@ -407,7 +487,13 @@ async def calcular_pena_individual(config: DelitoConfig) -> dict:
     # Verificar eximente completa
     if config.eximente_completa:
         return {
-            "delito": delito,
+            "delito": {
+                "id": str(delito.id),
+                "nombre": delito.nombre,
+                "articulo": delito.articulo,
+                "clasificacion": delito.clasificacion,
+                "penas_accesorias": delito.penas_accesorias or [],
+            },
             "pena_min": 0,
             "pena_max": 0,
             "tipo_pena": tipo_pena,
@@ -453,7 +539,13 @@ async def calcular_pena_individual(config: DelitoConfig) -> dict:
         modificaciones.append("1 agravante: pena en mitad superior")
     
     return {
-        "delito": delito,
+        "delito": {
+            "id": str(delito.id),
+            "nombre": delito.nombre,
+            "articulo": delito.articulo,
+            "clasificacion": delito.clasificacion,
+            "penas_accesorias": delito.penas_accesorias or [],
+        },
         "pena_min": max(1, pena_min),
         "pena_max": max(1, pena_max),
         "tipo_pena": tipo_pena,
@@ -544,7 +636,7 @@ def aplicar_concurso(penas: List[dict], tipo_concurso: TipoConcurso) -> dict:
     return {"pena_min": 0, "pena_max": 0, "descripcion": "Tipo de concurso no reconocido", "articulo": ""}
 
 @api_router.post("/calcular")
-async def calcular_pena(request: CalculoRequest):
+async def calcular_pena(request: CalculoRequest, session: AsyncSession = Depends(get_db)):
     """Calcula la pena total según el flujo completo"""
     
     resultados_individuales = []
@@ -552,7 +644,7 @@ async def calcular_pena(request: CalculoRequest):
     todas_penas_accesorias = []
     
     for config in request.delitos:
-        resultado = await calcular_pena_individual(config)
+        resultado = await calcular_pena_individual(config, session)
         penas_para_concurso.append(resultado)
         
         delito = resultado["delito"]
@@ -574,7 +666,7 @@ async def calcular_pena(request: CalculoRequest):
         grado_ejecucion_nombre = next((g["nombre"] for g in GRADOS_EJECUCION if g["id"] == config.grado_ejecucion.value), config.grado_ejecucion.value)
         
         resultados_individuales.append({
-            "delito_id": str(delito["_id"]),
+            "delito_id": str(delito["id"]),
             "nombre": delito["nombre"],
             "articulo": delito["articulo"],
             "clasificacion": delito.get("clasificacion", ""),
@@ -669,12 +761,13 @@ def generar_analisis_juridico(delitos, tipo_concurso, resultado_concurso) -> str
 # =============================================
 
 @api_router.post("/seed")
-async def seed_database():
+async def seed_database(session: AsyncSession = Depends(get_db)):
     """Pobla la base de datos con los delitos del CP Honduras"""
     
     # Verificar si ya hay datos
-    count = await db.delitos.count_documents({})
-    if count > 0:
+    result = await session.execute(select(func.count(DelitoDB.id)))
+    count = result.scalar()
+    if count and count > 0:
         return {"message": f"Base de datos ya tiene {count} delitos", "seeded": False}
     
     # Lista de delitos basada en los datos proporcionados
@@ -764,17 +857,26 @@ async def seed_database():
         {"nombre": "Violencia doméstica", "articulo": "Art. 209 CP", "conducta": "Ejercer violencia habitual en el ámbito doméstico", "clasificacion": "Violencia intrafamiliar", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Medidas de protección"]},
     ]
     
-    # Añadir campos por defecto
+    # Insertar usando SQLAlchemy
+    db_objs = []
     for d in delitos_seed:
-        d["tiene_pena_alternativa"] = d.get("tiene_pena_alternativa", False)
-        d["pena_alternativa_min"] = d.get("pena_alternativa_min", 0)
-        d["pena_alternativa_max"] = d.get("pena_alternativa_max", 0)
-        d["penas_accesorias"] = d.get("penas_accesorias", [])
-        d["observaciones"] = d.get("observaciones", None)
-        d["es_grave"] = d["pena_maxima_meses"] >= 60
-        d["creado_en"] = datetime.utcnow()
+        db_objs.append(DelitoDB(
+            nombre=d["nombre"],
+            articulo=d["articulo"],
+            conducta=d.get("conducta"),
+            clasificacion=d.get("clasificacion"),
+            pena_minima_meses=d["pena_minima_meses"],
+            pena_maxima_meses=d["pena_maxima_meses"],
+            tiene_pena_alternativa=d.get("tiene_pena_alternativa", False),
+            pena_alternativa_min=d.get("pena_alternativa_min", 0),
+            pena_alternativa_max=d.get("pena_alternativa_max", 0),
+            penas_accesorias=d.get("penas_accesorias", []),
+            observaciones=d.get("observaciones"),
+            es_grave=d["pena_maxima_meses"] >= 60,
+        ))
     
-    await db.delitos.insert_many(delitos_seed)
+    session.add_all(db_objs)
+    await session.commit()
     
     return {"message": f"Base de datos poblada con {len(delitos_seed)} delitos", "seeded": True}
 
@@ -796,15 +898,17 @@ logger = logging.getLogger(__name__)
 async def startup_seed():
     """Sembrar automáticamente la BD si está vacía"""
     try:
-        count = await db.delitos.count_documents({})
-        if count == 0:
-            logger.info("Base de datos vacía, ejecutando seed automático...")
-            await seed_database()
-        else:
-            logger.info(f"Base de datos tiene {count} delitos")
+        async with async_session() as session:
+            result = await session.execute(select(func.count(DelitoDB.id)))
+            count = result.scalar()
+            if not count or count == 0:
+                logger.info("Base de datos vacía, ejecutando seed automático...")
+                await seed_database(session)
+            else:
+                logger.info(f"Base de datos tiene {count} delitos")
     except Exception as e:
         logger.error(f"Error en seed automático: {e}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    await engine.dispose()
