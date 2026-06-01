@@ -16,7 +16,7 @@ import { useRouter, useFocusEffect } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING, RADIUS, SHADOWS, BACKEND_URL } from '../src/theme';
-import type { Delito, Clasificacion } from '../src/types';
+import type { Delito } from '../src/types';
 import { scale, fontScale, useResponsive } from '../src/responsive';
 import Container from '../src/Container';
 
@@ -25,22 +25,78 @@ export default function DelitosCatalog() {
   const insets = useSafeAreaInsets();
   const { isTablet } = useResponsive();
   const [delitos, setDelitos] = useState<Delito[]>([]);
-  const [clasificaciones, setClasificaciones] = useState<Clasificacion[]>([]);
+  const [ramas, setRamas] = useState<{id:string;cantidad:number}[]>([]);
   const [search, setSearch] = useState('');
-  const [activeClasificacion, setActiveClasificacion] = useState<string | null>(null);
+  const [activeRama, setActiveRama] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
+  const ramaNames: Record<string,string> = {
+    'vida_integridad':'Vida e Integridad Física','vida_integridad.homicidio':'Homicidio','vida_integridad.homicidio.consumado':'Homicidio consumado',
+    'vida_integridad.homicidio.imprudente':'Homicidio imprudente','vida_integridad.aborto':'Aborto','vida_integridad.lesiones':'Lesiones',
+    'vida_integridad.lesiones.graves':'Lesiones graves','vida_integridad.lesiones.leves':'Lesiones leves','vida_integridad.riña':'Riña',
+    'vida_integridad.vida_dependiente':'Vida humana dependiente','libertad':'Libertad','libertad.detenciones':'Detenciones ilegales',
+    'libertad.detenciones.ilegal':'Detención ilegal','libertad.detenciones.secuestro':'Secuestro','libertad.amenazas':'Amenazas y coacciones',
+    'libertad.violencia_genero':'Violencia de género','libertad.integridad_moral':'Integridad moral',
+    'libertad_sexual':'Libertad Sexual','libertad_sexual.agresiones':'Agresiones sexuales','libertad_sexual.agresiones.violacion':'Violación',
+    'libertad_sexual.agresiones.agravada':'Agresión sexual agravada','libertad_sexual.abusos':'Abusos sexuales',
+    'libertad_sexual.abusos.menores':'Abusos a menores','libertad_sexual.acoso':'Acoso sexual',
+    'libertad_sexual.explotacion':'Explotación sexual','libertad_sexual.trata':'Trata de personas',
+    'honor_intimidad':'Honor e Intimidad','honor_intimidad.calumnias':'Calumnias e injurias','honor_intimidad.secretos':'Revelación de secretos',
+    'honor_intimidad.allanamiento':'Allanamiento','familia':'Familia','familia.matrimonio':'Matrimonios ilegales',
+    'familia.sustraccion':'Sustracción de menores','familia.abandono':'Abandono familiar','patrimonio':'Patrimonio',
+    'patrimonio.hurto':'Hurto','patrimonio.hurto.simple':'Hurto simple','patrimonio.hurto.agravado':'Hurto agravado',
+    'patrimonio.robo':'Robo','patrimonio.robo.simple':'Robo simple','patrimonio.robo.agravado':'Robo agravado',
+    'patrimonio.extorsion':'Extorsión','patrimonio.estafa':'Estafas','patrimonio.estafa.simple':'Estafa','patrimonio.estafa.agravada':'Estafa agravada',
+    'patrimonio.apropiacion':'Apropiación indebida','patrimonio.daños':'Daños','patrimonio.daños.simple':'Daños simples','patrimonio.daños.agravado':'Daños agravados',
+    'patrimonio.receptacion':'Receptación','patrimonio.insolvencia':'Insolvencia','patrimonio.usura':'Usura','patrimonio.propiedad_intelectual':'Propiedad intelectual',
+    'patrimonio.fraude_informatico':'Fraude informático','trabajadores':'Derechos Laborales','trabajadores.sindical':'Libertad sindical',
+    'trabajadores.seguridad_laboral':'Seguridad laboral','trabajadores.discriminacion':'Discriminación laboral',
+    'territorio_ambiente':'Territorio y Medio Ambiente','territorio_ambiente.urbanismo':'Urbanismo','territorio_ambiente.patrimonio_historico':'Patrimonio histórico',
+    'territorio_ambiente.medio_ambiente':'Medio ambiente','territorio_ambiente.flora_fauna':'Flora y fauna','territorio_ambiente.incendio_forestal':'Incendio forestal',
+    'salud_publica':'Salud Pública','salud_publica.drogas':'Drogas','salud_publica.drogas.trafico':'Tráfico de drogas','salud_publica.drogas.produccion':'Producción de drogas',
+    'salud_publica.alimentarios':'Delitos alimentarios','salud_publica.farmaceuticos':'Delitos farmacéuticos','salud_publica.epidemias':'Epidemias',
+    'seguridad_colectiva':'Seguridad Colectiva','seguridad_colectiva.incendios':'Incendios','seguridad_colectiva.vial':'Seguridad vial','seguridad_colectiva.radiactivo':'Seguridad nuclear',
+    'fe_publica':'Fe Pública','fe_publica.moneda':'Falsificación de moneda','fe_publica.documentos_publicos':'Documentos públicos','fe_publica.documentos_privados':'Documentos privados',
+    'fe_publica.usurpacion':'Usurpación','admin_publica':'Administración Pública','admin_publica.cohecho':'Cohecho','admin_publica.influencias':'Tráfico de influencias',
+    'admin_publica.malversacion':'Malversación','admin_publica.fraudes':'Fraudes','admin_publica.abuso_autoridad':'Abuso de autoridad',
+    'admin_publica.infidelidad':'Infidelidad documental','admin_publica.negociaciones':'Negociaciones prohibidas',
+    'justicia':'Administración de Justicia','justicia.prevaricato':'Prevaricato','justicia.omision':'Omisión','justicia.encubrimiento':'Encubrimiento',
+    'justicia.falso_testimonio':'Falso testimonio','justicia.quebrantamiento':'Quebrantamiento','justicia.obstruccion':'Obstrucción',
+    'orden_publico':'Orden Público','orden_publico.atentados':'Atentados','orden_publico.resistencia':'Resistencia','orden_publico.desordenes':'Desórdenes','orden_publico.armas':'Armas',
+    'constitucion':'Constitución','constitucion.rebelion':'Rebelión','constitucion.derechos_fundamentales':'Derechos fundamentales',
+    'constitucion.expresion':'Libertad de expresión','constitucion.culto':'Libertad de culto','constitucion.electoral':'Delitos electorales',
+    'seguridad_estado':'Seguridad del Estado','seguridad_estado.traicion':'Traición','seguridad_estado.secretos':'Secretos de Estado','seguridad_estado.espionaje':'Espionaje',
+    'comunidad_internacional':'Comunidad Internacional','comunidad_internacional.genocidio':'Genocidio','comunidad_internacional.lesa_humanidad':'Lesa humanidad',
+    'comunidad_internacional.desaparicion':'Desaparición forzada','comunidad_internacional.tortura':'Tortura','comunidad_internacional.pirateria':'Piratería',
+  };
+
+  const getRamaPath = (id: string | null | undefined): string => {
+    if (!id) return '';
+    const parts = id.split('.');
+    const names = parts.map((_, i) => ramaNames[parts.slice(0, i+1).join('.')]).filter(Boolean);
+    return names.join(' > ');
+  };
+
+  const constitucionNombres: Record<number,string> = {
+    2:'Art. 2 Constitución',15:'Art. 15 Constitución',57:'Art. 57 Constitución',58:'Art. 58 Constitución',
+    59:'Art. 59 Constitución',60:'Art. 60 Constitución',61:'Art. 61 Constitución',63:'Art. 63 Constitución',
+    65:'Art. 65 Constitución',66:'Art. 66 Constitución',68:'Art. 68 Constitución',69:'Art. 69 Constitución',
+    70:'Art. 70 Constitución',71:'Art. 71 Constitución',72:'Art. 72 Constitución',73:'Art. 73 Constitución',
+    74:'Art. 74 Constitución',75:'Art. 75 Constitución',77:'Art. 77 Constitución',78:'Art. 78 Constitución',
+    79:'Art. 79 Constitución',80:'Art. 80 Constitución',86:'Art. 86 Constitución',87:'Art. 87 Constitución',88:'Art. 88 Constitución',
+  };
+
   const load = async () => {
     try {
-      const [dRes, cRes] = await Promise.all([
+      const [dRes, rRes] = await Promise.all([
         fetch(`${BACKEND_URL}/api/delitos?limit=1000`),
         fetch(`${BACKEND_URL}/api/clasificaciones`),
       ]);
       const dJson = await dRes.json();
-      const cJson = await cRes.json();
+      const rJson = await rRes.json();
       setDelitos(Array.isArray(dJson) ? dJson : []);
-      setClasificaciones(Array.isArray(cJson) ? cJson : []);
+      setRamas(Array.isArray(rJson) ? rJson : []);
     } catch (e) {
       console.warn('load delitos', e);
     } finally {
@@ -70,7 +126,7 @@ export default function DelitosCatalog() {
       )
         return false;
     }
-    if (activeClasificacion && d.clasificacion !== activeClasificacion) return false;
+    if (activeRama && d.rama_id !== activeRama) return false;
     return true;
   });
 
@@ -146,8 +202,13 @@ export default function DelitosCatalog() {
           <Text style={styles.penaText}>{item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}</Text>
         </View>
         <Text style={styles.clasifText} numberOfLines={1}>
-          {item.clasificacion}
+          {getRamaPath(item.rama_id)}
         </Text>
+        {item.constitucion_articulo_id && constitucionNombres[item.constitucion_articulo_id] && (
+          <Text style={[styles.clasifText, { color: COLORS.primary, fontStyle: 'normal', marginTop: scale(2) }]} numberOfLines={1}>
+            {constitucionNombres[item.constitucion_articulo_id]}
+          </Text>
+        )}
       </TouchableOpacity>
 
       <View style={styles.cardActions}>
@@ -206,23 +267,23 @@ export default function DelitosCatalog() {
           )}
         </View>
 
-        {/* Clasificacion filters */}
+        {/* Rama filters */}
         <FlatList
           horizontal
-          data={[{ nombre: 'Todas', cantidad: delitos.length } as any, ...clasificaciones]}
+          data={[{ nombre: 'Todas', cantidad: delitos.length } as any, ...ramas.map(r => ({...r, nombre: r.id}))]}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: SPACING.md }}
           keyExtractor={(item: any) => item.nombre}
           renderItem={({ item }: any) => {
             const isAll = item.nombre === 'Todas';
-            const isActive = isAll ? !activeClasificacion : activeClasificacion === item.nombre;
+            const isActive = isAll ? !activeRama : activeRama === item.nombre;
             return (
               <TouchableOpacity
                 style={[styles.chip, isActive && styles.chipActive]}
-                onPress={() => setActiveClasificacion(isAll ? null : item.nombre)}
+                onPress={() => setActiveRama(isAll ? null : item.nombre)}
               >
-                <Text style={[styles.chipText, isActive && styles.chipTextActive]}>
-                  {item.nombre}
+                <Text style={[styles.chipText, isActive && styles.chipTextActive]} numberOfLines={1}>
+                  {isAll ? 'Todas' : getRamaPath(item.nombre) || item.nombre}
                 </Text>
                 <View style={[styles.chipCount, isActive && styles.chipCountActive]}>
                   <Text style={[styles.chipCountText, isActive && styles.chipCountTextActive]}>

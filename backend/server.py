@@ -443,6 +443,22 @@ async def listar_clasificaciones(session: AsyncSession = Depends(get_db)):
     rows = result.all()
     return [{"nombre": row.rama_id, "cantidad": row.cantidad} for row in rows]
 
+@api_router.get("/ramas")
+async def listar_ramas(session: AsyncSession = Depends(get_db)):
+    """Lista todas las ramas jurídicas"""
+    rows = await session.execute(select(DelitoDB.rama_id, func.count(DelitoDB.id).label("cantidad")).where(
+        DelitoDB.rama_id.isnot(None)
+    ).group_by(DelitoDB.rama_id).order_by(DelitoDB.rama_id))
+    return {"ramas": [{"id": row.rama_id, "cantidad": row.cantidad} for row in rows]}
+
+@api_router.get("/constitucion")
+async def listar_constitucion(session: AsyncSession = Depends(get_db)):
+    """Lista artículos constitucionales"""
+    rows = await session.execute(select(DelitoDB.constitucion_articulo_id, func.count(DelitoDB.id).label("cantidad")).where(
+        DelitoDB.constitucion_articulo_id.isnot(None)
+    ).group_by(DelitoDB.constitucion_articulo_id).order_by(DelitoDB.constitucion_articulo_id))
+    return [{"id": row.constitucion_articulo_id, "cantidad": row.cantidad} for row in rows]
+
 # =============================================
 # ENDPOINTS DE CIRCUNSTANCIAS
 # =============================================
