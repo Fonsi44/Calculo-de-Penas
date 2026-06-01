@@ -67,4 +67,5 @@ export const SHADOWS = {
   },
 };
 
-export const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL || '';
+// Hardcodeada para builds estáticos de Expo (Vercel, SSR)
+export const BACKEND_URL = 'https://calculo-de-penas.vercel.app';
