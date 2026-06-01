@@ -150,7 +150,7 @@ export default function DelitosCatalog() {
     };
 
     if (Platform.OS === 'web') {
-      // eslint-disable-next-line no-alert
+       
       if (confirm(`¿Eliminar "${delito.nombre}"? Esta acción no se puede deshacer.`)) {
         doDelete();
       }

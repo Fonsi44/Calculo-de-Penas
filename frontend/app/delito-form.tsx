@@ -165,7 +165,7 @@ export default function DelitoForm() {
       }
     };
     if (Platform.OS === 'web') {
-      // eslint-disable-next-line no-alert
+       
       if (confirm('¿Eliminar este delito? Acción irreversible.')) doDelete();
     } else {
       Alert.alert('Eliminar delito', '¿Eliminar este delito? Acción irreversible.', [
