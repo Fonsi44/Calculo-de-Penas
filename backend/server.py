@@ -23,7 +23,7 @@ from sqlalchemy import (
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql+asyncpg://localhost:5432/penas')
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql+asyncpg://postgres:postgres@localhost:5432/penas')
 engine = create_async_engine(DATABASE_URL, echo=False, pool_size=5, max_overflow=10)
 async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -896,8 +896,13 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_seed():
-    """Sembrar automáticamente la BD si está vacía"""
+    """Crear tablas y sembrar BD si está vacía"""
     try:
+        async with engine.begin() as conn:
+            await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
+            await conn.run_sync(Base.metadata.create_all)
+            logger.info("Tablas verificadas/creadas correctamente")
+
         async with async_session() as session:
             result = await session.execute(select(func.count(DelitoDB.id)))
             count = result.scalar()
@@ -907,7 +912,7 @@ async def startup_seed():
             else:
                 logger.info(f"Base de datos tiene {count} delitos")
     except Exception as e:
-        logger.error(f"Error en seed automático: {e}")
+        logger.error(f"Error en startup: {e}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
