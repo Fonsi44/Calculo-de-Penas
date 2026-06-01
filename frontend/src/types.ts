@@ -3,7 +3,9 @@ export interface Delito {
   nombre: string;
   articulo: string;
   conducta: string;
-  clasificacion: string;
+  rama_id?: string | null;
+  constitucion_articulo_id?: number | null;
+  clasificacion?: string;
   pena_minima_meses: number;
   pena_maxima_meses: number;
   pena_alternativa_min: number;
