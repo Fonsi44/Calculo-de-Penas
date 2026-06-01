@@ -44,6 +44,7 @@ async def init():
                 nombre VARCHAR(500) NOT NULL,
                 articulo VARCHAR(100) NOT NULL,
                 conducta TEXT,
+                clasificacion VARCHAR(200),
                 rama_id VARCHAR(100) REFERENCES ramas_juridicas(id),
                 constitucion_articulo_id INTEGER REFERENCES articulos_constitucion(id),
                 pena_minima_meses INTEGER NOT NULL,
@@ -59,6 +60,16 @@ async def init():
                 actualizado_en TIMESTAMPTZ
             )
         """))
+
+        # Add new columns if they don't exist (for existing DB migration)
+        for col in [
+            ("ALTER TABLE delitos ADD COLUMN IF NOT EXISTS rama_id VARCHAR(100) REFERENCES ramas_juridicas(id)",),
+            ("ALTER TABLE delitos ADD COLUMN IF NOT EXISTS constitucion_articulo_id INTEGER REFERENCES articulos_constitucion(id)",),
+        ]:
+            try:
+                await conn.execute(text(col[0]))
+            except Exception:
+                pass
 
         # Seed ramas_juridicas
         ramas_file = DATA_DIR / 'ramas_juridicas.json'
