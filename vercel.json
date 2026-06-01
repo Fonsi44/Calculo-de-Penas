@@ -1,9 +1,15 @@
 {
   "experimentalServices": {
+    "frontend": {
+      "routePrefix": "/",
+      "buildCommand": "cd frontend && npx expo export --platform web",
+      "installCommand": "cd frontend && npm install",
+      "outputDirectory": "frontend/dist"
+    },
     "backend": {
       "root": ".",
       "entrypoint": "backend.server:app",
-      "routePrefix": "/"
+      "routePrefix": "/api"
     }
   }
 }
