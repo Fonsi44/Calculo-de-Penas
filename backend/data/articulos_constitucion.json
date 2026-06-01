@@ -1,0 +1,898 @@
+[
+  {
+    "numero": 1,
+    "articulo": "Art. 1 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "Honduras es un Estado de Derecho, soberano, independiente, democrático y unitario."
+  },
+  {
+    "numero": 2,
+    "articulo": "Art. 2 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "La soberanía corresponde al pueblo."
+  },
+  {
+    "numero": 3,
+    "articulo": "Art. 3 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "Nadie debe obediencia a un gobierno usurpador."
+  },
+  {
+    "numero": 4,
+    "articulo": "Art. 4 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "La forma de gobierno es republicana, democrática y representativa."
+  },
+  {
+    "numero": 5,
+    "articulo": "Art. 5 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "El pluralismo político es expresión de la democracia."
+  },
+  {
+    "numero": 6,
+    "articulo": "Art. 6 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "El idioma oficial es el español."
+  },
+  {
+    "numero": 7,
+    "articulo": "Art. 7 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "Los símbolos nacionales son la Bandera, el Escudo y el Himno."
+  },
+  {
+    "numero": 8,
+    "articulo": "Art. 8 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "La capital es Tegucigalpa y Comayagüela."
+  },
+  {
+    "numero": 9,
+    "articulo": "Art. 9 Constitución",
+    "titulo": "De la Organización del Estado",
+    "capitulo": "Disposiciones Preliminares",
+    "texto": "El territorio nacional está dividido en departamentos y municipios."
+  },
+  {
+    "numero": 10,
+    "articulo": "Art. 10 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "El territorio de Honduras está comprendido entre los límites establecidos por leyes y tratados."
+  },
+  {
+    "numero": 11,
+    "articulo": "Art. 11 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "El territorio incluye el mar territorial, zona económica exclusiva y espacio aéreo."
+  },
+  {
+    "numero": 12,
+    "articulo": "Art. 12 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "Honduras rechaza la guerra como medio de solución de conflictos."
+  },
+  {
+    "numero": 13,
+    "articulo": "Art. 13 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "No podrán cederse territorios a Estados extranjeros."
+  },
+  {
+    "numero": 14,
+    "articulo": "Art. 14 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "Las islas, cayos y bancos en el mar Caribe pertenecen a Honduras."
+  },
+  {
+    "numero": 15,
+    "articulo": "Art. 15 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "Honduras proclama los principios de derecho internacional."
+  },
+  {
+    "numero": 16,
+    "articulo": "Art. 16 Constitución",
+    "titulo": "Del Territorio",
+    "capitulo": "Límites y Organización",
+    "texto": "Los tratados internacionales son ley de la República."
+  },
+  {
+    "numero": 57,
+    "articulo": "Art. 57 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Toda persona tiene derecho a la vida, a la integridad física y moral."
+  },
+  {
+    "numero": 58,
+    "articulo": "Art. 58 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "El derecho a la vida es inviolable."
+  },
+  {
+    "numero": 59,
+    "articulo": "Art. 59 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Todos los hombres nacen libres e iguales en derechos."
+  },
+  {
+    "numero": 60,
+    "articulo": "Art. 60 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "No podrán establecerse discriminaciones por sexo, raza, clase o religión."
+  },
+  {
+    "numero": 61,
+    "articulo": "Art. 61 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Se garantiza la libertad individual."
+  },
+  {
+    "numero": 62,
+    "articulo": "Art. 62 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Nadie podrá ser detenido sin orden judicial."
+  },
+  {
+    "numero": 63,
+    "articulo": "Art. 63 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Nadie será sometido a tortura ni a tratos crueles o degradantes."
+  },
+  {
+    "numero": 64,
+    "articulo": "Art. 64 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "La prisión por deudas no existe en Honduras."
+  },
+  {
+    "numero": 65,
+    "articulo": "Art. 65 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "La pena de muerte no existe en Honduras."
+  },
+  {
+    "numero": 66,
+    "articulo": "Art. 66 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Se garantiza la libertad de asociación y de reunión."
+  },
+  {
+    "numero": 67,
+    "articulo": "Art. 67 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Se garantiza la libertad de tránsito."
+  },
+  {
+    "numero": 68,
+    "articulo": "Art. 68 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Toda persona tiene derecho a la libertad de pensamiento y conciencia."
+  },
+  {
+    "numero": 69,
+    "articulo": "Art. 69 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Se garantiza la libertad de expresión e información."
+  },
+  {
+    "numero": 70,
+    "articulo": "Art. 70 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "La correspondencia es inviolable."
+  },
+  {
+    "numero": 71,
+    "articulo": "Art. 71 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "El domicilio es inviolable."
+  },
+  {
+    "numero": 72,
+    "articulo": "Art. 72 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Se garantiza la libertad de culto."
+  },
+  {
+    "numero": 73,
+    "articulo": "Art. 73 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Individuales",
+    "texto": "Toda persona tiene derecho a la propiedad privada."
+  },
+  {
+    "numero": 74,
+    "articulo": "Art. 74 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "El trabajo es un derecho y un deber social."
+  },
+  {
+    "numero": 75,
+    "articulo": "Art. 75 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "Toda persona tiene derecho a la educación."
+  },
+  {
+    "numero": 76,
+    "articulo": "Art. 76 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "Se garantiza la libertad de enseñanza."
+  },
+  {
+    "numero": 77,
+    "articulo": "Art. 77 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "Toda persona tiene derecho a la salud."
+  },
+  {
+    "numero": 78,
+    "articulo": "Art. 78 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "La familia es la base de la sociedad."
+  },
+  {
+    "numero": 79,
+    "articulo": "Art. 79 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "Toda persona tiene derecho a la vivienda digna."
+  },
+  {
+    "numero": 80,
+    "articulo": "Art. 80 Constitución",
+    "titulo": "Derechos y Garantías",
+    "capitulo": "Derechos Sociales",
+    "texto": "El Estado promoverá la cultura y el deporte."
+  },
+  {
+    "numero": 81,
+    "articulo": "Art. 81 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Nacionalidad",
+    "texto": "Son hondureños por nacimiento los nacidos en territorio nacional."
+  },
+  {
+    "numero": 82,
+    "articulo": "Art. 82 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Nacionalidad",
+    "texto": "Son hondureños por naturalización los extranjeros que obtengan carta de naturalización."
+  },
+  {
+    "numero": 83,
+    "articulo": "Art. 83 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Nacionalidad",
+    "texto": "La nacionalidad hondureña no se pierde."
+  },
+  {
+    "numero": 84,
+    "articulo": "Art. 84 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Nacionalidad",
+    "texto": "La ciudadanía se adquiere a los 18 años."
+  },
+  {
+    "numero": 85,
+    "articulo": "Art. 85 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Ciudadanía",
+    "texto": "Son derechos del ciudadano: elegir y ser electo."
+  },
+  {
+    "numero": 86,
+    "articulo": "Art. 86 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Ciudadanía",
+    "texto": "El voto es universal, obligatorio y secreto."
+  },
+  {
+    "numero": 87,
+    "articulo": "Art. 87 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Ciudadanía",
+    "texto": "Se garantiza el derecho de petición."
+  },
+  {
+    "numero": 88,
+    "articulo": "Art. 88 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Ciudadanía",
+    "texto": "Toda persona tiene derecho a reunirse pacíficamente."
+  },
+  {
+    "numero": 89,
+    "articulo": "Art. 89 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Ciudadanía",
+    "texto": "Se garantiza el libre asociacionismo."
+  },
+  {
+    "numero": 90,
+    "articulo": "Art. 90 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Ciudadanía",
+    "texto": "Nadie está obligado a hacer lo que la ley no manda."
+  },
+  {
+    "numero": 91,
+    "articulo": "Art. 91 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "El habeas corpus garantiza la libertad personal."
+  },
+  {
+    "numero": 92,
+    "articulo": "Art. 92 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "El amparo protege los derechos constitucionales."
+  },
+  {
+    "numero": 93,
+    "articulo": "Art. 93 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Las garantías constitucionales son de aplicación inmediata."
+  },
+  {
+    "numero": 94,
+    "articulo": "Art. 94 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "La Constitución prevalece sobre cualquier ley o tratado."
+  },
+  {
+    "numero": 95,
+    "articulo": "Art. 95 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Los derechos y garantías enumerados no excluyen otros."
+  },
+  {
+    "numero": 96,
+    "articulo": "Art. 96 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "La ley no tiene efecto retroactivo, salvo en materia penal favorable."
+  },
+  {
+    "numero": 97,
+    "articulo": "Art. 97 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Nadie puede ser juzgado dos veces por la misma causa."
+  },
+  {
+    "numero": 98,
+    "articulo": "Art. 98 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Las penas deben ser proporcionales al delito."
+  },
+  {
+    "numero": 99,
+    "articulo": "Art. 99 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "La defensa es un derecho inviolable en todo proceso."
+  },
+  {
+    "numero": 100,
+    "articulo": "Art. 100 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Las acciones populares son admisibles para hacer cumplir la ley."
+  },
+  {
+    "numero": 101,
+    "articulo": "Art. 101 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "La ignorancia de la ley no excusa su cumplimiento."
+  },
+  {
+    "numero": 102,
+    "articulo": "Art. 102 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Ningún hondureño puede ser expatriado."
+  },
+  {
+    "numero": 103,
+    "articulo": "Art. 103 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "No se concederá la extradición por delitos políticos."
+  },
+  {
+    "numero": 104,
+    "articulo": "Art. 104 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "La extradición se regulará por tratados y la ley."
+  },
+  {
+    "numero": 105,
+    "articulo": "Art. 105 Constitución",
+    "titulo": "Nacionalidad y Ciudadanía",
+    "capitulo": "Garantías Constitucionales",
+    "texto": "Nadie podrá ser detenido por más de 24 horas sin ser puesto a disposición judicial."
+  },
+  {
+    "numero": 106,
+    "articulo": "Art. 106 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Organización",
+    "texto": "El Congreso Nacional es el Poder Legislativo del Estado."
+  },
+  {
+    "numero": 107,
+    "articulo": "Art. 107 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Organización",
+    "texto": "El Congreso se compone de diputados electos por sufragio directo."
+  },
+  {
+    "numero": 108,
+    "articulo": "Art. 108 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Organización",
+    "texto": "Los diputados duran 4 años en sus funciones."
+  },
+  {
+    "numero": 109,
+    "articulo": "Art. 109 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Organización",
+    "texto": "El Congreso se instalará el 25 de enero de cada año."
+  },
+  {
+    "numero": 110,
+    "articulo": "Art. 110 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Congreso Nacional crear, modificar y derogar leyes."
+  },
+  {
+    "numero": 111,
+    "articulo": "Art. 111 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Congreso aprobar el Presupuesto General de Ingresos y Egresos."
+  },
+  {
+    "numero": 112,
+    "articulo": "Art. 112 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Congreso declarar la guerra y aprobar la paz."
+  },
+  {
+    "numero": 113,
+    "articulo": "Art. 113 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Congreso conceder amnistía."
+  },
+  {
+    "numero": 114,
+    "articulo": "Art. 114 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Congreso la interpretación de la Constitución."
+  },
+  {
+    "numero": 115,
+    "articulo": "Art. 115 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Los diputados gozan de inmunidad por sus opiniones y votos."
+  },
+  {
+    "numero": 116,
+    "articulo": "Art. 116 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Ningún diputado podrá ser detenido salvo flagrante delito."
+  },
+  {
+    "numero": 117,
+    "articulo": "Art. 117 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Atribuciones",
+    "texto": "Los diputados no podrán gestionar negocios privados ante la administración."
+  },
+  {
+    "numero": 118,
+    "articulo": "Art. 118 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Formación de la Ley",
+    "texto": "La iniciativa de ley corresponde a los diputados, al Presidente y al pueblo."
+  },
+  {
+    "numero": 119,
+    "articulo": "Art. 119 Constitución",
+    "titulo": "Del Poder Legislativo",
+    "capitulo": "Formación de la Ley",
+    "texto": "Toda ley requiere dos debates en fechas distintas para su aprobación."
+  },
+  {
+    "numero": 210,
+    "articulo": "Art. 210 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Organización",
+    "texto": "El Poder Ejecutivo lo ejerce el Presidente de la República."
+  },
+  {
+    "numero": 211,
+    "articulo": "Art. 211 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Organización",
+    "texto": "El Presidente será electo por sufragio directo por 4 años."
+  },
+  {
+    "numero": 212,
+    "articulo": "Art. 212 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Organización",
+    "texto": "No podrá ser Presidente quien haya participado en golpes de Estado."
+  },
+  {
+    "numero": 213,
+    "articulo": "Art. 213 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Presidente la ejecución de las leyes."
+  },
+  {
+    "numero": 214,
+    "articulo": "Art. 214 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Atribuciones",
+    "texto": "El Presidente puede vetar las leyes aprobadas por el Congreso."
+  },
+  {
+    "numero": 215,
+    "articulo": "Art. 215 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Atribuciones",
+    "texto": "El Presidente es el Comandante General de las Fuerzas Armadas."
+  },
+  {
+    "numero": 216,
+    "articulo": "Art. 216 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Atribuciones",
+    "texto": "El Presidente puede suspender garantías en caso de invasión o perturbación grave."
+  },
+  {
+    "numero": 217,
+    "articulo": "Art. 217 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde al Presidente nombrar y separar a los Secretarios de Estado."
+  },
+  {
+    "numero": 218,
+    "articulo": "Art. 218 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Atribuciones",
+    "texto": "Los Secretarios de Estado son responsables de sus actos."
+  },
+  {
+    "numero": 219,
+    "articulo": "Art. 219 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Responsabilidades",
+    "texto": "El Presidente y los funcionarios son responsables por infracciones constitucionales."
+  },
+  {
+    "numero": 220,
+    "articulo": "Art. 220 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Responsabilidades",
+    "texto": "Podrá antejuzgarse al Presidente por traición o delitos graves."
+  },
+  {
+    "numero": 221,
+    "articulo": "Art. 221 Constitución",
+    "titulo": "Del Poder Ejecutivo",
+    "capitulo": "Responsabilidades",
+    "texto": "La Cámara de Cuentas fiscaliza la ejecución presupuestaria."
+  },
+  {
+    "numero": 257,
+    "articulo": "Art. 257 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "El Poder Judicial lo ejerce la Corte Suprema de Justicia y demás tribunales."
+  },
+  {
+    "numero": 258,
+    "articulo": "Art. 258 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "La justicia es gratuita y será administrada en nombre del Estado."
+  },
+  {
+    "numero": 259,
+    "articulo": "Art. 259 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "Los jueces son independientes en el ejercicio de sus funciones."
+  },
+  {
+    "numero": 260,
+    "articulo": "Art. 260 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "Los magistrados de la Corte Suprema son electos por el Congreso."
+  },
+  {
+    "numero": 261,
+    "articulo": "Art. 261 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "La Corte Suprema tiene 15 magistrados."
+  },
+  {
+    "numero": 262,
+    "articulo": "Art. 262 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde a la Corte Suprema conocer del recurso de casación."
+  },
+  {
+    "numero": 263,
+    "articulo": "Art. 263 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde a la Corte Suprema dirimir conflictos entre Poderes del Estado."
+  },
+  {
+    "numero": 264,
+    "articulo": "Art. 264 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Atribuciones",
+    "texto": "Corresponde a la Corte Suprema nombrar jueces y magistrados."
+  },
+  {
+    "numero": 265,
+    "articulo": "Art. 265 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Atribuciones",
+    "texto": "Los jueces son inamovibles durante su período."
+  },
+  {
+    "numero": 266,
+    "articulo": "Art. 266 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Ministerio Público",
+    "texto": "El Ministerio Público ejerce la acción penal pública."
+  },
+  {
+    "numero": 267,
+    "articulo": "Art. 267 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Ministerio Público",
+    "texto": "El Fiscal General es electo por el Congreso por 5 años."
+  },
+  {
+    "numero": 268,
+    "articulo": "Art. 268 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Ministerio Público",
+    "texto": "El Ministerio Público investiga los delitos."
+  },
+  {
+    "numero": 269,
+    "articulo": "Art. 269 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "El Poder Judicial administra justicia de manera gratuita."
+  },
+  {
+    "numero": 270,
+    "articulo": "Art. 270 Constitución",
+    "titulo": "Del Poder Judicial",
+    "capitulo": "Organización",
+    "texto": "Toda persona tiene derecho a ser oída por un tribunal competente."
+  },
+  {
+    "numero": 324,
+    "articulo": "Art. 324 Constitución",
+    "titulo": "Régimen Departamental y Municipal",
+    "capitulo": "Organización",
+    "texto": "El territorio se divide en departamentos y municipios."
+  },
+  {
+    "numero": 325,
+    "articulo": "Art. 325 Constitución",
+    "titulo": "Régimen Departamental y Municipal",
+    "capitulo": "Organización",
+    "texto": "Los gobernadores son nombrados por el Poder Ejecutivo."
+  },
+  {
+    "numero": 326,
+    "articulo": "Art. 326 Constitución",
+    "titulo": "Régimen Departamental y Municipal",
+    "capitulo": "Organización",
+    "texto": "Las municipalidades son autónomas."
+  },
+  {
+    "numero": 327,
+    "articulo": "Art. 327 Constitución",
+    "titulo": "Régimen Departamental y Municipal",
+    "capitulo": "Organización",
+    "texto": "El alcalde y los regidores son electos popularmente."
+  },
+  {
+    "numero": 328,
+    "articulo": "Art. 328 Constitución",
+    "titulo": "Régimen Departamental y Municipal",
+    "capitulo": "Organización",
+    "texto": "Los municipios tienen su propia hacienda."
+  },
+  {
+    "numero": 355,
+    "articulo": "Art. 355 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "La Hacienda Pública es administrada según el principio de legalidad."
+  },
+  {
+    "numero": 356,
+    "articulo": "Art. 356 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "El Presupuesto General es anual y contiene todos los ingresos y egresos."
+  },
+  {
+    "numero": 357,
+    "articulo": "Art. 357 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "No hay gasto público sin crédito presupuestario."
+  },
+  {
+    "numero": 358,
+    "articulo": "Art. 358 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "El sistema tributario es justo y progresivo."
+  },
+  {
+    "numero": 359,
+    "articulo": "Art. 359 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "No hay tributo sin ley previa que lo establezca."
+  },
+  {
+    "numero": 360,
+    "articulo": "Art. 360 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "La deuda pública debe ser autorizada por ley."
+  },
+  {
+    "numero": 361,
+    "articulo": "Art. 361 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "La Cámara de Cuentas fiscaliza la ejecución presupuestaria."
+  },
+  {
+    "numero": 362,
+    "articulo": "Art. 362 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "Los bienes nacionales son de uso público o privado del Estado."
+  },
+  {
+    "numero": 363,
+    "articulo": "Art. 363 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "El Estado puede expropiar por causa de utilidad pública."
+  },
+  {
+    "numero": 364,
+    "articulo": "Art. 364 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "La expropiación debe ser indemnizada previamente."
+  },
+  {
+    "numero": 365,
+    "articulo": "Art. 365 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "El monopolio estatal en ciertas áreas es permitido por ley."
+  },
+  {
+    "numero": 366,
+    "articulo": "Art. 366 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "Los recursos naturales pertenecen al Estado."
+  },
+  {
+    "numero": 367,
+    "articulo": "Art. 367 Constitución",
+    "titulo": "De la Hacienda Pública",
+    "capitulo": "Principios Generales",
+    "texto": "La riqueza del subsuelo pertenece al Estado."
+  },
+  {
+    "numero": 373,
+    "articulo": "Art. 373 Constitución",
+    "titulo": "De la Reforma de la Constitución",
+    "capitulo": "Procedimiento",
+    "texto": "La reforma constitucional requiere dos tercios de los diputados."
+  },
+  {
+    "numero": 374,
+    "articulo": "Art. 374 Constitución",
+    "titulo": "De la Reforma de la Constitución",
+    "capitulo": "Procedimiento",
+    "texto": "No podrán reformarse los artículos sobre forma de gobierno y territorio."
+  },
+  {
+    "numero": 375,
+    "articulo": "Art. 375 Constitución",
+    "titulo": "De la Reforma de la Constitución",
+    "capitulo": "Procedimiento",
+    "texto": "La iniciativa de reforma corresponde al Congreso, Presidente o pueblo."
+  },
+  {
+    "numero": 376,
+    "articulo": "Art. 376 Constitución",
+    "titulo": "De la Reforma de la Constitución",
+    "capitulo": "Procedimiento",
+    "texto": "La reforma debe ser ratificada por el Congreso siguiente."
+  },
+  {
+    "numero": 377,
+    "articulo": "Art. 377 Constitución",
+    "titulo": "De la Reforma de la Constitución",
+    "capitulo": "Procedimiento",
+    "texto": "La Constitución no pierde su vigencia por actos de fuerza."
+  }
+]

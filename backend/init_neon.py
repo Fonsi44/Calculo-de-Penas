@@ -1,30 +1,51 @@
 import asyncio
+import json
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy import text, select, func
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy import text
 
 load_dotenv(Path(__file__).parent / '.env')
 DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql+asyncpg://postgres:postgres@localhost:5432/penas')
 
+DATA_DIR = Path(__file__).parent / 'data'
 
 async def init():
-    print(f"Conectando a: {DATABASE_URL.split('@')[-1].split('?')[0]}")
     engine = create_async_engine(DATABASE_URL, echo=True)
 
     async with engine.begin() as conn:
-        print("Creando extensión vector...")
         await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
 
-        print("Creando tabla delitos...")
+        # Create tables
+        await conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS ramas_juridicas (
+                id VARCHAR(100) PRIMARY KEY,
+                nombre VARCHAR(300) NOT NULL,
+                parent_id VARCHAR(100) REFERENCES ramas_juridicas(id),
+                nivel INTEGER NOT NULL DEFAULT 1,
+                orden INTEGER NOT NULL DEFAULT 0
+            )
+        """))
+
+        await conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS articulos_constitucion (
+                id INTEGER PRIMARY KEY,
+                articulo VARCHAR(100) NOT NULL,
+                titulo VARCHAR(200),
+                capitulo VARCHAR(200),
+                texto TEXT
+            )
+        """))
+
         await conn.execute(text("""
             CREATE TABLE IF NOT EXISTS delitos (
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 nombre VARCHAR(500) NOT NULL,
                 articulo VARCHAR(100) NOT NULL,
                 conducta TEXT,
-                clasificacion VARCHAR(200),
+                rama_id VARCHAR(100) REFERENCES ramas_juridicas(id),
+                constitucion_articulo_id INTEGER REFERENCES articulos_constitucion(id),
                 pena_minima_meses INTEGER NOT NULL,
                 pena_maxima_meses INTEGER NOT NULL,
                 tiene_pena_alternativa BOOLEAN DEFAULT FALSE,
@@ -39,14 +60,68 @@ async def init():
             )
         """))
 
-        print("Creando índices...")
-        await conn.execute(text("CREATE INDEX IF NOT EXISTS idx_delitos_clasificacion ON delitos(clasificacion)"))
-        await conn.execute(text("CREATE INDEX IF NOT EXISTS idx_delitos_nombre ON delitos(nombre)"))
-        await conn.execute(text("CREATE INDEX IF NOT EXISTS idx_delitos_es_grave ON delitos(es_grave)"))
+        # Seed ramas_juridicas
+        ramas_file = DATA_DIR / 'ramas_juridicas.json'
+        if ramas_file.exists():
+            ramas = json.loads(ramas_file.read_text(encoding='utf-8'))
+            for r in ramas:
+                await conn.execute(
+                    text("""INSERT INTO ramas_juridicas (id, nombre, parent_id, nivel, orden)
+                            VALUES (:id, :nombre, :parent_id, :nivel, :orden)
+                            ON CONFLICT (id) DO NOTHING"""),
+                    {'id': r['id'], 'nombre': r['nombre'], 'parent_id': r.get('parent_id'),
+                     'nivel': r['nivel'], 'orden': r['orden']}
+                )
+            print(f"Seeded {len(ramas)} ramas juridicas")
 
-    print("Base de datos inicializada correctamente.")
+        # Seed articulos_constitucion
+        arts_file = DATA_DIR / 'articulos_constitucion.json'
+        if arts_file.exists():
+            arts = json.loads(arts_file.read_text(encoding='utf-8'))
+            for a in arts:
+                await conn.execute(
+                    text("""INSERT INTO articulos_constitucion (id, articulo, titulo, capitulo, texto)
+                            VALUES (:id, :articulo, :titulo, :capitulo, :texto)
+                            ON CONFLICT (id) DO NOTHING"""),
+                    {'id': a['numero'], 'articulo': a['articulo'], 'titulo': a['titulo'],
+                     'capitulo': a.get('capitulo'), 'texto': a.get('texto')}
+                )
+            print(f"Seeded {len(arts)} articulos constitucionales")
+
+        # Seed delitos
+        delitos_file = DATA_DIR / 'delitos.json'
+        if delitos_file.exists():
+            delitos = json.loads(delitos_file.read_text(encoding='utf-8'))
+            count = 0
+            for d in delitos:
+                es_grave = d.get('pena_maxima_meses', 0) >= 60
+                await conn.execute(
+                    text("""INSERT INTO delitos (nombre, articulo, conducta, rama_id,
+                            constitucion_articulo_id, pena_minima_meses, pena_maxima_meses,
+                            tiene_pena_alternativa, pena_alternativa_min, pena_alternativa_max,
+                            penas_accesorias, observaciones, es_grave)
+                            VALUES (:nombre, :articulo, :conducta, :rama_id,
+                            :constitucion_articulo_id, :pena_minima_meses, :pena_maxima_meses,
+                            :tiene_pena_alternativa, :pena_alternativa_min, :pena_alternativa_max,
+                            :penas_accesorias, :observaciones, :es_grave)
+                            ON CONFLICT DO NOTHING"""),
+                    {'nombre': d['nombre'], 'articulo': d['articulo'],
+                     'conducta': d.get('conducta'), 'rama_id': d.get('rama_id'),
+                     'constitucion_articulo_id': d.get('constitucion_articulo_id'),
+                     'pena_minima_meses': d['pena_minima_meses'],
+                     'pena_maxima_meses': d['pena_maxima_meses'],
+                     'tiene_pena_alternativa': d.get('tiene_pena_alternativa', False),
+                     'pena_alternativa_min': d.get('pena_alternativa_min', 0),
+                     'pena_alternativa_max': d.get('pena_alternativa_max', 0),
+                     'penas_accesorias': d.get('penas_accesorias', []),
+                     'observaciones': d.get('observaciones'),
+                     'es_grave': es_grave}
+                )
+                count += 1
+            print(f"Seeded {count} delitos")
+
     await engine.dispose()
-
+    print("Database initialized successfully")
 
 if __name__ == "__main__":
     asyncio.run(init())

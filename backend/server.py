@@ -16,11 +16,12 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import (
     select, func, text, String, Integer, Boolean,
-    DateTime, Text, ARRAY
+    DateTime, Text, ARRAY, ForeignKey
 )
 
 
 ROOT_DIR = Path(__file__).parent
+DATA_DIR = ROOT_DIR / 'data'
 load_dotenv(ROOT_DIR / '.env')
 
 DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql+asyncpg://postgres:postgres@localhost:5432/penas')
@@ -45,6 +46,8 @@ class DelitoDB(Base):
     tiene_pena_alternativa: Mapped[bool] = mapped_column(Boolean, default=False)
     pena_alternativa_min: Mapped[int] = mapped_column(Integer, default=0)
     pena_alternativa_max: Mapped[int] = mapped_column(Integer, default=0)
+    rama_id: Mapped[Optional[str]] = mapped_column(String(100), index=True)
+    constitucion_articulo_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     penas_accesorias: Mapped[Optional[List[str]]] = mapped_column(ARRAY(Text), default=list)
     observaciones: Mapped[Optional[str]] = mapped_column(Text)
     es_grave: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
@@ -91,7 +94,8 @@ class DelitoBase(BaseModel):
     nombre: str
     articulo: str
     conducta: str
-    clasificacion: str
+    rama_id: Optional[str] = None
+    constitucion_articulo_id: Optional[int] = None
     pena_minima_meses: int
     pena_maxima_meses: int
     pena_alternativa_min: Optional[int] = 0
@@ -311,7 +315,8 @@ async def listar_delitos(
             "nombre": d.nombre,
             "articulo": d.articulo,
             "conducta": d.conducta,
-            "clasificacion": d.clasificacion,
+            "rama_id": d.rama_id,
+            "constitucion_articulo_id": d.constitucion_articulo_id,
             "pena_minima_meses": d.pena_minima_meses,
             "pena_maxima_meses": d.pena_maxima_meses,
             "tiene_pena_alternativa": d.tiene_pena_alternativa,
@@ -351,7 +356,8 @@ async def obtener_delito(delito_id: str, session: AsyncSession = Depends(get_db)
             "nombre": d.nombre,
             "articulo": d.articulo,
             "conducta": d.conducta,
-            "clasificacion": d.clasificacion,
+            "rama_id": d.rama_id,
+            "constitucion_articulo_id": d.constitucion_articulo_id,
             "pena_minima_meses": d.pena_minima_meses,
             "pena_maxima_meses": d.pena_maxima_meses,
             "tiene_pena_alternativa": d.tiene_pena_alternativa,
@@ -372,7 +378,7 @@ async def crear_delito(delito: DelitoCreate, session: AsyncSession = Depends(get
         nombre=delito.nombre,
         articulo=delito.articulo,
         conducta=delito.conducta,
-        clasificacion=delito.clasificacion,
+        rama_id=delito.rama_id,
         pena_minima_meses=delito.pena_minima_meses,
         pena_maxima_meses=delito.pena_maxima_meses,
         tiene_pena_alternativa=delito.tiene_pena_alternativa,
@@ -429,13 +435,13 @@ async def eliminar_delito(delito_id: str, session: AsyncSession = Depends(get_db
 @api_router.get("/clasificaciones")
 async def listar_clasificaciones(session: AsyncSession = Depends(get_db)):
     """Lista todas las clasificaciones de delitos"""
-    stmt = select(DelitoDB.clasificacion, func.count(DelitoDB.id).label("cantidad")).where(
-        DelitoDB.clasificacion.isnot(None)
-    ).group_by(DelitoDB.clasificacion).order_by(DelitoDB.clasificacion)
+    stmt = select(DelitoDB.rama_id, func.count(DelitoDB.id).label("cantidad")).where(
+        DelitoDB.rama_id.isnot(None)
+    ).group_by(DelitoDB.rama_id).order_by(DelitoDB.rama_id)
 
     result = await session.execute(stmt)
     rows = result.all()
-    return [{"nombre": row.clasificacion, "cantidad": row.cantidad} for row in rows]
+    return [{"nombre": row.rama_id, "cantidad": row.cantidad} for row in rows]
 
 # =============================================
 # ENDPOINTS DE CIRCUNSTANCIAS
@@ -769,100 +775,47 @@ def generar_analisis_juridico(delitos, tipo_concurso, resultado_concurso) -> str
 
 @api_router.post("/seed")
 async def seed_database(session: AsyncSession = Depends(get_db)):
-    """Pobla la base de datos con los delitos del CP Honduras"""
+    """Pobla la base de datos con delitos del CP Honduras desde JSON"""
     
-    # Verificar si ya hay datos
     result = await session.execute(select(func.count(DelitoDB.id)))
     count = result.scalar()
     if count and count > 0:
         return {"message": f"Base de datos ya tiene {count} delitos", "seeded": False}
-    
-    # Lista de delitos basada en los datos proporcionados
-    delitos_seed = [
-        {"nombre": "Abandono de animales", "articulo": "Art. 342 CP", "conducta": "Abandonar animales bajo custodia poniendo en riesgo su vida o integridad", "clasificacion": "Delitos contra el bienestar animal", "pena_minima_meses": 6, "pena_maxima_meses": 24, "penas_accesorias": ["Inhabilitación para la tenencia de animales"]},
-        {"nombre": "Abandono de funciones públicas", "articulo": "Art. 500 CP", "conducta": "Abandonar injustificadamente un cargo o función pública", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": ["Inhabilitación especial"]},
-        {"nombre": "Abandono de menores o personas vulnerables", "articulo": "Art. 228 CP", "conducta": "Abandonar a persona menor de edad, con discapacidad, anciana o enferma", "clasificacion": "Trata de personas y explotación humana", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Aborto", "articulo": "Art. 196 CP", "conducta": "Provocar aborto fuera de los supuestos legales", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Abuso de autoridad", "articulo": "Art. 499 CP", "conducta": "Ejercer arbitrariamente funciones públicas causando perjuicio", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": ["Inhabilitación especial"]},
-        {"nombre": "Abuso de dispositivos informáticos", "articulo": "Art. 400 CP", "conducta": "Uso indebido de dispositivos o credenciales informáticas", "clasificacion": "Seguridad informática", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": ["Multa"]},
-        {"nombre": "Acceso no autorizado a sistemas informáticos", "articulo": "Art. 398 CP", "conducta": "Acceso sin autorización a sistemas protegidos", "clasificacion": "Seguridad informática", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Acoso laboral", "articulo": "Art. 294 CP", "conducta": "Hostigamiento laboral desde posición de superioridad", "clasificacion": "Derechos laborales", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": ["Inhabilitación"]},
-        {"nombre": "Allanamiento de domicilio", "articulo": "Art. 270 CP", "conducta": "Entrar o permanecer en domicilio ajeno sin autorización", "clasificacion": "Inviolabilidad domiciliaria", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Amenazas", "articulo": "Art. 246 CP", "conducta": "Anunciar la causación de un mal grave e ilícito", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Asesinato", "articulo": "Art. 193 CP", "conducta": "Dar muerte a otro concurriendo circunstancias agravantes", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
-        {"nombre": "Asociación para delinquir", "articulo": "Art. 554 CP", "conducta": "Integrar asociación estable para cometer delitos", "clasificacion": "Criminalidad organizada", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Asociación terrorista", "articulo": "Art. 587 CP", "conducta": "Formar parte de organización terrorista", "clasificacion": "Terrorismo", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
-        {"nombre": "Calumnia", "articulo": "Art. 230 CP", "conducta": "Imputar falsamente delito a una persona", "clasificacion": "Delitos contra el honor", "pena_minima_meses": 6, "pena_maxima_meses": 12, "tiene_pena_alternativa": True, "pena_alternativa_min": 6, "pena_alternativa_max": 12, "penas_accesorias": []},
-        {"nombre": "Chantaje", "articulo": "Art. 247 CP", "conducta": "Amenazar para obtener beneficio indebido", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Coacción", "articulo": "Art. 245 CP", "conducta": "Obligar a otro mediante violencia o intimidación", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Cohecho propio", "articulo": "Art. 492 CP", "conducta": "Solicitar dádivas para realizar u omitir acto del cargo", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Inhabilitación absoluta"]},
-        {"nombre": "Concusión", "articulo": "Art. 497 CP", "conducta": "Exigir ventajas abusando del cargo público", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Inhabilitación"]},
-        {"nombre": "Conducción temeraria", "articulo": "Art. 323 CP", "conducta": "Conducir poniendo en peligro grave la seguridad vial", "clasificacion": "Seguridad vial", "pena_minima_meses": 6, "pena_maxima_meses": 24, "penas_accesorias": ["Privación del derecho a conducir"]},
-        {"nombre": "Contaminación ambiental", "articulo": "Art. 324 CP", "conducta": "Contaminar aguas, suelos o aire causando daño ambiental", "clasificacion": "Delitos contra el medio ambiente", "pena_minima_meses": 48, "pena_maxima_meses": 96, "penas_accesorias": ["Multa"]},
-        {"nombre": "Contrabando", "articulo": "Art. 428 CP", "conducta": "Introducir o extraer mercancías eludiendo controles aduaneros", "clasificacion": "Hacienda pública", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": ["Multa proporcional"]},
-        {"nombre": "Crimen de lesa humanidad", "articulo": "Art. 139 CP", "conducta": "Cometer actos inhumanos de forma sistemática o generalizada", "clasificacion": "Comunidad internacional", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
-        {"nombre": "Daños", "articulo": "Art. 381 CP", "conducta": "Dañar bienes ajenos sin agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Daños agravados", "articulo": "Art. 382 CP", "conducta": "Dañar bienes concurriendo circunstancias agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Defraudación fiscal", "articulo": "Art. 431 CP", "conducta": "Eludir impuestos mediante engaño o simulación", "clasificacion": "Hacienda pública", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": ["Multa proporcional"]},
-        {"nombre": "Desaparición forzada", "articulo": "Art. 140 CP", "conducta": "Privar de libertad y ocultar paradero de la víctima", "clasificacion": "Comunidad internacional", "pena_minima_meses": 240, "pena_maxima_meses": 300, "penas_accesorias": []},
-        {"nombre": "Enriquecimiento ilícito", "articulo": "Art. 484 CP", "conducta": "Incrementar patrimonio injustificadamente como funcionario", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Inhabilitación absoluta"]},
-        {"nombre": "Espionaje", "articulo": "Art. 563 CP", "conducta": "Obtener o revelar información que afecte la seguridad del Estado", "clasificacion": "Seguridad del Estado", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
-        {"nombre": "Estafa", "articulo": "Art. 365 CP", "conducta": "Obtener beneficio patrimonial mediante engaño", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": []},
-        {"nombre": "Estafa agravada", "articulo": "Art. 366 CP", "conducta": "Estafa con agravantes legales", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Estragos", "articulo": "Art. 185 CP", "conducta": "Provocar incendio, explosión u otros estragos", "clasificacion": "Seguridad colectiva", "pena_minima_meses": 120, "pena_maxima_meses": 240, "penas_accesorias": []},
-        {"nombre": "Estupro", "articulo": "Art. 254 CP", "conducta": "Acceso carnal con menor mediante engaño", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Extorsión", "articulo": "Art. 373 CP", "conducta": "Obligar a otro a realizar u omitir actos mediante intimidación", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Extorsión agravada", "articulo": "Art. 374 CP", "conducta": "Extorsión con agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
-        {"nombre": "Falsificación de documentos públicos", "articulo": "Art. 456 CP", "conducta": "Falsificar documentos públicos o mercantiles", "clasificacion": "Delitos contra la fe pública", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Falsificación de moneda", "articulo": "Art. 447 CP", "conducta": "Falsificar moneda nacional o extranjera", "clasificacion": "Delitos contra la fe pública", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
-        {"nombre": "Falso testimonio", "articulo": "Art. 519 CP", "conducta": "Declarar falsamente como testigo en proceso judicial", "clasificacion": "Administración de justicia", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Femicidio", "articulo": "Art. 208 CP", "conducta": "Dar muerte a una mujer por razones de género", "clasificacion": "Violencia contra la mujer", "pena_minima_meses": 360, "pena_maxima_meses": 480, "penas_accesorias": []},
-        {"nombre": "Fraude informático", "articulo": "Art. 368 CP", "conducta": "Obtener beneficio mediante manipulación informática", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 48, "pena_maxima_meses": 96, "penas_accesorias": []},
-        {"nombre": "Genocidio", "articulo": "Art. 143 CP", "conducta": "Destruir total o parcialmente grupo protegido", "clasificacion": "Comunidad internacional", "pena_minima_meses": 360, "pena_maxima_meses": 480, "penas_accesorias": []},
-        {"nombre": "Homicidio", "articulo": "Art. 192 CP", "conducta": "Dar muerte a otra persona", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
-        {"nombre": "Homicidio imprudente", "articulo": "Art. 198 CP", "conducta": "Causar muerte por imprudencia grave", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 48, "pena_maxima_meses": 84, "penas_accesorias": []},
-        {"nombre": "Hostigamiento sexual", "articulo": "Art. 256 CP", "conducta": "Solicitar favores sexuales generando situación intimidatoria", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 24, "pena_maxima_meses": 48, "penas_accesorias": []},
-        {"nombre": "Hurto", "articulo": "Art. 357 CP", "conducta": "Apoderarse de cosa mueble ajena sin violencia ni fuerza", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 12, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Hurto agravado", "articulo": "Art. 363 CP", "conducta": "Apoderarse de cosa ajena con agravantes", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Incendio", "articulo": "Art. 183 CP", "conducta": "Provocar incendio sin circunstancias cualificadas", "clasificacion": "Seguridad colectiva", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
-        {"nombre": "Incendio forestal", "articulo": "Art. 327 CP", "conducta": "Provocar incendio en zonas forestales", "clasificacion": "Delitos contra el medio ambiente", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Multa"]},
-        {"nombre": "Injuria", "articulo": "Art. 229 CP", "conducta": "Proferir expresiones que lesionen la dignidad de otro", "clasificacion": "Delitos contra el honor", "pena_minima_meses": 0, "pena_maxima_meses": 0, "tiene_pena_alternativa": True, "pena_alternativa_min": 3, "pena_alternativa_max": 6, "penas_accesorias": []},
-        {"nombre": "Lavado de activos", "articulo": "Art. 439 CP", "conducta": "Ocultar o encubrir bienes de origen ilícito", "clasificacion": "Receptación y lavado de activos", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Multa"]},
-        {"nombre": "Lesiones", "articulo": "Art. 199 CP", "conducta": "Causar lesiones sin gravedad extrema", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": []},
-        {"nombre": "Lesiones graves", "articulo": "Art. 201 CP", "conducta": "Causar lesiones graves a otra persona", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Maltrato habitual", "articulo": "Art. 209 CP", "conducta": "Maltratar de forma habitual a integrante del núcleo familiar", "clasificacion": "Violencia doméstica", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Prohibición de aproximación"]},
-        {"nombre": "Malversación de caudales públicos", "articulo": "Art. 481 CP", "conducta": "Sustraer o dar uso indebido a fondos públicos", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Inhabilitación absoluta"]},
-        {"nombre": "Omisión del deber de socorro", "articulo": "Art. 216 CP", "conducta": "No auxiliar a persona en peligro grave", "clasificacion": "Derechos fundamentales", "pena_minima_meses": 6, "pena_maxima_meses": 36, "penas_accesorias": []},
-        {"nombre": "Organización criminal", "articulo": "Art. 554 CP", "conducta": "Dirigir u organizar estructura criminal estable", "clasificacion": "Criminalidad organizada", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Parricidio", "articulo": "Art. 204 CP", "conducta": "Dar muerte a ascendiente o descendiente", "clasificacion": "Delitos contra la vida", "pena_minima_meses": 300, "pena_maxima_meses": 360, "penas_accesorias": []},
-        {"nombre": "Peculado", "articulo": "Art. 480 CP", "conducta": "Apropiarse de bienes públicos", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": ["Inhabilitación absoluta"]},
-        {"nombre": "Pedofilia", "articulo": "Art. 250 CP", "conducta": "Actos sexuales con menores impúberes", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
-        {"nombre": "Piratería", "articulo": "Art. 165 CP", "conducta": "Actos de violencia o saqueo en alta mar", "clasificacion": "Derecho de gentes", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
-        {"nombre": "Pornografía infantil", "articulo": "Art. 261 CP", "conducta": "Producir, difundir o poseer material pornográfico infantil", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
-        {"nombre": "Portación ilegal de armas", "articulo": "Art. 584 CP", "conducta": "Portar armas de fuego sin autorización legal", "clasificacion": "Orden público", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": []},
-        {"nombre": "Prevaricato judicial", "articulo": "Art. 516 CP", "conducta": "Dictar resolución injusta a sabiendas", "clasificacion": "Administración de justicia", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": ["Inhabilitación absoluta"]},
-        {"nombre": "Producción ilícita de drogas", "articulo": "Art. 317 CP", "conducta": "Producir sustancias estupefacientes ilícitas", "clasificacion": "Delitos contra la salud pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
-        {"nombre": "Proxenetismo", "articulo": "Art. 262 CP", "conducta": "Facilitar o promover la prostitución ajena", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 60, "pena_maxima_meses": 96, "penas_accesorias": []},
-        {"nombre": "Rebelión", "articulo": "Art. 532 CP", "conducta": "Alzarse violentamente contra el orden constitucional", "clasificacion": "Delitos contra la Constitución", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
-        {"nombre": "Receptación", "articulo": "Art. 406 CP", "conducta": "Recibir bienes provenientes de delito", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 24, "pena_maxima_meses": 60, "penas_accesorias": []},
-        {"nombre": "Robo", "articulo": "Art. 360 CP", "conducta": "Apoderarse de cosa ajena con violencia o intimidación", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 72, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Robo agravado", "articulo": "Art. 361 CP", "conducta": "Robo con armas, en banda o con lesiones", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
-        {"nombre": "Secuestro", "articulo": "Art. 240 CP", "conducta": "Privar de libertad con fines ilícitos", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 180, "pena_maxima_meses": 300, "penas_accesorias": []},
-        {"nombre": "Secuestro agravado", "articulo": "Art. 241 CP", "conducta": "Secuestro con muerte, tortura o víctimas vulnerables", "clasificacion": "Delitos contra la libertad", "pena_minima_meses": 300, "pena_maxima_meses": 360, "penas_accesorias": []},
-        {"nombre": "Sedición", "articulo": "Art. 535 CP", "conducta": "Alzamiento colectivo contra la autoridad", "clasificacion": "Delitos contra la Constitución", "pena_minima_meses": 60, "pena_maxima_meses": 120, "penas_accesorias": []},
-        {"nombre": "Sustracción de menor", "articulo": "Art. 283 CP", "conducta": "Sustraer menor del cuidado legítimo", "clasificacion": "Delitos contra la familia", "pena_minima_meses": 48, "pena_maxima_meses": 96, "penas_accesorias": []},
-        {"nombre": "Terrorismo", "articulo": "Art. 589 CP", "conducta": "Ejecutar actos terroristas", "clasificacion": "Terrorismo", "pena_minima_meses": 240, "pena_maxima_meses": 360, "penas_accesorias": []},
-        {"nombre": "Tortura", "articulo": "Art. 209 CP", "conducta": "Infligir dolor grave físico o psicológico", "clasificacion": "Derechos humanos", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
-        {"nombre": "Tráfico de influencias", "articulo": "Art. 485 CP", "conducta": "Influir sobre funcionario para obtener beneficio", "clasificacion": "Delitos contra la administración pública", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Inhabilitación"]},
-        {"nombre": "Tráfico ilícito de drogas", "articulo": "Art. 316 CP", "conducta": "Comercializar sustancias estupefacientes ilícitas", "clasificacion": "Delitos contra la salud pública", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
-        {"nombre": "Tráfico ilícito de armas", "articulo": "Art. 582 CP", "conducta": "Comercializar armas sin autorización", "clasificacion": "Orden público", "pena_minima_meses": 96, "pena_maxima_meses": 144, "penas_accesorias": []},
-        {"nombre": "Trata de personas", "articulo": "Art. 218 CP", "conducta": "Captar, trasladar o recibir personas con fines de explotación", "clasificacion": "Trata de personas", "pena_minima_meses": 120, "pena_maxima_meses": 180, "penas_accesorias": []},
-        {"nombre": "Trata de personas agravada", "articulo": "Art. 219 CP", "conducta": "Trata de personas con menores o violencia", "clasificacion": "Trata de personas", "pena_minima_meses": 180, "pena_maxima_meses": 240, "penas_accesorias": []},
-        {"nombre": "Usurpación", "articulo": "Art. 378 CP", "conducta": "Ocupar inmueble o derecho real ajeno", "clasificacion": "Delitos contra el patrimonio", "pena_minima_meses": 24, "pena_maxima_meses": 48, "penas_accesorias": []},
-        {"nombre": "Violación", "articulo": "Art. 249 CP", "conducta": "Acceso carnal sin consentimiento mediante violencia o intimidación", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 108, "pena_maxima_meses": 156, "penas_accesorias": []},
-        {"nombre": "Violación agravada", "articulo": "Art. 250 CP", "conducta": "Violación con agravantes legales", "clasificacion": "Libertad e indemnidad sexual", "pena_minima_meses": 156, "pena_maxima_meses": 216, "penas_accesorias": []},
-        {"nombre": "Violencia doméstica", "articulo": "Art. 209 CP", "conducta": "Ejercer violencia habitual en el ámbito doméstico", "clasificacion": "Violencia intrafamiliar", "pena_minima_meses": 36, "pena_maxima_meses": 72, "penas_accesorias": ["Medidas de protección"]},
-    ]
+
+    import json
+
+    # Cargar ramas jurídicas
+    ramas_file = DATA_DIR / 'ramas_juridicas.json'
+    if ramas_file.exists():
+        ramas = json.loads(ramas_file.read_text(encoding='utf-8'))
+        for r in ramas:
+            await session.execute(
+                text("""INSERT INTO ramas_juridicas (id, nombre, parent_id, nivel, orden)
+                        VALUES (:id, :nombre, :parent_id, :nivel, :orden)
+                        ON CONFLICT (id) DO NOTHING"""),
+                {'id': r['id'], 'nombre': r['nombre'], 'parent_id': r.get('parent_id'),
+                 'nivel': r['nivel'], 'orden': r['orden']}
+            )
+
+    # Cargar artículos constitucionales
+    arts_file = DATA_DIR / 'articulos_constitucion.json'
+    if arts_file.exists():
+        arts = json.loads(arts_file.read_text(encoding='utf-8'))
+        for a in arts:
+            await session.execute(
+                text("""INSERT INTO articulos_constitucion (id, articulo, titulo, capitulo, texto)
+                        VALUES (:id, :articulo, :titulo, :capitulo, :texto)
+                        ON CONFLICT (id) DO NOTHING"""),
+                {'id': a['numero'], 'articulo': a['articulo'], 'titulo': a['titulo'],
+                 'capitulo': a.get('capitulo'), 'texto': a.get('texto')}
+            )
+
+    # Cargar delitos
+    delitos_file = DATA_DIR / 'delitos.json'
+    if not delitos_file.exists():
+        return {"message": "No se encontró el archivo de delitos", "seeded": False}
+
+    delitos_seed = json.loads(delitos_file.read_text(encoding='utf-8'))
     
     # Insertar usando SQLAlchemy
     db_objs = []
@@ -871,7 +824,8 @@ async def seed_database(session: AsyncSession = Depends(get_db)):
             nombre=d["nombre"],
             articulo=d["articulo"],
             conducta=d.get("conducta"),
-            clasificacion=d.get("clasificacion"),
+            rama_id=d.get("rama_id"),
+            constitucion_articulo_id=d.get("constitucion_articulo_id"),
             pena_minima_meses=d["pena_minima_meses"],
             pena_maxima_meses=d["pena_maxima_meses"],
             tiene_pena_alternativa=d.get("tiene_pena_alternativa", False),
