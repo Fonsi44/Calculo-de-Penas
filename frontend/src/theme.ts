@@ -67,4 +67,4 @@ export const SHADOWS = {
   },
 };
 
-export const BACKEND_URL = 'https://calculo-de-penas.vercel.app';
+export const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL || '';
