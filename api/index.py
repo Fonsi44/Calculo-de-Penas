@@ -1,9 +1,6 @@
-import os
-import sys
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
-from mangum import Mangum
-from backend.server import app
-
-handler = Mangum(app, lifespan="off")
+def handler(event, context):
+    return {
+        "statusCode": 200,
+        "headers": {"content-type": "application/json"},
+        "body": '{"message": "Motor de Cálculo de Penas - Honduras"}'
+    }
