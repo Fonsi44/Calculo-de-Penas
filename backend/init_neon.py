@@ -103,22 +103,38 @@ async def init():
         delitos_file = DATA_DIR / 'delitos.json'
         if delitos_file.exists():
             delitos = json.loads(delitos_file.read_text(encoding='utf-8'))
+
+            # Build mapping of ramas to nombres to derive `clasificacion` when missing
+            ramas_map = {}
+            ramas_file = DATA_DIR / 'ramas_juridicas.json'
+            if ramas_file.exists():
+                ramas_list = json.loads(ramas_file.read_text(encoding='utf-8'))
+                ramas_map = {r['id']: r['nombre'] for r in ramas_list}
+
             count = 0
             for d in delitos:
                 es_grave = d.get('pena_maxima_meses', 0) >= 60
+
+                # derive clasificacion from seed or from top-level rama_id
+                clasificacion_val = d.get('clasificacion')
+                rama_id = d.get('rama_id')
+                if not clasificacion_val and rama_id:
+                    top = str(rama_id).split('.')[0]
+                    clasificacion_val = ramas_map.get(top)
+
                 await conn.execute(
-                    text("""INSERT INTO delitos (nombre, articulo, conducta, rama_id,
+                    text("""INSERT INTO delitos (nombre, articulo, conducta, clasificacion, rama_id,
                             constitucion_articulo_id, pena_minima_meses, pena_maxima_meses,
                             tiene_pena_alternativa, pena_alternativa_min, pena_alternativa_max,
                             penas_accesorias, observaciones, es_grave)
-                            VALUES (:nombre, :articulo, :conducta, :rama_id,
+                            VALUES (:nombre, :articulo, :conducta, :clasificacion, :rama_id,
                             :constitucion_articulo_id, :pena_minima_meses, :pena_maxima_meses,
                             :tiene_pena_alternativa, :pena_alternativa_min, :pena_alternativa_max,
                             :penas_accesorias, :observaciones, :es_grave)
                             ON CONFLICT DO NOTHING"""),
                     {'nombre': d['nombre'], 'articulo': d['articulo'],
-                     'conducta': d.get('conducta'), 'rama_id': d.get('rama_id'),
-                     'constitucion_articulo_id': d.get('constitucion_articulo_id'),
+                     'conducta': d.get('conducta'), 'clasificacion': clasificacion_val,
+                     'rama_id': d.get('rama_id'), 'constitucion_articulo_id': d.get('constitucion_articulo_id'),
                      'pena_minima_meses': d['pena_minima_meses'],
                      'pena_maxima_meses': d['pena_maxima_meses'],
                      'tiene_pena_alternativa': d.get('tiene_pena_alternativa', False),
@@ -129,6 +145,16 @@ async def init():
                      'es_grave': es_grave}
                 )
                 count += 1
+
+            # For existing rows that still have NULL `clasificacion`, update using ramas_map
+            if ramas_map:
+                for top_id, nombre in ramas_map.items():
+                    await conn.execute(
+                        text("""UPDATE delitos SET clasificacion = :nombre
+                                WHERE (rama_id = :top_id OR rama_id LIKE :top_like) AND clasificacion IS NULL"""),
+                        {'nombre': nombre, 'top_id': top_id, 'top_like': f"{top_id}.%"}
+                    )
+
             print(f"Seeded {count} delitos")
 
     await engine.dispose()
