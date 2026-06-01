@@ -328,9 +328,16 @@ async def listar_delitos(
 @api_router.get("/delitos/count")
 async def contar_delitos(session: AsyncSession = Depends(get_db)):
     """Cuenta total de delitos"""
-    result = await session.execute(select(func.count(DelitoDB.id)))
-    total = result.scalar()
-    return {"total": total}
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info(f"DATABASE_URL env: {os.getenv('DATABASE_URL', 'NOT SET')[:50]}...")
+    try:
+        result = await session.execute(select(func.count(DelitoDB.id)))
+        total = result.scalar()
+        return {"total": total}
+    except Exception as e:
+        logger.error(f"Error counting delitos: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.get("/delitos/{delito_id}")
 async def obtener_delito(delito_id: str, session: AsyncSession = Depends(get_db)):
