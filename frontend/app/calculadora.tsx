@@ -414,7 +414,7 @@ function Step1({
         desc={`Catálogo del Código Penal de Honduras · ${totalCount} delitos disponibles`}
       />
       <View style={styles.searchInline}>
-        <Ionicons name="search" size={scale(18)} color={COLORS.textMuted} />
+        <Ionicons style={{ marginRight: SPACING.sm }} name="search" size={scale(18)} color={COLORS.textMuted} />
         <TextInput
           style={styles.searchInlineInput}
           placeholder="Buscar por nombre o artículo..."
@@ -424,7 +424,7 @@ function Step1({
         />
         {!!search && (
           <TouchableOpacity onPress={() => setSearch('')}>
-            <Ionicons name="close-circle" size={scale(18)} color={COLORS.textMuted} />
+            <Ionicons name="close-circle" size={scale(18)} color={COLORS.textMuted} style={{ marginLeft: SPACING.sm }} />
           </TouchableOpacity>
         )}
       </View>
@@ -652,7 +652,7 @@ function Step5({ configs, currentIdx, onAdd, onRemove }: any) {
           <View style={{ flex: 1 }}>
             <Text style={styles.delitoConfigTitle}>{c.delito.nombre}</Text>
             <Text style={styles.delitoConfigSub}>{c.delito.articulo}</Text>
-            <View style={{ flexDirection: 'row', gap: scale(6), marginTop: scale(6), flexWrap: 'wrap' }}>
+            <View style={{ flexDirection: 'row', marginTop: scale(6), flexWrap: 'wrap' }}>
               <Text style={styles.tagSmall}>{c.grado_autoria.replace('_', ' ')}</Text>
               <Text style={styles.tagSmall}>{c.grado_ejecucion.replace('_', ' ')}</Text>
               {c.agravantes.length > 0 && (
@@ -808,7 +808,7 @@ function Step8({ resultado }: any) {
         <View style={styles.summaryCard}>
           <Text style={styles.summaryNum}>Penas accesorias</Text>
           {resultado.penas_accesorias.map((p: string, i: number) => (
-            <View key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6), marginTop: scale(4) }}>
+            <View key={i} style={{ flexDirection: 'row', alignItems: 'center', marginTop: scale(4) }}>
               <Ionicons name="ribbon-outline" size={scale(14)} color={COLORS.accent} />
               <Text style={{ fontSize: fontScale(13), color: COLORS.text }}>{p}</Text>
             </View>
@@ -820,7 +820,7 @@ function Step8({ resultado }: any) {
         <Text style={styles.summaryNum}>Detalle por delito</Text>
         {resultado.delitos_analizados?.map((d: any, i: number) => (
           <View key={i} style={{ marginTop: i === 0 ? scale(6) : scale(12) }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6) }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={[styles.summaryTitle, { fontSize: fontScale(14), flex: 1 }]}>
                 {i + 1}. {d.nombre}
               </Text>
@@ -979,8 +979,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.primary,
     paddingHorizontal: scale(12),
-    paddingVertical: scale(8),
-    gap: scale(8),
+    paddingVertical: scale(6),
   },
   iconBtn: {
     width: scale(32),
@@ -993,12 +992,12 @@ const styles = StyleSheet.create({
   headerTitle: { color: COLORS.white, fontSize: fontScale(15), fontWeight: '700' },
   headerSub: { color: '#C9D1DD', fontSize: fontScale(10), marginTop: scale(1) },
   stepperWrap: { backgroundColor: COLORS.primary, paddingBottom: scale(4) },
-  stepperContent: { paddingHorizontal: scale(12), gap: scale(8), alignItems: 'flex-start' },
-  stepItem: { alignItems: 'center', minWidth: scale(48) },
+  stepperContent: { paddingHorizontal: scale(12), paddingVertical: scale(6), alignItems: 'center' },
+  stepItem: { alignItems: 'center', minWidth: scale(40), marginRight: scale(8) },
   stepCircle: {
-    width: scale(26),
-    height: scale(26),
-    borderRadius: scale(13),
+    width: scale(22),
+    height: scale(22),
+    borderRadius: scale(11),
     backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1007,12 +1006,13 @@ const styles = StyleSheet.create({
   },
   stepCircleActive: { backgroundColor: COLORS.accent, borderColor: COLORS.accent },
   stepCircleDone: { backgroundColor: COLORS.success, borderColor: COLORS.success },
-  stepNum: { color: COLORS.white, fontWeight: '700', fontSize: fontScale(13) },
+  stepNum: { color: COLORS.white, fontWeight: '700', fontSize: fontScale(12) },
   stepLabel: {
     color: '#A8B3C6',
-    fontSize: fontScale(9),
+    fontSize: fontScale(8),
     marginTop: scale(4),
     fontWeight: '600',
+    maxWidth: scale(64),
   },
   stepLabelActive: { color: COLORS.accent },
   kicker: {
@@ -1038,10 +1038,9 @@ const styles = StyleSheet.create({
   searchInline: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SPACING.sm,
     backgroundColor: COLORS.surface,
-    paddingHorizontal: SPACING.md,
-    paddingVertical: Platform.OS === 'ios' ? scale(12) : scale(6),
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: Platform.OS === 'ios' ? scale(10) : scale(6),
     borderRadius: RADIUS.md,
     borderWidth: 1,
     borderColor: COLORS.border,
@@ -1071,12 +1070,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.success + '08',
   },
   delitoName: { fontSize: fontScale(15), fontWeight: '700', color: COLORS.text, marginBottom: scale(6) },
-  metaRow: { flexDirection: 'row', gap: scale(6), flexWrap: 'wrap', marginBottom: scale(6) },
+  metaRow: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: scale(6) },
   articuloPill: {
     backgroundColor: COLORS.primary + '12',
     paddingHorizontal: scale(8),
     paddingVertical: scale(2),
     borderRadius: RADIUS.sm,
+    marginRight: scale(6),
   },
   articuloText: { fontSize: fontScale(11), fontWeight: '700', color: COLORS.primary },
   gravePill: {
@@ -1084,6 +1084,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(8),
     paddingVertical: scale(2),
     borderRadius: RADIUS.sm,
+    marginRight: scale(6),
   },
   gravePillText: { fontSize: fontScale(9), fontWeight: '800', color: COLORS.danger },
   delitoPena: { fontSize: fontScale(12), color: COLORS.textSecondary, fontWeight: '600' },
@@ -1249,6 +1250,7 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.sm,
     fontWeight: '600',
     textTransform: 'capitalize',
+    marginRight: scale(6),
   },
   addCard: {
     flexDirection: 'row',
@@ -1341,7 +1343,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     paddingHorizontal: scale(12),
     paddingTop: scale(8),
-    gap: scale(8),
+    paddingBottom: scale(8),
     borderTopWidth: 1,
     borderTopColor: COLORS.borderLight,
   },
@@ -1350,22 +1352,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: scale(4),
-    paddingVertical: scale(10),
+    paddingVertical: scale(8),
     borderRadius: RADIUS.sm,
     borderWidth: 1,
     borderColor: COLORS.primary,
+    minHeight: scale(40),
   },
   btnSecondaryText: { color: COLORS.primary, fontWeight: '700', fontSize: fontScale(13) },
   btnPrimary: {
-    flex: 2,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: scale(4),
-    paddingVertical: scale(10),
+    paddingVertical: scale(8),
     borderRadius: RADIUS.sm,
     backgroundColor: COLORS.primary,
+    minHeight: scale(40),
   },
   btnPrimaryText: { color: COLORS.white, fontWeight: '700', fontSize: fontScale(13) },
 });

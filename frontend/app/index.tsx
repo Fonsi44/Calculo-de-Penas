@@ -52,14 +52,14 @@ export default function Home() {
     <View style={[styles.root, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.primaryDark} />
       <View style={styles.hero}>
-        <View style={[styles.heroOverlay, { width: scale(200), height: scale(200), borderRadius: scale(200) }]} />
+        <View pointerEvents="none" style={[styles.heroOverlay, { width: scale(200), height: scale(200), borderRadius: scale(200), zIndex: 0 }]} />
         <View style={styles.heroContent}>
-          <View style={[styles.brandRow, { gap: scale(10) }]}>
-            <View style={[styles.brandIcon, { width: scale(36), height: scale(36), borderRadius: RADIUS.sm }]}>
+          <View style={styles.brandRow}>
+            <View style={[styles.brandIcon, { width: scale(36), height: scale(36), borderRadius: RADIUS.sm, marginRight: scale(8) }]}>
               <MaterialCommunityIcons name="scale-balance" size={fontScale(18)} color={COLORS.accent} />
             </View>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text style={[styles.brandTitle, { fontSize: fontScale(12) }]}>LEX HONDURAS</Text>
+              <Text numberOfLines={1} style={[styles.brandTitle, { fontSize: fontScale(12) }]}>LEX HONDURAS</Text>
               <Text style={[styles.brandSubtitle, { fontSize: fontScale(10) }]}>Motor juridico de calculo de penas</Text>
             </View>
           </View>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryLight,
     opacity: 0.4,
   },
-  heroContent: { position: 'relative' },
+  heroContent: { position: 'relative', zIndex: 1 },
   brandRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -206,12 +206,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgba(201,165,92,0.4)',
+    marginRight: scale(8),
   },
   brandTitle: {
     color: COLORS.accent,
     fontSize: 13,
     fontWeight: '800',
     letterSpacing: 2,
+    flexShrink: 1,
   },
   brandSubtitle: {
     color: '#D5DDEA',
@@ -270,7 +272,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     padding: scale(12),
     borderRadius: RADIUS.md,
-    gap: scale(10),
+    // gap not universally supported on RN web; use explicit margins on children
     borderLeftWidth: 3,
     borderLeftColor: COLORS.accent,
     ...SHADOWS.md,
@@ -280,6 +282,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.accent + '20',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: scale(10),
   },
   primaryActionTitle: {
     fontWeight: '700',
@@ -300,7 +303,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     padding: scale(11),
     borderRadius: RADIUS.md,
-    gap: scale(10),
+    // gap not universally supported; children use explicit spacing
     marginBottom: scale(8),
     borderWidth: 1,
     borderColor: COLORS.borderLight,
@@ -309,6 +312,7 @@ const styles = StyleSheet.create({
   secondaryActionIcon: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: scale(10),
   },
   secondaryActionTitle: {
     fontWeight: '700',

@@ -198,7 +198,7 @@ export default function DelitosCatalog() {
           </Text>
         )}
         <View style={styles.penaRow}>
-          <MaterialCommunityIcons name="gavel" size={scale(14)} color={COLORS.accent} />
+          <MaterialCommunityIcons style={{ marginRight: scale(6) }} name="gavel" size={scale(14)} color={COLORS.accent} />
           <Text style={styles.penaText}>{item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}</Text>
         </View>
         <Text style={styles.clasifText} numberOfLines={1}>
@@ -216,13 +216,13 @@ export default function DelitosCatalog() {
           style={styles.actionBtn}
           onPress={() => router.push({ pathname: '/delito-form', params: { id: item.id } })}
         >
-          <Ionicons name="create-outline" size={scale(18)} color={COLORS.primary} />
-          <Text style={styles.actionText}>Editar</Text>
+            <Ionicons style={{ marginRight: scale(6) }} name="create-outline" size={scale(18)} color={COLORS.primary} />
+            <Text style={styles.actionText}>Editar</Text>
         </TouchableOpacity>
         <View style={styles.actionDivider} />
         <TouchableOpacity style={styles.actionBtn} onPress={() => handleDelete(item)}>
-          <Ionicons name="trash-outline" size={scale(18)} color={COLORS.danger} />
-          <Text style={[styles.actionText, { color: COLORS.danger }]}>Eliminar</Text>
+            <Ionicons style={{ marginRight: scale(6) }} name="trash-outline" size={scale(18)} color={COLORS.danger} />
+            <Text style={[styles.actionText, { color: COLORS.danger }]}>Eliminar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -252,7 +252,7 @@ export default function DelitosCatalog() {
       {/* Search */}
       <View style={styles.searchWrap}>
         <View style={styles.searchBox}>
-          <Ionicons name="search" size={scale(18)} color={COLORS.textMuted} />
+          <Ionicons style={{ marginRight: SPACING.sm }} name="search" size={scale(18)} color={COLORS.textMuted} />
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar por nombre, artículo o conducta..."
@@ -262,7 +262,7 @@ export default function DelitosCatalog() {
           />
           {!!search && (
             <TouchableOpacity onPress={() => setSearch('')}>
-              <Ionicons name="close-circle" size={scale(18)} color={COLORS.textMuted} />
+              <Ionicons style={{ marginLeft: SPACING.sm }} name="close-circle" size={scale(18)} color={COLORS.textMuted} />
             </TouchableOpacity>
           )}
         </View>
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     paddingHorizontal: scale(12),
     paddingVertical: scale(8),
-    gap: scale(8),
+    paddingBottom: scale(8),
   },
   backBtn: {
     width: scale(32),
@@ -359,6 +359,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: scale(8),
   },
   addBtn: {
     width: scale(32),
@@ -374,7 +375,7 @@ const styles = StyleSheet.create({
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SPACING.sm,
+    // gap replaced by explicit margins on children
     backgroundColor: COLORS.white,
     marginHorizontal: SPACING.md,
     paddingHorizontal: SPACING.md,
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: scale(6),
+    // replace gap with margins in children
     backgroundColor: 'rgba(255,255,255,0.08)',
     paddingVertical: scale(6),
     paddingHorizontal: scale(12),
@@ -435,12 +436,13 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     marginBottom: scale(6),
   },
-  metaRow: { flexDirection: 'row', gap: scale(6), flexWrap: 'wrap' },
+  metaRow: { flexDirection: 'row', flexWrap: 'wrap' },
   articuloPill: {
     backgroundColor: COLORS.primary + '12',
     paddingHorizontal: scale(8),
     paddingVertical: scale(3),
     borderRadius: RADIUS.sm,
+    marginRight: scale(6),
   },
   articuloText: { fontSize: fontScale(11), fontWeight: '700', color: COLORS.primary },
   gravePill: {
@@ -448,6 +450,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(8),
     paddingVertical: scale(3),
     borderRadius: RADIUS.sm,
+    marginRight: scale(6),
   },
   gravePillText: {
     fontSize: fontScale(9),
@@ -464,7 +467,7 @@ const styles = StyleSheet.create({
   penaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: scale(6),
+    // gap removed; children should use explicit marginRight
     marginTop: SPACING.sm,
     backgroundColor: COLORS.accent + '12',
     paddingVertical: scale(6),
@@ -489,7 +492,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: scale(6),
+    paddingHorizontal: scale(6),
     paddingVertical: scale(10),
   },
   actionText: { fontSize: fontScale(13), fontWeight: '600', color: COLORS.primary },

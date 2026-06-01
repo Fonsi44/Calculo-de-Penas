@@ -69,3 +69,4 @@ export const SHADOWS = {
 
 // Hardcodeada para builds estáticos de Expo (Vercel, SSR)
 export const BACKEND_URL = 'https://calculo-de-penas.vercel.app';
+export const API_BASE = BACKEND_URL;

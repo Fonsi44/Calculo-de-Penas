@@ -400,7 +400,7 @@ export default function DelitoForm() {
 
           {isEdit && (
             <TouchableOpacity style={styles.deleteBtn} onPress={handleDelete}>
-              <Ionicons name="trash-outline" size={scale(18)} color={COLORS.danger} />
+              <Ionicons style={{ marginRight: scale(8) }} name="trash-outline" size={scale(18)} color={COLORS.danger} />
               <Text style={styles.deleteText}>Eliminar delito</Text>
             </TouchableOpacity>
           )}
@@ -424,7 +424,7 @@ export default function DelitoForm() {
             <ActivityIndicator size="small" color={COLORS.white} />
           ) : (
             <>
-              <MaterialCommunityIcons name="content-save" size={scale(18)} color={COLORS.white} />
+              <MaterialCommunityIcons style={{ marginRight: scale(8) }} name="content-save" size={scale(18)} color={COLORS.white} />
               <Text style={styles.saveText}>{isEdit ? 'Guardar cambios' : 'Crear delito'}</Text>
             </>
           )}
@@ -446,7 +446,7 @@ function Section({
   return (
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
-        <Ionicons name={icon} size={scale(16)} color={COLORS.accent} />
+        <Ionicons style={{ marginRight: scale(6) }} name={icon} size={scale(16)} color={COLORS.accent} />
         <Text style={styles.sectionTitle}>{title}</Text>
       </View>
       {children}
@@ -470,8 +470,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.primary,
     paddingHorizontal: scale(12),
-    paddingVertical: scale(8),
-    gap: scale(8),
+    paddingVertical: scale(6),
   },
   backBtn: {
     width: scale(32),
@@ -480,6 +479,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: scale(8),
   },
   headerTitle: {
     flex: 1,
@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: scale(6),
+    // gap removed for RN Web compatibility; icon uses marginRight
     marginBottom: scale(8),
     paddingBottom: scale(8),
     borderBottomWidth: 1,
@@ -545,7 +545,7 @@ const styles = StyleSheet.create({
   switchRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SPACING.sm,
+    // gap removed; children should use explicit margins when needed
     marginBottom: scale(12),
   },
   switchTitle: { fontSize: fontScale(14), fontWeight: '600', color: COLORS.text },
@@ -570,7 +570,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: scale(8),
+    paddingHorizontal: scale(8),
     paddingVertical: scale(14),
     borderRadius: RADIUS.md,
     borderWidth: 1,
@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     paddingHorizontal: scale(12),
     paddingTop: scale(8),
-    gap: scale(8),
+    paddingBottom: scale(8),
     borderTopWidth: 1,
     borderTopColor: COLORS.borderLight,
   },
@@ -599,14 +599,14 @@ const styles = StyleSheet.create({
   },
   cancelText: { fontSize: fontScale(13), fontWeight: '600', color: COLORS.textSecondary },
   saveBtn: {
-    flex: 2,
+    flex: 1,
     flexDirection: 'row',
-    paddingVertical: scale(10),
+    paddingVertical: scale(8),
     borderRadius: RADIUS.sm,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: scale(6),
+    minHeight: scale(40),
   },
   saveText: { fontSize: fontScale(13), fontWeight: '700', color: COLORS.white },
 });
