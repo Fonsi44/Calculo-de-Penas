@@ -54,21 +54,21 @@ export default function Home() {
       <View style={styles.hero}>
         <View style={[styles.heroOverlay, { width: scale(200), height: scale(200), borderRadius: scale(200) }]} />
         <View style={styles.heroContent}>
-          <View style={styles.brandRow}>
-            <View style={[styles.brandIcon, { width: scale(44), height: scale(44), borderRadius: RADIUS.md }]}>
-              <MaterialCommunityIcons name="scale-balance" size={fontScale(28)} color={COLORS.accent} />
+          <View style={[styles.brandRow, { gap: scale(10) }]}>
+            <View style={[styles.brandIcon, { width: scale(36), height: scale(36), borderRadius: RADIUS.sm }]}>
+              <MaterialCommunityIcons name="scale-balance" size={fontScale(18)} color={COLORS.accent} />
             </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.brandTitle}>LEX HONDURAS</Text>
-              <Text style={styles.brandSubtitle}>Motor juridico de calculo de penas</Text>
+            <View style={{ flex: 1, minWidth: 0 }}>
+              <Text style={[styles.brandTitle, { fontSize: fontScale(12) }]}>LEX HONDURAS</Text>
+              <Text style={[styles.brandSubtitle, { fontSize: fontScale(10) }]}>Motor juridico de calculo de penas</Text>
             </View>
           </View>
 
-          <Text style={[styles.heroTitle, { fontSize: fontScale(26), lineHeight: fontScale(32) }]}>
-            Determine la pena{'\n'}con precision tecnica
+          <Text style={[styles.heroTitle, { fontSize: fontScale(20), lineHeight: fontScale(24) }]}>
+            Determine la pena con precision tecnica
           </Text>
-          <Text style={[styles.heroDesc, { fontSize: fontScale(13), lineHeight: fontScale(19) }]}>
-            Aplicacion profesional basada en el Codigo Penal de Honduras (Decreto 130-2017).
+          <Text style={[styles.heroDesc, { fontSize: fontScale(12), lineHeight: fontScale(16) }]}>
+            Codigo Penal de Honduras (Decreto 130-2017)
           </Text>
 
           <View style={[styles.statsRow, isTablet && styles.statsRowTablet]}>
@@ -86,9 +86,9 @@ export default function Home() {
         </View>
       </View>
 
-      <Container style={{ paddingBottom: SPACING.xxl }}>
+      <Container style={{ paddingBottom: SPACING.lg }}>
         <ScrollView
-          contentContainerStyle={{ padding: SPACING.md }}
+          contentContainerStyle={{ padding: scale(12) }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[COLORS.accent]} />
           }
@@ -97,20 +97,20 @@ export default function Home() {
 
           <TouchableOpacity
             activeOpacity={0.85}
-            style={[styles.primaryAction, isTablet && { padding: scale(20) }]}
+            style={[styles.primaryAction, isTablet && { padding: scale(16) }]}
             onPress={() => router.push('/calculadora')}
           >
-            <View style={[styles.primaryActionIcon, { width: scale(56), height: scale(56), borderRadius: RADIUS.md }]}>
-              <MaterialCommunityIcons name="calculator-variant" size={fontScale(32)} color={COLORS.primary} />
+            <View style={[styles.primaryActionIcon, { width: scale(44), height: scale(44), borderRadius: RADIUS.sm }]}>
+              <MaterialCommunityIcons name="calculator-variant" size={fontScale(22)} color={COLORS.primary} />
             </View>
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.primaryActionTitle, { fontSize: fontScale(17) }]}>Calcular pena</Text>
-              <Text style={[styles.primaryActionDesc, { fontSize: fontScale(12) }]}>
+            <View style={{ flex: 1, minWidth: 0 }}>
+              <Text style={[styles.primaryActionTitle, { fontSize: fontScale(15) }]}>Calcular pena</Text>
+              <Text style={[styles.primaryActionDesc, { fontSize: fontScale(11) }]}>
                 Flujo guiado de 8 pasos · concurso, agravantes, atenuantes
               </Text>
             </View>
-            <View style={[styles.primaryActionArrow, { width: scale(36), height: scale(36), borderRadius: scale(18) }]}>
-              <Ionicons name="arrow-forward" size={fontScale(20)} color={COLORS.white} />
+            <View style={[styles.primaryActionArrow, { width: scale(28), height: scale(28), borderRadius: scale(14) }]}>
+              <Ionicons name="arrow-forward" size={fontScale(16)} color={COLORS.white} />
             </View>
           </TouchableOpacity>
 
@@ -133,27 +133,27 @@ export default function Home() {
             <TouchableOpacity
               key={i}
               activeOpacity={0.85}
-              style={[styles.secondaryAction, isTablet && { padding: scale(18) }]}
+              style={[styles.secondaryAction, isTablet && { padding: scale(14) }]}
               onPress={item.onPress}
             >
-              <View style={[styles.secondaryActionIcon, { width: scale(48), height: scale(48), borderRadius: RADIUS.md, backgroundColor: item.color + '22' }]}>
-                <MaterialCommunityIcons name={item.icon} size={fontScale(26)} color={item.color} />
+              <View style={[styles.secondaryActionIcon, { width: scale(40), height: scale(40), borderRadius: RADIUS.sm, backgroundColor: item.color + '22' }]}>
+                <MaterialCommunityIcons name={item.icon} size={fontScale(20)} color={item.color} />
               </View>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.secondaryActionTitle, { fontSize: fontScale(15) }]}>{item.title}</Text>
-                <Text style={[styles.secondaryActionDesc, { fontSize: fontScale(12) }]}>{item.desc}</Text>
+              <View style={{ flex: 1, minWidth: 0 }}>
+                <Text style={[styles.secondaryActionTitle, { fontSize: fontScale(14) }]}>{item.title}</Text>
+                <Text style={[styles.secondaryActionDesc, { fontSize: fontScale(11) }]}>{item.desc}</Text>
               </View>
-              <Ionicons name="chevron-forward" size={fontScale(22)} color={COLORS.textMuted} />
+              <Ionicons name="chevron-forward" size={fontScale(18)} color={COLORS.textMuted} />
             </TouchableOpacity>
           ))}
 
-          <View style={[styles.infoPanel, isTablet && { padding: scale(20) }]}>
+          <View style={[styles.infoPanel, isTablet && { padding: scale(14) }]}>
             <View style={styles.infoBadge}>
-              <Ionicons name="shield-checkmark" size={fontScale(14)} color={COLORS.accent} />
-              <Text style={[styles.infoBadgeText, { fontSize: fontScale(10) }]}>Marco normativo</Text>
+              <Ionicons name="shield-checkmark" size={fontScale(12)} color={COLORS.accent} />
+              <Text style={[styles.infoBadgeText, { fontSize: fontScale(9) }]}>Marco normativo</Text>
             </View>
-            <Text style={[styles.infoTitle, { fontSize: fontScale(16) }]}>Codigo Penal de Honduras</Text>
-            <Text style={[styles.infoBody, { fontSize: fontScale(13), lineHeight: fontScale(19) }]}>
+            <Text style={[styles.infoTitle, { fontSize: fontScale(14) }]}>Codigo Penal de Honduras</Text>
+            <Text style={[styles.infoBody, { fontSize: fontScale(12), lineHeight: fontScale(16) }]}>
               Aplica reglas tecnicas: reduccion por complicidad y tentativa, mitad superior por
               agravantes, mitad inferior por atenuantes, eximentes completas e incompletas, y
               concursos real, ideal, medial y continuado.
@@ -161,10 +161,9 @@ export default function Home() {
           </View>
 
           <View style={styles.disclaimer}>
-            <Ionicons name="information-circle-outline" size={fontScale(16)} color={COLORS.textMuted} />
-            <Text style={[styles.disclaimerText, { fontSize: fontScale(11), lineHeight: fontScale(16) }]}>
-              Este calculo es orientativo y no sustituye la funcion jurisdiccional. La determinacion
-              definitiva corresponde a los tribunales de Honduras.
+            <Ionicons name="information-circle-outline" size={fontScale(14)} color={COLORS.textMuted} />
+            <Text style={[styles.disclaimerText, { fontSize: fontScale(10), lineHeight: fontScale(14) }]}>
+              Este calculo es orientativo y no sustituye la funcion jurisdiccional.
             </Text>
           </View>
         </ScrollView>
@@ -181,8 +180,8 @@ const styles = StyleSheet.create({
   hero: {
     backgroundColor: COLORS.primary,
     paddingHorizontal: SPACING.md,
-    paddingTop: SPACING.md,
-    paddingBottom: SPACING.lg,
+    paddingTop: SPACING.sm,
+    paddingBottom: SPACING.md,
     borderBottomLeftRadius: RADIUS.xl,
     borderBottomRightRadius: RADIUS.xl,
     ...SHADOWS.lg,
@@ -198,9 +197,8 @@ const styles = StyleSheet.create({
   brandRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SPACING.lg,
-    gap: SPACING.sm,
-    flexWrap: 'wrap',
+    marginBottom: SPACING.sm,
+    flexWrap: 'nowrap',
   },
   brandIcon: {
     backgroundColor: 'rgba(201,165,92,0.18)',
@@ -227,12 +225,12 @@ const styles = StyleSheet.create({
   },
   heroDesc: {
     color: '#C9D1DD',
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   statsRow: {
     flexDirection: 'row',
-    gap: SPACING.sm,
-    marginTop: SPACING.sm,
+    gap: scale(6),
+    marginTop: SPACING.xs,
   },
   statsRowTablet: {
     maxWidth: 500,
@@ -243,8 +241,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.08)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.12)',
-    borderRadius: RADIUS.md,
-    padding: SPACING.sm + 2,
+    borderRadius: RADIUS.sm,
+    padding: scale(8),
     alignItems: 'center',
   },
   statValue: {
@@ -258,25 +256,25 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   sectionLabel: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
     color: COLORS.textMuted,
     textTransform: 'uppercase',
-    letterSpacing: 1.5,
-    marginBottom: SPACING.sm,
-    marginTop: SPACING.sm,
+    letterSpacing: 1.2,
+    marginBottom: scale(6),
+    marginTop: 0,
   },
   primaryAction: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
-    padding: SPACING.md,
-    borderRadius: RADIUS.lg,
-    gap: SPACING.md,
-    borderLeftWidth: 4,
+    padding: scale(12),
+    borderRadius: RADIUS.md,
+    gap: scale(10),
+    borderLeftWidth: 3,
     borderLeftColor: COLORS.accent,
     ...SHADOWS.md,
-    marginBottom: SPACING.md,
+    marginBottom: scale(10),
   },
   primaryActionIcon: {
     backgroundColor: COLORS.accent + '20',
@@ -300,10 +298,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
-    padding: SPACING.md,
-    borderRadius: RADIUS.lg,
-    gap: SPACING.md,
-    marginBottom: SPACING.sm + 4,
+    padding: scale(11),
+    borderRadius: RADIUS.md,
+    gap: scale(10),
+    marginBottom: scale(8),
     borderWidth: 1,
     borderColor: COLORS.borderLight,
     ...SHADOWS.sm,
@@ -322,9 +320,9 @@ const styles = StyleSheet.create({
   },
   infoPanel: {
     backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.lg,
-    padding: SPACING.md,
-    marginTop: SPACING.md,
+    borderRadius: RADIUS.md,
+    padding: scale(12),
+    marginTop: scale(10),
     borderWidth: 1,
     borderColor: COLORS.borderLight,
     ...SHADOWS.sm,
@@ -332,13 +330,13 @@ const styles = StyleSheet.create({
   infoBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: 4,
+    gap: scale(4),
+    paddingHorizontal: scale(8),
+    paddingVertical: scale(3),
     backgroundColor: COLORS.primary + '0F',
     borderRadius: RADIUS.pill,
     alignSelf: 'flex-start',
-    marginBottom: SPACING.sm,
+    marginBottom: scale(6),
   },
   infoBadgeText: {
     fontWeight: '700',
@@ -349,18 +347,18 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontWeight: '700',
     color: COLORS.text,
-    marginBottom: 6,
+    marginBottom: scale(4),
   },
   infoBody: {
     color: COLORS.textSecondary,
   },
   disclaimer: {
     flexDirection: 'row',
-    gap: SPACING.sm,
-    padding: SPACING.md,
-    marginTop: SPACING.md,
+    gap: scale(8),
+    padding: scale(10),
+    marginTop: scale(10),
     backgroundColor: COLORS.warning + '14',
-    borderRadius: RADIUS.md,
+    borderRadius: RADIUS.sm,
     borderWidth: 1,
     borderColor: COLORS.warning + '40',
   },

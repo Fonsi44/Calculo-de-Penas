@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Container({ children, style, maxWidth }: Props) {
-  const { isTablet, isWeb, contentWidth } = useResponsive();
+  const { isTablet, isWeb } = useResponsive();
   const shouldConstrain = isTablet || isWeb;
 
   if (!shouldConstrain) {
@@ -19,7 +19,7 @@ export default function Container({ children, style, maxWidth }: Props) {
 
   return (
     <View style={[styles.wrapper, style]}>
-      <View style={[styles.inner, { width: Math.min(contentWidth, maxWidth ?? 800) }]}>
+      <View style={[styles.inner, { maxWidth: maxWidth ?? 800 }]}>
         {children}
       </View>
     </View>
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    maxWidth: 800,
     width: '100%',
   },
 });
