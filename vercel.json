@@ -1,8 +1,7 @@
 {
-  "buildCommand": "",
-  "outputDirectory": "",
-  "installCommand": "",
-  "routes": [
-    { "src": "/api/(.*)", "dest": "api/index.py" }
-  ]
+  "functions": {
+    "backend/**/*.py": {
+      "excludeFiles": "frontend/**"
+    }
+  }
 }

@@ -57,7 +57,21 @@ async def get_db():
         yield session
 
 
-app = FastAPI(title="Motor de Cálculo de Penas - Honduras")
+app = FastAPI(title="Motor de Cálculo de Penas - Honduras", version="1.0.0")
+
+# Crear tablas al cargar el módulo (para serverless en Vercel)
+try:
+    import asyncio
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    async def _init_tables():
+        async with engine.begin() as conn:
+            await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
+            await conn.run_sync(Base.metadata.create_all)
+    loop.run_until_complete(_init_tables())
+    loop.close()
+except Exception:
+    pass
 api_router = APIRouter(prefix="/api")
 
 # =============================================
