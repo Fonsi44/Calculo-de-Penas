@@ -17,6 +17,8 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING, RADIUS, SHADOWS, BACKEND_URL } from '../src/theme';
 import type { Delito, DelitoConfig, CatalogItem, Step } from '../src/types';
+import { scale, fontScale, useResponsive } from '../src/responsive';
+import Container from '../src/Container';
 
 const STEPS = [
   { num: 1, label: 'Delito', icon: 'magnify' as const },
@@ -32,6 +34,7 @@ const STEPS = [
 export default function Calculadora() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { isTablet } = useResponsive();
 
   // Catalogs
   const [delitos, setDelitos] = useState<Delito[]>([]);
@@ -96,7 +99,6 @@ export default function Calculadora() {
     const next = [...configs];
     next[currentIdx] = cfg;
     setConfigs(next);
-    // skip variants if no alternative
     if (d.tiene_pena_alternativa) setStep(2);
     else setStep(3);
   };
@@ -190,7 +192,6 @@ export default function Calculadora() {
     setSearch('');
   };
 
-  // Filter delitos
   const filtered = delitos.filter((d) => {
     if (!search) return true;
     const q = search.toLowerCase();
@@ -222,14 +223,14 @@ export default function Calculadora() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.iconBtn} onPress={goPrev}>
-          <Ionicons name="chevron-back" size={24} color={COLORS.white} />
+          <Ionicons name="chevron-back" size={scale(24)} color={COLORS.white} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.headerTitle}>Calculadora de Penas</Text>
           <Text style={styles.headerSub}>Paso {step} de 8 · {STEPS[step - 1].label}</Text>
         </View>
         <TouchableOpacity style={styles.iconBtn} onPress={() => router.replace('/')}>
-          <Ionicons name="home-outline" size={22} color={COLORS.white} />
+          <Ionicons name="home-outline" size={scale(22)} color={COLORS.white} />
         </TouchableOpacity>
       </View>
 
@@ -253,7 +254,7 @@ export default function Calculadora() {
                 ]}
               >
                 {done ? (
-                  <Ionicons name="checkmark" size={16} color={COLORS.white} />
+                  <Ionicons name="checkmark" size={scale(16)} color={COLORS.white} />
                 ) : (
                   <Text
                     style={[
@@ -276,68 +277,70 @@ export default function Calculadora() {
       {/* Content */}
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ padding: SPACING.md, paddingBottom: 140 }}
+        contentContainerStyle={{ padding: SPACING.md, paddingBottom: scale(140) }}
         keyboardShouldPersistTaps="handled"
       >
-        {step === 1 && (
-          <Step1
-            delitos={filtered}
-            search={search}
-            setSearch={setSearch}
-            onSelect={selectDelito}
-            currentSelected={current?.delito.id}
-            totalCount={delitos.length}
-          />
-        )}
-        {step === 2 && current && (
-          <Step2 config={current} update={updateCurrent} />
-        )}
-        {step === 3 && current && (
-          <Step3
-            config={current}
-            update={updateCurrent}
-            gradosAutoria={gradosAutoria}
-            gradosEjecucion={gradosEjecucion}
-          />
-        )}
-        {step === 4 && current && (
-          <Step4
-            config={current}
-            update={updateCurrent}
-            agravantes={agravantes}
-            atenuantes={atenuantes}
-            eximentes={eximentes}
-            toggle={toggle}
-          />
-        )}
-        {step === 5 && (
-          <Step5
-            configs={configs}
-            currentIdx={currentIdx}
-            onAdd={addAnotherDelito}
-            onRemove={removeDelito}
-          />
-        )}
-        {step === 6 && (
-          <Step6
-            tipos={tiposConcurso}
-            selected={tipoConcurso}
-            onSelect={setTipoConcurso}
-            count={configs.length}
-          />
-        )}
-        {step === 7 && (
-          <Step7
-            configs={configs}
-            tipoConcurso={tipoConcurso}
-            tipos={tiposConcurso}
-            agravantesCat={agravantes}
-            atenuantesCat={atenuantes}
-            gradosAutoria={gradosAutoria}
-            gradosEjecucion={gradosEjecucion}
-          />
-        )}
-        {step === 8 && resultado && <Step8 resultado={resultado} />}
+        <Container>
+          {step === 1 && (
+            <Step1
+              delitos={filtered}
+              search={search}
+              setSearch={setSearch}
+              onSelect={selectDelito}
+              currentSelected={current?.delito.id}
+              totalCount={delitos.length}
+            />
+          )}
+          {step === 2 && current && (
+            <Step2 config={current} update={updateCurrent} />
+          )}
+          {step === 3 && current && (
+            <Step3
+              config={current}
+              update={updateCurrent}
+              gradosAutoria={gradosAutoria}
+              gradosEjecucion={gradosEjecucion}
+            />
+          )}
+          {step === 4 && current && (
+            <Step4
+              config={current}
+              update={updateCurrent}
+              agravantes={agravantes}
+              atenuantes={atenuantes}
+              eximentes={eximentes}
+              toggle={toggle}
+            />
+          )}
+          {step === 5 && (
+            <Step5
+              configs={configs}
+              currentIdx={currentIdx}
+              onAdd={addAnotherDelito}
+              onRemove={removeDelito}
+            />
+          )}
+          {step === 6 && (
+            <Step6
+              tipos={tiposConcurso}
+              selected={tipoConcurso}
+              onSelect={setTipoConcurso}
+              count={configs.length}
+            />
+          )}
+          {step === 7 && (
+            <Step7
+              configs={configs}
+              tipoConcurso={tipoConcurso}
+              tipos={tiposConcurso}
+              agravantesCat={agravantes}
+              atenuantesCat={atenuantes}
+              gradosAutoria={gradosAutoria}
+              gradosEjecucion={gradosEjecucion}
+            />
+          )}
+          {step === 8 && resultado && <Step8 resultado={resultado} />}
+        </Container>
       </ScrollView>
 
       {/* Footer */}
@@ -345,7 +348,7 @@ export default function Calculadora() {
         {step === 8 ? (
           <>
             <TouchableOpacity style={styles.btnSecondary} onPress={reset}>
-              <Ionicons name="refresh" size={18} color={COLORS.primary} />
+              <Ionicons name="refresh" size={scale(18)} color={COLORS.primary} />
               <Text style={styles.btnSecondaryText}>Nuevo cálculo</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnPrimary} onPress={() => router.replace('/')}>
@@ -355,7 +358,7 @@ export default function Calculadora() {
         ) : step === 7 ? (
           <>
             <TouchableOpacity style={styles.btnSecondary} onPress={goPrev}>
-              <Ionicons name="chevron-back" size={18} color={COLORS.primary} />
+              <Ionicons name="chevron-back" size={scale(18)} color={COLORS.primary} />
               <Text style={styles.btnSecondaryText}>Atrás</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -367,7 +370,7 @@ export default function Calculadora() {
                 <ActivityIndicator size="small" color={COLORS.white} />
               ) : (
                 <>
-                  <MaterialCommunityIcons name="gavel" size={18} color={COLORS.white} />
+                  <MaterialCommunityIcons name="gavel" size={scale(18)} color={COLORS.white} />
                   <Text style={styles.btnPrimaryText}>Calcular pena</Text>
                 </>
               )}
@@ -376,7 +379,7 @@ export default function Calculadora() {
         ) : (
           <>
             <TouchableOpacity style={styles.btnSecondary} onPress={goPrev}>
-              <Ionicons name="chevron-back" size={18} color={COLORS.primary} />
+              <Ionicons name="chevron-back" size={scale(18)} color={COLORS.primary} />
               <Text style={styles.btnSecondaryText}>Atrás</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -385,7 +388,7 @@ export default function Calculadora() {
               disabled={!current && step !== 5 && step !== 6}
             >
               <Text style={styles.btnPrimaryText}>Continuar</Text>
-              <Ionicons name="chevron-forward" size={18} color={COLORS.white} />
+              <Ionicons name="chevron-forward" size={scale(18)} color={COLORS.white} />
             </TouchableOpacity>
           </>
         )}
@@ -411,7 +414,7 @@ function Step1({
         desc={`Catálogo del Código Penal de Honduras · ${totalCount} delitos disponibles`}
       />
       <View style={styles.searchInline}>
-        <Ionicons name="search" size={18} color={COLORS.textMuted} />
+        <Ionicons name="search" size={scale(18)} color={COLORS.textMuted} />
         <TextInput
           style={styles.searchInlineInput}
           placeholder="Buscar por nombre o artículo..."
@@ -421,7 +424,7 @@ function Step1({
         />
         {!!search && (
           <TouchableOpacity onPress={() => setSearch('')}>
-            <Ionicons name="close-circle" size={18} color={COLORS.textMuted} />
+            <Ionicons name="close-circle" size={scale(18)} color={COLORS.textMuted} />
           </TouchableOpacity>
         )}
       </View>
@@ -450,7 +453,7 @@ function Step1({
             </View>
             <Ionicons
               name={sel ? 'checkmark-circle' : 'chevron-forward'}
-              size={22}
+              size={scale(22)}
               color={sel ? COLORS.success : COLORS.textMuted}
             />
           </TouchableOpacity>
@@ -488,7 +491,7 @@ function Step2({ config, update }: any) {
         </>
       ) : (
         <View style={styles.noteBox}>
-          <Ionicons name="information-circle-outline" size={18} color={COLORS.info} />
+          <Ionicons name="information-circle-outline" size={scale(18)} color={COLORS.info} />
           <Text style={styles.noteText}>
             Este delito no contempla penas alternativas. Continuaremos con la pena principal.
           </Text>
@@ -625,7 +628,7 @@ function Step4({ config, update, agravantes, atenuantes, eximentes, toggle }: an
             <View
               style={[
                 styles.toggleThumb,
-                config.eximente_completa && { left: 22 },
+                config.eximente_completa && { left: scale(22) },
               ]}
             />
           </TouchableOpacity>
@@ -649,7 +652,7 @@ function Step5({ configs, currentIdx, onAdd, onRemove }: any) {
           <View style={{ flex: 1 }}>
             <Text style={styles.delitoConfigTitle}>{c.delito.nombre}</Text>
             <Text style={styles.delitoConfigSub}>{c.delito.articulo}</Text>
-            <View style={{ flexDirection: 'row', gap: 6, marginTop: 6, flexWrap: 'wrap' }}>
+            <View style={{ flexDirection: 'row', gap: scale(6), marginTop: scale(6), flexWrap: 'wrap' }}>
               <Text style={styles.tagSmall}>{c.grado_autoria.replace('_', ' ')}</Text>
               <Text style={styles.tagSmall}>{c.grado_ejecucion.replace('_', ' ')}</Text>
               {c.agravantes.length > 0 && (
@@ -664,14 +667,14 @@ function Step5({ configs, currentIdx, onAdd, onRemove }: any) {
               )}
             </View>
           </View>
-          <TouchableOpacity onPress={() => onRemove(i)} style={{ padding: 6 }}>
-            <Ionicons name="trash-outline" size={20} color={COLORS.danger} />
+          <TouchableOpacity onPress={() => onRemove(i)} style={{ padding: scale(6) }}>
+            <Ionicons name="trash-outline" size={scale(20)} color={COLORS.danger} />
           </TouchableOpacity>
         </View>
       ))}
 
       <TouchableOpacity style={styles.addCard} onPress={onAdd}>
-        <Ionicons name="add-circle" size={28} color={COLORS.accent} />
+        <Ionicons name="add-circle" size={scale(28)} color={COLORS.accent} />
         <View style={{ flex: 1 }}>
           <Text style={styles.addCardTitle}>Agregar otro delito</Text>
           <Text style={styles.addCardDesc}>Configurar un delito adicional</Text>
@@ -762,7 +765,7 @@ function Step7({
         );
       })}
       {configs.length > 1 && tc && (
-        <View style={[styles.summaryCard, { borderLeftColor: COLORS.accent, borderLeftWidth: 4 }]}>
+        <View style={[styles.summaryCard, { borderLeftColor: COLORS.accent, borderLeftWidth: scale(4) }]}>
           <Text style={styles.summaryNum}>Concurso</Text>
           <Text style={styles.summaryTitle}>{tc.nombre}</Text>
           <Text style={styles.summarySub}>
@@ -780,7 +783,7 @@ function Step8({ resultado }: any) {
     <View>
       <View style={styles.resultBanner}>
         <View style={styles.resultIcon}>
-          <MaterialCommunityIcons name="gavel" size={28} color={COLORS.accent} />
+          <MaterialCommunityIcons name="gavel" size={scale(28)} color={COLORS.accent} />
         </View>
         <Text style={styles.resultLabel}>PENA APLICABLE</Text>
         <Text style={styles.resultValue}>{resultado.pena_principal}</Text>
@@ -791,9 +794,9 @@ function Step8({ resultado }: any) {
         <View style={styles.summaryCard}>
           <Text style={styles.summaryNum}>Penas accesorias</Text>
           {resultado.penas_accesorias.map((p: string, i: number) => (
-            <View key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 4 }}>
-              <Ionicons name="ribbon-outline" size={14} color={COLORS.accent} />
-              <Text style={{ fontSize: 13, color: COLORS.text }}>{p}</Text>
+            <View key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6), marginTop: scale(4) }}>
+              <Ionicons name="ribbon-outline" size={scale(14)} color={COLORS.accent} />
+              <Text style={{ fontSize: fontScale(13), color: COLORS.text }}>{p}</Text>
             </View>
           ))}
         </View>
@@ -802,15 +805,15 @@ function Step8({ resultado }: any) {
       <View style={styles.summaryCard}>
         <Text style={styles.summaryNum}>Detalle por delito</Text>
         {resultado.delitos_analizados?.map((d: any, i: number) => (
-          <View key={i} style={{ marginTop: i === 0 ? 6 : 12 }}>
-            <Text style={[styles.summaryTitle, { fontSize: 14 }]}>
+          <View key={i} style={{ marginTop: i === 0 ? scale(6) : scale(12) }}>
+            <Text style={[styles.summaryTitle, { fontSize: fontScale(14) }]}>
               {i + 1}. {d.nombre}
             </Text>
             <Text style={styles.summarySub}>{d.articulo}</Text>
-            <Text style={[styles.summaryRowVal, { marginTop: 4 }]}>{d.pena_individual_texto}</Text>
+            <Text style={[styles.summaryRowVal, { marginTop: scale(4) }]}>{d.pena_individual_texto}</Text>
             {d.modificaciones?.length > 0 &&
               d.modificaciones.map((m: string, j: number) => (
-                <Text key={j} style={{ fontSize: 11, color: COLORS.textSecondary, marginTop: 2 }}>
+                <Text key={j} style={{ fontSize: fontScale(11), color: COLORS.textSecondary, marginTop: scale(2) }}>
                   → {m}
                 </Text>
               ))}
@@ -825,14 +828,14 @@ function Step8({ resultado }: any) {
             {resultado.tipo_concurso.toUpperCase()}
           </Text>
           <Text style={styles.summarySub}>{resultado.concurso_articulo}</Text>
-          <Text style={[styles.summaryRowVal, { marginTop: 6 }]}>
+          <Text style={[styles.summaryRowVal, { marginTop: scale(6) }]}>
             {resultado.concurso_descripcion}
           </Text>
         </View>
       )}
 
       <View style={styles.disclaimerBox}>
-        <Ionicons name="warning-outline" size={16} color={COLORS.warning} />
+        <Ionicons name="warning-outline" size={scale(16)} color={COLORS.warning} />
         <Text style={styles.disclaimerText}>{resultado.disclaimer}</Text>
       </View>
     </View>
@@ -903,7 +906,7 @@ function CollapsibleGroup({ title, subtitle, items, selected, onToggle, color }:
         )}
         <Ionicons
           name={open ? 'chevron-up' : 'chevron-down'}
-          size={20}
+          size={scale(20)}
           color={COLORS.textMuted}
         />
       </TouchableOpacity>
@@ -918,7 +921,7 @@ function CollapsibleGroup({ title, subtitle, items, selected, onToggle, color }:
                 onPress={() => onToggle(it.id)}
               >
                 <View style={[styles.checkBox, sel && { backgroundColor: color, borderColor: color }]}>
-                  {sel && <Ionicons name="checkmark" size={14} color={COLORS.white} />}
+                  {sel && <Ionicons name="checkmark" size={scale(14)} color={COLORS.white} />}
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.checkTitle}>{it.nombre}</Text>
@@ -936,7 +939,7 @@ function CollapsibleGroup({ title, subtitle, items, selected, onToggle, color }:
 
 function SummaryRow({ label, value, color }: any) {
   return (
-    <View style={{ flexDirection: 'row', marginTop: 6 }}>
+    <View style={{ flexDirection: 'row', marginTop: scale(6) }}>
       <Text style={styles.summaryRowLabel}>{label}:</Text>
       <Text style={[styles.summaryRowVal, color && { color }]}>{value}</Text>
     </View>
@@ -950,26 +953,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.primary,
     paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm + 4,
+    paddingVertical: SPACING.sm + scale(4),
     gap: SPACING.sm,
   },
   iconBtn: {
-    width: 40,
-    height: 40,
+    width: scale(40),
+    height: scale(40),
     borderRadius: RADIUS.md,
     backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerTitle: { color: COLORS.white, fontSize: 17, fontWeight: '700' },
-  headerSub: { color: '#C9D1DD', fontSize: 11, marginTop: 2 },
+  headerTitle: { color: COLORS.white, fontSize: fontScale(17), fontWeight: '700' },
+  headerSub: { color: '#C9D1DD', fontSize: fontScale(11), marginTop: scale(2) },
   stepperWrap: { backgroundColor: COLORS.primary, paddingBottom: SPACING.sm },
-  stepperContent: { paddingHorizontal: SPACING.md, gap: 12, alignItems: 'flex-start' },
-  stepItem: { alignItems: 'center', minWidth: 60 },
+  stepperContent: { paddingHorizontal: SPACING.md, gap: scale(12), alignItems: 'flex-start' },
+  stepItem: { alignItems: 'center', minWidth: scale(60) },
   stepCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: scale(32),
+    height: scale(32),
+    borderRadius: scale(16),
     backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
@@ -978,33 +981,33 @@ const styles = StyleSheet.create({
   },
   stepCircleActive: { backgroundColor: COLORS.accent, borderColor: COLORS.accent },
   stepCircleDone: { backgroundColor: COLORS.success, borderColor: COLORS.success },
-  stepNum: { color: COLORS.white, fontWeight: '700', fontSize: 13 },
+  stepNum: { color: COLORS.white, fontWeight: '700', fontSize: fontScale(13) },
   stepLabel: {
     color: '#A8B3C6',
-    fontSize: 9,
-    marginTop: 4,
+    fontSize: fontScale(9),
+    marginTop: scale(4),
     fontWeight: '600',
   },
   stepLabelActive: { color: COLORS.accent },
   kicker: {
-    fontSize: 10,
+    fontSize: fontScale(10),
     fontWeight: '800',
     color: COLORS.accent,
-    letterSpacing: 1.5,
+    letterSpacing: scale(1.5),
     textTransform: 'uppercase',
-    marginBottom: 4,
+    marginBottom: scale(4),
   },
   title: {
-    fontSize: 22,
+    fontSize: fontScale(22),
     fontWeight: '800',
     color: COLORS.text,
-    lineHeight: 26,
+    lineHeight: fontScale(26),
   },
   titleDesc: {
-    fontSize: 13,
+    fontSize: fontScale(13),
     color: COLORS.textSecondary,
-    marginTop: 4,
-    lineHeight: 18,
+    marginTop: scale(4),
+    lineHeight: fontScale(18),
   },
   searchInline: {
     flexDirection: 'row',
@@ -1012,7 +1015,7 @@ const styles = StyleSheet.create({
     gap: SPACING.sm,
     backgroundColor: COLORS.surface,
     paddingHorizontal: SPACING.md,
-    paddingVertical: Platform.OS === 'ios' ? 12 : 6,
+    paddingVertical: Platform.OS === 'ios' ? scale(12) : scale(6),
     borderRadius: RADIUS.md,
     borderWidth: 1,
     borderColor: COLORS.border,
@@ -1020,11 +1023,11 @@ const styles = StyleSheet.create({
   },
   searchInlineInput: {
     flex: 1,
-    fontSize: 14,
+    fontSize: fontScale(14),
     color: COLORS.text,
-    paddingVertical: 4,
+    paddingVertical: scale(4),
   },
-  smallMuted: { fontSize: 11, color: COLORS.textMuted, marginBottom: SPACING.sm },
+  smallMuted: { fontSize: fontScale(11), color: COLORS.textMuted, marginBottom: SPACING.sm },
   delitoCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1041,36 +1044,36 @@ const styles = StyleSheet.create({
     borderColor: COLORS.success,
     backgroundColor: COLORS.success + '08',
   },
-  delitoName: { fontSize: 15, fontWeight: '700', color: COLORS.text, marginBottom: 6 },
-  metaRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: 6 },
+  delitoName: { fontSize: fontScale(15), fontWeight: '700', color: COLORS.text, marginBottom: scale(6) },
+  metaRow: { flexDirection: 'row', gap: scale(6), flexWrap: 'wrap', marginBottom: scale(6) },
   articuloPill: {
     backgroundColor: COLORS.primary + '12',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingHorizontal: scale(8),
+    paddingVertical: scale(2),
     borderRadius: RADIUS.sm,
   },
-  articuloText: { fontSize: 11, fontWeight: '700', color: COLORS.primary },
+  articuloText: { fontSize: fontScale(11), fontWeight: '700', color: COLORS.primary },
   gravePill: {
     backgroundColor: COLORS.danger + '15',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingHorizontal: scale(8),
+    paddingVertical: scale(2),
     borderRadius: RADIUS.sm,
   },
-  gravePillText: { fontSize: 9, fontWeight: '800', color: COLORS.danger },
-  delitoPena: { fontSize: 12, color: COLORS.textSecondary, fontWeight: '600' },
+  gravePillText: { fontSize: fontScale(9), fontWeight: '800', color: COLORS.danger },
+  delitoPena: { fontSize: fontScale(12), color: COLORS.textSecondary, fontWeight: '600' },
   subLabel: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '700',
     color: COLORS.textSecondary,
     textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: scale(1),
     marginBottom: SPACING.sm,
     marginTop: SPACING.sm,
   },
   radioCard: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: SPACING.sm + 4,
+    gap: SPACING.sm + scale(4),
     backgroundColor: COLORS.surface,
     padding: SPACING.md,
     borderRadius: RADIUS.md,
@@ -1080,23 +1083,23 @@ const styles = StyleSheet.create({
   },
   radioCardSel: { borderColor: COLORS.primary, backgroundColor: COLORS.primary + '06' },
   radioOuter: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: scale(22),
+    height: scale(22),
+    borderRadius: scale(11),
     borderWidth: 2,
     borderColor: COLORS.border,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 2,
+    marginTop: scale(2),
   },
   radioInner: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: scale(10),
+    height: scale(10),
+    borderRadius: scale(5),
     backgroundColor: COLORS.primary,
   },
-  radioTitle: { fontSize: 14, fontWeight: '700', color: COLORS.text },
-  radioDesc: { fontSize: 12, color: COLORS.textSecondary, marginTop: 2, lineHeight: 17 },
+  radioTitle: { fontSize: fontScale(14), fontWeight: '700', color: COLORS.text },
+  radioDesc: { fontSize: fontScale(12), color: COLORS.textSecondary, marginTop: scale(2), lineHeight: fontScale(17) },
   noteBox: {
     flexDirection: 'row',
     gap: SPACING.sm,
@@ -1106,11 +1109,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.info + '40',
   },
-  noteText: { flex: 1, fontSize: 12, color: COLORS.text, lineHeight: 17 },
+  noteText: { flex: 1, fontSize: fontScale(12), color: COLORS.text, lineHeight: fontScale(17) },
   row: { flexDirection: 'row', gap: SPACING.sm },
   pillChoice: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: scale(12),
     borderRadius: RADIUS.md,
     backgroundColor: COLORS.surface,
     borderWidth: 1,
@@ -1121,7 +1124,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.accent + '20',
     borderColor: COLORS.accent,
   },
-  pillChoiceText: { fontSize: 13, fontWeight: '700', color: COLORS.textSecondary },
+  pillChoiceText: { fontSize: fontScale(13), fontWeight: '700', color: COLORS.textSecondary },
   group: {
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.md,
@@ -1136,39 +1139,39 @@ const styles = StyleSheet.create({
     gap: SPACING.sm,
     padding: SPACING.md,
   },
-  groupDot: { width: 8, height: 8, borderRadius: 4 },
-  groupTitle: { fontSize: 14, fontWeight: '700', color: COLORS.text },
-  groupSub: { fontSize: 11, color: COLORS.textMuted, marginTop: 2 },
+  groupDot: { width: scale(8), height: scale(8), borderRadius: scale(4) },
+  groupTitle: { fontSize: fontScale(14), fontWeight: '700', color: COLORS.text },
+  groupSub: { fontSize: fontScale(11), color: COLORS.textMuted, marginTop: scale(2) },
   groupBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingHorizontal: scale(8),
+    paddingVertical: scale(2),
     borderRadius: RADIUS.pill,
-    minWidth: 22,
+    minWidth: scale(22),
     alignItems: 'center',
   },
-  groupBadgeText: { color: COLORS.white, fontSize: 11, fontWeight: '700' },
+  groupBadgeText: { color: COLORS.white, fontSize: fontScale(11), fontWeight: '700' },
   groupBody: { borderTopWidth: 1, borderTopColor: COLORS.borderLight },
   checkRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: SPACING.sm,
-    padding: SPACING.sm + 4,
+    padding: SPACING.sm + scale(4),
     borderBottomWidth: 1,
     borderBottomColor: COLORS.borderLight,
   },
   checkBox: {
-    width: 22,
-    height: 22,
-    borderRadius: 5,
+    width: scale(22),
+    height: scale(22),
+    borderRadius: scale(5),
     borderWidth: 2,
     borderColor: COLORS.border,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 2,
+    marginTop: scale(2),
   },
-  checkTitle: { fontSize: 13, fontWeight: '600', color: COLORS.text },
-  checkDesc: { fontSize: 11, color: COLORS.textSecondary, marginTop: 2 },
-  checkArt: { fontSize: 10, color: COLORS.textMuted, marginTop: 2, fontStyle: 'italic' },
+  checkTitle: { fontSize: fontScale(13), fontWeight: '600', color: COLORS.text },
+  checkDesc: { fontSize: fontScale(11), color: COLORS.textSecondary, marginTop: scale(2) },
+  checkArt: { fontSize: fontScale(10), color: COLORS.textMuted, marginTop: scale(2), fontStyle: 'italic' },
   toggleBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1180,23 +1183,23 @@ const styles = StyleSheet.create({
     marginTop: SPACING.sm,
     gap: SPACING.sm,
   },
-  toggleTitle: { fontSize: 14, fontWeight: '700', color: COLORS.text },
-  toggleDesc: { fontSize: 11, color: COLORS.textMuted, marginTop: 2 },
+  toggleTitle: { fontSize: fontScale(14), fontWeight: '700', color: COLORS.text },
+  toggleDesc: { fontSize: fontScale(11), color: COLORS.textMuted, marginTop: scale(2) },
   toggle: {
-    width: 44,
-    height: 24,
-    borderRadius: 12,
+    width: scale(44),
+    height: scale(24),
+    borderRadius: scale(12),
     backgroundColor: COLORS.border,
-    padding: 2,
+    padding: scale(2),
   },
   toggleThumb: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: scale(20),
+    height: scale(20),
+    borderRadius: scale(10),
     backgroundColor: COLORS.white,
     position: 'absolute',
-    top: 2,
-    left: 2,
+    top: scale(2),
+    left: scale(2),
   },
   delitoConfigCard: {
     flexDirection: 'row',
@@ -1209,14 +1212,14 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.sm,
     gap: SPACING.sm,
   },
-  delitoConfigTitle: { fontSize: 14, fontWeight: '700', color: COLORS.text },
-  delitoConfigSub: { fontSize: 11, color: COLORS.textMuted, marginTop: 2 },
+  delitoConfigTitle: { fontSize: fontScale(14), fontWeight: '700', color: COLORS.text },
+  delitoConfigSub: { fontSize: fontScale(11), color: COLORS.textMuted, marginTop: scale(2) },
   tagSmall: {
-    fontSize: 10,
+    fontSize: fontScale(10),
     backgroundColor: COLORS.borderLight,
     color: COLORS.textSecondary,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingHorizontal: scale(6),
+    paddingVertical: scale(2),
     borderRadius: RADIUS.sm,
     fontWeight: '600',
     textTransform: 'capitalize',
@@ -1233,8 +1236,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.accent + '08',
     marginTop: SPACING.sm,
   },
-  addCardTitle: { fontSize: 14, fontWeight: '700', color: COLORS.primary },
-  addCardDesc: { fontSize: 11, color: COLORS.textSecondary, marginTop: 2 },
+  addCardTitle: { fontSize: fontScale(14), fontWeight: '700', color: COLORS.primary },
+  addCardDesc: { fontSize: fontScale(11), color: COLORS.textSecondary, marginTop: scale(2) },
   summaryCard: {
     backgroundColor: COLORS.surface,
     padding: SPACING.md,
@@ -1245,22 +1248,22 @@ const styles = StyleSheet.create({
     ...SHADOWS.sm,
   },
   summaryNum: {
-    fontSize: 10,
+    fontSize: fontScale(10),
     fontWeight: '800',
     color: COLORS.accent,
-    letterSpacing: 1.5,
+    letterSpacing: scale(1.5),
     textTransform: 'uppercase',
-    marginBottom: 4,
+    marginBottom: scale(4),
   },
-  summaryTitle: { fontSize: 16, fontWeight: '700', color: COLORS.text },
-  summarySub: { fontSize: 12, color: COLORS.textSecondary, marginTop: 2 },
+  summaryTitle: { fontSize: fontScale(16), fontWeight: '700', color: COLORS.text },
+  summarySub: { fontSize: fontScale(12), color: COLORS.textSecondary, marginTop: scale(2) },
   summaryRowLabel: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '700',
     color: COLORS.textSecondary,
-    minWidth: 90,
+    minWidth: scale(90),
   },
-  summaryRowVal: { flex: 1, fontSize: 12, color: COLORS.text },
+  summaryRowVal: { flex: 1, fontSize: fontScale(12), color: COLORS.text },
   resultBanner: {
     backgroundColor: COLORS.primary,
     padding: SPACING.lg,
@@ -1270,9 +1273,9 @@ const styles = StyleSheet.create({
     ...SHADOWS.lg,
   },
   resultIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: scale(60),
+    height: scale(60),
+    borderRadius: scale(30),
     backgroundColor: 'rgba(201,165,92,0.18)',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1281,21 +1284,21 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.sm,
   },
   resultLabel: {
-    fontSize: 11,
+    fontSize: fontScale(11),
     fontWeight: '800',
     color: COLORS.accent,
-    letterSpacing: 2,
+    letterSpacing: scale(2),
     textTransform: 'uppercase',
   },
   resultValue: {
-    fontSize: 22,
+    fontSize: fontScale(22),
     fontWeight: '800',
     color: COLORS.white,
     marginTop: SPACING.sm,
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: fontScale(28),
   },
-  resultDate: { fontSize: 11, color: '#C9D1DD', marginTop: 6 },
+  resultDate: { fontSize: fontScale(11), color: '#C9D1DD', marginTop: scale(6) },
   disclaimerBox: {
     flexDirection: 'row',
     gap: SPACING.sm,
@@ -1306,12 +1309,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.warning + '40',
     marginTop: SPACING.sm,
   },
-  disclaimerText: { flex: 1, fontSize: 11, color: COLORS.textSecondary, lineHeight: 16, fontStyle: 'italic' },
+  disclaimerText: { flex: 1, fontSize: fontScale(11), color: COLORS.textSecondary, lineHeight: fontScale(16), fontStyle: 'italic' },
   footer: {
     flexDirection: 'row',
     backgroundColor: COLORS.surface,
     paddingHorizontal: SPACING.md,
-    paddingTop: SPACING.sm + 4,
+    paddingTop: SPACING.sm + scale(4),
     gap: SPACING.sm,
     borderTopWidth: 1,
     borderTopColor: COLORS.borderLight,
@@ -1321,22 +1324,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
-    paddingVertical: 14,
+    gap: scale(6),
+    paddingVertical: scale(14),
     borderRadius: RADIUS.md,
     borderWidth: 1,
     borderColor: COLORS.primary,
   },
-  btnSecondaryText: { color: COLORS.primary, fontWeight: '700', fontSize: 14 },
+  btnSecondaryText: { color: COLORS.primary, fontWeight: '700', fontSize: fontScale(14) },
   btnPrimary: {
     flex: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
-    paddingVertical: 14,
+    gap: scale(6),
+    paddingVertical: scale(14),
     borderRadius: RADIUS.md,
     backgroundColor: COLORS.primary,
   },
-  btnPrimaryText: { color: COLORS.white, fontWeight: '700', fontSize: 14 },
+  btnPrimaryText: { color: COLORS.white, fontWeight: '700', fontSize: fontScale(14) },
 });

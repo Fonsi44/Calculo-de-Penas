@@ -13,10 +13,13 @@ import { useRouter } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING, RADIUS, SHADOWS, BACKEND_URL } from '../src/theme';
+import { scale, fontScale, useResponsive } from '../src/responsive';
+import Container from '../src/Container';
 
 export default function Home() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { isTablet } = useResponsive();
   const [stats, setStats] = useState({ total: 0, clasificaciones: 0 });
   const [refreshing, setRefreshing] = useState(false);
 
@@ -37,9 +40,7 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    loadStats();
-  }, []);
+  useEffect(() => { loadStats(); }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -50,130 +51,124 @@ export default function Home() {
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.primaryDark} />
-
-      {/* HERO HEADER */}
       <View style={styles.hero}>
-        <View style={styles.heroOverlay} />
+        <View style={[styles.heroOverlay, { width: scale(200), height: scale(200), borderRadius: scale(200) }]} />
         <View style={styles.heroContent}>
           <View style={styles.brandRow}>
-            <View style={styles.brandIcon}>
-              <MaterialCommunityIcons name="scale-balance" size={28} color={COLORS.accent} />
+            <View style={[styles.brandIcon, { width: scale(44), height: scale(44), borderRadius: RADIUS.md }]}>
+              <MaterialCommunityIcons name="scale-balance" size={fontScale(28)} color={COLORS.accent} />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.brandTitle}>LEX HONDURAS</Text>
-              <Text style={styles.brandSubtitle}>Motor jurídico de cálculo de penas</Text>
+              <Text style={styles.brandSubtitle}>Motor juridico de calculo de penas</Text>
             </View>
           </View>
 
-          <Text style={styles.heroTitle}>Determine la pena{'\n'}con precisión técnica</Text>
-          <Text style={styles.heroDesc}>
-            Aplicación profesional basada en el Código Penal de Honduras (Decreto 130-2017).
+          <Text style={[styles.heroTitle, { fontSize: fontScale(26), lineHeight: fontScale(32) }]}>
+            Determine la pena{'\n'}con precision tecnica
+          </Text>
+          <Text style={[styles.heroDesc, { fontSize: fontScale(13), lineHeight: fontScale(19) }]}>
+            Aplicacion profesional basada en el Codigo Penal de Honduras (Decreto 130-2017).
           </Text>
 
-          <View style={styles.statsRow}>
-            <View style={styles.statCard}>
-              <Text style={styles.statValue}>{stats.total}</Text>
-              <Text style={styles.statLabel}>Delitos</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statValue}>{stats.clasificaciones}</Text>
-              <Text style={styles.statLabel}>Clasificaciones</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statValue}>8</Text>
-              <Text style={styles.statLabel}>Pasos</Text>
-            </View>
+          <View style={[styles.statsRow, isTablet && styles.statsRowTablet]}>
+            {[
+              { value: stats.total, label: 'Delitos' },
+              { value: stats.clasificaciones, label: 'Clasificaciones' },
+              { value: 8, label: 'Pasos' },
+            ].map((s, i) => (
+              <View key={i} style={[styles.statCard, isTablet && { padding: scale(12) }]}>
+                <Text style={[styles.statValue, { fontSize: fontScale(22) }]}>{s.value}</Text>
+                <Text style={[styles.statLabel, { fontSize: fontScale(10) }]}>{s.label}</Text>
+              </View>
+            ))}
           </View>
         </View>
       </View>
 
-      {/* CONTENT */}
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={{ padding: SPACING.md, paddingBottom: SPACING.xxl }}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[COLORS.accent]} />
-        }
-      >
-        <Text style={styles.sectionLabel}>Acciones principales</Text>
-
-        {/* PRIMARY ACTION */}
-        <TouchableOpacity
-          activeOpacity={0.85}
-          style={styles.primaryAction}
-          onPress={() => router.push('/calculadora')}
+      <Container style={{ paddingBottom: SPACING.xxl }}>
+        <ScrollView
+          contentContainerStyle={{ padding: SPACING.md }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[COLORS.accent]} />
+          }
         >
-          <View style={styles.primaryActionIcon}>
-            <MaterialCommunityIcons name="calculator-variant" size={32} color={COLORS.primary} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.primaryActionTitle}>Calcular pena</Text>
-            <Text style={styles.primaryActionDesc}>
-              Flujo guiado de 8 pasos · concurso, agravantes, atenuantes
+          <Text style={styles.sectionLabel}>Acciones principales</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.85}
+            style={[styles.primaryAction, isTablet && { padding: scale(20) }]}
+            onPress={() => router.push('/calculadora')}
+          >
+            <View style={[styles.primaryActionIcon, { width: scale(56), height: scale(56), borderRadius: RADIUS.md }]}>
+              <MaterialCommunityIcons name="calculator-variant" size={fontScale(32)} color={COLORS.primary} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.primaryActionTitle, { fontSize: fontScale(17) }]}>Calcular pena</Text>
+              <Text style={[styles.primaryActionDesc, { fontSize: fontScale(12) }]}>
+                Flujo guiado de 8 pasos · concurso, agravantes, atenuantes
+              </Text>
+            </View>
+            <View style={[styles.primaryActionArrow, { width: scale(36), height: scale(36), borderRadius: scale(18) }]}>
+              <Ionicons name="arrow-forward" size={fontScale(20)} color={COLORS.white} />
+            </View>
+          </TouchableOpacity>
+
+          {[
+            {
+              title: 'Catalogo de delitos',
+              desc: 'Buscar, crear, editar y eliminar tipos penales',
+              icon: 'book-open-variant' as const,
+              color: COLORS.accent,
+              onPress: () => router.push('/delitos'),
+            },
+            {
+              title: 'Registrar nuevo delito',
+              desc: 'Anadir un tipo penal personalizado al catalogo',
+              icon: 'plus-circle-outline' as const,
+              color: COLORS.success,
+              onPress: () => router.push({ pathname: '/delito-form', params: {} }),
+            },
+          ].map((item, i) => (
+            <TouchableOpacity
+              key={i}
+              activeOpacity={0.85}
+              style={[styles.secondaryAction, isTablet && { padding: scale(18) }]}
+              onPress={item.onPress}
+            >
+              <View style={[styles.secondaryActionIcon, { width: scale(48), height: scale(48), borderRadius: RADIUS.md, backgroundColor: item.color + '22' }]}>
+                <MaterialCommunityIcons name={item.icon} size={fontScale(26)} color={item.color} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.secondaryActionTitle, { fontSize: fontScale(15) }]}>{item.title}</Text>
+                <Text style={[styles.secondaryActionDesc, { fontSize: fontScale(12) }]}>{item.desc}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={fontScale(22)} color={COLORS.textMuted} />
+            </TouchableOpacity>
+          ))}
+
+          <View style={[styles.infoPanel, isTablet && { padding: scale(20) }]}>
+            <View style={styles.infoBadge}>
+              <Ionicons name="shield-checkmark" size={fontScale(14)} color={COLORS.accent} />
+              <Text style={[styles.infoBadgeText, { fontSize: fontScale(10) }]}>Marco normativo</Text>
+            </View>
+            <Text style={[styles.infoTitle, { fontSize: fontScale(16) }]}>Codigo Penal de Honduras</Text>
+            <Text style={[styles.infoBody, { fontSize: fontScale(13), lineHeight: fontScale(19) }]}>
+              Aplica reglas tecnicas: reduccion por complicidad y tentativa, mitad superior por
+              agravantes, mitad inferior por atenuantes, eximentes completas e incompletas, y
+              concursos real, ideal, medial y continuado.
             </Text>
           </View>
-          <View style={styles.primaryActionArrow}>
-            <Ionicons name="arrow-forward" size={20} color={COLORS.white} />
-          </View>
-        </TouchableOpacity>
 
-        {/* SECONDARY ACTIONS */}
-        <TouchableOpacity
-          activeOpacity={0.85}
-          style={styles.secondaryAction}
-          onPress={() => router.push('/delitos')}
-        >
-          <View style={[styles.secondaryActionIcon, { backgroundColor: COLORS.accent + '22' }]}>
-            <MaterialCommunityIcons name="book-open-variant" size={26} color={COLORS.accent} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.secondaryActionTitle}>Catálogo de delitos</Text>
-            <Text style={styles.secondaryActionDesc}>
-              Buscar, crear, editar y eliminar tipos penales
+          <View style={styles.disclaimer}>
+            <Ionicons name="information-circle-outline" size={fontScale(16)} color={COLORS.textMuted} />
+            <Text style={[styles.disclaimerText, { fontSize: fontScale(11), lineHeight: fontScale(16) }]}>
+              Este calculo es orientativo y no sustituye la funcion jurisdiccional. La determinacion
+              definitiva corresponde a los tribunales de Honduras.
             </Text>
           </View>
-          <Ionicons name="chevron-forward" size={22} color={COLORS.textMuted} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.85}
-          style={styles.secondaryAction}
-          onPress={() => router.push({ pathname: '/delito-form', params: {} })}
-        >
-          <View style={[styles.secondaryActionIcon, { backgroundColor: COLORS.success + '22' }]}>
-            <MaterialCommunityIcons name="plus-circle-outline" size={26} color={COLORS.success} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.secondaryActionTitle}>Registrar nuevo delito</Text>
-            <Text style={styles.secondaryActionDesc}>
-              Añadir un tipo penal personalizado al catálogo
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={22} color={COLORS.textMuted} />
-        </TouchableOpacity>
-
-        {/* INFO PANEL */}
-        <View style={styles.infoPanel}>
-          <View style={styles.infoBadge}>
-            <Ionicons name="shield-checkmark" size={14} color={COLORS.accent} />
-            <Text style={styles.infoBadgeText}>Marco normativo</Text>
-          </View>
-          <Text style={styles.infoTitle}>Código Penal de Honduras</Text>
-          <Text style={styles.infoBody}>
-            Aplica reglas técnicas: reducción por complicidad y tentativa, mitad superior por
-            agravantes, mitad inferior por atenuantes, eximentes completas e incompletas, y
-            concursos real, ideal, medial y continuado.
-          </Text>
-        </View>
-
-        <View style={styles.disclaimer}>
-          <Ionicons name="information-circle-outline" size={16} color={COLORS.textMuted} />
-          <Text style={styles.disclaimerText}>
-            Este cálculo es orientativo y no sustituye la función jurisdiccional. La determinación
-            definitiva corresponde a los tribunales de Honduras.
-          </Text>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </Container>
     </View>
   );
 }
@@ -195,10 +190,7 @@ const styles = StyleSheet.create({
   heroOverlay: {
     position: 'absolute',
     top: 0,
-    right: -20,
-    width: 200,
-    height: 200,
-    borderRadius: 200,
+    right: -scale(20),
     backgroundColor: COLORS.primaryLight,
     opacity: 0.4,
   },
@@ -208,11 +200,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: SPACING.lg,
     gap: SPACING.sm,
+    flexWrap: 'wrap',
   },
   brandIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: RADIUS.md,
     backgroundColor: 'rgba(201,165,92,0.18)',
     alignItems: 'center',
     justifyContent: 'center',
@@ -232,21 +222,21 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: COLORS.white,
-    fontSize: 26,
     fontWeight: '800',
-    lineHeight: 32,
     marginBottom: SPACING.xs,
   },
   heroDesc: {
     color: '#C9D1DD',
-    fontSize: 13,
-    lineHeight: 19,
     marginBottom: SPACING.md,
   },
   statsRow: {
     flexDirection: 'row',
     gap: SPACING.sm,
     marginTop: SPACING.sm,
+  },
+  statsRowTablet: {
+    maxWidth: 500,
+    alignSelf: 'center',
   },
   statCard: {
     flex: 1,
@@ -259,17 +249,14 @@ const styles = StyleSheet.create({
   },
   statValue: {
     color: COLORS.accent,
-    fontSize: 22,
     fontWeight: '800',
   },
   statLabel: {
     color: '#C9D1DD',
-    fontSize: 10,
     marginTop: 2,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
-  content: { flex: 1 },
   sectionLabel: {
     fontSize: 11,
     fontWeight: '700',
@@ -292,27 +279,19 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.md,
   },
   primaryActionIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: RADIUS.md,
     backgroundColor: COLORS.accent + '20',
     alignItems: 'center',
     justifyContent: 'center',
   },
   primaryActionTitle: {
-    fontSize: 17,
     fontWeight: '700',
     color: COLORS.text,
   },
   primaryActionDesc: {
-    fontSize: 12,
     color: COLORS.textSecondary,
     marginTop: 3,
   },
   primaryActionArrow: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
@@ -330,19 +309,14 @@ const styles = StyleSheet.create({
     ...SHADOWS.sm,
   },
   secondaryActionIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: RADIUS.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
   secondaryActionTitle: {
-    fontSize: 15,
     fontWeight: '700',
     color: COLORS.text,
   },
   secondaryActionDesc: {
-    fontSize: 12,
     color: COLORS.textSecondary,
     marginTop: 2,
   },
@@ -367,21 +341,17 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.sm,
   },
   infoBadgeText: {
-    fontSize: 10,
     fontWeight: '700',
     color: COLORS.primary,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
   infoTitle: {
-    fontSize: 16,
     fontWeight: '700',
     color: COLORS.text,
     marginBottom: 6,
   },
   infoBody: {
-    fontSize: 13,
-    lineHeight: 19,
     color: COLORS.textSecondary,
   },
   disclaimer: {
@@ -396,8 +366,6 @@ const styles = StyleSheet.create({
   },
   disclaimerText: {
     flex: 1,
-    fontSize: 11,
-    lineHeight: 16,
     color: COLORS.textSecondary,
     fontStyle: 'italic',
   },

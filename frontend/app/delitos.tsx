@@ -17,10 +17,13 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING, RADIUS, SHADOWS, BACKEND_URL } from '../src/theme';
 import type { Delito, Clasificacion } from '../src/types';
+import { scale, fontScale, useResponsive } from '../src/responsive';
+import Container from '../src/Container';
 
 export default function DelitosCatalog() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { isTablet } = useResponsive();
   const [delitos, setDelitos] = useState<Delito[]>([]);
   const [clasificaciones, setClasificaciones] = useState<Clasificacion[]>([]);
   const [search, setSearch] = useState('');
@@ -139,7 +142,7 @@ export default function DelitosCatalog() {
           </Text>
         )}
         <View style={styles.penaRow}>
-          <MaterialCommunityIcons name="gavel" size={14} color={COLORS.accent} />
+          <MaterialCommunityIcons name="gavel" size={scale(14)} color={COLORS.accent} />
           <Text style={styles.penaText}>{item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}</Text>
         </View>
         <Text style={styles.clasifText} numberOfLines={1}>
@@ -152,12 +155,12 @@ export default function DelitosCatalog() {
           style={styles.actionBtn}
           onPress={() => router.push({ pathname: '/delito-form', params: { id: item.id } })}
         >
-          <Ionicons name="create-outline" size={18} color={COLORS.primary} />
+          <Ionicons name="create-outline" size={scale(18)} color={COLORS.primary} />
           <Text style={styles.actionText}>Editar</Text>
         </TouchableOpacity>
         <View style={styles.actionDivider} />
         <TouchableOpacity style={styles.actionBtn} onPress={() => handleDelete(item)}>
-          <Ionicons name="trash-outline" size={18} color={COLORS.danger} />
+          <Ionicons name="trash-outline" size={scale(18)} color={COLORS.danger} />
           <Text style={[styles.actionText, { color: COLORS.danger }]}>Eliminar</Text>
         </TouchableOpacity>
       </View>
@@ -165,13 +168,13 @@ export default function DelitosCatalog() {
   );
 
   return (
-    <View style={[styles.root, { paddingTop: insets.top }]}>
+    <Container style={[styles.root, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.primaryDark} />
 
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={26} color={COLORS.white} />
+          <Ionicons name="chevron-back" size={scale(26)} color={COLORS.white} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.headerTitle}>Catálogo de Delitos</Text>
@@ -181,14 +184,14 @@ export default function DelitosCatalog() {
           style={styles.addBtn}
           onPress={() => router.push({ pathname: '/delito-form', params: {} })}
         >
-          <Ionicons name="add" size={22} color={COLORS.primary} />
+          <Ionicons name="add" size={scale(22)} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
 
       {/* Search */}
       <View style={styles.searchWrap}>
         <View style={styles.searchBox}>
-          <Ionicons name="search" size={18} color={COLORS.textMuted} />
+          <Ionicons name="search" size={scale(18)} color={COLORS.textMuted} />
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar por nombre, artículo o conducta..."
@@ -198,7 +201,7 @@ export default function DelitosCatalog() {
           />
           {!!search && (
             <TouchableOpacity onPress={() => setSearch('')}>
-              <Ionicons name="close-circle" size={18} color={COLORS.textMuted} />
+              <Ionicons name="close-circle" size={scale(18)} color={COLORS.textMuted} />
             </TouchableOpacity>
           )}
         </View>
@@ -254,7 +257,7 @@ export default function DelitosCatalog() {
             <View style={styles.emptyWrap}>
               <MaterialCommunityIcons
                 name="text-search"
-                size={56}
+                size={scale(56)}
                 color={COLORS.textMuted}
               />
               <Text style={styles.emptyTitle}>Sin resultados</Text>
@@ -272,9 +275,9 @@ export default function DelitosCatalog() {
         onPress={() => router.push({ pathname: '/delito-form', params: {} })}
         activeOpacity={0.85}
       >
-        <Ionicons name="add" size={26} color={COLORS.white} />
+        <Ionicons name="add" size={scale(26)} color={COLORS.white} />
       </TouchableOpacity>
-    </View>
+    </Container>
   );
 }
 
@@ -285,28 +288,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.primary,
     paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm + 4,
+    paddingVertical: SPACING.sm + scale(4),
     gap: SPACING.sm,
   },
   backBtn: {
-    width: 40,
-    height: 40,
+    width: scale(40),
+    height: scale(40),
     borderRadius: RADIUS.md,
     backgroundColor: 'rgba(255,255,255,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   addBtn: {
-    width: 40,
-    height: 40,
+    width: scale(40),
+    height: scale(40),
     borderRadius: RADIUS.md,
     backgroundColor: COLORS.accent,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerTitle: { color: COLORS.white, fontSize: 18, fontWeight: '700' },
-  headerSub: { color: '#C9D1DD', fontSize: 11, marginTop: 2 },
-  searchWrap: { backgroundColor: COLORS.primary, paddingBottom: SPACING.sm + 4 },
+  headerTitle: { color: COLORS.white, fontSize: fontScale(18), fontWeight: '700' },
+  headerSub: { color: '#C9D1DD', fontSize: fontScale(11), marginTop: scale(2) },
+  searchWrap: { backgroundColor: COLORS.primary, paddingBottom: SPACING.sm + scale(4) },
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -314,26 +317,26 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     marginHorizontal: SPACING.md,
     paddingHorizontal: SPACING.md,
-    paddingVertical: Platform.OS === 'ios' ? 10 : 4,
+    paddingVertical: Platform.OS === 'ios' ? scale(10) : scale(4),
     borderRadius: RADIUS.md,
     marginBottom: SPACING.sm,
     ...SHADOWS.sm,
   },
   searchInput: {
     flex: 1,
-    fontSize: 14,
+    fontSize: fontScale(14),
     color: COLORS.text,
-    paddingVertical: 6,
+    paddingVertical: scale(6),
   },
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: scale(6),
     backgroundColor: 'rgba(255,255,255,0.08)',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingVertical: scale(6),
+    paddingHorizontal: scale(12),
     borderRadius: RADIUS.pill,
-    marginRight: 8,
+    marginRight: scale(8),
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.12)',
   },
@@ -341,78 +344,78 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.accent,
     borderColor: COLORS.accent,
   },
-  chipText: { color: '#D5DDEA', fontSize: 12, fontWeight: '600' },
+  chipText: { color: '#D5DDEA', fontSize: fontScale(12), fontWeight: '600' },
   chipTextActive: { color: COLORS.primary },
   chipCount: {
     backgroundColor: 'rgba(255,255,255,0.12)',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingHorizontal: scale(6),
+    paddingVertical: scale(2),
     borderRadius: RADIUS.pill,
-    minWidth: 22,
+    minWidth: scale(22),
     alignItems: 'center',
   },
   chipCountActive: { backgroundColor: COLORS.primary },
-  chipCountText: { fontSize: 10, fontWeight: '700', color: '#D5DDEA' },
+  chipCountText: { fontSize: fontScale(10), fontWeight: '700', color: '#D5DDEA' },
   chipCountTextActive: { color: COLORS.accent },
   card: {
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.lg,
-    marginBottom: SPACING.sm + 4,
+    marginBottom: SPACING.sm + scale(4),
     borderWidth: 1,
     borderColor: COLORS.borderLight,
     overflow: 'hidden',
     ...SHADOWS.sm,
   },
   cardBody: { padding: SPACING.md },
-  cardHeader: { flexDirection: 'row', marginBottom: 6 },
+  cardHeader: { flexDirection: 'row', marginBottom: scale(6) },
   cardTitle: {
-    fontSize: 15,
+    fontSize: fontScale(15),
     fontWeight: '700',
     color: COLORS.text,
-    marginBottom: 6,
+    marginBottom: scale(6),
   },
-  metaRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
+  metaRow: { flexDirection: 'row', gap: scale(6), flexWrap: 'wrap' },
   articuloPill: {
     backgroundColor: COLORS.primary + '12',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingHorizontal: scale(8),
+    paddingVertical: scale(3),
     borderRadius: RADIUS.sm,
   },
-  articuloText: { fontSize: 11, fontWeight: '700', color: COLORS.primary },
+  articuloText: { fontSize: fontScale(11), fontWeight: '700', color: COLORS.primary },
   gravePill: {
     backgroundColor: COLORS.danger + '15',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingHorizontal: scale(8),
+    paddingVertical: scale(3),
     borderRadius: RADIUS.sm,
   },
   gravePillText: {
-    fontSize: 9,
+    fontSize: fontScale(9),
     fontWeight: '800',
     color: COLORS.danger,
-    letterSpacing: 0.5,
+    letterSpacing: fontScale(0.5),
   },
   cardDesc: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: COLORS.textSecondary,
-    lineHeight: 17,
-    marginTop: 4,
+    lineHeight: fontScale(17),
+    marginTop: scale(4),
   },
   penaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: scale(6),
     marginTop: SPACING.sm,
     backgroundColor: COLORS.accent + '12',
-    paddingVertical: 6,
-    paddingHorizontal: 10,
+    paddingVertical: scale(6),
+    paddingHorizontal: scale(10),
     borderRadius: RADIUS.sm,
     alignSelf: 'flex-start',
   },
-  penaText: { fontSize: 12, fontWeight: '700', color: COLORS.primary },
+  penaText: { fontSize: fontScale(12), fontWeight: '700', color: COLORS.primary },
   clasifText: {
-    fontSize: 11,
+    fontSize: fontScale(11),
     color: COLORS.textMuted,
-    marginTop: 8,
+    marginTop: scale(8),
     fontStyle: 'italic',
   },
   cardActions: {
@@ -425,25 +428,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
-    paddingVertical: 10,
+    gap: scale(6),
+    paddingVertical: scale(10),
   },
-  actionText: { fontSize: 13, fontWeight: '600', color: COLORS.primary },
+  actionText: { fontSize: fontScale(13), fontWeight: '600', color: COLORS.primary },
   actionDivider: { width: 1, backgroundColor: COLORS.borderLight },
   loadingWrap: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   emptyWrap: {
     alignItems: 'center',
-    paddingVertical: 60,
-    gap: 8,
+    paddingVertical: scale(60),
+    gap: scale(8),
   },
-  emptyTitle: { fontSize: 16, fontWeight: '700', color: COLORS.text },
-  emptyDesc: { fontSize: 13, color: COLORS.textMuted, textAlign: 'center' },
+  emptyTitle: { fontSize: fontScale(16), fontWeight: '700', color: COLORS.text },
+  emptyDesc: { fontSize: fontScale(13), color: COLORS.textMuted, textAlign: 'center' },
   fab: {
     position: 'absolute',
     right: SPACING.md,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: scale(56),
+    height: scale(56),
+    borderRadius: scale(28),
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
