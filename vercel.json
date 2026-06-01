@@ -1,5 +1,7 @@
 {
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": ""
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/frontend/dist/$1" }
+  ]
 }
