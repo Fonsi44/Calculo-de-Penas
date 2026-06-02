@@ -22,12 +22,12 @@ export const AGRAVANTES: CatalogoItem[] = [
 
 export const ATENUANTES: CatalogoItem[] = [
   { id: 'eximente_incompleta', articulo: 'Art. 26.1 CP', nombre: 'Eximente incompleta', descripcion: 'Cuando no concurran todos los requisitos de una eximente' },
+  { id: 'grave_adiccion', articulo: 'Art. 26.2 CP', nombre: 'Grave adicción', descripcion: 'Actuar bajo influencia de grave adicción a sustancias' },
   { id: 'arrebato', articulo: 'Art. 26.3 CP', nombre: 'Arrebato u obcecación', descripcion: 'Actuar por estímulos tan poderosos que produzcan arrebato' },
   { id: 'confesion', articulo: 'Art. 26.4 CP', nombre: 'Confesión del delito', descripcion: 'Haber confesado el delito antes de conocer el procedimiento' },
   { id: 'reparacion', articulo: 'Art. 26.5 CP', nombre: 'Reparación del daño', descripcion: 'Haber reparado el daño o disminuido sus efectos' },
   { id: 'dilaciones', articulo: 'Art. 26.6 CP', nombre: 'Dilaciones indebidas', descripcion: 'Dilaciones extraordinarias e indebidas en el procedimiento' },
   { id: 'menor_edad', articulo: 'Art. 26.7 CP', nombre: 'Menor de 21 años', descripcion: 'Ser menor de veintiún años' },
-  { id: 'grave_adiccion', articulo: 'Art. 26.2 CP', nombre: 'Grave adicción', descripcion: 'Actuar bajo influencia de grave adicción a sustancias' },
 ];
 
 export const EXIMENTES: CatalogoItem[] = [
@@ -59,5 +59,5 @@ export const TIPOS_CONCURSO: CatalogoItem[] = [
   { id: 'real', nombre: 'Concurso Real', articulo: 'Art. 37 CP', descripcion: 'Pluralidad de hechos delictivos independientes. Se acumulan las penas respetando los límites legales máximos.' },
   { id: 'ideal', nombre: 'Concurso Ideal', articulo: 'Art. 36 CP', descripcion: 'Un solo hecho constituye dos o más delitos. Se aplica la pena del delito más grave en su mitad superior.' },
   { id: 'medial', nombre: 'Concurso Medial', articulo: 'Art. 36.2 CP', descripcion: 'Un delito es medio necesario para cometer otro. Se aplica la pena superior en grado a la del delito más grave.' },
-  { id: 'continuado', nombre: 'Delito Continuado', articulo: 'Art. 35 CP', descripcion: 'Pluralidad de acciones con misma finalidad delictiva. Pena aumentada hasta el máximo legal.' },
+  { id: 'continuado', nombre: 'Delito Continuado', articulo: 'Art. 35 CP', descripcion: 'Pluralidad de acciones con misma finalidad delictiva. Pena en mitad superior del delito más grave.' },
 ];

@@ -31,13 +31,14 @@ export default function Calculadora() {
   const [loading, setLoading] = useState(true);
   const [calculating, setCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
     fetch('/api/delitos?limit=1000')
       .then(r => r.json())
       .then(d => setDelitos(Array.isArray(d) ? d : []))
-      .catch(e => console.warn(e))
+      .catch(e => { setFetchError(e.message || 'Error al cargar delitos'); console.warn(e); })
       .finally(() => setLoading(false));
   }, []);
 
@@ -83,7 +84,10 @@ export default function Calculadora() {
 
   const goPrev = () => {
     if (step === 7 && configs.length === 1) { setStep(5); return; }
-    if (step === 3 && current?.delito && !current.delito.tiene_pena_alternativa) { setStep(1); return; }
+    if (step === 3 && current?.delito && !current.delito.tiene_pena_alternativa) {
+      if (configs.length > 1) { setStep(5); return; }
+      setStep(1); return;
+    }
     if (step > 1) setStep((step - 1) as Step);
   };
 
@@ -235,7 +239,15 @@ export default function Calculadora() {
             )}
 
             <div className="space-y-1.5">
-              {filtered.length === 0 ? (
+              {fetchError ? (
+                <div className="bg-danger/10 border border-danger/30 rounded-lg p-3 text-center">
+                  <p className="text-sm font-semibold text-danger mb-1">Error de conexión</p>
+                  <p className="text-xs text-text-muted">{fetchError}</p>
+                  <button onClick={() => { setLoading(true); setFetchError(null); fetch('/api/delitos?limit=1000').then(r => r.json()).then(d => setDelitos(Array.isArray(d) ? d : [])).catch(e => setFetchError(e.message)).finally(() => setLoading(false)); }} className="mt-2 px-3 py-1.5 bg-primary text-white text-xs rounded-md hover:bg-primary-light transition-colors">
+                    Reintentar
+                  </button>
+                </div>
+              ) : filtered.length === 0 ? (
                 <p className="text-center text-text-muted text-sm py-8">Sin resultados</p>
               ) : (
                 filtered.map(d => (

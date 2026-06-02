@@ -206,7 +206,7 @@ export function aplicar_concurso(penas: ResultadoIndividual[], tipo_concurso: st
     const [pena_min, pena_max] = aplicar_mitad_superior(delito_mas_grave.pena_min, delito_mas_grave.pena_max);
     return {
       pena_min, pena_max,
-      descripcion: 'Delito Continuado (Art. 35 CP): Pluralidad de acciones con misma finalidad. Pena en mitad superior.',
+      descripcion: 'Delito Continuado (Art. 35 CP): Pluralidad de acciones con misma finalidad delictiva. Pena en mitad superior del delito más grave.',
       articulo: 'Art. 35 CP',
     };
   }
