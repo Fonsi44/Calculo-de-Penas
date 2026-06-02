@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Home, Search, Gavel, Plus, X, ClipboardList, Scale, Check, Minus } from 'lucide-react';
 import { AGRAVANTES, ATENUANTES, EXIMENTES, GRADOS_AUTORIA, GRADOS_EJECUCION, TIPOS_CONCURSO } from '@/lib/catalogos';
 import type { Delito, DelitoConfig, CatalogoItem, Step } from '../types';
+import { ErrorBoundary } from '../error-boundary';
 
 const STEPS = [
   { num: 1, label: 'Delito', icon: '🔍' },
@@ -55,7 +56,7 @@ export default function Calculadora() {
       agravantes: [],
       atenuantes: [],
       eximentes: [],
-      eximente_completa: false,
+      eximente_completa: null,
     };
     const next = [...configs];
     next[currentIdx] = cfg;
@@ -135,6 +136,7 @@ export default function Calculadora() {
       setResultado(data);
       setStep(8);
     } catch (e: any) {
+      console.error('[calcular] Error:', e);
       setError(e.message || 'No se pudo calcular la pena');
     } finally {
       setCalculating(false);
@@ -365,13 +367,13 @@ export default function Calculadora() {
                     key={e.id}
                     onClick={() => {
                       if (e.completa) {
-                        updateCurrent({ eximente_completa: !current?.eximente_completa, eximentes: [] });
+                        updateCurrent({ eximente_completa: current?.eximente_completa === e.id ? null : e.id, eximentes: [] });
                       } else {
-                        updateCurrent({ eximentes: toggle(current?.eximentes || [], e.id), eximente_completa: false });
+                        updateCurrent({ eximentes: toggle(current?.eximentes || [], e.id), eximente_completa: null });
                       }
                     }}
                     className={`w-full text-left p-2.5 rounded-lg border transition-all ${
-                      current?.eximente_completa && e.completa ? 'border-accent bg-accent/5' :
+                      current?.eximente_completa === e.id ? 'border-accent bg-accent/5' :
                       current?.eximentes.includes(e.id) ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/50'
                     }`}
                   >
@@ -558,74 +560,84 @@ export default function Calculadora() {
 
         {/* Step 8: Resultado */}
         {step === 8 && resultado && (
-          <div>
-            <div className="bg-surface border border-accent/30 rounded-lg p-4 mb-3 text-center shadow-md">
-              <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
-              <p className="text-xl font-extrabold text-primary">{resultado.pena_principal}</p>
-            </div>
-
-            {resultado.penas_accesorias?.length > 0 && (
-              <div className="bg-surface border border-border-light rounded-lg p-3 mb-2">
-                <p className="font-bold text-xs text-text mb-1">Penas accesorias</p>
-                <ul className="list-disc list-inside text-xs text-text-muted">
-                  {resultado.penas_accesorias.map((p: string, i: number) => (
-                    <li key={i}>{p}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {resultado.delitos_analizados?.map((d: any, i: number) => (
-              <div key={i} className="bg-surface border border-border-light rounded-lg p-3 mb-2 shadow-sm">
-                <div className="flex items-center gap-2 mb-1">
-                  <Gavel size={14} className="text-accent" />
-                  <p className="font-bold text-sm text-text">{d.nombre}</p>
-                </div>
-                <div className="grid grid-cols-2 gap-1 text-xs text-text-muted mb-1">
-                  <span>Artículo: {d.articulo}</span>
-                  <span>Gravedad: {d.gravedad}</span>
-                  <span>Pena base: {d.pena_base_texto}</span>
-                  <span>Pena individual: {d.pena_individual_texto}</span>
-                </div>
-                {d.agravantes_aplicadas?.length > 0 && (
-                  <p className="text-[11px] text-text-muted mb-0.5">
-                    <span className="font-semibold text-danger">Agravantes:</span> {d.agravantes_aplicadas.join(', ')}
-                  </p>
-                )}
-                {d.atenuantes_aplicadas?.length > 0 && (
-                  <p className="text-[11px] text-text-muted mb-0.5">
-                    <span className="font-semibold text-success">Atenuantes:</span> {d.atenuantes_aplicadas.join(', ')}
-                  </p>
-                )}
-              </div>
-            ))}
-
-            <details className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm">
-              <summary className="font-bold text-xs text-text cursor-pointer">Análisis jurídico completo</summary>
-              <pre className="mt-2 text-[11px] text-text-muted whitespace-pre-wrap font-sans leading-4">
-                {resultado.analisis_juridico}
-              </pre>
-            </details>
-
-            <div className="bg-warning/10 border border-warning/30 rounded-lg p-2.5 mb-3">
-              <p className="text-[11px] text-text-muted italic">{resultado.disclaimer}</p>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={reset}
-                className="flex-1 py-2.5 rounded-lg border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
-              >
+          <ErrorBoundary fallback={
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <p className="font-bold text-danger text-sm mb-2">Error al mostrar resultados</p>
+              <p className="text-xs text-text-muted mb-4">Ocurrió un error al renderizar el cálculo. Intente nuevamente.</p>
+              <button onClick={reset} className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-light transition-colors">
                 Nueva consulta
               </button>
-              <Link
-                href="/"
-                className="flex-1 py-2.5 rounded-lg bg-primary text-white font-bold text-sm text-center hover:bg-primary-light transition-colors"
-              >
-                Inicio
-              </Link>
             </div>
-          </div>
+          }>
+            <div>
+              <div className="bg-surface border border-accent/30 rounded-lg p-4 mb-3 text-center shadow-md">
+                <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
+                <p className="text-xl font-extrabold text-primary">{resultado.pena_principal}</p>
+              </div>
+
+              {resultado.penas_accesorias?.length > 0 && (
+                <div className="bg-surface border border-border-light rounded-lg p-3 mb-2">
+                  <p className="font-bold text-xs text-text mb-1">Penas accesorias</p>
+                  <ul className="list-disc list-inside text-xs text-text-muted">
+                    {resultado.penas_accesorias.map((p: string, i: number) => (
+                      <li key={i}>{p}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {resultado.delitos_analizados?.map((d: any, i: number) => (
+                <div key={i} className="bg-surface border border-border-light rounded-lg p-3 mb-2 shadow-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Gavel size={14} className="text-accent" />
+                    <p className="font-bold text-sm text-text">{d.nombre}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1 text-xs text-text-muted mb-1">
+                    <span>Artículo: {d.articulo}</span>
+                    <span>Gravedad: {d.gravedad}</span>
+                    <span>Pena base: {d.pena_base_texto}</span>
+                    <span>Pena individual: {d.pena_individual_texto}</span>
+                  </div>
+                  {d.agravantes_aplicadas?.length > 0 && (
+                    <p className="text-[11px] text-text-muted mb-0.5">
+                      <span className="font-semibold text-danger">Agravantes:</span> {d.agravantes_aplicadas.join(', ')}
+                    </p>
+                  )}
+                  {d.atenuantes_aplicadas?.length > 0 && (
+                    <p className="text-[11px] text-text-muted mb-0.5">
+                      <span className="font-semibold text-success">Atenuantes:</span> {d.atenuantes_aplicadas.join(', ')}
+                    </p>
+                  )}
+                </div>
+              ))}
+
+              <details className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm">
+                <summary className="font-bold text-xs text-text cursor-pointer">Análisis jurídico completo</summary>
+                <pre className="mt-2 text-[11px] text-text-muted whitespace-pre-wrap font-sans leading-4">
+                  {resultado.analisis_juridico}
+                </pre>
+              </details>
+
+              <div className="bg-warning/10 border border-warning/30 rounded-lg p-2.5 mb-3">
+                <p className="text-[11px] text-text-muted italic">{resultado.disclaimer}</p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={reset}
+                  className="flex-1 py-2.5 rounded-lg border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
+                >
+                  Nueva consulta
+                </button>
+                <Link
+                  href="/"
+                  className="flex-1 py-2.5 rounded-lg bg-primary text-white font-bold text-sm text-center hover:bg-primary-light transition-colors"
+                >
+                  Inicio
+                </Link>
+              </div>
+            </div>
+          </ErrorBoundary>
         )}
       </div>
 

@@ -41,7 +41,7 @@ export interface DelitoConfig {
   agravantes: string[];
   atenuantes: string[];
   eximentes: string[];
-  eximente_completa: boolean;
+  eximente_completa: string | null;
 }
 
 export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;

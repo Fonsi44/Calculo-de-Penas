@@ -24,7 +24,7 @@ export interface DelitoConfig {
   agravantes: string[];
   atenuantes: string[];
   eximentes: string[];
-  eximente_completa: boolean;
+  eximente_completa: string | null;
 }
 
 export interface CalculoRequest {
