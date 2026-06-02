@@ -86,6 +86,7 @@ export default function Calculadora() {
       return;
     }
     if (step === 5 && configs.length === 1) { setStep(7); return; }
+    if (step === 7) return; // Step 7 must use "Calcular pena" button
     if (step < 8) setStep((step + 1) as Step);
   };
 
@@ -681,14 +682,31 @@ export default function Calculadora() {
           >
             Atrás
           </button>
-          <button
-            onClick={goNext}
-            disabled={step === 1 && !current}
-            className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-md bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-50"
-          >
-            Continuar
-            <ChevronRight size={16} />
-          </button>
+          {step === 7 ? (
+            <button
+              onClick={calcular}
+              disabled={calculating}
+              className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-md bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-70"
+            >
+              {calculating ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Calculando...
+                </span>
+              ) : (
+                'Calcular pena'
+              )}
+            </button>
+          ) : (
+            <button
+              onClick={goNext}
+              disabled={step === 1 && !current}
+              className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-md bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-50"
+            >
+              Continuar
+              <ChevronRight size={16} />
+            </button>
+          )}
         </div>
       )}
     </div>
