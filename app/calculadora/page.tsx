@@ -43,6 +43,12 @@ export default function Calculadora() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (resultado) {
+      setStep(8);
+    }
+  }, [resultado]);
+
   const current = configs[currentIdx];
 
   const selectDelito = (d: Delito) => {
@@ -138,7 +144,6 @@ export default function Calculadora() {
       }
       const data = await res.json();
       setResultado(data);
-      setStep(8);
     } catch (e: any) {
       console.error('[calcular] Error:', e);
       setError(e.message || 'No se pudo calcular la pena');
