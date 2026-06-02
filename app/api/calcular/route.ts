@@ -5,7 +5,16 @@ import { calcular_pena } from '@/lib/calculo';
 import type { DelitoBase } from '@/lib/calculo';
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  let body: any;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: 'JSON inválido en el cuerpo de la solicitud' }, { status: 400 });
+  }
+
+  if (!body || !Array.isArray(body.delitos) || body.delitos.length === 0) {
+    return Response.json({ error: 'Se requiere al menos un delito para calcular la pena' }, { status: 400 });
+  }
 
   const delitoIds: string[] = body.delitos.map((d: any) => d.delito_id);
   const rows = await db.select().from(delitos).where(inArray(delitos.id, delitoIds));
@@ -28,7 +37,7 @@ export async function POST(request: Request) {
 
   for (const config of body.delitos) {
     if (!delitosMap.has(config.delito_id)) {
-      return Response.json({ error: `Delito ${config.delito_id} no encontrado` }, { status: 404 });
+      return Response.json({ error: `Delito ${config.delito_id} no encontrado en la base de datos` }, { status: 404 });
     }
   }
 
@@ -36,6 +45,6 @@ export async function POST(request: Request) {
     const result = calcular_pena(body, delitosMap);
     return Response.json(result);
   } catch (e: any) {
-    return Response.json({ error: e.message }, { status: 400 });
+    return Response.json({ error: e.message || 'Error interno al calcular la pena' }, { status: 400 });
   }
 }

@@ -559,7 +559,7 @@ export default function Calculadora() {
         )}
 
         {/* Step 8: Resultado */}
-        {step === 8 && resultado && (
+        {step === 8 && resultado?.pena_principal && (
           <ErrorBoundary fallback={
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <p className="font-bold text-danger text-sm mb-2">Error al mostrar resultados</p>
@@ -570,12 +570,20 @@ export default function Calculadora() {
             </div>
           }>
             <div>
-              <div className="bg-surface border border-accent/30 rounded-lg p-4 mb-3 text-center shadow-md">
-                <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
-                <p className="text-xl font-extrabold text-primary">{resultado.pena_principal}</p>
-              </div>
+              {resultado.pena_principal === 'EXENTO' ? (
+                <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mb-3 text-center shadow-md">
+                  <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
+                  <p className="text-xl font-extrabold text-warning">EXENTO</p>
+                  <p className="text-xs text-text-muted mt-2">Se ha aplicado una eximente completa. El delito no conlleva pena.</p>
+                </div>
+              ) : (
+                <div className="bg-surface border border-accent/30 rounded-lg p-4 mb-3 text-center shadow-md">
+                  <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
+                  <p className="text-xl font-extrabold text-primary">{resultado.pena_principal}</p>
+                </div>
+              )}
 
-              {resultado.penas_accesorias?.length > 0 && (
+              {Array.isArray(resultado.penas_accesorias) && resultado.penas_accesorias.length > 0 && (
                 <div className="bg-surface border border-border-light rounded-lg p-3 mb-2">
                   <p className="font-bold text-xs text-text mb-1">Penas accesorias</p>
                   <ul className="list-disc list-inside text-xs text-text-muted">
@@ -586,11 +594,14 @@ export default function Calculadora() {
                 </div>
               )}
 
-              {resultado.delitos_analizados?.map((d: any, i: number) => (
+              {(resultado.delitos_analizados || []).map((d: any, i: number) => (
                 <div key={i} className="bg-surface border border-border-light rounded-lg p-3 mb-2 shadow-sm">
                   <div className="flex items-center gap-2 mb-1">
                     <Gavel size={14} className="text-accent" />
-                    <p className="font-bold text-sm text-text">{d.nombre}</p>
+                    <p className="font-bold text-sm text-text flex-1">{d.nombre}</p>
+                    {d.exento && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-warning/10 text-warning font-bold">EXENTO</span>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-1 text-xs text-text-muted mb-1">
                     <span>Artículo: {d.articulo}</span>
@@ -598,20 +609,27 @@ export default function Calculadora() {
                     <span>Pena base: {d.pena_base_texto}</span>
                     <span>Pena individual: {d.pena_individual_texto}</span>
                   </div>
+                  {d.modificaciones?.length > 0 && (
+                    <div className="mt-1.5 mb-1">
+                      {d.modificaciones.map((mod: string, j: number) => (
+                        <p key={j} className="text-[11px] text-text-muted">→ {mod}</p>
+                      ))}
+                    </div>
+                  )}
                   {d.agravantes_aplicadas?.length > 0 && (
                     <p className="text-[11px] text-text-muted mb-0.5">
-                      <span className="font-semibold text-danger">Agravantes:</span> {d.agravantes_aplicadas.join(', ')}
+                      <span className="font-semibold text-danger">Agravantes aplicadas:</span> {d.agravantes_aplicadas.join(', ')}
                     </p>
                   )}
                   {d.atenuantes_aplicadas?.length > 0 && (
                     <p className="text-[11px] text-text-muted mb-0.5">
-                      <span className="font-semibold text-success">Atenuantes:</span> {d.atenuantes_aplicadas.join(', ')}
+                      <span className="font-semibold text-success">Atenuantes aplicadas:</span> {d.atenuantes_aplicadas.join(', ')}
                     </p>
                   )}
                 </div>
               ))}
 
-              <details className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm">
+              <details open className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm">
                 <summary className="font-bold text-xs text-text cursor-pointer">Análisis jurídico completo</summary>
                 <pre className="mt-2 text-[11px] text-text-muted whitespace-pre-wrap font-sans leading-4">
                   {resultado.analisis_juridico}

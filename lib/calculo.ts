@@ -52,8 +52,31 @@ export interface ResultadoConcurso {
   articulo: string;
 }
 
+export interface DelitoAnalizado {
+  delito_id: string;
+  nombre: string;
+  articulo: string;
+  clasificacion: string;
+  pena_base_min: number;
+  pena_base_max: number;
+  pena_base_texto: string;
+  pena_individual_min: number;
+  pena_individual_max: number;
+  pena_individual_texto: string;
+  pena_recomendada_meses: number;
+  pena_recomendada_texto: string;
+  gravedad: string;
+  grado_autoria: string;
+  grado_ejecucion: string;
+  agravantes_aplicadas: string[];
+  atenuantes_aplicadas: string[];
+  penas_accesorias: string[];
+  modificaciones: string[];
+  exento: boolean;
+}
+
 export interface ResultadoCalculo {
-  delitos_analizados: any[];
+  delitos_analizados: DelitoAnalizado[];
   tipo_concurso: string;
   concurso_descripcion: string;
   concurso_articulo: string;
@@ -214,7 +237,7 @@ export function aplicar_concurso(penas: ResultadoIndividual[], tipo_concurso: st
   return { pena_min: 0, pena_max: 0, descripcion: 'Tipo de concurso no reconocido', articulo: '' };
 }
 
-export function generar_analisis_juridico(delitos: any[], tipo_concurso: string, resultado_concurso: ResultadoConcurso): string {
+export function generar_analisis_juridico(delitos: DelitoAnalizado[], tipo_concurso: string, resultado_concurso: ResultadoConcurso): string {
   const lineas: string[] = [];
   const now = new Date();
   const fecha = now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -273,7 +296,7 @@ export function generar_analisis_juridico(delitos: any[], tipo_concurso: string,
 }
 
 export function calcular_pena(request: CalculoRequest, delitosMap: Map<string, DelitoBase>): ResultadoCalculo {
-  const resultados_individuales: any[] = [];
+  const resultados_individuales: DelitoAnalizado[] = [];
   const penas_para_concurso: ResultadoIndividual[] = [];
   const todas_penas_accesorias: string[] = [];
   const now = new Date();
