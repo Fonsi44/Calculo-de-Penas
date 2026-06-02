@@ -1,0 +1,279 @@
+{
+  "id": "d4e94b7c-ae2e-47d0-8fec-15d564319ab9",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.articulos_constitucion": {
+      "name": "articulos_constitucion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "articulo": {
+          "name": "articulo",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "titulo": {
+          "name": "titulo",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "capitulo": {
+          "name": "capitulo",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "texto": {
+          "name": "texto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.delitos": {
+      "name": "delitos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "articulo": {
+          "name": "articulo",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "conducta": {
+          "name": "conducta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "clasificacion": {
+          "name": "clasificacion",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rama_id": {
+          "name": "rama_id",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "constitucion_articulo_id": {
+          "name": "constitucion_articulo_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pena_minima_meses": {
+          "name": "pena_minima_meses",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pena_maxima_meses": {
+          "name": "pena_maxima_meses",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tiene_pena_alternativa": {
+          "name": "tiene_pena_alternativa",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "pena_alternativa_min": {
+          "name": "pena_alternativa_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "pena_alternativa_max": {
+          "name": "pena_alternativa_max",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "penas_accesorias": {
+          "name": "penas_accesorias",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'"
+        },
+        "observaciones": {
+          "name": "observaciones",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "es_grave": {
+          "name": "es_grave",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "creado_en": {
+          "name": "creado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "actualizado_en": {
+          "name": "actualizado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "delitos_rama_id_ramas_juridicas_id_fk": {
+          "name": "delitos_rama_id_ramas_juridicas_id_fk",
+          "tableFrom": "delitos",
+          "tableTo": "ramas_juridicas",
+          "columnsFrom": [
+            "rama_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "delitos_constitucion_articulo_id_articulos_constitucion_id_fk": {
+          "name": "delitos_constitucion_articulo_id_articulos_constitucion_id_fk",
+          "tableFrom": "delitos",
+          "tableTo": "articulos_constitucion",
+          "columnsFrom": [
+            "constitucion_articulo_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "delitos_nombre_articulo_unique": {
+          "name": "delitos_nombre_articulo_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nombre",
+            "articulo"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ramas_juridicas": {
+      "name": "ramas_juridicas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(100)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nivel": {
+          "name": "nivel",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "orden": {
+          "name": "orden",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ramas_juridicas_parent_id_ramas_juridicas_id_fk": {
+          "name": "ramas_juridicas_parent_id_ramas_juridicas_id_fk",
+          "tableFrom": "ramas_juridicas",
+          "tableTo": "ramas_juridicas",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, integer, boolean, timestamp, varchar, foreignKey } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique } from 'drizzle-orm/pg-core';
 
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
@@ -39,4 +39,5 @@ export const delitos = pgTable('delitos', {
 }, (table) => ({
   ramaRef: foreignKey({ columns: [table.ramaId], foreignColumns: [ramasJuridicas.id] }),
   constitucionRef: foreignKey({ columns: [table.constitucionArticuloId], foreignColumns: [articulosConstitucion.id] }),
+  uniqueNombreArticulo: unique('delitos_nombre_articulo_unique').on(table.nombre, table.articulo),
 }));

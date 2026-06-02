@@ -42,6 +42,13 @@ interface DelitoSeed {
 async function seed() {
   console.log('Iniciando seed...\n');
 
+  // Check if data already exists to prevent duplicate seeding
+  const existing = await sql`SELECT COUNT(*) as total FROM delitos`;
+  if (Number(existing[0].total) > 0) {
+    console.log(`✓ BD ya contiene ${existing[0].total} delitos — saltando seed`);
+    process.exit(0);
+  }
+
   // Ramas jurídicas — batch insert
   const ramasPath = path.resolve('data/ramas_juridicas.json');
   if (fs.existsSync(ramasPath)) {
