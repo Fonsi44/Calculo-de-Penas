@@ -123,11 +123,15 @@ export default function Calculadora() {
         })),
         tipo_concurso: configs.length > 1 ? tipoConcurso : 'ninguno',
       };
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const res = await fetch('/api/calcular', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.error || 'Error al calcular');
@@ -536,8 +540,12 @@ export default function Calculadora() {
             )}
 
             {error && (
-              <div className="bg-danger/10 border border-danger/30 rounded-lg p-2.5 mb-3">
-                <p className="text-xs font-semibold text-danger">{error}</p>
+              <div className="bg-danger/10 border border-danger/30 rounded-lg p-3 mb-3 text-center">
+                <p className="text-sm font-bold text-danger mb-1">Error al calcular</p>
+                <p className="text-xs text-text-muted">{error}</p>
+                <button onClick={calcular} className="mt-2 px-3 py-1.5 bg-danger text-white text-xs rounded-md font-semibold hover:opacity-90 transition-opacity">
+                  Reintentar
+                </button>
               </div>
             )}
 
@@ -629,7 +637,7 @@ export default function Calculadora() {
                 </div>
               ))}
 
-              <details open className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm">
+              <details className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm" open>
                 <summary className="font-bold text-xs text-text cursor-pointer">Análisis jurídico completo</summary>
                 <pre className="mt-2 text-[11px] text-text-muted whitespace-pre-wrap font-sans leading-4">
                   {resultado.analisis_juridico}
