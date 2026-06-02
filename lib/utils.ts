@@ -27,7 +27,7 @@ export function reducir_grado(minimo: number, maximo: number, grados: number = 1
 export function aumentar_grado(minimo: number, maximo: number, grados: number = 1): [number, number] {
   for (let i = 0; i < grados; i++) {
     const nuevo_min = maximo;
-    const nuevo_max = Math.min(480, Math.floor(maximo * 1.5));
+    const nuevo_max = Math.min(480, Math.floor(maximo + (maximo - minimo) / 2));
     minimo = nuevo_min;
     maximo = nuevo_max;
   }
