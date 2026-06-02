@@ -1,17 +1,68 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "./auth-context";
+import { ThemeProvider } from "./theme-context";
+import { UserMenu } from "./user-menu";
+import { GlobalErrorBoundary } from "./global-error-boundary";
+
+const siteUrl = "https://calculo-de-penas-nextjs.vercel.app";
 
 export const metadata: Metadata = {
   title: "LEX HONDURAS — Motor de Cálculo de Penas",
-  description: "Código Penal de Honduras (Decreto 130-2017). Determine la pena con precisión técnica.",
+  description: "Código Penal de Honduras (Decreto 130-2017). Determine la pena con precisión técnica. Herramienta profesional para abogados y juristas.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "LEX HONDURAS",
+    statusBarStyle: "black-translucent",
+  },
+  openGraph: {
+    title: "LEX HONDURAS — Motor de Cálculo de Penas",
+    description: "Código Penal de Honduras (Decreto 130-2017). Calcule penas con precisión técnica: concurso real, ideal, continuado, agravantes, atenuantes, eximentes.",
+    url: siteUrl,
+    siteName: "LEX HONDURAS",
+    locale: "es_HN",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport = { themeColor: "#1A2B4A" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className="h-full">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="es" className="h-full" suppressHydrationWarning>
+      <head>
+        <link rel="apple-touch-icon" href="/icon-192.svg" />
+        <link rel="canonical" href={siteUrl} />
+        <meta name="application-name" content="LEX HONDURAS" />
+        <meta name="author" content="LEX HONDURAS" />
+        <meta name="language" content="es" />
+        <meta name="robots" content="index, follow" />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                var theme = localStorage.getItem('lex-theme');
+                if (theme === 'dark') document.documentElement.classList.add('dark');
+              } catch(e) {}
+            })();
+          `
+        }} />
+      </head>
+      <body className="min-h-full flex flex-col">
+        <GlobalErrorBoundary>
+          <ThemeProvider>
+            <AuthProvider>
+              <UserMenu />
+              {children}
+            </AuthProvider>
+          </ThemeProvider>
+        </GlobalErrorBoundary>
+      </body>
     </html>
   );
 }

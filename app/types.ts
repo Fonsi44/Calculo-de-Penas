@@ -22,15 +22,6 @@ export interface Clasificacion {
   cantidad: number;
 }
 
-export interface CatalogoItem {
-  id: string;
-  nombre: string;
-  articulo?: string;
-  descripcion?: string;
-  completa?: boolean;
-  efecto?: string;
-}
-
 export interface DelitoConfig {
   delito: Delito;
   pena_seleccionada: 'prision' | 'multa';

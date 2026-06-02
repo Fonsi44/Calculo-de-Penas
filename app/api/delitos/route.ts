@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { delitos } from '@/lib/schema';
-import { and, or, ilike, isNotNull } from 'drizzle-orm';
+import { and, or, ilike } from 'drizzle-orm';
+import { delitoCreateSchema, validate } from '@/lib/validation';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -44,22 +45,33 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: 'JSON inválido' }, { status: 400 });
+  }
+
+  const parsed = validate(delitoCreateSchema, body);
+  if (!parsed.success) {
+    return Response.json({ error: parsed.error }, { status: 400 });
+  }
+
   const result = await db.insert(delitos).values({
-    nombre: body.nombre,
-    articulo: body.articulo,
-    conducta: body.conducta,
-    clasificacion: body.clasificacion,
-    ramaId: body.rama_id,
-    constitucionArticuloId: body.constitucion_articulo_id,
-    penaMinimaMeses: body.pena_minima_meses,
-    penaMaximaMeses: body.pena_maxima_meses,
-    tienePenaAlternativa: body.tiene_pena_alternativa ?? false,
-    penaAlternativaMin: body.pena_alternativa_min ?? 0,
-    penaAlternativaMax: body.pena_alternativa_max ?? 0,
-    penasAccesorias: body.penas_accesorias || [],
-    observaciones: body.observaciones,
-    esGrave: (body.pena_maxima_meses ?? 0) >= 60,
+    nombre: parsed.data.nombre,
+    articulo: parsed.data.articulo,
+    conducta: parsed.data.conducta || '',
+    clasificacion: parsed.data.clasificacion || '',
+    ramaId: parsed.data.rama_id,
+    constitucionArticuloId: parsed.data.constitucion_articulo_id,
+    penaMinimaMeses: parsed.data.pena_minima_meses,
+    penaMaximaMeses: parsed.data.pena_maxima_meses,
+    tienePenaAlternativa: parsed.data.tiene_pena_alternativa,
+    penaAlternativaMin: parsed.data.pena_alternativa_min,
+    penaAlternativaMax: parsed.data.pena_alternativa_max,
+    penasAccesorias: parsed.data.penas_accesorias || [],
+    observaciones: parsed.data.observaciones,
+    esGrave: parsed.data.pena_maxima_meses >= 60,
   }).returning({ id: delitos.id });
 
   return Response.json({ message: 'Delito creado', id: result[0].id }, { status: 201 });

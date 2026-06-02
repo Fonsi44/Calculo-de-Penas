@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Home, Search, Gavel, Plus, X, ClipboardList, Scale, Check, Minus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Home, Search, Gavel, Plus, X, ClipboardList, Scale, Check, Minus, FileText, Save, Printer } from 'lucide-react';
 import { AGRAVANTES, ATENUANTES, EXIMENTES, GRADOS_AUTORIA, GRADOS_EJECUCION, TIPOS_CONCURSO } from '@/lib/catalogos';
-import type { Delito, DelitoConfig, CatalogoItem, Step } from '../types';
+import type { Delito, DelitoConfig, Step } from '../types';
 import { ErrorBoundary } from '../error-boundary';
+import { ArticleModal } from '../article-modal';
 
 const STEPS = [
   { num: 1, label: 'Delito', icon: '🔍' },
@@ -33,6 +34,12 @@ export default function Calculadora() {
   const [calculating, setCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
+  const [articleRef, setArticleRef] = useState<string | null>(null);
+  const [casosList, setCasosList] = useState<{ id: string; titulo: string }[]>([]);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [selectedCaso, setSelectedCaso] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -50,6 +57,26 @@ export default function Calculadora() {
   }, [resultado]);
 
   const current = configs[currentIdx];
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setArticleRef(null);
+        setShowSaveModal(false);
+      }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        if (step === 7) calcular();
+      }
+      if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.metaKey) {
+        if (step > 1 && step < 8) goPrev();
+      }
+      if (e.key === 'ArrowRight' && !e.ctrlKey && !e.metaKey) {
+        if (step < 8 && !(step === 7)) goNext();
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [step, configs, configs.length, tipoConcurso]);
 
   const selectDelito = (d: Delito) => {
     const cfg: DelitoConfig = {
@@ -185,7 +212,7 @@ export default function Calculadora() {
   return (
     <div className="flex flex-col flex-1 bg-background">
       {/* Header */}
-      <div className="bg-primary px-3 py-2">
+      <div className="bg-primary px-3 py-2 no-print">
         <div className="flex items-center">
           <button onClick={goPrev} className="w-8 h-8 rounded-md bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
             <ChevronLeft size={20} className="text-white" />
@@ -199,8 +226,8 @@ export default function Calculadora() {
           </Link>
         </div>
 
-        {/* Stepper */}
-        <div className="flex gap-1 mt-2 overflow-x-auto pb-0.5 scrollbar-none">
+        {/* Stepper - mobile horizontal, desktop vertical */}
+        <div className="flex gap-1 mt-2 overflow-x-auto pb-0.5 scrollbar-none lg:hidden">
           {STEPS.map(s => {
             const active = s.num === step;
             const done = s.num < step;
@@ -217,8 +244,36 @@ export default function Calculadora() {
         </div>
       </div>
 
+      {/* Desktop layout: sidebar + content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Desktop sidebar */}
+        <div className="hidden lg:flex lg:flex-col desktop-sidebar bg-primary px-3 py-4 overflow-y-auto">
+          <div className="flex items-center gap-2 mb-4">
+            <Scale size={16} className="text-accent" />
+            <span className="text-[10px] font-bold text-accent tracking-widest">PASO {step} DE 8</span>
+          </div>
+          {STEPS.map(s => {
+            const active = s.num === step;
+            const done = s.num < step;
+            return (
+              <div key={s.num} className="flex items-center gap-2 py-1.5">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors flex-shrink-0 ${
+                  active ? 'bg-accent text-primary' : done ? 'bg-accent/60 text-primary' : 'bg-white/15 text-[#D5DDEA]'
+                }`}>
+                  {done ? <Check size={12} /> : s.num}
+                </div>
+                <span className={`text-xs transition-colors ${
+                  active ? 'text-accent font-bold' : done ? 'text-accent/60' : 'text-[#D5DDEA]'
+                }`}>
+                  {s.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
       {/* Body */}
-      <div className="flex-1 overflow-y-auto p-3 max-w-lg mx-auto w-full">
+      <div className="flex-1 overflow-y-auto p-3 max-w-lg mx-auto w-full lg:mx-0 lg:max-w-none lg:px-6 lg:py-4">
         {/* Step 1: Seleccionar delito */}
         {step === 1 && (
           <div>
@@ -370,7 +425,12 @@ export default function Calculadora() {
         {step === 4 && (
           <div>
             <div className="mb-4">
-              <h2 className="font-bold text-sm text-text mb-2">Eximentes</h2>
+              <div className="flex items-center gap-2 mb-2">
+                <h2 className="font-bold text-sm text-text">Eximentes</h2>
+                <button onClick={() => setArticleRef('Art. 30 CP')} className="text-[10px] text-accent underline hover:text-accent-light transition-colors">
+                  Art. 30 CP
+                </button>
+              </div>
               <div className="space-y-1.5">
                 {EXIMENTES.map(e => (
                   <button
@@ -400,7 +460,12 @@ export default function Calculadora() {
             </div>
 
             <div className="mb-4">
-              <h2 className="font-bold text-sm text-text mb-2">Agravantes (Art. 27 CP)</h2>
+              <div className="flex items-center gap-2 mb-2">
+                <h2 className="font-bold text-sm text-text">Agravantes</h2>
+                <button onClick={() => setArticleRef('Art. 32 CP')} className="text-[10px] text-accent underline hover:text-accent-light transition-colors">
+                  Art. 32 CP
+                </button>
+              </div>
               <div className="flex flex-wrap gap-1.5">
                 {AGRAVANTES.map(a => (
                   <button
@@ -419,7 +484,12 @@ export default function Calculadora() {
             </div>
 
             <div className="mb-4">
-              <h2 className="font-bold text-sm text-text mb-2">Atenuantes (Art. 26 CP)</h2>
+              <div className="flex items-center gap-2 mb-2">
+                <h2 className="font-bold text-sm text-text">Atenuantes</h2>
+                <button onClick={() => setArticleRef('Art. 31 CP')} className="text-[10px] text-accent underline hover:text-accent-light transition-colors">
+                  Art. 31 CP
+                </button>
+              </div>
               <div className="flex flex-wrap gap-1.5">
                 {ATENUANTES.map(a => (
                   <button
@@ -496,7 +566,9 @@ export default function Calculadora() {
                   }`}
                 >
                   <p className="font-semibold text-sm text-text">{tc.nombre}</p>
-                  <p className="text-[11px] text-text-muted">{tc.articulo}</p>
+                  <button onClick={(e) => { e.stopPropagation(); setArticleRef(tc.articulo || null); }} className="text-[11px] text-accent underline hover:text-accent-light transition-colors text-left">
+                    {tc.articulo}
+                  </button>
                   <p className="text-[11px] text-text-muted mt-0.5">{tc.descripcion}</p>
                 </button>
               ))}
@@ -583,7 +655,7 @@ export default function Calculadora() {
               </button>
             </div>
           }>
-            <div>
+            <div className="print-area">
               {resultado.pena_principal === 'EXENTO' ? (
                 <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mb-3 text-center shadow-md">
                   <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
@@ -654,6 +726,29 @@ export default function Calculadora() {
                 <p className="text-[11px] text-text-muted italic">{resultado.disclaimer}</p>
               </div>
 
+              {saveMsg && (
+                <div className={`text-center text-xs font-semibold mb-2 ${saveMsg.includes('Error') ? 'text-danger' : 'text-success'}`}>
+                  {saveMsg}
+                </div>
+              )}
+
+              <div className="flex gap-2 mb-3">
+                <button
+                  onClick={() => window.print()}
+                  className="no-print flex-1 py-2.5 rounded-lg border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
+                >
+                  <Printer size={14} className="inline mr-1" />
+                  Exportar PDF
+                </button>
+                <button
+                  onClick={() => { fetch('/api/casos').then(r => r.json()).then(setCasosList).catch(() => {}); setShowSaveModal(true); }}
+                  className="no-print flex-1 py-2.5 rounded-lg border-2 border-dashed border-accent/50 text-accent font-bold text-sm hover:bg-accent/5 transition-colors"
+                >
+                  <Save size={14} className="inline mr-1" />
+                  Guardar caso
+                </button>
+              </div>
+
               <div className="flex gap-3">
                 <button
                   onClick={reset}
@@ -671,11 +766,12 @@ export default function Calculadora() {
             </div>
           </ErrorBoundary>
         )}
-      </div>
+      </div>{/* end body */}
+      </div>{/* end desktop sidebar flex */}
 
       {/* Footer nav (except step 8) */}
       {step < 8 && (
-        <div className="sticky bottom-0 bg-surface border-t border-border-light px-3 py-2 flex gap-3">
+        <div className="sticky bottom-0 bg-surface border-t border-border-light px-3 py-2 flex gap-3 no-print">
           <button
             onClick={goPrev}
             className="flex-1 py-2.5 rounded-md border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
@@ -694,7 +790,10 @@ export default function Calculadora() {
                   Calculando...
                 </span>
               ) : (
-                'Calcular pena'
+                <>
+                  Calcular pena
+                  <span className="text-[9px] opacity-60 ml-1 hidden sm:inline">⌘↵</span>
+                </>
               )}
             </button>
           ) : (
@@ -707,6 +806,78 @@ export default function Calculadora() {
               <ChevronRight size={16} />
             </button>
           )}
+          <span className="text-[9px] text-text-muted hidden sm:flex items-center">← →</span>
+        </div>
+      )}
+
+      <ArticleModal articuloRef={articleRef} onClose={() => setArticleRef(null)} />
+
+      {showSaveModal && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center" onClick={() => setShowSaveModal(false)}>
+          <div className="absolute inset-0 bg-overlay" />
+          <div className="relative bg-surface rounded-t-xl sm:rounded-xl shadow-2xl w-full sm:max-w-sm p-4" onClick={e => e.stopPropagation()}>
+            <h3 className="font-bold text-sm text-text mb-3">Guardar en caso</h3>
+            {casosList.length > 0 && (
+              <div className="space-y-1 mb-3">
+                <p className="text-[11px] text-text-muted mb-1">Selecciona un caso existente:</p>
+                {casosList.map(c => (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedCaso(c.id)}
+                    className={`w-full text-left p-2 rounded-lg text-sm transition-all ${
+                      selectedCaso === c.id ? 'bg-accent/10 border border-accent' : 'bg-surface-alt border border-border hover:border-accent/50'
+                    }`}
+                  >
+                    {c.titulo}
+                  </button>
+                ))}
+              </div>
+            )}
+            <button
+              onClick={async () => {
+                setSaving(true);
+                setSaveMsg(null);
+                try {
+                  let casoId = selectedCaso;
+                  if (!casoId) {
+                    const res = await fetch('/api/casos', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ titulo: `Cálculo ${new Date().toLocaleDateString('es-ES')}` }),
+                    });
+                    const data = await res.json();
+                    casoId = data.id;
+                  }
+                  const config = configs.map(c => ({
+                    delito_id: c.delito.id,
+                    pena_seleccionada: c.pena_seleccionada,
+                    grado_autoria: c.grado_autoria,
+                    grado_ejecucion: c.grado_ejecucion,
+                    reduccion_tentativa: c.reduccion_tentativa,
+                    agravantes: c.agravantes,
+                    atenuantes: c.atenuantes,
+                    eximentes: c.eximentes,
+                    eximente_completa: c.eximente_completa,
+                  }));
+                  await fetch('/api/calculos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ caso_id: casoId, config, resultado }),
+                  });
+                  setSaveMsg('Guardado correctamente');
+                  setShowSaveModal(false);
+                } catch {
+                  setSaveMsg('Error al guardar');
+                } finally {
+                  setSaving(false);
+                }
+              }}
+              disabled={saving}
+              className="w-full py-2.5 rounded-md bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors disabled:opacity-70"
+            >
+              {saving ? 'Guardando...' : selectedCaso ? 'Guardar en caso seleccionado' : 'Crear nuevo caso y guardar'}
+            </button>
+          </div>
         </div>
       )}
     </div>

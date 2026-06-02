@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { ramasJuridicas, articulosConstitucion, delitos } from '@/lib/schema';
+import { ramasJuridicas, articulosConstitucion, articulosCp, delitos } from '@/lib/schema';
 import { count } from 'drizzle-orm';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -38,6 +38,24 @@ export async function POST() {
         titulo: a.titulo,
         capitulo: a.capitulo,
         texto: a.texto,
+      }))
+    ).onConflictDoNothing();
+  }
+
+  // Artículos del Código Penal
+  const cpPath = path.join(dataDir, 'articulos_cp.json');
+  if (fs.existsSync(cpPath)) {
+    const cp = JSON.parse(fs.readFileSync(cpPath, 'utf-8'));
+    await db.insert(articulosCp).values(
+      cp.map((a: any) => ({
+        articulo: a.articulo,
+        libro: a.libro,
+        titulo: a.titulo,
+        capitulo: a.capitulo,
+        seccion: a.seccion,
+        epigrafe: a.epigrafe,
+        texto: a.texto,
+        tema: a.tema,
       }))
     ).onConflictDoNothing();
   }

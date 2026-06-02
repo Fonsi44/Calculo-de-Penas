@@ -1,4 +1,12 @@
-import { meses_a_texto, reducir_grado, aumentar_grado, aplicar_mitad_superior, aplicar_mitad_inferior } from './utils';
+import {
+  meses_a_texto,
+  aumentar_en_fraccion,
+  disminuir_en_fraccion,
+  aplicar_mitad_superior,
+  aplicar_mitad_inferior,
+  calcular_gravedad,
+} from './utils';
+import { LIMITES } from './constants';
 import { AGRAVANTES, ATENUANTES, EXIMENTES, GRADOS_AUTORIA, GRADOS_EJECUCION } from './catalogos';
 
 export interface DelitoBase {
@@ -109,68 +117,112 @@ export function calcular_pena_individual(config: DelitoConfig, delito: DelitoBas
     return {
       delito: { id: delito.id, nombre: delito.nombre, articulo: delito.articulo, clasificacion: delito.clasificacion, penas_accesorias: delito.penas_accesorias },
       pena_min: 0, pena_max: 0, pena_recomendada: 0, gravedad: 'Exento', tipo_pena, exento: true,
-      pena_base_min, pena_base_max, modificaciones: ['Eximente completa aplicada - EXENTO'],
+      pena_base_min, pena_base_max, modificaciones: ['Eximente completa aplicada - EXENTO (Art. 30 CP)'],
     };
   }
 
   const modificaciones: string[] = [];
 
   if (config.grado_autoria === 'complice') {
-    [pena_min, pena_max] = reducir_grado(pena_min, pena_max, 1);
-    modificaciones.push('Cómplice: pena inferior en 1 grado (Art. 29 CP)');
+    [pena_min, pena_max] = disminuir_en_fraccion(pena_min, pena_max, LIMITES.FRACCION_COMPLICE);
+    modificaciones.push(`Cómplice: pena inferior en 1/3 (Art. 61 CP)`);
   }
 
-  if (config.grado_ejecucion === 'tentativa_acabada' || config.grado_ejecucion === 'tentativa_inacabada') {
-    [pena_min, pena_max] = reducir_grado(pena_min, pena_max, config.reduccion_tentativa);
-    modificaciones.push(`Tentativa: pena inferior en ${config.reduccion_tentativa} grado(s) (Art. 62 CP)`);
+  if (config.grado_ejecucion === 'tentativa_acabada') {
+    [pena_min, pena_max] = disminuir_en_fraccion(pena_min, pena_max, LIMITES.FRACCION_TENTATIVA_ACABADA);
+    modificaciones.push(`Tentativa acabada: pena inferior en 1/4 (Art. 62 CP)`);
+  } else if (config.grado_ejecucion === 'tentativa_inacabada') {
+    [pena_min, pena_max] = disminuir_en_fraccion(pena_min, pena_max, LIMITES.FRACCION_TENTATIVA_INACABADA);
+    modificaciones.push(`Tentativa inacabada: pena inferior en 1/3 (Art. 62 CP)`);
   }
 
-  for (const ex_id of config.eximentes) {
-    const ex = EXIMENTES.find(e => e.id === ex_id);
-    if (ex && !ex.completa) {
-      [pena_min, pena_max] = reducir_grado(pena_min, pena_max, 1);
-      modificaciones.push('Eximente incompleta: pena inferior en 1 grado');
-    }
-  }
+  const eximentes_incompletas = config.eximentes.filter(eid => {
+    const ex = EXIMENTES.find(e => e.id === eid);
+    return ex && !ex.completa;
+  }).length;
 
-  const neto = config.agravantes.length - config.atenuantes.length;
-  if (neto > 0) {
-    if (neto >= 2) {
-      [pena_min, pena_max] = aumentar_grado(pena_min, pena_max, 1);
-      modificaciones.push(`Saldo de ${neto} agravante(s): pena superior en 1 grado`);
-    } else {
+  const total_atenuantes = config.atenuantes.length + eximentes_incompletas;
+  const total_agravantes = config.agravantes.length;
+
+  if (total_agravantes === 0 && total_atenuantes === 0) {
+    modificaciones.push('Sin circunstancias modificativas: pena en el marco legal');
+  } else if (total_agravantes >= 1 && total_atenuantes === 0) {
+    if (total_agravantes <= 2) {
       [pena_min, pena_max] = aplicar_mitad_superior(pena_min, pena_max);
-      modificaciones.push('Saldo de 1 agravante: pena en mitad superior');
-    }
-  } else if (neto < 0) {
-    const neto_abs = Math.abs(neto);
-    if (neto_abs >= 2) {
-      [pena_min, pena_max] = reducir_grado(pena_min, pena_max, 1);
-      modificaciones.push(`Saldo de ${neto_abs} atenuante(s): pena inferior en 1 grado`);
+      modificaciones.push(`${total_agravantes} agravante(s): pena media hasta límite máximo (Art. 70.b CP)`);
     } else {
+      pena_min = pena_max;
+      modificaciones.push(`${total_agravantes} agravantes: pena en límite máximo (Art. 70.e CP)`);
+    }
+  } else if (total_atenuantes >= 1 && total_agravantes === 0) {
+    if (total_atenuantes === 1) {
       [pena_min, pena_max] = aplicar_mitad_inferior(pena_min, pena_max);
-      modificaciones.push('Saldo de 1 atenuante: pena en mitad inferior');
+      modificaciones.push(`1 atenuante: pena media hasta límite mínimo (Art. 70.c CP)`);
+    } else {
+      pena_max = pena_min;
+      modificaciones.push(`${total_atenuantes} atenuantes: pena en límite mínimo (Art. 70.d CP)`);
     }
   } else {
-    if (config.agravantes.length > 0 || config.atenuantes.length > 0) {
-      modificaciones.push('Agravantes y atenuantes compensados: se aplica pena base');
-    }
+    modificaciones.push(`Agravantes (${total_agravantes}) y atenuantes (${total_atenuantes}) compensados: ni máximo ni mínimo (Art. 70.f CP)`);
   }
 
-  const p_min = Math.max(1, pena_min);
-  const p_max = Math.max(1, pena_max);
+  const p_min = Math.max(1, Math.floor(pena_min));
+  const p_max = Math.max(1, Math.floor(pena_max));
   const medio = Math.floor((p_min + p_max) / 2);
 
-  let gravedad: string;
-  if (p_max >= 360) gravedad = 'Muy grave';
-  else if (p_max >= 120) gravedad = 'Grave';
-  else if (p_max >= 36) gravedad = 'Menos grave';
-  else gravedad = 'Leve';
+  const gravedad = calcular_gravedad(p_max);
 
   return {
     delito: { id: delito.id, nombre: delito.nombre, articulo: delito.articulo, clasificacion: delito.clasificacion, penas_accesorias: delito.penas_accesorias },
     pena_min: p_min, pena_max: p_max, pena_recomendada: medio, gravedad, tipo_pena, exento: false,
     pena_base_min, pena_base_max, modificaciones,
+  };
+}
+
+function aplicar_concurso_real(penas: ResultadoIndividual[]): ResultadoConcurso {
+  const total_min = penas.reduce((s, p) => s + p.pena_min, 0);
+  let total_max = penas.reduce((s, p) => s + p.pena_max, 0);
+  const max_individual = Math.max(...penas.map(p => p.pena_max));
+  const triple = max_individual * 3;
+
+  const alguna_excede_20 = penas.some(p => p.pena_max > LIMITES.UMBRAL_VEINTE_ANOS_MESES);
+  const limite = alguna_excede_20 ? LIMITES.PENA_MAXIMA_EXCEPCIONAL_MESES : LIMITES.PENA_MAXIMA_GENERAL_MESES;
+
+  total_max = Math.min(total_max, triple, limite);
+
+  return {
+    pena_min: Math.min(total_min, total_max),
+    pena_max: total_max,
+    descripcion: `Concurso Real: Se acumulan las penas. Límite: triple de la más grave (${meses_a_texto(max_individual)} × 3 = ${meses_a_texto(triple)}), máx. ${alguna_excede_20 ? '40 años' : '30 años'} (Art. 66 CP).`,
+    articulo: 'Art. 66 CP',
+  };
+}
+
+function aplicar_concurso_ideal(penas: ResultadoIndividual[]): ResultadoConcurso {
+  const mas_grave = penas.reduce((a, b) => a.pena_max > b.pena_max ? a : b);
+  const [pena_min, pena_max] = aumentar_en_fraccion(mas_grave.pena_min, mas_grave.pena_max, LIMITES.FRACCION_CONCURSO_IDEAL);
+
+  const suma_max = penas.reduce((s, p) => s + p.pena_max, 0);
+  const suma_min = penas.reduce((s, p) => s + p.pena_min, 0);
+
+  return {
+    pena_min: Math.min(pena_min, suma_min),
+    pena_max: Math.min(pena_max, suma_max),
+    descripcion: `Concurso Ideal: Pena de la infracción más grave (${mas_grave.delito.nombre}) aumentada en 1/3, sin exceder la suma de penas individuales (Art. 67 CP).`,
+    articulo: 'Art. 67 CP',
+  };
+}
+
+function aplicar_delito_continuado(penas: ResultadoIndividual[]): ResultadoConcurso {
+  const mas_grave = penas.reduce((a, b) => a.pena_max > b.pena_max ? a : b);
+  const [pena_min, pena_max] = aplicar_mitad_superior(mas_grave.pena_min, mas_grave.pena_max);
+  const max_con_adicional = Math.floor(pena_max * (1 + LIMITES.FRACCION_CONTINUADO_ADICIONAL));
+
+  return {
+    pena_min,
+    pena_max: max_con_adicional,
+    descripcion: `Delito Continuado: Pena en mitad superior de la infracción más grave (${mas_grave.delito.nombre}), pudiendo llegar hasta 1/3 más (Art. 68 CP).`,
+    articulo: 'Art. 68 CP',
   };
 }
 
@@ -190,51 +242,16 @@ export function aplicar_concurso(penas: ResultadoIndividual[], tipo_concurso: st
     };
   }
 
-  if (tipo_concurso === 'real') {
-    const total_min = penas_activas.reduce((s, p) => s + p.pena_min, 0);
-    let total_max = penas_activas.reduce((s, p) => s + p.pena_max, 0);
-    const pena_mayor = Math.max(...penas_activas.map(p => p.pena_max));
-    const limite = Math.min(pena_mayor * 3, 480);
-    total_max = Math.min(total_max, limite);
-    return {
-      pena_min: Math.min(total_min, total_max),
-      pena_max: total_max,
-      descripcion: 'Concurso Real (Art. 37 CP): Se acumulan las penas. Límite: triple de la mayor o 40 años.',
-      articulo: 'Art. 37 CP',
-    };
+  switch (tipo_concurso) {
+    case 'real':
+      return aplicar_concurso_real(penas_activas);
+    case 'ideal':
+      return aplicar_concurso_ideal(penas_activas);
+    case 'continuado':
+      return aplicar_delito_continuado(penas_activas);
+    default:
+      return { pena_min: 0, pena_max: 0, descripcion: 'Tipo de concurso no reconocido', articulo: '' };
   }
-
-  if (tipo_concurso === 'ideal') {
-    const delito_mas_grave = penas_activas.reduce((a, b) => a.pena_max > b.pena_max ? a : b);
-    const [pena_min, pena_max] = aplicar_mitad_superior(delito_mas_grave.pena_min, delito_mas_grave.pena_max);
-    return {
-      pena_min, pena_max,
-      descripcion: 'Concurso Ideal (Art. 36 CP): Un hecho, varios delitos. Pena del más grave en mitad superior.',
-      articulo: 'Art. 36 CP',
-    };
-  }
-
-  if (tipo_concurso === 'medial') {
-    const delito_mas_grave = penas_activas.reduce((a, b) => a.pena_max > b.pena_max ? a : b);
-    const [pena_min, pena_max] = aumentar_grado(delito_mas_grave.pena_min, delito_mas_grave.pena_max);
-    return {
-      pena_min, pena_max,
-      descripcion: 'Concurso Medial (Art. 36.2 CP): Delito medio para cometer otro. Pena superior en grado.',
-      articulo: 'Art. 36.2 CP',
-    };
-  }
-
-  if (tipo_concurso === 'continuado') {
-    const delito_mas_grave = penas_activas.reduce((a, b) => a.pena_max > b.pena_max ? a : b);
-    const [pena_min, pena_max] = aplicar_mitad_superior(delito_mas_grave.pena_min, delito_mas_grave.pena_max);
-    return {
-      pena_min, pena_max,
-      descripcion: 'Delito Continuado (Art. 35 CP): Pluralidad de acciones con misma finalidad delictiva. Pena en mitad superior del delito más grave.',
-      articulo: 'Art. 35 CP',
-    };
-  }
-
-  return { pena_min: 0, pena_max: 0, descripcion: 'Tipo de concurso no reconocido', articulo: '' };
 }
 
 export function generar_analisis_juridico(delitos: DelitoAnalizado[], tipo_concurso: string, resultado_concurso: ResultadoConcurso): string {
@@ -242,25 +259,25 @@ export function generar_analisis_juridico(delitos: DelitoAnalizado[], tipo_concu
   const now = new Date();
   const fecha = now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-  lineas.push('═'.repeat(50));
+  lineas.push('='.repeat(50));
   lineas.push('ANÁLISIS JURÍDICO DEL CÁLCULO DE PENA');
   lineas.push('Código Penal de Honduras (Decreto 130-2017)');
-  lineas.push('═'.repeat(50));
+  lineas.push('='.repeat(50));
   lineas.push(`\nFecha: ${fecha}`);
   lineas.push(`Total de delitos analizados: ${delitos.length}`);
 
   for (let i = 0; i < delitos.length; i++) {
     const d = delitos[i];
-    lineas.push(`\n${'─'.repeat(40)}`);
+    lineas.push(`\n${'-'.repeat(40)}`);
     lineas.push(`DELITO ${i + 1}: ${d.nombre.toUpperCase()}`);
-    lineas.push(`${'─'.repeat(40)}`);
-    lineas.push(`• Artículo: ${d.articulo}`);
-    lineas.push(`• Clasificación: ${d.clasificacion}`);
-    lineas.push(`• Pena base: ${d.pena_base_texto}`);
-    lineas.push(`• Gravedad: ${d.gravedad || 'No determinada'}`);
-    lineas.push(`• Pena recomendada: ${d.pena_recomendada_texto || d.pena_individual_texto}`);
-    lineas.push(`• Grado de autoría: ${d.grado_autoria}`);
-    lineas.push(`• Grado de ejecución: ${d.grado_ejecucion}`);
+    lineas.push(`${'-'.repeat(40)}`);
+    lineas.push(`Artículo: ${d.articulo}`);
+    lineas.push(`Clasificación: ${d.clasificacion}`);
+    lineas.push(`Pena base: ${d.pena_base_texto}`);
+    lineas.push(`Gravedad: ${d.gravedad || 'No determinada'}`);
+    lineas.push(`Pena recomendada: ${d.pena_recomendada_texto || d.pena_individual_texto}`);
+    lineas.push(`Grado de autoría: ${d.grado_autoria}`);
+    lineas.push(`Grado de ejecución: ${d.grado_ejecucion}`);
 
     if (d.modificaciones?.length) {
       lineas.push('\nModificaciones aplicadas:');
@@ -270,10 +287,10 @@ export function generar_analisis_juridico(delitos: DelitoAnalizado[], tipo_concu
     }
 
     if (d.agravantes_aplicadas?.length) {
-      lineas.push(`\nAgravantes (Art. 27 CP): ${d.agravantes_aplicadas.join(', ')}`);
+      lineas.push(`\nAgravantes (Art. 32 CP): ${d.agravantes_aplicadas.join(', ')}`);
     }
     if (d.atenuantes_aplicadas?.length) {
-      lineas.push(`Atenuantes (Art. 26 CP): ${d.atenuantes_aplicadas.join(', ')}`);
+      lineas.push(`Atenuantes (Art. 31 CP): ${d.atenuantes_aplicadas.join(', ')}`);
     }
 
     lineas.push(`\n★ PENA INDIVIDUAL: ${d.pena_individual_texto}`);
@@ -284,9 +301,9 @@ export function generar_analisis_juridico(delitos: DelitoAnalizado[], tipo_concu
   }
 
   if (delitos.length > 1 && tipo_concurso !== 'ninguno') {
-    lineas.push(`\n${'═'.repeat(50)}`);
+    lineas.push(`\n${'='.repeat(50)}`);
     lineas.push('CONCURSO DE DELITOS');
-    lineas.push(`${'═'.repeat(50)}`);
+    lineas.push(`${'='.repeat(50)}`);
     lineas.push(`Tipo: ${tipo_concurso.toUpperCase()}`);
     lineas.push(`Base legal: ${resultado_concurso.articulo}`);
     lineas.push(`Efecto: ${resultado_concurso.descripcion}`);

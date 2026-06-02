@@ -1,10 +1,10 @@
+import { LIMITES, UMBRALES_GRAVEDAD } from './constants';
+
 export function meses_a_texto(meses: number): string {
   if (meses <= 0) return '0 meses';
-  if (meses >= 480) return 'Prisión perpetua';
-
+  if (meses >= LIMITES.PENA_PERPETUA_MESES) return 'Prisión a perpetuidad';
   const años = Math.floor(meses / 12);
   const meses_restantes = meses % 12;
-
   if (años > 0 && meses_restantes > 0) {
     return `${años} año${años !== 1 ? 's' : ''} y ${meses_restantes} mes${meses_restantes !== 1 ? 'es' : ''}`;
   } else if (años > 0) {
@@ -14,32 +14,31 @@ export function meses_a_texto(meses: number): string {
   }
 }
 
-export function reducir_grado(minimo: number, maximo: number, grados: number = 1): [number, number] {
-  for (let i = 0; i < grados; i++) {
-    const nuevo_max = minimo;
-    const nuevo_min = Math.max(1, Math.floor(minimo / 2));
-    minimo = nuevo_min;
-    maximo = nuevo_max;
-  }
-  return [minimo, maximo];
+export function aumentar_en_fraccion(min: number, max: number, fraccion: number): [number, number] {
+  const nuevo_min = max;
+  const nuevo_max = Math.floor(max * (1 + fraccion));
+  return [nuevo_min, nuevo_max];
 }
 
-export function aumentar_grado(minimo: number, maximo: number, grados: number = 1): [number, number] {
-  for (let i = 0; i < grados; i++) {
-    const nuevo_min = maximo;
-    const nuevo_max = Math.min(480, Math.floor(maximo + (maximo - minimo) / 2));
-    minimo = nuevo_min;
-    maximo = nuevo_max;
-  }
-  return [minimo, maximo];
+export function disminuir_en_fraccion(min: number, max: number, fraccion: number): [number, number] {
+  const nuevo_min = Math.max(1, Math.floor(min * (1 - fraccion)));
+  const nuevo_max = min;
+  return [nuevo_min, nuevo_max];
 }
 
-export function aplicar_mitad_superior(minimo: number, maximo: number): [number, number] {
-  const punto_medio = Math.floor((minimo + maximo) / 2);
-  return [punto_medio, maximo];
+export function aplicar_mitad_superior(min: number, max: number): [number, number] {
+  const punto_medio = Math.floor((min + max) / 2);
+  return [punto_medio, max];
 }
 
-export function aplicar_mitad_inferior(minimo: number, maximo: number): [number, number] {
-  const punto_medio = Math.floor((minimo + maximo) / 2);
-  return [minimo, punto_medio];
+export function aplicar_mitad_inferior(min: number, max: number): [number, number] {
+  const punto_medio = Math.floor((min + max) / 2);
+  return [min, punto_medio];
+}
+
+export function calcular_gravedad(pena_max: number): string {
+  if (pena_max >= UMBRALES_GRAVEDAD.MUY_GRAVE) return 'Muy grave';
+  if (pena_max >= UMBRALES_GRAVEDAD.GRAVE) return 'Grave';
+  if (pena_max >= UMBRALES_GRAVEDAD.MENOS_GRAVE) return 'Menos grave';
+  return 'Leve';
 }

@@ -21,8 +21,50 @@
   --color-overlay: rgba(26, 43, 74, 0.45);
 }
 
+.dark {
+  --color-primary: #0F1A30;
+  --color-primary-light: #1A2B4A;
+  --color-primary-dark: #080E1A;
+  --color-background: #111318;
+  --color-surface: #1C1E26;
+  --color-surface-alt: #252830;
+  --color-text: #E8E8E8;
+  --color-text-secondary: #A0A0A0;
+  --color-text-muted: #707070;
+  --color-border: #2D3040;
+  --color-border-light: #252830;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+}
+
 body {
   background: var(--color-background);
   color: var(--color-text);
   font-family: system-ui, -apple-system, sans-serif;
 }
+
+@media print {
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; left: 0; top: 0; width: 100%; }
+  .no-print { display: none !important; }
+  pre { white-space: pre-wrap !important; font-family: serif !important; font-size: 11pt !important; }
+}
+
+@media (min-width: 768px) {
+  .desktop-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-sidebar {
+    width: 380px;
+  }
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar { display: none; }

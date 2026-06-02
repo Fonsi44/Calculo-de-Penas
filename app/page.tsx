@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Scale, Calculator, BookOpen, PlusCircle, ChevronRight, ArrowRight, ShieldCheck, Info } from 'lucide-react';
+import { Scale, Calculator, BookOpen, PlusCircle, ChevronRight, ArrowRight, ShieldCheck, Info, FileText, ClipboardList } from 'lucide-react';
 
 export default function Home() {
   const [stats, setStats] = useState({ total: 0, clasificaciones: 0 });
@@ -82,7 +82,9 @@ export default function Home() {
 
         {/* Secondary actions */}
         {[
+          { title: 'Mis casos', desc: 'Gestiona tus casos y cálculos guardados', icon: ClipboardList, href: '/casos' },
           { title: 'Catalogo de delitos', desc: 'Buscar, crear, editar y eliminar tipos penales', icon: BookOpen, href: '/delitos' },
+          { title: 'Codigo Penal completo', desc: 'Biblioteca de articulos del CP hondureno (Decreto 130-2017)', icon: Scale, href: '/cp' },
           { title: 'Registrar nuevo delito', desc: 'Anadir un tipo penal personalizado al catalogo', icon: PlusCircle, href: '/delito-form' },
         ].map((item, i) => (
           <Link
@@ -111,7 +113,7 @@ export default function Home() {
           <p className="text-text-secondary text-xs leading-4 mt-1">
             Aplica reglas tecnicas: reduccion por complicidad y tentativa, mitad superior por
             agravantes, mitad inferior por atenuantes, eximentes completas e incompletas, y
-            concursos real, ideal, medial y continuado.
+             concursos real, ideal y continuado.
           </p>
         </div>
 

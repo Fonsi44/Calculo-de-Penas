@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { ramasJuridicas, articulosConstitucion, delitos } from '../lib/schema';
+import { ramasJuridicas, articulosConstitucion, articulosCp, delitos } from '../lib/schema';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -79,6 +79,25 @@ async function seed() {
       }))
     ).onConflictDoNothing();
     console.log(`✓ Artículos constitucionales: ${arts.length} insertados`);
+  }
+
+  // Artículos del Código Penal
+  const cpPath = path.resolve('data/articulos_cp.json');
+  if (fs.existsSync(cpPath)) {
+    const cp: any[] = JSON.parse(fs.readFileSync(cpPath, 'utf-8'));
+    await db.insert(articulosCp).values(
+      cp.map(a => ({
+        articulo: a.articulo,
+        libro: a.libro,
+        titulo: a.titulo,
+        capitulo: a.capitulo,
+        seccion: a.seccion,
+        epigrafe: a.epigrafe,
+        texto: a.texto,
+        tema: a.tema,
+      }))
+    ).onConflictDoNothing();
+    console.log(`✓ Artículos CP: ${cp.length} insertados`);
   }
 
   // Delitos — batch insert en chunks de 100

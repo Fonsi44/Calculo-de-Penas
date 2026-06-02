@@ -3,20 +3,22 @@ import { delitos } from '@/lib/schema';
 import { inArray } from 'drizzle-orm';
 import { calcular_pena } from '@/lib/calculo';
 import type { DelitoBase } from '@/lib/calculo';
+import { calcularSchema, validate } from '@/lib/validation';
 
 export async function POST(request: Request) {
-  let body: any;
+  let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: 'JSON inválido en el cuerpo de la solicitud' }, { status: 400 });
+    return Response.json({ error: 'JSON inválido' }, { status: 400 });
   }
 
-  if (!body || !Array.isArray(body.delitos) || body.delitos.length === 0) {
-    return Response.json({ error: 'Se requiere al menos un delito para calcular la pena' }, { status: 400 });
+  const parsed = validate(calcularSchema, body);
+  if (!parsed.success) {
+    return Response.json({ error: parsed.error }, { status: 400 });
   }
 
-  const delitoIds: string[] = body.delitos.map((d: any) => d.delito_id);
+  const delitoIds = parsed.data.delitos.map(d => d.delito_id);
   const rows = await db.select().from(delitos).where(inArray(delitos.id, delitoIds));
 
   const delitosMap = new Map<string, DelitoBase>();
@@ -35,16 +37,17 @@ export async function POST(request: Request) {
     });
   }
 
-  for (const config of body.delitos) {
+  for (const config of parsed.data.delitos) {
     if (!delitosMap.has(config.delito_id)) {
-      return Response.json({ error: `Delito ${config.delito_id} no encontrado en la base de datos` }, { status: 404 });
+      return Response.json({ error: `Delito ${config.delito_id} no encontrado` }, { status: 404 });
     }
   }
 
   try {
-    const result = calcular_pena(body, delitosMap);
+    const result = calcular_pena(parsed.data, delitosMap);
     return Response.json(result);
-  } catch (e: any) {
-    return Response.json({ error: e.message || 'Error interno al calcular la pena' }, { status: 400 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Error interno';
+    return Response.json({ error: message }, { status: 400 });
   }
 }

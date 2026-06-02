@@ -1,0 +1,146 @@
+[
+  {
+    "articulo": "Art. 19 CP",
+    "libro": "Libro I",
+    "titulo": "Título II — Del delito",
+    "capitulo": "Capítulo II — Grados de ejecución",
+    "epigrafe": "Grados de ejecución punibles",
+    "texto": "Son punibles, el delito o falta consumados y la tentativa de delito.",
+    "tema": "ejecucion"
+  },
+  {
+    "articulo": "Art. 21 CP",
+    "libro": "Libro I",
+    "titulo": "Título II — Del delito",
+    "capitulo": "Capítulo II — Grados de ejecución",
+    "epigrafe": "Tentativa",
+    "texto": "Hay tentativa cuando se inicia la ejecución de un delito por actos exteriores directa y objetivamente encaminados a su consumación y éste no se produce por causas independientes de la voluntad del agente. Son clases de tentativa: a) Tentativa inacabada: cuando el agente ejecuta parte de los actos encaminados a producir la consumación del delito, no concluyéndolos por causas ajenas a su voluntad; b) Tentativa acabada: cuando el agente ha realizado todos los actos que objetivamente debieron llevar a la consumación del delito y ésta no se produjo.",
+    "tema": "ejecucion"
+  },
+  {
+    "articulo": "Art. 25 CP",
+    "libro": "Libro I",
+    "titulo": "Título II — Del delito",
+    "capitulo": "Capítulo III — De las personas penalmente responsables",
+    "epigrafe": "Autor",
+    "texto": "Es autor quien realiza la conducta punible, en todo o en parte, por sí mismo o sirviéndose de otro u otros como instrumentos, sean o no penalmente responsables, así como quienes la realizan conjuntamente.",
+    "tema": "autoria"
+  },
+  {
+    "articulo": "Art. 26 CP",
+    "libro": "Libro I",
+    "titulo": "Título II — Del delito",
+    "capitulo": "Capítulo III — De las personas penalmente responsables",
+    "epigrafe": "Partícipes",
+    "texto": "Son partícipes los inductores y los cómplices. Son inductores quienes dolosamente y por cualquier medio, determinan a otro a realizar un hecho delictivo. Son cómplices quienes no hallándose comprendidos en el artículo anterior, cooperan en la ejecución del hecho con actos anteriores o simultáneos.",
+    "tema": "autoria"
+  },
+  {
+    "articulo": "Art. 30 CP",
+    "libro": "Libro I",
+    "titulo": "Título III — De las causas de exención, atenuación y agravación",
+    "capitulo": "Capítulo I — Causas de exención",
+    "epigrafe": "Causas eximentes de la responsabilidad penal",
+    "texto": "Son causas de exención de la responsabilidad penal las siguientes:\n1) Inimputabilidad: Es inimputable quien, en el momento de la acción u omisión y como consecuencia de anomalía o alteración psíquica, alteración en la percepción o de intoxicación plena, no posee la capacidad de comprender el carácter ilícito de su conducta o de actuar conforme a esa comprensión, así como el menor de doce (12) años. El trastorno mental no exime de responsabilidad cuando haya sido procurado con el propósito de cometer un delito o se hubiera previsto o debido prever su comisión;\n2) Ejercicio de un derecho, oficio, cargo o cumplimiento de deber: Quien actúa en cumplimiento de un específico deber jurídico o en el ejercicio legítimo de un derecho, oficio o cargo;\n3) Estado de necesidad: Quien, en estado de necesidad, para evitar un mal propio o ajeno lesiona un bien jurídico de otra persona o infringe un deber, siempre que concurran los requisitos siguientes: a) Que el mal causado no sea mayor que el que se trate de evitar; b) Que la situación de necesidad no haya sido provocada intencionadamente por el sujeto; y c) Que el necesitado no tenga, por su oficio o cargo, obligación de sacrificarse;\n4) Legítima defensa: Quien obra en defensa de su persona o derechos o de otra persona o sus derechos, siempre que concurran los siguientes requisitos: a) Agresión ilegítima; b) Necesidad racional del medio empleado para impedirla o repelerla; y c) Falta de provocación suficiente por parte del defensor;\n5) Miedo insuperable: Quien actúa bajo los efectos de un miedo insuperable ante un mal igual o mayor;\n6) Cumplimiento de un específico deber jurídico o ejercicio legítimo de un derecho, oficio o cargo cuando no concurran los requisitos del numeral 2).",
+    "tema": "eximentes"
+  },
+  {
+    "articulo": "Art. 31 CP",
+    "libro": "Libro I",
+    "titulo": "Título III — De las causas de exención, atenuación y agravación",
+    "capitulo": "Capítulo II — Circunstancias atenuantes",
+    "epigrafe": "Circunstancias atenuantes comunes",
+    "texto": "Son circunstancias atenuantes comunes las siguientes:\n1) Las causas de exención de la responsabilidad criminal cuando no concurra alguno de los requisitos no esenciales exigidos para su apreciación. Estas causas tienen la consideración de atenuantes cualificadas;\n2) Actuar por estímulos tan poderosos que produzcan en el sujeto arrebato u obcecación de entidad semejante;\n3) Haber procedido el culpable a reparar el daño causado o a disminuir los efectos perjudiciales del delito antes de la finalización de las investigaciones preliminares;\n4) Ser el culpable mayor de dieciocho (18) años y menor de veintiuno (21);\n5) Haber procedido el culpable, antes de tener conocimiento del inicio de un procedimiento judicial, a confesar la infracción a las autoridades;\n6) Cualquier otra circunstancia análoga a las anteriores.",
+    "tema": "atenuantes"
+  },
+  {
+    "articulo": "Art. 32 CP",
+    "libro": "Libro I",
+    "titulo": "Título III — De las causas de exención, atenuación y agravación",
+    "capitulo": "Capítulo III — Circunstancias agravantes",
+    "epigrafe": "Circunstancias agravantes comunes",
+    "texto": "Son circunstancias agravantes comunes las siguientes:\n1) Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas, empleando medios, modos o formas en la ejecución, que tiendan directa y especialmente a asegurarla, sin riesgo para su persona que proceda de la defensa que pudiera hacer el ofendido;\n2) Ejecutar el hecho mediante abuso de superioridad o de confianza;\n3) Actuar con ensañamiento en la ejecución del hecho, aumentando deliberadamente el sufrimiento de la víctima;\n4) Ejecutar el hecho mediante disfraz o aprovechando las circunstancias de tiempo y lugar para facilitar su ejecución o la impunidad del delincuente;\n5) Cometer el hecho por precio, recompensa o promesa remuneratoria;\n6) Prevalerse del carácter público que tenga el culpable;\n7) Ejecutar el hecho valiéndose de una persona menor de dieciocho (18) años o con discapacidad;\n8) Cometer el delito por motivos racistas, homófobos, transfóbicos, de género, de edad, de enfermedad, de discapacidad, étnicos, religiosos o de cualquier otra naturaleza análoga;\n9) Reincidencia: haber sido condenado el culpable con anterioridad por un delito doloso de la misma naturaleza;\n10) Cometer el delito contra una pluralidad de víctimas.",
+    "tema": "agravantes"
+  },
+  {
+    "articulo": "Art. 37 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo I — De las penas y sus clases",
+    "epigrafe": "La pena de prisión a perpetuidad",
+    "texto": "Cuando la Ley así lo prevea, la pena de prisión será a perpetuidad. Esta pena supone la privación de la libertad de por vida, sin perjuicio de su revisión. La pena de prisión a perpetuidad debe ser revisada por el órgano Jurisdiccional de Ejecución de conformidad con la Ley Penitenciaria. La primera revisión se realiza una vez transcurridos treinta (30) años desde su imposición. Dicha revisión se efectúa de oficio, previa audiencia del Ministerio Público y del condenado. En caso de que dicha revisión sea denegada, la pena de prisión a perpetuidad no puede volver a revisarse hasta transcurrido un año desde la denegación.",
+    "tema": "penas"
+  },
+  {
+    "articulo": "Art. 60 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Pena para el autor",
+    "texto": "La pena fijada en la Ley es la que corresponde al autor del delito consumado.",
+    "tema": "penas"
+  },
+  {
+    "articulo": "Art. 61 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Pena para los partícipes",
+    "texto": "A los inductores de un delito consumado o intentado, se les debe imponer la misma pena que la fijada por la Ley para los autores del mismo delito. A los cómplices de un delito consumado o intentado, se les debe imponer la pena prevista por la Ley para los autores del mismo delito, rebajada en un tercio (1/3).",
+    "tema": "penas"
+  },
+  {
+    "articulo": "Art. 62 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Pena para la tentativa",
+    "texto": "A los autores de tentativa de delito se les debe imponer la pena del delito consumado rebajada en un cuarto (1/4) si se tratase de tentativa acabada, y en un tercio (1/3) en caso de una tentativa inacabada.",
+    "tema": "penas"
+  },
+  {
+    "articulo": "Art. 66 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Concurso real",
+    "texto": "Hay concurso real cuando un mismo sujeto realiza dos (2) o más acciones u omisiones y con ello infringe una misma norma penal varias veces o varias normas penales. Al culpable de dos (2) o más delitos o faltas se le imponen todas las penas correspondientes a las infracciones cometidas para su cumplimiento simultáneo, si fuere posible, atendidas la naturaleza y efectos de las mismas. Si las penas impuestas por las diversas infracciones no pueden ser cumplidas simultáneamente, debe seguirse el orden de su respectiva gravedad para su cumplimiento sucesivo. No obstante lo dispuesto en el párrafo anterior, el máximo de cumplimiento viene determinado por el triple del tiempo de duración de la más grave de las penas impuestas, que no puede exceder de treinta (30) años. En el caso de que alguno de los delitos por los que hubiere sido penado el culpable exceda de veinte (20) años, el máximo de cumplimiento efectivo de la pena es de cuarenta (40) años.",
+    "tema": "concursos"
+  },
+  {
+    "articulo": "Art. 67 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Concurso ideal",
+    "texto": "Hay concurso ideal cuando con una (1) sola acción u omisión se infringen diversas disposiciones legales que no se excluyen entre sí. La apreciación de concurso ideal supone la imposición de la pena correspondiente al delito o falta que tenga señalada la pena más grave aumentada en un tercio (1/3), sin que pueda exceder de la suma de las penas concretas impuestas si se hubiesen penado separadamente los delitos.",
+    "tema": "concursos"
+  },
+  {
+    "articulo": "Art. 68 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Delito continuado y delito masa",
+    "texto": "Quien en ejecución de un plan preconcebido o aprovechando idéntica ocasión, realiza una pluralidad de acciones u omisiones que ofenden a uno o varios sujetos e infringen el mismo precepto penal o preceptos de igual o semejante naturaleza, debe ser castigado como autor de un delito o falta continuados con la pena señalada para la infracción más grave que se debe imponer en su mitad superior, pudiendo llegarse hasta una pena superior en un tercio (1/3). La misma pena se impone cuando se trata de delitos masa.",
+    "tema": "concursos"
+  },
+  {
+    "articulo": "Art. 69 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Aumento o disminución en fracciones de la pena",
+    "texto": "La extensión de la pena aumentada o disminuida en fracciones a la prevista por la Ley, se fija atendiendo a las reglas siguientes:\n1) La pena aumentada en una fracción determinada, se forma partiendo de la cifra máxima señalada en la Ley para el delito de que se trate aumentando la fracción correspondiente, constituyendo la suma resultante su límite máximo. El límite mínimo de la pena aumentada en una fracción determinada será el máximo de la pena señalada por la Ley para el delito de que se trate; y,\n2) La pena disminuida en una fracción determinada se forma partiendo de la cifra mínima señalada por la Ley en el delito de que se trate y disminuyendo la fracción correspondiente, constituyendo el resultado de esta deducción su límite mínimo. El límite máximo de la pena disminuida en una fracción determinada será el mínimo de la pena señalada por la Ley para el delito de que se trate.",
+    "tema": "penas"
+  },
+  {
+    "articulo": "Art. 70 CP",
+    "libro": "Libro I",
+    "titulo": "Título IV — De las penas",
+    "capitulo": "Capítulo IV — De la determinación de la pena",
+    "epigrafe": "Concurrencia o ausencia de circunstancias modificativas",
+    "texto": "1) En los delitos dolosos:\na) Si no concurren circunstancias agravantes ni atenuantes, la pena se fija dentro del marco establecido para el delito en atención a las circunstancias personales del delincuente y a la mayor o menor gravedad del hecho;\nb) Si solo concurre una (1) o dos (2) agravantes y ninguna atenuante, se aplica la pena media hasta el límite máximo;\nc) Si solo concurre alguna atenuante se impone la pena media hasta el límite mínimo;\nd) Cuando concurren varias atenuantes y ninguna agravante se aplica la pena en su límite mínimo;\ne) Cuando concurren varias agravantes y ninguna atenuante se aplica la pena en su límite máximo; y,\nf) Cuando concurren atenuantes y agravantes se compensan unas y otras para la individualización de la pena. En este supuesto no se debe imponer el máximo ni el mínimo de la pena.\n2) En los delitos imprudentes, los jueces aplican las penas a su prudente arbitrio sin sujetarse a las reglas anteriores.",
+    "tema": "penas"
+  }
+]
