@@ -1,14 +1,11 @@
 'use client';
 
-import { Suspense, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Scale, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
-import Link from 'next/link';
 
-function LoginForm() {
+export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/';
 
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
@@ -36,7 +33,7 @@ function LoginForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Error');
-      window.location.href = redirect;
+      window.location.href = '/';
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -148,17 +145,5 @@ function LoginForm() {
         </p>
       </div>
     </div>
-  );
-}
-
-export default function LoginPage() {
-  return (
-    <Suspense fallback={
-      <div className="flex flex-1 items-center justify-center bg-background">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
-      <LoginForm />
-    </Suspense>
   );
 }
