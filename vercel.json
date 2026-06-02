@@ -1,9 +1,6 @@
 {
-  "experimentalServices": {
-    "backend": {
-      "root": ".",
-      "entrypoint": "backend.server:app",
-      "routePrefix": "/"
-    }
-  }
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install"
 }

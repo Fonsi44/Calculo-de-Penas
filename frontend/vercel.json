@@ -1,5 +1,0 @@
-{
-  "outputDirectory": "dist",
-    "buildCommand": "EXPO_PUBLIC_BACKEND_URL=https://calculo-de-penas.vercel.app npx expo export --platform web",
-  "installCommand": "npm install"
-}
