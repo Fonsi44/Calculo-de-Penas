@@ -1,27 +1,69 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Home, Search, Gavel, Plus, X, ClipboardList, Scale, Check, Minus, FileText, Save, Printer } from 'lucide-react';
-import { AGRAVANTES, ATENUANTES, EXIMENTES, GRADOS_AUTORIA, GRADOS_EJECUCION, TIPOS_CONCURSO } from '@/lib/catalogos';
+import {
+  ChevronLeft,
+  Home,
+  Search,
+  Gavel,
+  Plus,
+  X,
+  Scale,
+  Check,
+  Save,
+  Printer,
+  Search as SearchIcon,
+  FileText,
+  Sliders,
+  Users,
+  GitBranch,
+  Link2,
+  ListChecks,
+} from 'lucide-react';
+import {
+  AGRAVANTES,
+  ATENUANTES,
+  EXIMENTES,
+  GRADOS_AUTORIA,
+  GRADOS_EJECUCION,
+  TIPOS_CONCURSO,
+} from '@/lib/catalogos';
 import type { Delito, DelitoConfig, Step } from '../types';
 import { ErrorBoundary } from '../error-boundary';
 import { ArticleModal } from '../article-modal';
+import { Button } from '@/components/ui/button';
+import { IconButton } from '@/components/ui/icon-button';
+import { Card, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Chip } from '@/components/ui/chip';
+import { Input } from '@/components/ui/input';
+import { Stepper, type StepperStep } from '@/components/ui/stepper';
+import { Modal } from '@/components/ui/modal';
+import { EmptyState, ErrorState } from '@/components/ui/empty-state';
+import { CenteredSpinner } from '@/components/ui/spinner';
+import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm';
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
+import { useDebounce } from '@/hooks/use-debounce';
+import { cn, formatFechaCorta, pluralizar } from '@/lib/ui';
 
-const STEPS = [
-  { num: 1, label: 'Delito', icon: '🔍' },
-  { num: 2, label: 'Variantes', icon: '⚙️' },
-  { num: 3, label: 'Participación', icon: '👥' },
-  { num: 4, label: 'Circunstancias', icon: '⚖️' },
-  { num: 5, label: 'Más delitos', icon: '➕' },
-  { num: 6, label: 'Concurso', icon: '🔗' },
-  { num: 7, label: 'Resumen', icon: '📋' },
-  { num: 8, label: 'Resultado', icon: '🔨' },
+const STEPS: StepperStep[] = [
+  { num: 1, label: 'Delito' },
+  { num: 2, label: 'Variantes' },
+  { num: 3, label: 'Participación' },
+  { num: 4, label: 'Circunstancias' },
+  { num: 5, label: 'Más delitos' },
+  { num: 6, label: 'Concurso' },
+  { num: 7, label: 'Resumen' },
+  { num: 8, label: 'Resultado' },
 ];
 
 export default function Calculadora() {
   const router = useRouter();
+  const toast = useToast();
+  const confirm = useConfirm();
 
   const [delitos, setDelitos] = useState<Delito[]>([]);
   const [step, setStep] = useState<Step>(1);
@@ -39,44 +81,34 @@ export default function Calculadora() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [selectedCaso, setSelectedCaso] = useState('');
   const [saving, setSaving] = useState(false);
-  const [saveMsg, setSaveMsg] = useState<string | null>(null);
+
+  const debouncedSearch = useDebounce(search, 200);
 
   useEffect(() => {
     setLoading(true);
+    setFetchError(null);
     fetch('/api/delitos?limit=1000')
       .then(r => r.json())
       .then(d => setDelitos(Array.isArray(d) ? d : []))
-      .catch(e => { setFetchError(e.message || 'Error al cargar delitos'); console.warn(e); })
+      .catch(e => {
+        setFetchError(e.message || 'Error al cargar delitos');
+        console.warn(e);
+      })
       .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
-    if (resultado) {
-      setStep(8);
-    }
+    if (resultado) setStep(8);
   }, [resultado]);
 
   const current = configs[currentIdx];
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setArticleRef(null);
-        setShowSaveModal(false);
-      }
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-        if (step === 7) calcular();
-      }
-      if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.metaKey) {
-        if (step > 1 && step < 8) goPrev();
-      }
-      if (e.key === 'ArrowRight' && !e.ctrlKey && !e.metaKey) {
-        if (step < 8 && !(step === 7)) goNext();
-      }
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [step, configs, configs.length, tipoConcurso]);
+  useKeyboardShortcuts([
+    { key: 'Escape', handler: () => { setArticleRef(null); setShowSaveModal(false); } },
+    { key: 'Enter', ctrl: true, enabled: step === 7, handler: () => calcular() },
+    { key: 'ArrowLeft', enabled: step > 1 && step < 8, handler: () => goPrev() },
+    { key: 'ArrowRight', enabled: step < 8 && step !== 7, handler: () => goNext() },
+  ]);
 
   const selectDelito = (d: Delito) => {
     const cfg: DelitoConfig = {
@@ -113,7 +145,7 @@ export default function Calculadora() {
       return;
     }
     if (step === 5 && configs.length === 1) { setStep(7); return; }
-    if (step === 7) return; // Step 7 must use "Calcular pena" button
+    if (step === 7) return;
     if (step < 8) setStep((step + 1) as Step);
   };
 
@@ -132,7 +164,16 @@ export default function Calculadora() {
     setSearch('');
   };
 
-  const removeDelito = (idx: number) => {
+  const removeDelito = async (idx: number) => {
+    if (configs.length === 1) {
+      const ok = await confirm({
+        title: '¿Descartar cálculo?',
+        description: 'Se eliminará el único delito configurado.',
+        confirmLabel: 'Descartar',
+        tone: 'danger',
+      });
+      if (!ok) return;
+    }
     const next = configs.filter((_, i) => i !== idx);
     setConfigs(next);
     if (currentIdx >= next.length) setCurrentIdx(Math.max(0, next.length - 1));
@@ -167,7 +208,7 @@ export default function Calculadora() {
       });
       clearTimeout(timeoutId);
       if (!res.ok) {
-        const err = await res.json();
+        const err = await res.json().catch(() => ({}));
         throw new Error(err.error || 'Error al calcular');
       }
       const data = await res.json();
@@ -180,7 +221,16 @@ export default function Calculadora() {
     }
   };
 
-  const reset = () => {
+  const reset = async () => {
+    if (configs.length > 0 || resultado) {
+      const ok = await confirm({
+        title: '¿Iniciar nueva consulta?',
+        description: 'Se descartarán los datos del cálculo actual.',
+        confirmLabel: 'Nueva consulta',
+        tone: 'warning',
+      });
+      if (!ok) return;
+    }
     setConfigs([]);
     setCurrentIdx(0);
     setTipoConcurso('ninguno');
@@ -190,19 +240,34 @@ export default function Calculadora() {
     setError(null);
   };
 
-  const filtered = delitos.filter(d => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return d.nombre.toLowerCase().includes(q) || d.articulo.toLowerCase().includes(q) || (d.conducta || '').toLowerCase().includes(q);
-  });
+  const filtered = useMemo(() => {
+    if (!debouncedSearch) return delitos;
+    const q = debouncedSearch.toLowerCase();
+    return delitos.filter(d =>
+      d.nombre.toLowerCase().includes(q) ||
+      d.articulo.toLowerCase().includes(q) ||
+      (d.conducta || '').toLowerCase().includes(q)
+    );
+  }, [delitos, debouncedSearch]);
 
-  if (loading) {
+  if (loading) return <CenteredSpinner label="Cargando catálogos jurídicos..." />;
+
+  if (fetchError) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-text-secondary text-sm">Cargando catálogos jurídicos...</p>
-        </div>
+      <div className="flex flex-1 items-center justify-center bg-background p-4">
+        <ErrorState
+          title="Error de conexión"
+          description={fetchError}
+          onRetry={() => {
+            setLoading(true);
+            setFetchError(null);
+            fetch('/api/delitos?limit=1000')
+              .then(r => r.json())
+              .then(d => setDelitos(Array.isArray(d) ? d : []))
+              .catch(e => setFetchError(e.message))
+              .finally(() => setLoading(false));
+          }}
+        />
       </div>
     );
   }
@@ -214,629 +279,656 @@ export default function Calculadora() {
       {/* Header */}
       <div className="bg-primary px-3 py-2 no-print">
         <div className="flex items-center">
-          <button onClick={goPrev} className="w-8 h-8 rounded-md bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-            <ChevronLeft size={20} className="text-white" />
-          </button>
+          <IconButton
+            label="Paso anterior"
+            variant="solid"
+            onClick={goPrev}
+            disabled={step === 1}
+          >
+            <ChevronLeft size={18} />
+          </IconButton>
           <div className="flex-1 ml-2">
-            <h1 className="text-white font-bold text-sm">Calculadora de Penas</h1>
-            <p className="text-[#C9D1DD] text-[10px]">Paso {step} de 8 · {pasoActual.label}</p>
+            <h1 className="text-text-inverse font-bold text-sm">Calculadora de Penas</h1>
+            <p className="text-[11px] text-text-inverse/70">Paso {step} de 8 · {pasoActual.label}</p>
           </div>
-          <Link href="/" className="w-8 h-8 rounded-md bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-            <Home size={18} className="text-white" />
+          <Link href="/" aria-label="Volver al inicio" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center hover:bg-white/25">
+            <Home size={18} className="text-text-inverse" />
           </Link>
         </div>
 
-        {/* Stepper - mobile horizontal, desktop vertical */}
-        <div className="flex gap-1 mt-2 overflow-x-auto pb-0.5 scrollbar-none lg:hidden">
-          {STEPS.map(s => {
-            const active = s.num === step;
-            const done = s.num < step;
-            return (
-              <div key={s.num} className="flex items-center min-w-[36px]">
-                <div className={`w-5.5 h-5.5 rounded-full flex items-center justify-center text-[9px] font-bold transition-colors ${
-                  active ? 'bg-accent text-primary' : done ? 'bg-accent/60 text-primary' : 'bg-white/15 text-[#D5DDEA]'
-                }`}>
-                  {done ? <Check size={10} /> : s.num}
-                </div>
-              </div>
-            );
-          })}
+        <div className="lg:hidden mt-2">
+          <Stepper steps={STEPS} current={step} />
         </div>
       </div>
 
       {/* Desktop layout: sidebar + content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Desktop sidebar */}
-        <div className="hidden lg:flex lg:flex-col desktop-sidebar bg-primary px-3 py-4 overflow-y-auto">
+        <aside className="hidden lg:flex lg:flex-col desktop-sidebar bg-primary px-3 py-4 overflow-y-auto">
           <div className="flex items-center gap-2 mb-4">
             <Scale size={16} className="text-accent" />
-            <span className="text-[10px] font-bold text-accent tracking-widest">PASO {step} DE 8</span>
+            <span className="text-[11px] font-bold text-accent tracking-widest">PASO {step} DE 8</span>
           </div>
-          {STEPS.map(s => {
-            const active = s.num === step;
-            const done = s.num < step;
-            return (
-              <div key={s.num} className="flex items-center gap-2 py-1.5">
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors flex-shrink-0 ${
-                  active ? 'bg-accent text-primary' : done ? 'bg-accent/60 text-primary' : 'bg-white/15 text-[#D5DDEA]'
-                }`}>
-                  {done ? <Check size={12} /> : s.num}
-                </div>
-                <span className={`text-xs transition-colors ${
-                  active ? 'text-accent font-bold' : done ? 'text-accent/60' : 'text-[#D5DDEA]'
-                }`}>
-                  {s.label}
-                </span>
+          <Stepper steps={STEPS} current={step} variant="vertical" onSelect={(n) => {
+            if (n < step) setStep(n as Step);
+          }} />
+        </aside>
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto p-3 max-w-lg mx-auto w-full lg:mx-0 lg:max-w-none lg:px-6 lg:py-4">
+          {/* Step 1: Seleccionar delito */}
+          {step === 1 && (
+            <div>
+              <div className="relative mb-3">
+                <Input
+                  iconLeft={<Search size={16} />}
+                  placeholder="Buscar delito por nombre, artículo o conducta..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  iconRight={search ? (
+                    <button type="button" onClick={() => setSearch('')} aria-label="Limpiar búsqueda">
+                      <X size={16} />
+                    </button>
+                  ) : undefined}
+                />
               </div>
-            );
-          })}
-        </div>
 
-      {/* Body */}
-      <div className="flex-1 overflow-y-auto p-3 max-w-lg mx-auto w-full lg:mx-0 lg:max-w-none lg:px-6 lg:py-4">
-        {/* Step 1: Seleccionar delito */}
-        {step === 1 && (
-          <div>
-            <div className="flex items-center gap-2 bg-white border border-border rounded-lg px-3 py-2 mb-3 shadow-sm">
-              <Search size={16} className="text-text-muted" />
-              <input
-                className="flex-1 text-sm text-text outline-none bg-transparent py-1"
-                placeholder="Buscar delito..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                autoFocus
-              />
-              {search && (
-                <button onClick={() => setSearch('')}>
-                  <X size={16} className="text-text-muted" />
-                </button>
-              )}
-            </div>
-
-            {configs.length > 0 && (
-              <div className="mb-2">
-                <p className="text-xs text-text-muted mb-1">Delitos seleccionados:</p>
-                {configs.map((c, i) => (
-                  <div key={i} className="flex items-center gap-2 bg-accent/10 px-2.5 py-1.5 rounded-md mb-1">
-                    <span className="text-xs font-semibold text-primary flex-1 truncate">{c.delito.nombre}</span>
-                    <button onClick={() => removeDelito(i)}><X size={14} className="text-danger" /></button>
+              {configs.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-xs font-semibold text-text-secondary mb-1.5">Delitos configurados</p>
+                  <div className="space-y-1.5">
+                    {configs.map((c, i) => (
+                      <div key={i} className="flex items-center gap-2 bg-accent/10 border border-accent/30 px-3 py-2 rounded-md">
+                        <span className="text-xs font-bold text-primary flex-1 truncate">{c.delito.nombre}</span>
+                        <Badge tone="accent">{c.delito.articulo}</Badge>
+                        <button
+                          type="button"
+                          onClick={() => removeDelito(i)}
+                          aria-label={`Quitar ${c.delito.nombre}`}
+                          className="w-7 h-7 flex items-center justify-center rounded text-danger hover:bg-danger-bg"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
-
-            <div className="space-y-1.5">
-              {fetchError ? (
-                <div className="bg-danger/10 border border-danger/30 rounded-lg p-3 text-center">
-                  <p className="text-sm font-semibold text-danger mb-1">Error de conexión</p>
-                  <p className="text-xs text-text-muted">{fetchError}</p>
-                  <button onClick={() => { setLoading(true); setFetchError(null); fetch('/api/delitos?limit=1000').then(r => r.json()).then(d => setDelitos(Array.isArray(d) ? d : [])).catch(e => setFetchError(e.message)).finally(() => setLoading(false)); }} className="mt-2 px-3 py-1.5 bg-primary text-white text-xs rounded-md hover:bg-primary-light transition-colors">
-                    Reintentar
-                  </button>
                 </div>
-              ) : filtered.length === 0 ? (
-                <p className="text-center text-text-muted text-sm py-8">Sin resultados</p>
-              ) : (
-                filtered.map(d => (
-                  <button
-                    key={d.id}
-                    onClick={() => selectDelito(d)}
-                    className="w-full text-left bg-surface border border-border-light rounded-lg p-2.5 hover:shadow-md transition-shadow"
-                  >
-                    <p className="font-semibold text-sm text-text">{d.nombre}</p>
-                    <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
-                  </button>
-                ))
               )}
-            </div>
-          </div>
-        )}
 
-        {/* Step 2: Variantes */}
-        {step === 2 && (
-          <div>
-            <h2 className="font-bold text-sm text-text mb-2">Tipo de pena</h2>
-            <p className="text-xs text-text-muted mb-3">
-              Este delito admite pena alternativa. ¿Qué tipo de pena desea calcular?
-            </p>
-            <div className="space-y-2">
-              {[
-                { id: 'prision', label: 'Prisión', desc: 'Pena privativa de libertad' },
-                { id: 'multa', label: 'Multa', desc: 'Pena alternativa no privativa' },
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => { updateCurrent({ pena_seleccionada: opt.id as 'prision' | 'multa' }); setStep(3); }}
-                  className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
-                    current?.pena_seleccionada === opt.id
-                      ? 'border-accent bg-accent/5'
-                      : 'border-border bg-surface hover:border-accent/50'
-                  }`}
-                >
-                  <p className="font-semibold text-sm text-text">{opt.label}</p>
-                  <p className="text-xs text-text-muted">{opt.desc}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Participación */}
-        {step === 3 && (
-          <div>
-            <div className="mb-4">
-              <h2 className="font-bold text-sm text-text mb-2">Grado de autoría</h2>
-              <div className="space-y-1.5">
-                {GRADOS_AUTORIA.map(g => (
-                  <button
-                    key={g.id}
-                    onClick={() => updateCurrent({ grado_autoria: g.id })}
-                    className={`w-full text-left p-2.5 rounded-lg border transition-all ${
-                      current?.grado_autoria === g.id ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/50'
-                    }`}
-                  >
-                    <p className="font-semibold text-sm text-text">{g.nombre}</p>
-                    <p className="text-[11px] text-text-muted">{g.descripcion} ({g.articulo})</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <h2 className="font-bold text-sm text-text mb-2">Grado de ejecución</h2>
-              <div className="space-y-1.5">
-                {GRADOS_EJECUCION.map(g => (
-                  <button
-                    key={g.id}
-                    onClick={() => updateCurrent({ grado_ejecucion: g.id })}
-                    className={`w-full text-left p-2.5 rounded-lg border transition-all ${
-                      current?.grado_ejecucion === g.id ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/50'
-                    }`}
-                  >
-                    <p className="font-semibold text-sm text-text">{g.nombre}</p>
-                    <p className="text-[11px] text-text-muted">{g.descripcion} ({g.articulo})</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {(current?.grado_ejecucion === 'tentativa_acabada' || current?.grado_ejecucion === 'tentativa_inacabada') && (
-              <div>
-                <h2 className="font-bold text-sm text-text mb-2">Reducción por tentativa</h2>
-                <div className="flex gap-2">
-                  {[1, 2].map(n => (
+              {filtered.length === 0 ? (
+                <EmptyState
+                  icon={<SearchIcon size={40} />}
+                  title="Sin resultados"
+                  description="Modifica la búsqueda."
+                />
+              ) : (
+                <div className="space-y-1.5">
+                  {filtered.map(d => (
                     <button
-                      key={n}
-                      onClick={() => updateCurrent({ reduccion_tentativa: n })}
-                      className={`flex-1 p-2.5 rounded-lg border font-semibold text-sm transition-all ${
-                        current?.reduccion_tentativa === n ? 'border-accent bg-accent/5 text-accent' : 'border-border bg-surface text-text hover:border-accent/50'
-                      }`}
+                      key={d.id}
+                      type="button"
+                      onClick={() => selectDelito(d)}
+                      className="w-full text-left bg-surface border border-border-light rounded-md p-3 hover:shadow-md transition-shadow focus-visible:outline-none"
                     >
-                      {n} grado{n > 1 ? 's' : ''}
+                      <p className="font-semibold text-sm text-text">{d.nombre}</p>
+                      <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
                     </button>
                   ))}
                 </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Step 4: Circunstancias */}
-        {step === 4 && (
-          <div>
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <h2 className="font-bold text-sm text-text">Eximentes</h2>
-                <button onClick={() => setArticleRef('Art. 30 CP')} className="text-[10px] text-accent underline hover:text-accent-light transition-colors">
-                  Art. 30 CP
-                </button>
-              </div>
-              <div className="space-y-1.5">
-                {EXIMENTES.map(e => (
-                  <button
-                    key={e.id}
-                    onClick={() => {
-                      if (e.completa) {
-                        updateCurrent({ eximente_completa: current?.eximente_completa === e.id ? null : e.id, eximentes: [] });
-                      } else {
-                        updateCurrent({ eximentes: toggle(current?.eximentes || [], e.id), eximente_completa: null });
-                      }
-                    }}
-                    className={`w-full text-left p-2.5 rounded-lg border transition-all ${
-                      current?.eximente_completa === e.id ? 'border-accent bg-accent/5' :
-                      current?.eximentes.includes(e.id) ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <p className="font-semibold text-sm text-text flex-1">{e.nombre}</p>
-                      {e.completa && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold">COMPLETA</span>
-                      )}
-                    </div>
-                    <p className="text-[11px] text-text-muted">{e.articulo}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <h2 className="font-bold text-sm text-text">Agravantes</h2>
-                <button onClick={() => setArticleRef('Art. 32 CP')} className="text-[10px] text-accent underline hover:text-accent-light transition-colors">
-                  Art. 32 CP
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {AGRAVANTES.map(a => (
-                  <button
-                    key={a.id}
-                    onClick={() => updateCurrent({ agravantes: toggle(current?.agravantes || [], a.id) })}
-                    className={`px-2.5 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                      current?.agravantes.includes(a.id)
-                        ? 'bg-danger/10 border-danger/30 text-danger'
-                        : 'bg-surface border-border text-text-secondary hover:border-danger/30'
-                    }`}
-                  >
-                    {a.nombre}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <h2 className="font-bold text-sm text-text">Atenuantes</h2>
-                <button onClick={() => setArticleRef('Art. 31 CP')} className="text-[10px] text-accent underline hover:text-accent-light transition-colors">
-                  Art. 31 CP
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {ATENUANTES.map(a => (
-                  <button
-                    key={a.id}
-                    onClick={() => updateCurrent({ atenuantes: toggle(current?.atenuantes || [], a.id) })}
-                    className={`px-2.5 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                      current?.atenuantes.includes(a.id)
-                        ? 'bg-success/10 border-success/30 text-success'
-                        : 'bg-surface border-border text-text-secondary hover:border-success/30'
-                    }`}
-                  >
-                    {a.nombre}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Step 5: Más delitos */}
-        {step === 5 && (
-          <div>
-            <h2 className="font-bold text-sm text-text mb-2">Delitos seleccionados</h2>
-            <div className="space-y-1.5 mb-4">
-              {configs.map((c, i) => (
-                <div key={i} className="flex items-center gap-2 bg-surface border border-border-light rounded-lg p-2.5">
-                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
-                    {i + 1}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm text-text truncate">{c.delito.nombre}</p>
-                    <p className="text-[11px] text-text-muted">{c.delito.articulo}</p>
-                  </div>
-                  <button onClick={() => removeDelito(i)} className="p-1 hover:bg-danger/10 rounded transition-colors">
-                    <X size={14} className="text-danger" />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={addAnotherDelito}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-lg border-2 border-dashed border-border text-text-secondary font-semibold text-sm hover:border-accent hover:text-accent transition-all"
-            >
-              <Plus size={16} />
-              Añadir otro delito
-            </button>
-
-            {configs.length > 0 && (
-              <button
-                onClick={() => setStep(configs.length > 1 ? 6 : 7)}
-                className="w-full mt-3 py-3 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors"
-              >
-                {configs.length > 1 ? 'Configurar concurso' : 'Ver resumen'}
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Step 6: Concurso */}
-        {step === 6 && (
-          <div>
-            <h2 className="font-bold text-sm text-text mb-2">Tipo de concurso</h2>
-            <p className="text-xs text-text-muted mb-3">
-              Al existir múltiples delitos, seleccione el tipo de concurso aplicable.
-            </p>
-            <div className="space-y-2">
-              {TIPOS_CONCURSO.map(tc => (
-                <button
-                  key={tc.id}
-                  onClick={() => setTipoConcurso(tc.id)}
-                  className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
-                    tipoConcurso === tc.id ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/50'
-                  }`}
-                >
-                  <p className="font-semibold text-sm text-text">{tc.nombre}</p>
-                  <button onClick={(e) => { e.stopPropagation(); setArticleRef(tc.articulo || null); }} className="text-[11px] text-accent underline hover:text-accent-light transition-colors text-left">
-                    {tc.articulo}
-                  </button>
-                  <p className="text-[11px] text-text-muted mt-0.5">{tc.descripcion}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Step 7: Resumen */}
-        {step === 7 && (
-          <div>
-            <h2 className="font-bold text-sm text-text mb-3">Resumen del cálculo</h2>
-            {configs.map((c, i) => (
-              <div key={i} className="bg-surface border border-border-light rounded-lg p-3 mb-2 shadow-sm">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary">#{i + 1}</span>
-                  <p className="font-bold text-sm text-text flex-1">{c.delito.nombre}</p>
-                </div>
-                <div className="grid grid-cols-2 gap-1 text-xs text-text-muted">
-                  <span>Artículo: {c.delito.articulo}</span>
-                  <span>Pena: {c.pena_seleccionada === 'prision' ? 'Prisión' : 'Multa'}</span>
-                  <span>Autoría: {GRADOS_AUTORIA.find(g => g.id === c.grado_autoria)?.nombre}</span>
-                  <span>Ejecución: {GRADOS_EJECUCION.find(g => g.id === c.grado_ejecucion)?.nombre}</span>
-                </div>
-                {(c.agravantes.length > 0 || c.atenuantes.length > 0) && (
-                  <div className="flex flex-wrap gap-1 mt-1.5">
-                    {c.agravantes.map(aid => (
-                      <span key={aid} className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-danger/10 text-danger">
-                        {AGRAVANTES.find(a => a.id === aid)?.nombre}
-                      </span>
-                    ))}
-                    {c.atenuantes.map(aid => (
-                      <span key={aid} className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-success/10 text-success">
-                        {ATENUANTES.find(a => a.id === aid)?.nombre}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {tipoConcurso !== 'ninguno' && (
-              <div className="bg-accent/10 border border-accent/20 rounded-lg p-2.5 mb-3">
-                <p className="text-xs font-bold text-primary">
-                  Concurso: {TIPOS_CONCURSO.find(tc => tc.id === tipoConcurso)?.nombre}
-                </p>
-              </div>
-            )}
-
-            {error && (
-              <div className="bg-danger/10 border border-danger/30 rounded-lg p-3 mb-3 text-center">
-                <p className="text-sm font-bold text-danger mb-1">Error al calcular</p>
-                <p className="text-xs text-text-muted">{error}</p>
-                <button onClick={calcular} className="mt-2 px-3 py-1.5 bg-danger text-white text-xs rounded-md font-semibold hover:opacity-90 transition-opacity">
-                  Reintentar
-                </button>
-              </div>
-            )}
-
-            <button
-              onClick={calcular}
-              disabled={calculating}
-              className="w-full py-3 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-70"
-            >
-              {calculating ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Calculando...
-                </span>
-              ) : (
-                'Calcular pena'
               )}
-            </button>
-          </div>
-        )}
-
-        {/* Step 8: Resultado */}
-        {step === 8 && resultado?.pena_principal && (
-          <ErrorBoundary fallback={
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <p className="font-bold text-danger text-sm mb-2">Error al mostrar resultados</p>
-              <p className="text-xs text-text-muted mb-4">Ocurrió un error al renderizar el cálculo. Intente nuevamente.</p>
-              <button onClick={reset} className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-light transition-colors">
-                Nueva consulta
-              </button>
             </div>
-          }>
-            <div className="print-area">
-              {resultado.pena_principal === 'EXENTO' ? (
-                <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mb-3 text-center shadow-md">
-                  <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
-                  <p className="text-xl font-extrabold text-warning">EXENTO</p>
-                  <p className="text-xs text-text-muted mt-2">Se ha aplicado una eximente completa. El delito no conlleva pena.</p>
-                </div>
-              ) : (
-                <div className="bg-surface border border-accent/30 rounded-lg p-4 mb-3 text-center shadow-md">
-                  <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Pena Principal</p>
-                  <p className="text-xl font-extrabold text-primary">{resultado.pena_principal}</p>
-                </div>
-              )}
+          )}
 
-              {Array.isArray(resultado.penas_accesorias) && resultado.penas_accesorias.length > 0 && (
-                <div className="bg-surface border border-border-light rounded-lg p-3 mb-2">
-                  <p className="font-bold text-xs text-text mb-1">Penas accesorias</p>
-                  <ul className="list-disc list-inside text-xs text-text-muted">
-                    {resultado.penas_accesorias.map((p: string, i: number) => (
-                      <li key={i}>{p}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {(resultado.delitos_analizados || []).map((d: any, i: number) => (
-                <div key={i} className="bg-surface border border-border-light rounded-lg p-3 mb-2 shadow-sm">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Gavel size={14} className="text-accent" />
-                    <p className="font-bold text-sm text-text flex-1">{d.nombre}</p>
-                    {d.exento && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-warning/10 text-warning font-bold">EXENTO</span>
+          {/* Step 2: Variantes */}
+          {step === 2 && (
+            <div>
+              <h2 className="font-bold text-base text-text mb-2">Tipo de pena</h2>
+              <p className="text-xs text-text-secondary mb-3">
+                Este delito admite pena alternativa. Seleccione el tipo de pena a calcular.
+              </p>
+              <div className="space-y-2">
+                {[
+                  { id: 'prision', label: 'Prisión', desc: 'Pena privativa de libertad' },
+                  { id: 'multa', label: 'Multa', desc: 'Pena alternativa no privativa' },
+                ].map(opt => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => { updateCurrent({ pena_seleccionada: opt.id as 'prision' | 'multa' }); setStep(3); }}
+                    className={cn(
+                      'w-full text-left p-3 rounded-md border-2 transition-all focus-visible:outline-none',
+                      current?.pena_seleccionada === opt.id
+                        ? 'border-accent bg-accent/10'
+                        : 'border-border bg-surface hover:border-accent/50',
                     )}
+                  >
+                    <p className="font-semibold text-sm text-text">{opt.label}</p>
+                    <p className="text-xs text-text-muted">{opt.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Participación */}
+          {step === 3 && (
+            <div>
+              <Card padding="md" className="mb-3">
+                <CardHeader title="Grado de autoría" />
+                <div className="space-y-1.5">
+                  {GRADOS_AUTORIA.map(g => (
+                    <button
+                      key={g.id}
+                      type="button"
+                      onClick={() => updateCurrent({ grado_autoria: g.id })}
+                      className={cn(
+                        'w-full text-left p-2.5 rounded-md border transition-all focus-visible:outline-none',
+                        current?.grado_autoria === g.id ? 'border-accent bg-accent/10' : 'border-border bg-surface hover:border-accent/50',
+                      )}
+                    >
+                      <p className="font-semibold text-sm text-text">{g.nombre}</p>
+                      <p className="text-[11px] text-text-muted">{g.descripcion} ({g.articulo})</p>
+                    </button>
+                  ))}
+                </div>
+              </Card>
+
+              <Card padding="md" className="mb-3">
+                <CardHeader title="Grado de ejecución" />
+                <div className="space-y-1.5">
+                  {GRADOS_EJECUCION.map(g => (
+                    <button
+                      key={g.id}
+                      type="button"
+                      onClick={() => updateCurrent({ grado_ejecucion: g.id })}
+                      className={cn(
+                        'w-full text-left p-2.5 rounded-md border transition-all focus-visible:outline-none',
+                        current?.grado_ejecucion === g.id ? 'border-accent bg-accent/10' : 'border-border bg-surface hover:border-accent/50',
+                      )}
+                    >
+                      <p className="font-semibold text-sm text-text">{g.nombre}</p>
+                      <p className="text-[11px] text-text-muted">{g.descripcion} ({g.articulo})</p>
+                    </button>
+                  ))}
+                </div>
+              </Card>
+
+              {(current?.grado_ejecucion === 'tentativa_acabada' || current?.grado_ejecucion === 'tentativa_inacabada') && (
+                <Card padding="md">
+                  <CardHeader title="Reducción por tentativa" />
+                  <div className="flex gap-2">
+                    {[1, 2].map(n => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => updateCurrent({ reduccion_tentativa: n })}
+                        className={cn(
+                          'flex-1 h-10 rounded-md border font-semibold text-sm transition-all focus-visible:outline-none',
+                          current?.reduccion_tentativa === n
+                            ? 'border-accent bg-accent/10 text-accent-dark'
+                            : 'border-border bg-surface text-text hover:border-accent/50',
+                        )}
+                      >
+                        {n} grado{n > 1 ? 's' : ''}
+                      </button>
+                    ))}
                   </div>
-                  <div className="grid grid-cols-2 gap-1 text-xs text-text-muted mb-1">
-                    <span>Artículo: {d.articulo}</span>
-                    <span>Gravedad: {d.gravedad}</span>
-                    <span>Pena base: {d.pena_base_texto}</span>
-                    <span>Pena individual: {d.pena_individual_texto}</span>
+                </Card>
+              )}
+            </div>
+          )}
+
+          {/* Step 4: Circunstancias */}
+          {step === 4 && (
+            <div>
+              <Card padding="md" tone="default" className="mb-3 border-l-4 border-l-exemption">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="font-bold text-sm text-text">Eximentes</h2>
+                  <button
+                    type="button"
+                    onClick={() => setArticleRef('Art. 30 CP')}
+                    className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
+                  >
+                    Art. 30 CP
+                  </button>
+                </div>
+                <p className="text-[11px] text-text-secondary mb-2 italic">
+                  Las eximentes son excluyentes: si aplica una completa, no hay pena.
+                </p>
+                <div className="space-y-1.5">
+                  {EXIMENTES.map(e => {
+                    const selected = current?.eximente_completa === e.id || current?.eximentes.includes(e.id);
+                    return (
+                      <button
+                        key={e.id}
+                        type="button"
+                        onClick={() => {
+                          if (e.completa) {
+                            updateCurrent({
+                              eximente_completa: current?.eximente_completa === e.id ? null : e.id,
+                              eximentes: [],
+                            });
+                          } else {
+                            updateCurrent({
+                              eximentes: toggle(current?.eximentes || [], e.id),
+                              eximente_completa: null,
+                            });
+                          }
+                        }}
+                        className={cn(
+                          'w-full text-left p-2.5 rounded-md border transition-all focus-visible:outline-none',
+                          selected ? 'border-exemption bg-exemption-bg' : 'border-border bg-surface hover:border-exemption/50',
+                        )}
+                      >
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-sm text-text flex-1">{e.nombre}</p>
+                          {e.completa && <Badge tone="exemption">COMPLETA</Badge>}
+                        </div>
+                        <p className="text-[11px] text-text-muted">{e.articulo} · {e.descripcion}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+
+              <Card padding="md" className="mb-3 border-l-4 border-l-aggravation">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="font-bold text-sm text-text">Agravantes</h2>
+                  <button
+                    type="button"
+                    onClick={() => setArticleRef('Art. 32 CP')}
+                    className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
+                  >
+                    Art. 32 CP
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {AGRAVANTES.map(a => (
+                    <Chip
+                      key={a.id}
+                      tone="aggravation"
+                      selected={current?.agravantes.includes(a.id) || false}
+                      onClick={() => updateCurrent({ agravantes: toggle(current?.agravantes || [], a.id) })}
+                    >
+                      {a.nombre}
+                    </Chip>
+                  ))}
+                </div>
+              </Card>
+
+              <Card padding="md" className="border-l-4 border-l-mitigation">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="font-bold text-sm text-text">Atenuantes</h2>
+                  <button
+                    type="button"
+                    onClick={() => setArticleRef('Art. 31 CP')}
+                    className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
+                  >
+                    Art. 31 CP
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {ATENUANTES.map(a => (
+                    <Chip
+                      key={a.id}
+                      tone="mitigation"
+                      selected={current?.atenuantes.includes(a.id) || false}
+                      onClick={() => updateCurrent({ atenuantes: toggle(current?.atenuantes || [], a.id) })}
+                    >
+                      {a.nombre}
+                    </Chip>
+                  ))}
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {/* Step 5: Más delitos */}
+          {step === 5 && (
+            <div>
+              <h2 className="font-bold text-base text-text mb-2">Delitos configurados</h2>
+              <div className="space-y-2 mb-4">
+                {configs.map((c, i) => (
+                  <Card key={i} padding="sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
+                        {i + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-sm text-text truncate">{c.delito.nombre}</p>
+                        <p className="text-[11px] text-text-muted">{c.delito.articulo}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeDelito(i)}
+                        aria-label={`Quitar ${c.delito.nombre}`}
+                        className="w-9 h-9 flex items-center justify-center rounded text-danger hover:bg-danger-bg"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <Button variant="secondary" fullWidth size="lg" onClick={addAnotherDelito} iconLeft={<Plus size={16} />}>
+                Añadir otro delito
+              </Button>
+
+              {configs.length > 0 && (
+                <Button
+                  variant="primary"
+                  fullWidth
+                  size="lg"
+                  className="mt-3"
+                  onClick={() => setStep(configs.length > 1 ? 6 : 7)}
+                >
+                  {configs.length > 1 ? 'Configurar concurso' : 'Ver resumen'}
+                </Button>
+              )}
+            </div>
+          )}
+
+          {/* Step 6: Concurso */}
+          {step === 6 && (
+            <div>
+              <h2 className="font-bold text-base text-text mb-2">Tipo de concurso</h2>
+              <p className="text-xs text-text-secondary mb-3">
+                Al existir múltiples delitos, seleccione el tipo de concurso aplicable.
+              </p>
+              <div className="space-y-2">
+                {TIPOS_CONCURSO.map(tc => (
+                  <button
+                    key={tc.id}
+                    type="button"
+                    onClick={() => setTipoConcurso(tc.id)}
+                    className={cn(
+                      'w-full text-left p-3 rounded-md border-2 transition-all focus-visible:outline-none',
+                      tipoConcurso === tc.id ? 'border-accent bg-accent/10' : 'border-border bg-surface hover:border-accent/50',
+                    )}
+                  >
+                    <p className="font-semibold text-sm text-text">{tc.nombre}</p>
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); setArticleRef(tc.articulo || null); }}
+                      className="text-[11px] text-accent-dark underline hover:text-accent font-semibold text-left"
+                    >
+                      {tc.articulo}
+                    </button>
+                    <p className="text-[11px] text-text-muted mt-1">{tc.descripcion}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Step 7: Resumen */}
+          {step === 7 && (
+            <div>
+              <h2 className="font-bold text-base text-text mb-3">Resumen del cálculo</h2>
+              {configs.map((c, i) => (
+                <Card key={i} padding="md" className="mb-2">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-[11px] font-bold text-primary">#{i + 1}</span>
+                    <p className="font-bold text-sm text-text flex-1">{c.delito.nombre}</p>
                   </div>
-                  {d.modificaciones?.length > 0 && (
-                    <div className="mt-1.5 mb-1">
-                      {d.modificaciones.map((mod: string, j: number) => (
-                        <p key={j} className="text-[11px] text-text-muted">→ {mod}</p>
+                  <div className="grid grid-cols-2 gap-1 text-xs text-text-muted tabular-nums">
+                    <span>Artículo: {c.delito.articulo}</span>
+                    <span>Pena: {c.pena_seleccionada === 'prision' ? 'Prisión' : 'Multa'}</span>
+                    <span>Autoría: {GRADOS_AUTORIA.find(g => g.id === c.grado_autoria)?.nombre}</span>
+                    <span>Ejecución: {GRADOS_EJECUCION.find(g => g.id === c.grado_ejecucion)?.nombre}</span>
+                  </div>
+                  {(c.agravantes.length > 0 || c.atenuantes.length > 0 || c.eximentes.length > 0 || c.eximente_completa) && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {c.eximente_completa && (
+                        <Badge tone="exemption">
+                          Eximente: {EXIMENTES.find(e => e.id === c.eximente_completa)?.nombre}
+                        </Badge>
+                      )}
+                      {c.eximentes.map(eid => (
+                        <Badge key={eid} tone="exemption">
+                          Eximente incompleta: {EXIMENTES.find(e => e.id === eid)?.nombre}
+                        </Badge>
+                      ))}
+                      {c.agravantes.map(aid => (
+                        <Badge key={aid} tone="aggravation">
+                          {AGRAVANTES.find(a => a.id === aid)?.nombre}
+                        </Badge>
+                      ))}
+                      {c.atenuantes.map(aid => (
+                        <Badge key={aid} tone="mitigation">
+                          {ATENUANTES.find(a => a.id === aid)?.nombre}
+                        </Badge>
                       ))}
                     </div>
                   )}
-                  {d.agravantes_aplicadas?.length > 0 && (
-                    <p className="text-[11px] text-text-muted mb-0.5">
-                      <span className="font-semibold text-danger">Agravantes aplicadas:</span> {d.agravantes_aplicadas.join(', ')}
-                    </p>
-                  )}
-                  {d.atenuantes_aplicadas?.length > 0 && (
-                    <p className="text-[11px] text-text-muted mb-0.5">
-                      <span className="font-semibold text-success">Atenuantes aplicadas:</span> {d.atenuantes_aplicadas.join(', ')}
-                    </p>
-                  )}
-                </div>
+                </Card>
               ))}
 
-              <details className="bg-surface border border-border-light rounded-lg p-3 mb-3 shadow-sm" open>
-                <summary className="font-bold text-xs text-text cursor-pointer">Análisis jurídico completo</summary>
-                <pre className="mt-2 text-[11px] text-text-muted whitespace-pre-wrap font-sans leading-4">
-                  {resultado.analisis_juridico}
-                </pre>
-              </details>
-
-              <div className="bg-warning/10 border border-warning/30 rounded-lg p-2.5 mb-3">
-                <p className="text-[11px] text-text-muted italic">{resultado.disclaimer}</p>
-              </div>
-
-              {saveMsg && (
-                <div className={`text-center text-xs font-semibold mb-2 ${saveMsg.includes('Error') ? 'text-danger' : 'text-success'}`}>
-                  {saveMsg}
+              {tipoConcurso !== 'ninguno' && (
+                <div className="bg-accent/10 border border-accent/30 rounded-md p-3 mb-3">
+                  <p className="text-xs font-bold text-primary">
+                    Concurso: {TIPOS_CONCURSO.find(tc => tc.id === tipoConcurso)?.nombre}
+                  </p>
                 </div>
               )}
 
-              <div className="flex gap-2 mb-3">
-                <button
-                  onClick={() => window.print()}
-                  className="no-print flex-1 py-2.5 rounded-lg border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
-                >
-                  <Printer size={14} className="inline mr-1" />
-                  Exportar PDF
-                </button>
-                <button
-                  onClick={() => { fetch('/api/casos').then(r => r.json()).then(setCasosList).catch(() => {}); setShowSaveModal(true); }}
-                  className="no-print flex-1 py-2.5 rounded-lg border-2 border-dashed border-accent/50 text-accent font-bold text-sm hover:bg-accent/5 transition-colors"
-                >
-                  <Save size={14} className="inline mr-1" />
-                  Guardar caso
-                </button>
-              </div>
+              {error && (
+                <Card padding="md" tone="danger" className="mb-3 text-center">
+                  <p className="text-sm font-bold text-danger mb-1">Error al calcular</p>
+                  <p className="text-xs text-text-secondary mb-3">{error}</p>
+                  <Button variant="danger" size="sm" onClick={calcular}>Reintentar</Button>
+                </Card>
+              )}
 
-              <div className="flex gap-3">
-                <button
-                  onClick={reset}
-                  className="flex-1 py-2.5 rounded-lg border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
-                >
-                  Nueva consulta
-                </button>
-                <Link
-                  href="/"
-                  className="flex-1 py-2.5 rounded-lg bg-primary text-white font-bold text-sm text-center hover:bg-primary-light transition-colors"
-                >
-                  Inicio
-                </Link>
-              </div>
+              <Button
+                variant="primary"
+                fullWidth
+                size="lg"
+                loading={calculating}
+                onClick={calcular}
+              >
+                {calculating ? 'Calculando...' : 'Calcular pena'}
+              </Button>
             </div>
-          </ErrorBoundary>
-        )}
-      </div>{/* end body */}
-      </div>{/* end desktop sidebar flex */}
+          )}
+
+          {/* Step 8: Resultado */}
+          {step === 8 && resultado?.pena_principal && (
+            <ErrorBoundary fallback={
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <p className="font-bold text-danger text-sm mb-2">Error al mostrar resultados</p>
+                <p className="text-xs text-text-muted mb-4">Ocurrió un error al renderizar el cálculo. Intente nuevamente.</p>
+                <Button variant="primary" onClick={reset}>Nueva consulta</Button>
+              </div>
+            }>
+              <div className="print-area space-y-3">
+                {/* Cabecera del informe */}
+                <Card padding="md" tone="accent" className="text-center">
+                  <p className="text-[11px] text-text-secondary uppercase tracking-widest mb-1">Informe de cálculo de pena</p>
+                  <p className="text-sm font-bold text-primary">LEX HONDURAS · Decreto 130-2017</p>
+                  <p className="text-[11px] text-text-muted mt-1">
+                    {formatFechaCorta(new Date())}
+                  </p>
+                </Card>
+
+                {resultado.pena_principal === 'EXENTO' ? (
+                  <Card padding="md" tone="warning" className="text-center">
+                    <p className="text-xs text-text-secondary uppercase tracking-wider mb-1">Pena Principal</p>
+                    <p className="text-2xl font-extrabold text-warning">EXENTO</p>
+                    <p className="text-xs text-text-muted mt-2">Se ha aplicado una eximente completa. El delito no conlleva pena.</p>
+                  </Card>
+                ) : (
+                  <Card padding="md" tone="accent" className="text-center">
+                    <p className="text-xs text-text-secondary uppercase tracking-wider mb-1">Pena Principal</p>
+                    <p className="text-2xl font-extrabold text-primary font-serif">{resultado.pena_principal}</p>
+                  </Card>
+                )}
+
+                {/* I. Delitos analizados */}
+                {(resultado.delitos_analizados || []).length > 0 && (
+                  <Card padding="md">
+                    <h3 className="font-bold text-xs text-primary uppercase tracking-wider mb-3">I. Delitos analizados</h3>
+                    <div className="space-y-2">
+                      {(resultado.delitos_analizados || []).map((d: any, i: number) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <Gavel size={14} className="text-accent flex-shrink-0" />
+                          <p className="font-semibold text-sm text-text flex-1">{d.nombre}</p>
+                          <Badge tone="primary">{d.articulo}</Badge>
+                          {d.exento && <Badge tone="exemption">EXENTO</Badge>}
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                )}
+
+                {/* II. Detalle por delito */}
+                {(resultado.delitos_analizados || []).map((d: any, i: number) => (
+                  <Card key={i} padding="md">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-[11px] font-bold text-primary">#{i + 1}</span>
+                      <p className="font-bold text-sm text-text flex-1">{d.nombre}</p>
+                      {d.exento && <Badge tone="exemption">EXENTO</Badge>}
+                    </div>
+                    <div className="grid grid-cols-2 gap-1 text-xs text-text-secondary tabular-nums mb-2">
+                      <span>Artículo: {d.articulo}</span>
+                      <span>Gravedad: {d.gravedad}</span>
+                      <span>Pena base: {d.pena_base_texto}</span>
+                      <span>Pena individual: {d.pena_individual_texto}</span>
+                    </div>
+                    {d.modificaciones?.length > 0 && (
+                      <div className="mt-1 mb-2 space-y-0.5">
+                        {d.modificaciones.map((mod: string, j: number) => (
+                          <p key={j} className="text-[11px] text-text-secondary">→ {mod}</p>
+                        ))}
+                      </div>
+                    )}
+                    {d.agravantes_aplicadas?.length > 0 && (
+                      <p className="text-[11px] text-text-secondary mb-1">
+                        <span className="font-semibold text-aggravation">Agravantes aplicadas:</span> {d.agravantes_aplicadas.join(', ')}
+                      </p>
+                    )}
+                    {d.atenuantes_aplicadas?.length > 0 && (
+                      <p className="text-[11px] text-text-secondary mb-1">
+                        <span className="font-semibold text-mitigation">Atenuantes aplicadas:</span> {d.atenuantes_aplicadas.join(', ')}
+                      </p>
+                    )}
+                  </Card>
+                ))}
+
+                {/* Penas accesorias */}
+                {Array.isArray(resultado.penas_accesorias) && resultado.penas_accesorias.length > 0 && (
+                  <Card padding="md">
+                    <h3 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Penas accesorias</h3>
+                    <ul className="list-disc list-inside text-xs text-text-secondary space-y-1">
+                      {resultado.penas_accesorias.map((p: string, i: number) => (
+                        <li key={i}>{p}</li>
+                      ))}
+                    </ul>
+                  </Card>
+                )}
+
+                {/* Análisis jurídico completo */}
+                <details className="bg-surface border border-border-light rounded-md shadow-sm" open>
+                  <summary className="font-bold text-xs text-text cursor-pointer p-3">Análisis jurídico completo</summary>
+                  <pre className="px-3 pb-3 text-[11px] text-text-secondary whitespace-pre-wrap font-sans leading-4">
+                    {resultado.analisis_juridico}
+                  </pre>
+                </details>
+
+                {/* Disclaimer */}
+                <Card padding="md" tone="warning">
+                  <p className="text-[11px] text-text-secondary italic font-serif">
+                    {resultado.disclaimer}
+                  </p>
+                </Card>
+
+                {/* Acciones */}
+                <div className="grid grid-cols-2 gap-2 no-print">
+                  <Button variant="secondary" iconLeft={<Printer size={16} />} onClick={() => window.print()}>
+                    Exportar PDF
+                  </Button>
+                  <Button
+                    variant="primary"
+                    iconLeft={<Save size={16} />}
+                    onClick={async () => {
+                      try {
+                        const r = await fetch('/api/casos');
+                        const data = await r.json();
+                        setCasosList(Array.isArray(data) ? data.map((c: any) => ({ id: c.id, titulo: c.titulo })) : []);
+                      } catch {
+                        toast.danger('No se pudieron cargar los casos');
+                        return;
+                      }
+                      setShowSaveModal(true);
+                    }}
+                  >
+                    Guardar caso
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 no-print">
+                  <Button variant="secondary" onClick={reset}>Nueva consulta</Button>
+                  <Link href="/" className="contents">
+                    <Button variant="primary">Inicio</Button>
+                  </Link>
+                </div>
+              </div>
+            </ErrorBoundary>
+          )}
+        </div>
+      </div>
 
       {/* Footer nav (except step 8) */}
       {step < 8 && (
         <div className="sticky bottom-0 bg-surface border-t border-border-light px-3 py-2 flex gap-3 no-print">
-          <button
-            onClick={goPrev}
-            className="flex-1 py-2.5 rounded-md border border-border text-text-secondary font-semibold text-sm hover:bg-gray-50 transition-colors"
-          >
+          <Button variant="secondary" fullWidth onClick={goPrev} disabled={step === 1}>
             Atrás
-          </button>
+          </Button>
           {step === 7 ? (
-            <button
+            <Button
+              variant="primary"
+              fullWidth
+              loading={calculating}
               onClick={calcular}
-              disabled={calculating}
-              className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-md bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-70"
             >
-              {calculating ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Calculando...
-                </span>
-              ) : (
-                <>
-                  Calcular pena
-                  <span className="text-[9px] opacity-60 ml-1 hidden sm:inline">⌘↵</span>
-                </>
-              )}
-            </button>
+              {calculating ? 'Calculando...' : 'Calcular pena'}
+            </Button>
           ) : (
-            <button
+            <Button
+              variant="primary"
+              fullWidth
               onClick={goNext}
               disabled={step === 1 && !current}
-              className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-md bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-50"
+              iconRight={<ChevronLeft size={16} className="rotate-180" />}
             >
               Continuar
-              <ChevronRight size={16} />
-            </button>
+            </Button>
           )}
-          <span className="text-[9px] text-text-muted hidden sm:flex items-center">← →</span>
+          <div className="hidden sm:flex items-center text-[11px] text-text-muted gap-2">
+            <span>← →</span>
+            <span>Esc</span>
+            {step === 7 && <span>⌘↵</span>}
+          </div>
         </div>
       )}
 
       <ArticleModal articuloRef={articleRef} onClose={() => setArticleRef(null)} />
 
-      {showSaveModal && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center" onClick={() => setShowSaveModal(false)}>
-          <div className="absolute inset-0 bg-overlay" />
-          <div className="relative bg-surface rounded-t-xl sm:rounded-xl shadow-2xl w-full sm:max-w-sm p-4" onClick={e => e.stopPropagation()}>
-            <h3 className="font-bold text-sm text-text mb-3">Guardar en caso</h3>
-            {casosList.length > 0 && (
-              <div className="space-y-1 mb-3">
-                <p className="text-[11px] text-text-muted mb-1">Selecciona un caso existente:</p>
-                {casosList.map(c => (
-                  <button
-                    key={c.id}
-                    onClick={() => setSelectedCaso(c.id)}
-                    className={`w-full text-left p-2 rounded-lg text-sm transition-all ${
-                      selectedCaso === c.id ? 'bg-accent/10 border border-accent' : 'bg-surface-alt border border-border hover:border-accent/50'
-                    }`}
-                  >
-                    {c.titulo}
-                  </button>
-                ))}
-              </div>
-            )}
-            <button
+      <Modal
+        open={showSaveModal}
+        onClose={() => setShowSaveModal(false)}
+        title="Guardar en caso"
+        size="sm"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setShowSaveModal(false)}>
+              Cancelar
+            </Button>
+            <Button
+              variant="primary"
+              loading={saving}
               onClick={async () => {
                 setSaving(true);
-                setSaveMsg(null);
                 try {
                   let casoId = selectedCaso;
                   if (!casoId) {
@@ -864,22 +956,53 @@ export default function Calculadora() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ caso_id: casoId, config, resultado }),
                   });
-                  setSaveMsg('Guardado correctamente');
+                  toast.success('Guardado correctamente');
                   setShowSaveModal(false);
+                  setSelectedCaso('');
                 } catch {
-                  setSaveMsg('Error al guardar');
+                  toast.danger('Error al guardar');
                 } finally {
                   setSaving(false);
                 }
               }}
-              disabled={saving}
-              className="w-full py-2.5 rounded-md bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors disabled:opacity-70"
             >
-              {saving ? 'Guardando...' : selectedCaso ? 'Guardar en caso seleccionado' : 'Crear nuevo caso y guardar'}
+              {selectedCaso ? 'Guardar en caso seleccionado' : 'Crear nuevo caso y guardar'}
+            </Button>
+          </>
+        }
+      >
+        {casosList.length > 0 ? (
+          <div className="space-y-1">
+            <p className="text-xs font-semibold text-text-secondary mb-2">Selecciona un caso existente</p>
+            {casosList.map(c => (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setSelectedCaso(c.id)}
+                className={cn(
+                  'w-full text-left p-2.5 rounded-md text-sm transition-all focus-visible:outline-none',
+                  selectedCaso === c.id
+                    ? 'bg-accent/10 border border-accent'
+                    : 'bg-surface-alt border border-border hover:border-accent/50',
+                )}
+              >
+                {c.titulo}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setSelectedCaso('')}
+              className="w-full text-left p-2.5 rounded-md text-sm text-text-muted hover:bg-surface-alt border border-dashed border-border"
+            >
+              + Crear caso nuevo con la fecha actual
             </button>
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-sm text-text-secondary">
+            Se creará un nuevo caso con la fecha actual y se guardará este cálculo en él.
+          </p>
+        )}
+      </Modal>
     </div>
   );
 }

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "./auth-context";
 import { ThemeProvider } from "./theme-context";
-import { UserMenu } from "./user-menu";
+import { UserMenu } from "@/components/layout/user-menu";
+import { ToastProvider } from "@/components/ui/toast";
+import { ConfirmProvider } from "@/components/ui/confirm";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 
 const siteUrl = "https://calculo-de-penas-nextjs.vercel.app";
@@ -34,7 +36,7 @@ export const viewport = { themeColor: "#1A2B4A" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className="h-full" suppressHydrationWarning>
+    <html lang="es" dir="ltr" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="canonical" href={siteUrl} />
@@ -54,12 +56,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }} />
       </head>
       <body className="min-h-full flex flex-col">
+        <a href="#main" className="skip-link">Saltar al contenido</a>
         <GlobalErrorBoundary>
           <ThemeProvider>
-            <AuthProvider>
-              <UserMenu />
-              {children}
-            </AuthProvider>
+            <ToastProvider>
+              <ConfirmProvider>
+                <AuthProvider>
+                  <UserMenu />
+                  <main id="main" className="flex flex-col flex-1">
+                    {children}
+                  </main>
+                </AuthProvider>
+              </ConfirmProvider>
+            </ToastProvider>
           </ThemeProvider>
         </GlobalErrorBoundary>
       </body>
