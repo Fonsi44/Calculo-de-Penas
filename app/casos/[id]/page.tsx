@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Gavel, Calendar, Calculator, ArrowRight } from 'lucide-react';
+import { ChevronLeft, Gavel, Calendar, Calculator, ArrowRight, FileDown, Loader2 } from 'lucide-react';
 import { useAuth } from '../../auth-context';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -38,6 +38,7 @@ export default function CasoDetailPage() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [editTitulo, setEditTitulo] = useState('');
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     if (authLoading) return;
@@ -64,6 +65,35 @@ export default function CasoDetailPage() {
     });
     setCaso({ ...caso, titulo: editTitulo });
     setEditing(false);
+  };
+
+  const downloadPDF = async () => {
+    if (!caso) return;
+    setDownloading(true);
+    try {
+      const res = await fetch(`/api/casos/${caso.id}/pdf`);
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        alert(j.error || 'No se pudo generar el PDF');
+        return;
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const cd = res.headers.get('content-disposition') || '';
+      const match = cd.match(/filename="?([^"]+)"?/);
+      a.download = match?.[1] || 'informe.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('PDF download', e);
+      alert('Error de red al generar el PDF');
+    } finally {
+      setDownloading(false);
+    }
   };
 
   if (authLoading || loading) return <CenteredSpinner label="Cargando caso..." />;
@@ -113,6 +143,18 @@ export default function CasoDetailPage() {
                 >
                   editar
                 </button>
+                {caso.calculos.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={downloadPDF}
+                    disabled={downloading}
+                    aria-label="Descargar informe en PDF"
+                    className="flex items-center gap-1 h-7 px-2 bg-accent text-primary rounded text-[11px] font-bold hover:bg-accent-light disabled:opacity-50"
+                  >
+                    {downloading ? <Loader2 size={12} className="animate-spin" /> : <FileDown size={12} />}
+                    PDF
+                  </button>
+                )}
               </div>
             )}
             <p className="text-[11px] text-text-inverse/70">

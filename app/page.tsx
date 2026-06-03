@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Scale, Calculator, BookOpen, PlusCircle, ArrowRight, ShieldCheck, Info, ClipboardList } from 'lucide-react';
+import { Scale, Calculator, BookOpen, PlusCircle, ArrowRight, ShieldCheck, Info, ClipboardList, Search } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { ArticuloAutocomplete } from '@/components/domain/articulo-autocomplete';
 
 export default function Home() {
   const [stats, setStats] = useState({ total: 0, clasificaciones: 0 });
@@ -63,6 +64,18 @@ export default function Home() {
 
       {/* Content */}
       <div className="flex-1 p-3 max-w-2xl mx-auto w-full">
+        <Card padding="md" className="mb-3 border-l-4 border-l-accent">
+          <div className="flex items-center gap-2 mb-2">
+            <Search size={14} className="text-accent" />
+            <h2 className="font-bold text-sm text-primary">Búsqueda rápida de artículos</h2>
+            <Badge tone="info">{stats.total > 0 ? '635' : '...'} arts.</Badge>
+          </div>
+          <p className="text-[11px] text-text-secondary mb-2 leading-4">
+            Buscá por número (Art. 19), epígrafe (hurto) o tema (eximente).
+          </p>
+          <ArticuloAutocomplete />
+        </Card>
+
         <p className="text-[11px] font-bold text-text-muted uppercase tracking-wider mb-2">Acciones principales</p>
 
         {/* Primary action */}
