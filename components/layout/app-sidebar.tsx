@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight } from 'lucide-react';
+import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Keyboard } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/ui';
@@ -21,6 +21,7 @@ const NAV: NavItem[] = [
   { label: 'Mis casos', href: '/casos', icon: Briefcase, match: (p) => p.startsWith('/casos') },
   { label: 'Biblioteca CP', href: '/cp', icon: BookOpen, match: (p) => p.startsWith('/cp') },
   { label: 'Catálogo de delitos', href: '/delitos', icon: FileText, match: (p) => p.startsWith('/delitos') },
+  { label: 'Atajos de teclado', href: '/atajos', icon: Keyboard, match: (p) => p.startsWith('/atajos') },
 ];
 
 export function AppSidebar({ className, onNavigate }: { className?: string; onNavigate?: () => void }) {

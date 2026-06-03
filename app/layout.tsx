@@ -4,6 +4,7 @@ import { AuthProvider } from "./auth-context";
 import { ThemeProvider } from "./theme-context";
 import { ToastProvider } from "@/components/ui/toast";
 import { ConfirmProvider } from "@/components/ui/confirm";
+import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 
 const siteUrl = "https://calculo-de-penas-nextjs.vercel.app";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ToastProvider>
               <ConfirmProvider>
                 <AuthProvider>
+                  <GlobalShortcuts />
                   <div id="main" className="flex flex-col flex-1">
                     {children}
                   </div>
