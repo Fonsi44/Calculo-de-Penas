@@ -98,7 +98,7 @@ export function authFailureResponse(err: unknown): Response {
   });
 }
 
-export function createAuthResponse(data: any, token?: string) {
+export function createAuthResponse(data: unknown, token?: string) {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (token) {
     headers['Set-Cookie'] = `${COOKIE_NAME}=${token}; ${cookieAttrs()}`;
