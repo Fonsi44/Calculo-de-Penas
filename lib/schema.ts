@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, uniqueIndex, serial, jsonb, index } from 'drizzle-orm/pg-core';
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index } from 'drizzle-orm/pg-core';
 
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),

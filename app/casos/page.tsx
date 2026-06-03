@@ -12,7 +12,7 @@ import { IconButton } from '@/components/ui/icon-button';
 import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
-import { formatFechaCorta, pluralizar, claseEstado } from '@/lib/ui';
+import { formatFechaCorta, pluralizar } from '@/lib/ui';
 
 interface Caso {
   id: string;

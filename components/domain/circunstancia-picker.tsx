@@ -1,7 +1,7 @@
 'use client';
 
-import { Info, ShieldOff, Minus, Plus, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Card, CardHeader } from '@/components/ui/card';
+import { Info, ShieldOff, Minus, Plus } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { Chip } from '@/components/ui/chip';
 import { Badge } from '@/components/ui/badge';
 import { AGRAVANTES, ATENUANTES, EXIMENTES } from '@/lib/catalogos';

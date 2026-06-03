@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast';
 
 export default function LoginPage() {
-  const router = useRouter();
   const toast = useToast();
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
@@ -45,8 +44,8 @@ export default function LoginPage() {
       if (!res.ok) throw new Error(data.error || 'Error');
       toast.success(mode === 'login' ? 'Sesión iniciada' : 'Cuenta creada');
       window.location.href = '/';
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Error desconocido');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { CheckCircle2, Info, AlertTriangle, AlertCircle, X } from 'lucide-react';
 import { cn } from '@/lib/ui';
 

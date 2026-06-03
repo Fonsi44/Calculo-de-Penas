@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, Trash2, X, Bookmark, Lock, DollarSign, Ribbon, FileText, ChevronDown, ChevronUp } from 'lucide-react';
+import { Save, Trash2, X, Bookmark, Lock, DollarSign, Ribbon, FileText, ChevronDown, ChevronUp } from 'lucide-react';
 import type { Delito, Clasificacion } from '../types';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Field, Input, Textarea } from '@/components/ui/input';
@@ -103,7 +103,7 @@ function DelitoForm() {
     }
   }, [id, isEdit, toast]);
 
-  const update = (k: keyof FormState, v: any) => {
+  const update = <K extends keyof FormState>(k: K, v: FormState[K]) => {
     setForm(prev => ({ ...prev, [k]: v }));
     setErrors(prev => ({ ...prev, [k]: undefined }));
   };
@@ -166,8 +166,8 @@ function DelitoForm() {
       }
       toast.success(isEdit ? 'Delito actualizado' : 'Delito creado');
       router.back();
-    } catch (e: any) {
-      toast.danger('No se pudo guardar', e?.message);
+    } catch (e) {
+      toast.danger('No se pudo guardar', e instanceof Error ? e.message : undefined);
     } finally {
       setSaving(false);
     }

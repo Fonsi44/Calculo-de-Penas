@@ -195,10 +195,35 @@ export function ArticuloAutocomplete({
             <>
               {results.map((art, i) => {
                 const itemHref = href ? href(art) : `/cp/${art.id}`;
-                const Wrapper: any = onSelect ? 'button' : Link;
-                const wrapperProps: any = onSelect
-                  ? { type: 'button', onClick: () => handleSelect(art) }
-                  : { href: itemHref, onClick: () => setOpen(false) };
+                const inner = (
+                  <>
+                    <FileText size={14} className="text-accent mt-0.5 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-bold text-sm text-primary">
+                          {highlight(art.articulo, query)}
+                        </span>
+                        {art.tema && (
+                          <span className="text-[10px] uppercase tracking-wider font-semibold text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
+                            {TEMA_LABEL(art.tema)}
+                          </span>
+                        )}
+                      </div>
+                      {art.epigrafe && (
+                        <p className="text-xs text-text-secondary line-clamp-1 mt-0.5">
+                          {highlight(art.epigrafe, query)}
+                        </p>
+                      )}
+                      <p className="text-[11px] text-text-muted line-clamp-1 mt-0.5 italic">
+                        {art.texto.slice(0, 120)}{art.texto.length > 120 ? '…' : ''}
+                      </p>
+                    </div>
+                    <span className="text-text-muted text-[11px] flex items-center gap-1 shrink-0 mt-0.5">
+                      {active === i && <CornerDownLeft size={10} />}
+                      <ArrowRight size={12} />
+                    </span>
+                  </>
+                );
                 return (
                   <li
                     key={art.id}
@@ -210,36 +235,23 @@ export function ArticuloAutocomplete({
                     )}
                     onMouseEnter={() => setActive(i)}
                   >
-                    <Wrapper
-                      {...wrapperProps}
-                      className="flex items-start gap-2 text-left w-full focus:outline-none"
-                    >
-                      <FileText size={14} className="text-accent mt-0.5 shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-bold text-sm text-primary">
-                            {highlight(art.articulo, query)}
-                          </span>
-                          {art.tema && (
-                            <span className="text-[10px] uppercase tracking-wider font-semibold text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
-                              {TEMA_LABEL(art.tema)}
-                            </span>
-                          )}
-                        </div>
-                        {art.epigrafe && (
-                          <p className="text-xs text-text-secondary line-clamp-1 mt-0.5">
-                            {highlight(art.epigrafe, query)}
-                          </p>
-                        )}
-                        <p className="text-[11px] text-text-muted line-clamp-1 mt-0.5 italic">
-                          {art.texto.slice(0, 120)}{art.texto.length > 120 ? '…' : ''}
-                        </p>
-                      </div>
-                      <span className="text-text-muted text-[11px] flex items-center gap-1 shrink-0 mt-0.5">
-                        {active === i && <CornerDownLeft size={10} />}
-                        <ArrowRight size={12} />
-                      </span>
-                    </Wrapper>
+                    {onSelect ? (
+                      <button
+                        type="button"
+                        onClick={() => handleSelect(art)}
+                        className="flex items-start gap-2 text-left w-full focus:outline-none"
+                      >
+                        {inner}
+                      </button>
+                    ) : (
+                      <Link
+                        href={itemHref}
+                        onClick={() => setOpen(false)}
+                        className="flex items-start gap-2 text-left w-full focus:outline-none"
+                      >
+                        {inner}
+                      </Link>
+                    )}
                   </li>
                 );
               })}

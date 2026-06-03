@@ -53,7 +53,7 @@ export default function DelitosCatalog() {
       const rJson = await rRes.json();
       setDelitos(dJson.data || []);
       setTotal(dJson.total || 0);
-      setRamas(Array.isArray(rJson) ? rJson.map((r: any) => ({ id: r.nombre, cantidad: r.cantidad })) : []);
+      setRamas(Array.isArray(rJson) ? rJson.map((r: { nombre: string; cantidad: number }) => ({ id: r.nombre, cantidad: r.cantidad })) : []);
     } catch (e) {
       console.warn('load delitos', e);
       setError(true);

@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Search, X, BookOpen, FileText, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { Search, X, FileText, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
@@ -57,7 +56,6 @@ export default function BibliotecaCP() {
   const [search, setSearch] = useState('');
   const [tema, setTema] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [temasDisponibles, setTemasDisponibles] = useState<string[]>([]);
   const debouncedSearch = useDebounce(search, 300);
 
   useEffect(() => {

@@ -42,19 +42,6 @@ const delitoGrave: DelitoBase = {
   pena_alternativa_max: 0,
 };
 
-const delitoMuyGrave: DelitoBase = {
-  id: 'test-3',
-  nombre: 'Secuestro con resultado de muerte',
-  articulo: 'Art. 190 CP',
-  clasificacion: 'Libertad',
-  penas_accesorias: ['Inhabilitación absoluta perpetua'],
-  pena_minima_meses: 360,
-  pena_maxima_meses: 480,
-  tiene_pena_alternativa: false,
-  pena_alternativa_min: 0,
-  pena_alternativa_max: 0,
-};
-
 function makeConfig(overrides: Partial<DelitoConfig> = {}): DelitoConfig {
   return {
     delito_id: 'test-1',
@@ -381,7 +368,7 @@ describe('concurso — casos borde', () => {
   it('concurso tipo no reconocido en múltiples delitos → 0', () => {
     const r1 = calcular_pena_individual(makeConfig(), delitoBase);
     const r2 = calcular_pena_individual(makeConfig({ delito_id: 'test-1' }), delitoBase);
-    const r = aplicar_concurso([r1, r2], 'invalido' as any);
+    const r = aplicar_concurso([r1, r2], 'invalido' as never);
     expect(r.pena_max).toBe(0);
   });
 

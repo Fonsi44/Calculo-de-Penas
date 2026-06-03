@@ -84,7 +84,7 @@ async function seed() {
   // Artículos del Código Penal
   const cpPath = path.resolve('data/articulos_cp.json');
   if (fs.existsSync(cpPath)) {
-    const cp: any[] = JSON.parse(fs.readFileSync(cpPath, 'utf-8'));
+    const cp: { articulo: string; libro: string; titulo: string; capitulo: string | null; seccion: string | null; epigrafe: string | null; texto: string; tema: string | null }[] = JSON.parse(fs.readFileSync(cpPath, 'utf-8'));
     await db.insert(articulosCp).values(
       cp.map(a => ({
         articulo: a.articulo,

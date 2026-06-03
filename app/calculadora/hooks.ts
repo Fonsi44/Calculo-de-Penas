@@ -24,8 +24,8 @@ export function useDelitosLoader(): UseDelitosLoader {
       const r = await fetch('/api/delitos?limit=1000');
       const d = await r.json();
       setDelitos(Array.isArray(d) ? d : (d?.data || []));
-    } catch (e: any) {
-      setFetchError(e?.message || 'Error al cargar delitos');
+    } catch (e) {
+      setFetchError(e instanceof Error ? e.message : 'Error al cargar delitos');
     } finally {
       setLoading(false);
     }

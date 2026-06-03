@@ -9,7 +9,6 @@ import {
   ChevronLeft,
   Home,
   Search,
-  Gavel,
   Plus,
   X,
   Scale,
@@ -32,7 +31,6 @@ import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Chip } from '@/components/ui/chip';
 import { Input } from '@/components/ui/input';
 import { Stepper, type StepperStep } from '@/components/ui/stepper';
 import { Modal } from '@/components/ui/modal';
@@ -45,7 +43,7 @@ import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
 import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
 import { PenaltyResultPanel } from '@/components/domain/penalty-result-panel';
 import { UserActions } from '@/components/layout/user-actions';
-import { cn, formatFechaCorta, pluralizar } from '@/lib/ui';
+import { cn } from '@/lib/ui';
 
 const STEPS: StepperStep[] = [
   { num: 1, label: 'Delito' },
@@ -64,7 +62,7 @@ export default function Calculadora() {
   const confirm = useConfirm();
 
   const loader = useDelitosLoader();
-  const { delitos, setDelitos, loading, fetchError } = loader;
+  const { delitos, loading, fetchError } = loader;
   const { search, setSearch, filtered } = useDelitosFilter(delitos);
   const [step, setStep] = useState<Step>(1);
   const [configs, setConfigs] = useState<DelitoConfig[]>([]);
@@ -204,9 +202,9 @@ export default function Calculadora() {
       }
       const data = await res.json();
       setResultado(data);
-    } catch (e: any) {
+    } catch (e) {
       console.error('[calcular] Error:', e);
-      setError(e.message || 'No se pudo calcular la pena');
+      setError(e instanceof Error ? e.message : 'No se pudo calcular la pena');
     } finally {
       setCalculating(false);
     }
@@ -692,7 +690,7 @@ export default function Calculadora() {
                     try {
                       const r = await fetch('/api/casos');
                       const data = await r.json();
-                      setCasosList(Array.isArray(data) ? data.map((c: any) => ({ id: c.id, titulo: c.titulo })) : []);
+                      setCasosList(Array.isArray(data) ? data.map((c: { id: string; titulo: string }) => ({ id: c.id, titulo: c.titulo })) : []);
                     } catch {
                       toast.danger('No se pudieron cargar los casos');
                       return;

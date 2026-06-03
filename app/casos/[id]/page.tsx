@@ -3,21 +3,20 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Gavel, Calendar, Calculator, ArrowRight, FileDown, Loader2 } from 'lucide-react';
+import { ChevronLeft, Gavel, Calculator, ArrowRight, FileDown, Loader2 } from 'lucide-react';
 import { useAuth } from '../../auth-context';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { IconButton } from '@/components/ui/icon-button';
 import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
 import { formatFechaCorta, pluralizar } from '@/lib/ui';
+import type { DelitoConfig, ResultadoCalculo } from '@/lib/rules/v1/types';
 
 interface Calculo {
   id: string;
-  config: any;
-  resultado: any;
+  config: DelitoConfig;
+  resultado: ResultadoCalculo;
   creadoEn: string;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import type { DelitoConfig } from '@/lib/rules/v1/types';
 
 const colors = {
   primary: '#1A2B4A',
@@ -316,7 +317,7 @@ interface DelitoAnalizado {
 
 interface Calculo {
   id: string;
-  config: any;
+  config: DelitoConfig;
   resultado: {
     delitos_analizados: DelitoAnalizado[];
     tipo_concurso: string;
