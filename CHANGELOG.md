@@ -270,3 +270,21 @@
 | Indicador visual `⌘↵` en botón de calcular |
 
 ## Fase 2 — Autenticación, casos y exportación (2026-06-02)
+
+## Deploy fix — Vercel Production (2026-06-03)
+
+### Causa raíz
+
+Vercel rechazaba el build con `JWT_SECRET environment variable is required (>= 32 chars) in production` durante la fase de "Collecting page data". El dashboard de Vercel solo tenía configurada `DATABASE_URL` (Production) y faltaba `JWT_SECRET`.
+
+### Fix aplicado
+
+- `vercel env add JWT_SECRET production` con valor `crypto.randomBytes(48).toString('base64url')` (64 chars, criptográficamente seguro).
+- Empty commit `0750a3d` para re-disparar el deploy.
+- Verificado: deploy `dpl_9VdeKmEzZ1vPEfmvM8Vsv4RbKg9m` → status `Ready` (2026-06-03 23:13:54).
+- `https://calculo-de-penas-nextjs.vercel.app` → `200 OK`.
+- `https://calculo-de-penas-nextjs.vercel.app/api/auth/me` → `200 OK {"user":null}` (sin sesión, comportamiento correcto).
+
+### Nota de seguridad
+
+El secret añadido a Vercel Production es **diferente** del `lex-honduras-secret-change-in-production-2026` que sigue en `.env` local. El local funciona porque tiene 49 chars (pasa el check `>= 32`) y el fallback dev de `lib/auth.ts:10` cubre entornos sin env. En Vercel ahora se usa el secret seguro.
