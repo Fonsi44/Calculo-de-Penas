@@ -11,16 +11,9 @@ import {
   Plus,
   X,
   Scale,
-  Check,
   Save,
   Printer,
   Search as SearchIcon,
-  FileText,
-  Sliders,
-  Users,
-  GitBranch,
-  Link2,
-  ListChecks,
 } from 'lucide-react';
 import {
   AGRAVANTES,
@@ -47,6 +40,10 @@ import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { useDebounce } from '@/hooks/use-debounce';
+import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
+import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
+import { PenaltyResultPanel } from '@/components/domain/penalty-result-panel';
+import { UserActions } from '@/components/layout/user-actions';
 import { cn, formatFechaCorta, pluralizar } from '@/lib/ui';
 
 const STEPS: StepperStep[] = [
@@ -83,6 +80,7 @@ export default function Calculadora() {
   const [saving, setSaving] = useState(false);
 
   const debouncedSearch = useDebounce(search, 200);
+  useUnsavedChanges(configs.length > 0 && !resultado);
 
   useEffect(() => {
     setLoading(true);
@@ -102,6 +100,7 @@ export default function Calculadora() {
   }, [resultado]);
 
   const current = configs[currentIdx];
+  const hasWork = configs.length > 0 || Boolean(resultado);
 
   useKeyboardShortcuts([
     { key: 'Escape', handler: () => { setArticleRef(null); setShowSaveModal(false); } },
@@ -134,9 +133,6 @@ export default function Calculadora() {
     next[currentIdx] = { ...next[currentIdx], ...patch };
     setConfigs(next);
   };
-
-  const toggle = (arr: string[], v: string) =>
-    arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
 
   const goNext = () => {
     if (step === 1) {
@@ -222,7 +218,7 @@ export default function Calculadora() {
   };
 
   const reset = async () => {
-    if (configs.length > 0 || resultado) {
+    if (hasWork) {
       const ok = await confirm({
         title: '¿Iniciar nueva consulta?',
         description: 'Se descartarán los datos del cálculo actual.',
@@ -238,6 +234,19 @@ export default function Calculadora() {
     setStep(1);
     setSearch('');
     setError(null);
+  };
+
+  const exitCalculadora = async () => {
+    if (hasWork) {
+      const ok = await confirm({
+        title: '¿Salir sin guardar?',
+        description: 'Tienes un cálculo en curso que se perderá.',
+        confirmLabel: 'Salir',
+        tone: 'warning',
+      });
+      if (!ok) return;
+    }
+    router.push('/');
   };
 
   const filtered = useMemo(() => {
@@ -276,8 +285,8 @@ export default function Calculadora() {
 
   return (
     <div className="flex flex-col flex-1 bg-background">
-      {/* Header */}
-      <div className="bg-primary px-3 py-2 no-print">
+      {/* Header dedicado de calculadora */}
+      <header className="bg-primary px-3 py-2 no-print">
         <div className="flex items-center">
           <IconButton
             label="Paso anterior"
@@ -291,26 +300,35 @@ export default function Calculadora() {
             <h1 className="text-text-inverse font-bold text-sm">Calculadora de Penas</h1>
             <p className="text-[11px] text-text-inverse/70">Paso {step} de 8 · {pasoActual.label}</p>
           </div>
-          <Link href="/" aria-label="Volver al inicio" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center hover:bg-white/25">
-            <Home size={18} className="text-text-inverse" />
-          </Link>
+          <UserActions />
+          <IconButton
+            label="Salir al inicio"
+            variant="solid"
+            onClick={exitCalculadora}
+            className="ml-1"
+          >
+            <Home size={18} />
+          </IconButton>
         </div>
 
         <div className="lg:hidden mt-2">
           <Stepper steps={STEPS} current={step} />
         </div>
-      </div>
+      </header>
 
-      {/* Desktop layout: sidebar + content */}
+      {/* Desktop layout: sidebar stepper + content */}
       <div className="flex flex-1 overflow-hidden">
         <aside className="hidden lg:flex lg:flex-col desktop-sidebar bg-primary px-3 py-4 overflow-y-auto">
           <div className="flex items-center gap-2 mb-4">
             <Scale size={16} className="text-accent" />
             <span className="text-[11px] font-bold text-accent tracking-widest">PASO {step} DE 8</span>
           </div>
-          <Stepper steps={STEPS} current={step} variant="vertical" onSelect={(n) => {
-            if (n < step) setStep(n as Step);
-          }} />
+          <Stepper
+            steps={STEPS}
+            current={step}
+            variant="vertical"
+            onSelect={(n) => { if (n < step) setStep(n as Step); }}
+          />
         </aside>
 
         {/* Body */}
@@ -478,108 +496,12 @@ export default function Calculadora() {
           )}
 
           {/* Step 4: Circunstancias */}
-          {step === 4 && (
-            <div>
-              <Card padding="md" tone="default" className="mb-3 border-l-4 border-l-exemption">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-bold text-sm text-text">Eximentes</h2>
-                  <button
-                    type="button"
-                    onClick={() => setArticleRef('Art. 30 CP')}
-                    className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
-                  >
-                    Art. 30 CP
-                  </button>
-                </div>
-                <p className="text-[11px] text-text-secondary mb-2 italic">
-                  Las eximentes son excluyentes: si aplica una completa, no hay pena.
-                </p>
-                <div className="space-y-1.5">
-                  {EXIMENTES.map(e => {
-                    const selected = current?.eximente_completa === e.id || current?.eximentes.includes(e.id);
-                    return (
-                      <button
-                        key={e.id}
-                        type="button"
-                        onClick={() => {
-                          if (e.completa) {
-                            updateCurrent({
-                              eximente_completa: current?.eximente_completa === e.id ? null : e.id,
-                              eximentes: [],
-                            });
-                          } else {
-                            updateCurrent({
-                              eximentes: toggle(current?.eximentes || [], e.id),
-                              eximente_completa: null,
-                            });
-                          }
-                        }}
-                        className={cn(
-                          'w-full text-left p-2.5 rounded-md border transition-all focus-visible:outline-none',
-                          selected ? 'border-exemption bg-exemption-bg' : 'border-border bg-surface hover:border-exemption/50',
-                        )}
-                      >
-                        <div className="flex items-center gap-2">
-                          <p className="font-semibold text-sm text-text flex-1">{e.nombre}</p>
-                          {e.completa && <Badge tone="exemption">COMPLETA</Badge>}
-                        </div>
-                        <p className="text-[11px] text-text-muted">{e.articulo} · {e.descripcion}</p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </Card>
-
-              <Card padding="md" className="mb-3 border-l-4 border-l-aggravation">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-bold text-sm text-text">Agravantes</h2>
-                  <button
-                    type="button"
-                    onClick={() => setArticleRef('Art. 32 CP')}
-                    className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
-                  >
-                    Art. 32 CP
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {AGRAVANTES.map(a => (
-                    <Chip
-                      key={a.id}
-                      tone="aggravation"
-                      selected={current?.agravantes.includes(a.id) || false}
-                      onClick={() => updateCurrent({ agravantes: toggle(current?.agravantes || [], a.id) })}
-                    >
-                      {a.nombre}
-                    </Chip>
-                  ))}
-                </div>
-              </Card>
-
-              <Card padding="md" className="border-l-4 border-l-mitigation">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-bold text-sm text-text">Atenuantes</h2>
-                  <button
-                    type="button"
-                    onClick={() => setArticleRef('Art. 31 CP')}
-                    className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
-                  >
-                    Art. 31 CP
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {ATENUANTES.map(a => (
-                    <Chip
-                      key={a.id}
-                      tone="mitigation"
-                      selected={current?.atenuantes.includes(a.id) || false}
-                      onClick={() => updateCurrent({ atenuantes: toggle(current?.atenuantes || [], a.id) })}
-                    >
-                      {a.nombre}
-                    </Chip>
-                  ))}
-                </div>
-              </Card>
-            </div>
+          {step === 4 && current && (
+            <CircunstanciaPicker
+              current={current}
+              onChange={updateCurrent}
+              onOpenArticle={setArticleRef}
+            />
           )}
 
           {/* Step 5: Más delitos */}
@@ -732,7 +654,7 @@ export default function Calculadora() {
             </div>
           )}
 
-          {/* Step 8: Resultado */}
+          {/* Step 8: Resultado (informe pericial) */}
           {step === 8 && resultado?.pena_principal && (
             <ErrorBoundary fallback={
               <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -741,137 +663,42 @@ export default function Calculadora() {
                 <Button variant="primary" onClick={reset}>Nueva consulta</Button>
               </div>
             }>
-              <div className="print-area space-y-3">
-                {/* Cabecera del informe */}
-                <Card padding="md" tone="accent" className="text-center">
-                  <p className="text-[11px] text-text-secondary uppercase tracking-widest mb-1">Informe de cálculo de pena</p>
-                  <p className="text-sm font-bold text-primary">LEX HONDURAS · Decreto 130-2017</p>
-                  <p className="text-[11px] text-text-muted mt-1">
-                    {formatFechaCorta(new Date())}
-                  </p>
-                </Card>
+              <div className="print-area">
+                <PenaltyResultPanel
+                  resultado={resultado}
+                  onOpenArticle={setArticleRef}
+                />
+              </div>
 
-                {resultado.pena_principal === 'EXENTO' ? (
-                  <Card padding="md" tone="warning" className="text-center">
-                    <p className="text-xs text-text-secondary uppercase tracking-wider mb-1">Pena Principal</p>
-                    <p className="text-2xl font-extrabold text-warning">EXENTO</p>
-                    <p className="text-xs text-text-muted mt-2">Se ha aplicado una eximente completa. El delito no conlleva pena.</p>
-                  </Card>
-                ) : (
-                  <Card padding="md" tone="accent" className="text-center">
-                    <p className="text-xs text-text-secondary uppercase tracking-wider mb-1">Pena Principal</p>
-                    <p className="text-2xl font-extrabold text-primary font-serif">{resultado.pena_principal}</p>
-                  </Card>
-                )}
+              {/* Acciones */}
+              <div className="grid grid-cols-2 gap-2 mt-4 no-print">
+                <Button variant="secondary" iconLeft={<Printer size={16} />} onClick={() => window.print()}>
+                  Exportar PDF
+                </Button>
+                <Button
+                  variant="primary"
+                  iconLeft={<Save size={16} />}
+                  onClick={async () => {
+                    try {
+                      const r = await fetch('/api/casos');
+                      const data = await r.json();
+                      setCasosList(Array.isArray(data) ? data.map((c: any) => ({ id: c.id, titulo: c.titulo })) : []);
+                    } catch {
+                      toast.danger('No se pudieron cargar los casos');
+                      return;
+                    }
+                    setShowSaveModal(true);
+                  }}
+                >
+                  Guardar caso
+                </Button>
+              </div>
 
-                {/* I. Delitos analizados */}
-                {(resultado.delitos_analizados || []).length > 0 && (
-                  <Card padding="md">
-                    <h3 className="font-bold text-xs text-primary uppercase tracking-wider mb-3">I. Delitos analizados</h3>
-                    <div className="space-y-2">
-                      {(resultado.delitos_analizados || []).map((d: any, i: number) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <Gavel size={14} className="text-accent flex-shrink-0" />
-                          <p className="font-semibold text-sm text-text flex-1">{d.nombre}</p>
-                          <Badge tone="primary">{d.articulo}</Badge>
-                          {d.exento && <Badge tone="exemption">EXENTO</Badge>}
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                )}
-
-                {/* II. Detalle por delito */}
-                {(resultado.delitos_analizados || []).map((d: any, i: number) => (
-                  <Card key={i} padding="md">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-[11px] font-bold text-primary">#{i + 1}</span>
-                      <p className="font-bold text-sm text-text flex-1">{d.nombre}</p>
-                      {d.exento && <Badge tone="exemption">EXENTO</Badge>}
-                    </div>
-                    <div className="grid grid-cols-2 gap-1 text-xs text-text-secondary tabular-nums mb-2">
-                      <span>Artículo: {d.articulo}</span>
-                      <span>Gravedad: {d.gravedad}</span>
-                      <span>Pena base: {d.pena_base_texto}</span>
-                      <span>Pena individual: {d.pena_individual_texto}</span>
-                    </div>
-                    {d.modificaciones?.length > 0 && (
-                      <div className="mt-1 mb-2 space-y-0.5">
-                        {d.modificaciones.map((mod: string, j: number) => (
-                          <p key={j} className="text-[11px] text-text-secondary">→ {mod}</p>
-                        ))}
-                      </div>
-                    )}
-                    {d.agravantes_aplicadas?.length > 0 && (
-                      <p className="text-[11px] text-text-secondary mb-1">
-                        <span className="font-semibold text-aggravation">Agravantes aplicadas:</span> {d.agravantes_aplicadas.join(', ')}
-                      </p>
-                    )}
-                    {d.atenuantes_aplicadas?.length > 0 && (
-                      <p className="text-[11px] text-text-secondary mb-1">
-                        <span className="font-semibold text-mitigation">Atenuantes aplicadas:</span> {d.atenuantes_aplicadas.join(', ')}
-                      </p>
-                    )}
-                  </Card>
-                ))}
-
-                {/* Penas accesorias */}
-                {Array.isArray(resultado.penas_accesorias) && resultado.penas_accesorias.length > 0 && (
-                  <Card padding="md">
-                    <h3 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Penas accesorias</h3>
-                    <ul className="list-disc list-inside text-xs text-text-secondary space-y-1">
-                      {resultado.penas_accesorias.map((p: string, i: number) => (
-                        <li key={i}>{p}</li>
-                      ))}
-                    </ul>
-                  </Card>
-                )}
-
-                {/* Análisis jurídico completo */}
-                <details className="bg-surface border border-border-light rounded-md shadow-sm" open>
-                  <summary className="font-bold text-xs text-text cursor-pointer p-3">Análisis jurídico completo</summary>
-                  <pre className="px-3 pb-3 text-[11px] text-text-secondary whitespace-pre-wrap font-sans leading-4">
-                    {resultado.analisis_juridico}
-                  </pre>
-                </details>
-
-                {/* Disclaimer */}
-                <Card padding="md" tone="warning">
-                  <p className="text-[11px] text-text-secondary italic font-serif">
-                    {resultado.disclaimer}
-                  </p>
-                </Card>
-
-                {/* Acciones */}
-                <div className="grid grid-cols-2 gap-2 no-print">
-                  <Button variant="secondary" iconLeft={<Printer size={16} />} onClick={() => window.print()}>
-                    Exportar PDF
-                  </Button>
-                  <Button
-                    variant="primary"
-                    iconLeft={<Save size={16} />}
-                    onClick={async () => {
-                      try {
-                        const r = await fetch('/api/casos');
-                        const data = await r.json();
-                        setCasosList(Array.isArray(data) ? data.map((c: any) => ({ id: c.id, titulo: c.titulo })) : []);
-                      } catch {
-                        toast.danger('No se pudieron cargar los casos');
-                        return;
-                      }
-                      setShowSaveModal(true);
-                    }}
-                  >
-                    Guardar caso
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 no-print">
-                  <Button variant="secondary" onClick={reset}>Nueva consulta</Button>
-                  <Link href="/" className="contents">
-                    <Button variant="primary">Inicio</Button>
-                  </Link>
-                </div>
+              <div className="grid grid-cols-2 gap-2 mt-2 no-print">
+                <Button variant="secondary" onClick={reset}>Nueva consulta</Button>
+                <Link href="/" className="contents">
+                  <Button variant="primary">Inicio</Button>
+                </Link>
               </div>
             </ErrorBoundary>
           )}

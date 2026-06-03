@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Search, X, ChevronLeft, Plus, Gavel, Edit3, Trash2, BookOpen } from 'lucide-react';
+import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen } from 'lucide-react';
 import type { Delito } from '../types';
+import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,6 @@ import { useDebounce } from '@/hooks/use-debounce';
 import { formatRama } from '@/lib/ui';
 
 export default function DelitosCatalog() {
-  const router = useRouter();
   const toast = useToast();
   const confirm = useConfirm();
 
@@ -89,27 +88,21 @@ export default function DelitosCatalog() {
 
   if (error) {
     return (
-      <div className="flex flex-col flex-1 bg-background p-4">
+      <AppShell title="Catálogo de Delitos" subtitle="Error de carga">
         <ErrorState
           title="No se pudo cargar el catálogo"
           description="Verifica tu conexión e inténtalo nuevamente."
           onRetry={load}
         />
-      </div>
+      </AppShell>
     );
   }
 
   return (
-    <div className="flex flex-col flex-1 bg-background">
-      {/* Header */}
-      <div className="flex items-center bg-primary px-3 py-2 no-print">
-        <Link href="/" aria-label="Volver al inicio" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center mr-2 hover:bg-white/25">
-          <ChevronLeft size={18} className="text-text-inverse" />
-        </Link>
-        <div className="flex-1">
-          <h1 className="text-text-inverse font-bold text-base">Catálogo de Delitos</h1>
-          <p className="text-[11px] text-text-inverse/70">{filtered.length} resultados</p>
-        </div>
+    <AppShell
+      title="Catálogo de Delitos"
+      subtitle={`${filtered.length} resultados`}
+      headerRight={
         <Link
           href="/delito-form"
           aria-label="Crear nuevo delito"
@@ -117,11 +110,10 @@ export default function DelitosCatalog() {
         >
           <Plus size={18} className="text-primary" />
         </Link>
-      </div>
-
-      {/* Search */}
-      <div className="bg-primary pb-2">
-        <div className="relative mx-3 mb-2">
+      }
+    >
+      <div className="p-3 max-w-5xl mx-auto">
+        <div className="relative mb-3">
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -135,18 +127,17 @@ export default function DelitosCatalog() {
           />
         </div>
 
-        {/* Rama chips */}
-        <div className="flex gap-2 px-3 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex gap-2 mb-3 overflow-x-auto pb-1 scrollbar-none">
           <button
             type="button"
             onClick={() => setActiveRama(null)}
             className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
-              !activeRama ? 'bg-accent border-accent text-primary' : 'bg-white/10 border-white/20 text-text-inverse hover:bg-white/20'
+              !activeRama ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'
             }`}
           >
             Todas
             <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
-              !activeRama ? 'bg-primary text-accent' : 'bg-white/20 text-text-inverse'
+              !activeRama ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
             }`}>{delitos.length}</span>
           </button>
           {ramas.map((r) => {
@@ -157,34 +148,33 @@ export default function DelitosCatalog() {
                 type="button"
                 onClick={() => setActiveRama(isActive ? null : r.id)}
                 className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
-                  isActive ? 'bg-accent border-accent text-primary' : 'bg-white/10 border-white/20 text-text-inverse hover:bg-white/20'
+                  isActive ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'
                 }`}
               >
                 {formatRama(r.id) || r.id}
                 <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
-                  isActive ? 'bg-primary text-accent' : 'bg-white/20 text-text-inverse'
+                  isActive ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
                 }`}>{r.cantidad}</span>
               </button>
             );
           })}
         </div>
-      </div>
 
-      {/* List */}
-      <div className="flex-1 overflow-y-auto p-3 pb-24">
         {filtered.length === 0 ? (
           <EmptyState
             icon={<BookOpen size={48} />}
             title="Sin resultados"
             description="Modifica la búsqueda o registra un nuevo delito."
             action={
-              <Button variant="primary" iconLeft={<Plus size={16} />} onClick={() => router.push('/delito-form')}>
-                Nuevo delito
-              </Button>
+              <Link href="/delito-form">
+                <Button variant="primary" iconLeft={<Plus size={16} />}>
+                  Nuevo delito
+                </Button>
+              </Link>
             }
           />
         ) : (
-          <div className="space-y-2 max-w-2xl mx-auto">
+          <div className="space-y-2 grid md:grid-cols-2 gap-2">
             {filtered.map((item) => (
               <Card key={item.id} padding="none" className="hover:shadow-md transition-shadow">
                 <Link href={`/delito-form?id=${item.id}`} className="block p-3 focus-visible:outline-none">
@@ -233,7 +223,6 @@ export default function DelitosCatalog() {
         )}
       </div>
 
-      {/* FAB */}
       <Link
         href="/delito-form"
         aria-label="Crear nuevo delito"
@@ -241,6 +230,6 @@ export default function DelitosCatalog() {
       >
         <Plus size={22} className="text-text-inverse" />
       </Link>
-    </div>
+    </AppShell>
   );
 }

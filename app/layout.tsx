@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "./auth-context";
 import { ThemeProvider } from "./theme-context";
-import { UserMenu } from "@/components/layout/user-menu";
 import { ToastProvider } from "@/components/ui/toast";
 import { ConfirmProvider } from "@/components/ui/confirm";
 import { GlobalErrorBoundary } from "./global-error-boundary";
@@ -62,10 +61,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ToastProvider>
               <ConfirmProvider>
                 <AuthProvider>
-                  <UserMenu />
-                  <main id="main" className="flex flex-col flex-1">
+                  <div id="main" className="flex flex-col flex-1">
                     {children}
-                  </main>
+                  </div>
                 </AuthProvider>
               </ConfirmProvider>
             </ToastProvider>

@@ -1,0 +1,246 @@
+'use client';
+
+import { Gavel, Scale, FileText, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { formatFechaCompleta } from '@/lib/ui';
+
+interface DelitoAnalizado {
+  nombre: string;
+  articulo: string;
+  gravedad?: string;
+  pena_base_texto?: string;
+  pena_individual_texto?: string;
+  modificaciones?: string[];
+  agravantes_aplicadas?: string[];
+  atenuantes_aplicadas?: string[];
+  exento?: boolean;
+}
+
+export interface PenaltyResult {
+  pena_principal: string;
+  penas_accesorias?: string[];
+  delitos_analizados?: DelitoAnalizado[];
+  analisis_juridico: string;
+  disclaimer: string;
+}
+
+interface Props {
+  resultado: PenaltyResult;
+  casoTitulo?: string;
+  calculoNumero?: string;
+  onOpenArticle: (ref: string) => void;
+}
+
+export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpenArticle }: Props) {
+  const fecha = formatFechaCompleta(new Date());
+
+  return (
+    <div className="space-y-3 max-w-3xl mx-auto">
+      {/* Cabecera editorial */}
+      <Card padding="md" tone="accent" className="text-center">
+        <p className="text-[11px] text-text-secondary uppercase tracking-widest mb-1">
+          Informe de cálculo de pena
+        </p>
+        <p className="text-sm font-bold text-primary">LEX HONDURAS</p>
+        <p className="text-[11px] text-text-muted mt-1">Código Penal · Decreto 130-2017</p>
+        <div className="mt-3 pt-3 border-t border-border-light text-[11px] text-text-secondary tabular-nums">
+          <p>{fecha}</p>
+          {casoTitulo && <p className="mt-0.5">Caso: <span className="font-semibold text-text">{casoTitulo}</span></p>}
+          {calculoNumero && <p>N° de cálculo: <span className="font-semibold text-text">{calculoNumero}</span></p>}
+        </div>
+      </Card>
+
+      {/* Pena principal */}
+      {resultado.pena_principal === 'EXENTO' ? (
+        <Card padding="md" tone="default" className="bg-warning-bg border-warning/40 text-center">
+          <AlertCircle size={28} className="text-warning mx-auto mb-2" />
+          <p className="text-xs text-text-secondary uppercase tracking-wider mb-1">Pena principal</p>
+          <p className="text-2xl font-extrabold text-warning font-serif">EXENTO</p>
+          <p className="text-xs text-text-secondary mt-2 max-w-md mx-auto">
+            Se ha aplicado una eximente completa. El delito no conlleva pena.
+          </p>
+        </Card>
+      ) : (
+        <Card padding="md" tone="accent" className="text-center">
+          <Scale size={28} className="text-accent mx-auto mb-2" />
+          <p className="text-xs text-text-secondary uppercase tracking-wider mb-1">Pena principal</p>
+          <p className="text-2xl font-extrabold text-primary font-serif leading-tight">
+            {resultado.pena_principal}
+          </p>
+        </Card>
+      )}
+
+      {/* I. Delitos analizados */}
+      {(resultado.delitos_analizados || []).length > 0 && (
+        <Card padding="md">
+          <SectionHeader numeral="I" title="Delitos analizados" icon={<Gavel size={14} />} />
+          <div className="space-y-1.5">
+            {(resultado.delitos_analizados || []).map((d, i) => (
+              <div key={i} className="flex items-center gap-2 p-2 bg-surface-alt rounded-md">
+                <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-[11px] font-bold text-primary flex-shrink-0">
+                  {i + 1}
+                </span>
+                <p className="font-semibold text-sm text-text flex-1 truncate">{d.nombre}</p>
+                <Badge tone="primary">{d.articulo}</Badge>
+                {d.exento && <Badge tone="exemption">EXENTO</Badge>}
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* II. Detalle por delito */}
+      {(resultado.delitos_analizados || []).map((d, i) => (
+        <Card key={i} padding="md">
+          <SectionHeader
+            numeral={`II.${i + 1}`}
+            title={d.nombre}
+            icon={<Gavel size={14} />}
+            action={d.exento ? <Badge tone="exemption">EXENTO</Badge> : null}
+          />
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+            {d.articulo && (
+              <>
+                <dt className="text-text-muted">Artículo</dt>
+                <dd className="text-text font-semibold tabular-nums">{d.articulo}</dd>
+              </>
+            )}
+            {d.gravedad && (
+              <>
+                <dt className="text-text-muted">Gravedad</dt>
+                <dd className="text-text">{d.gravedad}</dd>
+              </>
+            )}
+            {d.pena_base_texto && (
+              <>
+                <dt className="text-text-muted">Pena base</dt>
+                <dd className="text-text tabular-nums">{d.pena_base_texto}</dd>
+              </>
+            )}
+            {d.pena_individual_texto && (
+              <>
+                <dt className="text-text-muted">Pena individual</dt>
+                <dd className="text-text font-semibold tabular-nums">{d.pena_individual_texto}</dd>
+              </>
+            )}
+          </dl>
+          {d.modificaciones && d.modificaciones.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-border-light">
+              <p className="text-[11px] font-bold text-text-secondary uppercase tracking-wider mb-1.5">
+                Operación
+              </p>
+              <ol className="space-y-1">
+                {d.modificaciones.map((mod, j) => (
+                  <li key={j} className="text-[11px] text-text-secondary font-serif leading-4 flex gap-1.5">
+                    <span className="text-accent-dark font-bold">→</span>
+                    <span>{mod}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+          {d.agravantes_aplicadas && d.agravantes_aplicadas.length > 0 && (
+            <p className="text-[11px] text-text-secondary mt-2">
+              <span className="font-bold text-aggravation">Agravantes aplicadas:</span>{' '}
+              {d.agravantes_aplicadas.join(', ')}
+            </p>
+          )}
+          {d.atenuantes_aplicadas && d.atenuantes_aplicadas.length > 0 && (
+            <p className="text-[11px] text-text-secondary">
+              <span className="font-bold text-mitigation">Atenuantes aplicadas:</span>{' '}
+              {d.atenuantes_aplicadas.join(', ')}
+            </p>
+          )}
+        </Card>
+      ))}
+
+      {/* III. Penas accesorias */}
+      {Array.isArray(resultado.penas_accesorias) && resultado.penas_accesorias.length > 0 && (
+        <Card padding="md">
+          <SectionHeader numeral="III" title="Penas accesorias" icon={<Scale size={14} />} />
+          <ul className="space-y-1">
+            {resultado.penas_accesorias.map((p, i) => (
+              <li key={i} className="text-xs text-text-secondary flex gap-2">
+                <CheckCircle2 size={14} className="text-accent flex-shrink-0 mt-0.5" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
+
+      {/* IV. Análisis jurídico completo */}
+      <Card padding="md">
+        <SectionHeader numeral="IV" title="Análisis jurídico" icon={<FileText size={14} />} />
+        <pre className="text-xs text-text font-serif leading-5 whitespace-pre-wrap font-sans">
+          {resultado.analisis_juridico}
+        </pre>
+      </Card>
+
+      {/* V. Fundamento normativo */}
+      <Card padding="md" tone="default" className="bg-surface-alt">
+        <SectionHeader numeral="V" title="Fundamento normativo" icon={<FileText size={14} />} />
+        <p className="text-[11px] text-text-secondary mb-2">
+          El presente cálculo se fundamenta en los siguientes artículos del Código Penal de Honduras (Decreto 130-2017):
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            { ref: 'Art. 19 CP', label: 'Consumación' },
+            { ref: 'Art. 21 CP', label: 'Tentativa' },
+            { ref: 'Art. 25 CP', label: 'Autoría' },
+            { ref: 'Art. 26 CP', label: 'Participación' },
+            { ref: 'Art. 30 CP', label: 'Eximentes' },
+            { ref: 'Art. 31 CP', label: 'Atenuantes' },
+            { ref: 'Art. 32 CP', label: 'Agravantes' },
+            { ref: 'Art. 60 CP', label: 'Penas' },
+            { ref: 'Art. 61 CP', label: 'Prisión' },
+            { ref: 'Art. 62 CP', label: 'Reducción' },
+            { ref: 'Art. 66 CP', label: 'Concurso real' },
+            { ref: 'Art. 67 CP', label: 'Concurso ideal' },
+            { ref: 'Art. 68 CP', label: 'Continuado' },
+            { ref: 'Art. 69 CP', label: 'Grados' },
+            { ref: 'Art. 70 CP', label: 'Límites' },
+          ].map((art) => (
+            <button
+              key={art.ref}
+              type="button"
+              onClick={() => onOpenArticle(art.ref)}
+              className="inline-flex items-center gap-1 h-7 px-2.5 rounded-full border border-border bg-surface text-[11px] font-semibold text-text hover:border-accent hover:text-accent-dark"
+            >
+              {art.ref}
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      {/* VI. Disclaimer */}
+      <Card padding="md" tone="default" className="bg-warning-bg border-warning/30">
+        <p className="text-[11px] text-text-secondary italic font-serif leading-5">
+          {resultado.disclaimer}
+        </p>
+      </Card>
+    </div>
+  );
+}
+
+function SectionHeader({
+  numeral,
+  title,
+  icon,
+  action,
+}: {
+  numeral: string;
+  title: string;
+  icon: React.ReactNode;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border-light">
+      <span className="text-[11px] font-bold text-accent-dark tracking-widest">{numeral}.</span>
+      <span className="text-accent-dark">{icon}</span>
+      <h3 className="font-bold text-sm text-primary uppercase tracking-wider flex-1">{title}</h3>
+      {action}
+    </div>
+  );
+}
