@@ -87,7 +87,7 @@ export default function Calculadora() {
     setFetchError(null);
     fetch('/api/delitos?limit=1000')
       .then(r => r.json())
-      .then(d => setDelitos(Array.isArray(d) ? d : []))
+      .then(d => setDelitos(Array.isArray(d) ? d : (d?.data || [])))
       .catch(e => {
         setFetchError(e.message || 'Error al cargar delitos');
         console.warn(e);
@@ -272,7 +272,7 @@ export default function Calculadora() {
             setFetchError(null);
             fetch('/api/delitos?limit=1000')
               .then(r => r.json())
-              .then(d => setDelitos(Array.isArray(d) ? d : []))
+              .then(d => setDelitos(Array.isArray(d) ? d : (d?.data || [])))
               .catch(e => setFetchError(e.message))
               .finally(() => setLoading(false));
           }}
