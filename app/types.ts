@@ -15,6 +15,9 @@ export interface Delito {
   observaciones?: string | null;
   es_grave: boolean;
   pena_texto?: string;
+  estado?: 'verificado' | 'pendiente_revision' | 'rechazado';
+  estado_nota?: string | null;
+  estado_articulo_sugerido?: string | null;
 }
 
 export interface Clasificacion {

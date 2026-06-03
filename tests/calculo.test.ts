@@ -176,6 +176,25 @@ describe('calcular_pena_individual — Art. 62 Tentativa', () => {
     expect(r.pena_max).toBe(6);
     expect(r.modificaciones[0]).toContain('1/3');
   });
+
+  it('tentativa acabada + reduccion_tentativa=2: -1/4 y luego mitad inferior', () => {
+    const r = calcular_pena_individual(
+      makeConfig({ grado_ejecucion: 'tentativa_acabada', reduccion_tentativa: 2 }),
+      delitoBase,
+    );
+    expect(r.pena_max).toBeLessThanOrEqual(6);
+    expect(r.modificaciones.some(m => m.includes('2 grados'))).toBe(true);
+  });
+
+  it('reduccion_tentativa=2 sin tentativa: no aplica', () => {
+    const r = calcular_pena_individual(
+      makeConfig({ reduccion_tentativa: 2 }),
+      delitoBase,
+    );
+    expect(r.modificaciones.some(m => m.includes('2 grados'))).toBe(false);
+    expect(r.pena_min).toBe(6);
+    expect(r.pena_max).toBe(24);
+  });
 });
 
 describe('calcular_pena_individual — Art. 70 Circunstancias', () => {

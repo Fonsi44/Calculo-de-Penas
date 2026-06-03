@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb } from 'drizzle-orm/pg-core';
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, uniqueIndex, serial, jsonb, index } from 'drizzle-orm/pg-core';
 
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
@@ -93,3 +93,42 @@ export const calculos = pgTable('calculos', {
 }, (table) => ({
   casoRef: foreignKey({ columns: [table.casoId], foreignColumns: [casos.id] }),
 }));
+
+export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
+  'login',
+  'logout',
+  'login_failed',
+  'caso_created',
+  'caso_updated',
+  'caso_deleted',
+  'calculo_created',
+  'calculo_deleted',
+  'delito_created',
+  'delito_updated',
+  'delito_deleted',
+  'rate_limited',
+  'unauthorized_access',
+]);
+
+export const auditoriaEventos = pgTable('auditoria_eventos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id'),
+  accion: auditoriaAccionEnum('accion').notNull(),
+  recurso: varchar('recurso', { length: 100 }),
+  recursoId: varchar('recurso_id', { length: 100 }),
+  ip: varchar('ip', { length: 64 }),
+  userAgent: varchar('user_agent', { length: 500 }),
+  metadata: jsonb('metadata'),
+  exito: boolean('exito').notNull().default(true),
+  mensaje: text('mensaje'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  accionIdx: index('auditoria_accion_idx').on(table.accion),
+  usuarioIdx: index('auditoria_usuario_idx').on(table.usuarioId),
+  creadoEnIdx: index('auditoria_creado_en_idx').on(table.creadoEn),
+}));
+
+export type AuditoriaAccion = typeof auditoriaAccionEnum.enumValues[number];
+export type AuditoriaEvento = typeof auditoriaEventos.$inferSelect;
+export type AuditoriaEventoInsert = typeof auditoriaEventos.$inferInsert;

@@ -1,0 +1,3083 @@
+{
+  "generado_en": "2026-06-03T16:54:50.920Z",
+  "fuente": "data/delitos-validacion.csv",
+  "total_registros": 469,
+  "verificados": 112,
+  "pendientes_revision": 34,
+  "rechazados": 323,
+  "entradas": {
+    "Abandono de animales__Art. 342 CP": {
+      "nombre": "Abandono de animales",
+      "articulo": "Art. 342 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 342 CP"
+    },
+    "Abandono de funciones públicas__Art. 500 CP": {
+      "nombre": "Abandono de funciones públicas",
+      "articulo": "Art. 500 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 500 CP"
+    },
+    "Abandono de menores o personas vulnerables__Art. 228 CP": {
+      "nombre": "Abandono de menores o personas vulnerables",
+      "articulo": "Art. 228 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 205 CP"
+    },
+    "Aborto__Art. 196 CP": {
+      "nombre": "Aborto",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 196 CP"
+    },
+    "Abuso de autoridad__Art. 499 CP": {
+      "nombre": "Abuso de autoridad",
+      "articulo": "Art. 499 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 499 CP"
+    },
+    "Abuso de dispositivos informáticos__Art. 400 CP": {
+      "nombre": "Abuso de dispositivos informáticos",
+      "articulo": "Art. 400 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 400 CP"
+    },
+    "Acceso no autorizado a sistemas informáticos__Art. 398 CP": {
+      "nombre": "Acceso no autorizado a sistemas informáticos",
+      "articulo": "Art. 398 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 400 CP (Abuso de dispositivos)",
+      "articulo_sugerido": "Art. 400 CP"
+    },
+    "Acoso laboral__Art. 294 CP": {
+      "nombre": "Acoso laboral",
+      "articulo": "Art. 294 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 294 CP"
+    },
+    "Allanamiento de domicilio__Art. 270 CP": {
+      "nombre": "Allanamiento de domicilio",
+      "articulo": "Art. 270 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 270 CP"
+    },
+    "Amenazas__Art. 246 CP": {
+      "nombre": "Amenazas",
+      "articulo": "Art. 246 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 600 CP"
+    },
+    "Asesinato__Art. 193 CP": {
+      "nombre": "Asesinato",
+      "articulo": "Art. 193 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 193 CP"
+    },
+    "Asociación para delinquir__Art. 554 CP": {
+      "nombre": "Asociación para delinquir",
+      "articulo": "Art. 554 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 588 CP"
+    },
+    "Asociación terrorista__Art. 587 CP": {
+      "nombre": "Asociación terrorista",
+      "articulo": "Art. 587 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 588 CP (Colaboración sin pertenencia a la asociación terrorista)",
+      "articulo_sugerido": "Art. 588 CP"
+    },
+    "Calumnia__Art. 230 CP": {
+      "nombre": "Calumnia",
+      "articulo": "Art. 230 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 230 CP"
+    },
+    "Chantaje__Art. 247 CP": {
+      "nombre": "Chantaje",
+      "articulo": "Art. 247 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 506 CP (Aprovechamiento de secreto o información privilegiada)",
+      "articulo_sugerido": "Art. 506 CP"
+    },
+    "Coacción__Art. 245 CP": {
+      "nombre": "Coacción",
+      "articulo": "Art. 245 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 361 CP (Robo con violencia o intimidación)",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Cohecho propio__Art. 492 CP": {
+      "nombre": "Cohecho propio",
+      "articulo": "Art. 492 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 492 CP"
+    },
+    "Concusión__Art. 497 CP": {
+      "nombre": "Concusión",
+      "articulo": "Art. 497 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 497 CP"
+    },
+    "Conducción temeraria__Art. 323 CP": {
+      "nombre": "Conducción temeraria",
+      "articulo": "Art. 323 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 323 CP"
+    },
+    "Contaminación ambiental__Art. 324 CP": {
+      "nombre": "Contaminación ambiental",
+      "articulo": "Art. 324 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 324 CP"
+    },
+    "Contrabando__Art. 428 CP": {
+      "nombre": "Contrabando",
+      "articulo": "Art. 428 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 429 CP"
+    },
+    "Crimen de lesa humanidad__Art. 139 CP": {
+      "nombre": "Crimen de lesa humanidad",
+      "articulo": "Art. 139 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 139 CP"
+    },
+    "Daños__Art. 381 CP": {
+      "nombre": "Daños",
+      "articulo": "Art. 381 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 604 CP (Entrada en heredad o campo ajenos)",
+      "articulo_sugerido": "Art. 604 CP"
+    },
+    "Daños agravados__Art. 382 CP": {
+      "nombre": "Daños agravados",
+      "articulo": "Art. 382 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 382 CP"
+    },
+    "Defraudación fiscal__Art. 431 CP": {
+      "nombre": "Defraudación fiscal",
+      "articulo": "Art. 431 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 434 CP"
+    },
+    "Desaparición forzada__Art. 140 CP": {
+      "nombre": "Desaparición forzada",
+      "articulo": "Art. 140 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 140 CP"
+    },
+    "Enriquecimiento ilícito__Art. 484 CP": {
+      "nombre": "Enriquecimiento ilícito",
+      "articulo": "Art. 484 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 484 CP"
+    },
+    "Espionaje__Art. 563 CP": {
+      "nombre": "Espionaje",
+      "articulo": "Art. 563 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 563 CP"
+    },
+    "Estafa__Art. 365 CP": {
+      "nombre": "Estafa",
+      "articulo": "Art. 365 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Estafa agravada__Art. 366 CP": {
+      "nombre": "Estafa agravada",
+      "articulo": "Art. 366 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 365 CP",
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Estragos__Art. 185 CP": {
+      "nombre": "Estragos",
+      "articulo": "Art. 185 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 185 CP"
+    },
+    "Estupro__Art. 254 CP": {
+      "nombre": "Estupro",
+      "articulo": "Art. 254 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 254 CP"
+    },
+    "Extorsión__Art. 373 CP": {
+      "nombre": "Extorsión",
+      "articulo": "Art. 373 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 373 CP"
+    },
+    "Extorsión agravada__Art. 374 CP": {
+      "nombre": "Extorsión agravada",
+      "articulo": "Art. 374 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 375 CP",
+      "articulo_sugerido": "Art. 375 CP"
+    },
+    "Falsificación de documentos públicos__Art. 456 CP": {
+      "nombre": "Falsificación de documentos públicos",
+      "articulo": "Art. 456 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 462 CP",
+      "articulo_sugerido": "Art. 462 CP"
+    },
+    "Falsificación de moneda__Art. 447 CP": {
+      "nombre": "Falsificación de moneda",
+      "articulo": "Art. 447 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 447 CP"
+    },
+    "Falso testimonio__Art. 519 CP": {
+      "nombre": "Falso testimonio",
+      "articulo": "Art. 519 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 519 CP"
+    },
+    "Femicidio__Art. 208 CP": {
+      "nombre": "Femicidio",
+      "articulo": "Art. 208 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 208 CP"
+    },
+    "Fraude informático__Art. 368 CP": {
+      "nombre": "Fraude informático",
+      "articulo": "Art. 368 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 405 CP",
+      "articulo_sugerido": "Art. 405 CP"
+    },
+    "Genocidio__Art. 143 CP": {
+      "nombre": "Genocidio",
+      "articulo": "Art. 143 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 143 CP"
+    },
+    "Homicidio__Art. 192 CP": {
+      "nombre": "Homicidio",
+      "articulo": "Art. 192 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Homicidio imprudente__Art. 198 CP": {
+      "nombre": "Homicidio imprudente",
+      "articulo": "Art. 198 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 198 CP"
+    },
+    "Hostigamiento sexual__Art. 256 CP": {
+      "nombre": "Hostigamiento sexual",
+      "articulo": "Art. 256 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 256 CP"
+    },
+    "Hurto__Art. 357 CP": {
+      "nombre": "Hurto",
+      "articulo": "Art. 357 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Hurto agravado__Art. 363 CP": {
+      "nombre": "Hurto agravado",
+      "articulo": "Art. 363 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 357 CP"
+    },
+    "Incendio__Art. 183 CP": {
+      "nombre": "Incendio",
+      "articulo": "Art. 183 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Incendio forestal__Art. 327 CP": {
+      "nombre": "Incendio forestal",
+      "articulo": "Art. 327 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Injuria__Art. 229 CP": {
+      "nombre": "Injuria",
+      "articulo": "Art. 229 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 233 CP"
+    },
+    "Lavado de activos__Art. 439 CP": {
+      "nombre": "Lavado de activos",
+      "articulo": "Art. 439 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 439 CP"
+    },
+    "Lesiones__Art. 199 CP": {
+      "nombre": "Lesiones",
+      "articulo": "Art. 199 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 200 CP",
+      "articulo_sugerido": "Art. 200 CP"
+    },
+    "Lesiones graves__Art. 201 CP": {
+      "nombre": "Lesiones graves",
+      "articulo": "Art. 201 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 199 CP",
+      "articulo_sugerido": "Art. 199 CP"
+    },
+    "Maltrato habitual__Art. 209 CP": {
+      "nombre": "Maltrato habitual",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 83 CP",
+      "articulo_sugerido": "Art. 83 CP"
+    },
+    "Malversación de caudales públicos__Art. 481 CP": {
+      "nombre": "Malversación de caudales públicos",
+      "articulo": "Art. 481 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 481 CP"
+    },
+    "Omisión del deber de socorro__Art. 216 CP": {
+      "nombre": "Omisión del deber de socorro",
+      "articulo": "Art. 216 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 204 CP",
+      "articulo_sugerido": "Art. 204 CP"
+    },
+    "Organización criminal__Art. 554 CP": {
+      "nombre": "Organización criminal",
+      "articulo": "Art. 554 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 585 CP",
+      "articulo_sugerido": "Art. 585 CP"
+    },
+    "Parricidio__Art. 204 CP": {
+      "nombre": "Parricidio",
+      "articulo": "Art. 204 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 194 CP",
+      "articulo_sugerido": "Art. 194 CP"
+    },
+    "Peculado__Art. 480 CP": {
+      "nombre": "Peculado",
+      "articulo": "Art. 480 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 478 CP",
+      "articulo_sugerido": "Art. 478 CP"
+    },
+    "Pedofilia__Art. 250 CP": {
+      "nombre": "Pedofilia",
+      "articulo": "Art. 250 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 254 CP"
+    },
+    "Piratería__Art. 165 CP": {
+      "nombre": "Piratería",
+      "articulo": "Art. 165 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 161 CP",
+      "articulo_sugerido": "Art. 161 CP"
+    },
+    "Pornografía infantil__Art. 261 CP": {
+      "nombre": "Pornografía infantil",
+      "articulo": "Art. 261 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 262 CP"
+    },
+    "Portación ilegal de armas__Art. 584 CP": {
+      "nombre": "Portación ilegal de armas",
+      "articulo": "Art. 584 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 47 CP",
+      "articulo_sugerido": "Art. 47 CP"
+    },
+    "Prevaricato judicial__Art. 516 CP": {
+      "nombre": "Prevaricato judicial",
+      "articulo": "Art. 516 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 516 CP"
+    },
+    "Producción ilícita de drogas__Art. 317 CP": {
+      "nombre": "Producción ilícita de drogas",
+      "articulo": "Art. 317 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 314 CP",
+      "articulo_sugerido": "Art. 314 CP"
+    },
+    "Proxenetismo__Art. 262 CP": {
+      "nombre": "Proxenetismo",
+      "articulo": "Art. 262 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 357 CP",
+      "articulo_sugerido": "Art. 357 CP"
+    },
+    "Rebelión__Art. 532 CP": {
+      "nombre": "Rebelión",
+      "articulo": "Art. 532 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 532 CP"
+    },
+    "Receptación__Art. 406 CP": {
+      "nombre": "Receptación",
+      "articulo": "Art. 406 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 438 CP",
+      "articulo_sugerido": "Art. 438 CP"
+    },
+    "Robo__Art. 360 CP": {
+      "nombre": "Robo",
+      "articulo": "Art. 360 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 361 CP",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Robo agravado__Art. 361 CP": {
+      "nombre": "Robo agravado",
+      "articulo": "Art. 361 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 363 CP (Agravantes específicas)",
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Secuestro__Art. 240 CP": {
+      "nombre": "Secuestro",
+      "articulo": "Art. 240 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 315 CP",
+      "articulo_sugerido": "Art. 315 CP"
+    },
+    "Secuestro agravado__Art. 241 CP": {
+      "nombre": "Secuestro agravado",
+      "articulo": "Art. 241 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 242 CP",
+      "articulo_sugerido": "Art. 242 CP"
+    },
+    "Sedición__Art. 535 CP": {
+      "nombre": "Sedición",
+      "articulo": "Art. 535 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 535 CP"
+    },
+    "Sustracción de menor__Art. 283 CP": {
+      "nombre": "Sustracción de menor",
+      "articulo": "Art. 283 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 287 CP",
+      "articulo_sugerido": "Art. 287 CP"
+    },
+    "Terrorismo__Art. 589 CP": {
+      "nombre": "Terrorismo",
+      "articulo": "Art. 589 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 590 CP"
+    },
+    "Tortura__Art. 209 CP": {
+      "nombre": "Tortura",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 216 CP",
+      "articulo_sugerido": "Art. 216 CP"
+    },
+    "Tráfico de influencias__Art. 485 CP": {
+      "nombre": "Tráfico de influencias",
+      "articulo": "Art. 485 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 490 CP",
+      "articulo_sugerido": "Art. 490 CP"
+    },
+    "Tráfico ilícito de drogas__Art. 316 CP": {
+      "nombre": "Tráfico ilícito de drogas",
+      "articulo": "Art. 316 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 314 CP",
+      "articulo_sugerido": "Art. 314 CP"
+    },
+    "Tráfico ilícito de armas__Art. 582 CP": {
+      "nombre": "Tráfico ilícito de armas",
+      "articulo": "Art. 582 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 580 CP"
+    },
+    "Trata de personas__Art. 218 CP": {
+      "nombre": "Trata de personas",
+      "articulo": "Art. 218 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 219 CP",
+      "articulo_sugerido": "Art. 219 CP"
+    },
+    "Trata de personas agravada__Art. 219 CP": {
+      "nombre": "Trata de personas agravada",
+      "articulo": "Art. 219 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 112 CP"
+    },
+    "Usurpación__Art. 378 CP": {
+      "nombre": "Usurpación",
+      "articulo": "Art. 378 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 378 CP"
+    },
+    "Violación__Art. 249 CP": {
+      "nombre": "Violación",
+      "articulo": "Art. 249 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 249 CP"
+    },
+    "Violación agravada__Art. 250 CP": {
+      "nombre": "Violación agravada",
+      "articulo": "Art. 250 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 249 CP",
+      "articulo_sugerido": "Art. 249 CP"
+    },
+    "Violencia doméstica__Art. 209 CP": {
+      "nombre": "Violencia doméstica",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 361 CP",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Homicidio simple__Art. 192 CP": {
+      "nombre": "Homicidio simple",
+      "articulo": "Art. 192 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Homicidio agravado__Art. 193 CP": {
+      "nombre": "Homicidio agravado",
+      "articulo": "Art. 193 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 193 CP"
+    },
+    "Homicidio preterintencional__Art. 197 CP": {
+      "nombre": "Homicidio preterintencional",
+      "articulo": "Art. 197 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Inducción al suicidio__Art. 195 CP": {
+      "nombre": "Inducción al suicidio",
+      "articulo": "Art. 195 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 197 CP",
+      "articulo_sugerido": "Art. 197 CP"
+    },
+    "Aborto consentido__Art. 196 CP": {
+      "nombre": "Aborto consentido",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 196 CP"
+    },
+    "Aborto forzado__Art. 196 CP": {
+      "nombre": "Aborto forzado",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 196 CP"
+    },
+    "Aborto imprudente__Art. 197 CP": {
+      "nombre": "Aborto imprudente",
+      "articulo": "Art. 197 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 196 CP",
+      "articulo_sugerido": "Art. 196 CP"
+    },
+    "Lesiones leves__Art. 202 CP": {
+      "nombre": "Lesiones leves",
+      "articulo": "Art. 202 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 599 CP",
+      "articulo_sugerido": "Art. 599 CP"
+    },
+    "Lesiones imprudentes__Art. 203 CP": {
+      "nombre": "Lesiones imprudentes",
+      "articulo": "Art. 203 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 202 CP",
+      "articulo_sugerido": "Art. 202 CP"
+    },
+    "Mutilar__Art. 200 CP": {
+      "nombre": "Mutilar",
+      "articulo": "Art. 200 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 201 CP",
+      "articulo_sugerido": "Art. 201 CP"
+    },
+    "Participación en riña__Art. 210 CP": {
+      "nombre": "Participación en riña",
+      "articulo": "Art. 210 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 63 CP",
+      "articulo_sugerido": "Art. 63 CP"
+    },
+    "Lesiones al feto__Art. 213 CP": {
+      "nombre": "Lesiones al feto",
+      "articulo": "Art. 213 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 203 CP",
+      "articulo_sugerido": "Art. 203 CP"
+    },
+    "Detención ilegal__Art. 240 CP": {
+      "nombre": "Detención ilegal",
+      "articulo": "Art. 240 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 235 CP",
+      "articulo_sugerido": "Art. 235 CP"
+    },
+    "Violencia doméstica habitual__Art. 209 CP": {
+      "nombre": "Violencia doméstica habitual",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 83 CP",
+      "articulo_sugerido": "Art. 83 CP"
+    },
+    "Maltrato psicológico__Art. 209 CP": {
+      "nombre": "Maltrato psicológico",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 214 CP",
+      "articulo_sugerido": "Art. 214 CP"
+    },
+    "Agresión sexual__Art. 251 CP": {
+      "nombre": "Agresión sexual",
+      "articulo": "Art. 251 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Abuso sexual a menor impúber__Art. 250 CP": {
+      "nombre": "Abuso sexual a menor impúber",
+      "articulo": "Art. 250 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 254 CP"
+    },
+    "Corrupción de menores__Art. 260 CP": {
+      "nombre": "Corrupción de menores",
+      "articulo": "Art. 260 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 250 CP",
+      "articulo_sugerido": "Art. 250 CP"
+    },
+    "Ciberacoso sexual__Art. 256 CP": {
+      "nombre": "Ciberacoso sexual",
+      "articulo": "Art. 256 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Difamación__Art. 231 CP": {
+      "nombre": "Difamación",
+      "articulo": "Art. 231 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 563 CP",
+      "articulo_sugerido": "Art. 563 CP"
+    },
+    "Revelación de secretos__Art. 232 CP": {
+      "nombre": "Revelación de secretos",
+      "articulo": "Art. 232 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 503 CP",
+      "articulo_sugerido": "Art. 503 CP"
+    },
+    "Matrimonio ilegal__Art. 280 CP": {
+      "nombre": "Matrimonio ilegal",
+      "articulo": "Art. 280 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 279 CP"
+    },
+    "Bigamia__Art. 281 CP": {
+      "nombre": "Bigamia",
+      "articulo": "Art. 281 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 279 CP",
+      "articulo_sugerido": "Art. 279 CP"
+    },
+    "Abandono de menores__Art. 228 CP": {
+      "nombre": "Abandono de menores",
+      "articulo": "Art. 228 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 228 CP"
+    },
+    "Impago de pensiones__Art. 285 CP": {
+      "nombre": "Impago de pensiones",
+      "articulo": "Art. 285 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 288 CP",
+      "articulo_sugerido": "Art. 288 CP"
+    },
+    "Hurto simple__Art. 357 CP": {
+      "nombre": "Hurto simple",
+      "articulo": "Art. 357 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 357 CP"
+    },
+    "Robo simple__Art. 360 CP": {
+      "nombre": "Robo simple",
+      "articulo": "Art. 360 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 361 CP",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Apropiación indebida__Art. 369 CP": {
+      "nombre": "Apropiación indebida",
+      "articulo": "Art. 369 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 602 CP",
+      "articulo_sugerido": "Art. 602 CP"
+    },
+    "Daños simples__Art. 381 CP": {
+      "nombre": "Daños simples",
+      "articulo": "Art. 381 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 604 CP (Entrada en heredad o campo ajenos)",
+      "articulo_sugerido": "Art. 604 CP"
+    },
+    "Blanqueo de capitales__Art. 439 CP": {
+      "nombre": "Blanqueo de capitales",
+      "articulo": "Art. 439 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 355 CP",
+      "articulo_sugerido": "Art. 355 CP"
+    },
+    "Usura__Art. 375 CP": {
+      "nombre": "Usura",
+      "articulo": "Art. 375 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 386 CP",
+      "articulo_sugerido": "Art. 386 CP"
+    },
+    "Violación de derechos de autor__Art. 390 CP": {
+      "nombre": "Violación de derechos de autor",
+      "articulo": "Art. 390 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 389 CP",
+      "articulo_sugerido": "Art. 389 CP"
+    },
+    "Piratería de software__Art. 391 CP": {
+      "nombre": "Piratería de software",
+      "articulo": "Art. 391 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 405 CP",
+      "articulo_sugerido": "Art. 405 CP"
+    },
+    "Atentado contra la libertad sindical__Art. 294 CP": {
+      "nombre": "Atentado contra la libertad sindical",
+      "articulo": "Art. 294 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Discriminación laboral__Art. 293 CP": {
+      "nombre": "Discriminación laboral",
+      "articulo": "Art. 293 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 294 CP (Acoso laboral vertical)",
+      "articulo_sugerido": "Art. 294 CP"
+    },
+    "Cohecho propio pasivo__Art. 492 CP": {
+      "nombre": "Cohecho propio pasivo",
+      "articulo": "Art. 492 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 492 CP"
+    },
+    "Cohecho activo__Art. 493 CP": {
+      "nombre": "Cohecho activo",
+      "articulo": "Art. 493 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 496 CP",
+      "articulo_sugerido": "Art. 496 CP"
+    },
+    "Omisión de perseguir delitos__Art. 518 CP": {
+      "nombre": "Omisión de perseguir delitos",
+      "articulo": "Art. 518 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 515 CP",
+      "articulo_sugerido": "Art. 515 CP"
+    },
+    "Encubrimiento__Art. 519 CP": {
+      "nombre": "Encubrimiento",
+      "articulo": "Art. 519 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 513 CP",
+      "articulo_sugerido": "Art. 513 CP"
+    },
+    "Falso testimonio__Art. 521 CP": {
+      "nombre": "Falso testimonio",
+      "articulo": "Art. 521 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 519 CP (Falso testimonio)",
+      "articulo_sugerido": "Art. 519 CP"
+    },
+    "Perjurio__Art. 522 CP": {
+      "nombre": "Perjurio",
+      "articulo": "Art. 522 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 230 CP",
+      "articulo_sugerido": "Art. 230 CP"
+    },
+    "Denuncia falsa__Art. 525 CP": {
+      "nombre": "Denuncia falsa",
+      "articulo": "Art. 525 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 528 CP",
+      "articulo_sugerido": "Art. 528 CP"
+    },
+    "Quebrantamiento de condena__Art. 526 CP": {
+      "nombre": "Quebrantamiento de condena",
+      "articulo": "Art. 526 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 96 CP (Quebrantamiento de las medidas de seguridad)",
+      "articulo_sugerido": "Art. 96 CP"
+    },
+    "Obstrucción a la justicia__Art. 528 CP": {
+      "nombre": "Obstrucción a la justicia",
+      "articulo": "Art. 528 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 531 CP",
+      "articulo_sugerido": "Art. 531 CP"
+    },
+    "Falsificación de moneda nacional__Art. 447 CP": {
+      "nombre": "Falsificación de moneda nacional",
+      "articulo": "Art. 447 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 447 CP"
+    },
+    "Usurpación de identidad__Art. 460 CP": {
+      "nombre": "Usurpación de identidad",
+      "articulo": "Art. 460 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 401 CP"
+    },
+    "Atentado contra la autoridad__Art. 542 CP": {
+      "nombre": "Atentado contra la autoridad",
+      "articulo": "Art. 542 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Resistencia__Art. 545 CP": {
+      "nombre": "Resistencia",
+      "articulo": "Art. 545 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 138 CP",
+      "articulo_sugerido": "Art. 138 CP"
+    },
+    "Desórdenes públicos__Art. 549 CP": {
+      "nombre": "Desórdenes públicos",
+      "articulo": "Art. 549 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 584 CP",
+      "articulo_sugerido": "Art. 584 CP"
+    },
+    "Atentado contra la libertad de expresión__Art. 560 CP": {
+      "nombre": "Atentado contra la libertad de expresión",
+      "articulo": "Art. 560 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Atentado contra la libertad de culto__Art. 562 CP": {
+      "nombre": "Atentado contra la libertad de culto",
+      "articulo": "Art. 562 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Discriminación__Art. 563 CP": {
+      "nombre": "Discriminación",
+      "articulo": "Art. 563 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 239 CP",
+      "articulo_sugerido": "Art. 239 CP"
+    },
+    "Delitos electorales__Art. 555 CP": {
+      "nombre": "Delitos electorales",
+      "articulo": "Art. 555 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 543 CP",
+      "articulo_sugerido": "Art. 543 CP"
+    },
+    "Traición__Art. 567 CP": {
+      "nombre": "Traición",
+      "articulo": "Art. 567 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 555 CP",
+      "articulo_sugerido": "Art. 555 CP"
+    },
+    "Espionaje__Art. 570 CP": {
+      "nombre": "Espionaje",
+      "articulo": "Art. 570 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 563 CP",
+      "articulo_sugerido": "Art. 563 CP"
+    },
+    "Acceso no autorizado a sistemas__Art. 398 CP": {
+      "nombre": "Acceso no autorizado a sistemas",
+      "articulo": "Art. 398 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 398 CP"
+    },
+    "Daños informáticos__Art. 401 CP": {
+      "nombre": "Daños informáticos",
+      "articulo": "Art. 401 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 404 CP",
+      "articulo_sugerido": "Art. 404 CP"
+    },
+    "Contrabando de mercancías peligrosas__Art. 429 CP": {
+      "nombre": "Contrabando de mercancías peligrosas",
+      "articulo": "Art. 429 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 429 CP"
+    },
+    "Delito contra la salud pública alimentaria__Art. 330 CP": {
+      "nombre": "Delito contra la salud pública alimentaria",
+      "articulo": "Art. 330 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 305 CP",
+      "articulo_sugerido": "Art. 305 CP"
+    },
+    "Propagación de epidemia__Art. 340 CP": {
+      "nombre": "Propagación de epidemia",
+      "articulo": "Art. 340 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 307 CP",
+      "articulo_sugerido": "Art. 307 CP"
+    },
+    "Incendio agravado__Art. 184 CP": {
+      "nombre": "Incendio agravado",
+      "articulo": "Art. 184 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 183 CP (Incendio)",
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Daños por imprudencia__Art. 383 CP": {
+      "nombre": "Daños por imprudencia",
+      "articulo": "Art. 383 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 174 CP",
+      "articulo_sugerido": "Art. 174 CP"
+    },
+    "Conducción bajo influencia de alcohol__Art. 324 CP": {
+      "nombre": "Conducción bajo influencia de alcohol",
+      "articulo": "Art. 324 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 323 CP",
+      "articulo_sugerido": "Art. 323 CP"
+    },
+    "Conducción sin permiso__Art. 325 CP": {
+      "nombre": "Conducción sin permiso",
+      "articulo": "Art. 325 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 323 CP",
+      "articulo_sugerido": "Art. 323 CP"
+    },
+    "Negativa a someterse a pruebas__Art. 326 CP": {
+      "nombre": "Negativa a someterse a pruebas",
+      "articulo": "Art. 326 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 375 CP",
+      "articulo_sugerido": "Art. 375 CP"
+    },
+    "Abandono del lugar del accidente__Art. 327 CP": {
+      "nombre": "Abandono del lugar del accidente",
+      "articulo": "Art. 327 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 16 CP",
+      "articulo_sugerido": "Art. 16 CP"
+    },
+    "Falsificación de tarjetas de crédito__Art. 449 CP": {
+      "nombre": "Falsificación de tarjetas de crédito",
+      "articulo": "Art. 449 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 463 CP",
+      "articulo_sugerido": "Art. 463 CP"
+    },
+    "Falsificación de efectos timbrados__Art. 450 CP": {
+      "nombre": "Falsificación de efectos timbrados",
+      "articulo": "Art. 450 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 453 CP",
+      "articulo_sugerido": "Art. 453 CP"
+    },
+    "Falsificación de documentos de identidad__Art. 459 CP": {
+      "nombre": "Falsificación de documentos de identidad",
+      "articulo": "Art. 459 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 460 CP",
+      "articulo_sugerido": "Art. 460 CP"
+    },
+    "Falsificación de certificados médicos__Art. 458 CP": {
+      "nombre": "Falsificación de certificados médicos",
+      "articulo": "Art. 458 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 459 CP",
+      "articulo_sugerido": "Art. 459 CP"
+    },
+    "Usurpación de funciones__Art. 461 CP": {
+      "nombre": "Usurpación de funciones",
+      "articulo": "Art. 461 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 471 CP",
+      "articulo_sugerido": "Art. 471 CP"
+    },
+    "Intrusismo profesional__Art. 462 CP": {
+      "nombre": "Intrusismo profesional",
+      "articulo": "Art. 462 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 472 CP",
+      "articulo_sugerido": "Art. 472 CP"
+    },
+    "Cohecho pasivo propio__Art. 492 CP": {
+      "nombre": "Cohecho pasivo propio",
+      "articulo": "Art. 492 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 493 CP (Cohecho impropio)",
+      "articulo_sugerido": "Art. 493 CP"
+    },
+    "Cohecho pasivo impropio__Art. 494 CP": {
+      "nombre": "Cohecho pasivo impropio",
+      "articulo": "Art. 494 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 493 CP"
+    },
+    "Exacciones ilegales__Art. 498 CP": {
+      "nombre": "Exacciones ilegales",
+      "articulo": "Art. 498 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 483 CP",
+      "articulo_sugerido": "Art. 483 CP"
+    },
+    "Nombramiento ilegal__Art. 501 CP": {
+      "nombre": "Nombramiento ilegal",
+      "articulo": "Art. 501 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 238 CP",
+      "articulo_sugerido": "Art. 238 CP"
+    },
+    "Abandono de cargo__Art. 500 CP": {
+      "nombre": "Abandono de cargo",
+      "articulo": "Art. 500 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 500 CP"
+    },
+    "Desobediencia a la autoridad__Art. 502 CP": {
+      "nombre": "Desobediencia a la autoridad",
+      "articulo": "Art. 502 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 499 CP",
+      "articulo_sugerido": "Art. 499 CP"
+    },
+    "Fraude de subvenciones__Art. 432 CP": {
+      "nombre": "Fraude de subvenciones",
+      "articulo": "Art. 432 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 434 CP"
+    },
+    "Prevaricato administrativo__Art. 517 CP": {
+      "nombre": "Prevaricato administrativo",
+      "articulo": "Art. 517 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 498 CP",
+      "articulo_sugerido": "Art. 498 CP"
+    },
+    "Omisión de perseguir delitos por funcionario__Art. 518 CP": {
+      "nombre": "Omisión de perseguir delitos por funcionario",
+      "articulo": "Art. 518 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 515 CP",
+      "articulo_sugerido": "Art. 515 CP"
+    },
+    "Encubrimiento por funcionario__Art. 520 CP": {
+      "nombre": "Encubrimiento por funcionario",
+      "articulo": "Art. 520 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 490 CP",
+      "articulo_sugerido": "Art. 490 CP"
+    },
+    "Quebrantamiento de medidas cautelares__Art. 527 CP": {
+      "nombre": "Quebrantamiento de medidas cautelares",
+      "articulo": "Art. 527 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 59 CP",
+      "articulo_sugerido": "Art. 59 CP"
+    },
+    "Falso testimonio en causa criminal__Art. 521 CP": {
+      "nombre": "Falso testimonio en causa criminal",
+      "articulo": "Art. 521 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 519 CP",
+      "articulo_sugerido": "Art. 519 CP"
+    },
+    "Atentado agravado__Art. 543 CP": {
+      "nombre": "Atentado agravado",
+      "articulo": "Art. 543 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Desobediencia grave__Art. 546 CP": {
+      "nombre": "Desobediencia grave",
+      "articulo": "Art. 546 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 610 CP",
+      "articulo_sugerido": "Art. 610 CP"
+    },
+    "Alteración del orden público__Art. 550 CP": {
+      "nombre": "Alteración del orden público",
+      "articulo": "Art. 550 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 609 CP",
+      "articulo_sugerido": "Art. 609 CP"
+    },
+    "Desórdenes públicos agravados__Art. 551 CP": {
+      "nombre": "Desórdenes públicos agravados",
+      "articulo": "Art. 551 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 584 CP",
+      "articulo_sugerido": "Art. 584 CP"
+    },
+    "Tenencia ilícita de armas prohibidas__Art. 585 CP": {
+      "nombre": "Tenencia ilícita de armas prohibidas",
+      "articulo": "Art. 585 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 580 CP",
+      "articulo_sugerido": "Art. 580 CP"
+    },
+    "Atentado contra la libertad de información__Art. 561 CP": {
+      "nombre": "Atentado contra la libertad de información",
+      "articulo": "Art. 561 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Atentado contra la libertad de reunión__Art. 564 CP": {
+      "nombre": "Atentado contra la libertad de reunión",
+      "articulo": "Art. 564 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Atentado al derecho de petición__Art. 565 CP": {
+      "nombre": "Atentado al derecho de petición",
+      "articulo": "Art. 565 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Fraude electoral__Art. 556 CP": {
+      "nombre": "Fraude electoral",
+      "articulo": "Art. 556 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 543 CP",
+      "articulo_sugerido": "Art. 543 CP"
+    },
+    "Crimen de guerra__Art. 144 CP": {
+      "nombre": "Crimen de guerra",
+      "articulo": "Art. 144 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 146 CP",
+      "articulo_sugerido": "Art. 146 CP"
+    },
+    "Ejecución extrajudicial__Art. 141 CP": {
+      "nombre": "Ejecución extrajudicial",
+      "articulo": "Art. 141 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 32 CP",
+      "articulo_sugerido": "Art. 32 CP"
+    },
+    "Hurto de uso de vehículo__Art. 358 CP": {
+      "nombre": "Hurto de uso de vehículo",
+      "articulo": "Art. 358 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 364 CP",
+      "articulo_sugerido": "Art. 364 CP"
+    },
+    "Hurto famélico__Art. 359 CP": {
+      "nombre": "Hurto famélico",
+      "articulo": "Art. 359 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 412 CP",
+      "articulo_sugerido": "Art. 412 CP"
+    },
+    "Robo con homicidio__Art. 362 CP": {
+      "nombre": "Robo con homicidio",
+      "articulo": "Art. 362 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 192 CP (Homicidio)",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Robo en casa habitada__Art. 361 CP": {
+      "nombre": "Robo en casa habitada",
+      "articulo": "Art. 361 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 363 CP (Agravantes específicas)",
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Robo con escalamiento__Art. 361 CP": {
+      "nombre": "Robo con escalamiento",
+      "articulo": "Art. 361 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 363 CP (Agravantes específicas)",
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Publicidad engañosa__Art. 367 CP": {
+      "nombre": "Publicidad engañosa",
+      "articulo": "Art. 367 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 547 CP",
+      "articulo_sugerido": "Art. 547 CP"
+    },
+    "Apropiación de cosas perdidas__Art. 370 CP": {
+      "nombre": "Apropiación de cosas perdidas",
+      "articulo": "Art. 370 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 372 CP",
+      "articulo_sugerido": "Art. 372 CP"
+    },
+    "Usurpación de inmueble__Art. 378 CP": {
+      "nombre": "Usurpación de inmueble",
+      "articulo": "Art. 378 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 378 CP"
+    },
+    "Usurpación de aguas__Art. 379 CP": {
+      "nombre": "Usurpación de aguas",
+      "articulo": "Art. 379 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 380 CP",
+      "articulo_sugerido": "Art. 380 CP"
+    },
+    "Daños al patrimonio histórico__Art. 386 CP": {
+      "nombre": "Daños al patrimonio histórico",
+      "articulo": "Art. 386 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 348 CP",
+      "articulo_sugerido": "Art. 348 CP"
+    },
+    "Daños por incendio__Art. 384 CP": {
+      "nombre": "Daños por incendio",
+      "articulo": "Art. 384 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 183 CP (Incendio)",
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Estafa de seguro__Art. 366 CP": {
+      "nombre": "Estafa de seguro",
+      "articulo": "Art. 366 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 17 CP",
+      "articulo_sugerido": "Art. 17 CP"
+    },
+    "Receptación negligente__Art. 407 CP": {
+      "nombre": "Receptación negligente",
+      "articulo": "Art. 407 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 438 CP",
+      "articulo_sugerido": "Art. 438 CP"
+    },
+    "Blanqueo por imprudencia__Art. 440 CP": {
+      "nombre": "Blanqueo por imprudencia",
+      "articulo": "Art. 440 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 174 CP",
+      "articulo_sugerido": "Art. 174 CP"
+    },
+    "Especulación__Art. 376 CP": {
+      "nombre": "Especulación",
+      "articulo": "Art. 376 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 391 CP",
+      "articulo_sugerido": "Art. 391 CP"
+    },
+    "Reproducción ilegal de obras__Art. 390 CP": {
+      "nombre": "Reproducción ilegal de obras",
+      "articulo": "Art. 390 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 558 CP",
+      "articulo_sugerido": "Art. 558 CP"
+    },
+    "Violación de secreto de empresa__Art. 394 CP": {
+      "nombre": "Violación de secreto de empresa",
+      "articulo": "Art. 394 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 395 CP",
+      "articulo_sugerido": "Art. 395 CP"
+    },
+    "Fraude de inversores__Art. 377 CP": {
+      "nombre": "Fraude de inversores",
+      "articulo": "Art. 377 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 563 CP",
+      "articulo_sugerido": "Art. 563 CP"
+    },
+    "Fraude a la administración__Art. 488 CP": {
+      "nombre": "Fraude a la administración",
+      "articulo": "Art. 488 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 432 CP",
+      "articulo_sugerido": "Art. 432 CP"
+    },
+    "Negociaciones prohibidas__Art. 486 CP": {
+      "nombre": "Negociaciones prohibidas",
+      "articulo": "Art. 486 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 485 CP",
+      "articulo_sugerido": "Art. 485 CP"
+    },
+    "Infidelidad en custodia de documentos__Art. 503 CP": {
+      "nombre": "Infidelidad en custodia de documentos",
+      "articulo": "Art. 503 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 460 CP"
+    },
+    "Construcción ilegal__Art. 350 CP": {
+      "nombre": "Construcción ilegal",
+      "articulo": "Art. 350 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 578 CP",
+      "articulo_sugerido": "Art. 578 CP"
+    },
+    "Alteración de planos__Art. 351 CP": {
+      "nombre": "Alteración de planos",
+      "articulo": "Art. 351 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 558 CP",
+      "articulo_sugerido": "Art. 558 CP"
+    },
+    "Daños a espacio natural protegido__Art. 330 CP": {
+      "nombre": "Daños a espacio natural protegido",
+      "articulo": "Art. 330 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 333 CP",
+      "articulo_sugerido": "Art. 333 CP"
+    },
+    "Tráfico de especies protegidas__Art. 328 CP": {
+      "nombre": "Tráfico de especies protegidas",
+      "articulo": "Art. 328 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 330 CP"
+    },
+    "Experimentación con animales__Art. 343 CP": {
+      "nombre": "Experimentación con animales",
+      "articulo": "Art. 343 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 341 CP",
+      "articulo_sugerido": "Art. 341 CP"
+    },
+    "Maltrato animal__Art. 342 CP": {
+      "nombre": "Maltrato animal",
+      "articulo": "Art. 342 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 341 CP (Maltrato de animales)",
+      "articulo_sugerido": "Art. 341 CP"
+    },
+    "Atentado a la libertad sindical agravado__Art. 294 CP": {
+      "nombre": "Atentado a la libertad sindical agravado",
+      "articulo": "Art. 294 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Siniestralidad laboral grave__Art. 296 CP": {
+      "nombre": "Siniestralidad laboral grave",
+      "articulo": "Art. 296 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Tráfico ilegal de mano de obra__Art. 297 CP": {
+      "nombre": "Tráfico ilegal de mano de obra",
+      "articulo": "Art. 297 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 291 CP",
+      "articulo_sugerido": "Art. 291 CP"
+    },
+    "Inducción a menor a abandonar hogar__Art. 284 CP": {
+      "nombre": "Inducción a menor a abandonar hogar",
+      "articulo": "Art. 284 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 285 CP",
+      "articulo_sugerido": "Art. 285 CP"
+    },
+    "Quebrantamiento de custodia__Art. 285 CP": {
+      "nombre": "Quebrantamiento de custodia",
+      "articulo": "Art. 285 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 91 CP",
+      "articulo_sugerido": "Art. 91 CP"
+    },
+    "Abandono de incapaz__Art. 228 CP": {
+      "nombre": "Abandono de incapaz",
+      "articulo": "Art. 228 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 228 CP"
+    },
+    "Violación de secreto profesional__Art. 235 CP": {
+      "nombre": "Violación de secreto profesional",
+      "articulo": "Art. 235 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 274 CP",
+      "articulo_sugerido": "Art. 274 CP"
+    },
+    "Interceptación de comunicaciones__Art. 399 CP": {
+      "nombre": "Interceptación de comunicaciones",
+      "articulo": "Art. 399 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 522 CP",
+      "articulo_sugerido": "Art. 522 CP"
+    },
+    "Suplantación de identidad digital__Art. 402 CP": {
+      "nombre": "Suplantación de identidad digital",
+      "articulo": "Art. 402 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 401 CP",
+      "articulo_sugerido": "Art. 401 CP"
+    },
+    "Acoso reiterado (stalking)__Art. 248 CP": {
+      "nombre": "Acoso reiterado (stalking)",
+      "articulo": "Art. 248 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 294 CP",
+      "articulo_sugerido": "Art. 294 CP"
+    },
+    "Trato degradante__Art. 249 CP": {
+      "nombre": "Trato degradante",
+      "articulo": "Art. 249 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 214 CP",
+      "articulo_sugerido": "Art. 214 CP"
+    },
+    "Omisión del deber de socorro por profesional__Art. 217 CP": {
+      "nombre": "Omisión del deber de socorro por profesional",
+      "articulo": "Art. 217 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 204 CP",
+      "articulo_sugerido": "Art. 204 CP"
+    },
+    "Contagio venéreo__Art. 207 CP": {
+      "nombre": "Contagio venéreo",
+      "articulo": "Art. 207 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 382 CP",
+      "articulo_sugerido": "Art. 382 CP"
+    },
+    "Participación en riña tumultuaria__Art. 210 CP": {
+      "nombre": "Participación en riña tumultuaria",
+      "articulo": "Art. 210 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 63 CP",
+      "articulo_sugerido": "Art. 63 CP"
+    },
+    "Duelo__Art. 211 CP": {
+      "nombre": "Duelo",
+      "articulo": "Art. 211 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 1 CP",
+      "articulo_sugerido": "Art. 1 CP"
+    },
+    "Manipulación genética__Art. 215 CP": {
+      "nombre": "Manipulación genética",
+      "articulo": "Art. 215 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 172 CP",
+      "articulo_sugerido": "Art. 172 CP"
+    },
+    "Agresión sexual con penetración de objetos__Art. 251 CP": {
+      "nombre": "Agresión sexual con penetración de objetos",
+      "articulo": "Art. 251 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 249 CP",
+      "articulo_sugerido": "Art. 249 CP"
+    },
+    "Exhibicionismo__Art. 257 CP": {
+      "nombre": "Exhibicionismo",
+      "articulo": "Art. 257 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 264 CP",
+      "articulo_sugerido": "Art. 264 CP"
+    },
+    "Provocación sexual__Art. 258 CP": {
+      "nombre": "Provocación sexual",
+      "articulo": "Art. 258 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 265 CP",
+      "articulo_sugerido": "Art. 265 CP"
+    },
+    "Rufianería__Art. 263 CP": {
+      "nombre": "Rufianería",
+      "articulo": "Art. 263 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 139 CP",
+      "articulo_sugerido": "Art. 139 CP"
+    },
+    "Delito farmacéutico__Art. 335 CP": {
+      "nombre": "Delito farmacéutico",
+      "articulo": "Art. 335 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 298 CP",
+      "articulo_sugerido": "Art. 298 CP"
+    },
+    "Adulteración de aguas__Art. 341 CP": {
+      "nombre": "Adulteración de aguas",
+      "articulo": "Art. 341 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 380 CP",
+      "articulo_sugerido": "Art. 380 CP"
+    },
+    "Tráfico de precursores__Art. 318 CP": {
+      "nombre": "Tráfico de precursores",
+      "articulo": "Art. 318 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 314 CP",
+      "articulo_sugerido": "Art. 314 CP"
+    },
+    "Peculado de uso__Art. 480 CP": {
+      "nombre": "Peculado de uso",
+      "articulo": "Art. 480 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 504 CP",
+      "articulo_sugerido": "Art. 504 CP"
+    },
+    "Malversación imprudente__Art. 482 CP": {
+      "nombre": "Malversación imprudente",
+      "articulo": "Art. 482 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 440 CP",
+      "articulo_sugerido": "Art. 440 CP"
+    },
+    "Cohecho de árbitros__Art. 495 CP": {
+      "nombre": "Cohecho de árbitros",
+      "articulo": "Art. 495 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 486 CP",
+      "articulo_sugerido": "Art. 486 CP"
+    },
+    "Corrupción en el sector privado__Art. 496 CP": {
+      "nombre": "Corrupción en el sector privado",
+      "articulo": "Art. 496 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 48 CP",
+      "articulo_sugerido": "Art. 48 CP"
+    },
+    "Negociación prohibida a funcionario__Art. 486 CP": {
+      "nombre": "Negociación prohibida a funcionario",
+      "articulo": "Art. 486 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 134 CP",
+      "articulo_sugerido": "Art. 134 CP"
+    },
+    "Desobediencia judicial__Art. 529 CP": {
+      "nombre": "Desobediencia judicial",
+      "articulo": "Art. 529 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 523 CP",
+      "articulo_sugerido": "Art. 523 CP"
+    },
+    "Denegación de auxilio judicial__Art. 530 CP": {
+      "nombre": "Denegación de auxilio judicial",
+      "articulo": "Art. 530 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 204 CP",
+      "articulo_sugerido": "Art. 204 CP"
+    },
+    "Encubrimiento personal__Art. 521 CP": {
+      "nombre": "Encubrimiento personal",
+      "articulo": "Art. 521 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 513 CP",
+      "articulo_sugerido": "Art. 513 CP"
+    },
+    "Encubrimiento real__Art. 522 CP": {
+      "nombre": "Encubrimiento real",
+      "articulo": "Art. 522 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 513 CP",
+      "articulo_sugerido": "Art. 513 CP"
+    },
+    "Revelación de actuaciones procesales__Art. 531 CP": {
+      "nombre": "Revelación de actuaciones procesales",
+      "articulo": "Art. 531 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 529 CP",
+      "articulo_sugerido": "Art. 529 CP"
+    },
+    "Quebrantamiento de condena leve__Art. 527 CP": {
+      "nombre": "Quebrantamiento de condena leve",
+      "articulo": "Art. 527 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 598 CP",
+      "articulo_sugerido": "Art. 598 CP"
+    },
+    "Desórdenes en espectáculos__Art. 552 CP": {
+      "nombre": "Desórdenes en espectáculos",
+      "articulo": "Art. 552 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 609 CP",
+      "articulo_sugerido": "Art. 609 CP"
+    },
+    "Lanzamiento de objetos peligrosos__Art. 553 CP": {
+      "nombre": "Lanzamiento de objetos peligrosos",
+      "articulo": "Art. 553 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 607 CP (Abandono de objetos peligrosos)",
+      "articulo_sugerido": "Art. 607 CP"
+    },
+    "Posesión de armas de guerra__Art. 586 CP": {
+      "nombre": "Posesión de armas de guerra",
+      "articulo": "Art. 586 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 580 CP",
+      "articulo_sugerido": "Art. 580 CP"
+    },
+    "Fabricación de armas__Art. 587 CP": {
+      "nombre": "Fabricación de armas",
+      "articulo": "Art. 587 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 580 CP",
+      "articulo_sugerido": "Art. 580 CP"
+    },
+    "Tráfico ilegal de explosivos__Art. 583 CP": {
+      "nombre": "Tráfico ilegal de explosivos",
+      "articulo": "Art. 583 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 582 CP",
+      "articulo_sugerido": "Art. 582 CP"
+    },
+    "Alzamiento público__Art. 537 CP": {
+      "nombre": "Alzamiento público",
+      "articulo": "Art. 537 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 6 CP",
+      "articulo_sugerido": "Art. 6 CP"
+    },
+    "Propaganda ilegal__Art. 559 CP": {
+      "nombre": "Propaganda ilegal",
+      "articulo": "Art. 559 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 547 CP",
+      "articulo_sugerido": "Art. 547 CP"
+    },
+    "Usurpación de funciones militares__Art. 573 CP": {
+      "nombre": "Usurpación de funciones militares",
+      "articulo": "Art. 573 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 471 CP",
+      "articulo_sugerido": "Art. 471 CP"
+    },
+    "Atentado contra jefe de Estado extranjero__Art. 576 CP": {
+      "nombre": "Atentado contra jefe de Estado extranjero",
+      "articulo": "Art. 576 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 158 CP",
+      "articulo_sugerido": "Art. 158 CP"
+    },
+    "Piratería aérea__Art. 166 CP": {
+      "nombre": "Piratería aérea",
+      "articulo": "Art. 166 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 161 CP",
+      "articulo_sugerido": "Art. 161 CP"
+    },
+    "Delito contra la salud pública con resultado de muerte__Art. 331 CP": {
+      "nombre": "Delito contra la salud pública con resultado de muerte",
+      "articulo": "Art. 331 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Tráfico de medicamentos falsos__Art. 336 CP": {
+      "nombre": "Tráfico de medicamentos falsos",
+      "articulo": "Art. 336 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 298 CP",
+      "articulo_sugerido": "Art. 298 CP"
+    },
+    "Violación de secretos de empresa__Art. 394 CP": {
+      "nombre": "Violación de secretos de empresa",
+      "articulo": "Art. 394 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 503 CP",
+      "articulo_sugerido": "Art. 503 CP"
+    },
+    "Violación de derechos de imagen__Art. 237 CP": {
+      "nombre": "Violación de derechos de imagen",
+      "articulo": "Art. 237 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 249 CP",
+      "articulo_sugerido": "Art. 249 CP"
+    },
+    "Suplantación de identidad profesional__Art. 463 CP": {
+      "nombre": "Suplantación de identidad profesional",
+      "articulo": "Art. 463 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 546 CP",
+      "articulo_sugerido": "Art. 546 CP"
+    },
+    "Falsificación de documento de identidad extranjero__Art. 460 CP": {
+      "nombre": "Falsificación de documento de identidad extranjero",
+      "articulo": "Art. 460 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 460 CP"
+    },
+    "Revelación de secreto por particular__Art. 236 CP": {
+      "nombre": "Revelación de secreto por particular",
+      "articulo": "Art. 236 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 274 CP",
+      "articulo_sugerido": "Art. 274 CP"
+    },
+    "Violación de correspondencia por funcionario__Art. 237 CP": {
+      "nombre": "Violación de correspondencia por funcionario",
+      "articulo": "Art. 237 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 548 CP",
+      "articulo_sugerido": "Art. 548 CP"
+    },
+    "Allanamiento de domicilio por funcionario__Art. 272 CP": {
+      "nombre": "Allanamiento de domicilio por funcionario",
+      "articulo": "Art. 272 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 270 CP",
+      "articulo_sugerido": "Art. 270 CP"
+    },
+    "Allanamiento con violencia__Art. 271 CP": {
+      "nombre": "Allanamiento con violencia",
+      "articulo": "Art. 271 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 361 CP (Robo con violencia o intimidación)",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Sustracción de menor por familiar__Art. 283 CP": {
+      "nombre": "Sustracción de menor por familiar",
+      "articulo": "Art. 283 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 91 CP",
+      "articulo_sugerido": "Art. 91 CP"
+    },
+    "Retención ilegal de menor__Art. 284 CP": {
+      "nombre": "Retención ilegal de menor",
+      "articulo": "Art. 284 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 281 CP",
+      "articulo_sugerido": "Art. 281 CP"
+    },
+    "Abandono temporal de menor__Art. 228 CP": {
+      "nombre": "Abandono temporal de menor",
+      "articulo": "Art. 228 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 281 CP"
+    },
+    "Omisión del deber de crianza__Art. 286 CP": {
+      "nombre": "Omisión del deber de crianza",
+      "articulo": "Art. 286 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 14 CP",
+      "articulo_sugerido": "Art. 14 CP"
+    },
+    "Impedimento del derecho de visitas__Art. 287 CP": {
+      "nombre": "Impedimento del derecho de visitas",
+      "articulo": "Art. 287 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 38 CP",
+      "articulo_sugerido": "Art. 38 CP"
+    },
+    "Lesiones con deformidad__Art. 201 CP": {
+      "nombre": "Lesiones con deformidad",
+      "articulo": "Art. 201 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 201 CP"
+    },
+    "Lesiones con pérdida de órgano__Art. 201 CP": {
+      "nombre": "Lesiones con pérdida de órgano",
+      "articulo": "Art. 201 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 562 CP",
+      "articulo_sugerido": "Art. 562 CP"
+    },
+    "Lesiones con pérdida de sentido__Art. 200 CP": {
+      "nombre": "Lesiones con pérdida de sentido",
+      "articulo": "Art. 200 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 562 CP",
+      "articulo_sugerido": "Art. 562 CP"
+    },
+    "Riña con resultado de muerte__Art. 210 CP": {
+      "nombre": "Riña con resultado de muerte",
+      "articulo": "Art. 210 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Provocación al duelo__Art. 212 CP": {
+      "nombre": "Provocación al duelo",
+      "articulo": "Art. 212 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 376 CP",
+      "articulo_sugerido": "Art. 376 CP"
+    },
+    "Manipulación genética con fines de selección__Art. 214 CP": {
+      "nombre": "Manipulación genética con fines de selección",
+      "articulo": "Art. 214 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 172 CP",
+      "articulo_sugerido": "Art. 172 CP"
+    },
+    "Fecundación ilegal__Art. 215 CP": {
+      "nombre": "Fecundación ilegal",
+      "articulo": "Art. 215 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 223 CP",
+      "articulo_sugerido": "Art. 223 CP"
+    },
+    "Clonación humana__Art. 216 CP": {
+      "nombre": "Clonación humana",
+      "articulo": "Art. 216 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 3 CP",
+      "articulo_sugerido": "Art. 3 CP"
+    },
+    "Contagio de ETS__Art. 207 CP": {
+      "nombre": "Contagio de ETS",
+      "articulo": "Art. 207 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Acoso sexual en el trabajo agravado__Art. 256 CP": {
+      "nombre": "Acoso sexual en el trabajo agravado",
+      "articulo": "Art. 256 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 246 CP",
+      "articulo_sugerido": "Art. 246 CP"
+    },
+    "Acoso sexual callejero__Art. 256 CP": {
+      "nombre": "Acoso sexual callejero",
+      "articulo": "Art. 256 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Abuso sexual con penetración digital__Art. 251 CP": {
+      "nombre": "Abuso sexual con penetración digital",
+      "articulo": "Art. 251 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Violación de persona en estado de inconsciencia__Art. 249 CP": {
+      "nombre": "Violación de persona en estado de inconsciencia",
+      "articulo": "Art. 249 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 249 CP"
+    },
+    "Agresión sexual con penetración de objetos agravada__Art. 251 CP": {
+      "nombre": "Agresión sexual con penetración de objetos agravada",
+      "articulo": "Art. 251 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 518 CP",
+      "articulo_sugerido": "Art. 518 CP"
+    },
+    "Exhibicionismo ante menores__Art. 257 CP": {
+      "nombre": "Exhibicionismo ante menores",
+      "articulo": "Art. 257 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 264 CP",
+      "articulo_sugerido": "Art. 264 CP"
+    },
+    "Pornografía infantil agravada__Art. 261 CP": {
+      "nombre": "Pornografía infantil agravada",
+      "articulo": "Art. 261 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 262 CP (Concepto de pornografía infantil)",
+      "articulo_sugerido": "Art. 262 CP"
+    },
+    "Proxenetismo agravado__Art. 262 CP": {
+      "nombre": "Proxenetismo agravado",
+      "articulo": "Art. 262 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 304 CP",
+      "articulo_sugerido": "Art. 304 CP"
+    },
+    "Turismo sexual infantil__Art. 264 CP": {
+      "nombre": "Turismo sexual infantil",
+      "articulo": "Art. 264 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Trata con fines de esclavitud__Art. 218 CP": {
+      "nombre": "Trata con fines de esclavitud",
+      "articulo": "Art. 218 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 139 CP",
+      "articulo_sugerido": "Art. 139 CP"
+    },
+    "Libertad condicional quebrantada__Art. 527 CP": {
+      "nombre": "Libertad condicional quebrantada",
+      "articulo": "Art. 527 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 81 CP",
+      "articulo_sugerido": "Art. 81 CP"
+    },
+    "Simulación de delito__Art. 525 CP": {
+      "nombre": "Simulación de delito",
+      "articulo": "Art. 525 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 529 CP",
+      "articulo_sugerido": "Art. 529 CP"
+    },
+    "Acusación falsa__Art. 524 CP": {
+      "nombre": "Acusación falsa",
+      "articulo": "Art. 524 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 528 CP",
+      "articulo_sugerido": "Art. 528 CP"
+    },
+    "Omisión de perseguir delito leve__Art. 518 CP": {
+      "nombre": "Omisión de perseguir delito leve",
+      "articulo": "Art. 518 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 598 CP",
+      "articulo_sugerido": "Art. 598 CP"
+    },
+    "Prevaricato por omisión__Art. 516 CP": {
+      "nombre": "Prevaricato por omisión",
+      "articulo": "Art. 516 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 516 CP"
+    },
+    "Resistencia grave__Art. 545 CP": {
+      "nombre": "Resistencia grave",
+      "articulo": "Art. 545 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 575 CP",
+      "articulo_sugerido": "Art. 575 CP"
+    },
+    "Atentado contra agente de autoridad__Art. 544 CP": {
+      "nombre": "Atentado contra agente de autoridad",
+      "articulo": "Art. 544 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Asociación ilícita__Art. 555 CP": {
+      "nombre": "Asociación ilícita",
+      "articulo": "Art. 555 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 588 CP",
+      "articulo_sugerido": "Art. 588 CP"
+    },
+    "Tenencia de arma blanca__Art. 588 CP": {
+      "nombre": "Tenencia de arma blanca",
+      "articulo": "Art. 588 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 575 CP",
+      "articulo_sugerido": "Art. 575 CP"
+    },
+    "Falsificación de moneda extranjera__Art. 448 CP": {
+      "nombre": "Falsificación de moneda extranjera",
+      "articulo": "Art. 448 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 447 CP",
+      "articulo_sugerido": "Art. 447 CP"
+    },
+    "Falsificación de documento privado agravado__Art. 457 CP": {
+      "nombre": "Falsificación de documento privado agravado",
+      "articulo": "Art. 457 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 459 CP",
+      "articulo_sugerido": "Art. 459 CP"
+    },
+    "Falsificación de pasaporte__Art. 459 CP": {
+      "nombre": "Falsificación de pasaporte",
+      "articulo": "Art. 459 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 459 CP"
+    },
+    "Usurpación de identidad en redes sociales__Art. 460 CP": {
+      "nombre": "Usurpación de identidad en redes sociales",
+      "articulo": "Art. 460 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 232 CP (Concepto de publicidad)",
+      "articulo_sugerido": "Art. 232 CP"
+    },
+    "Intrusismo profesional médico__Art. 462 CP": {
+      "nombre": "Intrusismo profesional médico",
+      "articulo": "Art. 462 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 472 CP",
+      "articulo_sugerido": "Art. 472 CP"
+    },
+    "Defraudación tributaria agravada__Art. 432 CP": {
+      "nombre": "Defraudación tributaria agravada",
+      "articulo": "Art. 432 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 448 CP",
+      "articulo_sugerido": "Art. 448 CP"
+    },
+    "Contrabando agravado__Art. 429 CP": {
+      "nombre": "Contrabando agravado",
+      "articulo": "Art. 429 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 605 CP (Contrabando no constitutivo de delito)",
+      "articulo_sugerido": "Art. 605 CP"
+    },
+    "Delito contra la ordenación del territorio__Art. 349 CP": {
+      "nombre": "Delito contra la ordenación del territorio",
+      "articulo": "Art. 349 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 521 CP",
+      "articulo_sugerido": "Art. 521 CP"
+    },
+    "Daños al patrimonio arqueológico__Art. 388 CP": {
+      "nombre": "Daños al patrimonio arqueológico",
+      "articulo": "Art. 388 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 350 CP",
+      "articulo_sugerido": "Art. 350 CP"
+    },
+    "Vertido contaminante agravado__Art. 326 CP": {
+      "nombre": "Vertido contaminante agravado",
+      "articulo": "Art. 326 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 314 CP",
+      "articulo_sugerido": "Art. 314 CP"
+    },
+    "Robo con fractura__Art. 360 CP": {
+      "nombre": "Robo con fractura",
+      "articulo": "Art. 360 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Robo en banda__Art. 361 CP": {
+      "nombre": "Robo en banda",
+      "articulo": "Art. 361 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Robo con toma de rehenes__Art. 361 CP": {
+      "nombre": "Robo con toma de rehenes",
+      "articulo": "Art. 361 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Hurto con abuso de confianza__Art. 363 CP": {
+      "nombre": "Hurto con abuso de confianza",
+      "articulo": "Art. 363 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 32 CP"
+    },
+    "Hurto en banda__Art. 363 CP": {
+      "nombre": "Hurto en banda",
+      "articulo": "Art. 363 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 363 CP"
+    },
+    "Hurto en lugar habitado__Art. 363 CP": {
+      "nombre": "Hurto en lugar habitado",
+      "articulo": "Art. 363 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 184 CP"
+    },
+    "Estafa con abuso de firma en blanco__Art. 366 CP": {
+      "nombre": "Estafa con abuso de firma en blanco",
+      "articulo": "Art. 366 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 459 CP",
+      "articulo_sugerido": "Art. 459 CP"
+    },
+    "Estafa cambiaria__Art. 366 CP": {
+      "nombre": "Estafa cambiaria",
+      "articulo": "Art. 366 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 365 CP",
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Apropiación indebida de bienes culturales__Art. 369 CP": {
+      "nombre": "Apropiación indebida de bienes culturales",
+      "articulo": "Art. 369 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 348 CP",
+      "articulo_sugerido": "Art. 348 CP"
+    },
+    "Usura agravada__Art. 375 CP": {
+      "nombre": "Usura agravada",
+      "articulo": "Art. 375 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 386 CP",
+      "articulo_sugerido": "Art. 386 CP"
+    },
+    "Daños en archivos informáticos__Art. 401 CP": {
+      "nombre": "Daños en archivos informáticos",
+      "articulo": "Art. 401 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 400 CP",
+      "articulo_sugerido": "Art. 400 CP"
+    },
+    "Daños informáticos agravados__Art. 401 CP": {
+      "nombre": "Daños informáticos agravados",
+      "articulo": "Art. 401 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 400 CP",
+      "articulo_sugerido": "Art. 400 CP"
+    },
+    "Interceptación de correo electrónico__Art. 399 CP": {
+      "nombre": "Interceptación de correo electrónico",
+      "articulo": "Art. 399 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 330 CP",
+      "articulo_sugerido": "Art. 330 CP"
+    },
+    "Amenazas con arma__Art. 246 CP": {
+      "nombre": "Amenazas con arma",
+      "articulo": "Art. 246 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 575 CP",
+      "articulo_sugerido": "Art. 575 CP"
+    },
+    "Amenazas de muerte__Art. 246 CP": {
+      "nombre": "Amenazas de muerte",
+      "articulo": "Art. 246 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Amenazas condicionadas__Art. 246 CP": {
+      "nombre": "Amenazas condicionadas",
+      "articulo": "Art. 246 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 600 CP",
+      "articulo_sugerido": "Art. 600 CP"
+    },
+    "Coacción con violencia__Art. 245 CP": {
+      "nombre": "Coacción con violencia",
+      "articulo": "Art. 245 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 361 CP (Robo con violencia o intimidación)",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Detención ilegal por funcionario__Art. 243 CP": {
+      "nombre": "Detención ilegal por funcionario",
+      "articulo": "Art. 243 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 238 CP",
+      "articulo_sugerido": "Art. 238 CP"
+    },
+    "Secuestro express__Art. 240 CP": {
+      "nombre": "Secuestro express",
+      "articulo": "Art. 240 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 242 CP"
+    },
+    "Maltrato psicológico habitual__Art. 209 CP": {
+      "nombre": "Maltrato psicológico habitual",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 289 CP",
+      "articulo_sugerido": "Art. 289 CP"
+    },
+    "Maltrato económico__Art. 209 CP": {
+      "nombre": "Maltrato económico",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 422 CP",
+      "articulo_sugerido": "Art. 422 CP"
+    },
+    "Venganza contra la pareja__Art. 209 CP": {
+      "nombre": "Venganza contra la pareja",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 509 CP",
+      "articulo_sugerido": "Art. 509 CP"
+    },
+    "Trato degradante en el ámbito laboral__Art. 294 CP": {
+      "nombre": "Trato degradante en el ámbito laboral",
+      "articulo": "Art. 294 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 294 CP"
+    },
+    "Discriminación racial__Art. 563 CP": {
+      "nombre": "Discriminación racial",
+      "articulo": "Art. 563 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 295 CP",
+      "articulo_sugerido": "Art. 295 CP"
+    },
+    "Discriminación por orientación sexual__Art. 563 CP": {
+      "nombre": "Discriminación por orientación sexual",
+      "articulo": "Art. 563 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 295 CP",
+      "articulo_sugerido": "Art. 295 CP"
+    },
+    "Atentado contra la libertad ideológica__Art. 560 CP": {
+      "nombre": "Atentado contra la libertad ideológica",
+      "articulo": "Art. 560 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Omisión del deber de perseguir delitos graves__Art. 518 CP": {
+      "nombre": "Omisión del deber de perseguir delitos graves",
+      "articulo": "Art. 518 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 515 CP",
+      "articulo_sugerido": "Art. 515 CP"
+    },
+    "Prevaricato judicial grave__Art. 516 CP": {
+      "nombre": "Prevaricato judicial grave",
+      "articulo": "Art. 516 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 516 CP"
+    },
+    "Obstrucción a la justicia por funcionario__Art. 528 CP": {
+      "nombre": "Obstrucción a la justicia por funcionario",
+      "articulo": "Art. 528 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 531 CP",
+      "articulo_sugerido": "Art. 531 CP"
+    },
+    "Cohecho de jurado__Art. 495 CP": {
+      "nombre": "Cohecho de jurado",
+      "articulo": "Art. 495 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 201 CP",
+      "articulo_sugerido": "Art. 201 CP"
+    },
+    "Cohecho de testigo__Art. 493 CP": {
+      "nombre": "Cohecho de testigo",
+      "articulo": "Art. 493 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 521 CP",
+      "articulo_sugerido": "Art. 521 CP"
+    },
+    "Malversación de fondos de cooperación__Art. 481 CP": {
+      "nombre": "Malversación de fondos de cooperación",
+      "articulo": "Art. 481 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 481 CP"
+    },
+    "Enriquecimiento ilícito de particular__Art. 485 CP": {
+      "nombre": "Enriquecimiento ilícito de particular",
+      "articulo": "Art. 485 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 484 CP",
+      "articulo_sugerido": "Art. 484 CP"
+    },
+    "Nombramiento ilegal agravado__Art. 501 CP": {
+      "nombre": "Nombramiento ilegal agravado",
+      "articulo": "Art. 501 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 117 CP",
+      "articulo_sugerido": "Art. 117 CP"
+    },
+    "Usurpación de aguas públicas__Art. 379 CP": {
+      "nombre": "Usurpación de aguas públicas",
+      "articulo": "Art. 379 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 380 CP",
+      "articulo_sugerido": "Art. 380 CP"
+    },
+    "Construcción ilegal en zona protegida__Art. 350 CP": {
+      "nombre": "Construcción ilegal en zona protegida",
+      "articulo": "Art. 350 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 343 CP",
+      "articulo_sugerido": "Art. 343 CP"
+    },
+    "Incendio de masa forestal__Art. 327 CP": {
+      "nombre": "Incendio de masa forestal",
+      "articulo": "Art. 327 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Incendio de bienes propios con fraude__Art. 185 CP": {
+      "nombre": "Incendio de bienes propios con fraude",
+      "articulo": "Art. 185 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 183 CP",
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Estragos por imprudencia__Art. 186 CP": {
+      "nombre": "Estragos por imprudencia",
+      "articulo": "Art. 186 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 188 CP",
+      "articulo_sugerido": "Art. 188 CP"
+    },
+    "Tenencia de material radiactivo__Art. 345 CP": {
+      "nombre": "Tenencia de material radiactivo",
+      "articulo": "Art. 345 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 261 CP",
+      "articulo_sugerido": "Art. 261 CP"
+    },
+    "Omisión del deber de socorro en accidente__Art. 216 CP": {
+      "nombre": "Omisión del deber de socorro en accidente",
+      "articulo": "Art. 216 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 204 CP",
+      "articulo_sugerido": "Art. 204 CP"
+    },
+    "Conducción con exceso de velocidad en zona escolar__Art. 323 CP": {
+      "nombre": "Conducción con exceso de velocidad en zona escolar",
+      "articulo": "Art. 323 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 323 CP"
+    },
+    "Incumplimiento de la obligación de someterse a prueba de alcoholemia__Art. 326 CP": {
+      "nombre": "Incumplimiento de la obligación de someterse a prueba de alcoholemia",
+      "articulo": "Art. 326 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 419 CP",
+      "articulo_sugerido": "Art. 419 CP"
+    },
+    "Difusión de contenidos sexuales sin consentimiento__Art. 236 CP": {
+      "nombre": "Difusión de contenidos sexuales sin consentimiento",
+      "articulo": "Art. 236 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 250 CP",
+      "articulo_sugerido": "Art. 250 CP"
+    },
+    "Acoso colectivo (linchamiento digital)__Art. 248 CP": {
+      "nombre": "Acoso colectivo (linchamiento digital)",
+      "articulo": "Art. 248 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 232 CP",
+      "articulo_sugerido": "Art. 232 CP"
+    },
+    "Suplantación de identidad en proceso judicial__Art. 460 CP": {
+      "nombre": "Suplantación de identidad en proceso judicial",
+      "articulo": "Art. 460 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 401 CP",
+      "articulo_sugerido": "Art. 401 CP"
+    },
+    "Falsificación de documento público en documento extranjero__Art. 456 CP": {
+      "nombre": "Falsificación de documento público en documento extranjero",
+      "articulo": "Art. 456 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 459 CP (Uso de documento falso)",
+      "articulo_sugerido": "Art. 459 CP"
+    },
+    "Falsificación de sello oficial__Art. 451 CP": {
+      "nombre": "Falsificación de sello oficial",
+      "articulo": "Art. 451 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 454 CP",
+      "articulo_sugerido": "Art. 454 CP"
+    },
+    "Abandono forzado de domicilio familiar__Art. 228 CP": {
+      "nombre": "Abandono forzado de domicilio familiar",
+      "articulo": "Art. 228 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 285 CP (Inducción al abandono de hogar)",
+      "articulo_sugerido": "Art. 285 CP"
+    },
+    "Sustracción internacional de menores__Art. 283 CP": {
+      "nombre": "Sustracción internacional de menores",
+      "articulo": "Art. 283 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 287 CP",
+      "articulo_sugerido": "Art. 287 CP"
+    },
+    "Matrimonio ilegal por funcionario__Art. 282 CP": {
+      "nombre": "Matrimonio ilegal por funcionario",
+      "articulo": "Art. 282 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 279 CP",
+      "articulo_sugerido": "Art. 279 CP"
+    },
+    "Difamación en medios de comunicación__Art. 231 CP": {
+      "nombre": "Difamación en medios de comunicación",
+      "articulo": "Art. 231 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 401 CP",
+      "articulo_sugerido": "Art. 401 CP"
+    },
+    "Revelación de datos personales por funcionario__Art. 234 CP": {
+      "nombre": "Revelación de datos personales por funcionario",
+      "articulo": "Art. 234 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 521 CP",
+      "articulo_sugerido": "Art. 521 CP"
+    },
+    "Descubrimiento de datos por particular__Art. 235 CP": {
+      "nombre": "Descubrimiento de datos por particular",
+      "articulo": "Art. 235 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 521 CP",
+      "articulo_sugerido": "Art. 521 CP"
+    },
+    "Piratería de señales__Art. 395 CP": {
+      "nombre": "Piratería de señales",
+      "articulo": "Art. 395 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 557 CP",
+      "articulo_sugerido": "Art. 557 CP"
+    },
+    "Copiado ilegal de software__Art. 391 CP": {
+      "nombre": "Copiado ilegal de software",
+      "articulo": "Art. 391 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 405 CP",
+      "articulo_sugerido": "Art. 405 CP"
+    },
+    "Difusión de obras sin derechos__Art. 390 CP": {
+      "nombre": "Difusión de obras sin derechos",
+      "articulo": "Art. 390 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 389 CP (Delitos contra el derecho de autor y los derechos conexos)",
+      "articulo_sugerido": "Art. 389 CP"
+    },
+    "Plagio__Art. 390 CP": {
+      "nombre": "Plagio",
+      "articulo": "Art. 390 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 390 CP"
+    },
+    "Estafa piramidal__Art. 366 CP": {
+      "nombre": "Estafa piramidal",
+      "articulo": "Art. 366 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 365 CP",
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Estafa mediante phishing__Art. 368 CP": {
+      "nombre": "Estafa mediante phishing",
+      "articulo": "Art. 368 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 365 CP",
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Uso ilegal de tarjeta bancaria__Art. 368 CP": {
+      "nombre": "Uso ilegal de tarjeta bancaria",
+      "articulo": "Art. 368 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 546 CP",
+      "articulo_sugerido": "Art. 546 CP"
+    },
+    "Transferencia fraudulenta__Art. 368 CP": {
+      "nombre": "Transferencia fraudulenta",
+      "articulo": "Art. 368 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 465 CP",
+      "articulo_sugerido": "Art. 465 CP"
+    },
+    "Manipulación de instrumentos de medición__Art. 396 CP": {
+      "nombre": "Manipulación de instrumentos de medición",
+      "articulo": "Art. 396 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 450 CP",
+      "articulo_sugerido": "Art. 450 CP"
+    },
+    "Contrabando de divisas__Art. 430 CP": {
+      "nombre": "Contrabando de divisas",
+      "articulo": "Art. 430 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 605 CP",
+      "articulo_sugerido": "Art. 605 CP"
+    },
+    "Contrabando de material estratégico__Art. 429 CP": {
+      "nombre": "Contrabando de material estratégico",
+      "articulo": "Art. 429 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 605 CP (Contrabando no constitutivo de delito)",
+      "articulo_sugerido": "Art. 605 CP"
+    },
+    "Negociación prohibida a funcionario electo__Art. 486 CP": {
+      "nombre": "Negociación prohibida a funcionario electo",
+      "articulo": "Art. 486 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 490 CP",
+      "articulo_sugerido": "Art. 490 CP"
+    },
+    "Corrupción activa internacional__Art. 496 CP": {
+      "nombre": "Corrupción activa internacional",
+      "articulo": "Art. 496 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 242 CP",
+      "articulo_sugerido": "Art. 242 CP"
+    },
+    "Blanqueo de capitales agravado__Art. 439 CP": {
+      "nombre": "Blanqueo de capitales agravado",
+      "articulo": "Art. 439 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 438 CP",
+      "articulo_sugerido": "Art. 438 CP"
+    },
+    "Blanqueo por omisión__Art. 440 CP": {
+      "nombre": "Blanqueo por omisión",
+      "articulo": "Art. 440 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 207 CP",
+      "articulo_sugerido": "Art. 207 CP"
+    },
+    "Delito contra la ordenación del territorio agravado__Art. 349 CP": {
+      "nombre": "Delito contra la ordenación del territorio agravado",
+      "articulo": "Art. 349 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 521 CP",
+      "articulo_sugerido": "Art. 521 CP"
+    },
+    "Daños al patrimonio artístico__Art. 387 CP": {
+      "nombre": "Daños al patrimonio artístico",
+      "articulo": "Art. 387 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 349 CP",
+      "articulo_sugerido": "Art. 349 CP"
+    },
+    "Contaminación acústica__Art. 328 CP": {
+      "nombre": "Contaminación acústica",
+      "articulo": "Art. 328 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 178 CP",
+      "articulo_sugerido": "Art. 178 CP"
+    },
+    "Contaminación lumínica__Art. 329 CP": {
+      "nombre": "Contaminación lumínica",
+      "articulo": "Art. 329 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 223 CP",
+      "articulo_sugerido": "Art. 223 CP"
+    },
+    "Maltrato animal con resultado de muerte__Art. 342 CP": {
+      "nombre": "Maltrato animal con resultado de muerte",
+      "articulo": "Art. 342 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 341 CP (Maltrato de animales)",
+      "articulo_sugerido": "Art. 341 CP"
+    },
+    "Abandono de animal con resultado de muerte__Art. 342 CP": {
+      "nombre": "Abandono de animal con resultado de muerte",
+      "articulo": "Art. 342 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 341 CP (Maltrato de animales)",
+      "articulo_sugerido": "Art. 341 CP"
+    },
+    "Incendio forestal con peligro para la vida__Art. 327 CP": {
+      "nombre": "Incendio forestal con peligro para la vida",
+      "articulo": "Art. 327 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 183 CP (Incendio)",
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Tráfico ilegal de residuos__Art. 331 CP": {
+      "nombre": "Tráfico ilegal de residuos",
+      "articulo": "Art. 331 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 164 CP",
+      "articulo_sugerido": "Art. 164 CP"
+    },
+    "Aborto sin consentimiento agravado__Art. 196 CP": {
+      "nombre": "Aborto sin consentimiento agravado",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 196 CP"
+    },
+    "Lesiones culposas graves__Art. 203 CP": {
+      "nombre": "Lesiones culposas graves",
+      "articulo": "Art. 203 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 13 CP",
+      "articulo_sugerido": "Art. 13 CP"
+    },
+    "Riña con arma blanca__Art. 210 CP": {
+      "nombre": "Riña con arma blanca",
+      "articulo": "Art. 210 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 600 CP",
+      "articulo_sugerido": "Art. 600 CP"
+    },
+    "Provocación directa al duelo__Art. 212 CP": {
+      "nombre": "Provocación directa al duelo",
+      "articulo": "Art. 212 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 420 CP",
+      "articulo_sugerido": "Art. 420 CP"
+    },
+    "Esterilización forzada__Art. 213 CP": {
+      "nombre": "Esterilización forzada",
+      "articulo": "Art. 213 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 139 CP",
+      "articulo_sugerido": "Art. 139 CP"
+    },
+    "Fecundación post mortem__Art. 215 CP": {
+      "nombre": "Fecundación post mortem",
+      "articulo": "Art. 215 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 285 CP",
+      "articulo_sugerido": "Art. 285 CP"
+    },
+    "Tráfico de órganos__Art. 217 CP": {
+      "nombre": "Tráfico de órganos",
+      "articulo": "Art. 217 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 164 CP",
+      "articulo_sugerido": "Art. 164 CP"
+    },
+    "Trata de menores__Art. 218 CP": {
+      "nombre": "Trata de menores",
+      "articulo": "Art. 218 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 293 CP",
+      "articulo_sugerido": "Art. 293 CP"
+    },
+    "Agresión sexual a persona con discapacidad__Art. 251 CP": {
+      "nombre": "Agresión sexual a persona con discapacidad",
+      "articulo": "Art. 251 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Violación de persona con discapacidad__Art. 249 CP": {
+      "nombre": "Violación de persona con discapacidad",
+      "articulo": "Art. 249 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 249 CP"
+    },
+    "Abuso sexual con penetración digital a menor__Art. 251 CP": {
+      "nombre": "Abuso sexual con penetración digital a menor",
+      "articulo": "Art. 251 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 253 CP",
+      "articulo_sugerido": "Art. 253 CP"
+    },
+    "Acoso sexual a menor__Art. 256 CP": {
+      "nombre": "Acoso sexual a menor",
+      "articulo": "Art. 256 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 281 CP",
+      "articulo_sugerido": "Art. 281 CP"
+    },
+    "Ciberacoso sexual a menor agravado__Art. 261 CP": {
+      "nombre": "Ciberacoso sexual a menor agravado",
+      "articulo": "Art. 261 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Posesión de pornografía infantil__Art. 261 CP": {
+      "nombre": "Posesión de pornografía infantil",
+      "articulo": "Art. 261 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 261 CP"
+    },
+    "Distribución de pornografía infantil__Art. 261 CP": {
+      "nombre": "Distribución de pornografía infantil",
+      "articulo": "Art. 261 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 261 CP"
+    },
+    "Prostitución forzada__Art. 262 CP": {
+      "nombre": "Prostitución forzada",
+      "articulo": "Art. 262 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 139 CP",
+      "articulo_sugerido": "Art. 139 CP"
+    },
+    "Explotación sexual de persona vulnerable__Art. 264 CP": {
+      "nombre": "Explotación sexual de persona vulnerable",
+      "articulo": "Art. 264 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 257 CP",
+      "articulo_sugerido": "Art. 257 CP"
+    },
+    "Delito contra la salud pública con resultado de muerte agravado__Art. 331 CP": {
+      "nombre": "Delito contra la salud pública con resultado de muerte agravado",
+      "articulo": "Art. 331 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Tráfico de medicamentos caducados__Art. 336 CP": {
+      "nombre": "Tráfico de medicamentos caducados",
+      "articulo": "Art. 336 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 298 CP",
+      "articulo_sugerido": "Art. 298 CP"
+    },
+    "Adulteración de productos farmacéuticos__Art. 337 CP": {
+      "nombre": "Adulteración de productos farmacéuticos",
+      "articulo": "Art. 337 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 298 CP",
+      "articulo_sugerido": "Art. 298 CP"
+    },
+    "Propagación de epidemia por imprudencia__Art. 340 CP": {
+      "nombre": "Propagación de epidemia por imprudencia",
+      "articulo": "Art. 340 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 307 CP",
+      "articulo_sugerido": "Art. 307 CP"
+    },
+    "Incumplimiento de cuarentena__Art. 341 CP": {
+      "nombre": "Incumplimiento de cuarentena",
+      "articulo": "Art. 341 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 77 CP",
+      "articulo_sugerido": "Art. 77 CP"
+    },
+    "Intrusismo profesional sanitario__Art. 462 CP": {
+      "nombre": "Intrusismo profesional sanitario",
+      "articulo": "Art. 462 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 472 CP",
+      "articulo_sugerido": "Art. 472 CP"
+    },
+    "Atentado contra monumento nacional__Art. 386 CP": {
+      "nombre": "Atentado contra monumento nacional",
+      "articulo": "Art. 386 CP",
+      "estado": "pendiente_revision",
+      "nota": "Sugerencia: Art. 570 CP (Atentado)",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Vertido de hidrocarburos__Art. 325 CP": {
+      "nombre": "Vertido de hidrocarburos",
+      "articulo": "Art. 325 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 305 CP",
+      "articulo_sugerido": "Art. 305 CP"
+    },
+    "Destrucción de documentos contables__Art. 503 CP": {
+      "nombre": "Destrucción de documentos contables",
+      "articulo": "Art. 503 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 460 CP"
+    },
+    "Falseamiento de cuentas anuales__Art. 390 CP": {
+      "nombre": "Falseamiento de cuentas anuales",
+      "articulo": "Art. 390 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 422 CP",
+      "articulo_sugerido": "Art. 422 CP"
+    },
+    "Administración desleal__Art. 377 CP": {
+      "nombre": "Administración desleal",
+      "articulo": "Art. 377 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 477 CP",
+      "articulo_sugerido": "Art. 477 CP"
+    },
+    "Apropiación indebida de bienes del Estado__Art. 480 CP": {
+      "nombre": "Apropiación indebida de bienes del Estado",
+      "articulo": "Art. 480 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 481 CP",
+      "articulo_sugerido": "Art. 481 CP"
+    },
+    "Uso indebido de información privilegiada__Art. 394 CP": {
+      "nombre": "Uso indebido de información privilegiada",
+      "articulo": "Art. 394 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 506 CP",
+      "articulo_sugerido": "Art. 506 CP"
+    },
+    "Denegación de prestaciones sanitarias__Art. 295 CP": {
+      "nombre": "Denegación de prestaciones sanitarias",
+      "articulo": "Art. 295 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 389 CP",
+      "articulo_sugerido": "Art. 389 CP"
+    },
+    "Discriminación por enfermedad__Art. 563 CP": {
+      "nombre": "Discriminación por enfermedad",
+      "articulo": "Art. 563 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 295 CP",
+      "articulo_sugerido": "Art. 295 CP"
+    },
+    "Discriminación por discapacidad__Art. 563 CP": {
+      "nombre": "Discriminación por discapacidad",
+      "articulo": "Art. 563 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 135 CP",
+      "articulo_sugerido": "Art. 135 CP"
+    },
+    "Atentado contra la libertad de empresa__Art. 564 CP": {
+      "nombre": "Atentado contra la libertad de empresa",
+      "articulo": "Art. 564 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Atentado contra el derecho a la educación__Art. 566 CP": {
+      "nombre": "Atentado contra el derecho a la educación",
+      "articulo": "Art. 566 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 570 CP",
+      "articulo_sugerido": "Art. 570 CP"
+    },
+    "Publicidad engañosa sobre productos de salud__Art. 367 CP": {
+      "nombre": "Publicidad engañosa sobre productos de salud",
+      "articulo": "Art. 367 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 606 CP",
+      "articulo_sugerido": "Art. 606 CP"
+    },
+    "Publicidad ilícita de juegos de azar__Art. 367 CP": {
+      "nombre": "Publicidad ilícita de juegos de azar",
+      "articulo": "Art. 367 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 387 CP",
+      "articulo_sugerido": "Art. 387 CP"
+    },
+    "Usurpación del estado civil__Art. 460 CP": {
+      "nombre": "Usurpación del estado civil",
+      "articulo": "Art. 460 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 119 CP",
+      "articulo_sugerido": "Art. 119 CP"
+    },
+    "Usurpación de títulos profesionales__Art. 461 CP": {
+      "nombre": "Usurpación de títulos profesionales",
+      "articulo": "Art. 461 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 175 CP",
+      "articulo_sugerido": "Art. 175 CP"
+    },
+    "Falsificación de documentos notariales__Art. 456 CP": {
+      "nombre": "Falsificación de documentos notariales",
+      "articulo": "Art. 456 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 462 CP",
+      "articulo_sugerido": "Art. 462 CP"
+    },
+    "Falsificación de documento privado contable__Art. 457 CP": {
+      "nombre": "Falsificación de documento privado contable",
+      "articulo": "Art. 457 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 461 CP",
+      "articulo_sugerido": "Art. 461 CP"
+    },
+    "Revelación de información financiera privilegiada__Art. 394 CP": {
+      "nombre": "Revelación de información financiera privilegiada",
+      "articulo": "Art. 394 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 506 CP",
+      "articulo_sugerido": "Art. 506 CP"
+    },
+    "Inutilización de buques o aeronaves__Art. 188 CP": {
+      "nombre": "Inutilización de buques o aeronaves",
+      "articulo": "Art. 188 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 558 CP",
+      "articulo_sugerido": "Art. 558 CP"
+    },
+    "Estafa mediante tarjeta de crédito__Art. 368 CP": {
+      "nombre": "Estafa mediante tarjeta de crédito",
+      "articulo": "Art. 368 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 365 CP",
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Sabotaje informático__Art. 401 CP": {
+      "nombre": "Sabotaje informático",
+      "articulo": "Art. 401 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 404 CP",
+      "articulo_sugerido": "Art. 404 CP"
+    },
+    "Acoso inmobiliario__Art. 248 CP": {
+      "nombre": "Acoso inmobiliario",
+      "articulo": "Art. 248 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 557 CP",
+      "articulo_sugerido": "Art. 557 CP"
+    },
+    "Trato degradante en residencia de mayores__Art. 249 CP": {
+      "nombre": "Trato degradante en residencia de mayores",
+      "articulo": "Art. 249 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 214 CP",
+      "articulo_sugerido": "Art. 214 CP"
+    },
+    "Violencia asistencial__Art. 209 CP": {
+      "nombre": "Violencia asistencial",
+      "articulo": "Art. 209 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 361 CP",
+      "articulo_sugerido": "Art. 361 CP"
+    },
+    "Desobediencia judicial agravada__Art. 529 CP": {
+      "nombre": "Desobediencia judicial agravada",
+      "articulo": "Art. 529 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 572 CP",
+      "articulo_sugerido": "Art. 572 CP"
+    },
+    "Deslealtad profesional de abogado__Art. 531 CP": {
+      "nombre": "Deslealtad profesional de abogado",
+      "articulo": "Art. 531 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 530 CP",
+      "articulo_sugerido": "Art. 530 CP"
+    },
+    "Descubrimiento de secretos de empresa__Art. 394 CP": {
+      "nombre": "Descubrimiento de secretos de empresa",
+      "articulo": "Art. 394 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 395 CP",
+      "articulo_sugerido": "Art. 395 CP"
+    },
+    "Violación de derechos de obtentor de variedades vegetales__Art. 392 CP": {
+      "nombre": "Violación de derechos de obtentor de variedades vegetales",
+      "articulo": "Art. 392 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 606 CP",
+      "articulo_sugerido": "Art. 606 CP"
+    },
+    "Incendio de cultivos__Art. 185 CP": {
+      "nombre": "Incendio de cultivos",
+      "articulo": "Art. 185 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 183 CP",
+      "articulo_sugerido": "Art. 183 CP"
+    },
+    "Daños a vías de comunicación__Art. 385 CP": {
+      "nombre": "Daños a vías de comunicación",
+      "articulo": "Art. 385 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 568 CP",
+      "articulo_sugerido": "Art. 568 CP"
+    },
+    "Estafa procesal__Art. 366 CP": {
+      "nombre": "Estafa procesal",
+      "articulo": "Art. 366 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 365 CP",
+      "articulo_sugerido": "Art. 365 CP"
+    },
+    "Denuncia falsa con acusación de delito grave__Art. 525 CP": {
+      "nombre": "Denuncia falsa con acusación de delito grave",
+      "articulo": "Art. 525 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 528 CP",
+      "articulo_sugerido": "Art. 528 CP"
+    },
+    "Simulación de delito grave__Art. 525 CP": {
+      "nombre": "Simulación de delito grave",
+      "articulo": "Art. 525 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 154 CP",
+      "articulo_sugerido": "Art. 154 CP"
+    },
+    "Encubrimiento de delito grave__Art. 521 CP": {
+      "nombre": "Encubrimiento de delito grave",
+      "articulo": "Art. 521 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 192 CP",
+      "articulo_sugerido": "Art. 192 CP"
+    },
+    "Quebrantamiento de orden de protección__Art. 527 CP": {
+      "nombre": "Quebrantamiento de orden de protección",
+      "articulo": "Art. 527 CP",
+      "estado": "rechazado",
+      "nota": "No encontrado en CP. Sugerencia: Art. 609 CP",
+      "articulo_sugerido": "Art. 609 CP"
+    },
+    "Robo en banda armada__Art. 361 CP": {
+      "nombre": "Robo en banda armada",
+      "articulo": "Art. 361 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": "Art. 363 CP"
+    }
+  }
+}

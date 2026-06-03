@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { articulosCp } from '@/lib/schema';
 import { ilike, or, and, eq, asc, sql } from 'drizzle-orm';
+import { requireAdmin, authFailureResponse } from '@/lib/auth';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -52,16 +53,21 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const [row] = await db.insert(articulosCp).values({
-    articulo: body.articulo,
-    libro: body.libro,
-    titulo: body.titulo,
-    capitulo: body.capitulo,
-    seccion: body.seccion,
-    epigrafe: body.epigrafe,
-    texto: body.texto,
-    tema: body.tema,
-  }).returning();
-  return Response.json(row, { status: 201 });
+  try {
+    requireAdmin(request);
+    const body = await request.json();
+    const [row] = await db.insert(articulosCp).values({
+      articulo: body.articulo,
+      libro: body.libro,
+      titulo: body.titulo,
+      capitulo: body.capitulo,
+      seccion: body.seccion,
+      epigrafe: body.epigrafe,
+      texto: body.texto,
+      tema: body.tema,
+    }).returning();
+    return Response.json(row, { status: 201 });
+  } catch (e) {
+    return authFailureResponse(e);
+  }
 }

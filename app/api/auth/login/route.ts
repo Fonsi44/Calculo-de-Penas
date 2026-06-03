@@ -2,8 +2,26 @@ import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { verifyPassword, signToken, createAuthResponse } from '@/lib/auth';
+import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
+import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
+
+const LOGIN_MAX = 5;
+const LOGIN_WINDOW_MS = 60_000;
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const rl = rateLimit(ip, { keyPrefix: 'login', windowMs: LOGIN_WINDOW_MS, max: LOGIN_MAX });
+  if (!rl.ok) {
+    await audit({
+      accion: 'rate_limited',
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+      exito: false,
+      mensaje: `Login rate limit exceeded from ${ip}`,
+    });
+    return rateLimitResponse(rl);
+  }
+
   let body: any;
   try { body = await request.json(); } catch {
     return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
@@ -16,13 +34,37 @@ export async function POST(request: Request) {
 
   const [user] = await db.select().from(usuarios).where(eq(usuarios.email, email));
   if (!user) {
+    await audit({
+      accion: 'login_failed',
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+      exito: false,
+      metadata: { email },
+      mensaje: 'Usuario no existe',
+    });
     return new Response(JSON.stringify({ error: 'Credenciales inválidas' }), { status: 401 });
   }
 
   const valid = await verifyPassword(password, user.passwordHash);
   if (!valid) {
+    await audit({
+      accion: 'login_failed',
+      usuarioId: user.id,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+      exito: false,
+      mensaje: 'Contraseña incorrecta',
+    });
     return new Response(JSON.stringify({ error: 'Credenciales inválidas' }), { status: 401 });
   }
+
+  await audit({
+    accion: 'login',
+    usuarioId: user.id,
+    ip: ipFromRequest(request),
+    userAgent: uaFromRequest(request),
+    exito: true,
+  });
 
   const token = signToken({ userId: user.id, email: user.email, rol: user.rol });
   return createAuthResponse({

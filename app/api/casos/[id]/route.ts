@@ -1,47 +1,60 @@
 import { db } from '@/lib/db';
 import { casos, calculos } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
-import { getTokenFromCookies, verifyToken } from '@/lib/auth';
-
-function getUser(request: Request) {
-  const token = getTokenFromCookies(request);
-  if (!token) return null;
-  return verifyToken(token);
-}
+import { requireAuth, authFailureResponse } from '@/lib/auth';
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  try {
+    const user = requireAuth(request);
+    const { id } = await params;
 
-  const [caso] = await db.select().from(casos).where(eq(casos.id, id));
-  if (!caso) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    const [caso] = await db.select().from(casos).where(eq(casos.id, id));
+    if (!caso) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (caso.usuarioId !== user.userId) {
+      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+    }
 
-  const calculosList = await db.select().from(calculos)
-    .where(eq(calculos.casoId, id))
-    .orderBy(desc(calculos.creadoEn));
+    const calculosList = await db.select().from(calculos)
+      .where(eq(calculos.casoId, id))
+      .orderBy(desc(calculos.creadoEn));
 
-  return new Response(JSON.stringify({ ...caso, calculos: calculosList }), { status: 200 });
+    return new Response(JSON.stringify({ ...caso, calculos: calculosList }), { status: 200 });
+  } catch (e) {
+    return authFailureResponse(e);
+  }
 }
 
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
-  const body = await request.json();
+  try {
+    const user = requireAuth(request);
+    const { id } = await params;
+    const body = await request.json();
 
-  const [row] = await db.update(casos)
-    .set({
-      titulo: body.titulo,
-      cliente: body.cliente,
-      estado: body.estado,
-      actualizadoEn: new Date(),
-    })
-    .where(eq(casos.id, id))
-    .returning();
+    const [existing] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })
+      .from(casos).where(eq(casos.id, id));
+    if (!existing) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (existing.usuarioId !== user.userId) {
+      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+    }
 
-  if (!row) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
-  return new Response(JSON.stringify(row), { status: 200 });
+    const update: Record<string, unknown> = { actualizadoEn: new Date() };
+    if (body.titulo !== undefined) update.titulo = body.titulo;
+    if (body.cliente !== undefined) update.cliente = body.cliente;
+    if (body.estado !== undefined) update.estado = body.estado;
+
+    const [row] = await db.update(casos)
+      .set(update)
+      .where(eq(casos.id, id))
+      .returning();
+
+    return new Response(JSON.stringify(row), { status: 200 });
+  } catch (e) {
+    return authFailureResponse(e);
+  }
 }

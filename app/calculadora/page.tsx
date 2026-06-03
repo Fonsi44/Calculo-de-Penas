@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDelitosLoader, useDelitosFilter } from './hooks';
+import type { ResultadoCalculo } from '@/lib/calculo';
 import Link from 'next/link';
 import {
   ChevronLeft,
@@ -39,7 +41,6 @@ import { CenteredSpinner } from '@/components/ui/spinner';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
-import { useDebounce } from '@/hooks/use-debounce';
 import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
 import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
 import { PenaltyResultPanel } from '@/components/domain/penalty-result-panel';
@@ -62,38 +63,24 @@ export default function Calculadora() {
   const toast = useToast();
   const confirm = useConfirm();
 
-  const [delitos, setDelitos] = useState<Delito[]>([]);
+  const loader = useDelitosLoader();
+  const { delitos, setDelitos, loading, fetchError } = loader;
+  const { search, setSearch, filtered } = useDelitosFilter(delitos);
   const [step, setStep] = useState<Step>(1);
   const [configs, setConfigs] = useState<DelitoConfig[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [tipoConcurso, setTipoConcurso] = useState<string>('ninguno');
-  const [resultado, setResultado] = useState<any>(null);
-  const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [resultado, setResultado] = useState<ResultadoCalculo | null>(null);
   const [calculating, setCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fetchError, setFetchError] = useState<string | null>(null);
   const [articleRef, setArticleRef] = useState<string | null>(null);
   const [casosList, setCasosList] = useState<{ id: string; titulo: string }[]>([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [selectedCaso, setSelectedCaso] = useState('');
   const [saving, setSaving] = useState(false);
+  const [pendientesConfirmados, setPendientesConfirmados] = useState<Record<string, boolean>>({});
 
-  const debouncedSearch = useDebounce(search, 200);
   useUnsavedChanges(configs.length > 0 && !resultado);
-
-  useEffect(() => {
-    setLoading(true);
-    setFetchError(null);
-    fetch('/api/delitos?limit=1000')
-      .then(r => r.json())
-      .then(d => setDelitos(Array.isArray(d) ? d : (d?.data || [])))
-      .catch(e => {
-        setFetchError(e.message || 'Error al cargar delitos');
-        console.warn(e);
-      })
-      .finally(() => setLoading(false));
-  }, []);
 
   useEffect(() => {
     if (resultado) setStep(8);
@@ -137,6 +124,14 @@ export default function Calculadora() {
   const goNext = () => {
     if (step === 1) {
       const d = current?.delito;
+      if (!d) return;
+      if ((d.estado === 'pendiente_revision' || d.estado === 'rechazado')
+          && !pendientesConfirmados[d.id]) {
+        toast.danger(
+          'Delito no verificado: confirma manualmente que el artículo coincide con la fuente oficial antes de continuar.',
+        );
+        return;
+      }
       setStep(d && !d.tiene_pena_alternativa ? 3 : 2);
       return;
     }
@@ -249,16 +244,6 @@ export default function Calculadora() {
     router.push('/');
   };
 
-  const filtered = useMemo(() => {
-    if (!debouncedSearch) return delitos;
-    const q = debouncedSearch.toLowerCase();
-    return delitos.filter(d =>
-      d.nombre.toLowerCase().includes(q) ||
-      d.articulo.toLowerCase().includes(q) ||
-      (d.conducta || '').toLowerCase().includes(q)
-    );
-  }, [delitos, debouncedSearch]);
-
   if (loading) return <CenteredSpinner label="Cargando catálogos jurídicos..." />;
 
   if (fetchError) {
@@ -267,15 +252,7 @@ export default function Calculadora() {
         <ErrorState
           title="Error de conexión"
           description={fetchError}
-          onRetry={() => {
-            setLoading(true);
-            setFetchError(null);
-            fetch('/api/delitos?limit=1000')
-              .then(r => r.json())
-              .then(d => setDelitos(Array.isArray(d) ? d : (d?.data || [])))
-              .catch(e => setFetchError(e.message))
-              .finally(() => setLoading(false));
-          }}
+          onRetry={() => { loader.refetch(); }}
         />
       </div>
     );
@@ -336,6 +313,7 @@ export default function Calculadora() {
           {/* Step 1: Seleccionar delito */}
           {step === 1 && (
             <div>
+              <BannerCalidadDatos />
               <div className="relative mb-3">
                 <Input
                   iconLeft={<Search size={16} />}
@@ -387,10 +365,42 @@ export default function Calculadora() {
                       onClick={() => selectDelito(d)}
                       className="w-full text-left bg-surface border border-border-light rounded-md p-3 hover:shadow-md transition-shadow focus-visible:outline-none"
                     >
-                      <p className="font-semibold text-sm text-text">{d.nombre}</p>
-                      <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
+                      <div className="flex items-start gap-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-sm text-text">{d.nombre}</p>
+                          <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
+                        </div>
+                        {d.estado === 'pendiente_revision' && (
+                          <Badge tone="warning">Revisar</Badge>
+                        )}
+                        {d.estado === 'rechazado' && (
+                          <Badge tone="danger">No verificado</Badge>
+                        )}
+                      </div>
                     </button>
                   ))}
+                </div>
+              )}
+              {current?.delito && (current.delito.estado === 'pendiente_revision' || current.delito.estado === 'rechazado') && (
+                <div className="mt-3 border-2 border-warning rounded-md p-3 bg-warning-bg">
+                  <p className="text-xs font-bold text-text mb-1">Art&iacute;culo no verificado contra la fuente oficial</p>
+                  <p className="text-[11px] text-text-secondary mb-2">
+                    {current.delito.estado_nota || 'El par (delito, art\u00edculo) no super\u00f3 la validaci\u00f3n autom\u00e1tica TF-IDF. Verifique manualmente contra el CP (Decreto 130-2017) antes de continuar.'}
+                  </p>
+                  {current.delito.estado_articulo_sugerido && (
+                    <p className="text-[11px] text-text-secondary mb-2">
+                      Sugerencia del validador: <strong>{current.delito.estado_articulo_sugerido}</strong>
+                    </p>
+                  )}
+                  <label className="flex items-start gap-2 text-xs text-text cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="mt-0.5"
+                      checked={!!pendientesConfirmados[current.delito.id]}
+                      onChange={e => setPendientesConfirmados(prev => ({ ...prev, [current.delito.id]: e.target.checked }))}
+                    />
+                    <span>Confirmo que verifiqu&eacute; el art&iacute;culo <strong>{current.delito.articulo}</strong> contra la fuente oficial y asumo la responsabilidad del uso.</span>
+                  </label>
                 </div>
               )}
             </div>
@@ -830,6 +840,37 @@ export default function Calculadora() {
           </p>
         )}
       </Modal>
+    </div>
+  );
+}
+
+function BannerCalidadDatos() {
+  const [summary, setSummary] = useState<{ verificados: number; pendientes: number; rechazados: number; total: number } | null>(null);
+  useEffect(() => {
+    fetch('/api/delitos/calidad')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d) setSummary(d); })
+      .catch(() => { /* silencioso: el banner es informativo */ });
+  }, []);
+  if (!summary || summary.total === 0) return null;
+  const { verificados, pendientes, rechazados, total } = summary;
+  const pct = (n: number) => Math.round((n / total) * 100);
+  return (
+    <div className="mb-3 border border-warning/40 bg-warning-bg rounded-md p-3 text-[11px] text-text-secondary">
+      <p className="font-bold text-text mb-1">Calidad del cat&aacute;logo de delitos</p>
+      <p>
+        <span className="text-success font-semibold">{verificados} verificados ({pct(verificados)}%)</span>
+        {' · '}
+        <span className="text-warning font-semibold">{pendientes} a revisar ({pct(pendientes)}%)</span>
+        {' · '}
+        <span className="text-danger font-semibold">{rechazados} rechazados ({pct(rechazados)}%)</span>
+        {' de '}
+        <strong>{total}</strong> totales.
+      </p>
+      <p className="mt-1">
+        Fuente: <code>data/delitos-validacion.csv</code> (TF-IDF vs. CP Decreto 130-2017).
+        Los delitos no verificados requerir&aacute;n confirmaci&oacute;n manual.
+      </p>
     </div>
   );
 }

@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  quality:
+    name: Lint, Typecheck, Test, Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
+      JWT_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef
+      NEXT_TELEMETRY_DISABLED: '1'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck (build dry-run)
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Validate seed data
+        run: |
+          node -e "const d=require('./data/delitos.json'); console.log('delitos:', d.length)"
+          node -e "const d=require('./data/delitos.json'); const s=new Set(d.map(x=>x.nombre+'|'+x.articulo)); console.log('duplicados:', d.length - s.size)"
+          node -e "const d=require('./data/delitos-estados.json'); console.log('estados:', d.total_registros, '(', d.verificados, 'OK,', d.pendientes_revision, 'revisar,', d.rechazados, 'rechazados)')"
