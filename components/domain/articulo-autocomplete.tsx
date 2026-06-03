@@ -92,7 +92,8 @@ export function ArticuloAutocomplete({
       .then(r => r.json())
       .then((data) => {
         if (cancelled) return;
-        setResults(Array.isArray(data) ? data : []);
+        const rows = Array.isArray(data) ? data : (data?.data || []);
+        setResults(rows);
         setActive(-1);
       })
       .catch(() => { if (!cancelled) setResults([]); })

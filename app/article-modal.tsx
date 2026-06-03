@@ -38,7 +38,8 @@ export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
     fetch(`/api/cp?busqueda=Art. ${num}&limit=1`)
       .then(r => r.json())
       .then(data => {
-        const found = Array.isArray(data) && data.length > 0 ? data[0] : null;
+        const rows = Array.isArray(data) ? data : (data?.data || []);
+        const found = rows.length > 0 ? rows[0] : null;
         if (!found) throw new Error('Artículo no disponible en la biblioteca');
         setArticle(found);
       })

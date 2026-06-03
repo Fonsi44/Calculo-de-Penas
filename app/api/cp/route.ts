@@ -1,13 +1,14 @@
 import { db } from '@/lib/db';
 import { articulosCp } from '@/lib/schema';
-import { ilike, or, and, eq, asc } from 'drizzle-orm';
+import { ilike, or, and, eq, asc, sql } from 'drizzle-orm';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const busqueda = searchParams.get('busqueda');
   const tema = searchParams.get('tema');
-  const limit = parseInt(searchParams.get('limit') || '100');
+  const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
+  const countOnly = searchParams.get('count') === '1';
 
   const filters = [];
   if (busqueda) {
@@ -24,15 +25,30 @@ export async function GET(request: Request) {
   if (tema) {
     filters.push(eq(articulosCp.tema, tema));
   }
+  const where = filters.length > 0 ? and(...filters) : undefined;
 
-  const rows = await db.select()
-    .from(articulosCp)
-    .where(filters.length > 0 ? and(...filters) : undefined)
-    .orderBy(asc(articulosCp.id))
-    .limit(limit)
-    .offset(offset);
+  if (countOnly) {
+    const [{ count }] = await db.select({ count: sql<number>`count(*)::int` }).from(articulosCp).where(where);
+    return Response.json({ total: count });
+  }
 
-  return Response.json(rows);
+  const [rows, totalRow] = await Promise.all([
+    db.select()
+      .from(articulosCp)
+      .where(where)
+      .orderBy(asc(articulosCp.id))
+      .limit(limit)
+      .offset(offset),
+    db.select({ count: sql<number>`count(*)::int` }).from(articulosCp).where(where),
+  ]);
+
+  return Response.json({
+    data: rows,
+    total: totalRow[0].count,
+    limit,
+    offset,
+    hasMore: offset + rows.length < totalRow[0].count,
+  });
 }
 
 export async function POST(request: Request) {

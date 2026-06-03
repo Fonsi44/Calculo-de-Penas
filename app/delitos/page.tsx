@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen } from 'lucide-react';
+import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Delito } from '../types';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
@@ -14,31 +14,45 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { useDebounce } from '@/hooks/use-debounce';
-import { formatRama } from '@/lib/ui';
+import { formatRama, pluralizar } from '@/lib/ui';
+
+const PAGE_SIZE = 30;
+
+interface DelitosResponse {
+  data: Delito[];
+  total: number;
+  hasMore: boolean;
+}
 
 export default function DelitosCatalog() {
   const toast = useToast();
   const confirm = useConfirm();
 
   const [delitos, setDelitos] = useState<Delito[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(0);
   const [ramas, setRamas] = useState<{ id: string; cantidad: number }[]>([]);
   const [search, setSearch] = useState('');
   const [activeRama, setActiveRama] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const debouncedSearch = useDebounce(search, 200);
+  const debouncedSearch = useDebounce(search, 250);
+  const offset = page * PAGE_SIZE;
+
+  useEffect(() => { setPage(0); }, [debouncedSearch, activeRama]);
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(false);
     try {
       const [dRes, rRes] = await Promise.all([
-        fetch('/api/delitos?limit=1000'),
+        fetch(`/api/delitos?limit=${PAGE_SIZE}&offset=${offset}${activeRama ? `&rama=${encodeURIComponent(activeRama)}` : ''}${debouncedSearch ? `&busqueda=${encodeURIComponent(debouncedSearch)}` : ''}`),
         fetch('/api/clasificaciones'),
       ]);
-      const dJson = await dRes.json();
+      const dJson: DelitosResponse = await dRes.json();
       const rJson = await rRes.json();
-      setDelitos(Array.isArray(dJson) ? dJson : []);
+      setDelitos(dJson.data || []);
+      setTotal(dJson.total || 0);
       setRamas(Array.isArray(rJson) ? rJson.map((r: any) => ({ id: r.nombre, cantidad: r.cantidad })) : []);
     } catch (e) {
       console.warn('load delitos', e);
@@ -46,22 +60,9 @@ export default function DelitosCatalog() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [offset, activeRama, debouncedSearch]);
 
   useEffect(() => { load(); }, [load]);
-
-  const filtered = delitos.filter((d) => {
-    if (debouncedSearch) {
-      const q = debouncedSearch.toLowerCase();
-      if (
-        !d.nombre.toLowerCase().includes(q) &&
-        !d.articulo.toLowerCase().includes(q) &&
-        !(d.conducta || '').toLowerCase().includes(q)
-      ) return false;
-    }
-    if (activeRama && d.rama_id !== activeRama) return false;
-    return true;
-  });
 
   const handleDelete = async (delito: Delito) => {
     const ok = await confirm({
@@ -75,6 +76,7 @@ export default function DelitosCatalog() {
       const res = await fetch(`/api/delitos/${delito.id}`, { method: 'DELETE' });
       if (res.ok) {
         setDelitos((prev) => prev.filter((d) => d.id !== delito.id));
+        setTotal((t) => Math.max(0, t - 1));
         toast.success('Delito eliminado');
       } else {
         toast.danger('No se pudo eliminar');
@@ -84,7 +86,9 @@ export default function DelitosCatalog() {
     }
   };
 
-  if (loading) return <CenteredSpinner label="Cargando catálogo..." />;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  if (loading && page === 0) return <CenteredSpinner label="Cargando catálogo..." />;
 
   if (error) {
     return (
@@ -101,7 +105,7 @@ export default function DelitosCatalog() {
   return (
     <AppShell
       title="Catálogo de Delitos"
-      subtitle={`${filtered.length} resultados`}
+      subtitle={`${pluralizar(total, 'resultado', 'resultados')}`}
       headerRight={
         <Link
           href="/delito-form"
@@ -138,9 +142,9 @@ export default function DelitosCatalog() {
             Todas
             <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
               !activeRama ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
-            }`}>{delitos.length}</span>
+            }`}>{total}</span>
           </button>
-          {ramas.map((r) => {
+          {ramas.slice(0, 10).map((r) => {
             const isActive = activeRama === r.id;
             return (
               <button
@@ -160,7 +164,7 @@ export default function DelitosCatalog() {
           })}
         </div>
 
-        {filtered.length === 0 ? (
+        {delitos.length === 0 ? (
           <EmptyState
             icon={<BookOpen size={48} />}
             title="Sin resultados"
@@ -174,52 +178,80 @@ export default function DelitosCatalog() {
             }
           />
         ) : (
-          <div className="space-y-2 grid md:grid-cols-2 gap-2">
-            {filtered.map((item) => (
-              <Card key={item.id} padding="none" className="hover:shadow-md transition-shadow">
-                <Link href={`/delito-form?id=${item.id}`} className="block p-3 focus-visible:outline-none">
-                  <div className="flex items-start mb-1.5">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-sm text-text mb-1 line-clamp-2">{item.nombre}</h3>
-                      <div className="flex flex-wrap gap-1.5">
-                        <Badge tone="primary">{item.articulo}</Badge>
-                        {item.es_grave && <Badge tone="aggravation">GRAVE</Badge>}
+          <>
+            <div className="grid md:grid-cols-2 gap-2">
+              {delitos.map((item) => (
+                <Card key={item.id} padding="none" className="hover:shadow-md transition-shadow">
+                  <Link href={`/delito-form?id=${item.id}`} className="block p-3 focus-visible:outline-none">
+                    <div className="flex items-start mb-1.5">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-sm text-text mb-1 line-clamp-2">{item.nombre}</h3>
+                        <div className="flex flex-wrap gap-1.5">
+                          <Badge tone="primary">{item.articulo}</Badge>
+                          {item.es_grave && <Badge tone="aggravation">GRAVE</Badge>}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {item.conducta && (
-                    <p className="text-text-secondary text-xs leading-4 line-clamp-2 mb-1">{item.conducta}</p>
-                  )}
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <Gavel size={14} className="text-accent" />
-                    <span className="text-xs font-bold text-primary tabular-nums">
-                      {item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}
-                    </span>
-                  </div>
-                  <p className="text-text-muted text-[11px] italic truncate">{formatRama(item.rama_id)}</p>
-                </Link>
-
-                <div className="flex border-t border-border-light">
-                  <Link
-                    href={`/delito-form?id=${item.id}`}
-                    className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-primary hover:bg-surface-alt"
-                  >
-                    <Edit3 size={14} />
-                    Editar
+                    {item.conducta && (
+                      <p className="text-text-secondary text-xs leading-4 line-clamp-2 mb-1">{item.conducta}</p>
+                    )}
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <Gavel size={14} className="text-accent" />
+                      <span className="text-xs font-bold text-primary tabular-nums">
+                        {item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}
+                      </span>
+                    </div>
+                    <p className="text-text-muted text-[11px] italic truncate">{formatRama(item.rama_id)}</p>
                   </Link>
-                  <div className="w-px bg-border-light" />
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(item)}
-                    className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-danger hover:bg-danger-bg"
-                  >
-                    <Trash2 size={14} />
-                    Eliminar
-                  </button>
-                </div>
-              </Card>
-            ))}
-          </div>
+
+                  <div className="flex border-t border-border-light">
+                    <Link
+                      href={`/delito-form?id=${item.id}`}
+                      className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-primary hover:bg-surface-alt"
+                    >
+                      <Edit3 size={14} />
+                      Editar
+                    </Link>
+                    <div className="w-px bg-border-light" />
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(item)}
+                      className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-danger hover:bg-danger-bg"
+                    >
+                      <Trash2 size={14} />
+                      Eliminar
+                    </button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between mt-3 py-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setPage(p => Math.max(0, p - 1))}
+                  disabled={page === 0}
+                  iconLeft={<ChevronLeft size={14} />}
+                >
+                  Anterior
+                </Button>
+                <span className="text-[11px] text-text-muted tabular-nums">
+                  Página {page + 1} de {totalPages}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                  disabled={page >= totalPages - 1}
+                  iconRight={<ChevronRight size={14} />}
+                >
+                  Siguiente
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </div>
 

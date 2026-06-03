@@ -1,18 +1,23 @@
 import { db } from '@/lib/db';
 import { delitos } from '@/lib/schema';
-import { and, or, ilike } from 'drizzle-orm';
+import { and, or, ilike, sql } from 'drizzle-orm';
 import { delitoCreateSchema, validate } from '@/lib/validation';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const clasificacion = searchParams.get('clasificacion');
+  const rama = searchParams.get('rama');
   const busqueda = searchParams.get('busqueda');
   const skip = parseInt(searchParams.get('skip') || '0');
-  const limit = parseInt(searchParams.get('limit') || '100');
+  const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 500);
+  const countOnly = searchParams.get('count') === '1';
 
   const filters = [];
   if (clasificacion) {
     filters.push(ilike(delitos.clasificacion, `%${clasificacion}%`));
+  }
+  if (rama) {
+    filters.push(ilike(delitos.ramaId, `%${rama}%`));
   }
   if (busqueda) {
     const q = `%${busqueda}%`;
@@ -20,28 +25,41 @@ export async function GET(request: Request) {
       or(ilike(delitos.nombre, q), ilike(delitos.articulo, q), ilike(delitos.conducta, q))
     );
   }
+  const where = filters.length > 0 ? and(...filters) : undefined;
 
-  const rows = await db.select().from(delitos).where(
-    filters.length > 0 ? and(...filters) : undefined
-  ).orderBy(delitos.nombre).offset(skip).limit(limit);
+  if (countOnly) {
+    const [{ count }] = await db.select({ count: sql<number>`count(*)::int` }).from(delitos).where(where);
+    return Response.json({ total: count });
+  }
 
-  return Response.json(rows.map(d => ({
-    id: d.id,
-    nombre: d.nombre,
-    articulo: d.articulo,
-    clasificacion: d.clasificacion,
-    conducta: d.conducta,
-    rama_id: d.ramaId,
-    constitucion_articulo_id: d.constitucionArticuloId,
-    pena_minima_meses: d.penaMinimaMeses,
-    pena_maxima_meses: d.penaMaximaMeses,
-    tiene_pena_alternativa: d.tienePenaAlternativa,
-    pena_alternativa_min: d.penaAlternativaMin,
-    pena_alternativa_max: d.penaAlternativaMax,
-    penas_accesorias: d.penasAccesorias || [],
-    observaciones: d.observaciones,
-    es_grave: d.esGrave,
-  })));
+  const [rows, totalRow] = await Promise.all([
+    db.select().from(delitos).where(where).orderBy(delitos.nombre).offset(skip).limit(limit),
+    db.select({ count: sql<number>`count(*)::int` }).from(delitos).where(where),
+  ]);
+
+  return Response.json({
+    data: rows.map(d => ({
+      id: d.id,
+      nombre: d.nombre,
+      articulo: d.articulo,
+      clasificacion: d.clasificacion,
+      conducta: d.conducta,
+      rama_id: d.ramaId,
+      constitucion_articulo_id: d.constitucionArticuloId,
+      pena_minima_meses: d.penaMinimaMeses,
+      pena_maxima_meses: d.penaMaximaMeses,
+      tiene_pena_alternativa: d.tienePenaAlternativa,
+      pena_alternativa_min: d.penaAlternativaMin,
+      pena_alternativa_max: d.penaAlternativaMax,
+      penas_accesorias: d.penasAccesorias || [],
+      observaciones: d.observaciones,
+      es_grave: d.esGrave,
+    })),
+    total: totalRow[0].count,
+    limit,
+    offset: skip,
+    hasMore: skip + rows.length < totalRow[0].count,
+  });
 }
 
 export async function POST(request: Request) {
