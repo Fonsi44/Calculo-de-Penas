@@ -22,13 +22,17 @@ export async function POST(request: Request) {
     return rateLimitResponse(rl);
   }
 
-  let body: any;
+  let body: unknown;
   try { body = await request.json(); } catch {
     return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
   }
 
-  const { email, password } = body;
-  if (!email || !password) {
+  if (!body || typeof body !== 'object') {
+    return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+  }
+
+  const { email, password } = body as { email?: unknown; password?: unknown };
+  if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
     return new Response(JSON.stringify({ error: 'Email y contraseña son obligatorios' }), { status: 400 });
   }
 

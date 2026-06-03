@@ -5,13 +5,17 @@ import { hashPassword, signToken, createAuthResponse } from '@/lib/auth';
 
 export async function POST(request: Request) {
   try {
-    let body: any;
+    let body: unknown;
     try { body = await request.json(); } catch {
       return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
     }
 
-    const { email, password, nombre } = body;
-    if (!email || !password || !nombre) {
+    if (!body || typeof body !== 'object') {
+      return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+    }
+
+    const { email, password, nombre } = body as { email?: unknown; password?: unknown; nombre?: unknown };
+    if (typeof email !== 'string' || typeof password !== 'string' || typeof nombre !== 'string' || !email || !password || !nombre) {
       return new Response(JSON.stringify({ error: 'Email, contraseña y nombre son obligatorios' }), { status: 400 });
     }
 
