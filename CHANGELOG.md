@@ -1,5 +1,47 @@
 # Changelog
 
+## Fase 3 — Consolidación (2026-06-03)
+
+### Autocompletar artículos
+- **`components/domain/articulo-autocomplete.tsx`** (NUEVO): Combobox accesible (`role="combobox"`, `aria-activedescendant`) con debounce 180 ms, navegación por teclado (↑/↓/Enter/Esc), highlight de coincidencias, badges de tema y click-outside para cerrar. Reutilizable.
+- **`app/page.tsx`**: Nueva card "Búsqueda rápida de artículos" en el home, con badge "635 arts." y enlace a `/api/cp`.
+
+### Generador de PDF profesional
+- **`lib/pdf-document.tsx`** (NUEVO): Componente `@react-pdf/renderer` con sistema de estilos, tipografía Helvetica, paleta institucional. Estructura por sección:
+  - Cabecera con marca LEX HONDURAS.
+  - Datos del caso (cliente, estado, fechas, total cálculos).
+  - Por cada cálculo: pena principal, accesorias, detalle por delito (pena base, resultante, recomendada, gravedad, modificaciones), concurso aplicable, análisis jurídico, fundamento normativo (chips Art. 19/21/25/26/27/30/31/32/60/61/62/66/67/68/69/70) y disclaimer legal.
+  - Pie de página con paginación, fecha de generación y datos de contacto.
+- **`app/api/casos/[id]/pdf/route.ts`** (NUEVO): Route handler server-side con auth JWT, verificación de ownership del caso, `renderToBuffer` + `Uint8Array` para Response, `Content-Disposition: attachment` con nombre saneado.
+- **`app/casos/[id]/page.tsx`**: Nuevo botón "PDF" en la cabecera que descarga el informe con autenticación vía cookie JWT.
+- **Dependencia añadida**: `@react-pdf/renderer` (57 paquetes transitivos).
+
+### Paginación server-side
+- **`app/api/cp/route.ts`**: Nueva respuesta `{data, total, limit, offset, hasMore}`. Soporta `?count=1` para total-only. Búsqueda y tema aplican a nivel SQL con `WHERE ... AND ...`.
+- **`app/api/delitos/route.ts`**: Misma forma de respuesta. Añadido filtro `rama` (matching `ramaId`).
+- **`app/cp/page.tsx`**: Refactor con `AppShell`, paginación de 30 resultados por página, total real desde `count`, labels de tema correctos (13 categorías reales), `EmptyState` y `Spinner` consistentes.
+- **`app/cp/[id]/page.tsx`**: Refactor con `AppShell`, `backHref="/cp"`, labels de tema correctos.
+- **`app/delitos/page.tsx`**: Refactor con `AppShell`, paginación 30/pág, filtro de rama, total real.
+
+### Backward compatibility
+- `app/article-modal.tsx` y `articulo-autocomplete.tsx` ahora aceptan tanto respuesta array (legacy) como `{data}` (nuevo).
+
+### Validación de datos (NO modificar fuente)
+- **`scripts/validate-delitos.js`**: Validador básico por similitud de tokens.
+- **`scripts/validate-delitos-tfidf.js`**: Validador con TF-IDF + cosine similarity. Genera `data/delitos-validacion.csv` con mejor artículo sugerido.
+- **`data/delitos-validacion.md`** (NUEVO): Reporte de calidad. 68.9 % de los 469 registros NO se corresponden con el artículo declarado. **PENDIENTE** de revisión manual por abogado HN. Riesgo legal documentado.
+- Acción: NO se modificó `data/delitos.json`. El script es de solo lectura.
+
+### Validación
+- 51/51 tests Vitest pasando.
+- `npm run build` OK.
+- Desplegado en Vercel: commit `a6a8f3f`, URL canónica `calculo-de-penas-nextjs.vercel.app`.
+
+### Riesgos abiertos (no cerrados)
+- `.env` con `DATABASE_URL` y `JWT_SECRET` aún en historial git (rotar pendiente).
+- `data/delitos.json` con 76.1 % de artículos incorrectos (revisión manual pendiente).
+- 4 fórmulas del motor pendientes de validación legal.
+
 ## Fase 2 Rediseño — Shell, dominio y resultado pericial (2026-06-03)
 
 ### AppShell, sidebar y header institucional
