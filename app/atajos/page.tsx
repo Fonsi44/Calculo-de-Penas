@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
-import { Keyboard, Calculator, FileText, Eye, Moon, Sun, ArrowLeft, ArrowRight, CornerDownLeft, X, Command, Layers, Sparkles } from 'lucide-react';
+import { Keyboard, Calculator, FileText, Eye, Layers, Sparkles } from 'lucide-react';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

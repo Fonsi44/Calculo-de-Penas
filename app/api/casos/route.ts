@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { casos, calculos } from '@/lib/schema';
-import { eq, desc, and, count } from 'drizzle-orm';
+import { eq, desc, count } from 'drizzle-orm';
 import { getTokenFromCookies, verifyToken } from '@/lib/auth';
 
 function getUser(request: Request) {

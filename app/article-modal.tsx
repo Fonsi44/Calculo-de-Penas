@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { X, FileText, Loader } from 'lucide-react';
+import { X, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 interface ArticuloCP {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderToBuffer } from '@react-pdf/renderer';
+import { renderToBuffer, type DocumentProps } from '@react-pdf/renderer';
 import { db } from '@/lib/db';
 import { casos, calculos } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
@@ -50,7 +50,7 @@ export async function GET(
   const casoCompleto = { ...caso, calculos: calculosList };
 
   const buffer = await renderToBuffer(
-    React.createElement(CasoPDFDocument as any, { caso: casoCompleto }) as any
+    React.createElement(CasoPDFDocument, { caso: casoCompleto as unknown as Parameters<typeof CasoPDFDocument>[0]['caso'] }) as unknown as React.ReactElement<DocumentProps>
   );
 
   const safeTitulo = (caso.titulo || 'caso')

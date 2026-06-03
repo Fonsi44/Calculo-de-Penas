@@ -5,7 +5,7 @@ import { calcular_pena } from '@/lib/calculo';
 import type { DelitoBase } from '@/lib/calculo';
 import { calcularSchema, validate } from '@/lib/validation';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
-import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 
 const CALC_MAX = 30;
 const CALC_WINDOW_MS = 60_000;

@@ -6,13 +6,16 @@ import { requireAuth, authFailureResponse } from '@/lib/auth';
 export async function POST(request: Request) {
   try {
     const user = requireAuth(request);
-    let body: any;
+    let body: unknown;
     try { body = await request.json(); } catch {
       return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
     }
-    const { caso_id, config, resultado } = body;
+    if (!body || typeof body !== 'object') {
+      return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+    }
+    const { caso_id, config, resultado } = body as { caso_id?: unknown; config?: unknown; resultado?: unknown };
 
-    if (!caso_id || !config || !resultado) {
+    if (typeof caso_id !== 'string' || !caso_id || config === undefined || resultado === undefined) {
       return new Response(JSON.stringify({ error: 'Faltan datos' }), { status: 400 });
     }
 
