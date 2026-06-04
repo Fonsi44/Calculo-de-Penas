@@ -3,6 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Delito } from '@/app/types';
 import { useDebounce } from '@/hooks/use-debounce';
+import { cacheGet, cacheSet } from '@/lib/cache';
+
+const CACHE_KEY_DELITOS = 'delitos-catalog';
+const CACHE_TTL = 10 * 60 * 1000;
 
 export interface UseDelitosLoader {
   delitos: Delito[];
@@ -13,8 +17,11 @@ export interface UseDelitosLoader {
 }
 
 export function useDelitosLoader(): UseDelitosLoader {
-  const [delitos, setDelitos] = useState<Delito[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [delitos, setDelitos] = useState<Delito[]>(() => {
+    const cached = cacheGet<Delito[]>(CACHE_KEY_DELITOS);
+    return cached ?? [];
+  });
+  const [loading, setLoading] = useState(() => !cacheGet(CACHE_KEY_DELITOS));
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   const refetch = useCallback(async () => {
@@ -23,7 +30,9 @@ export function useDelitosLoader(): UseDelitosLoader {
     try {
       const r = await fetch('/api/delitos?limit=1000');
       const d = await r.json();
-      setDelitos(Array.isArray(d) ? d : (d?.data || []));
+      const data = Array.isArray(d) ? d : (d?.data || []);
+      cacheSet(CACHE_KEY_DELITOS, data, CACHE_TTL);
+      setDelitos(data);
     } catch (e) {
       setFetchError(e instanceof Error ? e.message : 'Error al cargar delitos');
     } finally {
@@ -31,7 +40,10 @@ export function useDelitosLoader(): UseDelitosLoader {
     }
   }, []);
 
-  useEffect(() => { refetch(); }, [refetch]); // eslint-disable-line react-hooks/set-state-in-effect -- mount refetch
+  useEffect(() => {
+    if (!cacheGet(CACHE_KEY_DELITOS)) refetch();
+    else setLoading(false);
+  }, [refetch]);
 
   return { delitos, setDelitos, loading, fetchError, refetch };
 }
