@@ -17,6 +17,32 @@ interface Props {
   onComparar?: () => void;
 }
 
+function downloadPdfFromResult(resultado: ResultadoCalculo) {
+  fetch('/api/calcular/pdf', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ resultado }),
+  })
+    .then(r => {
+      if (!r.ok) throw new Error('Error al generar PDF');
+      return r.blob();
+    })
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'LEX-HN-calculo.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    })
+    .catch(() => {
+      // fallback a window.print
+      window.print();
+    });
+}
+
 export function Paso8Resultado({ resultado, reset, onOpenArticle, onSaveClick, onDuplicate, escenariosCount = 0, onComparar }: Props) {
   return (
     <ErrorBoundary fallback={
@@ -34,7 +60,7 @@ export function Paso8Resultado({ resultado, reset, onOpenArticle, onSaveClick, o
       </div>
 
       <div className="grid grid-cols-2 gap-2 mt-4 no-print">
-        <Button variant="secondary" iconLeft={<Printer size={16} />} onClick={() => window.print()}>
+        <Button variant="secondary" iconLeft={<Printer size={16} />} onClick={() => downloadPdfFromResult(resultado)}>
           Exportar PDF
         </Button>
         <Button variant="primary" iconLeft={<Save size={16} />} onClick={onSaveClick}>
