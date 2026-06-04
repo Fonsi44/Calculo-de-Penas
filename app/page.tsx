@@ -2,10 +2,63 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Scale, Calculator, BookOpen, PlusCircle, ArrowRight, ShieldCheck, Info, ClipboardList, Search } from 'lucide-react';
+import { Scale, Calculator, BookOpen, PlusCircle, ArrowRight, ShieldCheck, ClipboardList, Search, Gavel, FileCheck, AlertTriangle, Sparkles, BookMarked, Layers } from 'lucide-react';
+import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArticuloAutocomplete } from '@/components/domain/articulo-autocomplete';
+
+interface Feature {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  title: string;
+  desc: string;
+  href: string;
+  cta: string;
+  tone: 'accent' | 'success' | 'info' | 'warning' | 'neutral';
+}
+
+const FEATURES: Feature[] = [
+  {
+    icon: Calculator,
+    title: 'Calcular pena',
+    desc: 'Flujo guiado de 8 pasos: delito, participación, tentativa, concurso, agravantes, atenuantes, eximentes y resultado.',
+    href: '/calculadora',
+    cta: 'Iniciar cálculo',
+    tone: 'accent',
+  },
+  {
+    icon: ClipboardList,
+    title: 'Mis casos',
+    desc: 'Guarda, organiza y consulta tus cálculos con fecha, cliente y PDF exportable.',
+    href: '/casos',
+    cta: 'Ver mis casos',
+    tone: 'success',
+  },
+  {
+    icon: BookOpen,
+    title: 'Biblioteca del Código Penal',
+    desc: 'Consulta los 635 artículos del CP de Honduras (Decreto 130-2017) con búsqueda por número, epígrafe o tema.',
+    href: '/cp',
+    cta: 'Abrir biblioteca',
+    tone: 'info',
+  },
+  {
+    icon: FileCheck,
+    title: 'Catálogo de delitos',
+    desc: 'Busca, crea y edita tipos penales con sus artículos y rangos de pena asociados.',
+    href: '/delitos',
+    cta: 'Explorar catálogo',
+    tone: 'neutral',
+  },
+];
+
+const RULES = [
+  { icon: Gavel, label: 'Concurso real, ideal y continuado' },
+  { icon: Layers, label: 'Mitad superior e inferior' },
+  { icon: Sparkles, label: 'Agravantes y atenuantes' },
+  { icon: ShieldCheck, label: 'Eximentes completas e incompletas' },
+  { icon: BookMarked, label: 'Tentativa y complicidad' },
+];
 
 export default function Home() {
   const [stats, setStats] = useState({ total: 0, clasificaciones: 0 });
@@ -24,51 +77,57 @@ export default function Home() {
       .catch(e => console.warn('Stats error', e));
   }, []);
 
+  const toneClasses: Record<Feature['tone'], { bg: string; icon: string }> = {
+    accent: { bg: 'bg-accent/15', icon: 'text-primary' },
+    success: { bg: 'bg-success-bg', icon: 'text-success' },
+    info: { bg: 'bg-info-bg', icon: 'text-info' },
+    warning: { bg: 'bg-warning-bg', icon: 'text-warning' },
+    neutral: { bg: 'bg-surface-alt', icon: 'text-text-secondary' },
+  };
+
   return (
-    <div className="flex flex-col flex-1 bg-background">
-      {/* Hero */}
-      <div className="bg-primary px-4 pt-4 pb-6 rounded-b-xl shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 -right-5 w-48 h-48 rounded-full bg-primary-light/40" />
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-10 h-10 rounded-md bg-accent/20 border border-accent/40 flex items-center justify-center">
-              <Scale size={20} className="text-accent" />
+    <AppShell title="LEX HONDURAS" subtitle="Motor jurídico de cálculo de penas">
+      <div className="p-3 max-w-3xl mx-auto w-full space-y-3">
+        {/* Hero / intro */}
+        <Card padding="md" className="border-l-4 border-l-accent">
+          <div className="flex items-start gap-3">
+            <div className="w-11 h-11 rounded-md bg-primary flex items-center justify-center flex-shrink-0">
+              <Scale size={22} className="text-accent" />
             </div>
-            <div className="min-w-0">
-              <h1 className="text-accent text-xs font-extrabold tracking-widest truncate">LEX HONDURAS</h1>
-              <p className="text-[11px] text-text-inverse/70">Motor jurídico de cálculo de penas</p>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-extrabold text-base text-primary leading-tight">
+                Determine la pena con precisión técnica
+              </h2>
+              <p className="text-xs text-text-secondary mt-1 leading-5">
+                LEX HONDURAS es un motor jurídico que aplica las reglas técnicas del Código Penal
+                de Honduras (Decreto 130-2017) para calcular la pena aplicable a uno o varios hechos
+                delictivos, considerando participación, tentativa, concurso de delitos, agravantes,
+                atenuantes y eximentes.
+              </p>
             </div>
           </div>
-
-          <h2 className="text-text-inverse font-extrabold text-2xl leading-7 mb-1">
-            Determine la pena con precisión técnica
-          </h2>
-          <p className="text-[11px] text-text-inverse/70">
-            Código Penal de Honduras (Decreto 130-2017)
-          </p>
 
           <div className="flex gap-1.5 mt-3">
             {[
               { value: stats.total, label: 'Delitos' },
-              { value: stats.clasificaciones, label: 'Clasificaciones' },
-              { value: 8, label: 'Pasos' },
+              { value: '635', label: 'Arts. CP' },
+              { value: stats.clasificaciones, label: 'Ramas' },
+              { value: '8', label: 'Pasos' },
             ].map((s, i) => (
-              <div key={i} className="flex-1 bg-white/10 border border-white/15 rounded-md p-2 text-center">
-                <p className="text-accent font-extrabold text-2xl tabular-nums">{s.value}</p>
-                <p className="text-[11px] text-text-inverse/70 uppercase tracking-wider mt-0.5">{s.label}</p>
+              <div key={i} className="flex-1 bg-surface-alt rounded-md p-2 text-center">
+                <p className="text-primary font-extrabold text-lg tabular-nums">{s.value}</p>
+                <p className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </Card>
 
-      {/* Content */}
-      <div className="flex-1 p-3 max-w-2xl mx-auto w-full">
-        <Card padding="md" className="mb-3 border-l-4 border-l-accent">
+        {/* Quick search */}
+        <Card padding="md" className="border-l-4 border-l-accent">
           <div className="flex items-center gap-2 mb-2">
             <Search size={14} className="text-accent" />
             <h2 className="font-bold text-sm text-primary">Búsqueda rápida de artículos</h2>
-            <Badge tone="info">{stats.total > 0 ? '635' : '...'} arts.</Badge>
+            <Badge tone="info">635 arts.</Badge>
           </div>
           <p className="text-[11px] text-text-secondary mb-2 leading-4">
             Buscá por número (Art. 19), epígrafe (hurto) o tema (eximente).
@@ -76,78 +135,94 @@ export default function Home() {
           <ArticuloAutocomplete />
         </Card>
 
-        <p className="text-[11px] font-bold text-text-muted uppercase tracking-wider mb-2">Acciones principales</p>
-
-        {/* Primary action */}
-        <Link
-          href="/calculadora"
-          className="flex items-center bg-surface p-3 rounded-md border-l-4 border-l-accent shadow-sm mb-3 hover:shadow-md transition-shadow focus-visible:outline-none"
-        >
-          <div className="w-11 h-11 rounded-md bg-accent/15 flex items-center justify-center mr-3 flex-shrink-0">
-            <Calculator size={22} className="text-primary" />
+        {/* Features */}
+        <div>
+          <p className="text-[11px] font-bold text-text-muted uppercase tracking-wider mb-2 px-1">
+            Funcionalidades
+          </p>
+          <div className="space-y-2">
+            {FEATURES.map((f) => {
+              const tone = toneClasses[f.tone];
+              return (
+                <Link
+                  key={f.href}
+                  href={f.href}
+                  className="flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm hover:shadow-md transition-shadow focus-visible:outline-none"
+                >
+                  <div className={`w-11 h-11 rounded-md flex items-center justify-center mr-3 flex-shrink-0 ${tone.bg}`}>
+                    <f.icon size={20} className={tone.icon} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-text text-sm">{f.title}</p>
+                    <p className="text-text-secondary text-[11px] leading-4">{f.desc}</p>
+                  </div>
+                  <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                    <span className="text-[11px] font-semibold text-accent-dark hidden sm:inline">{f.cta}</span>
+                    <ArrowRight size={16} className="text-text-muted" />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-text text-sm">Calcular pena</p>
-            <p className="text-text-secondary text-[11px]">Flujo guiado de 8 pasos · concurso, agravantes, atenuantes</p>
-          </div>
-          <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center ml-2 flex-shrink-0">
-            <ArrowRight size={16} className="text-text-inverse" />
-          </div>
-        </Link>
+        </div>
 
-        {/* Secondary actions */}
-        {[
-          { title: 'Mis casos', desc: 'Gestiona tus casos y cálculos guardados', icon: ClipboardList, href: '/casos', tone: 'accent' as const },
-          { title: 'Catálogo de delitos', desc: 'Buscar, crear, editar y eliminar tipos penales', icon: BookOpen, href: '/delitos', tone: 'success' as const },
-          { title: 'Código Penal completo', desc: 'Biblioteca de artículos del CP hondureño (Decreto 130-2017)', icon: Scale, href: '/cp', tone: 'info' as const },
-          { title: 'Registrar nuevo delito', desc: 'Añadir un tipo penal personalizado al catálogo', icon: PlusCircle, href: '/delito-form', tone: 'neutral' as const },
-        ].map((item, i) => (
-          <Link
-            key={i}
-            href={item.href}
-            className="flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm mb-2 hover:shadow-md transition-shadow focus-visible:outline-none"
-          >
-            <div className={`w-10 h-10 rounded-md flex items-center justify-center mr-3 flex-shrink-0 ${
-              item.tone === 'accent' ? 'bg-accent/15' :
-              item.tone === 'success' ? 'bg-success-bg' :
-              item.tone === 'info' ? 'bg-info-bg' : 'bg-surface-alt'
-            }`}>
-              <item.icon size={20} className={
-                item.tone === 'accent' ? 'text-accent-dark' :
-                item.tone === 'success' ? 'text-success' :
-                item.tone === 'info' ? 'text-info' : 'text-text-secondary'
-              } />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-bold text-text text-sm">{item.title}</p>
-              <p className="text-text-secondary text-[11px]">{item.desc}</p>
-            </div>
-            <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
-          </Link>
-        ))}
-
-        {/* Info panel */}
-        <Card padding="md" className="mt-3">
+        {/* Rules applied */}
+        <Card padding="md">
           <div className="flex items-center gap-1 px-2 py-0.5 bg-primary/10 rounded-full w-fit mb-2">
             <ShieldCheck size={12} className="text-accent-dark" />
-            <span className="font-bold text-[11px] text-primary uppercase tracking-wider">Marco normativo</span>
+            <span className="font-bold text-[11px] text-primary uppercase tracking-wider">
+              Reglas técnicas que aplica el motor
+            </span>
           </div>
-          <p className="font-bold text-text text-sm mb-1">Código Penal de Honduras</p>
-          <p className="text-text-secondary text-xs leading-5">
-            Aplica reglas técnicas: reducción por complicidad y tentativa, mitad superior por
-            agravantes, mitad inferior por atenuantes, eximentes completas e incompletas, y
-            concursos real, ideal y continuado.
+          <ul className="space-y-1.5">
+            {RULES.map((r, i) => (
+              <li key={i} className="flex items-center gap-2 text-xs text-text-secondary">
+                <r.icon size={14} className="text-accent-dark flex-shrink-0" />
+                <span>{r.label}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+
+        {/* Legal framework */}
+        <Card padding="md" className="border-l-4 border-l-info">
+          <div className="flex items-center gap-2 mb-2">
+            <BookOpen size={14} className="text-info" />
+            <h2 className="font-bold text-sm text-primary">Marco normativo</h2>
+          </div>
+          <p className="text-xs text-text leading-5">
+            El cálculo se basa en el <strong>Código Penal de Honduras</strong> (Decreto 130-2017,
+            publicado en el Diario Oficial el 18 de enero de 2018), con sus reformas vigentes.
+            Los tipos penales, rangos de pena, atenuantes, agravantes y eximentes están
+            codificados en el motor conforme a los artículos 1 a 635.
           </p>
         </Card>
 
+        {/* Add custom delito */}
+        <Link
+          href="/delito-form"
+          className="flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm hover:shadow-md transition-shadow focus-visible:outline-none"
+        >
+          <div className="w-10 h-10 rounded-md bg-surface-alt flex items-center justify-center mr-3 flex-shrink-0">
+            <PlusCircle size={20} className="text-text-secondary" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-text text-sm">Registrar nuevo delito</p>
+            <p className="text-text-secondary text-[11px]">Añadir un tipo penal personalizado al catálogo</p>
+          </div>
+          <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
+        </Link>
+
         {/* Disclaimer */}
-        <div className="flex gap-2 p-3 mt-3 bg-warning-bg rounded-md border border-warning/30">
-          <Info size={14} className="text-text-secondary flex-shrink-0 mt-0.5" />
+        <div className="flex gap-2 p-3 bg-warning-bg rounded-md border border-warning/30">
+          <AlertTriangle size={14} className="text-text-secondary flex-shrink-0 mt-0.5" />
           <p className="text-text-secondary text-[11px] leading-4 italic">
-            Este cálculo es orientativo y no sustituye la función jurisdiccional.
+            Este cálculo es <strong>orientativo y técnico</strong>. No sustituye la función
+            jurisdiccional ni la valoración de pruebas que realiza el juez competente.
+            Cualquier aplicación práctica debe ser supervisada por un abogado habilitado.
           </p>
         </div>
       </div>
-    </div>
+    </AppShell>
   );
 }

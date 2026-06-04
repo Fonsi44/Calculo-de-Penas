@@ -6,6 +6,7 @@ import { ToastProvider } from "@/components/ui/toast";
 import { ConfirmProvider } from "@/components/ui/confirm";
 import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
+import { RootShell } from "@/components/layout/root-shell";
 
 const siteUrl = "https://calculo-de-penas-nextjs.vercel.app";
 
@@ -63,9 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <ConfirmProvider>
                 <AuthProvider>
                   <GlobalShortcuts />
-                  <div id="main" className="flex flex-col flex-1">
-                    {children}
-                  </div>
+                  <RootShell>{children}</RootShell>
                 </AuthProvider>
               </ConfirmProvider>
             </ToastProvider>
