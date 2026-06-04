@@ -10,6 +10,17 @@ import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
 import type { Delito, DelitoConfig, Step } from '../types';
 import type { ResultadoCalculo } from '@/lib/calculo';
 
+export interface Escenario {
+  id: string;
+  nombre: string;
+  configs: DelitoConfig[];
+  tipoConcurso: string;
+  resultado: ResultadoCalculo | null;
+}
+
+let escenarioCounter = 0;
+function nextEscenarioId() { return `esc-${++escenarioCounter}-${Date.now()}`; }
+
 export function useCalculadoraState() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,6 +46,8 @@ export function useCalculadoraState() {
   const [pendientesConfirmados, setPendientesConfirmados] = useState<Record<string, boolean>>({});
   const [loadingCalculoId, setLoadingCalculoId] = useState<string | null>(null);
   const [modificandoCaso, setModificandoCaso] = useState<{ casoTitulo: string } | null>(null);
+  const [escenarios, setEscenarios] = useState<Escenario[]>([]);
+  const [escenarioActivo, setEscenarioActivo] = useState<string | null>(null);
 
   const current = configs[currentIdx];
   const hasWork = configs.length > 0 || Boolean(resultado);
@@ -253,6 +266,37 @@ export function useCalculadoraState() {
     router.push('/');
   }, [hasWork, confirm, router]);
 
+  const duplicateEscenario = useCallback(() => {
+    const id = nextEscenarioId();
+    const n = escenarios.length + 1;
+    const esc: Escenario = {
+      id,
+      nombre: `Escenario ${n}`,
+      configs: JSON.parse(JSON.stringify(configs)),
+      tipoConcurso,
+      resultado: resultado ? JSON.parse(JSON.stringify(resultado)) : null,
+    };
+    setEscenarios(prev => [...prev, esc]);
+    setEscenarioActivo(id);
+    toast.success(`Escenario ${n} creado. Ahora puedes modificarlo desde el paso 1.`);
+  }, [configs, tipoConcurso, resultado, toast]);
+
+  const eliminarEscenario = useCallback((id: string) => {
+    setEscenarios(prev => prev.filter(e => e.id !== id));
+    if (escenarioActivo === id) setEscenarioActivo(null);
+  }, [escenarioActivo]);
+
+  const seleccionarEscenario = useCallback((id: string) => {
+    const esc = escenarios.find(e => e.id === id);
+    if (!esc) return;
+    setConfigs(JSON.parse(JSON.stringify(esc.configs)));
+    setTipoConcurso(esc.tipoConcurso);
+    setResultado(esc.resultado ? JSON.parse(JSON.stringify(esc.resultado)) : null);
+    setEscenarioActivo(id);
+    setStep(esc.resultado ? 8 : 7);
+    toast.success(`Escenario cargado: ${esc.nombre}`);
+  }, [escenarios, toast]);
+
   const handleSaveClick = useCallback(async () => {
     try {
       const r = await fetch('/api/casos');
@@ -328,5 +372,7 @@ export function useCalculadoraState() {
     addAnotherDelito, removeDelito,
     calcular, reset, exitCalculadora,
     handleSaveClick, handleSave,
+    escenarios, escenarioActivo,
+    duplicateEscenario, eliminarEscenario, seleccionarEscenario,
   };
 }

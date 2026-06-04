@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { useCalculadoraState } from './state';
@@ -13,6 +13,7 @@ import { Paso7Resumen } from './paso7-resumen';
 import { Paso8Resultado } from './paso8-resultado';
 import { CalculadoraHeader, CalculadoraSidebar } from './calculadora-header';
 import { SaveModal } from './save-modal';
+import { ComparadorView } from './comparador';
 import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
 import { ArticleModal } from '../article-modal';
 import { Button } from '@/components/ui/button';
@@ -42,6 +43,7 @@ function CalculadoraShell() {
   const s = useCalculadoraState();
   const router = useRouter();
   const pasoActual = STEPS.find(p => p.num === s.step)!;
+  const [mostrarComparador, setMostrarComparador] = useState(false);
 
   if (s.loading) return <CenteredSpinner label="Cargando catálogos jurídicos..." />;
   if (s.fetchError) {
@@ -126,12 +128,26 @@ function CalculadoraShell() {
             />
           )}
 
-          {s.step === 8 && s.resultado?.pena_principal && (
+          {s.step === 8 && s.resultado?.pena_principal && !mostrarComparador && (
             <Paso8Resultado
               resultado={s.resultado}
               reset={s.reset}
               onOpenArticle={s.setArticleRef}
               onSaveClick={s.handleSaveClick}
+              onDuplicate={s.duplicateEscenario}
+              escenariosCount={s.escenarios.length}
+              onComparar={() => setMostrarComparador(true)}
+            />
+          )}
+
+          {mostrarComparador && (
+            <ComparadorView
+              escenarios={s.escenarios}
+              escenarioActivo={s.escenarioActivo}
+              onSeleccionar={s.seleccionarEscenario}
+              onDuplicar={s.duplicateEscenario}
+              onEliminar={s.eliminarEscenario}
+              onVolver={() => setMostrarComparador(false)}
             />
           )}
         </div>
