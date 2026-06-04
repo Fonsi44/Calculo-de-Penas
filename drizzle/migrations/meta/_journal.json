@@ -36,6 +36,13 @@
       "when": 1780598204614,
       "tag": "0004_fixed_lifeguard",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1780598950182,
+      "tag": "0005_motionless_northstar",
+      "breakpoints": true
     }
   ]
 }

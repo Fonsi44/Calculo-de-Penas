@@ -52,6 +52,9 @@ export const delitos = pgTable('delitos', {
   ramaRef: foreignKey({ columns: [table.ramaId], foreignColumns: [ramasJuridicas.id] }),
   constitucionRef: foreignKey({ columns: [table.constitucionArticuloId], foreignColumns: [articulosConstitucion.id] }),
   uniqueNombreArticulo: unique('delitos_nombre_articulo_unique').on(table.nombre, table.articulo),
+  ramaIdx: index('delitos_rama_idx').on(table.ramaId),
+  nombreIdx: index('delitos_nombre_idx').on(table.nombre),
+  articuloIdx: index('delitos_articulo_idx').on(table.articulo),
 }));
 
 export const bufetes = pgTable('bufetes', {
@@ -82,6 +85,8 @@ export const casos = pgTable('casos', {
   actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
 }, (table) => ({
   usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  usuarioIdx: index('casos_usuario_idx').on(table.usuarioId),
+  creadoEnIdx: index('casos_creado_en_idx').on(table.creadoEn),
 }));
 
 export const calculos = pgTable('calculos', {
@@ -92,6 +97,8 @@ export const calculos = pgTable('calculos', {
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
   casoRef: foreignKey({ columns: [table.casoId], foreignColumns: [casos.id] }),
+  casoIdx: index('calculos_caso_idx').on(table.casoId),
+  creadoEnIdx: index('calculos_creado_en_idx').on(table.creadoEn),
 }));
 
 export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
