@@ -45,4 +45,13 @@ test.describe('Smoke — rutas públicas', () => {
     expect(res?.status()).toBe(200);
     await expect(page.getByRole('heading')).toBeVisible();
   });
+
+  test('CSP header presente y endurecido', async ({ request }) => {
+    const res = await request.get('/');
+    const csp = res.headers()['content-security-policy'];
+    expect(csp, 'CSP debe estar presente').toBeTruthy();
+    expect(csp, 'CSP no debe contener unsafe-eval').not.toContain('unsafe-eval');
+    expect(csp, 'CSP debe incluir object-src none').toContain("object-src 'none'");
+    expect(csp, 'CSP debe incluir frame-ancestors none').toContain("frame-ancestors 'none'");
+  });
 });
