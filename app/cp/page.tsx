@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Search, X, FileText, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, X, FileText, ArrowRight, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
@@ -18,6 +19,7 @@ interface ArticuloCP {
   libro: string | null;
   titulo: string | null;
   capitulo: string | null;
+  seccion: string | null;
   epigrafe: string | null;
   texto: string;
   tema: string | null;
@@ -47,6 +49,11 @@ const TEMA_LABELS: Record<string, string> = {
   autoria: 'Autoría',
 };
 
+function ubicacion(a: ArticuloCP): string {
+  const partes = [a.libro, a.titulo, a.capitulo, a.seccion].filter(Boolean);
+  return partes.join(' › ') || '';
+}
+
 const PAGE_SIZE = 30;
 
 export default function BibliotecaCP() {
@@ -59,13 +66,11 @@ export default function BibliotecaCP() {
   const debouncedSearch = useDebounce(search, 300);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset page on filter change
-    setPage(0);
+    setPage(0); // eslint-disable-line react-hooks/set-state-in-effect -- reset page on filter change
   }, [debouncedSearch, tema]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch hydration
-    setLoading(true);
+    setLoading(true); // eslint-disable-line react-hooks/set-state-in-effect -- fetch hydration
     const params = new URLSearchParams();
     if (debouncedSearch) params.set('busqueda', debouncedSearch);
     if (tema) params.set('tema', tema);
@@ -103,8 +108,8 @@ export default function BibliotecaCP() {
       title="Código Penal de Honduras"
       subtitle={`Decreto 130-2017 · ${pluralizar(total, 'artículo', 'artículos')}`}
     >
-      <div className="p-3 max-w-2xl mx-auto">
-        <div className="relative mb-2">
+      <div className="p-3 max-w-5xl mx-auto">
+        <div className="relative mb-3">
           <Input
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -122,18 +127,21 @@ export default function BibliotecaCP() {
           <button
             type="button"
             onClick={() => setTema(null)}
-            className={`h-7 px-2.5 rounded-full text-[11px] font-semibold whitespace-nowrap border transition-colors ${
+            className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
               !tema ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'
             }`}
           >
             Todos
+            <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
+              !tema ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
+            }`}>{total}</span>
           </button>
           {Object.entries(TEMA_LABELS).map(([id, label]) => (
             <button
               key={id}
               type="button"
               onClick={() => setTema(tema === id ? null : id)}
-              className={`h-7 px-2.5 rounded-full text-[11px] font-semibold whitespace-nowrap border transition-colors ${
+              className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
                 tema === id ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'
               }`}
             >
@@ -146,36 +154,50 @@ export default function BibliotecaCP() {
           <CenteredSpinner label="Buscando artículos..." />
         ) : articulos.length === 0 ? (
           <EmptyState
-            icon={<FileText size={48} />}
+            icon={<BookOpen size={48} />}
             title="Sin resultados"
             description="Modifica la búsqueda o selecciona otro tema."
           />
         ) : (
           <>
-            <div className="space-y-2">
+            <div className="grid md:grid-cols-2 gap-2">
               {articulos.map(a => (
-                <Link
-                  key={a.id}
-                  href={`/cp/${a.id}`}
-                  className="block bg-surface border border-border-light rounded-md p-3 hover:shadow-md transition-shadow focus-visible:outline-none"
-                >
-                  <div className="flex items-start gap-2 mb-1">
-                    <div className="min-w-0 flex-1">
-                      <p className="font-bold text-sm text-primary">{a.articulo}</p>
-                      {a.epigrafe && (
-                        <p className="font-semibold text-sm text-text">{a.epigrafe}</p>
-                      )}
+                <Card key={a.id} padding="none" className="hover:shadow-md transition-shadow">
+                  <Link href={`/cp/${a.id}`} className="block p-3 focus-visible:outline-none">
+                    <div className="flex items-start gap-2 mb-1.5">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm text-text mb-1">{a.articulo}</h3>
+                        {a.epigrafe && (
+                          <p className="font-semibold text-xs text-text-secondary leading-4">{a.epigrafe}</p>
+                        )}
+                      </div>
+                      <ArrowRight size={16} className="text-text-muted flex-shrink-0 mt-1" />
                     </div>
-                    <ArrowRight size={16} className="text-text-muted flex-shrink-0 mt-1" />
+
+                    <p className="text-xs text-text-secondary line-clamp-3 leading-5 mb-2 font-serif">
+                      {a.texto}
+                    </p>
+
+                    <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                      <FileText size={14} className="text-accent flex-shrink-0" />
+                      {a.tema && <Badge tone="primary">{TEMA_LABELS[a.tema] || a.tema}</Badge>}
+                    </div>
+
+                    {ubicacion(a) && (
+                      <p className="text-text-muted text-[11px] italic truncate">{ubicacion(a)}</p>
+                    )}
+                  </Link>
+
+                  <div className="flex border-t border-border-light">
+                    <Link
+                      href={`/cp/${a.id}`}
+                      className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-primary hover:bg-surface-alt"
+                    >
+                      <ArrowRight size={14} />
+                      Ver detalle
+                    </Link>
                   </div>
-                  <p className="text-xs text-text-secondary line-clamp-2 leading-4 mb-1">
-                    {a.texto}
-                  </p>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {a.tema && <Badge tone="primary">{TEMA_LABELS[a.tema] || a.tema}</Badge>}
-                    {a.libro && <span className="text-[11px] text-text-muted">{a.libro}</span>}
-                  </div>
-                </Link>
+                </Card>
               ))}
             </div>
 
