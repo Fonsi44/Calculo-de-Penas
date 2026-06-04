@@ -10,7 +10,7 @@ const LOGIN_WINDOW_MS = 60_000;
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
-  const rl = rateLimit(ip, { keyPrefix: 'login', windowMs: LOGIN_WINDOW_MS, max: LOGIN_MAX });
+  const rl = await rateLimit(ip, { keyPrefix: 'login', windowMs: LOGIN_WINDOW_MS, max: LOGIN_MAX });
   if (!rl.ok) {
     await audit({
       accion: 'rate_limited',

@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   try {
     const user = requireAuth(request);
 
-    const rl = rateLimit(user.userId, { keyPrefix: 'calc', windowMs: CALC_WINDOW_MS, max: CALC_MAX });
+    const rl = await rateLimit(user.userId, { keyPrefix: 'calc', windowMs: CALC_WINDOW_MS, max: CALC_MAX });
     if (!rl.ok) {
       return rateLimitResponse(rl);
     }

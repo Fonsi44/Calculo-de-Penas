@@ -1,11 +1,6 @@
-type Bucket = { count: number; resetAt: number };
-
-const buckets = new Map<string, Bucket>();
-
-const DEFAULTS = {
-  windowMs: 60_000,
-  max: 5,
-};
+import { db } from './db';
+import { rateLimits } from './schema';
+import { sql } from 'drizzle-orm';
 
 export interface RateLimitResult {
   ok: boolean;
@@ -20,30 +15,46 @@ export interface RateLimitOpts {
   keyPrefix?: string;
 }
 
-export function rateLimit(identifier: string, opts: RateLimitOpts = {}): RateLimitResult {
+const DEFAULTS = {
+  windowMs: 60_000,
+  max: 5,
+};
+
+export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): Promise<RateLimitResult> {
   const windowMs = opts.windowMs ?? DEFAULTS.windowMs;
   const max = opts.max ?? DEFAULTS.max;
-  const key = `${opts.keyPrefix ?? 'default'}::${identifier}`;
-  const now = Date.now();
-  const existing = buckets.get(key);
+  const keyPrefix = opts.keyPrefix ?? 'default';
+  const now = new Date();
 
-  if (!existing || existing.resetAt <= now) {
-    const resetAt = now + windowMs;
-    buckets.set(key, { count: 1, resetAt });
-    return { ok: true, remaining: max - 1, resetAt, retryAfterSec: 0 };
-  }
+  const insertResult = await db.insert(rateLimits)
+    .values({
+      identifier,
+      keyPrefix,
+      count: 1,
+      windowStart: now,
+      expiresAt: new Date(now.getTime() + windowMs),
+    })
+    .onConflictDoUpdate({
+      target: [rateLimits.identifier, rateLimits.keyPrefix],
+      set: {
+        count: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN 1 ELSE ${rateLimits.count} + 1 END`,
+        windowStart: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN NOW() ELSE ${rateLimits.windowStart} END`,
+        expiresAt: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN NOW() + make_interval(secs => ${windowMs / 1000}) ELSE ${rateLimits.expiresAt} END`,
+      },
+    })
+    .returning({ count: rateLimits.count, expiresAt: rateLimits.expiresAt });
 
-  if (existing.count >= max) {
-    return {
-      ok: false,
-      remaining: 0,
-      resetAt: existing.resetAt,
-      retryAfterSec: Math.ceil((existing.resetAt - now) / 1000),
-    };
-  }
+  const row = insertResult[0];
+  const resetAt = new Date(row.expiresAt).getTime();
+  const remaining = Math.max(0, max - row.count);
+  const ok = row.count <= max;
 
-  existing.count += 1;
-  return { ok: true, remaining: max - existing.count, resetAt: existing.resetAt, retryAfterSec: 0 };
+  return {
+    ok,
+    remaining,
+    resetAt,
+    retryAfterSec: ok ? 0 : Math.ceil((resetAt - Date.now()) / 1000),
+  };
 }
 
 export function rateLimitResponse(res: RateLimitResult): Response {
@@ -68,8 +79,4 @@ export function getClientIp(request: Request): string {
   const real = request.headers.get('x-real-ip');
   if (real) return real.trim();
   return 'unknown';
-}
-
-export function clearAllBuckets(): void {
-  buckets.clear();
 }

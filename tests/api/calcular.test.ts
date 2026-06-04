@@ -1,15 +1,22 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { signToken } from '../../lib/auth';
 
+const returningMock = vi.fn();
+const onConflictDoUpdateMock = vi.fn().mockReturnValue({ returning: returningMock });
+const valuesMock = vi.fn().mockReturnValue({ onConflictDoUpdate: onConflictDoUpdateMock });
+const insertMock = vi.fn().mockReturnValue({ values: valuesMock });
+
 vi.mock('../../lib/db', () => ({
   db: {
     select: vi.fn(),
+    insert: (...args: unknown[]) => insertMock(...args),
   },
   isDbConfigured: () => true,
 }));
 
 vi.mock('../../lib/schema', () => ({
   delitos: { id: 'delitos.id' },
+  rateLimits: { identifier: 'rate_limits.identifier', keyPrefix: 'rate_limits.key_prefix' },
 }));
 
 import { POST } from '../../app/api/calcular/route';
@@ -58,6 +65,7 @@ const baseBody = {
 describe('POST /api/calcular', () => {
   beforeEach(() => {
     mockDb.select.mockReset();
+    returningMock.mockResolvedValue([{ count: 1, expiresAt: new Date(Date.now() + 60_000).toISOString() }]);
   });
 
   it('retorna 401 sin token', async () => {

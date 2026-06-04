@@ -129,6 +129,17 @@ export const auditoriaEventos = pgTable('auditoria_eventos', {
   creadoEnIdx: index('auditoria_creado_en_idx').on(table.creadoEn),
 }));
 
+export const rateLimits = pgTable('rate_limits', {
+  identifier: varchar('identifier', { length: 255 }).notNull(),
+  keyPrefix: varchar('key_prefix', { length: 50 }).notNull(),
+  count: integer('count').notNull().default(1),
+  windowStart: timestamp('window_start', { withTimezone: true }).notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+}, (table) => ({
+  pk: unique('rate_limits_pk').on(table.identifier, table.keyPrefix),
+  expiresIdx: index('rate_limits_expires_idx').on(table.expiresAt),
+}));
+
 export type AuditoriaAccion = typeof auditoriaAccionEnum.enumValues[number];
 export type AuditoriaEvento = typeof auditoriaEventos.$inferSelect;
 export type AuditoriaEventoInsert = typeof auditoriaEventos.$inferInsert;
