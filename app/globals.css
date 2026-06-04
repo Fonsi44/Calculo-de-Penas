@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
   /* Marca */
   --color-primary: #1A2B4A;
   --color-primary-light: #2D4070;

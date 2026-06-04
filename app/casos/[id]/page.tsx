@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Gavel, Calculator, ArrowRight, FileDown, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Gavel, Calculator, ArrowRight, FileDown, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { useAuth } from '../../auth-context';
+import { AppShell } from '@/components/layout/app-shell';
+import { IconButton } from '@/components/ui/icon-button';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -121,72 +123,67 @@ export default function CasoDetailPage() {
 
   if (!caso) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-background p-4">
-        <EmptyState
-          title="Caso no encontrado"
-          description="El caso solicitado no existe o fue eliminado."
-          action={
-            <Link href="/casos">
-              <Button variant="primary">Volver a mis casos</Button>
-            </Link>
-          }
-        />
-      </div>
+      <AppShell title="Caso" backHref="/casos" backLabel="Volver a mis casos">
+        <div className="p-4">
+          <EmptyState
+            title="Caso no encontrado"
+            description="El caso solicitado no existe o fue eliminado."
+            action={
+              <Link href="/casos">
+                <Button variant="primary">Volver a mis casos</Button>
+              </Link>
+            }
+          />
+        </div>
+      </AppShell>
     );
   }
 
-  return (
-    <div className="flex flex-col flex-1 bg-background">
-      <div className="bg-primary px-3 py-2">
-        <div className="flex items-center">
-          <Link href="/casos" aria-label="Volver a mis casos" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center mr-2 hover:bg-white/25">
-            <ChevronLeft size={18} className="text-text-inverse" />
-          </Link>
-          <div className="flex-1 min-w-0">
-            {editing ? (
-              <div className="flex gap-1">
-                <Input
-                  value={editTitulo}
-                  onChange={e => setEditTitulo(e.target.value)}
-                  autoFocus
-                  className="bg-white/20 border-white/30 text-text-inverse placeholder:text-text-inverse/50"
-                />
-                <Button variant="primary" size="sm" onClick={updateCaso}>OK</Button>
-                <Button variant="ghost" size="sm" onClick={() => setEditing(false)} className="text-text-inverse hover:bg-white/15">X</Button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <h1 className="text-text-inverse font-bold text-sm truncate flex-1">{caso.titulo}</h1>
-                <button
-                  type="button"
-                  onClick={() => setEditing(true)}
-                  className="text-[11px] text-accent underline flex-shrink-0 font-semibold"
-                >
-                  editar
-                </button>
-                {caso.calculos.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={downloadPDF}
-                    disabled={downloading}
-                    aria-label="Descargar informe en PDF"
-                    className="flex items-center gap-1 h-7 px-2 bg-accent text-primary rounded text-[11px] font-bold hover:bg-accent-light disabled:opacity-50"
-                  >
-                    {downloading ? <Loader2 size={12} className="animate-spin" /> : <FileDown size={12} />}
-                    PDF
-                  </button>
-                )}
-              </div>
-            )}
-            <p className="text-[11px] text-text-inverse/70">
-              {caso.cliente && `Cliente: ${caso.cliente} · `}
-              {pluralizar(caso.calculos.length, 'cálculo', 'cálculos')}
-            </p>
-          </div>
-        </div>
-      </div>
+  const subtitle = [
+    caso.cliente && `Cliente: ${caso.cliente}`,
+    pluralizar(caso.calculos.length, 'cálculo', 'cálculos'),
+  ].filter(Boolean).join(' · ');
 
-      <div className="flex-1 overflow-y-auto p-3">
+  return (
+    <AppShell
+      title={caso.titulo}
+      subtitle={subtitle}
+      backHref="/casos"
+      backLabel="Volver a mis casos"
+      headerRight={
+        <div className="flex items-center gap-1">
+          <IconButton label="Editar título" variant="subtle" onClick={() => setEditing(true)}>
+            <Pencil size={16} />
+          </IconButton>
+          {caso.calculos.length > 0 && (
+            <IconButton
+              label="Descargar informe en PDF"
+              variant="subtle"
+              onClick={downloadPDF}
+              disabled={downloading}
+            >
+              {downloading ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
+            </IconButton>
+          )}
+        </div>
+      }
+    >
+      <div className="p-3">
+        {editing && (
+          <Card padding="md" tone="accent" className="mb-3 max-w-2xl mx-auto">
+            <h2 className="font-bold text-sm text-text mb-2">Editar t&iacute;tulo del caso</h2>
+            <Input
+              value={editTitulo}
+              onChange={e => setEditTitulo(e.target.value)}
+              autoFocus
+              className="mb-2"
+            />
+            <div className="flex gap-2">
+              <Button variant="secondary" fullWidth onClick={() => { setEditing(false); setEditTitulo(caso.titulo); }}>Cancelar</Button>
+              <Button variant="primary" fullWidth disabled={!editTitulo.trim() || editTitulo === caso.titulo} onClick={updateCaso}>Guardar</Button>
+            </div>
+          </Card>
+        )}
         <div className="max-w-2xl mx-auto">
           {caso.calculos.length === 0 ? (
             <EmptyState
@@ -251,6 +248,6 @@ export default function CasoDetailPage() {
           <ArrowRight size={16} />
         </Link>
       </div>
-    </div>
+    </AppShell>
   );
 }

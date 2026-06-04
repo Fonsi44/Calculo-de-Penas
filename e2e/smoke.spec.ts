@@ -72,4 +72,30 @@ test.describe('Smoke — rutas públicas', () => {
     expect(content).toMatch(/Responsable del Tratamiento/i);
     expect(content).toMatch(/Base Legal/i);
   });
+
+  test('dark mode: clase .dark aplica variables CSS correctas', async ({ page }) => {
+    await page.goto('/login');
+    const html = page.locator('html');
+
+    const lightBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    expect(lightBg).toBeTruthy();
+
+    await page.evaluate(() => {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('lex-theme', 'dark');
+    });
+    await expect(html).toHaveClass(/dark/);
+
+    const darkBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    expect(darkBg, 'bg debe cambiar al activar dark').not.toBe(lightBg);
+
+    await page.evaluate(() => {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('lex-theme', 'light');
+    });
+    await expect(html).not.toHaveClass(/dark/);
+
+    const lightBg2 = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    expect(lightBg2, 'bg debe volver al valor original').toBe(lightBg);
+  });
 });

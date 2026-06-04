@@ -942,21 +942,41 @@ function BannerCalidadDatos() {
   if (!summary || summary.total === 0) return null;
   const { verificados, pendientes, rechazados, total } = summary;
   const pct = (n: number) => Math.round((n / total) * 100);
+  const completo = pendientes === 0 && rechazados === 0;
   return (
-    <div className="mb-3 border border-warning/40 bg-warning-bg rounded-md p-3 text-[11px] text-text-secondary">
-      <p className="font-bold text-text mb-1">Calidad del cat&aacute;logo de delitos</p>
+    <div
+      className={`mb-3 border rounded-md p-3 text-[11px] text-text-secondary ${
+        completo
+          ? 'border-success/30 bg-success-bg'
+          : 'border-warning/40 bg-warning-bg'
+      }`}
+    >
+      <p className="font-bold text-text mb-1">
+        {completo ? 'Catálogo validado' : 'Calidad del cat\u00e1logo de delitos'}
+      </p>
       <p>
         <span className="text-success font-semibold">{verificados} verificados ({pct(verificados)}%)</span>
-        {' · '}
-        <span className="text-warning font-semibold">{pendientes} a revisar ({pct(pendientes)}%)</span>
-        {' · '}
-        <span className="text-danger font-semibold">{rechazados} rechazados ({pct(rechazados)}%)</span>
+        {pendientes > 0 && (
+          <>
+            {' · '}
+            <span className="text-warning font-semibold">{pendientes} a revisar ({pct(pendientes)}%)</span>
+          </>
+        )}
+        {rechazados > 0 && (
+          <>
+            {' · '}
+            <span className="text-danger font-semibold">{rechazados} rechazados ({pct(rechazados)}%)</span>
+          </>
+        )}
         {' de '}
         <strong>{total}</strong> totales.
       </p>
       <p className="mt-1">
-        Fuente: <code>data/delitos-validacion.csv</code> (TF-IDF vs. CP Decreto 130-2017).
-        Los delitos no verificados requerir&aacute;n confirmaci&oacute;n manual.
+        {completo
+          ? 'Los registros han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Reporte: '
+          : 'Fuente: '}
+        <code>data/delitos-validacion.csv</code>
+        {!completo && ' (TF-IDF vs. CP Decreto 130-2017). Los delitos no verificados requerir\u00e1n confirmaci\u00f3n manual.'}
       </p>
     </div>
   );

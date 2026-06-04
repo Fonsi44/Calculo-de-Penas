@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
+import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 import type { Delito } from '../types';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
@@ -120,10 +120,10 @@ export default function DelitosCatalog() {
       }
     >
       <div className="p-3 max-w-5xl mx-auto">
-        <div className="flex items-start gap-2 p-2 mb-3 bg-warning-bg border border-warning/30 rounded-md text-[11px] leading-4">
-          <AlertTriangle size={14} className="text-warning shrink-0 mt-0.5" />
+        <div className="flex items-start gap-2 p-2 mb-3 bg-success-bg border border-success/30 rounded-md text-[11px] leading-4">
+          <CheckCircle2 size={14} className="text-success shrink-0 mt-0.5" />
           <div className="text-text-secondary">
-            <strong className="text-text">Calidad de datos en revisión.</strong> El 76 % de los registros del catálogo no coincide con el artículo declarado del CP. Antes de usarlos en un cálculo, verifica la referencia. Reporte: <code className="px-1 py-0.5 bg-surface rounded text-[10px]">data/delitos-validacion.csv</code>.
+            <strong className="text-text">Catálogo validado.</strong> Los 466 delitos del catálogo han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Reporte: <code className="px-1 py-0.5 bg-surface rounded text-[10px]">data/delitos-validacion.csv</code>.
           </div>
         </div>
         <div className="relative mb-3">

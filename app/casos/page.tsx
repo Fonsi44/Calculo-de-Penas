@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Plus, ChevronLeft, FileText, Gavel, Calendar, ArrowRight, Briefcase } from 'lucide-react';
+import { Plus, FileText, Gavel, Calendar, ArrowRight, Briefcase } from 'lucide-react';
 import { useAuth } from '../auth-context';
+import { AppShell } from '@/components/layout/app-shell';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -63,21 +64,16 @@ export default function CasosPage() {
   if (authLoading || loading) return <CenteredSpinner label="Cargando casos..." />;
 
   return (
-    <div className="flex flex-col flex-1 bg-background">
-      <div className="flex items-center bg-primary px-3 py-2 no-print">
-        <Link href="/" aria-label="Volver al inicio" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center mr-2 hover:bg-white/25">
-          <ChevronLeft size={18} className="text-text-inverse" />
-        </Link>
-        <div className="flex-1">
-          <h1 className="text-text-inverse font-bold text-sm">Mis casos</h1>
-          <p className="text-[11px] text-text-inverse/70">{pluralizar(casos.length, 'caso', 'casos')}</p>
-        </div>
+    <AppShell
+      title="Mis casos"
+      subtitle={pluralizar(casos.length, 'caso', 'casos')}
+      headerRight={
         <IconButton label="Crear nuevo caso" variant="solid" onClick={() => setShowNewForm(true)}>
           <Plus size={18} />
         </IconButton>
-      </div>
-
-      <div className="flex-1 overflow-y-auto p-3">
+      }
+    >
+      <div className="p-3">
         {showNewForm && (
           <Card padding="md" tone="accent" className="mb-3">
             <h2 className="font-bold text-sm text-text mb-3">Nuevo caso</h2>
@@ -150,6 +146,6 @@ export default function CasosPage() {
           </div>
         )}
       </div>
-    </div>
+    </AppShell>
   );
 }
