@@ -1,19 +1,37 @@
 import { z } from 'zod';
+import {
+  AGRAVANTES,
+  ATENUANTES,
+  EXIMENTES,
+  GRADOS_AUTORIA,
+  GRADOS_EJECUCION,
+  TIPOS_CONCURSO,
+} from './catalogos';
+
+const ids = <T extends { id: string }>(items: T[]): [string, ...string[]] =>
+  items.map((i) => i.id) as [string, ...string[]];
+
+const ID_AGRAVANTES = ids(AGRAVANTES);
+const ID_ATENUANTES = ids(ATENUANTES);
+const ID_EXIMENTES = ids(EXIMENTES);
+const ID_GRADO_AUTORIA = ids(GRADOS_AUTORIA);
+const ID_GRADO_EJECUCION = ids(GRADOS_EJECUCION);
+const ID_TIPOS_CONCURSO = ids(TIPOS_CONCURSO);
 
 export const calcularSchema = z.object({
   delitos: z.array(z.object({
     delito_id: z.string().min(1),
     pena_seleccionada: z.enum(['prision', 'multa']),
     variables_activas: z.array(z.string()),
-    grado_autoria: z.string(),
-    grado_ejecucion: z.string(),
-    reduccion_tentativa: z.number().min(1).max(2),
-    agravantes: z.array(z.string()),
-    atenuantes: z.array(z.string()),
-    eximentes: z.array(z.string()),
-    eximente_completa: z.string().nullable(),
+    grado_autoria: z.enum(ID_GRADO_AUTORIA),
+    grado_ejecucion: z.enum(ID_GRADO_EJECUCION),
+    reduccion_tentativa: z.number().int().min(1).max(2),
+    agravantes: z.array(z.enum(ID_AGRAVANTES)),
+    atenuantes: z.array(z.enum(ID_ATENUANTES)),
+    eximentes: z.array(z.enum(ID_EXIMENTES)),
+    eximente_completa: z.enum(ID_EXIMENTES).nullable(),
   })).min(1),
-  tipo_concurso: z.string(),
+  tipo_concurso: z.enum(ID_TIPOS_CONCURSO),
 });
 
 export const delitoCreateSchema = z.object({

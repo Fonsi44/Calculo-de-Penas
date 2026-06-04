@@ -51,6 +51,7 @@ export const GRADOS_EJECUCION: CatalogoItem[] = [
 ];
 
 export const TIPOS_CONCURSO: CatalogoItem[] = [
+  { id: 'ninguno', nombre: 'Sin concurso (delito único)', articulo: '', descripcion: 'Aplica la pena individual sin acumulación ni reglas de concurso.' },
   { id: 'real', nombre: 'Concurso Real', articulo: 'Art. 66 CP', descripcion: 'Pluralidad de hechos delictivos independientes. Se acumulan las penas respetando los límites legales (triple de la más grave, máx. 30 años, o 40 si algún delito excede 20 años).' },
   { id: 'ideal', nombre: 'Concurso Ideal', articulo: 'Art. 67 CP', descripcion: 'Una sola acción u omisión infringe varias disposiciones legales. Pena de la infracción más grave aumentada en 1/3.' },
   { id: 'continuado', nombre: 'Delito Continuado', articulo: 'Art. 68 CP', descripcion: 'Pluralidad de acciones con misma finalidad delictiva. Pena en mitad superior de la más grave, pudiendo llegar hasta +1/3.' },

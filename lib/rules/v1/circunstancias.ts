@@ -1,4 +1,4 @@
-import { EXIMENTES } from '../../catalogos';
+import { AGRAVANTES, ATENUANTES, EXIMENTES } from '../../catalogos';
 import { aplicar_mitad_inferior, aplicar_mitad_superior } from '../../utils';
 import type { DelitoConfig } from './types';
 
@@ -10,10 +10,13 @@ export interface ResultadoCircunstancias {
   modificaciones: string[];
 }
 
+const idExisteEn = <T extends { id: string }>(items: T[], id: string): boolean =>
+  items.some((i) => i.id === id);
+
 export function contarEximentesIncompletas(config: DelitoConfig): number {
   return config.eximentes.filter((eid) => {
     const ex = EXIMENTES.find((e) => e.id === eid);
-    return ex && !ex.completa;
+    return ex ? !ex.completa : false;
   }).length;
 }
 
@@ -23,9 +26,11 @@ export function aplicarCircunstancias(
   config: DelitoConfig,
   modificaciones: string[],
 ): ResultadoCircunstancias {
+  const agravantes_validos = config.agravantes.filter((id) => idExisteEn(AGRAVANTES, id));
+  const atenuantes_validos = config.atenuantes.filter((id) => idExisteEn(ATENUANTES, id));
   const eximentes_incompletas = contarEximentesIncompletas(config);
-  const total_atenuantes = config.atenuantes.length + eximentes_incompletas;
-  const total_agravantes = config.agravantes.length;
+  const total_atenuantes = atenuantes_validos.length + eximentes_incompletas;
+  const total_agravantes = agravantes_validos.length;
 
   let min = pena_min;
   let max = pena_max;
