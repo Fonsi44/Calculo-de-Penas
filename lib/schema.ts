@@ -147,6 +147,16 @@ export const rateLimits = pgTable('rate_limits', {
   expiresIdx: index('rate_limits_expires_idx').on(table.expiresAt),
 }));
 
+export const aceptacionesLegales = pgTable('aceptaciones_legales', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  version: varchar('version', { length: 20 }).notNull(),
+  aceptadoEn: timestamp('aceptado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  uniqueUsuarioVersion: unique('aceptacion_unique').on(table.usuarioId, table.version),
+}));
+
 export type AuditoriaAccion = typeof auditoriaAccionEnum.enumValues[number];
 export type AuditoriaEvento = typeof auditoriaEventos.$inferSelect;
 export type AuditoriaEventoInsert = typeof auditoriaEventos.$inferInsert;

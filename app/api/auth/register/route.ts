@@ -1,7 +1,9 @@
 import { db } from '@/lib/db';
-import { usuarios } from '@/lib/schema';
+import { usuarios, aceptacionesLegales } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { hashPassword, signToken, createAuthResponse } from '@/lib/auth';
+
+const TERMINOS_VERSION = '2026-06-04';
 
 export async function POST(request: Request) {
   try {
@@ -30,6 +32,11 @@ export async function POST(request: Request) {
       passwordHash,
       nombre,
     }).returning();
+
+    await db.insert(aceptacionesLegales).values({
+      usuarioId: user.id,
+      version: TERMINOS_VERSION,
+    }).onConflictDoNothing();
 
     const token = signToken({ userId: user.id, email: user.email, rol: user.rol });
     return createAuthResponse({
