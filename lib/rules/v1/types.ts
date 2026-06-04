@@ -76,6 +76,7 @@ export interface DelitoAnalizado {
 }
 
 export interface ResultadoCalculo {
+  version_motor: string;
   delitos_analizados: DelitoAnalizado[];
   tipo_concurso: string;
   concurso_descripcion: string;

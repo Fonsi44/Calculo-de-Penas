@@ -124,6 +124,7 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
   const analisis_juridico = generarAnalisisJuridico(resultados_individuales, request.tipo_concurso, resultado_concurso);
 
   return {
+    version_motor: 'v1',
     delitos_analizados: resultados_individuales,
     tipo_concurso: request.tipo_concurso === 'ninguno' ? 'ninguno' : request.tipo_concurso,
     concurso_descripcion: resultado_concurso.descripcion,
