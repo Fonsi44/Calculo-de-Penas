@@ -90,6 +90,24 @@ export default function CasoDetailPage() {
     }
   };
 
+  const deleteCaso = async () => {
+    if (!caso) return;
+    const ok = await confirm({
+      title: `¿Eliminar caso "${caso.titulo}"?`,
+      description: 'Se eliminará el caso y todos sus cálculos asociados. Esta acción no se puede deshacer.',
+      confirmLabel: 'Eliminar caso',
+      tone: 'danger',
+    });
+    if (!ok) return;
+    const res = await fetch(`/api/casos/${caso.id}`, { method: 'DELETE' });
+    if (res.ok) {
+      toast.success('Caso eliminado');
+      router.push('/casos');
+    } else {
+      toast.danger('Error al eliminar el caso');
+    }
+  };
+
   const downloadPDF = async () => {
     if (!caso) return;
     setDownloading(true);
@@ -154,6 +172,9 @@ export default function CasoDetailPage() {
         <div className="flex items-center gap-1">
           <IconButton label="Editar título" variant="subtle" onClick={() => setEditing(true)}>
             <Pencil size={16} />
+          </IconButton>
+          <IconButton label="Eliminar caso" variant="subtle" onClick={deleteCaso}>
+            <Trash2 size={16} className="text-danger" />
           </IconButton>
           {caso.calculos.length > 0 && (
             <IconButton

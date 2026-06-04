@@ -68,3 +68,36 @@ export async function PUT(
     return authFailureResponse(e);
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const user = requireAuth(request);
+    const { id } = await params;
+
+    const [existing] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })
+      .from(casos).where(eq(casos.id, id));
+    if (!existing) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (existing.usuarioId !== user.userId) {
+      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+    }
+
+    await db.delete(calculos).where(eq(calculos.casoId, id));
+    await db.delete(casos).where(eq(casos.id, id));
+
+    await audit({
+      usuarioId: user.userId,
+      accion: 'caso_deleted',
+      recurso: 'caso',
+      recursoId: id,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+    });
+
+    return new Response(JSON.stringify({ message: 'Caso eliminado' }), { status: 200 });
+  } catch (e) {
+    return authFailureResponse(e);
+  }
+}
