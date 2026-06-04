@@ -20,6 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem('lex-theme') as Theme | null;
     if (saved === 'dark') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage hydration
       setTheme('dark');
       document.documentElement.classList.add('dark');
     }

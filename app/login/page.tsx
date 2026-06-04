@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Scale, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Field, Input } from '@/components/ui/input';

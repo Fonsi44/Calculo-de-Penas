@@ -80,6 +80,7 @@ function DelitoForm() {
       .catch(() => toast.danger('No se pudieron cargar las clasificaciones'));
 
     if (isEdit && id) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch hydration
       setLoading(true);
       fetch(`/api/delitos/${id}`)
         .then(r => r.json())

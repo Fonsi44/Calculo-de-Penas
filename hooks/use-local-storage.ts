@@ -9,11 +9,11 @@ export function useLocalStorage<T>(key: string, initial: T): [T, (v: T | ((prev:
   useEffect(() => {
     try {
       const raw = localStorage.getItem(key);
-      if (raw !== null) setValue(JSON.parse(raw) as T);
+      if (raw !== null) setValue(JSON.parse(raw) as T); // eslint-disable-line react-hooks/set-state-in-effect -- localStorage hydration
     } catch {
       // ignore
     }
-    setHydrated(true);
+    setHydrated(true);  
   }, [key]);
 
   const set = useCallback(

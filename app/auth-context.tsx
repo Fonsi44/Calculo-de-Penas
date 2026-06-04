@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  useEffect(() => { refresh(); }, []);
+  useEffect(() => { refresh(); }, []); // eslint-disable-line react-hooks/set-state-in-effect -- refresh hydration
 
   const logout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });

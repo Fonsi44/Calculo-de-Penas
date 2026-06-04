@@ -92,7 +92,7 @@ export function useMobileNav() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   useEffect(() => {
-    if (isDesktop) setOpen(false);
+    if (isDesktop) setOpen(false); // eslint-disable-line react-hooks/set-state-in-effect -- media query sync
   }, [isDesktop]);
   return { open, setOpen };
 }

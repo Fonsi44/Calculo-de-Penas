@@ -47,6 +47,7 @@ export default function ArticuloCPPage() {
 
   useEffect(() => {
     if (!params?.id) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch hydration
     setLoading(true);
     fetch(`/api/cp/${params.id}`)
       .then(r => r.json())

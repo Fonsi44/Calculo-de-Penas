@@ -59,10 +59,12 @@ export default function BibliotecaCP() {
   const debouncedSearch = useDebounce(search, 300);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset page on filter change
     setPage(0);
   }, [debouncedSearch, tema]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch hydration
     setLoading(true);
     const params = new URLSearchParams();
     if (debouncedSearch) params.set('busqueda', debouncedSearch);

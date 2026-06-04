@@ -39,7 +39,10 @@ export default function DelitosCatalog() {
   const debouncedSearch = useDebounce(search, 250);
   const offset = page * PAGE_SIZE;
 
-  useEffect(() => { setPage(0); }, [debouncedSearch, activeRama]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset page on filter change
+    setPage(0);
+  }, [debouncedSearch, activeRama]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -62,7 +65,7 @@ export default function DelitosCatalog() {
     }
   }, [offset, activeRama, debouncedSearch]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { load(); }, [load]); // eslint-disable-line react-hooks/set-state-in-effect -- mount + dep refetch
 
   const handleDelete = async (delito: Delito) => {
     const ok = await confirm({

@@ -81,7 +81,7 @@ export default function Calculadora() {
   useUnsavedChanges(configs.length > 0 && !resultado);
 
   useEffect(() => {
-    if (resultado) setStep(8);
+    if (resultado) setStep(8); // eslint-disable-line react-hooks/set-state-in-effect -- imperative navigation to result step
   }, [resultado]);
 
   const current = configs[currentIdx];

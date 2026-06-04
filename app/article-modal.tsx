@@ -24,6 +24,7 @@ export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
 
   useEffect(() => {
     if (!articuloRef) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch hydration
     setLoading(true);
     setError(null);
     setArticle(null);

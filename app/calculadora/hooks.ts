@@ -31,7 +31,7 @@ export function useDelitosLoader(): UseDelitosLoader {
     }
   }, []);
 
-  useEffect(() => { refetch(); }, [refetch]);
+  useEffect(() => { refetch(); }, [refetch]); // eslint-disable-line react-hooks/set-state-in-effect -- mount refetch
 
   return { delitos, setDelitos, loading, fetchError, refetch };
 }

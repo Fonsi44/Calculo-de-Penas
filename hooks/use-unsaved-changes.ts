@@ -1,11 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 export function useUnsavedChanges(active: boolean): void {
-  const activeRef = useRef(active);
-  activeRef.current = active;
-
   useEffect(() => {
     if (!active) return;
     const handler = (e: BeforeUnloadEvent) => {

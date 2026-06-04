@@ -82,11 +82,14 @@ export function ArticuloAutocomplete({
 
   useEffect(() => {
     if (!debounced || debounced.length < 2) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- debounce reset
       setResults([]);
+       
       setLoading(false);
       return;
     }
     let cancelled = false;
+     
     setLoading(true);
     fetch(`/api/cp?busqueda=${encodeURIComponent(debounced)}&limit=${maxResults}`)
       .then(r => r.json())
