@@ -11,6 +11,7 @@ const PUBLIC_API_PREFIXES = [
 
 const PUBLIC_API_EXACT = new Set<string>([
   '/api/delitos/count',
+  '/api/health',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>(['/login', '/_not-found', '/terminos', '/privacidad']);
