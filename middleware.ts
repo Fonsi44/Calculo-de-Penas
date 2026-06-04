@@ -13,7 +13,7 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/delitos/count',
 ]);
 
-const PUBLIC_PAGE_EXACT = new Set<string>(['/login', '/_not-found']);
+const PUBLIC_PAGE_EXACT = new Set<string>(['/login', '/_not-found', '/terminos', '/privacidad']);
 
 function isPublicApiPath(pathname: string): boolean {
   if (PUBLIC_API_EXACT.has(pathname)) return true;

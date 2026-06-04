@@ -54,4 +54,22 @@ test.describe('Smoke — rutas públicas', () => {
     expect(csp, 'CSP debe incluir object-src none').toContain("object-src 'none'");
     expect(csp, 'CSP debe incluir frame-ancestors none').toContain("frame-ancestors 'none'");
   });
+
+  test('terminos page carga y muestra secciones legales', async ({ page }) => {
+    const res = await page.goto('/terminos');
+    expect(res?.status()).toBe(200);
+    const content = await page.content();
+    expect(content).toMatch(/Términos y Condiciones/i);
+    expect(content).toMatch(/sin asesoramiento legal/i);
+    expect(content).toMatch(/Ley Aplicable/i);
+  });
+
+  test('privacidad page carga y muestra secciones legales', async ({ page }) => {
+    const res = await page.goto('/privacidad');
+    expect(res?.status()).toBe(200);
+    const content = await page.content();
+    expect(content).toMatch(/Privacidad/i);
+    expect(content).toMatch(/Responsable del Tratamiento/i);
+    expect(content).toMatch(/Base Legal/i);
+  });
 });
