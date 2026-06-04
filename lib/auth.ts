@@ -1,20 +1,80 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_SECRET_PREVIOUS = process.env.JWT_SECRET_PREVIOUS;
-if (!JWT_SECRET || JWT_SECRET.length < 32) {
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error('JWT_SECRET environment variable is required (>= 32 chars) in production');
+const IS_PROD = process.env.NODE_ENV === 'production';
+const IS_BUILD_PHASE = process.env.NEXT_PHASE === 'phase-production-build';
+const DEV_FALLBACK_SECRET = 'dev-only-secret-not-for-production-min-32-chars-AAAAA';
+
+const WEAK_SECRET_PATTERNS: RegExp[] = [
+  /change[-_]?in[-_]?production/i,
+  /dev[-_]?only/i,
+  /replace[-_]?with/i,
+  /example/i,
+  /placeholder/i,
+  /lex[-_]?honduras[-_]?secret/i,
+  /tu[-_]?secreto/i,
+  /your[-_]?secret/i,
+  /test1234/i,
+];
+
+let _secretValidated = false;
+let _previousSecretValidated = false;
+
+export function validateJwtSecret(secret: string | undefined, role: 'current' | 'previous'): void {
+  if (!secret) return;
+  if (secret.length < 32) {
+    throw new Error(
+      `JWT_SECRET${role === 'previous' ? '_PREVIOUS' : ''} debe tener al menos 32 caracteres (actual: ${secret.length}).`,
+    );
+  }
+  if (IS_PROD && secret === DEV_FALLBACK_SECRET) {
+    throw new Error('JWT_SECRET es el valor por defecto de desarrollo. No se permite en producción.');
+  }
+  for (const re of WEAK_SECRET_PATTERNS) {
+    if (re.test(secret)) {
+      const msg = `JWT_SECRET${role === 'previous' ? '_PREVIOUS' : ''} parece un placeholder o valor débil (coincide con patrón: ${re}). Genera uno nuevo con: node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"`;
+      if (IS_PROD) throw new Error(msg);
+      console.warn(`[auth] ADVERTENCIA: ${msg}`);
+      return;
+    }
   }
 }
-const SECRET: string = JWT_SECRET || 'dev-only-secret-not-for-production-min-32-chars-AAAAA';
+
+function ensureSecretValidated() {
+  if (_secretValidated) return;
+  _secretValidated = true;
+  if (IS_BUILD_PHASE) return;
+  try {
+    validateJwtSecret(process.env.JWT_SECRET, 'current');
+  } catch (e) {
+    if (IS_PROD) throw e;
+    console.warn(`[auth] ${(e as Error).message}`);
+  }
+}
+
+function ensurePreviousSecretValidated() {
+  if (_previousSecretValidated) return;
+  _previousSecretValidated = true;
+  if (IS_BUILD_PHASE) return;
+  try {
+    validateJwtSecret(process.env.JWT_SECRET_PREVIOUS, 'previous');
+  } catch (e) {
+    if (IS_PROD) throw e;
+    console.warn(`[auth] ${(e as Error).message}`);
+  }
+}
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET_PREVIOUS = process.env.JWT_SECRET_PREVIOUS;
+if (!IS_BUILD_PHASE && !JWT_SECRET && IS_PROD) {
+  throw new Error('JWT_SECRET environment variable is required (>= 32 chars) in production');
+}
+const SECRET: string = JWT_SECRET && JWT_SECRET.length >= 32 ? JWT_SECRET : DEV_FALLBACK_SECRET;
 const SECRET_PREVIOUS: string | null = JWT_SECRET_PREVIOUS && JWT_SECRET_PREVIOUS.length >= 32
   ? JWT_SECRET_PREVIOUS
   : null;
 const SALT_ROUNDS = 10;
 const TOKEN_TTL_SECONDS = 60 * 60 * 24;
-const IS_PROD = process.env.NODE_ENV === 'production';
 
 export const COOKIE_NAME = IS_PROD ? '__Host-token' : 'token';
 export const COOKIE_NAME_FALLBACK = 'token';
@@ -36,10 +96,13 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 }
 
 export function signToken(payload: { userId: string; email: string; rol: string }): string {
+  ensureSecretValidated();
   return jwt.sign(payload, SECRET, { expiresIn: `${TOKEN_TTL_SECONDS}s` });
 }
 
 export function verifyToken(token: string): { userId: string; email: string; rol: string } | null {
+  ensureSecretValidated();
+  ensurePreviousSecretValidated();
   try {
     return jwt.verify(token, SECRET) as { userId: string; email: string; rol: string };
   } catch {
