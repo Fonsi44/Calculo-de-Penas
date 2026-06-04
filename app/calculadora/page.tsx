@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDelitosLoader, useDelitosFilter } from './hooks';
 import type { ResultadoCalculo } from '@/lib/calculo';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ import {
   Save,
   Printer,
   Search as SearchIcon,
+  FileEdit,
 } from 'lucide-react';
 import {
   AGRAVANTES,
@@ -57,7 +58,16 @@ const STEPS: StepperStep[] = [
 ];
 
 export default function Calculadora() {
+  return (
+    <Suspense fallback={<CenteredSpinner label="Cargando calculadora..." />}>
+      <CalculadoraInner />
+    </Suspense>
+  );
+}
+
+function CalculadoraInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const toast = useToast();
   const confirm = useConfirm();
 
@@ -77,12 +87,66 @@ export default function Calculadora() {
   const [selectedCaso, setSelectedCaso] = useState('');
   const [saving, setSaving] = useState(false);
   const [pendientesConfirmados, setPendientesConfirmados] = useState<Record<string, boolean>>({});
+  const [loadingCalculoId, setLoadingCalculoId] = useState<string | null>(null);
+  const [modificandoCaso, setModificandoCaso] = useState<{ casoTitulo: string } | null>(null);
 
   useUnsavedChanges(configs.length > 0 && !resultado);
 
   useEffect(() => {
     if (resultado) setStep(8); // eslint-disable-line react-hooks/set-state-in-effect -- imperative navigation to result step
   }, [resultado]);
+
+  useEffect(() => {
+    const casoId = searchParams.get('casoId');
+    const calculoId = searchParams.get('calculoId');
+    if (!casoId) return;
+    if (calculoId) {
+      setSelectedCaso(casoId); // eslint-disable-line react-hooks/set-state-in-effect -- sync casoId from URL
+      setLoadingCalculoId(calculoId);
+    } else {
+      setSelectedCaso(casoId);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!loadingCalculoId) return;
+    const ctrl = new AbortController();
+    const calculoId = loadingCalculoId;
+    (async () => {
+      try {
+        const r = await fetch(`/api/calculos/${calculoId}`, { signal: ctrl.signal });
+        if (!r.ok) throw new Error('No se pudo cargar el cálculo');
+        const data = await r.json();
+        const enriched: DelitoConfig[] = (data.config as Array<{ delito: Delito | null } & Omit<DelitoConfig, 'delito'>>)
+          .filter(c => c.delito)
+          .map(c => ({
+            delito: c.delito as Delito,
+            pena_seleccionada: (c.pena_seleccionada ?? 'prision') as 'prision' | 'multa',
+            variables_activas: c.variables_activas ?? [],
+            grado_autoria: c.grado_autoria ?? 'autor_directo',
+            grado_ejecucion: c.grado_ejecucion ?? 'consumado',
+            reduccion_tentativa: c.reduccion_tentativa ?? 1,
+            agravantes: c.agravantes ?? [],
+            atenuantes: c.atenuantes ?? [],
+            eximentes: c.eximentes ?? [],
+            eximente_completa: c.eximente_completa ?? null,
+          }));
+        if (enriched.length === 0) throw new Error('Cálculo sin delitos válidos');
+        setConfigs(enriched);
+        setSelectedCaso(data.casoId);
+        setModificandoCaso({ casoTitulo: data.casoTitulo ?? '' });
+        toast.success('Cálculo cargado. Modifica lo que necesites y guarda de nuevo.');
+        setStep(1);
+        setCurrentIdx(0);
+      } catch (e) {
+        if ((e as Error).name === 'AbortError') return;
+        toast.danger('No se pudo cargar el cálculo');
+      } finally {
+        setLoadingCalculoId(null);
+      }
+    })();
+    return () => ctrl.abort();
+  }, [loadingCalculoId, toast]);
 
   const current = configs[currentIdx];
   const hasWork = configs.length > 0 || Boolean(resultado);
@@ -290,6 +354,31 @@ export default function Calculadora() {
           <Stepper steps={STEPS} current={step} />
         </div>
       </header>
+
+      {modificandoCaso && (
+        <div className="bg-accent/15 border-b border-accent/30 px-3 py-2 no-print">
+          <div className="flex items-center gap-2 max-w-3xl mx-auto">
+            <FileEdit size={16} className="text-primary flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-primary">Modificando cálculo del caso</p>
+              <p className="text-[11px] text-text-secondary truncate">
+                {modificandoCaso.casoTitulo || 'Caso'} — al guardar se creará un nuevo cálculo en este caso
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setModificandoCaso(null);
+                setSelectedCaso('');
+                router.replace('/calculadora');
+              }}
+              className="text-[11px] font-semibold text-text-secondary hover:text-text underline flex-shrink-0"
+            >
+              Salir
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Desktop layout: sidebar stepper + content */}
       <div className="flex flex-1 overflow-hidden">

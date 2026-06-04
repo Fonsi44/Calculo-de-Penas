@@ -3,13 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Gavel, Calculator, ArrowRight, FileDown, Loader2 } from 'lucide-react';
+import { ChevronLeft, Gavel, Calculator, ArrowRight, FileDown, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { useAuth } from '../../auth-context';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
+import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm';
 import { formatFechaCorta, pluralizar } from '@/lib/ui';
 import type { DelitoConfig, ResultadoCalculo } from '@/lib/rules/v1/types';
 
@@ -33,6 +35,8 @@ export default function CasoDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const toast = useToast();
+  const confirm = useConfirm();
   const [caso, setCaso] = useState<Caso | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -64,6 +68,24 @@ export default function CasoDetailPage() {
     });
     setCaso({ ...caso, titulo: editTitulo });
     setEditing(false);
+  };
+
+  const deleteCalculo = async (calculoId: string) => {
+    if (!caso) return;
+    const ok = await confirm({
+      title: '¿Eliminar cálculo?',
+      description: 'Esta acción no se puede deshacer.',
+      confirmLabel: 'Eliminar',
+      tone: 'danger',
+    });
+    if (!ok) return;
+    const res = await fetch(`/api/calculos/${calculoId}`, { method: 'DELETE' });
+    if (res.ok) {
+      setCaso({ ...caso, calculos: caso.calculos.filter(c => c.id !== calculoId) });
+      toast.success('Cálculo eliminado');
+    } else {
+      toast.danger('Error al eliminar');
+    }
   };
 
   const downloadPDF = async () => {
@@ -172,7 +194,7 @@ export default function CasoDetailPage() {
               title="Sin cálculos"
               description="Realiza un cálculo desde la calculadora y guárdalo en este caso."
               action={
-                <Link href="/calculadora">
+                <Link href={`/calculadora?casoId=${caso.id}`}>
                   <Button variant="primary" iconLeft={<Calculator size={16} />}>
                     Ir a la calculadora
                   </Button>
@@ -192,8 +214,25 @@ export default function CasoDetailPage() {
                       {formatFechaCorta(calc.creadoEn)}
                     </span>
                   </div>
-                  <div className="text-xs text-text-secondary leading-4 line-clamp-3">
+                  <div className="text-xs text-text-secondary leading-4 line-clamp-3 mb-2">
                     {calc.resultado?.analisis_juridico?.split('\n').slice(0, 5).join(' · ')}
+                  </div>
+                  <div className="flex gap-2 pt-2 border-t border-border-light">
+                    <Link
+                      href={`/calculadora?casoId=${caso.id}&calculoId=${calc.id}`}
+                      className="flex-1 flex items-center justify-center gap-1 h-8 px-2 rounded-md bg-accent/15 text-primary text-[11px] font-bold hover:bg-accent/25 focus-visible:outline-none"
+                    >
+                      <Pencil size={12} />
+                      Modificar
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => deleteCalculo(calc.id)}
+                      className="flex items-center justify-center gap-1 h-8 px-2 rounded-md text-danger text-[11px] font-semibold hover:bg-danger-bg focus-visible:outline-none"
+                      aria-label="Eliminar cálculo"
+                    >
+                      <Trash2 size={12} />
+                    </button>
                   </div>
                 </Card>
               ))}
@@ -204,11 +243,11 @@ export default function CasoDetailPage() {
 
       <div className="sticky bottom-0 bg-surface border-t border-border-light px-3 py-2 no-print">
         <Link
-          href="/calculadora"
+          href={`/calculadora?casoId=${caso.id}`}
           className="flex items-center justify-center gap-2 h-10 rounded-md bg-primary text-text-inverse font-bold text-sm hover:bg-primary-light"
         >
           <Calculator size={16} />
-          Nuevo cálculo
+          Nuevo cálculo en este caso
           <ArrowRight size={16} />
         </Link>
       </div>
