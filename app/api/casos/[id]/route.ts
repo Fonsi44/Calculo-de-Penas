@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { casos, calculos } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function GET(
   request: Request,
@@ -52,6 +53,15 @@ export async function PUT(
       .set(update)
       .where(eq(casos.id, id))
       .returning();
+
+    await audit({
+      usuarioId: user.userId,
+      accion: 'caso_updated',
+      recurso: 'caso',
+      recursoId: id,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+    });
 
     return new Response(JSON.stringify(row), { status: 200 });
   } catch (e) {

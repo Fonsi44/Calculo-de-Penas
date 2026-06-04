@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { calculos, casos, delitos } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { getEstadoDelito } from '@/lib/estados-delitos';
 
 interface StoredConfig {
@@ -117,6 +118,16 @@ export async function DELETE(
     }
 
     await db.delete(calculos).where(eq(calculos.id, id));
+
+    await audit({
+      usuarioId: user.userId,
+      accion: 'calculo_deleted',
+      recurso: 'calculo',
+      recursoId: id,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+    });
+
     return new Response(JSON.stringify({ message: 'Cálculo eliminado' }), { status: 200 });
   } catch (e) {
     return authFailureResponse(e);

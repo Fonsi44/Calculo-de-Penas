@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { calculos, casos } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function POST(request: Request) {
   try {
@@ -31,6 +32,15 @@ export async function POST(request: Request) {
       config: JSON.parse(JSON.stringify(config)),
       resultado: JSON.parse(JSON.stringify(resultado)),
     }).returning();
+
+    await audit({
+      usuarioId: user.userId,
+      accion: 'calculo_created',
+      recurso: 'calculo',
+      recursoId: row.id,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+    });
 
     return new Response(JSON.stringify(row), { status: 201 });
   } catch (e) {
