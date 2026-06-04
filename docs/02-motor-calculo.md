@@ -26,7 +26,7 @@ Pipeline de dosificación:
    - Solo agravantes → mitad superior.
    - Solo atenuantes → mitad inferior.
    - Mixto → compensación aritmética (1 atenuante compensa 2 agravantes, Art. 70.a).
-   - `eximente_completa` (Art. 25 CP) → exime; se reporta en modificaciones.
+   - `eximente_completa` (Art. 30 CP) → exime; se reporta en modificaciones.
 6. **Resultado** → `{ pena_min, pena_max, modificaciones[] }`.
 
 ### `aplicar_concurso(delitos_result, tipo) → PenaFinal`
@@ -63,9 +63,9 @@ Punto de entrada del endpoint `POST /api/calcular`. Acepta `CalculoRequest`:
 
 ## Catálogos (`lib/catalogos.ts`)
 
-- 10 agravantes (Art. 27 CP): alevosía, premeditación, abuso confianza, etc.
-- 6 atenuantes (Art. 26 CP): arrebato, obcecación, embriaguez, etc.
-- 5 eximentes incompletas (Art. 25 CP): legítima defensa parcial, etc.
+- 10 agravantes (Art. 32 CP): alevosía, abuso de superioridad o confianza, ensañamiento, disfraz, precio o recompensa, prevalimiento del carácter público, víctima menor o con discapacidad, motivos discriminatorios, reincidencia, pluralidad de víctimas.
+- 6 atenuantes (Art. 31 CP): eximente incompleta, arrebato u obcecación, reparación del daño, menor de 21 años, confesión del delito, circunstancia análoga.
+- 5 eximentes completas (Art. 30 CP): inimputabilidad, legítima defensa, estado de necesidad, miedo insuperable, cumplimiento de un deber.
 - 4 grados de autoría (Art. 61 CP).
 - 3 grados de ejecución (Art. 62 CP).
 - 5 tipos de concurso (Arts. 66-68 CP).

@@ -27,7 +27,7 @@ LEX HONDURAS (cálculo de penas) es una aplicación Next.js (App Router, Turbopa
 
 ## Entidades (lib/schema.ts)
 
-- `delitos` (469 registros): catálogo de tipos penales con penas.
+- `delitos` (466 entradas en JSON / 434 únicos en BD por unique constraint): catálogo de tipos penales del CP Honduras Decreto 130-2017, con penas mínima y máxima en meses.
 - `ramas_juridicas` (119 registros): taxonomía legal.
 - `articulos_constitucion` (128 registros).
 - `articulos_cp` (635 registros, derivado).

@@ -49,9 +49,8 @@ export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase)
   };
 }
 
-export function aplicarConcursoPublic(penas: ResultadoIndividual[], tipo_concurso: string) {
-  return aplicarConcurso(penas, tipo_concurso);
-}
+export { aplicarConcurso } from './concurso';
+export { generarAnalisisJuridico } from './analisis';
 
 export function generarAnalisisJuridicoPublic(
   delitos: DelitoAnalizado[],

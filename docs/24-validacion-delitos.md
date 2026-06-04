@@ -2,9 +2,9 @@
 
 ## Estado actual
 
-- **Total**: 469 delitos en `data/delitos.json`
+- **Total**: 466 delitos en `data/delitos.json`
 - **Validados**: 0
-- **Pendientes**: 469
+- **Pendientes**: 0 (verificados: 466/466)
 - **Archivo de trabajo**: `data/delitos-validacion.json`
 
 ## ¿Por qué validar?
@@ -206,8 +206,8 @@ node -e "const d=require('./data/delitos-validacion.json'); const c={};d.forEach
 2. **Validación final**: para cada delito mapeado, se actualizó `data/delitos.json` con el artículo y rango de pena correctos del CP vigente.
 
 **Resultado final (binario validado/rechazar)**:
-- **Validados**: 466/469 (artículo existe en CP vigente Decreto 130-2017)
-- **Rechazados**: 3/469 (Duelo, Provocación al duelo, Provocación directa al duelo — el tipo penal "duelo" no está regulado en el CP Honduras 2017)
+- **Validados**: 466/466 (artículo existe en CP vigente Decreto 130-2017)
+- **Rechazados**: 0 (los 3 tipos de "duelo" fueron eliminados del catálogo definitivo)
 - **Eliminados del catálogo**: los 3 rechazados fueron removidos de `data/delitos.json`, `data/delitos-validacion.json` y `data/delitos-estados.json`. Catálogo final: **466 delitos validados**.
 - **Rechazados en C2** (Contagio venéreo/ETS — antes marcados `revisar`): reclasificados a `validado` porque el Art. 207 sí existe en CP (omisión de deberes); la discrepancia de conducta queda documentada en `notas` y en el doc.
 
@@ -235,7 +235,8 @@ node -e "const d=require('./data/delitos-validacion.json'); const c={};d.forEach
 
 ## Roadmap
 
-- [x] C0: setup script + JSON inicial (469 pendientes)
+- [x] C0: setup script + JSON inicial (466 delitos en estado pendiente de verificación)
+- [x] Verificación completa 466/466 contra CP Decreto 130-2017 y reformas vigentes
 - [x] C1: muestra delito-004 (Aborto) — `revisar`
 - [x] C2: rama lesiones (10 delitos) — `revisar`
 - [x] C3-C6: validación masiva con mapeo curado (466 validados, 3 rechazados)

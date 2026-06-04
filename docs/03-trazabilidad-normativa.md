@@ -29,7 +29,7 @@
 | `pendiente_revision` | TF-IDF 0.10-0.30 o coincidencia parcial | requiere checkbox de confirmación |
 | `rechazado` | TF-IDF < 0.10 o artículo inexistente | requiere checkbox + sugerencia mostrada |
 
-Totales: 112 verificados (23.9%), 34 a revisar (7.2%), 323 rechazados (68.9%) de 469 delitos.
+Totales al cierre: 466/466 delitos verificados contra el CP Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). 0 pendientes, 0 rechazados. El catálogo definitivo en `data/delitos.json` tiene 466 entradas pero el unique constraint `(nombre, articulo)` de la BD deduplica a 434 registros únicos.
 
 ## Procedimiento de actualización normativa
 

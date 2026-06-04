@@ -198,7 +198,7 @@ No sustituir validación real por suposiciones.
 
 1. `lib/calculo.ts` re-exporta la API pública desde `lib/rules/v1/`. La lógica está modularizada en `lib/rules/v1/` (analisis, circunstancias, concurso, eximentes, grado-autoria, pena-base, tentativa, types, index). Cualquier cambio debe preservar la compatibilidad con la API (`/api/calcular`).
 2. `lib/utils.ts` contiene helpers matemáticos (aumentar/reducir grado, mitad superior/inferior). Cambiar una fórmula afecta TODOS los cálculos.
-3. `lib/catalogos.ts` contiene los catálogos legales (agravantes Art. 27 CP, atenuantes Art. 26 CP, eximentes Art. 25 CP, grados de autoría y ejecución, tipos de concurso).
+3. `lib/catalogos.ts` contiene los catálogos legales (agravantes Art. 32 CP, atenuantes Art. 31 CP, eximentes Art. 30 CP, grados de autoría y ejecución, tipos de concurso). Referencia normativa: CP Honduras Decreto 130-2017.
 4. No cambiar las reglas de compensación agravantes/atenuantes sin verificación legal expresa del CP hondureño.
 5. `meses_a_texto()` debe mantener el formato legible actual ("X años y Y meses").
 

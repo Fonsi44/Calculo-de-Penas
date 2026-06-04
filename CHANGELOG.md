@@ -1,5 +1,24 @@
 # Changelog
 
+## Fase 6 — Corrección documental y modelo de eximentes (2026-06-04)
+
+### Documentación
+
+- **`AGENTS.md`**: corregida la numeración de artículos del CP en `lib/catalogos.ts` (agravantes Art. 32, atenuantes Art. 31, eximentes Art. 30) — el código ya referenciaba correctamente los Arts. 30-32 del CP Decreto 130-2017; la doc estaba desactualizada.
+- **`docs/02-motor-calculo.md`**: misma corrección de Arts. 25-27 → 30-32; descripción completa de los 10 agravantes, 6 atenuantes y 5 eximentes completas conforme al catálogo real.
+- **`docs/01-arquitectura.md`, `docs/03-trazabilidad-normativa.md`, `docs/13-checklist-implementacion.md`, `docs/14-log-implementacion.md`, `docs/19-e2e-testing.md`, `docs/24-validacion-delitos.md`**: cifras corregidas (469 → 466 delitos verificados; 466/466 validados, 0 pendientes, 0 rechazados).
+
+### Modelo de eximentes (decisión)
+
+- **Decisión:** los 5 items del catálogo `EXIMENTES` (`inimputabilidad`, `legitima_defensa`, `estado_necesidad`, `miedo_insuperable`, `cumplimiento_deber`) son todos **eximentes completas** (`completa: true`).
+- El campo `eximentes: string[]` de `DelitoConfig` queda como compat: si llega con IDs, el motor **los descarta** (todos los items del catálogo son completas). La única vía de eximente incompleta es vía `atenuantes: ['eximente_incompleta']` (Art. 31.1 CP).
+- En próxima versión del schema (v2) se evaluará eliminar `eximentes: string[]` o introducir un item con `completa: false` en el catálogo.
+
+### Refactors menores
+
+- **`lib/calculo.ts`**: eliminados aliases `aplicarConcursoPublic`/`generarAnalisisJuridicoPublic`. Ahora se re-exportan directamente `aplicarConcurso` y `generarAnalisisJuridico`.
+- **`lib/estados-delitos.ts`**: añadido `import 'server-only'` para defensa contra importación accidental desde cliente.
+
 ## Fase 5 — Hardening (2026-06-03)
 
 ### Security headers (`next.config.ts`)

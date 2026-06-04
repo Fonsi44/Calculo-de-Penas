@@ -20,7 +20,7 @@ Registro cronológico de cambios significativos. Ver `CHANGELOG.md` para detalle
 
 - `scripts/generar-estados-delitos.js` + `lib/estados-delitos.ts` + `app/api/delitos/calidad/route.ts`.
 - Banner amarillo en calculadora + checkbox obligatorio para delitos no verificados.
-- `data/delitos-estados.json` con 469 entradas (112 OK, 34 revisar, 323 rechazados).
+- `data/delitos-estados.json` con 466 entradas (466 verificados, 0 pendientes, 0 rechazados al cierre del catálogo).
 
 ### Documentación
 

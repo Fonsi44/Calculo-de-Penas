@@ -17,7 +17,7 @@ Use esta lista para verificar que el sistema está listo para producción.
 
 ## Datos
 
-- [ ] `data/delitos.json` con 469 entradas sin duplicados.
+- [x] `data/delitos.json` con 466 entradas verificadas; nota: contiene 32 grupos duplicados por `(nombre, articulo)` que se insertan una sola vez por el unique constraint de la BD (434 únicos reales). Deduplicación pendiente (Fase 1).
 - [ ] `data/delitos-estados.json` generado y con totales correctos.
 - [ ] Catálogo de delitos revisado por abogado HN (al menos los 112 verificados).
 - [ ] Decidir tratamiento de los 323 delitos "rechazados": ¿inactivos? ¿corrección manual?

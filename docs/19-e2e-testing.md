@@ -44,7 +44,7 @@ Plan para activar E2E en CI:
 | `login page carga` | Form de login + alternar a register | 1.1s |
 | `atajos page` | Página de atajos de teclado | 1.2s |
 | `calculadora renderiza` | Carga o redirige a /login (200/302/307) | 0.9s |
-| `delitos page` | Lista de 469 delitos del CP | 0.6s |
+| `delitos page` | Lista de delitos del CP (434 únicos tras deduplicación; 32 duplicados eliminados del JSON) | 0.6s |
 
 Total local: ~25s (incluye `next build` + arranque + 5 tests paralelos con 4 workers)
 
