@@ -1,0 +1,164 @@
+import { describe, it, expect } from 'vitest';
+import {
+  signToken,
+  verifyToken,
+  requireAuth,
+  requireAdmin,
+  getTokenFromCookies,
+  authFailureResponse,
+  createAuthResponse,
+  createLogoutResponse,
+  hashPassword,
+  verifyPassword,
+  AuthError,
+  COOKIE_NAME,
+} from '../lib/auth';
+
+describe('lib/auth — signToken / verifyToken', () => {
+  const payload = { userId: 'user-1', email: 'a@b.com', rol: 'abogado' };
+
+  it('firma y verifica un token válido', () => {
+    const t = signToken(payload);
+    const r = verifyToken(t);
+    expect(r).not.toBeNull();
+    expect(r?.userId).toBe(payload.userId);
+    expect(r?.email).toBe(payload.email);
+    expect(r?.rol).toBe(payload.rol);
+  });
+
+  it('retorna null ante token mal formado', () => {
+    expect(verifyToken('no-es-jwt')).toBeNull();
+    expect(verifyToken('a.b.c')).toBeNull();
+    expect(verifyToken('')).toBeNull();
+  });
+
+  it('retorna null ante firma inválida', () => {
+    const t = signToken(payload);
+    const corrupto = t.slice(0, -3) + 'AAA';
+    expect(verifyToken(corrupto)).toBeNull();
+  });
+});
+
+describe('lib/auth — getTokenFromCookies', () => {
+  it('lee la cookie primaria', () => {
+    const req = new Request('http://x', { headers: { cookie: `${COOKIE_NAME}=abc123` } });
+    expect(getTokenFromCookies(req)).toBe('abc123');
+  });
+
+  it('retorna null sin cookie', () => {
+    const req = new Request('http://x');
+    expect(getTokenFromCookies(req)).toBeNull();
+  });
+
+  it('no decodifica cookies con prefijo similar', () => {
+    const req = new Request('http://x', { headers: { cookie: 'otro=zzz' } });
+    expect(getTokenFromCookies(req)).toBeNull();
+  });
+
+  it('maneja múltiples cookies', () => {
+    const req = new Request('http://x', {
+      headers: { cookie: `a=1; ${COOKIE_NAME}=mid; b=2` },
+    });
+    expect(getTokenFromCookies(req)).toBe('mid');
+  });
+});
+
+describe('lib/auth — requireAuth / requireAdmin', () => {
+  const payload = { userId: 'u-1', email: 'a@b.c', rol: 'abogado' };
+  const adminPayload = { userId: 'u-2', email: 'admin@b.c', rol: 'admin' };
+
+  function authedRequest(rol: 'abogado' | 'admin' = 'abogado'): Request {
+    const t = signToken(rol === 'admin' ? adminPayload : payload);
+    return new Request('http://x', { headers: { cookie: `${COOKIE_NAME}=${t}` } });
+  }
+
+  it('requireAuth retorna el payload con token válido', () => {
+    const u = requireAuth(authedRequest());
+    expect(u.userId).toBe('u-1');
+    expect(u.rol).toBe('abogado');
+  });
+
+  it('requireAuth lanza AuthError 401 sin token', () => {
+    expect(() => requireAuth(new Request('http://x'))).toThrow(AuthError);
+    try {
+      requireAuth(new Request('http://x'));
+    } catch (e) {
+      expect((e as AuthError).status).toBe(401);
+    }
+  });
+
+  it('requireAdmin acepta rol admin', () => {
+    const u = requireAdmin(authedRequest('admin'));
+    expect(u.rol).toBe('admin');
+  });
+
+  it('requireAdmin rechaza rol abogado con 403', () => {
+    try {
+      requireAdmin(authedRequest('abogado'));
+      throw new Error('debio haber lanzado');
+    } catch (e) {
+      expect((e as AuthError).status).toBe(403);
+    }
+  });
+});
+
+describe('lib/auth — authFailureResponse', () => {
+  it('mapea AuthError 401 a Response 401', async () => {
+    const r = authFailureResponse(new AuthError(401, 'No autorizado'));
+    expect(r.status).toBe(401);
+    const body = await r.json();
+    expect(body.error).toBe('No autorizado');
+  });
+
+  it('mapea AuthError 403 a Response 403', async () => {
+    const r = authFailureResponse(new AuthError(403, 'Requiere admin'));
+    expect(r.status).toBe(403);
+  });
+
+  it('errores desconocidos devuelven 401 genérico', async () => {
+    const r = authFailureResponse(new Error('boom'));
+    expect(r.status).toBe(401);
+  });
+});
+
+describe('lib/auth — createAuthResponse / createLogoutResponse', () => {
+  it('createAuthResponse sin token no setea cookie', async () => {
+    const r = createAuthResponse({ ok: true });
+    expect(r.headers.get('set-cookie')).toBeNull();
+    const body = await r.json();
+    expect(body.ok).toBe(true);
+  });
+
+  it('createAuthResponse con token setea cookie', () => {
+    const r = createAuthResponse({ ok: true }, 'jwt.token.here');
+    const set = r.headers.get('set-cookie');
+    expect(set).not.toBeNull();
+    expect(set).toContain(`${COOKIE_NAME}=jwt.token.here`);
+    expect(set).toContain('HttpOnly');
+    expect(set).toContain('SameSite=Lax');
+  });
+
+  it('createLogoutResponse limpia cookie primaria', () => {
+    const r = createLogoutResponse();
+    const set = r.headers.get('set-cookie');
+    expect(set).toContain(`${COOKIE_NAME}=`);
+    expect(set).toContain('Max-Age=0');
+  });
+});
+
+describe('lib/auth — hashPassword / verifyPassword', () => {
+  it('hashea y verifica correctamente', async () => {
+    const h = await hashPassword('secreto-123');
+    expect(h).toMatch(/^\$2[aby]\$/);
+    expect(await verifyPassword('secreto-123', h)).toBe(true);
+    expect(await verifyPassword('incorrecto', h)).toBe(false);
+  });
+
+  it('dos hashes del mismo password son distintos (salt)', async () => {
+    const h1 = await hashPassword('secreto-123');
+    const h2 = await hashPassword('secreto-123');
+    expect(h1).not.toBe(h2);
+    expect(await verifyPassword('secreto-123', h1)).toBe(true);
+    expect(await verifyPassword('secreto-123', h2)).toBe(true);
+  });
+});
