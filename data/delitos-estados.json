@@ -1,11 +1,11 @@
 {
-  "generado_en": "2026-06-04T08:02:29.365Z",
-  "fuente": "data/delitos-validacion.json (validación masiva contra CP Honduras Decreto 130-2017)",
+  "generado_en": "2026-06-04T09:54:59.957Z",
+  "fuente": "data/delitos-validacion.json (catalogo sin delitos rechazados)",
   "fuente_verificacion": "https://dpej.rae.es/eli/hn/d/2018/01/18/130",
-  "total_registros": 469,
+  "total_registros": 466,
   "verificados": 466,
   "pendientes_revision": 0,
-  "rechazados": 3,
+  "rechazados": 0,
   "entradas": {
     "Abandono de animales__Art. 342 CP": {
       "nombre": "Abandono de animales",
@@ -2197,16 +2197,6 @@
       "validador": "agente",
       "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130"
     },
-    "Duelo__Art. 211 CP": {
-      "nombre": "Duelo",
-      "articulo": "Art. 211 CP",
-      "estado": "rechazado",
-      "nota": "Delito \"Duelo\" no tiene mapeo curado en CP Honduras vigente (Decreto 130-2017). El catálogo lo incluye pero no se identifica un artículo específico que lo tipifique. Verificar manualmente.",
-      "articulo_sugerido": "NO MAPEADO",
-      "fecha_validacion": "2026-06-04",
-      "validador": "agente",
-      "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130"
-    },
     "Manipulación genética__Art. 215 CP": {
       "nombre": "Manipulación genética",
       "articulo": "Art. 215 CP",
@@ -2683,16 +2673,6 @@
       "estado": "verificado",
       "nota": "Mapeo curado. Art. 206 CP: \"Omisión de prestación de asistencia sanitaria.El profesional que estando obligad\". Pena ajustada al rango legal del CP vigente.",
       "articulo_sugerido": "Art. 206 CP",
-      "fecha_validacion": "2026-06-04",
-      "validador": "agente",
-      "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130"
-    },
-    "Provocación al duelo__Art. 212 CP": {
-      "nombre": "Provocación al duelo",
-      "articulo": "Art. 212 CP",
-      "estado": "rechazado",
-      "nota": "Delito \"Provocación al duelo\" no tiene mapeo curado en CP Honduras vigente (Decreto 130-2017). El catálogo lo incluye pero no se identifica un artículo específico que lo tipifique. Verificar manualmente.",
-      "articulo_sugerido": "NO MAPEADO",
       "fecha_validacion": "2026-06-04",
       "validador": "agente",
       "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130"
@@ -3823,16 +3803,6 @@
       "estado": "verificado",
       "nota": "Mapeo curado. Art. 205 CP: \"Omisión del deber de socorro a personas especialmente vulnerables.Quien encuentr\". Pena ajustada al rango legal del CP vigente.",
       "articulo_sugerido": "Art. 205 CP",
-      "fecha_validacion": "2026-06-04",
-      "validador": "agente",
-      "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130"
-    },
-    "Provocación directa al duelo__Art. 212 CP": {
-      "nombre": "Provocación directa al duelo",
-      "articulo": "Art. 212 CP",
-      "estado": "rechazado",
-      "nota": "Delito \"Provocación directa al duelo\" no tiene mapeo curado en CP Honduras vigente (Decreto 130-2017). El catálogo lo incluye pero no se identifica un artículo específico que lo tipifique. Verificar manualmente.",
-      "articulo_sugerido": "NO MAPEADO",
       "fecha_validacion": "2026-06-04",
       "validador": "agente",
       "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130"

@@ -208,6 +208,7 @@ node -e "const d=require('./data/delitos-validacion.json'); const c={};d.forEach
 **Resultado final (binario validado/rechazar)**:
 - **Validados**: 466/469 (artículo existe en CP vigente Decreto 130-2017)
 - **Rechazados**: 3/469 (Duelo, Provocación al duelo, Provocación directa al duelo — el tipo penal "duelo" no está regulado en el CP Honduras 2017)
+- **Eliminados del catálogo**: los 3 rechazados fueron removidos de `data/delitos.json`, `data/delitos-validacion.json` y `data/delitos-estados.json`. Catálogo final: **466 delitos validados**.
 - **Rechazados en C2** (Contagio venéreo/ETS — antes marcados `revisar`): reclasificados a `validado` porque el Art. 207 sí existe en CP (omisión de deberes); la discrepancia de conducta queda documentada en `notas` y en el doc.
 
 **Fuente verificada**: `https://dpej.rae.es/eli/hn/d/2018/01/18/130` (Real Academia Española — Diccionario panhispánico del español jurídico, texto íntegro del Decreto 130-2017).
@@ -239,4 +240,5 @@ node -e "const d=require('./data/delitos-validacion.json'); const c={};d.forEach
 - [x] C2: rama lesiones (10 delitos) — `revisar`
 - [x] C3-C6: validación masiva con mapeo curado (466 validados, 3 rechazados)
 - [x] C7: cierre — corregido catálogo y notas en `docs/24-validacion-delitos.md`
+- [x] C7+: eliminación de 3 delitos rechazados del catálogo (Duelo y variantes)
 - [ ] D6: UI para que abogado humano revise discrepancias de pena en entries `validado` con notas de advertencia

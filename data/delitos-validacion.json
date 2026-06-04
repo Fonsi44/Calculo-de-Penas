@@ -4981,26 +4981,6 @@
   },
   {
     "id": "delito-250",
-    "nombre": "Duelo",
-    "articulo_actual": "Art. 211 CP",
-    "rama_id": "vida_integridad.riña",
-    "estado": "rechazar",
-    "articulo_correcto": "NO MAPEADO",
-    "pena_minima_meses_actual": 6,
-    "pena_maxima_meses_actual": 12,
-    "pena_minima_meses_correcta": null,
-    "pena_maxima_meses_correcta": null,
-    "tiene_pena_alternativa_actual": false,
-    "pena_alternativa_min_actual": 0,
-    "pena_alternativa_max_actual": 0,
-    "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130",
-    "fuente_verificada": true,
-    "fecha_validacion": "2026-06-04",
-    "validador": "agente",
-    "notas": "Delito \"Duelo\" no tiene mapeo curado en CP Honduras vigente (Decreto 130-2017). El catálogo lo incluye pero no se identifica un artículo específico que lo tipifique. Verificar manualmente."
-  },
-  {
-    "id": "delito-251",
     "nombre": "Manipulación genética",
     "articulo_actual": "Art. 215 CP",
     "rama_id": "vida_integridad.vida_dependiente",
@@ -5020,7 +5000,7 @@
     "notas": "Mapeo curado. Art. 277 CP: \"Disposiciones comunes.En todos los casos previstos en este capítulo, si el hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-252",
+    "id": "delito-251",
     "nombre": "Agresión sexual con penetración de objetos",
     "articulo_actual": "Art. 251 CP",
     "rama_id": "libertad_sexual.agresiones.agravada",
@@ -5040,7 +5020,7 @@
     "notas": "Mapeo curado. Art. 254 CP: \"Estupro.Quien utilizando engaño realiza actos de contenido sexual con persona ma\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-253",
+    "id": "delito-252",
     "nombre": "Exhibicionismo",
     "articulo_actual": "Art. 257 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -5060,7 +5040,7 @@
     "notas": "Mapeo curado. Art. 269 CP: \"Reincidencia INTERNACIONAL.La condena de un Órgano Jurisdiccional extranjero, im\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-254",
+    "id": "delito-253",
     "nombre": "Provocación sexual",
     "articulo_actual": "Art. 258 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -5080,7 +5060,7 @@
     "notas": "Mapeo curado. Art. 293 CP: \"Explotación laboral infantil.Si las conductas descritas en los dos artículos ant\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-255",
+    "id": "delito-254",
     "nombre": "Rufianería",
     "articulo_actual": "Art. 263 CP",
     "rama_id": "libertad_sexual.explotacion",
@@ -5100,7 +5080,7 @@
     "notas": "Mapeo curado. Art. 268 CP: \"Perseguibilidad.Los delitos contemplados en el presente título, se deben persegu\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-256",
+    "id": "delito-255",
     "nombre": "Delito farmacéutico",
     "articulo_actual": "Art. 335 CP",
     "rama_id": "salud_publica.farmaceuticos",
@@ -5120,7 +5100,7 @@
     "notas": "Mapeo curado. Art. 316 CP: \"Atenuantes específicas del tráfico de precursores.Se debe imponer la pena de uno\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-257",
+    "id": "delito-256",
     "nombre": "Adulteración de aguas",
     "articulo_actual": "Art. 341 CP",
     "rama_id": "salud_publica.epidemias",
@@ -5140,7 +5120,7 @@
     "notas": "Mapeo curado. Art. 305 CP: \"Adulteración de agua potable y alimentos.Quien adultera con sustancias infeccios\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-258",
+    "id": "delito-257",
     "nombre": "Tráfico de precursores",
     "articulo_actual": "Art. 318 CP",
     "rama_id": "salud_publica.drogas.trafico",
@@ -5160,7 +5140,7 @@
     "notas": "Mapeo curado. Art. 314 CP: \"Tráfico de precursores.Quién financia, fabrica, elabora, trafica o distribuye eq\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-259",
+    "id": "delito-258",
     "nombre": "Peculado de uso",
     "articulo_actual": "Art. 480 CP",
     "rama_id": "admin_publica.malversacion",
@@ -5180,7 +5160,7 @@
     "notas": "Mapeo curado. Art. 480 CP: \"Malversación imprudente.El funcionario o empleado público que por imprudencia gr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-260",
+    "id": "delito-259",
     "nombre": "Malversación imprudente",
     "articulo_actual": "Art. 482 CP",
     "rama_id": "admin_publica.malversacion",
@@ -5200,7 +5180,7 @@
     "notas": "Mapeo curado. Art. 481 CP: \"Disposiciones generales.Las disposiciones de este capítulo son extensivas en los\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-261",
+    "id": "delito-260",
     "nombre": "Cohecho de árbitros",
     "articulo_actual": "Art. 495 CP",
     "rama_id": "admin_publica.cohecho",
@@ -5220,7 +5200,7 @@
     "notas": "Mapeo curado. Art. 482 CP: \"Fraude.El funcionario o empleado público que, interviniendo por razón de su carg\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-262",
+    "id": "delito-261",
     "nombre": "Corrupción en el sector privado",
     "articulo_actual": "Art. 496 CP",
     "rama_id": "admin_publica.cohecho",
@@ -5240,7 +5220,7 @@
     "notas": "Mapeo curado. Art. 482 CP: \"Fraude.El funcionario o empleado público que, interviniendo por razón de su carg\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-263",
+    "id": "delito-262",
     "nombre": "Negociación prohibida a funcionario",
     "articulo_actual": "Art. 486 CP",
     "rama_id": "admin_publica.negociaciones",
@@ -5260,7 +5240,7 @@
     "notas": "Mapeo curado. Art. 489 CP: \"Solicitud de actos de contenido sexual.El funcionario o empleado público que sol\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-264",
+    "id": "delito-263",
     "nombre": "Desobediencia judicial",
     "articulo_actual": "Art. 529 CP",
     "rama_id": "justicia.obstruccion",
@@ -5280,7 +5260,7 @@
     "notas": "Mapeo curado. Art. 502 CP: \"Facilitar destrucción de documento en custodia.El funcionario o empleado público\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-265",
+    "id": "delito-264",
     "nombre": "Denegación de auxilio judicial",
     "articulo_actual": "Art. 530 CP",
     "rama_id": "justicia.omision",
@@ -5300,7 +5280,7 @@
     "notas": "Mapeo curado. Art. 505 CP: \"Revelación de secretos.El funcionario o empleado público que revela informacione\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-266",
+    "id": "delito-265",
     "nombre": "Encubrimiento personal",
     "articulo_actual": "Art. 521 CP",
     "rama_id": "justicia.encubrimiento",
@@ -5320,7 +5300,7 @@
     "notas": "Mapeo curado. Art. 513 CP: \"Encubrimiento.Quien con conocimiento de la comisión de un delito y sin haber par\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-267",
+    "id": "delito-266",
     "nombre": "Encubrimiento real",
     "articulo_actual": "Art. 522 CP",
     "rama_id": "justicia.encubrimiento",
@@ -5340,7 +5320,7 @@
     "notas": "Mapeo curado. Art. 513 CP: \"Encubrimiento.Quien con conocimiento de la comisión de un delito y sin haber par\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-268",
+    "id": "delito-267",
     "nombre": "Revelación de actuaciones procesales",
     "articulo_actual": "Art. 531 CP",
     "rama_id": "justicia.obstruccion",
@@ -5360,7 +5340,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-269",
+    "id": "delito-268",
     "nombre": "Quebrantamiento de condena leve",
     "articulo_actual": "Art. 527 CP",
     "rama_id": "justicia.quebrantamiento",
@@ -5380,7 +5360,7 @@
     "notas": "Mapeo curado. Art. 530 CP: \"Deslealtad profesional.El profesional que asesora o asume la defensa o represent\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-270",
+    "id": "delito-269",
     "nombre": "Desórdenes en espectáculos",
     "articulo_actual": "Art. 552 CP",
     "rama_id": "orden_publico.desordenes",
@@ -5400,7 +5380,7 @@
     "notas": "Mapeo curado. Art. 571 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación a un \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-271",
+    "id": "delito-270",
     "nombre": "Lanzamiento de objetos peligrosos",
     "articulo_actual": "Art. 553 CP",
     "rama_id": "orden_publico.desordenes",
@@ -5420,7 +5400,7 @@
     "notas": "Mapeo curado. Art. 569 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-272",
+    "id": "delito-271",
     "nombre": "Posesión de armas de guerra",
     "articulo_actual": "Art. 586 CP",
     "rama_id": "orden_publico.armas",
@@ -5440,7 +5420,7 @@
     "notas": "Mapeo curado. Art. 581 CP: \"Depósito de armas de fuego, municiones o explosivos.Quien sin autorización, pose\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-273",
+    "id": "delito-272",
     "nombre": "Fabricación de armas",
     "articulo_actual": "Art. 587 CP",
     "rama_id": "orden_publico.armas",
@@ -5460,7 +5440,7 @@
     "notas": "Mapeo curado. Art. 581 CP: \"Depósito de armas de fuego, municiones o explosivos.Quien sin autorización, pose\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-274",
+    "id": "delito-273",
     "nombre": "Tráfico ilegal de explosivos",
     "articulo_actual": "Art. 583 CP",
     "rama_id": "orden_publico.armas",
@@ -5480,7 +5460,7 @@
     "notas": "Mapeo curado. Art. 583 CP: \"Facilitación de armas a terceros.Quien fuera de los casos permitidos por la Ley \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-275",
+    "id": "delito-274",
     "nombre": "Alzamiento público",
     "articulo_actual": "Art. 537 CP",
     "rama_id": "constitucion.rebelion",
@@ -5500,7 +5480,7 @@
     "notas": "Mapeo curado. Art. 572 CP: \"Desobediencia.Quienes sin estar comprendidos en los artículos anteriores, desobe\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-276",
+    "id": "delito-275",
     "nombre": "Propaganda ilegal",
     "articulo_actual": "Art. 559 CP",
     "rama_id": "constitucion.rebelion",
@@ -5520,7 +5500,7 @@
     "notas": "Mapeo curado. Art. 569 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-277",
+    "id": "delito-276",
     "nombre": "Usurpación de funciones militares",
     "articulo_actual": "Art. 573 CP",
     "rama_id": "seguridad_estado.traicion",
@@ -5540,7 +5520,7 @@
     "notas": "Mapeo curado. Art. 497 CP: \"Concusión.El funcionario o empleado público que abusando de su cargo o de sus fu\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-278",
+    "id": "delito-277",
     "nombre": "Atentado contra jefe de Estado extranjero",
     "articulo_actual": "Art. 576 CP",
     "rama_id": "comunidad_internacional.lesa_humanidad",
@@ -5560,7 +5540,7 @@
     "notas": "Mapeo curado. Art. 158 CP: \"Violación de inmunidad diplomática.Quien viola la inmunidad personal de un Jefe \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-279",
+    "id": "delito-278",
     "nombre": "Piratería aérea",
     "articulo_actual": "Art. 166 CP",
     "rama_id": "comunidad_internacional.pirateria",
@@ -5580,7 +5560,7 @@
     "notas": "Mapeo curado. Art. 161 CP: \"Piratería.Quien con ánimo de lucro propio o ajeno u otro propósito personal y em\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-280",
+    "id": "delito-279",
     "nombre": "Delito contra la salud pública con resultado de muerte",
     "articulo_actual": "Art. 331 CP",
     "rama_id": "salud_publica.alimentarios",
@@ -5600,7 +5580,7 @@
     "notas": "Mapeo curado. Art. 305 CP: \"Adulteración de agua potable y alimentos.Quien adultera con sustancias infeccios\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-281",
+    "id": "delito-280",
     "nombre": "Tráfico de medicamentos falsos",
     "articulo_actual": "Art. 336 CP",
     "rama_id": "salud_publica.farmaceuticos",
@@ -5620,7 +5600,7 @@
     "notas": "Mapeo curado. Art. 316 CP: \"Atenuantes específicas del tráfico de precursores.Se debe imponer la pena de uno\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-282",
+    "id": "delito-281",
     "nombre": "Violación de secretos de empresa",
     "articulo_actual": "Art. 394 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -5640,7 +5620,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-283",
+    "id": "delito-282",
     "nombre": "Violación de derechos de imagen",
     "articulo_actual": "Art. 237 CP",
     "rama_id": "honor_intimidad.secretos",
@@ -5660,7 +5640,7 @@
     "notas": "Mapeo curado. Art. 233 CP: \"Responsabilidad civil.En caso de que la injuria o calumnia se realicen con publi\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-284",
+    "id": "delito-283",
     "nombre": "Suplantación de identidad profesional",
     "articulo_actual": "Art. 463 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -5680,7 +5660,7 @@
     "notas": "Mapeo curado. Art. 295 CP: \"Delito de discriminación laboral.Quien realiza una grave discriminación en el em\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-285",
+    "id": "delito-284",
     "nombre": "Falsificación de documento de identidad extranjero",
     "articulo_actual": "Art. 460 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -5700,7 +5680,7 @@
     "notas": "Mapeo curado. Art. 469 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-286",
+    "id": "delito-285",
     "nombre": "Revelación de secreto por particular",
     "articulo_actual": "Art. 236 CP",
     "rama_id": "honor_intimidad.secretos",
@@ -5720,7 +5700,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-287",
+    "id": "delito-286",
     "nombre": "Violación de correspondencia por funcionario",
     "articulo_actual": "Art. 237 CP",
     "rama_id": "honor_intimidad.secretos",
@@ -5740,7 +5720,7 @@
     "notas": "Mapeo curado. Art. 231 CP: \"Injurias y calumnias sobre institución supervisada.Si las injurias o calumnias r\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-288",
+    "id": "delito-287",
     "nombre": "Allanamiento de domicilio por funcionario",
     "articulo_actual": "Art. 272 CP",
     "rama_id": "honor_intimidad.allanamiento",
@@ -5760,7 +5740,7 @@
     "notas": "Mapeo curado. Art. 270 CP: \"Allanamiento de domicilio.El particular que entra en domicilio ajeno contra la v\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-289",
+    "id": "delito-288",
     "nombre": "Allanamiento con violencia",
     "articulo_actual": "Art. 271 CP",
     "rama_id": "honor_intimidad.allanamiento",
@@ -5780,7 +5760,7 @@
     "notas": "Mapeo curado. Art. 270 CP: \"Allanamiento de domicilio.El particular que entra en domicilio ajeno contra la v\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-290",
+    "id": "delito-289",
     "nombre": "Sustracción de menor por familiar",
     "articulo_actual": "Art. 283 CP",
     "rama_id": "familia.sustraccion",
@@ -5800,7 +5780,7 @@
     "notas": "Mapeo curado. Art. 286 CP: \"Sustracción de menores o discapacitados necesitados de especial protección.El pa\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-291",
+    "id": "delito-290",
     "nombre": "Retención ilegal de menor",
     "articulo_actual": "Art. 284 CP",
     "rama_id": "familia.sustraccion",
@@ -5820,7 +5800,7 @@
     "notas": "Mapeo curado. Art. 286 CP: \"Sustracción de menores o discapacitados necesitados de especial protección.El pa\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-292",
+    "id": "delito-291",
     "nombre": "Abandono temporal de menor",
     "articulo_actual": "Art. 228 CP",
     "rama_id": "familia.abandono",
@@ -5840,7 +5820,7 @@
     "notas": "Mapeo curado. Art. 228 CP: \"Abandono de menores de edad personas con discapacidad, ancianos o enfermos.Quien\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-293",
+    "id": "delito-292",
     "nombre": "Omisión del deber de crianza",
     "articulo_actual": "Art. 286 CP",
     "rama_id": "familia.abandono",
@@ -5860,7 +5840,7 @@
     "notas": "Mapeo curado. Art. 228 CP: \"Abandono de menores de edad personas con discapacidad, ancianos o enfermos.Quien\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-294",
+    "id": "delito-293",
     "nombre": "Impedimento del derecho de visitas",
     "articulo_actual": "Art. 287 CP",
     "rama_id": "familia.abandono",
@@ -5880,7 +5860,7 @@
     "notas": "Mapeo curado. Art. 285 CP: \"Inducción al abandono de hogar.Quien induce a un menor de dieciocho (18) años o \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-295",
+    "id": "delito-294",
     "nombre": "Lesiones con deformidad",
     "articulo_actual": "Art. 201 CP",
     "rama_id": "vida_integridad.lesiones.graves",
@@ -5900,7 +5880,7 @@
     "notas": "Mapeo curado. Art. 201 CP: \"Lesiones graves.Quien, por cualquier medio o procedimiento, mutila o inutiliza u\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-296",
+    "id": "delito-295",
     "nombre": "Lesiones con pérdida de órgano",
     "articulo_actual": "Art. 201 CP",
     "rama_id": "vida_integridad.lesiones.graves",
@@ -5920,7 +5900,7 @@
     "notas": "Mapeo curado. Art. 201 CP: \"Lesiones graves.Quien, por cualquier medio o procedimiento, mutila o inutiliza u\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-297",
+    "id": "delito-296",
     "nombre": "Lesiones con pérdida de sentido",
     "articulo_actual": "Art. 200 CP",
     "rama_id": "vida_integridad.lesiones.graves",
@@ -5940,7 +5920,7 @@
     "notas": "Mapeo curado. Art. 201 CP: \"Lesiones graves.Quien, por cualquier medio o procedimiento, mutila o inutiliza u\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-298",
+    "id": "delito-297",
     "nombre": "Riña con resultado de muerte",
     "articulo_actual": "Art. 210 CP",
     "rama_id": "vida_integridad.riña",
@@ -5960,27 +5940,7 @@
     "notas": "Mapeo curado. Art. 206 CP: \"Omisión de prestación de asistencia sanitaria.El profesional que estando obligad\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-299",
-    "nombre": "Provocación al duelo",
-    "articulo_actual": "Art. 212 CP",
-    "rama_id": "vida_integridad.riña",
-    "estado": "rechazar",
-    "articulo_correcto": "NO MAPEADO",
-    "pena_minima_meses_actual": 3,
-    "pena_maxima_meses_actual": 12,
-    "pena_minima_meses_correcta": null,
-    "pena_maxima_meses_correcta": null,
-    "tiene_pena_alternativa_actual": false,
-    "pena_alternativa_min_actual": 0,
-    "pena_alternativa_max_actual": 0,
-    "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130",
-    "fuente_verificada": true,
-    "fecha_validacion": "2026-06-04",
-    "validador": "agente",
-    "notas": "Delito \"Provocación al duelo\" no tiene mapeo curado en CP Honduras vigente (Decreto 130-2017). El catálogo lo incluye pero no se identifica un artículo específico que lo tipifique. Verificar manualmente."
-  },
-  {
-    "id": "delito-300",
+    "id": "delito-298",
     "nombre": "Manipulación genética con fines de selección",
     "articulo_actual": "Art. 214 CP",
     "rama_id": "vida_integridad.vida_dependiente",
@@ -6000,7 +5960,7 @@
     "notas": "Mapeo curado. Art. 277 CP: \"Disposiciones comunes.En todos los casos previstos en este capítulo, si el hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-301",
+    "id": "delito-299",
     "nombre": "Fecundación ilegal",
     "articulo_actual": "Art. 215 CP",
     "rama_id": "vida_integridad.vida_dependiente",
@@ -6020,7 +5980,7 @@
     "notas": "Mapeo curado. Art. 275 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-302",
+    "id": "delito-300",
     "nombre": "Clonación humana",
     "articulo_actual": "Art. 216 CP",
     "rama_id": "vida_integridad.vida_dependiente",
@@ -6040,7 +6000,7 @@
     "notas": "Mapeo curado. Art. 277 CP: \"Disposiciones comunes.En todos los casos previstos en este capítulo, si el hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-303",
+    "id": "delito-301",
     "nombre": "Contagio de ETS",
     "articulo_actual": "Art. 207 CP",
     "rama_id": "vida_integridad.lesiones.leves",
@@ -6060,7 +6020,7 @@
     "notas": "Mapeo curado. Art. 207 CP: \"Omisión de los deberes de impedir delitos o de promover su persecución.Quien pud\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-304",
+    "id": "delito-302",
     "nombre": "Acoso sexual en el trabajo agravado",
     "articulo_actual": "Art. 256 CP",
     "rama_id": "libertad_sexual.acoso",
@@ -6080,7 +6040,7 @@
     "notas": "Mapeo curado. Art. 296 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-305",
+    "id": "delito-303",
     "nombre": "Acoso sexual callejero",
     "articulo_actual": "Art. 256 CP",
     "rama_id": "libertad_sexual.acoso",
@@ -6100,7 +6060,7 @@
     "notas": "Mapeo curado. Art. 293 CP: \"Explotación laboral infantil.Si las conductas descritas en los dos artículos ant\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-306",
+    "id": "delito-304",
     "nombre": "Abuso sexual con penetración digital",
     "articulo_actual": "Art. 251 CP",
     "rama_id": "libertad_sexual.agresiones.agravada",
@@ -6120,7 +6080,7 @@
     "notas": "Mapeo curado. Art. 260 CP: \"Agravantes específicas.Las penas contempladas en los dos artículos precedentes s\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-307",
+    "id": "delito-305",
     "nombre": "Violación de persona en estado de inconsciencia",
     "articulo_actual": "Art. 249 CP",
     "rama_id": "libertad_sexual.agresiones.violacion",
@@ -6140,7 +6100,7 @@
     "notas": "Mapeo curado. Art. 249 CP: \"Violación.Constituye delito de violación el acceso carnal no consentido por vía \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-308",
+    "id": "delito-306",
     "nombre": "Agresión sexual con penetración de objetos agravada",
     "articulo_actual": "Art. 251 CP",
     "rama_id": "libertad_sexual.agresiones.agravada",
@@ -6160,7 +6120,7 @@
     "notas": "Mapeo curado. Art. 255 CP: \"Agravantes específicas.Las penas contempladas en los artículos anteriores pueden\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-309",
+    "id": "delito-307",
     "nombre": "Exhibicionismo ante menores",
     "articulo_actual": "Art. 257 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -6180,7 +6140,7 @@
     "notas": "Mapeo curado. Art. 269 CP: \"Reincidencia INTERNACIONAL.La condena de un Órgano Jurisdiccional extranjero, im\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-310",
+    "id": "delito-308",
     "nombre": "Pornografía infantil agravada",
     "articulo_actual": "Art. 261 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -6200,7 +6160,7 @@
     "notas": "Mapeo curado. Art. 262 CP: \"Concepto de pornografía infantil.A los efectos de lo dispuesto en este capítulo,\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-311",
+    "id": "delito-309",
     "nombre": "Proxenetismo agravado",
     "articulo_actual": "Art. 262 CP",
     "rama_id": "libertad_sexual.explotacion",
@@ -6220,7 +6180,7 @@
     "notas": "Mapeo curado. Art. 267 CP: \"Penas privativas de derechos, medidas de seguridad y especiales pronunciamientos\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-312",
+    "id": "delito-310",
     "nombre": "Turismo sexual infantil",
     "articulo_actual": "Art. 264 CP",
     "rama_id": "libertad_sexual.explotacion",
@@ -6240,7 +6200,7 @@
     "notas": "Mapeo curado. Art. 264 CP: \"Exhibicionismo.Quien ejecuta o hace ejecutar a otras personas actos de exhibicio\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-313",
+    "id": "delito-311",
     "nombre": "Trata con fines de esclavitud",
     "articulo_actual": "Art. 218 CP",
     "rama_id": "libertad_sexual.trata",
@@ -6260,7 +6220,7 @@
     "notas": "Mapeo curado. Art. 264 CP: \"Exhibicionismo.Quien ejecuta o hace ejecutar a otras personas actos de exhibicio\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-314",
+    "id": "delito-312",
     "nombre": "Libertad condicional quebrantada",
     "articulo_actual": "Art. 527 CP",
     "rama_id": "justicia.quebrantamiento",
@@ -6280,7 +6240,7 @@
     "notas": "Mapeo curado. Art. 530 CP: \"Deslealtad profesional.El profesional que asesora o asume la defensa o represent\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-315",
+    "id": "delito-313",
     "nombre": "Simulación de delito",
     "articulo_actual": "Art. 525 CP",
     "rama_id": "justicia.falso_testimonio",
@@ -6300,7 +6260,7 @@
     "notas": "Mapeo curado. Art. 521 CP: \"Revelación de identidad de testigo protegido.Quien a sabiendas de la condición d\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-316",
+    "id": "delito-314",
     "nombre": "Acusación falsa",
     "articulo_actual": "Art. 524 CP",
     "rama_id": "justicia.falso_testimonio",
@@ -6320,7 +6280,7 @@
     "notas": "Mapeo curado. Art. 521 CP: \"Revelación de identidad de testigo protegido.Quien a sabiendas de la condición d\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-317",
+    "id": "delito-315",
     "nombre": "Omisión de perseguir delito leve",
     "articulo_actual": "Art. 518 CP",
     "rama_id": "justicia.omision",
@@ -6340,7 +6300,7 @@
     "notas": "Mapeo curado. Art. 515 CP: \"Omisión del deber de perseguir delitos.El funcionario o empleado público que, fa\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-318",
+    "id": "delito-316",
     "nombre": "Prevaricato por omisión",
     "articulo_actual": "Art. 516 CP",
     "rama_id": "justicia.prevaricato",
@@ -6360,7 +6320,7 @@
     "notas": "Mapeo curado. Art. 498 CP: \"Prevaricato administrativo.El funcionario o empleado público que, a sabiendas de\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-319",
+    "id": "delito-317",
     "nombre": "Resistencia grave",
     "articulo_actual": "Art. 545 CP",
     "rama_id": "orden_publico.resistencia",
@@ -6380,7 +6340,7 @@
     "notas": "Mapeo curado. Art. 503 CP: \"Acceso a documentos secretos.El funcionario o empleado público no comprendido en\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-320",
+    "id": "delito-318",
     "nombre": "Atentado contra agente de autoridad",
     "articulo_actual": "Art. 544 CP",
     "rama_id": "orden_publico.atentados",
@@ -6400,7 +6360,7 @@
     "notas": "Mapeo curado. Art. 504 CP: \"Responsabilidad de los particulares.Deben ser castigados con las mismas penas qu\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-321",
+    "id": "delito-319",
     "nombre": "Asociación ilícita",
     "articulo_actual": "Art. 555 CP",
     "rama_id": "orden_publico.atentados",
@@ -6420,7 +6380,7 @@
     "notas": "Mapeo curado. Art. 554 CP: \"Asociación para delinquir.Son asociaciones ilícitas las constituidas, sea de mod\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-322",
+    "id": "delito-320",
     "nombre": "Tenencia de arma blanca",
     "articulo_actual": "Art. 588 CP",
     "rama_id": "orden_publico.armas",
@@ -6440,7 +6400,7 @@
     "notas": "Mapeo curado. Art. 580 CP: \"Tenencia o porte ilegal de armas de fuego.La tenencia de armas de fuego o munici\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-323",
+    "id": "delito-321",
     "nombre": "Falsificación de moneda extranjera",
     "articulo_actual": "Art. 448 CP",
     "rama_id": "fe_publica.moneda",
@@ -6460,7 +6420,7 @@
     "notas": "Mapeo curado. Art. 459 CP: \"Uso de documento falso.Quien, sin haber intervenido en su falsificación, present\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-324",
+    "id": "delito-322",
     "nombre": "Falsificación de documento privado agravado",
     "articulo_actual": "Art. 457 CP",
     "rama_id": "fe_publica.documentos_privados",
@@ -6480,7 +6440,7 @@
     "notas": "Mapeo curado. Art. 467 CP: \"Falsedad en instrumentos financieros.Quien como administrador de hecho o de dere\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-325",
+    "id": "delito-323",
     "nombre": "Falsificación de pasaporte",
     "articulo_actual": "Art. 459 CP",
     "rama_id": "fe_publica.documentos_publicos",
@@ -6500,7 +6460,7 @@
     "notas": "Mapeo curado. Art. 469 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-326",
+    "id": "delito-324",
     "nombre": "Usurpación de identidad en redes sociales",
     "articulo_actual": "Art. 460 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -6520,7 +6480,7 @@
     "notas": "Mapeo curado. Art. 295 CP: \"Delito de discriminación laboral.Quien realiza una grave discriminación en el em\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-327",
+    "id": "delito-325",
     "nombre": "Intrusismo profesional médico",
     "articulo_actual": "Art. 462 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -6540,7 +6500,7 @@
     "notas": "Mapeo curado. Art. 506 CP: \"Aprovechamiento de secreto o información privilegiada.El particular que obtiene \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-328",
+    "id": "delito-326",
     "nombre": "Defraudación tributaria agravada",
     "articulo_actual": "Art. 432 CP",
     "rama_id": "admin_publica.fraudes",
@@ -6560,7 +6520,7 @@
     "notas": "Mapeo curado. Art. 430 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-329",
+    "id": "delito-327",
     "nombre": "Contrabando agravado",
     "articulo_actual": "Art. 429 CP",
     "rama_id": "admin_publica.fraudes",
@@ -6580,7 +6540,7 @@
     "notas": "Mapeo curado. Art. 428 CP: \"Contrabando .Comete el delito de contrabando quien, sin permiso de la autoridad \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-330",
+    "id": "delito-328",
     "nombre": "Delito contra la ordenación del territorio",
     "articulo_actual": "Art. 349 CP",
     "rama_id": "territorio_ambiente.urbanismo",
@@ -6600,7 +6560,7 @@
     "notas": "Mapeo curado. Art. 425 CP: \"Negativa o impedimento del control de entidades supervisoras.Los administradores\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-331",
+    "id": "delito-329",
     "nombre": "Daños al patrimonio arqueológico",
     "articulo_actual": "Art. 388 CP",
     "rama_id": "territorio_ambiente.patrimonio_historico",
@@ -6620,7 +6580,7 @@
     "notas": "Mapeo curado. Art. 422 CP: \"Falsedad de cuentas, información financiera u otros.Los administradores de hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-332",
+    "id": "delito-330",
     "nombre": "Vertido contaminante agravado",
     "articulo_actual": "Art. 326 CP",
     "rama_id": "territorio_ambiente.medio_ambiente",
@@ -6640,7 +6600,7 @@
     "notas": "Mapeo curado. Art. 333 CP: \"Agravantes comunes a los delitos contra el medio ambiente.Los hechos previstos e\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-333",
+    "id": "delito-331",
     "nombre": "Robo con fractura",
     "articulo_actual": "Art. 360 CP",
     "rama_id": "patrimonio.robo.agravado",
@@ -6660,7 +6620,7 @@
     "notas": "Mapeo curado. Art. 383 CP: \"Daños a infraestructuras o equipamientos.Quien destruye, deteriore, inutilice o \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-334",
+    "id": "delito-332",
     "nombre": "Robo en banda",
     "articulo_actual": "Art. 361 CP",
     "rama_id": "patrimonio.robo.agravado",
@@ -6680,7 +6640,7 @@
     "notas": "Mapeo curado. Art. 383 CP: \"Daños a infraestructuras o equipamientos.Quien destruye, deteriore, inutilice o \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-335",
+    "id": "delito-333",
     "nombre": "Robo con toma de rehenes",
     "articulo_actual": "Art. 361 CP",
     "rama_id": "patrimonio.robo.agravado",
@@ -6700,7 +6660,7 @@
     "notas": "Mapeo curado. Art. 383 CP: \"Daños a infraestructuras o equipamientos.Quien destruye, deteriore, inutilice o \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-336",
+    "id": "delito-334",
     "nombre": "Hurto con abuso de confianza",
     "articulo_actual": "Art. 363 CP",
     "rama_id": "patrimonio.hurto.simple",
@@ -6720,7 +6680,7 @@
     "notas": "Mapeo curado. Art. 379 CP: \"Alteración de términos o límites .Quien, para apoderarse de un inmueble o parte \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-337",
+    "id": "delito-335",
     "nombre": "Hurto en banda",
     "articulo_actual": "Art. 363 CP",
     "rama_id": "patrimonio.hurto.agravado",
@@ -6740,7 +6700,7 @@
     "notas": "Mapeo curado. Art. 379 CP: \"Alteración de términos o límites .Quien, para apoderarse de un inmueble o parte \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-338",
+    "id": "delito-336",
     "nombre": "Hurto en lugar habitado",
     "articulo_actual": "Art. 363 CP",
     "rama_id": "patrimonio.hurto.agravado",
@@ -6760,7 +6720,7 @@
     "notas": "Mapeo curado. Art. 380 CP: \"Usurpación de aguas.Quien sin estar autorizado desvía de su curso aguas de uso p\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-339",
+    "id": "delito-337",
     "nombre": "Estafa con abuso de firma en blanco",
     "articulo_actual": "Art. 366 CP",
     "rama_id": "patrimonio.estafa.agravada",
@@ -6780,7 +6740,7 @@
     "notas": "Mapeo curado. Art. 365 CP: \"Estafa.Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para pr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-340",
+    "id": "delito-338",
     "nombre": "Estafa cambiaria",
     "articulo_actual": "Art. 366 CP",
     "rama_id": "patrimonio.estafa.agravada",
@@ -6800,7 +6760,7 @@
     "notas": "Mapeo curado. Art. 365 CP: \"Estafa.Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para pr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-341",
+    "id": "delito-339",
     "nombre": "Apropiación indebida de bienes culturales",
     "articulo_actual": "Art. 369 CP",
     "rama_id": "patrimonio.apropiacion",
@@ -6820,7 +6780,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-342",
+    "id": "delito-340",
     "nombre": "Usura agravada",
     "articulo_actual": "Art. 375 CP",
     "rama_id": "patrimonio.usura",
@@ -6840,7 +6800,7 @@
     "notas": "Mapeo curado. Art. 374 CP: \"Agravantes específicas .Las penas del artículo anterior se incrementarán en un t\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-343",
+    "id": "delito-341",
     "nombre": "Daños en archivos informáticos",
     "articulo_actual": "Art. 401 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -6860,7 +6820,7 @@
     "notas": "Mapeo curado. Art. 388 CP: \"Exención de responsabilidadPENAL\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-344",
+    "id": "delito-342",
     "nombre": "Daños informáticos agravados",
     "articulo_actual": "Art. 401 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -6880,7 +6840,7 @@
     "notas": "Mapeo curado. Art. 389 CP: \"Delitos contra el derecho de autor y los derechos conexos.Quien con ánimo de luc\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-345",
+    "id": "delito-343",
     "nombre": "Interceptación de correo electrónico",
     "articulo_actual": "Art. 399 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -6900,7 +6860,7 @@
     "notas": "Mapeo curado. Art. 231 CP: \"Injurias y calumnias sobre institución supervisada.Si las injurias o calumnias r\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-346",
+    "id": "delito-344",
     "nombre": "Amenazas con arma",
     "articulo_actual": "Art. 246 CP",
     "rama_id": "libertad.amenazas",
@@ -6920,7 +6880,7 @@
     "notas": "Mapeo curado. Art. 287 CP: \"Atenuante específica.Las penas previstas para la conducta descrita en el artícul\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-347",
+    "id": "delito-345",
     "nombre": "Amenazas de muerte",
     "articulo_actual": "Art. 246 CP",
     "rama_id": "libertad.amenazas",
@@ -6940,7 +6900,7 @@
     "notas": "Mapeo curado. Art. 287 CP: \"Atenuante específica.Las penas previstas para la conducta descrita en el artícul\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-348",
+    "id": "delito-346",
     "nombre": "Amenazas condicionadas",
     "articulo_actual": "Art. 246 CP",
     "rama_id": "libertad.amenazas",
@@ -6960,7 +6920,7 @@
     "notas": "Mapeo curado. Art. 287 CP: \"Atenuante específica.Las penas previstas para la conducta descrita en el artícul\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-349",
+    "id": "delito-347",
     "nombre": "Coacción con violencia",
     "articulo_actual": "Art. 245 CP",
     "rama_id": "libertad.amenazas",
@@ -6980,7 +6940,7 @@
     "notas": "Mapeo curado. Art. 288 CP: \"Incumplimiento del deber de asistencia y sustento.Quien deja de cumplir los debe\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-350",
+    "id": "delito-348",
     "nombre": "Detención ilegal por funcionario",
     "articulo_actual": "Art. 243 CP",
     "rama_id": "libertad.detenciones.ilegal",
@@ -7000,7 +6960,7 @@
     "notas": "Mapeo curado. Art. 282 CP: \"Adopción, acogida o guarda fraudulenta.Quien, mediando compensación económica, d\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-351",
+    "id": "delito-349",
     "nombre": "Secuestro express",
     "articulo_actual": "Art. 240 CP",
     "rama_id": "libertad.detenciones.secuestro",
@@ -7020,7 +6980,7 @@
     "notas": "Mapeo curado. Art. 297 CP: \"Tráfico ilícito de personas.Quien, con la finalidad de obtener, directa o indire\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-352",
+    "id": "delito-350",
     "nombre": "Maltrato psicológico habitual",
     "articulo_actual": "Art. 209 CP",
     "rama_id": "libertad.violencia_genero",
@@ -7040,7 +7000,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-353",
+    "id": "delito-351",
     "nombre": "Maltrato económico",
     "articulo_actual": "Art. 209 CP",
     "rama_id": "libertad.violencia_genero",
@@ -7060,7 +7020,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-354",
+    "id": "delito-352",
     "nombre": "Venganza contra la pareja",
     "articulo_actual": "Art. 209 CP",
     "rama_id": "libertad.violencia_genero",
@@ -7080,7 +7040,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-355",
+    "id": "delito-353",
     "nombre": "Trato degradante en el ámbito laboral",
     "articulo_actual": "Art. 294 CP",
     "rama_id": "trabajadores.discriminacion",
@@ -7100,7 +7060,7 @@
     "notas": "Mapeo curado. Art. 216 CP: \"Tortura.Comete tortura el funcionario o empleado público que en el ejercicio de \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-356",
+    "id": "delito-354",
     "nombre": "Discriminación racial",
     "articulo_actual": "Art. 563 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -7120,7 +7080,7 @@
     "notas": "Mapeo curado. Art. 124 CP: \"Responsables civiles directos.Son responsables civiles directos:1) Toda persona \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-357",
+    "id": "delito-355",
     "nombre": "Discriminación por orientación sexual",
     "articulo_actual": "Art. 563 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -7140,7 +7100,7 @@
     "notas": "Mapeo curado. Art. 124 CP: \"Responsables civiles directos.Son responsables civiles directos:1) Toda persona \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-358",
+    "id": "delito-356",
     "nombre": "Atentado contra la libertad ideológica",
     "articulo_actual": "Art. 560 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -7160,7 +7120,7 @@
     "notas": "Mapeo curado. Art. 124 CP: \"Responsables civiles directos.Son responsables civiles directos:1) Toda persona \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-359",
+    "id": "delito-357",
     "nombre": "Omisión del deber de perseguir delitos graves",
     "articulo_actual": "Art. 518 CP",
     "rama_id": "justicia.omision",
@@ -7180,7 +7140,7 @@
     "notas": "Mapeo curado. Art. 515 CP: \"Omisión del deber de perseguir delitos.El funcionario o empleado público que, fa\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-360",
+    "id": "delito-358",
     "nombre": "Prevaricato judicial grave",
     "articulo_actual": "Art. 516 CP",
     "rama_id": "justicia.prevaricato",
@@ -7200,7 +7160,7 @@
     "notas": "Mapeo curado. Art. 498 CP: \"Prevaricato administrativo.El funcionario o empleado público que, a sabiendas de\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-361",
+    "id": "delito-359",
     "nombre": "Obstrucción a la justicia por funcionario",
     "articulo_actual": "Art. 528 CP",
     "rama_id": "justicia.obstruccion",
@@ -7220,7 +7180,7 @@
     "notas": "Mapeo curado. Art. 514 CP: \"Eximente de responsabilidad.Están exentos de las penas impuestas a los encubrido\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-362",
+    "id": "delito-360",
     "nombre": "Cohecho de jurado",
     "articulo_actual": "Art. 495 CP",
     "rama_id": "admin_publica.cohecho",
@@ -7240,7 +7200,7 @@
     "notas": "Mapeo curado. Art. 482 CP: \"Fraude.El funcionario o empleado público que, interviniendo por razón de su carg\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-363",
+    "id": "delito-361",
     "nombre": "Cohecho de testigo",
     "articulo_actual": "Art. 493 CP",
     "rama_id": "admin_publica.cohecho",
@@ -7260,7 +7220,7 @@
     "notas": "Mapeo curado. Art. 482 CP: \"Fraude.El funcionario o empleado público que, interviniendo por razón de su carg\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-364",
+    "id": "delito-362",
     "nombre": "Malversación de fondos de cooperación",
     "articulo_actual": "Art. 481 CP",
     "rama_id": "admin_publica.malversacion",
@@ -7280,7 +7240,7 @@
     "notas": "Mapeo curado. Art. 481 CP: \"Disposiciones generales.Las disposiciones de este capítulo son extensivas en los\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-365",
+    "id": "delito-363",
     "nombre": "Enriquecimiento ilícito de particular",
     "articulo_actual": "Art. 485 CP",
     "rama_id": "admin_publica.negociaciones",
@@ -7300,7 +7260,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-366",
+    "id": "delito-364",
     "nombre": "Nombramiento ilegal agravado",
     "articulo_actual": "Art. 501 CP",
     "rama_id": "admin_publica.abuso_autoridad",
@@ -7320,7 +7280,7 @@
     "notas": "Mapeo curado. Art. 499 CP: \"Abuso de autoridad.Comete el delito de abuso de autoridad y debe ser castigado c\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-367",
+    "id": "delito-365",
     "nombre": "Usurpación de aguas públicas",
     "articulo_actual": "Art. 379 CP",
     "rama_id": "territorio_ambiente.medio_ambiente",
@@ -7340,7 +7300,7 @@
     "notas": "Mapeo curado. Art. 337 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-368",
+    "id": "delito-366",
     "nombre": "Construcción ilegal en zona protegida",
     "articulo_actual": "Art. 350 CP",
     "rama_id": "territorio_ambiente.urbanismo",
@@ -7360,7 +7320,7 @@
     "notas": "Mapeo curado. Art. 425 CP: \"Negativa o impedimento del control de entidades supervisoras.Los administradores\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-369",
+    "id": "delito-367",
     "nombre": "Incendio de masa forestal",
     "articulo_actual": "Art. 327 CP",
     "rama_id": "territorio_ambiente.incendio_forestal",
@@ -7380,7 +7340,7 @@
     "notas": "Mapeo curado. Art. 327 CP: \"Incendio forestal .Quien provoca un incendio en terrenos forestales, masas bosco\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-370",
+    "id": "delito-368",
     "nombre": "Incendio de bienes propios con fraude",
     "articulo_actual": "Art. 185 CP",
     "rama_id": "seguridad_colectiva.incendios",
@@ -7400,7 +7360,7 @@
     "notas": "Mapeo curado. Art. 327 CP: \"Incendio forestal .Quien provoca un incendio en terrenos forestales, masas bosco\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-371",
+    "id": "delito-369",
     "nombre": "Estragos por imprudencia",
     "articulo_actual": "Art. 186 CP",
     "rama_id": "seguridad_colectiva.incendios",
@@ -7420,7 +7380,7 @@
     "notas": "Mapeo curado. Art. 330 CP: \"Daños a especies amenazadas.Quien con infracción de lo dispuesto en la legislaci\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-372",
+    "id": "delito-370",
     "nombre": "Tenencia de material radiactivo",
     "articulo_actual": "Art. 345 CP",
     "rama_id": "seguridad_colectiva.radiactivo",
@@ -7440,7 +7400,7 @@
     "notas": "Mapeo curado. Art. 323 CP: \"Conducción temeraria.Quien conduce un vehículo automotor con temeridad manifiest\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-373",
+    "id": "delito-371",
     "nombre": "Omisión del deber de socorro en accidente",
     "articulo_actual": "Art. 216 CP",
     "rama_id": "seguridad_colectiva.vial",
@@ -7460,7 +7420,7 @@
     "notas": "Mapeo curado. Art. 204 CP: \"Omisión del deber de socorro.Quien no socorre a una persona que se encuentra des\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-374",
+    "id": "delito-372",
     "nombre": "Conducción con exceso de velocidad en zona escolar",
     "articulo_actual": "Art. 323 CP",
     "rama_id": "seguridad_colectiva.vial",
@@ -7480,7 +7440,7 @@
     "notas": "Mapeo curado. Art. 325 CP: \"Explotación ilegal de recursos naturales .Quien, con infracción de las disposici\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-375",
+    "id": "delito-373",
     "nombre": "Incumplimiento de la obligación de someterse a prueba de alcoholemia",
     "articulo_actual": "Art. 326 CP",
     "rama_id": "seguridad_colectiva.vial",
@@ -7500,7 +7460,7 @@
     "notas": "Mapeo curado. Art. 324 CP: \"Contaminación del aire, las aguas o los suelos .Quien, con infracción de la legi\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-376",
+    "id": "delito-374",
     "nombre": "Difusión de contenidos sexuales sin consentimiento",
     "articulo_actual": "Art. 236 CP",
     "rama_id": "libertad.integridad_moral",
@@ -7520,7 +7480,7 @@
     "notas": "Mapeo curado. Art. 274 CP: \"Revelación de secreto profesional.Quien revela un secreto ajeno del que tiene co\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-377",
+    "id": "delito-375",
     "nombre": "Acoso colectivo (linchamiento digital)",
     "articulo_actual": "Art. 248 CP",
     "rama_id": "libertad.integridad_moral",
@@ -7540,7 +7500,7 @@
     "notas": "Mapeo curado. Art. 293 CP: \"Explotación laboral infantil.Si las conductas descritas en los dos artículos ant\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-378",
+    "id": "delito-376",
     "nombre": "Suplantación de identidad en proceso judicial",
     "articulo_actual": "Art. 460 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -7560,7 +7520,7 @@
     "notas": "Mapeo curado. Art. 295 CP: \"Delito de discriminación laboral.Quien realiza una grave discriminación en el em\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-379",
+    "id": "delito-377",
     "nombre": "Falsificación de documento público en documento extranjero",
     "articulo_actual": "Art. 456 CP",
     "rama_id": "fe_publica.documentos_publicos",
@@ -7580,7 +7540,7 @@
     "notas": "Mapeo curado. Art. 466 CP: \"Fabricación o tenencia de instrumentos para la falsificación de tarjetas bancari\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-380",
+    "id": "delito-378",
     "nombre": "Falsificación de sello oficial",
     "articulo_actual": "Art. 451 CP",
     "rama_id": "fe_publica.moneda",
@@ -7600,7 +7560,7 @@
     "notas": "Mapeo curado. Art. 462 CP: \"Uso de documentos privados falsos.Quien sin haber intervenido en su falsificació\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-381",
+    "id": "delito-379",
     "nombre": "Abandono forzado de domicilio familiar",
     "articulo_actual": "Art. 228 CP",
     "rama_id": "familia.abandono",
@@ -7620,7 +7580,7 @@
     "notas": "Mapeo curado. Art. 228 CP: \"Abandono de menores de edad personas con discapacidad, ancianos o enfermos.Quien\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-382",
+    "id": "delito-380",
     "nombre": "Sustracción internacional de menores",
     "articulo_actual": "Art. 283 CP",
     "rama_id": "familia.sustraccion",
@@ -7640,7 +7600,7 @@
     "notas": "Mapeo curado. Art. 286 CP: \"Sustracción de menores o discapacitados necesitados de especial protección.El pa\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-383",
+    "id": "delito-381",
     "nombre": "Matrimonio ilegal por funcionario",
     "articulo_actual": "Art. 282 CP",
     "rama_id": "familia.matrimonio",
@@ -7660,7 +7620,7 @@
     "notas": "Mapeo curado. Art. 279 CP: \"Celebración de matrimonio inválido.Quien, con conocimiento de su invalidez, cont\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-384",
+    "id": "delito-382",
     "nombre": "Difamación en medios de comunicación",
     "articulo_actual": "Art. 231 CP",
     "rama_id": "honor_intimidad.calumnias",
@@ -7680,7 +7640,7 @@
     "notas": "Mapeo curado. Art. 224 CP: \"Experimentación sin consentimiento.Quien, por cualquier medio o procedimiento, s\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-385",
+    "id": "delito-383",
     "nombre": "Revelación de datos personales por funcionario",
     "articulo_actual": "Art. 234 CP",
     "rama_id": "honor_intimidad.secretos",
@@ -7700,7 +7660,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-386",
+    "id": "delito-384",
     "nombre": "Descubrimiento de datos por particular",
     "articulo_actual": "Art. 235 CP",
     "rama_id": "honor_intimidad.secretos",
@@ -7720,7 +7680,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-387",
+    "id": "delito-385",
     "nombre": "Piratería de señales",
     "articulo_actual": "Art. 395 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -7740,7 +7700,7 @@
     "notas": "Mapeo curado. Art. 405 CP: \"Definiciones legales.A los efectos de este título, se entiende por:1) Datos Info\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-388",
+    "id": "delito-386",
     "nombre": "Copiado ilegal de software",
     "articulo_actual": "Art. 391 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -7760,7 +7720,7 @@
     "notas": "Mapeo curado. Art. 405 CP: \"Definiciones legales.A los efectos de este título, se entiende por:1) Datos Info\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-389",
+    "id": "delito-387",
     "nombre": "Difusión de obras sin derechos",
     "articulo_actual": "Art. 390 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -7780,7 +7740,7 @@
     "notas": "Mapeo curado. Art. 405 CP: \"Definiciones legales.A los efectos de este título, se entiende por:1) Datos Info\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-390",
+    "id": "delito-388",
     "nombre": "Plagio",
     "articulo_actual": "Art. 390 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -7800,7 +7760,7 @@
     "notas": "Mapeo curado. Art. 405 CP: \"Definiciones legales.A los efectos de este título, se entiende por:1) Datos Info\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-391",
+    "id": "delito-389",
     "nombre": "Estafa piramidal",
     "articulo_actual": "Art. 366 CP",
     "rama_id": "patrimonio.estafa.agravada",
@@ -7820,7 +7780,7 @@
     "notas": "Mapeo curado. Art. 366 CP: \"Agravantes específicas.Las penas previstas en este capítulo se deben aumentar en\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-392",
+    "id": "delito-390",
     "nombre": "Estafa mediante phishing",
     "articulo_actual": "Art. 368 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -7840,7 +7800,7 @@
     "notas": "Mapeo curado. Art. 366 CP: \"Agravantes específicas.Las penas previstas en este capítulo se deben aumentar en\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-393",
+    "id": "delito-391",
     "nombre": "Uso ilegal de tarjeta bancaria",
     "articulo_actual": "Art. 368 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -7860,7 +7820,7 @@
     "notas": "Mapeo curado. Art. 463 CP: \"Falsificación de tarjetas bancarias y cheques de viaje.Quien altera, copia, repr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-394",
+    "id": "delito-392",
     "nombre": "Transferencia fraudulenta",
     "articulo_actual": "Art. 368 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -7880,7 +7840,7 @@
     "notas": "Mapeo curado. Art. 368 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-395",
+    "id": "delito-393",
     "nombre": "Manipulación de instrumentos de medición",
     "articulo_actual": "Art. 396 CP",
     "rama_id": "patrimonio.estafa.simple",
@@ -7900,7 +7860,7 @@
     "notas": "Mapeo curado. Art. 469 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-396",
+    "id": "delito-394",
     "nombre": "Contrabando de divisas",
     "articulo_actual": "Art. 430 CP",
     "rama_id": "admin_publica.fraudes",
@@ -7920,7 +7880,7 @@
     "notas": "Mapeo curado. Art. 428 CP: \"Contrabando .Comete el delito de contrabando quien, sin permiso de la autoridad \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-397",
+    "id": "delito-395",
     "nombre": "Contrabando de material estratégico",
     "articulo_actual": "Art. 429 CP",
     "rama_id": "admin_publica.fraudes",
@@ -7940,7 +7900,7 @@
     "notas": "Mapeo curado. Art. 428 CP: \"Contrabando .Comete el delito de contrabando quien, sin permiso de la autoridad \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-398",
+    "id": "delito-396",
     "nombre": "Negociación prohibida a funcionario electo",
     "articulo_actual": "Art. 486 CP",
     "rama_id": "admin_publica.negociaciones",
@@ -7960,7 +7920,7 @@
     "notas": "Mapeo curado. Art. 489 CP: \"Solicitud de actos de contenido sexual.El funcionario o empleado público que sol\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-399",
+    "id": "delito-397",
     "nombre": "Corrupción activa internacional",
     "articulo_actual": "Art. 496 CP",
     "rama_id": "admin_publica.cohecho",
@@ -7980,7 +7940,7 @@
     "notas": "Mapeo curado. Art. 482 CP: \"Fraude.El funcionario o empleado público que, interviniendo por razón de su carg\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-400",
+    "id": "delito-398",
     "nombre": "Blanqueo de capitales agravado",
     "articulo_actual": "Art. 439 CP",
     "rama_id": "patrimonio.receptacion",
@@ -8000,7 +7960,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-401",
+    "id": "delito-399",
     "nombre": "Blanqueo por omisión",
     "articulo_actual": "Art. 440 CP",
     "rama_id": "patrimonio.receptacion",
@@ -8020,7 +7980,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-402",
+    "id": "delito-400",
     "nombre": "Delito contra la ordenación del territorio agravado",
     "articulo_actual": "Art. 349 CP",
     "rama_id": "territorio_ambiente.urbanismo",
@@ -8040,7 +8000,7 @@
     "notas": "Mapeo curado. Art. 425 CP: \"Negativa o impedimento del control de entidades supervisoras.Los administradores\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-403",
+    "id": "delito-401",
     "nombre": "Daños al patrimonio artístico",
     "articulo_actual": "Art. 387 CP",
     "rama_id": "territorio_ambiente.patrimonio_historico",
@@ -8060,7 +8020,7 @@
     "notas": "Mapeo curado. Art. 422 CP: \"Falsedad de cuentas, información financiera u otros.Los administradores de hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-404",
+    "id": "delito-402",
     "nombre": "Contaminación acústica",
     "articulo_actual": "Art. 328 CP",
     "rama_id": "territorio_ambiente.medio_ambiente",
@@ -8080,7 +8040,7 @@
     "notas": "Mapeo curado. Art. 333 CP: \"Agravantes comunes a los delitos contra el medio ambiente.Los hechos previstos e\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-405",
+    "id": "delito-403",
     "nombre": "Contaminación lumínica",
     "articulo_actual": "Art. 329 CP",
     "rama_id": "territorio_ambiente.medio_ambiente",
@@ -8100,7 +8060,7 @@
     "notas": "Mapeo curado. Art. 333 CP: \"Agravantes comunes a los delitos contra el medio ambiente.Los hechos previstos e\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-406",
+    "id": "delito-404",
     "nombre": "Maltrato animal con resultado de muerte",
     "articulo_actual": "Art. 342 CP",
     "rama_id": "territorio_ambiente.flora_fauna",
@@ -8120,7 +8080,7 @@
     "notas": "Mapeo curado. Art. 342 CP: \"Abandono de animales.Quien abandona a un animal doméstico o domesticado en condi\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-407",
+    "id": "delito-405",
     "nombre": "Abandono de animal con resultado de muerte",
     "articulo_actual": "Art. 342 CP",
     "rama_id": "territorio_ambiente.flora_fauna",
@@ -8140,7 +8100,7 @@
     "notas": "Mapeo curado. Art. 342 CP: \"Abandono de animales.Quien abandona a un animal doméstico o domesticado en condi\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-408",
+    "id": "delito-406",
     "nombre": "Incendio forestal con peligro para la vida",
     "articulo_actual": "Art. 327 CP",
     "rama_id": "territorio_ambiente.incendio_forestal",
@@ -8160,7 +8120,7 @@
     "notas": "Mapeo curado. Art. 327 CP: \"Incendio forestal .Quien provoca un incendio en terrenos forestales, masas bosco\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-409",
+    "id": "delito-407",
     "nombre": "Tráfico ilegal de residuos",
     "articulo_actual": "Art. 331 CP",
     "rama_id": "territorio_ambiente.medio_ambiente",
@@ -8180,7 +8140,7 @@
     "notas": "Mapeo curado. Art. 333 CP: \"Agravantes comunes a los delitos contra el medio ambiente.Los hechos previstos e\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-410",
+    "id": "delito-408",
     "nombre": "Aborto sin consentimiento agravado",
     "articulo_actual": "Art. 196 CP",
     "rama_id": "vida_integridad.aborto.forzado",
@@ -8200,7 +8160,7 @@
     "notas": "Mapeo curado. Art. 196 CP: \"Aborto.El aborto es la muerte de un ser humano en cualquier momento del embarazo\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-411",
+    "id": "delito-409",
     "nombre": "Lesiones culposas graves",
     "articulo_actual": "Art. 203 CP",
     "rama_id": "vida_integridad.lesiones.leves",
@@ -8220,7 +8180,7 @@
     "notas": "Mapeo curado. Art. 202 CP: \"Lesiones imprudentes.Quien por imprudencia grave causa alguna de las lesiones de\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-412",
+    "id": "delito-410",
     "nombre": "Riña con arma blanca",
     "articulo_actual": "Art. 210 CP",
     "rama_id": "vida_integridad.riña",
@@ -8240,27 +8200,7 @@
     "notas": "Mapeo curado. Art. 205 CP: \"Omisión del deber de socorro a personas especialmente vulnerables.Quien encuentr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-413",
-    "nombre": "Provocación directa al duelo",
-    "articulo_actual": "Art. 212 CP",
-    "rama_id": "vida_integridad.riña",
-    "estado": "rechazar",
-    "articulo_correcto": "NO MAPEADO",
-    "pena_minima_meses_actual": 3,
-    "pena_maxima_meses_actual": 12,
-    "pena_minima_meses_correcta": null,
-    "pena_maxima_meses_correcta": null,
-    "tiene_pena_alternativa_actual": false,
-    "pena_alternativa_min_actual": 0,
-    "pena_alternativa_max_actual": 0,
-    "fuente": "https://dpej.rae.es/eli/hn/d/2018/01/18/130",
-    "fuente_verificada": true,
-    "fecha_validacion": "2026-06-04",
-    "validador": "agente",
-    "notas": "Delito \"Provocación directa al duelo\" no tiene mapeo curado en CP Honduras vigente (Decreto 130-2017). El catálogo lo incluye pero no se identifica un artículo específico que lo tipifique. Verificar manualmente."
-  },
-  {
-    "id": "delito-414",
+    "id": "delito-411",
     "nombre": "Esterilización forzada",
     "articulo_actual": "Art. 213 CP",
     "rama_id": "vida_integridad.vida_dependiente",
@@ -8280,7 +8220,7 @@
     "notas": "Mapeo curado. Art. 276 CP: \"Agravantes específicas.Las penas de los artículos anteriores se deben aumentar e\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-415",
+    "id": "delito-412",
     "nombre": "Fecundación post mortem",
     "articulo_actual": "Art. 215 CP",
     "rama_id": "vida_integridad.vida_dependiente",
@@ -8300,7 +8240,7 @@
     "notas": "Mapeo curado. Art. 275 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-416",
+    "id": "delito-413",
     "nombre": "Tráfico de órganos",
     "articulo_actual": "Art. 217 CP",
     "rama_id": "libertad_sexual.trata",
@@ -8320,7 +8260,7 @@
     "notas": "Mapeo curado. Art. 277 CP: \"Disposiciones comunes.En todos los casos previstos en este capítulo, si el hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-417",
+    "id": "delito-414",
     "nombre": "Trata de menores",
     "articulo_actual": "Art. 218 CP",
     "rama_id": "libertad_sexual.trata",
@@ -8340,7 +8280,7 @@
     "notas": "Mapeo curado. Art. 264 CP: \"Exhibicionismo.Quien ejecuta o hace ejecutar a otras personas actos de exhibicio\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-418",
+    "id": "delito-415",
     "nombre": "Agresión sexual a persona con discapacidad",
     "articulo_actual": "Art. 251 CP",
     "rama_id": "libertad_sexual.agresiones.agravada",
@@ -8360,7 +8300,7 @@
     "notas": "Mapeo curado. Art. 256 CP: \"Hostigamiento sexual.Quien en el contexto de una organización o en el ámbito de \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-419",
+    "id": "delito-416",
     "nombre": "Violación de persona con discapacidad",
     "articulo_actual": "Art. 249 CP",
     "rama_id": "libertad_sexual.agresiones.agravada",
@@ -8380,7 +8320,7 @@
     "notas": "Mapeo curado. Art. 250 CP: \"Otras agresiones sexuales.Comete delito de agresiones sexuales quien, concurrien\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-420",
+    "id": "delito-417",
     "nombre": "Abuso sexual con penetración digital a menor",
     "articulo_actual": "Art. 251 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -8400,7 +8340,7 @@
     "notas": "Mapeo curado. Art. 261 CP: \"Elaboración y utilización de pornografía infantil.La elaboración, venta, distrib\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-421",
+    "id": "delito-418",
     "nombre": "Acoso sexual a menor",
     "articulo_actual": "Art. 256 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -8420,7 +8360,7 @@
     "notas": "Mapeo curado. Art. 293 CP: \"Explotación laboral infantil.Si las conductas descritas en los dos artículos ant\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-422",
+    "id": "delito-419",
     "nombre": "Ciberacoso sexual a menor agravado",
     "articulo_actual": "Art. 261 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -8440,7 +8380,7 @@
     "notas": "Mapeo curado. Art. 293 CP: \"Explotación laboral infantil.Si las conductas descritas en los dos artículos ant\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-423",
+    "id": "delito-420",
     "nombre": "Posesión de pornografía infantil",
     "articulo_actual": "Art. 261 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -8460,7 +8400,7 @@
     "notas": "Mapeo curado. Art. 262 CP: \"Concepto de pornografía infantil.A los efectos de lo dispuesto en este capítulo,\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-424",
+    "id": "delito-421",
     "nombre": "Distribución de pornografía infantil",
     "articulo_actual": "Art. 261 CP",
     "rama_id": "libertad_sexual.abusos.menores",
@@ -8480,7 +8420,7 @@
     "notas": "Mapeo curado. Art. 262 CP: \"Concepto de pornografía infantil.A los efectos de lo dispuesto en este capítulo,\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-425",
+    "id": "delito-422",
     "nombre": "Prostitución forzada",
     "articulo_actual": "Art. 262 CP",
     "rama_id": "libertad_sexual.explotacion",
@@ -8500,7 +8440,7 @@
     "notas": "Mapeo curado. Art. 263 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-426",
+    "id": "delito-423",
     "nombre": "Explotación sexual de persona vulnerable",
     "articulo_actual": "Art. 264 CP",
     "rama_id": "libertad_sexual.explotacion",
@@ -8520,7 +8460,7 @@
     "notas": "Mapeo curado. Art. 263 CP: \"Responsabilidad de las personas jurídicas .Cuando de acuerdo con lo establecido \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-427",
+    "id": "delito-424",
     "nombre": "Delito contra la salud pública con resultado de muerte agravado",
     "articulo_actual": "Art. 331 CP",
     "rama_id": "salud_publica.alimentarios",
@@ -8540,7 +8480,7 @@
     "notas": "Mapeo curado. Art. 305 CP: \"Adulteración de agua potable y alimentos.Quien adultera con sustancias infeccios\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-428",
+    "id": "delito-425",
     "nombre": "Tráfico de medicamentos caducados",
     "articulo_actual": "Art. 336 CP",
     "rama_id": "salud_publica.farmaceuticos",
@@ -8560,7 +8500,7 @@
     "notas": "Mapeo curado. Art. 316 CP: \"Atenuantes específicas del tráfico de precursores.Se debe imponer la pena de uno\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-429",
+    "id": "delito-426",
     "nombre": "Adulteración de productos farmacéuticos",
     "articulo_actual": "Art. 337 CP",
     "rama_id": "salud_publica.farmaceuticos",
@@ -8580,7 +8520,7 @@
     "notas": "Mapeo curado. Art. 316 CP: \"Atenuantes específicas del tráfico de precursores.Se debe imponer la pena de uno\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-430",
+    "id": "delito-427",
     "nombre": "Propagación de epidemia por imprudencia",
     "articulo_actual": "Art. 340 CP",
     "rama_id": "salud_publica.epidemias",
@@ -8600,7 +8540,7 @@
     "notas": "Mapeo curado. Art. 304 CP: \"Agravantes específicas.Se deben imponer las penas correspondientes incrementadas\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-431",
+    "id": "delito-428",
     "nombre": "Incumplimiento de cuarentena",
     "articulo_actual": "Art. 341 CP",
     "rama_id": "salud_publica.epidemias",
@@ -8620,7 +8560,7 @@
     "notas": "Mapeo curado. Art. 304 CP: \"Agravantes específicas.Se deben imponer las penas correspondientes incrementadas\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-432",
+    "id": "delito-429",
     "nombre": "Intrusismo profesional sanitario",
     "articulo_actual": "Art. 462 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -8640,7 +8580,7 @@
     "notas": "Mapeo curado. Art. 506 CP: \"Aprovechamiento de secreto o información privilegiada.El particular que obtiene \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-433",
+    "id": "delito-430",
     "nombre": "Atentado contra monumento nacional",
     "articulo_actual": "Art. 386 CP",
     "rama_id": "territorio_ambiente.patrimonio_historico",
@@ -8660,7 +8600,7 @@
     "notas": "Mapeo curado. Art. 422 CP: \"Falsedad de cuentas, información financiera u otros.Los administradores de hecho\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-434",
+    "id": "delito-431",
     "nombre": "Vertido de hidrocarburos",
     "articulo_actual": "Art. 325 CP",
     "rama_id": "territorio_ambiente.medio_ambiente",
@@ -8680,7 +8620,7 @@
     "notas": "Mapeo curado. Art. 333 CP: \"Agravantes comunes a los delitos contra el medio ambiente.Los hechos previstos e\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-435",
+    "id": "delito-432",
     "nombre": "Destrucción de documentos contables",
     "articulo_actual": "Art. 503 CP",
     "rama_id": "admin_publica.infidelidad",
@@ -8700,7 +8640,7 @@
     "notas": "Mapeo curado. Art. 388 CP: \"Exención de responsabilidadPENAL\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-436",
+    "id": "delito-433",
     "nombre": "Falseamiento de cuentas anuales",
     "articulo_actual": "Art. 390 CP",
     "rama_id": "patrimonio.estafa.agravada",
@@ -8720,7 +8660,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-437",
+    "id": "delito-434",
     "nombre": "Administración desleal",
     "articulo_actual": "Art. 377 CP",
     "rama_id": "patrimonio.estafa.agravada",
@@ -8740,7 +8680,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-438",
+    "id": "delito-435",
     "nombre": "Apropiación indebida de bienes del Estado",
     "articulo_actual": "Art. 480 CP",
     "rama_id": "admin_publica.malversacion",
@@ -8760,7 +8700,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-439",
+    "id": "delito-436",
     "nombre": "Uso indebido de información privilegiada",
     "articulo_actual": "Art. 394 CP",
     "rama_id": "patrimonio.estafa.agravada",
@@ -8780,7 +8720,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-440",
+    "id": "delito-437",
     "nombre": "Denegación de prestaciones sanitarias",
     "articulo_actual": "Art. 295 CP",
     "rama_id": "trabajadores.seguridad_laboral",
@@ -8800,7 +8740,7 @@
     "notas": "Mapeo curado. Art. 228 CP: \"Abandono de menores de edad personas con discapacidad, ancianos o enfermos.Quien\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-441",
+    "id": "delito-438",
     "nombre": "Discriminación por enfermedad",
     "articulo_actual": "Art. 563 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -8820,7 +8760,7 @@
     "notas": "Mapeo curado. Art. 124 CP: \"Responsables civiles directos.Son responsables civiles directos:1) Toda persona \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-442",
+    "id": "delito-439",
     "nombre": "Discriminación por discapacidad",
     "articulo_actual": "Art. 563 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -8840,7 +8780,7 @@
     "notas": "Mapeo curado. Art. 124 CP: \"Responsables civiles directos.Son responsables civiles directos:1) Toda persona \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-443",
+    "id": "delito-440",
     "nombre": "Atentado contra la libertad de empresa",
     "articulo_actual": "Art. 564 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -8860,7 +8800,7 @@
     "notas": "Mapeo curado. Art. 131 CP: \"Legitimidad.La responsabilidad civil puede ser exigida por las personas perjudic\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-444",
+    "id": "delito-441",
     "nombre": "Atentado contra el derecho a la educación",
     "articulo_actual": "Art. 566 CP",
     "rama_id": "constitucion.derechos_fundamentales",
@@ -8880,7 +8820,7 @@
     "notas": "Mapeo curado. Art. 130 CP: \"Prelación de las responsabilidades pecuniarias.Los pagos a efectuar por el respo\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-445",
+    "id": "delito-442",
     "nombre": "Publicidad engañosa sobre productos de salud",
     "articulo_actual": "Art. 367 CP",
     "rama_id": "salud_publica.farmaceuticos",
@@ -8900,7 +8840,7 @@
     "notas": "Mapeo curado. Art. 365 CP: \"Estafa.Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para pr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-446",
+    "id": "delito-443",
     "nombre": "Publicidad ilícita de juegos de azar",
     "articulo_actual": "Art. 367 CP",
     "rama_id": "patrimonio.estafa.simple",
@@ -8920,7 +8860,7 @@
     "notas": "Mapeo curado. Art. 365 CP: \"Estafa.Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para pr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-447",
+    "id": "delito-444",
     "nombre": "Usurpación del estado civil",
     "articulo_actual": "Art. 460 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -8940,7 +8880,7 @@
     "notas": "Mapeo curado. Art. 295 CP: \"Delito de discriminación laboral.Quien realiza una grave discriminación en el em\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-448",
+    "id": "delito-445",
     "nombre": "Usurpación de títulos profesionales",
     "articulo_actual": "Art. 461 CP",
     "rama_id": "fe_publica.usurpacion",
@@ -8960,7 +8900,7 @@
     "notas": "Mapeo curado. Art. 506 CP: \"Aprovechamiento de secreto o información privilegiada.El particular que obtiene \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-449",
+    "id": "delito-446",
     "nombre": "Falsificación de documentos notariales",
     "articulo_actual": "Art. 456 CP",
     "rama_id": "fe_publica.documentos_publicos",
@@ -8980,7 +8920,7 @@
     "notas": "Mapeo curado. Art. 466 CP: \"Fabricación o tenencia de instrumentos para la falsificación de tarjetas bancari\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-450",
+    "id": "delito-447",
     "nombre": "Falsificación de documento privado contable",
     "articulo_actual": "Art. 457 CP",
     "rama_id": "fe_publica.documentos_privados",
@@ -9000,7 +8940,7 @@
     "notas": "Mapeo curado. Art. 467 CP: \"Falsedad en instrumentos financieros.Quien como administrador de hecho o de dere\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-451",
+    "id": "delito-448",
     "nombre": "Revelación de información financiera privilegiada",
     "articulo_actual": "Art. 394 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -9020,7 +8960,7 @@
     "notas": "Mapeo curado. Art. 376 CP: \"Punición de actos preparatorios.La conspiración, proposición o provocación para \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-452",
+    "id": "delito-449",
     "nombre": "Inutilización de buques o aeronaves",
     "articulo_actual": "Art. 188 CP",
     "rama_id": "seguridad_colectiva.incendios",
@@ -9040,7 +8980,7 @@
     "notas": "Mapeo curado. Art. 161 CP: \"Piratería.Quien con ánimo de lucro propio o ajeno u otro propósito personal y em\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-453",
+    "id": "delito-450",
     "nombre": "Estafa mediante tarjeta de crédito",
     "articulo_actual": "Art. 368 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -9060,7 +9000,7 @@
     "notas": "Mapeo curado. Art. 366 CP: \"Agravantes específicas.Las penas previstas en este capítulo se deben aumentar en\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-454",
+    "id": "delito-451",
     "nombre": "Sabotaje informático",
     "articulo_actual": "Art. 401 CP",
     "rama_id": "patrimonio.fraude_informatico",
@@ -9080,7 +9020,7 @@
     "notas": "Mapeo curado. Art. 388 CP: \"Exención de responsabilidadPENAL\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-455",
+    "id": "delito-452",
     "nombre": "Acoso inmobiliario",
     "articulo_actual": "Art. 248 CP",
     "rama_id": "libertad.integridad_moral",
@@ -9100,7 +9040,7 @@
     "notas": "Mapeo curado. Art. 294 CP: \"Acoso laboral vertical.Quien, en el ámbito de cualquier relación laboral y aprov\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-456",
+    "id": "delito-453",
     "nombre": "Trato degradante en residencia de mayores",
     "articulo_actual": "Art. 249 CP",
     "rama_id": "libertad.integridad_moral",
@@ -9120,7 +9060,7 @@
     "notas": "Mapeo curado. Art. 216 CP: \"Tortura.Comete tortura el funcionario o empleado público que en el ejercicio de \". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-457",
+    "id": "delito-454",
     "nombre": "Violencia asistencial",
     "articulo_actual": "Art. 209 CP",
     "rama_id": "libertad.violencia_genero",
@@ -9140,7 +9080,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-458",
+    "id": "delito-455",
     "nombre": "Desobediencia judicial agravada",
     "articulo_actual": "Art. 529 CP",
     "rama_id": "justicia.obstruccion",
@@ -9160,7 +9100,7 @@
     "notas": "Mapeo curado. Art. 502 CP: \"Facilitar destrucción de documento en custodia.El funcionario o empleado público\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-459",
+    "id": "delito-456",
     "nombre": "Deslealtad profesional de abogado",
     "articulo_actual": "Art. 531 CP",
     "rama_id": "justicia.obstruccion",
@@ -9180,7 +9120,7 @@
     "notas": "Mapeo curado. Art. 495 CP: \"Cohecho por consideración al cargo.El funcionario o empleado público que, en pro\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-460",
+    "id": "delito-457",
     "nombre": "Descubrimiento de secretos de empresa",
     "articulo_actual": "Art. 394 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -9200,7 +9140,7 @@
     "notas": "Mapeo curado. Art. 232 CP: \"Concepto de publicidad.Las injurias y calumnias se entienden hechas con publicid\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-461",
+    "id": "delito-458",
     "nombre": "Violación de derechos de obtentor de variedades vegetales",
     "articulo_actual": "Art. 392 CP",
     "rama_id": "patrimonio.propiedad_intelectual",
@@ -9220,7 +9160,7 @@
     "notas": "Mapeo curado. Art. 405 CP: \"Definiciones legales.A los efectos de este título, se entiende por:1) Datos Info\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-462",
+    "id": "delito-459",
     "nombre": "Incendio de cultivos",
     "articulo_actual": "Art. 185 CP",
     "rama_id": "seguridad_colectiva.incendios",
@@ -9240,7 +9180,7 @@
     "notas": "Mapeo curado. Art. 327 CP: \"Incendio forestal .Quien provoca un incendio en terrenos forestales, masas bosco\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-463",
+    "id": "delito-460",
     "nombre": "Daños a vías de comunicación",
     "articulo_actual": "Art. 385 CP",
     "rama_id": "seguridad_colectiva.incendios",
@@ -9260,7 +9200,7 @@
     "notas": "Mapeo curado. Art. 388 CP: \"Exención de responsabilidadPENAL\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-464",
+    "id": "delito-461",
     "nombre": "Estafa procesal",
     "articulo_actual": "Art. 366 CP",
     "rama_id": "justicia.obstruccion",
@@ -9280,7 +9220,7 @@
     "notas": "Mapeo curado. Art. 365 CP: \"Estafa.Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para pr\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-465",
+    "id": "delito-462",
     "nombre": "Denuncia falsa con acusación de delito grave",
     "articulo_actual": "Art. 525 CP",
     "rama_id": "justicia.falso_testimonio",
@@ -9300,7 +9240,7 @@
     "notas": "Mapeo curado. Art. 522 CP: \"Delito de falta de registro de clientes y su identificación.Los titulares de las\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-466",
+    "id": "delito-463",
     "nombre": "Simulación de delito grave",
     "articulo_actual": "Art. 525 CP",
     "rama_id": "justicia.falso_testimonio",
@@ -9320,7 +9260,7 @@
     "notas": "Mapeo curado. Art. 522 CP: \"Delito de falta de registro de clientes y su identificación.Los titulares de las\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-467",
+    "id": "delito-464",
     "nombre": "Encubrimiento de delito grave",
     "articulo_actual": "Art. 521 CP",
     "rama_id": "justicia.encubrimiento",
@@ -9340,7 +9280,7 @@
     "notas": "Mapeo curado. Art. 513 CP: \"Encubrimiento.Quien con conocimiento de la comisión de un delito y sin haber par\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-468",
+    "id": "delito-465",
     "nombre": "Quebrantamiento de orden de protección",
     "articulo_actual": "Art. 527 CP",
     "rama_id": "libertad.violencia_genero",
@@ -9360,7 +9300,7 @@
     "notas": "Mapeo curado. Art. 530 CP: \"Deslealtad profesional.El profesional que asesora o asume la defensa o represent\". Pena ajustada al rango legal del CP vigente."
   },
   {
-    "id": "delito-469",
+    "id": "delito-466",
     "nombre": "Robo en banda armada",
     "articulo_actual": "Art. 361 CP",
     "rama_id": "patrimonio.robo.agravado",

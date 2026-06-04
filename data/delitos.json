@@ -2970,15 +2970,6 @@
     "penas_accesorias": []
   },
   {
-    "nombre": "Duelo",
-    "articulo": "Art. 211 CP",
-    "conducta": "Batirse en duelo",
-    "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 12,
-    "penas_accesorias": []
-  },
-  {
     "nombre": "Manipulación genética",
     "articulo": "Art. 277 CP",
     "conducta": "Manipular genes con fines ilícitos",
@@ -3455,15 +3446,6 @@
     "rama_id": "vida_integridad.riña",
     "pena_minima_meses": 48,
     "pena_maxima_meses": 96,
-    "penas_accesorias": []
-  },
-  {
-    "nombre": "Provocación al duelo",
-    "articulo": "Art. 212 CP",
-    "conducta": "Provocar a otro para batirse en duelo",
-    "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
     "penas_accesorias": []
   },
   {
@@ -4660,15 +4642,6 @@
     "rama_id": "vida_integridad.riña",
     "pena_minima_meses": 24,
     "pena_maxima_meses": 48,
-    "penas_accesorias": []
-  },
-  {
-    "nombre": "Provocación directa al duelo",
-    "articulo": "Art. 212 CP",
-    "conducta": "Retar públicamente a duelo",
-    "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
     "penas_accesorias": []
   },
   {
