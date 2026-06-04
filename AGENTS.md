@@ -72,15 +72,82 @@ Después de modificar:
 - Si algo falla, corregirlo o reportarlo como riesgo pendiente.
 - Si se modifica comportamiento del proyecto, actualizar documentación si existe y aplica.
 
-## Comandos mínimos de validación
+## Flujo obligatorio por cambio (forma actual de trabajar)
 
-Cuando se modifique TypeScript, Next.js, React, rutas, componentes, API routes o código dentro de `app/`:
+Cada vez que se modifiquen archivos del repositorio, el agente DEBE ejecutar la siguiente secuencia en orden. No saltar pasos. No reportar éxito si alguno falla.
+
+### 1. Lint + Build (siempre)
 
 ```bash
+npm run lint
 npm run build
 ```
 
-Cuando se modifique el motor de cálculo (`lib/calculo.ts`, `lib/utils.ts`, `lib/catalogos.ts`):
+- `lint` debe retornar 0 errores y 0 warnings.
+- `build` debe completar `Compiled successfully` y `Finished TypeScript` sin errores.
+- Si `build` falla por `EPERM` en `.next` (OneDrive lock en Windows): `Remove-Item -LiteralPath .next -Recurse -Force -ErrorAction SilentlyContinue` y reintentar.
+
+### 2. Tests unit + E2E (siempre)
+
+```bash
+npm run test
+npm run test:e2e
+```
+
+- `test` (Vitest) debe pasar 81/81 unit tests en 3 archivos.
+- `test:e2e` (Playwright) debe pasar todas las pruebas E2E (suite pública sin auth).
+- Si `test:e2e` falla por `EPERM` en `test-results` o `.next`: limpiar y reintentar.
+- Si el webServer de Playwright no arranca por build sucia: `Remove-Item -LiteralPath .next -Recurse -Force` antes de reintentar.
+
+### 3. Commit + Push (solo si los pasos 1 y 2 pasan)
+
+```bash
+git add <archivos específicos>
+git commit -m "<mensaje descriptivo en español>"
+git push origin main
+```
+
+- Hacer commits atómicos (un cambio lógico por commit).
+- Mensaje en español, sin emojis, con prefijo (`feat:`, `fix:`, `docs:`, `chore:`, etc.).
+- NO usar `git add .` a ciegas; revisar `git status` y `git diff --stat` antes.
+- `push` solo a `main` (este proyecto no usa branches de feature).
+
+### 4. Verificar deploy de Vercel (después de push)
+
+```bash
+Start-Sleep -Seconds 30
+vercel ls calculo-de-penas-nextjs
+vercel inspect <url-del-nuevo-deploy>
+```
+
+- Vercel CLI debe estar autenticado en el entorno.
+- El nuevo deploy debe pasar de `Building` a `Ready` en ~30-60s.
+- Verificar alias de producción: `calculo-de-penas-nextjs.vercel.app`.
+- Opcionalmente, verificar el bundle de producción con `x-vercel-protection-bypass` (token guardado en `.env.example` o en notas internas).
+
+### Resumen del flujo
+
+```
+Modificar archivos
+   ↓
+npm run lint && npm run build
+   ↓
+npm run test && npm run test:e2e
+   ↓
+git add + commit + push
+   ↓
+vercel ls + vercel inspect
+   ↓
+Reporte final con % completado, % restante, archivos modificados,
+comandos ejecutados, resultado de cada comando, cambios aplicados,
+errores corregidos, riesgos pendientes, NO VALIDADO, próximo paso.
+```
+
+## Comandos específicos por tipo de cambio
+
+Adicionalmente al flujo obligatorio anterior, aplicar las siguientes validaciones según el área modificada:
+
+Cuando se modifique el motor de cálculo (`lib/calculo.ts` — que re-exporta desde `lib/rules/v1/`, `lib/utils.ts`, `lib/catalogos.ts`):
 
 ```bash
 npm run build
@@ -129,7 +196,7 @@ No sustituir validación real por suposiciones.
 
 ### Motor de cálculo de penas
 
-1. `lib/calculo.ts` contiene la lógica de cálculo. Cualquier cambio debe preservar la compatibilidad con la API (`/api/calcular`).
+1. `lib/calculo.ts` re-exporta la API pública desde `lib/rules/v1/`. La lógica está modularizada en `lib/rules/v1/` (analisis, circunstancias, concurso, eximentes, grado-autoria, pena-base, tentativa, types, index). Cualquier cambio debe preservar la compatibilidad con la API (`/api/calcular`).
 2. `lib/utils.ts` contiene helpers matemáticos (aumentar/reducir grado, mitad superior/inferior). Cambiar una fórmula afecta TODOS los cálculos.
 3. `lib/catalogos.ts` contiene los catálogos legales (agravantes Art. 27 CP, atenuantes Art. 26 CP, eximentes Art. 25 CP, grados de autoría y ejecución, tipos de concurso).
 4. No cambiar las reglas de compensación agravantes/atenuantes sin verificación legal expresa del CP hondureño.
@@ -137,7 +204,7 @@ No sustituir validación real por suposiciones.
 
 ### Base de datos y esquema
 
-1. `lib/schema.ts` define las 3 tablas: `ramas_juridicas`, `articulos_constitucion`, `delitos`.
+1. `lib/schema.ts` define 9 tablas: `ramas_juridicas`, `articulos_constitucion`, `articulos_cp`, `delitos`, `bufetes`, `usuarios`, `casos`, `calculos`, `auditoria_eventos`.
 2. `delitos` tiene unique constraint en `(nombre, articulo)`. No insertar duplicados.
 3. Las migraciones se generan con `drizzle-kit generate` y se aplican con `drizzle-kit push`.
 4. No modificar la BD directamente en Neon sin pasar por Drizzle migrations.
@@ -145,7 +212,7 @@ No sustituir validación real por suposiciones.
 
 ### Datos semilla (data/)
 
-1. `data/delitos.json` contiene ~469 delitos del CP hondureño. No introducir duplicados.
+1. `data/delitos.json` contiene 466 delitos del CP hondureño, validados 466/466 contra el CP Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). No introducir duplicados.
 2. `data/ramas_juridicas.json` contiene la taxonomía de ramas legales (119 registros).
 3. `data/articulos_constitucion.json` contiene los artículos constitucionales referenciados (128 registros).
 4. Mantener encoding UTF-8 correcto en todos los JSON.
@@ -157,13 +224,23 @@ No sustituir validación real por suposiciones.
 2. Cada paso tiene estado manejado vía `configs` (array de `DelitoConfig`). Preservar la inmutabilidad.
 3. El paso 4 (circunstancias) maneja eximentes, agravantes y atenuantes. `eximente_completa` es `string | null`, no booleano.
 4. El paso 8 muestra el resultado del cálculo envuelto en un `ErrorBoundary`. No renderizar fuera de él.
+5. La calculadora usa layout propio (header azul distintivo + sidebar stepper desktop) y NO usa `AppShell` por UX de wizard de foco. Migrar a `AppShell` está explícitamente descartado.
 
 ### API routes
 
-1. Todas las rutas están en `app/api/`. Vanidad de URL: `/api/calcular`, `/api/delitos`, etc.
+1. Todas las rutas están en `app/api/`. Vanidad de URL: `/api/calcular`, `/api/delitos`, `/api/calculos/[id]`, etc.
 2. No cambiar la forma de las respuestas JSON sin actualizar el frontend.
 3. La ruta `/api/calcular` es POST y espera `CalculoRequest`. No cambiar el contrato.
 4. La ruta `/api/seed` verifica si hay datos antes de insertar. No forzar reseed.
+5. La ruta `/api/calculos/[id]` (GET/DELETE) sirve para modificar y eliminar cálculos individuales preservando historial.
+
+### Layout y shell
+
+1. `app/layout.tsx` envuelve todo en `RootShell` (sidebar persistente en desktop, drawer en móvil, oculto en rutas públicas).
+2. `components/layout/root-shell.tsx` define `PUBLIC_ROUTES` (`/login`, `/terminos`, `/privacidad`, `/_not-found`). Agregar nuevas rutas públicas ahí si corresponde.
+3. `components/layout/app-shell.tsx` provee el header sticky + main. Usar en páginas autenticadas que no tengan layout propio.
+4. `components/layout/app-sidebar.tsx` contiene el `NAV` array de rutas; mantenerlo sincronizado con el sitemap real.
+5. `e2e/smoke.spec.ts` cubre solo rutas públicas (sin auth). Tests autenticados requieren suite separada (no implementada).
 
 ## Reglas para documentación
 
