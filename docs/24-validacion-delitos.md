@@ -86,14 +86,44 @@ La calculadora usa estos datos para generar resultados. **Datos incorrectos = re
 
 ## Plan de ejecución (8-10 sesiones)
 
-- **C0** (setup): script + JSON inicial ← ACTUAL
-- **C1**: Rama Vida (10 delitos)
+- **C0** (setup): script + JSON inicial ← ACTUAL ✓
+- **C1**: Rama Vida (10 delitos) — 1 validado de muestra (delito-004 Aborto)
 - **C2**: Rama Integridad (15 delitos)
 - **C3**: Rama Libertad (20 delitos)
 - **C4**: Rama Patrimonio + Orden económico (60 delitos)
 - **C5**: Rama Sexual + Familia (40 delitos)
 - **C6**: Rama Administración pública + Resto (~324 delitos)
 - **C7**: Cierre: regenerar `data/delitos-estados.json`, tests, docs
+
+## C1 muestra — Delito-004 (Aborto)
+
+**Búsqueda**: websearch "Art. 196 Código Penal Honduras Aborto decreto 130-2017"
+**Fuente oficial encontrada**: https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf (TSC = Tribunal Superior de Cuentas, aloja texto del CP vigente)
+
+**Hallazgo crítico**:
+- Artículo CORRECTO: `Art. 196 CP` ✓
+- Pero Art. 196 tiene **3 niveles de pena**, no 1:
+  1. Consentido: 3-6 años prisión
+  2. Sin consentimiento, sin violencia: 6-8 años
+  3. Con violencia/intimidación/engaño: 8-10 años
+- Pena accesoria: multa 500-1000 días para profesionales sanitarios
+
+**Comparación con data/delitos.json**:
+| Campo | Actual | Correcto | ¿Coincide? |
+|-------|--------|----------|-------------|
+| `articulo` | `Art. 196 CP` | `Art. 196 CP` | ✓ |
+| `pena_minima_meses` | 36 | 36 (caso 1) | Parcial |
+| `pena_maxima_meses` | 72 | 120 (caso 3) | ✗ |
+| `pena_alternativa` | no | no | ✓ |
+
+**Estado asignado**: `revisar` (modelo de datos no captura 3 niveles de pena)
+
+**Recomendación**:
+- Separar Aborto en 3 delitos distintos: `Aborto consentido`, `Aborto sin consentimiento`, `Aborto con violencia`
+- O añadir campo `niveles_pena: [{min, max, condicion}]` en el schema
+
+**Fuente verificada**: ✓
+**Notas**: Caso edge del modelo. No es error de los datos, es limitación del schema.
 
 Por sesión, validar ~50-80 delitos (depende de la complejidad de búsqueda).
 
