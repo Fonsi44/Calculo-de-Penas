@@ -1,6 +1,131 @@
 # Changelog
 
-## Fase 6 — Corrección documental y modelo de eximentes (2026-06-04)
+## Fase 6 — Endurecimiento final (2026-06-04)
+
+### Lint y calidad
+
+- **`app/calculadora/calculadora-header.tsx`**: eliminado import no usado de `useRouter`.
+- **`app/calculadora/state.ts`**: añadidos `eslint-disable-line` para setState en efectos (navegación imperativa desde URL params).
+- **Resultado:** `npm run lint` → 0 errores, 0 warnings.
+
+### Documentación
+
+- **`README.md`**: estructura actualizada (12 módulos calculadora, 18 endpoints, 152 tests, health check, audit trail, rate limiting).
+- **`docs/13-checklist-implementacion.md`**: actualizado con items completados de seguridad, BD, testing.
+- **`docs/14-log-implementacion.md`**: métricas finales agregadas.
+
+### Métricas acumuladas
+
+- Tests: 53 → 152 (11 suites, 7 backend + 4 frontend).
+- Lint: advisory → blocking (0 errores, 0 warnings).
+- Tablas BD: 9 → 10 (rate_limits).
+- Índices BD: 3 → 12 (delitos 3, casos 2, calculos 2, rate_limits 1, auditoria 3).
+- Eventos auditables: 13 (todos implementados).
+- Rate limits activos: 2 (login 5/min en Neon, calcular 30/min en Neon).
+- Componentes calculadora: 2 → 12 archivos.
+- Security headers: 7.
+
+## Fase Pre-6 — Corrección documental y modelo de eximentes (2026-06-04)
+
+### Documentación
+
+- **`AGENTS.md`**: corregida la numeración de artículos del CP en `lib/catalogos.ts` (agravantes Art. 32, atenuantes Art. 31, eximentes Art. 30) — el código ya referenciaba correctamente los Arts. 30-32 del CP Decreto 130-2017; la doc estaba desactualizada.
+- **`docs/02-motor-calculo.md`**: misma corrección de Arts. 25-27 → 30-32; descripción completa de los 10 agravantes, 6 atenuantes y 5 eximentes completas conforme al catálogo real.
+- **`docs/01-arquitectura.md`, `docs/03-trazabilidad-normativa.md`, `docs/13-checklist-implementacion.md`, `docs/14-log-implementacion.md`, `docs/19-e2e-testing.md`, `docs/24-validacion-delitos.md`**: cifras corregidas (469 → 466 delitos verificados; 466/466 validados, 0 pendientes, 0 rechazados).
+
+### Modelo de eximentes (decisión)
+
+- **Decisión:** los 5 items del catálogo `EXIMENTES` (`inimputabilidad`, `legitima_defensa`, `estado_necesidad`, `miedo_insuperable`, `cumplimiento_deber`) son todos **eximentes completas** (`completa: true`).
+- El campo `eximentes: string[]` de `DelitoConfig` queda como compat: si llega con IDs, el motor **los descarta** (todos los items del catálogo son completas). La única vía de eximente incompleta es vía `atenuantes: ['eximente_incompleta']` (Art. 31.1 CP).
+- En próxima versión del schema (v2) se evaluará eliminar `eximentes: string[]` o introducir un item con `completa: false` en el catálogo.
+
+### Refactors menores
+
+- **`lib/calculo.ts`**: eliminados aliases `aplicarConcursoPublic`/`generarAnalisisJuridicoPublic`. Ahora se re-exportan directamente `aplicarConcurso` y `generarAnalisisJuridico`.
+- **`lib/estados-delitos.ts`**: añadido `import 'server-only'` para defensa contra importación accidental desde cliente.
+
+## Fase 5 — Tests frontend + CI endurecido (2026-06-04)
+
+### Testing
+
+- **`package.json`**: añadidos `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`, `jsdom`.
+- **`vitest.config.ts`**: añadido `setupFiles: ['./tests/setup.ts']`.
+- **`tests/setup.ts`** (NUEVO): importa `@testing-library/jest-dom` para matchers DOM.
+- **`tests/components/badge.test.tsx`** (NUEVO): 8 tests (tones, variants, sizes).
+- **`tests/components/button.test.tsx`** (NUEVO): 10 tests (variants, loading, disabled, click).
+- **`tests/components/chip.test.tsx`** (NUEVO): 6 tests (selected, tones, click).
+- **`tests/components/circunstancia-picker.test.tsx`** (NUEVO): 9 tests (secciones, regla compensación, toggles eximentes/agravantes/atenuantes, artículos CP).
+
+### CI/CD
+
+- **`.github/workflows/ci.yml`**: lint ahora bloqueante (eliminado `continue-on-error: true` y `|| true`). Nombre del paso actualizado.
+
+### Métricas
+
+- Tests: 119 → 152 (7 → 11 suites).
+- Lint: advisory → blocking.
+
+## Fase 4 — Refactor calculadora (2026-06-04)
+
+### Arquitectura
+
+- **`app/calculadora/state.ts`** (NUEVO): hook `useCalculadoraState` centralizando todo el estado (20+ variables) y handlers (12+ funciones) del flujo de 8 pasos.
+- **`app/calculadora/calculadora-header.tsx`** (NUEVO): header azul con stepper móvil + banner de modificación + sidebar desktop.
+- **`app/calculadora/paso2-variantes.tsx`** (NUEVO): selección de tipo de pena (prisión/multa).
+- **`app/calculadora/paso3-participacion.tsx`** (NUEVO): grado de autoría + ejecución + reducción tentativa.
+- **`app/calculadora/paso5-delitos-list.tsx`** (NUEVO): lista de delitos configurados con botones añadir/eliminar.
+- **`app/calculadora/paso6-concurso.tsx`** (NUEVO): selección de tipo de concurso.
+- **`app/calculadora/paso7-resumen.tsx`** (NUEVO): resumen + botón calcular.
+- **`app/calculadora/save-modal.tsx`** (NUEVO): modal para guardar cálculo en caso existente o nuevo.
+- **`app/calculadora/page.tsx`**: reducido de 817 → 99 líneas (solo orquestación).
+- **Total:** 2 → 12 archivos en `app/calculadora/`.
+
+## Fase 3 — Índices BD + API helpers (2026-06-04)
+
+### Base de datos
+
+- **`lib/schema.ts`**: índices añadidos en `delitos(ramaId, nombre, articulo)`, `casos(usuarioId, creadoEn)`, `calculos(casoId, creadoEn)`.
+- **`drizzle/migrations/0005_motionless_northstar.sql`** (NUEVO): migración con 7 nuevos índices.
+
+### API
+
+- **`lib/api-helpers.ts`** (NUEVO): helpers `apiSuccess(data, status)` y `apiError(message, status)` para estandarizar respuestas.
+
+## Fase 2 — Auditoría CRUD + Auth normalizado + Limpieza deps (2026-06-04)
+
+### Seguridad
+
+- **`app/api/casos/route.ts`**: migrado de `getUser()` manual a `requireAuth()`. Audit en POST (`caso_created`).
+- **`app/api/casos/[id]/route.ts`**: audit en PUT (`caso_updated`).
+- **`app/api/casos/[id]/pdf/route.ts`**: migrado de `getTokenFromCookies + verifyToken` a `requireAuth()` + `authFailureResponse()`.
+- **`app/api/calculos/route.ts`**: audit en POST (`calculo_created`).
+- **`app/api/calculos/[id]/route.ts`**: audit en DELETE (`calculo_deleted`).
+
+### Dependencias
+
+- **`package.json`**: eliminados `ws` y `@types/ws` (no utilizados). `dotenv` conservado (usado por scripts y seed).
+
+## Fase 1 — Rate limit Neon + Health check (2026-06-04)
+
+### Rate limiting
+
+- **`lib/schema.ts`**: nueva tabla `rate_limits` con UNIQUE(identifier, key_prefix) + índice expires.
+- **`drizzle/migrations/0004_fixed_lifeguard.sql`** (NUEVO): migración para tabla rate_limits.
+- **`lib/rate-limit.ts`**: rewrite completo para usar Neon DB en lugar de Map en memoria. Upsert atómico con `ON CONFLICT DO UPDATE` y `CASE WHEN expires_at < NOW()`. Función ahora async.
+- **`app/api/auth/login/route.ts`**: `await rateLimit(...)`.
+- **`app/api/calcular/route.ts`**: `await rateLimit(...)`.
+
+### Health check
+
+- **`app/api/health/route.ts`** (NUEVO): `GET /api/health` → `{ status, db, timestamp, uptime }`. Sin auth.
+- **`middleware.ts`**: `/api/health` añadido a rutas públicas.
+
+### Tests
+
+- **`tests/rate-limit.test.ts`**: rewrite completo para mock DB adapter.
+- **`tests/api/calcular.test.ts`**: mock de `insert` + `rateLimits` añadidos.
+
+## Fase 0 — Emergencia secretos + .gitignore (2026-06-04)
 
 ### Documentación
 

@@ -26,6 +26,44 @@ Registro cronológico de cambios significativos. Ver `CHANGELOG.md` para detalle
 
 - `docs/01-arquitectura.md`, `02-motor-calculo.md`, `03-trazabilidad-normativa.md`.
 
+## 2026-06-04 — Fase 0-6 (auditoría integral y hardening)
+
+### Fase 0 — Emergencia secretos
+- `.gitignore` verificado: `.env` ya ignorado. Añadidos logs, test-results, playwright-report.
+- Nuevo `JWT_SECRET` generado (48 bytes base64url).
+- Verificado: `.env` nunca commiteado en git.
+
+### Fase 1 — Rate limit Neon + Health check
+- `lib/rate-limit.ts`: migrado de Map en memoria a Neon DB (funciona en serverless sin Vercel Pro).
+- `app/api/health/route.ts` (nuevo): GET /api/health.
+- `drizzle/migrations/0004`: tabla rate_limits.
+
+### Fase 2 — Auditoría CRUD + Auth normalizado
+- Auditoría integrada en casos (POST/PUT) y cálculos (POST/DELETE).
+- `getUser()` manual eliminado: todos los endpoints usan `requireAuth()`.
+- PDF route migrado de verifyToken manual a requireAuth.
+- Dependencias `ws`, `@types/ws` eliminadas.
+
+### Fase 3 — Índices BD + API helpers
+- Índices añadidos en delitos (3), casos (2), calculos (2).
+- `drizzle/migrations/0005`: 7 índices nuevos.
+- `lib/api-helpers.ts` (nuevo): helpers apiSuccess/apiError.
+
+### Fase 4 — Refactor calculadora
+- Calculadora: de 1 archivo (817 líneas) a 12 módulos.
+- `page.tsx` reducido de 817 a 99 líneas.
+- `state.ts`: hook centralizado con toda la lógica de estado.
+
+### Fase 5 — Tests frontend + CI endurecido
+- Testing Library + jsdom configurados.
+- 4 suites de frontend: Badge, Button, Chip, CircunstanciaPicker (33 tests).
+- Total: 152 tests (11 suites, 7 backend + 4 frontend).
+- CI: lint ahora bloqueante.
+
+### Fase 6 — Endurecimiento final
+- Lint: 0 errores, 0 warnings.
+- CHANGELOG.md, README.md, docs/13, docs/14 actualizados.
+
 ## 2026-06-03 — Fase 1-2 (refactor)
 
 ### Motor

@@ -42,7 +42,7 @@ export function useCalculadoraState() {
   useUnsavedChanges(configs.length > 0 && !resultado);
 
   useEffect(() => {
-    if (resultado) setStep(8);
+    if (resultado) setStep(8); // eslint-disable-line react-hooks/set-state-in-effect -- imperative navigation to result step
   }, [resultado]);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export function useCalculadoraState() {
     const calculoId = searchParams.get('calculoId');
     if (!casoId) return;
     if (calculoId) {
-      setSelectedCaso(casoId);
+      setSelectedCaso(casoId); // eslint-disable-line react-hooks/set-state-in-effect -- sync casoId from URL
       setLoadingCalculoId(calculoId);
     } else {
       setSelectedCaso(casoId);

@@ -9,28 +9,102 @@ Público objetivo: profesionales del derecho que necesitan determinar penas con 
 - **Framework:** Next.js 16 (App Router)
 - **Frontend:** React 19 + Tailwind CSS v4
 - **Base de datos:** Neon PostgreSQL + Drizzle ORM
-- **Lenguaje:** TypeScript 5
-- **Tests:** Vitest
+- **Autenticación:** JWT (HttpOnly cookies) + bcryptjs
+- **Tests unitarios:** Vitest (152 tests)
+- **Tests E2E:** Playwright
+- **CI/CD:** GitHub Actions + Vercel
 
 ## Estructura
 
 ```
 app/
-  page.tsx           → Página principal
-  calculadora/       → Calculadora de penas (8 pasos)
-  delitos/           → Catálogo de delitos
-  delito-form/       → CRUD de delitos
-  api/               → API routes
+  page.tsx                   → Página principal
+  calculadora/               → Calculadora de penas (12 módulos)
+    page.tsx                 → Orquestación (~100 líneas)
+    state.ts                 → Estado centralizado
+    hooks.ts                 → useDelitosLoader, useDelitosFilter
+    calculadora-header.tsx   → Header + sidebar
+    paso1-delito.tsx         → Selección de delito
+    paso2-variantes.tsx      → Tipo de pena (prisión/multa)
+    paso3-participacion.tsx  → Autoría + ejecución + tentativa
+    paso5-delitos-list.tsx   → Lista de delitos configurados
+    paso6-concurso.tsx       → Tipo de concurso
+    paso7-resumen.tsx        → Resumen y calcular
+    paso8-resultado.tsx      → Resultado del cálculo
+    save-modal.tsx           → Modal guardar en caso
+  delitos/                   → Catálogo de delitos
+  delito-form/               → CRUD de delitos
+  api/                       → API routes (18 endpoints)
+    auth/login               → POST (rate-limited 5/min)
+    auth/logout              → POST
+    auth/me                  → GET
+    auth/register            → POST
+    calcular                 → POST (rate-limited 30/min)
+    calculos/                → GET, POST
+    calculos/[id]            → GET, DELETE
+    casos/                   → GET, POST
+    casos/[id]               → GET, PUT
+    casos/[id]/pdf           → GET (PDF export)
+    clasificaciones          → GET
+    cp/                      → GET, POST
+    cp/[id]                  → GET, PUT
+    delitos/                 → GET, POST
+    delitos/[id]             → GET, PUT, DELETE
+    delitos/calidad          → GET
+    delitos/count            → GET
+    health                   → GET (health check)
+    seed                     → POST (admin)
 lib/
-  calculo.ts         → Motor de cálculo (corazón del sistema)
-  utils.ts           → Funciones matemáticas (fracciones, mitades)
-  catalogos.ts       → Catálogos legales (agravantes, atenuantes, eximentes)
-  constants.ts       → Constantes y límites legales
-  schema.ts          → Esquema Drizzle ORM
-  db.ts              → Cliente de base de datos
-data/                → Datos semilla (delitos, ramas, artículos)
-tests/               → Tests del motor de cálculo
+  rules/v1/                  → Motor de cálculo modular (9 archivos)
+    types.ts                 → Tipos del dominio
+    pena-base.ts             → Art. 60 CP
+    grado-autoria.ts         → Art. 61 CP
+    tentativa.ts             → Art. 62 + 69 CP
+    circunstancias.ts        → Art. 70 CP
+    eximentes.ts             → Art. 30 CP
+    concurso.ts              → Arts. 66-68 CP
+    analisis.ts              → Reporte textual
+    index.ts                 → Orquestación
+  auth.ts                    → JWT + bcrypt + validación de secretos
+  audit.ts                   → Auditoría no-bloqueante
+  rate-limit.ts              → Rate limiting via Neon DB
+  schema.ts                  → Esquema Drizzle ORM (10 tablas)
+  validation.ts              → Zod schemas
+  api-helpers.ts             → Helpers apiSuccess / apiError
+  catalogos.ts               → Catálogos legales (CP Honduras)
+  utils.ts                   → Funciones matemáticas
+  constants.ts               → Límites legales
+  db.ts                      → Cliente de base de datos (Proxy pattern)
+components/
+  ui/                        → 13 componentes reutilizables
+  domain/                    → 3 componentes de dominio
+  layout/                    → 5 componentes de layout
+data/                        → Datos semilla (466 delitos, 119 ramas, 128 arts. const.)
+drizzle/                     → Migraciones (5) + seed
+tests/                       → 11 suites (152 tests)
+  calculo.test.ts            → Motor de cálculo
+  auth.test.ts               → Autenticación JWT
+  validation.test.ts         → Zod schemas
+  rate-limit.test.ts         → Rate limiting
+  audit.test.ts              → Auditoría
+  api/calcular.test.ts       → API calcular
+  components/                → Tests de frontend
+    badge.test.tsx
+    button.test.tsx
+    chip.test.tsx
+    circunstancia-picker.test.tsx
+e2e/                         → Tests E2E (2 suites)
 ```
+
+## API endpoints públicos
+
+- `GET /api/health` — Health check (DB status + uptime)
+- `GET /api/delitos/count` — Total de delitos
+- `GET /api/delitos/calidad` — Resumen de validación
+- `GET /api/clasificaciones` — Clasificaciones por rama
+- `POST /api/auth/login` — Inicio de sesión
+- `POST /api/auth/register` — Registro
+- `POST /api/auth/logout` — Cerrar sesión
 
 ## Motor de cálculo
 
@@ -56,14 +130,15 @@ El motor implementa fielmente las reglas del CP Honduras:
 
 ```bash
 npm install
-npm run dev
+npm run dev          # Servidor de desarrollo
 ```
 
 ## Tests
 
 ```bash
-npm test          # Una ejecución
-npm run test:watch  # Modo watch
+npm test             # 152 tests unitarios (Vitest)
+npm run test:e2e     # Tests E2E (Playwright)
+npm run lint         # ESLint (0 errores, 0 warnings)
 ```
 
 ## Build

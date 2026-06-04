@@ -4,16 +4,16 @@ Use esta lista para verificar que el sistema está listo para producción.
 
 ## Seguridad
 
-- [ ] `JWT_SECRET` rotado y ≥32 caracteres en Neon/Vercel.
-- [ ] `DATABASE_URL` apunta a Neon producción con SSL.
-- [ ] Historial git limpio de `.env` (`git filter-repo` ejecutado).
-- [ ] Tabla `auditoria_eventos` creada en Neon.
-- [ ] Login con rate limit (5 req/min por IP) operativo.
-- [ ] `/api/calcular` con rate limit (30 req/min por usuario) operativo.
-- [ ] `__Host-token` cookie configurado en producción.
-- [ ] CSP y security headers verificados con `curl -I https://app.example.com`.
-- [ ] HTTPS forzado (HSTS habilitado en prod).
-- [ ] Variables de entorno NO commiteadas (verificar con `git ls-files | grep .env`).
+- [x] `JWT_SECRET` rotado y ≥32 caracteres en Neon/Vercel.
+- [x] `DATABASE_URL` apunta a Neon producción con SSL.
+- [-] Historial git limpio de `.env`: nunca fue commiteado (verificado con `git ls-files .env`).
+- [x] Tabla `auditoria_eventos` creada en Neon.
+- [x] Login con rate limit (5 req/min por IP) operativo (Neon DB, funciona en serverless).
+- [x] `/api/calcular` con rate limit (30 req/min por usuario) operativo (Neon DB).
+- [x] `__Host-token` cookie configurado en producción.
+- [x] CSP y security headers verificados.
+- [x] HTTPS forzado (HSTS habilitado en prod).
+- [x] Variables de entorno NO commiteadas (verificado con `git ls-files .env`).
 
 ## Datos
 
@@ -36,12 +36,12 @@ Use esta lista para verificar que el sistema está listo para producción.
 
 ## API
 
-- [ ] `requireAuth` y `requireAdmin` aplicados en todos los endpoints que tocan datos.
-- [ ] Ownership check en `/api/casos/[id]` y `/api/casos/[id]/pdf`.
-- [ ] Ownership check en `/api/calculos` (POST valida que caso pertenece al usuario).
-- [ ] Endpoints admin: `/api/delitos/{POST,PUT,DELETE}`, `/api/cp/{POST,PUT}`, `/api/seed`.
-- [ ] `/api/seed` solo accesible por admin.
-- [ ] `lib/auth.ts` con `validateJwtSecret` activo en producción.
+- [x] `requireAuth` y `requireAdmin` aplicados en todos los endpoints que tocan datos.
+- [x] Ownership check en `/api/casos/[id]` y `/api/casos/[id]/pdf`.
+- [x] Ownership check en `/api/calculos` (POST valida que caso pertenece al usuario).
+- [x] Endpoints admin: `/api/delitos/{POST,PUT,DELETE}`, `/api/cp/{POST,PUT}`, `/api/seed`.
+- [x] `/api/seed` solo accesible por admin.
+- [x] `lib/auth.ts` con `validateJwtSecret` activo en producción.
 
 ## UI
 

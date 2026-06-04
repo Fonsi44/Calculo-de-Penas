@@ -4,7 +4,6 @@ import { ChevronLeft, Home, FileEdit, Scale } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 import { UserActions } from '@/components/layout/user-actions';
 import { Stepper, type StepperStep } from '@/components/ui/stepper';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   step: number;
