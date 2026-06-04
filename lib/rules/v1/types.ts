@@ -49,11 +49,14 @@ export interface ResultadoConcurso {
   articulo: string;
 }
 
+export type ConfianzaDelito = 'verificado' | 'pendiente_revision' | 'rechazado';
+
 export interface DelitoAnalizado {
   delito_id: string;
   nombre: string;
   articulo: string;
   clasificacion: string;
+  confianza: ConfianzaDelito;
   pena_base_min: number;
   pena_base_max: number;
   pena_base_texto: string;

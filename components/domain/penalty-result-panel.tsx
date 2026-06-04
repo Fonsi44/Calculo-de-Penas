@@ -1,13 +1,16 @@
 'use client';
 
-import { Gavel, Scale, FileText, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Gavel, Scale, FileText, AlertCircle, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatFechaCompleta } from '@/lib/ui';
 
+type ConfianzaDelito = 'verificado' | 'pendiente_revision' | 'rechazado';
+
 interface DelitoAnalizado {
   nombre: string;
   articulo: string;
+  confianza?: ConfianzaDelito;
   gravedad?: string;
   pena_base_texto?: string;
   pena_individual_texto?: string;
@@ -35,8 +38,36 @@ interface Props {
 export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpenArticle }: Props) {
   const fecha = formatFechaCompleta(new Date());
 
+  const delitosNoVerificados = (resultado.delitos_analizados || []).filter(d => d.confianza && d.confianza !== 'verificado');
+
   return (
     <div className="space-y-3 max-w-3xl mx-auto">
+      {delitosNoVerificados.length > 0 && (
+        <Card padding="md" tone="default" className="bg-danger-bg border-danger/40">
+          <div className="flex gap-2">
+            <ShieldAlert size={18} className="text-danger flex-shrink-0 mt-0.5" />
+            <div className="text-xs text-text-secondary leading-5">
+              <p className="font-bold text-danger text-sm mb-1">Atención: datos no verificados</p>
+              <p>
+                {delitosNoVerificados.length === 1
+                  ? '1 delito en este cálculo tiene un artículo no verificado contra el Código Penal.'
+                  : `${delitosNoVerificados.length} delitos en este cálculo tienen artículos no verificados contra el Código Penal.`}
+                {' '}Los rangos de pena asociados pueden no ser correctos. Se recomienda verificar manualmente cada artículo en la biblioteca del CP antes de usar este cálculo como referencia legal.
+              </p>
+              <ul className="mt-2 space-y-1">
+                {delitosNoVerificados.map((d, i) => (
+                  <li key={i} className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-danger flex-shrink-0" />
+                    <span className="font-semibold text-text">{d.nombre}</span>
+                    <span className="text-text-muted">({d.articulo})</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Cabecera editorial */}
       <Card padding="md" tone="accent" className="text-center">
         <p className="text-[11px] text-text-secondary uppercase tracking-widest mb-1">
@@ -83,6 +114,9 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
                 </span>
                 <p className="font-semibold text-sm text-text flex-1 truncate">{d.nombre}</p>
                 <Badge tone="primary">{d.articulo}</Badge>
+                {d.confianza === 'rechazado' && <Badge tone="danger" title="Artículo no verificado contra el CP">No verificado</Badge>}
+                {d.confianza === 'pendiente_revision' && <Badge tone="warning" title="Pendiente de revisión manual">Pendiente</Badge>}
+                {d.confianza === 'verificado' && <Badge tone="mitigation" title="Artículo validado contra el CP">Verificado</Badge>}
                 {d.exento && <Badge tone="exemption">EXENTO</Badge>}
               </div>
             ))}

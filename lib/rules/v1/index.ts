@@ -1,5 +1,6 @@
 import { calcular_gravedad, meses_a_texto } from '../../utils';
 import { AGRAVANTES, ATENUANTES, GRADOS_AUTORIA, GRADOS_EJECUCION } from '../../catalogos';
+import { getEstadoDelito } from '../../estados-delitos';
 import { seleccionarPenaBase } from './pena-base';
 import { aplicarGradoAutoria } from './grado-autoria';
 import { aplicarTentativa } from './tentativa';
@@ -87,12 +88,14 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
 
     const grado_autoria_nombre = GRADOS_AUTORIA.find((g) => g.id === config.grado_autoria)?.nombre || config.grado_autoria;
     const grado_ejecucion_nombre = GRADOS_EJECUCION.find((g) => g.id === config.grado_ejecucion)?.nombre || config.grado_ejecucion;
+    const estado = getEstadoDelito(delito.nombre, delito.articulo);
 
     resultados_individuales.push({
       delito_id: delito.id,
       nombre: delito.nombre,
       articulo: delito.articulo,
       clasificacion: delito.clasificacion || '',
+      confianza: estado.estado,
       pena_base_min: resultado.pena_base_min,
       pena_base_max: resultado.pena_base_max,
       pena_base_texto: `${meses_a_texto(resultado.pena_base_min)} a ${meses_a_texto(resultado.pena_base_max)}`,
