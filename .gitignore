@@ -56,3 +56,9 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# CP index (regenerable desde scripts/build-cp-index.cjs)
+/data/cp-indice.json
+
+# tool-output local (caches de webfetch)
+/.tool-output/

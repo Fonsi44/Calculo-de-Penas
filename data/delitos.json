@@ -77,10 +77,10 @@
   },
   {
     "nombre": "Abuso de dispositivos informáticos",
-    "articulo": "Art. 400 CP",
+    "articulo": "Art. 368 CP",
     "conducta": "Uso indebido de dispositivos o credenciales informáticas",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ],
@@ -93,7 +93,7 @@
   },
   {
     "nombre": "Acceso no autorizado a sistemas informáticos",
-    "articulo": "Art. 398 CP",
+    "articulo": "Art. 367 CP",
     "conducta": "Acceso sin autorización a sistemas protegidos",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
@@ -126,19 +126,19 @@
     "articulo": "Art. 270 CP",
     "conducta": "Entrar o permanecer en domicilio ajeno sin autorización",
     "rama_id": "honor_intimidad.allanamiento",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 71 Constitución",
     "constitucion_articulo_id": 71
   },
   {
     "nombre": "Amenazas",
-    "articulo": "Art. 246 CP",
+    "articulo": "Art. 287 CP",
     "conducta": "Anunciar la causación de un mal grave e ilícito",
     "rama_id": "libertad.amenazas",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 61 Constitución",
     "constitucion_articulo_id": 61
@@ -147,8 +147,8 @@
     "nombre": "Asesinato",
     "articulo": "Art. 193 CP",
     "conducta": "Dar muerte a otro concurriendo circunstancias agravantes",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "rama_id": "vida_integridad.homicidio.consumado",
     "constitucion_articulo": null,
@@ -162,7 +162,7 @@
     "articulo": "Art. 554 CP",
     "conducta": "Integrar asociación estable para cometer delitos",
     "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "rama_id": "orden_publico",
     "constitucion_articulo": null,
@@ -173,10 +173,10 @@
   },
   {
     "nombre": "Asociación terrorista",
-    "articulo": "Art. 587 CP",
+    "articulo": "Art. 553 CP",
     "conducta": "Formar parte de organización terrorista",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "rama_id": "constitucion",
     "constitucion_articulo": null,
@@ -187,11 +187,11 @@
   },
   {
     "nombre": "Calumnia",
-    "articulo": "Art. 230 CP",
+    "articulo": "Art. 226 CP",
     "conducta": "Imputar falsamente un delito",
     "rama_id": "honor_intimidad.calumnias",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 12,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 6,
     "pena_alternativa_max": 12,
@@ -201,10 +201,10 @@
   },
   {
     "nombre": "Chantaje",
-    "articulo": "Art. 247 CP",
+    "articulo": "Art. 289 CP",
     "conducta": "Amenazar para obtener beneficio indebido",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "libertad",
     "constitucion_articulo": null,
@@ -215,7 +215,7 @@
   },
   {
     "nombre": "Coacción",
-    "articulo": "Art. 245 CP",
+    "articulo": "Art. 288 CP",
     "conducta": "Obligar a otro mediante violencia o intimidación",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
@@ -229,10 +229,10 @@
   },
   {
     "nombre": "Cohecho propio",
-    "articulo": "Art. 492 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Solicitar dádivas para realizar u omitir acto del cargo",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -245,10 +245,10 @@
   },
   {
     "nombre": "Concusión",
-    "articulo": "Art. 497 CP",
+    "articulo": "Art. 484 CP",
     "conducta": "Exigir ventajas abusando del cargo público",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -264,7 +264,7 @@
     "articulo": "Art. 323 CP",
     "conducta": "Conducir poniendo en peligro grave la seguridad vial",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Privación del derecho a conducir"
     ],
@@ -277,10 +277,10 @@
   },
   {
     "nombre": "Contaminación ambiental",
-    "articulo": "Art. 324 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Contaminar aguas, suelos o aire causando daño ambiental",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ],
@@ -295,8 +295,8 @@
     "nombre": "Contrabando",
     "articulo": "Art. 428 CP",
     "conducta": "Introducir o extraer mercancías eludiendo controles aduaneros",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa proporcional"
     ],
@@ -309,10 +309,10 @@
   },
   {
     "nombre": "Crimen de lesa humanidad",
-    "articulo": "Art. 139 CP",
+    "articulo": "Art. 146 CP",
     "conducta": "Cometer actos inhumanos de forma sistemática o generalizada",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": [],
     "rama_id": "comunidad_internacional",
     "constitucion_articulo": null,
@@ -323,8 +323,22 @@
   },
   {
     "nombre": "Daños",
-    "articulo": "Art. 381 CP",
+    "articulo": "Art. 388 CP",
     "conducta": "Dañar bienes ajenos sin agravantes",
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
+    "penas_accesorias": [],
+    "rama_id": "patrimonio",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Daños agravados",
+    "articulo": "Art. 389 CP",
+    "conducta": "Dañar bienes concurriendo circunstancias agravantes",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
     "penas_accesorias": [],
@@ -336,25 +350,11 @@
     "constitucion_articulo_id": null
   },
   {
-    "nombre": "Daños agravados",
-    "articulo": "Art. 382 CP",
-    "conducta": "Dañar bienes concurriendo circunstancias agravantes",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
-    "penas_accesorias": [],
-    "rama_id": "patrimonio",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
     "nombre": "Defraudación fiscal",
-    "articulo": "Art. 431 CP",
+    "articulo": "Art. 430 CP",
     "conducta": "Eludir impuestos mediante engaño o simulación",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa proporcional"
     ],
@@ -367,10 +367,10 @@
   },
   {
     "nombre": "Desaparición forzada",
-    "articulo": "Art. 140 CP",
+    "articulo": "Art. 141 CP",
     "conducta": "Privar de libertad y ocultar paradero de la víctima",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 300,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": [],
     "rama_id": "comunidad_internacional",
     "constitucion_articulo": null,
@@ -381,10 +381,10 @@
   },
   {
     "nombre": "Enriquecimiento ilícito",
-    "articulo": "Art. 484 CP",
+    "articulo": "Art. 486 CP",
     "conducta": "Incrementar patrimonio injustificadamente como funcionario",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -397,10 +397,10 @@
   },
   {
     "nombre": "Espionaje",
-    "articulo": "Art. 563 CP",
+    "articulo": "Art. 151 CP",
     "conducta": "Obtener o revelar información que afecte la seguridad del Estado",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "rama_id": "seguridad_estado",
     "constitucion_articulo": null,
@@ -414,8 +414,8 @@
     "articulo": "Art. 365 CP",
     "conducta": "Obtener beneficio patrimonial mediante engaño",
     "rama_id": "patrimonio.estafa.simple",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 73 Constitución",
     "constitucion_articulo_id": 73
@@ -424,8 +424,8 @@
     "nombre": "Estafa agravada",
     "articulo": "Art. 366 CP",
     "conducta": "Estafa con agravantes legales",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -436,10 +436,10 @@
   },
   {
     "nombre": "Estragos",
-    "articulo": "Art. 185 CP",
+    "articulo": "Art. 330 CP",
     "conducta": "Provocar incendio, explosión u otros estragos",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "rama_id": "seguridad_colectiva",
     "constitucion_articulo": null,
@@ -450,10 +450,10 @@
   },
   {
     "nombre": "Estupro",
-    "articulo": "Art. 254 CP",
+    "articulo": "Art. 252 CP",
     "conducta": "Acceso carnal con menor mediante engaño",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 48,
+    "pena_maxima_meses": 84,
     "penas_accesorias": [],
     "rama_id": "libertad_sexual",
     "constitucion_articulo": null,
@@ -464,10 +464,10 @@
   },
   {
     "nombre": "Extorsión",
-    "articulo": "Art. 373 CP",
+    "articulo": "Art. 289 CP",
     "conducta": "Obligar a otro a realizar u omitir actos mediante intimidación",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -478,10 +478,10 @@
   },
   {
     "nombre": "Extorsión agravada",
-    "articulo": "Art. 374 CP",
+    "articulo": "Art. 289 CP",
     "conducta": "Extorsión con agravantes",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -492,10 +492,10 @@
   },
   {
     "nombre": "Falsificación de documentos públicos",
-    "articulo": "Art. 456 CP",
+    "articulo": "Art. 466 CP",
     "conducta": "Falsificar documentos públicos o mercantiles",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -506,10 +506,10 @@
   },
   {
     "nombre": "Falsificación de moneda",
-    "articulo": "Art. 447 CP",
+    "articulo": "Art. 459 CP",
     "conducta": "Falsificar moneda nacional o extranjera",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -522,8 +522,8 @@
     "nombre": "Falso testimonio",
     "articulo": "Art. 519 CP",
     "conducta": "Declarar falsamente como testigo en proceso judicial",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -537,8 +537,8 @@
     "articulo": "Art. 208 CP",
     "conducta": "Dar muerte a una mujer por razones de género",
     "rama_id": "vida_integridad.homicidio.consumado",
-    "pena_minima_meses": 360,
-    "pena_maxima_meses": 480,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 60 Constitución",
     "constitucion_articulo_id": 60
@@ -547,8 +547,8 @@
     "nombre": "Fraude informático",
     "articulo": "Art. 368 CP",
     "conducta": "Obtener beneficio mediante manipulación informática",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -559,11 +559,11 @@
   },
   {
     "nombre": "Genocidio",
-    "articulo": "Art. 143 CP",
+    "articulo": "Art. 145 CP",
     "conducta": "Destruir total o parcialmente grupo protegido",
     "rama_id": "comunidad_internacional.genocidio",
-    "pena_minima_meses": 360,
-    "pena_maxima_meses": 480,
+    "pena_minima_meses": 240,
+    "pena_maxima_meses": 360,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 15 Constitución",
     "constitucion_articulo_id": 15
@@ -572,8 +572,8 @@
     "nombre": "Homicidio",
     "articulo": "Art. 192 CP",
     "conducta": "Dar muerte a otra persona",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "rama_id": "vida_integridad.homicidio.consumado",
     "constitucion_articulo": null,
@@ -584,11 +584,11 @@
   },
   {
     "nombre": "Homicidio imprudente",
-    "articulo": "Art. 198 CP",
+    "articulo": "Art. 213 CP",
     "conducta": "Causar la muerte de otro por imprudencia grave",
     "rama_id": "vida_integridad.homicidio.imprudente",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 84,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación para conducir"
     ],
@@ -597,11 +597,11 @@
   },
   {
     "nombre": "Hostigamiento sexual",
-    "articulo": "Art. 256 CP",
+    "articulo": "Art. 296 CP",
     "conducta": "Solicitar favores sexuales generando situación intimidatoria",
     "rama_id": "libertad_sexual.acoso",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -610,7 +610,7 @@
   },
   {
     "nombre": "Hurto",
-    "articulo": "Art. 357 CP",
+    "articulo": "Art. 379 CP",
     "conducta": "Apoderarse de cosa mueble ajena sin violencia ni fuerza",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
@@ -624,10 +624,10 @@
   },
   {
     "nombre": "Hurto agravado",
-    "articulo": "Art. 363 CP",
+    "articulo": "Art. 380 CP",
     "conducta": "Apoderarse de cosa ajena con agravantes",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -638,10 +638,10 @@
   },
   {
     "nombre": "Incendio",
-    "articulo": "Art. 183 CP",
+    "articulo": "Art. 327 CP",
     "conducta": "Provocar incendio sin circunstancias cualificadas",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "seguridad_colectiva",
     "constitucion_articulo": null,
@@ -668,10 +668,10 @@
   },
   {
     "nombre": "Injuria",
-    "articulo": "Art. 229 CP",
+    "articulo": "Art. 225 CP",
     "conducta": "Proferir expresiones que lesionen la dignidad de otro",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 3,
     "pena_alternativa_max": 6,
@@ -682,10 +682,10 @@
   },
   {
     "nombre": "Lavado de activos",
-    "articulo": "Art. 439 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Ocultar o encubrir bienes de origen ilícito",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ],
@@ -700,8 +700,8 @@
     "nombre": "Lesiones",
     "articulo": "Art. 199 CP",
     "conducta": "Causar lesiones sin gravedad extrema",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 48,
     "penas_accesorias": [],
     "rama_id": "vida_integridad.homicidio.consumado",
     "constitucion_articulo": null,
@@ -715,18 +715,18 @@
     "articulo": "Art. 201 CP",
     "conducta": "Causar lesión que menoscabe la integridad física",
     "rama_id": "vida_integridad.lesiones.graves",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 57 Constitución",
     "constitucion_articulo_id": 57
   },
   {
     "nombre": "Maltrato habitual",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Maltratar de forma habitual a integrante del núcleo familiar",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Prohibición de aproximación"
     ],
@@ -741,8 +741,8 @@
     "nombre": "Malversación de caudales públicos",
     "articulo": "Art. 481 CP",
     "conducta": "Sustraer o dar uso indebido a fondos públicos",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -755,10 +755,10 @@
   },
   {
     "nombre": "Omisión del deber de socorro",
-    "articulo": "Art. 216 CP",
+    "articulo": "Art. 204 CP",
     "conducta": "No auxiliar a persona en peligro grave",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 36,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "rama_id": "constitucion.derechos_fundamentales",
     "constitucion_articulo": null,
@@ -771,7 +771,7 @@
     "nombre": "Organización criminal",
     "articulo": "Art. 554 CP",
     "conducta": "Dirigir u organizar estructura criminal estable",
-    "pena_minima_meses": 72,
+    "pena_minima_meses": 60,
     "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "rama_id": "orden_publico",
@@ -783,11 +783,11 @@
   },
   {
     "nombre": "Parricidio",
-    "articulo": "Art. 204 CP",
+    "articulo": "Art. 194 CP",
     "conducta": "Dar muerte a ascendiente o descendiente",
     "rama_id": "vida_integridad.homicidio.consumado",
-    "pena_minima_meses": 300,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 65 Constitución",
     "constitucion_articulo_id": 65
@@ -796,8 +796,8 @@
     "nombre": "Peculado",
     "articulo": "Art. 480 CP",
     "conducta": "Apropiarse de bienes públicos",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -810,36 +810,8 @@
   },
   {
     "nombre": "Pedofilia",
-    "articulo": "Art. 250 CP",
-    "conducta": "Actos sexuales con menores impúberes",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
-    "penas_accesorias": [],
-    "rama_id": "libertad_sexual",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Piratería",
-    "articulo": "Art. 165 CP",
-    "conducta": "Actos de violencia o saqueo en alta mar",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
-    "penas_accesorias": [],
-    "rama_id": "comunidad_internacional",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Pornografía infantil",
     "articulo": "Art. 261 CP",
-    "conducta": "Producir, difundir o poseer material pornográfico infantil",
+    "conducta": "Actos sexuales con menores impúberes",
     "pena_minima_meses": 96,
     "pena_maxima_meses": 144,
     "penas_accesorias": [],
@@ -851,11 +823,39 @@
     "constitucion_articulo_id": null
   },
   {
+    "nombre": "Piratería",
+    "articulo": "Art. 161 CP",
+    "conducta": "Actos de violencia o saqueo en alta mar",
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
+    "penas_accesorias": [],
+    "rama_id": "comunidad_internacional",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Pornografía infantil",
+    "articulo": "Art. 262 CP",
+    "conducta": "Producir, difundir o poseer material pornográfico infantil",
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
+    "penas_accesorias": [],
+    "rama_id": "libertad_sexual",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
     "nombre": "Portación ilegal de armas",
-    "articulo": "Art. 584 CP",
+    "articulo": "Art. 580 CP",
     "conducta": "Portar armas de fuego sin autorización legal",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -866,10 +866,10 @@
   },
   {
     "nombre": "Prevaricato judicial",
-    "articulo": "Art. 516 CP",
+    "articulo": "Art. 498 CP",
     "conducta": "Dictar resolución injusta a sabiendas",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -882,10 +882,10 @@
   },
   {
     "nombre": "Producción ilícita de drogas",
-    "articulo": "Art. 317 CP",
+    "articulo": "Art. 314 CP",
     "conducta": "Producir sustancias estupefacientes ilícitas",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -896,10 +896,10 @@
   },
   {
     "nombre": "Proxenetismo",
-    "articulo": "Art. 262 CP",
+    "articulo": "Art. 266 CP",
     "conducta": "Facilitar o promover la prostitución ajena",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [],
     "rama_id": "libertad_sexual",
     "constitucion_articulo": null,
@@ -910,86 +910,8 @@
   },
   {
     "nombre": "Rebelión",
-    "articulo": "Art. 532 CP",
+    "articulo": "Art. 572 CP",
     "conducta": "Alzarse violentamente contra el orden constitucional",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
-    "penas_accesorias": [],
-    "rama_id": "patrimonio",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Receptación",
-    "articulo": "Art. 406 CP",
-    "conducta": "Recibir bienes provenientes de delito",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
-    "penas_accesorias": [],
-    "rama_id": "patrimonio",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Robo",
-    "articulo": "Art. 360 CP",
-    "conducta": "Apoderarse de cosa ajena con violencia o intimidación",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
-    "penas_accesorias": [],
-    "rama_id": "patrimonio",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Robo agravado",
-    "articulo": "Art. 361 CP",
-    "conducta": "Robo con armas, en banda o con lesiones",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
-    "penas_accesorias": [],
-    "rama_id": "patrimonio",
-    "constitucion_articulo": null,
-    "tiene_pena_alternativa": false,
-    "pena_alternativa_min": 0,
-    "pena_alternativa_max": 0,
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Secuestro",
-    "articulo": "Art. 240 CP",
-    "conducta": "Privar de libertad con fines ilícitos",
-    "rama_id": "libertad.detenciones.secuestro",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 300,
-    "penas_accesorias": [],
-    "constitucion_articulo": "Art. 61 Constitución",
-    "constitucion_articulo_id": 61
-  },
-  {
-    "nombre": "Secuestro agravado",
-    "articulo": "Art. 241 CP",
-    "conducta": "Secuestro con muerte, tortura o víctimas vulnerables",
-    "rama_id": "libertad.detenciones.secuestro",
-    "pena_minima_meses": 300,
-    "pena_maxima_meses": 360,
-    "penas_accesorias": [],
-    "constitucion_articulo": "Art. 61 Constitución",
-    "constitucion_articulo_id": 61
-  },
-  {
-    "nombre": "Sedición",
-    "articulo": "Art. 535 CP",
-    "conducta": "Alzamiento colectivo contra la autoridad",
     "pena_minima_meses": 60,
     "pena_maxima_meses": 120,
     "penas_accesorias": [],
@@ -1001,11 +923,89 @@
     "constitucion_articulo_id": null
   },
   {
-    "nombre": "Sustracción de menor",
-    "articulo": "Art. 283 CP",
-    "conducta": "Sustraer menor del cuidado legítimo",
-    "pena_minima_meses": 48,
+    "nombre": "Receptación",
+    "articulo": "Art. 438 CP",
+    "conducta": "Recibir bienes provenientes de delito",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 48,
+    "penas_accesorias": [],
+    "rama_id": "patrimonio",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Robo",
+    "articulo": "Art. 382 CP",
+    "conducta": "Apoderarse de cosa ajena con violencia o intimidación",
+    "pena_minima_meses": 36,
     "pena_maxima_meses": 96,
+    "penas_accesorias": [],
+    "rama_id": "patrimonio",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Robo agravado",
+    "articulo": "Art. 383 CP",
+    "conducta": "Robo con armas, en banda o con lesiones",
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
+    "penas_accesorias": [],
+    "rama_id": "patrimonio",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Secuestro",
+    "articulo": "Art. 297 CP",
+    "conducta": "Privar de libertad con fines ilícitos",
+    "rama_id": "libertad.detenciones.secuestro",
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
+    "penas_accesorias": [],
+    "constitucion_articulo": "Art. 61 Constitución",
+    "constitucion_articulo_id": 61
+  },
+  {
+    "nombre": "Secuestro agravado",
+    "articulo": "Art. 297 CP",
+    "conducta": "Secuestro con muerte, tortura o víctimas vulnerables",
+    "rama_id": "libertad.detenciones.secuestro",
+    "pena_minima_meses": 144,
+    "pena_maxima_meses": 216,
+    "penas_accesorias": [],
+    "constitucion_articulo": "Art. 61 Constitución",
+    "constitucion_articulo_id": 61
+  },
+  {
+    "nombre": "Sedición",
+    "articulo": "Art. 573 CP",
+    "conducta": "Alzamiento colectivo contra la autoridad",
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
+    "penas_accesorias": [],
+    "rama_id": "patrimonio",
+    "constitucion_articulo": null,
+    "tiene_pena_alternativa": false,
+    "pena_alternativa_min": 0,
+    "pena_alternativa_max": 0,
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Sustracción de menor",
+    "articulo": "Art. 286 CP",
+    "conducta": "Sustraer menor del cuidado legítimo",
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "familia",
     "constitucion_articulo": null,
@@ -1016,32 +1016,32 @@
   },
   {
     "nombre": "Terrorismo",
-    "articulo": "Art. 589 CP",
+    "articulo": "Art. 553 CP",
     "conducta": "Ejecutar actos terroristas",
     "rama_id": "constitucion.rebelion",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 2 Constitución",
     "constitucion_articulo_id": 2
   },
   {
     "nombre": "Tortura",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 216 CP",
     "conducta": "Infligir dolor grave físico o psicológico",
     "rama_id": "comunidad_internacional.tortura",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 63 Constitución",
     "constitucion_articulo_id": 63
   },
   {
     "nombre": "Tráfico de influencias",
-    "articulo": "Art. 485 CP",
+    "articulo": "Art. 491 CP",
     "conducta": "Influir sobre funcionario para obtener beneficio",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1054,7 +1054,7 @@
   },
   {
     "nombre": "Tráfico ilícito de drogas",
-    "articulo": "Art. 316 CP",
+    "articulo": "Art. 315 CP",
     "conducta": "Comercializar sustancias estupefacientes ilícitas",
     "pena_minima_meses": 96,
     "pena_maxima_meses": 144,
@@ -1082,21 +1082,21 @@
   },
   {
     "nombre": "Trata de personas",
-    "articulo": "Art. 218 CP",
+    "articulo": "Art. 264 CP",
     "conducta": "Captar, trasladar o recibir personas con fines de explotación",
     "rama_id": "libertad_sexual.trata",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 57 Constitución",
     "constitucion_articulo_id": 57
   },
   {
     "nombre": "Trata de personas agravada",
-    "articulo": "Art. 219 CP",
+    "articulo": "Art. 264 CP",
     "conducta": "Trata de personas con menores o violencia",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "rama_id": "libertad_sexual.trata",
     "constitucion_articulo": null,
@@ -1107,10 +1107,10 @@
   },
   {
     "nombre": "Usurpación",
-    "articulo": "Art. 378 CP",
+    "articulo": "Art. 382 CP",
     "conducta": "Ocupar inmueble o derecho real ajeno",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "rama_id": "patrimonio",
     "constitucion_articulo": null,
@@ -1137,8 +1137,8 @@
     "nombre": "Violación agravada",
     "articulo": "Art. 250 CP",
     "conducta": "Violación con agravantes legales",
-    "pena_minima_meses": 156,
-    "pena_maxima_meses": 216,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "rama_id": "libertad_sexual",
     "constitucion_articulo": null,
@@ -1149,10 +1149,10 @@
   },
   {
     "nombre": "Violencia doméstica",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Ejercer violencia habitual en el ámbito doméstico",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Medidas de protección"
     ],
@@ -1168,8 +1168,8 @@
     "articulo": "Art. 192 CP",
     "conducta": "Dar muerte a otra persona sin circunstancias agravantes",
     "rama_id": "vida_integridad.homicidio.consumado",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 65 Constitución",
     "constitucion_articulo_id": 65
@@ -1179,19 +1179,19 @@
     "articulo": "Art. 193 CP",
     "conducta": "Dar muerte a otro concurriendo alevosía, precio o ensañamiento",
     "rama_id": "vida_integridad.homicidio.consumado",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 65 Constitución",
     "constitucion_articulo_id": 65
   },
   {
     "nombre": "Homicidio preterintencional",
-    "articulo": "Art. 197 CP",
+    "articulo": "Art. 192 CP",
     "conducta": "Causar muerte yendo más allá de la intención",
     "rama_id": "vida_integridad.homicidio.consumado",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 65 Constitución",
     "constitucion_articulo_id": 65
@@ -1201,8 +1201,8 @@
     "articulo": "Art. 195 CP",
     "conducta": "Inducir a otro al suicidio",
     "rama_id": "vida_integridad.homicidio.consumado",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 58 Constitución",
     "constitucion_articulo_id": 58
@@ -1222,14 +1222,14 @@
     "articulo": "Art. 196 CP",
     "conducta": "Provocar aborto sin consentimiento",
     "rama_id": "vida_integridad.aborto.forzado",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Aborto imprudente",
-    "articulo": "Art. 197 CP",
+    "articulo": "Art. 196 CP",
     "conducta": "Causar aborto por imprudencia",
     "rama_id": "vida_integridad.aborto.consentido",
     "pena_minima_meses": 12,
@@ -1239,79 +1239,79 @@
   },
   {
     "nombre": "Lesiones leves",
-    "articulo": "Art. 202 CP",
+    "articulo": "Art. 199 CP",
     "conducta": "Causar lesión sin relevancia penal grave",
     "rama_id": "vida_integridad.lesiones.leves",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
-    "penas_accesorias": [],
-    "constitucion_articulo_id": null
-  },
-  {
-    "nombre": "Lesiones imprudentes",
-    "articulo": "Art. 203 CP",
-    "conducta": "Causar lesiones por imprudencia",
-    "rama_id": "vida_integridad.lesiones.leves",
-    "pena_minima_meses": 3,
     "pena_maxima_meses": 12,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
+    "nombre": "Lesiones imprudentes",
+    "articulo": "Art. 202 CP",
+    "conducta": "Causar lesiones por imprudencia",
+    "rama_id": "vida_integridad.lesiones.leves",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 48,
+    "penas_accesorias": [],
+    "constitucion_articulo_id": null
+  },
+  {
     "nombre": "Mutilar",
-    "articulo": "Art. 200 CP",
+    "articulo": "Art. 201 CP",
     "conducta": "Causar pérdida de un miembro u órgano",
     "rama_id": "vida_integridad.lesiones.graves",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Participación en riña",
-    "articulo": "Art. 210 CP",
+    "articulo": "Art. 205 CP",
     "conducta": "Participar en riña tumultuaria",
     "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Lesiones al feto",
-    "articulo": "Art. 213 CP",
+    "articulo": "Art. 203 CP",
     "conducta": "Causar lesiones al feto",
     "rama_id": "vida_integridad.vida_dependiente",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 48,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Detención ilegal",
-    "articulo": "Art. 240 CP",
+    "articulo": "Art. 282 CP",
     "conducta": "Privar de libertad sin causa legal",
     "rama_id": "libertad.detenciones.ilegal",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 61 Constitución",
     "constitucion_articulo_id": 61
   },
   {
     "nombre": "Desaparición forzada",
-    "articulo": "Art. 140 CP",
+    "articulo": "Art. 141 CP",
     "conducta": "Privar de libertad y ocultar paradero",
     "rama_id": "comunidad_internacional.desaparicion",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 300,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 61 Constitución",
     "constitucion_articulo_id": 61
   },
   {
     "nombre": "Coacción",
-    "articulo": "Art. 245 CP",
+    "articulo": "Art. 288 CP",
     "conducta": "Obligar a otro mediante violencia o intimidación",
     "rama_id": "libertad.amenazas",
     "pena_minima_meses": 12,
@@ -1322,11 +1322,11 @@
   },
   {
     "nombre": "Violencia doméstica habitual",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Ejercer violencia habitual en el ámbito doméstico",
     "rama_id": "libertad.violencia_genero",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Prohibición de aproximación",
       "Medidas de protección"
@@ -1336,11 +1336,11 @@
   },
   {
     "nombre": "Maltrato psicológico",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Someter a trato degradante o humillante habitual",
     "rama_id": "libertad.violencia_genero",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Prohibición de aproximación"
     ],
@@ -1348,11 +1348,11 @@
   },
   {
     "nombre": "Omisión del deber de socorro",
-    "articulo": "Art. 216 CP",
+    "articulo": "Art. 204 CP",
     "conducta": "No auxiliar a persona en peligro grave",
     "rama_id": "libertad.integridad_moral",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 36,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
@@ -1372,28 +1372,28 @@
     "articulo": "Art. 250 CP",
     "conducta": "Violación con agravantes",
     "rama_id": "libertad_sexual.agresiones.agravada",
-    "pena_minima_meses": 156,
-    "pena_maxima_meses": 216,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Agresión sexual",
-    "articulo": "Art. 251 CP",
+    "articulo": "Art. 254 CP",
     "conducta": "Atentar contra la libertad sexual sin acceso carnal",
     "rama_id": "libertad_sexual.agresiones.violacion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Abuso sexual a menor impúber",
-    "articulo": "Art. 250 CP",
+    "articulo": "Art. 261 CP",
     "conducta": "Actos sexuales con menor de 12 años",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
@@ -1402,14 +1402,14 @@
     "articulo": "Art. 260 CP",
     "conducta": "Inducir a menor a prácticas sexuales",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 48,
+    "pena_maxima_meses": 84,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Ciberacoso sexual",
-    "articulo": "Art. 256 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Acoso sexual mediante medios electrónicos",
     "rama_id": "libertad_sexual.acoso",
     "pena_minima_meses": 12,
@@ -1421,21 +1421,21 @@
   },
   {
     "nombre": "Pornografía infantil",
-    "articulo": "Art. 261 CP",
+    "articulo": "Art. 262 CP",
     "conducta": "Producir, difundir o poseer material pornográfico infantil",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Difamación",
-    "articulo": "Art. 231 CP",
+    "articulo": "Art. 224 CP",
     "conducta": "Difundir información falsa que dañe la reputación",
     "rama_id": "honor_intimidad.calumnias",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 6,
     "pena_alternativa_max": 18,
@@ -1457,7 +1457,7 @@
   },
   {
     "nombre": "Matrimonio ilegal",
-    "articulo": "Art. 280 CP",
+    "articulo": "Art. 279 CP",
     "conducta": "Contraer matrimonio a sabiendas de su nulidad",
     "rama_id": "familia.matrimonio",
     "pena_minima_meses": 6,
@@ -1468,7 +1468,7 @@
   },
   {
     "nombre": "Bigamia",
-    "articulo": "Art. 281 CP",
+    "articulo": "Art. 278 CP",
     "conducta": "Contraer nuevo matrimonio sin disolver el anterior",
     "rama_id": "familia.matrimonio",
     "pena_minima_meses": 12,
@@ -1478,11 +1478,11 @@
   },
   {
     "nombre": "Sustracción de menor",
-    "articulo": "Art. 283 CP",
+    "articulo": "Art. 286 CP",
     "conducta": "Sustraer al menor del cuidado legítimo",
     "rama_id": "familia.sustraccion",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 78 Constitución",
     "constitucion_articulo_id": 78
@@ -1502,8 +1502,8 @@
     "articulo": "Art. 285 CP",
     "conducta": "Dejar de pagar la pensión alimenticia",
     "rama_id": "familia.abandono",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación para cargos públicos"
     ],
@@ -1511,7 +1511,7 @@
   },
   {
     "nombre": "Hurto simple",
-    "articulo": "Art. 357 CP",
+    "articulo": "Art. 379 CP",
     "conducta": "Apoderarse de cosa mueble ajena sin violencia",
     "rama_id": "patrimonio.hurto.simple",
     "pena_minima_meses": 12,
@@ -1522,32 +1522,32 @@
   },
   {
     "nombre": "Robo simple",
-    "articulo": "Art. 360 CP",
+    "articulo": "Art. 382 CP",
     "conducta": "Apoderarse de cosa ajena con violencia o intimidación",
     "rama_id": "patrimonio.robo.simple",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 73 Constitución",
     "constitucion_articulo_id": 73
   },
   {
     "nombre": "Extorsión",
-    "articulo": "Art. 373 CP",
+    "articulo": "Art. 289 CP",
     "conducta": "Obligar a otro mediante intimidación a realizar actos",
     "rama_id": "patrimonio.extorsion",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Extorsión agravada",
-    "articulo": "Art. 374 CP",
+    "articulo": "Art. 289 CP",
     "conducta": "Extorsión con armas, banda o lesiones",
     "rama_id": "patrimonio.extorsion",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
@@ -1556,8 +1556,8 @@
     "articulo": "Art. 368 CP",
     "conducta": "Obtener beneficio mediante manipulación informática",
     "rama_id": "patrimonio.fraude_informatico",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación informática"
     ],
@@ -1565,20 +1565,9 @@
   },
   {
     "nombre": "Apropiación indebida",
-    "articulo": "Art. 369 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Apropiarse de cosa ajena recibida legítimamente",
     "rama_id": "patrimonio.apropiacion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
-    "penas_accesorias": [],
-    "constitucion_articulo": "Art. 73 Constitución",
-    "constitucion_articulo_id": 73
-  },
-  {
-    "nombre": "Daños simples",
-    "articulo": "Art. 381 CP",
-    "conducta": "Dañar bienes ajenos sin agravantes",
-    "rama_id": "patrimonio.daños.simple",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
     "penas_accesorias": [],
@@ -1586,32 +1575,43 @@
     "constitucion_articulo_id": 73
   },
   {
+    "nombre": "Daños simples",
+    "articulo": "Art. 388 CP",
+    "conducta": "Dañar bienes ajenos sin agravantes",
+    "rama_id": "patrimonio.daños.simple",
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
+    "penas_accesorias": [],
+    "constitucion_articulo": "Art. 73 Constitución",
+    "constitucion_articulo_id": 73
+  },
+  {
     "nombre": "Daños agravados",
-    "articulo": "Art. 382 CP",
+    "articulo": "Art. 389 CP",
     "conducta": "Dañar bienes con agravantes",
     "rama_id": "patrimonio.daños.agravado",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Receptación",
-    "articulo": "Art. 406 CP",
+    "articulo": "Art. 438 CP",
     "conducta": "Recibir bienes provenientes de delito",
     "rama_id": "patrimonio.receptacion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 48,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Blanqueo de capitales",
-    "articulo": "Art. 439 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Ocultar bienes de origen ilícito",
     "rama_id": "patrimonio.receptacion",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ],
@@ -1619,11 +1619,11 @@
   },
   {
     "nombre": "Usura",
-    "articulo": "Art. 375 CP",
+    "articulo": "Art. 374 CP",
     "conducta": "Prestar dinero con interés excesivo",
     "rama_id": "patrimonio.usura",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 12,
     "pena_alternativa_max": 36,
@@ -1634,11 +1634,11 @@
   },
   {
     "nombre": "Violación de derechos de autor",
-    "articulo": "Art. 390 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Reproducir obras protegidas sin autorización",
     "rama_id": "patrimonio.propiedad_intelectual",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ],
@@ -1646,7 +1646,7 @@
   },
   {
     "nombre": "Piratería de software",
-    "articulo": "Art. 391 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Distribuir software sin licencia",
     "rama_id": "patrimonio.propiedad_intelectual",
     "pena_minima_meses": 12,
@@ -1659,7 +1659,7 @@
   },
   {
     "nombre": "Atentado contra la libertad sindical",
-    "articulo": "Art. 294 CP",
+    "articulo": "Art. 296 CP",
     "conducta": "Impedir el ejercicio de la libertad sindical",
     "rama_id": "trabajadores.sindical",
     "pena_minima_meses": 12,
@@ -1672,11 +1672,11 @@
   },
   {
     "nombre": "Discriminación laboral",
-    "articulo": "Art. 293 CP",
+    "articulo": "Art. 296 CP",
     "conducta": "Discriminar en el ámbito laboral",
     "rama_id": "trabajadores.discriminacion",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1685,11 +1685,11 @@
   },
   {
     "nombre": "Cohecho propio pasivo",
-    "articulo": "Art. 492 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Solicitar dádivas para realizar u omitir acto del cargo",
     "rama_id": "admin_publica.cohecho",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -1697,11 +1697,11 @@
   },
   {
     "nombre": "Cohecho activo",
-    "articulo": "Art. 493 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Ofrecer dádivas a un funcionario público",
     "rama_id": "admin_publica.cohecho",
     "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Multa"
     ],
@@ -1709,11 +1709,11 @@
   },
   {
     "nombre": "Tráfico de influencias",
-    "articulo": "Art. 485 CP",
+    "articulo": "Art. 491 CP",
     "conducta": "Influir sobre funcionario usando posición personal",
     "rama_id": "admin_publica.influencias",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1724,8 +1724,8 @@
     "articulo": "Art. 481 CP",
     "conducta": "Sustraer o dar uso indebido a fondos públicos",
     "rama_id": "admin_publica.malversacion",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -1733,11 +1733,11 @@
   },
   {
     "nombre": "Enriquecimiento ilícito",
-    "articulo": "Art. 484 CP",
+    "articulo": "Art. 486 CP",
     "conducta": "Incrementar patrimonio injustificadamente como funcionario",
     "rama_id": "admin_publica.malversacion",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ],
@@ -1745,11 +1745,11 @@
   },
   {
     "nombre": "Concusión",
-    "articulo": "Art. 497 CP",
+    "articulo": "Art. 484 CP",
     "conducta": "Exigir ventajas abusando del cargo público",
     "rama_id": "admin_publica.abuso_autoridad",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1757,11 +1757,11 @@
   },
   {
     "nombre": "Omisión de perseguir delitos",
-    "articulo": "Art. 518 CP",
+    "articulo": "Art. 515 CP",
     "conducta": "Funcionario que no persigue delitos debiendo hacerlo",
     "rama_id": "justicia.omision",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1769,47 +1769,47 @@
   },
   {
     "nombre": "Encubrimiento",
-    "articulo": "Art. 519 CP",
+    "articulo": "Art. 513 CP",
     "conducta": "Ayudar a eludir la investigación de un delito",
     "rama_id": "justicia.encubrimiento",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Falso testimonio",
-    "articulo": "Art. 521 CP",
+    "articulo": "Art. 519 CP",
     "conducta": "Declarar falsamente como testigo en proceso judicial",
     "rama_id": "justicia.falso_testimonio",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Perjurio",
-    "articulo": "Art. 522 CP",
+    "articulo": "Art. 519 CP",
     "conducta": "Faltar a la verdad en juramento decisorio",
     "rama_id": "justicia.falso_testimonio",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Denuncia falsa",
-    "articulo": "Art. 525 CP",
+    "articulo": "Art. 521 CP",
     "conducta": "Simular ser responsable de un delito",
     "rama_id": "justicia.falso_testimonio",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Quebrantamiento de condena",
-    "articulo": "Art. 526 CP",
+    "articulo": "Art. 530 CP",
     "conducta": "Quebrantar la pena o medida de seguridad",
     "rama_id": "justicia.quebrantamiento",
     "pena_minima_meses": 6,
@@ -1819,21 +1819,21 @@
   },
   {
     "nombre": "Obstrucción a la justicia",
-    "articulo": "Art. 528 CP",
+    "articulo": "Art. 514 CP",
     "conducta": "Obstruir la acción de la justicia mediante violencia",
     "rama_id": "justicia.obstruccion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Falsificación de moneda nacional",
-    "articulo": "Art. 447 CP",
+    "articulo": "Art. 459 CP",
     "conducta": "Falsificar moneda nacional o extranjera",
     "rama_id": "fe_publica.moneda",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ],
@@ -1841,37 +1841,37 @@
   },
   {
     "nombre": "Falsificación de documentos públicos",
-    "articulo": "Art. 456 CP",
+    "articulo": "Art. 466 CP",
     "conducta": "Falsificar documentos públicos o mercantiles",
     "rama_id": "fe_publica.documentos_publicos",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Usurpación de identidad",
-    "articulo": "Art. 460 CP",
+    "articulo": "Art. 295 CP",
     "conducta": "Suplantar la identidad de otra persona",
     "rama_id": "fe_publica.usurpacion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Atentado contra la autoridad",
-    "articulo": "Art. 542 CP",
+    "articulo": "Art. 504 CP",
     "conducta": "Agredir a funcionario de la autoridad",
     "rama_id": "orden_publico.atentados",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Resistencia",
-    "articulo": "Art. 545 CP",
+    "articulo": "Art. 503 CP",
     "conducta": "Resistirse a la autoridad con violencia",
     "rama_id": "orden_publico.resistencia",
     "pena_minima_meses": 6,
@@ -1881,7 +1881,7 @@
   },
   {
     "nombre": "Desórdenes públicos",
-    "articulo": "Art. 549 CP",
+    "articulo": "Art. 569 CP",
     "conducta": "Causar desórdenes en lugares públicos",
     "rama_id": "orden_publico.desordenes",
     "pena_minima_meses": 6,
@@ -1891,11 +1891,11 @@
   },
   {
     "nombre": "Portación ilegal de armas",
-    "articulo": "Art. 584 CP",
+    "articulo": "Art. 580 CP",
     "conducta": "Portar armas sin autorización legal",
     "rama_id": "orden_publico.armas",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Decomiso del arma"
     ],
@@ -1907,7 +1907,7 @@
     "conducta": "Integrar asociación estable para cometer delitos",
     "rama_id": "orden_publico.atentados",
     "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
@@ -1916,26 +1916,36 @@
     "articulo": "Art. 554 CP",
     "conducta": "Dirigir u organizar estructura criminal estable",
     "rama_id": "orden_publico.atentados",
-    "pena_minima_meses": 72,
+    "pena_minima_meses": 60,
     "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Rebelión",
-    "articulo": "Art. 532 CP",
+    "articulo": "Art. 572 CP",
     "conducta": "Alzarse violentamente contra el orden constitucional",
     "rama_id": "constitucion.rebelion",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 2 Constitución",
     "constitucion_articulo_id": 2
   },
   {
     "nombre": "Sedición",
-    "articulo": "Art. 535 CP",
+    "articulo": "Art. 573 CP",
     "conducta": "Alzamiento colectivo contra la autoridad",
+    "rama_id": "constitucion.rebelion",
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
+    "penas_accesorias": [],
+    "constitucion_articulo_id": null
+  },
+  {
+    "nombre": "Asociación terrorista",
+    "articulo": "Art. 553 CP",
+    "conducta": "Formar parte de organización terrorista",
     "rama_id": "constitucion.rebelion",
     "pena_minima_meses": 60,
     "pena_maxima_meses": 120,
@@ -1943,22 +1953,12 @@
     "constitucion_articulo_id": null
   },
   {
-    "nombre": "Asociación terrorista",
-    "articulo": "Art. 587 CP",
-    "conducta": "Formar parte de organización terrorista",
-    "rama_id": "constitucion.rebelion",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
-    "penas_accesorias": [],
-    "constitucion_articulo_id": null
-  },
-  {
     "nombre": "Atentado contra la libertad de expresión",
-    "articulo": "Art. 560 CP",
+    "articulo": "Art. 125 CP",
     "conducta": "Impedir el ejercicio de la libertad de expresión",
     "rama_id": "constitucion.expresion",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1967,22 +1967,22 @@
   },
   {
     "nombre": "Atentado contra la libertad de culto",
-    "articulo": "Art. 562 CP",
+    "articulo": "Art. 127 CP",
     "conducta": "Impedir el ejercicio del culto religioso",
     "rama_id": "constitucion.culto",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 72 Constitución",
     "constitucion_articulo_id": 72
   },
   {
     "nombre": "Discriminación",
-    "articulo": "Art. 563 CP",
+    "articulo": "Art. 124 CP",
     "conducta": "Discriminar por cualquier condición",
     "rama_id": "constitucion.derechos_fundamentales",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -1991,11 +1991,11 @@
   },
   {
     "nombre": "Delitos electorales",
-    "articulo": "Art. 555 CP",
+    "articulo": "Art. 510 CP",
     "conducta": "Violar el derecho al sufragio",
     "rama_id": "constitucion.electoral",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación política"
     ],
@@ -2004,11 +2004,11 @@
   },
   {
     "nombre": "Traición",
-    "articulo": "Art. 567 CP",
+    "articulo": "Art. 149 CP",
     "conducta": "Atentar contra la independencia nacional",
     "rama_id": "seguridad_estado.traicion",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": [
       "Inhabilitación absoluta perpetua"
     ],
@@ -2016,27 +2016,27 @@
   },
   {
     "nombre": "Espionaje",
-    "articulo": "Art. 570 CP",
+    "articulo": "Art. 151 CP",
     "conducta": "Obtener o revelar información que afecte la seguridad del Estado",
     "rama_id": "seguridad_estado.espionaje",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Piratería",
-    "articulo": "Art. 165 CP",
+    "articulo": "Art. 161 CP",
     "conducta": "Actos de violencia o saqueo en alta mar",
     "rama_id": "comunidad_internacional.pirateria",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Tráfico ilícito de drogas",
-    "articulo": "Art. 316 CP",
+    "articulo": "Art. 315 CP",
     "conducta": "Comercializar sustancias estupefacientes",
     "rama_id": "salud_publica.drogas.trafico",
     "pena_minima_meses": 96,
@@ -2048,11 +2048,11 @@
   },
   {
     "nombre": "Producción ilícita de drogas",
-    "articulo": "Art. 317 CP",
+    "articulo": "Art. 314 CP",
     "conducta": "Producir sustancias estupefacientes",
     "rama_id": "salud_publica.drogas.produccion",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ],
@@ -2060,11 +2060,11 @@
   },
   {
     "nombre": "Contaminación ambiental",
-    "articulo": "Art. 324 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Contaminar aguas, suelos o aire",
     "rama_id": "territorio_ambiente.medio_ambiente",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ],
@@ -2077,7 +2077,7 @@
     "conducta": "Conducir poniendo en peligro grave la seguridad vial",
     "rama_id": "seguridad_colectiva.vial",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Privación del derecho a conducir"
     ],
@@ -2085,11 +2085,11 @@
   },
   {
     "nombre": "Defraudación fiscal",
-    "articulo": "Art. 431 CP",
+    "articulo": "Art. 430 CP",
     "conducta": "Eludir impuestos mediante engaño",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa proporcional"
     ],
@@ -2097,7 +2097,7 @@
   },
   {
     "nombre": "Acceso no autorizado a sistemas",
-    "articulo": "Art. 398 CP",
+    "articulo": "Art. 367 CP",
     "conducta": "Acceder sin autorización a sistemas protegidos",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 12,
@@ -2107,11 +2107,11 @@
   },
   {
     "nombre": "Abuso de dispositivos informáticos",
-    "articulo": "Art. 400 CP",
+    "articulo": "Art. 368 CP",
     "conducta": "Uso indebido de dispositivos o credenciales",
     "rama_id": "patrimonio.fraude_informatico",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ],
@@ -2119,21 +2119,21 @@
   },
   {
     "nombre": "Daños informáticos",
-    "articulo": "Art. 401 CP",
+    "articulo": "Art. 388 CP",
     "conducta": "Dañar datos o sistemas informáticos",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Contrabando de mercancías peligrosas",
-    "articulo": "Art. 429 CP",
+    "articulo": "Art. 428 CP",
     "conducta": "Introducir mercancías peligrosas sin control",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -2142,11 +2142,11 @@
   },
   {
     "nombre": "Delito contra la salud pública alimentaria",
-    "articulo": "Art. 330 CP",
+    "articulo": "Art. 305 CP",
     "conducta": "Distribuir alimentos adulterados o nocivos",
     "rama_id": "salud_publica.alimentarios",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -2155,39 +2155,39 @@
   },
   {
     "nombre": "Propagación de epidemia",
-    "articulo": "Art. 340 CP",
+    "articulo": "Art. 304 CP",
     "conducta": "Propagar intencionadamente enfermedad epidémica",
     "rama_id": "salud_publica.epidemias",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [],
     "constitucion_articulo_id": null
   },
   {
     "nombre": "Incendio agravado",
-    "articulo": "Art. 184 CP",
+    "articulo": "Art. 327 CP",
     "conducta": "Provocar incendio con peligro para la vida",
     "rama_id": "seguridad_colectiva.incendios",
-    "pena_minima_meses": 144,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
     "nombre": "Daños por imprudencia",
-    "articulo": "Art. 383 CP",
+    "articulo": "Art. 388 CP",
     "conducta": "Causar daños por imprudencia grave",
     "rama_id": "patrimonio.daños.simple",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Conducción bajo influencia de alcohol",
-    "articulo": "Art. 324 CP",
+    "articulo": "Art. 323 CP",
     "conducta": "Conducir bajo efectos del alcohol",
     "rama_id": "seguridad_colectiva.vial",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Privación del derecho a conducir",
       "Multa"
@@ -2195,29 +2195,29 @@
   },
   {
     "nombre": "Conducción sin permiso",
-    "articulo": "Art. 325 CP",
+    "articulo": "Art. 322 CP",
     "conducta": "Conducir sin haber obtenido permiso",
     "rama_id": "seguridad_colectiva.vial",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 9,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Negativa a someterse a pruebas",
-    "articulo": "Art. 326 CP",
+    "articulo": "Art. 324 CP",
     "conducta": "Negarse a las pruebas de alcoholemia",
     "rama_id": "seguridad_colectiva.vial",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Privación del derecho a conducir"
     ]
   },
   {
     "nombre": "Abandono del lugar del accidente",
-    "articulo": "Art. 327 CP",
+    "articulo": "Art. 220 CP",
     "conducta": "Abandonar el lugar después de accidente con heridos",
     "rama_id": "seguridad_colectiva.vial",
     "pena_minima_meses": 6,
@@ -2228,38 +2228,38 @@
   },
   {
     "nombre": "Falsificación de tarjetas de crédito",
-    "articulo": "Art. 449 CP",
+    "articulo": "Art. 463 CP",
     "conducta": "Falsificar tarjetas de crédito o débito",
     "rama_id": "fe_publica.moneda",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Falsificación de efectos timbrados",
-    "articulo": "Art. 450 CP",
+    "articulo": "Art. 461 CP",
     "conducta": "Falsificar sellos, marcas o efectos timbrados",
     "rama_id": "fe_publica.moneda",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Falsificación de documentos de identidad",
-    "articulo": "Art. 459 CP",
+    "articulo": "Art. 469 CP",
     "conducta": "Falsificar DNI, pasaporte o documentos de identidad",
     "rama_id": "fe_publica.documentos_publicos",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Falsificación de certificados médicos",
-    "articulo": "Art. 458 CP",
+    "articulo": "Art. 469 CP",
     "conducta": "Expedir certificado médico falso",
     "rama_id": "fe_publica.documentos_privados",
     "pena_minima_meses": 12,
@@ -2270,40 +2270,40 @@
   },
   {
     "nombre": "Usurpación de funciones",
-    "articulo": "Art. 461 CP",
+    "articulo": "Art. 497 CP",
     "conducta": "Ejercer actos propios de una profesión sin título",
     "rama_id": "fe_publica.usurpacion",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Intrusismo profesional",
-    "articulo": "Art. 462 CP",
+    "articulo": "Art. 506 CP",
     "conducta": "Ejercer profesión sin habilitación legal",
     "rama_id": "fe_publica.usurpacion",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Cohecho pasivo propio",
-    "articulo": "Art. 492 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Funcionario que acepta dádivas por acto propio del cargo",
     "rama_id": "admin_publica.cohecho",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Cohecho pasivo impropio",
-    "articulo": "Art. 494 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Funcionario que acepta dádivas por acto no delictivo",
     "rama_id": "admin_publica.cohecho",
     "pena_minima_meses": 24,
@@ -2314,22 +2314,22 @@
   },
   {
     "nombre": "Exacciones ilegales",
-    "articulo": "Art. 498 CP",
+    "articulo": "Art. 492 CP",
     "conducta": "Exigir prestaciones no debidas por razón del cargo",
     "rama_id": "admin_publica.abuso_autoridad",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Nombramiento ilegal",
-    "articulo": "Art. 501 CP",
+    "articulo": "Art. 499 CP",
     "conducta": "Nombrar a persona sin los requisitos legales",
     "rama_id": "admin_publica.abuso_autoridad",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación"
     ]
@@ -2339,8 +2339,8 @@
     "articulo": "Art. 500 CP",
     "conducta": "Abandonar el cargo público sin justificación",
     "rama_id": "admin_publica.abuso_autoridad",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación especial"
     ]
@@ -2351,17 +2351,17 @@
     "conducta": "Desobedecer abiertamente una orden de autoridad",
     "rama_id": "admin_publica.abuso_autoridad",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Fraude de subvenciones",
-    "articulo": "Art. 432 CP",
+    "articulo": "Art. 366 CP",
     "conducta": "Obtener subvenciones públicas mediante falsedad",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 24,
+    "pena_minima_meses": 36,
     "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa"
@@ -2369,105 +2369,105 @@
   },
   {
     "nombre": "Prevaricato administrativo",
-    "articulo": "Art. 517 CP",
+    "articulo": "Art. 498 CP",
     "conducta": "Funcionario que dicta resolución injusta",
     "rama_id": "justicia.prevaricato",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Omisión de perseguir delitos por funcionario",
-    "articulo": "Art. 518 CP",
+    "articulo": "Art. 515 CP",
     "conducta": "Fiscal o juez que omite perseguir delito",
     "rama_id": "justicia.omision",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Encubrimiento por funcionario",
-    "articulo": "Art. 520 CP",
+    "articulo": "Art. 513 CP",
     "conducta": "Funcionario que encubre un delito",
     "rama_id": "justicia.encubrimiento",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Quebrantamiento de medidas cautelares",
-    "articulo": "Art. 527 CP",
+    "articulo": "Art. 530 CP",
     "conducta": "Incumplir las medidas cautelares impuestas",
     "rama_id": "justicia.quebrantamiento",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Falso testimonio en causa criminal",
-    "articulo": "Art. 521 CP",
+    "articulo": "Art. 520 CP",
     "conducta": "Falso testimonio en causa criminal contra reo",
     "rama_id": "justicia.falso_testimonio",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Atentado agravado",
-    "articulo": "Art. 543 CP",
+    "articulo": "Art. 504 CP",
     "conducta": "Atentado contra autoridad con arma o en grupo",
     "rama_id": "orden_publico.atentados",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Desobediencia grave",
-    "articulo": "Art. 546 CP",
+    "articulo": "Art. 502 CP",
     "conducta": "Desobedecer gravemente órdenes de la autoridad",
     "rama_id": "orden_publico.resistencia",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Alteración del orden público",
-    "articulo": "Art. 550 CP",
+    "articulo": "Art. 569 CP",
     "conducta": "Alterar el orden público con violencia",
+    "rama_id": "orden_publico.desordenes",
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
+    "penas_accesorias": []
+  },
+  {
+    "nombre": "Desórdenes públicos agravados",
+    "articulo": "Art. 570 CP",
+    "conducta": "Causar desórdenes con armas o violencia",
     "rama_id": "orden_publico.desordenes",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
-    "nombre": "Desórdenes públicos agravados",
-    "articulo": "Art. 551 CP",
-    "conducta": "Causar desórdenes con armas o violencia",
-    "rama_id": "orden_publico.desordenes",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
-    "penas_accesorias": []
-  },
-  {
     "nombre": "Tenencia ilícita de armas prohibidas",
-    "articulo": "Art. 585 CP",
+    "articulo": "Art. 580 CP",
     "conducta": "Poseer armas de uso prohibido",
     "rama_id": "orden_publico.armas",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Decomiso"
     ]
   },
   {
     "nombre": "Atentado contra la libertad de información",
-    "articulo": "Art. 561 CP",
+    "articulo": "Art. 125 CP",
     "conducta": "Impedir la libre circulación de información",
     "rama_id": "constitucion.expresion",
     "pena_minima_meses": 12,
@@ -2479,27 +2479,27 @@
   },
   {
     "nombre": "Atentado contra la libertad de reunión",
-    "articulo": "Art. 564 CP",
+    "articulo": "Art. 126 CP",
     "conducta": "Impedir el derecho de reunión pacífica",
     "rama_id": "constitucion.derechos_fundamentales",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 66 Constitución"
   },
   {
     "nombre": "Atentado al derecho de petición",
-    "articulo": "Art. 565 CP",
+    "articulo": "Art. 129 CP",
     "conducta": "Impedir el ejercicio del derecho de petición",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 87 Constitución"
   },
   {
     "nombre": "Fraude electoral",
-    "articulo": "Art. 556 CP",
+    "articulo": "Art. 510 CP",
     "conducta": "Alterar los resultados electorales",
     "rama_id": "constitucion.electoral",
     "pena_minima_meses": 36,
@@ -2511,28 +2511,28 @@
   },
   {
     "nombre": "Crimen de guerra",
-    "articulo": "Art. 144 CP",
+    "articulo": "Art. 148 CP",
     "conducta": "Cometer actos prohibidos en conflictos armados",
     "rama_id": "comunidad_internacional.lesa_humanidad",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": []
   },
   {
     "nombre": "Ejecución extrajudicial",
-    "articulo": "Art. 141 CP",
+    "articulo": "Art. 192 CP",
     "conducta": "Ejecutar a persona sin proceso legal",
     "rama_id": "comunidad_internacional.lesa_humanidad",
-    "pena_minima_meses": 300,
-    "pena_maxima_meses": 480,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": []
   },
   {
     "nombre": "Hurto de uso de vehículo",
-    "articulo": "Art. 358 CP",
+    "articulo": "Art. 379 CP",
     "conducta": "Tomar vehículo sin ánimo de apropiación",
     "rama_id": "patrimonio.hurto.simple",
-    "pena_minima_meses": 6,
+    "pena_minima_meses": 12,
     "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Privación del derecho a conducir"
@@ -2540,7 +2540,7 @@
   },
   {
     "nombre": "Hurto famélico",
-    "articulo": "Art. 359 CP",
+    "articulo": "Art. 379 CP",
     "conducta": "Sustraer cosas de primera necesidad por extrema necesidad",
     "rama_id": "patrimonio.hurto.simple",
     "pena_minima_meses": 0,
@@ -2549,34 +2549,34 @@
   },
   {
     "nombre": "Robo con homicidio",
-    "articulo": "Art. 362 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robo en el que resulta homicidio",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 240,
     "penas_accesorias": []
   },
   {
     "nombre": "Robo en casa habitada",
-    "articulo": "Art. 361 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robo en vivienda habitada",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Robo con escalamiento",
-    "articulo": "Art. 361 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robo mediante escalamiento",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Publicidad engañosa",
-    "articulo": "Art. 367 CP",
+    "articulo": "Art. 365 CP",
     "conducta": "Hacer afirmaciones falsas en propaganda comercial",
     "rama_id": "patrimonio.estafa.simple",
     "pena_minima_meses": 6,
@@ -2591,40 +2591,40 @@
   },
   {
     "nombre": "Apropiación de cosas perdidas",
-    "articulo": "Art. 370 CP",
+    "articulo": "Art. 377 CP",
     "conducta": "No restituir cosa perdida o de dueño desconocido",
     "rama_id": "patrimonio.apropiacion",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 12,
     "penas_accesorias": []
   },
   {
     "nombre": "Usurpación de inmueble",
-    "articulo": "Art. 378 CP",
+    "articulo": "Art. 382 CP",
     "conducta": "Ocupar inmueble ajeno sin autorización",
     "rama_id": "patrimonio.usura",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Usurpación de aguas",
-    "articulo": "Art. 379 CP",
+    "articulo": "Art. 337 CP",
     "conducta": "Desviar o usurpar aguas de uso público",
     "rama_id": "territorio_ambiente.medio_ambiente",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Daños al patrimonio histórico",
-    "articulo": "Art. 386 CP",
+    "articulo": "Art. 422 CP",
     "conducta": "Dañar bienes de interés cultural",
     "rama_id": "territorio_ambiente.patrimonio_historico",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa",
       "Obligación de restaurar"
@@ -2632,11 +2632,11 @@
   },
   {
     "nombre": "Daños por incendio",
-    "articulo": "Art. 384 CP",
+    "articulo": "Art. 327 CP",
     "conducta": "Causar daños mediante incendio",
     "rama_id": "patrimonio.daños.agravado",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
@@ -2645,12 +2645,12 @@
     "conducta": "Simular siniestro para cobrar seguro",
     "rama_id": "patrimonio.estafa.agravada",
     "pena_minima_meses": 36,
-    "pena_maxima_meses": 84,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
     "nombre": "Receptación negligente",
-    "articulo": "Art. 407 CP",
+    "articulo": "Art. 438 CP",
     "conducta": "Adquirir bienes sin verificar origen legítimo",
     "rama_id": "patrimonio.receptacion",
     "pena_minima_meses": 6,
@@ -2662,11 +2662,11 @@
   },
   {
     "nombre": "Blanqueo por imprudencia",
-    "articulo": "Art. 440 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Blanquear capitales por imprudencia grave",
     "rama_id": "patrimonio.receptacion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 12,
     "pena_alternativa_max": 36,
@@ -2676,11 +2676,11 @@
   },
   {
     "nombre": "Especulación",
-    "articulo": "Art. 376 CP",
+    "articulo": "Art. 374 CP",
     "conducta": "Alterar precios con ánimo de lucro ilícito",
     "rama_id": "patrimonio.usura",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 12,
     "pena_alternativa_max": 48,
@@ -2690,11 +2690,11 @@
   },
   {
     "nombre": "Reproducción ilegal de obras",
-    "articulo": "Art. 390 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Reproducir obras sin autorización con fin lucrativo",
     "rama_id": "patrimonio.propiedad_intelectual",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -2702,11 +2702,11 @@
   },
   {
     "nombre": "Violación de secreto de empresa",
-    "articulo": "Art. 394 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Revelar secretos industriales o comerciales",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -2714,11 +2714,11 @@
   },
   {
     "nombre": "Fraude de inversores",
-    "articulo": "Art. 377 CP",
+    "articulo": "Art. 366 CP",
     "conducta": "Falsear información para captar inversiones",
     "rama_id": "patrimonio.estafa.agravada",
     "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -2726,44 +2726,44 @@
   },
   {
     "nombre": "Fraude a la administración",
-    "articulo": "Art. 488 CP",
+    "articulo": "Art. 366 CP",
     "conducta": "Defraudar al Estado mediante engaño",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Negociaciones prohibidas",
-    "articulo": "Art. 486 CP",
+    "articulo": "Art. 489 CP",
     "conducta": "Funcionario que se interese en contratos estatales",
     "rama_id": "admin_publica.negociaciones",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Infidelidad en custodia de documentos",
-    "articulo": "Art. 503 CP",
+    "articulo": "Art. 495 CP",
     "conducta": "Destruir u ocultar documentos públicos",
     "rama_id": "admin_publica.infidelidad",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Construcción ilegal",
-    "articulo": "Art. 350 CP",
+    "articulo": "Art. 425 CP",
     "conducta": "Construir sin permiso en suelo protegido",
     "rama_id": "territorio_ambiente.urbanismo",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Demolición"
@@ -2771,7 +2771,7 @@
   },
   {
     "nombre": "Alteración de planos",
-    "articulo": "Art. 351 CP",
+    "articulo": "Art. 425 CP",
     "conducta": "Modificar planos de construcción aprobados",
     "rama_id": "territorio_ambiente.urbanismo",
     "pena_minima_meses": 12,
@@ -2783,11 +2783,11 @@
   },
   {
     "nombre": "Daños a espacio natural protegido",
-    "articulo": "Art. 330 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Dañar gravemente un espacio natural protegido",
     "rama_id": "territorio_ambiente.medio_ambiente",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa",
       "Restauración"
@@ -2795,7 +2795,7 @@
   },
   {
     "nombre": "Tráfico de especies protegidas",
-    "articulo": "Art. 328 CP",
+    "articulo": "Art. 339 CP",
     "conducta": "Comerciar con especies protegidas",
     "rama_id": "territorio_ambiente.flora_fauna",
     "pena_minima_meses": 24,
@@ -2807,11 +2807,11 @@
   },
   {
     "nombre": "Experimentación con animales",
-    "articulo": "Art. 343 CP",
+    "articulo": "Art. 341 CP",
     "conducta": "Experimentar con animales causándoles sufrimiento",
     "rama_id": "territorio_ambiente.flora_fauna",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
@@ -2829,7 +2829,7 @@
   },
   {
     "nombre": "Atentado a la libertad sindical agravado",
-    "articulo": "Art. 294 CP",
+    "articulo": "Art. 296 CP",
     "conducta": "Impedir el ejercicio sindical con violencia",
     "rama_id": "trabajadores.sindical",
     "pena_minima_meses": 24,
@@ -2844,7 +2844,7 @@
     "conducta": "No cumplir normas de seguridad causando muerte",
     "rama_id": "trabajadores.seguridad_laboral",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación",
       "Multa"
@@ -2852,11 +2852,11 @@
   },
   {
     "nombre": "Tráfico ilegal de mano de obra",
-    "articulo": "Art. 297 CP",
+    "articulo": "Art. 264 CP",
     "conducta": "Reclutar trabajadores incumpliendo normativa",
     "rama_id": "trabajadores.seguridad_laboral",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -2864,7 +2864,7 @@
   },
   {
     "nombre": "Inducción a menor a abandonar hogar",
-    "articulo": "Art. 284 CP",
+    "articulo": "Art. 228 CP",
     "conducta": "Inducir a menor a abandonar el hogar familiar",
     "rama_id": "familia.sustraccion",
     "pena_minima_meses": 12,
@@ -2891,7 +2891,7 @@
   },
   {
     "nombre": "Violación de secreto profesional",
-    "articulo": "Art. 235 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Revelar secretos conocidos en el ejercicio profesional",
     "rama_id": "honor_intimidad.secretos",
     "pena_minima_meses": 12,
@@ -2902,18 +2902,18 @@
   },
   {
     "nombre": "Interceptación de comunicaciones",
-    "articulo": "Art. 399 CP",
+    "articulo": "Art. 231 CP",
     "conducta": "Interceptar ilegalmente comunicaciones",
     "rama_id": "patrimonio.fraude_informatico",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación informática"
     ]
   },
   {
     "nombre": "Suplantación de identidad digital",
-    "articulo": "Art. 402 CP",
+    "articulo": "Art. 295 CP",
     "conducta": "Suplantar identidad en medios digitales",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 12,
@@ -2922,7 +2922,7 @@
   },
   {
     "nombre": "Acoso reiterado (stalking)",
-    "articulo": "Art. 248 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Acosar de forma reiterada a otra persona",
     "rama_id": "libertad.integridad_moral",
     "pena_minima_meses": 12,
@@ -2933,20 +2933,20 @@
   },
   {
     "nombre": "Trato degradante",
-    "articulo": "Art. 249 CP",
+    "articulo": "Art. 216 CP",
     "conducta": "Someter a trato humillante o degradante",
     "rama_id": "libertad.integridad_moral",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Omisión del deber de socorro por profesional",
-    "articulo": "Art. 217 CP",
+    "articulo": "Art. 204 CP",
     "conducta": "Profesional que omite el deber de socorro",
     "rama_id": "libertad.integridad_moral",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación profesional"
     ]
@@ -2956,17 +2956,17 @@
     "articulo": "Art. 207 CP",
     "conducta": "Transmitir enfermedad venérea a sabiendas",
     "rama_id": "vida_integridad.lesiones.leves",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 12,
     "penas_accesorias": []
   },
   {
     "nombre": "Participación en riña tumultuaria",
-    "articulo": "Art. 210 CP",
+    "articulo": "Art. 205 CP",
     "conducta": "Participar en riña con varias personas",
     "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 48,
     "penas_accesorias": []
   },
   {
@@ -2980,7 +2980,7 @@
   },
   {
     "nombre": "Manipulación genética",
-    "articulo": "Art. 215 CP",
+    "articulo": "Art. 277 CP",
     "conducta": "Manipular genes con fines ilícitos",
     "rama_id": "vida_integridad.vida_dependiente",
     "pena_minima_meses": 24,
@@ -2991,16 +2991,16 @@
   },
   {
     "nombre": "Agresión sexual con penetración de objetos",
-    "articulo": "Art. 251 CP",
+    "articulo": "Art. 254 CP",
     "conducta": "Introducir objetos por vía vaginal o anal",
     "rama_id": "libertad_sexual.agresiones.agravada",
-    "pena_minima_meses": 60,
+    "pena_minima_meses": 72,
     "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Exhibicionismo",
-    "articulo": "Art. 257 CP",
+    "articulo": "Art. 269 CP",
     "conducta": "Realizar actos de exhibición obscena",
     "rama_id": "libertad_sexual.abusos.menores",
     "pena_minima_meses": 12,
@@ -3009,16 +3009,16 @@
   },
   {
     "nombre": "Provocación sexual",
-    "articulo": "Art. 258 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Corromper o explotar la sexualidad de menores",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Rufianería",
-    "articulo": "Art. 263 CP",
+    "articulo": "Art. 268 CP",
     "conducta": "Explotar la prostitución de otra persona",
     "rama_id": "libertad_sexual.explotacion",
     "pena_minima_meses": 36,
@@ -3027,11 +3027,11 @@
   },
   {
     "nombre": "Delito farmacéutico",
-    "articulo": "Art. 335 CP",
+    "articulo": "Art. 316 CP",
     "conducta": "Distribuir medicamentos falsificados",
     "rama_id": "salud_publica.farmaceuticos",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -3039,20 +3039,20 @@
   },
   {
     "nombre": "Adulteración de aguas",
-    "articulo": "Art. 341 CP",
+    "articulo": "Art. 305 CP",
     "conducta": "Envenenar o adulterar aguas de consumo",
     "rama_id": "salud_publica.epidemias",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Tráfico de precursores",
-    "articulo": "Art. 318 CP",
+    "articulo": "Art. 314 CP",
     "conducta": "Comerciar con sustancias precursoras de drogas",
     "rama_id": "salud_publica.drogas.trafico",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ]
@@ -3062,15 +3062,15 @@
     "articulo": "Art. 480 CP",
     "conducta": "Usar bienes públicos para fines particulares",
     "rama_id": "admin_publica.malversacion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Malversación imprudente",
-    "articulo": "Art. 482 CP",
+    "articulo": "Art. 481 CP",
     "conducta": "Administrar fondos públicos de forma imprudente",
     "rama_id": "admin_publica.malversacion",
     "pena_minima_meses": 12,
@@ -3081,29 +3081,9 @@
   },
   {
     "nombre": "Cohecho de árbitros",
-    "articulo": "Art. 495 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Sobornar a un árbitro o jurado",
     "rama_id": "admin_publica.cohecho",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
-    "penas_accesorias": [
-      "Inhabilitación"
-    ]
-  },
-  {
-    "nombre": "Corrupción en el sector privado",
-    "articulo": "Art. 496 CP",
-    "conducta": "Sobornar a empleado de empresa privada",
-    "rama_id": "admin_publica.cohecho",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
-    "penas_accesorias": []
-  },
-  {
-    "nombre": "Negociación prohibida a funcionario",
-    "articulo": "Art. 486 CP",
-    "conducta": "Funcionario que participa en contratos privados con el Estado",
-    "rama_id": "admin_publica.negociaciones",
     "pena_minima_meses": 24,
     "pena_maxima_meses": 60,
     "penas_accesorias": [
@@ -3111,17 +3091,37 @@
     ]
   },
   {
+    "nombre": "Corrupción en el sector privado",
+    "articulo": "Art. 482 CP",
+    "conducta": "Sobornar a empleado de empresa privada",
+    "rama_id": "admin_publica.cohecho",
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
+    "penas_accesorias": []
+  },
+  {
+    "nombre": "Negociación prohibida a funcionario",
+    "articulo": "Art. 489 CP",
+    "conducta": "Funcionario que participa en contratos privados con el Estado",
+    "rama_id": "admin_publica.negociaciones",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
+    "penas_accesorias": [
+      "Inhabilitación"
+    ]
+  },
+  {
     "nombre": "Desobediencia judicial",
-    "articulo": "Art. 529 CP",
+    "articulo": "Art. 502 CP",
     "conducta": "Desobedecer una resolución judicial",
     "rama_id": "justicia.obstruccion",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Denegación de auxilio judicial",
-    "articulo": "Art. 530 CP",
+    "articulo": "Art. 505 CP",
     "conducta": "Funcionario que niega auxilio judicial",
     "rama_id": "justicia.omision",
     "pena_minima_meses": 12,
@@ -3132,7 +3132,7 @@
   },
   {
     "nombre": "Encubrimiento personal",
-    "articulo": "Art. 521 CP",
+    "articulo": "Art. 513 CP",
     "conducta": "Ayudar a un delincuente a eludir la justicia",
     "rama_id": "justicia.encubrimiento",
     "pena_minima_meses": 6,
@@ -3141,45 +3141,45 @@
   },
   {
     "nombre": "Encubrimiento real",
-    "articulo": "Art. 522 CP",
+    "articulo": "Art. 513 CP",
     "conducta": "Ocultar o destruir pruebas de un delito",
     "rama_id": "justicia.encubrimiento",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Revelación de actuaciones procesales",
-    "articulo": "Art. 531 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Revelar actuaciones procesales secretas",
     "rama_id": "justicia.obstruccion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Quebrantamiento de condena leve",
-    "articulo": "Art. 527 CP",
+    "articulo": "Art. 530 CP",
     "conducta": "Quebrantar medida cautelar leve",
     "rama_id": "justicia.quebrantamiento",
-    "pena_minima_meses": 3,
+    "pena_minima_meses": 6,
     "pena_maxima_meses": 12,
     "penas_accesorias": []
   },
   {
     "nombre": "Desórdenes en espectáculos",
-    "articulo": "Art. 552 CP",
+    "articulo": "Art. 571 CP",
     "conducta": "Causar desórdenes en espectáculos públicos",
     "rama_id": "orden_publico.desordenes",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Lanzamiento de objetos peligrosos",
-    "articulo": "Art. 553 CP",
+    "articulo": "Art. 569 CP",
     "conducta": "Lanzar objetos contra personas o bienes",
     "rama_id": "orden_publico.desordenes",
     "pena_minima_meses": 6,
@@ -3188,7 +3188,7 @@
   },
   {
     "nombre": "Posesión de armas de guerra",
-    "articulo": "Art. 586 CP",
+    "articulo": "Art. 581 CP",
     "conducta": "Poseer armas de uso militar sin autorización",
     "rama_id": "orden_publico.armas",
     "pena_minima_meses": 60,
@@ -3200,10 +3200,10 @@
   },
   {
     "nombre": "Fabricación de armas",
-    "articulo": "Art. 587 CP",
+    "articulo": "Art. 581 CP",
     "conducta": "Fabricar armas sin autorización",
     "rama_id": "orden_publico.armas",
-    "pena_minima_meses": 48,
+    "pena_minima_meses": 36,
     "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Decomiso",
@@ -3224,25 +3224,25 @@
   },
   {
     "nombre": "Alzamiento público",
-    "articulo": "Art. 537 CP",
+    "articulo": "Art. 572 CP",
     "conducta": "Alzarse públicamente contra leyes o autoridades",
     "rama_id": "constitucion.rebelion",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Propaganda ilegal",
-    "articulo": "Art. 559 CP",
+    "articulo": "Art. 569 CP",
     "conducta": "Hacer propaganda que incite a la violencia",
     "rama_id": "constitucion.rebelion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Usurpación de funciones militares",
-    "articulo": "Art. 573 CP",
+    "articulo": "Art. 497 CP",
     "conducta": "Ejercer funciones militares sin título",
     "rama_id": "seguridad_estado.traicion",
     "pena_minima_meses": 24,
@@ -3251,25 +3251,25 @@
   },
   {
     "nombre": "Atentado contra jefe de Estado extranjero",
-    "articulo": "Art. 576 CP",
+    "articulo": "Art. 158 CP",
     "conducta": "Atentar contra jefe de Estado extranjero en territorio nacional",
     "rama_id": "comunidad_internacional.lesa_humanidad",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Piratería aérea",
-    "articulo": "Art. 166 CP",
+    "articulo": "Art. 161 CP",
     "conducta": "Apoderarse de aeronave mediante violencia",
     "rama_id": "comunidad_internacional.pirateria",
-    "pena_minima_meses": 240,
-    "pena_maxima_meses": 360,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Delito contra la salud pública con resultado de muerte",
-    "articulo": "Art. 331 CP",
+    "articulo": "Art. 305 CP",
     "conducta": "Distribuir productos nocivos que causan muerte",
     "rama_id": "salud_publica.alimentarios",
     "pena_minima_meses": 60,
@@ -3281,11 +3281,11 @@
   },
   {
     "nombre": "Tráfico de medicamentos falsos",
-    "articulo": "Art. 336 CP",
+    "articulo": "Art. 316 CP",
     "conducta": "Comerciar con medicamentos falsificados",
     "rama_id": "salud_publica.farmaceuticos",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -3293,11 +3293,11 @@
   },
   {
     "nombre": "Violación de secretos de empresa",
-    "articulo": "Art. 394 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Revelar secretos comerciales o industriales",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -3305,7 +3305,7 @@
   },
   {
     "nombre": "Violación de derechos de imagen",
-    "articulo": "Art. 237 CP",
+    "articulo": "Art. 233 CP",
     "conducta": "Captar y difundir imágenes sin consentimiento",
     "rama_id": "honor_intimidad.secretos",
     "pena_minima_meses": 6,
@@ -3316,7 +3316,7 @@
   },
   {
     "nombre": "Suplantación de identidad profesional",
-    "articulo": "Art. 463 CP",
+    "articulo": "Art. 295 CP",
     "conducta": "Ejercer profesión usando título ajeno",
     "rama_id": "fe_publica.usurpacion",
     "pena_minima_meses": 12,
@@ -3327,7 +3327,7 @@
   },
   {
     "nombre": "Falsificación de documento de identidad extranjero",
-    "articulo": "Art. 460 CP",
+    "articulo": "Art. 469 CP",
     "conducta": "Falsificar documentos de identidad de extranjeros",
     "rama_id": "fe_publica.usurpacion",
     "pena_minima_meses": 24,
@@ -3336,7 +3336,7 @@
   },
   {
     "nombre": "Revelación de secreto por particular",
-    "articulo": "Art. 236 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Revelar secreto conocido por relación profesional",
     "rama_id": "honor_intimidad.secretos",
     "pena_minima_meses": 12,
@@ -3347,18 +3347,18 @@
   },
   {
     "nombre": "Violación de correspondencia por funcionario",
-    "articulo": "Art. 237 CP",
+    "articulo": "Art. 231 CP",
     "conducta": "Funcionario que intercepta correspondencia",
     "rama_id": "honor_intimidad.secretos",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Allanamiento de domicilio por funcionario",
-    "articulo": "Art. 272 CP",
+    "articulo": "Art. 270 CP",
     "conducta": "Funcionario que allana domicilio sin orden judicial",
     "rama_id": "honor_intimidad.allanamiento",
     "pena_minima_meses": 12,
@@ -3369,16 +3369,16 @@
   },
   {
     "nombre": "Allanamiento con violencia",
-    "articulo": "Art. 271 CP",
+    "articulo": "Art. 270 CP",
     "conducta": "Allanar domicilio usando violencia",
     "rama_id": "honor_intimidad.allanamiento",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Sustracción de menor por familiar",
-    "articulo": "Art. 283 CP",
+    "articulo": "Art. 286 CP",
     "conducta": "Un familiar sustrae al menor sin autorización",
     "rama_id": "familia.sustraccion",
     "pena_minima_meses": 24,
@@ -3387,7 +3387,7 @@
   },
   {
     "nombre": "Retención ilegal de menor",
-    "articulo": "Art. 284 CP",
+    "articulo": "Art. 286 CP",
     "conducta": "Retener a un menor ilegalmente",
     "rama_id": "familia.sustraccion",
     "pena_minima_meses": 12,
@@ -3399,26 +3399,26 @@
     "articulo": "Art. 228 CP",
     "conducta": "Abandonar temporalmente a un menor",
     "rama_id": "familia.abandono",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
-    "penas_accesorias": []
-  },
-  {
-    "nombre": "Omisión del deber de crianza",
-    "articulo": "Art. 286 CP",
-    "conducta": "Incumplir deberes de crianza y educación",
-    "rama_id": "familia.abandono",
     "pena_minima_meses": 6,
     "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
+    "nombre": "Omisión del deber de crianza",
+    "articulo": "Art. 228 CP",
+    "conducta": "Incumplir deberes de crianza y educación",
+    "rama_id": "familia.abandono",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
+    "penas_accesorias": []
+  },
+  {
     "nombre": "Impedimento del derecho de visitas",
-    "articulo": "Art. 287 CP",
+    "articulo": "Art. 285 CP",
     "conducta": "Impedir el régimen de visitas establecido",
     "rama_id": "familia.abandono",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
@@ -3426,8 +3426,8 @@
     "articulo": "Art. 201 CP",
     "conducta": "Causar lesión que produzca deformidad",
     "rama_id": "vida_integridad.lesiones.graves",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 72,
+    "pena_maxima_meses": 96,
     "penas_accesorias": []
   },
   {
@@ -3435,26 +3435,26 @@
     "articulo": "Art. 201 CP",
     "conducta": "Causar lesión que produzca pérdida de órgano",
     "rama_id": "vida_integridad.lesiones.graves",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Lesiones con pérdida de sentido",
-    "articulo": "Art. 200 CP",
+    "articulo": "Art. 201 CP",
     "conducta": "Causar lesión que produzca pérdida de sentido",
     "rama_id": "vida_integridad.lesiones.graves",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Riña con resultado de muerte",
-    "articulo": "Art. 210 CP",
+    "articulo": "Art. 206 CP",
     "conducta": "Participar en riña tumultuaria con resultado de muerte",
     "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 48,
+    "pena_maxima_meses": 96,
     "penas_accesorias": []
   },
   {
@@ -3468,7 +3468,7 @@
   },
   {
     "nombre": "Manipulación genética con fines de selección",
-    "articulo": "Art. 214 CP",
+    "articulo": "Art. 277 CP",
     "conducta": "Seleccionar genes con fines eugenésicos",
     "rama_id": "vida_integridad.vida_dependiente",
     "pena_minima_meses": 24,
@@ -3479,7 +3479,7 @@
   },
   {
     "nombre": "Fecundación ilegal",
-    "articulo": "Art. 215 CP",
+    "articulo": "Art. 275 CP",
     "conducta": "Realizar fecundación sin consentimiento",
     "rama_id": "vida_integridad.vida_dependiente",
     "pena_minima_meses": 24,
@@ -3490,11 +3490,11 @@
   },
   {
     "nombre": "Clonación humana",
-    "articulo": "Art. 216 CP",
+    "articulo": "Art. 277 CP",
     "conducta": "Realizar clonación humana",
     "rama_id": "vida_integridad.vida_dependiente",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación profesional"
     ]
@@ -3505,37 +3505,37 @@
     "conducta": "Transmitir enfermedad de transmisión sexual a sabiendas",
     "rama_id": "vida_integridad.lesiones.leves",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_maxima_meses": 12,
     "penas_accesorias": []
   },
   {
     "nombre": "Acoso sexual en el trabajo agravado",
-    "articulo": "Art. 256 CP",
+    "articulo": "Art. 296 CP",
     "conducta": "Acosar sexualmente a subordinado con amenaza de despido",
     "rama_id": "libertad_sexual.acoso",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación laboral"
     ]
   },
   {
     "nombre": "Acoso sexual callejero",
-    "articulo": "Art. 256 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Realizar actos de connotación sexual en la vía pública",
     "rama_id": "libertad_sexual.acoso",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Medidas de alejamiento"
     ]
   },
   {
     "nombre": "Abuso sexual con penetración digital",
-    "articulo": "Art. 251 CP",
+    "articulo": "Art. 260 CP",
     "conducta": "Realizar penetración digital sin consentimiento",
     "rama_id": "libertad_sexual.agresiones.agravada",
-    "pena_minima_meses": 48,
+    "pena_minima_meses": 60,
     "pena_maxima_meses": 96,
     "penas_accesorias": []
   },
@@ -3544,46 +3544,46 @@
     "articulo": "Art. 249 CP",
     "conducta": "Acceso carnal con persona privada de sentido",
     "rama_id": "libertad_sexual.agresiones.violacion",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 108,
+    "pena_maxima_meses": 156,
     "penas_accesorias": []
   },
   {
     "nombre": "Agresión sexual con penetración de objetos agravada",
-    "articulo": "Art. 251 CP",
+    "articulo": "Art. 255 CP",
     "conducta": "Introducir objetos con violencia o intimidación",
     "rama_id": "libertad_sexual.agresiones.agravada",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 84,
+    "pena_maxima_meses": 132,
     "penas_accesorias": []
   },
   {
     "nombre": "Exhibicionismo ante menores",
-    "articulo": "Art. 257 CP",
+    "articulo": "Art. 269 CP",
     "conducta": "Realizar actos de exhibición obscena ante menores",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 18,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Pornografía infantil agravada",
-    "articulo": "Art. 261 CP",
+    "articulo": "Art. 262 CP",
     "conducta": "Producir pornografía con menores de 12 años",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 144,
-    "pena_maxima_meses": 216,
+    "pena_minima_meses": 84,
+    "pena_maxima_meses": 132,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Proxenetismo agravado",
-    "articulo": "Art. 262 CP",
+    "articulo": "Art. 267 CP",
     "conducta": "Proxenetismo con menores o personas vulnerables",
     "rama_id": "libertad_sexual.explotacion",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
@@ -3600,16 +3600,16 @@
   },
   {
     "nombre": "Trata con fines de esclavitud",
-    "articulo": "Art. 218 CP",
+    "articulo": "Art. 264 CP",
     "conducta": "Someter a persona a esclavitud o condiciones análogas",
     "rama_id": "libertad_sexual.trata",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Libertad condicional quebrantada",
-    "articulo": "Art. 527 CP",
+    "articulo": "Art. 530 CP",
     "conducta": "Quebrantar condiciones de libertad condicional",
     "rama_id": "justicia.quebrantamiento",
     "pena_minima_meses": 6,
@@ -3618,7 +3618,7 @@
   },
   {
     "nombre": "Simulación de delito",
-    "articulo": "Art. 525 CP",
+    "articulo": "Art. 521 CP",
     "conducta": "Simular ser víctima de un delito",
     "rama_id": "justicia.falso_testimonio",
     "pena_minima_meses": 6,
@@ -3629,38 +3629,38 @@
   },
   {
     "nombre": "Acusación falsa",
-    "articulo": "Art. 524 CP",
+    "articulo": "Art. 521 CP",
     "conducta": "Acusar falsamente a alguien de un delito",
     "rama_id": "justicia.falso_testimonio",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": []
   },
   {
     "nombre": "Omisión de perseguir delito leve",
-    "articulo": "Art. 518 CP",
+    "articulo": "Art. 515 CP",
     "conducta": "Funcionario que omite perseguir un delito leve",
     "rama_id": "justicia.omision",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 12,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Prevaricato por omisión",
-    "articulo": "Art. 516 CP",
+    "articulo": "Art. 498 CP",
     "conducta": "Juez que omite resolver injustificadamente",
     "rama_id": "justicia.prevaricato",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Resistencia grave",
-    "articulo": "Art. 545 CP",
+    "articulo": "Art. 503 CP",
     "conducta": "Resistirse a la autoridad con arma blanca",
     "rama_id": "orden_publico.resistencia",
     "pena_minima_meses": 12,
@@ -3669,29 +3669,29 @@
   },
   {
     "nombre": "Atentado contra agente de autoridad",
-    "articulo": "Art. 544 CP",
+    "articulo": "Art. 504 CP",
     "conducta": "Agredir a agente de policía en acto de servicio",
     "rama_id": "orden_publico.atentados",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Asociación ilícita",
-    "articulo": "Art. 555 CP",
+    "articulo": "Art. 554 CP",
     "conducta": "Formar parte de asociación ilícita para delinquir",
     "rama_id": "orden_publico.atentados",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": []
   },
   {
     "nombre": "Tenencia de arma blanca",
-    "articulo": "Art. 588 CP",
+    "articulo": "Art. 580 CP",
     "conducta": "Portar arma blanca en lugares públicos",
     "rama_id": "orden_publico.armas",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 6,
     "pena_alternativa_max": 18,
@@ -3701,60 +3701,60 @@
   },
   {
     "nombre": "Falsificación de moneda extranjera",
-    "articulo": "Art. 448 CP",
+    "articulo": "Art. 459 CP",
     "conducta": "Falsificar moneda extranjera de curso legal",
     "rama_id": "fe_publica.moneda",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Falsificación de documento privado agravado",
-    "articulo": "Art. 457 CP",
+    "articulo": "Art. 467 CP",
     "conducta": "Falsificar documento privado causando perjuicio grave",
     "rama_id": "fe_publica.documentos_privados",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Falsificación de pasaporte",
-    "articulo": "Art. 459 CP",
+    "articulo": "Art. 469 CP",
     "conducta": "Falsificar pasaporte o documento de viaje",
     "rama_id": "fe_publica.documentos_publicos",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Usurpación de identidad en redes sociales",
-    "articulo": "Art. 460 CP",
+    "articulo": "Art. 295 CP",
     "conducta": "Crear perfil falso suplantando a otra persona en redes",
     "rama_id": "fe_publica.usurpacion",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Intrusismo profesional médico",
-    "articulo": "Art. 462 CP",
+    "articulo": "Art. 506 CP",
     "conducta": "Ejercer la medicina sin título habilitante",
     "rama_id": "fe_publica.usurpacion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Defraudación tributaria agravada",
-    "articulo": "Art. 432 CP",
+    "articulo": "Art. 430 CP",
     "conducta": "Defraudar al fisco mediante facturas falsas",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -3762,11 +3762,11 @@
   },
   {
     "nombre": "Contrabando agravado",
-    "articulo": "Art. 429 CP",
+    "articulo": "Art. 428 CP",
     "conducta": "Contrabando de armas o drogas",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -3774,11 +3774,11 @@
   },
   {
     "nombre": "Delito contra la ordenación del territorio",
-    "articulo": "Art. 349 CP",
+    "articulo": "Art. 425 CP",
     "conducta": "Realizar obras no autorizadas en suelo protegido",
     "rama_id": "territorio_ambiente.urbanismo",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Demolición"
@@ -3786,11 +3786,11 @@
   },
   {
     "nombre": "Daños al patrimonio arqueológico",
-    "articulo": "Art. 388 CP",
+    "articulo": "Art. 422 CP",
     "conducta": "Dañar yacimientos arqueológicos",
     "rama_id": "territorio_ambiente.patrimonio_historico",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Restauración"
@@ -3798,11 +3798,11 @@
   },
   {
     "nombre": "Vertido contaminante agravado",
-    "articulo": "Art. 326 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Verter sustancias tóxicas causando daño grave",
     "rama_id": "territorio_ambiente.medio_ambiente",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Restauración"
@@ -3810,34 +3810,34 @@
   },
   {
     "nombre": "Robo con fractura",
-    "articulo": "Art. 360 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robar violentando paredes o cerraduras",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 168,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Robo en banda",
-    "articulo": "Art. 361 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robar formando parte de una banda",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Robo con toma de rehenes",
-    "articulo": "Art. 361 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robar tomando rehenes",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 300,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Hurto con abuso de confianza",
-    "articulo": "Art. 363 CP",
+    "articulo": "Art. 379 CP",
     "conducta": "Hurtar aprovechando una relación de confianza",
     "rama_id": "patrimonio.hurto.simple",
     "pena_minima_meses": 24,
@@ -3846,43 +3846,43 @@
   },
   {
     "nombre": "Hurto en banda",
-    "articulo": "Art. 363 CP",
+    "articulo": "Art. 379 CP",
     "conducta": "Hurtar formando parte de organización",
     "rama_id": "patrimonio.hurto.agravado",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 48,
     "penas_accesorias": []
   },
   {
     "nombre": "Hurto en lugar habitado",
-    "articulo": "Art. 363 CP",
+    "articulo": "Art. 380 CP",
     "conducta": "Hurtar en casa habitada o local abierto al público",
     "rama_id": "patrimonio.hurto.agravado",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Estafa con abuso de firma en blanco",
-    "articulo": "Art. 366 CP",
+    "articulo": "Art. 365 CP",
     "conducta": "Rellenar un documento firmado en blanco",
     "rama_id": "patrimonio.estafa.agravada",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Estafa cambiaria",
-    "articulo": "Art. 366 CP",
+    "articulo": "Art. 365 CP",
     "conducta": "Estafar mediante letras de cambio o cheques",
     "rama_id": "patrimonio.estafa.agravada",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Apropiación indebida de bienes culturales",
-    "articulo": "Art. 369 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Apropiarse de bienes del patrimonio cultural",
     "rama_id": "patrimonio.apropiacion",
     "pena_minima_meses": 24,
@@ -3893,18 +3893,18 @@
   },
   {
     "nombre": "Usura agravada",
-    "articulo": "Art. 375 CP",
+    "articulo": "Art. 374 CP",
     "conducta": "Usura aprovechándose de situación angustiosa",
     "rama_id": "patrimonio.usura",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Daños en archivos informáticos",
-    "articulo": "Art. 401 CP",
+    "articulo": "Art. 388 CP",
     "conducta": "Dañar o borrar información en sistemas informáticos",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 12,
@@ -3913,7 +3913,7 @@
   },
   {
     "nombre": "Daños informáticos agravados",
-    "articulo": "Art. 401 CP",
+    "articulo": "Art. 389 CP",
     "conducta": "Dañar sistemas informáticos de entidades públicas",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 24,
@@ -3924,7 +3924,7 @@
   },
   {
     "nombre": "Interceptación de correo electrónico",
-    "articulo": "Art. 399 CP",
+    "articulo": "Art. 231 CP",
     "conducta": "Interceptar ilegalmente comunicaciones electrónicas",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 12,
@@ -3935,36 +3935,36 @@
   },
   {
     "nombre": "Amenazas con arma",
-    "articulo": "Art. 246 CP",
+    "articulo": "Art. 287 CP",
     "conducta": "Amenazar utilizando un arma",
     "rama_id": "libertad.amenazas",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Amenazas de muerte",
-    "articulo": "Art. 246 CP",
+    "articulo": "Art. 287 CP",
     "conducta": "Amenazar de muerte a una persona",
     "rama_id": "libertad.amenazas",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Orden de alejamiento"
     ]
   },
   {
     "nombre": "Amenazas condicionadas",
-    "articulo": "Art. 246 CP",
+    "articulo": "Art. 287 CP",
     "conducta": "Amenazar imponiendo una condición económica",
     "rama_id": "libertad.amenazas",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Coacción con violencia",
-    "articulo": "Art. 245 CP",
+    "articulo": "Art. 288 CP",
     "conducta": "Obligar a otro mediante violencia física",
     "rama_id": "libertad.amenazas",
     "pena_minima_meses": 24,
@@ -3973,11 +3973,11 @@
   },
   {
     "nombre": "Detención ilegal por funcionario",
-    "articulo": "Art. 243 CP",
+    "articulo": "Art. 282 CP",
     "conducta": "Funcionario que detiene ilegalmente",
     "rama_id": "libertad.detenciones.ilegal",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación"
     ],
@@ -3985,20 +3985,20 @@
   },
   {
     "nombre": "Secuestro express",
-    "articulo": "Art. 240 CP",
+    "articulo": "Art. 297 CP",
     "conducta": "Secuestrar por corto tiempo para obtener rescate",
     "rama_id": "libertad.detenciones.secuestro",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 96,
     "penas_accesorias": []
   },
   {
     "nombre": "Maltrato psicológico habitual",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Someter a violencia psicológica de forma reiterada",
     "rama_id": "libertad.violencia_genero",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Prohibición de aproximación",
       "Terapia psicológica"
@@ -4006,7 +4006,7 @@
   },
   {
     "nombre": "Maltrato económico",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Controlar económicamente a la pareja de forma abusiva",
     "rama_id": "libertad.violencia_genero",
     "pena_minima_meses": 12,
@@ -4017,22 +4017,22 @@
   },
   {
     "nombre": "Venganza contra la pareja",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Tomar venganza contra expareja mediante actos violentos",
     "rama_id": "libertad.violencia_genero",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Orden de alejamiento"
     ]
   },
   {
     "nombre": "Trato degradante en el ámbito laboral",
-    "articulo": "Art. 294 CP",
+    "articulo": "Art. 216 CP",
     "conducta": "Someter a trabajador a condiciones degradantes",
     "rama_id": "trabajadores.discriminacion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación",
       "Multa"
@@ -4040,7 +4040,7 @@
   },
   {
     "nombre": "Discriminación racial",
-    "articulo": "Art. 563 CP",
+    "articulo": "Art. 124 CP",
     "conducta": "Discriminar a persona por su raza o etnia",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 12,
@@ -4052,7 +4052,7 @@
   },
   {
     "nombre": "Discriminación por orientación sexual",
-    "articulo": "Art. 563 CP",
+    "articulo": "Art. 124 CP",
     "conducta": "Discriminar por orientación sexual o identidad de género",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 12,
@@ -4064,61 +4064,61 @@
   },
   {
     "nombre": "Atentado contra la libertad ideológica",
-    "articulo": "Art. 560 CP",
+    "articulo": "Art. 124 CP",
     "conducta": "Impedir la libertad de pensamiento o conciencia",
     "rama_id": "constitucion.derechos_fundamentales",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [],
     "constitucion_articulo": "Art. 68 Constitución"
   },
   {
     "nombre": "Omisión del deber de perseguir delitos graves",
-    "articulo": "Art. 518 CP",
+    "articulo": "Art. 515 CP",
     "conducta": "Fiscal que omite perseguir delito grave",
     "rama_id": "justicia.omision",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Prevaricato judicial grave",
-    "articulo": "Art. 516 CP",
+    "articulo": "Art. 498 CP",
     "conducta": "Juez que dicta sentencia injusta condenando inocente",
     "rama_id": "justicia.prevaricato",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 96,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Obstrucción a la justicia por funcionario",
-    "articulo": "Art. 528 CP",
+    "articulo": "Art. 514 CP",
     "conducta": "Funcionario que obstruye la investigación judicial",
     "rama_id": "justicia.obstruccion",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Cohecho de jurado",
-    "articulo": "Art. 495 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Sobornar a un miembro del jurado",
     "rama_id": "admin_publica.cohecho",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Cohecho de testigo",
-    "articulo": "Art. 493 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Pagar a testigo para que declare falsamente",
     "rama_id": "admin_publica.cohecho",
     "pena_minima_meses": 24,
@@ -4130,39 +4130,17 @@
     "articulo": "Art. 481 CP",
     "conducta": "Malversar fondos destinados a cooperación internacional",
     "rama_id": "admin_publica.malversacion",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Enriquecimiento ilícito de particular",
-    "articulo": "Art. 485 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Particular que colabora con funcionario en enriquecimiento",
     "rama_id": "admin_publica.negociaciones",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
-    "penas_accesorias": [
-      "Multa"
-    ]
-  },
-  {
-    "nombre": "Nombramiento ilegal agravado",
-    "articulo": "Art. 501 CP",
-    "conducta": "Nombrar a persona con antecedentes penales prohibidos",
-    "rama_id": "admin_publica.abuso_autoridad",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 48,
-    "penas_accesorias": [
-      "Inhabilitación"
-    ]
-  },
-  {
-    "nombre": "Usurpación de aguas públicas",
-    "articulo": "Art. 379 CP",
-    "conducta": "Usurpar aguas de dominio público",
-    "rama_id": "territorio_ambiente.medio_ambiente",
     "pena_minima_meses": 12,
     "pena_maxima_meses": 36,
     "penas_accesorias": [
@@ -4170,12 +4148,34 @@
     ]
   },
   {
+    "nombre": "Nombramiento ilegal agravado",
+    "articulo": "Art. 499 CP",
+    "conducta": "Nombrar a persona con antecedentes penales prohibidos",
+    "rama_id": "admin_publica.abuso_autoridad",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
+    "penas_accesorias": [
+      "Inhabilitación"
+    ]
+  },
+  {
+    "nombre": "Usurpación de aguas públicas",
+    "articulo": "Art. 337 CP",
+    "conducta": "Usurpar aguas de dominio público",
+    "rama_id": "territorio_ambiente.medio_ambiente",
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
+    "penas_accesorias": [
+      "Multa"
+    ]
+  },
+  {
     "nombre": "Construcción ilegal en zona protegida",
-    "articulo": "Art. 350 CP",
+    "articulo": "Art. 425 CP",
     "conducta": "Construir en zonas protegidas o de dominio público",
     "rama_id": "territorio_ambiente.urbanismo",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
@@ -4185,39 +4185,39 @@
     "articulo": "Art. 327 CP",
     "conducta": "Provocar incendio en gran masa forestal",
     "rama_id": "territorio_ambiente.incendio_forestal",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Incendio de bienes propios con fraude",
-    "articulo": "Art. 185 CP",
+    "articulo": "Art. 327 CP",
     "conducta": "Incendiar bienes propios para cobrar seguro",
     "rama_id": "seguridad_colectiva.incendios",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Estragos por imprudencia",
-    "articulo": "Art. 186 CP",
+    "articulo": "Art. 330 CP",
     "conducta": "Causar estragos por imprudencia grave",
     "rama_id": "seguridad_colectiva.incendios",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Tenencia de material radiactivo",
-    "articulo": "Art. 345 CP",
+    "articulo": "Art. 323 CP",
     "conducta": "Poseer material radiactivo sin autorización",
     "rama_id": "seguridad_colectiva.radiactivo",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Decomiso",
       "Multa"
@@ -4225,7 +4225,7 @@
   },
   {
     "nombre": "Omisión del deber de socorro en accidente",
-    "articulo": "Art. 216 CP",
+    "articulo": "Art. 204 CP",
     "conducta": "No socorrer a víctima de accidente de tráfico",
     "rama_id": "seguridad_colectiva.vial",
     "pena_minima_meses": 6,
@@ -4236,33 +4236,33 @@
   },
   {
     "nombre": "Conducción con exceso de velocidad en zona escolar",
-    "articulo": "Art. 323 CP",
+    "articulo": "Art. 325 CP",
     "conducta": "Conducir con exceso de velocidad cerca de escuelas",
     "rama_id": "seguridad_colectiva.vial",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Privación del derecho a conducir"
     ]
   },
   {
     "nombre": "Incumplimiento de la obligación de someterse a prueba de alcoholemia",
-    "articulo": "Art. 326 CP",
+    "articulo": "Art. 324 CP",
     "conducta": "Negarse a realizar prueba de alcoholemia",
     "rama_id": "seguridad_colectiva.vial",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Privación del derecho a conducir"
     ]
   },
   {
     "nombre": "Difusión de contenidos sexuales sin consentimiento",
-    "articulo": "Art. 236 CP",
+    "articulo": "Art. 274 CP",
     "conducta": "Difundir videos o imágenes sexuales sin permiso",
     "rama_id": "libertad.integridad_moral",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Eliminación de contenidos"
@@ -4270,18 +4270,18 @@
   },
   {
     "nombre": "Acoso colectivo (linchamiento digital)",
-    "articulo": "Art. 248 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Participar en acoso masivo por redes sociales",
     "rama_id": "libertad.integridad_moral",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Suplantación de identidad en proceso judicial",
-    "articulo": "Art. 460 CP",
+    "articulo": "Art. 295 CP",
     "conducta": "Suplantar a otra persona en un proceso judicial",
     "rama_id": "fe_publica.usurpacion",
     "pena_minima_meses": 24,
@@ -4290,16 +4290,16 @@
   },
   {
     "nombre": "Falsificación de documento público en documento extranjero",
-    "articulo": "Art. 456 CP",
+    "articulo": "Art. 466 CP",
     "conducta": "Falsificar documento público extranjero",
     "rama_id": "fe_publica.documentos_publicos",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
     "nombre": "Falsificación de sello oficial",
-    "articulo": "Art. 451 CP",
+    "articulo": "Art. 462 CP",
     "conducta": "Falsificar sellos oficiales de autoridades",
     "rama_id": "fe_publica.moneda",
     "pena_minima_meses": 36,
@@ -4313,35 +4313,35 @@
     "articulo": "Art. 228 CP",
     "conducta": "Obligar a un familiar a abandonar el hogar",
     "rama_id": "familia.abandono",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Medidas de protección"
     ]
   },
   {
     "nombre": "Sustracción internacional de menores",
-    "articulo": "Art. 283 CP",
+    "articulo": "Art. 286 CP",
     "conducta": "Trasladar ilegalmente a un menor al extranjero",
     "rama_id": "familia.sustraccion",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
     "nombre": "Matrimonio ilegal por funcionario",
-    "articulo": "Art. 282 CP",
+    "articulo": "Art. 279 CP",
     "conducta": "Funcionario que autoriza matrimonio ilegal",
     "rama_id": "familia.matrimonio",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Difamación en medios de comunicación",
-    "articulo": "Art. 231 CP",
+    "articulo": "Art. 224 CP",
     "conducta": "Difamar a alguien a través de medios de comunicación",
     "rama_id": "honor_intimidad.calumnias",
     "pena_minima_meses": 12,
@@ -4353,7 +4353,7 @@
   },
   {
     "nombre": "Revelación de datos personales por funcionario",
-    "articulo": "Art. 234 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Funcionario que revela datos personales sin autorización",
     "rama_id": "honor_intimidad.secretos",
     "pena_minima_meses": 12,
@@ -4364,7 +4364,7 @@
   },
   {
     "nombre": "Descubrimiento de datos por particular",
-    "articulo": "Art. 235 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Apoderarse ilegalmente de datos personales de otro",
     "rama_id": "honor_intimidad.secretos",
     "pena_minima_meses": 6,
@@ -4373,11 +4373,11 @@
   },
   {
     "nombre": "Piratería de señales",
-    "articulo": "Art. 395 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Interceptar señales de televisión por suscripción",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -4385,11 +4385,11 @@
   },
   {
     "nombre": "Copiado ilegal de software",
-    "articulo": "Art. 391 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Copiar software sin licencia con fines comerciales",
     "rama_id": "patrimonio.propiedad_intelectual",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -4397,22 +4397,22 @@
   },
   {
     "nombre": "Difusión de obras sin derechos",
-    "articulo": "Art. 390 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Distribuir obras protegidas por derechos de autor",
     "rama_id": "patrimonio.propiedad_intelectual",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Plagio",
-    "articulo": "Art. 390 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Apropiarse de obra ajena como propia",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
@@ -4422,15 +4422,15 @@
     "articulo": "Art. 366 CP",
     "conducta": "Crear esquema de estafa piramidal",
     "rama_id": "patrimonio.estafa.agravada",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Estafa mediante phishing",
-    "articulo": "Art. 368 CP",
+    "articulo": "Art. 366 CP",
     "conducta": "Obtener datos bancarios mediante engaño digital",
     "rama_id": "patrimonio.fraude_informatico",
     "pena_minima_meses": 36,
@@ -4441,11 +4441,11 @@
   },
   {
     "nombre": "Uso ilegal de tarjeta bancaria",
-    "articulo": "Art. 368 CP",
+    "articulo": "Art. 463 CP",
     "conducta": "Usar tarjeta bancaria de otro sin consentimiento",
     "rama_id": "patrimonio.fraude_informatico",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa"
     ]
@@ -4463,22 +4463,22 @@
   },
   {
     "nombre": "Manipulación de instrumentos de medición",
-    "articulo": "Art. 396 CP",
+    "articulo": "Art. 469 CP",
     "conducta": "Alterar contadores o instrumentos de medición",
     "rama_id": "patrimonio.estafa.simple",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Contrabando de divisas",
-    "articulo": "Art. 430 CP",
+    "articulo": "Art. 428 CP",
     "conducta": "Introducir o extraer divisas sin declarar",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa",
       "Decomiso"
@@ -4486,18 +4486,18 @@
   },
   {
     "nombre": "Contrabando de material estratégico",
-    "articulo": "Art. 429 CP",
+    "articulo": "Art. 428 CP",
     "conducta": "Comerciar ilegalmente con materiales estratégicos",
     "rama_id": "admin_publica.fraudes",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Negociación prohibida a funcionario electo",
-    "articulo": "Art. 486 CP",
+    "articulo": "Art. 489 CP",
     "conducta": "Funcionario electo que contrata con el Estado",
     "rama_id": "admin_publica.negociaciones",
     "pena_minima_meses": 24,
@@ -4508,44 +4508,44 @@
   },
   {
     "nombre": "Corrupción activa internacional",
-    "articulo": "Art. 496 CP",
+    "articulo": "Art. 482 CP",
     "conducta": "Sobornar a funcionario público extranjero",
     "rama_id": "admin_publica.cohecho",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Blanqueo de capitales agravado",
-    "articulo": "Art. 439 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Blanquear capitales procedentes de narcotráfico",
     "rama_id": "patrimonio.receptacion",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Blanqueo por omisión",
-    "articulo": "Art. 440 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "No impedir operación de blanqueo pudiendo hacerlo",
     "rama_id": "patrimonio.receptacion",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Delito contra la ordenación del territorio agravado",
-    "articulo": "Art. 349 CP",
+    "articulo": "Art. 425 CP",
     "conducta": "Urbanizar ilegalmente suelo protegido",
     "rama_id": "territorio_ambiente.urbanismo",
     "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa",
       "Demolición"
@@ -4553,11 +4553,11 @@
   },
   {
     "nombre": "Daños al patrimonio artístico",
-    "articulo": "Art. 387 CP",
+    "articulo": "Art. 422 CP",
     "conducta": "Dañar obras de arte de interés cultural",
     "rama_id": "territorio_ambiente.patrimonio_historico",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa",
       "Restauración"
@@ -4565,11 +4565,11 @@
   },
   {
     "nombre": "Contaminación acústica",
-    "articulo": "Art. 328 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Emitir ruidos que perturben gravemente la convivencia",
     "rama_id": "territorio_ambiente.medio_ambiente",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 6,
     "pena_alternativa_max": 18,
@@ -4579,11 +4579,11 @@
   },
   {
     "nombre": "Contaminación lumínica",
-    "articulo": "Art. 329 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Emitir luz artificial que afecte a ecosistemas",
     "rama_id": "territorio_ambiente.medio_ambiente",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 24,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 3,
     "pena_alternativa_max": 12,
@@ -4607,8 +4607,8 @@
     "articulo": "Art. 342 CP",
     "conducta": "Abandonar animal causándole la muerte",
     "rama_id": "territorio_ambiente.flora_fauna",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Inhabilitación para tenencia"
     ]
@@ -4619,18 +4619,18 @@
     "conducta": "Provocar incendio forestal con peligro para personas",
     "rama_id": "territorio_ambiente.incendio_forestal",
     "pena_minima_meses": 96,
-    "pena_maxima_meses": 168,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Tráfico ilegal de residuos",
-    "articulo": "Art. 331 CP",
+    "articulo": "Art. 333 CP",
     "conducta": "Transportar o gestionar residuos ilegalmente",
     "rama_id": "territorio_ambiente.medio_ambiente",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
@@ -4641,25 +4641,25 @@
     "conducta": "Abortar sin consentimiento causando grave daño",
     "rama_id": "vida_integridad.aborto.forzado",
     "pena_minima_meses": 96,
-    "pena_maxima_meses": 144,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Lesiones culposas graves",
-    "articulo": "Art. 203 CP",
+    "articulo": "Art. 202 CP",
     "conducta": "Causar lesiones graves por culpa o imprudencia",
     "rama_id": "vida_integridad.lesiones.leves",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 48,
     "penas_accesorias": []
   },
   {
     "nombre": "Riña con arma blanca",
-    "articulo": "Art. 210 CP",
+    "articulo": "Art. 205 CP",
     "conducta": "Participar en riña usando arma blanca",
     "rama_id": "vida_integridad.riña",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 48,
     "penas_accesorias": []
   },
   {
@@ -4673,16 +4673,16 @@
   },
   {
     "nombre": "Esterilización forzada",
-    "articulo": "Art. 213 CP",
+    "articulo": "Art. 276 CP",
     "conducta": "Esterilizar a una persona sin su consentimiento",
     "rama_id": "vida_integridad.vida_dependiente",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": []
   },
   {
     "nombre": "Fecundación post mortem",
-    "articulo": "Art. 215 CP",
+    "articulo": "Art. 275 CP",
     "conducta": "Utilizar gametos de persona fallecida sin autorización",
     "rama_id": "vida_integridad.vida_dependiente",
     "pena_minima_meses": 24,
@@ -4693,36 +4693,36 @@
   },
   {
     "nombre": "Tráfico de órganos",
-    "articulo": "Art. 217 CP",
+    "articulo": "Art. 277 CP",
     "conducta": "Comerciar ilegalmente con órganos humanos",
     "rama_id": "libertad_sexual.trata",
-    "pena_minima_meses": 120,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Trata de menores",
-    "articulo": "Art. 218 CP",
+    "articulo": "Art. 264 CP",
     "conducta": "Captar menores con fines de explotación",
     "rama_id": "libertad_sexual.trata",
-    "pena_minima_meses": 180,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "penas_accesorias": []
   },
   {
     "nombre": "Agresión sexual a persona con discapacidad",
-    "articulo": "Art. 251 CP",
+    "articulo": "Art. 256 CP",
     "conducta": "Atentar contra la libertad sexual de persona con discapacidad",
     "rama_id": "libertad_sexual.agresiones.agravada",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 108,
+    "pena_minima_meses": 84,
+    "pena_maxima_meses": 132,
     "penas_accesorias": []
   },
   {
     "nombre": "Violación de persona con discapacidad",
-    "articulo": "Art. 249 CP",
+    "articulo": "Art. 250 CP",
     "conducta": "Acceso carnal con persona con discapacidad",
     "rama_id": "libertad_sexual.agresiones.agravada",
     "pena_minima_meses": 120,
@@ -4731,16 +4731,16 @@
   },
   {
     "nombre": "Abuso sexual con penetración digital a menor",
-    "articulo": "Art. 251 CP",
+    "articulo": "Art. 261 CP",
     "conducta": "Realizar actos de penetración digital a menor",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 60,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Acoso sexual a menor",
-    "articulo": "Art. 256 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Acosar sexualmente a un menor de edad",
     "rama_id": "libertad_sexual.abusos.menores",
     "pena_minima_meses": 24,
@@ -4751,7 +4751,7 @@
   },
   {
     "nombre": "Ciberacoso sexual a menor agravado",
-    "articulo": "Art. 261 CP",
+    "articulo": "Art. 293 CP",
     "conducta": "Contactar con menor de 12 años con fines sexuales",
     "rama_id": "libertad_sexual.abusos.menores",
     "pena_minima_meses": 36,
@@ -4762,16 +4762,16 @@
   },
   {
     "nombre": "Posesión de pornografía infantil",
-    "articulo": "Art. 261 CP",
+    "articulo": "Art. 262 CP",
     "conducta": "Poseer material pornográfico infantil",
     "rama_id": "libertad_sexual.abusos.menores",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
     "nombre": "Distribución de pornografía infantil",
-    "articulo": "Art. 261 CP",
+    "articulo": "Art. 262 CP",
     "conducta": "Distribuir material pornográfico infantil",
     "rama_id": "libertad_sexual.abusos.menores",
     "pena_minima_meses": 60,
@@ -4782,29 +4782,29 @@
   },
   {
     "nombre": "Prostitución forzada",
-    "articulo": "Art. 262 CP",
+    "articulo": "Art. 263 CP",
     "conducta": "Obligar a alguien a ejercer la prostitución",
     "rama_id": "libertad_sexual.explotacion",
-    "pena_minima_meses": 72,
+    "pena_minima_meses": 60,
     "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Explotación sexual de persona vulnerable",
-    "articulo": "Art. 264 CP",
+    "articulo": "Art. 263 CP",
     "conducta": "Explotar sexualmente a persona en situación vulnerable",
     "rama_id": "libertad_sexual.explotacion",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 96,
+    "pena_minima_meses": 84,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   },
   {
     "nombre": "Delito contra la salud pública con resultado de muerte agravado",
-    "articulo": "Art. 331 CP",
+    "articulo": "Art. 305 CP",
     "conducta": "Distribuir productos nocivos causando muerte de menores",
     "rama_id": "salud_publica.alimentarios",
     "pena_minima_meses": 96,
-    "pena_maxima_meses": 180,
+    "pena_maxima_meses": 144,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -4812,8 +4812,19 @@
   },
   {
     "nombre": "Tráfico de medicamentos caducados",
-    "articulo": "Art. 336 CP",
+    "articulo": "Art. 316 CP",
     "conducta": "Comerciar con medicamentos caducados",
+    "rama_id": "salud_publica.farmaceuticos",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
+    "penas_accesorias": [
+      "Multa"
+    ]
+  },
+  {
+    "nombre": "Adulteración de productos farmacéuticos",
+    "articulo": "Art. 316 CP",
+    "conducta": "Adulterar la composición de medicamentos",
     "rama_id": "salud_publica.farmaceuticos",
     "pena_minima_meses": 24,
     "pena_maxima_meses": 60,
@@ -4822,19 +4833,8 @@
     ]
   },
   {
-    "nombre": "Adulteración de productos farmacéuticos",
-    "articulo": "Art. 337 CP",
-    "conducta": "Adulterar la composición de medicamentos",
-    "rama_id": "salud_publica.farmaceuticos",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
-    "penas_accesorias": [
-      "Multa"
-    ]
-  },
-  {
     "nombre": "Propagación de epidemia por imprudencia",
-    "articulo": "Art. 340 CP",
+    "articulo": "Art. 304 CP",
     "conducta": "Propagar una enfermedad por no cumplir medidas sanitarias",
     "rama_id": "salud_publica.epidemias",
     "pena_minima_meses": 6,
@@ -4845,56 +4845,9 @@
   },
   {
     "nombre": "Incumplimiento de cuarentena",
-    "articulo": "Art. 341 CP",
+    "articulo": "Art. 304 CP",
     "conducta": "Incumplir medidas de cuarentena obligatoria",
     "rama_id": "salud_publica.epidemias",
-    "pena_minima_meses": 3,
-    "pena_maxima_meses": 12,
-    "penas_accesorias": [
-      "Multa"
-    ]
-  },
-  {
-    "nombre": "Intrusismo profesional sanitario",
-    "articulo": "Art. 462 CP",
-    "conducta": "Ejercer profesión sanitaria sin título",
-    "rama_id": "fe_publica.usurpacion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
-    "penas_accesorias": [
-      "Multa",
-      "Inhabilitación"
-    ]
-  },
-  {
-    "nombre": "Atentado contra monumento nacional",
-    "articulo": "Art. 386 CP",
-    "conducta": "Atentar contra monumento declarado de interés nacional",
-    "rama_id": "territorio_ambiente.patrimonio_historico",
-    "pena_minima_meses": 48,
-    "pena_maxima_meses": 120,
-    "penas_accesorias": [
-      "Multa",
-      "Restauración"
-    ]
-  },
-  {
-    "nombre": "Vertido de hidrocarburos",
-    "articulo": "Art. 325 CP",
-    "conducta": "Verter hidrocarburos al mar o cursos de agua",
-    "rama_id": "territorio_ambiente.medio_ambiente",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 96,
-    "penas_accesorias": [
-      "Multa",
-      "Restauración"
-    ]
-  },
-  {
-    "nombre": "Destrucción de documentos contables",
-    "articulo": "Art. 503 CP",
-    "conducta": "Destruir documentos contables exigidos por ley",
-    "rama_id": "admin_publica.infidelidad",
     "pena_minima_meses": 6,
     "pena_maxima_meses": 24,
     "penas_accesorias": [
@@ -4902,12 +4855,59 @@
     ]
   },
   {
+    "nombre": "Intrusismo profesional sanitario",
+    "articulo": "Art. 506 CP",
+    "conducta": "Ejercer profesión sanitaria sin título",
+    "rama_id": "fe_publica.usurpacion",
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
+    "penas_accesorias": [
+      "Multa",
+      "Inhabilitación"
+    ]
+  },
+  {
+    "nombre": "Atentado contra monumento nacional",
+    "articulo": "Art. 422 CP",
+    "conducta": "Atentar contra monumento declarado de interés nacional",
+    "rama_id": "territorio_ambiente.patrimonio_historico",
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
+    "penas_accesorias": [
+      "Multa",
+      "Restauración"
+    ]
+  },
+  {
+    "nombre": "Vertido de hidrocarburos",
+    "articulo": "Art. 333 CP",
+    "conducta": "Verter hidrocarburos al mar o cursos de agua",
+    "rama_id": "territorio_ambiente.medio_ambiente",
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
+    "penas_accesorias": [
+      "Multa",
+      "Restauración"
+    ]
+  },
+  {
+    "nombre": "Destrucción de documentos contables",
+    "articulo": "Art. 388 CP",
+    "conducta": "Destruir documentos contables exigidos por ley",
+    "rama_id": "admin_publica.infidelidad",
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
+    "penas_accesorias": [
+      "Multa"
+    ]
+  },
+  {
     "nombre": "Falseamiento de cuentas anuales",
-    "articulo": "Art. 390 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Falsear las cuentas anuales de una sociedad",
     "rama_id": "patrimonio.estafa.agravada",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -4915,11 +4915,11 @@
   },
   {
     "nombre": "Administración desleal",
-    "articulo": "Art. 377 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Administrar patrimonio ajeno causando perjuicio",
     "rama_id": "patrimonio.estafa.agravada",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -4927,22 +4927,22 @@
   },
   {
     "nombre": "Apropiación indebida de bienes del Estado",
-    "articulo": "Art. 480 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Apropiarse indebidamente de bienes estatales",
     "rama_id": "admin_publica.malversacion",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 144,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación absoluta"
     ]
   },
   {
     "nombre": "Uso indebido de información privilegiada",
-    "articulo": "Art. 394 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Usar información reservada para beneficio propio",
     "rama_id": "patrimonio.estafa.agravada",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -4950,7 +4950,7 @@
   },
   {
     "nombre": "Denegación de prestaciones sanitarias",
-    "articulo": "Art. 295 CP",
+    "articulo": "Art. 228 CP",
     "conducta": "Denegar prestaciones sanitarias a quien las necesite",
     "rama_id": "trabajadores.seguridad_laboral",
     "pena_minima_meses": 6,
@@ -4962,7 +4962,7 @@
   },
   {
     "nombre": "Discriminación por enfermedad",
-    "articulo": "Art. 563 CP",
+    "articulo": "Art. 124 CP",
     "conducta": "Discriminar a persona por su estado de salud",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 6,
@@ -4974,7 +4974,7 @@
   },
   {
     "nombre": "Discriminación por discapacidad",
-    "articulo": "Art. 563 CP",
+    "articulo": "Art. 124 CP",
     "conducta": "Discriminar a persona con discapacidad",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 6,
@@ -4986,7 +4986,7 @@
   },
   {
     "nombre": "Atentado contra la libertad de empresa",
-    "articulo": "Art. 564 CP",
+    "articulo": "Art. 131 CP",
     "conducta": "Impedir el libre ejercicio de la empresa",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 6,
@@ -4996,7 +4996,7 @@
   },
   {
     "nombre": "Atentado contra el derecho a la educación",
-    "articulo": "Art. 566 CP",
+    "articulo": "Art. 130 CP",
     "conducta": "Impedir el acceso a la educación",
     "rama_id": "constitucion.derechos_fundamentales",
     "pena_minima_meses": 6,
@@ -5008,7 +5008,7 @@
   },
   {
     "nombre": "Publicidad engañosa sobre productos de salud",
-    "articulo": "Art. 367 CP",
+    "articulo": "Art. 365 CP",
     "conducta": "Publicitar productos con propiedades curativas falsas",
     "rama_id": "salud_publica.farmaceuticos",
     "pena_minima_meses": 12,
@@ -5019,7 +5019,7 @@
   },
   {
     "nombre": "Publicidad ilícita de juegos de azar",
-    "articulo": "Art. 367 CP",
+    "articulo": "Art. 365 CP",
     "conducta": "Publicitar juegos de azar no autorizados",
     "rama_id": "patrimonio.estafa.simple",
     "pena_minima_meses": 6,
@@ -5030,7 +5030,7 @@
   },
   {
     "nombre": "Usurpación del estado civil",
-    "articulo": "Art. 460 CP",
+    "articulo": "Art. 295 CP",
     "conducta": "Atribuirse el estado civil de otra persona",
     "rama_id": "fe_publica.usurpacion",
     "pena_minima_meses": 12,
@@ -5039,42 +5039,42 @@
   },
   {
     "nombre": "Usurpación de títulos profesionales",
-    "articulo": "Art. 461 CP",
+    "articulo": "Art. 506 CP",
     "conducta": "Usar título profesional sin tenerlo",
     "rama_id": "fe_publica.usurpacion",
     "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Falsificación de documentos notariales",
-    "articulo": "Art. 456 CP",
+    "articulo": "Art. 466 CP",
     "conducta": "Falsificar escrituras públicas o notariales",
     "rama_id": "fe_publica.documentos_publicos",
-    "pena_minima_meses": 72,
-    "pena_maxima_meses": 120,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": []
   },
   {
     "nombre": "Falsificación de documento privado contable",
-    "articulo": "Art. 457 CP",
+    "articulo": "Art. 467 CP",
     "conducta": "Falsificar documentos contables de empresa",
     "rama_id": "fe_publica.documentos_privados",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Revelación de información financiera privilegiada",
-    "articulo": "Art. 394 CP",
+    "articulo": "Art. 376 CP",
     "conducta": "Revelar información privilegiada del mercado de valores",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa",
       "Inhabilitación"
@@ -5082,38 +5082,38 @@
   },
   {
     "nombre": "Inutilización de buques o aeronaves",
-    "articulo": "Art. 188 CP",
+    "articulo": "Art. 161 CP",
     "conducta": "Inutilizar buques o aeronaves causando peligro",
     "rama_id": "seguridad_colectiva.incendios",
-    "pena_minima_meses": 96,
-    "pena_maxima_meses": 180,
+    "pena_minima_meses": 60,
+    "pena_maxima_meses": 120,
     "penas_accesorias": []
   },
   {
     "nombre": "Estafa mediante tarjeta de crédito",
-    "articulo": "Art. 368 CP",
+    "articulo": "Art. 366 CP",
     "conducta": "Usar tarjeta de crédito robada o falsificada",
     "rama_id": "patrimonio.fraude_informatico",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Sabotaje informático",
-    "articulo": "Art. 401 CP",
+    "articulo": "Art. 388 CP",
     "conducta": "Sabotear sistemas informáticos de entidades críticas",
     "rama_id": "patrimonio.fraude_informatico",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación informática"
     ]
   },
   {
     "nombre": "Acoso inmobiliario",
-    "articulo": "Art. 248 CP",
+    "articulo": "Art. 294 CP",
     "conducta": "Acosar a vecino para forzarle a vender su vivienda",
     "rama_id": "libertad.integridad_moral",
     "pena_minima_meses": 12,
@@ -5124,18 +5124,18 @@
   },
   {
     "nombre": "Trato degradante en residencia de mayores",
-    "articulo": "Art. 249 CP",
+    "articulo": "Art. 216 CP",
     "conducta": "Maltratar a ancianos en residencia",
     "rama_id": "libertad.integridad_moral",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 48,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Inhabilitación"
     ]
   },
   {
     "nombre": "Violencia asistencial",
-    "articulo": "Art. 209 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Maltratar a paciente en centro sanitario",
     "rama_id": "libertad.violencia_genero",
     "pena_minima_meses": 12,
@@ -5146,18 +5146,18 @@
   },
   {
     "nombre": "Desobediencia judicial agravada",
-    "articulo": "Art. 529 CP",
+    "articulo": "Art. 502 CP",
     "conducta": "Desobedecer reiteradamente resoluciones judiciales",
     "rama_id": "justicia.obstruccion",
-    "pena_minima_meses": 12,
-    "pena_maxima_meses": 36,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 60,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Deslealtad profesional de abogado",
-    "articulo": "Art. 531 CP",
+    "articulo": "Art. 495 CP",
     "conducta": "Abogado que defiende intereses contrarios a su cliente",
     "rama_id": "justicia.obstruccion",
     "pena_minima_meses": 12,
@@ -5168,69 +5168,69 @@
   },
   {
     "nombre": "Descubrimiento de secretos de empresa",
-    "articulo": "Art. 394 CP",
+    "articulo": "Art. 232 CP",
     "conducta": "Apoderarse de secretos de empresa por medios ilícitos",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Violación de derechos de obtentor de variedades vegetales",
-    "articulo": "Art. 392 CP",
+    "articulo": "Art. 405 CP",
     "conducta": "Usar ilegalmente variedades vegetales protegidas",
     "rama_id": "patrimonio.propiedad_intelectual",
-    "pena_minima_meses": 6,
-    "pena_maxima_meses": 24,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Incendio de cultivos",
-    "articulo": "Art. 185 CP",
+    "articulo": "Art. 327 CP",
     "conducta": "Incendiar cultivos agrícolas",
     "rama_id": "seguridad_colectiva.incendios",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Daños a vías de comunicación",
-    "articulo": "Art. 385 CP",
+    "articulo": "Art. 388 CP",
     "conducta": "Dañar carreteras, ferrocarriles o vías navegables",
     "rama_id": "seguridad_colectiva.incendios",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Estafa procesal",
-    "articulo": "Art. 366 CP",
+    "articulo": "Art. 365 CP",
     "conducta": "Engañar al tribunal en un proceso judicial",
     "rama_id": "justicia.obstruccion",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Denuncia falsa con acusación de delito grave",
-    "articulo": "Art. 525 CP",
+    "articulo": "Art. 522 CP",
     "conducta": "Denunciar falsamente un delito grave contra inocente",
     "rama_id": "justicia.falso_testimonio",
-    "pena_minima_meses": 24,
-    "pena_maxima_meses": 60,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Simulación de delito grave",
-    "articulo": "Art. 525 CP",
+    "articulo": "Art. 522 CP",
     "conducta": "Simular ser víctima de delito grave",
     "rama_id": "justicia.falso_testimonio",
     "pena_minima_meses": 12,
@@ -5241,31 +5241,31 @@
   },
   {
     "nombre": "Encubrimiento de delito grave",
-    "articulo": "Art. 521 CP",
+    "articulo": "Art. 513 CP",
     "conducta": "Encubrir delito grave como homicidio o asesinato",
     "rama_id": "justicia.encubrimiento",
-    "pena_minima_meses": 36,
-    "pena_maxima_meses": 72,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "penas_accesorias": []
   },
   {
     "nombre": "Quebrantamiento de orden de protección",
-    "articulo": "Art. 527 CP",
+    "articulo": "Art. 530 CP",
     "conducta": "Incumplir orden de protección a víctima de violencia",
     "rama_id": "libertad.violencia_genero",
     "pena_minima_meses": 6,
-    "pena_maxima_meses": 18,
+    "pena_maxima_meses": 24,
     "penas_accesorias": [
       "Multa"
     ]
   },
   {
     "nombre": "Robo en banda armada",
-    "articulo": "Art. 361 CP",
+    "articulo": "Art. 383 CP",
     "conducta": "Robar formando parte de banda armada",
     "rama_id": "patrimonio.robo.agravado",
-    "pena_minima_meses": 144,
-    "pena_maxima_meses": 240,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 144,
     "penas_accesorias": []
   }
 ]

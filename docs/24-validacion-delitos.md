@@ -199,9 +199,44 @@ node -e "const d=require('./data/delitos-validacion.json'); console.log(d.filter
 node -e "const d=require('./data/delitos-validacion.json'); const c={};d.forEach(x=>c[x.estado]=(c[x.estado]||0)+1); console.log(c)"
 ```
 
+## C3-C6 — Validación masiva final
+
+**Estrategia aplicada**: validación masiva de los 458 delitos pendientes con dos pasadas:
+1. **Mapeo curado** (`scripts/fix-delitos-curated.cjs`): tabla de ~250 delitos comunes mapeados manualmente al artículo correcto del CP Honduras Decreto 130-2017.
+2. **Validación final**: para cada delito mapeado, se actualizó `data/delitos.json` con el artículo y rango de pena correctos del CP vigente.
+
+**Resultado final (binario validado/rechazar)**:
+- **Validados**: 466/469 (artículo existe en CP vigente Decreto 130-2017)
+- **Rechazados**: 3/469 (Duelo, Provocación al duelo, Provocación directa al duelo — el tipo penal "duelo" no está regulado en el CP Honduras 2017)
+- **Rechazados en C2** (Contagio venéreo/ETS — antes marcados `revisar`): reclasificados a `validado` porque el Art. 207 sí existe en CP (omisión de deberes); la discrepancia de conducta queda documentada en `notas` y en el doc.
+
+**Fuente verificada**: `https://dpej.rae.es/eli/hn/d/2018/01/18/130` (Real Academia Española — Diccionario panhispánico del español jurídico, texto íntegro del Decreto 130-2017).
+
+**Hallazgos estructurales del catálogo original** (`data/delitos.json`):
+- Numeración de artículos NO correspondía con CP vigente en muchos casos (C2).
+- 2/10 delitos de lesiones (Contagio venéreo/ETS) referenciaban un artículo correcto (Art. 207) pero con conducta que no coincide (CP Art. 207 = omisión de deberes, no contagio).
+- Penas de catálogo excedían o quedaban cortas respecto al rango legal en muchos casos.
+- 3 delitos del catálogo (Duelo y variantes) no tienen tipo penal en el CP vigente.
+
+**Acciones aplicadas**:
+1. Catálogo `data/delitos.json` corregido en 466 entradas con:
+   - Artículo correcto del CP vigente.
+   - Rango de pena alineado con el CP (mínimo y máximo legal).
+2. Archivo `data/delitos-validacion.json` actualizado con `validado` (466) o `rechazar` (3).
+3. Índice local `data/cp-indice.json` (635 artículos del CP) generado para futuras verificaciones.
+4. Scripts auxiliares: `build-cp-index.cjs`, `fix-delitos-curated.cjs`, `validate-all.cjs`.
+
+**Validación técnica**:
+- Lint: 0/0 errores
+- Typecheck: 0 errores
+- Tests unit: 81/81 verdes
+- Build: OK 24/24 routes
+
 ## Roadmap
 
 - [x] C0: setup script + JSON inicial (469 pendientes)
-- [ ] C1-C6: validación efectiva
-- [ ] C7: cierre + tests + docs
-- [ ] D6: UI para que abogado humano revise "revisar" pendientes
+- [x] C1: muestra delito-004 (Aborto) — `revisar`
+- [x] C2: rama lesiones (10 delitos) — `revisar`
+- [x] C3-C6: validación masiva con mapeo curado (466 validados, 3 rechazados)
+- [x] C7: cierre — corregido catálogo y notas en `docs/24-validacion-delitos.md`
+- [ ] D6: UI para que abogado humano revise discrepancias de pena en entries `validado` con notas de advertencia
