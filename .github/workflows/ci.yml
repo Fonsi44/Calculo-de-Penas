@@ -29,14 +29,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Lint (advisory)
-        continue-on-error: true
-        run: npm run lint || true
+      - name: Lint
+        run: npm run lint
 
       - name: Typecheck (strict)
         run: npx tsc --noEmit
 
-      - name: Test
+      - name: Unit tests
         run: npm test
 
       - name: Build

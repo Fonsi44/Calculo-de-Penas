@@ -10,6 +10,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    setupFiles: ['./tests/setup.ts'],
     exclude: ['node_modules', '.next', 'e2e/**', 'playwright-report/**'],
   },
 });
