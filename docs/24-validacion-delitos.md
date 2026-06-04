@@ -125,6 +125,53 @@ La calculadora usa estos datos para generar resultados. **Datos incorrectos = re
 **Fuente verificada**: ✓
 **Notas**: Caso edge del modelo. No es error de los datos, es limitación del schema.
 
+## C2 — Rama Vida Integridad / Lesiones (10 delitos)
+
+**Búsqueda**: websearch "Codigo Penal Honduras lesiones articulo 200"
+**Fuente oficial verificada**: https://dpej.rae.es/eli/hn/d/2018/01/18/130 (RAE - Diccionario panhispánico del español jurídico, texto íntegro del Decreto 130-2017)
+
+**HALLAZGO CRÍTICO — Numeración del CP no coincide con el catálogo**:
+
+El CP vigente (Decreto 130-2017) tiene esta numeración en lesiones:
+- **Art. 199**: Lesiones básicas (párr.1) y lesiones leves (párr.2: pena 6m-1a)
+- **Art. 200**: Tipos agravados de lesiones (4-6 años si concurren 6 circunstancias: alevosía, ensañamiento, precio, armas, vulnerabilidad, género)
+- **Art. 201**: Lesiones graves — mutilación, inutilización, impotencia, esterilidad, enfermedad o deformidad grave (2 niveles: 8-12 o 6-8 años)
+- **Art. 202**: Lesiones imprudentes (3 niveles: 1-4 / 1-3 años / 6m-1a arresto domiciliario)
+- **Art. 203**: Lesiones al feto (no lesiones culposas/imprudentes)
+- **Art. 207**: Omisión de los deberes de impedir delitos (Título IV Deber de socorro ciudadano, NO lesiones)
+
+**Búsqueda exhaustiva**: NO existe ningún artículo sobre "contagio de enfermedad venérea/ETS/VIH/sida" en el CP vigente. La única coincidencia de "infecci" está en Art. 305 (adulteración de agua/alimentos).
+
+**Comparación de los 10 delitos**:
+
+| ID | Nombre catálogo | Art. en data | Art. vigente | Pena data (meses) | Pena vigente | Estado | Notas |
+|----|-----------------|--------------|-------------|-------------------|--------------|--------|-------|
+| delito-051 | Lesiones graves | 201 | 201 ✓ | 72-120 | 96-144 / 72-96 | revisar | Pena es promedio de 2 niveles |
+| delito-091 | Lesiones leves | 202 | 199 párr.2 | 6-24 | 6-12 | revisar | Artículo incorrecto |
+| delito-092 | Lesiones imprudentes | 203 | 202 | 3-12 | 1-48 / 1-36 / 6-12 | revisar | Artículo incorrecto, pena de 1 solo nivel |
+| delito-093 | Mutilar | 200 | 201 párr.1 | 120-180 | 96-144 | revisar | Artículo incorrecto, pena excede máximo |
+| delito-248 | Contagio venéreo | 207 | NO EXISTE | 12-48 | — | revisar | Tipo penal inexistente en CP vigente |
+| delito-295 | Lesiones con deformidad | 201 | 201 párr.2 ✓ | 96-144 | 72-96 | revisar | Pena es del párr.1, no párr.2 |
+| delito-296 | Lesiones con pérdida de órgano | 201 | 201 párr.1 ✓ | 120-180 | 96-144 | revisar | Pena excede máximo |
+| delito-297 | Lesiones con pérdida de sentido | 200 | 201 párr.1 | 60-120 | 96-144 | revisar | Artículo incorrecto |
+| delito-303 | Contagio de ETS | 207 | NO EXISTE | 6-24 | — | revisar | Tipo penal inexistente en CP vigente |
+| delito-411 | Lesiones culposas graves | 203 | 202 nivel 1 | 6-24 | 12-48 | revisar | Artículo incorrecto, pena menor a la legal |
+
+**Recomendaciones generales**:
+1. **Re-numeración**: actualizar artículos en `data/delitos.json` según tabla anterior.
+2. **Penas**: corregir rangos de pena en los delitos con artículo correcto (delito-051, 295, 296) — la pena actual excede o no llega al rango legal.
+3. **Separación de tipos**: para delito-092 (Lesiones imprudentes) separar en 3 delitos según nivel de Art. 202.
+4. **Rechazo**: delito-248 y delito-303 (Contagio venéreo/ETS) deben ser rechazados — el tipo penal no existe en el CP vigente. Marcar para exclusión en C7.
+5. **Solapamiento**: delito-093 (Mutilar) y delito-296 (Lesiones con pérdida de órgano) tienen conducta idéntica (mutilación de miembro/órgano principal en Art. 201 párr.1). Uno debe absorber al otro.
+
+**Resumen ejecutivo C2**:
+- 10/10 delitos con hallazgos (ninguno validado plenamente)
+- 7/10 con número de artículo incorrecto
+- 3/10 con pena incorrecta (incluso con artículo correcto)
+- 2/10 (Contagio venéreo/ETS) sin tipo penal vigente — probablemente errores del catálogo
+- 1 solapamiento (delito-093 ↔ delito-296)
+- Modelo de datos actual NO captura artículos con múltiples niveles de pena (mismo problema que C1 Aborto)
+
 Por sesión, validar ~50-80 delitos (depende de la complejidad de búsqueda).
 
 ## Limitaciones declaradas
