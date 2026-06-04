@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, X, Search as SearchIcon } from 'lucide-react';
+import { Search, X, Search as SearchIcon, CheckCircle2 } from 'lucide-react';
 import type { Delito, DelitoConfig } from '../types';
 import { BannerCalidadDatos } from './banner-calidad-datos';
 import { Input } from '@/components/ui/input';
@@ -87,9 +87,15 @@ export function Paso1Delito({
             >
               <div className="flex items-start gap-2">
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-text">{d.nombre}</p>
+                  <div className="flex items-center gap-1.5">
+                    {d.estado === 'verificado' && <CheckCircle2 size={14} className="text-mitigation flex-shrink-0" />}
+                    <p className="font-semibold text-sm text-text">{d.nombre}</p>
+                  </div>
                   <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
                 </div>
+                {d.estado === 'verificado' && (
+                  <Badge tone="mitigation">Verificado</Badge>
+                )}
                 {d.estado === 'pendiente_revision' && (
                   <Badge tone="warning">Revisar</Badge>
                 )}
