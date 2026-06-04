@@ -3,18 +3,15 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useDelitosLoader, useDelitosFilter } from './hooks';
+import { Paso1Delito } from './paso1-delito';
+import { Paso8Resultado } from './paso8-resultado';
 import type { ResultadoCalculo } from '@/lib/calculo';
-import Link from 'next/link';
 import {
   ChevronLeft,
   Home,
-  Search,
   Plus,
   X,
   Scale,
-  Save,
-  Printer,
-  Search as SearchIcon,
   FileEdit,
 } from 'lucide-react';
 import {
@@ -26,23 +23,20 @@ import {
   TIPOS_CONCURSO,
 } from '@/lib/catalogos';
 import type { Delito, DelitoConfig, Step } from '../types';
-import { ErrorBoundary } from '../error-boundary';
 import { ArticleModal } from '../article-modal';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { Stepper, type StepperStep } from '@/components/ui/stepper';
 import { Modal } from '@/components/ui/modal';
-import { EmptyState, ErrorState } from '@/components/ui/empty-state';
+import { ErrorState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
 import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
-import { PenaltyResultPanel } from '@/components/domain/penalty-result-panel';
 import { UserActions } from '@/components/layout/user-actions';
 import { cn } from '@/lib/ui';
 
@@ -399,98 +393,18 @@ function CalculadoraInner() {
         <div className="flex-1 overflow-y-auto p-3 max-w-lg mx-auto w-full lg:mx-0 lg:max-w-none lg:px-6 lg:py-4">
           {/* Step 1: Seleccionar delito */}
           {step === 1 && (
-            <div>
-              <BannerCalidadDatos />
-              <div className="relative mb-3">
-                <Input
-                  iconLeft={<Search size={16} />}
-                  placeholder="Buscar delito por nombre, artículo o conducta..."
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  iconRight={search ? (
-                    <button type="button" onClick={() => setSearch('')} aria-label="Limpiar búsqueda">
-                      <X size={16} />
-                    </button>
-                  ) : undefined}
-                />
-              </div>
-
-              {configs.length > 0 && (
-                <div className="mb-3">
-                  <p className="text-xs font-semibold text-text-secondary mb-1.5">Delitos configurados</p>
-                  <div className="space-y-1.5">
-                    {configs.map((c, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-accent/10 border border-accent/30 px-3 py-2 rounded-md">
-                        <span className="text-xs font-bold text-primary flex-1 truncate">{c.delito.nombre}</span>
-                        <Badge tone="accent">{c.delito.articulo}</Badge>
-                        <button
-                          type="button"
-                          onClick={() => removeDelito(i)}
-                          aria-label={`Quitar ${c.delito.nombre}`}
-                          className="w-7 h-7 flex items-center justify-center rounded text-danger hover:bg-danger-bg"
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {filtered.length === 0 ? (
-                <EmptyState
-                  icon={<SearchIcon size={40} />}
-                  title="Sin resultados"
-                  description="Modifica la búsqueda."
-                />
-              ) : (
-                <div className="space-y-1.5">
-                  {filtered.map(d => (
-                    <button
-                      key={d.id}
-                      type="button"
-                      onClick={() => selectDelito(d)}
-                      className="w-full text-left bg-surface border border-border-light rounded-md p-3 hover:shadow-md transition-shadow focus-visible:outline-none"
-                    >
-                      <div className="flex items-start gap-2">
-                        <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-sm text-text">{d.nombre}</p>
-                          <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
-                        </div>
-                        {d.estado === 'pendiente_revision' && (
-                          <Badge tone="warning">Revisar</Badge>
-                        )}
-                        {d.estado === 'rechazado' && (
-                          <Badge tone="danger">No verificado</Badge>
-                        )}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-              {current?.delito && (current.delito.estado === 'pendiente_revision' || current.delito.estado === 'rechazado') && (
-                <div className="mt-3 border-2 border-warning rounded-md p-3 bg-warning-bg">
-                  <p className="text-xs font-bold text-text mb-1">Art&iacute;culo no verificado contra la fuente oficial</p>
-                  <p className="text-[11px] text-text-secondary mb-2">
-                    {current.delito.estado_nota || 'El par (delito, art\u00edculo) no super\u00f3 la validaci\u00f3n autom\u00e1tica TF-IDF. Verifique manualmente contra el CP (Decreto 130-2017) antes de continuar.'}
-                  </p>
-                  {current.delito.estado_articulo_sugerido && (
-                    <p className="text-[11px] text-text-secondary mb-2">
-                      Sugerencia del validador: <strong>{current.delito.estado_articulo_sugerido}</strong>
-                    </p>
-                  )}
-                  <label className="flex items-start gap-2 text-xs text-text cursor-pointer">
-                    <input
-                      type="checkbox"
-                      className="mt-0.5"
-                      checked={!!pendientesConfirmados[current.delito.id]}
-                      onChange={e => setPendientesConfirmados(prev => ({ ...prev, [current.delito.id]: e.target.checked }))}
-                    />
-                    <span>Confirmo que verifiqu&eacute; el art&iacute;culo <strong>{current.delito.articulo}</strong> contra la fuente oficial y asumo la responsabilidad del uso.</span>
-                  </label>
-                </div>
-              )}
-            </div>
+            <Paso1Delito
+              filtered={filtered}
+              search={search}
+              setSearch={setSearch}
+              configs={configs}
+              current={current}
+              selectDelito={selectDelito}
+              removeDelito={removeDelito}
+              pendientesConfirmados={pendientesConfirmados}
+              setPendientesConfirmados={setPendientesConfirmados}
+              onOpenArticle={setArticleRef}
+            />
           )}
 
           {/* Step 2: Variantes */}
@@ -753,51 +667,22 @@ function CalculadoraInner() {
 
           {/* Step 8: Resultado (informe pericial) */}
           {step === 8 && resultado?.pena_principal && (
-            <ErrorBoundary fallback={
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <p className="font-bold text-danger text-sm mb-2">Error al mostrar resultados</p>
-                <p className="text-xs text-text-muted mb-4">Ocurrió un error al renderizar el cálculo. Intente nuevamente.</p>
-                <Button variant="primary" onClick={reset}>Nueva consulta</Button>
-              </div>
-            }>
-              <div className="print-area">
-                <PenaltyResultPanel
-                  resultado={resultado}
-                  onOpenArticle={setArticleRef}
-                />
-              </div>
-
-              {/* Acciones */}
-              <div className="grid grid-cols-2 gap-2 mt-4 no-print">
-                <Button variant="secondary" iconLeft={<Printer size={16} />} onClick={() => window.print()}>
-                  Exportar PDF
-                </Button>
-                <Button
-                  variant="primary"
-                  iconLeft={<Save size={16} />}
-                  onClick={async () => {
-                    try {
-                      const r = await fetch('/api/casos');
-                      const data = await r.json();
-                      setCasosList(Array.isArray(data) ? data.map((c: { id: string; titulo: string }) => ({ id: c.id, titulo: c.titulo })) : []);
-                    } catch {
-                      toast.danger('No se pudieron cargar los casos');
-                      return;
-                    }
-                    setShowSaveModal(true);
-                  }}
-                >
-                  Guardar caso
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 mt-2 no-print">
-                <Button variant="secondary" onClick={reset}>Nueva consulta</Button>
-                <Link href="/" className="contents">
-                  <Button variant="primary">Inicio</Button>
-                </Link>
-              </div>
-            </ErrorBoundary>
+            <Paso8Resultado
+              resultado={resultado}
+              reset={reset}
+              onOpenArticle={setArticleRef}
+              onSaveClick={async () => {
+                try {
+                  const r = await fetch('/api/casos');
+                  const data = await r.json();
+                  setCasosList(Array.isArray(data) ? data.map((c: { id: string; titulo: string }) => ({ id: c.id, titulo: c.titulo })) : []);
+                } catch {
+                  toast.danger('No se pudieron cargar los casos');
+                  return;
+                }
+                setShowSaveModal(true);
+              }}
+            />
           )}
         </div>
       </div>
@@ -927,57 +812,6 @@ function CalculadoraInner() {
           </p>
         )}
       </Modal>
-    </div>
-  );
-}
-
-function BannerCalidadDatos() {
-  const [summary, setSummary] = useState<{ verificados: number; pendientes: number; rechazados: number; total: number } | null>(null);
-  useEffect(() => {
-    fetch('/api/delitos/calidad')
-      .then(r => r.ok ? r.json() : null)
-      .then(d => { if (d) setSummary(d); })
-      .catch(() => { /* silencioso: el banner es informativo */ });
-  }, []);
-  if (!summary || summary.total === 0) return null;
-  const { verificados, pendientes, rechazados, total } = summary;
-  const pct = (n: number) => Math.round((n / total) * 100);
-  const completo = pendientes === 0 && rechazados === 0;
-  return (
-    <div
-      className={`mb-3 border rounded-md p-3 text-[11px] text-text-secondary ${
-        completo
-          ? 'border-success/30 bg-success-bg'
-          : 'border-warning/40 bg-warning-bg'
-      }`}
-    >
-      <p className="font-bold text-text mb-1">
-        {completo ? 'Catálogo validado' : 'Calidad del cat\u00e1logo de delitos'}
-      </p>
-      <p>
-        <span className="text-success font-semibold">{verificados} verificados ({pct(verificados)}%)</span>
-        {pendientes > 0 && (
-          <>
-            {' · '}
-            <span className="text-warning font-semibold">{pendientes} a revisar ({pct(pendientes)}%)</span>
-          </>
-        )}
-        {rechazados > 0 && (
-          <>
-            {' · '}
-            <span className="text-danger font-semibold">{rechazados} rechazados ({pct(rechazados)}%)</span>
-          </>
-        )}
-        {' de '}
-        <strong>{total}</strong> totales.
-      </p>
-      <p className="mt-1">
-        {completo
-          ? 'Los registros han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Reporte: '
-          : 'Fuente: '}
-        <code>data/delitos-validacion.csv</code>
-        {!completo && ' (TF-IDF vs. CP Decreto 130-2017). Los delitos no verificados requerir\u00e1n confirmaci\u00f3n manual.'}
-      </p>
     </div>
   );
 }
