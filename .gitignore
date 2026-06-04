@@ -48,14 +48,18 @@ frontend/.env.*.local
 # debug logs
 open-debug/
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# next.js logs
+next-stderr.log
+next-stdout.log
 
 # playwright
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
 # CP index (regenerable desde scripts/build-cp-index.cjs)
 /data/cp-indice.json
