@@ -1,0 +1,258 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import {
+  MapPin,
+  Navigation,
+  Car,
+  Bus,
+  Phone,
+  MessageCircle,
+  Clock,
+  ExternalLink,
+} from 'lucide-react';
+import { site, telHref, whatsappHref } from '@/lib/site';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Card } from '@/components/ui/card';
+import { CopyableAddress } from '@/components/marketing/copyable-address';
+
+export const metadata: Metadata = {
+  title: 'Cómo llegar al bufete',
+  description: `Indicaciones para llegar a ${site.name} en Nacaome, Valle. Dirección exacta, mapa, rutas y referencias para encontrarnos.`,
+  alternates: { canonical: '/como-llegar' },
+};
+
+const REF_POINTS = [
+  { name: 'Hondutel Nacaome', distance: '90 m al oeste', desc: 'Punto de referencia principal. Estamos una cuadra y media al este.' },
+  { name: 'Clínica Dental Dra. ANDARA', distance: 'Contiguo', desc: 'Nuestra oficina queda contigua a esta clínica dental.' },
+  { name: 'Parque Central de Nacaome', distance: '~3 min caminando', desc: 'Camine al este por el boulevard principal.' },
+  { name: 'Alcaldía Municipal de Nacaome', distance: '~5 min en vehículo', desc: 'Desde la alcaldía, tome dirección este sobre la calle principal.' },
+];
+
+const FROM_CITIES = [
+  { from: 'Tegucigalpa', km: '~90 km', time: '1 h 45 min', route: 'Carretera CA-5 sur → desvío a Nacaome' },
+  { from: 'Choluteca', km: '~65 km', time: '1 h 10 min', route: 'Carretera Panamericana CA-1 oeste' },
+  { from: 'San Lorenzo', km: '~30 km', time: '40 min', route: 'Carretera CA-1 hacia Nacaome' },
+  { from: 'Amapala', km: '~50 km', time: '1 h 20 min', route: 'Vía Goascorán → Nacaome' },
+];
+
+export default function ComoLlegarPage() {
+  const { latitude, longitude } = site.geo;
+  const gmapsEmbed = `https://www.google.com/maps?q=${latitude},${longitude}&hl=es&z=15&output=embed`;
+  const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+  const wazeLink = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
+
+  const fullAddress = `${site.address.line1}, ${site.address.line2}, ${site.address.city}, ${site.address.department}, ${site.address.country}`;
+
+  return (
+    <>
+      <section className="bg-primary text-text-inverse">
+        <Container size="lg" className="py-12 md:py-16">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
+            Cómo llegar
+          </p>
+          <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
+            Visítenos en Nacaome, Valle
+          </h1>
+          <p className="mt-4 text-[15px] md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
+            Estamos a cuadra y media al este de la oficina de Hondutel, contiguo a la
+            Clínica Dental Dra. ANDARA. Use el mapa interactivo para llegar directamente.
+          </p>
+        </Container>
+      </section>
+
+      {/* MAPA */}
+      <Section spacing="md">
+        <div className="grid lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2">
+            <Card padding="none" className="overflow-hidden">
+              <div className="aspect-[16/10] w-full bg-surface-alt relative">
+                <iframe
+                  title={`Mapa de ${site.name} en ${site.address.city}`}
+                  src={gmapsEmbed}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4 border-t border-border-light flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">
+                    Coordenadas
+                  </p>
+                  <p className="text-[13px] font-semibold text-text tabular-nums">
+                    {latitude}°N, {Math.abs(longitude)}°O
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={gmapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-primary text-white text-[12px] font-bold hover:bg-primary-light transition-colors"
+                  >
+                    <Navigation size={14} /> Google Maps
+                    <ExternalLink size={11} className="opacity-70" />
+                  </a>
+                  <a
+                    href={wazeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-info text-white text-[12px] font-bold hover:opacity-90 transition-opacity"
+                  >
+                    <Car size={14} /> Waze
+                    <ExternalLink size={11} className="opacity-70" />
+                  </a>
+                  <Link
+                    href="/contacto"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border-light text-text text-[12px] font-bold hover:bg-surface-alt"
+                  >
+                    <Phone size={14} /> Pedir indicaciones
+                  </Link>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <Card padding="md" className="bg-primary text-text-inverse h-full">
+            <div className="flex items-center gap-2 mb-3">
+              <MapPin size={18} className="text-accent" />
+              <h2 className="font-bold text-base text-text-inverse">Dirección</h2>
+            </div>
+            <p className="text-[14px] text-text-inverse/95 leading-relaxed">
+              {site.address.line1}<br />
+              {site.address.line2}<br />
+              {site.address.city}, {site.address.department}<br />
+              {site.address.country}
+            </p>
+
+            <div className="border-t border-primary-light/30 my-4" />
+
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
+              Copiar dirección
+            </h3>
+            <CopyableAddress value={fullAddress} variant="inverse" />
+
+            <div className="border-t border-primary-light/30 my-4" />
+
+            <ul className="space-y-2.5 text-[13px]">
+              <li className="flex items-center gap-2">
+                <Phone size={14} className="text-accent flex-shrink-0" />
+                <a href={telHref()} className="hover:text-accent tabular-nums">
+                  {site.phoneDisplay}
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MessageCircle size={14} className="text-accent flex-shrink-0" />
+                <a
+                  href={whatsappHref('Hola, necesito indicaciones para llegar al bufete.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-accent"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <Clock size={14} className="text-accent flex-shrink-0 mt-0.5" />
+                <span>Lun a Sáb · 7:00 – 20:00</span>
+              </li>
+            </ul>
+          </Card>
+        </div>
+      </Section>
+
+      {/* REFERENCE POINTS */}
+      <Section background="muted" spacing="md">
+        <SectionHeader
+          eyebrow="Puntos de referencia"
+          title="Cómo encontrarnos fácilmente"
+          subtitle="Cuatro puntos clave que le permitirán ubicarnos sin dificultad."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {REF_POINTS.map((p) => (
+            <Card key={p.name} padding="md" className="h-full">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0">
+                  <MapPin size={18} />
+                </div>
+                <div>
+                  <p className="font-bold text-[15px] text-text leading-tight">{p.name}</p>
+                  <p className="text-[12px] text-accent-dark font-semibold mt-0.5">{p.distance}</p>
+                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* FROM OTHER CITIES */}
+      <Section spacing="md">
+        <SectionHeader
+          eyebrow="Desde otras ciudades"
+          title="Rutas y tiempos aproximados"
+          subtitle="Distancias y tiempos de viaje por carretera. Considere tráfico y condiciones climáticas."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {FROM_CITIES.map((c) => (
+            <Card key={c.from} padding="md" className="h-full">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-primary text-text-inverse flex items-center justify-center flex-shrink-0">
+                  <Car size={18} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <p className="font-bold text-[15px] text-text leading-tight">Desde {c.from}</p>
+                    <span className="text-[11px] font-bold text-accent-dark bg-accent/10 rounded-full px-2 py-0.5">
+                      {c.km} · {c.time}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{c.route}</p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+        <Card padding="md" className="mt-6 bg-warning-bg border border-warning/30 flex items-start gap-3">
+          <Bus size={18} className="text-warning flex-shrink-0 mt-0.5" />
+          <p className="text-[12px] text-text-secondary leading-relaxed">
+            <strong>Transporte público:</strong> existen buses interurbanos desde Tegucigalpa,
+            Choluteca y San Lorenzo hasta la terminal de Nacaome. Desde la terminal, el bufete
+            se encuentra a 5 minutos en taxi o 15 minutos caminando.
+          </p>
+        </Card>
+      </Section>
+
+      {/* HORARIO */}
+      <Section background="muted" spacing="md">
+        <div className="max-w-2xl mx-auto">
+          <Card padding="md" className="text-center">
+            <h2 className="font-serif font-extrabold text-2xl text-primary">
+              Visítenos con cita previa
+            </h2>
+            <p className="text-[14px] text-text-secondary mt-3 leading-relaxed">
+              Para garantizarle una atención sin esperas y la confidencialidad que su caso
+              requiere, le recomendamos agendar una cita. Estamos disponibles de lunes a sábado
+              de 7:00 a 20:00.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center mt-5">
+              <Link
+                href="/solicitar-consulta"
+                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-aggravation text-white text-[14px] font-bold hover:opacity-90"
+              >
+                Agendar cita
+              </Link>
+              <a
+                href={telHref()}
+                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md border-2 border-primary/30 text-primary text-[14px] font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors"
+              >
+                <Phone size={14} /> Llamar
+              </a>
+            </div>
+          </Card>
+        </div>
+      </Section>
+    </>
+  );
+}

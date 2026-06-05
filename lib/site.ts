@@ -77,8 +77,8 @@ export const site = {
     },
   ] satisfies OpeningHours[],
   geo: {
-    latitude: process.env.NEXT_PUBLIC_GEO_LAT ? Number(process.env.NEXT_PUBLIC_GEO_LAT) : null,
-    longitude: process.env.NEXT_PUBLIC_GEO_LNG ? Number(process.env.NEXT_PUBLIC_GEO_LNG) : null,
+    latitude: process.env.NEXT_PUBLIC_GEO_LAT ? Number(process.env.NEXT_PUBLIC_GEO_LAT) : 13.5361,
+    longitude: process.env.NEXT_PUBLIC_GEO_LNG ? Number(process.env.NEXT_PUBLIC_GEO_LNG) : -87.4875,
   },
   social: {
     facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK ?? null,

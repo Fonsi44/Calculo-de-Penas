@@ -7,29 +7,49 @@ import { ConfirmProvider } from "@/components/ui/confirm";
 import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
+import { site } from "@/lib/site";
 
-const siteUrl = "https://calculo-de-penas-nextjs.vercel.app";
+const siteUrl = site.url;
 
 export const metadata: Metadata = {
-  title: "LEX HONDURAS — Motor de Cálculo de Penas",
-  description: "Código Penal de Honduras (Decreto 130-2017). Determine la pena con precisión técnica. Herramienta profesional para abogados y juristas.",
+  title: {
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s · ${site.name}`,
+  },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name }],
+  keywords: [
+    "abogado penalista Nacaome",
+    "abogados Nacaome Honduras",
+    "defensa penal Honduras",
+    "abogado Código Penal",
+    "abogado penal Valle",
+    "asistencia a detenidos",
+    "proceso penal Honduras",
+    "bufete penalista Valle",
+  ],
+  creator: site.name,
+  publisher: site.name,
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "LEX HONDURAS",
+    title: site.name,
     statusBarStyle: "black-translucent",
   },
   openGraph: {
-    title: "LEX HONDURAS — Motor de Cálculo de Penas",
-    description: "Código Penal de Honduras (Decreto 130-2017). Calcule penas con precisión técnica: concurso real, ideal, continuado, agravantes, atenuantes, eximentes.",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
     url: siteUrl,
-    siteName: "LEX HONDURAS",
+    siteName: site.name,
     locale: "es_HN",
     type: "website",
   },
-  robots: {
-    index: true,
-    follow: true,
+  robots: site.noindex
+    ? { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } }
+    : { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
+  alternates: {
+    canonical: siteUrl,
   },
 };
 
@@ -41,10 +61,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="canonical" href={siteUrl} />
-        <meta name="application-name" content="LEX HONDURAS" />
-        <meta name="author" content="LEX HONDURAS" />
+        <meta name="application-name" content={site.name} />
+        <meta name="author" content={site.name} />
         <meta name="language" content="es" />
-        <meta name="robots" content="index, follow" />
+        {site.noindex ? (
+          <>
+            <meta name="robots" content="noindex, nofollow, nocache" />
+            <meta name="googlebot" content="noindex, nofollow, noimageindex" />
+          </>
+        ) : (
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+        )}
         <script dangerouslySetInnerHTML={{
           __html: `
             (function() {
