@@ -9,22 +9,22 @@ export async function POST(request: Request) {
     const user = requireAuth(request);
     let body: unknown;
     try { body = await request.json(); } catch {
-      return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+      return Response.json({ error: 'JSON inválido' }, { status: 400 });
     }
     if (!body || typeof body !== 'object') {
-      return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+      return Response.json({ error: 'JSON inválido' }, { status: 400 });
     }
     const { caso_id, config, resultado } = body as { caso_id?: unknown; config?: unknown; resultado?: unknown };
 
     if (typeof caso_id !== 'string' || !caso_id || config === undefined || resultado === undefined) {
-      return new Response(JSON.stringify({ error: 'Faltan datos' }), { status: 400 });
+      return Response.json({ error: 'Faltan datos' }, { status: 400 });
     }
 
     const [caso] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })
       .from(casos).where(eq(casos.id, caso_id));
-    if (!caso) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (!caso) return Response.json({ error: 'Caso no encontrado' }, { status: 404 });
     if (caso.usuarioId !== user.userId) {
-      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+      return Response.json({ error: 'Sin permiso sobre este caso' }, { status: 403 });
     }
 
     const [row] = await db.insert(calculos).values({
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       userAgent: uaFromRequest(request),
     });
 
-    return new Response(JSON.stringify(row), { status: 201 });
+    return Response.json(row, { status: 201 });
   } catch (e) {
     return authFailureResponse(e);
   }

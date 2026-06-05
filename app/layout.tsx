@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               try {
                 var theme = localStorage.getItem('lex-theme');
                 if (theme === 'dark') document.documentElement.classList.add('dark');
-              } catch(e) {}
+              } catch(e) { /* localStorage puede no estar disponible (ej. SSR, entornos restringidos) */ }
             })();
           `
         }} />

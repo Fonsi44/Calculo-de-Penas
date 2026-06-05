@@ -46,7 +46,7 @@ async function seed() {
   const existing = await sql`SELECT COUNT(*) as total FROM delitos`;
   if (Number(existing[0].total) > 0) {
     console.log(`✓ BD ya contiene ${existing[0].total} delitos — saltando seed`);
-    process.exit(0);
+    return;
   }
 
   // Ramas jurídicas — batch insert
@@ -132,7 +132,6 @@ async function seed() {
   }
 
   console.log('\n✔ Seed completado');
-  process.exit(0);
 }
 
 seed().catch((err) => {

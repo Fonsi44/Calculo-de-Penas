@@ -1,6 +1,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import type { DelitoConfig } from '@/lib/rules/v1/types';
+import { formatMeses, formatFechaHora } from '@/lib/ui';
 
 const colors = {
   primary: '#1A2B4A',
@@ -343,26 +344,10 @@ interface Caso {
   calculos: Calculo[];
 }
 
-function formatMeses(meses: number): string {
-  if (!Number.isFinite(meses) || meses <= 0) return '0 meses';
-  const anios = Math.floor(meses / 12);
-  const m = meses % 12;
-  if (anios === 0) return `${m} ${m === 1 ? 'mes' : 'meses'}`;
-  if (m === 0) return `${anios} ${anios === 1 ? 'año' : 'años'}`;
-  return `${anios} ${anios === 1 ? 'año' : 'años'} y ${m} ${m === 1 ? 'mes' : 'meses'}`;
-}
-
 function formatFecha(iso: string): string {
   try {
     const d = new Date(iso);
     return d.toLocaleDateString('es-HN', { day: '2-digit', month: 'long', year: 'numeric' });
-  } catch { return iso; }
-}
-
-function formatFechaHora(iso: string): string {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleString('es-HN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   } catch { return iso; }
 }
 

@@ -24,16 +24,16 @@ export async function POST(request: Request) {
 
   let body: unknown;
   try { body = await request.json(); } catch {
-    return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+    return Response.json({ error: 'JSON inválido' }, { status: 400 });
   }
 
   if (!body || typeof body !== 'object') {
-    return new Response(JSON.stringify({ error: 'JSON inválido' }), { status: 400 });
+    return Response.json({ error: 'JSON inválido' }, { status: 400 });
   }
 
   const { email, password } = body as { email?: unknown; password?: unknown };
   if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
-    return new Response(JSON.stringify({ error: 'Email y contraseña son obligatorios' }), { status: 400 });
+    return Response.json({ error: 'Email y contraseña son obligatorios' }, { status: 400 });
   }
 
   const [user] = await db.select().from(usuarios).where(eq(usuarios.email, email));
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       metadata: { email },
       mensaje: 'Usuario no existe',
     });
-    return new Response(JSON.stringify({ error: 'Credenciales inválidas' }), { status: 401 });
+    return Response.json({ error: 'Credenciales inválidas' }, { status: 401 });
   }
 
   const valid = await verifyPassword(password, user.passwordHash);
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
       exito: false,
       mensaje: 'Contraseña incorrecta',
     });
-    return new Response(JSON.stringify({ error: 'Credenciales inválidas' }), { status: 401 });
+    return Response.json({ error: 'Credenciales inválidas' }, { status: 401 });
   }
 
   await audit({

@@ -1,0 +1,4 @@
+  File "<string>", line 7
+    print(f'Art. {n}: {new_map[n][\
+          ^
+SyntaxError: unterminated string literal (detected at line 7)

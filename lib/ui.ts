@@ -32,6 +32,9 @@ export function formatFechaHora(date: string | Date): string {
   });
 }
 
+// NOTA: formatMeses() es para presentación UI/PDF. No es intercambiable con
+// meses_a_texto() (lib/utils.ts), que pertenece al motor de cálculo y soporta
+// perpetuidad y valores negativos con distinto manejo de edge cases.
 export function formatMeses(meses: number): string {
   if (!Number.isFinite(meses) || meses < 0) return '0 meses';
   const anos = Math.floor(meses / 12);

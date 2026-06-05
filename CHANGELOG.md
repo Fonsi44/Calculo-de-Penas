@@ -1,5 +1,78 @@
 # Changelog
 
+## Fase 8 — Saneamiento integral del repositorio (2026-06-05)
+
+### Archivo de código muerto
+
+- **`_archived_unused/`** (NUEVO): carpeta de archivo con índice `INDEX.md` trazable. 35 archivos movidos.
+- **Código muerto archivado (4 archivos):** `components/ui/breadcrumb.tsx`, `hooks/use-local-storage.ts`, `lib/api-helpers.ts`, `lib/rules/v2/` (0 imports en todo el repositorio).
+- **Backups archivados (8 archivos):** `.gitbak`, `.bak2`, `backup_*_date` de `data/`.
+- **Artefactos históricos archivados (5 archivos):** `delitos-propuestos.json`, `delitos-validacion.md`, `inventario_cp_delitos.csv`, `inventario_faltantes.csv`, `validacion_constitucion.txt`.
+- **Scripts históricos archivados (13 scripts):** apply-0003, build-constitucion-index, build-cp-index, check-neon, fix-delitos, init-validacion, parse_cp_html, regen-delitos-validation, regenerate-estados, remove-rejected, update-validacion, validate-delitos, verify-auditoria.
+- **Assets boilerplate archivados (5 SVGs):** file.svg, globe.svg, next.svg, vercel.svg, window.svg.
+
+### Refactorizaciones
+
+- **`lib/pdf-document.tsx`**: eliminada duplicación de `formatMeses()` y `formatFechaHora()`; ahora importa de `lib/ui.ts`.
+- **API routes**: unificadas 7 rutas a `Response.json()` (antes mezclaban con `new Response(JSON.stringify())`). Afecta: `calculos/route.ts`, `calculos/[id]/route.ts`, `casos/[id]/route.ts`, `auth/login/route.ts`, `auth/me/route.ts`, `auth/register/route.ts`, `lib/rate-limit.ts`.
+- **`app/api/calculos/[id]/route.ts`**: `StoredConfig` ahora deriva de `DelitoConfig` con `Partial<>` en lugar de interfaz local.
+- **`app/layout.tsx`**: comentario en catch vacío del inline script de tema.
+- **`drizzle/seed.ts`**: reemplazado `process.exit(0)` por `return` en guarda de seed; eliminado `process.exit(0)` del final.
+- **`lib/utils.ts`** y **`lib/ui.ts`**: documentada diferencia semántica entre `meses_a_texto()` y `formatMeses()`.
+
+### Correcciones
+
+- **`public/manifest.json`**: corregidas referencias a iconos PWA (apuntaban a `icon-192.png` e `icon-512.png` inexistentes; ahora usa `icon-192.svg` existente).
+- **`middleware.ts`**: limpiado regex del matcher (eliminados 5 SVG boilerplate ya archivados).
+- **`AGENTS.md`**: corregido conteo de tests (decía "81 en 3 archivos", la realidad es "152 en 11 archivos").
+
+### Impacto
+
+- `data/`: 21 → 7 archivos (solo activos)
+- `scripts/`: 23 → 10 archivos (solo útiles)
+- `public/`: 7 → 2 archivos (manifest.json + icon-192.svg)
+- `lib/`: eliminadas funciones duplicadas en `pdf-document.tsx`
+- 0 dependencias huérfanas encontradas
+
+## Fase 7 — Saneamiento integral del catálogo contra CP HN (2026-06-05)
+
+### Constitución (fuente de verdad)
+
+- **`docs/Constitucion de Honduras.pdf`**: nuevo PDF agregado como fuente primaria de la Constitución de la República.
+- **`scripts/build-constitucion-index.py`** (NUEVO): extractor de Constitución desde PDF (PyMuPDF 1.27).
+- **`data/articulos_constitucion.json`**: re-extraído de 128 a **378 artículos** (rango 1-379, único gap real en Art. 332).
+- **Hallazgo crítico**: el JSON anterior tenía mapeos `numero → texto` incorrectos. Re-extracción corrige todos los enlaces constitución↔delito.
+- Sub-artículos 43-A y 43-B fusionados en Art. 43 (evita PK duplicado en BD, preserva texto).
+
+### Catálogo de delitos
+
+- **`data/delitos.json`**: **434 → 483 entradas** (395 nuevas extracciones + 88 preservadas del catálogo histórico que referencian artículos CP fuera de `tema='delitos'`).
+- Cubre los **362 artículos del CP con `tema='delitos'`** del Decreto 130-2017.
+- **`scripts/extract-penas-from-cp.py`** (NUEVO): parser de penas artículo-por-artículo. 4 órdenes del CP soportadas: `prisión de X a Y años`, `X a Y años de prisión`, `prisión a perpetuidad`, `prisión permanente`.
+- **232/395 (58.7%)** con pena auto-detectada. Resto (163) son artículos procesales/concursales sin pena propia.
+- 251/395 con `rama_id` auto-asignada desde estructura CP. 132/395 con `constitucion_articulo_id` enlazado.
+- **`data/delitos-propuestos.json`**: catálogo propuesto intermedio (395 entradas).
+- **`data/inventario_cp_delitos.csv`** (NUEVO): inventario de los 362 artículos CP con `tema='delitos'`, marcando cobertura actual.
+- **`data/inventario_faltantes.csv`** (NUEVO): 255 artículos CP no cubiertos.
+- **`data/reclasificacion_88.csv`** (NUEVO): 88 entradas del catálogo histórico que referencian artículos fuera de `tema='delitos'`.
+
+### Validación y reportes
+
+- **`data/delitos-validacion.json`**: regenerado (234 validados, 249 a revisión, 0 rechazados).
+- **`data/delitos-estados.json`**: totales sincronizados con seed.
+- **`data/delitos-validacion.csv`**: regenerado.
+- **Sanity checks**: 0 mojibake, 0 duplicados, 0 pena_min > pena_max (1 caso detectado y corregido: Malversación imprudente).
+
+### Web y documentación
+
+- **`app/delitos/page.tsx`**: hardcode "Los 466 delitos" → dinámico con `{total}` y mención de "362 artículos del CP tipificados como delito".
+- **`README.md`**: cifra actualizada de "466 delitos, 128 arts. const." → "483 delitos, 378 arts. const.".
+- **`docs/13-checklist-implementacion.md`**, **`docs/14-log-implementacion.md`**, **`docs/24-validacion-delitos.md`**: cifras y narrativa actualizadas.
+
+### Filesystem
+
+- **`docs/Co�digo Penal Decreto 130-2017 fusionado actualizado a julio 2024.pdf`**: renombrado a **`docs/Codigo Penal Decreto 130-2017 fusionado actualizado a julio 2024.pdf`** (corregido caracter combinante Unicode).
+
 ## Fase 6 — Endurecimiento final (2026-06-04)
 
 ### Lint y calidad

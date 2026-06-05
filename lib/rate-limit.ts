@@ -64,12 +64,11 @@ export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): P
 }
 
 export function rateLimitResponse(res: RateLimitResult): Response {
-  return new Response(
-    JSON.stringify({ error: 'Demasiadas solicitudes. Intente de nuevo más tarde.' }),
+  return Response.json(
+    { error: 'Demasiadas solicitudes. Intente de nuevo más tarde.' },
     {
       status: 429,
       headers: {
-        'Content-Type': 'application/json',
         'Retry-After': String(res.retryAfterSec),
         'X-RateLimit-Limit': String(res.remaining + 1),
         'X-RateLimit-Remaining': '0',

@@ -2,6 +2,36 @@
 
 Registro cronológico de cambios significativos. Ver `CHANGELOG.md` para detalle.
 
+## 2026-06-05 — Fase 8 (saneamiento integral del repositorio)
+
+### Archivo de código no utilizado
+
+- Creación de `/_archived_unused/` con `INDEX.md` trazable.
+- 35 archivos movidos: 4 código muerto (0 imports), 8 backups, 5 artefactos históricos, 13 scripts one-shot, 5 SVG boilerplate.
+- `data/` reducido de 21 a 7 archivos (solo datos activos).
+- `scripts/` reducido de 23 a 10 scripts (solo mantenimiento activo).
+- `public/` reducido de 7 a 2 assets (solo PWA).
+
+### Refactorizaciones de calidad
+
+- `lib/pdf-document.tsx`: eliminada duplicación de `formatMeses()` y `formatFechaHora()` → ahora importa de `lib/ui.ts`.
+- 7 rutas API unificadas a `Response.json()`.
+- `StoredConfig` en `calculos/[id]/route.ts` derivado de `DelitoConfig` con `Partial<>`.
+- Documentada diferencia `meses_a_texto()` vs `formatMeses()` en ambos archivos.
+- Comentario en catch vacío de `app/layout.tsx`.
+- `drizzle/seed.ts`: `process.exit()` reemplazado por `return` en guarda.
+
+### Correcciones
+
+- Bug PWA: `manifest.json` referenciaba iconos PNG inexistentes → corregido a SVG existente.
+- `middleware.ts`: regex limpiado de exclusiones huérfanas.
+- `AGENTS.md`: conteo de tests corregido de "81 en 3" a "152 en 11".
+
+### Validación pendiente
+
+- `npm run lint && npm run build`
+- `npm run test && npm run test:e2e`
+
 ## 2026-06-03 — Fase 0 (contención de riesgos)
 
 ### Seguridad
@@ -20,7 +50,7 @@ Registro cronológico de cambios significativos. Ver `CHANGELOG.md` para detalle
 
 - `scripts/generar-estados-delitos.js` + `lib/estados-delitos.ts` + `app/api/delitos/calidad/route.ts`.
 - Banner amarillo en calculadora + checkbox obligatorio para delitos no verificados.
-- `data/delitos-estados.json` con 466 entradas (466 verificados, 0 pendientes, 0 rechazados al cierre del catálogo).
+- `data/delitos-estados.json` con 483 entradas (234 validados automáticamente, 249 pendientes de revisión manual, 0 rechazados). Refleja el catálogo saneado contra CP Decreto 130-2017 con sus 362 artículos tipificados como delito.
 
 ### Documentación
 

@@ -4,20 +4,9 @@ import { eq } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { getEstadoDelito } from '@/lib/estados-delitos';
+import type { DelitoConfig } from '@/lib/rules/v1/types';
 
-interface StoredConfig {
-  delito_id: string;
-  pena_seleccionada?: string;
-  variables_activas?: string[];
-  grado_autoria?: string;
-  grado_ejecucion?: string;
-  reduccion_tentativa?: number;
-  agravantes?: string[];
-  atenuantes?: string[];
-  eximentes?: string[];
-  eximente_completa?: string | null;
-  [key: string]: unknown;
-}
+type StoredConfig = Partial<DelitoConfig> & { delito_id: string; [key: string]: unknown };
 
 export async function GET(
   request: Request,
@@ -29,13 +18,13 @@ export async function GET(
 
     const [calculo] = await db.select().from(calculos).where(eq(calculos.id, id));
     if (!calculo) {
-      return new Response(JSON.stringify({ error: 'Cálculo no encontrado' }), { status: 404 });
+      return Response.json({ error: 'Cálculo no encontrado' }, { status: 404 });
     }
 
     const [caso] = await db.select({ id: casos.id, usuarioId: casos.usuarioId, titulo: casos.titulo })
       .from(casos).where(eq(casos.id, calculo.casoId));
     if (!caso || caso.usuarioId !== user.userId) {
-      return new Response(JSON.stringify({ error: 'Sin permiso sobre este cálculo' }), { status: 403 });
+      return Response.json({ error: 'Sin permiso sobre este cálculo' }, { status: 403 });
     }
 
     const storedConfig = calculo.config as unknown as StoredConfig[];
@@ -84,14 +73,14 @@ export async function GET(
       });
     }
 
-    return new Response(JSON.stringify({
+    return Response.json({
       id: calculo.id,
       casoId: calculo.casoId,
       casoTitulo: caso.titulo,
       creadoEn: calculo.creadoEn,
       config: enrichedConfig,
       resultado: calculo.resultado,
-    }), { status: 200 });
+    });
   } catch (e) {
     return authFailureResponse(e);
   }
@@ -108,13 +97,13 @@ export async function DELETE(
     const [calculo] = await db.select({ id: calculos.id, casoId: calculos.casoId })
       .from(calculos).where(eq(calculos.id, id));
     if (!calculo) {
-      return new Response(JSON.stringify({ error: 'Cálculo no encontrado' }), { status: 404 });
+      return Response.json({ error: 'Cálculo no encontrado' }, { status: 404 });
     }
 
     const [caso] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })
       .from(casos).where(eq(casos.id, calculo.casoId));
     if (!caso || caso.usuarioId !== user.userId) {
-      return new Response(JSON.stringify({ error: 'Sin permiso sobre este cálculo' }), { status: 403 });
+      return Response.json({ error: 'Sin permiso sobre este cálculo' }, { status: 403 });
     }
 
     await db.delete(calculos).where(eq(calculos.id, id));
@@ -128,7 +117,7 @@ export async function DELETE(
       userAgent: uaFromRequest(request),
     });
 
-    return new Response(JSON.stringify({ message: 'Cálculo eliminado' }), { status: 200 });
+    return Response.json({ message: 'Cálculo eliminado' });
   } catch (e) {
     return authFailureResponse(e);
   }

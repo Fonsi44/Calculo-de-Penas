@@ -16,6 +16,7 @@ const eslintConfig = defineConfig([
     "data/**",
     "drizzle/**",
     "docs/**",
+    "_archived_unused/**",
   ]),
 ]);
 

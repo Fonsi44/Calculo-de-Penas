@@ -1,5 +1,9 @@
 import { LIMITES, UMBRALES_GRAVEDAD } from './constants';
 
+// NOTA: meses_a_texto() y formatMeses() (en lib/ui.ts) son funciones con
+// propósito distinto. meses_a_texto() es para el motor de cálculo (soporta
+// perpetuidad y valores negativos). formatMeses() es para presentación UI y
+// PDF (usa pluralizar(), tiene manejo de NaN). No unificar.
 export function meses_a_texto(meses: number): string {
   if (meses <= 0) return '0 meses';
   if (meses >= LIMITES.PENA_PERPETUA_MESES) return 'Prisión a perpetuidad';

@@ -6,12 +6,12 @@ import { getTokenFromCookies, verifyToken } from '@/lib/auth';
 export async function GET(request: Request) {
   const token = getTokenFromCookies(request);
   if (!token) {
-    return new Response(JSON.stringify({ user: null }), { status: 200 });
+    return Response.json({ user: null }, { status: 200 });
   }
 
   const payload = verifyToken(token);
   if (!payload) {
-    return new Response(JSON.stringify({ user: null }), { status: 200 });
+    return Response.json({ user: null }, { status: 200 });
   }
 
   const [user] = await db.select({
@@ -22,8 +22,8 @@ export async function GET(request: Request) {
   }).from(usuarios).where(eq(usuarios.id, payload.userId));
 
   if (!user) {
-    return new Response(JSON.stringify({ user: null }), { status: 200 });
+    return Response.json({ user: null }, { status: 200 });
   }
 
-  return new Response(JSON.stringify({ user }), { status: 200 });
+  return Response.json({ user });
 }

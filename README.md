@@ -70,7 +70,7 @@ lib/
   rate-limit.ts              → Rate limiting via Neon DB
   schema.ts                  → Esquema Drizzle ORM (10 tablas)
   validation.ts              → Zod schemas
-  api-helpers.ts             → Helpers apiSuccess / apiError
+  api-helpers.ts             → Archivos de soporte (catalogos, utils, constants)
   catalogos.ts               → Catálogos legales (CP Honduras)
   utils.ts                   → Funciones matemáticas
   constants.ts               → Límites legales
@@ -79,8 +79,8 @@ components/
   ui/                        → 13 componentes reutilizables
   domain/                    → 3 componentes de dominio
   layout/                    → 5 componentes de layout
-data/                        → Datos semilla (466 delitos, 119 ramas, 128 arts. const.)
-drizzle/                     → Migraciones (5) + seed
+data/                        → Datos semilla (483 delitos, 119 ramas, 378 arts. const.)
+drizzle/                     → Migraciones (7) + seed
 tests/                       → 11 suites (152 tests)
   calculo.test.ts            → Motor de cálculo
   auth.test.ts               → Autenticación JWT

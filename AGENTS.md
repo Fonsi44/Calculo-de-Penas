@@ -94,7 +94,7 @@ npm run test
 npm run test:e2e
 ```
 
-- `test` (Vitest) debe pasar 81/81 unit tests en 3 archivos.
+- `test` (Vitest) debe pasar 152/152 unit tests en 11 archivos.
 - `test:e2e` (Playwright) debe pasar todas las pruebas E2E (suite pública sin auth).
 - Si `test:e2e` falla por `EPERM` en `test-results` o `.next`: limpiar y reintentar.
 - Si el webServer de Playwright no arranca por build sucia: `Remove-Item -LiteralPath .next -Recurse -Force` antes de reintentar.

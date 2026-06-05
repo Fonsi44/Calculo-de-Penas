@@ -13,16 +13,16 @@ export async function GET(
     const { id } = await params;
 
     const [caso] = await db.select().from(casos).where(eq(casos.id, id));
-    if (!caso) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (!caso) return Response.json({ error: 'Caso no encontrado' }, { status: 404 });
     if (caso.usuarioId !== user.userId) {
-      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+      return Response.json({ error: 'Sin permiso sobre este caso' }, { status: 403 });
     }
 
     const calculosList = await db.select().from(calculos)
       .where(eq(calculos.casoId, id))
       .orderBy(desc(calculos.creadoEn));
 
-    return new Response(JSON.stringify({ ...caso, calculos: calculosList }), { status: 200 });
+    return Response.json({ ...caso, calculos: calculosList });
   } catch (e) {
     return authFailureResponse(e);
   }
@@ -39,9 +39,9 @@ export async function PUT(
 
     const [existing] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })
       .from(casos).where(eq(casos.id, id));
-    if (!existing) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (!existing) return Response.json({ error: 'Caso no encontrado' }, { status: 404 });
     if (existing.usuarioId !== user.userId) {
-      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+      return Response.json({ error: 'Sin permiso sobre este caso' }, { status: 403 });
     }
 
     const update: Record<string, unknown> = { actualizadoEn: new Date() };
@@ -63,7 +63,7 @@ export async function PUT(
       userAgent: uaFromRequest(request),
     });
 
-    return new Response(JSON.stringify(row), { status: 200 });
+    return Response.json(row, { status: 200 });
   } catch (e) {
     return authFailureResponse(e);
   }
@@ -79,9 +79,9 @@ export async function DELETE(
 
     const [existing] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })
       .from(casos).where(eq(casos.id, id));
-    if (!existing) return new Response(JSON.stringify({ error: 'Caso no encontrado' }), { status: 404 });
+    if (!existing) return Response.json({ error: 'Caso no encontrado' }, { status: 404 });
     if (existing.usuarioId !== user.userId) {
-      return new Response(JSON.stringify({ error: 'Sin permiso sobre este caso' }), { status: 403 });
+      return Response.json({ error: 'Sin permiso sobre este caso' }, { status: 403 });
     }
 
     await db.delete(calculos).where(eq(calculos.casoId, id));
@@ -96,7 +96,7 @@ export async function DELETE(
       userAgent: uaFromRequest(request),
     });
 
-    return new Response(JSON.stringify({ message: 'Caso eliminado' }), { status: 200 });
+    return Response.json({ message: 'Caso eliminado' });
   } catch (e) {
     return authFailureResponse(e);
   }
