@@ -1,0 +1,113 @@
+import { Resend } from 'resend';
+
+let _client: Resend | null = null;
+
+function getClient(): Resend | null {
+  if (_client) return _client;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return null;
+  _client = new Resend(apiKey);
+  return _client;
+}
+
+export function isEmailConfigured(): boolean {
+  return Boolean(process.env.RESEND_API_KEY);
+}
+
+export function getFromAddress(): string {
+  return process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev';
+}
+
+export function getNotificationEmail(): string {
+  return process.env.CONTACT_NOTIFICATION_EMAIL ?? 'contacto@pinedayasociadoshn.com';
+}
+
+export interface ContactEmailPayload {
+  nombre: string;
+  telefono: string;
+  email: string | null;
+  asunto: string;
+  mensaje: string;
+  ip?: string;
+  userAgent?: string;
+  submittedAt: Date;
+}
+
+export interface SendResult {
+  ok: boolean;
+  id?: string;
+  error?: string;
+}
+
+export async function sendContactEmail(payload: ContactEmailPayload): Promise<SendResult> {
+  const client = getClient();
+  if (!client) {
+    return { ok: false, error: 'RESEND_API_KEY no configurada' };
+  }
+
+  const to = getNotificationEmail();
+  const from = getFromAddress();
+  const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
+  const subject = `[Web] ${payload.asunto} — ${payload.nombre}`;
+
+  const html = `
+    <h2>Nuevo mensaje desde el formulario de contacto</h2>
+    <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif;font-size:14px;">
+      <tr><td><strong>Nombre</strong></td><td>${escapeHtml(payload.nombre)}</td></tr>
+      <tr><td><strong>Teléfono</strong></td><td>${escapeHtml(payload.telefono)}</td></tr>
+      <tr><td><strong>Correo</strong></td><td>${escapeHtml(payload.email ?? '—')}</td></tr>
+      <tr><td><strong>Asunto</strong></td><td>${escapeHtml(payload.asunto)}</td></tr>
+      <tr><td><strong>Fecha</strong></td><td>${payload.submittedAt.toISOString()}</td></tr>
+    </table>
+    <h3>Mensaje</h3>
+    <p style="white-space:pre-wrap;font-family:sans-serif;font-size:14px;">${escapeHtml(payload.mensaje)}</p>
+    <hr />
+    <p style="font-size:12px;color:#666;">
+      IP: ${escapeHtml(payload.ip ?? 'desconocida')}<br />
+      UA: ${escapeHtml(payload.userAgent ?? 'desconocido')}
+    </p>
+  `.trim();
+
+  const text = [
+    'Nuevo mensaje desde el formulario de contacto',
+    '',
+    `Nombre: ${payload.nombre}`,
+    `Teléfono: ${payload.telefono}`,
+    `Correo: ${payload.email ?? '—'}`,
+    `Asunto: ${payload.asunto}`,
+    `Fecha: ${payload.submittedAt.toISOString()}`,
+    '',
+    'Mensaje:',
+    payload.mensaje,
+    '',
+    '---',
+    `IP: ${payload.ip ?? 'desconocida'}`,
+    `UA: ${payload.userAgent ?? 'desconocido'}`,
+  ].join('\n');
+
+  try {
+    const { data, error } = await client.emails.send({
+      from: `Web Pineda y Asociados <${from}>`,
+      to: [to],
+      replyTo,
+      subject,
+      html,
+      text,
+    });
+    if (error) {
+      return { ok: false, error: error.message };
+    }
+    return { ok: true, id: data?.id };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'Error desconocido' };
+  }
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}

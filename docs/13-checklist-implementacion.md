@@ -14,6 +14,8 @@ Use esta lista para verificar que el sistema está listo para producción.
 - [x] CSP y security headers verificados.
 - [x] HTTPS forzado (HSTS habilitado en prod).
 - [x] Variables de entorno NO commiteadas (verificado con `git ls-files .env`).
+- [x] **Restricción de dominio**: solo emails `@pinedayasociadoshn.com` en `/api/auth/login` y `/api/auth/register` (Fase 11, 2026-06-05).
+- [x] **Ruta única de login**: `/login` legacy redirige a `/intranet/login`; no hay links internos al path antiguo.
 
 ## Datos
 

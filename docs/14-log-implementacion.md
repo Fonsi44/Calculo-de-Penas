@@ -2,6 +2,34 @@
 
 Registro cronológico de cambios significativos. Ver `CHANGELOG.md` para detalle.
 
+## 2026-06-05 — Fase 11 (restricción de dominio + fix navegación)
+
+### Seguridad
+
+- Auth limitada al dominio `@pinedayasociadoshn.com` con bypass para E2E (`ALLOW_TEST_EMAILS` o `NODE_ENV=test`).
+- Helper `isAllowedAuthEmail()` centralizado en `lib/auth.ts`.
+- 14 tests nuevos cubriendo dominio válido, externo, malicioso, mayúsculas, espacios, bypass test.
+
+### Navegación
+
+- `app/login/page.tsx` → redirect server-side a `/intranet/login` (3 líneas).
+- `components/layout/user-actions.tsx` → logout action y link "Iniciar sesión" apuntan a `/intranet/login`.
+
+### Limpieza
+
+- `.gitignore`: añadidos `.opencode/`, `home-*.png`, `neon-mcp-*.log`, `.playwright-mcp/`, `opencode.jsonc`, `scripts/validate-opencode-config.cjs`.
+
+### Hallazgo BD Neon (verificación previa)
+
+- 16 usuarios en `usuarios`: 1 real (`alfonsroiget@gmail.com`, pre-cambio de branding) + 15 artefactos de tests E2E.
+- **Implicación**: con la restricción activa, ese usuario real no podrá iniciar sesión hasta que se cree con email `@pinedayasociadoshn.com`.
+
+### Validación
+
+- 181/181 unit tests.
+- Build OK (37/37 páginas).
+- E2E: misma firma que baseline (4 fallos preexistentes por rate-limit en `auth-flow.spec.ts`).
+
 ## 2026-06-05 — Fase 8 (saneamiento integral del repositorio)
 
 ### Archivo de código no utilizado

@@ -10,6 +10,7 @@ Público objetivo: profesionales del derecho que necesitan determinar penas con 
 - **Frontend:** React 19 + Tailwind CSS v4
 - **Base de datos:** Neon PostgreSQL + Drizzle ORM
 - **Autenticación:** JWT (HttpOnly cookies) + bcryptjs
+- **Email transaccional:** Resend (formulario de contacto público)
 - **Tests unitarios:** Vitest (152 tests)
 - **Tests E2E:** Playwright
 - **CI/CD:** GitHub Actions + Vercel
@@ -39,7 +40,21 @@ app/
     auth/logout              → POST
     auth/me                  → GET
     auth/register            → POST
-    calcular                 → POST (rate-limited 30/min)
+    calculos/                → GET, POST
+    calculos/[id]            → GET, DELETE
+    casos/                   → GET, POST
+    casos/[id]               → GET, PUT
+    casos/[id]/pdf           → GET (PDF export)
+    clasificaciones          → GET
+    contacto                 → POST (formulario público, rate-limited 3/hora)
+    cp/                      → GET, POST
+    cp/[id]                  → GET, PUT
+    delitos/                 → GET, POST
+    delitos/[id]             → GET, PUT, DELETE
+    delitos/calidad          → GET
+    delitos/count            → GET
+    health                   → GET (health check)
+    seed                     → POST (admin)
     calculos/                → GET, POST
     calculos/[id]            → GET, DELETE
     casos/                   → GET, POST
@@ -68,6 +83,7 @@ lib/
   auth.ts                    → JWT + bcrypt + validación de secretos
   audit.ts                   → Auditoría no-bloqueante
   rate-limit.ts              → Rate limiting via Neon DB
+  email.ts                   → Cliente Resend (envío de emails transaccionales)
   schema.ts                  → Esquema Drizzle ORM (10 tablas)
   validation.ts              → Zod schemas
   api-helpers.ts             → Archivos de soporte (catalogos, utils, constants)

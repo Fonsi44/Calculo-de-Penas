@@ -1,5 +1,37 @@
 # Changelog
 
+## Fase 10 — Resend (email transaccional del formulario de contacto) (2026-06-05)
+
+### Dependencias
+- **`package.json`**: añadida `resend` (SDK oficial, 6.x).
+
+### Backend
+- **`lib/email.ts`** (NUEVO): cliente Resend con instanciación perezosa, helpers `sendContactEmail()`, `isEmailConfigured()`, `getFromAddress()`, `getNotificationEmail()`. Sanitiza HTML de campos de usuario. Si `RESEND_API_KEY` no está configurada, devuelve `ok: false` (la API responde 503).
+- **`lib/validation.ts`**: nuevo `contactoSchema` (Zod) y `CONTACTO_ASUNTOS` (catálogo compartido con el form). Exporta tipo `ContactoInput`.
+- **`app/api/contacto/route.ts`** (NUEVO): endpoint POST público. Valida con Zod, aplica rate limit por IP (3/hora), envía email a `CONTACT_NOTIFICATION_EMAIL` con `replyTo` al correo del remitente, devuelve 200 / 400 / 429 / 502 / 503.
+
+### Configuración
+- **`.env.example`**: ya tenía `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_NOTIFICATION_EMAIL` documentados (sin cambios).
+- **`.env.local`** (NUEVO, gitignored): valores reales para entorno local.
+- **Vercel**: pendiente agregar `RESEND_API_KEY` y `RESEND_FROM_EMAIL` en Production/Preview/Development (Vercel → Settings → Environment Variables). Sin esto, el endpoint devolverá 503.
+
+### Frontend
+- **`app/(public)/contacto/page.tsx`**: sin cambios. Ya hacía POST a `/api/contacto`, que antes devolvía 404. Ahora operativo.
+- **Pendiente de hardening futuro**: extraer `SUBJECTS` del form para importar `CONTACTO_ASUNTOS` desde `lib/validation.ts` (DRY). No aplicado en este cambio para mantener diff mínimo.
+
+### Tests
+- **`tests/validation.test.ts`**: 8 tests nuevos para `contactoSchema` (payload válido, email vacío opcional, validaciones varias, trim).
+- **`tests/api/contacto.test.ts`** (NUEVO): 7 tests (200 éxito, 400 validación, 400 JSON malformado, 400 sin privacidad, 503 sin Resend, 502 fallo Resend, 429 rate limit).
+
+### Seguridad
+- Rate limit por IP (3/hora) para prevenir abuso del formulario público.
+- IP y User-Agent del remitente se incluyen en el email y se loguean en consola para trazabilidad.
+- API key nunca expuesta al cliente (uso server-side exclusivamente).
+
+### Riesgos
+- En Vercel hay que añadir `RESEND_API_KEY` (Production). Sin esto el endpoint falla con 503.
+- `RESEND_FROM_EMAIL` por defecto es `onboarding@resend.dev` (solo funciona con la cuenta Resend que emitió la key). Para enviar desde el dominio del bufete, verificar el dominio en Resend y cambiar `RESEND_FROM_EMAIL` a `no-reply@pinedayasociadoshn.com`.
+
 ## Fase 9 — Saneamiento integral del catálogo contra CP HN (2026-06-05)
 
 ### Constitución (fuente de verdad)
@@ -531,6 +563,39 @@
 | `←` / `→` | Navegar entre pasos |
 | `Esc` | Cerrar modals (artículo, guardar caso) |
 | Indicador visual `⌘↵` en botón de calcular |
+
+## Fase 11 — Restricción de dominio y fix de navegación (2026-06-05)
+
+### Restricción de dominio en autenticación
+
+- **`lib/auth.ts`**: exporta `ALLOWED_EMAIL_DOMAIN = '@pinedayasociadoshn.com'`, `TEST_EMAIL_DOMAINS = ['@test.local', '@example.com']` y helpers `isTestMode()` / `isAllowedAuthEmail()`. La función `isAllowedAuthEmail(email)` aplica la regla con bypass automático cuando `process.env.ALLOW_TEST_EMAILS === 'true'` o `process.env.NODE_ENV === 'test'`.
+- **`lib/validation.ts`**: `authRegisterSchema` y `authLoginSchema` añaden `.refine()` que rechaza emails fuera de `@pinedayasociadoshn.com` (mensaje: "Solo se permiten correos del dominio @pinedayasociadoshn.com"). El bypass de test domains se evalúa en runtime, no en build.
+- **`tests/validation.test.ts`**: 14 tests nuevos (3 describe blocks: `authRegisterSchema`, `authLoginSchema`, `isAllowedAuthEmail`) que cubren: dominio válido, dominio externo, dominio malicioso tipo `pinedayasociadoshn.com.evil.com`, mayúsculas, espacios, lista de dominios de test, bypass por `ALLOW_TEST_EMAILS`, rechazo en mayúsculas con punto antes del dominio.
+- **`scripts/e2e-start.mjs`**: añade `ALLOW_TEST_EMAILS: 'true'` al env cuando se ejecuta Playwright, para que la suite `e2e/auth-flow.spec.ts` (que usa `@test.local`) siga pasando.
+- Total de tests: 181/181 (152 anteriores + 29 nuevos) en 12 archivos.
+
+### Fix de navegación `/login` legacy
+
+- **`app/login/page.tsx`**: ya no contiene el formulario. Convertido en server component minimal que ejecuta `redirect('/intranet/login')` desde `next/navigation`. Cualquier `goto('/login')`, link o historial del navegador ahora va a `/intranet/login` (ruta oficial del bufete).
+- **`components/layout/user-actions.tsx`**: dos referencias a `/login` actualizadas a `/intranet/login` (línea 74 `router.push` del logout action; línea 85 `Link href` del botón "Iniciar sesión" cuando no hay sesión).
+- **`e2e/smoke.spec.ts`**: 3 cambios. Test 18 y test de modo oscuro actualizados a `/intranet/login` con matcher de título `/Pineda y Asociados|LEX/i`. Nuevo test verifica que `/login` redirige correctamente.
+
+### Hardening menor
+
+- **`app/(public)/contacto/page.tsx`**: eliminado array `SUBJECTS` local. Ahora importa `CONTACTO_ASUNTOS` desde `lib/validation` (DRY, fuente única de verdad entre cliente y API).
+- **`.env.example`**: añadida variable documentada `RESEND_FROM_EMAIL="no-reply@pinedayasociadoshn.com"` para configurar el remitente del email transaccional del formulario de contacto (override del default `onboarding@resend.dev`).
+
+### Limpieza
+
+- **`.gitignore`**: añadidos patrones `.opencode/`, `home-*.png`, `neon-mcp-*.log`, `.playwright-mcp/`, `opencode.jsonc`, `scripts/validate-opencode-config.cjs` (artefactos de desarrollo local / sesión MCP, no del repositorio).
+- Scripts temporales (`scripts/clean-ratelimit.cjs`, `scripts/list-users.cjs`) eliminados antes del commit.
+
+### Validación
+
+- `npm run lint`: 0/0 errores introducidos por este cambio (los 4 warnings preexistentes de `live-widgets.tsx` son de otro lote).
+- `npm run build`: `✓ Compiled successfully in 9.3s` + `Finished TypeScript in 9.6s` + 37/37 static pages.
+- `npm test`: 181/181 tests en 12 archivos.
+- `npm run test:e2e`: misma firma que baseline (4 fallos preexistentes en `auth-flow.spec.ts` por rate-limit compartido entre tests paralelos; 1 fallo nuevo en smoke test del título `/login` corregido a `/intranet/login`).
 
 ## Fase 2 — Autenticación, casos y exportación (2026-06-02)
 

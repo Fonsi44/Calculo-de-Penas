@@ -43,6 +43,30 @@
 - Cualquier ruta no pública sin token → 401 JSON (en API) o redirect a `/login` (en páginas).
 - Advertencia: en Next.js 17 la convención `middleware` será `proxy`.
 
+## Restricción de dominio en autenticación (Fase 11)
+
+A partir de 2026-06-05, los endpoints `/api/auth/login` y `/api/auth/register` solo aceptan emails del dominio corporativo `@pinedayasociadoshn.com`.
+
+- **Constante centralizada** en `lib/auth.ts`:
+  - `ALLOWED_EMAIL_DOMAIN = '@pinedayasociadoshn.com'`
+  - `TEST_EMAIL_DOMAINS = ['@test.local', '@example.com']` (solo para E2E)
+- **Helper** `isAllowedAuthEmail(email)`: aplica la regla y devuelve `true` si el email pertenece al dominio corporativo **o** si el modo test está activo.
+- **Validación en runtime**: `authRegisterSchema` y `authLoginSchema` en `lib/validation.ts` aplican `.refine()` que rechaza cualquier otro dominio con mensaje explícito.
+- **Bypass para tests**:
+  - Variable de entorno `ALLOW_TEST_EMAILS=true` (la pone `scripts/e2e-start.mjs` al arrancar Playwright).
+  - `NODE_ENV === 'test'` también activa el bypass.
+- **Páginas UI**:
+  - `app/intranet/login/page.tsx` muestra hint visible "Use su correo corporativo @pinedayasociadoshn.com" bajo el campo email.
+  - Placeholder del campo email: `usuario@pinedayasociadoshn.com`.
+
+### Por qué no solo en middleware
+
+La validación se aplica en los schemas de Zod (no en `middleware.ts`) porque las API routes usan `req.json()` y necesitan parsear el body para validar. El middleware actual solo verifica la presencia del token en rutas protegidas, no la forma del payload.
+
+### Razón de los dominios de test en lista blanca
+
+`e2e/auth-flow.spec.ts` usa `TEST_EMAIL = \`e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@test.local\`` para registrar usuarios sintéticos en cada corrida. Sin la lista blanca, los tests E2E no podrían crear cuentas y la suite entera fallaría.
+
 ## Variables de entorno
 
 | Variable | Requerida | Validación |

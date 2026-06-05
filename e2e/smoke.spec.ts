@@ -16,8 +16,8 @@ test.describe('Smoke — rutas públicas', () => {
   });
 
   test('login page carga y permite alternar modo', async ({ page }) => {
-    await page.goto('/login');
-    await expect(page).toHaveTitle(/LEX/i);
+    await page.goto('/intranet/login');
+    await expect(page).toHaveTitle(/Pineda y Asociados|LEX/i);
     await expect(page.getByLabel(/email/i)).toBeVisible();
 
     const registerToggle = page.getByRole('button', { name: /registr/i }).first();
@@ -38,6 +38,12 @@ test.describe('Smoke — rutas públicas', () => {
     expect([200, 307, 302], 'status permitido').toContain(res?.status() ?? 0);
 
     await expect(page.locator('body')).toBeVisible();
+  });
+
+  test('/login legacy redirige a /intranet/login', async ({ page }) => {
+    const res = await page.goto('/login');
+    expect(res?.status()).toBe(200);
+    await expect(page).toHaveURL(/\/intranet\/login$/);
   });
 
   test('delitos page carga con listado', async ({ page }) => {
@@ -74,7 +80,7 @@ test.describe('Smoke — rutas públicas', () => {
   });
 
   test('dark mode: clase .dark aplica variables CSS correctas', async ({ page }) => {
-    await page.goto('/login');
+    await page.goto('/intranet/login');
     const html = page.locator('html');
 
     const lightBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

@@ -71,7 +71,7 @@ export function UserActions() {
                 onClick={async () => {
                   setOpen(false);
                   await logout();
-                  router.push('/login');
+                  router.push('/intranet/login');
                 }}
                 className="w-full flex items-center gap-2 px-3 py-2 text-sm text-danger hover:bg-danger-bg border-t border-border-light"
               >
@@ -82,7 +82,7 @@ export function UserActions() {
         </div>
       ) : (
         <Link
-          href="/login"
+          href="/intranet/login"
           className="h-9 px-3 inline-flex items-center rounded-md bg-primary text-text-inverse text-xs font-semibold hover:bg-primary-light"
         >
           Iniciar sesión

@@ -66,3 +66,11 @@ next-env.d.ts
 
 # tool-output local (caches de webfetch)
 /.tool-output/
+
+# opencode + agent debug
+.opencode/
+home-*.png
+neon-mcp-*.log
+.playwright-mcp/
+opencode.jsonc
+scripts/validate-opencode-config.cjs

@@ -7,6 +7,7 @@ import {
   GRADOS_EJECUCION,
   TIPOS_CONCURSO,
 } from './catalogos';
+import { isAllowedAuthEmail } from './auth';
 
 const ids = <T extends { id: string }>(items: T[]): [string, ...string[]] =>
   items.map((i) => i.id) as [string, ...string[]];
@@ -51,15 +52,52 @@ export const delitoCreateSchema = z.object({
 });
 
 export const authRegisterSchema = z.object({
-  email: z.string().email('Email inválido'),
+  email: z
+    .string()
+    .email('Email inválido')
+    .refine(isAllowedAuthEmail, {
+      message: 'Solo se permiten correos del dominio @pinedayasociadoshn.com',
+    }),
   password: z.string().min(6, 'Mínimo 6 caracteres'),
   nombre: z.string().min(1, 'Nombre requerido'),
 });
 
 export const authLoginSchema = z.object({
-  email: z.string().email('Email inválido'),
+  email: z
+    .string()
+    .email('Email inválido')
+    .refine(isAllowedAuthEmail, {
+      message: 'Solo se permiten correos del dominio @pinedayasociadoshn.com',
+    }),
   password: z.string().min(1, 'Contraseña requerida'),
 });
+
+export const CONTACTO_ASUNTOS = [
+  'Asistencia a persona detenida',
+  'Cita para consulta',
+  'Defensa penal en proceso',
+  'Recurso o apelación',
+  'Atención a víctima',
+  'Asesoría preventiva',
+  'Otro asunto',
+] as const;
+
+export const contactoSchema = z.object({
+  nombre: z.string().trim().min(1, 'Nombre requerido').max(200),
+  telefono: z.string().trim().min(1, 'Teléfono requerido').max(50),
+  email: z
+    .string()
+    .trim()
+    .max(255)
+    .email('Email inválido')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  asunto: z.enum(CONTACTO_ASUNTOS, { message: 'Asunto inválido' }),
+  mensaje: z.string().trim().min(10, 'Mínimo 10 caracteres').max(5000),
+  acepta: z.literal(true, { message: 'Debe aceptar la política de privacidad' }),
+});
+
+export type ContactoInput = z.infer<typeof contactoSchema>;
 
 function extractZodError(error: z.ZodError): string {
   try {

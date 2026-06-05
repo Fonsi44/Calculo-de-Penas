@@ -103,13 +103,13 @@ export default function IntranetLoginPage() {
               </Field>
             )}
 
-            <Field label="Email" htmlFor="email" required>
+            <Field label="Email" htmlFor="email" required hint="Use su correo corporativo @pinedayasociadoshn.com">
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="email@ejemplo.com"
+                placeholder="usuario@pinedayasociadoshn.com"
                 iconLeft={<Mail size={16} />}
                 required
               />

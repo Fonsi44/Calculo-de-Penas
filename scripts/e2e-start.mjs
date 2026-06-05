@@ -13,6 +13,7 @@ const env = {
   NODE_ENV: 'production',
   JWT_SECRET,
   DATABASE_URL,
+  ALLOW_TEST_EMAILS: 'true',
   NEXT_TELEMETRY_DISABLED: '1',
 };
 

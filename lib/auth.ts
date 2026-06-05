@@ -79,6 +79,22 @@ const TOKEN_TTL_SECONDS = 60 * 60 * 24;
 export const COOKIE_NAME = IS_PROD ? '__Host-token' : 'token';
 export const COOKIE_NAME_FALLBACK = 'token';
 
+export const ALLOWED_EMAIL_DOMAIN = '@pinedayasociadoshn.com';
+
+export const TEST_EMAIL_DOMAINS = ['@test.local', '@example.com'] as const;
+
+export function isTestMode(): boolean {
+  return process.env.NODE_ENV === 'test' || process.env.ALLOW_TEST_EMAILS === 'true';
+}
+
+export function isAllowedAuthEmail(email: string): boolean {
+  const normalized = email.trim().toLowerCase();
+  if (isTestMode()) {
+    if (TEST_EMAIL_DOMAINS.some((d) => normalized.endsWith(d))) return true;
+  }
+  return normalized.endsWith(ALLOWED_EMAIL_DOMAIN);
+}
+
 function cookieAttrs(): string {
   const parts = ['HttpOnly', 'Path=/', 'SameSite=Lax', `Max-Age=${TOKEN_TTL_SECONDS}`];
   if (IS_PROD) {

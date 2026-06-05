@@ -18,18 +18,11 @@ import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { LiveOfficeStatus } from '@/components/marketing/live-widgets';
+import { CONTACTO_ASUNTOS } from '@/lib/validation';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
-const SUBJECTS = [
-  'Asistencia a persona detenida',
-  'Cita para consulta',
-  'Defensa penal en proceso',
-  'Recurso o apelación',
-  'Atención a víctima',
-  'Asesoría preventiva',
-  'Otro asunto',
-];
+const SUBJECTS = CONTACTO_ASUNTOS;
 
 export default function ContactoPage() {
   const [form, setForm] = useState({
