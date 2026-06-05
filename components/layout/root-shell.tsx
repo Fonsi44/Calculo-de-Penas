@@ -6,7 +6,6 @@ import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from './ap
 
 const PUBLIC_ROUTES = new Set([
   '/',
-  '/login',
   '/terminos',
   '/privacidad',
   '/aviso-legal',
@@ -21,13 +20,15 @@ const PUBLIC_ROUTES = new Set([
   '/derecho-penal-hondureno',
   '/proceso-penal',
   '/blog',
+  '/intranet/login',
+  '/intranet/recuperar-clave',
+  '/intranet/acceso-denegado',
 ]);
 
 const PUBLIC_PREFIXES = ['/areas-de-practica', '/blog/'];
 
 function isPublicRoute(pathname: string): boolean {
   if (PUBLIC_ROUTES.has(pathname)) return true;
-  if (pathname === '/blog') return true;
   if (PUBLIC_PREFIXES.some(p => pathname === p.replace(/\/$/, '') || pathname.startsWith(p))) return true;
   return false;
 }
