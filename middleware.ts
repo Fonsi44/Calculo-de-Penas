@@ -16,8 +16,12 @@ const PUBLIC_API_EXACT = new Set<string>([
 
 const PUBLIC_PAGE_EXACT = new Set<string>([
   '/',
-  '/login',
   '/_not-found',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/manifest.json',
+  '/icon-192.svg',
+  '/favicon.ico',
   '/terminos',
   '/privacidad',
   '/aviso-legal',
@@ -32,6 +36,13 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/derecho-penal-hondureno',
   '/proceso-penal',
   '/blog',
+]);
+
+const INTRANET_LOGIN_PATH = '/intranet/login';
+const INTRANET_PUBLIC_EXACT = new Set<string>([
+  INTRANET_LOGIN_PATH,
+  '/intranet/recuperar-clave',
+  '/intranet/acceso-denegado',
 ]);
 
 const PUBLIC_PAGE_PREFIXES = [
@@ -71,19 +82,29 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (isPublicPagePath(pathname)) {
-    if (pathname === '/login' && token) {
-      return NextResponse.redirect(new URL('/', request.url));
+  // Páginas de la intranet: si no hay token, ir al login de intranet.
+  // Si hay token y está en el login, mandarlo al dashboard.
+  if (pathname.startsWith('/intranet')) {
+    if (INTRANET_PUBLIC_EXACT.has(pathname)) {
+      if (pathname === INTRANET_LOGIN_PATH && token) {
+        return NextResponse.redirect(new URL('/intranet/dashboard', request.url));
+      }
+      return NextResponse.next();
+    }
+    if (!token) {
+      const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
+      return NextResponse.redirect(loginUrl);
     }
     return NextResponse.next();
   }
 
-  if (!token) {
-    const loginUrl = new URL('/login', request.url);
-    return NextResponse.redirect(loginUrl);
+  if (isPublicPagePath(pathname)) {
+    return NextResponse.next();
   }
 
-  return NextResponse.next();
+  // Rutas protegidas no reconocidas: redirigir al login de intranet.
+  const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {

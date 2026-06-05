@@ -1,7 +1,9 @@
 import type { NextConfig } from 'next';
 
 const isProd = process.env.NODE_ENV === 'production';
-const noindexActive = process.env.NEXT_PUBLIC_NOINDEX === 'true' || (process.env.NEXT_PUBLIC_NOINDEX === undefined && !isProd);
+// Por defecto bloqueamos indexación hasta lanzamiento oficial.
+// Para permitir indexación: NEXT_PUBLIC_NOINDEX=false (explícito).
+const noindexActive = process.env.NEXT_PUBLIC_NOINDEX !== 'false';
 
 const csp = [
   "default-src 'self'",
@@ -36,9 +38,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // El redirect www → apex lo gestiona Vercel a nivel de dominio
   // (Settings → Domains → Redirect). Aquí solo mantenemos los legacy redirects.
+  // IMPORTANTE: NO redirigir /login → /intranet/login (causaba bucles).
   async redirects() {
     return [
-      { source: '/login', destination: '/intranet/login', permanent: true },
       { source: '/casos', destination: '/intranet/casos', permanent: true },
       { source: '/inicio', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },

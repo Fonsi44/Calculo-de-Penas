@@ -31,16 +31,14 @@ type OpeningHours = {
   closes: string;
 };
 
-const isProd = process.env.NODE_ENV === 'production';
 const envNoindex = process.env.NEXT_PUBLIC_NOINDEX;
 
 /**
  * Modo anti-indexación activo en desarrollo y hasta que se indique el
  * lanzamiento. Una sola variable controla robots, header HTTP y sitemap.
+ * Para permitir indexación: NEXT_PUBLIC_NOINDEX=false (explícito).
  */
-const noindexActive =
-  envNoindex === 'true' ||
-  (envNoindex === undefined && !isProd);
+const noindexActive = envNoindex !== 'false';
 
 export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pinedayasociadoshn.com').replace(/\/+$/, ''),
@@ -90,7 +88,7 @@ export const site = {
   legal: {
     jurisdiction: 'República de Honduras',
     code: 'Código Penal Decreto 130-2017',
-    isProd,
+    isProd: process.env.NODE_ENV === 'production',
   },
   /** Si true, todo el sitio emite noindex,nofollow y bloquea rastreadores. */
   noindex: noindexActive,
