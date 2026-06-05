@@ -30,12 +30,9 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
     : {
-        command: `npm run build && next start -p ${PORT}`,
+        command: 'node scripts/e2e-start.mjs',
         url: BASE_URL,
         reuseExistingServer: !process.env.CI,
         timeout: 240_000,
-        env: {
-          NODE_ENV: 'production',
-        },
       },
 });
