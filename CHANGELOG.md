@@ -1,5 +1,34 @@
 # Changelog
 
+## Fase 11 — Consolidación de MCPs y wrapper de entorno para OpenCode (2026-06-05)
+
+### Configuración
+- **`opencode.jsonc`** (local, no versionado): rediseñado para usar servidores `npx -y` on-demand. Sustituye el MCP `dbhub` roto (binario ausente en `.opencode/node_modules/`) por una combinación portable de servidores estándar. Conserva `filesystem`, añade `github` con wrapper de `.env` y `chrome-devtools`. MCPs remotos/heredados (`playwright`, `neon`, `git`) se siguen tomando del global del usuario.
+- **`scripts/load-env.cjs`** (NUEVO, versionado): wrapper CommonJS que lee `.env` del proyecto desde `CWD` (o `DOTENV_PATH` si está definido), exporta las variables que aún no estén en `process.env` y lanza el subproceso propagando stdin/stdout/env. Soporta expansión de placeholders `${VAR}` en argumentos. Usa `shell: true` solo en Windows para resolver binarios `.cmd` (npx, npm). Verificado con `opencode mcp list`: 6/6 servidores conectados.
+- **`eslint.config.mjs`**: añadido `scripts/load-env.cjs` a `globalIgnores` (binario auxiliar en CommonJS, no es código de la app).
+
+### Backend
+- Sin cambios. Ningún archivo del motor de cálculo ni del backend fue tocado.
+
+### Frontend
+- Sin cambios. La calculadora, el sidebar y el resto de UI no fueron tocados.
+
+### Tests
+- Validación manual con `opencode mcp list`: 6/6 servidores conectados (`playwright`, `neon`, `github`, `git`, `filesystem`, `chrome-devtools`). El `github` MCP ahora carga `GITHUB_PERSONAL_ACCESS_TOKEN` desde `.env` del proyecto (antes fallaba porque solo estaba en global).
+- Validación de sintaxis de `load-env.cjs` con `node -c` y de `opencode.jsonc` con `JSON.parse`.
+
+### Seguridad
+- El wrapper no sobrescribe variables ya presentes en el shell: si `NEON_API_KEY` o `GITHUB_PERSONAL_ACCESS_TOKEN` están exportados en el entorno del usuario, tienen precedencia sobre `.env`.
+- `load-env.cjs` no loguea valores de variables, solo cuenta cuántas cargó (con `LOAD_ENV_DEBUG=1`).
+- `.opencode/dbhub.toml` con DSN hardcoded se conserva sin cambios (no se borra por política de mínima intervención). El user puede sanitizarlo manualmente si lo desea.
+
+### Riesgos
+- `npm run lint` sigue reportando **4 errores preexistentes** no introducidos por esta fase: `app/calculadora/hooks.ts:44` (setState en effect), `app/intranet/dashboard/page.tsx:91` (setState en effect), `components/marketing/live-widgets.tsx:33` y `:50` (setState en effect). Son de la regla `react-hooks/set-state-in-effect` y requieren refactor fuera del alcance de esta fase.
+- 8 warnings preexistentes en archivos de la app y de marketing (variables/imports no usados) que ya existían antes de este cambio.
+- `opencode.jsonc` no se versiona en git (verificado con `git show HEAD:opencode.jsonc` → 404 y `git status --ignored` lo marca como `!! opencode.jsonc`). El cambio queda solo en disco del usuario. Si en el futuro se quiere portabilizar la config, hay que sacar `.opencode/` del `.gitignore` raíz (decisión de arquitectura separada).
+- `chrome-devtools-mcp` requiere Chrome estable instalado (ya está en `C:\Program Files\Google\Chrome\Application\chrome.exe`).
+- **Hallazgo de última hora**: `.opencode/` completo está ignorado en el `.gitignore` raíz (no solo en `.opencode/.gitignore`). Por eso el wrapper se movió de `.opencode/bin/load-env.cjs` a `scripts/load-env.cjs` para que sea replicable entre clones. Si se necesita más tooling local, el lugar correcto es `scripts/` o `.opencode/` queda como estado descartable por diseño.
+
 ## Fase 10 — Resend (email transaccional del formulario de contacto) (2026-06-05)
 
 ### Dependencias
