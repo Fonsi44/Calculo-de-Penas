@@ -25,36 +25,42 @@ export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): P
   const max = opts.max ?? DEFAULTS.max;
   const keyPrefix = opts.keyPrefix ?? 'default';
   const now = new Date();
+  const resetAt = now.getTime() + windowMs;
 
-  const insertResult = await db.insert(rateLimits)
-    .values({
-      identifier,
-      keyPrefix,
-      count: 1,
-      windowStart: now,
-      expiresAt: new Date(now.getTime() + windowMs),
-    })
-    .onConflictDoUpdate({
-      target: [rateLimits.identifier, rateLimits.keyPrefix],
-      set: {
-        count: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN 1 ELSE ${rateLimits.count} + 1 END`,
-        windowStart: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN NOW() ELSE ${rateLimits.windowStart} END`,
-        expiresAt: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN NOW() + make_interval(secs => ${windowMs / 1000}) ELSE ${rateLimits.expiresAt} END`,
-      },
-    })
-    .returning({ count: rateLimits.count, expiresAt: rateLimits.expiresAt });
+  try {
+    const insertResult = await db.insert(rateLimits)
+      .values({
+        identifier,
+        keyPrefix,
+        count: 1,
+        windowStart: now,
+        expiresAt: new Date(resetAt),
+      })
+      .onConflictDoUpdate({
+        target: [rateLimits.identifier, rateLimits.keyPrefix],
+        set: {
+          count: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN 1 ELSE ${rateLimits.count} + 1 END`,
+          windowStart: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN NOW() ELSE ${rateLimits.windowStart} END`,
+          expiresAt: sql`CASE WHEN ${rateLimits.expiresAt} < NOW() THEN NOW() + make_interval(secs => ${windowMs / 1000}) ELSE ${rateLimits.expiresAt} END`,
+        },
+      })
+      .returning({ count: rateLimits.count, expiresAt: rateLimits.expiresAt });
 
-  const row = insertResult[0];
-  const resetAt = new Date(row.expiresAt).getTime();
-  const remaining = Math.max(0, max - row.count);
-  const ok = row.count <= max;
+    const row = insertResult[0];
+    const dbResetAt = new Date(row.expiresAt).getTime();
+    const remaining = Math.max(0, max - row.count);
+    const ok = row.count <= max;
 
-  return {
-    ok,
-    remaining,
-    resetAt,
-    retryAfterSec: ok ? 0 : Math.ceil((resetAt - Date.now()) / 1000),
-  };
+    return {
+      ok,
+      remaining,
+      resetAt: dbResetAt,
+      retryAfterSec: ok ? 0 : Math.ceil((dbResetAt - Date.now()) / 1000),
+    };
+  } catch (e) {
+    console.warn('[rate-limit] fallback mode (DB rate limit no disponible):', (e as Error).message);
+    return { ok: true, remaining: max, resetAt, retryAfterSec: 0 };
+  }
 }
 
 export function rateLimitResponse(res: RateLimitResult): Response {
