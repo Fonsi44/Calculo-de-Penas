@@ -10,18 +10,18 @@ import { areaHref, breadcrumbsSchema, itemListSchema, serviceSchema } from '@/li
 import { getAreaTone } from '@/lib/icon-map';
 
 export const metadata: Metadata = {
-  title: 'Servicios Jurídicos',
+  title: 'Áreas Jurídicas',
   description: `Conozca las 13 áreas de práctica de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
-  alternates: { canonical: '/servicios-juridicos' },
+  alternates: { canonical: '/areas-juridicas' },
 };
 
-export default function ServiciosJuridicosPage() {
-  const url = absoluteUrl('/servicios-juridicos');
-  const breadcrumbs = breadcrumbsSchema([{ name: 'Inicio', url: absoluteUrl('/') }, { name: 'Servicios Jurídicos', url }]);
+export default function AreasJuridicasPage() {
+  const url = absoluteUrl('/areas-juridicas');
+  const breadcrumbs = breadcrumbsSchema([{ name: 'Inicio', url: absoluteUrl('/') }, { name: 'Áreas Jurídicas', url }]);
   const itemList = itemListSchema('Áreas de práctica', areasGenerales.map((a) => ({ name: a.titulo, url: areaHref(a.slug) })));
   const servSchema = serviceSchema({
-    slug: 'servicios-juridicos',
-    name: 'Servicios Jurídicos — Pineda y Asociados',
+    slug: 'areas-juridicas',
+    name: 'Áreas Jurídicas — Pineda y Asociados',
     description: 'Bufete multidisciplinario con 13 áreas de práctica en Nacaome, Valle, Honduras.',
     serviceType: 'LegalService',
     keywords: site.keywords,
@@ -38,7 +38,7 @@ export default function ServiciosJuridicosPage() {
         <Container size="lg" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
             <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
-              Servicios Jurídicos
+              Áreas Jurídicas
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
               13 áreas de práctica para defender sus derechos
@@ -65,7 +65,7 @@ export default function ServiciosJuridicosPage() {
           {areasGenerales.map((area) => (
             <ServiceCardPhoto
               key={area.slug}
-              href={`/servicios-juridicos/${area.slug}`}
+              href={`/areas-juridicas/${area.slug}`}
               title={area.titulo}
               description={area.resumen}
               tone={getAreaTone(area.slug)}

@@ -57,7 +57,7 @@ const TONE_MAP: Record<string, PlaceholderTone> = {
   'gestion-documental-y-legalizacion': 'migrante',
   'actos-notariales-internacionales': 'migrante',
   'asuntos-civiles-y-familiares-desde-el-extranjero': 'familia',
-  'servicios-juridicos': 'primary',
+  'areas-juridicas': 'primary',
   'derecho-penal': 'penal',
   'migrantes-hondurenos-en-espana': 'migrante',
 };

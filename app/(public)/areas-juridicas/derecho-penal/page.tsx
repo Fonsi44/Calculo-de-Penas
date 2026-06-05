@@ -6,32 +6,32 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { ServiceCardPhoto } from '@/components/marketing/service-card-photo';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
-import { hubMigrantes } from '@/data/areas-juridicas';
-import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
+import { hubPenal } from '@/data/areas-juridicas';
+import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getAreaTone } from '@/lib/icon-map';
 
 export const metadata: Metadata = {
-  title: 'Migrantes Hondureños en España',
-  description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. ${site.name}.`,
-  alternates: { canonical: '/servicios-juridicos/migrantes-hondurenos-en-espana' },
+  title: 'Derecho Penal',
+  description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca. ${site.name}.`,
+  alternates: { canonical: '/areas-juridicas/derecho-penal' },
 };
 
-export default function MigrantesPage() {
-  const url = migrantesHubHref();
+export default function DerechoPenalPage() {
+  const url = penalHubHref();
   const ldSchemas = areaSchemas({
     service: {
-      slug: 'migrantes-hondurenos-en-espana',
-      name: 'Migrantes Hondureños en España — Pineda y Asociados',
-      description: hubMigrantes.descripcion,
-      serviceType: 'LegalService',
-      keywords: hubMigrantes.keywords,
+      slug: 'derecho-penal',
+      name: 'Derecho Penal — Pineda y Asociados',
+      description: hubPenal.descripcion,
+      serviceType: 'CriminalDefense',
+      keywords: hubPenal.keywords,
       url,
     },
-    faqs: hubMigrantes.faqs,
+    faqs: hubPenal.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
-      { name: 'Servicios Jurídicos', url: absoluteUrl('/servicios-juridicos') },
-      { name: 'Migrantes Hondureños en España', url },
+      { name: 'Áreas Jurídicas', url: absoluteUrl('/areas-juridicas') },
+      { name: 'Derecho Penal', url },
     ],
     url,
   });
@@ -46,13 +46,13 @@ export default function MigrantesPage() {
         <Container size="lg" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
             <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
-              {hubMigrantes.heroEyebrow}
+              {hubPenal.heroEyebrow}
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              {hubMigrantes.heroTitle}
+              {hubPenal.heroTitle}
             </h1>
             <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {hubMigrantes.heroSubtitle}
+              {hubPenal.heroSubtitle}
             </p>
             <div className="mt-7">
               <CTAGroup variant="inverse" />
@@ -63,20 +63,20 @@ export default function MigrantesPage() {
 
       <Section background="muted" spacing="md">
         <SectionHeader
-          eyebrow="Asistencia transnacional"
-          title={hubMigrantes.titulo}
-          subtitle={hubMigrantes.resumen}
+          eyebrow="Grupos especializados"
+          title={hubPenal.titulo}
+          subtitle={hubPenal.resumen}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {hubMigrantes.subareas.map((sub) => (
+          {hubPenal.grupos.map((grupo) => (
             <ServiceCardPhoto
-              key={sub.slug}
-              href={`/servicios-juridicos/migrantes-hondurenos-en-espana/${sub.slug}`}
-              title={sub.titulo}
-              description={sub.resumen}
-              tone={getAreaTone(sub.slug)}
+              key={grupo.slug}
+              href={`/areas-juridicas/derecho-penal/${grupo.slug}`}
+              title={grupo.titulo}
+              description={grupo.resumen}
+              tone={getAreaTone(grupo.slug)}
               aspect="16/9"
-              label={sub.titulo}
+              label={grupo.titulo}
             />
           ))}
         </div>
@@ -85,11 +85,11 @@ export default function MigrantesPage() {
       <Section spacing="md" id="preguntas-frecuentes">
         <SectionHeader
           eyebrow="Preguntas frecuentes"
-          title="Dudas comunes sobre trámites entre Honduras y España"
+          title="Resolvemos sus dudas sobre defensa penal"
           align="center"
         />
         <div className="max-w-3xl mx-auto space-y-3">
-          {hubMigrantes.faqs.map((faq, i) => (
+          {hubPenal.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
               <h3 className="font-bold text-[15px] text-text leading-tight mb-1.5">
                 {faq.pregunta}
@@ -105,9 +105,9 @@ export default function MigrantesPage() {
       <Section background="muted" spacing="sm">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-text-secondary text-[14px] leading-relaxed mb-5">
-            Si reside en España y necesita gestionar trámites legales en Honduras,
-            podemos ayudarle. Consúltenos sin compromiso y le explicaremos el
-            procedimiento paso a paso.
+            Cada caso penal es distinto. Si no encuentra la información que busca
+            o necesita una valoración concreta de su situación, solicite una
+            consulta confidencial y le atenderemos personalmente.
           </p>
           <Link
             href="/solicitar-consulta"

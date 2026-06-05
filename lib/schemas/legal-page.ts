@@ -134,13 +134,13 @@ export function areaSchemas(args: {
 /* -------------------------------------------------------------------------- */
 
 export function areaHref(slug: string) {
-  return absoluteUrl(`/servicios-juridicos/${slug}`);
+  return absoluteUrl(`/areas-juridicas/${slug}`);
 }
 
 export function penalHubHref() {
-  return absoluteUrl('/servicios-juridicos/derecho-penal');
+  return absoluteUrl('/areas-juridicas/derecho-penal');
 }
 
 export function migrantesHubHref() {
-  return absoluteUrl('/servicios-juridicos/migrantes-hondurenos-en-espana');
+  return absoluteUrl('/migrantes-hondurenos-en-espana');
 }
