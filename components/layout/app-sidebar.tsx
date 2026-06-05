@@ -16,12 +16,12 @@ interface NavItem {
 }
 
 const NAV: NavItem[] = [
-  { label: 'Inicio', href: '/', icon: Home, match: (p) => p === '/' },
-  { label: 'Calculadora', href: '/calculadora', icon: Calculator, match: (p) => p.startsWith('/calculadora') },
-  { label: 'Mis casos', href: '/casos', icon: Briefcase, match: (p) => p.startsWith('/casos') },
-  { label: 'Biblioteca CP', href: '/cp', icon: BookOpen, match: (p) => p.startsWith('/cp') },
-  { label: 'Catálogo de delitos', href: '/delitos', icon: FileText, match: (p) => p.startsWith('/delitos') },
-  { label: 'Atajos de teclado', href: '/atajos', icon: Keyboard, match: (p) => p.startsWith('/atajos') },
+  { label: 'Inicio', href: '/intranet/dashboard', icon: Home, match: (p) => p === '/intranet/dashboard' },
+  { label: 'Calculadora', href: '/intranet/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/calculadora') || p === '/calculadora' || p.startsWith('/calculadora/') },
+  { label: 'Mis casos', href: '/intranet/casos', icon: Briefcase, match: (p) => p.startsWith('/intranet/casos') || p === '/casos' || p.startsWith('/casos/') },
+  { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp' || p.startsWith('/cp/') },
+  { label: 'Catálogo de delitos', href: '/intranet/delitos', icon: FileText, match: (p) => p.startsWith('/intranet/delitos') || p === '/delitos' || p.startsWith('/delitos/') },
+  { label: 'Atajos de teclado', href: '/intranet/atajos', icon: Keyboard, match: (p) => p.startsWith('/intranet/atajos') || p === '/atajos' || p.startsWith('/atajos/') },
 ];
 
 export function AppSidebar({ className, onNavigate }: { className?: string; onNavigate?: () => void }) {

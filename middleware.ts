@@ -45,6 +45,23 @@ const INTRANET_PUBLIC_EXACT = new Set<string>([
   '/intranet/acceso-denegado',
 ]);
 
+// Paths intranet protegidos que NO están bajo /intranet/* (legacy).
+// Mantener para que los enlaces internos antiguos (casos/[id] → /calculadora,
+// cp/[id] → /cp, etc.) sigan funcionando sin redirigir al login.
+const INTRANET_LEGACY_EXACT = new Set<string>([
+  '/calculadora',
+  '/casos',
+  '/cp',
+  '/delitos',
+  '/atajos',
+  '/delito-form',
+]);
+const INTRANET_LEGACY_PREFIXES = [
+  '/casos/',
+  '/cp/',
+  '/delitos/',
+];
+
 const PUBLIC_PAGE_PREFIXES = [
   '/areas-de-practica',
   '/blog/',
@@ -54,6 +71,12 @@ const PUBLIC_PAGE_PREFIXES = [
 function isPublicPagePath(pathname: string): boolean {
   if (PUBLIC_PAGE_EXACT.has(pathname)) return true;
   if (PUBLIC_PAGE_PREFIXES.some(p => pathname.startsWith(p))) return true;
+  return false;
+}
+
+function isIntranetLegacyPath(pathname: string): boolean {
+  if (INTRANET_LEGACY_EXACT.has(pathname)) return true;
+  if (INTRANET_LEGACY_PREFIXES.some(p => pathname.startsWith(p))) return true;
   return false;
 }
 
@@ -91,6 +114,17 @@ export function middleware(request: NextRequest) {
       }
       return NextResponse.next();
     }
+    if (!token) {
+      const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
+      return NextResponse.redirect(loginUrl);
+    }
+    return NextResponse.next();
+  }
+
+  // Paths intranet legacy (no están bajo /intranet/*): requieren auth.
+  // Los rewrites en next.config.ts exponen estas páginas también bajo
+  // /intranet/*, pero mantenemos los paths viejos para enlaces internos.
+  if (isIntranetLegacyPath(pathname)) {
     if (!token) {
       const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
       return NextResponse.redirect(loginUrl);

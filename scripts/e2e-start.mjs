@@ -14,6 +14,7 @@ const env = {
   JWT_SECRET,
   DATABASE_URL,
   ALLOW_TEST_EMAILS: 'true',
+  DISABLE_RATE_LIMIT: 'true',
   NEXT_TELEMETRY_DISABLED: '1',
 };
 

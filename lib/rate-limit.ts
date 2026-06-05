@@ -21,6 +21,12 @@ const DEFAULTS = {
 };
 
 export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): Promise<RateLimitResult> {
+  // Bypass en tests E2E para no bloquear flujos que hacen múltiples logins.
+  // Activado por scripts/e2e-start.mjs vía env var.
+  if (process.env.DISABLE_RATE_LIMIT === 'true') {
+    return { ok: true, remaining: DEFAULTS.max, resetAt: Date.now() + DEFAULTS.windowMs, retryAfterSec: 0 };
+  }
+
   const windowMs = opts.windowMs ?? DEFAULTS.windowMs;
   const max = opts.max ?? DEFAULTS.max;
   const keyPrefix = opts.keyPrefix ?? 'default';

@@ -41,9 +41,23 @@ const nextConfig: NextConfig = {
   // IMPORTANTE: NO redirigir /login → /intranet/login (causaba bucles).
   async redirects() {
     return [
-      { source: '/casos', destination: '/intranet/casos', permanent: true },
       { source: '/inicio', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },
+    ];
+  },
+  // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*
+  // para que el sidebar y los enlaces canónicos apunten a /intranet/calculadora,
+  // /intranet/casos, etc., sin mover los archivos page.tsx existentes.
+  // El middleware ya permite /intranet/* a usuarios autenticados.
+  async rewrites() {
+    return [
+      { source: '/intranet/calculadora', destination: '/calculadora' },
+      { source: '/intranet/casos', destination: '/casos' },
+      { source: '/intranet/casos/:id', destination: '/casos/:id' },
+      { source: '/intranet/cp', destination: '/cp' },
+      { source: '/intranet/cp/:id', destination: '/cp/:id' },
+      { source: '/intranet/delitos', destination: '/delitos' },
+      { source: '/intranet/atajos', destination: '/atajos' },
     ];
   },
   async headers() {
