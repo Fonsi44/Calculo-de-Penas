@@ -2,27 +2,29 @@ import { db } from '@/lib/db';
 import { usuarios, aceptacionesLegales } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { hashPassword, signToken, createAuthResponse } from '@/lib/auth';
+import { authRegisterSchema, validate } from '@/lib/validation';
+import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 const TERMINOS_VERSION = '2026-06-04';
 
 export async function POST(request: Request) {
   try {
-    let body: unknown;
-    try { body = await request.json(); } catch {
-      return Response.json({ error: 'JSON inválido' }, { status: 400 });
+    const parsed = validate(authRegisterSchema, await request.json().catch(() => null));
+    if (!parsed.success) {
+      return Response.json({ error: parsed.error }, { status: 400 });
     }
-
-    if (!body || typeof body !== 'object') {
-      return Response.json({ error: 'JSON inválido' }, { status: 400 });
-    }
-
-    const { email, password, nombre } = body as { email?: unknown; password?: unknown; nombre?: unknown };
-    if (typeof email !== 'string' || typeof password !== 'string' || typeof nombre !== 'string' || !email || !password || !nombre) {
-      return Response.json({ error: 'Email, contraseña y nombre son obligatorios' }, { status: 400 });
-    }
+    const { email, password, nombre } = parsed.data;
 
     const existing = await db.select().from(usuarios).where(eq(usuarios.email, email));
     if (existing.length > 0) {
+      await audit({
+        accion: 'login_failed',
+        ip: ipFromRequest(request),
+        userAgent: uaFromRequest(request),
+        exito: false,
+        metadata: { email, kind: 'register_conflict' },
+        mensaje: 'Email ya registrado',
+      });
       return Response.json({ error: 'El email ya está registrado' }, { status: 409 });
     }
 
@@ -37,6 +39,16 @@ export async function POST(request: Request) {
       usuarioId: user.id,
       version: TERMINOS_VERSION,
     }).onConflictDoNothing();
+
+    await audit({
+      accion: 'login',
+      usuarioId: user.id,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+      exito: true,
+      metadata: { email, kind: 'register' },
+      mensaje: 'Cuenta creada',
+    });
 
     const token = signToken({ userId: user.id, email: user.email, rol: user.rol });
     return createAuthResponse({

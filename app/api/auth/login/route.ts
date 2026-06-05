@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import { verifyPassword, signToken, createAuthResponse } from '@/lib/auth';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
+import { authLoginSchema, validate } from '@/lib/validation';
 
 const LOGIN_MAX = 5;
 const LOGIN_WINDOW_MS = 60_000;
@@ -22,19 +23,11 @@ export async function POST(request: Request) {
     return rateLimitResponse(rl);
   }
 
-  let body: unknown;
-  try { body = await request.json(); } catch {
-    return Response.json({ error: 'JSON inválido' }, { status: 400 });
+  const parsed = validate(authLoginSchema, await request.json().catch(() => null));
+  if (!parsed.success) {
+    return Response.json({ error: parsed.error }, { status: 400 });
   }
-
-  if (!body || typeof body !== 'object') {
-    return Response.json({ error: 'JSON inválido' }, { status: 400 });
-  }
-
-  const { email, password } = body as { email?: unknown; password?: unknown };
-  if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
-    return Response.json({ error: 'Email y contraseña son obligatorios' }, { status: 400 });
-  }
+  const { email, password } = parsed.data;
 
   const [user] = await db.select().from(usuarios).where(eq(usuarios.email, email));
   if (!user) {
