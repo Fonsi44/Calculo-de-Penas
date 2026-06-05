@@ -4,12 +4,38 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from './app-sidebar';
 
-const PUBLIC_ROUTES = new Set(['/login', '/terminos', '/privacidad', '/_not-found']);
+const PUBLIC_ROUTES = new Set([
+  '/',
+  '/login',
+  '/terminos',
+  '/privacidad',
+  '/aviso-legal',
+  '/politica-privacidad',
+  '/politica-cookies',
+  '/disclaimer',
+  '/despacho',
+  '/contacto',
+  '/solicitar-consulta',
+  '/como-llegar',
+  '/preguntas-frecuentes',
+  '/derecho-penal-hondureno',
+  '/proceso-penal',
+  '/blog',
+]);
+
+const PUBLIC_PREFIXES = ['/areas-de-practica', '/blog/'];
+
+function isPublicRoute(pathname: string): boolean {
+  if (PUBLIC_ROUTES.has(pathname)) return true;
+  if (pathname === '/blog') return true;
+  if (PUBLIC_PREFIXES.some(p => pathname === p.replace(/\/$/, '') || pathname.startsWith(p))) return true;
+  return false;
+}
 
 export function RootShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { open, setOpen } = useMobileNav();
-  const isPublic = PUBLIC_ROUTES.has(pathname);
+  const isPublic = isPublicRoute(pathname);
 
   if (isPublic) {
     return <div id="main" className="flex flex-col flex-1">{children}</div>;

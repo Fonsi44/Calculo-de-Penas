@@ -14,7 +14,39 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/health',
 ]);
 
-const PUBLIC_PAGE_EXACT = new Set<string>(['/login', '/_not-found', '/terminos', '/privacidad']);
+const PUBLIC_PAGE_EXACT = new Set<string>([
+  '/',
+  '/login',
+  '/_not-found',
+  '/terminos',
+  '/privacidad',
+  '/aviso-legal',
+  '/politica-privacidad',
+  '/politica-cookies',
+  '/disclaimer',
+  '/despacho',
+  '/contacto',
+  '/solicitar-consulta',
+  '/como-llegar',
+  '/preguntas-frecuentes',
+  '/derecho-penal-hondureno',
+  '/proceso-penal',
+  '/blog',
+]);
+
+const PUBLIC_PAGE_PREFIXES = [
+  '/areas-de-practica',
+  '/blog/',
+  '/_next/',
+];
+
+const APEX_HOST = 'pinedayasociadoshn.com';
+
+function isPublicPagePath(pathname: string): boolean {
+  if (PUBLIC_PAGE_EXACT.has(pathname)) return true;
+  if (PUBLIC_PAGE_PREFIXES.some(p => pathname.startsWith(p))) return true;
+  return false;
+}
 
 function isPublicApiPath(pathname: string): boolean {
   if (PUBLIC_API_EXACT.has(pathname)) return true;
@@ -27,7 +59,18 @@ function readToken(request: NextRequest): string | undefined {
 }
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, host } = request.nextUrl;
+
+  // Forzar apex (pinedayasociadoshn.com) como host canónico.
+  // Si llega por www.*, redirigir 301 al apex preservando path y query.
+  const bareHost = host.split(':')[0];
+  if (bareHost === `www.${APEX_HOST}`) {
+    const url = request.nextUrl.clone();
+    url.host = APEX_HOST;
+    url.protocol = 'https:';
+    return NextResponse.redirect(url, 301);
+  }
+
   const token = readToken(request);
 
   if (pathname.startsWith('/api/')) {
@@ -38,7 +81,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (PUBLIC_PAGE_EXACT.has(pathname)) {
+  if (isPublicPagePath(pathname)) {
     if (pathname === '/login' && token) {
       return NextResponse.redirect(new URL('/', request.url));
     }
