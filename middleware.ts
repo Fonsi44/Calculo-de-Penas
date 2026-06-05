@@ -40,8 +40,6 @@ const PUBLIC_PAGE_PREFIXES = [
   '/_next/',
 ];
 
-const APEX_HOST = 'pinedayasociadoshn.com';
-
 function isPublicPagePath(pathname: string): boolean {
   if (PUBLIC_PAGE_EXACT.has(pathname)) return true;
   if (PUBLIC_PAGE_PREFIXES.some(p => pathname.startsWith(p))) return true;
@@ -59,17 +57,9 @@ function readToken(request: NextRequest): string | undefined {
 }
 
 export function middleware(request: NextRequest) {
-  const { pathname, host } = request.nextUrl;
-
-  // Forzar apex (pinedayasociadoshn.com) como host canónico.
-  // Si llega por www.*, redirigir 301 al apex preservando path y query.
-  const bareHost = host.split(':')[0];
-  if (bareHost === `www.${APEX_HOST}`) {
-    const url = request.nextUrl.clone();
-    url.host = APEX_HOST;
-    url.protocol = 'https:';
-    return NextResponse.redirect(url, 301);
-  }
+  const { pathname } = request.nextUrl;
+  // El redirect www → apex lo gestiona Vercel a nivel de dominio,
+  // no en el middleware (causaba bucles de redirección con el edge).
 
   const token = readToken(request);
 

@@ -34,7 +34,8 @@ const robotsHeader = noindexActive
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  // El redirect www → apex se aplica en middleware.ts (soporte nativo sin `has`)
+  // El redirect www → apex lo gestiona Vercel a nivel de dominio
+  // (Settings → Domains → Redirect). Aquí solo mantenemos los legacy redirects.
   async redirects() {
     return [
       { source: '/login', destination: '/intranet/login', permanent: true },
