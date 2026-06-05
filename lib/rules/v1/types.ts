@@ -36,6 +36,7 @@ export interface ResultadoIndividual {
   pena_recomendada: number;
   gravedad: string;
   tipo_pena: string;
+  unidad: 'meses' | 'dias';
   exento: boolean;
   pena_base_min: number;
   pena_base_max: number;

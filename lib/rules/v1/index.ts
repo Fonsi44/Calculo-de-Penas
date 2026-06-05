@@ -13,13 +13,13 @@ import type { CalculoRequest, DelitoAnalizado, DelitoBase, DelitoConfig, Resulta
 export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase): ResultadoIndividual {
   const base = seleccionarPenaBase(config, delito);
   let { pena_min, pena_max } = base;
-  const { tipo_pena, pena_base_min, pena_base_max } = base;
+  const { tipo_pena, unidad, pena_base_min, pena_base_max } = base;
 
   const eximente = evaluarEximenteCompleta(config.eximente_completa);
   if (eximente.aplica) {
     return {
       delito: { id: delito.id, nombre: delito.nombre, articulo: delito.articulo, clasificacion: delito.clasificacion, penas_accesorias: delito.penas_accesorias },
-      pena_min: 0, pena_max: 0, pena_recomendada: 0, gravedad: 'Exento', tipo_pena, exento: true,
+      pena_min: 0, pena_max: 0, pena_recomendada: 0, gravedad: 'Exento', tipo_pena, unidad, exento: true,
       pena_base_min, pena_base_max, modificaciones: eximente.modificaciones,
     };
   }
@@ -38,14 +38,14 @@ export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase)
   pena_min = circ.pena_min;
   pena_max = circ.pena_max;
 
-  const p_min = Math.max(1, Math.floor(pena_min));
-  const p_max = Math.max(1, Math.floor(pena_max));
-  const medio = Math.floor((p_min + p_max) / 2);
-  const gravedad = calcular_gravedad(p_max);
+  const p_min = (pena_base_min === 0 && pena_min === 0) ? 0 : Math.max(1, Math.floor(pena_min));
+  const p_max = (pena_base_max === 0 && pena_max === 0) ? 0 : Math.max(1, Math.floor(pena_max));
+  const medio = p_min === 0 && p_max === 0 ? 0 : Math.floor((p_min + p_max) / 2);
+  const gravedad = unidad === 'dias' ? 'Multa' : p_max === 0 ? 'Sin pena' : calcular_gravedad(p_max);
 
   return {
     delito: { id: delito.id, nombre: delito.nombre, articulo: delito.articulo, clasificacion: delito.clasificacion, penas_accesorias: delito.penas_accesorias },
-    pena_min: p_min, pena_max: p_max, pena_recomendada: medio, gravedad, tipo_pena, exento: false,
+    pena_min: p_min, pena_max: p_max, pena_recomendada: medio, gravedad, tipo_pena, unidad, exento: false,
     pena_base_min, pena_base_max, modificaciones,
   };
 }
@@ -84,7 +84,9 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
 
     const pena_texto = resultado.exento
       ? 'EXENTO (eximente completa)'
-      : `${meses_a_texto(resultado.pena_min)} a ${meses_a_texto(resultado.pena_max)} de ${resultado.tipo_pena}`;
+      : resultado.unidad === 'dias'
+        ? `${resultado.pena_min} a ${resultado.pena_max} días de ${resultado.tipo_pena}`
+        : `${meses_a_texto(resultado.pena_min)} a ${meses_a_texto(resultado.pena_max)} de ${resultado.tipo_pena}`;
 
     const grado_autoria_nombre = GRADOS_AUTORIA.find((g) => g.id === config.grado_autoria)?.nombre || config.grado_autoria;
     const grado_ejecucion_nombre = GRADOS_EJECUCION.find((g) => g.id === config.grado_ejecucion)?.nombre || config.grado_ejecucion;
@@ -98,12 +100,16 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
       confianza: estado.estado,
       pena_base_min: resultado.pena_base_min,
       pena_base_max: resultado.pena_base_max,
-      pena_base_texto: `${meses_a_texto(resultado.pena_base_min)} a ${meses_a_texto(resultado.pena_base_max)}`,
+      pena_base_texto: resultado.unidad === 'dias'
+        ? `${resultado.pena_base_min} a ${resultado.pena_base_max} días`
+        : `${meses_a_texto(resultado.pena_base_min)} a ${meses_a_texto(resultado.pena_base_max)}`,
       pena_individual_min: resultado.pena_min,
       pena_individual_max: resultado.pena_max,
       pena_individual_texto: pena_texto,
       pena_recomendada_meses: resultado.pena_recomendada,
-      pena_recomendada_texto: meses_a_texto(resultado.pena_recomendada),
+      pena_recomendada_texto: resultado.unidad === 'dias'
+        ? `${resultado.pena_recomendada} días`
+        : meses_a_texto(resultado.pena_recomendada),
       gravedad: resultado.gravedad,
       grado_autoria: grado_autoria_nombre,
       grado_ejecucion: grado_ejecucion_nombre,
@@ -117,9 +123,15 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
 
   const resultado_concurso = aplicarConcurso(penas_para_concurso, request.tipo_concurso);
 
+  const penas_activas = penas_para_concurso.filter((p) => !p.exento);
+  const todas_multas = penas_activas.length > 0 && penas_activas.every((p) => p.unidad === 'dias');
+  const tipo_pena_principal = todas_multas ? 'multa' : 'prisión';
+
   const pena_principal_texto = resultado_concurso.pena_max === 0
     ? 'EXENTO'
-    : `${meses_a_texto(resultado_concurso.pena_min)} a ${meses_a_texto(resultado_concurso.pena_max)} de prisión`;
+    : todas_multas
+      ? `${resultado_concurso.pena_min} a ${resultado_concurso.pena_max} días de ${tipo_pena_principal}`
+      : `${meses_a_texto(resultado_concurso.pena_min)} a ${meses_a_texto(resultado_concurso.pena_max)} de ${tipo_pena_principal}`;
 
   const analisis_juridico = generarAnalisisJuridico(resultados_individuales, request.tipo_concurso, resultado_concurso);
 

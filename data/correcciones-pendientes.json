@@ -1,0 +1,2466 @@
+[
+  {
+    "id": "delito-0001",
+    "nombre": "Amenaza para obtener confesión",
+    "articulo": "Art. 215 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.71) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0002",
+    "nombre": "Tortura (modalidad 1)",
+    "articulo": "Art. 216 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 1,
+      "pena_maxima_meses": 120
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=72-120m vs CP=1-120m"
+    ]
+  },
+  {
+    "id": "delito-0003",
+    "nombre": "Tortura (modalidad 2)",
+    "articulo": "Art. 216 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 1,
+      "pena_maxima_meses": 120,
+      "es_grave": true
+    },
+    "discrepancias": [
+      "CP dice prision 1-120m pero catalogo tiene 0-0",
+      "es_grave=false pero pena maxima CP es 120m (>= 120m)"
+    ]
+  },
+  {
+    "id": "delito-0004",
+    "nombre": "Tortura (modalidad 3)",
+    "articulo": "Art. 216 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 1,
+      "pena_maxima_meses": 120,
+      "es_grave": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-12m vs CP=1-120m",
+      "es_grave=false pero pena maxima CP es 120m (>= 120m)"
+    ]
+  },
+  {
+    "id": "delito-0005",
+    "nombre": "Tratos crueles, inhumanos o degradantes por funcionario público",
+    "articulo": "Art. 217 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0009",
+    "nombre": "Explotación en condiciones de esclavitud o servidumbre (modalidad 1)",
+    "articulo": "Art. 221 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 108,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=72-108m vs CP=12-108m",
+      "es_grave=true pero pena maxima CP es 108m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0010",
+    "nombre": "Explotación en condiciones de esclavitud o servidumbre (modalidad 2)",
+    "articulo": "Art. 221 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 108,
+      "pena_alternativa_min": 150,
+      "pena_alternativa_max": 300,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-12m vs CP=12-108m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0012",
+    "nombre": "Inseminación artificial y otras técnicas de reproducción asistida no consentidas",
+    "articulo": "Art. 223 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0013",
+    "nombre": "Experimentación sin consentimiento",
+    "articulo": "Art. 224 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0024",
+    "nombre": "Privación ilegal de libertad",
+    "articulo": "Art. 235 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0025",
+    "nombre": "Privación ilegal de libertad agravada",
+    "articulo": "Art. 236 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 108m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0026",
+    "nombre": "Privación ilegal de libertad atenuada",
+    "articulo": "Art. 237 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0029",
+    "nombre": "Secuestro agravado (modalidad 1)",
+    "articulo": "Art. 240 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 9999,
+      "pena_maxima_meses": 9999
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=144-180m vs CP=9999-9999m"
+    ]
+  },
+  {
+    "id": "delito-0030",
+    "nombre": "Secuestro agravado (modalidad 2)",
+    "articulo": "Art. 240 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 9999,
+      "pena_maxima_meses": 9999
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=180-240m vs CP=9999-9999m"
+    ]
+  },
+  {
+    "id": "delito-0032",
+    "nombre": "Secuestro atenuado",
+    "articulo": "Art. 241 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.73) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0039",
+    "nombre": "Desplazamiento forzado",
+    "articulo": "Art. 248 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 108m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0041",
+    "nombre": "Allanamiento por funcionario o empleado público",
+    "articulo": "Art. 271 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0042",
+    "nombre": "Descubrimiento y revelación de secretos (modalidad 1)",
+    "articulo": "Art. 272 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-48m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0043",
+    "nombre": "Descubrimiento y revelación de secretos (modalidad 2)",
+    "articulo": "Art. 272 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-36m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0052",
+    "nombre": "Suposición de parto y ocultación o sustitución de menor (modalidad 1)",
+    "articulo": "Art. 281 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 72
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-36m vs CP=6-72m"
+    ]
+  },
+  {
+    "id": "delito-0053",
+    "nombre": "Suposición de parto y ocultación o sustitución de menor (modalidad 2)",
+    "articulo": "Art. 281 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 72,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-72m vs CP=6-72m",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0054",
+    "nombre": "Suposición de parto y ocultación o sustitución de menor (modalidad 3)",
+    "articulo": "Art. 281 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 72
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-12m vs CP=6-72m"
+    ]
+  },
+  {
+    "id": "delito-0055",
+    "nombre": "Adopción, acogida o guarda fraudulenta",
+    "articulo": "Art. 282 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.75) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0059",
+    "nombre": "Sustracción de menores o discapacitados necesitados de especial protección",
+    "articulo": "Art. 286 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0070",
+    "nombre": "Tráfico ilícito de personas (modalidad 1)",
+    "articulo": "Art. 297 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 4,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=48-96m vs CP=4-240m"
+    ]
+  },
+  {
+    "id": "delito-0071",
+    "nombre": "Tráfico ilícito de personas (modalidad 2)",
+    "articulo": "Art. 297 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 4,
+      "pena_maxima_meses": 240,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 300,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-240m vs CP=4-240m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0072",
+    "nombre": "Elaboración y comercio ilegal de medicamentos",
+    "articulo": "Art. 298 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0073",
+    "nombre": "Imitación de alimentos, productos o sustancias",
+    "articulo": "Art. 299 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0079",
+    "nombre": "Adulteración de agua potable y alimentos",
+    "articulo": "Art. 305 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0081",
+    "nombre": "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 1)",
+    "articulo": "Art. 307 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 120,
+      "pena_alternativa_min": 300,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true,
+      "es_grave": true
+    },
+    "discrepancias": [
+      "CP dice prision 36-120m pero catalogo tiene 0-0",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=false pero pena maxima CP es 120m (>= 120m)"
+    ]
+  },
+  {
+    "id": "delito-0082",
+    "nombre": "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 2)",
+    "articulo": "Art. 307 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 120
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=72-120m vs CP=36-120m"
+    ]
+  },
+  {
+    "id": "delito-0083",
+    "nombre": "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 3)",
+    "articulo": "Art. 307 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 120
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-60m vs CP=36-120m"
+    ]
+  },
+  {
+    "id": "delito-0087",
+    "nombre": "Tráfico de drogas",
+    "articulo": "Art. 311 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0090",
+    "nombre": "Tráfico de precursores",
+    "articulo": "Art. 314 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.83) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0103",
+    "nombre": "Incendio forestal (modalidad 1)",
+    "articulo": "Art. 327 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 72,
+      "pena_maxima_meses": 180
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=72-120m vs CP=72-180m"
+    ]
+  },
+  {
+    "id": "delito-0104",
+    "nombre": "Incendio forestal (modalidad 2)",
+    "articulo": "Art. 327 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 72,
+      "pena_maxima_meses": 180,
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 800,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=72-180m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0120",
+    "nombre": "Urbanización ilegal",
+    "articulo": "Art. 343 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0121",
+    "nombre": "Aprobación irregular por parte de funcionario público",
+    "articulo": "Art. 344 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0125",
+    "nombre": "Tráfico ilícito de bienes del patrimonio cultural",
+    "articulo": "Art. 348 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.81) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0126",
+    "nombre": "Alteración de inmuebles pertenecientes al patrimonio cultural",
+    "articulo": "Art. 349 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.83) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0127",
+    "nombre": "Expolio de zonas arqueológicas",
+    "articulo": "Art. 350 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0135",
+    "nombre": "Hurto de ganado o cosechas (modalidad 1)",
+    "articulo": "Art. 358 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "CP dice prision 12-48m pero catalogo tiene 0-0"
+    ]
+  },
+  {
+    "id": "delito-0136",
+    "nombre": "Hurto de ganado o cosechas (modalidad 2)",
+    "articulo": "Art. 358 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-48m vs CP=12-48m"
+    ]
+  },
+  {
+    "id": "delito-0137",
+    "nombre": "Hurto de ganado o cosechas (modalidad 3)",
+    "articulo": "Art. 358 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=12-48m"
+    ]
+  },
+  {
+    "id": "delito-0138",
+    "nombre": "Hurto de ganado o cosechas (modalidad 4)",
+    "articulo": "Art. 358 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=12-48m"
+    ]
+  },
+  {
+    "id": "delito-0141",
+    "nombre": "Robo con violencia o intimidación",
+    "articulo": "Art. 361 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0142",
+    "nombre": "Robo de ganado (modalidad 1)",
+    "articulo": "Art. 362 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 72
+    },
+    "discrepancias": [
+      "CP dice prision 36-72m pero catalogo tiene 0-0"
+    ]
+  },
+  {
+    "id": "delito-0143",
+    "nombre": "Robo de ganado (modalidad 2)",
+    "articulo": "Art. 362 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 72,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=48-72m vs CP=36-72m",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0144",
+    "nombre": "Robo de ganado (modalidad 3)",
+    "articulo": "Art. 362 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 72,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-60m vs CP=36-72m",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0146",
+    "nombre": "Hurto y robo de uso de vehículo automotor (modalidad 1)",
+    "articulo": "Art. 364 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=12-48m"
+    ]
+  },
+  {
+    "id": "delito-0147",
+    "nombre": "Hurto y robo de uso de vehículo automotor (modalidad 2)",
+    "articulo": "Art. 364 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-48m vs CP=12-48m"
+    ]
+  },
+  {
+    "id": "delito-0150",
+    "nombre": "Estafas impropias",
+    "articulo": "Art. 367 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0152",
+    "nombre": "Defraudaciones de energía, fluidos y telecomunicaciones",
+    "articulo": "Art. 369 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 1,
+      "pena_maxima_meses": 36
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-36m vs CP=1-36m"
+    ]
+  },
+  {
+    "id": "delito-0156",
+    "nombre": "Extorsión",
+    "articulo": "Art. 373 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 9999,
+      "pena_maxima_meses": 9999
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=180-9999m vs CP=9999-9999m"
+    ]
+  },
+  {
+    "id": "delito-0166",
+    "nombre": "Daños a infraestructuras o equipamientos",
+    "articulo": "Art. 383 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0172",
+    "nombre": "Delitos contra el derecho de autor y los derechos conexos",
+    "articulo": "Art. 389 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0173",
+    "nombre": "Agravantes específicas",
+    "articulo": "Art. 390 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0174",
+    "nombre": "Disfrute ilícito de servicios de acceso condicional (modalidad 1)",
+    "articulo": "Art. 391 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 36
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=6-36m"
+    ]
+  },
+  {
+    "id": "delito-0175",
+    "nombre": "Disfrute ilícito de servicios de acceso condicional (modalidad 2)",
+    "articulo": "Art. 391 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 36
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-12m vs CP=6-36m"
+    ]
+  },
+  {
+    "id": "delito-0177",
+    "nombre": "Uso ilegítimo de patente",
+    "articulo": "Art. 393 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.76) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0178",
+    "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 1)",
+    "articulo": "Art. 394 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "pena_alternativa_min": 30,
+      "pena_alternativa_max": 150,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP menciona multa pero no esta registrada como alternativa",
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar."
+    ]
+  },
+  {
+    "id": "delito-0179",
+    "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 2)",
+    "articulo": "Art. 394 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=12-48m"
+    ]
+  },
+  {
+    "id": "delito-0180",
+    "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 3)",
+    "articulo": "Art. 394 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48,
+      "pena_alternativa_min": 30,
+      "pena_alternativa_max": 150,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP dice prision 12-48m pero catalogo tiene 0-0",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0181",
+    "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 4)",
+    "articulo": "Art. 394 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 48,
+      "pena_alternativa_min": 30,
+      "pena_alternativa_max": 150,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP dice prision 12-48m pero catalogo tiene 0-0",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0182",
+    "nombre": "Descubrimiento y revelación de secreto industrial o comercial (modalidad 1)",
+    "articulo": "Art. 395 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 24,
+      "pena_maxima_meses": 60
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-48m vs CP=24-60m"
+    ]
+  },
+  {
+    "id": "delito-0183",
+    "nombre": "Descubrimiento y revelación de secreto industrial o comercial (modalidad 2)",
+    "articulo": "Art. 395 CP",
+    "clasificacion": "REVISAR_MANUAL",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud baja (0.12) con texto CP. Posible articulo incorrecto.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0187",
+    "nombre": "Daños a datos y sistemas informáticos (modalidad 1)",
+    "articulo": "Art. 399 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 300,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP dice prision 12-36m pero catalogo tiene 0-0",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0188",
+    "nombre": "Daños a datos y sistemas informáticos (modalidad 2)",
+    "articulo": "Art. 399 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-24m vs CP=12-36m"
+    ]
+  },
+  {
+    "id": "delito-0196",
+    "nombre": "Delito de quiebra fraudulenta",
+    "articulo": "Art. 406 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0202",
+    "nombre": "Detracción de materias primas u otros productos",
+    "articulo": "Art. 412 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0205",
+    "nombre": "Acuerdos y prácticas restrictivas de la competencia",
+    "articulo": "Art. 415 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0206",
+    "nombre": "Obstaculización de procesos de licitación o subastas",
+    "articulo": "Art. 416 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0208",
+    "nombre": "Corrupción en los negocios entre particulares",
+    "articulo": "Art. 418 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0219",
+    "nombre": "Penalidad del delito de contrabando",
+    "articulo": "Art. 429 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0230",
+    "nombre": "Lavado de activos imprudente",
+    "articulo": "Art. 440 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0232",
+    "nombre": "Testaferrato",
+    "articulo": "Art. 442 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.76) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0239",
+    "nombre": "Tenencia de moneda falsa para su puesta en circulación",
+    "articulo": "Art. 449 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0240",
+    "nombre": "Fabricación o tenencia de instrumentos para la falsificación de moneda",
+    "articulo": "Art. 450 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0243",
+    "nombre": "Falsificación de sellos y otros efectos timbrados",
+    "articulo": "Art. 453 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0246",
+    "nombre": "Falsificación de documentos públicos y mercantiles",
+    "articulo": "Art. 456 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0255",
+    "nombre": "Tenencia de tarjetas bancarias o cheques de viaje falsos para su puesta en circulación",
+    "articulo": "Art. 465 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0256",
+    "nombre": "Fabricación o tenencia de instrumentos para la falsificación de tarjetas bancarias y cheques de viaje",
+    "articulo": "Art. 466 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0257",
+    "nombre": "Falsedad en instrumentos financieros",
+    "articulo": "Art. 467 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0263",
+    "nombre": "Uso indebido de uniforme, insignias y equipo policial o militar",
+    "articulo": "Art. 473 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0264",
+    "nombre": "Malversación por apropiación",
+    "articulo": "Art. 474 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.70) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0265",
+    "nombre": "Malversación por uso",
+    "articulo": "Art. 475 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.70) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0266",
+    "nombre": "Malversación por aplicación oficial diferente",
+    "articulo": "Art. 476 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.74) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0267",
+    "nombre": "Administración desleal del patrimonio público",
+    "articulo": "Art. 477 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.71) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0268",
+    "nombre": "Agravantes específicas",
+    "articulo": "Art. 478 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 108m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0270",
+    "nombre": "Malversación imprudente",
+    "articulo": "Art. 480 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 72,
+      "pena_maxima_meses": 36
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-72m vs CP=72-36m"
+    ]
+  },
+  {
+    "id": "delito-0272",
+    "nombre": "Fraude",
+    "articulo": "Art. 482 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0273",
+    "nombre": "Exacciones ilegales",
+    "articulo": "Art. 483 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0274",
+    "nombre": "Enriquecimiento ilícito",
+    "articulo": "Art. 484 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0275",
+    "nombre": "Negociaciones incompatibles de funcionario o empleado público",
+    "articulo": "Art. 485 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0276",
+    "nombre": "Negociaciones incompatibles de perito, árbitro y contadores",
+    "articulo": "Art. 486 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0280",
+    "nombre": "Tráfico de influencias cometido por funcionario público",
+    "articulo": "Art. 490 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0282",
+    "nombre": "Cohecho propio",
+    "articulo": "Art. 492 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0283",
+    "nombre": "Cohecho impropio",
+    "articulo": "Art. 493 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.70) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0287",
+    "nombre": "Concusión",
+    "articulo": "Art. 497 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.74) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0295",
+    "nombre": "Revelación de secretos (modalidad 1)",
+    "articulo": "Art. 505 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48,
+      "pena_alternativa_min": 400,
+      "pena_alternativa_max": 800,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP dice prision 6-48m pero catalogo tiene 0-0",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0296",
+    "nombre": "Revelación de secretos (modalidad 2)",
+    "articulo": "Art. 505 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-12m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0297",
+    "nombre": "Revelación de secretos (modalidad 3)",
+    "articulo": "Art. 505 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-48m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0308",
+    "nombre": "Prevaricato judicial",
+    "articulo": "Art. 516 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.75) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0311",
+    "nombre": "Falso testimonio",
+    "articulo": "Art. 519 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.72) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0312",
+    "nombre": "Intimidación a testigos y otros intervinientes en el proceso penal",
+    "articulo": "Art. 520 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0313",
+    "nombre": "Revelación de identidad de testigo protegido",
+    "articulo": "Art. 521 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0319",
+    "nombre": "Favorecimiento de la evasión (modalidad 1)",
+    "articulo": "Art. 527 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 120,
+      "pena_alternativa_min": 300,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true,
+      "es_grave": true
+    },
+    "discrepancias": [
+      "CP dice prision 36-120m pero catalogo tiene 0-0",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=false pero pena maxima CP es 120m (>= 120m)"
+    ]
+  },
+  {
+    "id": "delito-0320",
+    "nombre": "Favorecimiento de la evasión (modalidad 2)",
+    "articulo": "Art. 527 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 120
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-120m vs CP=36-120m"
+    ]
+  },
+  {
+    "id": "delito-0321",
+    "nombre": "Favorecimiento de la evasión (modalidad 3)",
+    "articulo": "Art. 527 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 36,
+      "pena_maxima_meses": 120,
+      "pena_alternativa_min": 300,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-72m vs CP=36-120m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0326",
+    "nombre": "Rebelión (modalidad 1)",
+    "articulo": "Art. 532 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 60,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-180m vs CP=60-240m"
+    ]
+  },
+  {
+    "id": "delito-0327",
+    "nombre": "Rebelión (modalidad 2)",
+    "articulo": "Art. 532 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 60,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=180-240m vs CP=60-240m"
+    ]
+  },
+  {
+    "id": "delito-0334",
+    "nombre": "Muerte, lesiones o secuestro del Presidente de la República",
+    "articulo": "Art. 539 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 9999,
+      "pena_maxima_meses": 9999
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-9999m vs CP=9999-9999m"
+    ]
+  },
+  {
+    "id": "delito-0336",
+    "nombre": "Perturbación ilícita del funcionamiento de las instituciones (modalidad 1)",
+    "articulo": "Art. 541 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 72,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-72m vs CP=12-72m",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0337",
+    "nombre": "Perturbación ilícita del funcionamiento de las instituciones (modalidad 2)",
+    "articulo": "Art. 541 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 72
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-48m vs CP=12-72m"
+    ]
+  },
+  {
+    "id": "delito-0338",
+    "nombre": "Perturbación ilícita del funcionamiento de las instituciones (modalidad 3)",
+    "articulo": "Art. 541 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 72
+    },
+    "discrepancias": [
+      "CP dice prision 12-72m pero catalogo tiene 0-0"
+    ]
+  },
+  {
+    "id": "delito-0339",
+    "nombre": "Coacción y amenaza electoral",
+    "articulo": "Art. 542 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0341",
+    "nombre": "Otros delitos electorales",
+    "articulo": "Art. 544 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.66) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0345",
+    "nombre": "Limitación o Impedimento de determinados derechos fundamentales",
+    "articulo": "Art. 548 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0354",
+    "nombre": "Ataque a señales fronterizas",
+    "articulo": "Art. 557 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.68) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0355",
+    "nombre": "Levantamiento ilegal de planos de fortificaciones u otras obras",
+    "articulo": "Art. 558 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.82) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0361",
+    "nombre": "Incitación a la guerra o a la represalia",
+    "articulo": "Art. 564 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0363",
+    "nombre": "Violación de tregua o pacto, salvoconducto o tratado",
+    "articulo": "Art. 566 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.80) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0376",
+    "nombre": "Introducción de objetos prohibidos",
+    "articulo": "Art. 579 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0380",
+    "nombre": "Facilitación de armas a terceros",
+    "articulo": "Art. 583 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "es_grave=true pero pena maxima CP es 60m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0385",
+    "nombre": "Colaboración sin pertenencia a la asociación terrorista (modalidad 1)",
+    "articulo": "Art. 588 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 60,
+      "pena_maxima_meses": 144
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-120m vs CP=60-144m"
+    ]
+  },
+  {
+    "id": "delito-0386",
+    "nombre": "Colaboración sin pertenencia a la asociación terrorista (modalidad 2)",
+    "articulo": "Art. 588 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 60,
+      "pena_maxima_meses": 144,
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 1000,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=60-144m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0389",
+    "nombre": "Asistencia a campos de entrenamiento",
+    "articulo": "Art. 591 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.73) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 84m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0390",
+    "nombre": "Ciberterrorismo o terrorismo electrónico",
+    "articulo": "Art. 592 CP",
+    "clasificacion": "OK",
+    "correcciones": {
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Conducta tiene similitud media (0.67) con texto CP. Verificar.",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0395",
+    "nombre": "Aborto",
+    "articulo": "Art. 196 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 96,
+      "pena_maxima_meses": 120,
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 1,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-72m vs CP=96-120m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0396",
+    "nombre": "Asesinato",
+    "articulo": "Art. 193 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 240,
+      "pena_maxima_meses": 360
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=240-360m"
+    ]
+  },
+  {
+    "id": "delito-0397",
+    "nombre": "Crimen de lesa humanidad",
+    "articulo": "Art. 146 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 9999,
+      "pena_maxima_meses": 9999
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-240m vs CP=9999-9999m"
+    ]
+  },
+  {
+    "id": "delito-0400",
+    "nombre": "Estupro",
+    "articulo": "Art. 252 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 48,
+      "pena_maxima_meses": 72,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=48-84m vs CP=48-72m",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0401",
+    "nombre": "Femicidio",
+    "articulo": "Art. 208 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 240,
+      "pena_maxima_meses": 360
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=240-360m"
+    ]
+  },
+  {
+    "id": "delito-0402",
+    "nombre": "Genocidio",
+    "articulo": "Art. 145 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 360,
+      "pena_maxima_meses": 480
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=240-360m vs CP=360-480m"
+    ]
+  },
+  {
+    "id": "delito-0403",
+    "nombre": "Homicidio",
+    "articulo": "Art. 192 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-96m vs CP=180-240m"
+    ]
+  },
+  {
+    "id": "delito-0404",
+    "nombre": "Homicidio imprudente",
+    "articulo": "Art. 213 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-60m vs CP=12-36m",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0405",
+    "nombre": "Lesiones",
+    "articulo": "Art. 199 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-48m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0407",
+    "nombre": "Omisión del deber de socorro",
+    "articulo": "Art. 204 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 300,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-24m vs CP=6-12m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0408",
+    "nombre": "Parricidio",
+    "articulo": "Art. 194 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 240,
+      "pena_maxima_meses": 300
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=240-300m"
+    ]
+  },
+  {
+    "id": "delito-0409",
+    "nombre": "Pedofilia",
+    "articulo": "Art. 261 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 48,
+      "pena_maxima_meses": 72,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=48-72m",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0410",
+    "nombre": "Piratería",
+    "articulo": "Art. 161 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=180-240m"
+    ]
+  },
+  {
+    "id": "delito-0413",
+    "nombre": "Trata de personas",
+    "articulo": "Art. 264 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0414",
+    "nombre": "Trata de personas agravada",
+    "articulo": "Art. 264 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0416",
+    "nombre": "Violación agravada",
+    "articulo": "Art. 250 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 60,
+      "pena_maxima_meses": 96,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=60-96m",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0417",
+    "nombre": "Homicidio simple",
+    "articulo": "Art. 192 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-96m vs CP=180-240m"
+    ]
+  },
+  {
+    "id": "delito-0418",
+    "nombre": "Homicidio agravado",
+    "articulo": "Art. 193 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 240,
+      "pena_maxima_meses": 360
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=240-360m"
+    ]
+  },
+  {
+    "id": "delito-0419",
+    "nombre": "Homicidio preterintencional",
+    "articulo": "Art. 192 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-120m vs CP=180-240m"
+    ]
+  },
+  {
+    "id": "delito-0421",
+    "nombre": "Aborto consentido",
+    "articulo": "Art. 196 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 96,
+      "pena_maxima_meses": 120,
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 1,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=36-72m vs CP=96-120m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0422",
+    "nombre": "Aborto forzado",
+    "articulo": "Art. 196 CP",
+    "clasificacion": "REVISAR_MANUAL",
+    "correcciones": {
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 1,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP menciona multa pero no esta registrada como alternativa",
+      "Conducta tiene similitud baja (0.00) con texto CP. Posible articulo incorrecto."
+    ]
+  },
+  {
+    "id": "delito-0423",
+    "nombre": "Aborto imprudente",
+    "articulo": "Art. 196 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 96,
+      "pena_maxima_meses": 120,
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 1,
+      "tiene_pena_alternativa": true,
+      "es_grave": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=96-120m",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=false pero pena maxima CP es 120m (>= 120m)"
+    ]
+  },
+  {
+    "id": "delito-0424",
+    "nombre": "Lesiones leves",
+    "articulo": "Art. 199 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-12m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0427",
+    "nombre": "Participación en riña",
+    "articulo": "Art. 205 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 200,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=6-12m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0428",
+    "nombre": "Lesiones al feto",
+    "articulo": "Art. 203 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 48
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-48m vs CP=6-48m"
+    ]
+  },
+  {
+    "id": "delito-0429",
+    "nombre": "Agresión sexual",
+    "articulo": "Art. 254 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 3600,
+      "pena_alternativa_min": 300,
+      "pena_alternativa_max": 600,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-96m vs CP=6-3600m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0430",
+    "nombre": "Abuso sexual a menor impúber",
+    "articulo": "Art. 261 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 48,
+      "pena_maxima_meses": 72,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=48-72m",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0435",
+    "nombre": "Traición",
+    "articulo": "Art. 149 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 120,
+      "pena_maxima_meses": 180
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-240m vs CP=120-180m"
+    ]
+  },
+  {
+    "id": "delito-0439",
+    "nombre": "Crimen de guerra",
+    "articulo": "Art. 148 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 120,
+      "pena_maxima_meses": 180
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-240m vs CP=120-180m"
+    ]
+  },
+  {
+    "id": "delito-0440",
+    "nombre": "Ejecución extrajudicial",
+    "articulo": "Art. 192 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-240m vs CP=180-240m"
+    ]
+  },
+  {
+    "id": "delito-0441",
+    "nombre": "Tráfico ilegal de mano de obra",
+    "articulo": "Art. 264 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-120m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0442",
+    "nombre": "Omisión del deber de socorro por profesional",
+    "articulo": "Art. 204 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 300,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=12-36m vs CP=6-12m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0444",
+    "nombre": "Participación en riña tumultuaria",
+    "articulo": "Art. 205 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 200,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-48m vs CP=6-12m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0445",
+    "nombre": "Agresión sexual con penetración de objetos",
+    "articulo": "Art. 254 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 3600,
+      "pena_alternativa_min": 300,
+      "pena_alternativa_max": 600,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=72-120m vs CP=6-3600m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0448",
+    "nombre": "Atentado contra jefe de Estado extranjero",
+    "articulo": "Art. 158 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-120m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0449",
+    "nombre": "Piratería aérea",
+    "articulo": "Art. 161 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=180-240m"
+    ]
+  },
+  {
+    "id": "delito-0450",
+    "nombre": "Lesiones con deformidad",
+    "articulo": "Art. 201 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 96,
+      "pena_maxima_meses": 144
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=72-96m vs CP=96-144m"
+    ]
+  },
+  {
+    "id": "delito-0453",
+    "nombre": "Riña con resultado de muerte",
+    "articulo": "Art. 206 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=48-96m vs CP=6-12m",
+      "es_grave=true pero pena maxima CP es 12m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0461",
+    "nombre": "Turismo sexual infantil",
+    "articulo": "Art. 264 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0462",
+    "nombre": "Trata con fines de esclavitud",
+    "articulo": "Art. 264 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0466",
+    "nombre": "Omisión del deber de socorro en accidente",
+    "articulo": "Art. 204 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 300,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=6-24m vs CP=6-12m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0467",
+    "nombre": "Aborto sin consentimiento agravado",
+    "articulo": "Art. 196 CP",
+    "clasificacion": "REVISAR_MANUAL",
+    "correcciones": {
+      "pena_alternativa_min": 500,
+      "pena_alternativa_max": 1,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "CP menciona multa pero no esta registrada como alternativa",
+      "Conducta tiene similitud baja (0.02) con texto CP. Posible articulo incorrecto."
+    ]
+  },
+  {
+    "id": "delito-0469",
+    "nombre": "Riña con arma blanca",
+    "articulo": "Art. 205 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 6,
+      "pena_maxima_meses": 12,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 200,
+      "tiene_pena_alternativa": true
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=24-48m vs CP=6-12m",
+      "CP menciona multa pero no esta registrada como alternativa"
+    ]
+  },
+  {
+    "id": "delito-0470",
+    "nombre": "Trata de menores",
+    "articulo": "Art. 264 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 36,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=12-36m",
+      "es_grave=true pero pena maxima CP es 36m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0471",
+    "nombre": "Agresión sexual a persona con discapacidad",
+    "articulo": "Art. 256 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 12,
+      "pena_maxima_meses": 24,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=84-132m vs CP=12-24m",
+      "es_grave=true pero pena maxima CP es 24m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0472",
+    "nombre": "Violación de persona con discapacidad",
+    "articulo": "Art. 250 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 60,
+      "pena_maxima_meses": 96,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=120-180m vs CP=60-96m",
+      "es_grave=true pero pena maxima CP es 96m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0473",
+    "nombre": "Abuso sexual con penetración digital a menor",
+    "articulo": "Art. 261 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 48,
+      "pena_maxima_meses": 72,
+      "pena_alternativa_min": 100,
+      "pena_alternativa_max": 500,
+      "tiene_pena_alternativa": true,
+      "es_grave": false
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=96-144m vs CP=48-72m",
+      "CP menciona multa pero no esta registrada como alternativa",
+      "es_grave=true pero pena maxima CP es 72m (< 120m)"
+    ]
+  },
+  {
+    "id": "delito-0476",
+    "nombre": "Prostitución forzada",
+    "articulo": "Art. 263 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 0,
+      "pena_maxima_meses": 0
+    },
+    "discrepancias": [
+      "Articulo sin pena de prision pero catalogo tiene 60-120 meses. Debe ser 0."
+    ]
+  },
+  {
+    "id": "delito-0477",
+    "nombre": "Explotación sexual de persona vulnerable",
+    "articulo": "Art. 263 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 0,
+      "pena_maxima_meses": 0
+    },
+    "discrepancias": [
+      "Articulo sin pena de prision pero catalogo tiene 84-144 meses. Debe ser 0."
+    ]
+  },
+  {
+    "id": "delito-0482",
+    "nombre": "Inutilización de buques o aeronaves",
+    "articulo": "Art. 161 CP",
+    "clasificacion": "CORREGIR_PENA",
+    "correcciones": {
+      "pena_minima_meses": 180,
+      "pena_maxima_meses": 240
+    },
+    "discrepancias": [
+      "Penas difieren: catalogo=60-120m vs CP=180-240m"
+    ]
+  }
+]
