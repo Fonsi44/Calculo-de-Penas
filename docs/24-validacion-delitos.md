@@ -243,3 +243,39 @@ node -e "const d=require('./data/delitos-validacion.json'); const c={};d.forEach
 - [x] C7: cierre — corregido catálogo y notas en `docs/24-validacion-delitos.md`
 - [x] C7+: eliminación de 3 delitos rechazados del catálogo (Duelo y variantes)
 - [ ] D6: UI para que abogado humano revise discrepancias de pena en entries `validado` con notas de advertencia
+
+## Saneamiento integral contra el CP Honduras (2026-06-05)
+
+**Motivación**: el catálogo final de 434 delitos (post-deduplicación C7+) seguía incompleto respecto al CP vigente. De los 362 artículos con `tema='delitos'`, solo 107 estaban cubiertos. Además, la Constitución (128 arts en `data/articulos_constitucion.json`) tenía mapeos incorrectos `numero → texto`.
+
+**Acciones realizadas**:
+
+1. **Re-extracción de la Constitución** desde `docs/Constitucion de Honduras.pdf` (PyMuPDF 1.27):
+   - `data/articulos_constitucion.json`: 128 → **378 artículos** (rango 1-379, único gap real en Art. 332).
+   - Sub-artículos 43-A y 43-B fusionados en Art. 43 (preserva texto, evita PK duplicado en BD).
+   - **Hallazgo crítico**: los textos anteriores NO coincidían con la numeración (ej. "Art. 57" contenía texto del Art. 65 real). Re-extracción desde PDF es la fuente de verdad.
+
+2. **Inventario del CP**:
+   - `data/inventario_cp_delitos.csv`: 362 artículos CP con tema='delitos'.
+   - 107 cubiertos, **255 faltantes** identificados para adicionar.
+
+3. **Parser de penas** (artículo por artículo):
+   - `scripts/extract-penas-from-cp.py` con regexes para 4 órdenes del CP: `prisión de X a Y años`, `X a Y años de prisión`, `prisión a perpetuidad`, etc.
+   - `data/delitos-propuestos.json`: **395 entradas** (362 arts + 33 modalidades detectadas).
+   - **232/395 (58.7%)** con pena auto-detectada. El resto (163) son artículos procesales (Concursos, agravantes referenciales, definiciones) sin pena propia.
+
+4. **Asignación de rama_id y constitución**:
+   - 251/395 con rama_id auto-asignada desde estructura CP (libro/título/capítulo → rama_id del catálogo histórico).
+   - 132/395 con `constitucion_articulo_id` enlazado.
+   - `data/reclasificacion_88.csv`: 88 entradas del catálogo histórico que referencian artículos CP fuera de `tema='delitos'` (ej. "Nombramiento ilegal" en Art. 499) — preservadas con su rama original.
+
+5. **Merge final + validación + re-seed**:
+   - `data/delitos.json`: 434 → **483 entradas** (395 nuevas + 88 preservadas).
+   - `data/delitos-validacion.json`: 234 validados automáticamente, 249 a revisión manual de pena, 0 rechazados.
+   - `data/delitos-estados.json`: totales sincronizados.
+   - `data/delitos-validacion.csv`: regenerado con detalle por entrada.
+   - **Sanity checks**: 0 mojibake, 0 duplicados, 0 pena_min > pena_max (1 caso detectado y corregido: Malversación imprudente).
+
+**Resultado**: 483 delitos únicos respaldados por el CP Honduras Decreto 130-2017 y la Constitución de la República, cifras sincronizadas entre seed, BD local, validación y documentación.
+
+**Pendiente para abogado humano (D6)**: revisar manualmente los 249 delitos a revisión de pena, especialmente los artículos procesales/concursales que no declaran pena propia pero que el parser no logró emparejar con la pena de un artículo base.

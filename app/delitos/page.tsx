@@ -123,7 +123,7 @@ export default function DelitosCatalog() {
         <div className="flex items-start gap-2 p-2 mb-3 bg-success-bg border border-success/30 rounded-md text-[11px] leading-4">
           <CheckCircle2 size={14} className="text-success shrink-0 mt-0.5" />
           <div className="text-text-secondary">
-            <strong className="text-text">Catálogo validado.</strong> Los 466 delitos del catálogo han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Reporte: <code className="px-1 py-0.5 bg-surface rounded text-[10px]">data/delitos-validacion.csv</code>.
+            <strong className="text-text">Catálogo validado.</strong> Los {total} tipos penales del catálogo (incluye modalidades agravadas/atenuadas por artículo) han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024), cubriendo los 362 artículos del CP tipificados como delito. Reporte: <code className="px-1 py-0.5 bg-surface rounded text-[10px]">data/delitos-validacion.csv</code>.
           </div>
         </div>
         <div className="relative mb-3">

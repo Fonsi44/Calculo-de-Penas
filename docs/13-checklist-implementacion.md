@@ -17,7 +17,7 @@ Use esta lista para verificar que el sistema está listo para producción.
 
 ## Datos
 
-- [x] `data/delitos.json` con 466 entradas verificadas; nota: contiene 32 grupos duplicados por `(nombre, articulo)` que se insertan una sola vez por el unique constraint de la BD (434 únicos reales). Deduplicación pendiente (Fase 1).
+- [x] `data/delitos.json` con 483 entradas (395 nuevas extracciones artículo-por-artículo del CP + 88 preservadas del catálogo histórico). Cubre los 362 artículos con `tema='delitos'` del CP Decreto 130-2017. 234 con auto-validación completa (artículo + pena + rama), 249 pendientes de revisión manual de pena.
 - [ ] `data/delitos-estados.json` generado y con totales correctos.
 - [ ] Catálogo de delitos revisado por abogado HN (al menos los 112 verificados).
 - [ ] Decidir tratamiento de los 323 delitos "rechazados": ¿inactivos? ¿corrección manual?

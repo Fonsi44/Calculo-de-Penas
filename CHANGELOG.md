@@ -1,5 +1,51 @@
 # Changelog
 
+## Fase 9 — Saneamiento integral del catálogo contra CP HN (2026-06-05)
+
+### Constitución (fuente de verdad)
+
+- **`docs/Constitucion de Honduras.pdf`**: nuevo PDF agregado como fuente primaria de la Constitución de la República.
+- **`scripts/build-constitucion-index.py`** (NUEVO): extractor de Constitución desde PDF (PyMuPDF 1.27).
+- **`data/articulos_constitucion.json`**: re-extraído de 128 a **378 artículos** (rango 1-379, único gap real en Art. 332).
+- **Hallazgo crítico**: el JSON anterior tenía mapeos `numero → texto` incorrectos. Re-extracción corrige todos los enlaces constitución↔delito.
+- Sub-artículos 43-A y 43-B fusionados en Art. 43 (evita PK duplicado en BD, preserva texto).
+
+### Catálogo de delitos
+
+- **`data/delitos.json`**: **434 → 483 entradas** (395 nuevas extracciones + 88 preservadas del catálogo histórico que referencian artículos CP fuera de `tema='delitos'`).
+- Cubre los **362 artículos del CP con `tema='delitos'`** del Decreto 130-2017.
+- **`scripts/extract-penas-from-cp.py`** (NUEVO): parser de penas artículo-por-artículo. 4 órdenes del CP soportadas: `prisión de X a Y años`, `X a Y años de prisión`, `prisión a perpetuidad`, `prisión permanente`.
+- **232/395 (58.7%)** con pena auto-detectada. Resto (163) son artículos procesales/concursales sin pena propia.
+- 251/395 con `rama_id` auto-asignada desde estructura CP. 132/395 con `constitucion_articulo_id` enlazado.
+- **`data/delitos-propuestos.json`**: catálogo propuesto intermedio (395 entradas).
+- **`data/inventario_cp_delitos.csv`** (NUEVO): inventario de los 362 artículos CP con `tema='delitos'`, marcando cobertura actual.
+- **`data/inventario_faltantes.csv`** (NUEVO): 255 artículos CP no cubiertos.
+- **`data/reclasificacion_88.csv`** (NUEVO): 88 entradas del catálogo histórico que referencian artículos fuera de `tema='delitos'`.
+
+### Validación y reportes
+
+- **`data/delitos-validacion.json`**: regenerado (234 validados, 249 a revisión, 0 rechazados).
+- **`data/delitos-estados.json`**: totales sincronizados con seed.
+- **`data/delitos-validacion.csv`**: regenerado.
+- **Sanity checks**: 0 mojibake, 0 duplicados, 0 pena_min > pena_max (1 caso detectado y corregido: Malversación imprudente).
+
+### Web y documentación
+
+- **`app/delitos/page.tsx`**: hardcode "Los 466 delitos" → dinámico con `{total}` y mención de "362 artículos del CP tipificados como delito".
+- **`README.md`**: cifra actualizada de "466 delitos, 128 arts. const." → "483 delitos, 378 arts. const.".
+- **`docs/13-checklist-implementacion.md`**, **`docs/14-log-implementacion.md`**, **`docs/24-validacion-delitos.md`**: cifras y narrativa actualizadas.
+
+### Filesystem
+
+- **`docs/Co�digo Penal Decreto 130-2017 fusionado actualizado a julio 2024.pdf`**: renombrado a **`docs/Codigo Penal Decreto 130-2017 fusionado actualizado a julio 2024.pdf`** (corregido caracter combinante Unicode).
+
+### BD Neon (re-seed limpio)
+
+- **`scripts/resend-neon.mjs`** (NUEVO): backup + DELETE + INSERT para `delitos` y `articulos_constitucion` con orden FK-aware.
+- Delitos: 469 → **483** (sanitización, sin mojibake, FK actualizadas).
+- Articulos_constitucion: 128 → **378** (PKs y textos correctos).
+- Backups guardados en `data/backup_*_2026-06-05.json`.
+
 ## Fase 8 — Saneamiento integral del repositorio (2026-06-05)
 
 ### Archivo de código muerto
