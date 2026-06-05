@@ -33,9 +33,10 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/solicitar-consulta',
   '/como-llegar',
   '/preguntas-frecuentes',
-  '/derecho-penal-hondureno',
-  '/proceso-penal',
   '/blog',
+  '/areas-juridicas',
+  '/derecho-penal',
+  '/migrantes-hondurenos-en-espana',
 ]);
 
 const INTRANET_LOGIN_PATH = '/intranet/login';
@@ -63,7 +64,7 @@ const INTRANET_LEGACY_PREFIXES = [
 ];
 
 const PUBLIC_PAGE_PREFIXES = [
-  '/areas-de-practica',
+  '/areas-juridicas',
   '/blog/',
   '/_next/',
 ];

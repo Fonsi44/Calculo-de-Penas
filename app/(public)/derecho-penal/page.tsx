@@ -13,7 +13,7 @@ import { getAreaTone } from '@/lib/icon-map';
 export const metadata: Metadata = {
   title: 'Derecho Penal',
   description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca. ${site.name}.`,
-  alternates: { canonical: '/areas-juridicas/derecho-penal' },
+  alternates: { canonical: '/derecho-penal' },
 };
 
 export default function DerechoPenalPage() {
@@ -30,7 +30,6 @@ export default function DerechoPenalPage() {
     faqs: hubPenal.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
-      { name: 'Áreas Jurídicas', url: absoluteUrl('/areas-juridicas') },
       { name: 'Derecho Penal', url },
     ],
     url,
@@ -71,7 +70,7 @@ export default function DerechoPenalPage() {
           {hubPenal.grupos.map((grupo) => (
             <ServiceCardPhoto
               key={grupo.slug}
-              href={`/areas-juridicas/derecho-penal/${grupo.slug}`}
+              href={`/derecho-penal/${grupo.slug}`}
               title={grupo.titulo}
               description={grupo.resumen}
               tone={getAreaTone(grupo.slug)}

@@ -3,25 +3,24 @@ import { Scale, Phone, MessageCircle, Mail, MapPin, Clock, Lock } from 'lucide-r
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 
 const AREAS = [
-  { label: 'Defensa Penal', href: '/areas-de-practica/defensa-penal' },
-  { label: 'Delitos contra la vida', href: '/areas-de-practica/delitos-contra-la-vida' },
-  { label: 'Delitos contra la propiedad', href: '/areas-de-practica/delitos-contra-la-propiedad' },
-  { label: 'Drogas', href: '/areas-de-practica/drogas' },
-  { label: 'Violencia doméstica', href: '/areas-de-practica/violencia-domestica' },
-  { label: 'Delitos sexuales', href: '/areas-de-practica/delitos-sexuales' },
-  { label: 'Delitos económicos', href: '/areas-de-practica/delitos-economicos' },
-  { label: 'Asistencia a detenidos', href: '/areas-de-practica/asistencia-detenidos' },
-  { label: 'Audiencias', href: '/areas-de-practica/audiencias' },
-  { label: 'Recursos', href: '/areas-de-practica/recursos' },
-  { label: 'Asesoría preventiva', href: '/areas-de-practica/asesoria-preventiva' },
-  { label: 'Atención a víctimas', href: '/areas-de-practica/atencion-victimas' },
+  { label: 'Derecho Penal', href: '/derecho-penal' },
+  { label: 'Derecho de Familia', href: '/areas-juridicas/derecho-de-familia' },
+  { label: 'Derecho Laboral', href: '/areas-juridicas/derecho-laboral' },
+  { label: 'Derecho Civil y Notarial', href: '/areas-juridicas/derecho-civil-y-notarial' },
+  { label: 'Derecho Mercantil', href: '/areas-juridicas/derecho-mercantil-empresarial' },
+  { label: 'Derecho Tributario', href: '/areas-juridicas/tributario-fiscal' },
+  { label: 'Derecho Bancario', href: '/areas-juridicas/derecho-bancario-y-financiero' },
+  { label: 'Administrativo', href: '/areas-juridicas/derecho-administrativo-y-servicio-civil' },
+  { label: 'Regulación Sanitaria', href: '/areas-juridicas/regulacion-sanitaria' },
+  { label: 'Extranjería', href: '/areas-juridicas/extranjeria-en-honduras' },
+  { label: 'Conciliación y Arbitraje', href: '/areas-juridicas/conciliacion-y-arbitraje' },
 ];
 
 const DESPACHO = [
   { label: 'El Despacho', href: '/despacho' },
   { label: 'Cómo llegar', href: '/como-llegar' },
-  { label: 'Derecho Penal Hondureño', href: '/derecho-penal-hondureno' },
-  { label: 'Proceso Penal', href: '/proceso-penal' },
+  { label: 'Áreas Jurídicas', href: '/areas-juridicas' },
+  { label: 'Migrantes en España', href: '/migrantes-hondurenos-en-espana' },
   { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
 ];
 
@@ -57,7 +56,7 @@ export function PublicFooter() {
 
           {/* Áreas */}
           <div>
-            <h3 className="text-[12px] font-bold uppercase tracking-wider text-accent mb-3">Áreas de práctica</h3>
+            <h3 className="text-[12px] font-bold uppercase tracking-wider text-accent mb-3">Áreas Jurídicas</h3>
             <ul className="space-y-1.5">
               {AREAS.map((a) => (
                 <li key={a.href}>

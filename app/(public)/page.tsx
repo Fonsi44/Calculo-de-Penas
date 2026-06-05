@@ -41,12 +41,12 @@ const REAL_QUESTIONS = [
 ];
 
 const AREAS = [
-  { icon: ShieldCheck, title: 'Defensa Penal', desc: 'Asumimos su defensa desde la primera actuación procesal hasta la sentencia firme.', href: '/areas-de-practica/defensa-penal' },
-  { icon: Gavel, title: 'Audiencias y Juicio Oral', desc: 'Representación técnica en audiencias iniciales, preliminares, de sobreseimiento y juicio oral.', href: '/areas-de-practica/audiencias' },
-  { icon: Users, title: 'Asistencia a Detenidos', desc: 'Asistencia letrada inmediata en sede policial o ante el Ministerio Público.', href: '/areas-de-practica/asistencia-detenidos' },
-  { icon: FileText, title: 'Recursos y Apelaciones', desc: 'Interposición de recursos de apelación, casación, revisión y amparo.', href: '/areas-de-practica/recursos' },
-  { icon: HeartHandshake, title: 'Atención a Víctimas', desc: 'Acompañamiento jurídico a víctimas de delitos durante el proceso penal.', href: '/areas-de-practica/atencion-victimas' },
-  { icon: BookOpen, title: 'Asesoría Preventiva', desc: 'Consultoría penal preventiva para empresas, instituciones y personas.', href: '/areas-de-practica/asesoria-preventiva' },
+  { icon: ShieldCheck, title: 'Defensa Penal', desc: 'Asumimos su defensa desde la primera actuación procesal hasta la sentencia firme.', href: '/derecho-penal' },
+  { icon: Gavel, title: 'Audiencias y Juicio Oral', desc: 'Representación técnica en audiencias iniciales, preliminares, de sobreseimiento y juicio oral.', href: '/derecho-penal' },
+  { icon: Users, title: 'Asistencia a Detenidos', desc: 'Asistencia letrada inmediata en sede policial o ante el Ministerio Público.', href: '/derecho-penal/atencion-casos-penales-litigiosos' },
+  { icon: FileText, title: 'Recursos y Apelaciones', desc: 'Interposición de recursos de apelación, casación, revisión y amparo.', href: '/derecho-penal/recursos-y-defensa-avanzada' },
+  { icon: HeartHandshake, title: 'Atención a Víctimas', desc: 'Acompañamiento jurídico a víctimas de delitos durante el proceso penal.', href: '/derecho-penal' },
+  { icon: BookOpen, title: 'Asesoría Preventiva', desc: 'Consultoría penal preventiva para empresas, instituciones y personas.', href: '/derecho-penal' },
 ];
 
 const PROCESS = [
@@ -218,7 +218,7 @@ export default function HomePage() {
       {/* SERVICES */}
       <Section background="muted" spacing="md" ariaLabel="Áreas de práctica">
         <SectionHeader
-          eyebrow="Áreas de práctica"
+          eyebrow="Áreas Jurídicas"
           title="Defensa penal integral"
           subtitle="Cada caso requiere análisis individual. Le orientamos sobre la vía procesal adecuada y los plazos que aplican."
         />

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${grupo.titulo} | Derecho Penal`,
     description: `${grupo.descripcion.substring(0, 160)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
-    alternates: { canonical: `/areas-juridicas/derecho-penal/${slug}` },
+    alternates: { canonical: `/derecho-penal/${slug}` },
   };
 }
 
@@ -33,7 +33,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
   if (!grupo) notFound();
 
   const url = penalHubHref();
-  const grupoUrl = absoluteUrl(`/areas-juridicas/derecho-penal/${slug}`);
+  const grupoUrl = absoluteUrl(`/derecho-penal/${slug}`);
   const Icon = getIcon(grupo.icono);
   const tone = getAreaTone(slug);
 
@@ -53,7 +53,6 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
     faqs: grupo.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
-      { name: 'Áreas Jurídicas', url: absoluteUrl('/areas-juridicas') },
       { name: 'Derecho Penal', url },
       { name: grupo.titulo, url: grupoUrl },
     ],
@@ -148,7 +147,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
           {related.map((r) => (
             <ServiceCardPhoto
               key={r.slug}
-              href={`/areas-juridicas/derecho-penal/${r.slug}`}
+              href={`/derecho-penal/${r.slug}`}
               title={r.titulo}
               description={r.resumen}
               tone={getAreaTone(r.slug)}
@@ -157,7 +156,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
             />
           ))}
           <ServiceCardPhoto
-            href="/areas-juridicas/derecho-penal"
+            href="/derecho-penal"
             title="Ver todos los servicios penales"
             description="Volver al hub de derecho penal para explorar todos los grupos especializados."
             tone="penal"

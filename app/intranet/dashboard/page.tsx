@@ -275,7 +275,7 @@ export default function IntranetDashboard() {
             codificados en el motor conforme a los artículos 1 a 635.
           </p>
           <Link
-            href="/derecho-penal-hondureno"
+            href="/derecho-penal"
             className="inline-flex items-center gap-1 mt-2 text-[11px] font-semibold text-primary hover:text-accent-dark"
           >
             Ver marco normativo completo <ArrowRight size={12} />

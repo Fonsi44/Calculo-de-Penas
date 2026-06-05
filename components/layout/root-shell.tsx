@@ -17,15 +17,16 @@ const PUBLIC_ROUTES = new Set([
   '/solicitar-consulta',
   '/como-llegar',
   '/preguntas-frecuentes',
-  '/derecho-penal-hondureno',
-  '/proceso-penal',
   '/blog',
+  '/areas-juridicas',
+  '/derecho-penal',
+  '/migrantes-hondurenos-en-espana',
   '/intranet/login',
   '/intranet/recuperar-clave',
   '/intranet/acceso-denegado',
 ]);
 
-const PUBLIC_PREFIXES = ['/areas-de-practica', '/blog/'];
+const PUBLIC_PREFIXES = ['/areas-juridicas', '/blog/'];
 
 function isPublicRoute(pathname: string): boolean {
   if (PUBLIC_ROUTES.has(pathname)) return true;

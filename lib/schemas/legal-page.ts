@@ -138,7 +138,7 @@ export function areaHref(slug: string) {
 }
 
 export function penalHubHref() {
-  return absoluteUrl('/areas-juridicas/derecho-penal');
+  return absoluteUrl('/derecho-penal');
 }
 
 export function migrantesHubHref() {

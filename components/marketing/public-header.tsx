@@ -8,9 +8,9 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 
 const NAV = [
   { label: 'El Despacho', href: '/despacho' },
-  { label: 'Áreas de Práctica', href: '/areas-de-practica' },
-  { label: 'Derecho Penal', href: '/derecho-penal-hondureno' },
-  { label: 'Proceso Penal', href: '/proceso-penal' },
+  { label: 'Áreas Jurídicas', href: '/areas-juridicas' },
+  { label: 'Derecho Penal', href: '/derecho-penal' },
+  { label: 'Migrantes en España', href: '/migrantes-hondurenos-en-espana' },
   { label: 'FAQ', href: '/preguntas-frecuentes' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
