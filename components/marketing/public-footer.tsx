@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Scale, Phone, MessageCircle, Mail, MapPin, Clock, Lock } from 'lucide-react';
+import { Scale, Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 
 const AREAS = [
@@ -127,11 +127,7 @@ export function PublicFooter() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/intranet" className="inline-flex items-center gap-1 text-[12px] text-text-inverse/70 hover:text-accent">
-                <Lock size={11} /> Intranet
-              </Link>
-            </li>
+
           </ul>
         </div>
         <p className="text-[11px] text-text-inverse/50 mt-3 italic">
