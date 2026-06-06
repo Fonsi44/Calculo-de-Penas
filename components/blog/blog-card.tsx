@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/ui';
@@ -25,7 +26,13 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
         featured && 'md:grid md:grid-cols-2',
       )}
     >
-      <div className={cn('h-48 bg-gradient-to-br from-primary/10 to-accent/10', featured && 'md:h-full')} />
+      <div className={cn('relative h-48 overflow-hidden', featured && 'md:h-full')}>
+        {post.coverImage ? (
+          <Image src={post.coverImage} alt={post.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
+        )}
+      </div>
       <div className="p-5 flex flex-col justify-between">
         <div>
           <div className="flex items-center gap-2 mb-3">

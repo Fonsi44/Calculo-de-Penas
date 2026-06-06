@@ -1,6 +1,43 @@
 # Changelog
 
-## Release 1 — Frontend público completo (2026-06-06)
+## Release 2 — Cluster SEO blog zona sur (2026-06-06)
+
+### Novedades
+
+- **Cluster SEO de 5 artículos** orientados a posicionamiento local en el sur de Honduras.
+- Cada artículo con keyword principal propia, intención de búsqueda diferenciada y enfoque geográfico en Nacaome, Valle y Choluteca.
+- Enlazado interno entre artículos y hacia páginas de servicio del sitio.
+
+### Artículos creados
+
+1. **«¿Cuándo necesita un abogado penalista en el sur de Honduras?»** — `abogado-penalista-sur-honduras.ts` (derecho-penal). Keyword: "abogado penalista sur de Honduras". Intención: informacional + transaccional suave.
+2. **«Problemas legales familiares en Honduras: guía práctica de pasos a seguir»** — `problemas-legales-familiares-honduras.ts` (derecho-de-familia). Keyword: "problemas legales familiares Honduras". Intención: informacional.
+3. **«Despido laboral en Honduras: derechos, indemnización y pasos para reclamar»** — `despido-laboral-honduras-derechos.ts` (derecho-laboral). Keyword: "despido laboral Honduras derechos". Intención: informacional + transaccional clara.
+4. **«Cómo elegir un bufete de abogados en Nacaome o la zona sur de Honduras»** — `elegir-bufete-abogados-nacaome.ts` (practica-legal). Keyword: "bufete de abogados Nacaome". Intención: comparativa / confianza / validación.
+5. **«Servicios legales para empresas y particulares en el sur de Honduras»** — `servicios-legales-empresas-sur-honduras.ts` (derecho-civil). Keyword: "servicios legales sur de Honduras". Intención: transaccional clara.
+
+### Archivos modificados
+
+- `data/blog/posts/index.ts` — importados y registrados los 5 nuevos posts.
+- `data/blog/posts/abogado-penalista-sur-honduras.ts` (NUEVO)
+- `data/blog/posts/problemas-legales-familiares-honduras.ts` (NUEVO)
+- `data/blog/posts/despido-laboral-honduras-derechos.ts` (NUEVO)
+- `data/blog/posts/elegir-bufete-abogados-nacaome.ts` (NUEVO)
+- `data/blog/posts/servicios-legales-empresas-sur-honduras.ts` (NUEVO)
+
+### Cluster SEO
+
+- Post piloto existente (`defensa-penal-honduras`) funciona como piedra angular del clúster penal.
+- Artículo 1 enlaza al post piloto y viceversa.
+- Artículo 4 enlaza a página de servicio y al post 5.
+- Artículo 5 enlaza a páginas de servicio de cada rama (penal, familia, laboral, civil).
+- Schema `BlogPosting` aplicado automáticamente vía `lib/schemas/blog.ts` para todos los posts.
+- Sin canibalización semántica entre artículos.
+
+### Validación
+
+- 5 posts nuevos + 1 existente = 6 posts en total.
+- Sin cambios en motor de cálculo, API, DB, componentes, layout ni configuración.
 
 ### Novedades
 
