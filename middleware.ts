@@ -65,6 +65,8 @@ const INTRANET_LEGACY_PREFIXES = [
 
 const PUBLIC_PAGE_PREFIXES = [
   '/areas-juridicas',
+  '/derecho-penal',
+  '/migrantes-hondurenos-en-espana',
   '/blog/',
   '/_next/',
 ];
