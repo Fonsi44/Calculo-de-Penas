@@ -106,6 +106,83 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
   }
 }
 
+export interface ConsultaEmailPayload {
+  nombre: string;
+  telefono: string;
+  email: string | null;
+  motivo: string;
+  resumen: string;
+  ip?: string;
+  userAgent?: string;
+  submittedAt: Date;
+}
+
+export async function sendConsultaEmail(payload: ConsultaEmailPayload): Promise<SendResult> {
+  const client = getClient();
+  if (!client) {
+    return { ok: false, error: 'RESEND_API_KEY no configurada' };
+  }
+
+  const to = getNotificationEmail();
+  const from = getFromAddress();
+  const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
+  const subject = `[Solicitud de consulta] ${payload.motivo} — ${payload.nombre}`;
+  const fechaLocal = formatHondurasDateTime(payload.submittedAt, { dateStyle: 'long', timeStyle: 'short' });
+
+  const html = `
+    <h2>Nueva solicitud de consulta desde la web</h2>
+    <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif;font-size:14px;">
+      <tr><td><strong>Nombre</strong></td><td>${escapeHtml(payload.nombre)}</td></tr>
+      <tr><td><strong>Teléfono</strong></td><td>${escapeHtml(payload.telefono)}</td></tr>
+      <tr><td><strong>Correo</strong></td><td>${escapeHtml(payload.email ?? '—')}</td></tr>
+      <tr><td><strong>Motivo</strong></td><td>${escapeHtml(payload.motivo)}</td></tr>
+      <tr><td><strong>Fecha (Honduras)</strong></td><td>${escapeHtml(fechaLocal)}</td></tr>
+    </table>
+    <h3>Resumen de la situación</h3>
+    <p style="white-space:pre-wrap;font-family:sans-serif;font-size:14px;">${escapeHtml(payload.resumen)}</p>
+    <hr />
+    <p style="font-size:12px;color:#666;">
+      IP: ${escapeHtml(payload.ip ?? 'desconocida')}<br />
+      UA: ${escapeHtml(payload.userAgent ?? 'desconocido')}<br />
+      ISO: ${payload.submittedAt.toISOString()}
+    </p>
+  `.trim();
+
+  const text = [
+    'Nueva solicitud de consulta desde la web',
+    '',
+    `Nombre: ${payload.nombre}`,
+    `Teléfono: ${payload.telefono}`,
+    `Correo: ${payload.email ?? '—'}`,
+    `Motivo: ${payload.motivo}`,
+    `Fecha (Honduras): ${fechaLocal}`,
+    '',
+    'Resumen:',
+    payload.resumen,
+    '',
+    '---',
+    `IP: ${payload.ip ?? 'desconocida'}`,
+    `UA: ${payload.userAgent ?? 'desconocido'}`,
+  ].join('\n');
+
+  try {
+    const { data, error } = await client.emails.send({
+      from: `Web Pineda y Asociados <${from}>`,
+      to: [to],
+      replyTo,
+      subject,
+      html,
+      text,
+    });
+    if (error) {
+      return { ok: false, error: error.message };
+    }
+    return { ok: true, id: data?.id };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'Error desconocido' };
+  }
+}
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')

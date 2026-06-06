@@ -106,7 +106,34 @@ export const contactoSchema = z.object({
   acepta: z.literal(true, { message: 'Debe aceptar la política de privacidad' }),
 });
 
+export const CONSULTA_MOTIVOS = [
+  'Familiar detenido',
+  'Citaciones o audiencias',
+  'Investigación en curso',
+  'Querella o denuncia',
+  'Recurso o apelación',
+  'Asesoría preventiva',
+  'Atención a víctima',
+  'Otro asunto',
+] as const;
+
+export const consultaSchema = z.object({
+  nombre: z.string().trim().min(1, 'Nombre requerido').max(200),
+  telefono: z.string().trim().min(1, 'Teléfono requerido').max(50),
+  email: z
+    .string()
+    .trim()
+    .max(255)
+    .email('Email inválido')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  motivo: z.enum(CONSULTA_MOTIVOS, { message: 'Motivo inválido' }),
+  resumen: z.string().trim().min(15, 'Mínimo 15 caracteres').max(5000),
+  acepta: z.literal(true, { message: 'Debe aceptar la política de privacidad' }),
+});
+
 export type ContactoInput = z.infer<typeof contactoSchema>;
+export type ConsultaInput = z.infer<typeof consultaSchema>;
 
 function extractZodError(error: z.ZodError): string {
   try {
