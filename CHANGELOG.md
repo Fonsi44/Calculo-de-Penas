@@ -1,5 +1,18 @@
 # Changelog
 
+## Release 5 — Hardenizado SSL/TLS y canonical host www (2026-06-06)
+
+### Cambios aplicados
+
+- **SSL/TLS**: Auditoría completa del estado HTTPS. El sitio ya operaba correctamente:
+  - Certificado gestionado por Vercel (Let's Encrypt, renovación automática).
+  - Redirección 308 HTTP→HTTPS en todos los 4 puntos de entrada.
+  - HSTS `max-age=63072000; includeSubDomains; preload` (2 años, listo para preload).
+  - Cabeceras de seguridad completas (CSP, X-Frame-Options, X-Content-Type-Options, etc.).
+  - Sin mixed content detectado.
+- **Canonical host**: Cambiado `site.url` fallback de apex→www (`lib/site.ts:44`, `.env.example:12`). Configurada `NEXT_PUBLIC_SITE_URL` explícitamente en Vercel Production para alinear todas las URLs canónicas, OpenGraph y JSON-LD con `https://www.pinedayasociadoshn.com`.
+- **Validación**: Lint 0 errores, Build 87/87 páginas.
+
 ## Release 4 — Auditoría y correcciones de accesibilidad (2026-06-06)
 
 ### Cambios aplicados

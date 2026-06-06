@@ -41,7 +41,7 @@ const envNoindex = process.env.NEXT_PUBLIC_NOINDEX;
 const noindexActive = envNoindex === 'true';
 
 export const site = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pinedayasociadoshn.com').replace(/\/+$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.pinedayasociadoshn.com').replace(/\/+$/, ''),
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? 'Pineda y Asociados',
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
