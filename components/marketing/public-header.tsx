@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Scale, Menu, X, Phone, MessageCircle, Calendar, ChevronDown } from 'lucide-react';
+import { Scale, Menu, X, Phone, MessageCircle, Lock, Calendar, ChevronDown } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 
 const NAV = [
@@ -41,7 +41,7 @@ export function PublicHeader() {
     >
       {/* Barra superior con datos de contacto */}
       <div className="hidden md:block bg-primary-dark">
-        <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center text-[12px]">
+        <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-between text-[12px]">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
               href={telHref()}
@@ -55,6 +55,14 @@ export function PublicHeader() {
             <span className="text-text-inverse/40">·</span>
             <span className="text-text-inverse/80">{site.address.city}, {site.address.department}</span>
           </div>
+          <Link
+            href="/intranet/dashboard"
+            className="flex items-center gap-1.5 text-text-inverse/50 hover:text-accent transition-colors focus-visible:outline-none"
+            title="Acceso exclusivo para personal del bufete"
+          >
+            <Lock size={11} aria-hidden="true" />
+            <span>Acceso Intranet</span>
+          </Link>
         </div>
       </div>
 
