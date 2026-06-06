@@ -65,5 +65,5 @@ Estado: completado al 100%. Pendientes de roadmap futuro.
 - Verificación legal externa del motor
 - Tests E2E de calculadora completa
 - Tests de carga y rendimiento
-- Migración a Next.js 17 (proxy en lugar de middleware)
+- [OK] Migración middleware → proxy (Next.js 16, f6c0663)
 - Nonces CSP nativos

@@ -28,7 +28,7 @@
 - **IDOR cerrado**: todas las rutas con `[id]` verifican `userId` del recurso vs. token
 - **Rate limiting**: login (5/min) y contacto (3/hora) vía Neon DB
 - **CSP**: 7 directivas configuradas en `next.config.ts`
-- **Security headers**: middleware añade X-Content-Type-Options, X-Frame-Options, Referrer-Policy
+- **Security headers**: proxy añade X-Content-Type-Options, X-Frame-Options, Referrer-Policy
 - **Restricción de dominio**: registro solo con email `@pinedayasociadoshn.com` (Fase 11)
 - **Auditoría**: eventos críticos registrados en tabla `auditoria_eventos` (no bloqueante)
 - **Validación al arranque**: `NODE_ENV=production` verifica `JWT_SECRET` y `DATABASE_URL`

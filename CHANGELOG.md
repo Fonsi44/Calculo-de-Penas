@@ -1,5 +1,23 @@
 # Changelog
 
+## Release 3 — Migración middleware → proxy (2026-06-06)
+
+### Cambios técnicos
+
+- Migración oficial de Next.js: `middleware.ts` → `proxy.ts` con codemod oficial.
+- Función exportada renombrada de `middleware` a `proxy`. Comportamiento idéntico.
+- Actualizadas todas las referencias en `AGENTS.md`, `docs/`, `next.config.ts`.
+- Advertencia de deprecación `middleware` eliminada del build.
+
+### Archivos modificados
+
+- `middleware.ts` → `proxy.ts` (renombrado + función renombrada)
+- `next.config.ts` (comentario actualizado)
+- `AGENTS.md` (3 referencias a middleware → proxy)
+- `docs/01-arquitectura.md`, `docs/06-seguridad.md`, `docs/07-csp-hardening.md`, `docs/09-despliegue.md`, `docs/13-checklist-implementacion.md`
+- `data/areas-juridicas.ts` (comentario)
+- `CHANGELOG.md`
+
 ## Release 2 — Cluster SEO blog zona sur (2026-06-06)
 
 ### Novedades

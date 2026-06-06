@@ -244,14 +244,14 @@ No sustituir validación real por suposiciones.
 
 ### Sistema de imágenes (público, sin optimizer, sin auth)
 
-Estado fijado en commits `2ed1168` (unoptimized) y `52a9b72` (middleware). Cambios futuros deben preservar este contrato:
+Estado fijado en commits `2ed1168` (unoptimized) y `52a9b72` (middleware → `proxy.ts`). Cambios futuros deben preservar este contrato:
 
 1. `next.config.ts` DEBE mantener `images: { unoptimized: true }`. NO re-habilitar el optimizer `/_next/image`:
    - Devuelve 400 Bad Request para imágenes corporativas (provocado `ERR_*` en consola).
    - Añade latencia significativa sin beneficio.
    - Si en el futuro se quiere optimizar: configurar `images.remotePatterns` para hosts externos y validar antes contra todas las páginas públicas.
 
-2. `middleware.ts` DEBE mantener `images/` en el negative lookahead del `matcher` (`'/(?!_next/static|_next/image|favicon.ico|manifest.json|icon-192.svg|images/).*)'`). Las imágenes son públicas y NO requieren auth. Si se quita, el middleware redirige `/images/*` a `/intranet/login` y las tarjetas muestran `PlaceholderPhoto` gris en producción.
+2. `proxy.ts` DEBE mantener `images/` en el negative lookahead del `matcher` (`'/(?!_next/static|_next/image|favicon.ico|manifest.json|icon-192.svg|images/|BingSiteAuth\\.xml).*)'`). Las imágenes son públicas y NO requieren auth. Si se quita, el proxy redirige `/images/*` a `/intranet/login` y las tarjetas muestran `PlaceholderPhoto` gris en producción.
 
 3. NO reintroducir la directiva CSP `upgrade-insecure-requests`. Fue eliminada por:
    - Ser redundante con HSTS en producción (Vercel sirve HTTPS).
@@ -303,7 +303,7 @@ Cuando se actualice documentación, indicar claramente qué se actualizó.
 
 ## Reglas específicas de acceso a la intranet
 
-1. La URL de la intranet es `https://pinedayasociadoshn.com/intranet/dashboard` (apex). El redirect `www` → apex lo gestiona Vercel a nivel de dominio; no añadirlo al middleware (causa bucles).
+1. La URL de la intranet es `https://pinedayasociadoshn.com/intranet/dashboard` (apex). El redirect `www` → apex lo gestiona Vercel a nivel de dominio; no añadirlo al proxy (causa bucles).
 2. Solo se accede a la intranet desde el botón "Acceso Intranet" situado en la barra superior del encabezado de la web pública (`components/marketing/public-header.tsx`).
 3. Ninguna página, subpágina, componente, sección, enlace del footer, enlace del drawer móvil, breadcrumb, CTA, tarjeta de servicio, artículo de blog o cualquier otro elemento de la web pública puede contener un enlace (`href`) que apunte directa o indirectamente a cualquier ruta bajo `/intranet/`.
 4. Las únicas excepciones permitidas son:

@@ -19,7 +19,7 @@ LEX HONDURAS es una aplicación Next.js 16 (App Router, Turbopack) que combina u
 
 ## Stack
 
-- **Next.js** 16.2.7 (App Router, Turbopack; middleware deprecado → `proxy` en Next 17)
+- **Next.js** 16.2.7 (App Router, Turbopack; `middleware` → `proxy` migrado)
 - **React** 19.2.4
 - **Tailwind CSS** v4
 - **Drizzle ORM** 0.45.2 + `@neondatabase/serverless` 1.1.0
@@ -93,7 +93,7 @@ LEX HONDURAS es una aplicación Next.js 16 (App Router, Turbopack) que combina u
 
 ## Riesgos arquitectónicos
 
-- `middleware` deprecado en Next 17 → migrar a `proxy`
+- `middleware` → `proxy.ts` (migrado)
 - CSP usa `'unsafe-inline'` para scripts/styles (Next.js 16 no soporta nonces nativos). Roadmap: migrar a nonces con `CSP_NONCE` en Next.js 17.
 - Rate limiting por IP es insuficiente tras proxies/CDN; requeriría cabecera `x-forwarded-for` confiable.
 - Sin branch protection en GitHub (plan gratuito).

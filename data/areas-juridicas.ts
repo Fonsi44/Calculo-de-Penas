@@ -15,7 +15,7 @@
  *   - keywords long-tail (sin duplicar site.keywords global)
  *   - color: prefijo tailwind para PlaceholderPhoto (bg-{color}-*)
  *
- * Este archivo NO se importa desde middleware ni desde el cliente
+ * Este archivo NO se importa desde proxy ni desde el cliente
  * si no se necesita: está pensado para server components y rutas
  * dinámicas (generateStaticParams).
  */

@@ -99,7 +99,7 @@ node -e "console.log(require('bcryptjs').hashSync('tu-password', 10))"
 - Logs: Vercel Functions tab.
 - Errores: revisar panel Vercel.
 - BD: Neon dashboard (CPU, connections, storage).
-- Advertencias de deprecación: `middleware` → `proxy` en Next 17.
+- Migración `middleware` → `proxy` completada (Next.js 16).
 
 ## Rollback
 

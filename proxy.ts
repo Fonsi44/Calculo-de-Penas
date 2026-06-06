@@ -92,10 +92,10 @@ function readToken(request: NextRequest): string | undefined {
     ?? request.cookies.get(COOKIE_NAME_FALLBACK)?.value;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   // El redirect www → apex lo gestiona Vercel a nivel de dominio,
-  // no en el middleware (causaba bucles de redirección con el edge).
+  // no en el proxy (causaba bucles de redirección con el edge).
 
   const token = readToken(request);
 

@@ -27,8 +27,8 @@ Quitar `'unsafe-inline'` rompe la app en producción sin configuración adiciona
 La forma correcta de endurecer este punto es usar **nonces**:
 
 ```ts
-// middleware.ts
-export function middleware(request: NextRequest) {
+// proxy.ts
+export function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   const cspHeader = `
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
@@ -43,8 +43,8 @@ export function middleware(request: NextRequest) {
 }
 ```
 
-Esto se implementará en **Fase F2** (migración de middleware → proxy Next 17),
-donde el proxy nativo de Next soporta nonces automáticos.
+Esto se implementará en **Fase F2** (migración completada en Next 16,
+donde el proxy nativo de Next soporta nonces automáticos).
 
 ## Por qué se quitó `'unsafe-eval'`
 
@@ -90,5 +90,5 @@ content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; 
 ## Roadmap
 
 - [x] A4: Quitar `unsafe-eval`, añadir `object-src 'none'`
-- [ ] F2 (Next 17): implementar nonces en proxy nativo
+- [ ] F2: implementar nonces en proxy nativo
 - [ ] F2: cambiar styles a hashes por build

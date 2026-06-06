@@ -71,7 +71,7 @@ const nextConfig: NextConfig = {
   // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*
   // para que el sidebar y los enlaces canónicos apunten a /intranet/calculadora,
   // /intranet/casos, etc., sin mover los archivos page.tsx existentes.
-  // El middleware ya permite /intranet/* a usuarios autenticados.
+  // El proxy ya permite /intranet/* a usuarios autenticados.
   async rewrites() {
     return [
       { source: '/intranet/calculadora', destination: '/calculadora' },
