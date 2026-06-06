@@ -10,33 +10,33 @@ interface TrustItem {
 const DEFAULT_ITEMS: TrustItem[] = [
   {
     icon: ShieldCheck,
-    title: 'Confidencialidad 100%',
+    title: 'Confidencialidad total',
     description: 'Secreto profesional desde el primer contacto',
   },
   {
     icon: Scale,
-    title: 'CP Decreto 130-2017 · Reformas 59-2024',
-    description: 'Código Penal actualizado con reformas 119-2019, 46-2020, 93-2021 y 59-2024',
+    title: 'Penal actualizado',
+    description: 'Código Penal y reformas vigentes',
   },
   {
     icon: Lock,
     title: 'Atención reservada',
-    description: 'Identidad del cliente protegida por ley',
+    description: 'Protección legal de la identidad del cliente',
   },
   {
     icon: Clock,
-    title: '60h / semana + 24/7',
-    description: 'Presencial 60h semanales (Lun-Sáb 7-20) · Urgencias 24/7 por WhatsApp o llamada',
+    title: 'Disponibilidad',
+    description: 'Atención presencial y urgencias 24/7',
   },
   {
     icon: Award,
     title: '+15 años',
-    description: 'Ejercicio profesional en el sur de Honduras',
+    description: 'Experiencia jurídica en el sur de Honduras',
   },
   {
     icon: Briefcase,
-    title: '13 áreas del derecho',
-    description: 'Cobertura legal multidisciplinar',
+    title: 'Cobertura multidisciplinaria',
+    description: 'Asesoría integral en diversas áreas del derecho',
   },
 ];
 

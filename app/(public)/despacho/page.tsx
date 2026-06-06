@@ -23,7 +23,7 @@ import { getCorporateImage } from '@/data/images';
 
 export const metadata: Metadata = {
   title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
-  description: `Conoce ${site.name}: bufete multidisciplinar con sede en Nacaome, Valle. 13 áreas del derecho, defensa penal como especialidad destacada, y un equipo técnico al servicio de su caso en todo el sur de Honduras.`,
+  description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico, confidencialidad absoluta y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
   alternates: { canonical: '/despacho' },
 };
 
@@ -83,14 +83,16 @@ export default function DespachoPage() {
       <PageHero
         eyebrow="El Despacho"
         badge="Multidisciplinar"
-        title="13 áreas del derecho, una sola firma en el sur de Honduras"
+        title="Compromiso Legal, Rigor Técnico y Visión de Vanguardia"
         subtitle={
           <>
-            {site.name} es un bufete multidisciplinar con sede en Nacaome, Valle. La defensa
-            penal —nuestra especialidad fundacional— sigue siendo uno de nuestros pilares
-            principales, y la acompañamos con asesoría integral en familia, laboral, civil,
-            mercantil, tributario, notarial y más. Trabajamos con técnica, prudencia y cercanía
-            humana para quien requiere defensa y orientación jurídica seria en Honduras.
+            {site.name} es un bufete multidisciplinario fundado sobre los pilares del
+            rigor metodológico, la confidencialidad absoluta y la excelencia jurídica. Nos
+            especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito
+            penal como en las distintas ramas del derecho empresarial y privado. Nuestro
+            enfoque combina una sólida solvencia técnica con la digitalización de procesos,
+            garantizando a cada cliente un respaldo legal robusto, transparente y de alto
+            nivel en un entorno global.
           </>
         }
         cta={<CTAGroup variant="inverse" />}
