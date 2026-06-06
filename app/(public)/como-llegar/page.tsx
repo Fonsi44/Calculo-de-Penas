@@ -114,7 +114,7 @@ export default function ComoLlegarPage() {
             </Card>
           </div>
 
-          <Card padding="md" className="bg-primary text-text-inverse h-full">
+          <Card padding="md" className="!bg-primary text-text-inverse h-full">
             <div className="flex items-center gap-2 mb-3">
               <MapPin size={18} className="text-accent" />
               <h2 className="font-bold text-base text-text-inverse">Dirección</h2>
@@ -132,6 +132,19 @@ export default function ComoLlegarPage() {
               Copiar dirección
             </h3>
             <CopyableAddress value={fullAddress} variant="inverse" />
+
+            <div className="border-t border-primary-light/30 my-4" />
+
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
+              Plus Code
+            </h3>
+            <p className="text-[13px] text-text-inverse/90 leading-relaxed">
+              <span className="font-bold text-text-inverse tabular-nums">GGJ7+239</span>
+              {' '}{site.address.city}, {site.address.department}, {site.address.country}
+            </p>
+            <p className="text-[11px] text-text-inverse/65 leading-relaxed mt-1.5">
+              Use este código en Google Maps para una ubicación exacta sin necesidad de dirección escrita.
+            </p>
 
             <div className="border-t border-primary-light/30 my-4" />
 

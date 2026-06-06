@@ -8,9 +8,9 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 
 const NAV = [
   { label: 'El Despacho', href: '/despacho' },
-  { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
+  { label: 'Servicios Jurídicos', href: '/areas-juridicas' },
   { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
+  { label: 'Hondureños en España', href: '/migrantes-hondurenos-en-espana' },
   { label: 'FAQ', href: '/preguntas-frecuentes' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
@@ -35,9 +35,9 @@ export function PublicHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full text-text-inverse transition-all duration-300 ${
+      className={`sticky top-0 z-50 w-full text-text-inverse transition-all duration-300 ${
         scrolled
-          ? 'bg-primary/85 backdrop-blur-md shadow-lg border-b border-primary-light/40'
+          ? 'bg-primary/95 backdrop-blur-md shadow-lg border-b border-primary-light/40'
           : 'bg-primary border-b border-primary-light'
       }`}
     >

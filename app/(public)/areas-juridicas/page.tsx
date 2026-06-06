@@ -3,36 +3,28 @@ import Link from 'next/link';
 import { ArrowRight, Scale } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
+import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
-import { ContactStrip, CTAGroup } from '@/components/marketing/cta-buttons';
-import { PremiumServiceGrid } from '@/components/marketing/premium-service-grid';
-import { breadcrumbsSchema, itemListSchema, serviceSchema } from '@/lib/schemas/legal-page';
-import { premiumServices } from '@/lib/data/service-catalog';
+import { FeatureGrid, type FeatureItem } from '@/components/marketing/feature-grid';
+import { areasGenerales } from '@/data/areas-juridicas';
+import { areaHref, breadcrumbsSchema, itemListSchema, serviceSchema } from '@/lib/schemas/legal-page';
+import { getIcon } from '@/lib/icon-map';
 
 export const metadata: Metadata = {
-  title: `Servicios Jurídicos | ${site.name}`,
-  description: `Las 13 áreas del derecho que manejamos en ${site.name}: penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, propiedad intelectual, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
-  alternates: { canonical: '/servicios-juridicos' },
+  title: 'Áreas Jurídicas',
+  description: `Conozca las 13 áreas de práctica de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
+  alternates: { canonical: '/areas-juridicas' },
 };
 
-export default function ServiciosJuridicosPage() {
-  const url = absoluteUrl('/servicios-juridicos');
-  const breadcrumbs = breadcrumbsSchema([
-    { name: 'Inicio', url: absoluteUrl('/') },
-    { name: 'Servicios Jurídicos', url },
-  ]);
-  const itemList = itemListSchema(
-    'Servicios jurídicos',
-    premiumServices.map((s) => ({
-      name: s.titulo,
-      url: absoluteUrl(`/servicios-juridicos/${s.slug}`),
-    })),
-  );
+export default function AreasJuridicasPage() {
+  const url = absoluteUrl('/areas-juridicas');
+  const breadcrumbs = breadcrumbsSchema([{ name: 'Inicio', url: absoluteUrl('/') }, { name: 'Áreas Jurídicas', url }]);
+  const itemList = itemListSchema('Áreas de práctica', areasGenerales.map((a) => ({ name: a.titulo, url: areaHref(a.slug) })));
   const servSchema = serviceSchema({
-    slug: 'servicios-juridicos',
-    name: `Servicios Jurídicos — ${site.name}`,
-    description: `Bufete multidisciplinario con 13 áreas de práctica en Nacaome, Valle, Honduras.`,
+    slug: 'areas-juridicas',
+    name: 'Áreas Jurídicas — Pineda y Asociados',
+    description: 'Bufete multidisciplinario con 13 áreas de práctica en Nacaome, Valle, Honduras.',
     serviceType: 'LegalService',
     keywords: site.keywords,
     url,
@@ -41,12 +33,12 @@ export default function ServiciosJuridicosPage() {
   return (
     <>
       <PageHero
-        eyebrow="Servicios Jurídicos"
+        eyebrow="Áreas Jurídicas"
         badge="Cobertura integral"
         title="13 áreas del derecho para defender y asesorarle en cualquier frente"
         subtitle={
           <>
-            Desde Nacaome, Valle, ofrecemos cobertura legal integral en {premiumServices.length}{' '}
+            Desde Nacaome, Valle, ofrecemos cobertura legal integral en {areasGenerales.length}{' '}
             disciplinas del derecho hondureño. La defensa penal es nuestra especialidad destacada
             y la acompañamos con servicios especializados en familia, laboral, civil, mercantil,
             tributario y más.
@@ -63,7 +55,21 @@ export default function ServiciosJuridicosPage() {
           title="Cobertura legal completa en Honduras"
           subtitle="Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes."
         />
-        <PremiumServiceGrid />
+        <FeatureGrid
+          bento
+          cols={5}
+          items={areasGenerales.map<FeatureItem>((area) => {
+            const Icon = getIcon(area.icono);
+            return {
+              title: area.titulo,
+              description: area.resumen,
+              icon: Icon,
+              href: areaHref(area.slug),
+              tone: (area.color as FeatureItem['tone']) ?? 'primary',
+              badge: area.slug === 'derecho-penal' ? 'Pilar' : undefined,
+            };
+          })}
+        />
       </Section>
 
       <Section spacing="sm">
@@ -81,7 +87,7 @@ export default function ServiciosJuridicosPage() {
           </p>
           <Link
             href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-primary text-white text-base font-bold hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity"
           >
             Solicitar consulta confidencial <ArrowRight size={18} />
           </Link>
