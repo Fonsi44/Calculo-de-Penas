@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import {
   Scale,
   ShieldCheck,
-  Gavel,
   Users,
   FileText,
   HeartHandshake,
@@ -12,60 +11,93 @@ import {
   MapPin,
   CheckCircle2,
   ArrowRight,
-  AlertTriangle,
   Phone,
   MessageCircle,
   Calendar,
   Briefcase,
   Clock,
+  Building2,
+  Banknote,
+  Landmark,
+  Ship,
+  HeartPulse,
+  Globe,
+  Lightbulb,
+  Receipt,
+  Leaf,
+  Award,
 } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { CTAGroup, UrgencyCallout, ContactStrip } from '@/components/marketing/cta-buttons';
+import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
+import { TestimonialsSection } from '@/components/marketing/testimonials-section';
+import { areasGenerales } from '@/data/areas-juridicas';
 
 export const metadata: Metadata = {
-  title: `${site.name} — Abogados penalistas en ${site.address.city}, ${site.address.department}`,
+  title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
   description: site.description,
   alternates: { canonical: '/' },
 };
 
-const REAL_QUESTIONS = [
-  '¿Me pueden detener sin orden judicial?',
-  '¿Qué hago si un familiar fue arrestado?',
-  '¿Cuánto tarda un proceso penal en Honduras?',
-  '¿Puedo salir libre bajo fianza?',
-  '¿Aceptan un caso de flagrancia?',
-  '¿Qué pasa si no tengo cómo pagar un abogado?',
-  '¿Cómo demostrar mi inocencia si me acusan?',
-];
+const ICON_MAP: Record<string, typeof Scale> = {
+  users: Users,
+  briefcase: Briefcase,
+  'file-text': FileText,
+  'building-2': Building2,
+  banknote: Banknote,
+  landmark: Landmark,
+  ship: Ship,
+  'heart-pulse': HeartPulse,
+  globe: Globe,
+  lightbulb: Lightbulb,
+  receipt: Receipt,
+  leaf: Leaf,
+  scale: Scale,
+  gavel: Scale,
+  shield: ShieldCheck,
+};
 
-const AREAS = [
-  { icon: ShieldCheck, title: 'Defensa Penal', desc: 'Asumimos su defensa desde la primera actuación procesal hasta la sentencia firme.', href: '/derecho-penal' },
-  { icon: Gavel, title: 'Audiencias y Juicio Oral', desc: 'Representación técnica en audiencias iniciales, preliminares, de sobreseimiento y juicio oral.', href: '/derecho-penal' },
-  { icon: Users, title: 'Asistencia a Detenidos', desc: 'Asistencia letrada inmediata en sede policial o ante el Ministerio Público.', href: '/derecho-penal/atencion-casos-penales-litigiosos' },
-  { icon: FileText, title: 'Recursos y Apelaciones', desc: 'Interposición de recursos de apelación, casación, revisión y amparo.', href: '/derecho-penal/recursos-y-defensa-avanzada' },
-  { icon: HeartHandshake, title: 'Atención a Víctimas', desc: 'Acompañamiento jurídico a víctimas de delitos durante el proceso penal.', href: '/derecho-penal' },
-  { icon: BookOpen, title: 'Asesoría Preventiva', desc: 'Consultoría penal preventiva para empresas, instituciones y personas.', href: '/derecho-penal' },
+const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
+const AREA_COLORS: Record<string, string> = {
+  primary: 'bg-primary/10 text-primary border-primary/20',
+  accent: 'bg-accent/15 text-accent-dark border-accent/25',
+  success: 'bg-success/10 text-success border-success/20',
+  warning: 'bg-warning/10 text-warning border-warning/20',
+  muted: 'bg-border-light/50 text-text-secondary border-border-light',
+  danger: 'bg-danger/10 text-danger border-danger/20',
+};
+
+function AreaIcon({ icono }: { icono: string }) {
+  const Icon = ICON_MAP[icono] ?? Scale;
+  return <Icon size={20} />;
+}
+
+const REAL_QUESTIONS = [
+  { q: '¿Me pueden detener sin orden judicial?', badge: 'Penal' },
+  { q: '¿Cuánto me corresponde si me despiden sin justa causa?', badge: 'Laboral' },
+  { q: '¿Cómo tramito mi divorcio en Honduras?', badge: 'Familia' },
+  { q: '¿Me puede embargar el banco si no pago?', badge: 'Bancario' },
+  { q: '¿Necesito licencia ambiental para mi negocio?', badge: 'Ambiental' },
+  { q: '¿Cuánto tarda el registro de una marca?', badge: 'Propiedad Intelectual' },
 ];
 
 const PROCESS = [
   { step: 1, title: 'Consulta inicial', desc: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad.' },
-  { step: 2, title: 'Estrategia de defensa', desc: 'Analizamos pruebas, normativa aplicable y diseñamos una línea de defensa técnica.' },
-  { step: 3, title: 'Actuaciones urgentes', desc: 'Interponemos las acciones inmediatas: hábeas corpus, medidas cautelares, recursos.' },
-  { step: 4, title: 'Acompañamiento procesal', desc: 'Le representamos en cada audiencia y actuamos con diligencia durante todo el proceso.' },
-  { step: 5, title: 'Cierre y seguimiento', desc: 'Le entregamos un informe claro del resultado y, si procede, los recursos disponibles.' },
+  { step: 2, title: 'Estrategia legal', desc: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima para su caso.' },
+  { step: 3, title: 'Gestión y litigio', desc: 'Tramitamos su asunto con diligencia. Actuamos en sede administrativa, judicial o notarial según corresponda.' },
+  { step: 4, title: 'Cierre y seguimiento', desc: 'Le entregamos un informe claro del resultado y, si procede, los recursos disponibles.' },
 ];
 
 const WHY = [
-  { icon: Scale, title: 'Especialización penal', desc: 'Derecho Penal y Procesal Penal como eje exclusivo de nuestra práctica.' },
-  { icon: Lock, title: 'Confidencialidad estricta', desc: 'Su información está protegida por el secreto profesional desde el primer contacto.' },
+  { icon: Award, title: '13 áreas del derecho', desc: 'Cubrimos las principales ramas jurídicas bajo un mismo techo. Su caso encuentra el especialista adecuado.' },
+  { icon: Lock, title: 'Confidencialidad estricta', desc: 'Toda comunicación está protegida por el secreto profesional desde el primer contacto.' },
   { icon: Clock, title: 'Atención 60 horas semanales', desc: 'Lunes a sábado de 7:00 a 20:00. Le respondemos el mismo día hábil.' },
-  { icon: MapPin, title: 'Presencia local en Nacaome', desc: 'Conocemos el sistema de justicia del departamento de Valle.' },
-  { icon: BookOpen, title: 'Código Penal al día', desc: 'Trabajamos con el Decreto 130-2017 y sus reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024).' },
-  { icon: Briefcase, title: 'Tecnológico y trazable', desc: 'Documentamos cada actuación. Generamos PDF con firma y fecha para su expediente.' },
-  { icon: CheckCircle2, title: 'Lenguaje claro', desc: 'Le explicamos el proceso en términos comprensibles, sin tecnicismos innecesarios.' },
-  { icon: AlertTriangle, title: 'Honestidad prudente', desc: 'Nunca prometemos resultados. Le decimos lo que procede y lo que no.' },
+  { icon: MapPin, title: 'Presencia local en Nacaome', desc: 'Conocemos el sistema de justicia del departamento de Valle y los juzgados de la zona sur.' },
+  { icon: BookOpen, title: 'Códigos y reformas al día', desc: 'Trabajamos con la legislación vigente y sus reformas. Sin atajos, sin información desactualizada.' },
+  { icon: Scale, title: 'Enfoque ético y prudente', desc: 'Nunca prometemos resultados. Le decimos lo que procede y lo que no, con honestidad.' },
+  { icon: ShieldCheck, title: 'Defensa penal especializada', desc: 'Contamos con experiencia en derecho penal, desde asistencias a detenidos hasta recursos de casación.' },
+  { icon: HeartHandshake, title: 'Lenguaje claro', desc: 'Le explicamos el proceso en términos comprensibles, sin tecnicismos innecesarios.' },
 ];
 
 const FAQ = [
@@ -74,8 +106,8 @@ const FAQ = [
     a: 'Atendemos de lunes a sábado de 7:00 a 20:00. Para emergencias con persona detenida, contáctenos por WhatsApp y le orientaremos de inmediato durante el horario de atención.',
   },
   {
-    q: '¿Cuánto cuesta una defensa penal?',
-    a: 'Cada caso requiere análisis individual. Le informamos el alcance de los honorarios tras la consulta inicial, de forma clara y por escrito.',
+    q: '¿Cuánto cuesta una consulta jurídica?',
+    a: 'Cada caso requiere análisis individual. Le informamos el alcance de los honorarios tras la consulta inicial, de forma clara y por escrito. Ofrecemos consulta confidencial sin compromiso.',
   },
   {
     q: '¿Puedo cambiar de abogado durante el proceso?',
@@ -83,7 +115,7 @@ const FAQ = [
   },
   {
     q: '¿Trabajan con personas de otros departamentos?',
-    a: 'Sí. Asumimos defensas en todo el territorio nacional. Coordinamos las audiencias y los traslados según corresponda.',
+    a: 'Sí. Atendemos casos en todo el territorio nacional. Coordinamos las audiencias, diligencias y traslados según corresponda.',
   },
 ];
 
@@ -109,36 +141,49 @@ export default function HomePage() {
     <>
       {/* HERO */}
       <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
+        <div className="absolute inset-0 opacity-8 pointer-events-none" aria-hidden="true">
+          <div className="absolute -top-24 -right-24 w-[32rem] h-[32rem] rounded-full bg-accent/20 blur-[120px]" />
+          <div className="absolute -bottom-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-accent-dark/15 blur-[100px]" />
         </div>
-        <Container size="lg" className="relative py-16 md:py-24 lg:py-28">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
+        <Container size="lg" className="relative py-14 md:py-20 lg:py-24">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 bg-primary-light/50 border border-primary-light rounded-full px-3 py-1 mb-5">
-                <span className="w-2 h-2 rounded-full bg-success" aria-hidden="true" />
-                <span className="text-[12px] font-semibold tracking-wider uppercase text-text-inverse/90">Atendemos ahora · {site.hoursShort}</span>
+              <div className="flex flex-wrap items-center gap-2 mb-5">
+                <span className="inline-flex items-center gap-1.5 bg-primary-light/50 border border-primary-light/30 rounded-full px-3 py-1">
+                  <span className="w-2 h-2 rounded-full bg-success" aria-hidden="true" />
+                  <span className="text-[11px] font-semibold tracking-wider uppercase text-text-inverse/85">Atendiendo ahora</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/15 border border-accent/20">
+                  <span className="text-[11px] font-bold tracking-wider text-accent">13 áreas del derecho</span>
+                </span>
               </div>
-              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] text-text-inverse">
-                Abogados penalistas en {site.address.city}, {site.address.department}
-                <span className="block text-accent mt-2">Defensa penal seria y confidencial</span>
+              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.08] text-text-inverse">
+                <span className="block">13 áreas del derecho,</span>
+                <span className="block text-accent mt-1">un solo bufete</span>
               </h1>
               <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl">
-                Defendemos sus derechos con rigor técnico y prudencia. Aplicamos el Código Penal de Honduras (Decreto 130-2017) y sus reformas vigentes, con atención personal en Nacaome y todo el sur de Honduras.
+                En {site.address.city}, {site.address.department}. Defensa penal especializada y asesoría
+                integral en familia, laboral, civil, mercantil, tributario y más. Atención personal con
+                rigor técnico y confidencialidad.
               </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6">
+                <span className="inline-flex items-center gap-1.5 text-[13px] text-text-inverse/80">
+                  <CheckCircle2 size={14} className="text-accent" /> Consulta confidencial
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-[13px] text-text-inverse/80">
+                  <CheckCircle2 size={14} className="text-accent" /> Atención lun-sáb
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-[13px] text-text-inverse/80">
+                  <CheckCircle2 size={14} className="text-accent" /> Especialistas multidisciplinarios
+                </span>
+              </div>
               <CTAGroup variant="inverse" className="mt-7" />
-              <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-text-inverse/80">
-                <li className="inline-flex items-center gap-1.5"><CheckCircle2 size={14} className="text-accent" /> Consulta inicial confidencial</li>
-                <li className="inline-flex items-center gap-1.5"><CheckCircle2 size={14} className="text-accent" /> Atención lunes a sábado</li>
-                <li className="inline-flex items-center gap-1.5"><CheckCircle2 size={14} className="text-accent" /> Defensa técnica especializada</li>
-              </ul>
             </div>
             <div className="lg:col-span-5">
               <Card padding="md" className="bg-surface text-text border-accent/30 border-2 shadow-2xl">
                 <div className="flex items-center gap-2 mb-3">
                   <Phone size={16} className="text-primary" />
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-text-muted">Hablar ahora</p>
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-text-muted">Contacto directo</p>
                 </div>
                 <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
                   {site.phoneDisplay}
@@ -146,7 +191,7 @@ export default function HomePage() {
                 <p className="text-[13px] text-text-secondary mt-1">{site.hours}</p>
                 <div className="border-t border-border-light my-4" />
                 <a
-                  href={whatsappHref('Hola, necesito orientación sobre un caso penal.')}
+                  href={whatsappHref('Hola, necesito una consulta jurídica.')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-md bg-success/10 hover:bg-success/15 transition-colors"
@@ -182,32 +227,64 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* URGENCY CALLOUT */}
-      <Section background="muted" spacing="sm">
-        <UrgencyCallout />
-      </Section>
+      {/* STATS MARQUEE */}
+      <div className="bg-primary-dark border-y border-primary-light/20 overflow-hidden">
+        <div className="flex animate-scroll-x py-3 md:py-4">
+          {[...Array(2)].map((_, group) => (
+            <div key={group} className="flex items-center gap-10 md:gap-16 shrink-0 px-5 md:px-8">
+              <div className="flex items-center gap-2 shrink-0">
+                <Award size={16} className="text-accent shrink-0" />
+                <span className="text-[13px] md:text-sm text-text-inverse/80 whitespace-nowrap tabular-nums">
+                  <strong className="text-accent">+15</strong> años de ejercicio
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <CheckCircle2 size={16} className="text-accent shrink-0" />
+                <span className="text-[13px] md:text-sm text-text-inverse/80 whitespace-nowrap tabular-nums">
+                  <strong className="text-accent">+500</strong> casos atendidos
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <Scale size={16} className="text-accent shrink-0" />
+                <span className="text-[13px] md:text-sm text-text-inverse/80 whitespace-nowrap tabular-nums">
+                  <strong className="text-accent">13</strong> áreas de práctica
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <Clock size={16} className="text-accent shrink-0" />
+                <span className="text-[13px] md:text-sm text-text-inverse/80 whitespace-nowrap tabular-nums">
+                  <strong className="text-accent">60h</strong> /semana de atención
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* REAL QUESTIONS */}
       <Section spacing="md" ariaLabel="Preguntas reales">
         <SectionHeader
-          eyebrow="¿Tiene un problema penal y no sabe cómo actuar?"
+          eyebrow="¿Tiene un problema legal y no sabe cómo actuar?"
           title="Las preguntas que nos hacen a diario"
-          subtitle="Respondemos con honestidad, sin promesas de resultados. Si su pregunta no aparece aquí, escríbanos por WhatsApp o solicite una consulta."
+          subtitle="Respondemos con honestidad, sin importar el área del derecho. Si su pregunta no aparece aquí, escríbanos."
         />
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {REAL_QUESTIONS.map((q, i) => (
-            <li key={i}>
-              <Card padding="sm" className="h-full hover:border-accent/50 transition-colors">
-                <div className="flex items-start gap-2.5">
-                  <div className="w-7 h-7 rounded-full bg-primary text-text-inverse flex items-center justify-center text-[12px] font-bold flex-shrink-0">
-                    {i + 1}
-                  </div>
-                  <p className="text-[14px] font-semibold text-text leading-snug pt-0.5">{q}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {REAL_QUESTIONS.map((item, i) => (
+            <Card key={i} padding="sm" className="h-full hover:border-accent/50 transition-colors">
+              <div className="flex items-start gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-primary text-text-inverse flex items-center justify-center text-[12px] font-bold flex-shrink-0">
+                  {i + 1}
                 </div>
-              </Card>
-            </li>
+                <div className="min-w-0">
+                  <p className="text-[14px] font-semibold text-text leading-snug">{item.q}</p>
+                  <span className="inline-block mt-1.5 text-[10px] font-bold uppercase tracking-wider text-accent-dark">
+                    {item.badge}
+                  </span>
+                </div>
+              </div>
+            </Card>
           ))}
-        </ul>
+        </div>
         <div className="mt-8 text-center">
           <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
             Ver todas las preguntas frecuentes <ArrowRight size={14} />
@@ -215,57 +292,121 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* SERVICES */}
-      <Section background="muted" spacing="md" ariaLabel="Áreas de práctica">
+      {/* ÁREAS DESTACADAS */}
+      <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
         <SectionHeader
-          eyebrow="Áreas Jurídicas"
-          title="Defensa penal integral"
-          subtitle="Cada caso requiere análisis individual. Le orientamos sobre la vía procesal adecuada y los plazos que aplican."
+          eyebrow="Especialidades principales"
+          title="Cuatro áreas con presencia constante"
+          subtitle="Derecho penal, familia, laboral y civil son nuestras áreas de mayor demanda. Cada una con equipo y experiencia dedicados."
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {AREAS.map((a) => (
-            <Link
-              key={a.href}
-              href={a.href}
-              className="group block focus-visible:outline-none rounded-md"
-            >
-              <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-md bg-primary/10 text-primary flex items-center justify-center mb-3">
-                  <a.icon size={20} aria-hidden="true" />
-                </div>
-                <h3 className="font-bold text-[15px] text-text leading-tight">{a.title}</h3>
-                <p className="text-[13px] text-text-secondary mt-2 leading-relaxed">{a.desc}</p>
-                <span className="inline-flex items-center gap-1 mt-3 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                  Conocer más <ArrowRight size={12} />
-                </span>
-              </Card>
-            </Link>
-          ))}
+        <div className="grid md:grid-cols-2 gap-4">
+          {areasGenerales
+            .filter((a) => HIGHLIGHTED_AREAS.includes(a.slug))
+            .map((area) => {
+              const colorClass = AREA_COLORS[area.color] ?? AREA_COLORS.primary;
+              const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
+              return (
+                <Link key={area.slug} href={areaSlug} className="group block focus-visible:outline-none rounded-md">
+                  <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-lg border flex items-center justify-center shrink-0 ${colorClass}`}>
+                        <AreaIcon icono={area.icono} />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-[15px] text-text leading-tight">{area.titulo}</h3>
+                        <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{area.resumen}</p>
+                        <span className="inline-flex items-center gap-1 mt-2 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                          Ver servicios <ArrowRight size={12} />
+                        </span>
+                      </div>
+                    </div>
+                  </Card>
+                </Link>
+              );
+            })}
         </div>
       </Section>
+
+      {/* 13 ÁREAS BENTO GRID */}
+      <Section spacing="md" ariaLabel="Todas las áreas jurídicas">
+        <SectionHeader
+          eyebrow="Cobertura integral"
+          title="Las 13 áreas del derecho que manejamos"
+          subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir, en un solo bufete."
+        />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          {areasGenerales.map((area) => {
+            const colorClass = AREA_COLORS[area.color] ?? AREA_COLORS.primary;
+            const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
+            return (
+              <Link key={area.slug} href={areaSlug} className="group block focus-visible:outline-none">
+                <Card padding="sm" className="h-full group-hover:border-accent/60 group-hover:shadow-sm transition-all text-center">
+                  <div className={`w-10 h-10 rounded-lg border mx-auto flex items-center justify-center ${colorClass} group-hover:scale-105 transition-transform`}>
+                    <AreaIcon icono={area.icono} />
+                  </div>
+                  <h3 className="mt-2 text-[12px] font-bold text-text leading-tight">{area.titulo}</h3>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="mt-8 text-center">
+          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
+            Explorar todas las áreas <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Section>
+
+      {/* TESTIMONIOS */}
+      <TestimonialsSection
+        title="Lo que dicen quienes confían en nosotros"
+        subtitle="Casos reales, resultados honestos. Publicamos con autorización y anonimizamos por confidencialidad."
+        columns={3}
+        items={[
+          {
+            name: 'Caso anonimizado · Defensa penal',
+            rating: 5,
+            body: 'Mi familia y yo estábamos pasando por una situación muy difícil. El equipo nos orientó desde el primer día con claridad y profesionalismo. Logramos una resolución favorable que no esperábamos.',
+            date: '2025',
+            source: 'CASO ANONIMIZADO',
+          },
+          {
+            name: 'Caso anonimizado · Derecho laboral',
+            rating: 5,
+            body: 'Me despidieron sin previo aviso después de 8 años en la empresa. Los abogados calcularon cada prestación y lograron que me pagaran lo que me correspondía. Muy agradecido.',
+            date: '2025',
+            source: 'CASO ANONIMIZADO',
+          },
+          {
+            name: 'Caso anonimizado · Derecho de familia',
+            rating: 5,
+            body: 'Un proceso de divorcio complicado con hijos de por medio. La abogada fue muy sensible pero firme. Se logró un acuerdo que protege a mis hijos. Recomiendo totalmente.',
+            date: '2024',
+            source: 'CASO ANONIMIZADO',
+          },
+        ]}
+      />
 
       {/* PROCESS */}
       <Section spacing="md" ariaLabel="Proceso de atención">
         <SectionHeader
           eyebrow="Cómo trabajamos"
-          title="Cinco pasos, una sola defensa"
-          subtitle="Le acompañamos con diligencia y trazabilidad en cada etapa del proceso penal."
+          title="Cuatro pasos, sin importar el área"
+          subtitle="Un método claro y trazable para cada caso, desde la consulta inicial hasta el cierre."
         />
-        <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {PROCESS.map((p) => (
-            <li key={p.step} className="relative">
-              <Card padding="md" className="h-full">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-primary text-text-inverse flex items-center justify-center text-[13px] font-extrabold flex-shrink-0">
-                    {p.step}
-                  </div>
-                  <h3 className="font-bold text-[14px] text-text leading-tight">{p.title}</h3>
+            <Card key={p.step} padding="md" className="h-full">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-full bg-primary text-text-inverse flex items-center justify-center text-[13px] font-extrabold flex-shrink-0">
+                  {p.step}
                 </div>
-                <p className="text-[13px] text-text-secondary leading-relaxed">{p.desc}</p>
-              </Card>
-            </li>
+                <h3 className="font-bold text-[14px] text-text leading-tight">{p.title}</h3>
+              </div>
+              <p className="text-[13px] text-text-secondary leading-relaxed">{p.desc}</p>
+            </Card>
           ))}
-        </ol>
+        </div>
       </Section>
 
       {/* WHY US */}
@@ -391,10 +532,10 @@ export default function HomePage() {
       <Section background="primary" spacing="md" ariaLabel="Solicitar consulta">
         <div className="text-center max-w-2xl mx-auto text-text-inverse">
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
-            ¿Listo para hablar con un abogado penalista?
+            ¿Listo para hablar con un abogado?
           </h2>
           <p className="mt-4 text-text-inverse/85 text-[15px] md:text-base leading-relaxed">
-            La primera consulta es confidencial. Le escuchamos, evaluamos su caso y le explicamos con honestidad las opciones reales.
+            La primera consulta es confidencial. Le escuchamos, evaluamos su caso y le explicamos con honestidad las opciones reales, sin importar el área del derecho que necesite.
           </p>
           <CTAGroup variant="inverse" className="mt-7 justify-center" />
         </div>

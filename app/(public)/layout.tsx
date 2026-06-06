@@ -8,7 +8,7 @@ const isIndexable = !site.noindex;
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} — Abogados penalistas en ${site.address.city}, ${site.address.department}`,
+    default: `${site.name} — ${site.tagline}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     locale: 'es_HN',
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — Abogados penalistas en ${site.address.city}, ${site.address.department}`,
+    title: `${site.name} — ${site.tagline}`,
     description: site.description,
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: `${site.name} — Abogados penalistas en ${site.address.city}, ${site.address.department}`,
+        alt: `${site.name} — ${site.tagline}`,
       },
     ],
   },

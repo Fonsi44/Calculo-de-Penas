@@ -35,8 +35,10 @@ export function PublicHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full bg-primary text-text-inverse border-b border-primary-light transition-shadow ${
-        scrolled ? 'shadow-md' : ''
+      className={`sticky top-0 z-40 w-full text-text-inverse transition-all duration-300 ${
+        scrolled
+          ? 'bg-primary/85 backdrop-blur-md shadow-lg border-b border-primary-light/40'
+          : 'bg-primary border-b border-primary-light'
       }`}
     >
       {/* Barra superior con datos de contacto */}
@@ -78,7 +80,7 @@ export function PublicHeader() {
           </div>
           <div className="min-w-0">
             <p className="font-extrabold text-sm leading-none tracking-wide">{site.shortName}</p>
-            <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Abogados penalistas</p>
+            <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
           </div>
         </Link>
 
@@ -165,7 +167,7 @@ export function PublicHeader() {
               {site.phoneDisplay}
             </a>
             <a
-              href={whatsappHref('Hola, necesito una consulta penal.')}
+            href={whatsappHref('Hola, necesito una consulta jurídica.')}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}

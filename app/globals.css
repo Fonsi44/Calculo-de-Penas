@@ -44,17 +44,45 @@
   --color-info-border: #B8C9E8;
 
   /* Tonos jurídicos (semánticos de dominio) */
-  --color-exemption: #C58A2E;          /* eximentes: ocre */
+  --color-exemption: #C58A2E;
   --color-exemption-bg: #FBF1DE;
   --color-exemption-border: #E5C99A;
 
-  --color-mitigation: #0E7A4F;          /* atenuantes: verde botella */
+  --color-mitigation: #0E7A4F;
   --color-mitigation-bg: #E6F4ED;
   --color-mitigation-border: #B8DEC9;
 
-  --color-aggravation: #B22234;         /* agravantes: carmesí */
+  --color-aggravation: #B22234;
   --color-aggravation-bg: #FBECEC;
   --color-aggravation-border: #E5B5BB;
+
+  /* Sombras */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+  --shadow-glow: 0 0 30px rgba(201,165,92,0.25);
+
+  /* Animaciones */
+  --animate-fade-in-up: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scale-in: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scroll-x: scroll-x 35s linear infinite;
+  --animate-scroll-x-reverse: scroll-x 35s linear infinite reverse;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scroll-x {
+  to { transform: translateX(-50%); }
 }
 
 .dark {
@@ -108,6 +136,17 @@
   --color-aggravation-border: #5A2A30;
 }
 
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selección de texto */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+
 /* Tipografía base */
 body {
   background: var(--color-background);
@@ -117,6 +156,14 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utilitario */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Tipografía editorial para citas legales */

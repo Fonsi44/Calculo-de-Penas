@@ -13,6 +13,8 @@ const AREAS = [
   { label: 'Administrativo', href: '/areas-juridicas/derecho-administrativo-y-servicio-civil' },
   { label: 'Regulación Sanitaria', href: '/areas-juridicas/regulacion-sanitaria' },
   { label: 'Extranjería', href: '/areas-juridicas/extranjeria-en-honduras' },
+  { label: 'Propiedad Intelectual', href: '/areas-juridicas/propiedad-intelectual' },
+  { label: 'Ambiental Regulatorio', href: '/areas-juridicas/ambiental-regulatorio' },
   { label: 'Conciliación y Arbitraje', href: '/areas-juridicas/conciliacion-y-arbitraje' },
 ];
 
@@ -46,11 +48,11 @@ export function PublicFooter() {
               </div>
               <div>
                 <p className="font-extrabold text-sm leading-none">{site.shortName}</p>
-                <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Abogados penalistas</p>
+                <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
               </div>
             </Link>
             <p className="text-[13px] text-text-inverse/80 leading-relaxed">
-              Defensa penal técnica y confidencial en Nacaome, Valle. Aplicación rigurosa del Código Penal de Honduras.
+              Bufete multidisciplinario en {site.address.city}, {site.address.department}. 13 áreas del derecho: penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y arbitraje.
             </p>
           </div>
 

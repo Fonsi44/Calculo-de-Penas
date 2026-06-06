@@ -46,13 +46,13 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Abogados penalistas en Nacaome, Valle — Defensa penal seria y confidencial',
+    'Bufete multidisciplinario en Nacaome, Valle — 13 áreas del derecho',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete penalista en Nacaome, Valle, Honduras. Defensa técnica en Código Penal, asistencia a detenidos, asesoría preventiva y atención a víctimas.',
+    'Bufete multidisciplinario en Nacaome, Valle, Honduras. 13 áreas del derecho: penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y arbitraje. Defensa penal seria y confidencial.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'abogado penalista Nacaome, abogados Nacaome Honduras, defensa penal Honduras, abogado Código Penal, abogado penal Valle, asistencia a detenidos, proceso penal Honduras, abogado cerca de Hondutel, bufete penalista Valle').split(',').map((k) => k.trim()),
+      'bufete multidisciplinario Nacaome, abogados Nacaome Honduras, abogado penalista Nacaome, defensa penal Honduras, abogado de familia Honduras, abogado laboral Valle, derecho civil Nacaome, abogado mercantil Honduras, abogado tributario Honduras, derecho bancario Honduras, derecho administrativo Honduras, derecho aduanero Honduras, regulación sanitaria ARSA, extranjería Honduras, propiedad intelectual Honduras, derecho ambiental Honduras, conciliación y arbitraje Honduras').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   phoneDisplay: '+504 9536-3724',
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
