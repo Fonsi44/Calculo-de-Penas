@@ -52,12 +52,10 @@ export function PublicFooter() {
               </div>
             </Link>
             <p className="text-xs-plus text-text-inverse/80 leading-relaxed text-pretty">
-              <strong className="font-semibold text-text-inverse">Bufete multidisciplinar</strong> en {site.address.city}, {site.address.department},
+              <strong className="font-semibold text-text-inverse">Bufete jurídico</strong> en {site.address.city}, {site.address.department},
               con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
-              pilar histórico. Integramos 13 áreas del derecho (penal, familia, laboral, civil, mercantil, tributario,
-              bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y
-              conciliación/arbitraje) para asesorarle en cualquier frente, con atención confidencial y personalizada
-              en Nacaome y todo el sur de Honduras.
+              pilar fundacional. Atención directa del abogado, confidencial y personalizada, con presencia activa
+              en juzgados del sur de Honduras.
             </p>
             <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
               Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.

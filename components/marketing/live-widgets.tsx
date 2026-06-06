@@ -131,11 +131,9 @@ export function FloatingContactRail() {
 
 export function Ticker() {
   const items = [
-    'Defensa penal seria y confidencial · 13 áreas del derecho',
-    'Lunes a sábado · 7:00 a 20:00',
-    'Asistencia a detenidos 24/7 por WhatsApp en horario hábil',
-    'Aplicación rigurosa del Código Penal · Decreto 130-2017 y reformas vigentes',
-    'Bufete multidisciplinar en Nacaome y todo el sur de Honduras',
+    'Asistencia a detenidos · Respuesta inmediata por WhatsApp',
+    'Procesos penales, familia, laboral, civil y mercantil',
+    'Ubicados en Nacaome, Valle · Atención en todo Honduras',
   ];
   return (
     <div className="bg-primary-dark text-text-inverse/80 overflow-hidden border-b border-primary-light/30">
@@ -165,7 +163,7 @@ export function StatsCounter() {
       {[
         { value: '+15', label: 'Años de ejercicio', icon: Activity },
         { value: '635', label: 'Artículos CP', icon: MapPin },
-        { value: '60h', label: 'Atención semanal', icon: Phone },
+        { value: '60h', label: 'Horario continuo', icon: Phone },
         { value: '100%', label: 'Confidencialidad', icon: MessageCircle },
       ].map((s, i) => (
         <div

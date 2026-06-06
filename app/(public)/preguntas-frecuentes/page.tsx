@@ -144,7 +144,7 @@ export default function FaqPage() {
     <>
       <PageHero
         eyebrow="Preguntas Frecuentes"
-        badge="13 áreas del derecho"
+        badge="Todas las ramas legales"
         title="Resuelva sus dudas legales"
         subtitle={
           <>

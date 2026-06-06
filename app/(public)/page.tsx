@@ -18,8 +18,6 @@ import {
   Building,
   BriefcaseBusiness,
   Users,
-  Award,
-  Lock,
   Landmark,
 } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
@@ -59,14 +57,11 @@ const PROCESS = [
 ];
 
 const WHY = [
-  { icon: Award, title: '13 áreas del derecho', desc: 'Cubrimos las principales ramas jurídicas bajo un mismo techo. Su caso encuentra el especialista adecuado.' },
-  { icon: Lock, title: 'Confidencialidad estricta', desc: 'Toda comunicación está protegida por el secreto profesional desde el primer contacto.' },
-  { icon: Clock, title: 'Atención 60 horas semanales', desc: 'Lunes a sábado de 7:00 a 20:00. Le respondemos el mismo día hábil.' },
   { icon: MapPin, title: 'Presencia local en Nacaome', desc: 'Conocemos el sistema de justicia del departamento de Valle y los juzgados de la zona sur.' },
-  { icon: BookOpen, title: 'Códigos y reformas al día', desc: 'Trabajamos con la legislación vigente y sus reformas. Sin atajos, sin información desactualizada.' },
   { icon: Scale, title: 'Enfoque ético y prudente', desc: 'Nunca prometemos resultados. Le decimos lo que procede y lo que no, con honestidad.' },
-  { icon: ShieldCheck, title: 'Defensa penal especializada', desc: 'Contamos con experiencia en derecho penal, desde asistencias a detenidos hasta recursos de casación.' },
+  { icon: ShieldCheck, title: 'Defensa penal especializada', desc: 'Experiencia en derecho penal, desde asistencias a detenidos hasta recursos de casación.' },
   { icon: HeartHandshake, title: 'Lenguaje claro', desc: 'Le explicamos el proceso en términos comprensibles, sin tecnicismos innecesarios.' },
+  { icon: BookOpen, title: 'Metodología documentada', desc: 'Cada actuación queda registrada y trazable. Trabajamos con procesos internos auditables.' },
 ];
 
 const FAQ = [
@@ -138,31 +133,25 @@ export default function HomePage() {
                   </span>
                   <span className="text-xxs font-semibold tracking-wider uppercase text-text-inverse/85">Atendiendo ahora</span>
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/15 border border-accent/20">
-                  <span className="text-xxs font-bold tracking-wider text-accent">13 áreas del derecho</span>
-                </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/40 border border-primary-light/30 text-text-inverse/85">
-                  <span className="text-xxs font-bold tracking-wider">Multidisciplinar</span>
+                  <span className="text-xxs font-bold tracking-wider">Asesoría integral</span>
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tighter text-text-inverse text-balance">
-                <span className="block">13 áreas del derecho,</span>
-                <span className="block text-gradient-accent mt-1">un solo bufete</span>
+                <span className="block">Defensa penal y asesoría jurídica</span>
+                <span className="block text-gradient-accent mt-1">en Nacaome y todo Honduras</span>
               </h1>
               <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
-                En {site.address.city}, {site.address.department}. Defensa penal especializada y asesoría
-                integral en familia, laboral, civil, mercantil, tributario y más. Atención personal con
-                rigor técnico y confidencialidad.
+                Defensa penal especializada y representación jurídica integral para personas y empresas.
+                Atención directa del abogado, sin intermediarios, con confidencialidad absoluta y
+                presencia activa en los juzgados de {site.address.city}, Valle y todo Honduras.
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6">
                 <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
-                  <CheckCircle2 size={14} className="text-accent" /> Consulta confidencial
+                  <CheckCircle2 size={14} className="text-accent" /> Primera consulta sin compromiso
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
-                  <CheckCircle2 size={14} className="text-accent" /> Atención lun-sáb
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
-                  <CheckCircle2 size={14} className="text-accent" /> Especialistas multidisciplinarios
+                  <CheckCircle2 size={14} className="text-accent" /> Atención directa del abogado
                 </span>
               </div>
               <CTAGroup variant="inverse" className="mt-7" />
@@ -290,8 +279,8 @@ export default function HomePage() {
       <Section spacing="md" ariaLabel="Todas las áreas jurídicas">
         <SectionHeader
           eyebrow="Cobertura integral"
-          title="Las 13 áreas del derecho que manejamos"
-          subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir, en un solo bufete."
+          title="Nuestras áreas de práctica"
+          subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir bajo una misma dirección letrada."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {areasGenerales.map((area) => (
@@ -364,35 +353,19 @@ export default function HomePage() {
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {WHY.map((w, i) => (
+          {WHY.map((w) => (
             <div
               key={w.title}
-              className={`rounded-md border p-5 backdrop-blur-sm card-premium ${
-                i === 0
-                  ? 'lg:col-span-3 md:flex md:items-center md:gap-6 bg-accent/10 border-accent/30'
-                  : 'border-primary-light/40 bg-primary-light/20'
-              }`}
+              className="rounded-md border border-primary-light/40 bg-primary-light/20 p-5 backdrop-blur-sm card-premium"
             >
-              <div
-                className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  i === 0 ? 'bg-accent text-primary' : 'bg-accent/15 text-accent'
-                }`}
-              >
+              <div className="w-12 h-12 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0">
                 <w.icon size={22} aria-hidden="true" />
               </div>
-              <div className={i === 0 ? 'md:flex-1 mt-3 md:mt-0' : 'mt-2.5'}>
-                <h3
-                  className={`font-bold leading-tight text-text-inverse text-balance ${
-                    i === 0 ? 'text-lg md:text-xl' : 'text-sm'
-                  }`}
-                >
+              <div className="mt-2.5">
+                <h3 className="font-bold text-sm leading-tight text-text-inverse text-balance">
                   {w.title}
                 </h3>
-                <p
-                  className={`leading-relaxed text-text-inverse/80 text-pretty ${
-                    i === 0 ? 'text-sm mt-1.5' : 'text-xs mt-1.5'
-                  }`}
-                >
+                <p className="text-xs leading-relaxed text-text-inverse/80 mt-1.5 text-pretty">
                   {w.desc}
                 </p>
               </div>

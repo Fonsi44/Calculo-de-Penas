@@ -35,7 +35,7 @@ export default function AreasJuridicasPage() {
       <PageHero
         eyebrow="Áreas Jurídicas"
         badge="Cobertura integral"
-        title="13 áreas del derecho para defender y asesorarle en cualquier frente"
+        title="Todos los servicios jurídicos que su caso necesita, bajo una misma dirección letrada"
         subtitle={
           <>
             Desde Nacaome, Valle, ofrecemos cobertura legal integral en {areasGenerales.length}{' '}
