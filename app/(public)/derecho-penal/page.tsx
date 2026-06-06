@@ -57,6 +57,7 @@ export default function DerechoPenalPage() {
         />
         <FeatureGrid
           bento
+          cols={4}
           items={hubPenal.grupos.map<FeatureItem>((grupo) => {
             const Icon = getIcon(grupo.icono);
             return {

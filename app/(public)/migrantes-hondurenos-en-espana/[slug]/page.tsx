@@ -82,7 +82,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
       </section>
 
       <Section background="default" spacing="md">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl mb-8">
           <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-3">
             Qué hacemos
           </p>
@@ -90,9 +90,6 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
             Servicios de {subarea.titulo.toLowerCase()}
           </h2>
         </div>
-      </Section>
-
-      <Section background="muted" spacing="md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {subarea.subservicios.map((s, i) => (
             <div key={i} className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-4 hover:border-accent/40 transition-colors">

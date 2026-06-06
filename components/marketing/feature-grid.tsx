@@ -8,7 +8,11 @@ export interface FeatureItem {
   icon: LucideIcon;
   href?: string;
   tone?: 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'muted';
-  /** Para bento: celda grande (1fr x 1fr) o mediana (auto). */
+  /**
+   * Variante de tamaño: SOLO controla el tamaño del icono y de la tipografía.
+   * El layout (icono arriba, título y descripción debajo, todo centrado) es
+   * SIEMPRE el mismo para que la grid sea visualmente coherente.
+   */
   size?: 'sm' | 'md' | 'lg';
   badge?: string;
 }
@@ -17,10 +21,17 @@ interface FeatureGridProps {
   items: FeatureItem[];
   className?: string;
   /**
-   * Si true, organiza las 4 primeras items en layout bento (1 grande + 3 medianas)
-   * y el resto en grid uniforme. Si false, todo va al grid uniforme.
+   * Si true, la 1ª card se renderiza en `lg` (icono grande) y el resto en
+   * `sm` (icono compacto). El layout sigue siendo vertical y consistente.
+   * Si false, todas las cards son `sm` y se ven uniformes.
    */
   bento?: boolean;
+  /**
+   * Columnas en desktop. Default: 4 (ideal para 12-16 cards como las
+   * 13 áreas jurídicas). Cada card se estira a la misma altura de fila
+   * y la última fila queda centrada horizontalmente.
+   */
+  cols?: 2 | 3 | 4 | 5;
 }
 
 const TONE_CLASSES: Record<NonNullable<FeatureItem['tone']>, string> = {
@@ -37,27 +48,32 @@ function FeatureCard({ item }: { item: FeatureItem }) {
   const toneCls = TONE_CLASSES[tone];
   const size = item.size ?? 'sm';
 
-  // Tamaño del icono y tipografía según size.
   const iconBox =
     size === 'lg' ? 'w-14 h-14' : size === 'md' ? 'w-12 h-12' : 'w-11 h-11';
-  const iconSize = size === 'lg' ? 26 : size === 'md' ? 22 : 20;
+  const iconSize = size === 'lg' ? 28 : size === 'md' ? 24 : 20;
   const titleSize =
     size === 'lg' ? 'text-base md:text-lg' : size === 'md' ? 'text-[15px]' : 'text-[13px]';
   const descSize = size === 'lg' ? 'text-[14px]' : 'text-[12px]';
   const paddingCls = size === 'sm' ? 'p-4' : 'p-5';
-  const layoutCls = size === 'sm' ? 'flex-col items-center text-center' : 'items-start gap-4';
+  const gapCls = size === 'sm' ? 'gap-2.5' : 'gap-3';
 
+  // Layout SIEMPRE vertical y centrado:
+  //   icono ARRIBA
+  //   título ABAJO (bold, centrado)
+  //   descripción ABAJO (centrada, text-pretty)
+  // Esto garantiza que la grid estire todas las cards a la misma altura
+  // con `items-stretch` (default de CSS grid) y que no haya escalones.
   const inner = (
     <div
-      className={`h-full rounded-md border border-border-light bg-surface ${paddingCls} card-premium flex ${layoutCls}`}
+      className={`h-full w-full rounded-md border border-border-light bg-surface ${paddingCls} card-premium flex flex-col items-center text-center ${gapCls}`}
     >
       <div
         className={`${iconBox} rounded-lg border flex items-center justify-center flex-shrink-0 ${toneCls} group-hover:scale-105 transition-transform`}
       >
         <item.icon size={iconSize} aria-hidden="true" />
       </div>
-      <div className="min-w-0 flex-1">
-        <div className={size === 'sm' ? 'flex flex-col items-center gap-1' : 'flex items-center gap-2'}>
+      <div className="min-w-0 w-full flex-1 flex flex-col items-center">
+        <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
           <h3 className={`font-bold ${titleSize} text-text leading-tight text-balance`}>
             {item.title}
           </h3>
@@ -78,65 +94,60 @@ function FeatureCard({ item }: { item: FeatureItem }) {
 
   if (item.href) {
     return (
-      <Link href={item.href} className="group block focus-visible:outline-none h-full">
+      <Link href={item.href} className="group block focus-visible:outline-none h-full w-full">
         {inner}
       </Link>
     );
   }
-  return <div className="group h-full">{inner}</div>;
+  return <div className="group h-full w-full">{inner}</div>;
 }
 
 /**
- * Grid bento real (no uniforme) para 13 áreas o para bloques de "ventajas".
+ * Grid uniforme con cards verticales (icono arriba, texto debajo).
+ *
+ * Implementado con `flex flex-wrap justify-center` + anchos fijos
+ * responsivos. Esto garantiza:
+ *  - Todas las cards de la misma fila tienen la misma altura.
+ *  - La última fila (cuando hay menos items) queda centrada
+ *    horizontalmente, sin huecos a un lado.
+ *  - Todas las cards usan el mismo layout vertical.
  *
  * Si `bento=true`:
- *  - item[0] = LG (ocupa 2 cols en desktop)
- *  - items[1..3] = MD (1 col)
- *  - resto = SM en grid uniforme
- *
- * Mobile: 2 cols compactas (sm). Tablet: 3 cols. Desktop: 4 cols con la 1ª expandida.
+ *  - La 1ª card es `lg` (icono grande).
+ *  - El resto son `sm` (icono compacto).
+ *  - La grid sigue siendo uniforme en columnas y alturas.
  */
-export function FeatureGrid({ items, className, bento = false }: FeatureGridProps) {
-  if (!bento) {
-    return (
-      <div
-        className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 ${className ?? ''}`}
-      >
-        {items.map((it, i) => (
-          <FeatureCard key={i} item={{ ...it, size: it.size ?? 'sm' }} />
-        ))}
-      </div>
-    );
-  }
+export function FeatureGrid({
+  items,
+  className,
+  bento = false,
+  cols = 4,
+}: FeatureGridProps) {
+  // Anchos fijos por breakpoint en función de `cols`.
+  // Usamos `w-[calc(...)]` para que la última fila quede centrada y las
+  // cards mantengan el mismo ancho en cada breakpoint. El `gap-3` (0.75rem)
+  // se compensa restando `gap/2` por cada gap lateral posible (n-1).
+  // En la práctica usamos `flex-1` con `max-w` para no pelearnos con el
+  // cálculo exacto, y dejamos que la grid CSS estire.
+  const cardWidths: Record<NonNullable<FeatureGridProps['cols']>, string> = {
+    2: 'w-full sm:w-[calc(50%-0.375rem)]',
+    3: 'w-full sm:w-[calc(50%-0.375rem)] lg:w-[calc(33.333%-0.5rem)]',
+    4: 'w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-0.5rem)] lg:w-[calc(25%-0.5625rem)]',
+    5: 'w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-0.5rem)] md:w-[calc(25%-0.5625rem)] lg:w-[calc(20%-0.6rem)]',
+  };
 
-  // Modo bento: separa destacadas del resto.
-  const featured = items.slice(0, 4).map((it, i) => ({
+  const featured = items.map((it, i) => ({
     ...it,
-    size: i === 0 ? ('lg' as const) : ('md' as const),
+    size: (bento && i === 0 ? 'lg' : 'sm') as NonNullable<FeatureItem['size']>,
   }));
-  const rest = items.slice(4).map((it) => ({ ...it, size: 'sm' as const }));
 
   return (
-    <div className={className}>
-      {/* Bento destacado: 1 grande + 3 medianas. */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-        {featured.map((it, i) => (
-          <div
-            key={`f-${i}`}
-            className={i === 0 ? 'sm:col-span-2 lg:col-span-1 lg:row-span-1' : ''}
-          >
-            <FeatureCard item={it} />
-          </div>
-        ))}
-      </div>
-      {/* Resto en grid uniforme. */}
-      {rest.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mt-3 md:mt-4">
-          {rest.map((it, i) => (
-            <FeatureCard key={`r-${i}`} item={it} />
-          ))}
+    <div className={`flex flex-wrap justify-center gap-3 ${className ?? ''}`}>
+      {featured.map((it, i) => (
+        <div key={i} className={cardWidths[cols]}>
+          <FeatureCard item={it} />
         </div>
-      )}
+      ))}
     </div>
   );
 }

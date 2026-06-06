@@ -58,6 +58,7 @@ export default function AreasJuridicasPage() {
         />
         <FeatureGrid
           bento
+          cols={5}
           items={areasGenerales.map<FeatureItem>((area) => {
             const Icon = getIcon(area.icono);
             return {
