@@ -44,6 +44,46 @@ export function LiveClock() {
   );
 }
 
+export function HeroOfficeBadge() {
+  const [now, setNow] = useState<Date | null>(() => new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(t);
+  }, []);
+
+  const isOpen = (() => {
+    if (!now) return null;
+    const { dayOfWeek, minutesOfDay } = getHondurasClock(now);
+    if (dayOfWeek === 0) return false;
+    return minutesOfDay >= 7 * 60 && minutesOfDay < 20 * 60;
+  })();
+
+  const label = isOpen === null
+    ? 'Verificando horario'
+    : isOpen
+    ? 'Atendiendo ahora'
+    : 'Cerrado ahora';
+
+  const dotColor = isOpen === null
+    ? 'bg-text-muted'
+    : isOpen
+    ? 'bg-success'
+    : 'bg-aggravation';
+
+  const pulseClass = isOpen
+    ? 'animate-glow-pulse'
+    : '';
+
+  return (
+    <span className="inline-flex items-center gap-1.5 bg-primary-light/50 border border-primary-light/30 rounded-full px-3 py-1">
+      <span className="relative w-2 h-2 flex-shrink-0">
+        <span className={`absolute inset-0 rounded-full ${dotColor} ${pulseClass}`} />
+      </span>
+      <span className="text-xxs font-semibold tracking-wider uppercase text-text-inverse/85">{label}</span>
+    </span>
+  );
+}
+
 export function LiveOfficeStatus() {
   const [now, setNow] = useState<Date | null>(() => new Date());
   useEffect(() => {

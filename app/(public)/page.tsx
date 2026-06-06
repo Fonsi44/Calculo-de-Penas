@@ -28,6 +28,7 @@ import { TestimonialsSection } from '@/components/marketing/testimonials-section
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
@@ -127,12 +128,7 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7">
               <div className="flex flex-wrap items-center gap-2 mb-5">
-                <span className="inline-flex items-center gap-1.5 bg-primary-light/50 border border-primary-light/30 rounded-full px-3 py-1">
-                  <span className="relative w-2 h-2 flex-shrink-0">
-                    <span className="absolute inset-0 rounded-full bg-success animate-glow-pulse" />
-                  </span>
-                  <span className="text-xxs font-semibold tracking-wider uppercase text-text-inverse/85">Atendiendo ahora</span>
-                </span>
+                <HeroOfficeBadge />
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/40 border border-primary-light/30 text-text-inverse/85">
                   <span className="text-xxs font-bold tracking-wider">Asesoría integral</span>
                 </span>
