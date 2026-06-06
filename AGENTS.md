@@ -254,6 +254,16 @@ No crear documentación innecesaria si el proyecto no la usa, salvo instrucción
 
 Cuando se actualice documentación, indicar claramente qué se actualizó.
 
+## Reglas específicas de acceso a la intranet
+
+1. La URL de la intranet es `https://www.pinedayasociadoshn.com/intranet/dashboard`.
+2. Solo se accede a la intranet desde el botón "Acceso Intranet" situado en la barra superior del encabezado de la web pública (`components/marketing/public-header.tsx`).
+3. Ninguna página, subpágina, componente, sección, enlace del footer, enlace del drawer móvil, breadcrumb, CTA, tarjeta de servicio, artículo de blog o cualquier otro elemento de la web pública puede contener un enlace (`href`) que apunte directa o indirectamente a cualquier ruta bajo `/intranet/`.
+4. Las únicas excepciones permitidas son:
+   - El botón "Acceso Intranet" en el header (`components/marketing/public-header.tsx`, apunta a `/intranet/dashboard`).
+   - Los componentes internos de la intranet (`components/layout/user-actions.tsx`, `components/layout/app-sidebar.tsx`) que se renderizan solo dentro de rutas `/intranet/*` y no son accesibles desde páginas públicas.
+5. Cualquier modificación que introduzca nuevos enlaces a `/intranet/` en componentes o páginas públicas será rechazada automáticamente.
+
 ## Reglas de comunicación con el usuario
 
 - Responder siempre en español.
