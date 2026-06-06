@@ -1,5 +1,46 @@
 # Changelog
 
+## Release 1 — Frontend público completo (2026-06-06)
+
+### Novedades
+
+- **F0**: Andamiaje común — `data/areas-juridicas.ts` (1086 líneas, taxonomía 13 áreas + 7 grupos penales + 3 subáreas migrantes), `lib/schemas/legal-page.ts` (helpers JSON-LD).
+- **F1**: 7 componentes marketing — `placeholder-photo`, `circular-icon`, `service-card-photo`, `specialists-grid`, `two-column-image-text`, `commitments-grid`, `testimonials-section`.
+- **F2**: 3 hubs — `/servicios-juridicos` (posteriormente `/areas-juridicas`), `/derecho-penal`, `/migrantes-hondurenos-en-espana`.
+- **F3**: 13 áreas standalone (familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación).
+- **F4**: 7 grupos penales + 3 subáreas transnacionales (10 páginas dinámicas).
+- **F5**: FAQ pública `/preguntas-frecuentes` con 73 preguntas en 11 categorías y acordeones `<details>`.
+- **F6-F7**: Blog infra — `data/blog/` con tipos, categorías (11), post piloto. `lib/blog.ts`, `lib/schemas/blog.ts`. Componentes `blog-card`, `blog-sidebar`. Páginas: `/blog` hub, `/blog/[slug]` SSG, `/blog/categoria/[categoria]`, `/blog/feed.xml` RSS 2.0.
+- **F8**: Post piloto "Defensa penal en Honduras" (~1000 palabras HTML).
+- **F9**: Sitemap dinámico con blog posts + categorías. Navegación header/footer, middleware, redirects 301.
+
+### Cambios de ruta
+
+- `/servicios-juridicos` → `/areas-juridicas` (renombrado).
+- `/derecho-penal` movido a top-level (fuera de áreas-juridicas).
+- `/migrantes-hondurenos-en-espana` movido a top-level.
+- Redirects 301: `/areas-de-practica/*` → `/areas-juridicas/*`, `/derecho-penal-hondureno` → `/derecho-penal`, `/proceso-penal` → `/migrantes-hondurenos-en-espana`.
+
+### Intranet
+
+- Eliminados todos los enlaces a `/intranet/` de componentes públicos (header, footer).
+- Solo se permite el botón "Acceso Intranet" en la barra superior del header (`components/marketing/public-header.tsx`).
+- Verificado: 0 enlaces no autorizados a `/intranet/` en código público.
+
+### Validación
+
+- `npm run lint`: 22 problemas (4 errores preexistentes + 18 warnings preexistentes). 0 errores nuevos introducidos.
+- `npm run build`: `Compiled successfully` + `Finished TypeScript` sin errores. 78/78 páginas estáticas (SSG/SSR).
+- `npm test`: 181/181 tests pasados en 12 archivos.
+- `npm run test:e2e`: 25/25 tests pasados.
+- Vercel deploy: `Ready` en ~45s. Alias producción: `pinedayasociadoshn.com`.
+
+### Riesgos
+
+- 4 errores lint preexistentes (setState en effect) no corregidos.
+- Sin assets fotográficos propios del bufete (diseño sin imágenes).
+- Sin páginas legales (aviso-legal, política-privacidad, política-cookies, disclaimer) — pendientes para release futuro.
+
 ## Fase 11 — Consolidación de MCPs y wrapper de entorno para OpenCode (2026-06-05)
 
 ### Configuración
