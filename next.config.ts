@@ -47,6 +47,7 @@ const nextConfig: NextConfig = {
       { source: '/areas-de-practica/:path*', destination: '/areas-juridicas/:path*', permanent: true },
       { source: '/derecho-penal-hondureno', destination: '/derecho-penal', permanent: true },
       { source: '/proceso-penal', destination: '/migrantes-hondurenos-en-espana', permanent: true },
+      { source: '/privacidad', destination: '/politica-privacidad', permanent: true },
     ];
   },
   // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*

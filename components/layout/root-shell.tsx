@@ -7,7 +7,6 @@ import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from './ap
 const PUBLIC_ROUTES = new Set([
   '/',
   '/terminos',
-  '/privacidad',
   '/aviso-legal',
   '/politica-privacidad',
   '/politica-cookies',

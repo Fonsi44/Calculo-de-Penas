@@ -66,17 +66,47 @@ test.describe('Smoke — rutas públicas', () => {
     expect(res?.status()).toBe(200);
     const content = await page.content();
     expect(content).toMatch(/Términos y Condiciones/i);
-    expect(content).toMatch(/sin asesoramiento legal/i);
-    expect(content).toMatch(/Ley Aplicable/i);
+    expect(content).toMatch(/asesoramiento legal/i);
+    expect(content).toMatch(/Ley aplicable/i);
   });
 
-  test('privacidad page carga y muestra secciones legales', async ({ page }) => {
-    const res = await page.goto('/privacidad');
+  test('aviso-legal page carga y muestra secciones legales', async ({ page }) => {
+    const res = await page.goto('/aviso-legal');
+    expect(res?.status()).toBe(200);
+    const content = await page.content();
+    expect(content).toMatch(/Aviso Legal/i);
+    expect(content).toMatch(/Marco normativo/i);
+  });
+
+  test('politica-privacidad page carga y muestra secciones legales', async ({ page }) => {
+    const res = await page.goto('/politica-privacidad');
     expect(res?.status()).toBe(200);
     const content = await page.content();
     expect(content).toMatch(/Privacidad/i);
-    expect(content).toMatch(/Responsable del Tratamiento/i);
-    expect(content).toMatch(/Base Legal/i);
+    expect(content).toMatch(/Responsable/i);
+    expect(content).toMatch(/Base legal/i);
+  });
+
+  test('politica-cookies page carga y muestra secciones legales', async ({ page }) => {
+    const res = await page.goto('/politica-cookies');
+    expect(res?.status()).toBe(200);
+    const content = await page.content();
+    expect(content).toMatch(/Cookies/i);
+    expect(content).toMatch(/__Host-token/);
+  });
+
+  test('disclaimer page carga y muestra secciones legales', async ({ page }) => {
+    const res = await page.goto('/disclaimer');
+    expect(res?.status()).toBe(200);
+    const content = await page.content();
+    expect(content).toMatch(/Disclaimer/i);
+    expect(content).toMatch(/calculadora de penas/i);
+  });
+
+  test('redirect /privacidad → /politica-privacidad', async ({ page }) => {
+    const res = await page.goto('/privacidad');
+    expect(res?.status()).toBe(200);
+    await expect(page).toHaveURL(/\/politica-privacidad$/);
   });
 
   test('dark mode: clase .dark aplica variables CSS correctas', async ({ page }) => {

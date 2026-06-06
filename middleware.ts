@@ -23,7 +23,6 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/icon-192.svg',
   '/favicon.ico',
   '/terminos',
-  '/privacidad',
   '/aviso-legal',
   '/politica-privacidad',
   '/politica-cookies',
