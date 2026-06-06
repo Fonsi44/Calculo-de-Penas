@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Section, Container } from '@/components/marketing/section';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { ContactStrip } from '@/components/marketing/cta-buttons';
 import { BlogCard } from '@/components/blog/blog-card';
 import { blogCategories } from '@/data/blog/categories';
-import { getPostsByCategory, getAllCategorySlugs, getCategoryName } from '@/lib/blog';
+import { getPostsByCategory, getAllCategorySlugs } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import { site } from '@/lib/site';
 import Link from 'next/link';

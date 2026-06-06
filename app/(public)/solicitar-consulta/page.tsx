@@ -9,8 +9,8 @@ import {
   ArrowRight,
   AlertTriangle,
 } from 'lucide-react';
-import { site, telHref, whatsappHref } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { telHref, whatsappHref } from '@/lib/site';
+import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 
 export const metadata: Metadata = {

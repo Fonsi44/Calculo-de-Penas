@@ -4,10 +4,9 @@ import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { BlogCard } from '@/components/blog/blog-card';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
-import { getAllPosts, getFeaturedPosts, formatDateShort } from '@/lib/blog';
+import { getAllPosts, getFeaturedPosts } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import Link from 'next/link';
-import { ArrowRight, Calendar, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Blog Jurídico',

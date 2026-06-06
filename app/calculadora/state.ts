@@ -279,7 +279,7 @@ export function useCalculadoraState() {
     setEscenarios(prev => [...prev, esc]);
     setEscenarioActivo(id);
     toast.success(`Escenario ${n} creado. Ahora puedes modificarlo desde el paso 1.`);
-  }, [configs, tipoConcurso, resultado, toast]);
+  }, [configs, tipoConcurso, resultado, toast, escenarios.length]);
 
   const eliminarEscenario = useCallback((id: string) => {
     setEscenarios(prev => prev.filter(e => e.id !== id));

@@ -24,15 +24,14 @@ export function useDelitosLoader(): UseDelitosLoader {
   const [loading, setLoading] = useState(() => !cacheGet(CACHE_KEY_DELITOS));
   const [fetchError, setFetchError] = useState<string | null>(null);
 
-  const refetch = useCallback(async () => {
-    setLoading(true);
-    setFetchError(null);
+  const refetch = useCallback(async (): Promise<void> => {
     try {
       const r = await fetch('/api/delitos?limit=1000');
       const d = await r.json();
       const data = Array.isArray(d) ? d : (d?.data || []);
       cacheSet(CACHE_KEY_DELITOS, data, CACHE_TTL);
       setDelitos(data);
+      setFetchError(null);
     } catch (e) {
       setFetchError(e instanceof Error ? e.message : 'Error al cargar delitos');
     } finally {
@@ -41,9 +40,16 @@ export function useDelitosLoader(): UseDelitosLoader {
   }, []);
 
   useEffect(() => {
-    if (!cacheGet(CACHE_KEY_DELITOS)) refetch();
-    else setLoading(false);
-  }, [refetch]);
+    if (!loading) return;
+    let cancelled = false;
+    (async () => {
+      await refetch();
+      if (cancelled) return;
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [loading, refetch]);
 
   return { delitos, setDelitos, loading, fetchError, refetch };
 }

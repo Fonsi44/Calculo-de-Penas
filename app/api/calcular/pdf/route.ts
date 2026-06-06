@@ -1,7 +1,6 @@
 import React from 'react';
 import { renderToBuffer, type DocumentProps } from '@react-pdf/renderer';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
-import type { ResultadoCalculo } from '@/lib/rules/v1/types';
 
 export const dynamic = 'force-dynamic';
 

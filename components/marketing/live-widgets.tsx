@@ -28,9 +28,8 @@ export function LiveBadge() {
 }
 
 export function LiveClock() {
-  const [now, setNow] = useState<Date | null>(null);
+  const [now, setNow] = useState<Date | null>(() => new Date());
   useEffect(() => {
-    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
@@ -45,9 +44,8 @@ export function LiveClock() {
 }
 
 export function LiveOfficeStatus() {
-  const [now, setNow] = useState<Date | null>(null);
+  const [now, setNow] = useState<Date | null>(() => new Date());
   useEffect(() => {
-    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(t);
   }, []);

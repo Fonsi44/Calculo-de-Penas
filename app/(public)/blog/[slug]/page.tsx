@@ -2,13 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Calendar, Clock, User, ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
-import { blogCategories } from '@/data/blog/categories';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
-import type { Post } from '@/data/blog/types';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,8 +39,6 @@ export default async function BlogPostPage({ params }: Props) {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-
-  const catColor = blogCategories.find((c) => c.slug === post.category)?.color ?? 'muted';
 
   return (
     <>

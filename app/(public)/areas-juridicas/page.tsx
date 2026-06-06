@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { ArrowRight, Scale } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
-import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';

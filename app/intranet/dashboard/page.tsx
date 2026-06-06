@@ -85,10 +85,9 @@ const RULES = [
 
 export default function IntranetDashboard() {
   const [stats, setStats] = useState({ total: 0, clasificaciones: 0 });
-  const [now, setNow] = useState<Date | null>(null);
+  const [now, setNow] = useState<Date | null>(() => new Date());
 
   useEffect(() => {
-    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 30000);
     Promise.all([
       fetch('/api/delitos/count').then((r) => r.json()),

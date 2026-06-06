@@ -1,6 +1,6 @@
 'use client';
 
-import { Gavel, Plus, Trash2, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Plus, Trash2, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -129,7 +129,6 @@ function ComparacionDirecta({ escenarios }: { escenarios: Escenario[] }) {
         const r = e.resultado;
         if (!r) return null;
         const diffMin = r.pena_principal_minimo_meses - minGlobal;
-        const diffMax = r.pena_principal_maximo_meses - maxGlobal;
         return (
           <div key={i} className="flex items-center gap-2 pl-4 border-l-2 border-border">
             <span className="font-semibold text-text-secondary w-32">{e.nombre}:</span>
