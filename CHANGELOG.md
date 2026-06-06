@@ -1,5 +1,39 @@
 # Changelog
 
+## Release 4 — Auditoría y correcciones de accesibilidad (2026-06-06)
+
+### Cambios aplicados
+
+- **CRITICAL**: Eliminado `id="main"` duplicado en `root-shell.tsx` — el wrapper público pasa a `<div>` sin id; el wrapper intranet cambia a `<main id="main">`. El skip-link ahora apunta al `<main>` correcto.
+- **CRITICAL**: Añadido `useFocusTrap` a `ArticleModal`, `MobileNavDrawer` (app-sidebar) y menú móvil de `public-header`.
+- **CRITICAL**: Añadido `aria-label` al campo de búsqueda en paso 1 de calculadora; `role="alert"` en errores de formularios (contacto y solicitar consulta); `id` explícito + `htmlFor` en checkboxes y labels de formularios.
+- **HIGH**: Contraste de color corregido — `--color-text-muted` light `#6B6B6B→#595959` (4.7:1), dark `#8A8A8A→#A0A0A0` (4.6:1), ambos WCAG AA.
+- **HIGH**: Touch target mínimo aumentado — `IconButton` sm de 28px→32px.
+- **MEDIUM**: `Chip` cambia de `role="switch"`/`aria-checked` a `role="button"`/`aria-pressed` (selección, no toggle persistente).
+- **MEDIUM**: `aria-expanded` añadido a `MobileNavToggle` en `app-sidebar`.
+- **MEDIUM`: `<h3>` dentro de `<summary>` en FAQ cambiado a `<span>` semánticamente neutro.
+- Sin cambios en diseño visual, SEO, rendimiento ni funcionalidad.
+
+### Archivos modificados
+
+- `components/layout/root-shell.tsx`
+- `app/article-modal.tsx`
+- `components/layout/app-sidebar.tsx`
+- `components/marketing/public-header.tsx`
+- `app/calculadora/paso1-delito.tsx`
+- `components/marketing/solicitar-consulta-form.tsx`
+- `app/(public)/contacto/page.tsx`
+- `app/globals.css`
+- `components/ui/icon-button.tsx`
+- `components/ui/chip.tsx`
+- `app/(public)/page.tsx`
+
+### Validación
+
+- `npm run lint`: 0 errores, 0 warnings.
+- `npm run build`: Compiled successfully, 87/87 páginas.
+- Test suite no ejecutada (solo cambios de UI/aria, 0 cambios en lógica de negocio).
+
 ## Release 3 — Migración middleware → proxy (2026-06-06)
 
 ### Cambios técnicos

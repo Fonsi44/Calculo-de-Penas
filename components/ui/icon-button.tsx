@@ -15,7 +15,7 @@ const VARIANT: Record<NonNullable<IconButtonProps['variant']>, string> = {
 };
 
 const SIZE: Record<NonNullable<IconButtonProps['size']>, string> = {
-  sm: 'w-7 h-7',
+  sm: 'w-8 h-8',
   md: 'w-9 h-9',
 };
 

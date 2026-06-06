@@ -36,6 +36,7 @@ export function Paso1Delito({
       <BannerCalidadDatos />
       <div className="relative mb-3">
         <Input
+          aria-label="Buscar delito por nombre, artículo o conducta"
           iconLeft={<Search size={16} />}
           placeholder="Buscar delito por nombre, artículo o conducta..."
           value={search}
@@ -118,8 +119,9 @@ export function Paso1Delito({
               Sugerencia del validador: <strong>{current.delito.estado_articulo_sugerido}</strong>
             </p>
           )}
-          <label className="flex items-start gap-2 text-xs text-text cursor-pointer">
+          <label htmlFor={`confirmar-${current.delito.id}`} className="flex items-start gap-2 text-xs text-text cursor-pointer">
             <input
+              id={`confirmar-${current.delito.id}`}
               type="checkbox"
               className="mt-0.5"
               checked={!!pendientesConfirmados[current.delito.id]}

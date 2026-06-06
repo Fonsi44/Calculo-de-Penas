@@ -39,11 +39,11 @@ export function RootShell({ children }: { children: React.ReactNode }) {
   const isPublic = isPublicRoute(pathname);
 
   if (isPublic) {
-    return <div id="main" className="flex flex-col flex-1">{children}</div>;
+    return <div className="flex flex-col flex-1">{children}</div>;
   }
 
   return (
-    <div id="main" className="flex flex-1 bg-background">
+    <main id="main" className="flex flex-1 bg-background">
       <aside className="hidden lg:flex desktop-sidebar bg-surface border-r border-border-light flex-col p-4 sticky top-0 h-screen overflow-y-auto no-print">
         <Link
           href="/"
@@ -65,10 +65,10 @@ export function RootShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <div className="fixed bottom-4 right-4 z-40 lg:hidden no-print">
-        <MobileNavToggle onClick={() => setOpen(true)} />
+        <MobileNavToggle open={open} onClick={() => setOpen(true)} />
       </div>
 
       <MobileNavDrawer open={open} onClose={() => setOpen(false)} />
-    </div>
+    </main>
   );
 }

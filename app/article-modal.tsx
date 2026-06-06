@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { X, FileText } from 'lucide-react';
 import Link from 'next/link';
+import { useFocusTrap } from '@/hooks/use-focus-trap';
 
 interface ArticuloCP {
   id: number;
@@ -18,6 +19,7 @@ interface ArticleModalProps {
 }
 
 export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
+  const trapRef = useFocusTrap<HTMLDivElement>(!!articuloRef);
   const [article, setArticle] = useState<ArticuloCP | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -54,6 +56,7 @@ export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-overlay" />
       <div
+        ref={trapRef}
         className="relative bg-surface rounded-t-xl sm:rounded-xl shadow-2xl w-full sm:max-w-lg max-h-[80vh] flex flex-col overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
@@ -62,7 +65,7 @@ export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
             <FileText size={16} className="text-accent" />
             <span className="font-bold text-sm text-primary">Artículo del CP</span>
           </div>
-          <button onClick={onClose} className="w-7 h-7 rounded-md hover:bg-gray-100 flex items-center justify-center transition-colors">
+          <button onClick={onClose} aria-label="Cerrar" className="w-8 h-8 rounded-md hover:bg-gray-100 flex items-center justify-center transition-colors">
             <X size={16} className="text-text-muted" />
           </button>
         </div>

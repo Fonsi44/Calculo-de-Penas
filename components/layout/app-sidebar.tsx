@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Keyboard } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { useFocusTrap } from '@/hooks/use-focus-trap';
 import { cn } from '@/lib/ui';
 
 interface NavItem {
@@ -54,11 +55,13 @@ export function AppSidebar({ className, onNavigate }: { className?: string; onNa
 }
 
 export function MobileNavDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const trapRef = useFocusTrap<HTMLDivElement>(open);
   if (!open) return null;
   return (
     <div className="lg:hidden fixed inset-0 z-50 no-print" role="presentation">
       <div className="absolute inset-0 bg-overlay" onClick={onClose} aria-hidden="true" />
       <aside
+        ref={trapRef}
         className="absolute left-0 top-0 bottom-0 w-72 bg-surface shadow-xl p-4 flex flex-col"
         role="dialog"
         aria-label="Menú de navegación"
@@ -80,10 +83,10 @@ export function MobileNavDrawer({ open, onClose }: { open: boolean; onClose: () 
   );
 }
 
-export function MobileNavToggle({ onClick }: { onClick: () => void }) {
+export function MobileNavToggle({ onClick, open }: { onClick: () => void; open?: boolean }) {
   return (
-    <IconButton label="Abrir menú" variant="solid" onClick={onClick} className="lg:hidden">
-      <Menu size={18} />
+    <IconButton label={open ? 'Cerrar menú' : 'Abrir menú'} variant="solid" onClick={onClick} aria-expanded={open} className="lg:hidden">
+      {open ? <X size={18} /> : <Menu size={18} />}
     </IconButton>
   );
 }

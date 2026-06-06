@@ -525,7 +525,7 @@ export default function HomePage() {
                 className="group rounded-md border border-border-light bg-surface faq-anim open:border-accent/40"
               >
                 <summary className="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
-                  <h3 className="font-semibold text-sm text-text leading-snug text-balance">{f.q}</h3>
+                  <span className="font-semibold text-sm text-text leading-snug text-balance">{f.q}</span>
                   <span className="w-6 h-6 rounded-full bg-surface-alt group-open:bg-accent/15 flex items-center justify-center flex-shrink-0 transition-colors">
                     <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 transition-transform" />
                   </span>

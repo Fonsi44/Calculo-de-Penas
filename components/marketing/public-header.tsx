@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Scale, Menu, X, Phone, MessageCircle, Lock, Calendar, ChevronDown } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
+import { useFocusTrap } from '@/hooks/use-focus-trap';
 
 const NAV = [
   { label: 'El Despacho', href: '/despacho' },
@@ -25,6 +26,7 @@ export function PublicHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const mobileTrapRef = useFocusTrap<HTMLDivElement>(open);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -137,7 +139,7 @@ export function PublicHeader() {
 
       {/* Drawer móvil */}
       {open && (
-        <div className="lg:hidden border-t border-primary-light bg-primary">
+        <div ref={mobileTrapRef} className="lg:hidden border-t border-primary-light bg-primary">
           <nav aria-label="Navegación móvil" className="px-3 py-3 flex flex-col gap-1">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);

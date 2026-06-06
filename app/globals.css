@@ -44,7 +44,7 @@
   /* Texto */
   --color-text: #1A1A1A;
   --color-text-secondary: #5A5A5A;
-  --color-text-muted: #6B6B6B;
+  --color-text-muted: #595959;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes */
@@ -156,7 +156,7 @@
 
   --color-text: #E8E8E8;
   --color-text-secondary: #B0B0B0;
-  --color-text-muted: #8A8A8A;
+  --color-text-muted: #A0A0A0;
   --color-text-inverse: #1A1A1A;
 
   --color-border: #2D3040;

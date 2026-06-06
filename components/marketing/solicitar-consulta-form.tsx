@@ -144,8 +144,9 @@ export function SolicitarConsultaForm() {
           evaluar su caso.
         </p>
       </div>
-      <label className="flex items-start gap-2 text-xs text-text-secondary">
+      <label htmlFor="consulta-acepta" className="flex items-start gap-2 text-xs text-text-secondary">
         <input
+          id="consulta-acepta"
           type="checkbox"
           checked={form.acepta}
           onChange={(e) => setForm((f) => ({ ...f, acepta: e.target.checked }))}
@@ -161,7 +162,7 @@ export function SolicitarConsultaForm() {
       </label>
 
       {err && (
-        <div className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
+        <div role="alert" className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
           <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
           <span>{err}</span>
         </div>
@@ -201,15 +202,17 @@ function Field({
   type?: string;
   required?: boolean;
 }) {
+  const fieldId = `consulta-${label.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-')}`;
   return (
     <div>
-      <label className="block text-xs font-bold text-text mb-1">
+      <label htmlFor={fieldId} className="block text-xs font-bold text-text mb-1">
         {label}
         {required && <span className="text-aggravation ml-0.5">*</span>}
       </label>
       <div className="relative">
         <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
         <input
+          id={fieldId}
           type={type}
           value={value}
           onChange={onChange}
