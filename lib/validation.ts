@@ -73,12 +73,21 @@ export const authLoginSchema = z.object({
 });
 
 export const CONTACTO_ASUNTOS = [
-  'Asistencia a persona detenida',
   'Cita para consulta',
-  'Defensa penal en proceso',
-  'Recurso o apelación',
-  'Atención a víctima',
-  'Asesoría preventiva',
+  'Derecho penal',
+  'Derecho de familia',
+  'Derecho laboral',
+  'Derecho civil y notarial',
+  'Derecho mercantil y empresarial',
+  'Derecho bancario y financiero',
+  'Derecho administrativo',
+  'Derecho aduanero y comercio exterior',
+  'Regulación sanitaria',
+  'Extranjería en Honduras',
+  'Propiedad intelectual',
+  'Derecho tributario y fiscal',
+  'Derecho ambiental',
+  'Conciliación y arbitraje',
   'Otro asunto',
 ] as const;
 

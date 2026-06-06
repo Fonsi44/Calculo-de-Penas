@@ -15,7 +15,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { LiveOfficeStatus } from '@/components/marketing/live-widgets';
 import { CONTACTO_ASUNTOS } from '@/lib/validation';
@@ -237,7 +237,7 @@ export default function ContactoPage() {
                 </li>
                 <li>
                   <a
-                    href={whatsappHref('Hola, necesito orientación sobre un caso penal.')}
+                    href={whatsappHref('Hola, necesito orientación jurídica.')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-3 hover:text-success"
@@ -281,14 +281,24 @@ export default function ContactoPage() {
 
             <Card padding="md" className="bg-warning-bg border border-warning/30">
               <p className="text-[12px] text-text-secondary leading-relaxed">
-                <strong className="text-text">¿Emergencia con persona detenida?</strong>{' '}
-                Contáctenos de inmediato por WhatsApp o teléfono durante el horario de atención.
-                Fuera de horario, le recomendamos consultar la{' '}
-                <a href="/asistencia-detenidos" className="text-primary font-semibold hover:underline">
-                  guía de asistencia a detenidos
-                </a>
-                .
+                <strong className="text-text">¿Urgencia legal?</strong>{' '}
+                Detención, desalojo, despido, denuncia o retención migratoria —si es
+                apremiante, contáctenos de inmediato. Actuamos en toda Honduras con
+                presencia en Nacaome, Tegucigalpa, San Pedro Sula, Choluteca y Comayagua.
               </p>
+            </Card>
+
+            <Card padding="sm">
+              <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-2">
+                13 áreas de práctica
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {['Penal','Familia','Laboral','Civil','Mercantil','Bancario','Administrativo','Aduanero','Sanitario','Extranjería','Prop.Intelectual','Tributario','Ambiental','Conciliación'].map((a) => (
+                  <span key={a} className="inline-flex px-1.5 py-0.5 rounded-full bg-muted text-[10px] text-text-secondary font-medium">
+                    {a}
+                  </span>
+                ))}
+              </div>
             </Card>
           </div>
         </div>
