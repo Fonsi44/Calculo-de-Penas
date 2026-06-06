@@ -115,6 +115,22 @@ export default function HondurenosEnEspanaPage() {
       </Section>
 
       <Section background="muted" spacing="sm">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-text-secondary text-[14px] leading-relaxed mb-5">
+            Si reside en España y necesita gestionar trámites legales en Honduras,
+            podemos ayudarle. Consúltenos sin compromiso y le explicaremos el
+            procedimiento paso a paso.
+          </p>
+          <Link
+            href="/solicitar-consulta"
+            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-primary text-white text-base font-bold hover:opacity-90 transition-opacity"
+          >
+            Solicitar consulta confidencial <ArrowRight size={18} />
+          </Link>
+        </div>
+      </Section>
+
+      <Section spacing="sm">
         <ContactStrip />
       </Section>
 
