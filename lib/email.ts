@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { formatHondurasDateTime } from '@/lib/datetime';
 
 let _client: Resend | null = null;
 
@@ -49,6 +50,7 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
   const from = getFromAddress();
   const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
   const subject = `[Web] ${payload.asunto} — ${payload.nombre}`;
+  const fechaLocal = formatHondurasDateTime(payload.submittedAt, { dateStyle: 'long', timeStyle: 'short' });
 
   const html = `
     <h2>Nuevo mensaje desde el formulario de contacto</h2>
@@ -57,14 +59,15 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
       <tr><td><strong>Teléfono</strong></td><td>${escapeHtml(payload.telefono)}</td></tr>
       <tr><td><strong>Correo</strong></td><td>${escapeHtml(payload.email ?? '—')}</td></tr>
       <tr><td><strong>Asunto</strong></td><td>${escapeHtml(payload.asunto)}</td></tr>
-      <tr><td><strong>Fecha</strong></td><td>${payload.submittedAt.toISOString()}</td></tr>
+      <tr><td><strong>Fecha (Honduras)</strong></td><td>${escapeHtml(fechaLocal)}</td></tr>
     </table>
     <h3>Mensaje</h3>
     <p style="white-space:pre-wrap;font-family:sans-serif;font-size:14px;">${escapeHtml(payload.mensaje)}</p>
     <hr />
     <p style="font-size:12px;color:#666;">
       IP: ${escapeHtml(payload.ip ?? 'desconocida')}<br />
-      UA: ${escapeHtml(payload.userAgent ?? 'desconocido')}
+      UA: ${escapeHtml(payload.userAgent ?? 'desconocido')}<br />
+      ISO: ${payload.submittedAt.toISOString()}
     </p>
   `.trim();
 
@@ -75,7 +78,7 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
     `Teléfono: ${payload.telefono}`,
     `Correo: ${payload.email ?? '—'}`,
     `Asunto: ${payload.asunto}`,
-    `Fecha: ${payload.submittedAt.toISOString()}`,
+    `Fecha (Honduras): ${fechaLocal}`,
     '',
     'Mensaje:',
     payload.mensaje,

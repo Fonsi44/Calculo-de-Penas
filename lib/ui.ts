@@ -1,3 +1,5 @@
+import { formatHondurasDate, formatHondurasDateTime } from '@/lib/datetime';
+
 export function cn(...args: Array<unknown>): string {
   return args.filter((a): a is string | number => Boolean(a) || a === 0 || a === '').map(String).join(' ');
 }
@@ -7,13 +9,11 @@ export function pluralizar(n: number, singular: string, plural: string): string 
 }
 
 export function formatFechaCorta(date: string | Date): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+  return formatHondurasDate(date, { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 export function formatFechaCompleta(date: string | Date): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleDateString('es-ES', {
+  return formatHondurasDate(date, {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
@@ -22,8 +22,7 @@ export function formatFechaCompleta(date: string | Date): string {
 }
 
 export function formatFechaHora(date: string | Date): string {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleString('es-ES', {
+  return formatHondurasDateTime(date, {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',

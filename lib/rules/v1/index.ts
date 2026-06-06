@@ -9,6 +9,7 @@ import { evaluarEximenteCompleta } from './eximentes';
 import { aplicarConcurso } from './concurso';
 import { generarAnalisisJuridico } from './analisis';
 import type { CalculoRequest, DelitoAnalizado, DelitoBase, DelitoConfig, ResultadoCalculo, ResultadoIndividual } from './types';
+import { formatHondurasDateTime } from '@/lib/datetime';
 
 export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase): ResultadoIndividual {
   const base = seleccionarPenaBase(config, delito);
@@ -65,8 +66,13 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
   const resultados_individuales: DelitoAnalizado[] = [];
   const penas_para_concurso: ResultadoIndividual[] = [];
   const todas_penas_accesorias: string[] = [];
-  const now = new Date();
-  const fecha = now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  const fecha = formatHondurasDateTime(new Date(), {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   for (const config of request.delitos) {
     const delito = delitosMap.get(config.delito_id);

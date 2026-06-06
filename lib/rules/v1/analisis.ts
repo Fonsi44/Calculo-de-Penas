@@ -1,4 +1,5 @@
 import type { DelitoAnalizado, ResultadoConcurso } from './types';
+import { formatHondurasDateTime } from '@/lib/datetime';
 
 export function generarAnalisisJuridico(
   delitos: DelitoAnalizado[],
@@ -6,8 +7,13 @@ export function generarAnalisisJuridico(
   resultado_concurso: ResultadoConcurso,
 ): string {
   const lineas: string[] = [];
-  const now = new Date();
-  const fecha = now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  const fecha = formatHondurasDateTime(new Date(), {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   lineas.push('='.repeat(50));
   lineas.push('ANÁLISIS JURÍDICO DEL CÁLCULO DE PENA');

@@ -272,6 +272,23 @@ Estado fijado en commits `2ed1168` (unoptimized) y `52a9b72` (middleware). Cambi
 
 7. Hero de la home NO usa `<img>` propio: la card premium con CTA vive en `app/(public)/page.tsx` sin foto corporativa. Si se quiere re-introducir, usar `next/image` con `images.unoptimized=true` y validar contra `e2e/smoke.spec.ts` (test de consola limpia).
 
+## Zona horaria de Honduras (obligatoria)
+
+Toda fecha/hora que se muestre a la persona usuaria debe estar en zona horaria de Honduras (CST, UTC-6, sin horario de verano). El servidor (Vercel) corre en UTC y los navegadores visitantes pueden estar en cualquier zona, por lo que **confiar en `new Date().toLocaleString()` produce horas incorrectas**.
+
+Reglas:
+
+1. **Helper central en `lib/datetime.ts`**:
+   - `HONDURAS_TZ = 'America/Tegucigalpa'` (constante IANA, no string libre).
+   - `formatHondurasDateTime(d, opts)`, `formatHondurasDate(d, opts)`, `formatHondurasTime(d, opts)`: locale `es-HN` + `timeZone: HONDURAS_TZ` por defecto.
+   - `getHondurasClock(d)`: devuelve `{ hour, minute, dayOfWeek, minutesOfDay }` calculado con `Intl.DateTimeFormat.formatToParts` para evitar derivas por DST del navegador.
+2. **NO usar `toLocaleDateString` / `toLocaleTimeString` / `toLocaleString` sin `timeZone: 'America/Tegucigalpa'`** en código de UI, calculadora, dashboard, blog, PDF o email. Si se necesita formatear, importar de `lib/datetime.ts`.
+3. **NO usar `new Date().getHours()` / `getDay()` / `getMinutes()`** para lógica de horario (abierto/cerrado, saludo según hora). Usar `getHondurasClock(new Date())` en su lugar.
+4. **Fechas internas y técnicas** (sitemap `lastmod`, RSS `lastBuildDate`, `api/health` `timestamp`, `Date.now()` en rate-limit/cache, timestamps de DB) se mantienen en UTC/ISO. Solo se traducen a Honduras al presentarlas.
+5. **Email de contacto**: incluir dos versiones de la fecha — `Fecha (Honduras)` formateada con `formatHondurasDateTime` y `ISO: ...toISOString()` para auditoría técnica.
+6. **Tests**: si un test verifica una fecha formateada, no assertar el texto literal (depende de la TZ del runner). Assertar solo el contenido legal estable (ej. `toContain('Código Penal de Honduras')`).
+7. Si en el futuro se quiere soportar otra zona horaria (sede en Madrid, por ejemplo), no añadir un parámetro `tz` en cada llamada: refactorizar a un contexto de usuario y leer de ahí.
+
 ## Reglas para documentación
 
 Si el cambio afecta comportamiento, comandos, configuración, API, semillas o flujo de ejecución, actualizar documentación si existe:

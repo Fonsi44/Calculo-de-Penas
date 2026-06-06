@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
+import { formatHondurasDate } from '@/lib/datetime';
 import type { Delito, DelitoConfig, Step } from '../types';
 import type { ResultadoCalculo } from '@/lib/calculo';
 
@@ -317,7 +318,7 @@ export function useCalculadoraState() {
         const res = await fetch('/api/casos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ titulo: `Cálculo ${new Date().toLocaleDateString('es-ES')}` }),
+          body: JSON.stringify({ titulo: `Cálculo ${formatHondurasDate(new Date(), { day: '2-digit', month: 'short', year: 'numeric' })}` }),
         });
         const data = await res.json();
         casoId = data.id ?? data.data?.id;

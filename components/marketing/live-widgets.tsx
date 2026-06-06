@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Activity, MapPin, Phone, MessageCircle } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
+import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 
 /**
  * Indicador "vivo": pulso animado, número de visitantes simulados,
@@ -38,7 +39,7 @@ export function LiveClock() {
   }
   return (
     <span className="tabular-nums">
-      {now.toLocaleTimeString('es-HN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+      {formatHondurasTime(now, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
     </span>
   );
 }
@@ -52,12 +53,9 @@ export function LiveOfficeStatus() {
 
   const isOpen = (() => {
     if (!now) return null;
-    const day = now.getDay();
-    if (day === 0) return false;
-    const h = now.getHours();
-    const m = now.getMinutes();
-    const mins = h * 60 + m;
-    return mins >= 7 * 60 && mins < 20 * 60;
+    const { dayOfWeek, minutesOfDay } = getHondurasClock(now);
+    if (dayOfWeek === 0) return false;
+    return minutesOfDay >= 7 * 60 && minutesOfDay < 20 * 60;
   })();
 
   return (

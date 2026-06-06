@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { formatHondurasDate, getHondurasClock } from '@/lib/datetime';
 import {
   Scale,
   Calculator,
@@ -112,13 +113,13 @@ export default function IntranetDashboard() {
   };
 
   const greeting = (() => {
-    const h = (now ?? new Date()).getHours();
+    const h = getHondurasClock(now ?? new Date()).hour;
     if (h < 12) return 'Buenos días';
     if (h < 18) return 'Buenas tardes';
     return 'Buenas noches';
   })();
 
-  const dateStr = (now ?? new Date()).toLocaleDateString('es-HN', {
+  const dateStr = formatHondurasDate(now ?? new Date(), {
     weekday: 'long',
     day: 'numeric',
     month: 'long',

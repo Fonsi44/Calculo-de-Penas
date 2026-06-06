@@ -1,6 +1,7 @@
 import type { Post } from '@/data/blog/types';
 import { blogCategories } from '@/data/blog/categories';
 import { posts as allPosts } from '@/data/blog/posts';
+import { formatHondurasDate } from '@/lib/datetime';
 
 export function getAllPosts(): Post[] {
   return allPosts;
@@ -40,8 +41,7 @@ export function getAllCategorySlugs(): string[] {
 }
 
 export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('es-HN', {
+  return formatHondurasDate(dateString, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -49,8 +49,7 @@ export function formatDate(dateString: string): string {
 }
 
 export function formatDateShort(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('es-HN', {
+  return formatHondurasDate(dateString, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

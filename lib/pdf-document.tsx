@@ -2,6 +2,7 @@ import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import type { DelitoConfig } from '@/lib/rules/v1/types';
 import { formatMeses, formatFechaHora } from '@/lib/ui';
+import { formatHondurasDate } from '@/lib/datetime';
 
 const colors = {
   primary: '#1A2B4A',
@@ -346,8 +347,7 @@ interface Caso {
 
 function formatFecha(iso: string): string {
   try {
-    const d = new Date(iso);
-    return d.toLocaleDateString('es-HN', { day: '2-digit', month: 'long', year: 'numeric' });
+    return formatHondurasDate(iso, { day: '2-digit', month: 'long', year: 'numeric' });
   } catch { return iso; }
 }
 
