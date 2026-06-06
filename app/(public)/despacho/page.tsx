@@ -156,24 +156,24 @@ export default function DespachoPage() {
             </ul>
           </div>
           <div className="space-y-3">
-            <div className="rounded-md border shadow-sm bg-primary text-text-inverse p-4 card-premium">
+            <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 rounded-md bg-accent/20 flex items-center justify-center">
-                  <Scale size={22} className="text-accent" />
+                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
+                  <Scale size={18} />
                 </div>
                 <div>
-                  <p className="text-xxs font-bold uppercase tracking-widest text-accent">
+                  <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                     Visión
                   </p>
-                  <p className="text-sm font-bold leading-tight">Justicia accesible y técnica</p>
+                  <p className="text-sm font-bold leading-tight text-text">Justicia accesible y técnica</p>
                 </div>
               </div>
-              <p className="text-sm text-text-inverse/90 leading-relaxed text-pretty">
+              <p className="text-sm text-text leading-relaxed text-pretty">
                 Aspiramos a un sistema de justicia donde cada persona, en Nacaome y en el sur de
                 Honduras, pueda ejercer su derecho a la defensa y a la asesoría legal con un
                 equipo que domine la técnica, explique con claridad y actúe con prudencia.
               </p>
-            </div>
+            </Card>
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                 Valores
