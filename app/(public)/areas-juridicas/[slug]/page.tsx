@@ -4,13 +4,11 @@ import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { PlaceholderPhoto } from '@/components/marketing/placeholder-photo';
-import { ServiceCardPhoto } from '@/components/marketing/service-card-photo';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
+import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { areasGenerales, getAreaBySlug, type AreaStandalone } from '@/data/areas-juridicas';
 import { areaHref, areaSchemas } from '@/lib/schemas/legal-page';
-import { getIcon, getAreaTone } from '@/lib/icon-map';
+import { getIcon } from '@/lib/icon-map';
 
 export function generateStaticParams() {
   return areasGenerales.map((a) => ({ slug: a.slug }));
@@ -34,7 +32,6 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
 
   const url = areaHref(slug);
   const Icon = getIcon(area.icono);
-  const tone = getAreaTone(slug);
 
   const related = area.areasRelacionadas
     .map((rSlug) => areasGenerales.find((a) => a.slug === rSlug))
@@ -98,29 +95,22 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       </Section>
 
       <Section background="muted" spacing="md">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <div>
-            <PlaceholderPhoto tone={tone} aspect="4/3" label={area.titulo} rounded="xl" />
-          </div>
-          <div>
-            <ul className="space-y-4">
-              {area.subservicios.map((s, i) => (
-                <li key={i} className="flex items-start gap-4">
-                  <span className="w-10 h-10 rounded-full border-2 border-accent flex items-center justify-center bg-white flex-shrink-0 mt-0.5">
-                    <Icon size={16} className="text-accent-dark" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="font-bold text-[15px] md:text-base text-primary leading-snug">
-                      {s.titulo}
-                    </h4>
-                    <p className="text-[14px] md:text-[15px] text-text leading-relaxed mt-1">
-                      {s.descripcion}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {area.subservicios.map((s, i) => (
+            <div key={i} className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-4 hover:border-accent/40 transition-colors">
+              <span className="w-10 h-10 rounded-full border-2 border-accent flex items-center justify-center bg-white flex-shrink-0 mt-0.5">
+                <Icon size={16} className="text-accent-dark" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h4 className="font-bold text-[15px] md:text-base text-primary leading-snug">
+                  {s.titulo}
+                </h4>
+                <p className="text-[14px] md:text-[15px] text-text-secondary leading-relaxed mt-1">
+                  {s.descripcion}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </Section>
 
@@ -152,17 +142,27 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
             subtitle="Estas áreas complementan o están vinculadas con los servicios descritos."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {related.map((r) => (
-              <ServiceCardPhoto
-                key={r.slug}
-                href={`/areas-juridicas/${r.slug}`}
-                title={r.titulo}
-                description={r.resumen}
-                tone={getAreaTone(r.slug)}
-                aspect="16/9"
-                label={r.titulo}
-              />
-            ))}
+            {related.map((r) => {
+              const RIcon = getIcon(r.icono);
+              return (
+                <Link key={r.slug} href={areaHref(r.slug)} className="group block focus-visible:outline-none">
+                  <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                    <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                      <RIcon size={20} aria-hidden="true" />
+                    </div>
+                    <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
+                      {r.titulo}
+                    </h3>
+                    <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                      {r.resumen}
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-3 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                      Conocer más <ArrowRight size={12} />
+                    </span>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
         </Section>
       )}
