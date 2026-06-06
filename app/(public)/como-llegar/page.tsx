@@ -41,7 +41,7 @@ export default function ComoLlegarPage() {
   const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
   const wazeLink = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
 
-  const fullAddress = `${site.address.line1}, ${site.address.line2}, ${site.address.city}, ${site.address.department}, ${site.address.country}`;
+  const shortAddress = site.address.full;
 
   return (
     <>
@@ -54,8 +54,9 @@ export default function ComoLlegarPage() {
             Visítenos en Nacaome, Valle
           </h1>
           <p className="mt-4 text-[15px] md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
-            Estamos a cuadra y media al este de la oficina de Hondutel, contiguo a la
-            Clínica Dental Dra. ANDARA. Use el mapa interactivo para llegar directamente.
+            <strong className="font-bold text-accent tabular-nums">GGJ7+239</strong>
+            {' · '}Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA.
+            Use el mapa para orientarse o abra Google Maps/Waze desde aquí.
           </p>
         </Container>
       </section>
@@ -70,7 +71,7 @@ export default function ComoLlegarPage() {
                   latitude={latitude}
                   longitude={longitude}
                   label={site.name}
-                  fullAddress={`${site.address.line1}, ${site.address.line2}, ${site.address.city}`}
+                  fullAddress={`${site.address.line1} — ${site.address.line2}, ${site.address.city}`}
                   zoom={16}
                   className="w-full h-full"
                 />
@@ -119,11 +120,21 @@ export default function ComoLlegarPage() {
               <MapPin size={18} className="text-accent" />
               <h2 className="font-bold text-base text-text-inverse">Dirección</h2>
             </div>
+
+            <p className="text-[18px] font-bold text-accent tabular-nums mb-1">
+              GGJ7+239
+            </p>
             <p className="text-[14px] text-text-inverse/95 leading-relaxed">
-              {site.address.line1}<br />
-              {site.address.line2}<br />
-              {site.address.city}, {site.address.department}<br />
-              {site.address.country}
+              {site.address.city}, {site.address.department}, {site.address.country}
+            </p>
+
+            <div className="border-t border-primary-light/30 my-4" />
+
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
+              Referencia
+            </h3>
+            <p className="text-[13px] text-text-inverse/85 leading-relaxed">
+              {site.address.line2}
             </p>
 
             <div className="border-t border-primary-light/30 my-4" />
@@ -131,20 +142,7 @@ export default function ComoLlegarPage() {
             <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
               Copiar dirección
             </h3>
-            <CopyableAddress value={fullAddress} variant="inverse" />
-
-            <div className="border-t border-primary-light/30 my-4" />
-
-            <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
-              Plus Code
-            </h3>
-            <p className="text-[13px] text-text-inverse/90 leading-relaxed">
-              <span className="font-bold text-text-inverse tabular-nums">GGJ7+239</span>
-              {' '}{site.address.city}, {site.address.department}, {site.address.country}
-            </p>
-            <p className="text-[11px] text-text-inverse/65 leading-relaxed mt-1.5">
-              Use este código en Google Maps para una ubicación exacta sin necesidad de dirección escrita.
-            </p>
+            <CopyableAddress value={shortAddress} variant="inverse" />
 
             <div className="border-t border-primary-light/30 my-4" />
 

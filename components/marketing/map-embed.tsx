@@ -14,7 +14,11 @@ interface MapEmbedProps {
 }
 
 /**
- * Mapa interactivo basado en Leaflet + OpenStreetMap.
+ * Mapa estático basado en Leaflet + OpenStreetMap.
+ *
+ * Es deliberadamente fijo: sin arrastre, sin zoom interactivo, sin
+ * controles. Solo muestra la ubicación del bufete. El usuario puede
+ * abrir Google Maps o Waze con los botones externos para navegación.
  *
  * Reemplaza al iframe de Google Maps (que muestra "contenido bloqueado"
  * sin clave de la Google Maps Embed API). OSM no requiere clave, ni proxy,
@@ -52,6 +56,11 @@ export function MapEmbed({
         center: [latitude, longitude],
         zoom,
         scrollWheelZoom: false,
+        dragging: false,
+        zoomControl: false,
+        doubleClickZoom: false,
+        touchZoom: false,
+        keyboard: false,
         attributionControl: true,
       });
 
