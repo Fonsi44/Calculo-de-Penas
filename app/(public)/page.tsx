@@ -566,18 +566,19 @@ export default function HomePage() {
             </Card>
           </div>
           <div>
-            <Card padding="none" className="overflow-hidden aspect-[4/3] bg-surface-alt flex items-center justify-center">
-              <div className="text-center p-6">
-                <MapPin size={36} className="text-accent-dark mx-auto mb-3" aria-hidden="true" />
-                <p className="font-bold text-text">Mapa interactivo</p>
-                <p className="text-[12px] text-text-secondary mt-1.5 max-w-xs mx-auto leading-relaxed">
-                  Próximamente: mapa embebido con coordenadas exactas del bufete.
-                </p>
-                <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-3 text-[12px] font-semibold text-primary">
-                  Cómo llegar <ArrowRight size={12} />
-                </Link>
-              </div>
+            <Card padding="none" className="overflow-hidden aspect-[4/3] bg-surface-alt">
+              <iframe
+                title={`Mapa de ${site.name} en ${site.address.city}`}
+                src={`https://www.google.com/maps?q=${site.geo.latitude},${site.geo.longitude}&hl=es&z=15&output=embed`}
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </Card>
+            <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-2 text-[12px] font-semibold text-primary hover:text-accent-dark">
+              Cómo llegar y ver indicaciones <ArrowRight size={12} />
+            </Link>
           </div>
         </div>
       </Section>
