@@ -156,7 +156,7 @@ export default function DespachoPage() {
             </ul>
           </div>
           <div className="space-y-3">
-            <Card padding="md" className="bg-primary text-text-inverse card-premium">
+            <div className="rounded-md border shadow-sm bg-primary text-text-inverse p-4 card-premium">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 rounded-md bg-accent/20 flex items-center justify-center">
                   <Scale size={22} className="text-accent" />
@@ -173,7 +173,7 @@ export default function DespachoPage() {
                 Honduras, pueda ejercer su derecho a la defensa y a la asesoría legal con un
                 equipo que domine la técnica, explique con claridad y actúe con prudencia.
               </p>
-            </Card>
+            </div>
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                 Valores
