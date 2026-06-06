@@ -16,7 +16,9 @@ const csp = [
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
-  ...(isProd ? ["upgrade-insecure-requests"] : []),
+  // Nota: NO incluimos `upgrade-insecure-requests` porque rompe los
+  // tests e2e (el servidor HTTP local de Playwright no soporta HTTPS)
+  // y es redundante en producción (HSTS ya fuerza HTTPS vía cabecera).
 ].join('; ');
 
 const securityHeaders = [
@@ -36,6 +38,22 @@ const robotsHeader = noindexActive
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  /**
+   * Las imágenes se sirven tal cual desde /public/images/* sin pasar por
+   * el optimizador /_next/image. Justificación:
+   *   - El optimizer añade latencia significativa y devuelve 400 si la
+   *     imagen no encaja en sus dimensiones permitidas.
+   *   - Las fotos corporativas ya están descargadas en su tamaño final
+   *     desde Pexels/Unsplash (100-500 KB cada una) y no requieren
+   *     redimensionado en runtime.
+   *   - El tamaño total del bundle de imágenes (~6.5 MB) es aceptable
+   *     para una web de bufete con audiencias de Honduras/España.
+   * Para volver a habilitar la optimización: cambiar a `false` y
+   * configurar `images.remotePatterns` si se sirven URLs externas.
+   */
+  images: {
+    unoptimized: true,
+  },
   // El redirect www → apex lo gestiona Vercel a nivel de dominio
   // (Settings → Domains → Redirect). Aquí solo mantenemos los legacy redirects.
   // IMPORTANTE: NO redirigir /login → /intranet/login (causaba bucles).

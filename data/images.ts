@@ -6,6 +6,10 @@
  *   public/images/services/   (13 areas juridicas standalone)
  *   public/images/penal/      (7 grupos de derecho penal)
  *
+ * Las claves coinciden con los slugs canonicos de data/areas-juridicas.ts
+ * (areasGenerales, hubPenal.grupos, hubMigrantes.subareas) para que
+ * ServiceCard pueda resolver la imagen pasando `slug={area.slug}`.
+ *
  * Cualquier consumidor que reciba un `slug` conocido recibira una URL
  * local servida por Next.js (sin dependencias de CDN externo en runtime).
  *
@@ -18,27 +22,27 @@ export type ImageCategory = 'corporate' | 'services' | 'penal';
 const SERVICES: Record<string, string> = {
   'derecho-de-familia': '/images/services/familia.jpg',
   'derecho-laboral': '/images/services/laboral.jpg',
-  'derecho-civil': '/images/services/civil.jpg',
-  'derecho-mercantil': '/images/services/mercantil.jpg',
-  'derecho-bancario': '/images/services/bancario.jpg',
-  'derecho-administrativo': '/images/services/administrativo.jpg',
-  'derecho-aduanero': '/images/services/aduanero.jpg',
-  'derecho-sanitario': '/images/services/sanitario.jpg',
-  'extranjeria': '/images/services/extranjeria.jpg',
+  'derecho-civil-y-notarial': '/images/services/civil.jpg',
+  'derecho-mercantil-empresarial': '/images/services/mercantil.jpg',
+  'derecho-bancario-y-financiero': '/images/services/bancario.jpg',
+  'derecho-administrativo-y-servicio-civil': '/images/services/administrativo.jpg',
+  'derecho-aduanero-y-comercio-exterior': '/images/services/aduanero.jpg',
+  'regulacion-sanitaria': '/images/services/sanitario.jpg',
+  'extranjeria-en-honduras': '/images/services/extranjeria.jpg',
   'propiedad-intelectual': '/images/services/propiedad-intelectual.jpg',
-  'derecho-tributario': '/images/services/tributario.jpg',
-  'derecho-ambiental': '/images/services/ambiental.jpg',
-  'arbitraje': '/images/services/arbitraje.jpg',
+  'tributario-fiscal': '/images/services/tributario.jpg',
+  'ambiental-regulatorio': '/images/services/ambiental.jpg',
+  'conciliacion-y-arbitraje': '/images/services/arbitraje.jpg',
 };
 
 const PENAL: Record<string, string> = {
-  'litigio-complejo': '/images/penal/litigio-complejo.jpg',
-  'resolucion-alternativa': '/images/penal/resolucion-alternativa.jpg',
-  'penal-juvenil': '/images/penal/penal-juvenil.jpg',
-  'representacion-integral': '/images/penal/representacion-integral.jpg',
-  'recursos-impugnaciones': '/images/penal/recursos-impugnaciones.jpg',
-  'consultoria-preventiva': '/images/penal/consultoria-preventiva.jpg',
-  'penitenciario': '/images/penal/penitenciario.jpg',
+  'atencion-casos-penales-litigiosos': '/images/penal/litigio-complejo.jpg',
+  'mediacion-conflictos-penales-y-multas': '/images/penal/resolucion-alternativa.jpg',
+  'menores-justicia-juvenil': '/images/penal/penal-juvenil.jpg',
+  'proceso-penal-completo': '/images/penal/representacion-integral.jpg',
+  'recursos-y-defensa-avanzada': '/images/penal/recursos-impugnaciones.jpg',
+  'estrategia-penal-y-litigio': '/images/penal/consultoria-preventiva.jpg',
+  'ejecucion-penal-y-beneficios': '/images/penal/penitenciario.jpg',
 };
 
 const CORPORATE: Record<string, string> = {

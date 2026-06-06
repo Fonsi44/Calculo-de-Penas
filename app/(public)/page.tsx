@@ -3,10 +3,7 @@ import type { Metadata } from 'next';
 import {
   Scale,
   ShieldCheck,
-  Users,
-  FileText,
   HeartHandshake,
-  Lock,
   BookOpen,
   MapPin,
   CheckCircle2,
@@ -16,20 +13,14 @@ import {
   Calendar,
   Briefcase,
   Clock,
-  Building2,
-  Banknote,
-  Landmark,
-  Ship,
-  HeartPulse,
-  Globe,
-  Lightbulb,
-  Receipt,
-  Leaf,
-  Award,
   Gavel,
   Handshake,
   Building,
   BriefcaseBusiness,
+  Users,
+  Award,
+  Lock,
+  Landmark,
 } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
@@ -40,7 +31,8 @@ import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
-import { FeatureGrid, type FeatureItem } from '@/components/marketing/feature-grid';
+import { ServiceCard } from '@/components/marketing/service-card';
+import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 
 export const metadata: Metadata = {
   title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
@@ -48,38 +40,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
-const ICON_MAP: Record<string, typeof Scale> = {
-  users: Users,
-  briefcase: Briefcase,
-  'file-text': FileText,
-  'building-2': Building2,
-  banknote: Banknote,
-  landmark: Landmark,
-  ship: Ship,
-  'heart-pulse': HeartPulse,
-  globe: Globe,
-  lightbulb: Lightbulb,
-  receipt: Receipt,
-  leaf: Leaf,
-  scale: Scale,
-  gavel: Scale,
-  shield: ShieldCheck,
-};
-
 const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
-const AREA_COLORS: Record<string, string> = {
-  primary: 'bg-primary/10 text-primary border-primary/20',
-  accent: 'bg-accent/15 text-accent-dark border-accent/25',
-  success: 'bg-success/10 text-success border-success/20',
-  warning: 'bg-warning/10 text-warning border-warning/20',
-  muted: 'bg-border-light/50 text-text-secondary border-border-light',
-  danger: 'bg-danger/10 text-danger border-danger/20',
-};
-
-function AreaIcon({ icono }: { icono: string }) {
-  const Icon = ICON_MAP[icono] ?? Scale;
-  return <Icon size={20} />;
-}
 
 const REAL_QUESTIONS = [
   { q: '¿Me pueden detener sin orden judicial?', badge: 'Penal' },
@@ -308,52 +269,43 @@ export default function HomePage() {
           {areasGenerales
             .filter((a) => HIGHLIGHTED_AREAS.includes(a.slug))
             .map((area) => {
-              const colorClass = AREA_COLORS[area.color] ?? AREA_COLORS.primary;
               const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
               return (
-                <Link key={area.slug} href={areaSlug} className="group block focus-visible:outline-none rounded-md">
-                  <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                    <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 rounded-lg border flex items-center justify-center shrink-0 ${colorClass}`}>
-                        <AreaIcon icono={area.icono} />
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="font-bold text-[15px] text-text leading-tight">{area.titulo}</h3>
-                        <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{area.resumen}</p>
-                        <span className="inline-flex items-center gap-1 mt-2 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                          Ver servicios <ArrowRight size={12} />
-                        </span>
-                      </div>
-                    </div>
-                  </Card>
-                </Link>
+                <ServiceCard
+                  key={area.slug}
+                  href={areaSlug}
+                  slug={area.slug}
+                  title={area.titulo}
+                  description={area.resumen}
+                  category="services"
+                  tone={area.color as PlaceholderTone}
+                  aspect="3/2"
+                />
               );
             })}
         </div>
       </Section>
 
-      {/* 13 ÁREAS — BENTO REAL */}
+      {/* 13 ÁREAS — GRID CON IMAGEN */}
       <Section spacing="md" ariaLabel="Todas las áreas jurídicas">
         <SectionHeader
           eyebrow="Cobertura integral"
           title="Las 13 áreas del derecho que manejamos"
           subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir, en un solo bufete."
         />
-        <FeatureGrid
-          bento
-          items={areasGenerales.map<FeatureItem>((area) => {
-            const Icon = ICON_MAP[area.icono] ?? Scale;
-            const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
-            return {
-              title: area.titulo,
-              description: area.slug === 'derecho-penal' ? 'Especialidad destacada del bufete' : area.resumen,
-              icon: Icon,
-              href: areaSlug,
-              tone: (area.color as FeatureItem['tone']) ?? 'primary',
-              badge: area.slug === 'derecho-penal' ? 'Pilar' : undefined,
-            };
-          })}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {areasGenerales.map((area) => (
+            <ServiceCard
+              key={area.slug}
+              href={`/areas-juridicas/${area.slug}`}
+              slug={area.slug}
+              title={area.titulo}
+              description={area.resumen}
+              category="services"
+              tone={area.color as PlaceholderTone}
+            />
+          ))}
+        </div>
         <div className="mt-8 text-center">
           <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
             Explorar todas las áreas <ArrowRight size={14} />

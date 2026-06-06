@@ -19,6 +19,7 @@ import { LiveOfficeStatus, StatsCounter } from '@/components/marketing/live-widg
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
+import { getCorporateImage } from '@/data/images';
 
 export const metadata: Metadata = {
   title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
@@ -98,6 +99,32 @@ export default function DespachoPage() {
 
       {/* TRUST BAR */}
       <TrustBar background="light" />
+
+      {/* HERO CORPORATIVO */}
+      {(() => {
+        const heroImg = getCorporateImage('hero_despacho');
+        return heroImg ? (
+          <div className="relative aspect-[21/9] w-full overflow-hidden bg-primary">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={heroImg} alt={`Interior del despacho ${site.name}`} className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/55 to-transparent" aria-hidden="true" />
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center">
+              <div className="max-w-2xl text-text-inverse">
+                <p className="eyebrow-rule text-[11px] font-bold uppercase tracking-[0.3em] text-accent mb-3">
+                  Sede del bufete
+                </p>
+                <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-balance">
+                  Atención presencial en Nacaome, Valle
+                </h2>
+                <p className="mt-3 text-[14px] md:text-base text-text-inverse/85 leading-relaxed text-pretty">
+                  {site.address.line1}, {site.address.line2}.
+                  Le recibimos con cita previa para garantizar confidencialidad.
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : null;
+      })()}
 
       {/* STATS + LIVE */}
       <Section background="muted" spacing="sm">
@@ -225,6 +252,16 @@ export default function DespachoPage() {
           title="Profesionales al servicio de su defensa"
           subtitle="La información pública del equipo se publica únicamente con consentimiento expreso de cada profesional, conforme al secreto profesional y a la Ley de Protección de Datos."
         />
+        {(() => {
+          const meetingImg = getCorporateImage('corporate_meeting');
+          return meetingImg ? (
+            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-md mb-6 border border-border-light">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={meetingImg} alt="Reunión profesional del bufete" className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" aria-hidden="true" />
+            </div>
+          ) : null;
+        })()}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             {

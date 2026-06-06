@@ -6,10 +6,10 @@ import { Section, SectionHeader } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
-import { FeatureGrid, type FeatureItem } from '@/components/marketing/feature-grid';
+import { ServiceCard } from '@/components/marketing/service-card';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { areaHref, breadcrumbsSchema, itemListSchema, serviceSchema } from '@/lib/schemas/legal-page';
-import { getIcon } from '@/lib/icon-map';
+import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 
 export const metadata: Metadata = {
   title: 'Áreas Jurídicas',
@@ -55,21 +55,19 @@ export default function AreasJuridicasPage() {
           title="Cobertura legal completa en Honduras"
           subtitle="Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes."
         />
-        <FeatureGrid
-          bento
-          cols={5}
-          items={areasGenerales.map<FeatureItem>((area) => {
-            const Icon = getIcon(area.icono);
-            return {
-              title: area.titulo,
-              description: area.resumen,
-              icon: Icon,
-              href: areaHref(area.slug),
-              tone: (area.color as FeatureItem['tone']) ?? 'primary',
-              badge: area.slug === 'derecho-penal' ? 'Pilar' : undefined,
-            };
-          })}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {areasGenerales.map((area) => (
+            <ServiceCard
+              key={area.slug}
+              href={areaHref(area.slug)}
+              slug={area.slug}
+              title={area.titulo}
+              description={area.resumen}
+              category="services"
+              tone={area.color as PlaceholderTone}
+            />
+          ))}
+        </div>
       </Section>
 
       <Section spacing="sm">

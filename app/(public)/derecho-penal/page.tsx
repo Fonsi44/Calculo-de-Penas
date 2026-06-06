@@ -7,10 +7,10 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
-import { FeatureGrid, type FeatureItem } from '@/components/marketing/feature-grid';
+import { ServiceCard } from '@/components/marketing/service-card';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
-import { getIcon } from '@/lib/icon-map';
+import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 
 export const metadata: Metadata = {
   title: 'Derecho Penal',
@@ -55,20 +55,19 @@ export default function DerechoPenalPage() {
           title={hubPenal.titulo}
           subtitle={hubPenal.resumen}
         />
-        <FeatureGrid
-          bento
-          cols={4}
-          items={hubPenal.grupos.map<FeatureItem>((grupo) => {
-            const Icon = getIcon(grupo.icono);
-            return {
-              title: grupo.titulo,
-              description: grupo.resumen,
-              icon: Icon,
-              href: `/derecho-penal/${grupo.slug}`,
-              tone: 'primary',
-            };
-          })}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {hubPenal.grupos.map((grupo) => (
+            <ServiceCard
+              key={grupo.slug}
+              href={`/derecho-penal/${grupo.slug}`}
+              slug={grupo.slug}
+              title={grupo.titulo}
+              description={grupo.resumen}
+              category="penal"
+              tone={(grupo.color as PlaceholderTone) ?? 'primary'}
+            />
+          ))}
+        </div>
       </Section>
 
       <Section spacing="md" id="preguntas-frecuentes">
