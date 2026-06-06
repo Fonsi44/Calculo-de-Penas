@@ -61,6 +61,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  verification: {
+    other: {
+      'msvalidate.01': '0D7F7E114D9C22D0332B7769EBE015D4',
+    },
+  },
 };
 
 export const viewport = { themeColor: "#0B1B3D" };
