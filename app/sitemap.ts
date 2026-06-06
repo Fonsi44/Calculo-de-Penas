@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { site, absoluteUrl } from '@/lib/site';
+import { getAllPosts } from '@/lib/blog';
+import { blogCategories } from '@/data/blog/categories';
 
 /**
  * Listado de rutas públicas del sitio. Durante el modo noindex
@@ -57,10 +59,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   const now = new Date();
-  return PUBLIC_ROUTES.map((r) => ({
+
+  const staticRoutes = PUBLIC_ROUTES.map((r) => ({
     url: absoluteUrl(r.path),
     lastModified: r.lastModified ?? now,
-    changeFrequency: r.changeFrequency,
+    changeFrequency: r.changeFrequency as MetadataRoute.Sitemap[number]['changeFrequency'],
     priority: r.priority,
   }));
+
+  const blogCategoryRoutes = blogCategories.map((c) => ({
+    url: absoluteUrl(`/blog/categoria/${c.slug}`),
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }));
+
+  const blogPostRoutes = getAllPosts().map((p) => ({
+    url: absoluteUrl(`/blog/${p.slug}`),
+    lastModified: new Date(p.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...blogCategoryRoutes, ...blogPostRoutes];
 }
