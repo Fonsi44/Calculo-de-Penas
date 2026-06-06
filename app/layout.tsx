@@ -70,7 +70,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" dir="ltr"       className={`h-full ${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" href="/icon-192.svg" />
-        <link rel="canonical" href={siteUrl} />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon-192.svg" type="image/svg+xml" />
         <meta name="application-name" content={site.name} />
         <meta name="author" content={site.name} />
         <meta name="language" content="es" />

@@ -52,12 +52,13 @@ export function BlogSidebar() {
           <h3 className="font-bold text-sm text-text mb-4">Etiquetas</h3>
           <div className="flex flex-wrap gap-1.5">
             {allTags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="inline-block px-2.5 py-1 rounded-full bg-surface-alt text-xs text-text-muted"
+                href={`/blog?tag=${encodeURIComponent(tag)}`}
+                className="inline-block px-2.5 py-1 rounded-full bg-surface-alt text-xs text-text-muted hover:bg-primary/10 hover:text-primary transition-colors"
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         </div>

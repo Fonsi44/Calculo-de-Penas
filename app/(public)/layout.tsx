@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
-import { site, legalServiceSchema, organizationSchema } from '@/lib/site';
+import { site, legalServiceSchema, organizationSchema, websiteSchema } from '@/lib/site';
 
 const isIndexable = !site.noindex;
 
@@ -82,6 +82,7 @@ export const metadata: Metadata = {
 export default function PublicLayout({ children }: { children: ReactNode }) {
   const legalLd = legalServiceSchema();
   const orgLd = organizationSchema();
+  const webLd = websiteSchema();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -97,6 +98,10 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webLd) }}
       />
     </div>
   );

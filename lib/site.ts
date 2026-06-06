@@ -198,6 +198,32 @@ export function legalServiceSchema() {
 }
 
 /**
+ * Schema.org WebSite para búsqueda y navegación.
+ */
+export function websiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${site.url}/#website`,
+    url: site.url,
+    name: site.name,
+    description: site.description,
+    inLanguage: 'es-HN',
+    publisher: { '@id': `${site.url}/#legal-service` },
+    potentialAction: [
+      {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${site.url}/buscar?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    ],
+  };
+}
+
+/**
  * Schema.org Organization para la home y el bloque "El Despacho".
  */
 export function organizationSchema() {

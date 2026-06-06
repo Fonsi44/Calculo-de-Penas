@@ -50,7 +50,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500'],
+        disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found'],
       },
       // IA y scrapers siguen bloqueados por protección de contenido原创
       { userAgent: 'GPTBot', disallow: '/' },

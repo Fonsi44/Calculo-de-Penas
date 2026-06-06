@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="32" fill="#1A2B4A"/>
+  <g transform="translate(96,96)">
+    <path d="M-60,-10 L-60,10 L-20,30 L-20,-30 Z" fill="#C9A55C" opacity="0.3"/>
+    <path d="M-15,-35 L-15,35 L15,25 L15,-25 Z" fill="#C9A55C"/>
+    <path d="M20,-30 L20,30 L60,10 L60,-10 Z" fill="#C9A55C" opacity="0.3"/>
+    <line x1="0" y1="-50" x2="0" y2="50" stroke="#C9A55C" stroke-width="3" opacity="0.5"/>
+  </g>
+  <text x="96" y="145" font-family="system-ui" font-size="28" font-weight="bold" fill="white" text-anchor="middle">LEX</text>
+</svg>
