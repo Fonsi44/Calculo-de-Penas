@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* Marca */
-  --color-primary: #1A2B4A;
-  --color-primary-light: #2D4070;
-  --color-primary-dark: #0F1A30;
-  --color-accent: #C9A55C;
-  --color-accent-light: #E5C885;
-  --color-accent-dark: #A88840;
+  /* Marca — paleta "Premium Corporate Luxury"
+     Navy #0B1B3D + Gold #D4AF37 (border gold #C5A059). PROHIBIDO rojo. */
+  --color-primary: #0B1B3D;
+  --color-primary-light: #1F2D5C;
+  --color-primary-dark: #050D1F;
+  --color-accent: #D4AF37;
+  --color-accent-light: #E5C271;
+  --color-accent-dark: #C5A059;
 
   /* Superficies */
   --color-background: #F5F2EC;
@@ -62,9 +63,9 @@
   --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
   --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
-  --shadow-glow: 0 0 30px rgba(201,165,92,0.25);
-  --shadow-glow-accent: 0 10px 40px -10px rgba(201,165,92,0.45);
-  --shadow-premium: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 1px 3px rgba(15,26,48,0.06), 0 12px 32px -12px rgba(15,26,48,0.18);
+  --shadow-glow: 0 0 30px rgba(212,175,55,0.25);
+  --shadow-glow-accent: 0 10px 40px -10px rgba(212,175,55,0.45);
+  --shadow-premium: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 1px 3px rgba(5,13,31,0.06), 0 12px 32px -12px rgba(5,13,31,0.18);
 
   /* Easing & motion */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -106,8 +107,8 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201,165,92,0.0), 0 0 0 0 rgba(201,165,92,0.0); }
-  50%      { box-shadow: 0 0 0 6px rgba(201,165,92,0.10), 0 0 28px 2px rgba(201,165,92,0.18); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.0), 0 0 0 0 rgba(212,175,55,0.0); }
+  50%      { box-shadow: 0 0 0 6px rgba(212,175,55,0.10), 0 0 28px 2px rgba(212,175,55,0.18); }
 }
 
 @keyframes float-soft {
@@ -116,12 +117,12 @@
 }
 
 .dark {
-  --color-primary: #2D4070;
-  --color-primary-light: #3E5494;
-  --color-primary-dark: #1A2B4A;
-  --color-accent: #C9A55C;
-  --color-accent-light: #E5C885;
-  --color-accent-dark: #A88840;
+  --color-primary: #1F2D5C;
+  --color-primary-light: #2D4070;
+  --color-primary-dark: #0B1B3D;
+  --color-accent: #D4AF37;
+  --color-accent-light: #E5C271;
+  --color-accent-dark: #C5A059;
 
   --color-background: #0E1015;
   --color-surface: #1C1E26;
@@ -198,7 +199,7 @@ body {
 
 /* Tipografía editorial para citas legales */
 .font-serif {
-  font-family: var(--font-serif), Georgia, 'Times New Roman', 'Source Serif 4', serif;
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
   font-feature-settings: "lnum", "pnum";
 }
 
@@ -287,8 +288,56 @@ body {
 }
 .card-premium:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-premium), 0 0 0 1px rgba(201,165,92,0.18);
-  border-color: rgba(201,165,92,0.45);
+  box-shadow: var(--shadow-premium), 0 0 0 1px rgba(212,175,55,0.18);
+  border-color: rgba(212,175,55,0.45);
+}
+
+/* Premium card con top-bar dorado (patrón del repo fuente).
+   Opt-in: añadir `premium-bar` a la <a>/<Link> raíz de la card. */
+.premium-bar {
+  position: relative;
+  overflow: hidden;
+}
+.premium-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-accent-dark);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-soft);
+  pointer-events: none;
+  z-index: 2;
+}
+.premium-bar:hover::before,
+.premium-bar:focus-visible::before {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .premium-bar::before { transition: none; }
+}
+
+/* Eyebrow rule: línea dorada de 32px (w-8) + texto uppercase tracking.
+   Patrón del repo fuente para todos los hero/eyebrows. */
+.eyebrow-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-accent);
+}
+.eyebrow-rule::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--color-accent);
+  flex-shrink: 0;
 }
 
 /* Borde con gradiente dorado (degradado en el ring, fondo opaco interno). */
@@ -302,7 +351,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(201,165,92,0.55), rgba(168,136,64,0.18) 50%, rgba(201,165,92,0));
+  background: linear-gradient(135deg, rgba(212,175,55,0.55), rgba(197,160,89,0.18) 50%, rgba(212,175,55,0));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
@@ -335,7 +384,7 @@ body {
 
 /* Texto con gradiente dorado (para acentos y números). */
 .text-gradient-accent {
-  background: linear-gradient(135deg, #C9A55C 0%, #E5C885 50%, #A88840 100%);
+  background: linear-gradient(135deg, #D4AF37 0%, #E5C271 50%, #C5A059 100%);
   -webkit-background-clip: text;
           background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -352,14 +401,14 @@ body {
 }
 .bg-grid-soft {
   background-image:
-    linear-gradient(rgba(15,26,48,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15,26,48,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(5,13,31,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(5,13,31,0.05) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 
 /* Patrón de puntos dorados (zonas oscuras). */
 .bg-dots-accent {
-  background-image: radial-gradient(rgba(201,165,92,0.22) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(212,175,55,0.22) 1px, transparent 1px);
   background-size: 22px 22px;
   background-position: 0 0;
 }
@@ -368,7 +417,7 @@ body {
 .divider-accent {
   position: relative;
   height: 1px;
-  background: linear-gradient(90deg, rgba(201,165,92,0.55) 0, rgba(201,165,92,0.18) 30%, transparent 100%);
+  background: linear-gradient(90deg, rgba(212,175,55,0.55) 0, rgba(212,175,55,0.18) 30%, transparent 100%);
 }
 
 /* Conector para ProcessStepper (línea horizontal dorada entre pasos). */
@@ -382,7 +431,7 @@ body {
   left: 1.25rem;
   right: 1.25rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(201,165,92,0.35) 18%, rgba(201,165,92,0.35) 82%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.35) 18%, rgba(212,175,55,0.35) 82%, transparent 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -397,7 +446,7 @@ body {
 
 /* Halo dorado para acentos premium (iconos destacados, etc). */
 .halo-accent {
-  box-shadow: 0 0 0 1px rgba(201,165,92,0.35), 0 8px 24px -8px rgba(201,165,92,0.55);
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.35), 0 8px 24px -8px rgba(212,175,55,0.55);
 }
 
 /* FAQ summary marker (chevron nativo) oculto en todos los browsers. */
@@ -435,8 +484,8 @@ details.faq-anim > summary + .faq-body > .faq-body-inner {
   content: "";
   position: absolute;
   inset: 0;
-  background: #C9A55C;
-  border: 2px solid #1A2B4A;
+  background: #D4AF37;
+  border: 2px solid #0B1B3D;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   transform-origin: center;
@@ -448,7 +497,7 @@ details.faq-anim > summary + .faq-body > .faq-body-inner {
   left: 9px;
   width: 8px;
   height: 8px;
-  background: #1A2B4A;
+  background: #0B1B3D;
   border-radius: 50%;
 }
 /* Leaflet requiere que el contenedor tenga altura explícita. */

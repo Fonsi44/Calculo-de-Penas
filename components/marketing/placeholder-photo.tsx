@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import { cn } from '@/lib/ui';
 
 const TONES = {
@@ -41,6 +42,15 @@ interface PlaceholderPhotoProps {
   icon?: ReactNode;
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   className?: string;
+  /**
+   * Ruta local servida por Next (p.ej. /images/services/familia.jpg).
+   * Si se indica, se renderiza la imagen con object-cover en lugar del
+   * gradiente del tone. El tone se mantiene como fallback accesible y
+   * como background bajo la imagen por si la red falla.
+   */
+  imageSrc?: string;
+  /** Alt text de la imagen. Si no se indica, se usa `label`. */
+  imageAlt?: string;
 }
 
 const ROUNDED = {
@@ -67,8 +77,11 @@ export function PlaceholderPhoto({
   icon,
   rounded = 'lg',
   className,
+  imageSrc,
+  imageAlt,
 }: PlaceholderPhotoProps) {
   const t = TONES[tone];
+  const hasImage = Boolean(imageSrc);
   return (
     <div
       className={cn(
@@ -81,26 +94,38 @@ export function PlaceholderPhoto({
         background: `linear-gradient(135deg, ${t.from} 0%, ${t.to} 100%)`,
         color: t.accent,
       }}
-      role={label ? 'img' : undefined}
-      aria-label={label}
+      role={hasImage ? undefined : label ? 'img' : undefined}
+      aria-label={hasImage ? undefined : label}
     >
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.25) 0%, transparent 50%)',
-        }}
-      />
-      <div className="relative w-1/3 max-w-[120px] opacity-70">
-        {icon ?? DEFAULT_ICON}
-      </div>
-      {label && (
-        <span
-          className="absolute bottom-2 right-3 text-[10px] font-bold uppercase tracking-widest opacity-60"
-          style={{ color: t.accent }}
-        >
-          {label}
-        </span>
+      {hasImage ? (
+        <Image
+          src={imageSrc as string}
+          alt={imageAlt ?? label ?? ''}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
+        />
+      ) : (
+        <>
+          <div
+            className="absolute inset-0 opacity-30 pointer-events-none"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.25) 0%, transparent 50%)',
+            }}
+          />
+          <div className="relative w-1/3 max-w-[120px] opacity-70">
+            {icon ?? DEFAULT_ICON}
+          </div>
+          {label && (
+            <span
+              className="absolute bottom-2 right-3 text-[10px] font-bold uppercase tracking-widest opacity-60"
+              style={{ color: t.accent }}
+            >
+              {label}
+            </span>
+          )}
+        </>
       )}
     </div>
   );

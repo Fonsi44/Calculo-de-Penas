@@ -14,6 +14,8 @@ interface TwoColumnImageTextProps {
     tone?: PlaceholderTone;
     aspect?: PlaceholderAspect;
     label?: string;
+    src?: string;
+    alt?: string;
   };
   heading?: string;
   intro?: string;
@@ -41,6 +43,8 @@ export function TwoColumnImageText({
           tone={image.tone ?? 'primary'}
           aspect={image.aspect ?? '4/3'}
           label={image.label}
+          imageSrc={image.src}
+          imageAlt={image.alt}
           rounded="xl"
         />
       </div>

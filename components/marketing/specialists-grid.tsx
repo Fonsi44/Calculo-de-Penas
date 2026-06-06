@@ -7,6 +7,8 @@ export interface Specialist {
   tone?: PlaceholderTone;
   aspect?: PlaceholderAspect;
   label?: string;
+  imageSrc?: string;
+  imageAlt?: string;
 }
 
 interface SpecialistsGridProps {
@@ -60,6 +62,8 @@ export function SpecialistsGrid({
               aspect={it.aspect ?? aspect}
               rounded="none"
               label={it.label}
+              imageSrc={it.imageSrc}
+              imageAlt={it.imageAlt}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/85 via-primary-dark/35 to-transparent pointer-events-none" />
             <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
