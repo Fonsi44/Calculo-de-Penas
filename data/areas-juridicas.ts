@@ -637,7 +637,7 @@ export const hubPenal: HubPenal = {
   titulo: 'Derecho Penal',
   resumen: 'Defensa penal estratégica en Honduras, desde la primera actuación procesal hasta la ejecución.',
   descripcion:
-    'Defensa técnica en todas las etapas del proceso penal hondureño, con presencia activa en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca y Nacaome. Conocimiento profundo del Código Penal (Decreto 130-2017), la jurisprudencia de la CSJ y la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Corte Suprema.',
+    'Defensa técnica en todas las etapas del proceso penal hondureño, con presencia activa en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca y Nacaome. Conocimiento profundo del Código Penal (Decreto 130-2017 y reformas 119-2019, 46-2020, 93-2021, 59-2024), la jurisprudencia de la CSJ y la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Corte Suprema.',
   heroEyebrow: 'Área principal',
   heroTitle: 'Defensa penal seria, técnica y confidencial',
   heroSubtitle:

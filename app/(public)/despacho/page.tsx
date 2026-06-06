@@ -53,7 +53,6 @@ const VALUES = [
 const TIMELINE = [
   { year: '2010', title: 'Inicio del ejercicio', desc: 'Apertura del bufete en Nacaome, Valle, con atención inicial en derecho penal y procesal penal.' },
   { year: '2014', title: 'Consolidación regional', desc: 'Asumimos defensas y asesorías en todo el departamento de Valle y zonas aledañas de Choluteca y La Paz.' },
-  { year: '2018', title: 'Reforma al Código Penal', desc: 'Incorporamos el Decreto 130-2017 a nuestra práctica y desarrollamos el primer motor interno de cálculo de penas.' },
   { year: '2022', title: 'Transformación digital', desc: 'Lanzamos plataforma de gestión de casos, biblioteca jurídica y motor técnico de penas.' },
   { year: '2026', title: 'Bufete multidisciplinar', desc: 'Ampliamos a 13 áreas del derecho y abrimos este portal para que la ciudadanía conozca nuestros servicios y ejerza su defensa.' },
 ];

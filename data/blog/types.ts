@@ -13,4 +13,5 @@ export type PostFrontmatter = {
 
 export type Post = PostFrontmatter & {
   body: string;
+  coverImage?: string;
 };

@@ -15,8 +15,8 @@ const DEFAULT_ITEMS: TrustItem[] = [
   },
   {
     icon: Scale,
-    title: 'CP Decreto 130-2017',
-    description: 'Aplicación rigurosa y actualizada del Código Penal',
+    title: 'CP Decreto 130-2017 · Reformas 59-2024',
+    description: 'Código Penal actualizado con reformas 119-2019, 46-2020, 93-2021 y 59-2024',
   },
   {
     icon: Lock,
@@ -25,8 +25,8 @@ const DEFAULT_ITEMS: TrustItem[] = [
   },
   {
     icon: Clock,
-    title: '60h / semana',
-    description: 'Lunes a sábado, 7:00 a 20:00',
+    title: '60h / semana + 24/7',
+    description: 'Presencial 60h semanales (Lun-Sáb 7-20) · Urgencias 24/7 por WhatsApp o llamada',
   },
   {
     icon: Award,

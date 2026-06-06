@@ -17,7 +17,8 @@ export function generarAnalisisJuridico(
 
   lineas.push('='.repeat(50));
   lineas.push('ANÁLISIS JURÍDICO DEL CÁLCULO DE PENA');
-  lineas.push('Código Penal de Honduras (Decreto 130-2017)');
+  const cpRef = 'Código Penal de Honduras (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)';
+  lineas.push(cpRef);
   lineas.push('='.repeat(50));
   lineas.push(`\nFecha: ${fecha}`);
   lineas.push(`Total de delitos analizados: ${delitos.length}`);

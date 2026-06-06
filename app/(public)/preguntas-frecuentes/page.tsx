@@ -1,9 +1,15 @@
 import type { Metadata } from 'next';
-import { ChevronDown, HelpCircle, MessageCircle, ArrowRight } from 'lucide-react';
+import {
+  Scale, ShieldAlert, Gavel, Users, Briefcase, FileText,
+  Building2, Globe, DollarSign, Shield, HelpCircle,
+  ChevronDown, MessageCircle, ArrowRight,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { categoriasFaq, totalPreguntas } from '@/data/faq';
+import type { FaqCategory } from '@/data/faq';
 import { faqPageSchema } from '@/lib/schemas/legal-page';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
@@ -14,6 +20,106 @@ export const metadata: Metadata = {
   description: `Respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
   alternates: { canonical: '/preguntas-frecuentes' },
 };
+
+type CatMeta = {
+  icon: LucideIcon;
+  iconColor: string;
+  borderColor: string;
+  badgeBg: string;
+  badgeText: string;
+};
+
+const CAT_META: Record<string, CatMeta> = {
+  'derecho-penal-general': {
+    icon: Scale,
+    iconColor: 'text-primary',
+    borderColor: 'border-l-primary/40',
+    badgeBg: 'bg-primary/8',
+    badgeText: 'text-primary',
+  },
+  'asistencia-detenidos': {
+    icon: ShieldAlert,
+    iconColor: 'text-aggravation',
+    borderColor: 'border-l-aggravation/40',
+    badgeBg: 'bg-aggravation/8',
+    badgeText: 'text-aggravation',
+  },
+  'proceso-penal': {
+    icon: Gavel,
+    iconColor: 'text-accent-dark',
+    borderColor: 'border-l-accent/40',
+    badgeBg: 'bg-accent/10',
+    badgeText: 'text-accent-dark',
+  },
+  'derecho-de-familia': {
+    icon: Users,
+    iconColor: 'text-primary',
+    borderColor: 'border-l-primary/40',
+    badgeBg: 'bg-primary/8',
+    badgeText: 'text-primary',
+  },
+  'derecho-laboral': {
+    icon: Briefcase,
+    iconColor: 'text-warning',
+    borderColor: 'border-l-warning/40',
+    badgeBg: 'bg-warning/8',
+    badgeText: 'text-warning',
+  },
+  'derecho-civil': {
+    icon: FileText,
+    iconColor: 'text-text-muted',
+    borderColor: 'border-l-border',
+    badgeBg: 'bg-surface-alt',
+    badgeText: 'text-text-secondary',
+  },
+  'derecho-mercantil': {
+    icon: Building2,
+    iconColor: 'text-text-muted',
+    borderColor: 'border-l-border',
+    badgeBg: 'bg-surface-alt',
+    badgeText: 'text-text-secondary',
+  },
+  'extranjeria-migracion': {
+    icon: Globe,
+    iconColor: 'text-primary',
+    borderColor: 'border-l-primary/40',
+    badgeBg: 'bg-primary/8',
+    badgeText: 'text-primary',
+  },
+  'tributario-sar': {
+    icon: DollarSign,
+    iconColor: 'text-warning',
+    borderColor: 'border-l-warning/40',
+    badgeBg: 'bg-warning/8',
+    badgeText: 'text-warning',
+  },
+  'bufete-honorarios': {
+    icon: Shield,
+    iconColor: 'text-accent-dark',
+    borderColor: 'border-l-accent/40',
+    badgeBg: 'bg-accent/10',
+    badgeText: 'text-accent-dark',
+  },
+  'otras-areas': {
+    icon: HelpCircle,
+    iconColor: 'text-text-muted',
+    borderColor: 'border-l-border',
+    badgeBg: 'bg-surface-alt',
+    badgeText: 'text-text-secondary',
+  },
+};
+
+function SectionChip({ cat }: { cat: FaqCategory }) {
+  const m = CAT_META[cat.slug];
+  const Icon = m?.icon ?? HelpCircle;
+  const colorCls = m?.iconColor ?? 'text-text-muted';
+  return (
+    <span className={`inline-flex items-center gap-1.5 ${colorCls} text-[11px] font-semibold`}>
+      <Icon size={14} />
+      {cat.titulo}
+    </span>
+  );
+}
 
 export default function FaqPage() {
   const flatFaqs = categoriasFaq.flatMap((c) =>
@@ -57,56 +163,78 @@ export default function FaqPage() {
 
       <Section spacing="sm">
         <div className="flex flex-wrap gap-2 justify-center">
-          {categoriasFaq.map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`#${cat.slug}`}
-              className="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-surface-alt text-[13px] font-medium text-text-secondary hover:bg-accent/20 hover:text-accent-dark transition-colors"
-            >
-              <HelpCircle size={14} />
-              {cat.titulo}
-              <span className="text-[11px] text-text-muted ml-1">({cat.preguntas.length})</span>
-            </Link>
-          ))}
+          {categoriasFaq.map((cat) => {
+            const m = CAT_META[cat.slug];
+            const Icon = m?.icon ?? HelpCircle;
+            return (
+              <Link
+                key={cat.slug}
+                href={`#${cat.slug}`}
+                className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-full ${m?.badgeBg ?? 'bg-surface-alt'} text-[13px] font-medium ${m?.badgeText ?? 'text-text-secondary'} hover:shadow-md transition-all`}
+              >
+                <Icon size={14} />
+                {cat.titulo}
+                <span className="text-[11px] opacity-60 ml-1">({cat.preguntas.length})</span>
+              </Link>
+            );
+          })}
         </div>
       </Section>
 
-      {categoriasFaq.map((cat) => (
-        <Section
-          key={cat.slug}
-          id={cat.slug}
-          background={categoriasFaq.indexOf(cat) % 2 === 0 ? 'default' : 'muted'}
-          spacing="md"
-        >
-          <SectionHeader
-            eyebrow={cat.titulo}
-            title={cat.descripcion}
-          />
-          <div className="space-y-3">
-            {cat.preguntas.map((p, i) => (
-              <details
-                key={i}
-                className="faq-anim group bg-background rounded-lg border border-border hover:border-accent/40 transition-colors open:border-accent/60 card-premium"
-              >
-                <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-[15px] font-semibold text-text leading-snug hover:text-primary transition-colors">
-                  <span className="flex-1">{p.pregunta}</span>
-                  <ChevronDown
-                    size={18}
-                    className="text-text-muted flex-shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:text-accent"
-                  />
-                </summary>
-                <div className="faq-content">
-                  <div className="border-t border-border/50 pt-3">
-                    <p className="text-[14px] text-text-secondary leading-relaxed text-pretty">
-                      {p.respuesta}
-                    </p>
+      {categoriasFaq.map((cat) => {
+        const m = CAT_META[cat.slug];
+        const Icon = m?.icon ?? HelpCircle;
+        const borderCls = m?.borderColor ?? 'border-l-border';
+        const colorCls = m?.iconColor ?? 'text-text-muted';
+
+        return (
+          <Section
+            key={cat.slug}
+            id={cat.slug}
+            background={categoriasFaq.indexOf(cat) % 2 === 0 ? 'default' : 'muted'}
+            spacing="md"
+          >
+            <SectionHeader
+              eyebrow={
+                <span className={`inline-flex items-center gap-2 ${colorCls}`}>
+                  <Icon size={18} />
+                  {cat.titulo}
+                </span>
+              }
+              title={cat.descripcion}
+            />
+            <div className="space-y-3">
+              {cat.preguntas.map((p, i) => (
+                <details
+                  key={i}
+                  className={`faq-anim group bg-background rounded-lg border border-border hover:shadow-md transition-all open:shadow-md card-premium ${borderCls} border-l-[3px]`}
+                >
+                  <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-[15px] font-semibold text-text leading-snug hover:text-primary transition-colors">
+                    <span className="flex-1 flex items-start gap-3">
+                      <span className={`mt-0.5 hidden sm:inline-flex ${colorCls} opacity-60 group-hover:opacity-100 transition-opacity`}>
+                        <Icon size={16} />
+                      </span>
+                      <span>{p.pregunta}</span>
+                    </span>
+                    <ChevronDown
+                      size={18}
+                      className={`flex-shrink-0 transition-transform duration-200 group-open:rotate-180 ${colorCls}`}
+                    />
+                  </summary>
+                  <div className="faq-content">
+                    <div className="border-t border-border/50 pt-3">
+                      <SectionChip cat={cat} />
+                      <p className="text-[14px] text-text-secondary leading-relaxed text-pretty mt-2">
+                        {p.respuesta}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </details>
-            ))}
-          </div>
-        </Section>
-      ))}
+                </details>
+              ))}
+            </div>
+          </Section>
+        );
+      })}
 
       <Section background="primary" spacing="md">
         <SectionHeader

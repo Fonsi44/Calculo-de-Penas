@@ -134,7 +134,7 @@ export function Ticker() {
     'Defensa penal seria y confidencial · 13 áreas del derecho',
     'Lunes a sábado · 7:00 a 20:00',
     'Asistencia a detenidos 24/7 por WhatsApp en horario hábil',
-    'Aplicación rigurosa del Código Penal · Decreto 130-2017',
+    'Aplicación rigurosa del Código Penal · Decreto 130-2017 y reformas vigentes',
     'Bufete multidisciplinar en Nacaome y todo el sur de Honduras',
   ];
   return (

@@ -5,7 +5,7 @@ import { site } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Términos y Condiciones',
   description:
-    'Términos y condiciones de uso de LEX Honduras, calculadora de penas del Código Penal hondureño (Decreto 130-2017).',
+    'Términos y condiciones de uso de LEX Honduras, calculadora de penas del Código Penal hondureño (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024).',
   alternates: { canonical: '/terminos' },
   robots: { index: true, follow: true },
 };
@@ -40,7 +40,7 @@ export default function TerminosPage() {
       <LegalSection number="2" title="Descripción del servicio">
         <p>
           La Plataforma es una calculadora jurídica que aplica las reglas
-          del <strong className="font-semibold text-primary">Código Penal de Honduras (Decreto 130-2017)</strong> y
+          del <strong className="font-semibold text-primary">Código Penal de Honduras (Decreto 130-2017 y reformas vigentes)</strong> y
           sus reformas vigentes (Decretos 119-2019, 46-2020, 93-2021 y
           59-2024) para estimar la pena correspondiente a uno o varios
           delitos, considerando atenuantes, agravantes, eximentes, grados

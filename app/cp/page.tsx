@@ -106,7 +106,7 @@ export default function BibliotecaCP() {
   return (
     <AppShell
       title="Código Penal de Honduras"
-      subtitle={`Decreto 130-2017 · ${pluralizar(total, 'artículo', 'artículos')}`}
+      subtitle={`Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024) · ${pluralizar(total, 'artículo', 'artículos')}`}
     >
       <div className="p-3 max-w-5xl mx-auto">
         <div className="relative mb-3">

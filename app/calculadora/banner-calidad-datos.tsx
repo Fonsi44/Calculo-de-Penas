@@ -54,7 +54,7 @@ export function BannerCalidadDatos() {
           ? 'Los registros han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Reporte: '
           : 'Fuente: '}
         <code>data/delitos-validacion.csv</code>
-        {!completo && ' (TF-IDF vs. CP Decreto 130-2017). Los delitos no verificados requerirán confirmación manual.'}
+        {!completo && ' (TF-IDF vs. CP Decreto 130-2017 y reformas vigentes). Los delitos no verificados requerirán confirmación manual.'}
       </p>
     </div>
   );

@@ -63,7 +63,7 @@ export function LegalDocument({
               </p>
               <p className="text-text-secondary">
                 Este texto es una guía base adaptada a la legislación hondureña
-                (Constitución Arts. 76-80, Código Penal Decreto 130-2017,
+                (Constitución Arts. 76-80, Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024),
                 Código Civil, Código de Comercio y normativa del Colegio de
                 Abogados de Honduras). La versión definitiva debe ser revisada
                 y aprobada por un abogado colegiado antes de su publicación

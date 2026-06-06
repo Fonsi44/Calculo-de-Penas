@@ -73,6 +73,13 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
             </header>
 
+            {post.coverImage && (
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md mb-8 border border-border-light shadow-md">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={post.coverImage} alt={post.title} className="absolute inset-0 w-full h-full object-cover" />
+              </div>
+            )}
+
             <div className="prose prose-sm max-w-none text-text-secondary leading-relaxed [&_h2]:text-text [&_h2]:font-serif [&_h2]:font-bold [&_h2]:text-xl [&_h2]:mt-8 [&_h2]:mb-3 [&_h3]:text-text [&_h3]:font-bold [&_h3]:text-lg [&_h3]:mt-6 [&_h3]:mb-2 [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-text" dangerouslySetInnerHTML={{ __html: post.body }} />
 
             {post.tags.length > 0 && (

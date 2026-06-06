@@ -493,7 +493,7 @@ export function CasoPDFDocument({ caso }: { caso: Caso }) {
     <Document
       title={`Informe pericial — ${caso.titulo}`}
       author="LEX HONDURAS"
-      subject="Cálculo de pena — Código Penal de Honduras (Decreto 130-2017)"
+      subject="Cálculo de pena — Código Penal de Honduras (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)"
       creator="LEX HONDURAS — Motor de Cálculo de Penas"
     >
       <Page size="A4" style={styles.page}>
@@ -508,7 +508,7 @@ export function CasoPDFDocument({ caso }: { caso: Caso }) {
         </View>
 
         <Text style={styles.title}>{caso.titulo}</Text>
-        <Text style={styles.subtitle}>Marco legal: Código Penal de Honduras — Decreto 130-2017</Text>
+        <Text style={styles.subtitle}>Marco legal: Código Penal de Honduras — Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)</Text>
 
         <View style={styles.metaRow}>
           <View style={styles.metaItem}>

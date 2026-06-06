@@ -1,9 +1,9 @@
 import type { NextConfig } from 'next';
 
 const isProd = process.env.NODE_ENV === 'production';
-// Por defecto bloqueamos indexación hasta lanzamiento oficial.
-// Para permitir indexación: NEXT_PUBLIC_NOINDEX=false (explícito).
-const noindexActive = process.env.NEXT_PUBLIC_NOINDEX !== 'false';
+// Indexable por defecto en producción. Solo anti-indexar si
+// NEXT_PUBLIC_NOINDEX=true explícito (staging, previews).
+const noindexActive = process.env.NEXT_PUBLIC_NOINDEX === 'true';
 
 const csp = [
   "default-src 'self'",

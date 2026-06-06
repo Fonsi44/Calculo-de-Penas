@@ -11,6 +11,7 @@ export const defensaPenalHonduras: Post = {
   author: 'Pineda y Asociados',
   readingTime: '8 min',
   featured: true,
+  coverImage: '/images/blog/defensa-penal.webp',
   body: `
 <p>Enfrentar un proceso penal es una experiencia que cambia la vida. En Honduras, el sistema de justicia penal está diseñado para garantizar el debido proceso, pero la realidad es que la falta de información y la sobrecarga del sistema pueden poner en desventaja a quien no cuenta con una defensa técnica adecuada.</p>
 

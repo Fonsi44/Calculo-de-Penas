@@ -62,9 +62,9 @@ export function Section({
 }
 
 interface SectionHeaderProps {
-  eyebrow?: string;
+  eyebrow?: string | React.ReactNode;
   title: string;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   align?: 'left' | 'center';
   invert?: boolean;
   className?: string;

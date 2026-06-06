@@ -31,7 +31,7 @@ export default function DisclaimerPage() {
 
       <LegalSection number="1" title="Sobre la calculadora de penas">
         <p>
-          La calculadora aplica las reglas del <strong className="font-semibold text-primary">Código Penal de Honduras (Decreto 130-2017)</strong> y
+          La calculadora aplica las reglas del <strong className="font-semibold text-primary">Código Penal de Honduras (Decreto 130-2017 y reformas vigentes)</strong> y
           sus reformas vigentes. Está diseñada como herramienta de apoyo
           para que abogados, estudiantes de derecho y usuarios informados
           puedan estimar la pena correspondiente a uno o varios delitos

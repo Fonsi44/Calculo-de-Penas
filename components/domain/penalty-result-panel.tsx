@@ -74,7 +74,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
           Informe de cálculo de pena
         </p>
         <p className="text-sm font-bold text-primary">LEX HONDURAS</p>
-        <p className="text-[11px] text-text-muted mt-1">Código Penal · Decreto 130-2017</p>
+        <p className="text-[11px] text-text-muted mt-1">Código Penal · Decreto 130-2017 y reformas vigentes</p>
         <div className="mt-3 pt-3 border-t border-border-light text-[11px] text-text-secondary tabular-nums">
           <p>{fecha}</p>
           {casoTitulo && <p className="mt-0.5">Caso: <span className="font-semibold text-text">{casoTitulo}</span></p>}
@@ -216,7 +216,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
       <Card padding="md" tone="default" className="bg-surface-alt">
         <SectionHeader numeral="V" title="Fundamento normativo" icon={<FileText size={14} />} />
         <p className="text-[11px] text-text-secondary mb-2">
-          El presente cálculo se fundamenta en los siguientes artículos del Código Penal de Honduras (Decreto 130-2017):
+          El presente cálculo se fundamenta en los siguientes artículos del Código Penal de Honduras (Decreto 130-2017 y reformas vigentes):
         </p>
         <div className="flex flex-wrap gap-1.5">
           {[

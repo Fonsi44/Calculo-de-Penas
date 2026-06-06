@@ -111,7 +111,7 @@ export function Paso1Delito({
         <div className="mt-3 border-2 border-warning rounded-md p-3 bg-warning-bg">
           <p className="text-xs font-bold text-text mb-1">Artículo no verificado contra la fuente oficial</p>
           <p className="text-[11px] text-text-secondary mb-2">
-            {current.delito.estado_nota || 'El par (delito, artículo) no superó la validación automática TF-IDF. Verifique manualmente contra el CP (Decreto 130-2017) antes de continuar.'}
+            {current.delito.estado_nota || 'El par (delito, artículo) no superó la validación automática TF-IDF. Verifique manualmente contra el CP (Decreto 130-2017 y reformas vigentes) antes de continuar.'}
           </p>
           {current.delito.estado_articulo_sugerido && (
             <p className="text-[11px] text-text-secondary mb-2">

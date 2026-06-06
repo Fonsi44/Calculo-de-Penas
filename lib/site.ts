@@ -34,11 +34,11 @@ type OpeningHours = {
 const envNoindex = process.env.NEXT_PUBLIC_NOINDEX;
 
 /**
- * Modo anti-indexación activo en desarrollo y hasta que se indique el
- * lanzamiento. Una sola variable controla robots, header HTTP y sitemap.
- * Para permitir indexación: NEXT_PUBLIC_NOINDEX=false (explícito).
+ * Indexable por defecto. Solo activar anti-indexación si se asigna
+ * explícitamente NEXT_PUBLIC_NOINDEX=true (staging, previews).
+ * Una sola variable controla robots, header HTTP y sitemap.
  */
-const noindexActive = envNoindex !== 'false';
+const noindexActive = envNoindex === 'true';
 
 export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pinedayasociadoshn.com').replace(/\/+$/, ''),
@@ -52,7 +52,7 @@ export const site = {
     'Bufete multidisciplinario en Nacaome, Valle, Honduras. Defensa penal seria y confidencial con más de 15 años de ejercicio, y 12 áreas complementarias del derecho (familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental) y conciliación/arbitraje. Atención personalizada, confidencial y reservada en todo el sur de Honduras.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'bufete multidisciplinar Nacaome, bufete multidisciplinario Honduras, abogados Nacaome Valle, abogado penalista Nacaome, defensa penal Honduras, asistencia legal 24 horas Honduras, abogado de familia Honduras, abogado laboral Valle, derecho civil Nacaome, abogado mercantil Honduras, abogado tributario Honduras, derecho bancario Honduras, derecho administrativo Honduras, derecho aduanero Honduras, regulación sanitaria ARSA, extranjería Honduras, propiedad intelectual Honduras, derecho ambiental Honduras, conciliación y arbitraje Honduras, Código Penal Decreto 130-2017').split(',').map((k) => k.trim()),
+      'bufete multidisciplinar Nacaome, bufete multidisciplinario Honduras, abogados Nacaome Valle, abogado penalista Nacaome, defensa penal Honduras, asistencia legal 24 horas Honduras, abogado de familia Honduras, abogado laboral Valle, derecho civil Nacaome, abogado mercantil Honduras, abogado tributario Honduras, derecho bancario Honduras, derecho administrativo Honduras, derecho aduanero Honduras, regulación sanitaria ARSA, extranjería Honduras, propiedad intelectual Honduras, derecho ambiental Honduras, conciliación y arbitraje Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   phoneDisplay: '+504 9536-3724',
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
@@ -87,7 +87,7 @@ export const site = {
   },
   legal: {
     jurisdiction: 'República de Honduras',
-    code: 'Código Penal Decreto 130-2017',
+    code: 'Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
     isProd: process.env.NODE_ENV === 'production',
   },
   /** Si true, todo el sitio emite noindex,nofollow y bloquea rastreadores. */
@@ -179,7 +179,7 @@ export function legalServiceSchema() {
       'Propiedad Intelectual',
       'Derecho Ambiental Regulatorio',
       'Conciliación y Arbitraje',
-      'Código Penal Decreto 130-2017 de Honduras',
+      'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
     ],
     sameAs: [
       site.social.facebook,

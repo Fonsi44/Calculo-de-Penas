@@ -33,7 +33,7 @@ export const categoriasFaq: FaqCategory[] = [
       },
       {
         pregunta: '¿Qué delitos cubre el Código Penal hondureño?',
-        respuesta: 'El Código Penal (Decreto 130-2017) tipifica delitos contra la vida, la integridad personal, la libertad, el patrimonio, el orden económico, la salud pública, la administración pública y más. Cubre desde homicidio y lesiones hasta delitos informáticos y ambientales.',
+        respuesta: 'El Código Penal (Decreto 130-2017 y reformas 119-2019, 46-2020, 93-2021, 59-2024) tipifica delitos contra la vida, la integridad personal, la libertad, el patrimonio, el orden económico, la salud pública, la administración pública y más. Cubre desde homicidio y lesiones hasta delitos informáticos y ambientales.',
       },
       {
         pregunta: '¿Cuál es la diferencia entre dolo y culpa?',

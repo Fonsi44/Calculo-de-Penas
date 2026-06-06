@@ -60,11 +60,11 @@ const FEATURES: Feature[] = [
   {
     icon: BookOpen,
     title: 'Biblioteca del Código Penal',
-    desc: 'Consulta los artículos del CP de Honduras (Decreto 130-2017) con búsqueda por número, epígrafe o tema.',
+    desc: 'Consulta los artículos del CP de Honduras (Decreto 130-2017 y reformas vigentes) con búsqueda por número, epígrafe o tema.',
     href: '/intranet/cp',
     cta: 'Abrir biblioteca',
     tone: 'info',
-    badge: 'Decreto 130-2017',
+    badge: 'Decreto 130-2017 · Reformas 59-2024',
   },
   {
     icon: FileCheck,
@@ -270,7 +270,8 @@ export default function IntranetDashboard() {
           </div>
           <p className="text-xs text-text leading-5">
             El cálculo se basa en el <strong>Código Penal de Honduras</strong> (Decreto 130-2017,
-            publicado en el Diario Oficial el 18 de enero de 2018), con sus reformas vigentes.
+            publicado en el Diario Oficial el 18 de enero de 2018) y sus reformas vigentes
+            (Decretos 119-2019, 46-2020, 93-2021 y 59-2024).
             Los tipos penales, rangos de pena, atenuantes, agravantes y eximentes están
             codificados en el motor conforme a los artículos 1 a 635.
           </p>
