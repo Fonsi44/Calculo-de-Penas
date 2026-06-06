@@ -14,6 +14,7 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CopyableAddress } from '@/components/marketing/copyable-address';
+import { MapEmbed } from '@/components/marketing/map-embed';
 
 export const metadata: Metadata = {
   title: 'Cómo llegar al bufete',
@@ -37,7 +38,6 @@ const FROM_CITIES = [
 
 export default function ComoLlegarPage() {
   const { latitude, longitude } = site.geo;
-  const gmapsEmbed = `https://www.google.com/maps?q=${latitude},${longitude}&hl=es&z=15&output=embed`;
   const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
   const wazeLink = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
 
@@ -66,13 +66,13 @@ export default function ComoLlegarPage() {
           <div className="lg:col-span-2">
             <Card padding="none" className="overflow-hidden">
               <div className="aspect-[16/10] w-full bg-surface-alt relative">
-                <iframe
-                  title={`Mapa de ${site.name} en ${site.address.city}`}
-                  src={gmapsEmbed}
-                  className="w-full h-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
+                <MapEmbed
+                  latitude={latitude}
+                  longitude={longitude}
+                  label={site.name}
+                  fullAddress={`${site.address.line1}, ${site.address.line2}, ${site.address.city}`}
+                  zoom={16}
+                  className="w-full h-full"
                 />
               </div>
               <div className="p-4 border-t border-border-light flex flex-wrap items-center justify-between gap-3">

@@ -36,6 +36,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { TestimonialsSection } from '@/components/marketing/testimonials-section';
+import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
@@ -567,13 +568,13 @@ export default function HomePage() {
           </div>
           <div>
             <Card padding="none" className="overflow-hidden aspect-[4/3] bg-surface-alt">
-              <iframe
-                title={`Mapa de ${site.name} en ${site.address.city}`}
-                src={`https://www.google.com/maps?q=${site.geo.latitude},${site.geo.longitude}&hl=es&z=15&output=embed`}
-                className="w-full h-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
+              <MapEmbed
+                latitude={site.geo.latitude}
+                longitude={site.geo.longitude}
+                label={site.name}
+                fullAddress={site.address.full}
+                zoom={15}
+                className="w-full h-full"
               />
             </Card>
             <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-2 text-[12px] font-semibold text-primary hover:text-accent-dark">
