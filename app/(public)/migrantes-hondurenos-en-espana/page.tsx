@@ -3,12 +3,11 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { ServiceCardPhoto } from '@/components/marketing/service-card-photo';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
+import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { hubMigrantes } from '@/data/areas-juridicas';
 import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
-import { getAreaTone } from '@/lib/icon-map';
+import { getIcon } from '@/lib/icon-map';
 
 export const metadata: Metadata = {
   title: 'Migrantes Hondureños en España',
@@ -66,18 +65,32 @@ export default function MigrantesPage() {
           title={hubMigrantes.titulo}
           subtitle={hubMigrantes.resumen}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {hubMigrantes.subareas.map((sub) => (
-            <ServiceCardPhoto
-              key={sub.slug}
-              href={`/migrantes-hondurenos-en-espana/${sub.slug}`}
-              title={sub.titulo}
-              description={sub.resumen}
-              tone={getAreaTone(sub.slug)}
-              aspect="16/9"
-              label={sub.titulo}
-            />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {hubMigrantes.subareas.map((sub) => {
+            const Icon = getIcon(sub.icono);
+            return (
+              <Link
+                key={sub.slug}
+                href={`/migrantes-hondurenos-en-espana/${sub.slug}`}
+                className="group block focus-visible:outline-none"
+              >
+                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                    <Icon size={22} aria-hidden="true" />
+                  </div>
+                  <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
+                    {sub.titulo}
+                  </h3>
+                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                    {sub.resumen}
+                  </p>
+                  <span className="inline-flex items-center gap-1 mt-3 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                    Conocer más <ArrowRight size={12} />
+                  </span>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
       </Section>
 

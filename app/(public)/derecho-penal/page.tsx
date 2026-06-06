@@ -3,12 +3,11 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { ServiceCardPhoto } from '@/components/marketing/service-card-photo';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
+import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
-import { getAreaTone } from '@/lib/icon-map';
+import { getIcon } from '@/lib/icon-map';
 
 export const metadata: Metadata = {
   title: 'Derecho Penal',
@@ -66,18 +65,34 @@ export default function DerechoPenalPage() {
           title={hubPenal.titulo}
           subtitle={hubPenal.resumen}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {hubPenal.grupos.map((grupo) => (
-            <ServiceCardPhoto
-              key={grupo.slug}
-              href={`/derecho-penal/${grupo.slug}`}
-              title={grupo.titulo}
-              description={grupo.resumen}
-              tone={getAreaTone(grupo.slug)}
-              aspect="16/9"
-              label={grupo.titulo}
-            />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {hubPenal.grupos.map((grupo) => {
+            const Icon = getIcon(grupo.icono);
+            return (
+              <Link
+                key={grupo.slug}
+                href={`/derecho-penal/${grupo.slug}`}
+                className="group block focus-visible:outline-none"
+              >
+                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                    <Icon size={22} aria-hidden="true" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
+                      {grupo.titulo}
+                    </h3>
+                    <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                      {grupo.resumen}
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-2 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                      Conocer más <ArrowRight size={12} />
+                    </span>
+                  </div>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
       </Section>
 
