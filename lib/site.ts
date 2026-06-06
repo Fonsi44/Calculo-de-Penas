@@ -49,10 +49,10 @@ export const site = {
     'Bufete multidisciplinario en Nacaome, Valle — 13 áreas del derecho',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete multidisciplinario en Nacaome, Valle, Honduras. 13 áreas del derecho: penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y arbitraje. Defensa penal seria y confidencial.',
+    'Bufete multidisciplinario en Nacaome, Valle, Honduras. Defensa penal seria y confidencial con más de 15 años de ejercicio, y 12 áreas complementarias del derecho (familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental) y conciliación/arbitraje. Atención personalizada, confidencial y reservada en todo el sur de Honduras.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'bufete multidisciplinario Nacaome, abogados Nacaome Honduras, abogado penalista Nacaome, defensa penal Honduras, abogado de familia Honduras, abogado laboral Valle, derecho civil Nacaome, abogado mercantil Honduras, abogado tributario Honduras, derecho bancario Honduras, derecho administrativo Honduras, derecho aduanero Honduras, regulación sanitaria ARSA, extranjería Honduras, propiedad intelectual Honduras, derecho ambiental Honduras, conciliación y arbitraje Honduras').split(',').map((k) => k.trim()),
+      'bufete multidisciplinar Nacaome, bufete multidisciplinario Honduras, abogados Nacaome Valle, abogado penalista Nacaome, defensa penal Honduras, asistencia legal 24 horas Honduras, abogado de familia Honduras, abogado laboral Valle, derecho civil Nacaome, abogado mercantil Honduras, abogado tributario Honduras, derecho bancario Honduras, derecho administrativo Honduras, derecho aduanero Honduras, regulación sanitaria ARSA, extranjería Honduras, propiedad intelectual Honduras, derecho ambiental Honduras, conciliación y arbitraje Honduras, Código Penal Decreto 130-2017').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   phoneDisplay: '+504 9536-3724',
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
@@ -162,6 +162,25 @@ export function legalServiceSchema() {
       closes: h.closes,
     })),
     knowsLanguage: ['es-HN', 'es-ES'],
+    serviceType:
+      'Bufete multidisciplinar — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
+    knowsAbout: [
+      'Derecho Penal',
+      'Derecho de Familia',
+      'Derecho Laboral',
+      'Derecho Civil y Notarial',
+      'Derecho Mercantil y Empresarial',
+      'Derecho Tributario y Fiscal',
+      'Derecho Bancario y Financiero',
+      'Derecho Administrativo y Servicio Civil',
+      'Derecho Aduanero',
+      'Regulación Sanitaria',
+      'Extranjería y Migración',
+      'Propiedad Intelectual',
+      'Derecho Ambiental Regulatorio',
+      'Conciliación y Arbitraje',
+      'Código Penal Decreto 130-2017 de Honduras',
+    ],
     sameAs: [
       site.social.facebook,
       site.social.instagram,

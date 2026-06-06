@@ -9,7 +9,7 @@ interface CTAGroupProps {
   className?: string;
 }
 
-const DEFAULT_MSG = 'Hola, necesito una consulta penal. Vi su sitio web.';
+const DEFAULT_MSG = 'Hola, necesito una consulta jurídica. Vi su sitio web.';
 
 export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className }: CTAGroupProps) {
   if (variant === 'compact') {
@@ -46,7 +46,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         </a>
         <Link
           href="/solicitar-consulta"
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
@@ -59,7 +59,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <Link
           href="/solicitar-consulta"
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
@@ -78,7 +78,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
       <Link
         href="/solicitar-consulta"
-        className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
       >
         <Calendar size={18} aria-hidden="true" />
         Solicitar consulta

@@ -2,9 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
+import { FeatureGrid, type FeatureItem } from '@/components/marketing/feature-grid';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
@@ -36,28 +39,15 @@ export default function DerechoPenalPage() {
 
   return (
     <>
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
-        <Container size="lg" className="relative py-14 md:py-20">
-          <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
-              {hubPenal.heroEyebrow}
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              {hubPenal.heroTitle}
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {hubPenal.heroSubtitle}
-            </p>
-            <div className="mt-7">
-              <CTAGroup variant="inverse" />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow={hubPenal.heroEyebrow}
+        badge="Especialidad destacada"
+        title={hubPenal.heroTitle}
+        subtitle={<>{hubPenal.heroSubtitle}</>}
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      <TrustBar background="light" />
 
       <Section background="muted" spacing="md">
         <SectionHeader
@@ -65,35 +55,19 @@ export default function DerechoPenalPage() {
           title={hubPenal.titulo}
           subtitle={hubPenal.resumen}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {hubPenal.grupos.map((grupo) => {
+        <FeatureGrid
+          bento
+          items={hubPenal.grupos.map<FeatureItem>((grupo) => {
             const Icon = getIcon(grupo.icono);
-            return (
-              <Link
-                key={grupo.slug}
-                href={`/derecho-penal/${grupo.slug}`}
-                className="group block focus-visible:outline-none"
-              >
-                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                    <Icon size={22} aria-hidden="true" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
-                      {grupo.titulo}
-                    </h3>
-                    <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
-                      {grupo.resumen}
-                    </p>
-                    <span className="inline-flex items-center gap-1 mt-2 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                      Conocer más <ArrowRight size={12} />
-                    </span>
-                  </div>
-                </Card>
-              </Link>
-            );
+            return {
+              title: grupo.titulo,
+              description: grupo.resumen,
+              icon: Icon,
+              href: `/derecho-penal/${grupo.slug}`,
+              tone: 'primary',
+            };
           })}
-        </div>
+        />
       </Section>
 
       <Section spacing="md" id="preguntas-frecuentes">

@@ -63,12 +63,22 @@
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
   --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
   --shadow-glow: 0 0 30px rgba(201,165,92,0.25);
+  --shadow-glow-accent: 0 10px 40px -10px rgba(201,165,92,0.45);
+  --shadow-premium: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 1px 3px rgba(15,26,48,0.06), 0 12px 32px -12px rgba(15,26,48,0.18);
+
+  /* Easing & motion */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   /* Animaciones */
   --animate-fade-in-up: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-scale-in: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-scroll-x: scroll-x 35s linear infinite;
   --animate-scroll-x-reverse: scroll-x 35s linear infinite reverse;
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-shimmer: shimmer 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  --animate-glow-pulse: glow-pulse 3.2s ease-in-out infinite;
+  --animate-float-soft: float-soft 6s ease-in-out infinite;
 }
 
 @keyframes fade-in-up {
@@ -83,6 +93,26 @@
 
 @keyframes scroll-x {
   to { transform: translateX(-50%); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,165,92,0.0), 0 0 0 0 rgba(201,165,92,0.0); }
+  50%      { box-shadow: 0 0 0 6px rgba(201,165,92,0.10), 0 0 28px 2px rgba(201,165,92,0.18); }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
 
 .dark {
@@ -151,7 +181,7 @@ html {
 body {
   background: var(--color-background);
   color: var(--color-text);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -168,7 +198,7 @@ body {
 
 /* Tipografía editorial para citas legales */
 .font-serif {
-  font-family: Georgia, 'Times New Roman', 'Source Serif 4', serif;
+  font-family: var(--font-serif), Georgia, 'Times New Roman', 'Source Serif 4', serif;
   font-feature-settings: "lnum", "pnum";
 }
 
@@ -241,4 +271,150 @@ body {
 .tabular-nums {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
+}
+
+/* ----- Utilidades premium (extensión no-breaking) ----- */
+
+/* Tipografía balanceada y legible (CSS moderno) */
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+
+/* Card premium: hover lift + sombra + halo dorado sutil.
+   Opt-in: añadir `premium` a <Card>. */
+.card-premium {
+  transition: transform 220ms var(--ease-spring), box-shadow 220ms var(--ease-spring), border-color 220ms var(--ease-spring);
+  will-change: transform;
+}
+.card-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-premium), 0 0 0 1px rgba(201,165,92,0.18);
+  border-color: rgba(201,165,92,0.45);
+}
+
+/* Borde con gradiente dorado (degradado en el ring, fondo opaco interno). */
+.ring-gradient-accent {
+  position: relative;
+  isolation: isolate;
+}
+.ring-gradient-accent::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(201,165,92,0.55), rgba(168,136,64,0.18) 50%, rgba(201,165,92,0));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Botón con shimmer dorado en hover (1 pasada, 600ms). */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0%, transparent 35%, rgba(255,255,255,0.18) 50%, transparent 65%, transparent 100%);
+  background-size: 220% 100%;
+  background-position: -120% 0;
+  transform: skewX(-18deg);
+  opacity: 0;
+  transition: opacity 200ms var(--ease-soft);
+  pointer-events: none;
+  z-index: 1;
+}
+.btn-shimmer:hover::after {
+  opacity: 1;
+  animation: shimmer 1.4s var(--ease-soft) 1;
+}
+
+/* Texto con gradiente dorado (para acentos y números). */
+.text-gradient-accent {
+  background: linear-gradient(135deg, #C9A55C 0%, #E5C885 50%, #A88840 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+
+/* Patrón sutil de grid (1px line, muy bajo contraste) para heroes oscuros. */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+.bg-grid-soft {
+  background-image:
+    linear-gradient(rgba(15,26,48,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,26,48,0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Patrón de puntos dorados (zonas oscuras). */
+.bg-dots-accent {
+  background-image: radial-gradient(rgba(201,165,92,0.22) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: 0 0;
+}
+
+/* Divider con línea accent (acent dorado a la izquierda). */
+.divider-accent {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201,165,92,0.55) 0, rgba(201,165,92,0.18) 30%, transparent 100%);
+}
+
+/* Conector para ProcessStepper (línea horizontal dorada entre pasos). */
+.process-connector {
+  position: relative;
+}
+.process-connector::before {
+  content: "";
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201,165,92,0.35) 18%, rgba(201,165,92,0.35) 82%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+@media (max-width: 1023px) {
+  .process-connector::before { display: none; }
+}
+
+/* Animation utility: pausa marquee on hover (sin JS). */
+.marquee-pause-on-hover:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Halo dorado para acentos premium (iconos destacados, etc). */
+.halo-accent {
+  box-shadow: 0 0 0 1px rgba(201,165,92,0.35), 0 8px 24px -8px rgba(201,165,92,0.55);
+}
+
+/* FAQ summary marker (chevron nativo) oculto en todos los browsers. */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+/* Animación CSS-only de altura para details (grid-rows trick).
+   Mantiene la animación suave sin necesidad de medir altura con JS. */
+details.faq-anim > summary + .faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms var(--ease-spring);
+}
+details.faq-anim[open] > summary + .faq-body {
+  grid-template-rows: 1fr;
+}
+details.faq-anim > summary + .faq-body > .faq-body-inner {
+  overflow: hidden;
+  min-height: 0;
 }

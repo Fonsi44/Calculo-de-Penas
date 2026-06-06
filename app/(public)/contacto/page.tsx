@@ -15,7 +15,9 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
-import { Section, Container } from '@/components/marketing/section';
+import { Section } from '@/components/marketing/section';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
 import { Card } from '@/components/ui/card';
 import { LiveOfficeStatus } from '@/components/marketing/live-widgets';
 import { CONTACTO_ASUNTOS } from '@/lib/validation';
@@ -73,29 +75,34 @@ export default function ContactoPage() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="bg-primary text-text-inverse">
-        <Container size="lg" className="py-12 md:py-16">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
-            Contacto
-          </p>
-          <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight max-w-3xl">
-            Estamos disponibles para escucharle
-          </h1>
-          <p className="mt-4 text-[15px] md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
-            Elija el canal que prefiera. Toda comunicación está protegida por el secreto
-            profesional. Le respondemos en horario hábil.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Contacto"
+        badge="Respuesta en horario hábil"
+        title="Estamos disponibles para escucharle"
+        subtitle={
+          <>
+            Elija el canal que prefiera. Toda comunicación está protegida por el
+            <strong className="font-bold text-accent"> secreto profesional</strong>.
+            Atendemos <strong className="font-bold">cualquiera de las 13 áreas del bufete</strong>:
+            defensa penal, familia, laboral, civil, mercantil, tributario, bancario,
+            administrativo, aduanero, sanitario, extranjería, propiedad intelectual,
+            ambiental y conciliación/arbitraje.
+          </>
+        }
+        cta={undefined}
+      />
+
+      <TrustBar background="light" />
 
       <Section spacing="md">
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Form */}
           <div className="lg:col-span-3">
-            <Card padding="md">
+            <Card padding="md" className="card-premium">
               <div className="flex items-center gap-2 mb-4">
-                <MessageSquare size={18} className="text-primary" />
+                <div className="w-9 h-9 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                  <MessageSquare size={18} />
+                </div>
                 <h2 className="font-bold text-base text-primary">Formulario confidencial</h2>
               </div>
 
@@ -200,7 +207,7 @@ export default function ContactoPage() {
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full h-12 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors disabled:opacity-50"
+                    className="btn-shimmer w-full h-12 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors disabled:opacity-50"
                   >
                     {status === 'sending' ? (
                       <>

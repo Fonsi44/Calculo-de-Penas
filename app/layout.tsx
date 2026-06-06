@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./auth-context";
 import { ThemeProvider } from "./theme-context";
@@ -8,6 +9,21 @@ import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
 import { site } from "@/lib/site";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-serif",
+  weight: ["400", "600", "700", "800"],
+  style: ["normal", "italic"],
+});
 
 const siteUrl = site.url;
 
@@ -48,7 +64,7 @@ export const viewport = { themeColor: "#1A2B4A" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" dir="ltr" className="h-full" suppressHydrationWarning>
+    <html lang="es" dir="ltr" className={`h-full ${inter.variable} ${sourceSerif.variable}`} suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="canonical" href={siteUrl} />

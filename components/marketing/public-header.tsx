@@ -106,7 +106,7 @@ export function PublicHeader() {
 
         <div className="hidden lg:flex items-center gap-2">
           <a
-            href={whatsappHref('Hola, necesito una consulta penal.')}
+            href={whatsappHref('Hola, necesito una consulta jurídica.')}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-success text-white hover:opacity-90 transition-opacity focus-visible:outline-none"

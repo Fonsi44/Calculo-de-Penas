@@ -106,7 +106,7 @@ export function FloatingContactRail() {
       className="fixed bottom-4 right-4 z-30 flex flex-col gap-2 print:hidden"
     >
       <a
-        href={whatsappHref('Hola, necesito orientación sobre un caso penal.')}
+        href={whatsappHref('Hola, necesito orientación jurídica.')}
         target="_blank"
         rel="noopener noreferrer"
         className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center shadow-lg shadow-success/30 hover:scale-105 transition-transform"
@@ -135,11 +135,11 @@ export function FloatingContactRail() {
 
 export function Ticker() {
   const items = [
-    'Defensa penal seria y confidencial',
+    'Defensa penal seria y confidencial · 13 áreas del derecho',
     'Lunes a sábado · 7:00 a 20:00',
     'Asistencia a detenidos 24/7 por WhatsApp en horario hábil',
     'Aplicación rigurosa del Código Penal · Decreto 130-2017',
-    'Atención en Nacaome y todo el sur de Honduras',
+    'Bufete multidisciplinar en Nacaome y todo el sur de Honduras',
   ];
   return (
     <div className="bg-primary-dark text-text-inverse/80 overflow-hidden border-b border-primary-light/30">

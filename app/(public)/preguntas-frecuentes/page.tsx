@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { ChevronDown, HelpCircle, MessageCircle, ArrowRight } from 'lucide-react';
 import { site } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Section, SectionHeader } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { categoriasFaq, totalPreguntas } from '@/data/faq';
 import { faqPageSchema } from '@/lib/schemas/legal-page';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -34,29 +36,24 @@ export default function FaqPage() {
 
   return (
     <>
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
-        <Container size="lg" className="relative py-14 md:py-20">
-          <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
-              Preguntas Frecuentes
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              Resuelva sus dudas legales
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {totalPreguntas} preguntas organizadas en {categoriasFaq.length} categorías.
-              Encuentre respuestas claras y prácticas sobre el sistema legal hondureño.
-            </p>
-            <div className="mt-7">
-              <CTAGroup variant="inverse" />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Preguntas Frecuentes"
+        badge="13 áreas del derecho"
+        title="Resuelva sus dudas legales"
+        subtitle={
+          <>
+            {totalPreguntas} preguntas organizadas en {categoriasFaq.length} categorías.
+            Respuestas claras y prácticas sobre el sistema legal hondureño para
+            <strong className="font-bold text-accent"> defensa penal</strong>,
+            familia, laboral, civil, mercantil, tributario, bancario, administrativo,
+            aduanero, sanitario, extranjería, propiedad intelectual, ambiental y
+            conciliación/arbitraje.
+          </>
+        }
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      <TrustBar background="light" />
 
       <Section spacing="sm">
         <div className="flex flex-wrap gap-2 justify-center">
@@ -89,18 +86,18 @@ export default function FaqPage() {
             {cat.preguntas.map((p, i) => (
               <details
                 key={i}
-                className="group bg-background rounded-lg border border-border hover:border-accent/40 transition-colors open:border-accent/60"
+                className="faq-anim group bg-background rounded-lg border border-border hover:border-accent/40 transition-colors open:border-accent/60 card-premium"
               >
                 <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-[15px] font-semibold text-text leading-snug hover:text-primary transition-colors">
                   <span className="flex-1">{p.pregunta}</span>
                   <ChevronDown
                     size={18}
-                    className="text-text-muted flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+                    className="text-text-muted flex-shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:text-accent"
                   />
                 </summary>
-                <div className="px-5 pb-4 pt-0">
+                <div className="faq-content">
                   <div className="border-t border-border/50 pt-3">
-                    <p className="text-[14px] text-text-secondary leading-relaxed">
+                    <p className="text-[14px] text-text-secondary leading-relaxed text-pretty">
                       {p.respuesta}
                     </p>
                   </div>

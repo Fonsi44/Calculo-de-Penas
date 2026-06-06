@@ -9,16 +9,20 @@ import {
   HeartHandshake,
   ArrowRight,
   CheckCircle2,
+  Gavel,
 } from 'lucide-react';
 import { site } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Section, SectionHeader } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { LiveOfficeStatus, StatsCounter } from '@/components/marketing/live-widgets';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
+import { ProcessStepper } from '@/components/marketing/process-stepper';
 
 export const metadata: Metadata = {
-  title: 'El Despacho',
-  description: `Conoce a ${site.name}: abogados penalistas en Nacaome, Valle. Nuestra historia, equipo, valores y por qué somos referentes en defensa penal en el sur de Honduras.`,
+  title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
+  description: `Conoce ${site.name}: bufete multidisciplinar con sede en Nacaome, Valle. 13 áreas del derecho, defensa penal como especialidad destacada, y un equipo técnico al servicio de su caso en todo el sur de Honduras.`,
   alternates: { canonical: '/despacho' },
 };
 
@@ -31,7 +35,7 @@ const VALUES = [
   {
     icon: BookOpen,
     title: 'Estudio permanente',
-    desc: 'Nos actualizamos en jurisprudencia, reformas y doctrina. El derecho penal cambia, y nuestra práctica también.',
+    desc: 'Nos actualizamos en jurisprudencia, reformas y doctrina. El derecho cambia, y nuestra práctica también.',
   },
   {
     icon: HeartHandshake,
@@ -46,11 +50,11 @@ const VALUES = [
 ];
 
 const TIMELINE = [
-  { year: '2010', title: 'Inicio del ejercicio', desc: 'Apertura del bufete en Nacaome, Valle, con enfoque exclusivo en derecho penal.' },
-  { year: '2014', title: 'Consolidación regional', desc: 'Asumimos defensas en todo el departamento de Valle y zonas aledañas de Choluteca y La Paz.' },
-  { year: '2018', title: 'Reforma al Código Penal', desc: 'Incorporamos el Decreto 130-2017 a nuestra práctica y desarrollamos el primer motor interno de cálculo.' },
+  { year: '2010', title: 'Inicio del ejercicio', desc: 'Apertura del bufete en Nacaome, Valle, con atención inicial en derecho penal y procesal penal.' },
+  { year: '2014', title: 'Consolidación regional', desc: 'Asumimos defensas y asesorías en todo el departamento de Valle y zonas aledañas de Choluteca y La Paz.' },
+  { year: '2018', title: 'Reforma al Código Penal', desc: 'Incorporamos el Decreto 130-2017 a nuestra práctica y desarrollamos el primer motor interno de cálculo de penas.' },
   { year: '2022', title: 'Transformación digital', desc: 'Lanzamos plataforma de gestión de casos, biblioteca jurídica y motor técnico de penas.' },
-  { year: '2026', title: 'Sitio web público', desc: 'Apertura de este portal para que la ciudadanía conozca nuestros servicios y ejerza su derecho a la defensa.' },
+  { year: '2026', title: 'Bufete multidisciplinar', desc: 'Ampliamos a 13 áreas del derecho y abrimos este portal para que la ciudadanía conozca nuestros servicios y ejerza su defensa.' },
 ];
 
 const COMMITMENTS = [
@@ -60,6 +64,8 @@ const COMMITMENTS = [
   'Presupuesto de honorarios por escrito',
   'Atención directa del abogado responsable',
   'Trazabilidad documental de cada actuación',
+  'Coordinación interna entre áreas cuando su caso lo requiere',
+  'Información actualizada sobre normativa y reformas',
 ];
 
 export default function DespachoPage() {
@@ -74,30 +80,24 @@ export default function DespachoPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
-        <Container size="lg" className="relative py-14 md:py-20">
-          <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
-              El Despacho
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              Más de una década defendiendo derechos en el sur de Honduras
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {site.name} es un bufete especializado en derecho penal y procesal penal,
-              con sede en Nacaome, Valle. Trabajamos con técnica, prudencia y cercanía
-              humana para quienes requieren defensa penal seria en Honduras.
-            </p>
-            <div className="mt-7">
-              <CTAGroup variant="inverse" />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="El Despacho"
+        badge="Multidisciplinar"
+        title="13 áreas del derecho, una sola firma en el sur de Honduras"
+        subtitle={
+          <>
+            {site.name} es un bufete multidisciplinar con sede en Nacaome, Valle. La defensa
+            penal —nuestra especialidad fundacional— sigue siendo uno de nuestros pilares
+            principales, y la acompañamos con asesoría integral en familia, laboral, civil,
+            mercantil, tributario, notarial y más. Trabajamos con técnica, prudencia y cercanía
+            humana para quien requiere defensa y orientación jurídica seria en Honduras.
+          </>
+        }
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      {/* TRUST BAR */}
+      <TrustBar background="light" />
 
       {/* STATS + LIVE */}
       <Section background="muted" spacing="sm">
@@ -111,14 +111,14 @@ export default function DespachoPage() {
 
       {/* MISSION */}
       <Section spacing="md">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div>
             <SectionHeader
               eyebrow="Misión"
               title="Defender con técnica, servir con humanidad"
-              subtitle="Nuestra razón de ser es garantizar que toda persona, sin importar su condición, acceda a una defensa penal seria, técnica y respetuosa de sus derechos."
+              subtitle="Nuestra razón de ser es garantizar que toda persona acceda a una defensa y orientación jurídica seria, técnica y respetuosa de sus derechos, en cualquiera de las áreas que atendemos."
             />
-            <ul className="space-y-2.5 mt-4">
+            <ul className="space-y-2.5 mt-5">
               {COMMITMENTS.map((c, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-[14px] text-text leading-relaxed">
                   <CheckCircle2 size={16} className="text-success flex-shrink-0 mt-0.5" />
@@ -127,8 +127,8 @@ export default function DespachoPage() {
               ))}
             </ul>
           </div>
-          <div>
-            <Card padding="md" className="bg-primary text-text-inverse">
+          <div className="space-y-3">
+            <Card padding="md" className="bg-primary text-text-inverse card-premium">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 rounded-md bg-accent/20 flex items-center justify-center">
                   <Scale size={22} className="text-accent" />
@@ -140,18 +140,33 @@ export default function DespachoPage() {
                   <p className="text-[15px] font-bold leading-tight">Justicia accesible y técnica</p>
                 </div>
               </div>
-              <p className="text-[14px] text-text-inverse/90 leading-relaxed">
-                Aspiramos a un sistema de justicia donde cada persona, en Nacaome y en el
-                sur de Honduras, pueda ejercer su derecho a la defensa con un abogado que
-                domine la técnica, explique con claridad y actúe con prudencia.
+              <p className="text-[14px] text-text-inverse/90 leading-relaxed text-pretty">
+                Aspiramos a un sistema de justicia donde cada persona, en Nacaome y en el sur de
+                Honduras, pueda ejercer su derecho a la defensa y a la asesoría legal con un
+                equipo que domine la técnica, explique con claridad y actúe con prudencia.
               </p>
             </Card>
-            <Card padding="md" className="mt-3 border-l-4 border-l-accent">
+            <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-1">
                 Valores
               </p>
               <p className="text-[14px] text-text leading-relaxed">
                 Honestidad · Confidencialidad · Rigor técnico · Respeto · Empatía · Discreción
+              </p>
+            </Card>
+            <Card padding="md" className="border-l-4 border-l-primary card-premium">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                  <Gavel size={18} />
+                </div>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">
+                  Especialidad destacada
+                </p>
+              </div>
+              <p className="text-[14px] text-text leading-relaxed text-pretty">
+                La defensa penal y procesal penal sigue siendo nuestro pilar histórico. Contamos
+                con experiencia en asistencia a detenidos, audiencias iniciales, preliminares,
+                juicio oral y recursos de casación.
               </p>
             </Card>
           </div>
@@ -167,12 +182,12 @@ export default function DespachoPage() {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {VALUES.map((v) => (
-            <Card key={v.title} padding="md" className="h-full">
-              <div className="w-11 h-11 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center mb-3">
+            <Card key={v.title} padding="md" className="h-full card-premium">
+              <div className="w-11 h-11 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center mb-3 border border-accent/30">
                 <v.icon size={20} aria-hidden="true" />
               </div>
-              <h3 className="font-bold text-[15px] text-text leading-tight">{v.title}</h3>
-              <p className="text-[13px] text-text-secondary mt-2 leading-relaxed">{v.desc}</p>
+              <h3 className="font-bold text-[15px] text-text leading-tight text-balance">{v.title}</h3>
+              <p className="text-[13px] text-text-secondary mt-2 leading-relaxed text-pretty">{v.desc}</p>
             </Card>
           ))}
         </div>
@@ -189,12 +204,12 @@ export default function DespachoPage() {
           {TIMELINE.map((t) => (
             <li key={t.year} className="ml-6 relative">
               <span className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-accent border-4 border-background" />
-              <Card padding="sm" className="border-l-4 border-l-accent">
+              <Card padding="sm" className="border-l-4 border-l-accent card-premium">
                 <p className="text-[12px] font-bold uppercase tracking-widest text-accent-dark">
                   {t.year}
                 </p>
                 <h3 className="font-bold text-[15px] text-text mt-0.5">{t.title}</h3>
-                <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed text-pretty">
                   {t.desc}
                 </p>
               </Card>
@@ -217,11 +232,11 @@ export default function DespachoPage() {
               desc: 'Abogado responsable del bufete. Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio oral en el departamento de Valle y zonas circunvecinas.',
             },
             {
-              rol: 'Apoyo técnico y documental',
-              desc: 'Asistencia en la preparación de escritos, recursos, cálculo técnico de penas y trazabilidad documental de cada caso.',
+              rol: 'Apoyo técnico y multidisciplinar',
+              desc: 'Asistencia en la preparación de escritos, recursos, cálculo técnico de penas y coordinación con las distintas áreas del bufete que su caso pueda requerir.',
             },
           ].map((p) => (
-            <Card key={p.rol} padding="md">
+            <Card key={p.rol} padding="md" className="card-premium">
               <div className="flex items-center gap-3">
                 <div className="w-14 h-14 rounded-full bg-primary text-text-inverse flex items-center justify-center font-bold text-lg flex-shrink-0">
                   <GraduationCap size={22} />
@@ -235,7 +250,7 @@ export default function DespachoPage() {
                   </p>
                 </div>
               </div>
-              <p className="text-[13px] text-text-secondary mt-3 leading-relaxed">
+              <p className="text-[13px] text-text-secondary mt-3 leading-relaxed text-pretty">
                 {p.desc}
               </p>
             </Card>
@@ -245,6 +260,55 @@ export default function DespachoPage() {
           Por seguridad y ética profesional, la identidad completa de los profesionales
           se revela únicamente a clientes con relación de servicio constituida.
         </p>
+      </Section>
+
+      {/* CÓMO TRABAJAMOS */}
+      <Section spacing="md">
+        <SectionHeader
+          eyebrow="Cómo trabajamos"
+          title="Cuatro pasos para acompañarle en su caso"
+          subtitle="Un método claro y trazable que aplicamos a todas las áreas del bufete, con la confidencialidad y el rigor técnico que su situación requiere."
+        />
+        <ProcessStepper
+          steps={[
+            { step: 1, title: 'Consulta inicial', desc: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad, sea penal, civil, laboral o cualquier otra área.' },
+            { step: 2, title: 'Estrategia legal', desc: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima, identificando si requiere coordinación con otras áreas.' },
+            { step: 3, title: 'Gestión y litigio', desc: 'Tramitamos su asunto con diligencia en sede administrativa, judicial o notarial, según corresponda. Le mantenemos informado en cada etapa.' },
+            { step: 4, title: 'Cierre y seguimiento', desc: 'Le entregamos un informe claro del resultado y, si procede, los recursos o las actuaciones complementarias disponibles.' },
+          ]}
+          withConnector
+        />
+      </Section>
+
+      {/* POR QUÉ MULTIDISCIPLINAR */}
+      <Section background="primary" spacing="md">
+        <div className="text-text-inverse">
+          <SectionHeader
+            eyebrow="Visión multidisciplinar"
+            title="Su caso atendido por el área correcta, con apoyo del bufete completo"
+            subtitle="La mayoría de los problemas jurídicos cruzan varias ramas del derecho. Un equipo coordinado es más rápido, más barato y más seguro que tratar cada frente por separado."
+            invert
+          />
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { icon: Gavel, title: 'Penal + familia + civil', desc: 'Acusaciones con repercusiones familiares y patrimoniales.' },
+            { icon: Briefcase, title: 'Laboral + mercantil', desc: 'Despidos en empresas con contratos y sociedades cruzadas.' },
+            { icon: Scale, title: 'Civil + tributario + bancario', desc: 'Embargos, cobros, contratos y obligaciones tributarias.' },
+            { icon: BookOpen, title: 'Notarial + registral', desc: 'Compraventas, donaciones, sociedades y traspasos.' },
+          ].map((it) => (
+            <div key={it.title} className="rounded-md border border-primary-light/40 bg-primary-light/20 p-4 backdrop-blur-sm card-premium">
+              <it.icon size={22} className="text-accent mb-2" aria-hidden="true" />
+              <h3 className="font-bold text-[14px] text-text-inverse leading-tight text-balance">{it.title}</h3>
+              <p className="text-[12px] text-text-inverse/80 leading-relaxed mt-1.5 text-pretty">{it.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent hover:text-text-inverse transition-colors">
+            Ver las 13 áreas del bufete <ArrowRight size={14} />
+          </Link>
+        </div>
       </Section>
 
       {/* CONTACT STRIP */}
@@ -257,7 +321,7 @@ export default function DespachoPage() {
         <div className="mt-8 text-center">
           <Link
             href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-primary text-text-inverse text-base font-bold hover:bg-primary-light transition-colors"
           >
             Solicitar consulta confidencial <ArrowRight size={18} />
           </Link>

@@ -39,7 +39,7 @@ export function PublicFooter() {
   return (
     <footer className="bg-primary text-text-inverse">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {/* Identidad */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-4 focus-visible:outline-none" aria-label={site.name}>
@@ -51,14 +51,26 @@ export function PublicFooter() {
                 <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
               </div>
             </Link>
-            <p className="text-[13px] text-text-inverse/80 leading-relaxed">
-              Bufete multidisciplinario en {site.address.city}, {site.address.department}. 13 áreas del derecho: penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y arbitraje.
+            <p className="text-[13px] text-text-inverse/80 leading-relaxed text-pretty">
+              <strong className="font-semibold text-text-inverse">Bufete multidisciplinar</strong> en {site.address.city}, {site.address.department},
+              con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
+              pilar histórico. Integramos 13 áreas del derecho (penal, familia, laboral, civil, mercantil, tributario,
+              bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y
+              conciliación/arbitraje) para asesorarle en cualquier frente, con atención confidencial y personalizada
+              en Nacaome y todo el sur de Honduras.
+            </p>
+            <p className="text-[12px] text-text-inverse/65 leading-relaxed mt-3 text-pretty">
+              Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
             </p>
           </div>
 
           {/* Áreas */}
           <div>
-            <h3 className="text-[12px] font-bold uppercase tracking-wider text-accent mb-3">Áreas Jurídicas</h3>
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
+              <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">
+                Áreas Jurídicas
+              </h3>
+            </div>
             <ul className="space-y-1.5">
               {AREAS.map((a) => (
                 <li key={a.href}>
@@ -72,7 +84,11 @@ export function PublicFooter() {
 
           {/* Despacho */}
           <div>
-            <h3 className="text-[12px] font-bold uppercase tracking-wider text-accent mb-3">El Despacho</h3>
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
+              <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">
+                El Despacho
+              </h3>
+            </div>
             <ul className="space-y-1.5">
               {DESPACHO.map((d) => (
                 <li key={d.href}>
@@ -86,7 +102,11 @@ export function PublicFooter() {
 
           {/* Contacto */}
           <div>
-            <h3 className="text-[12px] font-bold uppercase tracking-wider text-accent mb-3">Contacto</h3>
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
+              <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">
+                Contacto
+              </h3>
+            </div>
             <ul className="space-y-2.5 text-[13px]">
               <li className="flex items-start gap-2">
                 <MapPin size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
@@ -117,7 +137,7 @@ export function PublicFooter() {
           </div>
         </div>
 
-        <div className="border-t border-primary-light/40 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="divider-accent mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <p className="text-[12px] text-text-inverse/70">
             © {year} {site.name}. Todos los derechos reservados.
           </p>
@@ -132,7 +152,7 @@ export function PublicFooter() {
 
           </ul>
         </div>
-        <p className="text-[11px] text-text-inverse/50 mt-3 italic">
+        <p className="text-[11px] text-text-inverse/50 mt-3 italic text-pretty">
           La información publicada en este sitio es de carácter general y orientativo. No sustituye la asesoría legal personalizada. Cada caso requiere análisis individual por un abogado habilitado.
         </p>
       </div>
