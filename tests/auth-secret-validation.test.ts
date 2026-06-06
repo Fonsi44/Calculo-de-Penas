@@ -18,7 +18,7 @@ describe('validateJwtSecret', () => {
   }
 
   it('lanza en producción si el secreto es < 32 chars al firmar', async () => {
-    process.env.NODE_ENV = 'production';
+    Object.assign(process.env, { NODE_ENV: 'production' });
     process.env.JWT_SECRET = 'short';
     const auth = await loadAuth();
     expect(() => auth.signToken({ userId: 'u1', email: 'u@x.com', rol: 'user' }))
@@ -26,7 +26,7 @@ describe('validateJwtSecret', () => {
   });
 
   it('lanza en producción si el secreto es el fallback de desarrollo', async () => {
-    process.env.NODE_ENV = 'production';
+    Object.assign(process.env, { NODE_ENV: 'production' });
     process.env.JWT_SECRET = 'dev-only-secret-not-for-production-min-32-chars-AAAAA';
     const auth = await loadAuth();
     expect(() => auth.signToken({ userId: 'u1', email: 'u@x.com', rol: 'user' }))
@@ -34,7 +34,7 @@ describe('validateJwtSecret', () => {
   });
 
   it('lanza en producción si el secreto coincide con un patrón débil', async () => {
-    process.env.NODE_ENV = 'production';
+    Object.assign(process.env, { NODE_ENV: 'production' });
     process.env.JWT_SECRET = 'change-in-production-please-use-48-random-bytes-XYZ';
     const auth = await loadAuth();
     expect(() => auth.signToken({ userId: 'u1', email: 'u@x.com', rol: 'user' }))
@@ -42,7 +42,7 @@ describe('validateJwtSecret', () => {
   });
 
   it('NO lanza en desarrollo aunque el secreto sea débil (solo warning)', async () => {
-    process.env.NODE_ENV = 'development';
+    Object.assign(process.env, { NODE_ENV: 'development' });
     process.env.JWT_SECRET = 'change-in-production-please-use-48-random-bytes-XYZ';
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const auth = await loadAuth();
@@ -52,14 +52,14 @@ describe('validateJwtSecret', () => {
   });
 
   it('NO lanza si el secreto es fuerte (>= 48 chars random)', async () => {
-    process.env.NODE_ENV = 'production';
+    Object.assign(process.env, { NODE_ENV: 'production' });
     process.env.JWT_SECRET = STRONG;
     const auth = await loadAuth();
     expect(() => auth.signToken({ userId: 'u1', email: 'u@x.com', rol: 'user' })).not.toThrow();
   });
 
   it('valida también JWT_SECRET_PREVIOUS al verificar', async () => {
-    process.env.NODE_ENV = 'production';
+    Object.assign(process.env, { NODE_ENV: 'production' });
     process.env.JWT_SECRET = STRONG;
     process.env.JWT_SECRET_PREVIOUS = 'short';
     const auth = await loadAuth();
@@ -68,7 +68,7 @@ describe('validateJwtSecret', () => {
   });
 
   it('rechaza "lex-honduras-secret-change-in-production-2026" (patrones múltiples)', async () => {
-    process.env.NODE_ENV = 'production';
+    Object.assign(process.env, { NODE_ENV: 'production' });
     process.env.JWT_SECRET = 'lex-honduras-secret-change-in-production-2026-pad-pad-pad-pad';
     const auth = await loadAuth();
     expect(() => auth.signToken({ userId: 'u1', email: 'u@x.com', rol: 'user' }))
