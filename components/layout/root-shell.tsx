@@ -54,7 +54,7 @@ export function RootShell({ children }: { children: React.ReactNode }) {
           </div>
           <div>
             <p className="font-extrabold text-xs text-primary tracking-widest leading-none">LEX HONDURAS</p>
-            <p className="text-caption text-text-muted leading-none mt-0.5">Cálculo de penas</p>
+            <p className="text-xxs text-text-muted leading-none mt-0.5">Cálculo de penas</p>
           </div>
         </Link>
         <AppSidebar />

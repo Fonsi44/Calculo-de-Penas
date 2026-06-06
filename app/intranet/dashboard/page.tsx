@@ -167,7 +167,7 @@ export default function IntranetDashboard() {
                 <p className="text-primary font-extrabold text-lg tabular-nums leading-none">
                   {s.value}
                 </p>
-                <p className="text-caption text-text-muted uppercase tracking-wider mt-1">
+                <p className="text-xxs text-text-muted uppercase tracking-wider mt-1">
                   {s.label}
                 </p>
               </div>
@@ -196,7 +196,7 @@ export default function IntranetDashboard() {
             <p className="text-xxs font-bold text-text-muted uppercase tracking-wider">
               Funcionalidades
             </p>
-            <p className="text-caption text-text-muted inline-flex items-center gap-1">
+            <p className="text-xxs text-text-muted inline-flex items-center gap-1">
               <TrendingUp size={10} /> 4 módulos activos
             </p>
           </div>
@@ -218,7 +218,7 @@ export default function IntranetDashboard() {
                     <div className="flex items-center gap-1.5">
                       <p className="font-bold text-text text-sm">{f.title}</p>
                       {f.badge && (
-                        <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark text-micro font-bold uppercase tracking-wider">
+                        <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark text-xxs font-bold uppercase tracking-wider">
                           {f.badge}
                         </span>
                       )}

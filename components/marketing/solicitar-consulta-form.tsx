@@ -66,7 +66,7 @@ export function SolicitarConsultaForm() {
       <div className="rounded-md border border-success/30 bg-success/10 p-6 text-center">
         <CheckCircle2 size={40} className="text-success mx-auto mb-3" />
         <p className="font-bold text-text text-base">Solicitud recibida</p>
-        <p className="text-xs-plus text-text-secondary mt-2 leading-relaxed max-w-md mx-auto">
+        <p className="text-sm text-text-secondary mt-2 leading-relaxed max-w-md mx-auto">
           Hemos registrado su consulta. Le contactaremos en horario hábil por el canal
           que haya indicado. Si requiere atención inmediata, use el teléfono o WhatsApp.
         </p>

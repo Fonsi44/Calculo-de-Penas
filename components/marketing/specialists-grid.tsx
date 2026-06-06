@@ -44,7 +44,7 @@ export function SpecialistsGrid({
             </h2>
           )}
           {subtitle && (
-            <p className="mt-3 text-body md:text-base text-text-secondary leading-relaxed">
+            <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
               {subtitle}
             </p>
           )}

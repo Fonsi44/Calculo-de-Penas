@@ -170,7 +170,7 @@ export default function FaqPage() {
               <Link
                 key={cat.slug}
                 href={`#${cat.slug}`}
-                className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-full ${m?.badgeBg ?? 'bg-surface-alt'} text-xs-plus font-medium ${m?.badgeText ?? 'text-text-secondary'} hover:shadow-md transition-all`}
+                className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-full ${m?.badgeBg ?? 'bg-surface-alt'} text-sm font-medium ${m?.badgeText ?? 'text-text-secondary'} hover:shadow-md transition-all`}
               >
                 <Icon size={14} />
                 {cat.titulo}
@@ -209,7 +209,7 @@ export default function FaqPage() {
                   key={i}
                   className={`faq-anim group bg-background rounded-xl border border-border/70 hover:border-accent/40 hover:shadow-md transition-all open:shadow-md open:border-accent/30 card-premium ${borderCls} border-l-[3px]`}
                 >
-                  <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-body font-semibold text-text leading-snug hover:text-primary transition-colors">
+                  <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-sm font-semibold text-text leading-snug hover:text-primary transition-colors">
                     <span className="flex-1 flex items-start gap-3">
                       <span className={`mt-0.5 hidden sm:inline-flex ${colorCls} opacity-50 group-hover:opacity-100 transition-opacity`}>
                         <Icon size={16} />
@@ -266,7 +266,7 @@ export default function FaqPage() {
       <Section spacing="md">
         <SectionHeader
           eyebrow="Contacto directo"
-          title="Hable hoy con un abogado"
+          title="¿Tiene más dudas? Escríbanos"
         />
         <ContactStrip />
       </Section>

@@ -9,7 +9,7 @@ export function BlogSidebar() {
   return (
     <aside className="space-y-8">
       <div>
-        <h3 className="font-bold text-body text-text mb-4">Categorías</h3>
+        <h3 className="font-bold text-sm text-text mb-4">Categorías</h3>
         <ul className="space-y-1">
           {blogCategories.map((cat) => (
             <li key={cat.slug}>
@@ -26,7 +26,7 @@ export function BlogSidebar() {
 
       {recentPosts.length > 0 && (
         <div>
-          <h3 className="font-bold text-body text-text mb-4">Artículos recientes</h3>
+          <h3 className="font-bold text-sm text-text mb-4">Artículos recientes</h3>
           <ul className="space-y-3">
             {recentPosts.map((p) => (
               <li key={p.slug}>
@@ -49,7 +49,7 @@ export function BlogSidebar() {
 
       {allTags.length > 0 && (
         <div>
-          <h3 className="font-bold text-body text-text mb-4">Etiquetas</h3>
+          <h3 className="font-bold text-sm text-text mb-4">Etiquetas</h3>
           <div className="flex flex-wrap gap-1.5">
             {allTags.map((tag) => (
               <span

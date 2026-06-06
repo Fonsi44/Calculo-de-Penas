@@ -78,15 +78,13 @@ export default function ContactoPage() {
       <PageHero
         eyebrow="Contacto"
         badge="Respuesta en horario hábil"
-        title="Estamos disponibles para escucharle"
+        title="Póngase en contacto con el bufete"
         subtitle={
           <>
             Elija el canal que prefiera. Toda comunicación está protegida por el
             <strong className="font-bold text-accent"> secreto profesional</strong>.
-            Atendemos <strong className="font-bold">cualquiera de las 13 áreas del bufete</strong>:
-            defensa penal, familia, laboral, civil, mercantil, tributario, bancario,
-            administrativo, aduanero, sanitario, extranjería, propiedad intelectual,
-            ambiental y conciliación/arbitraje.
+            Atendemos <strong className="font-bold">todas las áreas del bufete</strong>:
+            penal, familia, laboral, civil, mercantil, tributario y más.
           </>
         }
         cta={undefined}
@@ -110,7 +108,7 @@ export default function ContactoPage() {
                 <div className="rounded-md border border-success/30 bg-success/10 p-5 text-center">
                   <CheckCircle2 size={36} className="text-success mx-auto mb-2" />
                   <p className="font-bold text-text">Mensaje recibido</p>
-                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
+                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
                     Le contactaremos en horario hábil por el medio que haya indicado.
                     Si requiere atención inmediata, use el teléfono o WhatsApp.
                   </p>
@@ -232,7 +230,7 @@ export default function ContactoPage() {
               <h3 className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
                 Canales directos
               </h3>
-              <ul className="space-y-3 text-xs-plus">
+              <ul className="space-y-3 text-sm">
                 <li>
                   <a href={telHref()} className="flex items-start gap-3 hover:text-primary">
                     <Phone size={16} className="text-accent-dark flex-shrink-0 mt-0.5" />
@@ -301,7 +299,7 @@ export default function ContactoPage() {
               </p>
               <div className="flex flex-wrap gap-1">
                 {['Penal','Familia','Laboral','Civil','Mercantil','Bancario','Administrativo','Aduanero','Sanitario','Extranjería','Prop.Intelectual','Tributario','Ambiental','Conciliación'].map((a) => (
-                  <span key={a} className="inline-flex px-1.5 py-0.5 rounded-full bg-muted text-caption text-text-secondary font-medium">
+                  <span key={a} className="inline-flex px-1.5 py-0.5 rounded-full bg-muted text-xxs text-text-secondary font-medium">
                     {a}
                   </span>
                 ))}

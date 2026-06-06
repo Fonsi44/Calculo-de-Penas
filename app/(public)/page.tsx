@@ -70,16 +70,16 @@ const FAQ = [
     a: 'Atendemos de lunes a sábado de 7:00 a 20:00. Para emergencias con persona detenida, contáctenos por WhatsApp y le orientaremos de inmediato durante el horario de atención.',
   },
   {
-    q: '¿Cuánto cuesta una consulta jurídica?',
-    a: 'Cada caso requiere análisis individual. Le informamos el alcance de los honorarios tras la consulta inicial, de forma clara y por escrito. Ofrecemos consulta confidencial sin compromiso.',
+    q: '¿Qué documentos necesito para la primera consulta?',
+    a: 'Identificación oficial, documentos relacionados con su caso (contratos, notificaciones, actas) y cualquier prueba que considere relevante. Nosotros le orientaremos sobre lo que hace falta.',
   },
   {
-    q: '¿Puedo cambiar de abogado durante el proceso?',
-    a: 'Sí. Usted puede revocar el poder a su abogado y designar a otro en cualquier momento. Le orientamos sobre los pasos a seguir.',
+    q: '¿Qué debo hacer si recibo una citación judicial?',
+    a: 'No la ignore. Contacte a un abogado de inmediato. Una citación tiene plazos que corren y, si no se atiende, puede generar sanciones o perjudicar su defensa.',
   },
   {
-    q: '¿Trabajan con personas de otros departamentos?',
-    a: 'Sí. Atendemos casos en todo el territorio nacional. Coordinamos las audiencias, diligencias y traslados según corresponda.',
+    q: '¿Ofrecen asesoría preventiva para empresas?',
+    a: 'Sí. Asesoramos en cumplimiento normativo, contratos, gobierno corporativo y prevención de contingencias laborales, tributarias y mercantiles antes de que surja el conflicto.',
   },
   {
     q: '¿Pueden llevar mi caso penal y mi caso laboral a la vez?',
@@ -143,14 +143,14 @@ export default function HomePage() {
               </h1>
               <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
                 Defensa penal especializada y representación jurídica integral para personas y empresas.
-                Atención directa del abogado, sin intermediarios, con confidencialidad absoluta y
-                presencia activa en los juzgados de {site.address.city}, Valle y todo Honduras.
+                Presencia activa en los juzgados de {site.address.city}, Valle y todo Honduras,
+                con comunicación clara y un equipo coordinado en cada área del derecho.
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6">
-                <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
+                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/80">
                   <CheckCircle2 size={14} className="text-accent" /> Primera consulta sin compromiso
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
+                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/80">
                   <CheckCircle2 size={14} className="text-accent" /> Atención directa del abogado
                 </span>
               </div>
@@ -166,7 +166,7 @@ export default function HomePage() {
                   <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
                     {site.phoneDisplay}
                   </a>
-                  <p className="text-xs-plus text-text-secondary mt-1">{site.hours}</p>
+                  <p className="text-sm text-text-secondary mt-1">{site.hours}</p>
                   <div className="divider-accent my-4" />
                   <a
                     href={whatsappHref('Hola, necesito una consulta jurídica.')}
@@ -178,7 +178,7 @@ export default function HomePage() {
                       <MessageCircle size={16} className="text-white" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs-plus font-bold text-success">WhatsApp directo</p>
+                      <p className="text-sm font-bold text-success">WhatsApp directo</p>
                       <p className="text-xxs text-text-secondary">Respuesta durante horario de atención</p>
                     </div>
                   </a>
@@ -190,7 +190,7 @@ export default function HomePage() {
                       <Calendar size={16} className="text-text-inverse" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs-plus font-bold text-primary">Formulario confidencial</p>
+                      <p className="text-sm font-bold text-primary">Formulario confidencial</p>
                       <p className="text-xxs text-text-secondary">Le respondemos en horario hábil</p>
                     </div>
                   </Link>
@@ -230,7 +230,7 @@ export default function HomePage() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-text leading-snug text-balance">{item.q}</p>
-                    <span className="inline-flex items-center gap-1 mt-1.5 text-caption font-bold uppercase tracking-wider text-accent-dark">
+                    <span className="inline-flex items-center gap-1 mt-1.5 text-xxs font-bold uppercase tracking-wider text-accent-dark">
                       <span className="w-1 h-1 rounded-full bg-accent" aria-hidden="true" />
                       {item.badge}
                     </span>
@@ -305,7 +305,7 @@ export default function HomePage() {
       {/* TESTIMONIOS */}
       <TestimonialsSection
         title="Lo que dicen quienes confían en nosotros"
-        subtitle="Casos reales, resultados honestos. Publicamos con autorización y anonimizamos por confidencialidad."
+        subtitle="Casos reales, resultados verificables. Publicamos con autorización y anonimizamos por confidencialidad."
         columns={3}
         items={[
           {
@@ -347,7 +347,7 @@ export default function HomePage() {
         <div className="text-text-inverse">
           <SectionHeader
             eyebrow="Por qué elegirnos"
-            title="Ocho razones que hacen la diferencia"
+            title="Cinco razones que marcan la diferencia"
             subtitle="Nuestra práctica se sostiene sobre principios técnicos, no sobre promesas."
             invert
           />
@@ -384,7 +384,7 @@ export default function HomePage() {
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text leading-tight text-balance">
               Un mismo problema jurídico puede tocar varias ramas del derecho a la vez
             </h2>
-            <p className="mt-4 text-body text-text-secondary leading-relaxed text-pretty">
+            <p className="mt-4 text-sm text-text-secondary leading-relaxed text-pretty">
               Atender su asunto con un equipo multidisciplinar evita que tenga que contratar abogados
               distintos para cada frente. Coordinamos estrategia, plazos y piezas procesales desde un
               solo bufete, con comunicación directa y un expediente unificado.
@@ -486,7 +486,7 @@ export default function HomePage() {
                   </div>
                 </li>
               </ul>
-              <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-4 text-xs-plus font-semibold text-primary hover:text-accent-dark">
+              <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark">
                 Ver indicaciones para llegar <ArrowRight size={14} />
               </Link>
             </Card>
@@ -518,7 +518,7 @@ export default function HomePage() {
               title="Respuestas a sus dudas"
               subtitle="Las preguntas que más recibimos. Si tiene una diferente, escríbanos."
             />
-            <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-xs-plus font-semibold text-primary hover:text-accent-dark">
+            <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
               Ver todas las preguntas <ArrowRight size={14} />
             </Link>
           </div>
@@ -534,7 +534,7 @@ export default function HomePage() {
                     <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 transition-transform" />
                   </span>
                 </summary>
-                <div className="faq-content px-4 pb-4 -mt-1 text-xs-plus text-text-secondary leading-relaxed text-pretty">
+                <div className="faq-content px-4 pb-4 -mt-1 text-sm text-text-secondary leading-relaxed text-pretty">
                   {f.a}
                 </div>
               </details>
@@ -547,10 +547,10 @@ export default function HomePage() {
       <Section background="primary" spacing="md" ariaLabel="Solicitar consulta">
         <div className="text-center max-w-2xl mx-auto text-text-inverse">
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
-            ¿Listo para hablar con un abogado?
+            Cuéntenos su caso. Le orientamos sin compromiso.
           </h2>
-          <p className="mt-4 text-text-inverse/85 text-body md:text-base leading-relaxed">
-            La primera consulta es confidencial. Le escuchamos, evaluamos su caso y le explicamos con honestidad las opciones reales, sin importar el área del derecho que necesite.
+          <p className="mt-4 text-text-inverse/85 text-sm md:text-base leading-relaxed">
+            La primera consulta es confidencial. Le escuchamos, evaluamos su caso y le explicamos con claridad las opciones reales, sin importar el área del derecho que necesite.
           </p>
           <CTAGroup variant="inverse" className="mt-7 justify-center" />
         </div>

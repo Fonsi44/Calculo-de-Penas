@@ -44,7 +44,7 @@ export default async function BlogCategoryPage({ params }: Props) {
         <Container size="lg" className="relative py-14 md:py-20">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs-plus text-accent hover:text-accent-dark transition-colors mb-4"
+            className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-accent-dark transition-colors mb-4"
           >
             <ArrowLeft size={14} /> Volver al blog
           </Link>

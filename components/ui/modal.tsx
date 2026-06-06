@@ -50,7 +50,7 @@ export function Modal({ open, onClose, title, description, children, footer, siz
       >
         <div className="flex items-start justify-between gap-3 px-5 py-4 border-b border-border-light">
           <div className="min-w-0">
-            <h2 id="modal-title" className="text-base font-bold text-primary">{title}</h2>
+            <h2 id="modal-title" className="text-lg font-bold text-primary">{title}</h2>
             {description && (
               <p id="modal-desc" className="text-xs text-text-secondary mt-0.5">{description}</p>
             )}

@@ -75,7 +75,7 @@ export default function AreasJuridicasPage() {
           <div className="w-14 h-14 mx-auto rounded-full bg-accent/15 flex items-center justify-center mb-4">
             <Scale size={24} className="text-accent-dark" />
           </div>
-          <p className="text-xs-plus font-bold uppercase tracking-widest text-accent-dark mb-2">
+          <p className="text-sm font-bold uppercase tracking-widest text-accent-dark mb-2">
             ¿No encuentra lo que busca?
           </p>
           <p className="text-text-secondary text-sm leading-relaxed mb-5">

@@ -47,7 +47,7 @@ export function CommitmentsGrid({
               </h2>
             )}
             {subtitle && (
-              <p className="mt-3 text-body md:text-base text-text-secondary leading-relaxed">
+              <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
                 {subtitle}
               </p>
             )}
@@ -63,7 +63,7 @@ export function CommitmentsGrid({
                 tone="primary"
                 bordered
               />
-              <p className="mt-4 text-sm md:text-body text-text-secondary leading-relaxed max-w-xs">
+              <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed max-w-xs">
                 {it.description}
               </p>
             </div>

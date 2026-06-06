@@ -77,7 +77,7 @@ export function PageHero({
             <span className={eyebrowCls}>{eyebrow}</span>
             {badge && (
               <span
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-caption font-bold uppercase tracking-wider ${
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xxs font-bold uppercase tracking-wider ${
                   isPrimary
                     ? 'bg-accent/15 border border-accent/30 text-accent'
                     : 'bg-primary/10 border border-primary/20 text-primary'

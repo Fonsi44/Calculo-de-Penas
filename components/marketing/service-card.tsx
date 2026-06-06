@@ -103,7 +103,7 @@ export function ServiceCard({
           {title}
         </h3>
         {description && (
-          <p className="mt-2 text-xs-plus leading-relaxed text-text-secondary line-clamp-3">
+          <p className="mt-2 text-sm leading-relaxed text-text-secondary line-clamp-3">
             {description}
           </p>
         )}

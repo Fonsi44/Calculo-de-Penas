@@ -48,14 +48,13 @@ export function PublicFooter() {
               </div>
               <div>
                 <p className="font-extrabold text-sm leading-none">{site.shortName}</p>
-                <p className="text-caption text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
+                <p className="text-xxs text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
               </div>
             </Link>
-            <p className="text-xs-plus text-text-inverse/80 leading-relaxed text-pretty">
+            <p className="text-sm text-text-inverse/80 leading-relaxed text-pretty">
               <strong className="font-semibold text-text-inverse">Bufete jurídico</strong> en {site.address.city}, {site.address.department},
               con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
-              pilar fundacional. Atención directa del abogado, confidencial y personalizada, con presencia activa
-              en juzgados del sur de Honduras.
+              pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
             </p>
             <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
               Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
@@ -72,7 +71,7 @@ export function PublicFooter() {
             <ul className="space-y-1.5">
               {AREAS.map((a) => (
                 <li key={a.href}>
-                  <Link href={a.href} className="text-xs-plus text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link href={a.href} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
                     {a.label}
                   </Link>
                 </li>
@@ -90,7 +89,7 @@ export function PublicFooter() {
             <ul className="space-y-1.5">
               {DESPACHO.map((d) => (
                 <li key={d.href}>
-                  <Link href={d.href} className="text-xs-plus text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link href={d.href} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
                     {d.label}
                   </Link>
                 </li>
@@ -105,7 +104,7 @@ export function PublicFooter() {
                 Contacto
               </h3>
             </div>
-            <ul className="space-y-2.5 text-xs-plus">
+            <ul className="space-y-2.5 text-sm">
               <li className="flex items-start gap-2">
                 <MapPin size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-text-inverse/80 leading-relaxed">

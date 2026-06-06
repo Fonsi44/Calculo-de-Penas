@@ -78,10 +78,10 @@ export default function MigrantesPage() {
                   <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                     <Icon size={22} aria-hidden="true" />
                   </div>
-                  <h3 className="font-bold text-body text-text leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
                     {sub.titulo}
                   </h3>
-                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
+                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
                     {sub.resumen}
                   </p>
                   <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
@@ -103,7 +103,7 @@ export default function MigrantesPage() {
         <div className="max-w-3xl mx-auto space-y-3">
           {hubMigrantes.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-body text-text leading-tight mb-1.5">
+              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
                 {faq.pregunta}
               </h3>
               <p className="text-sm text-text-secondary leading-relaxed">

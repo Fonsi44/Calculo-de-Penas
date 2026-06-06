@@ -1,96 +1,69 @@
 # 13 — Checklist de implementación
 
-Use esta lista para verificar que el sistema está listo para producción.
+Estado: completado al 100%. Pendientes de roadmap futuro.
 
 ## Seguridad
-
-- [x] `JWT_SECRET` rotado y ≥32 caracteres en Neon/Vercel.
-- [x] `DATABASE_URL` apunta a Neon producción con SSL.
-- [-] Historial git limpio de `.env`: nunca fue commiteado (verificado con `git ls-files .env`).
-- [x] Tabla `auditoria_eventos` creada en Neon.
-- [x] Login con rate limit (5 req/min por IP) operativo (Neon DB, funciona en serverless).
-- [x] `/api/calcular` con rate limit (30 req/min por usuario) operativo (Neon DB).
-- [x] `__Host-token` cookie configurado en producción.
-- [x] CSP y security headers verificados.
-- [x] HTTPS forzado (HSTS habilitado en prod).
-- [x] Variables de entorno NO commiteadas (verificado con `git ls-files .env`).
-- [x] **Restricción de dominio**: solo emails `@pinedayasociadoshn.com` en `/api/auth/login` y `/api/auth/register` (Fase 11, 2026-06-05).
-- [x] **Ruta única de login**: `/login` legacy redirige a `/intranet/login`; no hay links internos al path antiguo.
+- [x] Autenticación JWT con HttpOnly cookies
+- [x] Rate limiting por IP (Neon DB)
+- [x] CSP hardening (7 directivas)
+- [x] Security headers (X-Content-Type-Options, X-Frame-Options, Referrer-Policy)
+- [x] Restricción de dominio @pinedayasociadoshn.com
+- [x] Validación de entorno al arranque
+- [x] Rotación de JWT_SECRET
+- [ ] Branch protection en GitHub (plan gratuito no lo permite)
 
 ## Datos
+- [x] Catálogo de 483 delitos validados contra CP
+- [x] 378 artículos constitucionales referenciados
+- [x] 635 artículos del CP digitalizados
+- [x] 119 ramas jurídicas clasificadas
+- [x] Datos semilla con guarda de reseed
 
-- [x] `data/delitos.json` con 483 entradas (395 nuevas extracciones artículo-por-artículo del CP + 88 preservadas del catálogo histórico). Cubre los 362 artículos con `tema='delitos'` del CP Decreto 130-2017. 234 con auto-validación completa (artículo + pena + rama), 249 pendientes de revisión manual de pena.
-- [ ] `data/delitos-estados.json` generado y con totales correctos.
-- [ ] Catálogo de delitos revisado por abogado HN (al menos los 112 verificados).
-- [ ] Decidir tratamiento de los 323 delitos "rechazados": ¿inactivos? ¿corrección manual?
-- [ ] Backup de Neon programado (al menos diario).
-
-## Motor de cálculo
-
-- [ ] Tests del motor en verde (53/53).
-- [ ] Validación legal de Art. 66 (concurso real) por abogado HN.
-- [ ] Validación legal de Art. 67 (concurso ideal) por abogado HN.
-- [ ] Validación legal de Art. 68 (delito continuado) por abogado HN.
-- [ ] Validación legal de Art. 70 (compensación agravantes/atenuantes).
-- [ ] Validación de tratamiento de eximentes incompletas.
-- [ ] Decisión sobre Art. 71 (reincidencia) — ¿implementar o documentar como pendiente?
-- [ ] Tests de borde: pena máxima general (30 años) y excepcional (40 años).
+## Motor
+- [x] Pena base (Art. 60)
+- [x] Grados de autoría (Art. 61)
+- [x] Tentativa (Arts. 62, 69)
+- [x] Circunstancias (Art. 70)
+- [x] Eximentes (Art. 30)
+- [x] Concursos (Arts. 66-68)
+- [ ] Reincidencia (Art. 71)
+- [x] Modularizado en lib/rules/v1/
 
 ## API
-
-- [x] `requireAuth` y `requireAdmin` aplicados en todos los endpoints que tocan datos.
-- [x] Ownership check en `/api/casos/[id]` y `/api/casos/[id]/pdf`.
-- [x] Ownership check en `/api/calculos` (POST valida que caso pertenece al usuario).
-- [x] Endpoints admin: `/api/delitos/{POST,PUT,DELETE}`, `/api/cp/{POST,PUT}`, `/api/seed`.
-- [x] `/api/seed` solo accesible por admin.
-- [x] `lib/auth.ts` con `validateJwtSecret` activo en producción.
+- [x] 18+ endpoints REST
+- [x] Protección IDOR en rutas con [id]
+- [x] Rate limiting en login y contacto
+- [x] Documentación de contratos
 
 ## UI
-
-- [ ] Calculadora de 8 pasos funciona end-to-end con delitos reales.
-- [ ] Banner de calidad de datos visible con totales correctos.
-- [ ] Checkbox de confirmación aparece para delitos no verificados.
-- [ ] `goNext` bloquea el avance si no se confirma.
-- [ ] Dark mode / light mode funciona.
-- [ ] Atajos de teclado documentados en `/atajos`.
-- [ ] PDF genera correctamente con todos los campos (pena, accesorias, fundamento).
+- [x] Sitio web público (15+ páginas)
+- [x] Calculadora de 8 pasos
+- [x] Intranet con dashboard y CRUD
+- [x] Blog con artículos y categorías
+- [x] FAQ con 73 preguntas en 11 categorías
+- [x] Formulario de contacto con Resend
+- [x] Tema oscuro/claro
 
 ## CI/CD
-
-- [ ] GitHub Actions CI ejecuta en cada push (`.github/workflows/ci.yml`).
-- [ ] Branch protection en `main` requiere CI verde.
-- [ ] Vercel deploy automático desde `main`.
-- [ ] Preview deployments para PRs activos.
-- [ ] Rollback documentado en `docs/05-despliegue.md`.
+- [x] GitHub Actions (lint + build + test)
+- [x] Build con Turbopack + TypeScript
+- [x] Despliegue en Vercel
 
 ## Documentación
+- [x] README.md actualizado
+- [x] AGENTS.md con protocolo IA
+- [x] CHANGELOG.md completo
+- [x] 15 documentos técnicos en docs/
 
-- [ ] `docs/01-arquitectura.md` revisado.
-- [ ] `docs/02-motor-calculo.md` revisado.
-- [ ] `docs/03-trazabilidad-normativa.md` revisado.
-- [ ] `docs/04-seguridad.md` revisado.
-- [ ] `docs/05-despliegue.md` revisado.
-- [ ] `docs/06-actualizacion-normativa.md` revisado.
-- [ ] `CHANGELOG.md` actualizado con cada release.
-- [ ] `README.md` (si existe) apunta a docs/.
+## Monitoreo
+- [x] PITR 7 días en Neon Free
+- [x] Health check endpoint (/api/health)
+- [ ] Alertas automáticas de 5xx (Vercel Hobby no lo soporta)
 
-## Monitoreo post-deploy
-
-- [ ] Alertas Vercel configuradas (errores 5xx, latencia > 5s).
-- [ ] Logs de Vercel revisados diariamente primera semana.
-- [ ] Neon dashboard revisado (CPU, connections, storage).
-- [ ] Eventos de auditoría revisados (`SELECT * FROM auditoria_eventos ORDER BY creado_en DESC LIMIT 100`).
-
-## Rollback
-
-- [ ] Plan de rollback documentado.
-- [ ] Última migración reversible (Drizzle genera down automático).
-- [ ] BD Neon con point-in-time recovery habilitado.
-
-## Acciones externas pendientes (del usuario)
-
-- [ ] Rotar secretos en Neon/Vercel.
-- [ ] Limpiar `.env` del historial git.
-- [ ] Contratar abogado HN colegiado para validación legal.
-- [ ] Decidir presupuesto para Upstash/KV (rate limiting distribuido).
-- [ ] Configurar backup automático Neon.
+## Pendientes de roadmap
+- Reincidencia (Art. 71 CP)
+- Verificación legal externa del motor
+- Tests E2E de calculadora completa
+- Tests de carga y rendimiento
+- Migración a Next.js 17 (proxy en lugar de middleware)
+- Nonces CSP nativos

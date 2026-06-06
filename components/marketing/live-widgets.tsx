@@ -164,7 +164,7 @@ export function StatsCounter() {
         { value: '+15', label: 'Años de ejercicio', icon: Activity },
         { value: '635', label: 'Artículos CP', icon: MapPin },
         { value: '60h', label: 'Horario continuo', icon: Phone },
-        { value: '100%', label: 'Confidencialidad', icon: MessageCircle },
+        { value: '100%', label: 'Privacidad legal', icon: MessageCircle },
       ].map((s, i) => (
         <div
           key={i}
@@ -178,7 +178,7 @@ export function StatsCounter() {
           <p className="font-extrabold text-2xl text-primary tabular-nums leading-none">
             {s.value}
           </p>
-          <p className="text-caption text-text-muted uppercase tracking-wider mt-2">
+          <p className="text-xxs text-text-muted uppercase tracking-wider mt-2">
             {s.label}
           </p>
         </div>

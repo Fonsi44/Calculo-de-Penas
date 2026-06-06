@@ -182,21 +182,23 @@ Registro cronológico de cambios significativos. Ver `CHANGELOG.md` para detalle
 | Refactor motor a `lib/rules/v1/` | 396 líneas monolíticas | Inline, riesgo de regresión |
 | Tests siguen importando de `lib/calculo` | Back-compat | Mover tests, alto costo |
 | `__Host-token` solo en prod | Compatibilidad dev | Forzar siempre, requiere HTTPS local |
-| Rate limit in-memory | Sin infra Upstash hoy | Distribución real con KV |
+| Rate limit via Neon DB | Persistencia multi-instancia, sin coste adicional | In-memory (pierde en cold starts) |
 | Auditoría no-bloqueante | No romper login si BD falla | Síncrona, riesgo de DoS |
 | Banner + checkbox para no verificados | Transparencia al usuario | Bloqueo total, perdería funcionalidad |
 
 ## Métricas acumuladas
 
-- **Tests**: 51 → 53 (+2).
-- **Endpoints API con auth**: 6 → 8 (casos, calculos, delitos, cp, seed, calcular, calidad, count).
-- **Rutas API públicas mínimas**: 5 (auth flow + count).
-- **Migraciones Drizzle**: 3 (delitos/ramas, articulos_cp, casos/usuarios/calculos + auditoria_eventos).
-- **Archivos del motor**: 1 → 9 módulos cohesivos.
-- **Documentos**: 0 → 8 (arquitectura, motor, trazabilidad, seguridad, despliegue, actualización, checklist, log).
-- **Security headers**: 0 → 7 (CSP, X-Content-Type-Options, X-Frame, Referrer-Policy, Permissions-Policy, HSTS, X-DNS-Prefetch-Control).
-- **Tablas BD**: 8 → 9 (auditoria_eventos).
+- **Tests**: 51 → 185 (Vitest, 13 suites) + 29 E2E (Playwright).
+- **Endpoints API**: 18+ (auth, calcular, calculos, casos, contacto, cp, delitos, health, seed, clasificaciones).
+- **Migraciones Drizzle**: 7 (delitos/ramas, articulos_cp, usuarios/bufetes, casos/calculos, auditoria_eventos, rate_limits, aceptaciones_legales).
+- **Archivos del motor**: 1 → 9 módulos cohesivos (lib/rules/v1/).
+- **Documentos**: 0 → 15 en docs/ + README + AGENTS + CHANGELOG.
+- **Security headers**: implementados en middleware (CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy).
+- **Tablas BD**: 11 (ramas_juridicas, articulos_constitucion, articulos_cp, delitos, bufetes, usuarios, casos, calculos, auditoria_eventos, rate_limits, aceptaciones_legales).
 - **Acciones auditables**: 13.
+- **Delitos catalogados**: 483 (saneados contra CP Decreto 130-2017).
+- **Artículos constitución**: 378.
+- **Imágenes públicas**: 26 JPG en /public/images/. 
 
 ## Próximos pasos
 

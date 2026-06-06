@@ -117,7 +117,7 @@ export function UrgencyCallout({
         </div>
         <div className="min-w-0">
           <p className="font-bold text-text leading-tight">{title}</p>
-          <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">{description}</p>
+          <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">{description}</p>
         </div>
       </div>
       <CTAGroup variant="compact" className="md:flex-shrink-0" />
@@ -156,8 +156,8 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
               {it.icon}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-caption font-bold uppercase tracking-wider text-text-muted">{it.label}</p>
-              <p className="text-xs-plus font-semibold text-text leading-tight mt-0.5 tabular-nums">{it.value}</p>
+              <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">{it.label}</p>
+              <p className="text-sm font-semibold text-text leading-tight mt-0.5 tabular-nums">{it.value}</p>
             </div>
           </div>
         );

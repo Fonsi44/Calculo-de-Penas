@@ -52,7 +52,7 @@ function FeatureCard({ item }: { item: FeatureItem }) {
     size === 'lg' ? 'w-14 h-14' : size === 'md' ? 'w-12 h-12' : 'w-11 h-11';
   const iconSize = size === 'lg' ? 28 : size === 'md' ? 24 : 20;
   const titleSize =
-    size === 'lg' ? 'text-base md:text-lg' : size === 'md' ? 'text-body' : 'text-xs-plus';
+    size === 'lg' ? 'text-base md:text-lg' : size === 'md' ? 'text-sm' : 'text-xs';
   const descSize = size === 'lg' ? 'text-sm' : 'text-xs';
   const paddingCls = size === 'sm' ? 'p-4' : 'p-5';
   const gapCls = size === 'sm' ? 'gap-2.5' : 'gap-3';
@@ -78,7 +78,7 @@ function FeatureCard({ item }: { item: FeatureItem }) {
             {item.title}
           </h3>
           {item.badge && (
-            <span className="text-micro font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark border border-accent/30 flex-shrink-0">
+            <span className="text-xxs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark border border-accent/30 flex-shrink-0">
               {item.badge}
             </span>
           )}

@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { ShieldCheck, Scale, Lock, Clock, Award, Briefcase } from 'lucide-react';
+import { Scale, Award, Briefcase, FileText, Phone, MessageCircle } from 'lucide-react';
 
 interface TrustItem {
   icon: LucideIcon;
@@ -9,24 +9,24 @@ interface TrustItem {
 
 const DEFAULT_ITEMS: TrustItem[] = [
   {
-    icon: ShieldCheck,
-    title: 'Confidencialidad total',
-    description: 'Secreto profesional desde el primer contacto',
+    icon: FileText,
+    title: 'Consulta inicial sin costo',
+    description: 'Evaluación confidencial para conocer su caso',
   },
   {
     icon: Scale,
     title: 'Penal actualizado',
-    description: 'Código Penal y reformas vigentes',
+    description: 'Código Penal Decreto 130-2017 y reformas',
   },
   {
-    icon: Lock,
-    title: 'Atención reservada',
-    description: 'Protección legal de la identidad del cliente',
+    icon: Briefcase,
+    title: 'Presupuesto por escrito',
+    description: 'Honorarios claros, acordados y documentados',
   },
   {
-    icon: Clock,
-    title: 'Disponibilidad',
-    description: 'Atención presencial y urgencias 24/7',
+    icon: Phone,
+    title: 'Abogado responsable',
+    description: 'Atención directa sin intermediarios',
   },
   {
     icon: Award,
@@ -34,9 +34,9 @@ const DEFAULT_ITEMS: TrustItem[] = [
     description: 'Experiencia jurídica en el sur de Honduras',
   },
   {
-    icon: Briefcase,
-    title: 'Cobertura multidisciplinaria',
-    description: 'Asesoría integral en diversas áreas del derecho',
+    icon: MessageCircle,
+    title: '13 áreas integradas',
+    description: 'Un solo bufete, todas las ramas del derecho',
   },
 ];
 
@@ -68,8 +68,8 @@ export function TrustBar({
     ? 'w-9 h-9 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0'
     : 'w-9 h-9 rounded-md bg-primary/8 text-primary flex items-center justify-center flex-shrink-0';
   const titleCls = isDark
-    ? 'text-xs-plus font-bold text-text-inverse leading-tight'
-    : 'text-xs-plus font-bold text-text leading-tight';
+    ? 'text-sm font-bold text-text-inverse leading-tight'
+    : 'text-sm font-bold text-text leading-tight';
   const descCls = isDark
     ? 'text-xxs text-text-inverse/70 leading-snug mt-0.5'
     : 'text-xxs text-text-secondary leading-snug mt-0.5';

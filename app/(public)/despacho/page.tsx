@@ -23,7 +23,7 @@ import { getCorporateImage } from '@/data/images';
 
 export const metadata: Metadata = {
   title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
-  description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico, confidencialidad absoluta y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
+  description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
   alternates: { canonical: '/despacho' },
 };
 
@@ -87,12 +87,12 @@ export default function DespachoPage() {
         subtitle={
           <>
             {site.name} es un bufete multidisciplinario fundado sobre los pilares del
-            rigor metodológico, la confidencialidad absoluta y la excelencia jurídica. Nos
+            rigor metodológico, la confidencialidad y la excelencia jurídica. Nos
             especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito
             penal como en las distintas ramas del derecho empresarial y privado. Nuestro
             enfoque combina una sólida solvencia técnica con la digitalización de procesos,
             garantizando a cada cliente un respaldo legal robusto, transparente y de alto
-            nivel en un entorno global.
+            nivel.
           </>
         }
         cta={<CTAGroup variant="inverse" />}
@@ -165,7 +165,7 @@ export default function DespachoPage() {
                   <p className="text-xxs font-bold uppercase tracking-widest text-accent">
                     Visión
                   </p>
-                  <p className="text-body font-bold leading-tight">Justicia accesible y técnica</p>
+                  <p className="text-sm font-bold leading-tight">Justicia accesible y técnica</p>
                 </div>
               </div>
               <p className="text-sm text-text-inverse/90 leading-relaxed text-pretty">
@@ -214,8 +214,8 @@ export default function DespachoPage() {
               <div className="w-11 h-11 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center mb-3 border border-accent/30">
                 <v.icon size={20} aria-hidden="true" />
               </div>
-              <h3 className="font-bold text-body text-text leading-tight text-balance">{v.title}</h3>
-              <p className="text-xs-plus text-text-secondary mt-2 leading-relaxed text-pretty">{v.desc}</p>
+              <h3 className="font-bold text-sm text-text leading-tight text-balance">{v.title}</h3>
+              <p className="text-sm text-text-secondary mt-2 leading-relaxed text-pretty">{v.desc}</p>
             </Card>
           ))}
         </div>
@@ -236,8 +236,8 @@ export default function DespachoPage() {
                 <p className="text-xs font-bold uppercase tracking-widest text-accent-dark">
                   {t.year}
                 </p>
-                <h3 className="font-bold text-body text-text mt-0.5">{t.title}</h3>
-                <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed text-pretty">
+                <h3 className="font-bold text-sm text-text mt-0.5">{t.title}</h3>
+                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed text-pretty">
                   {t.desc}
                 </p>
               </Card>
@@ -288,7 +288,7 @@ export default function DespachoPage() {
                   </p>
                 </div>
               </div>
-              <p className="text-xs-plus text-text-secondary mt-3 leading-relaxed text-pretty">
+              <p className="text-sm text-text-secondary mt-3 leading-relaxed text-pretty">
                 {p.desc}
               </p>
             </Card>
@@ -353,7 +353,7 @@ export default function DespachoPage() {
       <Section spacing="md">
         <SectionHeader
           eyebrow="Hable con nosotros"
-          title="Estamos disponibles para escucharle"
+          title="Resuélvanos sus dudas directamente"
         />
         <ContactStrip />
         <div className="mt-8 text-center">

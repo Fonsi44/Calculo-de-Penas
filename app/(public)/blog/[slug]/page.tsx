@@ -46,7 +46,7 @@ export default async function BlogPostPage({ params }: Props) {
         <Container size="md">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs-plus text-text-muted hover:text-primary transition-colors mb-6"
+            className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-primary transition-colors mb-6"
           >
             <ArrowLeft size={14} /> Volver al blog
           </Link>
@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: Props) {
               <h1 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-text">
                 {post.title}
               </h1>
-              <div className="flex flex-wrap items-center gap-4 mt-4 text-xs-plus text-text-muted">
+              <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-text-muted">
                 <span className="flex items-center gap-1.5">
                   <Calendar size={14} /> {formatDate(post.publishedAt)}
                 </span>

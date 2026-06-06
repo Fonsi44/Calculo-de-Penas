@@ -55,7 +55,7 @@ export function TwoColumnImageText({
           </h3>
         )}
         {intro && (
-          <p className="mt-3 text-body md:text-base text-text-secondary leading-relaxed">
+          <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
             {intro}
           </p>
         )}
@@ -65,11 +65,11 @@ export function TwoColumnImageText({
               <CircularIcon icon={it.icon} size={iconSize} background="white" tone="gold" bordered />
               <div className="min-w-0 flex-1">
                 {it.title && (
-                  <h4 className="font-bold text-body md:text-base text-primary leading-snug">
+                  <h4 className="font-bold text-sm md:text-base text-primary leading-snug">
                     {it.title}
                   </h4>
                 )}
-                <p className={`text-sm md:text-body text-text leading-relaxed ${it.title ? 'mt-1' : ''}`}>
+                <p className={`text-sm md:text-base text-text leading-relaxed ${it.title ? 'mt-1' : ''}`}>
                   {it.body}
                 </p>
               </div>

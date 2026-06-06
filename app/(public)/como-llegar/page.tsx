@@ -53,7 +53,7 @@ export default function ComoLlegarPage() {
           <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
             Visítenos en Nacaome, Valle
           </h1>
-          <p className="mt-4 text-body md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
+          <p className="mt-4 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
             <strong className="font-bold text-accent tabular-nums">GGJ7+239</strong>
             {' · '}Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA.
             Use el mapa para orientarse o abra Google Maps/Waze desde aquí.
@@ -81,7 +81,7 @@ export default function ComoLlegarPage() {
                   <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
                     Coordenadas
                   </p>
-                  <p className="text-xs-plus font-semibold text-text tabular-nums">
+                  <p className="text-sm font-semibold text-text tabular-nums">
                     {latitude}°N, {Math.abs(longitude)}°O
                   </p>
                 </div>
@@ -133,7 +133,7 @@ export default function ComoLlegarPage() {
             <h3 className="text-xxs font-bold uppercase tracking-widest text-accent mb-2">
               Referencia
             </h3>
-            <p className="text-xs-plus text-text-inverse/85 leading-relaxed">
+            <p className="text-sm text-text-inverse/85 leading-relaxed">
               {site.address.line2}
             </p>
 
@@ -146,7 +146,7 @@ export default function ComoLlegarPage() {
 
             <div className="border-t border-primary-light/30 my-4" />
 
-            <ul className="space-y-2.5 text-xs-plus">
+            <ul className="space-y-2.5 text-sm">
               <li className="flex items-center gap-2">
                 <Phone size={14} className="text-accent flex-shrink-0" />
                 <a href={telHref()} className="hover:text-accent tabular-nums">
@@ -188,9 +188,9 @@ export default function ComoLlegarPage() {
                   <MapPin size={18} />
                 </div>
                 <div>
-                  <p className="font-bold text-body text-text leading-tight">{p.name}</p>
+                  <p className="font-bold text-sm text-text leading-tight">{p.name}</p>
                   <p className="text-xs text-accent-dark font-semibold mt-0.5">{p.distance}</p>
-                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
+                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
                 </div>
               </div>
             </Card>
@@ -214,12 +214,12 @@ export default function ComoLlegarPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <p className="font-bold text-body text-text leading-tight">Desde {c.from}</p>
+                    <p className="font-bold text-sm text-text leading-tight">Desde {c.from}</p>
                     <span className="text-xxs font-bold text-accent-dark bg-accent/10 rounded-full px-2 py-0.5">
                       {c.km} · {c.time}
                     </span>
                   </div>
-                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">{c.route}</p>
+                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">{c.route}</p>
                 </div>
               </div>
             </Card>

@@ -42,7 +42,7 @@ export function ProcessStepper({ steps, withConnector = true, className }: Proce
               {s.title}
             </h3>
           </div>
-          <p className="text-xs-plus text-text-secondary leading-relaxed relative z-10 text-pretty">
+          <p className="text-sm text-text-secondary leading-relaxed relative z-10 text-pretty">
             {s.desc}
           </p>
         </div>

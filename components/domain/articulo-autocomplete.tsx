@@ -207,7 +207,7 @@ export function ArticuloAutocomplete({
                           {highlight(art.articulo, query)}
                         </span>
                         {art.tema && (
-                          <span className="text-caption uppercase tracking-wider font-semibold text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
+                          <span className="text-xxs uppercase tracking-wider font-semibold text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
                             {TEMA_LABEL(art.tema)}
                           </span>
                         )}

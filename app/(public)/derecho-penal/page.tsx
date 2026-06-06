@@ -79,7 +79,7 @@ export default function DerechoPenalPage() {
         <div className="max-w-3xl mx-auto space-y-3">
           {hubPenal.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-body text-text leading-tight mb-1.5">
+              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
                 {faq.pregunta}
               </h3>
               <p className="text-sm text-text-secondary leading-relaxed">

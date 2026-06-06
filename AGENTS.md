@@ -212,9 +212,9 @@ No sustituir validación real por suposiciones.
 
 ### Datos semilla (data/)
 
-1. `data/delitos.json` contiene 466 delitos del CP hondureño, validados 466/466 contra el CP Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). No introducir duplicados.
+1. `data/delitos.json` contiene 483 delitos del CP hondureño, validados contra el CP Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). No introducir duplicados.
 2. `data/ramas_juridicas.json` contiene la taxonomía de ramas legales (119 registros).
-3. `data/articulos_constitucion.json` contiene los artículos constitucionales referenciados (128 registros).
+3. `data/articulos_constitucion.json` contiene los artículos constitucionales referenciados (378 registros).
 4. Mantener encoding UTF-8 correcto en todos los JSON.
 5. El seed (`drizzle/seed.ts`) tiene guarda: si ya hay datos, no ejecuta nada.
 

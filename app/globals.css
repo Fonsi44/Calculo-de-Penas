@@ -5,22 +5,20 @@
      Navy #0B1B3D + Gold #D4AF37 (border gold #C5A059). PROHIBIDO rojo. */
 
   /* --- Sistema tipográfico unificado ---
-   * Escala completa:
-   *   text-micro  (9px)  — micro etiquetas
-   *   text-caption(10px) — captions, side notes
-   *   text-xxs    (11px) — eyebrow, badges, small labels
-   *   text-xs     (12px) — labels, meta, stepper
-   *   text-xs-plus(13px) — body pequeño, descripciones
-   *   text-sm     (14px) — body estándar
-   *   text-body   (15px) — body más grande
-   *   text-base   (16px) — base del sistema
+   * Escala consolidada (solo un custom token):
+   *   text-xxs    (11px) — eyebrow, badges, small captions
+   *   text-xs     (12px) — labels, meta, stepper, links
+   *   text-sm     (14px) — body estándar, descripciones
+   *   text-base   (16px) — base del sistema, hero subtitles
    *   text-lg     (18px) — card titles, lead
+   *   text-xl     (20px) — h3, dashboard numbers
+   *   text-2xl    (24px) — h2 mobile
+   *   text-3xl    (30px) — h1 mobile
+   *   text-4xl    (36px) — h1 desktop md
+   *   text-5xl    (48px) — h1 desktop lg
+   *   text-6xl    — h1 hero home
    */
-  --font-size-micro: 9px;
-  --font-size-caption: 10px;
   --font-size-xxs: 11px;
-  --font-size-xs-plus: 13px;
-  --font-size-body: 15px;
 
   /* Leading (line-height) extendido */
   --leading-tighter: 1.08;

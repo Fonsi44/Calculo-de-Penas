@@ -73,7 +73,7 @@ export default function BlogHubPage() {
                 <div className="mt-8 text-center">
                   <Link
                     href="/blog/feed.xml"
-                    className="text-xs-plus text-text-muted hover:text-primary transition-colors"
+                    className="text-sm text-text-muted hover:text-primary transition-colors"
                   >
                     Suscribirse al RSS
                   </Link>

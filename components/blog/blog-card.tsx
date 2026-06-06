@@ -63,7 +63,7 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
           </div>
           <Link
             href={`/blog/${post.slug}`}
-            className="flex items-center gap-1 text-xs-plus font-semibold text-primary hover:text-accent-dark transition-colors"
+            className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-accent-dark transition-colors"
           >
             Leer más <ArrowRight size={14} />
           </Link>

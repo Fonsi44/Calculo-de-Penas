@@ -45,7 +45,7 @@ export default function SolicitarConsultaPage() {
           <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight max-w-3xl">
             Cuéntenos su caso. Le escuchamos con discreción.
           </h1>
-          <p className="mt-4 text-body md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
+          <p className="mt-4 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
             Complete el formulario o contáctenos directamente. Toda comunicación es
             estrictamente confidencial.
           </p>
@@ -57,7 +57,7 @@ export default function SolicitarConsultaPage() {
           <div className="lg:col-span-3">
             <Card padding="md" className="border-l-4 border-l-accent">
               <h2 className="font-bold text-base text-primary">Formulario de consulta</h2>
-              <p className="text-xs-plus text-text-secondary mt-1 mb-5">
+              <p className="text-sm text-text-secondary mt-1 mb-5">
                 Los campos marcados con * son obligatorios. Por seguridad, no incluya
                 contraseñas, números de tarjeta ni documentos de identidad completos.
               </p>
@@ -69,16 +69,16 @@ export default function SolicitarConsultaPage() {
             <Card padding="md" className="bg-aggravation text-white">
               <div className="flex items-center gap-2 mb-2">
                 <AlertTriangle size={18} aria-hidden="true" />
-                <h3 className="font-bold text-body">¿Emergencia con detenido?</h3>
+                <h3 className="font-bold text-sm">¿Emergencia con detenido?</h3>
               </div>
-              <p className="text-xs-plus text-white/90 leading-relaxed">
+              <p className="text-sm text-white/90 leading-relaxed">
                 Si un familiar está siendo detenido o necesita asistencia letrada
                 inmediata, no espere. Llámenos o escríbanos por WhatsApp ahora.
               </p>
               <div className="flex flex-col sm:flex-row gap-2 mt-4">
                 <a
                   href={telHref()}
-                  className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-white text-aggravation text-xs-plus font-bold hover:bg-white/90"
+                  className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-white text-aggravation text-sm font-bold hover:bg-white/90"
                 >
                   <Phone size={14} /> Llamar
                 </a>
@@ -86,7 +86,7 @@ export default function SolicitarConsultaPage() {
                   href={whatsappHref('Emergencia: tengo un familiar detenido.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-success text-white text-xs-plus font-bold hover:opacity-90"
+                  className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-success text-white text-sm font-bold hover:opacity-90"
                 >
                   <MessageCircle size={14} /> WhatsApp
                 </a>
@@ -97,7 +97,7 @@ export default function SolicitarConsultaPage() {
               <h3 className="font-bold text-sm text-primary mb-3">Motivos frecuentes</h3>
               <ul className="space-y-1.5">
                 {REASONS.map((r) => (
-                  <li key={r} className="flex items-center gap-2 text-xs-plus text-text-secondary">
+                  <li key={r} className="flex items-center gap-2 text-sm text-text-secondary">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-dark flex-shrink-0" />
                     {r}
                   </li>
@@ -114,7 +114,7 @@ export default function SolicitarConsultaPage() {
                       <g.icon size={14} />
                     </div>
                     <div>
-                      <p className="text-xs-plus font-bold text-text leading-tight">{g.title}</p>
+                      <p className="text-sm font-bold text-text leading-tight">{g.title}</p>
                       <p className="text-xs text-text-secondary leading-relaxed">{g.desc}</p>
                     </div>
                   </li>

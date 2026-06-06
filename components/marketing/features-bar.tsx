@@ -73,7 +73,7 @@ export function FeaturesBar({ className, eyebrow, title }: FeaturesBarProps) {
                 <h3 className="font-serif text-lg font-bold text-primary">
                   {feature.title}
                 </h3>
-                <p className="text-xs-plus leading-relaxed text-text-secondary">
+                <p className="text-sm leading-relaxed text-text-secondary">
                   {feature.description}
                 </p>
               </li>

@@ -80,7 +80,7 @@ export function PublicHeader() {
           </div>
           <div className="min-w-0">
             <p className="font-extrabold text-sm leading-none tracking-wide">{site.shortName}</p>
-            <p className="text-caption text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
+            <p className="text-xxs text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
           </div>
         </Link>
 
@@ -92,7 +92,7 @@ export function PublicHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
-                className={`px-3 h-9 inline-flex items-center text-xs-plus font-semibold rounded-md transition-colors focus-visible:outline-none ${
+                className={`px-3 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
                   active
                     ? 'text-accent bg-primary-light/40'
                     : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -117,7 +117,7 @@ export function PublicHeader() {
           </a>
           <Link
             href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-aggravation text-white text-xs-plus font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-aggravation text-white text-sm font-semibold hover:opacity-90 transition-opacity focus-visible:outline-none"
           >
             <Calendar size={14} aria-hidden="true" />
             Solicitar consulta

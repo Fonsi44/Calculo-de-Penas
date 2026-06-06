@@ -100,7 +100,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       {subtitle && (
         <p
           className={cn(
-            'mt-4 text-body md:text-base leading-relaxed',
+            'mt-4 text-sm md:text-base leading-relaxed',
             invert ? 'text-text-inverse/85' : 'text-text-secondary',
           )}
         >

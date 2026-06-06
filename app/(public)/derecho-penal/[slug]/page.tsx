@@ -100,10 +100,10 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
                 <Icon size={16} className="text-accent-dark" />
               </span>
               <div className="min-w-0 flex-1">
-                <h4 className="font-bold text-body md:text-base text-primary leading-snug">
+                <h4 className="font-bold text-sm md:text-base text-primary leading-snug">
                   {s.titulo}
                 </h4>
-                <p className="text-sm md:text-body text-text-secondary leading-relaxed mt-1">
+                <p className="text-sm text-text-secondary leading-relaxed mt-1">
                   {s.descripcion}
                 </p>
               </div>
@@ -121,7 +121,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
         <div className="max-w-3xl mx-auto space-y-3">
           {grupo.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-body text-text leading-tight mb-1.5">
+              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
                 {faq.pregunta}
               </h3>
               <p className="text-sm text-text-secondary leading-relaxed">
@@ -147,10 +147,10 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
                   <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                     <RIcon size={20} aria-hidden="true" />
                   </div>
-                  <h3 className="font-bold text-body text-text leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
                     {r.titulo}
                   </h3>
-                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
+                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
                     {r.resumen}
                   </p>
                   <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
@@ -165,10 +165,10 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
               <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                 <span className="font-extrabold text-lg">+</span>
               </div>
-              <h3 className="font-bold text-body text-text leading-tight group-hover:text-primary transition-colors">
-                Ver todos los servicios penales
-              </h3>
-              <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
+                <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
+                  Ver todos los servicios penales
+                </h3>
+                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
                 Volver al hub de derecho penal para explorar todos los grupos especializados.
               </p>
               <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
@@ -183,7 +183,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
         <div className="text-center max-w-2xl mx-auto">
           {grupo.destacado && (
             <Card padding="md" className="border-l-4 border-l-accent mb-6 text-left">
-              <p className="text-xs-plus font-bold uppercase tracking-widest text-accent-dark mb-1">
+              <p className="text-sm font-bold uppercase tracking-widest text-accent-dark mb-1">
                 Dato destacado
               </p>
               <p className="text-sm text-text-secondary leading-relaxed">
