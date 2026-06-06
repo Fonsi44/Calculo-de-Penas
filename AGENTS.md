@@ -94,7 +94,7 @@ npm run test
 npm run test:e2e
 ```
 
-- `test` (Vitest) debe pasar 152/152 unit tests en 11 archivos.
+- `test` (Vitest) debe pasar 185/185 unit tests en 13 archivos.
 - `test:e2e` (Playwright) debe pasar todas las pruebas E2E (suite pública sin auth).
 - Si `test:e2e` falla por `EPERM` en `test-results` o `.next`: limpiar y reintentar.
 - Si el webServer de Playwright no arranca por build sucia: `Remove-Item -LiteralPath .next -Recurse -Force` antes de reintentar.
@@ -204,7 +204,7 @@ No sustituir validación real por suposiciones.
 
 ### Base de datos y esquema
 
-1. `lib/schema.ts` define 9 tablas: `ramas_juridicas`, `articulos_constitucion`, `articulos_cp`, `delitos`, `bufetes`, `usuarios`, `casos`, `calculos`, `auditoria_eventos`.
+1. `lib/schema.ts` define 11 tablas: `ramas_juridicas`, `articulos_constitucion`, `articulos_cp`, `delitos`, `bufetes`, `usuarios`, `casos`, `calculos`, `auditoria_eventos`, `rate_limits`, `aceptaciones_legales`.
 2. `delitos` tiene unique constraint en `(nombre, articulo)`. No insertar duplicados.
 3. Las migraciones se generan con `drizzle-kit generate` y se aplican con `drizzle-kit push`.
 4. No modificar la BD directamente en Neon sin pasar por Drizzle migrations.
@@ -242,6 +242,36 @@ No sustituir validación real por suposiciones.
 4. `components/layout/app-sidebar.tsx` contiene el `NAV` array de rutas; mantenerlo sincronizado con el sitemap real.
 5. `e2e/smoke.spec.ts` cubre solo rutas públicas (sin auth). Tests autenticados requieren suite separada (no implementada).
 
+### Sistema de imágenes (público, sin optimizer, sin auth)
+
+Estado fijado en commits `2ed1168` (unoptimized) y `52a9b72` (middleware). Cambios futuros deben preservar este contrato:
+
+1. `next.config.ts` DEBE mantener `images: { unoptimized: true }`. NO re-habilitar el optimizer `/_next/image`:
+   - Devuelve 400 Bad Request para imágenes corporativas (provocado `ERR_*` en consola).
+   - Añade latencia significativa sin beneficio.
+   - Si en el futuro se quiere optimizar: configurar `images.remotePatterns` para hosts externos y validar antes contra todas las páginas públicas.
+
+2. `middleware.ts` DEBE mantener `images/` en el negative lookahead del `matcher` (`'/(?!_next/static|_next/image|favicon.ico|manifest.json|icon-192.svg|images/).*)'`). Las imágenes son públicas y NO requieren auth. Si se quita, el middleware redirige `/images/*` a `/intranet/login` y las tarjetas muestran `PlaceholderPhoto` gris en producción.
+
+3. NO reintroducir la directiva CSP `upgrade-insecure-requests`. Fue eliminada por:
+   - Ser redundante con HSTS en producción (Vercel sirve HTTPS).
+   - Romper `e2e/smoke.spec.ts` con `ERR_SSL_PROTOCOL_ERROR` cuando el servidor de test es HTTP.
+   - Provocar 6 errores 400 en imágenes durante la suite e2e.
+   Solo reintroducir si se demuestra que aporta seguridad real y se valida contra toda la suite e2e.
+
+4. Catálogo de imágenes en `data/images.ts`:
+   - `SERVICES` (13 entradas): mapa slug → `/images/services/<area>.jpg` para las 13 áreas generales.
+   - `PENAL` (7 entradas): mapa slug → `/images/penal/<grupo>.jpg` para los 7 grupos de derecho penal.
+   - `CORPORATE` (6 entradas): claves (`hero_home`, `hero_despacho`, `services_general`, `services_penal`, `courthouse`, `corporate_meeting`) → `/images/corporate/<clave>.jpg`.
+   - Las claves coinciden con los `slug` canónicos de `data/areas-juridicas.ts` (`areasGenerales`, `hubPenal.grupos`).
+   - Si un slug no existe en el mapa, `ServiceCard` debe caer a `PlaceholderPhoto` (gris con gradient) — NO renderizar `<img>` roto.
+
+5. 26 imágenes JPG en `/public/images/{services,penal,corporate}/` (177 KB promedio, ~6.5 MB total). El usuario aceptó explícitamente NO convertirlas a WebP/AVIF ni optimizar en build. No introducir pipeline de conversión de imágenes sin instrucción explícita.
+
+6. `ServiceCard` (`components/marketing/service-card.tsx`) usa `next/image` con `fill`, `sizes` y `className="object-cover"`. NO migrar a `<img>` plano (pierde lazy loading, aspect ratio responsive y group-hover scale). NO migrar a `AppShell` (la calculadora tampoco lo usa, UX de wizard de foco).
+
+7. Hero de la home NO usa `<img>` propio: la card premium con CTA vive en `app/(public)/page.tsx` sin foto corporativa. Si se quiere re-introducir, usar `next/image` con `images.unoptimized=true` y validar contra `e2e/smoke.spec.ts` (test de consola limpia).
+
 ## Reglas para documentación
 
 Si el cambio afecta comportamiento, comandos, configuración, API, semillas o flujo de ejecución, actualizar documentación si existe:
@@ -256,7 +286,7 @@ Cuando se actualice documentación, indicar claramente qué se actualizó.
 
 ## Reglas específicas de acceso a la intranet
 
-1. La URL de la intranet es `https://www.pinedayasociadoshn.com/intranet/dashboard`.
+1. La URL de la intranet es `https://pinedayasociadoshn.com/intranet/dashboard` (apex). El redirect `www` → apex lo gestiona Vercel a nivel de dominio; no añadirlo al middleware (causa bucles).
 2. Solo se accede a la intranet desde el botón "Acceso Intranet" situado en la barra superior del encabezado de la web pública (`components/marketing/public-header.tsx`).
 3. Ninguna página, subpágina, componente, sección, enlace del footer, enlace del drawer móvil, breadcrumb, CTA, tarjeta de servicio, artículo de blog o cualquier otro elemento de la web pública puede contener un enlace (`href`) que apunte directa o indirectamente a cualquier ruta bajo `/intranet/`.
 4. Las únicas excepciones permitidas son:
