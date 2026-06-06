@@ -305,7 +305,7 @@ export default function DespachoPage() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent hover:text-text-inverse transition-colors">
+          <Link href="/servicios-juridicos" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent hover:text-text-inverse transition-colors">
             Ver las 13 áreas del bufete <ArrowRight size={14} />
           </Link>
         </div>

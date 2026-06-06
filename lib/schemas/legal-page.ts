@@ -134,7 +134,7 @@ export function areaSchemas(args: {
 /* -------------------------------------------------------------------------- */
 
 export function areaHref(slug: string) {
-  return absoluteUrl(`/areas-juridicas/${slug}`);
+  return absoluteUrl(`/servicios-juridicos/${slug}`);
 }
 
 export function penalHubHref() {
@@ -142,5 +142,5 @@ export function penalHubHref() {
 }
 
 export function migrantesHubHref() {
-  return absoluteUrl('/migrantes-hondurenos-en-espana');
+  return absoluteUrl('/hondurenos-en-espana');
 }

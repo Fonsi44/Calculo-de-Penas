@@ -308,7 +308,7 @@ export default function HomePage() {
             .filter((a) => HIGHLIGHTED_AREAS.includes(a.slug))
             .map((area) => {
               const colorClass = AREA_COLORS[area.color] ?? AREA_COLORS.primary;
-              const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
+              const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`;
               return (
                 <Link key={area.slug} href={areaSlug} className="group block focus-visible:outline-none rounded-md">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
@@ -342,7 +342,7 @@ export default function HomePage() {
           bento
           items={areasGenerales.map<FeatureItem>((area) => {
             const Icon = ICON_MAP[area.icono] ?? Scale;
-            const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
+            const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`;
             return {
               title: area.titulo,
               description: area.slug === 'derecho-penal' ? 'Especialidad destacada del bufete' : area.resumen,
@@ -354,7 +354,7 @@ export default function HomePage() {
           })}
         />
         <div className="mt-8 text-center">
-          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
+          <Link href="/servicios-juridicos" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
             Explorar todas las áreas <ArrowRight size={14} />
           </Link>
         </div>

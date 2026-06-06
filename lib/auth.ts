@@ -64,17 +64,38 @@ function ensurePreviousSecretValidated() {
   }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_SECRET_PREVIOUS = process.env.JWT_SECRET_PREVIOUS;
-if (!IS_BUILD_PHASE && !JWT_SECRET && IS_PROD) {
-  throw new Error('JWT_SECRET environment variable is required (>= 32 chars) in production');
-}
-const SECRET: string = JWT_SECRET && JWT_SECRET.length >= 32 ? JWT_SECRET : DEV_FALLBACK_SECRET;
-const SECRET_PREVIOUS: string | null = JWT_SECRET_PREVIOUS && JWT_SECRET_PREVIOUS.length >= 32
-  ? JWT_SECRET_PREVIOUS
-  : null;
 const SALT_ROUNDS = 10;
 const TOKEN_TTL_SECONDS = 60 * 60 * 24;
+
+let _secret: string | null = null;
+let _secretPrevious: string | null | undefined = undefined;
+
+function getSecret(): string {
+  ensureSecretValidated();
+  if (_secret !== null) return _secret;
+  const raw = process.env.JWT_SECRET;
+  if (raw && raw.length >= 32) {
+    _secret = raw;
+    return _secret;
+  }
+  if (IS_PROD) {
+    throw new Error('JWT_SECRET environment variable is required (>= 32 chars) in production');
+  }
+  _secret = DEV_FALLBACK_SECRET;
+  return _secret;
+}
+
+function getSecretPrevious(): string | null {
+  ensurePreviousSecretValidated();
+  if (_secretPrevious !== undefined) return _secretPrevious;
+  const raw = process.env.JWT_SECRET_PREVIOUS;
+  if (raw && raw.length >= 32) {
+    _secretPrevious = raw;
+  } else {
+    _secretPrevious = null;
+  }
+  return _secretPrevious;
+}
 
 export const COOKIE_NAME = IS_PROD ? '__Host-token' : 'token';
 export const COOKIE_NAME_FALLBACK = 'token';
@@ -112,19 +133,18 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 }
 
 export function signToken(payload: { userId: string; email: string; rol: string }): string {
-  ensureSecretValidated();
-  return jwt.sign(payload, SECRET, { expiresIn: `${TOKEN_TTL_SECONDS}s` });
+  return jwt.sign(payload, getSecret(), { expiresIn: `${TOKEN_TTL_SECONDS}s` });
 }
 
 export function verifyToken(token: string): { userId: string; email: string; rol: string } | null {
-  ensureSecretValidated();
-  ensurePreviousSecretValidated();
+  const secret = getSecret();
   try {
-    return jwt.verify(token, SECRET) as { userId: string; email: string; rol: string };
+    return jwt.verify(token, secret) as { userId: string; email: string; rol: string };
   } catch {
-    if (SECRET_PREVIOUS) {
+    const previous = getSecretPrevious();
+    if (previous) {
       try {
-        return jwt.verify(token, SECRET_PREVIOUS) as { userId: string; email: string; rol: string };
+        return jwt.verify(token, previous) as { userId: string; email: string; rol: string };
       } catch {
         return null;
       }

@@ -8,9 +8,9 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 
 const NAV = [
   { label: 'El Despacho', href: '/despacho' },
-  { label: 'Áreas Jurídicas', href: '/areas-juridicas' },
+  { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
   { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Migrantes en España', href: '/migrantes-hondurenos-en-espana' },
+  { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
   { label: 'FAQ', href: '/preguntas-frecuentes' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
