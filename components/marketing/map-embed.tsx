@@ -107,7 +107,7 @@ export function MapEmbed({
       />
       {/* Pin visual mientras Leaflet carga las baldosas, para que no se vea vacío. */}
       <noscript>
-        <div className="flex items-center gap-2 p-3 text-[12px] text-text-secondary">
+        <div className="flex items-center gap-2 p-3 text-xs text-text-secondary">
           <MapPin size={14} className="text-accent-dark" />
           <span>{fullAddress}</span>
         </div>

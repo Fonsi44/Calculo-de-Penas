@@ -109,13 +109,13 @@ export default function DespachoPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/55 to-transparent" aria-hidden="true" />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center">
               <div className="max-w-2xl text-text-inverse">
-                <p className="eyebrow-rule text-[11px] font-bold uppercase tracking-[0.3em] text-accent mb-3">
+                <p className="eyebrow-rule text-xxs font-bold uppercase tracking-eyebrow text-accent mb-3">
                   Sede del bufete
                 </p>
                 <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-balance">
                   Atención presencial en Nacaome, Valle
                 </h2>
-                <p className="mt-3 text-[14px] md:text-base text-text-inverse/85 leading-relaxed text-pretty">
+                <p className="mt-3 text-sm md:text-base text-text-inverse/85 leading-relaxed text-pretty">
                   {site.address.line1}, {site.address.line2}.
                   Le recibimos con cita previa para garantizar confidencialidad.
                 </p>
@@ -146,7 +146,7 @@ export default function DespachoPage() {
             />
             <ul className="space-y-2.5 mt-5">
               {COMMITMENTS.map((c, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-[14px] text-text leading-relaxed">
+                <li key={i} className="flex items-start gap-2.5 text-sm text-text leading-relaxed">
                   <CheckCircle2 size={16} className="text-success flex-shrink-0 mt-0.5" />
                   <span>{c}</span>
                 </li>
@@ -160,23 +160,23 @@ export default function DespachoPage() {
                   <Scale size={22} className="text-accent" />
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-accent">
+                  <p className="text-xxs font-bold uppercase tracking-widest text-accent">
                     Visión
                   </p>
-                  <p className="text-[15px] font-bold leading-tight">Justicia accesible y técnica</p>
+                  <p className="text-body font-bold leading-tight">Justicia accesible y técnica</p>
                 </div>
               </div>
-              <p className="text-[14px] text-text-inverse/90 leading-relaxed text-pretty">
+              <p className="text-sm text-text-inverse/90 leading-relaxed text-pretty">
                 Aspiramos a un sistema de justicia donde cada persona, en Nacaome y en el sur de
                 Honduras, pueda ejercer su derecho a la defensa y a la asesoría legal con un
                 equipo que domine la técnica, explique con claridad y actúe con prudencia.
               </p>
             </Card>
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-1">
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                 Valores
               </p>
-              <p className="text-[14px] text-text leading-relaxed">
+              <p className="text-sm text-text leading-relaxed">
                 Honestidad · Confidencialidad · Rigor técnico · Respeto · Empatía · Discreción
               </p>
             </Card>
@@ -185,11 +185,11 @@ export default function DespachoPage() {
                 <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
                   <Gavel size={18} />
                 </div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">
+                <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
                   Especialidad destacada
                 </p>
               </div>
-              <p className="text-[14px] text-text leading-relaxed text-pretty">
+              <p className="text-sm text-text leading-relaxed text-pretty">
                 La defensa penal y procesal penal sigue siendo nuestro pilar histórico. Contamos
                 con experiencia en asistencia a detenidos, audiencias iniciales, preliminares,
                 juicio oral y recursos de casación.
@@ -212,8 +212,8 @@ export default function DespachoPage() {
               <div className="w-11 h-11 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center mb-3 border border-accent/30">
                 <v.icon size={20} aria-hidden="true" />
               </div>
-              <h3 className="font-bold text-[15px] text-text leading-tight text-balance">{v.title}</h3>
-              <p className="text-[13px] text-text-secondary mt-2 leading-relaxed text-pretty">{v.desc}</p>
+              <h3 className="font-bold text-body text-text leading-tight text-balance">{v.title}</h3>
+              <p className="text-xs-plus text-text-secondary mt-2 leading-relaxed text-pretty">{v.desc}</p>
             </Card>
           ))}
         </div>
@@ -231,11 +231,11 @@ export default function DespachoPage() {
             <li key={t.year} className="ml-6 relative">
               <span className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-accent border-4 border-background" />
               <Card padding="sm" className="border-l-4 border-l-accent card-premium">
-                <p className="text-[12px] font-bold uppercase tracking-widest text-accent-dark">
+                <p className="text-xs font-bold uppercase tracking-widest text-accent-dark">
                   {t.year}
                 </p>
-                <h3 className="font-bold text-[15px] text-text mt-0.5">{t.title}</h3>
-                <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed text-pretty">
+                <h3 className="font-bold text-body text-text mt-0.5">{t.title}</h3>
+                <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed text-pretty">
                   {t.desc}
                 </p>
               </Card>
@@ -278,21 +278,21 @@ export default function DespachoPage() {
                   <GraduationCap size={22} />
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">
+                  <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
                     {p.rol}
                   </p>
-                  <p className="text-[14px] font-semibold text-text leading-tight">
+                  <p className="text-sm font-semibold text-text leading-tight">
                     Identidad reservada
                   </p>
                 </div>
               </div>
-              <p className="text-[13px] text-text-secondary mt-3 leading-relaxed text-pretty">
+              <p className="text-xs-plus text-text-secondary mt-3 leading-relaxed text-pretty">
                 {p.desc}
               </p>
             </Card>
           ))}
         </div>
-        <p className="text-[12px] text-text-muted text-center mt-6 italic max-w-2xl mx-auto">
+        <p className="text-xs text-text-muted text-center mt-6 italic max-w-2xl mx-auto">
           Por seguridad y ética profesional, la identidad completa de los profesionales
           se revela únicamente a clientes con relación de servicio constituida.
         </p>
@@ -335,13 +335,13 @@ export default function DespachoPage() {
           ].map((it) => (
             <div key={it.title} className="rounded-md border border-primary-light/40 bg-primary-light/20 p-4 backdrop-blur-sm card-premium">
               <it.icon size={22} className="text-accent mb-2" aria-hidden="true" />
-              <h3 className="font-bold text-[14px] text-text-inverse leading-tight text-balance">{it.title}</h3>
-              <p className="text-[12px] text-text-inverse/80 leading-relaxed mt-1.5 text-pretty">{it.desc}</p>
+              <h3 className="font-bold text-sm text-text-inverse leading-tight text-balance">{it.title}</h3>
+              <p className="text-xs text-text-inverse/80 leading-relaxed mt-1.5 text-pretty">{it.desc}</p>
             </div>
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent hover:text-text-inverse transition-colors">
+          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-text-inverse transition-colors">
             Ver las 13 áreas del bufete <ArrowRight size={14} />
           </Link>
         </div>

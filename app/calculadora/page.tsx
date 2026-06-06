@@ -167,7 +167,7 @@ function CalculadoraShell() {
               Continuar
             </Button>
           )}
-          <div className="hidden sm:flex items-center text-[11px] text-text-muted gap-2">
+          <div className="hidden sm:flex items-center text-xxs text-text-muted gap-2">
             <span>← →</span><span>Esc</span>
             {s.step === 7 && <span>⌘↵</span>}
           </div>

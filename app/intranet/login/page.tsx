@@ -161,7 +161,7 @@ export default function IntranetLoginPage() {
           </form>
         </Card>
 
-        <p className="text-center text-[11px] text-text-muted mt-4 leading-relaxed">
+        <p className="text-center text-xxs text-text-muted mt-4 leading-relaxed">
           Este acceso es de uso interno del bufete. Toda actividad queda registrada en el sistema de auditoría conforme a nuestras políticas de seguridad.
         </p>
       </div>

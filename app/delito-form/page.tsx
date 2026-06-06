@@ -308,7 +308,7 @@ function DelitoForm() {
                 </Field>
               </div>
             </div>
-            <p className="text-[11px] text-text-muted italic mt-1">
+            <p className="text-xxs text-text-muted italic mt-1">
               Tip: 1 año = 12 meses · 5 años = 60 meses · ≥60 meses ⇒ delito grave
             </p>
           </Section>
@@ -317,7 +317,7 @@ function DelitoForm() {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <p className="text-sm font-semibold text-text">Posee pena alternativa</p>
-                <p className="text-[11px] text-text-muted">Permite optar por multa u otra pena no privativa</p>
+                <p className="text-xxs text-text-muted">Permite optar por multa u otra pena no privativa</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input

@@ -119,7 +119,7 @@ export function PlaceholderPhoto({
           </div>
           {label && (
             <span
-              className="absolute bottom-2 right-3 text-[10px] font-bold uppercase tracking-widest opacity-60"
+              className="absolute bottom-2 right-3 text-caption font-bold uppercase tracking-widest opacity-60"
               style={{ color: t.accent }}
             >
               {label}

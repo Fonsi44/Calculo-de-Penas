@@ -25,10 +25,10 @@ export function Field({ label, hint, error, required, htmlFor, children, classNa
       )}
       {children}
       {hint && !error && (
-        <p className="text-[11px] text-text-muted mt-1 italic">{hint}</p>
+        <p className="text-xxs text-text-muted mt-1 italic">{hint}</p>
       )}
       {error && (
-        <p role="alert" className="text-[11px] text-danger mt-1 font-semibold">
+        <p role="alert" className="text-xxs text-danger mt-1 font-semibold">
           {error}
         </p>
       )}

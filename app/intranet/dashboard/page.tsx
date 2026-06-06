@@ -137,13 +137,13 @@ export default function IntranetDashboard() {
               <Scale size={22} className="text-accent" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark">
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
                 {greeting}
               </p>
               <h2 className="font-extrabold text-lg text-primary leading-tight mt-0.5">
                 Bienvenido al panel del bufete
               </h2>
-              <p className="text-[12px] text-text-secondary mt-1 leading-5 capitalize">
+              <p className="text-xs text-text-secondary mt-1 leading-5 capitalize">
                 {dateStr} · {site.address.city}, {site.address.department}
               </p>
             </div>
@@ -167,7 +167,7 @@ export default function IntranetDashboard() {
                 <p className="text-primary font-extrabold text-lg tabular-nums leading-none">
                   {s.value}
                 </p>
-                <p className="text-[10px] text-text-muted uppercase tracking-wider mt-1">
+                <p className="text-caption text-text-muted uppercase tracking-wider mt-1">
                   {s.label}
                 </p>
               </div>
@@ -184,7 +184,7 @@ export default function IntranetDashboard() {
             <h2 className="font-bold text-sm text-primary">Búsqueda rápida de artículos</h2>
             <Badge tone="info">CP Honduras</Badge>
           </div>
-          <p className="text-[11px] text-text-secondary mb-2 leading-4">
+          <p className="text-xxs text-text-secondary mb-2 leading-4">
             Buscá por número (Art. 19), epígrafe (hurto) o tema (eximente).
           </p>
           <ArticuloAutocomplete />
@@ -193,10 +193,10 @@ export default function IntranetDashboard() {
         {/* Features */}
         <div>
           <div className="flex items-center justify-between mb-2 px-1">
-            <p className="text-[11px] font-bold text-text-muted uppercase tracking-wider">
+            <p className="text-xxs font-bold text-text-muted uppercase tracking-wider">
               Funcionalidades
             </p>
-            <p className="text-[10px] text-text-muted inline-flex items-center gap-1">
+            <p className="text-caption text-text-muted inline-flex items-center gap-1">
               <TrendingUp size={10} /> 4 módulos activos
             </p>
           </div>
@@ -218,15 +218,15 @@ export default function IntranetDashboard() {
                     <div className="flex items-center gap-1.5">
                       <p className="font-bold text-text text-sm">{f.title}</p>
                       {f.badge && (
-                        <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark text-[9px] font-bold uppercase tracking-wider">
+                        <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark text-micro font-bold uppercase tracking-wider">
                           {f.badge}
                         </span>
                       )}
                     </div>
-                    <p className="text-text-secondary text-[11px] leading-4 mt-0.5">{f.desc}</p>
+                    <p className="text-text-secondary text-xxs leading-4 mt-0.5">{f.desc}</p>
                   </div>
                   <div className="flex items-center gap-1 ml-2 flex-shrink-0">
-                    <span className="text-[11px] font-semibold text-accent-dark hidden sm:inline group-hover:text-primary transition-colors">
+                    <span className="text-xxs font-semibold text-accent-dark hidden sm:inline group-hover:text-primary transition-colors">
                       {f.cta}
                     </span>
                     <ArrowRight
@@ -244,7 +244,7 @@ export default function IntranetDashboard() {
         <Card padding="md">
           <div className="flex items-center gap-1.5 px-2 py-0.5 bg-primary/10 rounded-full w-fit mb-2">
             <ShieldCheck size={12} className="text-accent-dark" />
-            <span className="font-bold text-[11px] text-primary uppercase tracking-wider">
+            <span className="font-bold text-xxs text-primary uppercase tracking-wider">
               Reglas técnicas que aplica el motor
             </span>
           </div>
@@ -277,7 +277,7 @@ export default function IntranetDashboard() {
           </p>
           <Link
             href="/derecho-penal"
-            className="inline-flex items-center gap-1 mt-2 text-[11px] font-semibold text-primary hover:text-accent-dark"
+            className="inline-flex items-center gap-1 mt-2 text-xxs font-semibold text-primary hover:text-accent-dark"
           >
             Ver marco normativo completo <ArrowRight size={12} />
           </Link>
@@ -293,7 +293,7 @@ export default function IntranetDashboard() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-bold text-text text-sm">El Despacho</p>
-            <p className="text-text-secondary text-[11px]">
+            <p className="text-text-secondary text-xxs">
               Conoce a {site.name} y al equipo detrás del bufete
             </p>
           </div>
@@ -310,7 +310,7 @@ export default function IntranetDashboard() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-bold text-text text-sm">Registrar nuevo delito</p>
-            <p className="text-text-secondary text-[11px]">
+            <p className="text-text-secondary text-xxs">
               Añadir un tipo penal personalizado al catálogo
             </p>
           </div>
@@ -324,7 +324,7 @@ export default function IntranetDashboard() {
             className="text-text-secondary flex-shrink-0 mt-0.5"
             aria-hidden="true"
           />
-          <p className="text-text-secondary text-[11px] leading-4 italic">
+          <p className="text-text-secondary text-xxs leading-4 italic">
             Este cálculo es <strong>orientativo y técnico</strong>. No sustituye la función
             jurisdiccional ni la valoración de pruebas que realiza el juez competente.
             Cualquier aplicación práctica debe ser supervisada por un abogado habilitado.

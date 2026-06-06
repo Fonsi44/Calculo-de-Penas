@@ -114,7 +114,7 @@ function SectionChip({ cat }: { cat: FaqCategory }) {
   const Icon = m?.icon ?? HelpCircle;
   const colorCls = m?.iconColor ?? 'text-text-muted';
   return (
-    <span className={`inline-flex items-center gap-1.5 ${colorCls} text-[11px] font-semibold`}>
+    <span className={`inline-flex items-center gap-1.5 ${colorCls} text-xxs font-semibold`}>
       <Icon size={14} />
       {cat.titulo}
     </span>
@@ -170,11 +170,11 @@ export default function FaqPage() {
               <Link
                 key={cat.slug}
                 href={`#${cat.slug}`}
-                className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-full ${m?.badgeBg ?? 'bg-surface-alt'} text-[13px] font-medium ${m?.badgeText ?? 'text-text-secondary'} hover:shadow-md transition-all`}
+                className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-full ${m?.badgeBg ?? 'bg-surface-alt'} text-xs-plus font-medium ${m?.badgeText ?? 'text-text-secondary'} hover:shadow-md transition-all`}
               >
                 <Icon size={14} />
                 {cat.titulo}
-                <span className="text-[11px] opacity-60 ml-1">({cat.preguntas.length})</span>
+                <span className="text-xxs opacity-60 ml-1">({cat.preguntas.length})</span>
               </Link>
             );
           })}
@@ -203,30 +203,32 @@ export default function FaqPage() {
               }
               title={cat.descripcion}
             />
-            <div className="space-y-3">
+            <div className="space-y-4">
               {cat.preguntas.map((p, i) => (
                 <details
                   key={i}
-                  className={`faq-anim group bg-background rounded-lg border border-border hover:shadow-md transition-all open:shadow-md card-premium ${borderCls} border-l-[3px]`}
+                  className={`faq-anim group bg-background rounded-xl border border-border/70 hover:border-accent/40 hover:shadow-md transition-all open:shadow-md open:border-accent/30 card-premium ${borderCls} border-l-[3px]`}
                 >
-                  <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-[15px] font-semibold text-text leading-snug hover:text-primary transition-colors">
+                  <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-body font-semibold text-text leading-snug hover:text-primary transition-colors">
                     <span className="flex-1 flex items-start gap-3">
-                      <span className={`mt-0.5 hidden sm:inline-flex ${colorCls} opacity-60 group-hover:opacity-100 transition-opacity`}>
+                      <span className={`mt-0.5 hidden sm:inline-flex ${colorCls} opacity-50 group-hover:opacity-100 transition-opacity`}>
                         <Icon size={16} />
                       </span>
-                      <span>{p.pregunta}</span>
+                      <span className="text-pretty">{p.pregunta}</span>
                     </span>
                     <ChevronDown
                       size={18}
                       className={`flex-shrink-0 transition-transform duration-200 group-open:rotate-180 ${colorCls}`}
                     />
                   </summary>
-                  <div className="faq-content">
-                    <div className="border-t border-border/50 pt-3">
-                      <SectionChip cat={cat} />
-                      <p className="text-[14px] text-text-secondary leading-relaxed text-pretty mt-2">
-                        {p.respuesta}
-                      </p>
+                  <div className="faq-body">
+                    <div className="faq-body-inner">
+                      <div className="border-t border-border/40 pt-4 px-5 pb-5">
+                        <SectionChip cat={cat} />
+                        <p className="text-sm text-text leading-relaxed max-w-prose mt-3 text-pretty">
+                          {p.respuesta}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </details>

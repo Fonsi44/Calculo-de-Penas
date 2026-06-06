@@ -47,7 +47,7 @@ export function AppShell({
             )}
             <div className="flex-1 min-w-0">
               <h1 className="font-bold text-base text-text truncate">{title}</h1>
-              {subtitle && <p className="text-[11px] text-text-muted truncate">{subtitle}</p>}
+              {subtitle && <p className="text-xxs text-text-muted truncate">{subtitle}</p>}
             </div>
             <UserActions />
             {headerRight}

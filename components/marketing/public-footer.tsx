@@ -48,10 +48,10 @@ export function PublicFooter() {
               </div>
               <div>
                 <p className="font-extrabold text-sm leading-none">{site.shortName}</p>
-                <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
+                <p className="text-caption text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
               </div>
             </Link>
-            <p className="text-[13px] text-text-inverse/80 leading-relaxed text-pretty">
+            <p className="text-xs-plus text-text-inverse/80 leading-relaxed text-pretty">
               <strong className="font-semibold text-text-inverse">Bufete multidisciplinar</strong> en {site.address.city}, {site.address.department},
               con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
               pilar histórico. Integramos 13 áreas del derecho (penal, familia, laboral, civil, mercantil, tributario,
@@ -59,7 +59,7 @@ export function PublicFooter() {
               conciliación/arbitraje) para asesorarle en cualquier frente, con atención confidencial y personalizada
               en Nacaome y todo el sur de Honduras.
             </p>
-            <p className="text-[12px] text-text-inverse/65 leading-relaxed mt-3 text-pretty">
+            <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
               Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
             </p>
           </div>
@@ -67,14 +67,14 @@ export function PublicFooter() {
           {/* Áreas */}
           <div>
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
-              <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">
+              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 Áreas Jurídicas
               </h3>
             </div>
             <ul className="space-y-1.5">
               {AREAS.map((a) => (
                 <li key={a.href}>
-                  <Link href={a.href} className="text-[13px] text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link href={a.href} className="text-xs-plus text-text-inverse/80 hover:text-accent transition-colors">
                     {a.label}
                   </Link>
                 </li>
@@ -85,14 +85,14 @@ export function PublicFooter() {
           {/* Despacho */}
           <div>
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
-              <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">
+              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 El Despacho
               </h3>
             </div>
             <ul className="space-y-1.5">
               {DESPACHO.map((d) => (
                 <li key={d.href}>
-                  <Link href={d.href} className="text-[13px] text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link href={d.href} className="text-xs-plus text-text-inverse/80 hover:text-accent transition-colors">
                     {d.label}
                   </Link>
                 </li>
@@ -103,11 +103,11 @@ export function PublicFooter() {
           {/* Contacto */}
           <div>
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
-              <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">
+              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 Contacto
               </h3>
             </div>
-            <ul className="space-y-2.5 text-[13px]">
+            <ul className="space-y-2.5 text-xs-plus">
               <li className="flex items-start gap-2">
                 <MapPin size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-text-inverse/80 leading-relaxed">
@@ -138,13 +138,13 @@ export function PublicFooter() {
         </div>
 
         <div className="divider-accent mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <p className="text-[12px] text-text-inverse/70">
+          <p className="text-xs text-text-inverse/70">
             © {year} {site.name}. Todos los derechos reservados.
           </p>
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {LEGALES.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="text-[12px] text-text-inverse/70 hover:text-accent transition-colors">
+                <Link href={l.href} className="text-xs text-text-inverse/70 hover:text-accent transition-colors">
                   {l.label}
                 </Link>
               </li>
@@ -152,7 +152,7 @@ export function PublicFooter() {
 
           </ul>
         </div>
-        <p className="text-[11px] text-text-inverse/50 mt-3 italic text-pretty">
+        <p className="text-xxs text-text-inverse/50 mt-3 italic text-pretty">
           La información publicada en este sitio es de carácter general y orientativo. No sustituye la asesoría legal personalizada. Cada caso requiere análisis individual por un abogado habilitado.
         </p>
       </div>

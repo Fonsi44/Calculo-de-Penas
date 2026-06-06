@@ -27,7 +27,7 @@ export function Paso3Participacion({ current, onChange }: Props) {
               )}
             >
               <p className="font-semibold text-sm text-text">{g.nombre}</p>
-              <p className="text-[11px] text-text-muted">{g.descripcion} ({g.articulo})</p>
+              <p className="text-xxs text-text-muted">{g.descripcion} ({g.articulo})</p>
             </button>
           ))}
         </div>
@@ -47,7 +47,7 @@ export function Paso3Participacion({ current, onChange }: Props) {
               )}
             >
               <p className="font-semibold text-sm text-text">{g.nombre}</p>
-              <p className="text-[11px] text-text-muted">{g.descripcion} ({g.articulo})</p>
+              <p className="text-xxs text-text-muted">{g.descripcion} ({g.articulo})</p>
             </button>
           ))}
         </div>

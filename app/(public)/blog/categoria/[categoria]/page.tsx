@@ -44,12 +44,12 @@ export default async function BlogCategoryPage({ params }: Props) {
         <Container size="lg" className="relative py-14 md:py-20">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-[13px] text-accent hover:text-accent-dark transition-colors mb-4"
+            className="inline-flex items-center gap-1.5 text-xs-plus text-accent hover:text-accent-dark transition-colors mb-4"
           >
             <ArrowLeft size={14} /> Volver al blog
           </Link>
           <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
               Categoría
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
@@ -70,7 +70,7 @@ export default async function BlogCategoryPage({ params }: Props) {
             </p>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-[14px] font-semibold"
+              className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold"
             >
               <ArrowLeft size={14} /> Ver todos los artículos
             </Link>

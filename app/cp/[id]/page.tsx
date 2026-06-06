@@ -87,7 +87,7 @@ export default function ArticuloCPPage() {
       <div className="p-3 max-w-2xl mx-auto space-y-3">
         <Card padding="md" tone="accent">
           {articulo.epigrafe && (
-            <p className="text-[11px] text-text-secondary uppercase tracking-wider mb-1">{articulo.epigrafe}</p>
+            <p className="text-xxs text-text-secondary uppercase tracking-wider mb-1">{articulo.epigrafe}</p>
           )}
           <h2 className="text-xl font-extrabold text-primary mb-3 font-serif">{articulo.articulo}</h2>
           <div className="text-sm text-text leading-6 whitespace-pre-line font-serif">
@@ -141,7 +141,7 @@ export default function ArticuloCPPage() {
                 >
                   <ExternalLink size={12} className="text-text-muted flex-shrink-0" />
                   <span className="font-semibold text-text flex-1 truncate">{d.nombre}</span>
-                  <span className="text-[11px] text-text-muted">{d.articulo}</span>
+                  <span className="text-xxs text-text-muted">{d.articulo}</span>
                 </Link>
               ))}
             </div>

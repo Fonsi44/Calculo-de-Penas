@@ -228,7 +228,7 @@ export default function CasoDetailPage() {
                     <p className="font-bold text-sm text-text flex-1 font-serif">
                       {calc.resultado?.pena_principal || 'Cálculo'}
                     </p>
-                    <span className="text-[11px] text-text-muted tabular-nums">
+                    <span className="text-xxs text-text-muted tabular-nums">
                       {formatFechaCorta(calc.creadoEn)}
                     </span>
                   </div>
@@ -238,7 +238,7 @@ export default function CasoDetailPage() {
                   <div className="flex gap-2 pt-2 border-t border-border-light">
                     <Link
                       href={`/calculadora?casoId=${caso.id}&calculoId=${calc.id}`}
-                      className="flex-1 flex items-center justify-center gap-1 h-8 px-2 rounded-md bg-accent/15 text-primary text-[11px] font-bold hover:bg-accent/25 focus-visible:outline-none"
+                      className="flex-1 flex items-center justify-center gap-1 h-8 px-2 rounded-md bg-accent/15 text-primary text-xxs font-bold hover:bg-accent/25 focus-visible:outline-none"
                     >
                       <Pencil size={12} />
                       Modificar
@@ -246,7 +246,7 @@ export default function CasoDetailPage() {
                     <button
                       type="button"
                       onClick={() => deleteCalculo(calc.id)}
-                      className="flex items-center justify-center gap-1 h-8 px-2 rounded-md text-danger text-[11px] font-semibold hover:bg-danger-bg focus-visible:outline-none"
+                      className="flex items-center justify-center gap-1 h-8 px-2 rounded-md text-danger text-xxs font-semibold hover:bg-danger-bg focus-visible:outline-none"
                       aria-label="Eliminar cálculo"
                     >
                       <Trash2 size={12} />

@@ -103,11 +103,11 @@ export function ServiceCard({
           {title}
         </h3>
         {description && (
-          <p className="mt-2 text-[13px] leading-relaxed text-text-secondary line-clamp-3">
+          <p className="mt-2 text-xs-plus leading-relaxed text-text-secondary line-clamp-3">
             {description}
           </p>
         )}
-        <span className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
+        <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
           Conocer más
           <ArrowRight size={14} aria-hidden="true" />
         </span>

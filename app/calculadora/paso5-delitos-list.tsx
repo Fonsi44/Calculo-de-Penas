@@ -25,7 +25,7 @@ export function Paso5DelitosList({ configs, onAddAnother, onRemove, onNext }: Pr
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-sm text-text truncate">{c.delito.nombre}</p>
-                <p className="text-[11px] text-text-muted">{c.delito.articulo}</p>
+                <p className="text-xxs text-text-muted">{c.delito.articulo}</p>
               </div>
               <button
                 type="button"

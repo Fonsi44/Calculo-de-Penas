@@ -65,7 +65,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
         </div>
         <Container size="lg" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
               Migrantes Hondureños en España
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
@@ -83,7 +83,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
 
       <Section background="default" spacing="md">
         <div className="max-w-3xl mb-8">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-3">
+          <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
             Qué hacemos
           </p>
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight">
@@ -97,10 +97,10 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                 <Icon size={16} className="text-accent-dark" />
               </span>
               <div className="min-w-0 flex-1">
-                <h4 className="font-bold text-[15px] md:text-base text-primary leading-snug">
+                <h4 className="font-bold text-body md:text-base text-primary leading-snug">
                   {s.titulo}
                 </h4>
-                <p className="text-[14px] md:text-[15px] text-text-secondary leading-relaxed mt-1">
+                <p className="text-sm md:text-body text-text-secondary leading-relaxed mt-1">
                   {s.descripcion}
                 </p>
               </div>
@@ -118,10 +118,10 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
         <div className="max-w-3xl mx-auto space-y-3">
           {subarea.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-[15px] text-text leading-tight mb-1.5">
+              <h3 className="font-bold text-body text-text leading-tight mb-1.5">
                 {faq.pregunta}
               </h3>
-              <p className="text-[14px] text-text-secondary leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {faq.respuesta}
               </p>
             </Card>
@@ -145,13 +145,13 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                     <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                       <RIcon size={20} aria-hidden="true" />
                     </div>
-                    <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
+                    <h3 className="font-bold text-body text-text leading-tight group-hover:text-primary transition-colors">
                       {r.titulo}
                     </h3>
-                    <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                    <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
                       {r.resumen}
                     </p>
-                    <span className="inline-flex items-center gap-1 mt-3 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                    <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
                       Conocer más <ArrowRight size={12} />
                     </span>
                   </Card>
@@ -163,13 +163,13 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                 <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                   <span className="font-extrabold text-lg">+</span>
                 </div>
-                <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
+                <h3 className="font-bold text-body text-text leading-tight group-hover:text-primary transition-colors">
                   Ver todos los servicios para migrantes
                 </h3>
-                <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
                   Volver al hub de migrantes hondureños en España para explorar todas las subáreas.
                 </p>
-                <span className="inline-flex items-center gap-1 mt-3 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
                   Conocer más <ArrowRight size={12} />
                 </span>
               </Card>
@@ -182,15 +182,15 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
         <div className="text-center max-w-2xl mx-auto">
           {subarea.destacado && (
             <Card padding="md" className="border-l-4 border-l-accent mb-6 text-left">
-              <p className="text-[13px] font-bold uppercase tracking-widest text-accent-dark mb-1">
+              <p className="text-xs-plus font-bold uppercase tracking-widest text-accent-dark mb-1">
                 Dato destacado
               </p>
-              <p className="text-[14px] text-text-secondary leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {subarea.destacado}
               </p>
             </Card>
           )}
-          <p className="text-text-secondary text-[14px] leading-relaxed mb-5">
+          <p className="text-text-secondary text-sm leading-relaxed mb-5">
             Si tiene una consulta específica sobre {subarea.titulo.toLowerCase()},
             estaremos encantados de atenderle. Solicite una cita y le
             orientaremos sin compromiso.

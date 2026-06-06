@@ -57,7 +57,7 @@ export function LegalDocument({
               className="text-warning flex-shrink-0 mt-0.5"
               aria-hidden="true"
             />
-            <div className="text-[13px] leading-relaxed text-text">
+            <div className="text-xs-plus leading-relaxed text-text">
               <p className="font-bold text-primary mb-1">
                 Plantilla de referencia — pendiente de revisión por abogado colegiado
               </p>
@@ -74,7 +74,7 @@ export function LegalDocument({
 
           <article className="text-text">{children}</article>
 
-          <div className="mt-12 pt-6 border-t border-border-light text-[12px] text-text-muted flex flex-wrap items-center justify-between gap-2">
+          <div className="mt-12 pt-6 border-t border-border-light text-xs text-text-muted flex flex-wrap items-center justify-between gap-2">
             <span>Versión: {version}</span>
             <span>Última actualización: {lastUpdated}</span>
           </div>
@@ -95,12 +95,12 @@ export function LegalSection({ number, title, children, id }: LegalSectionProps)
   return (
     <section id={id} className="mb-9 last:mb-0">
       <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary mb-3 flex items-baseline gap-2.5 scroll-mt-32">
-        <span className="text-accent text-[15px] md:text-base font-bold tabular-nums">
+        <span className="text-accent text-body md:text-base font-bold tabular-nums">
           {number}.
         </span>
         <span>{title}</span>
       </h2>
-      <div className="text-[15px] leading-[1.7] text-text space-y-3">
+      <div className="text-body leading-comfortable text-text space-y-3">
         {children}
       </div>
     </section>
@@ -110,10 +110,10 @@ export function LegalSection({ number, title, children, id }: LegalSectionProps)
 export function LegalSubsection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="mt-4">
-      <h3 className="font-sans font-bold text-[15px] text-primary mb-2">
+      <h3 className="font-sans font-bold text-body text-primary mb-2">
         {title}
       </h3>
-      <div className="text-[15px] leading-[1.7] text-text space-y-3">
+      <div className="text-body leading-comfortable text-text space-y-3">
         {children}
       </div>
     </div>
@@ -131,7 +131,7 @@ export function LegalList({ items, ordered = false, className }: LegalListProps)
   return (
     <Tag
       className={cn(
-        'text-[15px] leading-[1.7] pl-5 space-y-1.5 marker:text-accent',
+        'text-body leading-comfortable pl-5 space-y-1.5 marker:text-accent',
         ordered ? 'list-decimal' : 'list-disc',
         className,
       )}
@@ -159,7 +159,7 @@ export function LegalCallout({
     <div
       role="note"
       className={cn(
-        'rounded-md border px-4 py-3 my-4 text-[14px] leading-[1.65]',
+        'rounded-md border px-4 py-3 my-4 text-sm leading-comfortable',
         styles[variant],
       )}
     >

@@ -68,11 +68,11 @@ export function TrustBar({
     ? 'w-9 h-9 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0'
     : 'w-9 h-9 rounded-md bg-primary/8 text-primary flex items-center justify-center flex-shrink-0';
   const titleCls = isDark
-    ? 'text-[13px] font-bold text-text-inverse leading-tight'
-    : 'text-[13px] font-bold text-text leading-tight';
+    ? 'text-xs-plus font-bold text-text-inverse leading-tight'
+    : 'text-xs-plus font-bold text-text leading-tight';
   const descCls = isDark
-    ? 'text-[11px] text-text-inverse/70 leading-snug mt-0.5'
-    : 'text-[11px] text-text-secondary leading-snug mt-0.5';
+    ? 'text-xxs text-text-inverse/70 leading-snug mt-0.5'
+    : 'text-xxs text-text-secondary leading-snug mt-0.5';
 
   return (
     <div className={`${wrapperCls} ${className ?? ''}`}>

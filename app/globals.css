@@ -3,6 +3,33 @@
 @theme {
   /* Marca — paleta "Premium Corporate Luxury"
      Navy #0B1B3D + Gold #D4AF37 (border gold #C5A059). PROHIBIDO rojo. */
+
+  /* --- Sistema tipográfico unificado ---
+   * Escala completa:
+   *   text-micro  (9px)  — micro etiquetas
+   *   text-caption(10px) — captions, side notes
+   *   text-xxs    (11px) — eyebrow, badges, small labels
+   *   text-xs     (12px) — labels, meta, stepper
+   *   text-xs-plus(13px) — body pequeño, descripciones
+   *   text-sm     (14px) — body estándar
+   *   text-body   (15px) — body más grande
+   *   text-base   (16px) — base del sistema
+   *   text-lg     (18px) — card titles, lead
+   */
+  --font-size-micro: 9px;
+  --font-size-caption: 10px;
+  --font-size-xxs: 11px;
+  --font-size-xs-plus: 13px;
+  --font-size-body: 15px;
+
+  /* Leading (line-height) extendido */
+  --leading-tighter: 1.08;
+  --leading-comfortable: 1.65;
+
+  /* Tracking (letter-spacing) extendido */
+  --tracking-eyebrow: 0.3em;
+  --tracking-footer: 0.14em;
+
   --color-primary: #0B1B3D;
   --color-primary-light: #1F2D5C;
   --color-primary-dark: #050D1F;
@@ -340,6 +367,39 @@ body {
   flex-shrink: 0;
 }
 
+/* --- Clases utilitarias tipográficas compartidas --- */
+
+/* Label eyebrow estándar (todas las páginas públicas) */
+.eyebrow-label {
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--color-accent);
+}
+
+/* Título de sección estándar (font-serif, extrabold, responsive) */
+.section-title {
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.25;
+}
+@media (min-width: 768px) {
+  .section-title { font-size: 30px; }
+}
+@media (min-width: 1024px) {
+  .section-title { font-size: 36px; }
+}
+
+/* Título de card estándar */
+.card-title {
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
 /* Borde con gradiente dorado (degradado en el ring, fondo opaco interno). */
 .ring-gradient-accent {
   position: relative;
@@ -454,11 +514,12 @@ details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 
 /* Animación CSS-only de altura para details (grid-rows trick).
-   Mantiene la animación suave sin necesidad de medir altura con JS. */
+   Mantiene la animación suave sin necesidad de medir altura con JS.
+   El contenido interno va en .faq-body > .faq-body-inner con overflow hidden. */
 details.faq-anim > summary + .faq-body {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 280ms var(--ease-spring);
+  transition: grid-template-rows 320ms var(--ease-spring);
 }
 details.faq-anim[open] > summary + .faq-body {
   grid-template-rows: 1fr;
@@ -466,6 +527,12 @@ details.faq-anim[open] > summary + .faq-body {
 details.faq-anim > summary + .faq-body > .faq-body-inner {
   overflow: hidden;
   min-height: 0;
+}
+details.faq-anim > summary {
+  transition: background-color 220ms var(--ease-soft);
+}
+details.faq-anim:not([open]) > summary:hover {
+  background-color: rgba(212, 175, 55, 0.04);
 }
 
 /* Marcador del mapa (Leaflet divIcon) — pin dorado coherente con la marca. */

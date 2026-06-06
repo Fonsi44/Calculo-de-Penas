@@ -31,11 +31,11 @@ export function Paso6Concurso({ tipoConcurso, onChange, onOpenArticle }: Props) 
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onOpenArticle(tc.articulo || null); }}
-              className="text-[11px] text-accent-dark underline hover:text-accent font-semibold text-left"
+              className="text-xxs text-accent-dark underline hover:text-accent font-semibold text-left"
             >
               {tc.articulo}
             </button>
-            <p className="text-[11px] text-text-muted mt-1">{tc.descripcion}</p>
+            <p className="text-xxs text-text-muted mt-1">{tc.descripcion}</p>
           </button>
         ))}
       </div>

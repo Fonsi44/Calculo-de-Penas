@@ -31,14 +31,14 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
           <div className="flex items-center gap-2 mb-3">
             <span
               className={cn(
-                'inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full',
+                'inline-block text-xxs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full',
                 CAT_COLORS[catColor] ?? CAT_COLORS.muted,
               )}
             >
               {post.category}
             </span>
             {post.featured && (
-              <span className="text-[11px] font-bold uppercase tracking-wider text-accent-dark">
+              <span className="text-xxs font-bold uppercase tracking-wider text-accent-dark">
                 Destacado
               </span>
             )}
@@ -48,12 +48,12 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
               {post.title}
             </h3>
           </Link>
-          <p className="mt-2 text-[14px] text-text-secondary leading-relaxed line-clamp-3">
+          <p className="mt-2 text-sm text-text-secondary leading-relaxed line-clamp-3">
             {post.description}
           </p>
         </div>
         <div className="mt-4 flex items-center justify-between">
-          <div className="flex items-center gap-3 text-[12px] text-text-muted">
+          <div className="flex items-center gap-3 text-xs text-text-muted">
             <span className="flex items-center gap-1">
               <Calendar size={12} /> {formatDateShort(post.publishedAt)}
             </span>
@@ -63,7 +63,7 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
           </div>
           <Link
             href={`/blog/${post.slug}`}
-            className="flex items-center gap-1 text-[13px] font-semibold text-primary hover:text-accent-dark transition-colors"
+            className="flex items-center gap-1 text-xs-plus font-semibold text-primary hover:text-accent-dark transition-colors"
           >
             Leer más <ArrowRight size={14} />
           </Link>

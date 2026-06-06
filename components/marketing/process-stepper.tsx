@@ -38,11 +38,11 @@ export function ProcessStepper({ steps, withConnector = true, className }: Proce
                 className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-accent ring-2 ring-surface"
               />
             </div>
-            <h3 className="font-bold text-[14px] text-text leading-tight text-balance">
+            <h3 className="font-bold text-sm text-text leading-tight text-balance">
               {s.title}
             </h3>
           </div>
-          <p className="text-[13px] text-text-secondary leading-relaxed relative z-10 text-pretty">
+          <p className="text-xs-plus text-text-secondary leading-relaxed relative z-10 text-pretty">
             {s.desc}
           </p>
         </div>

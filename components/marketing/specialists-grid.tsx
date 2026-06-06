@@ -44,7 +44,7 @@ export function SpecialistsGrid({
             </h2>
           )}
           {subtitle && (
-            <p className="mt-3 text-[15px] md:text-base text-text-secondary leading-relaxed">
+            <p className="mt-3 text-body md:text-base text-text-secondary leading-relaxed">
               {subtitle}
             </p>
           )}
@@ -70,7 +70,7 @@ export function SpecialistsGrid({
               <h3 className="font-serif font-bold text-lg md:text-xl text-text-inverse leading-snug drop-shadow">
                 {it.title}
               </h3>
-              <span className="mt-2 inline-block text-[11px] font-bold uppercase tracking-widest text-accent">
+              <span className="mt-2 inline-block text-xxs font-bold uppercase tracking-widest text-accent">
                 Ver detalle
               </span>
             </div>

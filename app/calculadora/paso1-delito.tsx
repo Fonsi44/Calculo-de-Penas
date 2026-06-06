@@ -91,7 +91,7 @@ export function Paso1Delito({
                     {d.estado === 'verificado' && <CheckCircle2 size={14} className="text-mitigation flex-shrink-0" />}
                     <p className="font-semibold text-sm text-text">{d.nombre}</p>
                   </div>
-                  <p className="text-[11px] text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
+                  <p className="text-xxs text-text-muted mt-0.5">{d.articulo} · {d.clasificacion}</p>
                 </div>
                 {d.estado === 'verificado' && (
                   <Badge tone="mitigation">Verificado</Badge>
@@ -110,11 +110,11 @@ export function Paso1Delito({
       {current?.delito && (current.delito.estado === 'pendiente_revision' || current.delito.estado === 'rechazado') && (
         <div className="mt-3 border-2 border-warning rounded-md p-3 bg-warning-bg">
           <p className="text-xs font-bold text-text mb-1">Artículo no verificado contra la fuente oficial</p>
-          <p className="text-[11px] text-text-secondary mb-2">
+          <p className="text-xxs text-text-secondary mb-2">
             {current.delito.estado_nota || 'El par (delito, artículo) no superó la validación automática TF-IDF. Verifique manualmente contra el CP (Decreto 130-2017 y reformas vigentes) antes de continuar.'}
           </p>
           {current.delito.estado_articulo_sugerido && (
-            <p className="text-[11px] text-text-secondary mb-2">
+            <p className="text-xxs text-text-secondary mb-2">
               Sugerencia del validador: <strong>{current.delito.estado_articulo_sugerido}</strong>
             </p>
           )}

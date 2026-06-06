@@ -47,13 +47,13 @@ export default function ComoLlegarPage() {
     <>
       <section className="bg-primary text-text-inverse">
         <Container size="lg" className="py-12 md:py-16">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
+          <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
             Cómo llegar
           </p>
           <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
             Visítenos en Nacaome, Valle
           </h1>
-          <p className="mt-4 text-[15px] md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
+          <p className="mt-4 text-body md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
             <strong className="font-bold text-accent tabular-nums">GGJ7+239</strong>
             {' · '}Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA.
             Use el mapa para orientarse o abra Google Maps/Waze desde aquí.
@@ -78,10 +78,10 @@ export default function ComoLlegarPage() {
               </div>
               <div className="p-4 border-t border-border-light flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">
+                  <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
                     Coordenadas
                   </p>
-                  <p className="text-[13px] font-semibold text-text tabular-nums">
+                  <p className="text-xs-plus font-semibold text-text tabular-nums">
                     {latitude}°N, {Math.abs(longitude)}°O
                   </p>
                 </div>
@@ -90,7 +90,7 @@ export default function ComoLlegarPage() {
                     href={gmapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-primary text-white text-[12px] font-bold hover:bg-primary-light transition-colors"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-primary text-white text-xs font-bold hover:bg-primary-light transition-colors"
                   >
                     <Navigation size={14} /> Google Maps
                     <ExternalLink size={11} className="opacity-70" />
@@ -99,14 +99,14 @@ export default function ComoLlegarPage() {
                     href={wazeLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-info text-white text-[12px] font-bold hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-info text-white text-xs font-bold hover:opacity-90 transition-opacity"
                   >
                     <Car size={14} /> Waze
                     <ExternalLink size={11} className="opacity-70" />
                   </a>
                   <Link
                     href="/contacto"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border-light text-text text-[12px] font-bold hover:bg-surface-alt"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border-light text-text text-xs font-bold hover:bg-surface-alt"
                   >
                     <Phone size={14} /> Pedir indicaciones
                   </Link>
@@ -121,32 +121,32 @@ export default function ComoLlegarPage() {
               <h2 className="font-bold text-base text-text-inverse">Dirección</h2>
             </div>
 
-            <p className="text-[18px] font-bold text-accent tabular-nums mb-1">
+            <p className="text-lg font-bold text-accent tabular-nums mb-1">
               GGJ7+239
             </p>
-            <p className="text-[14px] text-text-inverse/95 leading-relaxed">
+            <p className="text-sm text-text-inverse/95 leading-relaxed">
               {site.address.city}, {site.address.department}, {site.address.country}
             </p>
 
             <div className="border-t border-primary-light/30 my-4" />
 
-            <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
+            <h3 className="text-xxs font-bold uppercase tracking-widest text-accent mb-2">
               Referencia
             </h3>
-            <p className="text-[13px] text-text-inverse/85 leading-relaxed">
+            <p className="text-xs-plus text-text-inverse/85 leading-relaxed">
               {site.address.line2}
             </p>
 
             <div className="border-t border-primary-light/30 my-4" />
 
-            <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent mb-2">
+            <h3 className="text-xxs font-bold uppercase tracking-widest text-accent mb-2">
               Copiar dirección
             </h3>
             <CopyableAddress value={shortAddress} variant="inverse" />
 
             <div className="border-t border-primary-light/30 my-4" />
 
-            <ul className="space-y-2.5 text-[13px]">
+            <ul className="space-y-2.5 text-xs-plus">
               <li className="flex items-center gap-2">
                 <Phone size={14} className="text-accent flex-shrink-0" />
                 <a href={telHref()} className="hover:text-accent tabular-nums">
@@ -188,9 +188,9 @@ export default function ComoLlegarPage() {
                   <MapPin size={18} />
                 </div>
                 <div>
-                  <p className="font-bold text-[15px] text-text leading-tight">{p.name}</p>
-                  <p className="text-[12px] text-accent-dark font-semibold mt-0.5">{p.distance}</p>
-                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
+                  <p className="font-bold text-body text-text leading-tight">{p.name}</p>
+                  <p className="text-xs text-accent-dark font-semibold mt-0.5">{p.distance}</p>
+                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
                 </div>
               </div>
             </Card>
@@ -214,12 +214,12 @@ export default function ComoLlegarPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <p className="font-bold text-[15px] text-text leading-tight">Desde {c.from}</p>
-                    <span className="text-[11px] font-bold text-accent-dark bg-accent/10 rounded-full px-2 py-0.5">
+                    <p className="font-bold text-body text-text leading-tight">Desde {c.from}</p>
+                    <span className="text-xxs font-bold text-accent-dark bg-accent/10 rounded-full px-2 py-0.5">
                       {c.km} · {c.time}
                     </span>
                   </div>
-                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{c.route}</p>
+                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">{c.route}</p>
                 </div>
               </div>
             </Card>
@@ -227,7 +227,7 @@ export default function ComoLlegarPage() {
         </div>
         <Card padding="md" className="mt-6 bg-warning-bg border border-warning/30 flex items-start gap-3">
           <Bus size={18} className="text-warning flex-shrink-0 mt-0.5" />
-          <p className="text-[12px] text-text-secondary leading-relaxed">
+          <p className="text-xs text-text-secondary leading-relaxed">
             <strong>Transporte público:</strong> existen buses interurbanos desde Tegucigalpa,
             Choluteca y San Lorenzo hasta la terminal de Nacaome. Desde la terminal, el bufete
             se encuentra a 5 minutos en taxi o 15 minutos caminando.
@@ -242,7 +242,7 @@ export default function ComoLlegarPage() {
             <h2 className="font-serif font-extrabold text-2xl text-primary">
               Visítenos con cita previa
             </h2>
-            <p className="text-[14px] text-text-secondary mt-3 leading-relaxed">
+            <p className="text-sm text-text-secondary mt-3 leading-relaxed">
               Para garantizarle una atención sin esperas y la confidencialidad que su caso
               requiere, le recomendamos agendar una cita. Estamos disponibles de lunes a sábado
               de 7:00 a 20:00.
@@ -250,13 +250,13 @@ export default function ComoLlegarPage() {
             <div className="flex flex-col sm:flex-row gap-2 justify-center mt-5">
               <Link
                 href="/solicitar-consulta"
-                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-aggravation text-white text-[14px] font-bold hover:opacity-90"
+                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-aggravation text-white text-sm font-bold hover:opacity-90"
               >
                 Agendar cita
               </Link>
               <a
                 href={telHref()}
-                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md border-2 border-primary/30 text-primary text-[14px] font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors"
+                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md border-2 border-primary/30 text-primary text-sm font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors"
               >
                 <Phone size={14} /> Llamar
               </a>

@@ -43,7 +43,7 @@ export default function MigrantesPage() {
         </div>
         <Container size="lg" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
               {hubMigrantes.heroEyebrow}
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
@@ -78,13 +78,13 @@ export default function MigrantesPage() {
                   <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                     <Icon size={22} aria-hidden="true" />
                   </div>
-                  <h3 className="font-bold text-[15px] text-text leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-body text-text leading-tight group-hover:text-primary transition-colors">
                     {sub.titulo}
                   </h3>
-                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
                     {sub.resumen}
                   </p>
-                  <span className="inline-flex items-center gap-1 mt-3 text-[12px] font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
                     Conocer más <ArrowRight size={12} />
                   </span>
                 </Card>
@@ -103,10 +103,10 @@ export default function MigrantesPage() {
         <div className="max-w-3xl mx-auto space-y-3">
           {hubMigrantes.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-[15px] text-text leading-tight mb-1.5">
+              <h3 className="font-bold text-body text-text leading-tight mb-1.5">
                 {faq.pregunta}
               </h3>
-              <p className="text-[14px] text-text-secondary leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {faq.respuesta}
               </p>
             </Card>
@@ -116,7 +116,7 @@ export default function MigrantesPage() {
 
       <Section background="muted" spacing="sm">
         <div className="text-center max-w-2xl mx-auto">
-          <p className="text-text-secondary text-[14px] leading-relaxed mb-5">
+          <p className="text-text-secondary text-sm leading-relaxed mb-5">
             Si reside en España y necesita gestionar trámites legales en Honduras,
             podemos ayudarle. Consúltenos sin compromiso y le explicaremos el
             procedimiento paso a paso.

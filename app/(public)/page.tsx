@@ -136,16 +136,16 @@ export default function HomePage() {
                   <span className="relative w-2 h-2 flex-shrink-0">
                     <span className="absolute inset-0 rounded-full bg-success animate-glow-pulse" />
                   </span>
-                  <span className="text-[11px] font-semibold tracking-wider uppercase text-text-inverse/85">Atendiendo ahora</span>
+                  <span className="text-xxs font-semibold tracking-wider uppercase text-text-inverse/85">Atendiendo ahora</span>
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/15 border border-accent/20">
-                  <span className="text-[11px] font-bold tracking-wider text-accent">13 áreas del derecho</span>
+                  <span className="text-xxs font-bold tracking-wider text-accent">13 áreas del derecho</span>
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/40 border border-primary-light/30 text-text-inverse/85">
-                  <span className="text-[11px] font-bold tracking-wider">Multidisciplinar</span>
+                  <span className="text-xxs font-bold tracking-wider">Multidisciplinar</span>
                 </span>
               </div>
-              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.08] text-text-inverse text-balance">
+              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tighter text-text-inverse text-balance">
                 <span className="block">13 áreas del derecho,</span>
                 <span className="block text-gradient-accent mt-1">un solo bufete</span>
               </h1>
@@ -155,13 +155,13 @@ export default function HomePage() {
                 rigor técnico y confidencialidad.
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6">
-                <span className="inline-flex items-center gap-1.5 text-[13px] text-text-inverse/80">
+                <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
                   <CheckCircle2 size={14} className="text-accent" /> Consulta confidencial
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-[13px] text-text-inverse/80">
+                <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
                   <CheckCircle2 size={14} className="text-accent" /> Atención lun-sáb
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-[13px] text-text-inverse/80">
+                <span className="inline-flex items-center gap-1.5 text-xs-plus text-text-inverse/80">
                   <CheckCircle2 size={14} className="text-accent" /> Especialistas multidisciplinarios
                 </span>
               </div>
@@ -172,12 +172,12 @@ export default function HomePage() {
                 <Card padding="md" className="bg-surface text-text border-accent/30 border-2 shadow-2xl card-premium">
                   <div className="flex items-center gap-2 mb-3">
                     <Phone size={16} className="text-primary" />
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-text-muted">Contacto directo</p>
+                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Contacto directo</p>
                   </div>
                   <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
                     {site.phoneDisplay}
                   </a>
-                  <p className="text-[13px] text-text-secondary mt-1">{site.hours}</p>
+                  <p className="text-xs-plus text-text-secondary mt-1">{site.hours}</p>
                   <div className="divider-accent my-4" />
                   <a
                     href={whatsappHref('Hola, necesito una consulta jurídica.')}
@@ -189,8 +189,8 @@ export default function HomePage() {
                       <MessageCircle size={16} className="text-white" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[13px] font-bold text-success">WhatsApp directo</p>
-                      <p className="text-[11px] text-text-secondary">Respuesta durante horario de atención</p>
+                      <p className="text-xs-plus font-bold text-success">WhatsApp directo</p>
+                      <p className="text-xxs text-text-secondary">Respuesta durante horario de atención</p>
                     </div>
                   </a>
                   <Link
@@ -201,12 +201,12 @@ export default function HomePage() {
                       <Calendar size={16} className="text-text-inverse" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[13px] font-bold text-primary">Formulario confidencial</p>
-                      <p className="text-[11px] text-text-secondary">Le respondemos en horario hábil</p>
+                      <p className="text-xs-plus font-bold text-primary">Formulario confidencial</p>
+                      <p className="text-xxs text-text-secondary">Le respondemos en horario hábil</p>
                     </div>
                   </Link>
                   <div className="divider-accent my-4" />
-                  <div className="flex items-start gap-2 text-[12px] text-text-secondary">
+                  <div className="flex items-start gap-2 text-xs text-text-secondary">
                     <MapPin size={14} className="text-accent-dark flex-shrink-0 mt-0.5" />
                     <span className="leading-relaxed">{site.address.line1}, {site.address.line2}</span>
                   </div>
@@ -236,12 +236,12 @@ export default function HomePage() {
             >
               <Card padding="sm" className="h-full card-premium">
                 <div className="flex items-start gap-2.5">
-                  <div className="w-8 h-8 rounded-md bg-primary text-text-inverse flex items-center justify-center text-[12px] font-extrabold flex-shrink-0 group-hover:bg-accent-dark group-hover:text-primary transition-colors">
+                  <div className="w-8 h-8 rounded-md bg-primary text-text-inverse flex items-center justify-center text-xs font-extrabold flex-shrink-0 group-hover:bg-accent-dark group-hover:text-primary transition-colors">
                     {i + 1}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[14px] font-semibold text-text leading-snug text-balance">{item.q}</p>
-                    <span className="inline-flex items-center gap-1 mt-1.5 text-[10px] font-bold uppercase tracking-wider text-accent-dark">
+                    <p className="text-sm font-semibold text-text leading-snug text-balance">{item.q}</p>
+                    <span className="inline-flex items-center gap-1 mt-1.5 text-caption font-bold uppercase tracking-wider text-accent-dark">
                       <span className="w-1 h-1 rounded-full bg-accent" aria-hidden="true" />
                       {item.badge}
                     </span>
@@ -252,7 +252,7 @@ export default function HomePage() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
+          <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
             Ver todas las preguntas frecuentes <ArrowRight size={14} />
           </Link>
         </div>
@@ -307,7 +307,7 @@ export default function HomePage() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:text-accent-dark transition-colors">
+          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
             Explorar todas las áreas <ArrowRight size={14} />
           </Link>
         </div>
@@ -383,14 +383,14 @@ export default function HomePage() {
               <div className={i === 0 ? 'md:flex-1 mt-3 md:mt-0' : 'mt-2.5'}>
                 <h3
                   className={`font-bold leading-tight text-text-inverse text-balance ${
-                    i === 0 ? 'text-lg md:text-xl' : 'text-[14px]'
+                    i === 0 ? 'text-lg md:text-xl' : 'text-sm'
                   }`}
                 >
                   {w.title}
                 </h3>
                 <p
                   className={`leading-relaxed text-text-inverse/80 text-pretty ${
-                    i === 0 ? 'text-[14px] mt-1.5' : 'text-[12px] mt-1.5'
+                    i === 0 ? 'text-sm mt-1.5' : 'text-xs mt-1.5'
                   }`}
                 >
                   {w.desc}
@@ -405,25 +405,25 @@ export default function HomePage() {
       <Section spacing="md" ariaLabel="Por qué un bufete multidisciplinar">
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           <div className="lg:col-span-5">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-3">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
               Visión integral
             </p>
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text leading-tight text-balance">
               Un mismo problema jurídico puede tocar varias ramas del derecho a la vez
             </h2>
-            <p className="mt-4 text-[15px] text-text-secondary leading-relaxed text-pretty">
+            <p className="mt-4 text-body text-text-secondary leading-relaxed text-pretty">
               Atender su asunto con un equipo multidisciplinar evita que tenga que contratar abogados
               distintos para cada frente. Coordinamos estrategia, plazos y piezas procesales desde un
               solo bufete, con comunicación directa y un expediente unificado.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-bold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
                 <Handshake size={12} /> Estrategia unificada
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-bold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
                 <BriefcaseBusiness size={12} /> Un solo expediente
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-bold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
                 <Users size={12} /> Equipo coordinado
               </span>
             </div>
@@ -457,8 +457,8 @@ export default function HomePage() {
                     <it.icon size={18} aria-hidden="true" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-bold text-[14px] text-text leading-tight text-balance">{it.title}</h3>
-                    <p className="text-[12px] text-text-secondary leading-relaxed mt-1.5 text-pretty">
+                    <h3 className="font-bold text-sm text-text leading-tight text-balance">{it.title}</h3>
+                    <p className="text-xs text-text-secondary leading-relaxed mt-1.5 text-pretty">
                       {it.desc}
                     </p>
                   </div>
@@ -489,7 +489,7 @@ export default function HomePage() {
               subtitle="Visítenos con cita previa. Estaremos encantados de recibirle."
             />
             <Card padding="md">
-              <ul className="space-y-3 text-[14px]">
+              <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-3">
                   <MapPin size={18} className="text-accent-dark flex-shrink-0 mt-0.5" />
                   <div>
@@ -513,7 +513,7 @@ export default function HomePage() {
                   </div>
                 </li>
               </ul>
-              <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-4 text-[13px] font-semibold text-primary hover:text-accent-dark">
+              <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-4 text-xs-plus font-semibold text-primary hover:text-accent-dark">
                 Ver indicaciones para llegar <ArrowRight size={14} />
               </Link>
             </Card>
@@ -529,7 +529,7 @@ export default function HomePage() {
                 className="w-full h-full"
               />
             </Card>
-            <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-2 text-[12px] font-semibold text-primary hover:text-accent-dark">
+            <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-primary hover:text-accent-dark">
               Cómo llegar y ver indicaciones <ArrowRight size={12} />
             </Link>
           </div>
@@ -545,7 +545,7 @@ export default function HomePage() {
               title="Respuestas a sus dudas"
               subtitle="Las preguntas que más recibimos. Si tiene una diferente, escríbanos."
             />
-            <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:text-accent-dark">
+            <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-xs-plus font-semibold text-primary hover:text-accent-dark">
               Ver todas las preguntas <ArrowRight size={14} />
             </Link>
           </div>
@@ -556,12 +556,12 @@ export default function HomePage() {
                 className="group rounded-md border border-border-light bg-surface faq-anim open:border-accent/40"
               >
                 <summary className="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
-                  <h3 className="font-semibold text-[14px] text-text leading-snug text-balance">{f.q}</h3>
+                  <h3 className="font-semibold text-sm text-text leading-snug text-balance">{f.q}</h3>
                   <span className="w-6 h-6 rounded-full bg-surface-alt group-open:bg-accent/15 flex items-center justify-center flex-shrink-0 transition-colors">
                     <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 transition-transform" />
                   </span>
                 </summary>
-                <div className="faq-content px-4 pb-4 -mt-1 text-[13px] text-text-secondary leading-relaxed text-pretty">
+                <div className="faq-content px-4 pb-4 -mt-1 text-xs-plus text-text-secondary leading-relaxed text-pretty">
                   {f.a}
                 </div>
               </details>
@@ -576,7 +576,7 @@ export default function HomePage() {
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
             ¿Listo para hablar con un abogado?
           </h2>
-          <p className="mt-4 text-text-inverse/85 text-[15px] md:text-base leading-relaxed">
+          <p className="mt-4 text-text-inverse/85 text-body md:text-base leading-relaxed">
             La primera consulta es confidencial. Le escuchamos, evaluamos su caso y le explicamos con honestidad las opciones reales, sin importar el área del derecho que necesite.
           </p>
           <CTAGroup variant="inverse" className="mt-7 justify-center" />

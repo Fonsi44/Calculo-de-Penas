@@ -48,7 +48,7 @@ export default function PoliticaCookiesPage() {
             </thead>
             <tbody className="divide-y divide-border-light">
               <tr>
-                <td className="px-3 py-2.5 font-mono text-[12px] text-primary">__Host-token</td>
+                <td className="px-3 py-2.5 font-mono text-xs text-primary">__Host-token</td>
                 <td className="px-3 py-2.5">Técnica (sesión)</td>
                 <td className="px-3 py-2.5">
                   Autenticación del usuario en la intranet del bufete.
@@ -56,7 +56,7 @@ export default function PoliticaCookiesPage() {
                 <td className="px-3 py-2.5">Sesión</td>
               </tr>
               <tr>
-                <td className="px-3 py-2.5 font-mono text-[12px] text-primary">__Host-theme</td>
+                <td className="px-3 py-2.5 font-mono text-xs text-primary">__Host-theme</td>
                 <td className="px-3 py-2.5">Técnica (preferencia)</td>
                 <td className="px-3 py-2.5">
                   Recordar la preferencia de modo claro u oscuro del visitante.
@@ -64,7 +64,7 @@ export default function PoliticaCookiesPage() {
                 <td className="px-3 py-2.5">1 año</td>
               </tr>
               <tr>
-                <td className="px-3 py-2.5 font-mono text-[12px] text-primary">__Host-cookie-consent</td>
+                <td className="px-3 py-2.5 font-mono text-xs text-primary">__Host-cookie-consent</td>
                 <td className="px-3 py-2.5">Técnica (consentimiento)</td>
                 <td className="px-3 py-2.5">
                   Registrar la decisión del usuario sobre cookies no esenciales.
@@ -75,10 +75,10 @@ export default function PoliticaCookiesPage() {
           </table>
         </div>
         <LegalCallout variant="info">
-          Las cookies con prefijo <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-[12px]">__Host-</code>{' '}
-          son establecidas con el atributo <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-[12px]">Secure</code>,{' '}
-          <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-[12px]">HttpOnly</code> y sin{' '}
-          <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-[12px]">Domain</code>, lo que
+          Las cookies con prefijo <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-xs">__Host-</code>{' '}
+          son establecidas con el atributo <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-xs">Secure</code>,{' '}
+          <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-xs">HttpOnly</code> y sin{' '}
+          <code className="px-1 py-0.5 rounded bg-surface-alt font-mono text-xs">Domain</code>, lo que
           impide suplantaciones entre sitios.
         </LegalCallout>
       </LegalSection>

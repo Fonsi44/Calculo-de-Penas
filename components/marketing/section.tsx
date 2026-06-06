@@ -82,7 +82,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       {eyebrow && (
         <p
           className={cn(
-            'text-[11px] font-bold uppercase tracking-widest mb-3',
+            'text-xxs font-bold uppercase tracking-widest mb-3',
             invert ? 'text-accent' : 'text-accent-dark',
           )}
         >
@@ -100,7 +100,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       {subtitle && (
         <p
           className={cn(
-            'mt-4 text-[15px] md:text-base leading-relaxed',
+            'mt-4 text-body md:text-base leading-relaxed',
             invert ? 'text-text-inverse/85' : 'text-text-secondary',
           )}
         >

@@ -23,7 +23,7 @@ export function BannerCalidadDatos() {
   const completo = pendientes === 0 && rechazados === 0;
   return (
     <div
-      className={`mb-3 border rounded-md p-3 text-[11px] text-text-secondary ${
+      className={`mb-3 border rounded-md p-3 text-xxs text-text-secondary ${
         completo
           ? 'border-success/30 bg-success-bg'
           : 'border-warning/40 bg-warning-bg'

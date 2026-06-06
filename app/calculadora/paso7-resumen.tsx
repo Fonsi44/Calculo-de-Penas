@@ -45,23 +45,23 @@ export function Paso7Resumen({ configs, tipoConcurso, error, calculating, onCalc
       <Card padding="md" tone="accent" className="mb-3">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
           <div>
-            <p className="text-[11px] text-text-secondary uppercase tracking-wider mb-1">Delitos</p>
+            <p className="text-xxs text-text-secondary uppercase tracking-wider mb-1">Delitos</p>
             <p className="text-xl font-extrabold text-primary">{configs.length}</p>
           </div>
           <div>
-            <p className="text-[11px] text-text-secondary uppercase tracking-wider mb-1">Agravantes</p>
+            <p className="text-xxs text-text-secondary uppercase tracking-wider mb-1">Agravantes</p>
             <p className={cn('text-xl font-extrabold', m.totalAgravantes > 0 ? 'text-aggravation' : 'text-text-muted')}>
               {m.totalAgravantes}
             </p>
           </div>
           <div>
-            <p className="text-[11px] text-text-secondary uppercase tracking-wider mb-1">Atenuantes</p>
+            <p className="text-xxs text-text-secondary uppercase tracking-wider mb-1">Atenuantes</p>
             <p className={cn('text-xl font-extrabold', m.totalAtenuantes > 0 ? 'text-mitigation' : 'text-text-muted')}>
               {m.totalAtenuantes}
             </p>
           </div>
           <div>
-            <p className="text-[11px] text-text-secondary uppercase tracking-wider mb-1">Balance</p>
+            <p className="text-xxs text-text-secondary uppercase tracking-wider mb-1">Balance</p>
             <p className={cn(
               'text-xl font-extrabold',
               balance > 0 ? 'text-aggravation' : balance < 0 ? 'text-mitigation' : 'text-text-muted',
@@ -72,7 +72,7 @@ export function Paso7Resumen({ configs, tipoConcurso, error, calculating, onCalc
         </div>
 
         <div className="mt-3 pt-3 border-t border-border-light">
-          <p className="text-[11px] font-semibold text-text-secondary mb-2">Factores que afectan la pena:</p>
+          <p className="text-xxs font-semibold text-text-secondary mb-2">Factores que afectan la pena:</p>
           <div className="flex flex-wrap gap-1.5">
             {m.hayTentativa && (
               <Badge tone="mitigation" variant="outline" size="md">
@@ -100,7 +100,7 @@ export function Paso7Resumen({ configs, tipoConcurso, error, calculating, onCalc
               </Badge>
             )}
             {m.totalAgravantes === 0 && m.totalAtenuantes === 0 && !m.hayTentativa && !m.hayComplice && (
-              <span className="text-[11px] text-text-muted">Pena base sin modificaciones</span>
+              <span className="text-xxs text-text-muted">Pena base sin modificaciones</span>
             )}
           </div>
         </div>
@@ -109,7 +109,7 @@ export function Paso7Resumen({ configs, tipoConcurso, error, calculating, onCalc
       {configs.map((c, i) => (
         <Card key={i} padding="md" className="mb-2">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-[11px] font-bold text-primary">#{i + 1}</span>
+            <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xxs font-bold text-primary">#{i + 1}</span>
             <p className="font-bold text-sm text-text flex-1">{c.delito.nombre}</p>
           </div>
           <div className="grid grid-cols-2 gap-1 text-xs text-text-muted tabular-nums">

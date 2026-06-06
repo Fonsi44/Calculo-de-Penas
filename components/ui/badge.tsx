@@ -74,7 +74,7 @@ const TONE: Record<BadgeTone, { soft: string; outline: string; solid: string }> 
 };
 
 const SIZE = {
-  sm: 'text-[11px] px-1.5 py-0.5',
+  sm: 'text-xxs px-1.5 py-0.5',
   md: 'text-xs px-2 py-0.5',
 };
 

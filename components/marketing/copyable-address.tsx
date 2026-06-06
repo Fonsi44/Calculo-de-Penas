@@ -33,7 +33,7 @@ export function CopyableAddress({ value, variant = 'default', label = 'Copiar' }
       }`}
     >
       <p
-        className={`text-[12px] leading-snug flex-1 break-words ${
+        className={`text-xs leading-snug flex-1 break-words ${
           isInverse ? 'text-text-inverse/90' : 'text-text'
         }`}
       >
@@ -42,7 +42,7 @@ export function CopyableAddress({ value, variant = 'default', label = 'Copiar' }
       <button
         type="button"
         onClick={onClick}
-        className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] font-bold transition-opacity ${
+        className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xxs font-bold transition-opacity ${
           isInverse
             ? 'bg-accent text-primary hover:opacity-90'
             : 'bg-primary text-text-inverse hover:opacity-90'

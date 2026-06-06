@@ -120,10 +120,10 @@ export default function DelitosCatalog() {
       }
     >
       <div className="p-3 max-w-5xl mx-auto">
-        <div className="flex items-start gap-2 p-2 mb-3 bg-success-bg border border-success/30 rounded-md text-[11px] leading-4">
+        <div className="flex items-start gap-2 p-2 mb-3 bg-success-bg border border-success/30 rounded-md text-xxs leading-4">
           <CheckCircle2 size={14} className="text-success shrink-0 mt-0.5" />
           <div className="text-text-secondary">
-            <strong className="text-text">Catálogo validado.</strong> Los {total} tipos penales del catálogo (incluye modalidades agravadas/atenuadas por artículo) han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024), cubriendo los 362 artículos del CP tipificados como delito. Reporte: <code className="px-1 py-0.5 bg-surface rounded text-[10px]">data/delitos-validacion.csv</code>.
+            <strong className="text-text">Catálogo validado.</strong> Los {total} tipos penales del catálogo (incluye modalidades agravadas/atenuadas por artículo) han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024), cubriendo los 362 artículos del CP tipificados como delito. Reporte: <code className="px-1 py-0.5 bg-surface rounded text-caption">data/delitos-validacion.csv</code>.
           </div>
         </div>
         <div className="relative mb-3">
@@ -149,7 +149,7 @@ export default function DelitosCatalog() {
             }`}
           >
             Todas
-            <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
+            <span className={`px-1.5 py-0.5 rounded-full text-xxs font-bold ${
               !activeRama ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
             }`}>{total}</span>
           </button>
@@ -165,7 +165,7 @@ export default function DelitosCatalog() {
                 }`}
               >
                 {formatRama(r.id) || r.id}
-                <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
+                <span className={`px-1.5 py-0.5 rounded-full text-xxs font-bold ${
                   isActive ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
                 }`}>{r.cantidad}</span>
               </button>
@@ -210,7 +210,7 @@ export default function DelitosCatalog() {
                         {item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}
                       </span>
                     </div>
-                    <p className="text-text-muted text-[11px] italic truncate">{formatRama(item.rama_id)}</p>
+                    <p className="text-text-muted text-xxs italic truncate">{formatRama(item.rama_id)}</p>
                   </Link>
 
                   <div className="flex border-t border-border-light">
@@ -246,7 +246,7 @@ export default function DelitosCatalog() {
                 >
                   Anterior
                 </Button>
-                <span className="text-[11px] text-text-muted tabular-nums">
+                <span className="text-xxs text-text-muted tabular-nums">
                   Página {page + 1} de {totalPages}
                 </span>
                 <Button

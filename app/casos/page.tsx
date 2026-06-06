@@ -126,11 +126,11 @@ export default function CasosPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-bold text-sm text-text truncate">{c.titulo}</p>
-                    {c.cliente && <p className="text-[11px] text-text-muted">Cliente: {c.cliente}</p>}
+                    {c.cliente && <p className="text-xxs text-text-muted">Cliente: {c.cliente}</p>}
                   </div>
                   <ArrowRight size={16} className="text-text-muted flex-shrink-0 mt-1" />
                 </div>
-                <div className="flex items-center gap-3 mt-2 text-[11px] text-text-muted">
+                <div className="flex items-center gap-3 mt-2 text-xxs text-text-muted">
                   <Badge tone={c.estado === 'completado' ? 'mitigation' : 'warning'}>{c.estado}</Badge>
                   <span className="flex items-center gap-1">
                     <Gavel size={11} />

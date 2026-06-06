@@ -77,12 +77,12 @@ export function CircunstanciaPicker({ current, onChange, onOpenArticle }: Props)
           <button
             type="button"
             onClick={() => onOpenArticle('Art. 30 CP')}
-            className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
+            className="text-xxs text-accent-dark underline hover:text-accent font-semibold"
           >
             Art. 30 CP
           </button>
         </div>
-        <p className="text-[11px] text-text-secondary mb-3 italic">
+        <p className="text-xxs text-text-secondary mb-3 italic">
           Excluyentes: si aplica una eximente completa, no hay pena. Las incompletas atenúan.
         </p>
         <div className="space-y-1.5">
@@ -112,7 +112,7 @@ export function CircunstanciaPicker({ current, onChange, onOpenArticle }: Props)
                     isIncompletaSelected && <Badge tone="exemption">APLICA</Badge>
                   )}
                 </div>
-                <p className="text-[11px] text-text-muted mt-0.5">
+                <p className="text-xxs text-text-muted mt-0.5">
                   {e.articulo} · {e.descripcion}
                 </p>
               </button>
@@ -132,12 +132,12 @@ export function CircunstanciaPicker({ current, onChange, onOpenArticle }: Props)
           <button
             type="button"
             onClick={() => onOpenArticle('Art. 32 CP')}
-            className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
+            className="text-xxs text-accent-dark underline hover:text-accent font-semibold"
           >
             Art. 32 CP
           </button>
         </div>
-        <p className="text-[11px] text-text-secondary mb-3 italic">
+        <p className="text-xxs text-text-secondary mb-3 italic">
           Aumentan la pena dentro de la mitad superior del marco penal.
         </p>
         <div className="flex flex-wrap gap-1.5">
@@ -165,12 +165,12 @@ export function CircunstanciaPicker({ current, onChange, onOpenArticle }: Props)
           <button
             type="button"
             onClick={() => onOpenArticle('Art. 31 CP')}
-            className="text-[11px] text-accent-dark underline hover:text-accent font-semibold"
+            className="text-xxs text-accent-dark underline hover:text-accent font-semibold"
           >
             Art. 31 CP
           </button>
         </div>
-        <p className="text-[11px] text-text-secondary mb-3 italic">
+        <p className="text-xxs text-text-secondary mb-3 italic">
           Reducen la pena dentro de la mitad inferior del marco penal.
         </p>
         <div className="flex flex-wrap gap-1.5">

@@ -41,6 +41,6 @@ describe('Badge', () => {
 
   it('aplica size sm por defecto', () => {
     const { container } = render(<Badge>Small</Badge>);
-    expect(container.firstChild).toHaveClass('text-[11px]');
+    expect(container.firstChild).toHaveClass('text-xxs');
   });
 });

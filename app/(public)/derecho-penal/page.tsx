@@ -79,10 +79,10 @@ export default function DerechoPenalPage() {
         <div className="max-w-3xl mx-auto space-y-3">
           {hubPenal.faqs.map((faq, i) => (
             <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-[15px] text-text leading-tight mb-1.5">
+              <h3 className="font-bold text-body text-text leading-tight mb-1.5">
                 {faq.pregunta}
               </h3>
-              <p className="text-[14px] text-text-secondary leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {faq.respuesta}
               </p>
             </Card>
@@ -92,7 +92,7 @@ export default function DerechoPenalPage() {
 
       <Section background="muted" spacing="sm">
         <div className="text-center max-w-2xl mx-auto">
-          <p className="text-text-secondary text-[14px] leading-relaxed mb-5">
+          <p className="text-text-secondary text-sm leading-relaxed mb-5">
             Cada caso penal es distinto. Si no encuentra la información que busca
             o necesita una valoración concreta de su situación, solicite una
             consulta confidencial y le atenderemos personalmente.

@@ -132,7 +132,7 @@ export default function BibliotecaCP() {
             }`}
           >
             Todos
-            <span className={`px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
+            <span className={`px-1.5 py-0.5 rounded-full text-xxs font-bold ${
               !tema ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'
             }`}>{total}</span>
           </button>
@@ -184,7 +184,7 @@ export default function BibliotecaCP() {
                     </div>
 
                     {ubicacion(a) && (
-                      <p className="text-text-muted text-[11px] italic truncate">{ubicacion(a)}</p>
+                      <p className="text-text-muted text-xxs italic truncate">{ubicacion(a)}</p>
                     )}
                   </Link>
 
@@ -212,7 +212,7 @@ export default function BibliotecaCP() {
                 >
                   Anterior
                 </Button>
-                <span className="text-[11px] text-text-muted tabular-nums">
+                <span className="text-xxs text-text-muted tabular-nums">
                   Página {page + 1} de {totalPages}
                 </span>
                 <Button

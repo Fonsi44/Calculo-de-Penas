@@ -77,7 +77,7 @@ export function Stepper({ steps, current, variant = 'horizontal', className, onS
           >
             <div
               className={cn(
-                'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold transition-colors',
+                'w-6 h-6 rounded-full flex items-center justify-center text-xxs font-bold transition-colors',
                 active && 'bg-accent text-primary',
                 done && 'bg-accent/70 text-primary',
                 !active && !done && 'bg-white/15 text-text-inverse',

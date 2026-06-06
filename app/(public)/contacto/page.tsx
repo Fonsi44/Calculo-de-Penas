@@ -110,14 +110,14 @@ export default function ContactoPage() {
                 <div className="rounded-md border border-success/30 bg-success/10 p-5 text-center">
                   <CheckCircle2 size={36} className="text-success mx-auto mb-2" />
                   <p className="font-bold text-text">Mensaje recibido</p>
-                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">
+                  <p className="text-xs-plus text-text-secondary mt-1.5 leading-relaxed">
                     Le contactaremos en horario hábil por el medio que haya indicado.
                     Si requiere atención inmediata, use el teléfono o WhatsApp.
                   </p>
                   <button
                     type="button"
                     onClick={() => setStatus('idle')}
-                    className="mt-4 text-[12px] font-semibold text-primary hover:text-accent-dark"
+                    className="mt-4 text-xs font-semibold text-primary hover:text-accent-dark"
                   >
                     Enviar otro mensaje
                   </button>
@@ -149,13 +149,13 @@ export default function ContactoPage() {
                     onChange={onChange('email')}
                   />
                   <div>
-                    <label className="block text-[12px] font-bold text-text mb-1">
+                    <label className="block text-xs font-bold text-text mb-1">
                       Asunto
                     </label>
                     <select
                       value={form.asunto}
                       onChange={onChange('asunto')}
-                      className="w-full h-11 px-3 rounded-md border border-border-light bg-surface text-[14px] text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+                      className="w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
                     >
                       {SUBJECTS.map((s) => (
                         <option key={s} value={s}>
@@ -165,7 +165,7 @@ export default function ContactoPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[12px] font-bold text-text mb-1">
+                    <label className="block text-xs font-bold text-text mb-1">
                       Mensaje
                     </label>
                     <textarea
@@ -173,15 +173,15 @@ export default function ContactoPage() {
                       onChange={onChange('mensaje')}
                       rows={5}
                       placeholder="Describa brevemente su situación. NO incluya datos sensibles innecesarios."
-                      className="w-full px-3 py-2.5 rounded-md border border-border-light bg-surface text-[14px] text-text leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+                      className="w-full px-3 py-2.5 rounded-md border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
                       required
                       minLength={10}
                     />
-                    <p className="text-[11px] text-text-muted mt-1">
+                    <p className="text-xxs text-text-muted mt-1">
                       Mínimo 10 caracteres. Por seguridad, no envíe contraseñas, números de tarjeta ni documentos de identidad completos.
                     </p>
                   </div>
-                  <label className="flex items-start gap-2 text-[12px] text-text-secondary">
+                  <label className="flex items-start gap-2 text-xs text-text-secondary">
                     <input
                       type="checkbox"
                       checked={form.acepta}
@@ -198,7 +198,7 @@ export default function ContactoPage() {
                   </label>
 
                   {errorMsg && (
-                    <div className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-[12px] text-aggravation">
+                    <div className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
                       <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
                       <span>{errorMsg}</span>
                     </div>
@@ -229,10 +229,10 @@ export default function ContactoPage() {
             <LiveOfficeStatus />
 
             <Card padding="md">
-              <h3 className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-3">
+              <h3 className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
                 Canales directos
               </h3>
-              <ul className="space-y-3 text-[13px]">
+              <ul className="space-y-3 text-xs-plus">
                 <li>
                   <a href={telHref()} className="flex items-start gap-3 hover:text-primary">
                     <Phone size={16} className="text-accent-dark flex-shrink-0 mt-0.5" />
@@ -287,7 +287,7 @@ export default function ContactoPage() {
             </Card>
 
             <Card padding="md" className="bg-warning-bg border border-warning/30">
-              <p className="text-[12px] text-text-secondary leading-relaxed">
+              <p className="text-xs text-text-secondary leading-relaxed">
                 <strong className="text-text">¿Urgencia legal?</strong>{' '}
                 Detención, desalojo, despido, denuncia o retención migratoria —si es
                 apremiante, contáctenos de inmediato. Actuamos en toda Honduras con
@@ -296,12 +296,12 @@ export default function ContactoPage() {
             </Card>
 
             <Card padding="sm">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-accent-dark mb-2">
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-2">
                 13 áreas de práctica
               </p>
               <div className="flex flex-wrap gap-1">
                 {['Penal','Familia','Laboral','Civil','Mercantil','Bancario','Administrativo','Aduanero','Sanitario','Extranjería','Prop.Intelectual','Tributario','Ambiental','Conciliación'].map((a) => (
-                  <span key={a} className="inline-flex px-1.5 py-0.5 rounded-full bg-muted text-[10px] text-text-secondary font-medium">
+                  <span key={a} className="inline-flex px-1.5 py-0.5 rounded-full bg-muted text-caption text-text-secondary font-medium">
                     {a}
                   </span>
                 ))}
@@ -331,7 +331,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-[12px] font-bold text-text mb-1">
+      <label className="block text-xs font-bold text-text mb-1">
         {label}
         {required && <span className="text-aggravation ml-0.5">*</span>}
       </label>
@@ -342,7 +342,7 @@ function Field({
           value={value}
           onChange={onChange}
           required={required}
-          className="w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-[14px] text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          className="w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
         />
       </div>
     </div>

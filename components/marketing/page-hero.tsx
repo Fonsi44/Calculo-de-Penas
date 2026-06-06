@@ -41,12 +41,12 @@ export function PageHero({
     : 'relative bg-surface-alt text-text overflow-hidden border-b border-border-light';
 
   const eyebrowCls = isPrimary
-    ? 'text-[11px] font-bold uppercase tracking-widest text-accent'
-    : 'text-[11px] font-bold uppercase tracking-widest text-accent-dark';
+    ? 'text-xxs font-bold uppercase tracking-widest text-accent'
+    : 'text-xxs font-bold uppercase tracking-widest text-accent-dark';
 
   const titleCls = isPrimary
-    ? 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-[1.08] text-text-inverse text-balance'
-    : 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-[1.08] text-primary text-balance';
+    ? 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tighter text-text-inverse text-balance'
+    : 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tighter text-primary text-balance';
 
   const subtitleCls = isPrimary
     ? 'mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-3xl'
@@ -77,7 +77,7 @@ export function PageHero({
             <span className={eyebrowCls}>{eyebrow}</span>
             {badge && (
               <span
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-caption font-bold uppercase tracking-wider ${
                   isPrimary
                     ? 'bg-accent/15 border border-accent/30 text-accent'
                     : 'bg-primary/10 border border-primary/20 text-primary'

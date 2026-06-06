@@ -27,7 +27,7 @@ export default function BlogHubPage() {
         </div>
         <Container size="lg" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-accent mb-3">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
               Blog Jurídico
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
@@ -73,7 +73,7 @@ export default function BlogHubPage() {
                 <div className="mt-8 text-center">
                   <Link
                     href="/blog/feed.xml"
-                    className="text-[13px] text-text-muted hover:text-primary transition-colors"
+                    className="text-xs-plus text-text-muted hover:text-primary transition-colors"
                   >
                     Suscribirse al RSS
                   </Link>

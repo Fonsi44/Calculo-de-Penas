@@ -46,21 +46,21 @@ export default async function BlogPostPage({ params }: Props) {
         <Container size="md">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-[13px] text-text-muted hover:text-primary transition-colors mb-6"
+            className="inline-flex items-center gap-1.5 text-xs-plus text-text-muted hover:text-primary transition-colors mb-6"
           >
             <ArrowLeft size={14} /> Volver al blog
           </Link>
           <article>
             <header className="mb-8">
               <div className="flex items-center gap-2 mb-3">
-                <span className="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/15 text-primary">
+                <span className="inline-block text-xxs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/15 text-primary">
                   {getCategoryName(post.category) ?? post.category}
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-text">
                 {post.title}
               </h1>
-              <div className="flex flex-wrap items-center gap-4 mt-4 text-[13px] text-text-muted">
+              <div className="flex flex-wrap items-center gap-4 mt-4 text-xs-plus text-text-muted">
                 <span className="flex items-center gap-1.5">
                   <Calendar size={14} /> {formatDate(post.publishedAt)}
                 </span>
@@ -88,7 +88,7 @@ export default async function BlogPostPage({ params }: Props) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-block px-2.5 py-1 rounded-full bg-surface-alt text-[12px] text-text-muted"
+                      className="inline-block px-2.5 py-1 rounded-full bg-surface-alt text-xs text-text-muted"
                     >
                       {tag}
                     </span>
@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: Props) {
               {prevPost ? (
                 <Link
                   href={`/blog/${prevPost.slug}`}
-                  className="flex items-center gap-2 text-[14px] text-text-secondary hover:text-primary transition-colors"
+                  className="flex items-center gap-2 text-sm text-text-secondary hover:text-primary transition-colors"
                 >
                   <ArrowLeft size={14} className="flex-shrink-0" />
                   <span className="line-clamp-1">{prevPost.title}</span>
@@ -112,7 +112,7 @@ export default async function BlogPostPage({ params }: Props) {
               {nextPost ? (
                 <Link
                   href={`/blog/${nextPost.slug}`}
-                  className="flex items-center justify-end gap-2 text-[14px] text-text-secondary hover:text-primary transition-colors sm:text-right"
+                  className="flex items-center justify-end gap-2 text-sm text-text-secondary hover:text-primary transition-colors sm:text-right"
                 >
                   <span className="line-clamp-1">{nextPost.title}</span>
                   <ArrowRight size={14} className="flex-shrink-0" />

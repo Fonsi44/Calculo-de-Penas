@@ -63,7 +63,7 @@ export function UserActions() {
             >
               <div className="px-3 py-2 border-b border-border-light">
                 <p className="text-xs font-bold text-text truncate">{user.nombre}</p>
-                <p className="text-[11px] text-text-secondary truncate">{user.email}</p>
+                <p className="text-xxs text-text-secondary truncate">{user.email}</p>
               </div>
               <button
                 type="button"

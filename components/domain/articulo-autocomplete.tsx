@@ -207,7 +207,7 @@ export function ArticuloAutocomplete({
                           {highlight(art.articulo, query)}
                         </span>
                         {art.tema && (
-                          <span className="text-[10px] uppercase tracking-wider font-semibold text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
+                          <span className="text-caption uppercase tracking-wider font-semibold text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
                             {TEMA_LABEL(art.tema)}
                           </span>
                         )}
@@ -217,11 +217,11 @@ export function ArticuloAutocomplete({
                           {highlight(art.epigrafe, query)}
                         </p>
                       )}
-                      <p className="text-[11px] text-text-muted line-clamp-1 mt-0.5 italic">
+                      <p className="text-xxs text-text-muted line-clamp-1 mt-0.5 italic">
                         {art.texto.slice(0, 120)}{art.texto.length > 120 ? '…' : ''}
                       </p>
                     </div>
-                    <span className="text-text-muted text-[11px] flex items-center gap-1 shrink-0 mt-0.5">
+                    <span className="text-text-muted text-xxs flex items-center gap-1 shrink-0 mt-0.5">
                       {active === i && <CornerDownLeft size={10} />}
                       <ArrowRight size={12} />
                     </span>

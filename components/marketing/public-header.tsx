@@ -43,7 +43,7 @@ export function PublicHeader() {
     >
       {/* Barra superior con datos de contacto */}
       <div className="hidden md:block bg-primary-dark">
-        <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-between text-[12px]">
+        <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
               href={telHref()}
@@ -80,7 +80,7 @@ export function PublicHeader() {
           </div>
           <div className="min-w-0">
             <p className="font-extrabold text-sm leading-none tracking-wide">{site.shortName}</p>
-            <p className="text-[10px] text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
+            <p className="text-caption text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
           </div>
         </Link>
 
@@ -92,7 +92,7 @@ export function PublicHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
-                className={`px-3 h-9 inline-flex items-center text-[13px] font-semibold rounded-md transition-colors focus-visible:outline-none ${
+                className={`px-3 h-9 inline-flex items-center text-xs-plus font-semibold rounded-md transition-colors focus-visible:outline-none ${
                   active
                     ? 'text-accent bg-primary-light/40'
                     : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -117,7 +117,7 @@ export function PublicHeader() {
           </a>
           <Link
             href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-aggravation text-white text-[13px] font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-aggravation text-white text-xs-plus font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
           >
             <Calendar size={14} aria-hidden="true" />
             Solicitar consulta
@@ -184,7 +184,7 @@ export function PublicHeader() {
               <Calendar size={16} />
               Solicitar consulta
             </Link>
-            <p className="px-3 pt-2 text-[11px] text-text-inverse/60">{site.hours}</p>
+            <p className="px-3 pt-2 text-xxs text-text-inverse/60">{site.hours}</p>
           </nav>
         </div>
       )}

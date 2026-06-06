@@ -97,7 +97,7 @@ export default function AtajosPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 id={`g-${g.title}`} className="font-bold text-sm text-text">{g.title}</h3>
-                <p className="text-[11px] text-text-muted leading-4">{g.description}</p>
+                <p className="text-xxs text-text-muted leading-4">{g.description}</p>
               </div>
             </div>
 
@@ -109,13 +109,13 @@ export default function AtajosPage() {
                       {s.keys.map((k, j) => (
                         <span key={j} className="flex items-center gap-1">
                           <Kbd>{k}</Kbd>
-                          {j < s.keys.length - 1 && <span className="text-text-muted text-[11px]">+</span>}
+                          {j < s.keys.length - 1 && <span className="text-text-muted text-xxs">+</span>}
                         </span>
                       ))}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-semibold text-text">{s.label}</div>
-                      <div className="text-[11px] text-text-muted leading-4">{s.description}</div>
+                      <div className="text-xxs text-text-muted leading-4">{s.description}</div>
                     </div>
                   </li>
                 ))}
@@ -144,7 +144,7 @@ export default function AtajosPage() {
           </div>
         </Card>
 
-        <p className="text-[11px] text-text-muted text-center py-2 italic">
+        <p className="text-xxs text-text-muted text-center py-2 italic">
           Sugerencias de atajos adicionales son bienvenidas. Esta página se actualizará con cada release.
         </p>
       </div>

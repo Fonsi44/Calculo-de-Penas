@@ -47,7 +47,7 @@ export function TestimonialsSection({
             {title}
           </h2>
           {subtitle && (
-            <p className="mt-3 text-[15px] md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
+            <p className="mt-3 text-body md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
               {subtitle}
             </p>
           )}
@@ -78,10 +78,10 @@ export function TestimonialsSection({
                     ))}
                   </div>
                 </header>
-                <p className="mt-3 text-[14px] md:text-[15px] text-text-secondary leading-relaxed">
+                <p className="mt-3 text-sm md:text-body text-text-secondary leading-relaxed">
                   {t.body}
                 </p>
-                <footer className="mt-4 flex items-center justify-between text-[11px] text-text-muted">
+                <footer className="mt-4 flex items-center justify-between text-xxs text-text-muted">
                   <span>{t.source ?? 'Cliente verificado'}</span>
                   {t.date && <span>{t.date}</span>}
                 </footer>

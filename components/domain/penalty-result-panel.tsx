@@ -70,12 +70,12 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
 
       {/* Cabecera editorial */}
       <Card padding="md" tone="accent" className="text-center">
-        <p className="text-[11px] text-text-secondary uppercase tracking-widest mb-1">
+        <p className="text-xxs text-text-secondary uppercase tracking-widest mb-1">
           Informe de cálculo de pena
         </p>
         <p className="text-sm font-bold text-primary">LEX HONDURAS</p>
-        <p className="text-[11px] text-text-muted mt-1">Código Penal · Decreto 130-2017 y reformas vigentes</p>
-        <div className="mt-3 pt-3 border-t border-border-light text-[11px] text-text-secondary tabular-nums">
+        <p className="text-xxs text-text-muted mt-1">Código Penal · Decreto 130-2017 y reformas vigentes</p>
+        <div className="mt-3 pt-3 border-t border-border-light text-xxs text-text-secondary tabular-nums">
           <p>{fecha}</p>
           {casoTitulo && <p className="mt-0.5">Caso: <span className="font-semibold text-text">{casoTitulo}</span></p>}
           {calculoNumero && <p>N° de cálculo: <span className="font-semibold text-text">{calculoNumero}</span></p>}
@@ -109,7 +109,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
           <div className="space-y-1.5">
             {(resultado.delitos_analizados || []).map((d, i) => (
               <div key={i} className="flex items-center gap-2 p-2 bg-surface-alt rounded-md">
-                <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-[11px] font-bold text-primary flex-shrink-0">
+                <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xxs font-bold text-primary flex-shrink-0">
                   {i + 1}
                 </span>
                 <p className="font-semibold text-sm text-text flex-1 truncate">{d.nombre}</p>
@@ -161,12 +161,12 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
           </dl>
           {d.modificaciones && d.modificaciones.length > 0 && (
             <div className="mt-3 pt-3 border-t border-border-light">
-              <p className="text-[11px] font-bold text-text-secondary uppercase tracking-wider mb-1.5">
+              <p className="text-xxs font-bold text-text-secondary uppercase tracking-wider mb-1.5">
                 Operación
               </p>
               <ol className="space-y-1">
                 {d.modificaciones.map((mod, j) => (
-                  <li key={j} className="text-[11px] text-text-secondary font-serif leading-4 flex gap-1.5">
+                  <li key={j} className="text-xxs text-text-secondary font-serif leading-4 flex gap-1.5">
                     <span className="text-accent-dark font-bold">→</span>
                     <span>{mod}</span>
                   </li>
@@ -175,13 +175,13 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
             </div>
           )}
           {d.agravantes_aplicadas && d.agravantes_aplicadas.length > 0 && (
-            <p className="text-[11px] text-text-secondary mt-2">
+            <p className="text-xxs text-text-secondary mt-2">
               <span className="font-bold text-aggravation">Agravantes aplicadas:</span>{' '}
               {d.agravantes_aplicadas.join(', ')}
             </p>
           )}
           {d.atenuantes_aplicadas && d.atenuantes_aplicadas.length > 0 && (
-            <p className="text-[11px] text-text-secondary">
+            <p className="text-xxs text-text-secondary">
               <span className="font-bold text-mitigation">Atenuantes aplicadas:</span>{' '}
               {d.atenuantes_aplicadas.join(', ')}
             </p>
@@ -215,7 +215,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
       {/* V. Fundamento normativo */}
       <Card padding="md" tone="default" className="bg-surface-alt">
         <SectionHeader numeral="V" title="Fundamento normativo" icon={<FileText size={14} />} />
-        <p className="text-[11px] text-text-secondary mb-2">
+        <p className="text-xxs text-text-secondary mb-2">
           El presente cálculo se fundamenta en los siguientes artículos del Código Penal de Honduras (Decreto 130-2017 y reformas vigentes):
         </p>
         <div className="flex flex-wrap gap-1.5">
@@ -240,7 +240,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
               key={art.ref}
               type="button"
               onClick={() => onOpenArticle(art.ref)}
-              className="inline-flex items-center gap-1 h-7 px-2.5 rounded-full border border-border bg-surface text-[11px] font-semibold text-text hover:border-accent hover:text-accent-dark"
+              className="inline-flex items-center gap-1 h-7 px-2.5 rounded-full border border-border bg-surface text-xxs font-semibold text-text hover:border-accent hover:text-accent-dark"
             >
               {art.ref}
             </button>
@@ -250,7 +250,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
 
       {/* VI. Disclaimer */}
       <Card padding="md" tone="default" className="bg-warning-bg border-warning/30">
-        <p className="text-[11px] text-text-secondary italic font-serif leading-5">
+        <p className="text-xxs text-text-secondary italic font-serif leading-5">
           {resultado.disclaimer}
         </p>
       </Card>
@@ -271,7 +271,7 @@ function SectionHeader({
 }) {
   return (
     <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border-light">
-      <span className="text-[11px] font-bold text-accent-dark tracking-widest">{numeral}.</span>
+      <span className="text-xxs font-bold text-accent-dark tracking-widest">{numeral}.</span>
       <span className="text-accent-dark">{icon}</span>
       <h3 className="font-bold text-sm text-primary uppercase tracking-wider flex-1">{title}</h3>
       {action}

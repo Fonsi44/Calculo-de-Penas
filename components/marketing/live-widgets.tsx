@@ -18,7 +18,7 @@ export function LiveBadge() {
 
   const visitors = 2 + (tick % 4);
   return (
-    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/30 text-success text-[11px] font-bold">
+    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/30 text-success text-xxs font-bold">
       <span className="relative flex h-2 w-2">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
         <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
@@ -75,10 +75,10 @@ export function LiveOfficeStatus() {
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-[11px] font-bold uppercase tracking-wider text-text-muted">
+        <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">
           Estado de la oficina
         </p>
-        <p className="text-[14px] font-bold text-text leading-tight">
+        <p className="text-sm font-bold text-text leading-tight">
           {isOpen === null
             ? 'Verificando horario'
             : isOpen
@@ -86,7 +86,7 @@ export function LiveOfficeStatus() {
             : 'Cerrado · respondemos al abrir'}
         </p>
         {now && (
-          <p className="text-[11px] text-text-secondary mt-0.5 tabular-nums">
+          <p className="text-xxs text-text-secondary mt-0.5 tabular-nums">
             <LiveClock /> · {site.hours}
           </p>
         )}
@@ -110,7 +110,7 @@ export function FloatingContactRail() {
         title="WhatsApp"
       >
         <MessageCircle size={20} aria-hidden="true" />
-        <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-[11px] font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           WhatsApp
         </span>
       </a>
@@ -121,7 +121,7 @@ export function FloatingContactRail() {
         title={`Llamar ${site.phoneDisplay}`}
       >
         <Phone size={20} aria-hidden="true" />
-        <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-[11px] font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none tabular-nums">
+        <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none tabular-nums">
           {site.phoneDisplay}
         </span>
       </a>
@@ -143,7 +143,7 @@ export function Ticker() {
         {[...items, ...items, ...items].map((t, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-2 px-6 text-[11px] font-semibold"
+            className="inline-flex items-center gap-2 px-6 text-xxs font-semibold"
           >
             <Activity size={10} className="text-accent" /> {t}
           </span>
@@ -180,7 +180,7 @@ export function StatsCounter() {
           <p className="font-extrabold text-2xl text-primary tabular-nums leading-none">
             {s.value}
           </p>
-          <p className="text-[10px] text-text-muted uppercase tracking-wider mt-2">
+          <p className="text-caption text-text-muted uppercase tracking-wider mt-2">
             {s.label}
           </p>
         </div>
