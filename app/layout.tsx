@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-serif",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   style: ["normal", "italic"],
 });
 
@@ -25,7 +25,7 @@ const manrope = Manrope({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const siteUrl = site.url;
@@ -74,6 +74,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" dir="ltr"       className={`h-full ${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon-192.svg" type="image/svg+xml" />

@@ -37,7 +37,7 @@ export function PublicHeader() {
     <header
       className={`sticky top-0 z-50 w-full text-text-inverse transition-all duration-300 ${
         scrolled
-          ? 'bg-primary/95 backdrop-blur-md shadow-lg border-b border-primary-light/40'
+          ? 'bg-primary/95 shadow-lg border-b border-primary-light/40'
           : 'bg-primary border-b border-primary-light'
       }`}
     >

@@ -31,7 +31,7 @@ export function LiveBadge() {
 export function LiveClock() {
   const [now, setNow] = useState<Date | null>(() => new Date());
   useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 1000);
+    const t = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(t);
   }, []);
   if (!now) {
@@ -139,7 +139,7 @@ export function FloatingContactRail() {
   return (
     <div
       aria-label="Acceso rápido de contacto"
-      className="fixed bottom-4 right-4 z-30 flex flex-col gap-2 print:hidden"
+      className="fixed bottom-4 right-4 z-30 flex flex-col gap-2 print:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
       <a
         href={whatsappHref('Hola, necesito orientación jurídica.')}

@@ -38,57 +38,73 @@ export function MapEmbed({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const markerRef = useRef<Marker | null>(null);
+  const loadedRef = useRef(false);
 
   useEffect(() => {
+    if (loadedRef.current) return;
+    const el = containerRef.current;
+    if (!el) return;
     let cancelled = false;
 
-    (async () => {
-      const L = (await import('leaflet')).default;
-      await import('leaflet/dist/leaflet.css');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || loadedRef.current) return;
+        loadedRef.current = true;
+        observer.disconnect();
 
-      if (cancelled || !containerRef.current) return;
-      if (mapRef.current) {
-        mapRef.current.setView([latitude, longitude], zoom);
-        return;
-      }
+        (async () => {
+          const L = (await import('leaflet')).default;
+          await import('leaflet/dist/leaflet.css');
 
-      const map = L.map(containerRef.current, {
-        center: [latitude, longitude],
-        zoom,
-        scrollWheelZoom: false,
-        dragging: false,
-        zoomControl: false,
-        doubleClickZoom: false,
-        touchZoom: false,
-        keyboard: false,
-        attributionControl: true,
-      });
+          if (cancelled || !containerRef.current) return;
+          if (mapRef.current) {
+            mapRef.current.setView([latitude, longitude], zoom);
+            return;
+          }
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
+          const map = L.map(containerRef.current, {
+            center: [latitude, longitude],
+            zoom,
+            scrollWheelZoom: false,
+            dragging: false,
+            zoomControl: false,
+            doubleClickZoom: false,
+            touchZoom: false,
+            keyboard: false,
+            attributionControl: true,
+          });
 
-      const icon = L.divIcon({
-        className: 'bufete-map-marker',
-        html: '<span class="bufete-map-marker__pin" aria-hidden="true"></span>',
-        iconSize: [30, 40],
-        iconAnchor: [15, 38],
-        popupAnchor: [0, -36],
-      });
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          }).addTo(map);
 
-      const marker = L.marker([latitude, longitude], { icon, title: label }).addTo(map);
-      marker.bindPopup(
-        `<strong>${escapeHtml(label)}</strong><br>${escapeHtml(fullAddress)}`,
-      );
+          const icon = L.divIcon({
+            className: 'bufete-map-marker',
+            html: '<span class="bufete-map-marker__pin" aria-hidden="true"></span>',
+            iconSize: [30, 40],
+            iconAnchor: [15, 38],
+            popupAnchor: [0, -36],
+          });
 
-      mapRef.current = map;
-      markerRef.current = marker;
-    })();
+          const marker = L.marker([latitude, longitude], { icon, title: label }).addTo(map);
+          marker.bindPopup(
+            `<strong>${escapeHtml(label)}</strong><br>${escapeHtml(fullAddress)}`,
+          );
+
+          mapRef.current = map;
+          markerRef.current = marker;
+        })();
+      },
+      { rootMargin: '200px' },
+    );
+
+    observer.observe(el);
 
     return () => {
       cancelled = true;
+      observer.disconnect();
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
