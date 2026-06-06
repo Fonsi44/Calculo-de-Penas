@@ -9,6 +9,7 @@ import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
 import { site } from "@/lib/site";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 /* Tipografía "Premium Corporate Luxury" — Cormorant Garamond (headings)
    + Manrope (body). Patrón del repo fuente. */
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </ToastProvider>
           </ThemeProvider>
         </GlobalErrorBoundary>
+        <SpeedInsights />
       </body>
     </html>
   );
