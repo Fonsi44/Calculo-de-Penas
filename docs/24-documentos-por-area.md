@@ -191,3 +191,4 @@ export async function GET(request: Request) {
 - [ ] 7. Crear funciones getDocumentosPorArea, getDocumentosSugeridos, getDocumentosObligatorios
 - [ ] 8. Crear API endpoint GET /api/twenty/documentos?area=
 - [ ] 9. Integrar con flujo de creación de caso
+

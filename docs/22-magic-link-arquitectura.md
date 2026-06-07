@@ -541,3 +541,4 @@ async function verifyPortalAccess(token: string, dealId: string): Promise<Respon
 - [ ] 14. Probar flujo completo: generar link → validar → ver caso → subir doc
 
 
+

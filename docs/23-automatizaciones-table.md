@@ -350,3 +350,4 @@ export async function evaluateEscalation(resource: any, rules: EscalationRule[])
 - [ ] 11. Probar flujo: crear lead → WhatsApp bienvenida
 - [ ] 12. Probar escalamiento: 3 rechazos de documento → admin notificado
 
+

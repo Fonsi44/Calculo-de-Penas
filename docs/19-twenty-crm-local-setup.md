@@ -103,3 +103,4 @@ docker compose pull              # Actualizar imágenes
 - [ ] 7. Cuenta admin creada en localhost:3000
 - [ ] 8. API key obtenida y guardada en .env.local
 
+

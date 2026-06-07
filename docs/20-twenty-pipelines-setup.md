@@ -561,3 +561,4 @@ console.log('[consulta] Lead creado en Twenty:', twentyDeal.id);
 - [ ] 15. Crear generador de número de caso LEX-YYYY-NNN
 - [ ] 16. Actualizar /api/consulta para crear leads en Twenty
 
+

@@ -51,3 +51,4 @@ Pasos A1-A8: ver docs/18 en producción.
 ## B3: Probar formularios
 
 Pasos B1-B3: se ejecutan cuando el dominio esté verificado.
+

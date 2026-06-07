@@ -207,3 +207,4 @@ pg_dump -h localhost -U postgres -d twenty_crm > "backup_$(Get-Date -Format yyyy
 - [ ] 9. Verificar TLS 1.3 y HSTS
 - [ ] 10. Configurar backup automático diario de BD
 
+

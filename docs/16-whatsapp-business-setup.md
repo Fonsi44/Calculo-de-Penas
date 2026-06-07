@@ -152,3 +152,4 @@ En developers.facebook.com → App → WhatsApp → Configuration → Webhook:
 - [ ] B4: Proxy.ts actualizado (dev)
 - [ ] B5: Webhook configurado en Meta (dev)
 
+
