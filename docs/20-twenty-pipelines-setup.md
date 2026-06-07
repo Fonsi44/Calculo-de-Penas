@@ -24,18 +24,16 @@ Twenty permite crear objetos personalizados desde la API REST. Ejecuta estos com
 
 ### 2.1 Obtener API key de Twenty
 
-```powershell
-# En la UI de Twenty: Settings > API > Crear API key
-# O vía API:
-curl -X POST http://localhost:3000/rest/access-token
-```
+La API key se obtiene desde la UI de Twenty: **Settings → API → Create API Key**.
 
 Guarda la key como variable de entorno:
 
 ```powershell
 $env:TWENTY_API_KEY = "tu-api-key-aqui"
-$env:TWENTY_API_URL = "http://localhost:3000"
+$env:TWENTY_API_URL = "http://localhost:3000/rest"
 ```
+
+> ⚠️ **Nota sobre la API REST de Twenty**: La API REST es limitada. Algunos endpoints mostrados aquí (creación de pipelines, objetos personalizados, campos) pueden requerir configuración desde la UI de Twenty. Verifica contra la spec OpenAPI real de tu instancia en `http://localhost:3000/rest/openapi` antes de ejecutar.
 
 ### 2.2 Crear objeto "Documento"
 
@@ -140,12 +138,12 @@ Campos de "Disponibilidad":
 |---|---|---|
 | userId | relation | FK a User (Twenty) |
 | dayOfWeek | number | 0=Domingo...6=Sábado |
-| startTime | time | Ej: "07:00" |
-| endTime | time | Ej: "20:00" |
+| startTime | text | Ej: "07:00" |
+| endTime | text | Ej: "20:00" |
 | slotDurationMinutes | number | Default 30 |
-| breakStart | time nullable | Ej: "12:00" |
-| breakEnd | time nullable | Ej: "13:00" |
-| modalities | multiselect | phone, office, home_visit |
+| breakStart | text (nullable) | Ej: "12:00" |
+| breakEnd | text (nullable) | Ej: "13:00" |
+| modalities | text (multi) | phone, office, home_visit |
 | isActive | boolean | Default true |
 
 ---
@@ -280,18 +278,18 @@ Crear `lib/twenty-client.ts`:
 // lib/twenty-client.ts
 // Cliente HTTP para la REST API de Twenty CRM
 
-const TWENTY_API_URL = process.env.TWENTY_API_URL || 'http://localhost:3000';
+const TWENTY_API_URL = process.env.TWENTY_API_URL || 'http://localhost:3000/rest';
 const TWENTY_API_KEY = process.env.TWENTY_API_KEY;
 
 interface TwentyOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
   params?: Record<string, string>;
-  etag?: string;  // Para optimistic locking
+  etag?: string;
 }
 
 export async function twentyFetch<T>(endpoint: string, options: TwentyOptions = {}): Promise<T> {
-  const url = new URL(`${TWENTY_API_URL}/rest/${endpoint}`);
+  const url = new URL(`${TWENTY_API_URL}/${endpoint}`);
   if (options.params) {
     Object.entries(options.params).forEach(([k, v]) => url.searchParams.set(k, v));
   }
@@ -317,6 +315,61 @@ export async function twentyFetch<T>(endpoint: string, options: TwentyOptions = 
   const data = await response.json();
 
   return { ...data, etag } as T;
+}
+
+// ─── Helpers de alto nivel ───
+
+interface CreateContactInput {
+  name: string;
+  telefono: string;
+  email?: string;
+  leadSource?: string;
+}
+
+export async function createContactInTwenty(input: CreateContactInput) {
+  return twentyFetch('people', {
+    method: 'POST',
+    body: {
+      name: { firstName: input.name, lastName: '' },
+      phones: { primaryPhoneNumber: input.telefono, primaryPhoneCountryCode: '+34' },
+      emails: input.email ? { primaryEmail: input.email } : undefined,
+      leadSource: input.leadSource || 'web',
+    },
+  });
+}
+
+interface CreateDealInput {
+  contactId: string;
+  name: string;
+  pipelineId?: string;
+  stageId?: string;
+}
+
+export async function createDealInTwenty(input: CreateDealInput) {
+  return twentyFetch('deals', {
+    method: 'POST',
+    body: {
+      name: input.name,
+      companyId: null,
+      pipelineId: input.pipelineId || null,
+      stageId: input.stageId || null,
+    },
+  });
+}
+
+export async function findContactByPhone(telefono: string) {
+  const result = await twentyFetch('people', {
+    params: { filter: `phone[eq]:${telefono}` },
+  });
+  return result?.data?.[0] || null;
+}
+
+export async function getActiveDeals(contactId: string) {
+  return twentyFetch(`people/${contactId}/deals`);
+}
+
+export async function getDealFromTwenty(dealId: string) {
+  return twentyFetch(`deals/${dealId}`);
 }
 ```
 
@@ -362,7 +415,7 @@ Configurar el webhook en Twenty:
 ```powershell
 # Registrar webhook en Twenty
 $webhook = @{
-    targetUrl = "http://localhost:3001/api/twenty/webhook"  # URL de tu Next.js dev
+    targetUrl = "http://localhost:3000/api/twenty/webhook"  # URL de tu Next.js dev (cambiar si usa otro puerto)
     operations = @("create", "update")
     objectName = "deal"
 } | ConvertTo-Json
@@ -490,8 +543,10 @@ export async function generateCaseNumber(): Promise<string> {
     SELECT COALESCE(MAX(seq), 0) + 1 as next_seq
     FROM case_number_sequence
     WHERE year = ${year}
-    FOR UPDATE  -- Bloqueo de fila para evitar duplicados
   `);
+  // NOTA: FOR UPDATE no funciona en Neon con pooled connections.
+  // Para atomicidad real, usar una transacción SERIALIZABLE o
+  // implementar el contador vía la tabla con unique constraint.
   
   // Guardar el nuevo seq
   await db.execute(sql`

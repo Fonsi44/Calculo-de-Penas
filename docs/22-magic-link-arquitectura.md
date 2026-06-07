@@ -337,9 +337,9 @@ export async function POST(
   const docId = formData.get('docId') as string;
 
   // Validaciones
-  const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/heic'];
+  const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
   if (!allowedTypes.includes(file.type)) {
-    return Response.json({ error: 'Formato no permitido. Usa PDF, JPG, PNG o HEIC' }, { status: 400 });
+    return Response.json({ error: 'Formato no permitido. Usa PDF, JPG o PNG' }, { status: 400 });
   }
   if (file.size > 15 * 1024 * 1024) {
     return Response.json({ error: 'Archivo demasiado grande (máx 15 MB)' }, { status: 400 });
@@ -482,9 +482,18 @@ export async function rescheduleAppointment(
 
   // Notificar
   if (requestedBy === 'client') {
-    await notifyLawyer(appointment.lawyerId, 'appointment.rescheduled_by_client', { ... });
+    await notifyLawyer(appointment.lawyerId, 'appointment.rescheduled_by_client', {
+      dealId: appointment.dealId,
+      contactName: appointment.contactName,
+      newDate,
+      newTime,
+    });
   } else {
-    await notifyClient(appointment.contactId, 'appointment.rescheduled_by_lawyer', { ... });
+    await notifyClient(appointment.contactId, 'appointment.rescheduled_by_lawyer', {
+      dealId: appointment.dealId,
+      newDate,
+      newTime,
+    });
   }
 
   return { ok: true };

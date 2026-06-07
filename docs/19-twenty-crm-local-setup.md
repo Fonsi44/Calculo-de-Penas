@@ -47,6 +47,13 @@ PG_DATABASE_PASSWORD=<contraseña_segura>
 STORAGE_TYPE=local
 ```
 
+⚠️ **Conflicto de puerto**: Twenty usa `localhost:3000`. Si el Next.js de este proyecto también corre en `:3000`, ejecuta Next.js en otro puerto:
+```powershell
+npm run dev -- -p 3001
+```
+
+Así Twenty queda en `:3000` y el proyecto Next.js en `:3001`.
+
 ## 5. Arrancar contenedores
 
 ```powershell
@@ -70,16 +77,22 @@ docker compose ps
 
 ## 8. Obtener API key
 
-```powershell
-curl http://localhost:3000/rest/access-token
-```
+La API key se obtiene desde la UI de Twenty:
+
+1. Abrir `http://localhost:3000`
+2. Ir a **Settings → API** (icono de llave)
+3. **Create API Key** → copiar el token
+
+No usar `curl /rest/access-token` (ese endpoint no genera keys nuevas).
 
 Guardar en `.env.local` del proyecto web:
 
 ```env
-TWENTY_API_URL=http://localhost:3000
+TWENTY_API_URL=http://localhost:3000/rest
 TWENTY_API_KEY=<token del paso 8>
 ```
+
+> La URL debe incluir `/rest` al final porque el MCP de Twenty y el cliente HTTP usan esa base.
 
 ## Comandos útiles
 

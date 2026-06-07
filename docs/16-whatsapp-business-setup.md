@@ -8,14 +8,13 @@
 
 Durante las pruebas locales se usan datos personales. Al pasar a producción se cambian:
 
-| Recurso | Pruebas (local) | Producción (web) |
-|---|---|---|
-| Email notificaciones | alfonsroiget@gmail.com | contacto@pinedayasocioshn.com |
-| Teléfono WhatsApp | +34 661 911 574 | +504 9536 3724 |
-| URL callback webhook | http://localhost:3000/api/whatsapp | https://pinedayasocioshn.com/api/whatsapp |
-| Integración web /api/consulta | Deshabilitada (se conecta después) | Activa creando leads en Twenty |
+| Recurso | Pruebas (local) |
+|---|---|
+| Email notificaciones | alfonsroiget@gmail.com |
+| Teléfono WhatsApp | +34 661911574 |
+| URL callback webhook | http://localhost:3000/api/whatsapp |
 
-Los pasos siguientes ya reflejan los valores de pruebas. Cuando estés listo para producción, cambia las variables de entorno y el Callback URL en Meta. El resto de la configuración (pipelines, objetos, etc.) es idéntica.
+Los pasos siguientes ya reflejan los valores de pruebas locales.
 
 ---
 
@@ -37,7 +36,7 @@ Icono: **B** blanca sobre fondo verde oscuro (NO el de teléfono blanco que es W
 - Abre WhatsApp Business
 - Acepta términos
 - País: **España (+34)**
-- Número: **+34 661 911 574**
+- Número: **661 91 15 74** (display Meta: +34 661 91 15 74, API E.164: +34661911574)
 - Llega un SMS con código de 6 dígitos — escríbelo
 - Cuando pregunte "Restaurar historial": pulsa **NO** (es línea nueva)
 
@@ -48,10 +47,10 @@ En WhatsApp Business: tres puntos (Android) / Configuración (iPhone) → Config
 | Campo | Valor |
 |---|---|
 | Nombre | Pineda y Asociados |
-| Categoría | Abogado & Servicios legales |
+| Categoría | Professional Services (PROF_SERVICES) |
 | Descripción | Bufete multidisciplinario en Nacaome, Valle. Derecho penal, familia, laboral, civil, mercantil y más. |
 | Correo | alfonsroiget@gmail.com |
-| Web | http://localhost:3000 |
+| Web | https://pinedayasociadoshn.com |
 | Dirección | Barrio El Centro, 100 mts del Parque Central, Nacaome, Valle |
 | Horario | Lun–Sáb 7:00–20:00 |
 
@@ -93,15 +92,12 @@ El abogado debe completar docs/17 (Meta Business) para obtener:
 
 ### B2. Variables de entorno
 
-Agregar a `.env.local`:
-
-```env
-WHATSAPP_PHONE_NUMBER_ID=123456789012345
-WHATSAPP_BUSINESS_ACCOUNT_ID=987654321098765
-WHATSAPP_ACCESS_TOKEN=EAA...
-WHATSAPP_API_VERSION=v22.0
-WHATSAPP_VERIFY_TOKEN=mi_token_secreto_para_webhook
-```
+Ya configuradas en `.env.local` (ver docs/17 paso A7):
+- `WHATSAPP_PHONE_NUMBER_ID=1201622436357912`
+- `WHATSAPP_BUSINESS_ACCOUNT_ID=1603799175088577`
+- `WHATSAPP_ACCESS_TOKEN` — token de docs/17
+- `WHATSAPP_API_VERSION=v25.0`
+- `WHATSAPP_VERIFY_TOKEN=lex-honduras-wa-verify-2026`
 
 ### B3. Endpoint webhook
 
@@ -125,15 +121,15 @@ export async function POST(request: Request) {
 }
 ```
 
-### B4. Registrar en proxy.ts
+### B4. Proxy.ts — ya está configurado
 
-Agregar `/api/whatsapp` a `PUBLIC_API_PREFIXES` o `PUBLIC_API_EXACT` en `proxy.ts` para que el webhook de Meta pueda llegar sin autenticación.
+`/api/whatsapp` ya está en `PUBLIC_API_EXACT` en `proxy.ts` (línea 15). No es necesario modificarlo.
 
 ### B5. Configurar Webhook en Meta for Developers
 
 En developers.facebook.com → App → WhatsApp → Configuration → Webhook:
 - **Callback URL**: `http://localhost:3000/api/whatsapp`
-- **Verify Token**: el mismo de `WHATSAPP_VERIFY_TOKEN`
+- **Verify Token**: `lex-honduras-wa-verify-2026`
 - **Webhook fields**: marcar `messages`, `message_deliveries`, `message_reads`
 - Tocar **Verify and Save**
 

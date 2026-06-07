@@ -74,3 +74,4 @@ neon-mcp-*.log
 .playwright-mcp/
 opencode.jsonc
 scripts/validate-opencode-config.cjs
+.env*

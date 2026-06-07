@@ -1,195 +1,148 @@
-﻿# Meta Business Suite — Verificación de empresa para WhatsApp API
+﻿# META BUSINESS — GUÍA DE EJECUCIÓN
 
-> **Participantes**: Abogado (pasos A) + Desarrollador (pasos B)
-> **Tiempo**: ~30 min abogado + ~15 min desarrollador
-> **Objetivo**: Obtener el token permanente para que el CRM pueda enviar/recibir WhatsApp
+Sigue estos pasos en orden. Cada uno tiene un enlace directo.
 
 ---
 
-## Primero: entiende qué vamos a hacer
+## A1. Crear cuenta Meta for Developers
 
-Meta (Facebook) controla la API de WhatsApp. Para que el CRM pueda enviar mensajes
-automáticos (recordatorios, notificaciones, bienvenidas), necesitamos que Meta nos dé
-un "token" — una clave secreta que autoriza al CRM.
-
-El proceso:
-1. Te registras como desarrollador en Meta (gratis)
-2. Creas una "aplicación" (contenedor de configuración)
-3. Asocias tu número de WhatsApp Business a esa aplicación
-4. Creas un "usuario del sistema" (cuenta robot) con permiso para WhatsApp
-5. Copias el token y se lo das al desarrollador
-
-> **Todo es GRATIS**. Meta cobra solo cuando envías mensajes a clientes reales.
-
-### URLs oficiales de referencia usadas en esta guía
-
-| Paso | URL oficial |
-|---|---|
-| Meta for Developers | https://developers.facebook.com |
-| WhatsApp Cloud API docs | https://developers.facebook.com/docs/whatsapp/cloud-api |
-| Crear app WhatsApp | https://developers.facebook.com/docs/whatsapp/cloud-api/get-started |
-| Webhooks WhatsApp | https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks |
-| System User tokens | https://developers.facebook.com/docs/facebook-login/access-tokens |
-| WhatsApp Manager (plantillas) | https://business.facebook.com/wa/manager |
-| Twenty REST API | https://docs.twenty.com/developers/extend/api.md |
-| Twenty Webhooks | https://docs.twenty.com/developers/extend/webhooks.md |
-
----
-
-## SECCIÓN A — ABOGADO (lo haces TÚ)
-
-### A1. Crear cuenta en Meta for Developers
-
-> 📖 Documentación oficial: https://developers.facebook.com/docs/development/register
-
-1. Ve a https://developers.facebook.com
-2. Toca **"Empezar"** (arriba a la derecha)
-3. Inicia sesión con alfonsroiget@gmail.com
-4. Acepta términos de desarrollador
-
----
-
-### A2. Crear la aplicación (App)
-
-> 📖 WhatsApp Cloud API — crear app: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started#create-app
-
-1. Toca **"Mis aplicaciones"** → **"Crear aplicación"**
-2. Selecciona **"Negocio"** (NO "Consumidor")
-3. Toca **"Siguiente"**
-4. Rellena:
-   - Nombre: `Pineda y Asociados — CRM`
-   - Correo: `alfonsroiget@gmail.com`
-   - Cuenta comercial: "No tengo"
-5. **"Crear aplicación"** → resuelve captcha
-
----
-
-### A3. Agregar producto WhatsApp
-
-1. En el menú lateral, busca **"Productos"**
-2. Busca el icono de **WhatsApp** (burbuja verde)
-3. Toca **"Configurar"**
-
----
-
-### A4. Crear cuenta comercial
-
-1. Dentro de WhatsApp, busca **"Cuentas comerciales"**
-2. **"Crear cuenta comercial"**
-3. Rellena:
-   - Nombre: `Pineda y Asociados`
-   - Web: `http://localhost:3000`
-   - Correo: `alfonsroiget@gmail.com`
-   - Industria: `Servicios legales`
-4. **"Siguiente"**
-
-✅ **Anota el ID de la cuenta comercial** (ej: 987654321098765)
-
----
-
-### A5. Registrar tu número de teléfono
-
-1. **"Números de teléfono"** → **"Agregar número"**
-2. Método: **"Teléfono"**
-3. Rellena:
-   - País: España (+34)
-   - Número: `661911574` (sin +34)
-   - Alias: `Bufete principal`
-4. **"Siguiente"**
-5. Verificación: **"Llamada telefónica"** (más rápido)
-6. **"Enviar código"** → recibirás llamada automática
-7. Anota el código de 6 dígitos que te dicen → escríbelo → **"Confirmar"**
-
-✅ **Anota el ID del número** (ej: 123456789012345)
-
----
-
-### A6. Crear System User + token permanente
-
-> 📖 System Users (Meta docs): https://developers.facebook.com/docs/facebook-login/access-tokens#system-users
-> 📖 WhatsApp token permanente: https://developers.facebook.com/docs/whatsapp/cloud-api/overview#permanent-token
-
-⚠️ **El token solo aparece UNA VEZ. No cierres sin copiarlo.**
-
-1. En el menú lateral, busca **"Usuarios del sistema"**
-2. **"Agregar"** → Nombre: `CRM Integration` → Rol: **Admin** → **"Crear"**
-3. En la fila del usuario, toca **"Generar token"** (icono de llave)
-4. Rellena:
-   - App: `Pineda y Asociados — CRM`
-   - Permisos: marca **`whatsapp_business_messaging`**
-   - Expiración: 60 días
-5. **"Generar"** → aparece un texto largo (empieza con EAA...)
-6. ✅ **COPIA EL TOKEN EN ESTE MOMENTO**
-7. **"Hecho"**
-
----
-
-### A7. Entregar al desarrollador
+> **Enlace**: https://developers.facebook.com
 
 ```
-Token:             EAAc1HZCcZBZB... (lo que copiaste)
-ID del número:     123456789012345 (de A5)
-ID cuenta comercial: 987654321098765 (de A4)
+Hecho: alfonsroiget@gmail.com
 ```
+
+- [x] Hecho
 
 ---
 
-## SECCIÓN B — DESARROLLADOR
+## A2. Crear aplicación tipo Negocio
 
-### B1. Validar token
+> **Enlace**: https://developers.facebook.com/apps/
 
-> 📖 WhatsApp Cloud API — probar endpoint: https://developers.facebook.com/docs/whatsapp/cloud-api/overview#test-your-setup
-
-```bash
-curl -H "Authorization: Bearer EAA..." "https://graph.facebook.com/v22.0/ID_DEL_NUMERO"
+```
+Nombre: Pineda y Asociados CRM
 ```
 
-Esperado: `{ "id": "12345...", "name": "Pineda y Asociados" }`
-Error: "Invalid OAuth access token" → regenerar token en A6.
-
-### B2. Guardar en .env.local
-
-```env
-WHATSAPP_ACCESS_TOKEN=EAA...
-WHATSAPP_PHONE_NUMBER_ID=123456789012345
-WHATSAPP_BUSINESS_ACCOUNT_ID=987654321098765
-WHATSAPP_API_VERSION=v22.0
-```
-
-### B3. Webhook (después de /api/whatsapp)
-
-> 📖 WhatsApp webhooks oficial: https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks
-> 📖 Twenty webhooks: https://docs.twenty.com/developers/extend/webhooks.md
-
-1. developers.facebook.com > app > WhatsApp > Configuración
-2. Webhook → **"Editar"**
-3. Callback URL: `http://localhost:3000/api/whatsapp`
-4. Verify Token: el de `WHATSAPP_VERIFY_TOKEN` en .env
-5. Campos: marcar `messages`, `message_deliveries`
-6. **"Verificar y guardar"**
+- [x] Hecho → **ID App**: `1186621923892949`
 
 ---
 
-## Progreso
+## A3. Agregar producto WhatsApp
 
-- [ ] A1: Cuenta Meta for Developers
-- [ ] A2: App tipo Negocio ("Pineda y Asociados — CRM")
-- [ ] A3: Producto WhatsApp agregado
-- [ ] A4: Cuenta comercial (ID: _______________)
-- [ ] A5: Número +34 661911574 verificado (ID: _______________)
-- [ ] A6: System User + token (empieza con EAA)
-- [ ] A7: Token + IDs entregados al dev
-- [ ] B1: Token validado con curl
-- [ ] B2: Variables en .env.local
-- [ ] B3: Webhook configurado (post /api/whatsapp)
+> **Enlace**: https://developers.facebook.com/apps/1186621923892949/whatsapp-business/
+
+- [x] Hecho
 
 ---
 
-## Migración a producción
+## A4. Crear cuenta comercial WhatsApp
+
+- [x] Hecho → **ID cuenta comercial**: `1603799175088577`
+
+---
+
+## A5. Registrar número de teléfono +34 661911574
+
+- [x] Hecho → **ID número**: `1201622436357912`
+- **Número**: +34 661911574
+- **WABA ID**: `981792174749339`
+
+---
+
+## A6. System User + Token permanente
+
+> **Enlace**: https://business.facebook.com/settings/system-users?business_id=1603799175088577
+
+⚠️ **EL TOKEN SOLO APARECE UNA VEZ. CÓPIALO AL INSTANTE.**
+
+```
+1. "Agregar"
+2. Nombre: CRM Integration
+3. Rol: Admin → "Crear"
+4. En la fila del usuario, icono llave → "Generar token"
+5. App: Pineda y Asociados CRM
+6. Permiso: solo whatsapp_business_messaging
+7. Expiración: 60 días (máximo permitido)
+8. "Generar"
+9. ⚠️ COPIA EL TEXTO LARGO (empieza con EAA...)
+10. Pégalo en un bloc de notas
+```
+
+> 💡 Los tokens expiran cada 60 días. El desarrollador puede generar uno nuevo cuando expire sin necesidad de repetir todo el proceso.
+
+- [x] Hecho → **Token**: generado y guardado en .env.local
+
+---
+
+## A7. Guardar en .env.local
+
+- [x] Hecho ✅
+
+---
+
+## B1. Validar token
+
+```powershell
+curl -H "Authorization: Bearer EAA..." "https://graph.facebook.com/v25.0/1201622436357912"
+```
+
+Respuesta obtenida:
+```json
+{ "verified_name": "Pineda y Asociados", "display_phone_number": "+34 661 91 15 74" }
+```
+
+- [x] Token válido ✅
+
+> ⚠️ **Los tokens expiran cada 60 días.** Si la API devuelve 401, hay que regenerarlo:
+> 1. Ir a https://business.facebook.com/settings/system-users?business_id=1603799175088577
+> 2. En el usuario "CRM Integration", icono llave → "Generar token"
+> 3. App: Pineda y Asociados CRM | Permiso: whatsapp_business_messaging
+> 4. Copiar y actualizar `WHATSAPP_ACCESS_TOKEN` en `.env.local`
+
+---
+
+## B2. Verificar .env.local
+
+- [x] Hecho ✅
+
+---
+
+## B3. Webhook (hacer después de crear /api/whatsapp)
+
+> **Enlace**: https://developers.facebook.com/apps/1186621923892949/whatsapp-business/wa-dev-console/?tab=webhooks
+
+```
+1. "Editar" callback
+2. Callback URL: http://localhost:3000/api/whatsapp
+3. Verify Token: lex-honduras-wa-verify-2026
+4. Campos: messages, message_deliveries
+5. "Verificar y guardar"
+```
+
+- [ ] Pendiente (esperar a que exista /api/whatsapp en docs/21)
+
+---
+
+## Datos finales de prueba
+
+```
+WHATSAPP_ACCESS_TOKEN:        EAATVJrWddZCABR... (ver .env.local)
+WHATSAPP_PHONE_NUMBER_ID:     1201622436357912
+WHATSAPP_BUSINESS_ACCOUNT_ID: 1603799175088577
+WHATSAPP_WABA_ID:             981792174749339
+WHATSAPP_API_VERSION:         v25.0
+WHATSAPP_VERIFY_TOKEN:        lex-honduras-wa-verify-2026
+```
+
+> **Nota**: API version **v25.0**. El token expira cada 60 días (regenerar en Meta Business).
+
+---
+
+## Migración a producción (cuando se active el dominio)
 
 | Durante pruebas | En producción |
 |---|---|
 | alfonsroiget@gmail.com | contacto@pinedayasocioshn.com |
-| +34 661 911 574 | +504 9536 3724 |
-| http://localhost:3000 | https://pinedayasocioshn.com |
-| Token de tu cuenta personal | Misma app, mismo token |
+| +34 661911574 | Número del bufete |
+| http://localhost:3000 | Dominio de producción |

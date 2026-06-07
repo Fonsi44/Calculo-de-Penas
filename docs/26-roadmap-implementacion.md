@@ -42,21 +42,21 @@
 - [ ] 0.13 Copiar token, ID del número, ID de cuenta comercial
 - [ ] 0.14 Entregar token + IDs al desarrollador
 
-### docs/18 — Resend (verificar dominio de correo)
+### docs/18 — Resend (verificar dominio de correo) ✅ Completado
 
-- [ ] 0.15 Iniciar sesión en resend.com con alfonsroiget@gmail.com
-- [ ] 0.16 Agregar dominio pinedayasocioshn.com
-- [ ] 0.17 Agregar 3 registros DNS en el proveedor del dominio (MX, TXT, DKIM)
-- [ ] 0.18 Verificar dominio en Resend (tocar "Verify")
-- [ ] 0.19 Avisar al desarrollador que el dominio está verificado
+- [x] 0.15 Iniciar sesión en resend.com con alfonsroiget@gmail.com
+- [x] 0.16 Agregar dominio pinedayasocioshn.com
+- [x] 0.17 Agregar 3 registros DNS en el proveedor del dominio (MX, TXT, DKIM)
+- [x] 0.18 Verificar dominio en Resend (tocar "Verify")
+- [x] 0.19 Avisar al desarrollador que el dominio está verificado
 
 ### Entregables de Fase 0
 
 Al completar esta fase, el abogado debe haber entregado al desarrollador:
-- [ ] Token de acceso permanente (EAA...)
+- [x] Token de acceso permanente (EAA...) ✅
 - [ ] ID del número de teléfono
 - [ ] ID de la cuenta comercial
-- [ ] Dominio de correo verificado en Resend
+- [x] Dominio de correo verificado en Resend ✅
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
@@ -98,7 +98,7 @@ Al completar esta fase, el abogado debe haber entregado al desarrollador:
 
 - [ ] 1.18 Crear lib/twenty-client.ts (cliente HTTP para API de Twenty)
 - [ ] 1.19 Crear app/api/twenty/webhook/route.ts (endpoint para recibir eventos)
-- [ ] 1.20 Registrar webhook en Twenty (apuntar a localhost:3001/api/twenty/webhook)
+- [ ] 1.20 Registrar webhook en Twenty (apuntar a localhost:3000/api/twenty/webhook)
 - [ ] 1.21 Implementar pool de leads con optimistic locking (ETag)
 - [ ] 1.22 Crear app/api/twenty/deals/assign/route.ts (asignación atómica)
 - [ ] 1.23 Crear generador de número de caso LEX-YYYY-NNN
@@ -255,7 +255,6 @@ Al completar esta fase, el abogado debe haber entregado al desarrollador:
 ║                                                             ║
 ║ Próximo paso (post-Fase 4, no implementado aún):            ║
 ║ - Deploy a VPS (Clouding.io ~8€/mes)                        ║
-║ - Dominio localhost:3000                          ║
 ║ - Facturación electrónica SAR (Fase 4+)                     ║
 ║ - Multi-bufete (Fase 4+)                                    ║
 ╚══════════════════════════════════════════════════════════════╝

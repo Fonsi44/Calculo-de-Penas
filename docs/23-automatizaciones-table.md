@@ -223,11 +223,13 @@ export async function handleDocumentUpdated(doc: any) {
 
 ## 5. Programa recordatorios (cron)
 
-Crear `app/api/cron/reminders/route.ts` (usar node-schedule (local)):
+Crear `app/api/cron/reminders/route.ts`:
 
 ```typescript
 // app/api/cron/reminders/route.ts
-// Se ejecuta cada hora vía node-schedule
+// Endpoint llamado periódicamente.
+// En local: usar un scheduler (node-schedule o Windows Task Scheduler llamando curl).
+// En Vercel: configurar Cron Jobs en el dashboard.
 
 export async function GET(request: Request) {
   const now = new Date();
@@ -273,7 +275,9 @@ export async function GET(request: Request) {
 }
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+// maxDuration 60 requiere Vercel Pro. En Hobby (gratis) el límite es 10s.
+// En local (next dev) no hay límite. En VPS propio, configurar en el servidor.
+// export const maxDuration = 60;
 ```
 
 ---

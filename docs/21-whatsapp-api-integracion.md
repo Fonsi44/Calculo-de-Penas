@@ -25,11 +25,11 @@ Agregar a `.env.local`:
 
 ```env
 # WhatsApp Cloud API
-WHATSAPP_PHONE_NUMBER_ID=123456789012345    # ID del número (abogado entrega)
-WHATSAPP_BUSINESS_ACCOUNT_ID=987654321098765 # ID cuenta comercial
-WHATSAPP_ACCESS_TOKEN=EAA...                 # Token permanente (abogado entrega)
-WHATSAPP_API_VERSION=v22.0                   # Versión de API Meta
-WHATSAPP_VERIFY_TOKEN=mi_token_secreto       # Token para handshake webhook
+WHATSAPP_PHONE_NUMBER_ID=1201622436357912    # ID del número
+WHATSAPP_BUSINESS_ACCOUNT_ID=1603799175088577 # ID cuenta comercial
+WHATSAPP_ACCESS_TOKEN=EAA...                 # Token permanente (docs/17)
+WHATSAPP_API_VERSION=v25.0                   # Versión de API Meta
+WHATSAPP_VERIFY_TOKEN=lex-honduras-wa-verify-2026
 ```
 
 Agregar a `.env.example` los mismos campos vacíos.
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
 // lib/whatsapp.ts
 // Cliente completo para la API de WhatsApp Cloud
 
-const API_VERSION = process.env.WHATSAPP_API_VERSION || 'v22.0';
+const API_VERSION = process.env.WHATSAPP_API_VERSION || 'v25.0';
 const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
 const BASE_URL = `https://graph.facebook.com/${API_VERSION}/${PHONE_NUMBER_ID}`;
@@ -286,12 +286,12 @@ export async function handleIncomingMessage(msg: IncomingMessage) {
 function normalizePhone(phone: string): string {
   // Eliminar +, espacios, guiones
   let clean = phone.replace(/[\s\-\+]/g, '');
-  // Si empieza con 504, agregar +
-  if (clean.startsWith('504') && !clean.startsWith('+')) {
+  // Si empieza con 34, agregar +
+  if (clean.startsWith('34') && !clean.startsWith('+')) {
     clean = '+' + clean;
   }
-  // Si solo tiene 8 dígitos (número HN sin código país), asumir +34
-  if (/^\d{8}$/.test(clean)) {
+  // Si solo tiene 9 dígitos (móvil español sin código país), asumir +34
+  if (/^\d{9}$/.test(clean)) {
     clean = '+34' + clean;
   }
   return clean;
@@ -301,6 +301,8 @@ function normalizePhone(phone: string): string {
 ---
 
 ## 6. Configurar webhook en Meta for Developers
+
+**Número WhatsApp**: display `+34 661 91 15 74` · API E.164 `+34661911574` · Phone ID `1201622436357912`
 
 **Pasos del abogado (ya hizo docs/17):**
 - Creó app en developers.facebook.com
@@ -316,7 +318,7 @@ function normalizePhone(phone: string): string {
 | Campo | Valor |
 |---|---|
 | Callback URL | `http://localhost:3000/api/whatsapp` |
-| Verify Token | El mismo valor de `WHATSAPP_VERIFY_TOKEN` en .env.local |
+| Verify Token | `lex-honduras-wa-verify-2026` |
 | Webhook fields | Marcar: `messages`, `message_deliveries`, `message_reads` |
 
 4. Tocar **Verify and Save**
@@ -344,9 +346,11 @@ Estas plantillas deben crearse en WhatsApp Manager y ser aprobadas por Meta.
 
 ### 7.1 Crear plantillas
 
+Las plantillas se crean en WhatsApp Manager (UI), no vía API (Meta rechaza templates creados por API automáticamente).
+
 1. Ir a https://business.facebook.com → WhatsApp Manager
 2. Seleccionar cuenta comercial → **Plantillas de mensajes**
-3. Crear cada plantilla:
+3. Crear cada plantilla con ejemplos de contenido para aprobación:
 
 | Plantilla | Categoría | Variables | Propósito |
 |---|---|---|---|
@@ -360,6 +364,8 @@ Estas plantillas deben crearse en WhatsApp Manager y ser aprobadas por Meta.
 | caso_actualizacion | UTILITY | {{1}} etapa | Cambio de etapa |
 | magic_link_reenvio | UTILITY | {{1}} link | Reenvío de enlace |
 
+> ⚠️ **Tiempo de aprobación**: 24-48h. Las plantillas se testean con el webhook en local (docs/21 sección 6).
+
 ### 7.2 Ejemplo: plantilla "bienvenida_lead"
 
 ```
@@ -370,9 +376,9 @@ Hola {{1}}, gracias por contactarnos.
 Hemos recibido tu solicitud y uno de nuestros abogados te atenderá pronto.
 
 Mientras tanto, puedes conocer más sobre nuestros servicios en:
-http://localhost:3000
+https://pinedayasociadoshn.com
 
-📞 +34 661 911 574
+📞 +34 661911574
 ```
 
 ### 7.3 Envío de plantilla desde el código

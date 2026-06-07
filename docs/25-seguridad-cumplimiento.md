@@ -155,7 +155,7 @@ async function requirePortalAccess(token: string, dealId: string) {
 | Magic link tokens | SHA-256 hash en DB. Token raw solo en URL y memoria. |
 | Documentos | Almacenados con nombres hasheados. URLs con expiración. |
 | Conexión DB | PostgreSQL con SSL/TLS obligatorio. |
-| Secretos | JWT_SECRET, WHATSAPP_TOKEN, RESEND_API_KEY en .env.local / .env.local |
+| Secretos | JWT_SECRET, WHATSAPP_TOKEN, RESEND_API_KEY en `.env` y `.env.local` |
 
 ### 3.3 Rate limiting
 
