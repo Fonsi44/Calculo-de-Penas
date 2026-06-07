@@ -38,21 +38,21 @@ Nombre: Pineda y Asociados CRM
 
 ## A4. Crear cuenta comercial WhatsApp
 
-- [x] Hecho → **ID cuenta comercial**: `1603799175088577`
+- [x] Hecho → **ID cuenta comercial**: `<BUSINESS_ACCOUNT_ID>`
 
 ---
 
-## A5. Registrar número de teléfono +34 661911574
+## A5. Registrar número de teléfono +34 6XXXXXXXX
 
-- [x] Hecho → **ID número**: `1201622436357912`
-- **Número**: +34 661911574
-- **WABA ID**: `981792174749339`
+- [x] Hecho → **ID número**: `<PHONE_NUMBER_ID>`
+- **Número**: +34 6XXXXXXXX
+- **WABA ID**: `<WABA_ID>`
 
 ---
 
 ## A6. System User + Token permanente
 
-> **Enlace**: https://business.facebook.com/settings/system-users?business_id=1603799175088577
+> **Enlace**: https://business.facebook.com/settings/system-users?business_id=<BUSINESS_ACCOUNT_ID>
 
 ⚠️ **EL TOKEN SOLO APARECE UNA VEZ. CÓPIALO AL INSTANTE.**
 
@@ -84,18 +84,18 @@ Nombre: Pineda y Asociados CRM
 ## B1. Validar token
 
 ```powershell
-curl -H "Authorization: Bearer EAA..." "https://graph.facebook.com/v25.0/1201622436357912"
+curl -H "Authorization: Bearer EAA..." "https://graph.facebook.com/v25.0/<PHONE_NUMBER_ID>"
 ```
 
 Respuesta obtenida:
 ```json
-{ "verified_name": "Pineda y Asociados", "display_phone_number": "+34 661 91 15 74" }
+{ "verified_name": "Pineda y Asociados", "display_phone_number": "+34 6XX XX XX XX" }
 ```
 
 - [x] Token válido ✅
 
 > ⚠️ **Los tokens expiran cada 60 días.** Si la API devuelve 401, hay que regenerarlo:
-> 1. Ir a https://business.facebook.com/settings/system-users?business_id=1603799175088577
+> 1. Ir a https://business.facebook.com/settings/system-users?business_id=<BUSINESS_ACCOUNT_ID>
 > 2. En el usuario "CRM Integration", icono llave → "Generar token"
 > 3. App: Pineda y Asociados CRM | Permiso: whatsapp_business_messaging
 > 4. Copiar y actualizar `WHATSAPP_ACCESS_TOKEN` en `.env.local`
@@ -115,7 +115,7 @@ Respuesta obtenida:
 ```
 1. "Editar" callback
 2. Callback URL: http://localhost:3000/api/whatsapp
-3. Verify Token: lex-honduras-wa-verify-2026
+3. Verify Token: <WHATSAPP_VERIFY_TOKEN>
 4. Campos: messages, message_deliveries
 5. "Verificar y guardar"
 ```
@@ -127,12 +127,12 @@ Respuesta obtenida:
 ## Datos finales de prueba
 
 ```
-WHATSAPP_ACCESS_TOKEN:        EAATVJrWddZCABR... (ver .env.local)
-WHATSAPP_PHONE_NUMBER_ID:     1201622436357912
-WHATSAPP_BUSINESS_ACCOUNT_ID: 1603799175088577
-WHATSAPP_WABA_ID:             981792174749339
+WHATSAPP_ACCESS_TOKEN:        EAA... (ver .env.local)
+WHATSAPP_PHONE_NUMBER_ID:     <tu-phone-number-id>
+WHATSAPP_BUSINESS_ACCOUNT_ID: <tu-business-account-id>
+WHATSAPP_WABA_ID:             <tu-waba-id>
 WHATSAPP_API_VERSION:         v25.0
-WHATSAPP_VERIFY_TOKEN:        lex-honduras-wa-verify-2026
+WHATSAPP_VERIFY_TOKEN:        <tu-verify-token>
 ```
 
 > **Nota**: API version **v25.0**. El token expira cada 60 días (regenerar en Meta Business).
@@ -144,5 +144,5 @@ WHATSAPP_VERIFY_TOKEN:        lex-honduras-wa-verify-2026
 | Durante pruebas | En producción |
 |---|---|
 | alfonsroiget@gmail.com | contacto@pinedayasocioshn.com |
-| +34 661911574 | Número del bufete |
+| +34 6XXXXXXXX | Número del bufete |
 | http://localhost:3000 | Dominio de producción |

@@ -15,13 +15,13 @@ Se puede usar `no-reply@pinedayasocioshn.com` ya, no es necesario esperar a prod
 |---|---|
 | Dominio verificado | ✅ `pinedayasocioshn.com` (sending enabled) |
 | Remitente (From) | `onboarding@resend.dev` o `no-reply@pinedayasocioshn.com` |
-| API key actual | `re_XKSMA2fX_3nsVqhucNJpynwkjRrB6w9Rn` (nombre: "opencode") |
+| API key actual | `re_...` (guardada en `.env.local` como `RESEND_API_KEY`) |
 
 ## ⏭️ Configuración actual .env.local
 
 ```env
 # .env.local (configuración vigente)
-RESEND_API_KEY=re_XKSMA2fX_3nsVqhucNJpynwkjRrB6w9Rn
+RESEND_API_KEY=<tu-api-key-aqui>
 RESEND_FROM_EMAIL=onboarding@resend.dev
 CONTACT_NOTIFICATION_EMAIL=contacto@pinedayasocioshn.com
 ```
@@ -38,7 +38,7 @@ Verificado contra la API real de Resend el 2026-06-07:
 | Dominio agregado | ✅ | `pinedayasocioshn.com` (ID: `2a8517f6-bf2f-4515-928c-1261a9d7af3a`) |
 | DNS configurado | ✅ | MX, TXT, CNAME |
 | Dominio verificado | ✅ `verified` | Región: `eu-west-1`, sending: `enabled` |
-| API key creada | ✅ | `re_XKSMA2fX_3nsVqhucNJpynwkjRrB6w9Rn` (nombre: "opencode") |
+| API key creada | ✅ | `re_...` (nombre: "opencode") |
 | Envío con onboarding@resend.dev | ✅ | Funciona (ID: `f7ee91ad-65e1-4eb5-8829-c734434e6826`) |
 | Envío con no-reply@dominio | ❌ **403** | `"The domain is not verified"` — incoherencia con GET /domains |
 
@@ -52,7 +52,7 @@ RESEND_FROM_EMAIL=no-reply@pinedayasocioshn.com
 
 Luego probar con:
 ```powershell
-Invoke-WebRequest -Uri "https://api.resend.com/emails" -Headers @{Authorization="Bearer re_XKSMA2fX_3nsVqhucNJpynwkjRrB6w9Rn"; "Content-Type"="application/json"} -Method Post -Body '{"from":"no-reply@pinedayasocioshn.com","to":["alfonsroiget@gmail.com"],"subject":"Test","text":"test"}'
+Invoke-WebRequest -Uri "https://api.resend.com/emails" -Headers @{Authorization="Bearer $env:RESEND_API_KEY"; "Content-Type"="application/json"} -Method Post -Body '{"from":"no-reply@pinedayasocioshn.com","to":["alfonsroiget@gmail.com"],"subject":"Test","text":"test"}'
 ```
 
 ### API endpoints documentados (verificados)
@@ -67,10 +67,10 @@ Invoke-WebRequest -Uri "https://api.resend.com/emails" -Headers @{Authorization=
 
 ```env
 # Resend (envío emails)
-RESEND_API_KEY=re_XKSMA2fX_3nsVqhucNJpynwkjRrB6w9Rn
+RESEND_API_KEY=<tu-api-key-aqui>
 
 # ImprovMX (forward correo entrante → Gmail)
-IMPROVMX_API_KEY=sk_a2c2ac63d74a42dab7cd8cea5e20a614
+IMPROVMX_API_KEY=<tu-api-key-aqui>
 IMPROVMX_DOMAIN=pinedayasociadoshn.com
 ```
 

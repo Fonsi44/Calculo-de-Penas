@@ -11,7 +11,7 @@ Durante las pruebas locales se usan datos personales. Al pasar a producción se 
 | Recurso | Pruebas (local) |
 |---|---|
 | Email notificaciones | alfonsroiget@gmail.com |
-| Teléfono WhatsApp | +34 661911574 |
+| Teléfono WhatsApp | +34 6XX XXX XXX |
 | URL callback webhook | http://localhost:3000/api/whatsapp |
 
 Los pasos siguientes ya reflejan los valores de pruebas locales.
@@ -36,7 +36,7 @@ Icono: **B** blanca sobre fondo verde oscuro (NO el de teléfono blanco que es W
 - Abre WhatsApp Business
 - Acepta términos
 - País: **España (+34)**
-- Número: **661 91 15 74** (display Meta: +34 661 91 15 74, API E.164: +34661911574)
+- Número: **6XX XX XX XX** (display Meta: +34 6XX XX XX XX, API E.164: +346XXXXXXXX)
 - Llega un SMS con código de 6 dígitos — escríbelo
 - Cuando pregunte "Restaurar historial": pulsa **NO** (es línea nueva)
 
@@ -74,7 +74,7 @@ Foto de perfil: usa el logo del bufete (está en `public/logo.png`).
 
 Cuando tengas WhatsApp Business funcionando, entrega estos datos al desarrollador:
 
-- [ ] Número verificado: +34 661 911 574
+- [ ] Número verificado: +34 6XX XXX XXX
 - [ ] Acceso al correo alfonsroiget@gmail.com (para código Meta)
 
 ---
@@ -93,11 +93,11 @@ El abogado debe completar docs/17 (Meta Business) para obtener:
 ### B2. Variables de entorno
 
 Ya configuradas en `.env.local` (ver docs/17 paso A7):
-- `WHATSAPP_PHONE_NUMBER_ID=1201622436357912`
-- `WHATSAPP_BUSINESS_ACCOUNT_ID=1603799175088577`
+- `WHATSAPP_PHONE_NUMBER_ID=<tu-phone-number-id>`
+- `WHATSAPP_BUSINESS_ACCOUNT_ID=<tu-business-account-id>`
 - `WHATSAPP_ACCESS_TOKEN` — token de docs/17
 - `WHATSAPP_API_VERSION=v25.0`
-- `WHATSAPP_VERIFY_TOKEN=lex-honduras-wa-verify-2026`
+- `WHATSAPP_VERIFY_TOKEN=<tu-verify-token>`
 
 ### B3. Endpoint webhook
 
@@ -129,7 +129,7 @@ export async function POST(request: Request) {
 
 En developers.facebook.com → App → WhatsApp → Configuration → Webhook:
 - **Callback URL**: `http://localhost:3000/api/whatsapp`
-- **Verify Token**: `lex-honduras-wa-verify-2026`
+- **Verify Token**: `<WHATSAPP_VERIFY_TOKEN>`
 - **Webhook fields**: marcar `messages`, `message_deliveries`, `message_reads`
 - Tocar **Verify and Save**
 

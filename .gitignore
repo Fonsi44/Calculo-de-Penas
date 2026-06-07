@@ -75,3 +75,6 @@ neon-mcp-*.log
 opencode.jsonc
 scripts/validate-opencode-config.cjs
 .env*
+
+# security: no commitear claves públicas ni archivos de infraestructura
+*.pub

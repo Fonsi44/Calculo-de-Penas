@@ -25,11 +25,11 @@ Agregar a `.env.local`:
 
 ```env
 # WhatsApp Cloud API
-WHATSAPP_PHONE_NUMBER_ID=1201622436357912    # ID del número
-WHATSAPP_BUSINESS_ACCOUNT_ID=1603799175088577 # ID cuenta comercial
+WHATSAPP_PHONE_NUMBER_ID=<tu-phone-number-id>    # ID del número
+WHATSAPP_BUSINESS_ACCOUNT_ID=<tu-business-account-id> # ID cuenta comercial
 WHATSAPP_ACCESS_TOKEN=EAA...                 # Token permanente (docs/17)
 WHATSAPP_API_VERSION=v25.0                   # Versión de API Meta
-WHATSAPP_VERIFY_TOKEN=lex-honduras-wa-verify-2026
+WHATSAPP_VERIFY_TOKEN=<tu-verify-token>
 ```
 
 Agregar a `.env.example` los mismos campos vacíos.
@@ -302,7 +302,7 @@ function normalizePhone(phone: string): string {
 
 ## 6. Configurar webhook en Meta for Developers
 
-**Número WhatsApp**: display `+34 661 91 15 74` · API E.164 `+34661911574` · Phone ID `1201622436357912`
+**Número WhatsApp**: display `+34 6XX XX XX XX` · API E.164 `+346XXXXXXXX` · Phone ID `<WHATSAPP_PHONE_NUMBER_ID>`
 
 **Pasos del abogado (ya hizo docs/17):**
 - Creó app en developers.facebook.com
@@ -318,7 +318,7 @@ function normalizePhone(phone: string): string {
 | Campo | Valor |
 |---|---|
 | Callback URL | `http://localhost:3000/api/whatsapp` |
-| Verify Token | `lex-honduras-wa-verify-2026` |
+| Verify Token | `<WHATSAPP_VERIFY_TOKEN>` |
 | Webhook fields | Marcar: `messages`, `message_deliveries`, `message_reads` |
 
 4. Tocar **Verify and Save**
@@ -378,7 +378,7 @@ Hemos recibido tu solicitud y uno de nuestros abogados te atenderá pronto.
 Mientras tanto, puedes conocer más sobre nuestros servicios en:
 https://pinedayasociadoshn.com
 
-📞 +34 661911574
+📞 +34 6XX XXX XXX
 ```
 
 ### 7.3 Envío de plantilla desde el código
