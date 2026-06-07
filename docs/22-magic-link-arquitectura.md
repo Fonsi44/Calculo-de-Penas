@@ -196,7 +196,7 @@ export default async function MiCasoPage({
             Ingresa el enlace que recibiste por WhatsApp para ver tu caso.
           </p>
           <p className="text-sm text-text-muted">
-            ¿No tienes enlace? Pídelo a tu abogado o llama al +504 9536 3724.
+            ¿No tienes enlace? Pídelo a tu abogado o llama al +34 661 911 574.
           </p>
         </div>
       </div>
@@ -539,4 +539,5 @@ async function verifyPortalAccess(token: string, dealId: string): Promise<Respon
 - [ ] 12. Implementar verificación de acceso (contactId match)
 - [ ] 13. Implementar reenvío de magic link (pantalla expirado)
 - [ ] 14. Probar flujo completo: generar link → validar → ver caso → subir doc
+
 

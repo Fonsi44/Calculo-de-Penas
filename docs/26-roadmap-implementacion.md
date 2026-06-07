@@ -25,7 +25,7 @@
 ### docs/16 — WhatsApp Business en el teléfono del bufete
 
 - [ ] 0.1 Descargar WhatsApp Business en el teléfono del bufete
-- [ ] 0.2 Verificar número +504 9536 3724 con código SMS
+- [ ] 0.2 Verificar número +34 661 911 574 con código SMS
 - [ ] 0.3 Configurar perfil profesional (nombre, categoría, horario, dirección)
 - [ ] 0.4 Poner logo del bufete como foto de perfil
 - [ ] 0.5 Configurar mensaje de ausencia (fuera de horario)
@@ -36,7 +36,7 @@
 - [ ] 0.7 Crear cuenta en developers.facebook.com
 - [ ] 0.8 Crear aplicación tipo "Negocio" → "Pineda y Asociados - CRM"
 - [ ] 0.9 Agregar producto WhatsApp a la aplicación
-- [ ] 0.10 Registrar número +504 9536 3724 (verificar por llamada)
+- [ ] 0.10 Registrar número +34 661 911 574 (verificar por llamada)
 - [ ] 0.11 Crear usuario del sistema (System User): "CRM Integration"
 - [ ] 0.12 Generar token de acceso permanente (permiso: whatsapp_business_messaging)
 - [ ] 0.13 Copiar token, ID del número, ID de cuenta comercial
@@ -131,7 +131,7 @@ Al completar esta fase, el abogado debe haber entregado al desarrollador:
 - [ ] 2.2 Crear app/api/whatsapp/route.ts (GET handshake + POST webhook)
 - [ ] 2.3 Crear lib/whatsapp.ts (sendText, sendTemplate, sendButtons, sendDocument)
 - [ ] 2.4 Crear lib/whatsapp-handler.ts (procesar mensajes entrantes)
-- [ ] 2.5 Implementar normalización de teléfonos (+504)
+- [ ] 2.5 Implementar normalización de teléfonos (+34)
 - [ ] 2.6 Configurar webhook en Meta for Developers
 - [ ] 2.7 Probar handshake con ngrok/cloudflared (túnel local)
 - [ ] 2.8 Crear plantillas WhatsApp en WhatsApp Manager
@@ -276,5 +276,6 @@ Al completar esta fase, el abogado debe haber entregado al desarrollador:
 
 > Los tiempos del abogado (Fase 0) se hacen en paralelo al desarrollo de Fase 1.
 > Tiempo real hasta MVP funcional (Fase 0 + Fase 1): ~10h.
+
 
 

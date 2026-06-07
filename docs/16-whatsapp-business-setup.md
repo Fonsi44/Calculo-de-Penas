@@ -36,8 +36,8 @@ Icono: **B** blanca sobre fondo verde oscuro (NO el de teléfono blanco que es W
 
 - Abre WhatsApp Business
 - Acepta términos
-- País: **Honduras (+504)**
-- Número: **+504 9536 3724**
+- País: **España (+34)**
+- Número: **+34 661 911 574**
 - Llega un SMS con código de 6 dígitos — escríbelo
 - Cuando pregunte "Restaurar historial": pulsa **NO** (es línea nueva)
 
@@ -75,7 +75,7 @@ Foto de perfil: usa el logo del bufete (está en `public/logo.png`).
 
 Cuando tengas WhatsApp Business funcionando, entrega estos datos al desarrollador:
 
-- [ ] Número verificado: +504 9536 3724
+- [ ] Número verificado: +34 661 911 574
 - [ ] Acceso al correo alfonsroiget@gmail.com (para código Meta)
 
 ---
@@ -151,3 +151,4 @@ En developers.facebook.com → App → WhatsApp → Configuration → Webhook:
 - [ ] B3: Endpoint /api/whatsapp creado (dev)
 - [ ] B4: Proxy.ts actualizado (dev)
 - [ ] B5: Webhook configurado en Meta (dev)
+

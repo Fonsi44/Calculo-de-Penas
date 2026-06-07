@@ -190,7 +190,7 @@ export async function sendDocument(to: string, url: string, filename: string, ca
 // ─── Parsear mensaje entrante ───
 
 export interface IncomingMessage {
-  from: string;          // +504XXXXXXXX
+  from: string;          // +34XXXXXXXX
   type: string;          // text, interactive, document, image
   text?: string;
   interactive?: { button_reply: { id: string; title: string } };
@@ -290,9 +290,9 @@ function normalizePhone(phone: string): string {
   if (clean.startsWith('504') && !clean.startsWith('+')) {
     clean = '+' + clean;
   }
-  // Si solo tiene 8 dígitos (número HN sin código país), asumir +504
+  // Si solo tiene 8 dígitos (número HN sin código país), asumir +34
   if (/^\d{8}$/.test(clean)) {
-    clean = '+504' + clean;
+    clean = '+34' + clean;
   }
   return clean;
 }
@@ -372,13 +372,13 @@ Hemos recibido tu solicitud y uno de nuestros abogados te atenderá pronto.
 Mientras tanto, puedes conocer más sobre nuestros servicios en:
 http://localhost:3000
 
-📞 +504 9536 3724
+📞 +34 661 911 574
 ```
 
 ### 7.3 Envío de plantilla desde el código
 
 ```typescript
-await sendTemplate('+504XXXXXXXX', 'bienvenida_lead', {
+await sendTemplate('+34XXXXXXXX', 'bienvenida_lead', {
   '1': 'Juan',
   '2': 'Pineda y Asociados',
 });
@@ -512,7 +512,7 @@ if (msg.interactive?.button_reply) {
 - [ ] 2. Crear app/api/whatsapp/route.ts (GET + POST)
 - [ ] 3. Crear lib/whatsapp.ts (sendText, sendTemplate, sendButtons, sendDocument)
 - [ ] 4. Crear lib/whatsapp-handler.ts (procesar mensajes entrantes)
-- [ ] 5. Implementar normalización de teléfonos (+504)
+- [ ] 5. Implementar normalización de teléfonos (+34)
 - [ ] 6. Configurar webhook en Meta for Developers
 - [ ] 7. Probar handshake con ngrok/cloudflared
 - [ ] 8. Crear plantillas en WhatsApp Manager y esperar aprobación
@@ -521,4 +521,5 @@ if (msg.interactive?.button_reply) {
 - [ ] 11. Probar flujo completo: mensaje entrante → crear lead → responder
 - [ ] 12. Probar plantillas aprobadas
 - [ ] 13. Probar mensajes interactivos (botones)
+
 

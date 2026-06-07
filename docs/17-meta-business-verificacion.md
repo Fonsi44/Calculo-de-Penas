@@ -39,7 +39,7 @@
 ### A5. Registrar número
 
 - **"Agregar número"** → Método: **"Teléfono"**
-- País: Honduras (+504)
+- País: España (+34)
 - Número: **661911574** (sin +34)
 - Alias: `Bufete principal`
 - Pide verificación por **llamada** (más rápido que SMS)
@@ -99,6 +99,7 @@ WHATSAPP_API_VERSION=v22.0
 - [ ] A7: Token + IDs entregados (abogado)
 - [ ] B1: Token validado con curl (dev)
 - [ ] B2: Variables en .env.local (dev)
+
 
 
 
