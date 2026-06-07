@@ -21,11 +21,26 @@ El proceso:
 
 > **Todo es GRATIS**. Meta cobra solo cuando envías mensajes a clientes reales.
 
+### URLs oficiales de referencia usadas en esta guía
+
+| Paso | URL oficial |
+|---|---|
+| Meta for Developers | https://developers.facebook.com |
+| WhatsApp Cloud API docs | https://developers.facebook.com/docs/whatsapp/cloud-api |
+| Crear app WhatsApp | https://developers.facebook.com/docs/whatsapp/cloud-api/get-started |
+| Webhooks WhatsApp | https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks |
+| System User tokens | https://developers.facebook.com/docs/facebook-login/access-tokens |
+| WhatsApp Manager (plantillas) | https://business.facebook.com/wa/manager |
+| Twenty REST API | https://docs.twenty.com/developers/extend/api.md |
+| Twenty Webhooks | https://docs.twenty.com/developers/extend/webhooks.md |
+
 ---
 
 ## SECCIÓN A — ABOGADO (lo haces TÚ)
 
 ### A1. Crear cuenta en Meta for Developers
+
+> 📖 Documentación oficial: https://developers.facebook.com/docs/development/register
 
 1. Ve a https://developers.facebook.com
 2. Toca **"Empezar"** (arriba a la derecha)
@@ -35,6 +50,8 @@ El proceso:
 ---
 
 ### A2. Crear la aplicación (App)
+
+> 📖 WhatsApp Cloud API — crear app: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started#create-app
 
 1. Toca **"Mis aplicaciones"** → **"Crear aplicación"**
 2. Selecciona **"Negocio"** (NO "Consumidor")
@@ -89,6 +106,9 @@ El proceso:
 
 ### A6. Crear System User + token permanente
 
+> 📖 System Users (Meta docs): https://developers.facebook.com/docs/facebook-login/access-tokens#system-users
+> 📖 WhatsApp token permanente: https://developers.facebook.com/docs/whatsapp/cloud-api/overview#permanent-token
+
 ⚠️ **El token solo aparece UNA VEZ. No cierres sin copiarlo.**
 
 1. En el menú lateral, busca **"Usuarios del sistema"**
@@ -118,6 +138,8 @@ ID cuenta comercial: 987654321098765 (de A4)
 
 ### B1. Validar token
 
+> 📖 WhatsApp Cloud API — probar endpoint: https://developers.facebook.com/docs/whatsapp/cloud-api/overview#test-your-setup
+
 ```bash
 curl -H "Authorization: Bearer EAA..." "https://graph.facebook.com/v22.0/ID_DEL_NUMERO"
 ```
@@ -135,6 +157,9 @@ WHATSAPP_API_VERSION=v22.0
 ```
 
 ### B3. Webhook (después de /api/whatsapp)
+
+> 📖 WhatsApp webhooks oficial: https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks
+> 📖 Twenty webhooks: https://docs.twenty.com/developers/extend/webhooks.md
 
 1. developers.facebook.com > app > WhatsApp > Configuración
 2. Webhook → **"Editar"**
