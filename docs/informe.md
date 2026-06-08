@@ -38,7 +38,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 ### HS-01 — OG tags genéricos en páginas secundarias ✅ CORREGIDO
 - **Problema (corregido):** Las páginas `/despacho`, `/servicios-juridicos`, `/derecho-penal` y `/hondurenos-en-espana` no definían sus propios OG title y OG description. Heredaban los de la homepage. El OG URL también apuntaba siempre a `/`. Se añadió `openGraph` específico con title, description, url e images en cada página y se actualizó el root layout con `og:image` global.
 - **Evidencia:** Análisis de meta tags HTML tras la corrección. Cada página ahora exporta su propio `openGraph` en `generateMetadata()`.
-- **Impacto:** Alto — al compartir en redes sociales, todas las páginas muestran el mismo título y descripción genérica, perdiendo contexto.
+- **Impacto:** Impacto corregido — las páginas ya muestran metadata social específica al compartirse.
 - **Prioridad:** Corregido
 - **Esfuerzo:** Bajo — añadir `generateMetadata()` con OG tags específicos en cada archivo `page.tsx` (ya hay estructura de metadata).
 - **Recomendación:** En cada `generateMetadata()`, exportar `openGraph: { title, description, url }` con valores específicos de la página.
@@ -52,7 +52,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 ### HS-03 — Analítica no implementada (scripts externos inactivos) ✅ CORREGIDO
 - **Problema (corregido):** El CSP estaba configurado para Google Tag Manager, Clarity y Google Analytics, pero ninguno de estos scripts estaba activo en las páginas. Solo Speed Insights de Vercel se cargaba realmente.
 - **Corrección aplicada:** Se añadió Script condicional para GA4 y Clarity en `app/layout.tsx` usando `next/script` con `strategy="afterInteractive"`. Se carga solo si existen `NEXT_PUBLIC_GA_ID` o `NEXT_PUBLIC_CLARITY_ID`.
-- **Impacto:** Medio — no hay datos de tráfico, conversión ni comportamiento de usuario.
+- **Impacto:** Impacto parcialmente resuelto — la infraestructura de GA4/Clarity está lista; la medición real depende de configurar `NEXT_PUBLIC_GA_ID` y/o `NEXT_PUBLIC_CLARITY_ID` en Vercel.
 - **Prioridad:** Corregido
 - **Esfuerzo:** Bajo — instalar los scripts (ya hay variables de entorno `NEXT_PUBLIC_GA_ID` y `NEXT_PUBLIC_CLARITY_ID` en `.env.example`).
 - **Recomendación:** Implementar GTM o GA4 + Clarity usando Next.js `<Script>` con `strategy="afterInteractive"`.
@@ -60,7 +60,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 ### HS-04 — URLs legacy devuelven 307 (redirect temporal al login) ✅ CORREGIDO
 - **Problema (corregido):** `/areas-juridicas`, `/migrantes-hondurenos-en-espana`, `/hodurenos-en-espana` devolvían 307 al login de intranet en lugar de 404 o 410. Esto confundía a crawlers.
 - **Corrección aplicada:** Se añadió `OBSOLETE_PUBLIC_PREFIXES` en `proxy.ts`. Estas rutas ahora devuelven 404.
-- **Impacto:** Medio — los crawlers pueden seguir cadenas de redirección y encontrarse con una página de login, perdiendo valor de rastreo.
+- **Impacto:** Impacto corregido — las rutas legacy ya devuelven 404 y no redirigen al login.
 - **Prioridad:** Corregido
 - **Esfuerzo:** Bajo — añadir excepciones en el proxy para rutas obsoletas y devolver 404, o redirigirlas 301.
 - **Recomendación:** Añadir en `proxy.ts` una lista de rutas obsoletas que deben 404 en lugar de caer al default redirect.
@@ -419,7 +419,7 @@ H2 distribuidos correctamente.
 - [x] 9. Eliminar meta keywords global (R6)
 - [x] 10. Verificar accesibilidad básica y contraste (R7)
 - [x] 11. Evaluar hreflang — no aplica para sitio monolingüe (R7)
-- [x] 12. Evaluar sitemap de imágenes — no implementado por limitaciones de MetadataRoute (R7)
+- [x] 12. Evaluar sitemap de imágenes — no implementado por decisión técnica: baja prioridad y evitar XML manual innecesario. (R7)
 
 ### A medio plazo (1-3 meses)
 - [ ] 13. Publicar más artículos de blog (>12 artículos)

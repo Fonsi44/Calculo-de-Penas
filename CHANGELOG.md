@@ -25,6 +25,7 @@
 - Checklist: sitemap de imágenes marcado como evaluado (`[x]`).
 - Puntuación global unificada a 82/100 en todo el documento.
 - Conclusión reescrita reflejando estado real: problemas técnicos corregidos, pendientes de contenido y autoridad.
+- **Limpieza final de wording**: impactos de HS-01, HS-03 y HS-04 actualizados a tiempo pasado/corregido. HS-05 road map actualizado: "limitaciones de MetadataRoute" → "decisión técnica: baja prioridad y evitar XML manual".
 
 ### Accesibilidad
 - **Contraste**: verificado primary (#0B1B3D) y acento (#C5A55A) superan WCAG AA.
