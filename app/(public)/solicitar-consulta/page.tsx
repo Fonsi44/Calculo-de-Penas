@@ -10,6 +10,8 @@ import {
   AlertTriangle,
   Clock,
   ChevronRight,
+  MapPin,
+  Building,
 } from 'lucide-react';
 import { telHref, whatsappHref, site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
@@ -192,20 +194,56 @@ export default function SolicitarConsultaPage() {
       </Section>
 
       <Section background="muted" spacing="md">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
-            Prefiere vernos en persona
-          </h2>
-          <p className="mt-3 text-sm text-text-secondary">
-            Con cita previa. Estamos en Nacaome, Valle, con horario de lunes a sábado.
-          </p>
-          <Link
-            href="/como-llegar"
-            className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-primary hover:text-accent-dark"
-          >
-            Ver cómo llegar <ArrowRight size={14} />
-          </Link>
-        </div>
+        <Container size="lg">
+          <div className="text-center mb-8">
+            <p className="text-xs font-bold uppercase tracking-eyebrow text-accent-dark mb-2">Visítenos</p>
+            <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
+              Prefiere vernos en persona
+            </h2>
+            <p className="mt-2 text-sm text-text-secondary max-w-lg mx-auto">
+              Con cita previa. Estaremos encantados de atenderle en nuestro despacho.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div className="flex flex-col items-center text-center p-5 rounded-xl bg-surface border border-border/30">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                <MapPin size={18} />
+              </div>
+              <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Dirección</p>
+              <p className="text-sm font-semibold text-text leading-snug">{site.address.line1}</p>
+              <p className="text-xs text-text-secondary mt-0.5">{site.address.line2}</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-5 rounded-xl bg-surface border border-border/30">
+              <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center mb-3">
+                <Clock size={18} />
+              </div>
+              <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Horario</p>
+              <p className="text-sm font-semibold text-text leading-snug">Lun–sáb 7:00–20:00</p>
+              <p className="text-xs text-text-secondary mt-0.5">Con cita previa</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-5 rounded-xl bg-surface border border-border/30">
+              <div className="w-10 h-10 rounded-lg bg-success/15 text-success flex items-center justify-center mb-3">
+                <Building size={18} />
+              </div>
+              <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Despacho</p>
+              <p className="text-sm font-semibold text-text leading-snug">Pineda y Asociados</p>
+              <Link
+                href="/como-llegar"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-accent-dark hover:text-primary transition-colors mt-1"
+              >
+                Ver cómo llegar <ArrowRight size={12} />
+              </Link>
+            </div>
+          </div>
+          <div className="text-center mt-6">
+            <Link
+              href="/como-llegar"
+              className="btn-shimmer inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+            >
+              <MapPin size={16} /> Indicaciones para llegar
+            </Link>
+          </div>
+        </Container>
       </Section>
     </>
   );
