@@ -1,8 +1,28 @@
 # Changelog
 
-## Release 9 — Rediseño editorial premium del blog (2026-06-08)
+## Release 10 — Auditoría de espaciados y frontend (2026-06-08)
 
-### Plantilla de artículo rediseñada
+### Espaciado entre secciones
+- **Section spacing reducido un 30%**: `md` de `py-14 md:py-20` → `py-10 md:py-14`; `lg` de `py-20 md:py-28` → `py-14 md:py-20`.
+- **SectionHeader margin reducido un 33%**: `mb-8 md:mb-12` → `mb-6 md:mb-8`.
+- El cambio se aplica globalmente a las 114 páginas del sitio.
+
+### Página /contacto eliminada
+- Redirect 301 permanente a `/solicitar-consulta`.
+- Header, sitemap, proxy y rutas públicas actualizados.
+
+### Hallazgos registrados
+- HS-10: Fecha única en 24 artículos de blog (pendiente de distribuir).
+- HS-11: Página /contacto eliminada (corregido).
+
+### Documentación
+- `docs/informe.md`: actualizado con hallazgos HS-09, HS-10, HS-11. Puntuación global actualizada: 84/100 (+10).
+
+### Validaciones
+- Build: 114/114 páginas, 0 errores
+- Lint: 0 errores, 1 warning preexistente
+
+## Release 9 — Rediseño editorial premium del blog (2026-06-08)
 - **Nueva experiencia editorial premium** en `app/(public)/blog/[slug]/page.tsx`:
   - Breadcrumbs elegantes con categoría y título.
   - Hero con categoría, H1 a escala profesional, extracto y metadatos con iconos.

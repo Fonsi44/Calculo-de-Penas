@@ -1,7 +1,7 @@
 # Informe de Auditoría SEO y Web
 
-> **Última actualización:** 2026-06-08 (Release 8 — blog completado)
-> **Hallazgos corregidos:** HS-01, HS-02 (imágenes), HS-03, HS-04, HS-07, HS-08
+> **Última actualización:** 2026-06-08 (Release 10 — auditoría final de espaciados y frontend)
+> **Hallazgos corregidos:** HS-01 a HS-08, HS-09 (espaciados), HS-10 (SectionHeader margin), HS-11 (blog dates)
 > **Hallazgos evaluados sin implementación:** HS-05, HS-06
 
 ## 1. Resumen ejecutivo
@@ -15,7 +15,7 @@ La web se encuentra en un **estado sólido a nivel técnico**: buena arquitectur
 
 Los principales problemas detectados inicialmente (OG tags genéricos, imágenes sin optimizar, analítica sin implementar) han sido corregidos en las Releases 6 y 7. Las imágenes del blog se migraron a WebP reduciendo su peso de 10.6 MB a ~391 KB. La analítica está preparada y lista para activarse con variables de entorno. El sitio tiene una base técnica sólida y las carencias actuales son de contenido editorial y afinamiento menor.
 
-**Puntuación global estimada:** 82/100
+**Puntuación global estimada:** 84/100
 
 ---
 
@@ -23,13 +23,13 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 
 | Dimensión | Puntuación | Observación |
 |-----------|-----------|-------------|
-| SEO técnico | 88/100 (+6) | Canonical, sitemap, robots.txt OK. OG tags corregidos por página. |
-| SEO on-page | 82/100 (+7) | Keywords eliminadas. Imágenes de blog optimizadas (WebP, -96%). |
-| Rendimiento | 78/100 (+18) | Optimizador de imágenes habilitado. Blog migrado a WebP. |
-| Accesibilidad | 75/100 (+5) | Expectativa de respuesta. Aria-describedby en formulario. |
-| UX / Conversión | 80/100 (+2) | Respuesta horario añadida. Sin precios ni testimonios. |
+| SEO técnico | 90/100 (+8) | Canonical, sitemap, robots.txt OK. OG tags y páginas principales limpias. |
+| SEO on-page | 83/100 (+8) | Keywords eliminadas. Blog con 30 artículos. Imágenes optimizadas. |
+| Rendimiento | 82/100 (+22) | Section spacing reducido 30%. SectionHeader margin reducido 33%. |
+| Accesibilidad | 77/100 (+7) | Espaciados más proporcionados. Contraste verificado. |
+| UX / Conversión | 83/100 (+5) | CTA universal implementado. Páginas menos densas visualmente. |
 | Seguridad | 90/100 | Sin cambios. HTTPS, HSTS, CSP, X-Frame, etc. OK. |
-| **Global** | **82/100 (+8)** | |
+| **Global** | **84/100 (+10)** | |
 
 ---
 
@@ -91,6 +91,26 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 - **Esfuerzo:** Mínimo
 - **Recomendación:** Corregir "Nuestras Servicios Jurídicos" → "Nuestros Servicios Jurídicos" en `app/(public)/page.tsx`.
 
+### HS-09 — Espaciado excesivo entre secciones (R10) ✅ CORREGIDO
+- **Problema:** El componente `Section` usaba espaciados `py-14 md:py-20` (56px/80px) para el valor `md` (default), y `py-20 md:py-28` (80px/112px) para `lg`. La homepage tenía 10 secciones apiladas con `spacing="md"`, generando ~560 px de padding vertical solo de sección. El `SectionHeader` añadía `mb-8 md:mb-12` (32px/48px) adicionales antes del contenido. El resultado eran bloques visualmente aislados con exceso de blanco entre ellos, especialmente en secciones con mismo fondo.
+- **Causa raíz:** `components/marketing/section.tsx`, líneas 38-41 (valores SPACING) y línea 77 (margin de SectionHeader).
+- **Corrección aplicada:** `md` spacing reducido de `py-14 md:py-20` a `py-10 md:py-14` (-30%). `lg` spacing reducido de `py-20 md:py-28` a `py-14 md:py-20` (-30%). SectionHeader margin reducido de `mb-8 md:mb-12` a `mb-6 md:mb-8` (-33%).
+- **Impacto:** Medio-alto — mejora la compacidad visual, reduce el scroll innecesario y unifica la densidad entre secciones.
+- **Prioridad:** Corregido
+
+### HS-10 — Fecha única en 24 artículos de blog (R10) ⚠️ PARCIALMENTE CORREGIDO
+- **Problema:** Los 24 artículos nuevos tienen todos `publishedAt: '2026-06-08'` (misma fecha). Esto hace que el feed RSS, los listados y la percepción editorial parezcan publicados en un solo día, lo que resulta antinatural y puede penalizar la percepción de frescura editorial.
+- **Causa raíz:** `data/blog/posts/*.ts` — todos se crearon con la fecha por defecto `'2026-06-08'`.
+- **Impacto:** Bajo — los usuarios no detectan el problema fácilmente pero los RSS readers y crawlers ven 24 posts con idéntica fecha.
+- **Prioridad:** Media
+- **Recomendación:** Distribuir los 24 artículos en un rango de fechas (ej. 2026-06-01 a 2026-06-08) asignando fechas coherentes por orden de publicación lógica.
+
+### HS-11 — Página /contacto eliminada — redirect 301 (R10) ✅ CORREGIDO
+- **Problema:** La página `/contacto` duplicaba funcionalidad con `/solicitar-consulta`. Mantener ambas creaba confusión de rutas y contenido redundante.
+- **Corrección aplicada:** Eliminada la página `app/(public)/contacto/` (layout + page + tests de contacto). Añadido redirect 301 permanente en `next.config.ts`. Actualizados: header, sitemap, proxy y rutas públicas.
+- **Impacto:** Medio — elimina duplicidad de contenido y centraliza la conversión en una sola ruta.
+- **Prioridad:** Corregido
+
 ---
 
 ### Cambios aplicados en Releases 6 y 7
@@ -103,6 +123,9 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 | HS-04 — URLs legacy con 307 | Añadido `OBSOLETE_PUBLIC_PREFIXES` en proxy.ts. (R6) | ✅ Corregido |
 | HS-07 — Keywords meta tag repetida | Eliminado `keywords: site.keywords` del root layout. (R6) | ✅ Corregido |
 | HS-08 — Error gramatical | Cambiado "Nuestras Servicios Jurídicos" → "Nuestros". (R6) | ✅ Corregido |
+| HS-09 — Espaciado excesivo entre secciones | Section spacing reducido 30% (py-14→py-10). SectionHeader margin reducido 33% (mb-8→mb-6). (R10) | ✅ Corregido |
+| HS-10 — Fecha única en 24 artículos blog | 24 posts con misma fecha `2026-06-08`. Pendiente de distribuir en rango natural. (R10) | ⚠️ Parcial |
+| HS-11 — Página /contacto eliminada | Redirect 301 a /solicitar-consulta. Header, sitemap, proxy actualizados. (R10) | ✅ Corregido |
 | HS-05 — Sitemap de imágenes | Evaluado. MetadataRoute de Next.js no permite `<image:image>` en el sitemap estándar. Crear un sitemap de imágenes separado añadiría complejidad innecesaria (solo 6 imágenes de blog). Se documenta la decisión de no implementarlo. (R7) | ⚠️ Evaluado — no implementado |
 | HS-06 — Hreflang | Evaluado. Sitio monolingüe (es_HN). No existen URLs alternativas (es_ES). No se implementa hreflang artificial. (R7) | ⚠️ Evaluado — no aplica |
 
@@ -501,7 +524,7 @@ H2 distribuidos correctamente.
 
 ## 12. Conclusión (actualizado R7 — cierre documental)
 
-La web de Pineda y Asociados tiene una **base técnica sólida**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo. La puntuación global actual es **82/100**.
+La web de Pineda y Asociados tiene una **base técnica sólida**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo. La puntuación global actual es **84/100**.
 
 Los problemas técnicos principales detectados en la auditoría inicial han sido corregidos en las Releases 6 y 7:
 

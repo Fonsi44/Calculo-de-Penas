@@ -36,9 +36,9 @@ const BG = {
 };
 
 const SPACING = {
-  sm: 'py-10 md:py-14',
-  md: 'py-14 md:py-20',
-  lg: 'py-20 md:py-28',
+  sm: 'py-8 md:py-10',
+  md: 'py-10 md:py-14',
+  lg: 'py-14 md:py-20',
 };
 
 export function Section({
@@ -74,7 +74,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
   return (
     <div
       className={cn(
-        'mb-8 md:mb-12',
+        'mb-6 md:mb-8',
         align === 'center' && 'text-center max-w-3xl mx-auto',
         className,
       )}
