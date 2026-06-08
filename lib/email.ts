@@ -20,7 +20,7 @@ export function getFromAddress(): string {
 }
 
 export function getNotificationEmail(): string {
-  return process.env.CONTACT_NOTIFICATION_EMAIL ?? 'contacto@pinedayasociadoshn.com';
+  return process.env.CONTACT_NOTIFICATION_EMAIL ?? 'alfonsroiget@gmail.com';
 }
 
 export interface ContactEmailPayload {
