@@ -236,35 +236,6 @@ export default function ComoLlegarPage() {
         </Card>
       </Section>
 
-      {/* HORARIO */}
-      <Section background="muted" spacing="md">
-        <div className="max-w-2xl mx-auto">
-          <Card padding="md" className="text-center">
-            <h2 className="font-serif font-extrabold text-2xl text-primary">
-              Visítenos con cita previa
-            </h2>
-            <p className="text-sm text-text-secondary mt-3 leading-relaxed">
-              Para garantizarle una atención sin esperas y la confidencialidad que su caso
-              requiere, le recomendamos agendar una cita. Estamos disponibles de lunes a sábado
-              de 7:00 a 20:00.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-2 justify-center mt-5">
-              <Link
-                href="/solicitar-consulta"
-                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-aggravation text-white text-sm font-bold hover:opacity-90"
-              >
-                Agendar cita
-              </Link>
-              <a
-                href={telHref()}
-                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md border-2 border-primary/30 text-primary text-sm font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors"
-              >
-                <Phone size={14} /> Llamar
-              </a>
-            </div>
-          </Card>
-        </div>
-      </Section>
       <ConsultationCTA />
     </>
   );
