@@ -1,7 +1,8 @@
-# Informe de Auditoría SEO y Web
+# Informe de Auditoría SEO, Frontend, UX y Rendimiento Web
 
-> **Última actualización:** 2026-06-08 (Release 10 — auditoría final de espaciados y frontend)
-> **Hallazgos corregidos:** HS-01 a HS-08, HS-09 (espaciados), HS-10 (SectionHeader margin), HS-11 (blog dates)
+> **Última actualización:** 2026-06-08 (Release 10)
+> **Hallazgos corregidos:** HS-01 a HS-08, HS-09 (espaciados + SectionHeader), HS-11 (eliminación /contacto)
+> **Hallazgos parciales:** HS-03 (analítica: implementada, pendiente activación), HS-10 (fechas del blog)
 > **Hallazgos evaluados sin implementación:** HS-05, HS-06
 
 ## 1. Resumen ejecutivo
@@ -49,11 +50,11 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 - **Impacto:** Alto — mejora LCP y tiempo de carga en conexiones lentas.
 - **Prioridad:** Corregido
 
-### HS-03 — Analítica no implementada (scripts externos inactivos) ✅ CORREGIDO
+### HS-03 — Analítica no implementada (scripts externos inactivos) ⚠️ IMPLEMENTADO, PENDIENTE ACTIVACIÓN
 - **Problema (corregido):** El CSP estaba configurado para Google Tag Manager, Clarity y Google Analytics, pero ninguno de estos scripts estaba activo en las páginas. Solo Speed Insights de Vercel se cargaba realmente.
 - **Corrección aplicada:** Se añadió Script condicional para GA4 y Clarity en `app/layout.tsx` usando `next/script` con `strategy="afterInteractive"`. Se carga solo si existen `NEXT_PUBLIC_GA_ID` o `NEXT_PUBLIC_CLARITY_ID`.
 - **Impacto:** Impacto parcialmente resuelto — la infraestructura de GA4/Clarity está lista; la medición real depende de configurar `NEXT_PUBLIC_GA_ID` y/o `NEXT_PUBLIC_CLARITY_ID` en Vercel.
-- **Prioridad:** Corregido
+- **Prioridad:** Implementado, pendiente de activación
 - **Esfuerzo:** Bajo — instalar los scripts (ya hay variables de entorno `NEXT_PUBLIC_GA_ID` y `NEXT_PUBLIC_CLARITY_ID` en `.env.example`).
 - **Recomendación:** Implementar GTM o GA4 + Clarity usando Next.js `<Script>` con `strategy="afterInteractive"`.
 
@@ -117,9 +118,9 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 
 | Hallazgo | Cambio aplicado | Estado |
 |----------|----------------|--------|
-| HS-01 — OG tags genéricos | Añadido `openGraph` específico con title, description, url, images en /despacho, /servicios-juridicos, /derecho-penal, /hondurenos-en-espana y /contacto. Root layout actualizado con `og:image`. (R6) | ✅ Corregido |
+| HS-01 — OG tags genéricos | Añadido `openGraph` específico en /despacho, /servicios-juridicos, /derecho-penal, /hondurenos-en-espana y /solicitar-consulta. Root layout actualizado con `og:image`. (R6) | ✅ Corregido |
 | HS-02 — Imágenes sin optimizar | Cambiado `images.unoptimized: true → false` en next.config.ts (R6). 5 imágenes de blog migradas a WebP con `sharp`: 10.6 MB → **391 KB** (-96%) (R7). | ✅ Corregido |
-| HS-03 — Analítica no implementada | Añadido Script condicional para GA4 y Clarity en `app/layout.tsx` con `next/script` `strategy="afterInteractive"`. (R6) | ✅ Corregido |
+| HS-03 — Analítica no implementada | Añadido Script condicional para GA4 y Clarity en `app/layout.tsx` con `next/script` `strategy="afterInteractive"`. Requiere configurar env vars en Vercel para activación real. (R6) | ⚠️ Implementado, pendiente activación |
 | HS-04 — URLs legacy con 307 | Añadido `OBSOLETE_PUBLIC_PREFIXES` en proxy.ts. (R6) | ✅ Corregido |
 | HS-07 — Keywords meta tag repetida | Eliminado `keywords: site.keywords` del root layout. (R6) | ✅ Corregido |
 | HS-08 — Error gramatical | Cambiado "Nuestras Servicios Jurídicos" → "Nuestros". (R6) | ✅ Corregido |
@@ -149,7 +150,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 | Servicios Jurídicos | ✅ `Servicios Jurídicos \| Pineda y Asociados` | ✅ Enumera las 13 especialidades |
 | Derecho Penal | ✅ `Derecho Penal \| Pineda y Asociados` | ✅ Destaca presencia en 5 ciudades |
 | Hondureños en España | ✅ `Hondureños en España \| Pineda y Asociados` | ✅ Orientada a la intención del usuario migrante |
-| Contacto | ✅ `Contacto \| Pineda y Asociados` | ✅ Clara y directa |
+| Contacto | ✅ `Contacto \| Pineda y Asociados` | ✅ Redirige 301 a consulta |
 
 **Conclusión:** Titles y descriptions son correctos, únicos y con intención de búsqueda.
 
@@ -161,7 +162,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 | Servicios Jurídicos | `Todos los servicios jurídicos que su caso necesita, bajo una misma dirección letrada` | Correcto, con propuesta de valor |
 | Derecho Penal | `Defensa penal seria, técnica y confidencial` | Correcto, 3 adjetivos clave |
 | Hondureños en España | `Hondureños en España: asistencia legal integral` | Correcto |
-| Contacto | `Póngase en contacto con el bufete` | Correcto |
+| Contacto | `Póngase en contacto con el bufete` | Redirigido 301 a `/solicitar-consulta` |
 
 H2 distribuidos correctamente.
 
@@ -198,10 +199,10 @@ H2 distribuidos correctamente.
 
 ### 4.9 Enlaces internos y externos
 - ✅ Navegación principal presente en header (7 enlaces directos)
-- ✅ Footer con enlaces a las 13 áreas jurídicas + despacho + contacto
+- ✅ Footer con enlaces a las 13 áreas jurídicas + despacho + solicitar consulta
 - ✅ Interlinking entre páginas relacionadas (FAQs, breadcrumbs)
 - ✅ Breadcrumbs con datos estructurados JSON-LD en páginas de detalle
-- ❌ Sin enlaces al blog desde la homepage (excepto la sección dedicada)
+- ⚠️ Blog enlazado desde homepage pero con poca prominencia visual (el enlace existe en la sección de blog pero no destaca suficientemente)
 
 ### 4.10 Datos estructurados (Schema.org)
 - ✅ Cobertura excelente de Schema.org: `LegalService`, `LocalBusiness`, `Organization`, `WebSite`, `WebPage`, `Service`, `FAQPage`, `ItemList`, `BreadcrumbList`, `AboutPage`
@@ -387,7 +388,7 @@ H2 distribuidos correctamente.
 - ✅ Footer completo con todas las áreas
 - ✅ Botón "Acceso Intranet" discreto para empleados
 - ✅ La mayoría de páginas son accesibles en 1-2 clics desde homepage
-- ✅ 404 personalizada con enlaces a inicio, áreas jurídicas y contacto
+- ✅ 404 personalizada con enlaces a inicio, servicios jurídicos y solicitar consulta
 
 ### 8.5 Fricciones
 - ✅ **Formulario de contacto:** Indicación de tiempo de respuesta añadida (lun–sáb 7:00–20:00) + enlaces a teléfono/WhatsApp para urgencias.
@@ -470,7 +471,7 @@ H2 distribuidos correctamente.
 - [x] Schema.org implementado (LegalService, FAQ, Breadcrumb)
 - [x] OG title/description específicos en páginas hijas
 - [x] OG URL corregido en páginas hijas
-- [x] OG image implementada en páginas hijas y contacto
+- [x] OG image implementada en páginas hijas y solicitar-consulta
 - [x] hreflang evaluado — no aplica (monolingüe)
 - [x] URLs legacy con 404 en lugar de 307
 - [x] Meta keywords global eliminado
@@ -482,7 +483,7 @@ H2 distribuidos correctamente.
 - [x] Contenido original sin duplicación
 - [x] "Nuestras" → "Nuestros" corregido en homepage
 - [x] Imágenes de blog optimizadas (WebP, -96%)
-- [ ] Blog con más artículos (30 actuales, objetivo alcanzado)
+- [x] Blog con más artículos (30 actuales, objetivo alcanzado)
 
 ### Rendimiento
 - [x] images.unoptimized evaluado (cambiar a false)
@@ -522,25 +523,31 @@ H2 distribuidos correctamente.
 
 ---
 
-## 12. Conclusión (actualizado R7 — cierre documental)
+## 12. Conclusión (actualizado R10)
 
-La web de Pineda y Asociados tiene una **base técnica sólida**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo. La puntuación global actual es **84/100**.
+La web de Pineda y Asociados tiene una **base técnica sólida**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo. La puntuación global actual es **84/100** (+10 desde la auditoría inicial).
 
-Los problemas técnicos principales detectados en la auditoría inicial han sido corregidos en las Releases 6 y 7:
+Los problemas técnicos detectados han sido corregidos a lo largo de 10 releases:
 
-1. ✅ **OG tags específicos por página** — mejora directa en el rendimiento en redes sociales.
-2. ✅ **Optimización de imágenes** — reducción de 10.6 MB a 391 KB (-96%) migrando blog a WebP.
-3. ✅ **Analítica condicional** — infraestructura lista para GA4 y Clarity.
-4. ✅ **Corrección gramatical** — "Nuestros Servicios Jurídicos".
-5. ✅ **URLs legacy** — ahora devuelven 404 en lugar de 307 al login.
-6. ✅ **Meta keywords** — eliminado del root layout.
-7. ✅ **Sitemap de imágenes y hreflang evaluados** — documentadas las decisiones de no implementación.
+1. ✅ **OG tags específicos por página** (R6) — mejora directa en el rendimiento en redes sociales.
+2. ✅ **Optimización de imágenes** (R7) — reducción de 10.6 MB a 391 KB (-96%) migrando blog a WebP.
+3. ⚠️ **Analítica condicional** (R6) — infraestructura lista para GA4 y Clarity. Pendiente de activación configurando `NEXT_PUBLIC_GA_ID` y/o `NEXT_PUBLIC_CLARITY_ID` en Vercel.
+4. ✅ **Corrección gramatical** (R6) — "Nuestros Servicios Jurídicos".
+5. ✅ **URLs legacy** (R6) — ahora devuelven 404 en lugar de 307 al login.
+6. ✅ **Meta keywords** (R6) — eliminado del root layout.
+7. ✅ **Sitemap de imágenes y hreflang evaluados** (R7) — documentadas las decisiones de no implementación.
+8. ✅ **24 artículos de blog** (R8) — 30 artículos totales en 13 categorías.
+9. ✅ **Rediseño editorial del blog** (R9) — tipografía, hero, sidebar, CTA, artículos relacionados.
+10. ✅ **Reducción de espaciados** (R10) — Section spacing -30%, SectionHeader margin -33%.
+11. ✅ **Eliminación de /contacto** (R10) — redirect 301 permanente a `/solicitar-consulta`.
+12. ⚠️ **Fechas del blog** (R10) — 24 artículos comparten fecha `2026-06-08`. Pendiente de distribuir en rango natural.
 
-Lo que queda pendiente es principalmente de **contenido editorial y construcción de autoridad externa**:
-- Publicar más artículos de blog (>12).
+Lo que queda pendiente es principalmente de **construcción de autoridad externa y afinamiento**:
 - Añadir perfiles de Google Mi Negocio y redes sociales.
 - Auditoría de accesibilidad con herramienta especializada (axe/WAVE).
-- Migración de imágenes corporativas a WebP si superan 500 KB.
+- Migración de imágenes corporativas a WebP.
+- Distribuir fechas de publicación del blog en un rango natural.
+- Activar analítica configurando las variables de entorno en Vercel.
 
 Con las acciones del roadmap a medio plazo se puede alcanzar una puntuación estimada de **~90/100**.
 
