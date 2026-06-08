@@ -47,7 +47,12 @@ const INTRANET_PUBLIC_EXACT = new Set<string>([
   '/intranet/acceso-denegado',
 ]);
 
-// Paths intranet protegidos que NO están bajo /intranet/* (legacy).
+// Rutas públicas obsoletas que deben devolver 404 en lugar de redirigir al login.
+const OBSOLETE_PUBLIC_PREFIXES = [
+  '/areas-juridicas',
+  '/migrantes-hondurenos-en-espana',
+  '/hodurenos-en-espana',
+];
 // Mantener para que los enlaces internos antiguos (casos/[id] → /calculadora,
 // cp/[id] → /cp, etc.) sigan funcionando sin redirigir al login.
 const INTRANET_LEGACY_EXACT = new Set<string>([
@@ -137,6 +142,11 @@ export function proxy(request: NextRequest) {
   }
 
   if (isPublicPagePath(pathname)) {
+    return NextResponse.next();
+  }
+
+  // Rutas públicas obsoletas: 404 en lugar de redirigir al login.
+  if (OBSOLETE_PUBLIC_PREFIXES.some(p => pathname.startsWith(p))) {
     return NextResponse.next();
   }
 

@@ -10,6 +10,7 @@ import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
 import { site } from "@/lib/site";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 /* Tipografía "Premium Corporate Luxury" — Cormorant Garamond (headings)
    + Manrope (body). Patrón del repo fuente. */
@@ -38,7 +39,6 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   authors: [{ name: site.name }],
-  keywords: site.keywords,
   creator: site.name,
   publisher: site.name,
   manifest: "/manifest.json",
@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: "es_HN",
     type: "website",
+    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Bufete jurídico en Nacaome, Valle` }],
   },
   robots: site.noindex
     ? { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } }
@@ -116,6 +117,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ThemeProvider>
         </GlobalErrorBoundary>
         <SpeedInsights />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');`}
+            </Script>
+          </>
+        )}
+        {process.env.NEXT_PUBLIC_CLARITY_ID && (
+          <Script id="clarity" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, 'clarity', 'script', '${process.env.NEXT_PUBLIC_CLARITY_ID}');`}
+          </Script>
+        )}
       </body>
     </html>
   );

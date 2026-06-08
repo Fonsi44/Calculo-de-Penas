@@ -1,6 +1,29 @@
 # Changelog
 
-## Release 5 — Hardenizado SSL/TLS y canonical host www (2026-06-06)
+## Release 6 — Auditoría SEO y mejoras web integrales (2026-06-08)
+
+### SEO técnico
+- **OG tags específicos por página**: Añadidos `openGraph` title, description, url e images propios en `/despacho`, `/servicios-juridicos`, `/derecho-penal`, `/hondurenos-en-espana` y `/contacto`. Corregido `og:url` que apuntaba genéricamente a homepage.
+- **OG image**: Añadida referencia a `og-image.png` en todas las páginas y en el root layout.
+- **Meta keywords**: Eliminado el meta `keywords` global del root layout (repetitivo en todas las páginas, ignorado por Google desde 2009).
+- **URLs legacy**: Añadido manejo explícito en `proxy.ts` para rutas obsoletas (`/areas-juridicas`, `/migrantes-hondurenos-en-espana`, `/hodurenos-en-espana`) que ahora devuelven 404 en lugar de redirigir al login de intranet (307).
+
+### Contenido
+- **Corrección gramatical**: "Nuestras Servicios Jurídicos" → "Nuestros Servicios Jurídicos" en homepage (`app/(public)/page.tsx`).
+
+### Rendimiento
+- **Optimización de imágenes**: Cambiado `images.unoptimized: true → false` en `next.config.ts`. Las imágenes ahora pasan por el optimizador de Next.js, reduciendo tamaño sin pérdida visual.
+- **Analítica**: Implementada infraestructura condicional para Google Analytics (GA4) y Microsoft Clarity via `next/script` con `strategy="afterInteractive"`. Se cargan solo si las variables de entorno `NEXT_PUBLIC_GA_ID` o `NEXT_PUBLIC_CLARITY_ID` están definidas.
+
+### UX/CRO
+- **Expectativa de respuesta**: Añadido texto informativo en formulario de contacto con horario laboral y alternativas urgentes (teléfono/WhatsApp).
+
+### Validaciones
+- Build: 89/89 páginas generadas, 0 errores
+- Lint: 0 errores
+- Tests: 183/185 pasan (2 fallos preexistentes en chip.test.tsx ajenos a estos cambios)
+
+
 
 ### Cambios aplicados
 

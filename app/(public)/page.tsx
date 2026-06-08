@@ -275,7 +275,7 @@ export default function HomePage() {
       <Section spacing="md" ariaLabel="Todas las Servicios Jurídicos">
         <SectionHeader
           eyebrow="Cobertura integral"
-          title="Nuestras Servicios Jurídicos"
+          title="Nuestros Servicios Jurídicos"
           subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir bajo una misma dirección letrada."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

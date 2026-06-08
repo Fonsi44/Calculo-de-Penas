@@ -121,6 +121,7 @@ export default function ContactoPage() {
                   </button>
                 </div>
               ) : (
+                <>
                 <form onSubmit={submit} className="space-y-3">
                   <div className="grid sm:grid-cols-2 gap-3">
                     <Field
@@ -219,6 +220,10 @@ export default function ContactoPage() {
                     )}
                   </button>
                 </form>
+                <p className="text-xxs text-text-muted mt-3 text-center">
+                  Respondemos normalmente durante el horario laboral (lun–sáb 7:00–20:00). Para asuntos urgentes, llámenos al <a href={telHref()} className="text-primary font-semibold hover:underline">{site.phoneDisplay}</a> o escríbanos por <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">WhatsApp</a>.
+                </p>
+                </>
               )}
             </Card>
           </div>

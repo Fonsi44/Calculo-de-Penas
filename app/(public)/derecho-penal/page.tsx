@@ -16,6 +16,15 @@ export const metadata: Metadata = {
   title: 'Derecho Penal',
   description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca. ${site.name}.`,
   alternates: { canonical: '/derecho-penal' },
+  openGraph: {
+    title: `Derecho Penal — ${site.name}`,
+    description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en todo el país.`,
+    url: `${site.url}/derecho-penal`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Derecho Penal` }],
+  },
 };
 
 export default function DerechoPenalPage() {

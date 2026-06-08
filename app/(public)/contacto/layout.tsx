@@ -8,8 +8,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/contacto' },
   openGraph: {
     title: `Contacto · ${site.name}`,
-    description: `Visítenos en ${site.address.full} o contáctenos por teléfono o WhatsApp.`,
+    description: `Visítenos en ${site.address.city}, ${site.address.department}, Honduras o contáctenos por teléfono o WhatsApp.`,
     url: `${site.url}/contacto`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `Contacto · ${site.name}` }],
   },
 };
 

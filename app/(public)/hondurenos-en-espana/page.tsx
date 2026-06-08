@@ -13,6 +13,15 @@ export const metadata: Metadata = {
   title: 'Hondureños en España',
   description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. ${site.name}.`,
   alternates: { canonical: '/hondurenos-en-espana' },
+  openGraph: {
+    title: `Hondureños en España — ${site.name}`,
+    description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España.`,
+    url: `${site.url}/hondurenos-en-espana`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Hondureños en España` }],
+  },
 };
 
 export default function MigrantesPage() {
