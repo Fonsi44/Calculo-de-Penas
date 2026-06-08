@@ -8,8 +8,10 @@ import {
   CheckCircle2,
   ArrowRight,
   AlertTriangle,
+  Clock,
+  ChevronRight,
 } from 'lucide-react';
-import { telHref, whatsappHref } from '@/lib/site';
+import { telHref, whatsappHref, site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 
@@ -65,62 +67,126 @@ export default function SolicitarConsultaPage() {
             </Card>
           </div>
 
-          <div className="lg:col-span-2 space-y-3">
-            <Card padding="md" className="bg-aggravation text-white">
-              <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle size={18} aria-hidden="true" />
-                <h3 className="font-bold text-sm">¿Emergencia con detenido?</h3>
-              </div>
-              <p className="text-sm text-white/90 leading-relaxed">
-                Si un familiar está siendo detenido o necesita asistencia letrada
-                inmediata, no espere. Llámenos o escríbanos por WhatsApp ahora.
+          <div className="lg:col-span-2 space-y-4">
+            {/* Contacto directo */}
+            <Card padding="md">
+              <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">
+                <Phone size={15} className="text-accent-dark" />
+                Contacto directo
+              </h3>
+              <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+                Si prefiere hablar con nosotros directamente, estamos disponibles en horario hábil.
               </p>
-              <div className="flex flex-col sm:flex-row gap-2 mt-4">
+              <div className="space-y-2.5">
                 <a
                   href={telHref()}
-                  className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-white text-aggravation text-sm font-bold hover:bg-white/90"
+                  className="flex items-center gap-3 p-3 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-accent/5 transition-all group"
                 >
-                  <Phone size={14} /> Llamar
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+                    <Phone size={18} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-bold uppercase tracking-wider text-text-muted">Teléfono</p>
+                    <p className="text-sm font-semibold text-text leading-tight mt-0.5 tabular-nums">{site.phoneDisplay}</p>
+                  </div>
+                  <ChevronRight size={16} className="text-text-muted flex-shrink-0 group-hover:text-accent-dark transition-colors" />
                 </a>
                 <a
-                  href={whatsappHref('Emergencia: tengo un familiar detenido.')}
+                  href={whatsappHref('Hola, necesito una consulta jurídica.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-success text-white text-sm font-bold hover:opacity-90"
+                  className="flex items-center gap-3 p-3 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-accent/5 transition-all group"
                 >
-                  <MessageCircle size={14} /> WhatsApp
+                  <div className="w-10 h-10 rounded-lg bg-success/15 text-success flex items-center justify-center flex-shrink-0 group-hover:bg-success/20 transition-colors">
+                    <MessageCircle size={18} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-bold uppercase tracking-wider text-text-muted">WhatsApp</p>
+                    <p className="text-sm font-semibold text-text leading-tight mt-0.5">Respuesta inmediata</p>
+                  </div>
+                  <ChevronRight size={16} className="text-text-muted flex-shrink-0 group-hover:text-accent-dark transition-colors" />
                 </a>
               </div>
             </Card>
 
-            <Card padding="md">
-              <h3 className="font-bold text-sm text-primary mb-3">Motivos frecuentes</h3>
-              <ul className="space-y-1.5">
+            {/* Emergencia */}
+            <div className="p-4 rounded-xl bg-gradient-to-br from-aggravation/10 to-aggravation/5 border border-aggravation/20">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg bg-aggravation flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle size={18} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm text-aggravation leading-tight">¿Emergencia con detenido?</h3>
+                  <p className="text-xs text-text-secondary mt-1 leading-relaxed">
+                    Si un familiar está siendo detenido o necesita asistencia inmediata, no espere un minuto.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <a
+                  href={telHref()}
+                  className="flex-1 inline-flex items-center justify-center gap-2 h-10 rounded-lg bg-aggravation text-white text-sm font-bold hover:opacity-90 transition-opacity"
+                >
+                  <Phone size={15} /> Llamar ahora
+                </a>
+                <a
+                  href={whatsappHref('Emergencia: necesito asistencia legal inmediata.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 h-10 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
+                >
+                  <MessageCircle size={15} /> WhatsApp
+                </a>
+              </div>
+            </div>
+
+            {/* Motivos frecuentes */}
+            <Card padding="sm">
+              <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">
+                <Calendar size={15} className="text-accent-dark" />
+                Motivos frecuentes
+              </h3>
+              <div className="grid grid-cols-2 gap-1.5">
                 {REASONS.map((r) => (
-                  <li key={r} className="flex items-center gap-2 text-sm text-text-secondary">
+                  <div key={r} className="flex items-center gap-2 px-2.5 py-2 rounded-md bg-primary/5 text-xs text-text-secondary">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-dark flex-shrink-0" />
                     {r}
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </Card>
 
-            <Card padding="md">
-              <h3 className="font-bold text-sm text-primary mb-3">Nuestras garantías</h3>
-              <ul className="space-y-2.5">
+            {/* Garantías */}
+            <Card padding="sm">
+              <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">
+                <ShieldCheck size={15} className="text-accent-dark" />
+                Nuestras garantías
+              </h3>
+              <div className="space-y-2.5">
                 {GUARANTEES.map((g) => (
-                  <li key={g.title} className="flex items-start gap-2.5">
-                    <div className="w-8 h-8 rounded-md bg-success/15 text-success flex items-center justify-center flex-shrink-0">
-                      <g.icon size={14} />
+                  <div key={g.title} className="flex items-start gap-2.5">
+                    <div className="w-7 h-7 rounded-md bg-success/15 text-success flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <g.icon size={13} />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-text leading-tight">{g.title}</p>
-                      <p className="text-xs text-text-secondary leading-relaxed">{g.desc}</p>
+                      <p className="text-xs font-bold text-text leading-tight">{g.title}</p>
+                      <p className="text-xxs text-text-secondary leading-relaxed mt-0.5">{g.desc}</p>
                     </div>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </Card>
+
+            {/* Horario */}
+            <div className="flex items-center gap-2.5 px-4 py-3 rounded-lg border border-border/30 bg-surface-alt">
+              <div className="w-8 h-8 rounded-md bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                <Clock size={15} />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-text">Horario de atención</p>
+                <p className="text-xxs text-text-muted">Lun–sáb 7:00–20:00 · Nacaome, Valle</p>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
