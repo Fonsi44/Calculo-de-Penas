@@ -93,11 +93,10 @@ export default async function BlogHubPage(props: { searchParams?: Promise<{ tag?
                   ))}
                 </div>
                 <div className="mt-8 flex flex-col items-center gap-3">
-                  <Link
+                  <a
                     href="/blog/feed.xml"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-accent/30 bg-accent/5 text-xs font-bold uppercase tracking-wider text-accent-dark hover:bg-accent/10 hover:border-accent/50 transition-all"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    type="application/rss+xml"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-accent/30 bg-accent/5 text-xs font-bold uppercase tracking-wider text-accent-dark hover:bg-accent/10 hover:border-accent/50 transition-all cursor-pointer"
                     aria-label="Suscribirse al RSS del blog"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-dark">
@@ -106,7 +105,7 @@ export default async function BlogHubPage(props: { searchParams?: Promise<{ tag?
                       <circle cx="5" cy="19" r="1" />
                     </svg>
                     Suscribirse al RSS
-                  </Link>
+                  </a>
                   <p className="text-xxs text-text-muted">Reciba los nuevos artículos automáticamente</p>
                 </div>
               </div>

@@ -238,11 +238,10 @@ export default async function BlogPostPage({ params }: Props) {
                 </div>
 
                 {/* RSS Feed */}
-                <Link
+                <a
                   href="/blog/feed.xml"
+                  type="application/rss+xml"
                   className="flex items-center gap-2.5 p-4 rounded-xl border border-accent/20 bg-accent/5 hover:bg-accent/10 transition-all"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   aria-label="Suscribirse al RSS del blog"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-dark flex-shrink-0">
@@ -254,7 +253,7 @@ export default async function BlogPostPage({ params }: Props) {
                     <p className="text-xs font-bold text-text leading-tight">Suscribirse al RSS</p>
                     <p className="text-xxs text-text-muted mt-0.5">Reciba nuevos artículos</p>
                   </div>
-                </Link>
+                </a>
               </div>
             </aside>
           </div>
