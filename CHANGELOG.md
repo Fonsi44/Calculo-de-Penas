@@ -1,6 +1,49 @@
 # Changelog
 
-## Release 8 — 24 artículos de blog SEO + optimización de imágenes (2026-06-08)
+## Release 9 — Rediseño editorial premium del blog (2026-06-08)
+
+### Plantilla de artículo rediseñada
+- **Nueva experiencia editorial premium** en `app/(public)/blog/[slug]/page.tsx`:
+  - Breadcrumbs elegantes con categoría y título.
+  - Hero con categoría, H1 a escala profesional, extracto y metadatos con iconos.
+  - Cover image usando `next/image` con `priority` + `sizes` responsive.
+  - Sidebar lateral con autor, contacto directo (teléfono/WhatsApp) y sección de compartir.
+  - CTA intermedio contextual ("¿Necesita asesoría legal personalizada?") dentro del artículo.
+  - Artículos relacionados estilo "También puede interesarle" con grid de 3 tarjetas con imagen.
+  - Navegación prev/next mejorada con cards y títulos.
+  - CTA final con sección propia y diseño centrado.
+
+### Tipografía y legibilidad
+- **Cuerpo de texto**: de 14px (`prose-sm`) a **17px** (16px en móvil).
+- **Interlineado**: de `1.625` a **1.8** para lectura cómoda.
+- **Ancho de lectura**: limitado a **42rem** (~672px) en la columna principal.
+- **H2**: 1.5rem con prefijo decorativo "§", borde inferior dorado, separación 2.5rem superior.
+- **H3**: 1.2rem, bold, sin decoración excesiva.
+- **Párrafos**: separación de 1.25rem entre ellos.
+- **Enlaces**: subrayados con `text-underline-offset`, color acento dorado.
+- **Blockquotes**: borde izquierdo dorado de 3px, fondo `surface-alt`.
+- **Negritas**: color `primary` (#0B1B3D) para énfasis jurídico.
+- **Listas**: bullets consistentes, interlineado generoso en ítems.
+- Todo gestionado desde clase `.article-body` en `globals.css`, sin estilos inline en el JSX.
+
+### Cover image
+- Migrada de `<img>` plano a `next/image` con `fill`, `priority` y `sizes="(max-width: 1024px) 100vw, 1024px"`.
+- Contenedor `aspect-[21/9]` con borde y sombra sutil.
+
+### SEO y enlazado interno
+- Breadcrumbs con datos estructurados (categoría del post enlazada).
+- Artículos relacionados con puntuación por categoría y tags.
+- Sidebar con teléfono y WhatsApp directos.
+
+### Documentación
+- `CHANGELOG.md`: Release 9 añadida.
+- `globals.css`: +80 líneas de estilos editoriales `.article-body`.
+
+### Validaciones
+- Build: 115/115 páginas, 0 errores
+- Lint: 0 errores, 1 warning preexistente
+
+
 
 ### Blog
 - **24 artículos nuevos** optimizados para SEO, con contenido original de 900-1200 palabras cada uno, FAQs, enlaces internos y CTAs.

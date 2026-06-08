@@ -570,3 +570,126 @@ details.faq-anim:not([open]) > summary:hover {
   font-family: inherit;
   background: #FAF7F1;
 }
+
+/* ============================================================
+   PLANTILLA EDITORIAL PREMIUM — ARTÍCULOS DEL BLOG (R9)
+   Escala tipográfica, ritmo visual y legibilidad jurídica.
+   ============================================================ */
+
+.article-body {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--color-text);
+  max-width: 42rem; /* ~672px: ancho de lectura óptimo */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article-body h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-primary);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.article-body h2::before {
+  content: "§ ";
+  font-size: 1.25rem;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+.article-body h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-primary);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-body p {
+  margin-bottom: 1.25rem;
+}
+
+.article-body strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.article-body ul, .article-body ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+}
+
+.article-body ul li {
+  list-style-type: disc;
+}
+
+.article-body ol li {
+  list-style-type: decimal;
+}
+
+.article-body a {
+  color: var(--color-accent-dark);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.article-body a:hover {
+  color: var(--color-primary);
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background: var(--color-surface-alt);
+  border-radius: 0 0.375rem 0.375rem 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.article-body blockquote p {
+  margin-bottom: 0;
+}
+
+.article-body hr {
+  margin: 2rem 0;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-accent), transparent);
+}
+
+/* FAQ styling */
+.article-body .faq-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .article-body {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  .article-body h2 {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+  .article-body h3 {
+    font-size: 1.1rem;
+  }
+}
