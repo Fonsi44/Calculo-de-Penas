@@ -61,7 +61,7 @@ export function PublicFooter() {
             </p>
           </div>
 
-          {/* Áreas */}
+          {/* Servicios */}
           <div>
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
