@@ -22,7 +22,7 @@ const DESPACHO = [
   { label: 'El Despacho', href: '/despacho' },
   { label: 'Cómo llegar', href: '/como-llegar' },
   { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
-  { label: 'Hondureños en España', href: '/migrantes-hondurenos-en-espana' },
+  { label: 'Hondureños en España', href: '/hodurenos-en-espana' },
   { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
 ];
 

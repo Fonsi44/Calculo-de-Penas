@@ -4,7 +4,7 @@
  * Estructura:
  *   - 1 hub de servicios jurídicos generales (13 áreas)
  *   - 1 hub de derecho penal con 7 grupos especializados
- *   - 1 hub de migrantes hondureños en España con 3 subáreas
+ *   - 1 hub de Hondureños en España con 3 subáreas
  *
  * Cada entrada expone:
  *   - slug estable (URL canónica, sin acentos, en kebab-case)
@@ -59,7 +59,7 @@ export type HubPenal = {
 };
 
 export type HubMigrantes = {
-  slug: 'migrantes-hondurenos-en-espana';
+  slug: 'hodurenos-en-espana';
   titulo: string;
   resumen: string;
   descripcion: string;
@@ -459,7 +459,7 @@ export const areasGenerales: AreaStandalone[] = [
       { pregunta: '¿Cuánto tarda la residencia temporal en Honduras?', respuesta: 'Entre 6 y 18 meses dependiendo del tipo y la carga del INM. Con patrocinador abogado, se reduce significativamente.' },
       { pregunta: '¿Puedo naturalizarme sin renunciar a mi nacionalidad?', respuesta: 'Sí, Honduras reconoce la doble nacionalidad por nacimiento. Si la adquirió por naturalización, deberá revisar los tratados bilaterales.' },
     ],
-    areasRelacionadas: ['migrantes-hondurenos-en-espana', 'derecho-de-familia'],
+    areasRelacionadas: ['hodurenos-en-espana', 'derecho-de-familia'],
     keywords: [
       'INM Honduras',
       'residencia Honduras',
@@ -927,13 +927,13 @@ export const hubPenal: HubPenal = {
 /* -------------------------------------------------------------------------- */
 
 export const hubMigrantes: HubMigrantes = {
-  slug: 'migrantes-hondurenos-en-espana',
-  titulo: 'Migrantes Hondureños en España',
+  slug: 'hodurenos-en-espana',
+  titulo: 'Hondureños en España',
   resumen: 'Gestión documental, actos notariales internacionales y asuntos civiles y familiares desde España.',
   descripcion:
     'Atención jurídica especializada para la comunidad hondureña residente en España. Coordinamos con notarías, registros civiles, consulados y autoridades españolas para validar y ejecutar actos jurídicos con pleno efecto en Honduras y Europa.',
   heroEyebrow: 'Asistencia transnacional',
-  heroTitle: 'Migrantes hondureños en España: asistencia legal integral',
+  heroTitle: 'Hondureños en España: asistencia legal integral',
   heroSubtitle:
     'Resolvemos sus trámites legales entre Honduras y España. Documentación, notariado, familia, sucesiones y reconocimientos con pleno efecto jurídico en ambos países.',
   faqs: [
@@ -948,7 +948,7 @@ export const hubMigrantes: HubMigrantes = {
     'derecho-de-familia',
   ],
   keywords: [
-    'migrantes hondureños en España',
+    'Hondureños en España',
     'abogado Honduras España',
     'legalización de documentos Honduras',
     'apostilla Honduras España',

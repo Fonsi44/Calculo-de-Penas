@@ -10,17 +10,17 @@ import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 
 export const metadata: Metadata = {
-  title: 'Migrantes Hondureños en España',
+  title: 'Hondureños en España',
   description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. ${site.name}.`,
-  alternates: { canonical: '/migrantes-hondurenos-en-espana' },
+  alternates: { canonical: '/hodurenos-en-espana' },
 };
 
 export default function MigrantesPage() {
   const url = migrantesHubHref();
   const ldSchemas = areaSchemas({
     service: {
-      slug: 'migrantes-hondurenos-en-espana',
-      name: 'Migrantes Hondureños en España — Pineda y Asociados',
+      slug: 'hodurenos-en-espana',
+      name: 'Hondureños en España — Pineda y Asociados',
       description: hubMigrantes.descripcion,
       serviceType: 'LegalService',
       keywords: hubMigrantes.keywords,
@@ -29,7 +29,7 @@ export default function MigrantesPage() {
     faqs: hubMigrantes.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
-      { name: 'Migrantes Hondureños en España', url },
+      { name: 'Hondureños en España', url },
     ],
     url,
   });
@@ -71,7 +71,7 @@ export default function MigrantesPage() {
             return (
               <Link
                 key={sub.slug}
-                href={`/migrantes-hondurenos-en-espana/${sub.slug}`}
+                href={`/hodurenos-en-espana/${sub.slug}`}
                 className="group block focus-visible:outline-none"
               >
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">

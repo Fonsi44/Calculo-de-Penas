@@ -11,7 +11,7 @@ const NAV = [
   { label: 'El Despacho', href: '/despacho' },
   { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
   { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Hondureños en España', href: '/migrantes-hondurenos-en-espana' },
+  { label: 'Hondureños en España', href: '/hodurenos-en-espana' },
   { label: 'FAQ', href: '/preguntas-frecuentes' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },

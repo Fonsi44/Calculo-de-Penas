@@ -142,5 +142,5 @@ export function penalHubHref() {
 }
 
 export function migrantesHubHref() {
-  return absoluteUrl('/migrantes-hondurenos-en-espana');
+  return absoluteUrl('/hodurenos-en-espana');
 }

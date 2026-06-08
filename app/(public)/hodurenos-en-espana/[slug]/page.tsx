@@ -19,9 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const subarea = hubMigrantes.subareas.find((s) => s.slug === slug);
   if (!subarea) return {};
   return {
-    title: `${subarea.titulo} | Migrantes Hondureños en España`,
+    title: `${subarea.titulo} | Hondureños en España`,
     description: `${subarea.descripcion.substring(0, 160)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
-    alternates: { canonical: `/migrantes-hondurenos-en-espana/${slug}` },
+    alternates: { canonical: `/hodurenos-en-espana/${slug}` },
   };
 }
 
@@ -31,7 +31,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
   if (!subarea) notFound();
 
   const url = migrantesHubHref();
-  const subareaUrl = absoluteUrl(`/migrantes-hondurenos-en-espana/${slug}`);
+  const subareaUrl = absoluteUrl(`/hodurenos-en-espana/${slug}`);
   const Icon = getIcon(subarea.icono);
 
   const related = subarea.areasRelacionadas
@@ -140,7 +140,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
             {related.map((r) => {
               const RIcon = getIcon(r.icono);
               return (
-                <Link key={r.slug} href={`/migrantes-hondurenos-en-espana/${r.slug}`} className="group block focus-visible:outline-none">
+                <Link key={r.slug} href={`/hodurenos-en-espana/${r.slug}`} className="group block focus-visible:outline-none">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                     <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                       <RIcon size={20} aria-hidden="true" />
@@ -158,7 +158,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                 </Link>
               );
             })}
-            <Link href="/migrantes-hondurenos-en-espana" className="group block focus-visible:outline-none">
+            <Link href="/hodurenos-en-espana" className="group block focus-visible:outline-none">
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                   <span className="font-extrabold text-lg">+</span>

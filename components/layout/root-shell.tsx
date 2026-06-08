@@ -19,13 +19,13 @@ const PUBLIC_ROUTES = new Set([
   '/blog',
   '/servicios-juridicos',
   '/derecho-penal',
-  '/migrantes-hondurenos-en-espana',
+  '/hodurenos-en-espana',
   '/intranet/login',
   '/intranet/recuperar-clave',
   '/intranet/acceso-denegado',
 ]);
 
-const PUBLIC_PREFIXES = ['/servicios-juridicos', '/derecho-penal', '/migrantes-hondurenos-en-espana', '/blog/'];
+const PUBLIC_PREFIXES = ['/servicios-juridicos', '/derecho-penal', '/hodurenos-en-espana', '/blog/'];
 
 function isPublicRoute(pathname: string): boolean {
   if (PUBLIC_ROUTES.has(pathname)) return true;
