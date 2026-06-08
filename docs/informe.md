@@ -1,8 +1,8 @@
 # Informe de Auditoría SEO, Frontend, UX y Rendimiento Web
 
 > **Última actualización:** 2026-06-08 (Release 10)
-> **Hallazgos corregidos:** HS-01 a HS-08, HS-09 (espaciados + SectionHeader), HS-11 (eliminación /contacto)
-> **Hallazgos parciales:** HS-03 (analítica: implementada, pendiente activación), HS-10 (fechas del blog)
+> **Hallazgos corregidos:** HS-01 a HS-08, HS-09 (espaciados + SectionHeader), HS-10 (fechas del blog), HS-11 (eliminación /contacto)
+> **Hallazgos parciales:** HS-03 (analítica: implementada, pendiente activación)
 > **Hallazgos evaluados sin implementación:** HS-05, HS-06
 
 ## 1. Resumen ejecutivo
@@ -99,12 +99,12 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 - **Impacto:** Medio-alto — mejora la compacidad visual, reduce el scroll innecesario y unifica la densidad entre secciones.
 - **Prioridad:** Corregido
 
-### HS-10 — Fecha única en 24 artículos de blog (R10) ⚠️ PARCIALMENTE CORREGIDO
-- **Problema:** Los 24 artículos nuevos tienen todos `publishedAt: '2026-06-08'` (misma fecha). Esto hace que el feed RSS, los listados y la percepción editorial parezcan publicados en un solo día, lo que resulta antinatural y puede penalizar la percepción de frescura editorial.
+### HS-10 — Fecha única en 24 artículos de blog (R10) ✅ CORREGIDO
+- **Problema (corregido):** Los 24 artículos nuevos tenían todos `publishedAt: '2026-06-08'` (misma fecha), lo que resultaba antinatural en el feed RSS y listados.
+- **Corrección aplicada:** Distribuidas las fechas en un rango de 22 días (15 may – 8 jun 2026) mediante script. Solo 1 post conserva la fecha del lanzamiento. Las fechas ahora reflejan una progresión editorial natural.
 - **Causa raíz:** `data/blog/posts/*.ts` — todos se crearon con la fecha por defecto `'2026-06-08'`.
-- **Impacto:** Bajo — los usuarios no detectan el problema fácilmente pero los RSS readers y crawlers ven 24 posts con idéntica fecha.
-- **Prioridad:** Media
-- **Recomendación:** Distribuir los 24 artículos en un rango de fechas (ej. 2026-06-01 a 2026-06-08) asignando fechas coherentes por orden de publicación lógica.
+- **Impacto:** Bajo — mejoró la percepción editorial y la variedad en el feed RSS.
+- **Prioridad:** Corregido
 
 ### HS-11 — Página /contacto eliminada — redirect 301 (R10) ✅ CORREGIDO
 - **Problema:** La página `/contacto` duplicaba funcionalidad con `/solicitar-consulta`. Mantener ambas creaba confusión de rutas y contenido redundante.
@@ -125,7 +125,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 | HS-07 — Keywords meta tag repetida | Eliminado `keywords: site.keywords` del root layout. (R6) | ✅ Corregido |
 | HS-08 — Error gramatical | Cambiado "Nuestras Servicios Jurídicos" → "Nuestros". (R6) | ✅ Corregido |
 | HS-09 — Espaciado excesivo entre secciones | Section spacing reducido 30% (py-14→py-10). SectionHeader margin reducido 33% (mb-8→mb-6). (R10) | ✅ Corregido |
-| HS-10 — Fecha única en 24 artículos blog | 24 posts con misma fecha `2026-06-08`. Pendiente de distribuir en rango natural. (R10) | ⚠️ Parcial |
+| HS-10 — Fecha única en 24 artículos blog | Distribuidas fechas en rango 15 may – 8 jun (22 días). Solo 1 post en fecha de lanzamiento. (R10) | ✅ Corregido |
 | HS-11 — Página /contacto eliminada | Redirect 301 a /solicitar-consulta. Header, sitemap, proxy actualizados. (R10) | ✅ Corregido |
 | HS-05 — Sitemap de imágenes | Evaluado. MetadataRoute de Next.js no permite `<image:image>` en el sitemap estándar. Crear un sitemap de imágenes separado añadiría complejidad innecesaria (solo 6 imágenes de blog). Se documenta la decisión de no implementarlo. (R7) | ⚠️ Evaluado — no implementado |
 | HS-06 — Hreflang | Evaluado. Sitio monolingüe (es_HN). No existen URLs alternativas (es_ES). No se implementa hreflang artificial. (R7) | ⚠️ Evaluado — no aplica |
@@ -540,13 +540,12 @@ Los problemas técnicos detectados han sido corregidos a lo largo de 10 releases
 9. ✅ **Rediseño editorial del blog** (R9) — tipografía, hero, sidebar, CTA, artículos relacionados.
 10. ✅ **Reducción de espaciados** (R10) — Section spacing -30%, SectionHeader margin -33%.
 11. ✅ **Eliminación de /contacto** (R10) — redirect 301 permanente a `/solicitar-consulta`.
-12. ⚠️ **Fechas del blog** (R10) — 24 artículos comparten fecha `2026-06-08`. Pendiente de distribuir en rango natural.
+12. ✅ **Fechas del blog** (R10) — 24 artículos distribuidos en 22 días. Post más reciente: 8 jun.
 
 Lo que queda pendiente es principalmente de **construcción de autoridad externa y afinamiento**:
 - Añadir perfiles de Google Mi Negocio y redes sociales.
 - Auditoría de accesibilidad con herramienta especializada (axe/WAVE).
 - Migración de imágenes corporativas a WebP.
-- Distribuir fechas de publicación del blog en un rango natural.
 - Activar analítica configurando las variables de entorno en Vercel.
 
 Con las acciones del roadmap a medio plazo se puede alcanzar una puntuación estimada de **~90/100**.
