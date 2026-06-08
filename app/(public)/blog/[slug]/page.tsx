@@ -167,7 +167,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <div className="mt-10 p-6 rounded-xl border border-accent/30 bg-accent/5 text-center">
                   <p className="font-serif font-bold text-lg text-primary mb-2">¿Necesita asesoría legal personalizada?</p>
                   <p className="text-sm text-text-secondary mb-4">Cada caso es único. Hable con un abogado y reciba orientación confidencial.</p>
-                  <CTAGroup variant="primary" />
+                  <CTAGroup variant="primary" className="justify-center" />
                 </div>
               </article>
 
