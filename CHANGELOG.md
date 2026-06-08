@@ -1,6 +1,37 @@
 # Changelog
 
-## Release 6 — Auditoría SEO y mejoras web integrales (2026-06-08)
+## Release 7 — Auditoría SEO: imágenes, accesibilidad, depuración de informe (2026-06-08)
+
+### Imágenes
+- **Migración a WebP**: 5 imágenes JPG del blog convertidas a WebP usando `sharp`. Reducción de 10.6 MB a 391 KB (-96%).
+  - `bufete-abogados.jpg` (3.3 MB) → `bufete-abogados.webp` (103 KB)
+  - `despido-laboral.jpg` (2.8 MB) → `despido-laboral.webp` (48 KB)
+  - `abogado-penalista-sur.jpg` (2.4 MB) → `abogado-penalista-sur.webp` (110 KB)
+  - `problemas-familiares.jpg` (1.0 MB) → `problemas-familiares.webp` (55 KB)
+  - `servicios-empresariales.jpg` (1.4 MB) → `servicios-empresariales.webp` (16 KB)
+- Actualizadas todas las referencias en `data/blog/posts/` (6 posts → `.webp`).
+
+### Informe de auditoría (`docs/informe.md`)
+- Depuración completa de inconsistencias entre resumen, hallazgos, análisis, quick wins, roadmap y checklist.
+- Marcados como corregidos: HS-01 (OG), HS-02 (imágenes), HS-03 (analítica), HS-04 (URLs legacy), HS-07 (keywords), HS-08 (gramática).
+- Evaluados y documentados: HS-05 (sitemap de imágenes — no implementado por limitación de MetadataRoute), HS-06 (hreflang — no aplica, sitio monolingüe).
+- Actualizadas puntuaciones: SEO on-page 82/100 (+7), Rendimiento 78/100 (+18), Global **82/100 (+8)**.
+
+### Accesibilidad
+- **Contraste**: verificado primary (#0B1B3D) y acento (#C5A55A) superan WCAG AA.
+- **FAQs**: verificados nativos `<details>/<summary>` navegables por teclado.
+- **Aria-describedby**: documentado en informe.
+
+### Lazy loading y sitemap
+- Verificado: BlogCard usa `next/image` con `fill` + `sizes` (lazy loading por defecto). Correcto.
+- Sitemap ya tiene frecuencia `weekly` para blog. Sin cambios necesarios.
+
+### Validaciones
+- Build: 89/89 páginas, 0 errores
+- Lint: 0 errores
+- Tests: 183/185 pasan (2 fallos preexistentes chip.test.tsx)
+
+
 
 ### SEO técnico
 - **OG tags específicos por página**: Añadidos `openGraph` title, description, url e images propios en `/despacho`, `/servicios-juridicos`, `/derecho-penal`, `/hondurenos-en-espana` y `/contacto`. Corregido `og:url` que apuntaba genéricamente a homepage.

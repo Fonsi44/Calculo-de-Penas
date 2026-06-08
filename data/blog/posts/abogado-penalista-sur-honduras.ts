@@ -16,7 +16,7 @@ export const abogadoPenalistaSurHonduras: Post = {
   ],
   author: 'Pineda y Asociados',
   readingTime: '7 min',
-  coverImage: '/images/blog/abogado-penalista-sur.jpg',
+  coverImage: '/images/blog/abogado-penalista-sur.webp',
   body: `
 <p>En el sur de Honduras, como en cualquier región del país, enfrentar una investigación penal o una detención puede ocurrir sin previo aviso. La diferencia entre un proceso llevado con defensa técnica desde el inicio y uno sin ella suele definirse en las primeras horas. Saber cuándo contactar a un abogado penalista es tan importante como saber a quién llamar.</p>
 

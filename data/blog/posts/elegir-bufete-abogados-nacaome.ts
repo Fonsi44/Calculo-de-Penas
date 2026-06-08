@@ -16,7 +16,7 @@ export const elegirBufeteAbogadosNacaome: Post = {
   ],
   author: 'Pineda y Asociados',
   readingTime: '6 min',
-  coverImage: '/images/blog/bufete-abogados.jpg',
+  coverImage: '/images/blog/bufete-abogados.webp',
   body: `
 <p>Elegir un bufete de abogados no es una decisión menor. Cuando una persona o una empresa necesita representación legal, lo que está en juego puede ser su libertad, su patrimonio, su familia o su negocio. En el sur de Honduras, donde las opciones de asesoría jurídica especializada son más limitadas que en Tegucigalpa o San Pedro Sula, la elección del despacho correcto cobra una relevancia particular.</p>
 

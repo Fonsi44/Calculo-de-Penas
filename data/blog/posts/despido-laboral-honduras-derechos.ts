@@ -16,7 +16,7 @@ export const despidoLaboralHondurasDerechos: Post = {
   ],
   author: 'Pineda y Asociados',
   readingTime: '7 min',
-  coverImage: '/images/blog/despido-laboral.jpg',
+  coverImage: '/images/blog/despido-laboral.webp',
   body: `
 <p>Perder el empleo es una situación difícil, y cuando el despido ocurre sin causa justificada o sin el pago de las prestaciones que la ley ordena, la incertidumbre se multiplica. En Honduras, el Código del Trabajo establece un marco de protección para el trabajador que muchas personas desconocen hasta que enfrentan el conflicto.</p>
 

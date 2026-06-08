@@ -16,7 +16,7 @@ export const problemasLegalesFamiliaresHonduras: Post = {
   ],
   author: 'Pineda y Asociados',
   readingTime: '8 min',
-  coverImage: '/images/blog/problemas-familiares.jpg',
+  coverImage: '/images/blog/problemas-familiares.webp',
   body: `
 <p>Los conflictos familiares son, después de los penales, la causa más frecuente de consulta jurídica en Honduras. Una separación, la disputa por la custodia de los hijos, el incumplimiento de la pensión alimenticia o la muerte de un familiar sin testamento son situaciones que, sin orientación legal, pueden volverse procesos largos y emocionalmente desgastantes.</p>
 

@@ -16,7 +16,7 @@ export const serviciosLegalesEmpresasSurHonduras: Post = {
   ],
   author: 'Pineda y Asociados',
   readingTime: '7 min',
-  coverImage: '/images/blog/servicios-empresariales.jpg',
+  coverImage: '/images/blog/servicios-empresariales.webp',
   body: `
 <p>El sur de Honduras concentra una actividad económica relevante: comercio en la frontera con El Salvador y Nicaragua, producción agrícola y ganadera en Valle y Choluteca, y un creciente sector de servicios. Esta dinámica genera necesidades legales tanto para empresas como para particulares que, sin una asesoría jurídica integral, pueden enfrentar riesgos evitables.</p>
 
