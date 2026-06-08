@@ -34,7 +34,7 @@ export default function NotFound() {
           Servicios Jurídicos
         </Link>
         <Link
-          href="/contacto"
+          href="/solicitar-consulta"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-text-secondary font-semibold hover:bg-surface-alt transition-colors"
         >
           Contacto

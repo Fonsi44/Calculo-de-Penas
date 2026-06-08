@@ -99,6 +99,6 @@ export const pensionAlimenticiaHondurasComoSolicitarla: Post = {
   <li><a href="/blog/custodia-hijos-honduras-juez">Custodia de hijos en Honduras: qué valora un juez</a></li>
 </ul>
 
-<p>Si necesita solicitar o reclamar una pensión alimenticia, <a href="/contacto" target="_blank">contáctenos</a> para recibir asesoría legal personalizada.</p>
+<p>Si necesita solicitar o reclamar una pensión alimenticia, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría legal personalizada.</p>
 `,
 };

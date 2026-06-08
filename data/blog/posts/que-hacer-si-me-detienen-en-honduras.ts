@@ -83,6 +83,6 @@ export const queHacerSiMeDetienenEnHonduras: Post = {
 
 <p>Enfrentar una detención sin preparación puede tener consecuencias graves. Conocer sus derechos y el procedimiento es el primer paso, pero contar con un abogado penalista desde el momento cero es lo que realmente marca la diferencia entre un proceso llevado con garantías y uno en el que sus derechos pueden verse comprometidos.</p>
 
-<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/contacto">Pineda y Asociados</a> estamos listos para ayudarle.</p>
+<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/solicitar-consulta">Pineda y Asociados</a> estamos listos para ayudarle.</p>
 `,
 };

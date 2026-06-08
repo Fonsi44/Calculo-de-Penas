@@ -107,6 +107,6 @@ export const medidasSustitutivasPrisionPreventivaHonduras: Post = {
 
 <p>La prisión preventiva no debe ser la regla general, sino la excepción. La ley hondureña ofrece un abanico de medidas sustitutivas que permiten compatibilizar las necesidades del proceso con el derecho a la libertad. La clave está en una defensa técnica que conozca estas herramientas y las solicite en el momento procesal oportuno.</p>
 
-<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/contacto">Pineda y Asociados</a> estamos listos para ayudarle.</p>
+<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/solicitar-consulta">Pineda y Asociados</a> estamos listos para ayudarle.</p>
 `,
 };

@@ -95,6 +95,6 @@ export const despidoInjustificadoHondurasDerechosTrabajador: Post = {
   <li><a href="/blog/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga?</a></li>
 </ul>
 
-<p>Si ha sido despedido y tiene dudas sobre sus derechos, <a href="/contacto" target="_blank">contáctenos</a> para una evaluación gratuita de su caso.</p>
+<p>Si ha sido despedido y tiene dudas sobre sus derechos, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una evaluación gratuita de su caso.</p>
 `,
 };

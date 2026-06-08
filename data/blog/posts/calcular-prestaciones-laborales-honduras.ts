@@ -93,6 +93,6 @@ export const calcularPrestacionesLaboralesHonduras: Post = {
   <li><a href="/blog/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga en Honduras?</a></li>
 </ul>
 
-<p>Si necesita ayuda para calcular o reclamar sus prestaciones laborales, <a href="/contacto" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>
+<p>Si necesita ayuda para calcular o reclamar sus prestaciones laborales, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>
 `,
 };

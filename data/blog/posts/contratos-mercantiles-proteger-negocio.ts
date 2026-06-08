@@ -89,6 +89,6 @@ export const contratosMercantilesProtegerNegocio: Post = {
   <li><a href="/blog/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
 </ul>
 
-<p>Para redactar o revisar sus contratos mercantiles, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios</a> o <a href="/contacto" target="_blank">contáctenos</a> para una asesoría personalizada.</p>
+<p>Para redactar o revisar sus contratos mercantiles, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una asesoría personalizada.</p>
 `,
 };

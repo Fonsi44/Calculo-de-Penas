@@ -95,6 +95,6 @@ export const custodiaHijosHondurasJuez: Post = {
   <li><a href="/blog/pension-alimenticia-honduras-como-solicitarla">Pensión alimenticia en Honduras: cómo solicitarla</a></li>
 </ul>
 
-<p>Si necesita asesoría en un proceso de custodia, <a href="/contacto" target="_blank">contáctenos</a> para una consulta con nuestros abogados de familia.</p>
+<p>Si necesita asesoría en un proceso de custodia, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una consulta con nuestros abogados de familia.</p>
 `,
 };

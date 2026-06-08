@@ -76,6 +76,6 @@ export const contratosCivilesHondurasErroresComunes: Post = {
   <li><a href="/blog/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
 </ul>
 
-<p>Si tiene dudas antes de firmar un contrato, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios de asesoría legal</a> o <a href="/contacto" target="_blank">contáctenos</a> para una revisión profesional.</p>
+<p>Si tiene dudas antes de firmar un contrato, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios de asesoría legal</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una revisión profesional.</p>
 `,
 };

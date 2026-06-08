@@ -99,6 +99,6 @@ export const poderLegalHondurasCuandoSeNecesita: Post = {
   <li><a href="/blog/poder-desde-espana-para-tramites-honduras">Poder desde España para trámites en Honduras: guía completa</a></li>
 </ul>
 
-<p>¿Necesita otorgar un poder o tiene dudas sobre qué tipo de representación legal le conviene? <a href="/contacto" target="_blank">Contáctenos</a> para recibir asesoría notarial personalizada.</p>
+<p>¿Necesita otorgar un poder o tiene dudas sobre qué tipo de representación legal le conviene? <a href="/solicitar-consulta" target="_blank">Contáctenos</a> para recibir asesoría notarial personalizada.</p>
 `,
 };

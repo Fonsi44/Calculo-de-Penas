@@ -94,6 +94,6 @@ export const incumplimientoContratoComercialHonduras: Post = {
   <li><a href="/blog/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
 </ul>
 
-<p>Si enfrenta un incumplimiento contractual, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios de derecho mercantil</a> o <a href="/contacto" target="_blank">contáctenos</a> para evaluar su caso y definir la mejor estrategia legal.</p>
+<p>Si enfrenta un incumplimiento contractual, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios de derecho mercantil</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para evaluar su caso y definir la mejor estrategia legal.</p>
 `,
 };

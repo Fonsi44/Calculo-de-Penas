@@ -106,7 +106,7 @@ export default function ComoLlegarPage() {
                     <ExternalLink size={11} className="opacity-70" />
                   </a>
                   <Link
-                    href="/contacto"
+                    href="/solicitar-consulta"
                     className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border-light text-text text-xs font-bold hover:bg-surface-alt"
                   >
                     <Phone size={14} /> Pedir indicaciones

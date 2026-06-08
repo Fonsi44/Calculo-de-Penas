@@ -89,6 +89,6 @@ export const derechosLaboralesBasicosHonduras: Post = {
   <li><a href="/blog/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga en Honduras?</a></li>
 </ul>
 
-<p>Si tiene dudas sobre sus derechos laborales, <a href="/contacto" target="_blank">contáctenos</a> para recibir orientación legal personalizada.</p>
+<p>Si tiene dudas sobre sus derechos laborales, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir orientación legal personalizada.</p>
 `,
 };

@@ -136,6 +136,6 @@ export const diferenciaDenunciaQuerellaAcusacionHonduras: Post = {
 
 <p>Denuncia, querella y acusación son figuras distintas pero complementarias en el sistema penal hondureño. Saber cuándo y cómo utilizar cada una puede marcar la diferencia en la protección de sus derechos. Si tiene dudas sobre qué figura aplica a su caso, consulte con un abogado penalista antes de actuar.</p>
 
-<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/contacto">Pineda y Asociados</a> estamos listos para ayudarle.</p>
+<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/solicitar-consulta">Pineda y Asociados</a> estamos listos para ayudarle.</p>
 `,
 };

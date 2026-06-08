@@ -100,6 +100,6 @@ export const herenciasHondurasFalleceFamiliar: Post = {
   <li><a href="/blog/tramites-notariales-frecuentes-honduras">Trámites notariales frecuentes en Honduras</a></li>
 </ul>
 
-<p>Si necesita asesoría para tramitar una herencia, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios jurídicos</a> o <a href="/contacto" target="_blank">contáctenos</a> para una consulta personalizada.</p>
+<p>Si necesita asesoría para tramitar una herencia, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios jurídicos</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una consulta personalizada.</p>
 `,
 };

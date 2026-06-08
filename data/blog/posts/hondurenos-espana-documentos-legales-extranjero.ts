@@ -83,6 +83,6 @@ export const hondurenosEspanaDocumentosLegalesExtranjero: Post = {
   <li><a href="/blog/asuntos-familiares-honduras-viviendo-espana">Cómo resolver asuntos familiares en Honduras viviendo en España</a></li>
 </ul>
 
-<p>Si necesita gestionar documentos legales en Honduras desde España, <a href="/hondurenos-en-espana" target="_blank">consulte nuestros servicios para hondureños en España</a> o <a href="/contacto" target="_blank">contáctenos directamente</a> para recibir asesoría personalizada.</p>
+<p>Si necesita gestionar documentos legales en Honduras desde España, <a href="/hondurenos-en-espana" target="_blank">consulte nuestros servicios para hondureños en España</a> o <a href="/solicitar-consulta" target="_blank">contáctenos directamente</a> para recibir asesoría personalizada.</p>
 `,
 };

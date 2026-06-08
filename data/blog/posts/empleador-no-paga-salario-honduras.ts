@@ -92,6 +92,6 @@ export const empleadorNoPagaSalarioHonduras: Post = {
   <li><a href="/blog/derechos-laborales-basicos-honduras">Derechos laborales básicos que todo trabajador debe conocer</a></li>
 </ul>
 
-<p>Si su empleador no le paga, no espere más. <a href="/contacto" target="_blank">Contáctenos</a> hoy para una consulta y evaluemos juntos su caso.</p>
+<p>Si su empleador no le paga, no espere más. <a href="/solicitar-consulta" target="_blank">Contáctenos</a> hoy para una consulta y evaluemos juntos su caso.</p>
 `,
 };

@@ -98,6 +98,6 @@ export const divorcioHondurasPasosRequisitos: Post = {
   <li><a href="/blog/pension-alimenticia-honduras-como-solicitarla">Pensión alimenticia en Honduras: cómo solicitarla</a></li>
 </ul>
 
-<p>Si está considerando el divorcio y necesita orientación legal, <a href="/contacto" target="_blank">contáctenos</a> para una consulta con nuestros abogados de familia.</p>
+<p>Si está considerando el divorcio y necesita orientación legal, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una consulta con nuestros abogados de familia.</p>
 `,
 };

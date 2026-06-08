@@ -98,6 +98,6 @@ export const asuntosFamiliaresHondurasViviendoEspana: Post = {
   <li><a href="/blog/problemas-legales-familiares-honduras">Problemas legales familiares en Honduras: guía práctica de pasos a seguir</a></li>
 </ul>
 
-<p>Si necesita resolver un asunto familiar en Honduras desde España, <a href="/hondurenos-en-espana" target="_blank">consulte nuestros servicios para hondureños en España</a> o <a href="/contacto" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>
+<p>Si necesita resolver un asunto familiar en Honduras desde España, <a href="/hondurenos-en-espana" target="_blank">consulte nuestros servicios para hondureños en España</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>
 `,
 };

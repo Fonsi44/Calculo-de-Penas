@@ -109,6 +109,6 @@ export const delitosMasComunesHonduras: Post = {
 
 <p>Conocer los tipos de delitos más frecuentes y las formas de actuar legalmente ante ellos es el primer paso para proteger sus derechos. Ya sea como víctima o como imputado, la asistencia de un abogado penalista especializado es fundamental para navegar el sistema judicial con garantías.</p>
 
-<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/contacto">Pineda y Asociados</a> estamos listos para ayudarle.</p>
+<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/solicitar-consulta">Pineda y Asociados</a> estamos listos para ayudarle.</p>
 `,
 };

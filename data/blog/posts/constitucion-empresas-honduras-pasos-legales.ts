@@ -84,6 +84,6 @@ export const constitucionEmpresasHondurasPasosLegales: Post = {
   <li><a href="/blog/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
 </ul>
 
-<p>Si desea constituir su empresa, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios de derecho mercantil</a> o <a href="/contacto" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>
+<p>Si desea constituir su empresa, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios de derecho mercantil</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>
 `,
 };

@@ -127,6 +127,6 @@ export const cuandoNecesitoAbogadoPenalistaHonduras: Post = {
 
 <p>La pregunta no es si necesita un abogado penalista, sino cuándo debe contactarlo. Y la respuesta es siempre lo antes posible. Ya sea que reciba una citación, sea detenido o tenga conocimiento de una investigación en su contra, la intervención temprana de un especialista puede marcar la diferencia entre un proceso llevado con garantías y uno en el que sus derechos se vean comprometidos.</p>
 
-<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/contacto">Pineda y Asociados</a> estamos listos para ayudarle.</p>
+<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/solicitar-consulta">Pineda y Asociados</a> estamos listos para ayudarle.</p>
 `,
 };

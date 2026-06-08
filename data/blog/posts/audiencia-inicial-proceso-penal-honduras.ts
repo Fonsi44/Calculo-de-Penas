@@ -96,6 +96,6 @@ export const audienciaInicialProcesoPenalHonduras: Post = {
 
 <p>La audiencia inicial es un momento decisivo en el proceso penal. Lo que ocurra en ella puede determinar el rumbo de todo el caso. Contar con un abogado penalista que conozca a fondo el procedimiento y que esté preparado para controlar la legalidad de la detención, impugnar pruebas ilícitas y solicitar medidas sustitutivas es la mejor inversión que puede hacer para proteger su libertad.</p>
 
-<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/contacto">Pineda y Asociados</a> estamos listos para ayudarle.</p>
+<p>¿Necesita asesoría legal personalizada? Contáctenos para una consulta confidencial. En <a href="/solicitar-consulta">Pineda y Asociados</a> estamos listos para ayudarle.</p>
 `,
 };

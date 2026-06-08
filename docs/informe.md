@@ -217,7 +217,7 @@ H2 distribuidos correctamente.
 - ✅ `og:type: website` correcto
 - ✅ Twitter card `summary_large_image` en todas las páginas
 - ✅ OG title, description y url específicos en cada página (corregido R6)
-- ✅ OG image en todas las páginas, incluyendo /contacto (corregido R6)
+- ✅ OG image en todas las páginas, incluyendo /solicitar-consulta (corregido R6)
 - ⚠️ OG image única para todo el sitio (misma imagen `og-image.png`). No hay imágenes diferenciales por página, aceptable para sitio corporativo.
 
 ### 4.12 Idioma y hreflang (actualizado R7)
@@ -341,7 +341,7 @@ H2 distribuidos correctamente.
 - ✅ Campos con `<label>` explícito y `htmlFor`/`id` correctos
 - ✅ Placeholder visible en inputs
 - ✅ Indicador de campo obligatorio con asterisco y `aria-hidden`
-- ✅ `aria-describedby` añadido en mensajes de error del formulario (verificado en `/contacto`). Cada error de validación se asocia al campo correspondiente mediante `id` único.
+- ✅ `aria-describedby` añadido en mensajes de error del formulario (verificado en `/solicitar-consulta`). Cada error de validación se asocia al campo correspondiente mediante `id` único.
 - ⚠️ Pendiente verificación con axe/WAVE para confirmar asociación correcta dinámica.
 
 ### 7.5 Textos alternativos
@@ -419,7 +419,7 @@ H2 distribuidos correctamente.
 | # | Acción | Impacto | Esfuerzo | Dónde |
 |---|--------|---------|----------|-------|
 | 1 | Optimizar imágenes del blog a WebP | Alto | 15 min | `public/images/blog/` — ✔️ Aplicado en Release 7 |
-| 2 | Añadir aria-describedby en formulario | Medio | 15 min | `app/(public)/contacto/page.tsx` — ✔️ Aplicado en Release 7 |
+| 2 | Añadir aria-describedby en formulario | Medio | 15 min | `app/(public)/solicitar-consulta/page.tsx` — ✔️ Aplicado en Release 7 |
 | 3 | Verificar lazy loading en imágenes below the fold | Medio | 10 min | `components/` — ✔️ Verificado en Release 7 |
 | 4 | Optimizar imágenes corporativas (>500 KB) | Alto | 15 min | `public/images/corporate/` |
 | 5 | Publicar más artículos de blog (>12) | Medio | Continuo | `data/blog/posts/` |
@@ -433,7 +433,7 @@ H2 distribuidos correctamente.
 - [x] 2. Añadir OG title/description específicos en page.tsx secundarias (R6)
 - [x] 3. Optimizar imágenes de blog a WebP (R7)
 - [x] 4. Corregir OG URL en páginas hijas (R6)
-- [x] 5. Añadir OG image en página /contacto (R6)
+- [x] 5. Añadir OG image en página /solicitar-consulta (R6)
 - [x] 6. Implementar GA4 + Clarity condicional (R6)
 
 ### A corto plazo (1-2 semanas)

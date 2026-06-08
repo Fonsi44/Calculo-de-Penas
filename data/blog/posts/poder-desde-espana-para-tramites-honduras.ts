@@ -82,6 +82,6 @@ export const poderDesdeEspanaParaTramitesHonduras: Post = {
   <li><a href="/blog/asuntos-familiares-honduras-viviendo-espana">Cómo resolver asuntos familiares en Honduras viviendo en España</a></li>
 </ul>
 
-<p>¿Necesita otorgar un poder desde España para trámites en Honduras? <a href="/contacto" target="_blank">Contáctenos</a> para recibir asesoría y coordinación notarial sin complicaciones.</p>
+<p>¿Necesita otorgar un poder desde España para trámites en Honduras? <a href="/solicitar-consulta" target="_blank">Contáctenos</a> para recibir asesoría y coordinación notarial sin complicaciones.</p>
 `,
 };
