@@ -50,12 +50,6 @@ const VALUES = [
   },
 ];
 
-const TIMELINE = [
-  { year: '2010', title: 'Inicio del ejercicio', desc: 'Apertura del bufete en Nacaome, Valle, con atención inicial en derecho penal y procesal penal.' },
-  { year: '2014', title: 'Consolidación regional', desc: 'Asumimos defensas y asesorías en todo el departamento de Valle y zonas aledañas de Choluteca y La Paz.' },
-  { year: '2022', title: 'Transformación digital', desc: 'Lanzamos plataforma de gestión de casos, biblioteca jurídica y motor técnico de penas.' },
-  { year: '2026', title: 'Bufete multidisciplinar', desc: 'Ampliamos a 13 áreas del derecho y abrimos este portal para que la ciudadanía conozca nuestros servicios y ejerza su defensa.' },
-];
 
 const COMMITMENTS = [
   'Consulta inicial confidencial y sin compromiso',
@@ -219,31 +213,6 @@ export default function DespachoPage() {
             </Card>
           ))}
         </div>
-      </Section>
-
-      {/* TIMELINE */}
-      <Section spacing="md">
-        <SectionHeader
-          eyebrow="Nuestra historia"
-          title="De la defensa en sala a la transformación digital"
-          subtitle="Una trayectoria construida caso a caso, con la confianza de quienes nos eligieron."
-        />
-        <ol className="relative border-l-2 border-accent/30 ml-3 space-y-6">
-          {TIMELINE.map((t) => (
-            <li key={t.year} className="ml-6 relative">
-              <span className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-accent border-4 border-background" />
-              <Card padding="sm" className="border-l-4 border-l-accent card-premium">
-                <p className="text-xs font-bold uppercase tracking-widest text-accent-dark">
-                  {t.year}
-                </p>
-                <h3 className="font-bold text-sm text-text mt-0.5">{t.title}</h3>
-                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed text-pretty">
-                  {t.desc}
-                </p>
-              </Card>
-            </li>
-          ))}
-        </ol>
       </Section>
 
       {/* EQUIPO (placeholder honesto) */}
