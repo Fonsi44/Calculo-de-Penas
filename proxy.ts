@@ -13,6 +13,7 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/delitos/count',
   '/api/health',
   '/api/whatsapp',
+  '/api/indexnow-key',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>([
