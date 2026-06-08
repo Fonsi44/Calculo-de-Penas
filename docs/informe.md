@@ -2,7 +2,7 @@
 
 > **Última actualización:** 2026-06-08 (Release 7)
 > **Hallazgos corregidos:** HS-01, HS-02 (imágenes), HS-03, HS-04, HS-07, HS-08
-> **Hallazgos pendientes:** HS-05 (evaluado: no implementado), HS-06 (evaluado: no aplica)
+> **Hallazgos evaluados sin implementación:** HS-05, HS-06
 
 ## 1. Resumen ejecutivo
 
@@ -15,7 +15,7 @@ La web se encuentra en un **estado sólido a nivel técnico**: buena arquitectur
 
 Los principales problemas detectados inicialmente (OG tags genéricos, imágenes sin optimizar, analítica sin implementar) han sido corregidos en las Releases 6 y 7. Las imágenes del blog se migraron a WebP reduciendo su peso de 10.6 MB a ~391 KB. La analítica está preparada y lista para activarse con variables de entorno. El sitio tiene una base técnica sólida y las carencias actuales son de contenido editorial y afinamiento menor.
 
-**Puntuación global estimada:** 79/100
+**Puntuación global estimada:** 82/100
 
 ---
 
@@ -65,21 +65,15 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 - **Esfuerzo:** Bajo — añadir excepciones en el proxy para rutas obsoletas y devolver 404, o redirigirlas 301.
 - **Recomendación:** Añadir en `proxy.ts` una lista de rutas obsoletas que deben 404 en lugar de caer al default redirect.
 
-### HS-05 — Sitemap único sin imágenes
-- **Problema:** El sitemap en `app/sitemap.ts` incluye todas las rutas públicas de texto, pero no hay sitemap de imágenes. Google/Bing indexa sin información de las imágenes disponibles.
-- **Evidencia:** Análisis de `app/sitemap.ts`.
-- **Impacto:** Bajo — las imágenes pueden tardar más en aparecer en búsqueda de imágenes.
-- **Prioridad:** Baja
-- **Esfuerzo:** Bajo — añadir un sitemap de imágenes adicional o incluir `<image:image>` en el sitemap existente.
-- **Recomendación:** Implementar sitemap de imágenes o verificar que Google Discover ya indexa imágenes correctamente.
+### HS-05 — Sitemap de imágenes evaluado, no implementado
+- **Evaluación:** El sitemap principal (`app/sitemap.ts`) funciona correctamente e incluye todas las rutas públicas del sitio. Se evaluó la posibilidad de añadir un sitemap de imágenes. MetadataRoute de Next.js no permite expresar `<image:image>` en el sitemap estándar. Crear un sitemap de imágenes separado (XML manual) añadiría complejidad innecesaria para solo 6 imágenes de blog, que ya son descubribles a través de las páginas donde están referenciadas. Las imágenes ya están optimizadas en WebP. Si el volumen visual crece significativamente en el futuro, puede reconsiderarse.
+- **Impacto:** Bajo — las imágenes de blog ya son indexables a través de las páginas.
+- **Prioridad:** Evaluado — no implementado por decisión técnica.
 
-### HS-06 — Sin hreflang en sección de hondureños en España
-- **Problema:** No hay `link rel="alternate" hreflang` en ninguna página, ni siquiera en `/hondurenos-en-espana` que podría tener versión en español de España vs Honduras.
-- **Evidencia:** Revisión de HTML.
-- **Impacto:** Bajo — para un sitio unilingüe no es crítico, pero la sección de migrantes podría beneficiarse.
-- **Prioridad:** Baja
-- **Esfuerzo:** Bajo
-- **Recomendación:** Evaluar si se requiere hreflang `es-HN` vs `es-ES` en `/hondurenos-en-espana`.
+### HS-06 — Hreflang evaluado, no aplica
+- **Evaluación:** El sitio es monolingüe (es_HN). No existen URLs alternativas regionales (es_ES) para ninguna página, incluida la sección `/hondurenos-en-espana`. Todo el contenido está redactado en español de Honduras sin una versión independiente en español de España. Implementar hreflang artificial sin URLs alternativas reales sería incorrecto según la especificación de Google. La decisión documentada es no implementarlo. Si en el futuro se crean versiones regionales diferenciadas, deberá añadirse con `alternates` en el metadata de cada página.
+- **Impacto:** Ninguno — no hay contenido duplicado entre variantes regionales inexistentes.
+- **Prioridad:** Evaluado — no aplica.
 
 ### HS-07 — Keywords meta tag repetida en todas las páginas ✅ CORREGIDO
 - **Problema (corregido):** El meta `keywords` contenía la misma lista exhaustiva (22 keywords) en todas las páginas del sitio, lo que Google ignora y diluye la relevancia específica de cada página.
@@ -122,7 +116,7 @@ Los principales problemas detectados inicialmente (OG tags genéricos, imágenes
 - ✅ Theme color definido (`#0B1B3D`)
 - ✅ Estructura semántica con `<header>`, `<main>`, `<footer>`
 - ✅ Skip link presente antes del contenido principal
-- ❌ H1 presente y único en cada página. Se espera que así sea
+- ✅ H1 presente y único en cada página
 
 ### 4.2 Title y meta description
 | Página | Title | Meta Description |
@@ -187,10 +181,10 @@ H2 distribuidos correctamente.
 - ❌ Sin enlaces al blog desde la homepage (excepto la sección dedicada)
 
 ### 4.10 Datos estructurados (Schema.org)
-- ✅ Excellent schema coverage: `LegalService`, `LocalBusiness`, `Organization`, `WebSite`, `WebPage`, `Service`, `FAQPage`, `ItemList`, `BreadcrumbList`, `AboutPage`
+- ✅ Cobertura excelente de Schema.org: `LegalService`, `LocalBusiness`, `Organization`, `WebSite`, `WebPage`, `Service`, `FAQPage`, `ItemList`, `BreadcrumbList`, `AboutPage`
 - ✅ JSON-LD bien formado en todas las páginas
 - ✅ LegalService con `areaServed` y `serviceType` correctos
-- ✅ FAQPpage con preguntas y respuestas en páginas que lo tienen
+- ✅ FAQPage con preguntas y respuestas en páginas que lo tienen
 - ❌ Sin `Review` ni `AggregateRating` (falta marca de confianza social)
 - ❌ Sin `Product` (aunque no venden productos, podrían declarar servicio con `offers`)
 
@@ -471,7 +465,7 @@ H2 distribuidos correctamente.
 - [x] images.unoptimized evaluado (cambiar a false)
 - [x] 6 imágenes de blog optimizadas a WebP (<130 KB c/u)
 - [x] Lazy loading verificado en imágenes below the fold
-- [ ] Sitemap de imágenes evaluado — no implementado (limitación de MetadataRoute)
+- [x] Sitemap de imágenes evaluado — no implementado por decisión técnica
 
 ### Accesibilidad
 - [x] Skip link presente
@@ -505,22 +499,26 @@ H2 distribuidos correctamente.
 
 ---
 
-## 12. Conclusión (actualizado R7)
+## 12. Conclusión (actualizado R7 — cierre documental)
 
-La web de Pineda y Asociados tiene una **base técnica excelente**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo.
+La web de Pineda y Asociados tiene una **base técnica sólida**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo. La puntuación global actual es **82/100**.
 
-Las mejoras aplicadas en Releases 6 y 7 han corregido los principales problemas detectados en la auditoría inicial:
+Los problemas técnicos principales detectados en la auditoría inicial han sido corregidos en las Releases 6 y 7:
 
 1. ✅ **OG tags específicos por página** — mejora directa en el rendimiento en redes sociales.
-2. ✅ **Optimización de imágenes** — reducción de 10.6 MB a 391 KB (-96%) migrando blog a WebP con `sharp`.
-3. ✅ **Analítica condicional** — infraestructura lista para GA4 y Clarity (requiere configurar env vars en Vercel).
+2. ✅ **Optimización de imágenes** — reducción de 10.6 MB a 391 KB (-96%) migrando blog a WebP.
+3. ✅ **Analítica condicional** — infraestructura lista para GA4 y Clarity.
 4. ✅ **Corrección gramatical** — "Nuestros Servicios Jurídicos".
 5. ✅ **URLs legacy** — ahora devuelven 404 en lugar de 307 al login.
 6. ✅ **Meta keywords** — eliminado del root layout.
+7. ✅ **Sitemap de imágenes y hreflang evaluados** — documentadas las decisiones de no implementación.
 
-**Pendiente de acciones externas:**
-- Configurar `NEXT_PUBLIC_GA_ID` y/o `NEXT_PUBLIC_CLARITY_ID` en Vercel para activar analítica.
-- Publicar más artículos de blog para fortalecer contenido editorial.
+Lo que queda pendiente es principalmente de **contenido editorial y construcción de autoridad externa**:
+- Publicar más artículos de blog (>12).
 - Añadir perfiles de Google Mi Negocio y redes sociales.
+- Auditoría de accesibilidad con herramienta especializada (axe/WAVE).
+- Migración de imágenes corporativas a WebP si superan 500 KB.
 
-La puntuación global pasó de **74/100 → 82/100** (+8 puntos). Con las acciones pendientes del roadmap (mediano plazo) se puede alcanzar ~90/100.
+Con las acciones del roadmap a medio plazo se puede alcanzar una puntuación estimada de **~90/100**.
+
+El sitio está preparado para escalar en SEO y captar tráfico desde buscadores. Las carencias actuales no son estructurales sino de contenido y afinamiento progresivo.

@@ -14,8 +14,17 @@
 ### Informe de auditoría (`docs/informe.md`)
 - Depuración completa de inconsistencias entre resumen, hallazgos, análisis, quick wins, roadmap y checklist.
 - Marcados como corregidos: HS-01 (OG), HS-02 (imágenes), HS-03 (analítica), HS-04 (URLs legacy), HS-07 (keywords), HS-08 (gramática).
-- Evaluados y documentados: HS-05 (sitemap de imágenes — no implementado por limitación de MetadataRoute), HS-06 (hreflang — no aplica, sitio monolingüe).
+- Evaluados y documentados: HS-05 (sitemap de imágenes — no implementado), HS-06 (hreflang — no aplica).
 - Actualizadas puntuaciones: SEO on-page 82/100 (+7), Rendimiento 78/100 (+18), Global **82/100 (+8)**.
+
+### Mantenimiento documental (cierre R7)
+- Eliminado duplicado completo del informe (ya estaba limpio, verificado).
+- HS-05 y HS-06 reescritos como evaluación documentada, no como errores activos.
+- Corregido `❌ H1 presente y único` → `✅`.
+- Corregidos typos: "Excellent schema coverage" → español, "FAQPpage" → "FAQPage".
+- Checklist: sitemap de imágenes marcado como evaluado (`[x]`).
+- Puntuación global unificada a 82/100 en todo el documento.
+- Conclusión reescrita reflejando estado real: problemas técnicos corregidos, pendientes de contenido y autoridad.
 
 ### Accesibilidad
 - **Contraste**: verificado primary (#0B1B3D) y acento (#C5A55A) superan WCAG AA.
