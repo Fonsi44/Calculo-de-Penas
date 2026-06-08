@@ -100,10 +100,6 @@ export default function DerechoPenalPage() {
         </div>
       </Section>
 
-      <Section spacing="sm">
-        <ContactStrip />
-      </Section>
-
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}

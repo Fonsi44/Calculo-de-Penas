@@ -13,7 +13,9 @@ import {
   AlertCircle,
   User,
   MessageSquare,
+  ArrowRight,
 } from 'lucide-react';
+import Link from 'next/link';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 import { Section } from '@/components/marketing/section';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -226,10 +228,20 @@ export default function ContactoPage() {
                 </>
               )}
             </Card>
-          </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-2 space-y-3">
+            <Link
+              href="/solicitar-consulta"
+              className="block p-4 rounded-xl bg-gradient-to-br from-primary to-primary-light text-white border border-primary-light/50 hover:from-primary-light hover:to-primary transition-all group"
+            >
+              <p className="text-xs font-bold uppercase tracking-wider mb-1">¿Prefiere una consulta formal?</p>
+              <p className="text-sm text-white/85 leading-relaxed">
+                Complete nuestro formulario confidencial y le responderemos por escrito.
+              </p>
+              <span className="inline-flex items-center gap-1.5 mt-2.5 text-sm font-bold text-accent group-hover:underline">
+                Solicitar consulta <ArrowRight size={14} />
+              </span>
+            </Link>
+
             <LiveOfficeStatus />
 
             <Card padding="md">

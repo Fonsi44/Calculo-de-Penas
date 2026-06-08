@@ -110,10 +110,6 @@ export default async function BlogHubPage(props: { searchParams?: Promise<{ tag?
         </div>
       </Section>
 
-      <Section spacing="md">
-        <ContactStrip />
-      </Section>
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

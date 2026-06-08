@@ -540,19 +540,6 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* CTA FINAL */}
-      <Section background="primary" spacing="md" ariaLabel="Solicitar consulta">
-        <div className="text-center max-w-2xl mx-auto text-text-inverse">
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
-            Cuéntenos su caso. Le orientamos sin compromiso.
-          </h2>
-          <p className="mt-4 text-text-inverse/85 text-sm md:text-base leading-relaxed">
-            La primera consulta es confidencial. Le escuchamos, evaluamos su caso y le explicamos con claridad las opciones reales, sin importar el área del derecho que necesite.
-          </p>
-          <CTAGroup variant="inverse" className="mt-7 justify-center" />
-        </div>
-      </Section>
-
       <ConsultationCTA />
 
       {/* Schema.org JSON-LD */}

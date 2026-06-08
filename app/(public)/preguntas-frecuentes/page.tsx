@@ -239,39 +239,6 @@ export default function FaqPage() {
         );
       })}
 
-      <Section background="primary" spacing="md">
-        <SectionHeader
-          eyebrow="¿No encontró su pregunta?"
-          title="Estamos listos para ayudarle"
-          subtitle="Cada caso es único. Si su duda no está aquí, contáctenos para recibir atención personalizada."
-          align="center"
-          invert
-        />
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
-          <Link
-            href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity"
-          >
-            Solicitar consulta <ArrowRight size={18} />
-          </Link>
-          <Link
-            href="/contacto"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-white/15 text-white text-base font-semibold hover:bg-white/25 transition-colors"
-          >
-            <MessageCircle size={18} />
-            Ir a contacto
-          </Link>
-        </div>
-      </Section>
-
-      <Section spacing="md">
-        <SectionHeader
-          eyebrow="Contacto directo"
-          title="¿Tiene más dudas? Escríbanos"
-        />
-        <ContactStrip />
-      </Section>
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
