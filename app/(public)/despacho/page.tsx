@@ -328,23 +328,6 @@ export default function DespachoPage() {
         </div>
       </Section>
 
-      {/* CONTACT STRIP */}
-      <Section spacing="md">
-        <SectionHeader
-          eyebrow="Hable con nosotros"
-          title="Resuélvanos sus dudas directamente"
-        />
-        <ContactStrip />
-        <div className="mt-8 text-center">
-          <Link
-            href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-primary text-text-inverse text-base font-bold hover:bg-primary-light transition-colors"
-          >
-            Solicitar consulta confidencial <ArrowRight size={18} />
-          </Link>
-        </div>
-      </Section>
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}

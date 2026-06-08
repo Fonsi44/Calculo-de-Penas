@@ -100,22 +100,6 @@ export default function DerechoPenalPage() {
         </div>
       </Section>
 
-      <Section background="muted" spacing="sm">
-        <div className="text-center max-w-2xl mx-auto">
-          <p className="text-text-secondary text-sm leading-relaxed mb-5">
-            Cada caso penal es distinto. Si no encuentra la información que busca
-            o necesita una valoración concreta de su situación, solicite una
-            consulta confidencial y le atenderemos personalmente.
-          </p>
-          <Link
-            href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity"
-          >
-            Solicitar consulta confidencial <ArrowRight size={18} />
-          </Link>
-        </div>
-      </Section>
-
       <Section spacing="sm">
         <ContactStrip />
       </Section>
