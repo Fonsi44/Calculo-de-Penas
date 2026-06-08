@@ -14,6 +14,7 @@ import { faqPageSchema } from '@/lib/schemas/legal-page';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: 'Preguntas Frecuentes',
@@ -280,6 +281,9 @@ export default function FaqPage() {
           ]),
         }}
       />
+      <ConsultationCTA />
     </>
   );
 }
+
+

@@ -5,6 +5,7 @@ import { Calendar, Clock, User, ArrowLeft, ArrowRight, ChevronRight, Phone, Mess
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site, telHref, whatsappHref } from '@/lib/site';
@@ -277,16 +278,7 @@ export default async function BlogPostPage({ params }: Props) {
         </Section>
       )}
 
-      {/* ── CTA FINAL ── */}
-      <Section spacing="md">
-        <Container size="md" className="text-center">
-          <h2 className="font-serif font-bold text-2xl text-primary mb-3">¿Necesita asesoría legal?</h2>
-          <p className="text-text-secondary mb-6 max-w-lg mx-auto leading-relaxed">
-            Si enfrenta una situación legal, nuestro equipo está listo para ayudarle con una consulta confidencial y personalizada.
-          </p>
-          <CTAGroup variant="primary" />
-        </Container>
-      </Section>
+      <ConsultationCTA />
 
       {/* ── SCHEMA ── */}
       <script
@@ -296,3 +288,4 @@ export default async function BlogPostPage({ params }: Props) {
     </>
   );
 }
+

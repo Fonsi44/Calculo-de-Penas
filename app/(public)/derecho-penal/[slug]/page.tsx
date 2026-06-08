@@ -9,6 +9,7 @@ import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { hubPenal, type AreaBase } from '@/data/areas-juridicas';
 import { areaSchemas, penalHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export function generateStaticParams() {
   return hubPenal.grupos.map((g) => ({ slug: g.slug }));
@@ -212,6 +213,8 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
+      <ConsultationCTA />
     </>
   );
 }
+

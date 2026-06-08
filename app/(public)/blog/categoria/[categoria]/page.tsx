@@ -9,6 +9,7 @@ import { blogCollectionSchema } from '@/lib/schemas/blog';
 import { site } from '@/lib/site';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 type Props = { params: Promise<{ categoria: string }> };
 
@@ -100,6 +101,9 @@ export default async function BlogCategoryPage({ params }: Props) {
           ),
         }}
       />
+      <ConsultationCTA />
     </>
   );
 }
+
+

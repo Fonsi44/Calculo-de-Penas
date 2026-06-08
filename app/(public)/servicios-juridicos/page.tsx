@@ -10,6 +10,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { areaHref, breadcrumbsSchema, itemListSchema, serviceSchema } from '@/lib/schemas/legal-page';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: 'Servicios Jurídicos',
@@ -79,35 +80,7 @@ export default function AreasJuridicasPage() {
         </div>
       </Section>
 
-      <Section spacing="sm">
-        <div className="text-center max-w-2xl mx-auto">
-          <div className="w-14 h-14 mx-auto rounded-full bg-accent/15 flex items-center justify-center mb-4">
-            <Scale size={24} className="text-accent-dark" />
-          </div>
-          <p className="text-sm font-bold uppercase tracking-widest text-accent-dark mb-2">
-            ¿No encuentra lo que busca?
-          </p>
-          <p className="text-text-secondary text-sm leading-relaxed mb-5">
-            Cada caso es único. Si su situación no encaja exactamente en una de las
-            áreas descritas, consúltenos sin compromiso. Analizaremos su caso y le
-            orientaremos sobre la vía legal más adecuada.
-          </p>
-          <Link
-            href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity"
-          >
-            Solicitar consulta confidencial <ArrowRight size={18} />
-          </Link>
-        </div>
-      </Section>
-
-      <Section background="muted" spacing="sm">
-        <ContactStrip />
-      </Section>
-
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servSchema) }} />
+      <ConsultationCTA />
     </>
   );
 }

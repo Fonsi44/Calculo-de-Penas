@@ -8,6 +8,7 @@ import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { hubMigrantes } from '@/data/areas-juridicas';
 import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: 'Hondureños en España',
@@ -146,6 +147,8 @@ export default function MigrantesPage() {
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
+      <ConsultationCTA />
     </>
   );
 }
+

@@ -20,6 +20,7 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { getCorporateImage } from '@/data/images';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
@@ -348,6 +349,8 @@ export default function DespachoPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
       />
+      <ConsultationCTA />
     </>
   );
 }
+

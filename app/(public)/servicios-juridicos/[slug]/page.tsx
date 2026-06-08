@@ -9,6 +9,7 @@ import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { areasGenerales, getAreaBySlug, type AreaStandalone } from '@/data/areas-juridicas';
 import { areaHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export function generateStaticParams() {
   return areasGenerales.map((a) => ({ slug: a.slug }));
@@ -200,6 +201,8 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
+      <ConsultationCTA />
     </>
   );
 }
+

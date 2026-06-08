@@ -15,6 +15,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { Card } from '@/components/ui/card';
 import { CopyableAddress } from '@/components/marketing/copyable-address';
 import { MapEmbed } from '@/components/marketing/map-embed';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: 'Cómo llegar al bufete',
@@ -264,6 +265,8 @@ export default function ComoLlegarPage() {
           </Card>
         </div>
       </Section>
+      <ConsultationCTA />
     </>
   );
 }
+

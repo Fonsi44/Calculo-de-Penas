@@ -11,6 +11,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: 'Derecho Penal',
@@ -122,6 +123,8 @@ export default function DerechoPenalPage() {
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
+      <ConsultationCTA />
     </>
   );
 }
+

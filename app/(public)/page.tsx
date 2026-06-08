@@ -32,6 +32,7 @@ import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
@@ -552,9 +553,12 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <ConsultationCTA />
+
       {/* Schema.org JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(heroLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
     </>
   );
 }
+
