@@ -1,6 +1,44 @@
 # Changelog
 
-## Release 7 — Auditoría SEO: imágenes, accesibilidad, depuración de informe (2026-06-08)
+## Release 8 — 24 artículos de blog SEO + optimización de imágenes (2026-06-08)
+
+### Blog
+- **24 artículos nuevos** optimizados para SEO, con contenido original de 900-1200 palabras cada uno, FAQs, enlaces internos y CTAs.
+  - 6 posts de Derecho penal: detención, denuncia vs querella, audiencia inicial, medidas sustitutivas, delitos comunes, abogado penalista.
+  - 4 posts de Derecho laboral: despido injustificado, prestaciones, impago de salario, derechos básicos.
+  - 3 posts de Derecho de familia: divorcio, custodia, pensión alimenticia.
+  - 3 posts de Derecho civil: herencias, reclamar deudas, contratos civiles.
+  - 3 posts de Derecho mercantil: constitución empresas, contratos mercantiles, incumplimiento contractual.
+  - 2 posts de Derecho notarial: trámites notariales, poder legal.
+  - 3 posts de Hondureños en España: documentos desde extranjero, poder desde España, asuntos familiares.
+- **Total del blog:** 30 artículos (6 originales + 24 nuevos).
+
+### Imágenes
+- **24 JPG convertidas a WebP** desde `docs/imagenes/` a `public/images/blog/`. Peso total ~2.3 GB → ~35 MB.
+- Cada imagen vinculada a su post por slug (`/images/blog/[slug].webp`).
+
+### Categorías
+- **2 categorías nuevas**: `hondurenos-en-espana` y `derecho-notarial`.
+- Totales ahora: 13 categorías.
+
+### SEO y metadata
+- **og:image implementado** en blog `[slug]/page.tsx` — los posts ahora tienen metadata social con su cover image.
+- **OpenGraph completo** por post: title, description, url, siteName, locale, type, authors, tags, images.
+
+### Enlazado interno
+- Cada post enlaza a las páginas principales relevantes (servicios, penal, hondurenos-en-espana, contacto).
+- Sección "También puede interesarle" con enlaces cruzados entre posts relacionados por tema.
+
+### Sitemap
+- Nuevos posts incorporados automáticamente por `app/sitemap.ts` via `getAllPosts()`.
+- Total de rutas públicas: 115 páginas.
+
+### Validaciones
+- Build: 115/115 páginas (era 89), 0 errores
+- Lint: 0 errores, 1 warning preexistente
+- Tests: 183/185 pasan (2 preexistentes)
+
+
 
 ### Imágenes
 - **Migración a WebP**: 5 imágenes JPG del blog convertidas a WebP usando `sharp`. Reducción de 10.6 MB a 391 KB (-96%).

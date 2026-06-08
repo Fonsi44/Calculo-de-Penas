@@ -6,6 +6,7 @@ import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
+import { site } from '@/lib/site';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,10 +23,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `${site.url}/blog/${post.slug}`,
+      siteName: site.name,
+      locale: 'es_HN',
       type: 'article',
       publishedTime: post.publishedAt,
       authors: [post.author],
       tags: post.tags,
+      ...(post.coverImage ? { images: [{ url: `${site.url}${post.coverImage}`, width: 1200, height: 630, alt: post.title }] } : {}),
     },
   };
 }

@@ -49,6 +49,18 @@ export const blogCategories: BlogCategory[] = [
     color: 'primary',
   },
   {
+    slug: 'hondurenos-en-espana',
+    nombre: 'Hondureños en España',
+    descripcion: 'Asistencia legal, gestión documental y trámites para hondureños residentes en España.',
+    color: 'primary',
+  },
+  {
+    slug: 'derecho-notarial',
+    nombre: 'Derecho Notarial',
+    descripcion: 'Poderes, actos notariales, protocolización de documentos y trámites notariales en Honduras.',
+    color: 'muted',
+  },
+  {
     slug: 'tributario',
     nombre: 'Derecho Tributario',
     descripcion: 'Impuestos, fiscalización del SAR, planificación fiscal y defensa del contribuyente.',

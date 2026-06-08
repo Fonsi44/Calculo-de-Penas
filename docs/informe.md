@@ -1,6 +1,6 @@
 # Informe de Auditoría SEO y Web
 
-> **Última actualización:** 2026-06-08 (Release 7)
+> **Última actualización:** 2026-06-08 (Release 8 — blog completado)
 > **Hallazgos corregidos:** HS-01, HS-02 (imágenes), HS-03, HS-04, HS-07, HS-08
 > **Hallazgos evaluados sin implementación:** HS-05, HS-06
 
@@ -156,7 +156,7 @@ H2 distribuidos correctamente.
 ### 4.6 Sitemap
 - ✅ Sitemap accesible en `https://www.pinedayasocioshn.com/sitemap.xml`
 - ✅ Generado dinámicamente desde `app/sitemap.ts`
-- ✅ Incluye todas las rutas públicas: home, despacho, 13 servicios, 7 subáreas penales, 3 subáreas migrantes, blog (6 artículos + 8 categorías), páginas legales
+- ✅ Incluye todas las rutas públicas: home, despacho, 13 servicios, 7 subáreas penales, 3 subáreas migrantes, blog (30 artículos + 13 categorías), páginas legales
 - ✅ Última modificación actualizada (`2026-06-08T07:25:20.318Z`)
 - ✅ Blogs con cambio de frecuencia weekly
 
@@ -210,7 +210,7 @@ H2 distribuidos correctamente.
 - ✅ Contenido original, sin duplicación evidente entre páginas
 - ✅ Texto suficiente en cada página (150-300 palabras visibles + descripciones de servicios)
 - ✅ Los subservicios en cada área jurídica (17 para familia, 16 para mercantil, etc.) proporcionan contenido rico
-- ✅ Blog con 6 artículos originales de entre 800-1500 palabras
+- ✅ Blog con 30 artículos originales de entre 800-1200 palabras
 - ✅ FAQ bien estructurado con datos JSON-LD
 
 ### 5.2 Intención de búsqueda
@@ -231,7 +231,7 @@ H2 distribuidos correctamente.
 - ✅ Canonical correcto previene canibalización
 
 ### 5.5 Thin content
-- ❌ **Blog categorías:** 8 categorías con solo 1 o 2 artículos cada una → páginas de categoría con poco contenido propio
+- ✅ **Blog categorías:** 13 categorías con distribución de artículos por área jurídica (R8)
 - ❌ Páginas legales (aviso-legal, política-privacidad, cookies, términos, disclaimer) tienen contenido genérico — bajo valor SEO pero esperado para este tipo de páginas
 - ✅ Páginas de servicios tienen contenido sustancial
 
@@ -370,7 +370,7 @@ H2 distribuidos correctamente.
 - ✅ **Formulario de contacto:** Indicación de tiempo de respuesta añadida (lun–sáb 7:00–20:00) + enlaces a teléfono/WhatsApp para urgencias.
 - ❌ **Ubicación:** El mapa interactivo usa Leaflet + OSM (sin Google Maps). Puede ser más lento de cargar y menos familiar para el usuario hondureño promedio
 - ❌ **Calculadora de penas:** Requiere login (barrera alta para un usuario que quiere probar la herramienta)
-- ❌ **Blog:** 6 artículos en 8 categorías → sensación de sitio con poco contenido actualizado
+- ✅ **Blog:** 30 artículos en 13 categorías (+24 en Release 8). Penal, laboral, familia, civil, mercantil, notarial y hondureños en España cubiertos.
 
 ### 8.6 Diseño responsive
 - ✅ Diseño mobile-first con Tailwind
@@ -422,7 +422,7 @@ H2 distribuidos correctamente.
 - [x] 12. Evaluar sitemap de imágenes — no implementado por decisión técnica: baja prioridad y evitar XML manual innecesario. (R7)
 
 ### A medio plazo (1-3 meses)
-- [ ] 13. Publicar más artículos de blog (>12 artículos)
+- [x] 13. Publicar más artículos de blog (>12 artículos) — alcanzado (R8, 30 artículos)
 - [ ] 14. Añadir perfiles de Google Mi Negocio y redes sociales
 - [ ] 15. Crear enlaces desde homepage a blog de forma más destacada
 - [ ] 16. Añadir testimonios visibles (con consentimiento)
@@ -459,7 +459,7 @@ H2 distribuidos correctamente.
 - [x] Contenido original sin duplicación
 - [x] "Nuestras" → "Nuestros" corregido en homepage
 - [x] Imágenes de blog optimizadas (WebP, -96%)
-- [ ] Blog con más artículos
+- [ ] Blog con más artículos (30 actuales, objetivo alcanzado)
 
 ### Rendimiento
 - [x] images.unoptimized evaluado (cambiar a false)
