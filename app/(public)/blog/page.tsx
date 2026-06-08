@@ -7,6 +7,7 @@ import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import { getAllPosts, getFeaturedPosts, getPostsByTag } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import Link from 'next/link';
+import { RssButton } from '@/components/marketing/rss-button';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
@@ -92,21 +93,8 @@ export default async function BlogHubPage(props: { searchParams?: Promise<{ tag?
                     <BlogCard key={p.slug} post={p} />
                   ))}
                 </div>
-                <div className="mt-8 flex flex-col items-center gap-3">
-                  <a
-                    href="/blog/feed.xml"
-                    type="application/rss+xml"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-accent/30 bg-accent/5 text-xs font-bold uppercase tracking-wider text-accent-dark hover:bg-accent/10 hover:border-accent/50 transition-all cursor-pointer"
-                    aria-label="Suscribirse al RSS del blog"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-dark">
-                      <path d="M4 11a9 9 0 0 1 9 9" />
-                      <path d="M4 4a16 16 0 0 1 16 16" />
-                      <circle cx="5" cy="19" r="1" />
-                    </svg>
-                    Suscribirse al RSS
-                  </a>
-                  <p className="text-xxs text-text-muted">Reciba los nuevos artículos automáticamente</p>
+                <div className="mt-8">
+                  <RssButton />
                 </div>
               </div>
             )}

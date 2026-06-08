@@ -61,6 +61,9 @@ export const metadata: Metadata = {
     : { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   alternates: {
     canonical: siteUrl,
+    types: {
+      'application/rss+xml': `${siteUrl}/blog/feed.xml`,
+    },
   },
   verification: {
     other: {
