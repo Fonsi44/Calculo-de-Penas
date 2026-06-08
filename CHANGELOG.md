@@ -22,6 +22,12 @@
 - Build: 114/114 páginas, 0 errores
 - Lint: 0 errores, 1 warning preexistente
 
+### RSS Feed (post-Release 10)
+- **Feed reescrito**: XML escaping de caracteres especiales, `pubDate` en RFC 822 estándar, categorías legibles, `<image>` tag para logo.
+- **Autodiscovery**: `<link rel="alternate" type="application/rss+xml">` añadido en root layout.
+- **Botón RSS**: ahora copia la URL al portapapeles con feedback visual + fallback a ventana nueva. Versión sidebar para artículos.
+- Componentes: `rss-button.tsx`, `rss-sidebar.tsx`.
+
 ## Release 9 — Rediseño editorial premium del blog (2026-06-08)
 - **Nueva experiencia editorial premium** en `app/(public)/blog/[slug]/page.tsx`:
   - Breadcrumbs elegantes con categoría y título.
