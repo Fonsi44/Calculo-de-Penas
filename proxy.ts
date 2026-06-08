@@ -15,6 +15,7 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/whatsapp',
   '/api/indexnow-key',
   '/api/contacto',
+  '/api/consulta',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>([
@@ -31,7 +32,6 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/politica-cookies',
   '/disclaimer',
   '/despacho',
-  '/contacto',
   '/solicitar-consulta',
   '/como-llegar',
   '/preguntas-frecuentes',

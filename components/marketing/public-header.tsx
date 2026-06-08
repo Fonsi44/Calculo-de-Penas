@@ -14,7 +14,7 @@ const NAV = [
   { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
   { label: 'FAQ', href: '/preguntas-frecuentes' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Contacto', href: '/contacto' },
+  { label: 'Contacto', href: '/solicitar-consulta' },
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {

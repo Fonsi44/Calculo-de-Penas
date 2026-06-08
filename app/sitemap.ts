@@ -41,7 +41,6 @@ const PUBLIC_ROUTES: Array<{ path: string; priority: number; changeFrequency: Me
   { path: '/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/preguntas-frecuentes', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/blog', priority: 0.7, changeFrequency: 'weekly' },
-  { path: '/contacto', priority: 0.9, changeFrequency: 'yearly' },
   { path: '/solicitar-consulta', priority: 0.95, changeFrequency: 'yearly' },
   { path: '/como-llegar', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/aviso-legal', priority: 0.2, changeFrequency: 'yearly' },

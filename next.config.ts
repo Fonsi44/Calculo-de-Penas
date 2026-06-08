@@ -65,6 +65,7 @@ const nextConfig: NextConfig = {
       { source: '/areas-de-practica/:path*', destination: '/servicios-juridicos/:path*', permanent: true },
       { source: '/derecho-penal-hondureno', destination: '/derecho-penal', permanent: true },
       { source: '/proceso-penal', destination: '/hondurenos-en-espana', permanent: true },
+      { source: '/contacto', destination: '/solicitar-consulta', permanent: true },
       { source: '/privacidad', destination: '/politica-privacidad', permanent: true },
     ];
   },

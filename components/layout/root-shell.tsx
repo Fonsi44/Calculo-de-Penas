@@ -12,7 +12,6 @@ const PUBLIC_ROUTES = new Set([
   '/politica-cookies',
   '/disclaimer',
   '/despacho',
-  '/contacto',
   '/solicitar-consulta',
   '/como-llegar',
   '/preguntas-frecuentes',
