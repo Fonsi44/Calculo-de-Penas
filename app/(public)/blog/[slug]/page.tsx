@@ -5,7 +5,6 @@ import { Calendar, Clock, User, ArrowLeft, ArrowRight, ChevronRight, Phone, Mess
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { RssSidebar } from '@/components/marketing/rss-sidebar';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
@@ -281,8 +280,6 @@ export default async function BlogPostPage({ params }: Props) {
           </Container>
         </Section>
       )}
-
-      <ConsultationCTA />
 
       {/* ── SCHEMA ── */}
       <script
