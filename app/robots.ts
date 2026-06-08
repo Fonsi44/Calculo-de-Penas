@@ -68,6 +68,5 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'Meta-ExternalAgent', disallow: '/' },
     ],
     sitemap: `${site.url}/sitemap.xml`,
-    host: site.url,
   };
 }
