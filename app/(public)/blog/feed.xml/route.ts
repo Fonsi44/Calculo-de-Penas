@@ -6,7 +6,7 @@ export async function GET() {
   const siteUrl = site.url;
 
   const items = posts
-    .slice(0, 20)
+    .slice(0, 30)
     .map(
       (post) => `
     <item>
