@@ -5,7 +5,7 @@ export const reclamarDeudaLegalmenteHonduras: Post = {
   title: 'Cómo reclamar una deuda legalmente en Honduras',
   description:
     'Guía práctica para reclamar deudas por la vía legal en Honduras. Requisitos del título ejecutivo, procedimiento judicial y alternativas de cobro.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-20',
   category: 'derecho-civil',
   tags: ['reclamar deuda Honduras', 'cobro judicial', 'título ejecutivo', 'juicio ejecutivo'],
   author: 'Pineda y Asociados',

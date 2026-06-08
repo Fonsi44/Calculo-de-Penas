@@ -5,7 +5,7 @@ export const asuntosFamiliaresHondurasViviendoEspana: Post = {
   title: 'Cómo resolver asuntos familiares en Honduras viviendo en España',
   description:
     'Divorcio, custodia, alimentos y herencias en Honduras desde España. Cómo gestionar asuntos familiares sin necesidad de viajar al país.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-06-04',
   category: 'hondurenos-en-espana',
   tags: ['asuntos familiares Honduras España', 'divorcio internacional', 'custodia internacional', 'hondureños en España'],
   author: 'Pineda y Asociados',

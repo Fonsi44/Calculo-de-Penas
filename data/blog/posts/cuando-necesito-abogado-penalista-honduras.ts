@@ -5,7 +5,7 @@ export const cuandoNecesitoAbogadoPenalistaHonduras: Post = {
   title: '¿Cuándo necesito un abogado penalista en Honduras?',
   description:
     'Desde el momento de una citación o detención, contar con un abogado penalista marca la diferencia. Sepa en qué situaciones es indispensable buscar defensa técnica.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-27',
   category: 'derecho-penal',
   tags: ['abogado penalista Honduras', 'defensa penal', 'proceso penal', 'asesoría legal'],
   author: 'Pineda y Asociados',

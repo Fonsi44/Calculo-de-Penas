@@ -5,7 +5,7 @@ export const despidoInjustificadoHondurasDerechosTrabajador: Post = {
   title: 'Despido injustificado en Honduras: derechos del trabajador',
   description:
     'Conozca qué es un despido injustificado, sus derechos laborales, cómo reclamar y qué indemnización corresponde según la legislación hondureña.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-06-01',
   category: 'derecho-laboral',
   tags: [
     'despido injustificado Honduras',

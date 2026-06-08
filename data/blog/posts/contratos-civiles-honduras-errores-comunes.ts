@@ -5,7 +5,7 @@ export const contratosCivilesHondurasErroresComunes: Post = {
   title: 'Contratos civiles en Honduras: errores comunes antes de firmar',
   description:
     'Los errores más frecuentes al firmar contratos civiles en Honduras y cómo evitarlos. Proteja sus intereses con revisión legal previa.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-20',
   category: 'derecho-civil',
   tags: ['contratos civiles Honduras', 'firmar contrato', 'asesoría legal', 'derecho civil Honduras'],
   author: 'Pineda y Asociados',

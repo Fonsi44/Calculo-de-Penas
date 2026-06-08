@@ -5,7 +5,7 @@ export const contratosMercantilesProtegerNegocio: Post = {
   title: 'Contratos mercantiles: claves para proteger tu negocio',
   description:
     'Los contratos mercantiles bien redactados protegen su empresa. Conozca las cláusulas esenciales y los errores que debe evitar en Honduras.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-22',
   category: 'derecho-mercantil',
   tags: ['contratos mercantiles Honduras', 'proteger negocio', 'cláusulas contractuales', 'derecho mercantil'],
   author: 'Pineda y Asociados',

@@ -5,7 +5,7 @@ export const tramitesNotarialesFrecuentesHonduras: Post = {
   title: 'Trámites notariales frecuentes en Honduras',
   description:
     'Poderes, escrituras, actas notariales, auténticas y otros trámites notariales comunes en Honduras. Guía práctica con requisitos principales.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-20',
   category: 'derecho-notarial',
   tags: ['trámites notariales Honduras', 'poder legal', 'escritura pública', 'acta notarial'],
   author: 'Pineda y Asociados',

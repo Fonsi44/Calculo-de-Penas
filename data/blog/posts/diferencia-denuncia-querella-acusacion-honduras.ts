@@ -5,7 +5,7 @@ export const diferenciaDenunciaQuerellaAcusacionHonduras: Post = {
   title: 'Diferencia entre denuncia, querella y acusación en Honduras',
   description:
     'Conozca las diferencias clave entre denuncia, querella y acusación en el sistema penal hondureño. Cada figura tiene requisitos, efectos y procedimientos distintos.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-22',
   category: 'derecho-penal',
   tags: ['denuncia', 'querella', 'acusación', 'proceso penal Honduras'],
   author: 'Pineda y Asociados',

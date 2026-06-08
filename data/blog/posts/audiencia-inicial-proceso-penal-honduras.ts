@@ -5,7 +5,7 @@ export const audienciaInicialProcesoPenalHonduras: Post = {
   title: 'Cómo funciona una audiencia inicial en el proceso penal hondureño',
   description:
     'La audiencia inicial es una etapa clave del proceso penal en Honduras. Conozca qué sucede, quién interviene, qué se decide y cómo prepararse con defensa técnica.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-25',
   category: 'derecho-penal',
   tags: ['audiencia inicial', 'proceso penal Honduras', 'defensa penal', 'etapas del proceso'],
   author: 'Pineda y Asociados',

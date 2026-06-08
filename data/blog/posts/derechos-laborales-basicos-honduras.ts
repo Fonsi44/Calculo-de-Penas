@@ -5,7 +5,7 @@ export const derechosLaboralesBasicosHonduras: Post = {
   title: 'Derechos laborales básicos que todo trabajador debe conocer',
   description:
     'Salario mínimo, jornada, vacaciones, aguinaldo, estabilidad laboral. Conozca los derechos laborales fundamentales en Honduras.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-24',
   category: 'derecho-laboral',
   tags: [
     'derechos laborales Honduras',

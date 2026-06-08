@@ -5,7 +5,7 @@ export const incumplimientoContratoComercialHonduras: Post = {
   title: 'Qué hacer ante un incumplimiento de contrato comercial',
   description:
     'Guía para reaccionar ante un incumplimiento contractual en Honduras: pasos legales, reclamación formal, mediación y vía judicial.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-24',
   category: 'derecho-mercantil',
   tags: ['incumplimiento de contrato Honduras', 'reclamación comercial', 'derecho mercantil', 'resolución de conflictos'],
   author: 'Pineda y Asociados',

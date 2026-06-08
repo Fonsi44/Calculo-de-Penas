@@ -5,7 +5,7 @@ export const herenciasHondurasFalleceFamiliar: Post = {
   title: 'Herencias en Honduras: ¿qué hacer cuando fallece un familiar?',
   description:
     'Pasos legales tras el fallecimiento de un familiar en Honduras. Sucesión testada e intestada, plazos, documentación necesaria y asesoría legal.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-24',
   category: 'derecho-civil',
   tags: ['herencias Honduras', 'sucesión', 'testamento Honduras', 'derecho civil'],
   author: 'Pineda y Asociados',

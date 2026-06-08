@@ -5,7 +5,7 @@ export const queHacerSiMeDetienenEnHonduras: Post = {
   title: '¿Qué hacer si me detienen en Honduras? Guía legal completa',
   description:
     'Guía paso a paso sobre sus derechos, el procedimiento y cómo actuar si es detenido en Honduras. Información legal clara, práctica y actualizada conforme al Código Procesal Penal.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-20',
   category: 'derecho-penal',
   tags: ['detención Honduras', 'derechos del detenido', 'proceso penal Honduras', 'abogado penalista'],
   author: 'Pineda y Asociados',

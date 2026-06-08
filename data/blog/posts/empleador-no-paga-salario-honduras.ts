@@ -5,7 +5,7 @@ export const empleadorNoPagaSalarioHonduras: Post = {
   title: '¿Qué hacer si mi empleador no me paga en Honduras?',
   description:
     'Pasos legales para reclamar salarios impagos en Honduras. Derechos del trabajador, vías administrativas y judiciales disponibles.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-27',
   category: 'derecho-laboral',
   tags: [
     'salario impago Honduras',

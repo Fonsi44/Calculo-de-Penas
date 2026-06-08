@@ -5,7 +5,7 @@ export const poderLegalHondurasCuandoSeNecesita: Post = {
   title: 'Poder legal en Honduras: ¿cuándo se necesita y cómo hacerlo?',
   description:
     'Qué es un poder legal, tipos, cuándo se necesita en Honduras y los pasos para otorgarlo correctamente ante notario.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-05-22',
   category: 'derecho-notarial',
   tags: ['poder legal Honduras', 'poder notarial', 'trámites notariales', 'abogado notario'],
   author: 'Pineda y Asociados',

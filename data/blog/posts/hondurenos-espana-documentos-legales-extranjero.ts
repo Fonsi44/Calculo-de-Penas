@@ -5,7 +5,7 @@ export const hondurenosEspanaDocumentosLegalesExtranjero: Post = {
   title: 'Hondureños en España: cómo gestionar documentos legales desde el extranjero',
   description:
     'Guía para hondureños residentes en España que necesitan gestionar documentos legales en Honduras: partidas, antecedentes, poderes y más.',
-  publishedAt: '2026-06-08',
+  publishedAt: '2026-06-04',
   category: 'hondurenos-en-espana',
   tags: ['hondureños en España', 'documentos legales extranjero', 'trámites consulares', 'apostilla'],
   author: 'Pineda y Asociados',
