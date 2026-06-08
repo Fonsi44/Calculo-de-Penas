@@ -8,7 +8,6 @@ import { getAllPosts, getFeaturedPosts, getPostsByTag } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import Link from 'next/link';
 import { RssButton } from '@/components/marketing/rss-button';
-import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
   title: 'Blog Jurídico',
@@ -118,7 +117,6 @@ export default async function BlogHubPage(props: { searchParams?: Promise<{ tag?
           ),
         }}
       />
-      <ConsultationCTA />
     </>
   );
 }
