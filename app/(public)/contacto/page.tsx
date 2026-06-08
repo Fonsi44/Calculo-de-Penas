@@ -296,7 +296,7 @@ export default function ContactoPage() {
 
             <Card padding="sm">
               <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-2">
-                13 áreas de práctica
+                13 Servicios Jurídicos
               </p>
               <div className="flex flex-wrap gap-1">
                 {['Penal','Familia','Laboral','Civil','Mercantil','Bancario','Administrativo','Aduanero','Sanitario','Extranjería','Prop.Intelectual','Tributario','Ambiental','Conciliación'].map((a) => (

@@ -4,24 +4,24 @@ import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 
 const AREAS = [
   { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Derecho de Familia', href: '/areas-juridicas/derecho-de-familia' },
-  { label: 'Derecho Laboral', href: '/areas-juridicas/derecho-laboral' },
-  { label: 'Derecho Civil y Notarial', href: '/areas-juridicas/derecho-civil-y-notarial' },
-  { label: 'Derecho Mercantil', href: '/areas-juridicas/derecho-mercantil-empresarial' },
-  { label: 'Derecho Tributario', href: '/areas-juridicas/tributario-fiscal' },
-  { label: 'Derecho Bancario', href: '/areas-juridicas/derecho-bancario-y-financiero' },
-  { label: 'Administrativo', href: '/areas-juridicas/derecho-administrativo-y-servicio-civil' },
-  { label: 'Regulación Sanitaria', href: '/areas-juridicas/regulacion-sanitaria' },
-  { label: 'Extranjería', href: '/areas-juridicas/extranjeria-en-honduras' },
-  { label: 'Propiedad Intelectual', href: '/areas-juridicas/propiedad-intelectual' },
-  { label: 'Ambiental Regulatorio', href: '/areas-juridicas/ambiental-regulatorio' },
-  { label: 'Conciliación y Arbitraje', href: '/areas-juridicas/conciliacion-y-arbitraje' },
+  { label: 'Derecho de Familia', href: '/servicios-juridicos/derecho-de-familia' },
+  { label: 'Derecho Laboral', href: '/servicios-juridicos/derecho-laboral' },
+  { label: 'Derecho Civil y Notarial', href: '/servicios-juridicos/derecho-civil-y-notarial' },
+  { label: 'Derecho Mercantil', href: '/servicios-juridicos/derecho-mercantil-empresarial' },
+  { label: 'Derecho Tributario', href: '/servicios-juridicos/tributario-fiscal' },
+  { label: 'Derecho Bancario', href: '/servicios-juridicos/derecho-bancario-y-financiero' },
+  { label: 'Administrativo', href: '/servicios-juridicos/derecho-administrativo-y-servicio-civil' },
+  { label: 'Regulación Sanitaria', href: '/servicios-juridicos/regulacion-sanitaria' },
+  { label: 'Extranjería', href: '/servicios-juridicos/extranjeria-en-honduras' },
+  { label: 'Propiedad Intelectual', href: '/servicios-juridicos/propiedad-intelectual' },
+  { label: 'Ambiental Regulatorio', href: '/servicios-juridicos/ambiental-regulatorio' },
+  { label: 'Conciliación y Arbitraje', href: '/servicios-juridicos/conciliacion-y-arbitraje' },
 ];
 
 const DESPACHO = [
   { label: 'El Despacho', href: '/despacho' },
   { label: 'Cómo llegar', href: '/como-llegar' },
-  { label: 'Servicios Jurídicos', href: '/areas-juridicas' },
+  { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
   { label: 'Hondureños en España', href: '/migrantes-hondurenos-en-espana' },
   { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
 ];
@@ -65,7 +65,7 @@ export function PublicFooter() {
           <div>
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
-                Áreas Jurídicas
+                Servicios Jurídicos
               </h3>
             </div>
             <ul className="space-y-1.5">

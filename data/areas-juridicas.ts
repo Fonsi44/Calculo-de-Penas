@@ -1,5 +1,5 @@
 /**
- * Taxonomía de áreas jurídicas del bufete.
+ * Taxonomía de Servicios Jurídicos del bufete.
  *
  * Estructura:
  *   - 1 hub de servicios jurídicos generales (13 áreas)

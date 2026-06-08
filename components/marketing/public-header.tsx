@@ -9,7 +9,7 @@ import { useFocusTrap } from '@/hooks/use-focus-trap';
 
 const NAV = [
   { label: 'El Despacho', href: '/despacho' },
-  { label: 'Servicios Jurídicos', href: '/areas-juridicas' },
+  { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
   { label: 'Derecho Penal', href: '/derecho-penal' },
   { label: 'Hondureños en España', href: '/migrantes-hondurenos-en-espana' },
   { label: 'FAQ', href: '/preguntas-frecuentes' },

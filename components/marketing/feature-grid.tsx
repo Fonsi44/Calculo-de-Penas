@@ -28,7 +28,7 @@ interface FeatureGridProps {
   bento?: boolean;
   /**
    * Columnas en desktop. Default: 4 (ideal para 12-16 cards como las
-   * 13 áreas jurídicas). Cada card se estira a la misma altura de fila
+   * 13 Servicios Jurídicos). Cada card se estira a la misma altura de fila
    * y la última fila queda centrada horizontalmente.
    */
   cols?: 2 | 3 | 4 | 5;

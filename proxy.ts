@@ -35,7 +35,7 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/como-llegar',
   '/preguntas-frecuentes',
   '/blog',
-  '/areas-juridicas',
+  '/servicios-juridicos',
   '/derecho-penal',
   '/migrantes-hondurenos-en-espana',
 ]);
@@ -65,7 +65,7 @@ const INTRANET_LEGACY_PREFIXES = [
 ];
 
 const PUBLIC_PAGE_PREFIXES = [
-  '/areas-juridicas',
+  '/servicios-juridicos',
   '/derecho-penal',
   '/migrantes-hondurenos-en-espana',
   '/blog/',

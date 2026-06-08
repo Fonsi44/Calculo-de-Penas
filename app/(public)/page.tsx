@@ -254,7 +254,7 @@ export default function HomePage() {
           {areasGenerales
             .filter((a) => HIGHLIGHTED_AREAS.includes(a.slug))
             .map((area) => {
-              const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/areas-juridicas/${area.slug}`;
+              const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`;
               return (
                 <ServiceCard
                   key={area.slug}
@@ -272,17 +272,17 @@ export default function HomePage() {
       </Section>
 
       {/* 13 ÁREAS — GRID CON IMAGEN */}
-      <Section spacing="md" ariaLabel="Todas las áreas jurídicas">
+      <Section spacing="md" ariaLabel="Todas las Servicios Jurídicos">
         <SectionHeader
           eyebrow="Cobertura integral"
-          title="Nuestras áreas de práctica"
+          title="Nuestras Servicios Jurídicos"
           subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir bajo una misma dirección letrada."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {areasGenerales.map((area) => (
             <ServiceCard
               key={area.slug}
-              href={`/areas-juridicas/${area.slug}`}
+              href={`/servicios-juridicos/${area.slug}`}
               slug={area.slug}
               title={area.titulo}
               description={area.resumen}
@@ -292,7 +292,7 @@ export default function HomePage() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/areas-juridicas" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+          <Link href="/servicios-juridicos" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
             Explorar todas las áreas <ArrowRight size={14} />
           </Link>
         </div>

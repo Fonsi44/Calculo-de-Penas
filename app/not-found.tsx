@@ -18,7 +18,7 @@ export default function NotFound() {
       <p className="text-xl text-text-secondary mb-2">Página no encontrada</p>
       <p className="text-text-muted max-w-md mb-8">
         La página que busca no existe o ha sido movida. Puede explorar nuestras
-        áreas jurídicas o volver al inicio.
+        Servicios Jurídicos o volver al inicio.
       </p>
       <div className="flex flex-wrap gap-4 justify-center">
         <Link
@@ -28,10 +28,10 @@ export default function NotFound() {
           <ArrowLeft size={18} /> Ir al inicio
         </Link>
         <Link
-          href="/areas-juridicas"
+          href="/servicios-juridicos"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-text-secondary font-semibold hover:bg-surface-alt transition-colors"
         >
-          Áreas jurídicas
+          Servicios Jurídicos
         </Link>
         <Link
           href="/contacto"

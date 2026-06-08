@@ -12,19 +12,19 @@ import { areaHref, breadcrumbsSchema, itemListSchema, serviceSchema } from '@/li
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 
 export const metadata: Metadata = {
-  title: 'Áreas Jurídicas',
-  description: `Conozca las 13 áreas de práctica de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
-  alternates: { canonical: '/areas-juridicas' },
+  title: 'Servicios Jurídicos',
+  description: `Conozca las 13 especialidades de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
+  alternates: { canonical: '/servicios-juridicos' },
 };
 
 export default function AreasJuridicasPage() {
-  const url = absoluteUrl('/areas-juridicas');
-  const breadcrumbs = breadcrumbsSchema([{ name: 'Inicio', url: absoluteUrl('/') }, { name: 'Áreas Jurídicas', url }]);
-  const itemList = itemListSchema('Áreas de práctica', areasGenerales.map((a) => ({ name: a.titulo, url: areaHref(a.slug) })));
+  const url = absoluteUrl('/servicios-juridicos');
+  const breadcrumbs = breadcrumbsSchema([{ name: 'Inicio', url: absoluteUrl('/') }, { name: 'Servicios Jurídicos', url }]);
+  const itemList = itemListSchema('Servicios Jurídicos', areasGenerales.map((a) => ({ name: a.titulo, url: areaHref(a.slug) })));
   const servSchema = serviceSchema({
-    slug: 'areas-juridicas',
-    name: 'Áreas Jurídicas — Pineda y Asociados',
-    description: 'Bufete multidisciplinario con 13 áreas de práctica en Nacaome, Valle, Honduras.',
+    slug: 'servicios-juridicos',
+    name: 'Servicios Jurídicos — Pineda y Asociados',
+    description: 'Bufete multidisciplinario con 13 especialidades en Nacaome, Valle, Honduras.',
     serviceType: 'LegalService',
     keywords: site.keywords,
     url,
@@ -33,7 +33,7 @@ export default function AreasJuridicasPage() {
   return (
     <>
       <PageHero
-        eyebrow="Áreas Jurídicas"
+        eyebrow="Servicios Jurídicos"
         badge="Cobertura integral"
         title="Todos los servicios jurídicos que su caso necesita, bajo una misma dirección letrada"
         subtitle={
@@ -51,7 +51,7 @@ export default function AreasJuridicasPage() {
 
       <Section background="muted" spacing="md">
         <SectionHeader
-          eyebrow="Áreas de práctica"
+          eyebrow="Servicios Jurídicos"
           title="Cobertura legal completa en Honduras"
           subtitle="Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes."
         />

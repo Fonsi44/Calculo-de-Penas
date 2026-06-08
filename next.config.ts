@@ -61,8 +61,10 @@ const nextConfig: NextConfig = {
     return [
       { source: '/inicio', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },
-      { source: '/areas-de-practica', destination: '/areas-juridicas', permanent: true },
-      { source: '/areas-de-practica/:path*', destination: '/areas-juridicas/:path*', permanent: true },
+      { source: '/areas-de-practica', destination: '/servicios-juridicos', permanent: true },
+      { source: '/areas-de-practica/:path*', destination: '/servicios-juridicos/:path*', permanent: true },
+      { source: '/areas-juridicas', destination: '/servicios-juridicos', permanent: true },
+      { source: '/areas-juridicas/:path*', destination: '/servicios-juridicos/:path*', permanent: true },
       { source: '/derecho-penal-hondureno', destination: '/derecho-penal', permanent: true },
       { source: '/proceso-penal', destination: '/migrantes-hondurenos-en-espana', permanent: true },
       { source: '/privacidad', destination: '/politica-privacidad', permanent: true },

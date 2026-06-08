@@ -11,7 +11,7 @@
 | /como-llegar | Static | Dirección + mapa placeholder |
 | /preguntas-frecuentes | Static | 73 preguntas en 11 categorías, acordeones, FAQPage JSON-LD |
 | /areas-juridicas | Hub SSG | 13 áreas con ServiceCardPhoto grid, JSON-LD ItemList |
-| /areas-juridicas/[slug] | SSG | 13 áreas standalone con hero, subservicios, FAQ, relacionadas |
+| /servicios-juridicos/[slug] | SSG | 13 áreas standalone con hero, subservicios, FAQ, relacionadas |
 | /derecho-penal | Hub SSG | 7 grupos penales, FAQ, JSON-LD |
 | /derecho-penal/[slug] | SSG | 7 grupos penales con hero, subservicios, FAQ |
 | /migrantes-hondurenos-en-espana | Hub SSG | 3 subáreas transnacionales |
@@ -40,7 +40,7 @@
 
 - section.tsx: Container, Section, SectionHeader con variants.
 - cta-buttons.tsx: CTAGroup, UrgencyCallout, ContactStrip.
-- public-header.tsx: NAV con Inicio, Áreas Jurídicas, Derecho Penal, Migrantes, FAQ, Blog, Contacto. Barra superior con teléfono + Acceso Intranet.
+- public-header.tsx: NAV con Inicio, Servicios Jurídicos, Derecho Penal, Migrantes, FAQ, Blog, Contacto. Barra superior con teléfono + Acceso Intranet.
 - public-footer.tsx: 4 columnas (identidad, áreas, despacho, contacto). Legales en barra inferior.
 - placeholder-photo.tsx: Rectángulo gradiente con paleta por área.
 - circular-icon.tsx: Círculo con borde dorado, LucideIcon.
@@ -61,7 +61,7 @@
 ## Redirects 301 (next.config.ts)
 
 - /areas-de-practica → /areas-juridicas
-- /areas-de-practica/:path* → /areas-juridicas/:path*
+- /areas-de-practica/:path* → /servicios-juridicos/:path*
 - /derecho-penal-hondureno → /derecho-penal
 - /proceso-penal → /migrantes-hondurenos-en-espana
 - /inicio → /

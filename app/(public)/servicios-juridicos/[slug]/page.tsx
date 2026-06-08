@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: area.titulo,
     description: `${area.descripcion.substring(0, 160)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
-    alternates: { canonical: `/areas-juridicas/${slug}` },
+    alternates: { canonical: `/servicios-juridicos/${slug}` },
   };
 }
 
@@ -49,7 +49,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
     faqs: area.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
-      { name: 'Áreas Jurídicas', url: absoluteUrl('/areas-juridicas') },
+      { name: 'Servicios Jurídicos', url: absoluteUrl('/servicios-juridicos') },
       { name: area.titulo, url },
     ],
     url,

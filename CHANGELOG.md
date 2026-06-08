@@ -108,7 +108,7 @@
 
 - **F0**: Andamiaje común — `data/areas-juridicas.ts` (1086 líneas, taxonomía 13 áreas + 7 grupos penales + 3 subáreas migrantes), `lib/schemas/legal-page.ts` (helpers JSON-LD).
 - **F1**: 7 componentes marketing — `placeholder-photo`, `circular-icon`, `service-card-photo`, `specialists-grid`, `two-column-image-text`, `commitments-grid`, `testimonials-section`.
-- **F2**: 3 hubs — `/servicios-juridicos` (posteriormente `/areas-juridicas`), `/derecho-penal`, `/migrantes-hondurenos-en-espana`.
+- **F2**: 3 hubs — `/servicios-juridicos` (posteriormente `/servicios-juridicos`), `/derecho-penal`, `/migrantes-hondurenos-en-espana`.
 - **F3**: 13 áreas standalone (familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación).
 - **F4**: 7 grupos penales + 3 subáreas transnacionales (10 páginas dinámicas).
 - **F5**: FAQ pública `/preguntas-frecuentes` con 73 preguntas en 11 categorías y acordeones `<details>`.
@@ -118,10 +118,10 @@
 
 ### Cambios de ruta
 
-- `/servicios-juridicos` → `/areas-juridicas` (renombrado).
+- `/servicios-juridicos` → `/servicios-juridicos` (renombrado).
 - `/derecho-penal` movido a top-level (fuera de áreas-juridicas).
 - `/migrantes-hondurenos-en-espana` movido a top-level.
-- Redirects 301: `/areas-de-practica/*` → `/areas-juridicas/*`, `/derecho-penal-hondureno` → `/derecho-penal`, `/proceso-penal` → `/migrantes-hondurenos-en-espana`.
+- Redirects 301: `/areas-de-practica/*` → `/servicios-juridicos/*`, `/derecho-penal-hondureno` → `/derecho-penal`, `/proceso-penal` → `/migrantes-hondurenos-en-espana`.
 
 ### Intranet
 
