@@ -59,7 +59,7 @@ const TONE_MAP: Record<string, PlaceholderTone> = {
   'asuntos-civiles-y-familiares-desde-el-extranjero': 'familia',
   'servicios-juridicos': 'primary',
   'derecho-penal': 'penal',
-  'hodurenos-en-espana': 'migrante',
+  'hondurenos-en-espana': 'migrante',
 };
 
 export function getIcon(name: string): LucideIcon {

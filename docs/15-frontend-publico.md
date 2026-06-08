@@ -14,8 +14,8 @@
 | /servicios-juridicos/[slug] | SSG | 13 áreas standalone con hero, subservicios, FAQ, relacionadas |
 | /derecho-penal | Hub SSG | 7 grupos penales, FAQ, JSON-LD |
 | /derecho-penal/[slug] | SSG | 7 grupos penales con hero, subservicios, FAQ |
-| /migrantes-hondurenos-en-espana | Hub SSG | 3 subáreas transnacionales |
-| /migrantes-hondurenos-en-espana/[slug] | SSG | 3 subáreas con hero, subservicios, FAQ |
+| /hondurenos-en-espana | Hub SSG | 3 subáreas transnacionales |
+| /hondurenos-en-espana/[slug] | SSG | 3 subáreas con hero, subservicios, FAQ |
 | /blog | Hub SSG | Featured + grid + sidebar |
 | /blog/[slug] | SSG | Artículo con metadata, tags, JSON-LD BlogPosting |
 | /blog/categoria/[categoria] | SSG | 11 categorías, hero + grid + sidebar |
@@ -63,7 +63,7 @@
 - /areas-de-practica → /areas-juridicas
 - /areas-de-practica/:path* → /servicios-juridicos/:path*
 - /derecho-penal-hondureno → /derecho-penal
-- /proceso-penal → /migrantes-hondurenos-en-espana
+- /proceso-penal → /hondurenos-en-espana
 - /inicio → /
 - /home → /
 

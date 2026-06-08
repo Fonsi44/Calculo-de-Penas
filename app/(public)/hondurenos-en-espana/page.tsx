@@ -12,14 +12,14 @@ import { getIcon } from '@/lib/icon-map';
 export const metadata: Metadata = {
   title: 'Hondureños en España',
   description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. ${site.name}.`,
-  alternates: { canonical: '/hodurenos-en-espana' },
+  alternates: { canonical: '/hondurenos-en-espana' },
 };
 
 export default function MigrantesPage() {
   const url = migrantesHubHref();
   const ldSchemas = areaSchemas({
     service: {
-      slug: 'hodurenos-en-espana',
+      slug: 'hondurenos-en-espana',
       name: 'Hondureños en España — Pineda y Asociados',
       description: hubMigrantes.descripcion,
       serviceType: 'LegalService',
@@ -71,7 +71,7 @@ export default function MigrantesPage() {
             return (
               <Link
                 key={sub.slug}
-                href={`/hodurenos-en-espana/${sub.slug}`}
+                href={`/hondurenos-en-espana/${sub.slug}`}
                 className="group block focus-visible:outline-none"
               >
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">

@@ -59,7 +59,7 @@ export type HubPenal = {
 };
 
 export type HubMigrantes = {
-  slug: 'hodurenos-en-espana';
+  slug: 'hondurenos-en-espana';
   titulo: string;
   resumen: string;
   descripcion: string;
@@ -459,7 +459,7 @@ export const areasGenerales: AreaStandalone[] = [
       { pregunta: '¿Cuánto tarda la residencia temporal en Honduras?', respuesta: 'Entre 6 y 18 meses dependiendo del tipo y la carga del INM. Con patrocinador abogado, se reduce significativamente.' },
       { pregunta: '¿Puedo naturalizarme sin renunciar a mi nacionalidad?', respuesta: 'Sí, Honduras reconoce la doble nacionalidad por nacimiento. Si la adquirió por naturalización, deberá revisar los tratados bilaterales.' },
     ],
-    areasRelacionadas: ['hodurenos-en-espana', 'derecho-de-familia'],
+    areasRelacionadas: ['hondurenos-en-espana', 'derecho-de-familia'],
     keywords: [
       'INM Honduras',
       'residencia Honduras',
@@ -927,7 +927,7 @@ export const hubPenal: HubPenal = {
 /* -------------------------------------------------------------------------- */
 
 export const hubMigrantes: HubMigrantes = {
-  slug: 'hodurenos-en-espana',
+  slug: 'hondurenos-en-espana',
   titulo: 'Hondureños en España',
   resumen: 'Gestión documental, actos notariales internacionales y asuntos civiles y familiares desde España.',
   descripcion:

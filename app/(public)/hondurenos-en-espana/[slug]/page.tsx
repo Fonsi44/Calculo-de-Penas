@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${subarea.titulo} | Hondureños en España`,
     description: `${subarea.descripcion.substring(0, 160)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
-    alternates: { canonical: `/hodurenos-en-espana/${slug}` },
+    alternates: { canonical: `/hondurenos-en-espana/${slug}` },
   };
 }
 
@@ -31,7 +31,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
   if (!subarea) notFound();
 
   const url = migrantesHubHref();
-  const subareaUrl = absoluteUrl(`/hodurenos-en-espana/${slug}`);
+  const subareaUrl = absoluteUrl(`/hondurenos-en-espana/${slug}`);
   const Icon = getIcon(subarea.icono);
 
   const related = subarea.areasRelacionadas
@@ -50,7 +50,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
     faqs: subarea.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
-      { name: 'Migrantes Hondureños en España', url },
+      { name: 'Hondureños en España', url },
       { name: subarea.titulo, url: subareaUrl },
     ],
     url: subareaUrl,
@@ -66,7 +66,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
         <Container size="lg" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
             <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-              Migrantes Hondureños en España
+              Hondureños en España
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
               {subarea.titulo}
@@ -140,7 +140,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
             {related.map((r) => {
               const RIcon = getIcon(r.icono);
               return (
-                <Link key={r.slug} href={`/hodurenos-en-espana/${r.slug}`} className="group block focus-visible:outline-none">
+                <Link key={r.slug} href={`/hondurenos-en-espana/${r.slug}`} className="group block focus-visible:outline-none">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                     <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                       <RIcon size={20} aria-hidden="true" />
@@ -158,7 +158,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                 </Link>
               );
             })}
-            <Link href="/hodurenos-en-espana" className="group block focus-visible:outline-none">
+            <Link href="/hondurenos-en-espana" className="group block focus-visible:outline-none">
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                   <span className="font-extrabold text-lg">+</span>
@@ -167,7 +167,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                   Ver todos los servicios para migrantes
                 </h3>
                 <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
-                  Volver al hub de migrantes hondureños en España para explorar todas las subáreas.
+                  Volver al hub de hondureños en España para explorar todas las subáreas.
                 </p>
                 <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
                   Conocer más <ArrowRight size={12} />
