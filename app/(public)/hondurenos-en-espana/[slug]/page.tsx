@@ -192,17 +192,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
               </p>
             </Card>
           )}
-          <p className="text-text-secondary text-sm leading-relaxed mb-5">
-            Si tiene una consulta específica sobre {subarea.titulo.toLowerCase()},
-            estaremos encantados de atenderle. Solicite una cita y le
-            orientaremos sin compromiso.
-          </p>
-          <Link
-            href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-12 px-6 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity"
-          >
-            Solicitar consulta confidencial <ArrowRight size={18} />
-          </Link>
+
         </div>
       </Section>
 
