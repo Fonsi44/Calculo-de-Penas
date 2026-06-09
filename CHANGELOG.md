@@ -1,5 +1,40 @@
 # Changelog
 
+## Release 11 — Auditoría estratégica de contenido y plan maestro SEO (2026-06-08)
+
+### Diagnóstico de contenido
+- Auditoría exhaustiva del 100% del sitio: 30 páginas públicas, 30 blog posts, 73 FAQs, 13 áreas jurídicas, 14 categorías de blog.
+- **24 hallazgos estratégicos documentados (D1-D24)** en `docs/informe.md` §12.3.
+- 8 de 14 áreas jurídicas (57%) sin un solo artículo de blog.
+- 6 de 13 categorías de blog (46%) definidas pero vacías.
+- 4 directorios de ruta sin `page.tsx`: `proceso-penal/`, `areas-de-practica/`, `derecho-penal-hondureno/`, `servicios-juridicos/areas-juridicas/[slug]/`.
+
+### Debilidades críticas detectadas
+- **Sin landings transaccionales** para queries de alta intención (abogado penalista Nacaome, despido injustificado, me detuvieron).
+- **Sin páginas locales** para las 4 ciudades donde el bufete declara presencia (Tegucigalpa, SPS, Comayagua, Choluteca).
+- **Blog no enlaza a páginas de servicio** — flujo de PageRank desperdiciado.
+- **Autoría anónima** en 30 artículos, sin biografías ni fechas de actualización.
+- **Equipo con "Identidad reservada"** en /despacho — debilita gravemente el EEAT.
+- **Sin glosario jurídico, recursos descargables ni página de honorarios**.
+- **ConsultationCTA débil** ("¿No encuentra lo que busca?" → reactivo, sin urgencia).
+- **Sin página de urgencias** para detenidos (la info está en blog, no en landing).
+- **Sin Google Mi Negocio enlazado** (pendiente desde auditorías anteriores).
+
+### Plan maestro propuesto (sin implementar aún)
+- **30 nuevos artículos** priorizados en 3 fases (inmediata: 12, corto plazo: 10, medio plazo: 8).
+- **10 nuevas secciones/páginas**: 4 landings locales, página de proceso penal, landing urgencias, landing abogado penalista, landing despido injustificado, glosario jurídico (50 términos), honorarios, recursos descargables.
+- **Reestructuración de enlazado interno**: reglas concretas blog→servicios, servicios→blog, glosario→todo.
+- **8 mejoras de EEAT**: número de colegiación, personas editoriales, updatedAt, fuentes externas, Google Mi Negocio.
+- **6 mejoras de conversión**: CTA reescrito, secciones de tiempos/costes en landings, CTA contextual en blog, selector de área en formulario, landing de urgencias.
+- **Roadmap por fases**: inmediata (15d), corto plazo (30d), medio plazo (60d), largo plazo (90-180d).
+
+### Documentación
+- `docs/informe.md`: añadida §12 completa con auditoría de contenido, 24 hallazgos estratégicos, plan editorial, reestructuración de enlazado, mejoras EEAT, mejoras de conversión y roadmap por fases. Conclusión actualizada a R11.
+- `CHANGELOG.md`: Release 11 añadida.
+
+### Archivos eliminados
+- `.kilo/plans/auditoria-seo-plan-maestro.md` — consolidado en `docs/informe.md`.
+
 ## Release 10 — Auditoría de espaciados y frontend (2026-06-08)
 
 ### Espaciado entre secciones

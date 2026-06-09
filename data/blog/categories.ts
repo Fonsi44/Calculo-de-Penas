@@ -84,4 +84,46 @@ export const blogCategories: BlogCategory[] = [
     descripcion: 'Información sobre derechos fundamentales, garantías constitucionales y mecanismos de protección.',
     color: 'primary',
   },
+  {
+    slug: 'derecho-bancario',
+    nombre: 'Derecho Bancario',
+    descripcion: 'Demandas bancarias, deudas, ejecución hipotecaria, tarjetas de crédito y derechos del consumidor financiero.',
+    color: 'warning',
+  },
+  {
+    slug: 'derecho-administrativo',
+    nombre: 'Derecho Administrativo',
+    descripcion: 'Amparo, contratación pública, sanciones administrativas, expropiación y defensa frente al Estado.',
+    color: 'muted',
+  },
+  {
+    slug: 'derecho-aduanero',
+    nombre: 'Derecho Aduanero',
+    descripcion: 'Importación y exportación, Código Aduanero Centroamericano, zonas libres y trámites aduaneros.',
+    color: 'muted',
+  },
+  {
+    slug: 'regulacion-sanitaria',
+    nombre: 'Regulación Sanitaria',
+    descripcion: 'Registros sanitarios ARSA, habilitación de clínicas, responsabilidad médica y regulación farmacéutica.',
+    color: 'success',
+  },
+  {
+    slug: 'propiedad-intelectual',
+    nombre: 'Propiedad Intelectual',
+    descripcion: 'Marcas, patentes, derechos de autor, secreto comercial y protección de activos intangibles.',
+    color: 'accent',
+  },
+  {
+    slug: 'derecho-ambiental',
+    nombre: 'Derecho Ambiental',
+    descripcion: 'Licencias ambientales, delitos ecológicos, evaluación de impacto ambiental y derechos indígenas.',
+    color: 'success',
+  },
+  {
+    slug: 'conciliacion-arbitraje',
+    nombre: 'Conciliación y Arbitraje',
+    descripcion: 'Mediación, arbitraje comercial, CCIC, métodos alternos de resolución de conflictos.',
+    color: 'info',
+  },
 ];

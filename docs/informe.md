@@ -1,9 +1,10 @@
 # Informe de Auditoría SEO, Frontend, UX y Rendimiento Web
 
-> **Última actualización:** 2026-06-08 (Release 10)
+> **Última actualización:** 2026-06-08 (Release 11)
 > **Hallazgos corregidos:** HS-01 a HS-08, HS-09 (espaciados + SectionHeader), HS-10 (fechas del blog), HS-11 (eliminación /contacto)
 > **Hallazgos parciales:** HS-03 (analítica: implementada, pendiente activación)
 > **Hallazgos evaluados sin implementación:** HS-05, HS-06
+> **Hallazgos estratégicos (R11):** HS-12 a HS-24 — diagnóstico de contenido, gaps editoriales, EEAT y plan maestro
 
 ## 1. Resumen ejecutivo
 
@@ -523,31 +524,275 @@ H2 distribuidos correctamente.
 
 ---
 
-## 12. Conclusión (actualizado R10)
+## 12. Auditoría de Contenido y Estrategia Editorial (R11)
 
-La web de Pineda y Asociados tiene una **base técnica sólida**: framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de contenidos coherente. Las URLs son limpias, la indexabilidad está permitida, y no hay errores críticos de rastreo. La puntuación global actual es **84/100** (+10 desde la auditoría inicial).
+> **Metodología:** Análisis exhaustivo del 100% del código fuente (app/, components/, data/, lib/). Lectura directa de cada página, componente, blog post, archivo de datos y configuración. Sin herramientas externas de crawling. 24 hallazgos estratégicos documentados de D1 a D24.
 
-Los problemas técnicos detectados han sido corregidos a lo largo de 10 releases:
+### 12.1 Inventario de contenido actual
 
-1. ✅ **OG tags específicos por página** (R6) — mejora directa en el rendimiento en redes sociales.
-2. ✅ **Optimización de imágenes** (R7) — reducción de 10.6 MB a 391 KB (-96%) migrando blog a WebP.
-3. ⚠️ **Analítica condicional** (R6) — infraestructura lista para GA4 y Clarity. Pendiente de activación configurando `NEXT_PUBLIC_GA_ID` y/o `NEXT_PUBLIC_CLARITY_ID` en Vercel.
-4. ✅ **Corrección gramatical** (R6) — "Nuestros Servicios Jurídicos".
-5. ✅ **URLs legacy** (R6) — ahora devuelven 404 en lugar de 307 al login.
-6. ✅ **Meta keywords** (R6) — eliminado del root layout.
-7. ✅ **Sitemap de imágenes y hreflang evaluados** (R7) — documentadas las decisiones de no implementación.
-8. ✅ **24 artículos de blog** (R8) — 30 artículos totales en 13 categorías.
-9. ✅ **Rediseño editorial del blog** (R9) — tipografía, hero, sidebar, CTA, artículos relacionados.
-10. ✅ **Reducción de espaciados** (R10) — Section spacing -30%, SectionHeader margin -33%.
-11. ✅ **Eliminación de /contacto** (R10) — redirect 301 permanente a `/solicitar-consulta`.
-12. ✅ **Fechas del blog** (R10) — 24 artículos distribuidos en 22 días. Post más reciente: 8 jun.
+| Ruta | Tipo | Evaluación |
+|---|---|---|
+| `/` | Homepage | Fuerte: hero + servicios + proceso + FAQ + testimonios + CTA triple |
+| `/despacho` | Corporativa | Correcta: misión, visión, valores, equipo, pero equipo dice "Identidad reservada" |
+| `/servicios-juridicos` | Hub 13 áreas | Correcto: service cards + CTA |
+| `/servicios-juridicos/[slug]` ×13 | Landing servicio | Fuerte: subservicios (13-17 c/u) + FAQs + áreas relacionadas |
+| `/derecho-penal` | Hub penal | Fuerte: 7 grupos especializados + FAQs |
+| `/derecho-penal/[slug]` ×7 | Sub-landing penal | Fuerte: especialización penal profunda |
+| `/hondurenos-en-espana` | Hub migrante | Correcto: 3 subáreas + FAQs |
+| `/hondurenos-en-espana/[slug]` ×3 | Sub-landing | Correcto: documental, notarial, civil-familiar desde el extranjero |
+| `/preguntas-frecuentes` | FAQ hub | Fuerte: 73 preguntas en 11 categorías con JSON-LD FAQPage |
+| `/blog` | Blog hub | Correcto: 30 artículos, sidebar con 13 categorías, filtro por tag |
+| `/blog/[slug]` ×30 | Artículo | Bueno: 800-1200 palabras, H2/H3, listas, enlaces relacionados |
+| `/blog/categoria/[categoria]` ×13 | Categoría blog | **6 vacías** — categorías definidas sin artículos |
+| `/solicitar-consulta` | Conversión | Correcta: formulario + canales + garantías + emergencia |
+| `/como-llegar` | Local | Correcta pero aislada |
+| Páginas legales ×5 | Legales | Thin content genérico (esperado para este tipo de páginas) |
 
-Lo que queda pendiente es principalmente de **construcción de autoridad externa y afinamiento**:
-- Añadir perfiles de Google Mi Negocio y redes sociales.
-- Auditoría de accesibilidad con herramienta especializada (axe/WAVE).
-- Migración de imágenes corporativas a WebP.
-- Activar analítica configurando las variables de entorno en Vercel.
+**Directorios de ruta vacíos (sin page.tsx):** `proceso-penal/`, `areas-de-practica/`, `derecho-penal-hondureno/`, `servicios-juridicos/areas-juridicas/[slug]/`.
 
-Con las acciones del roadmap a medio plazo se puede alcanzar una puntuación estimada de **~90/100**.
+### 12.2 Cobertura del blog por área jurídica
 
-El sitio está preparado para escalar en SEO y captar tráfico desde buscadores. Las carencias actuales no son estructurales sino de contenido y afinamiento progresivo.
+| Área jurídica | Blog posts | Estado |
+|---|---|---|
+| Derecho Penal | 8 | ✅ Cubierto |
+| Derecho Laboral | 5 | ✅ Cubierto |
+| Derecho de Familia | 4 | ✅ Cubierto |
+| Derecho Civil y Notarial | 3 | ⚠️ Escaso |
+| Derecho Mercantil | 3 | ⚠️ Escaso |
+| Hondureños en España | 3 | ⚠️ Escaso |
+| Derecho Notarial | 2 | ⚠️ Escaso |
+| Ubicación/Elección bufete | 2 | ⚠️ Escaso |
+| **Derecho Bancario** | **0** | ❌ Sin cobertura |
+| **Derecho Administrativo** | **0** | ❌ Sin cobertura |
+| **Derecho Aduanero** | **0** | ❌ Sin cobertura |
+| **Regulación Sanitaria** | **0** | ❌ Sin cobertura |
+| **Extranjería en Honduras** | **0** | ❌ Sin cobertura |
+| **Propiedad Intelectual** | **0** | ❌ Sin cobertura |
+| **Tributario y Fiscal** | **0** | ❌ Sin cobertura |
+| **Ambiental Regulatorio** | **0** | ❌ Sin cobertura |
+| **Conciliación y Arbitraje** | **0** | ❌ Sin cobertura |
+
+**8 de 14 áreas jurídicas (57%) sin un solo artículo de blog.** Las categorías de blog `proceso-penal`, `extranjeria-migracion`, `tributario`, `noticias-legales`, `practica-legal` y `derechos-ciudadanos` están definidas pero no tienen artículos (46% de categorías vacías).
+
+### 12.3 Hallazgos estratégicos — debilidades de contenido
+
+#### Estratégicas (impacto alto)
+
+| ID | Hallazgo | Evidencia |
+|---|---|---|
+| D1 | **Sin landings transaccionales por keyword de alta intención** | No existe `/abogado-penalista-nacaome`, `/despido-injustificado`, `/me-detuvieron-que-hago`. Se pierde tráfico de queries con intención de contratación inmediata |
+| D2 | **Sin páginas locales por ciudad** | Solo se menciona Nacaome. El bufete declara presencia en Tegucigalpa, SPS, Comayagua, Choluteca pero no tiene páginas dedicadas. Se pierde todo el SEO local para esas ciudades |
+| D3 | **6 categorías de blog vacías** | 46% de categorías del sidebar enlazan a páginas sin contenido. Mala UX, desperdicio de crawl budget, señal de abandono |
+| D4 | **Sin estrategia de pillar-cluster** | Los artículos existen como islas. No hay páginas pillar que agrupen y enlacen a los artículos satélite. Google no detecta autoridad temática concentrada |
+| D5 | **Blog no enlaza a páginas de servicio** | Los posts enlazan entre sí y a /solicitar-consulta, pero casi nunca a /servicios-juridicos/[area]. Se desperdicia flujo de PageRank hacia páginas transaccionales |
+
+#### Editoriales (impacto medio-alto)
+
+| ID | Hallazgo |
+|---|---|
+| D6 | **Autoría anónima en blog:** 30 artículos con `author: 'Pineda y Asociados'`. Sin biografías ni fichas de autor |
+| D7 | **Sin fechas de actualización:** Solo `publishedAt`, sin `updatedAt`. Reduce frescura percibida |
+| D8 | **Sin contenido descargable:** Sin guías, checklists ni modelos que capturen emails |
+| D9 | **Sin glosario jurídico:** Faltan definiciones de términos técnicos que atraigan tráfico informacional |
+| D10 | **Testimonios anonimizados y genéricos:** Solo 3, sin nombre ni detalles del caso |
+| D11 | **Sin citas a fuentes externas:** Los artículos no enlazan a leyes, jurisprudencia, CSJ, CNBS, SAR. Debilita EEAT |
+
+#### Arquitectura (impacto medio)
+
+| ID | Hallazgo |
+|---|---|
+| D12 | **4 directorios de ruta vacíos** sin page.tsx |
+| D13 | **Blog sidebar inflado:** 13 categorías con solo 7 con contenido |
+| D14 | **Páginas legales thin content** sin aprovechamiento de tráfico potencial |
+| D15 | **Falta hub de "Proceso Penal":** El directorio existe vacío. Es un tema central que merece página propia |
+
+#### Conversión (impacto alto)
+
+| ID | Hallazgo |
+|---|---|
+| D16 | **ConsultationCTA débil:** "¿No encuentra lo que busca?" es reactivo, no genera urgencia |
+| D17 | **Sin página de urgencias para detenidos:** La info está en blog, no en landing optimizada para conversión urgente |
+| D18 | **Sin página de honorarios/transparencia:** El sitio dice "presupuesto por escrito" pero no explica cómo funciona |
+| D19 | **Formulario sin lead magnet:** Sin incentivo para dejar datos: guía, checklist, o "te llamamos en X tiempo" |
+| D20 | **Sin widget de chat en vivo:** Solo WhatsApp y teléfono |
+
+#### EEAT / Autoridad (impacto alto)
+
+| ID | Hallazgo |
+|---|---|
+| D21 | **Equipo con "Identidad reservada":** La página /despacho oculta identidades. Gravísimo para EEAT |
+| D22 | **Sin página de metodología:** Solo 4 pasos genéricos, sin profundidad real |
+| D23 | **Sin enlaces a credenciales:** Sin número de colegiación, registro profesional ni enlace al Colegio de Abogados |
+| D24 | **Sin Google Mi Negocio enlazado:** Pendiente desde auditorías anteriores |
+
+### 12.4 Oportunidades — secciones nuevas que crear
+
+| # | Ruta propuesta | Tipo | Prioridad | Objetivo |
+|---|---|---|---|---|
+| 1 | `/tegucigalpa`, `/san-pedro-sula`, `/choluteca`, `/comayagua` | Landings locales ×4 | **Inmediata** | SEO local multi-ciudad. Capturar queries "abogado [ciudad]" |
+| 2 | `/proceso-penal` | Página pillar | **Inmediata** | Hub del proceso penal con enlaces a blog posts relacionados |
+| 3 | `/abogado-penalista-nacaome` | Landing transaccional | **Inmediata** | Query de alta intención de contratación |
+| 4 | `/despido-injustificado` | Landing transaccional | **Inmediata** | "cuánto me toca si me despiden" → alta conversión |
+| 5 | `/urgencias` | Landing urgencia | **Inmediata** | "me detuvieron qué hago" → máxima urgencia y conversión |
+| 6 | `/honorarios` | Transparencia | **Corto plazo** | "cuánto cobra un abogado Honduras" → confianza |
+| 7 | `/glosario-juridico` + `/[termino]` ×30-50 | Glosario A-Z | **Corto plazo** | Tráfico informacional de cola larga, interlinking masivo |
+| 8 | `/recursos` + 3 guías descargables | Lead magnets | **Medio plazo** | Captura de emails, contenido descargable |
+| 9 | `/divorcio-express-honduras` | Landing transaccional | **Corto plazo** | Divorcio por mutuo acuerdo, alta conversión |
+| 10 | `/deudas-y-embargos` | Landing transaccional | **Medio plazo** | Defensa frente a bancos y acreedores |
+
+### 12.5 Plan editorial — 30 artículos priorizados
+
+#### Fase 1 — Inmediata (12 artículos, relleno de categorías vacías)
+
+| # | Título | Categoría | Intención |
+|---|---|---|---|
+| B1 | "¿Cómo funciona un juicio oral en Honduras? Etapas y qué esperar" | proceso-penal | Informacional |
+| B2 | "Recursos contra una sentencia penal: apelación y casación en Honduras" | proceso-penal | Informacional |
+| B3 | "Sobreseimiento definitivo vs provisional: qué significa para su caso" | proceso-penal | Informacional |
+| B4 | "Residencia temporal en Honduras: requisitos, plazos y tipos de visa" | extranjeria-migracion | Inf+Trans |
+| B5 | "Naturalización en Honduras: cómo obtener la nacionalidad hondureña" | extranjeria-migracion | Informacional |
+| B6 | "Visas para invertir en Honduras: inversionista, rentista y pensionado" | extranjeria-migracion | Inf+Trans |
+| B7 | "¿Qué hacer si el SAR me notifica una fiscalización?" | tributario | Informacional |
+| B8 | "Impuestos en Honduras para pequeñas empresas: guía básica 2026" | tributario | Informacional |
+| B9 | "Cláusulas abusivas en contratos bancarios: cómo defender sus derechos" | derecho-civil | Inf+Trans |
+| B10 | "¿Qué hacer si un banco me demanda por deuda? Defensa y opciones" | derecho-civil | Inf urgente |
+| B11 | "Derechos del consumidor financiero en Honduras: guía CNBS" | derecho-civil | Informacional |
+| B12 | "Hábeas corpus: qué es, cuándo se interpone y qué esperar" | derechos-ciudadanos | Informacional |
+
+#### Fase 2 — Corto plazo (10 artículos, expansión de áreas con poca cobertura)
+
+| # | Título | Categoría |
+|---|---|---|
+| B13 | "Responsabilidad médica en Honduras: cuándo se configura la mala praxis" | derecho-civil |
+| B14 | "Propiedad intelectual para emprendedores: proteja su marca y su producto" | derecho-mercantil |
+| B15 | "Contratos de franquicia en Honduras: aspectos legales clave" | derecho-mercantil |
+| B16 | "Sanciones administrativas: cómo defenderse frente al Estado" | derecho-administrativo |
+| B17 | "Despido de empleados públicos en Honduras: ¿procede?" | derecho-administrativo |
+| B18 | "Importar desde China a Honduras: guía legal y aduanera" | derecho-aduanero |
+| B19 | "Registro sanitario de alimentos ante la ARSA: paso a paso" | regulacion-sanitaria |
+| B20 | "Mediación vs juicio: ¿qué conviene más en un conflicto legal?" | practica-legal |
+| B21 | "Derechos del detenido en Honduras: guía constitucional completa" | derechos-ciudadanos |
+| B22 | "Acoso laboral (mobbing) en Honduras: cómo denunciarlo" | derecho-laboral |
+
+#### Fase 3 — Medio plazo (8 artículos, cobertura de áreas restantes)
+
+| # | Título | Categoría |
+|---|---|---|
+| B23 | "Licencia ambiental en Honduras: categorías, plazos y sanciones" | ambiental |
+| B24 | "Arbitraje en Honduras: cuándo conviene y cómo funciona" | practica-legal |
+| B25 | "Lavado de activos: obligaciones de cumplimiento para empresas" | compliance |
+| B26 | "Cómo tributar si trabaja en España y tiene bienes en Honduras" | hondurenos-en-espana |
+| B27 | "Herencias transfronterizas: bienes en Honduras y España" | hondurenos-en-espana |
+| B28 | "Contratos para empleadas domésticas en Honduras: obligaciones" | derecho-laboral |
+| B29 | "Riesgos profesionales: derechos del trabajador ante accidente laboral" | derecho-laboral |
+| B30 | "Cómo elegir el tipo de sociedad para su empresa en Honduras" | derecho-mercantil |
+
+### 12.6 Reestructuración de enlazado interno
+
+**Reglas de enlazado que deben implementarse:**
+
+1. Cada blog post debe enlazar a su **página de servicio correspondiente** al menos 1 vez con anchor text descriptivo (ej: post laboral → `/servicios-juridicos/derecho-laboral`).
+2. Cada página de servicio debe incluir **bloque de "Artículos relacionados"** con 2-3 blog posts relevantes (actualmente solo enlazan a otras áreas de servicio).
+3. Las landings locales deben enlazar a las landings de servicio relevantes.
+4. El glosario debe enlazar a servicios y blog posts — cada definición es una oportunidad de interlinking contextual.
+5. La página de urgencias debe enlazar a `/derecho-penal`, al blog post de detención, y a `/solicitar-consulta`.
+6. La página de honorarios debe enlazar a cada área de servicio con CTA.
+
+**Páginas huérfanas detectadas:** `/como-llegar` (aislada, enlazar desde landings locales y footer). Categorías de blog vacías (eliminar del sidebar hasta que tengan contenido).
+
+### 12.7 Mejoras de EEAT / autoridad
+
+| # | Acción | Esfuerzo | Impacto |
+|---|---|---|---|
+| E1 | Añadir número de colegiación/registro profesional en /despacho y footer | Mínimo | Alto |
+| E2 | Crear 2-3 personas editoriales para el blog con mini-bio al final de cada artículo | Medio | Alto |
+| E3 | Añadir `updatedAt` a los 30 blog posts existentes | Bajo | Medio |
+| E4 | Enlazar a fuentes externas (CSJ, CNBS, SAR, tsjudicial.hn) en artículos | Medio | Alto |
+| E5 | Crear y enlazar perfil de Google Mi Negocio | Bajo | Alto |
+| E6 | Crear página de metodología detallada (ampliar /despacho) | Medio | Alto |
+| E7 | Añadir Schema `Article` y `Attorney` donde proceda | Bajo | Medio |
+| E8 | Sección de "Actualización normativa" mensual en blog | Medio | Medio |
+
+### 12.8 Mejoras de conversión
+
+| # | Acción | Dónde |
+|---|---|---|
+| C1 | Cambiar texto del ConsultationCTA: de "¿No encuentra lo que busca?" a "Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso" | `consultation-cta.tsx` |
+| C2 | Añadir sección de "Tiempos estimados" y "Qué necesita para empezar" en cada página de servicio | 13 landings |
+| C3 | Añadir CTA contextual a mitad del artículo en blog posts | `blog/[slug]` |
+| C4 | Añadir selector de área jurídica en formulario de consulta | `/solicitar-consulta` |
+| C5 | Añadir indicador de tiempo de respuesta en formulario | `/solicitar-consulta` |
+| C6 | Página de urgencias con diseño de máxima urgencia: teléfono gigante, checklist primeras 24h | `/urgencias` |
+
+### 12.9 Roadmap por fases
+
+#### Fase inmediata (días 1-15) — bajo esfuerzo, alto impacto
+1. Eliminar del sidebar/blog las 6 categorías sin contenido (o marcarlas "próximamente")
+2. Añadir `updatedAt` a los 30 blog posts
+3. Añadir enlaces de cada blog post a su página de servicio correspondiente
+4. Mejorar texto del ConsultationCTA
+5. Crear página `/proceso-penal`
+6. Conectar Google Mi Negocio + enlace en footer y /despacho
+7. Añadir número de colegiación en /despacho
+8. Añadir Schema `Article` a páginas de blog post
+9. Publicar 12 artículos Fase 1
+10. Crear landing `/urgencias` y `/abogado-penalista-nacaome`
+
+#### Fase corto plazo (días 15-45)
+11. Crear 4 landings locales por ciudad
+12. Crear landing `/despido-injustificado`
+13. Publicar 10 artículos Fase 2
+14. Crear página `/honorarios`
+15. Crear glosario jurídico con 30-50 términos iniciales
+16. Mejorar formulario de consulta (selector área, tiempo respuesta)
+17. Crear 2-3 personas editoriales con mini-bio
+18. Añadir enlaces a fuentes externas en artículos existentes
+19. Añadir bloques "Artículos relacionados" en páginas de servicio
+
+#### Fase medio plazo (días 45-90)
+20. Publicar 8 artículos Fase 3
+21. Crear hub de recursos con 3 lead magnets descargables
+22. Crear página de "Casos frecuentes / Metodología"
+23. Añadir Schema `Review`/`AggregateRating` si hay reseñas
+24. Auditoría de canibalización de keywords
+25. Implementar breadcrumbs HTML visibles
+
+#### Fase largo plazo (días 90-180)
+26. Expandir glosario a 80-100 términos
+27. Landing pública de calculadora de penas sin requerir login
+28. Chat en vivo o chatbot básico
+29. Programa de actualización semestral de artículos
+30. Evaluar contenido en video (YouTube) para queries "cómo hacer X"
+
+---
+
+## 13. Conclusión (actualizado R11)
+
+La web de Pineda y Asociados tiene una **base técnica sobresaliente** (SEO técnico 90/100): framework moderno (Next.js 16), infraestructura CDN (Vercel), seguridad completa (HSTS, CSP, headers), sitemap dinámico, Schema.org bien implementado y estructura de URLs limpia. La puntuación global actual es **84/100** (+10 desde la auditoría inicial).
+
+Los problemas técnicos detectados han sido corregidos a lo largo de 11 releases. Release 11 incorpora la auditoría estratégica de contenido con 24 hallazgos editoriales y un plan maestro completo.
+
+**Lo que queda pendiente — Release 12 y siguientes:**
+
+Prioridad inmediata (moverá SEO y negocio):
+- Cubrir 8 áreas jurídicas sin artículos de blog (publicar 12 artículos Fase 1)
+- Crear landings transaccionales para queries de alta conversión
+- Crear 4 landings locales para SEO multi-ciudad
+- Página de urgencias para detenidos
+- Interlinking blog → servicios
+
+Prioridad corto plazo (construcción de autoridad):
+- Glosario jurídico
+- Página de honorarios y transparencia
+- Personas editoriales y biografías
+- Enlaces a fuentes externas autoritativas
+- Lead magnets descargables
+
+Prioridad medio plazo (afinamiento):
+- Chat en vivo
+- Calculadora pública
+- Auditoría de canibalización
+
+Con las acciones del roadmap completo se puede alcanzar una puntuación estimada de **~92-94/100** y duplicar el tráfico orgánico cualificado en 6-12 meses.
+
+El sitio está preparado para escalar en SEO. Las carencias actuales no son estructurales sino de **contenido, profundidad editorial y arquitectura de conversión**. El plan maestro detallado en la sección 12 proporciona la hoja de ruta completa para cerrar cada gap.
