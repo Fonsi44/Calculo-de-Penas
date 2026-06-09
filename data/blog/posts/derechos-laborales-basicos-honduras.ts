@@ -6,6 +6,7 @@ export const derechosLaboralesBasicosHonduras: Post = {
   description:
     'Salario mínimo, jornada, vacaciones, aguinaldo, estabilidad laboral. Conozca los derechos laborales fundamentales en Honduras.',
   publishedAt: '2026-05-24',
+  updatedAt: '2026-05-31',
   category: 'derecho-laboral',
   tags: [
     'derechos laborales Honduras',

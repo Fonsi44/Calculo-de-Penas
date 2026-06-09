@@ -5,6 +5,7 @@ export const lavadoActivosObligacionesCumplimientoEmpresasHonduras: Post = {
   title: 'Lavado de activos en Honduras: obligaciones de cumplimiento para empresas',
   description: 'Explica quiénes son sujetos obligados, qué medidas de cumplimiento implementar, reporte de operaciones sospechosas y sanciones.',
   publishedAt: '2026-07-10',
+  updatedAt: '2026-07-15',
   category: 'practica-legal',
   tags: ["prevención lavado activos honduras","uaf honduras","sujetos obligados lavado activos","compliance honduras"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const fianzaMedidasCautelaresProcesoPenalHonduras: Post = {
   title: 'Fianza y medidas cautelares en el proceso penal hondureño',
   description: 'Explica qué tipos de medidas cautelares existen en el proceso penal hondureño, cuándo procede la prisión preventiva, cómo solicitar libertad bajo fianza y qué factores evalúa el juez.',
   publishedAt: '2026-05-17',
+  updatedAt: '2026-05-22',
   category: 'derecho-penal',
   tags: ["medidas cautelares honduras","prisión preventiva honduras","libertad bajo fianza","caución económica proceso penal"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const contratosConfidencialidadNdaSecretoComercialHonduras: Post = {
   title: 'Contratos de confidencialidad (NDA) y secreto comercial en Honduras',
   description: 'Explica qué es un NDA, cláusulas esenciales, cómo se protege el secreto comercial en Honduras y acciones por violación.',
   publishedAt: '2026-06-25',
+  updatedAt: '2026-06-29',
   category: 'propiedad-intelectual',
   tags: ["nda honduras","acuerdo de confidencialidad modelo","secreto comercial honduras","protección información confidencial"],
   author: 'Pineda y Asociados',

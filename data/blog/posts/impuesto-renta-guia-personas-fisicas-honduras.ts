@@ -5,6 +5,7 @@ export const impuestoRentaGuiaPersonasFisicasHonduras: Post = {
   title: 'Impuesto sobre la Renta en Honduras: guía para personas físicas',
   description: 'Explica quiénes deben declarar, rentas gravables y exentas, tabla de tarifas, deducciones personales y plazos de declaración.',
   publishedAt: '2026-06-25',
+  updatedAt: '2026-07-05',
   category: 'tributario',
   tags: ["isr honduras 2026","declaración de renta honduras","renta gravable honduras","tablas isr honduras"],
   author: 'Pineda y Asociados',

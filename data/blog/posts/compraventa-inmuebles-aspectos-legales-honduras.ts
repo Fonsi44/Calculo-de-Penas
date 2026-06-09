@@ -5,6 +5,7 @@ export const compraventaInmueblesAspectosLegalesHonduras: Post = {
   title: 'Compraventa de inmuebles en Honduras: aspectos legales clave',
   description: 'Explica el proceso legal de compraventa: due diligence, promesa de venta, escrituración, registro, impuestos y costos asociados.',
   publishedAt: '2026-05-30',
+  updatedAt: '2026-06-05',
   category: 'derecho-civil',
   tags: ["cómo comprar una casa honduras","escritura pública compraventa","registro de la propiedad honduras","due diligence inmobiliario honduras"],
   author: 'Pineda y Asociados',

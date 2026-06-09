@@ -5,6 +5,7 @@ export const sancionesAdministrativasComoDefenderseHonduras: Post = {
   title: 'Sanciones administrativas en Honduras: cómo defenderse',
   description: 'Explica el procedimiento administrativo sancionador, cómo impugnar multas, recursos administrativos (reposición, apelación) y defensa legal.',
   publishedAt: '2026-06-09',
+  updatedAt: '2026-06-13',
   category: 'derecho-administrativo',
   tags: ["multas sar honduras","impugnar multa administrativa","procedimiento administrativo sancionador","recurso de reposición honduras"],
   author: 'Pineda y Asociados',

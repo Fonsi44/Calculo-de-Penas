@@ -5,6 +5,7 @@ export const allanamientoIlegalViolacionDomicilioHonduras: Post = {
   title: 'Violación de domicilio y allanamiento ilegal en Honduras',
   description: 'Explica cuándo un allanamiento es legal, qué requisitos debe cumplir una orden, qué hacer si se viola el domicilio sin orden judicial y cómo denunciarlo.',
   publishedAt: '2026-05-17',
+  updatedAt: '2026-05-22',
   category: 'derecho-penal',
   tags: ["violación de domicilio honduras","orden de allanamiento honduras","requisitos allanamiento honduras","allanamiento sin orden"],
   author: 'Pineda y Asociados',

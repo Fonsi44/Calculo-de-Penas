@@ -6,6 +6,7 @@ export const poderDesdeEspanaParaTramitesHonduras: Post = {
   description:
     'Cómo otorgar un poder legal desde España para realizar trámites en Honduras sin viajar. Procedimiento, requisitos y validez internacional.',
   publishedAt: '2026-06-01',
+  updatedAt: '2026-06-08',
   category: 'hondurenos-en-espana',
   tags: ['poder desde España', 'trámites Honduras', 'hondureños en España', 'poder notarial internacional'],
   author: 'Pineda y Asociados',

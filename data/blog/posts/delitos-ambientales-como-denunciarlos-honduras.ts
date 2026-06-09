@@ -5,6 +5,7 @@ export const delitosAmbientalesComoDenunciarlosHonduras: Post = {
   title: 'Delitos ambientales en Honduras: qué son y cómo denunciarlos',
   description: 'Explica los delitos ambientales tipificados en el Código Penal, penas asociadas, cómo denunciar y la reparación del daño.',
   publishedAt: '2026-06-27',
+  updatedAt: '2026-07-02',
   category: 'derecho-ambiental',
   tags: ["daño ambiental honduras","contaminación delito honduras","tala ilegal honduras","tráfico de especies honduras"],
   author: 'Pineda y Asociados',

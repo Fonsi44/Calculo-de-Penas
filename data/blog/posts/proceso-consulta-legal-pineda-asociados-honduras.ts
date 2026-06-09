@@ -5,6 +5,7 @@ export const procesoConsultaLegalPinedaAsociadosHonduras: Post = {
   title: '¿Cómo es el proceso de consulta legal en Pineda y Asociados?',
   description: 'Explica paso a paso cómo es el proceso: solicitud de consulta, primera entrevista, análisis del caso, presupuesto y seguimiento.',
   publishedAt: '2026-07-12',
+  updatedAt: '2026-07-16',
   category: 'practica-legal',
   tags: ["cómo funciona consulta abogado","primera consulta gratis honduras","qué esperar de una consulta legal","proceso de asesoría"],
   author: 'Pineda y Asociados',

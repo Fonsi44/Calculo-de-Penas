@@ -6,6 +6,7 @@ export const abogadoPenalistaSurHonduras: Post = {
   description:
     'Sepa en qué situaciones es urgente contactar a un abogado penalista en Nacaome, Choluteca o la zona sur de Honduras. Identifique señales de alerta y actúe a tiempo.',
   publishedAt: '2026-05-18',
+  updatedAt: '2026-05-23',
   category: 'derecho-penal',
   tags: [
     'abogado penalista sur de Honduras',

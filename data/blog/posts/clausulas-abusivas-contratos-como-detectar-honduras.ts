@@ -5,6 +5,7 @@ export const clausulasAbusivasContratosComoDetectarHonduras: Post = {
   title: 'Cláusulas abusivas en contratos: cómo detectarlas y anularlas',
   description: 'Explica qué son las cláusulas abusivas, ejemplos comunes, marco legal en Honduras y cómo impugnarlas judicialmente.',
   publishedAt: '2026-05-30',
+  updatedAt: '2026-06-04',
   category: 'derecho-civil',
   tags: ["contratos de adhesión honduras","cláusulas leoninas","nulidad de cláusulas abusivas","protección consumidor honduras"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const actualizacionLegislativaMensualHonduras: Post = {
   title: '¿Qué dice la ley hondureña sobre...? Actualización legislativa mensual',
   description: 'Resumen mensual de las principales reformas legales, nuevos decretos y cambios normativos relevantes para ciudadanos y empresas.',
   publishedAt: '2026-07-13',
+  updatedAt: '2026-07-20',
   category: 'noticias-legales',
   tags: ["reformas legales honduras","actualidad jurídica honduras","congreso nacional leyes","decretos legislativos honduras"],
   author: 'Pineda y Asociados',

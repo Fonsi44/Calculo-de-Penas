@@ -5,6 +5,7 @@ export const pinedaAsociadosBufeteMultidisciplinarioHonduras: Post = {
   title: 'Pineda y Asociados: conozca nuestro bufete multidisciplinario',
   description: 'Presenta la historia, valores, áreas de práctica y equipo del bufete, destacando los 15+ años de experiencia y la atención personalizada.',
   publishedAt: '2026-07-12',
+  updatedAt: '2026-07-19',
   category: 'practica-legal',
   tags: ["bufete de abogados nacaome","abogados en valle honduras","estudio jurídico multidisciplinario","pineda asociados abogados"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const herenciasTransfronterizasBienesHondurasEspana: Post = {
   title: 'Herencias transfronterizas: bienes en Honduras y España',
   description: 'Explica el proceso sucesorio cuando hay bienes en ambos países, ley aplicable, impuestos y documentación necesaria.',
   publishedAt: '2026-06-19',
+  updatedAt: '2026-06-25',
   category: 'hondurenos-en-espana',
   tags: ["heredar bienes en honduras desde españa","sucesión internacional","impuesto herencia honduras españa","testamento transfronterizo"],
   author: 'Pineda y Asociados',

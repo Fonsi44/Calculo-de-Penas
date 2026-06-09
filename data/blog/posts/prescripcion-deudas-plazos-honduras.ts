@@ -5,6 +5,7 @@ export const prescripcionDeudasPlazosHonduras: Post = {
   title: 'Prescripción de deudas en Honduras: plazos y cómo opera',
   description: 'Explica los plazos de prescripción de deudas según el Código Civil, cómo se interrumpe la prescripción y qué hacer si le cobran una deuda prescrita.',
   publishedAt: '2026-05-27',
+  updatedAt: '2026-06-05',
   category: 'derecho-civil',
   tags: ["cuándo prescribe una deuda honduras","deudas prescritas honduras","cobro judicial de deudas","prescripción de cheques honduras"],
   author: 'Pineda y Asociados',

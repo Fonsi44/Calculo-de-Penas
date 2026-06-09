@@ -5,6 +5,7 @@ export const costosHonorariosAbogadosComoFuncionanHonduras: Post = {
   title: 'Costos y honorarios de abogados en Honduras: cómo funcionan',
   description: 'Explica los modelos de honorarios (fijo, contingencia, por hora), consulta inicial gratuita, presupuesto por escrito y transparencia del bufete.',
   publishedAt: '2026-07-09',
+  updatedAt: '2026-07-16',
   category: 'practica-legal',
   tags: ["honorarios abogados honduras","consulta legal costo","presupuesto por escrito abogado","arancel de abogados honduras"],
   author: 'Pineda y Asociados',

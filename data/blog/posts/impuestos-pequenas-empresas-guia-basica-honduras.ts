@@ -5,6 +5,7 @@ export const impuestosPequenasEmpresasGuiaBasicaHonduras: Post = {
   title: 'Impuestos para pequeñas empresas en Honduras: guía básica',
   description: 'Explica las obligaciones tributarias básicas: inscripción RTN, declaraciones ISV e ISR, facturación, regímenes y sanciones por incumplimiento.',
   publishedAt: '2026-06-26',
+  updatedAt: '2026-07-05',
   category: 'tributario',
   tags: ["régimen simplificado honduras","isv honduras","facturación honduras","rtn obligaciones"],
   author: 'Pineda y Asociados',

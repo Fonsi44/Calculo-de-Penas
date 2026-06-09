@@ -6,6 +6,7 @@ export const constitucionEmpresasHondurasPasosLegales: Post = {
   description:
     'Guía paso a paso para constituir una empresa en Honduras: tipo de sociedad, escritura, RTN, permisos y obligaciones legales iniciales.',
   publishedAt: '2026-05-24',
+  updatedAt: '2026-05-29',
   category: 'derecho-mercantil',
   tags: ['constitución de empresas Honduras', 'sociedad mercantil', 'RTN empresa', 'derecho mercantil'],
   author: 'Pineda y Asociados',

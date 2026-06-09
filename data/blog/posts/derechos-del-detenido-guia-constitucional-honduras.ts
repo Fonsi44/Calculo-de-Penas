@@ -5,6 +5,7 @@ export const derechosDelDetenidoGuiaConstitucionalHonduras: Post = {
   title: 'Derechos del detenido en Honduras: guía constitucional completa',
   description: 'Explica los derechos constitucionales desde la detención hasta la sentencia, basados en la Constitución y el Código Procesal Penal.',
   publishedAt: '2026-07-04',
+  updatedAt: '2026-07-11',
   category: 'derechos-ciudadanos',
   tags: ["garantías constitucionales detenido","derecho a abogado honduras","presunción de inocencia","declaración del detenido"],
   author: 'Pineda y Asociados',

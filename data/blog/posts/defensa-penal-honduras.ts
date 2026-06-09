@@ -6,6 +6,7 @@ export const defensaPenalHonduras: Post = {
   description:
     'Conozca sus derechos, las etapas del proceso penal y por qué una defensa técnica marca la diferencia en el sistema judicial hondureño.',
   publishedAt: '2026-05-15',
+  updatedAt: '2026-05-22',
   category: 'derecho-penal',
   tags: ['defensa penal', 'derechos del imputado', 'proceso penal Honduras', 'abogado penalista'],
   author: 'Pineda y Asociados',

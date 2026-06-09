@@ -6,6 +6,7 @@ export const cuandoNecesitoAbogadoPenalistaHonduras: Post = {
   description:
     'Desde el momento de una citación o detención, contar con un abogado penalista marca la diferencia. Sepa en qué situaciones es indispensable buscar defensa técnica.',
   publishedAt: '2026-05-27',
+  updatedAt: '2026-06-05',
   category: 'derecho-penal',
   tags: ['abogado penalista Honduras', 'defensa penal', 'proceso penal', 'asesoría legal'],
   author: 'Pineda y Asociados',

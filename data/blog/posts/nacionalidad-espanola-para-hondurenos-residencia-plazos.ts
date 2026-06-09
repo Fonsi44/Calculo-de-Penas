@@ -5,6 +5,7 @@ export const nacionalidadEspanolaParaHondurenosResidenciaPlazos: Post = {
   title: 'Nacionalidad española para hondureños: residencia, examen y plazos',
   description: 'Explica los requisitos de residencia, preparación para exámenes CCSE y DELE, documentación y proceso de solicitud de nacionalidad.',
   publishedAt: '2026-06-22',
+  updatedAt: '2026-07-01',
   category: 'hondurenos-en-espana',
   tags: ["años de residencia para nacionalidad esp","examen ccse nacionalidad","examen dele nacionalidad","solicitar nacionalidad española"],
   author: 'Pineda y Asociados',

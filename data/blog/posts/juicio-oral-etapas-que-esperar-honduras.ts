@@ -5,6 +5,7 @@ export const juicioOralEtapasQueEsperarHonduras: Post = {
   title: '¿Cómo funciona un juicio oral en Honduras? Etapas y qué esperar',
   description: 'Explica las etapas del juicio oral, roles de cada participante, duración estimada y qué esperar como acusado o víctima.',
   publishedAt: '2026-07-02',
+  updatedAt: '2026-07-09',
   category: 'proceso-penal',
   tags: ["cómo es un juicio penal honduras","audiencia inicial","audiencia preliminar","juicio oral y público"],
   author: 'Pineda y Asociados',

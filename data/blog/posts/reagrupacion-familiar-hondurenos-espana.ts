@@ -5,6 +5,7 @@ export const reagrupacionFamiliarHondurenosEspana: Post = {
   title: 'Reagrupación familiar de hondureños en España',
   description: 'Explica los requisitos de ingresos, vivienda, documentación y proceso para reagrupar a familiares en España.',
   publishedAt: '2026-06-20',
+  updatedAt: '2026-06-27',
   category: 'hondurenos-en-espana',
   tags: ["traer familia a españa","reagrupación familiar requisitos","visado por reagrupación","ingresos mínimos reagrupación"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const creditosReestructuracionDeudasBancariasHonduras: Post = {
   title: 'Créditos bancarios y reestructuración de deudas en Honduras',
   description: 'Explica las opciones legales para reestructurar deudas bancarias, negociación directa, mediación CNBS y alternativas judiciales.',
   publishedAt: '2026-06-04',
+  updatedAt: '2026-06-08',
   category: 'derecho-bancario',
   tags: ["cómo renegociar deuda banco honduras","crédito hipotecario problemas","consolidación de deudas","ley de quiebras honduras"],
   author: 'Pineda y Asociados',

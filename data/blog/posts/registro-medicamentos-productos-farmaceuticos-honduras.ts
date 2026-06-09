@@ -5,6 +5,7 @@ export const registroMedicamentosProductosFarmaceuticosHonduras: Post = {
   title: 'Registro de medicamentos y productos farmacéuticos en Honduras',
   description: 'Explica el proceso de registro de medicamentos, categorías, documentación técnica, buenas prácticas de fabricación y renovaciones.',
   publishedAt: '2026-06-14',
+  updatedAt: '2026-06-24',
   category: 'regulacion-sanitaria',
   tags: ["registro sanitario medicamentos arsa","registro farmacéutico honduras","validación técnica medicamentos","registro de genéricos honduras"],
   author: 'Pineda y Asociados',

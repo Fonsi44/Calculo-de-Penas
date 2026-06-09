@@ -5,6 +5,7 @@ export const evaluacionImpactoAmbientalPasoAPasoHonduras: Post = {
   title: 'Evaluación de impacto ambiental en Honduras: paso a paso',
   description: 'Explica el proceso de EIA, contenido del estudio, consulta pública, resolución y seguimiento.',
   publishedAt: '2026-06-29',
+  updatedAt: '2026-07-04',
   category: 'derecho-ambiental',
   tags: ["eia honduras","estudio de impacto ambiental requisitos","términos de referencia miambiente","consultoría ambiental honduras"],
   author: 'Pineda y Asociados',

@@ -6,6 +6,7 @@ export const pensionAlimenticiaHondurasComoSolicitarla: Post = {
   description:
     'Guía paso a paso para solicitar pensión alimenticia en Honduras. Requisitos, procedimiento, cálculo y qué hacer si el obligado no paga.',
   publishedAt: '2026-05-27',
+  updatedAt: '2026-06-03',
   category: 'derecho-de-familia',
   tags: [
     'pensión alimenticia Honduras',

@@ -5,6 +5,7 @@ export const usucapionPrescripcionAdquisitivaHonduras: Post = {
   title: 'Usucapión o prescripción adquisitiva en Honduras',
   description: 'Explica qué es la usucapión, requisitos de posesión, plazos, diferencia entre posesión notaria y judicial, y cómo iniciar el trámite.',
   publishedAt: '2026-05-31',
+  updatedAt: '2026-06-08',
   category: 'derecho-civil',
   tags: ["prescripción adquisitiva honduras","posesión de inmuebles legalizar","posesión notaria honduras","cómo legalizar terreno sin escritura"],
   author: 'Pineda y Asociados',

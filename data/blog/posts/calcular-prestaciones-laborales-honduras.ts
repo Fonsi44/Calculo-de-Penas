@@ -6,6 +6,7 @@ export const calcularPrestacionesLaboralesHonduras: Post = {
   description:
     'Guía práctica para entender y calcular prestaciones laborales en Honduras: aguinaldo, décimo tercer mes, vacaciones, indemnización y más.',
   publishedAt: '2026-05-27',
+  updatedAt: '2026-06-05',
   category: 'derecho-laboral',
   tags: [
     'prestaciones laborales Honduras',

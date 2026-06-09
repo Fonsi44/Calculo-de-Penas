@@ -5,6 +5,7 @@ export const hondurenosEnEspanaGuiaLegalCompleta: Post = {
   title: 'Hondureños en España: guía legal completa para migrantes',
   description: 'Guía completa sobre regularización, visados, arraigo, asilo, nacionalidad y derechos de los hondureños en España.',
   publishedAt: '2026-06-19',
+  updatedAt: '2026-06-24',
   category: 'hondurenos-en-espana',
   tags: ["regularización hondureños españa","asilo españa hondureños","residencia españa hondureños","nacionalidad española hondureños"],
   author: 'Pineda y Asociados',

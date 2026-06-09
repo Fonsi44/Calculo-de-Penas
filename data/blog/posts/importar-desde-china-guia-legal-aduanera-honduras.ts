@@ -5,6 +5,7 @@ export const importarDesdeChinaGuiaLegalAduaneraHonduras: Post = {
   title: 'Importar desde China a Honduras: guía legal completa',
   description: 'Explica la ruta legal para importar desde China, documentación específica, tratamientos arancelarios, certificaciones y riesgos legales.',
   publishedAt: '2026-06-12',
+  updatedAt: '2026-06-17',
   category: 'derecho-aduanero',
   tags: ["comprar en china y vender en honduras","aduana honduras importaciones china","tratado comercial china honduras","flete marítimo china honduras"],
   author: 'Pineda y Asociados',

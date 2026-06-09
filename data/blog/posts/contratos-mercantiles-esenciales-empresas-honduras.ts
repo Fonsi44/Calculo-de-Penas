@@ -5,6 +5,7 @@ export const contratosMercantilesEsencialesEmpresasHonduras: Post = {
   title: 'Contratos mercantiles esenciales para empresas en Honduras',
   description: 'Explica los contratos mercantiles más usados en Honduras, cláusulas esenciales, riesgos comunes y cómo redactarlos correctamente.',
   publishedAt: '2026-06-02',
+  updatedAt: '2026-06-09',
   category: 'derecho-mercantil',
   tags: ["contrato de suministro honduras","contrato de distribución honduras","contrato de compraventa mercantil","cláusulas contractuales empresas"],
   author: 'Pineda y Asociados',

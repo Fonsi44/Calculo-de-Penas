@@ -5,6 +5,7 @@ export const guardaCustodiaMenoresTiposHonduras: Post = {
   title: 'Guarda y custodia de menores en Honduras: tipos y cómo solicitarla',
   description: 'Explica los tipos de guarda y custodia, diferencias con patria potestad, factores que evalúa el juez, y cómo se determina el régimen de visitas.',
   publishedAt: '2026-05-24',
+  updatedAt: '2026-06-02',
   category: 'derecho-de-familia',
   tags: ["guarda y custodia hijos honduras","patria potestad honduras","custodia compartida honduras","régimen de visitas honduras"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const derechosDeAutorProteccionRegistroHonduras: Post = {
   title: 'Derechos de autor en Honduras: qué protegen y cómo registrarlos',
   description: 'Explica qué obras protege el derecho de autor, cómo registrarlas, duración de la protección, derechos morales y patrimoniales.',
   publishedAt: '2026-06-23',
+  updatedAt: '2026-07-01',
   category: 'propiedad-intelectual',
   tags: ["registro de obras honduras","digepih derechos autor","cómo registrar un libro honduras","propiedad intelectual obras artísticas"],
   author: 'Pineda y Asociados',

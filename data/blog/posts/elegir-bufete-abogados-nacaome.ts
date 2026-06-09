@@ -6,6 +6,7 @@ export const elegirBufeteAbogadosNacaome: Post = {
   description:
     'Guía para elegir un despacho jurídico en Nacaome, Choluteca o el sur de Honduras. Qué preguntar, qué criterios evaluar y cómo distinguir un servicio legal serio y confiable.',
   publishedAt: '2026-05-30',
+  updatedAt: '2026-06-03',
   category: 'practica-legal',
   tags: [
     'bufete de abogados Nacaome',

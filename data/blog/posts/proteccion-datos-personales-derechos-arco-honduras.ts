@@ -5,6 +5,7 @@ export const proteccionDatosPersonalesDerechosArcoHonduras: Post = {
   title: 'Protección de datos personales en Honduras: derechos ARCO',
   description: 'Explica los derechos de acceso, rectificación, cancelación y oposición (ARCO), marco legal y cómo ejercerlos.',
   publishedAt: '2026-07-08',
+  updatedAt: '2026-07-11',
   category: 'derechos-ciudadanos',
   tags: ["derechos arco honduras","habeas data","ley de protección de datos honduras","acceso a información pública"],
   author: 'Pineda y Asociados',

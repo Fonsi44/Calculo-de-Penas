@@ -5,6 +5,7 @@ export const contratosFranquiciaAspectosLegalesHonduras: Post = {
   title: 'Contratos de franquicia en Honduras: aspectos legales clave',
   description: 'Explica los elementos clave de un contrato de franquicia en Honduras, derechos y obligaciones, canon de entrada, regalías y protección legal.',
   publishedAt: '2026-06-04',
+  updatedAt: '2026-06-09',
   category: 'derecho-mercantil',
   tags: ["franquicias en honduras requisitos","cómo abrir una franquicia","ley de franquicias honduras","franquiciante franquiciatario derechos"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const etapaInvestigacionProcesoPenalHonduras: Post = {
   title: 'Etapa de investigación en el proceso penal hondureño',
   description: 'Explica la fase preparatoria, plazos de investigación, derechos del imputado, salidas alternas (criterio de oportunidad, suspensión condicional).',
   publishedAt: '2026-07-04',
+  updatedAt: '2026-07-11',
   category: 'proceso-penal',
   tags: ["etapa preparatoria proceso penal","ministerio público investigación","plazo investigación honduras","archivo de investigación"],
   author: 'Pineda y Asociados',

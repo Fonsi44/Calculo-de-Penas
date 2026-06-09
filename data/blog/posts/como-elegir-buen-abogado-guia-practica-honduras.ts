@@ -5,6 +5,7 @@ export const comoElegirBuenAbogadoGuiaPracticaHonduras: Post = {
   title: 'Cómo elegir un buen abogado en Honduras: guía práctica',
   description: 'Explica criterios para seleccionar abogado: especialización, experiencia, comunicación, honorarios, referencias y confianza.',
   publishedAt: '2026-07-12',
+  updatedAt: '2026-07-16',
   category: 'practica-legal',
   tags: ["qué preguntar antes de contratar abogado","abogado de confianza honduras","bufete multidisciplinario","especialización legal"],
   author: 'Pineda y Asociados',

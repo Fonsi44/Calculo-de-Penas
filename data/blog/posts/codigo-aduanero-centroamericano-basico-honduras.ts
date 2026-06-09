@@ -5,6 +5,7 @@ export const codigoAduaneroCentroamericanoBasicoHonduras: Post = {
   title: 'Código Aduanero Centroamericano: lo básico para importadores y exportadores',
   description: 'Explica los fundamentos del CAC, sistema de valoración, origen de mercancías, régimen de tránsito y operadores económicos autorizados.',
   publishedAt: '2026-06-12',
+  updatedAt: '2026-06-17',
   category: 'derecho-aduanero',
   tags: ["cac honduras","normativa aduanera centroamericana","despacho aduanero centroamericano","valoración aduanera"],
   author: 'Pineda y Asociados',

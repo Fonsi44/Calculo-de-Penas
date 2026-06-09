@@ -6,6 +6,7 @@ export const serviciosLegalesEmpresasSurHonduras: Post = {
   description:
     'Conozca los servicios jurídicos disponibles en el sur de Honduras: asesoría corporativa, defensa penal, derecho laboral, familiar, civil y más para empresas y personas.',
   publishedAt: '2026-06-03',
+  updatedAt: '2026-06-08',
   category: 'derecho-civil',
   tags: [
     'servicios legales sur de Honduras',

@@ -5,6 +5,7 @@ export const adopcionRequisitosProcesoHonduras: Post = {
   title: 'Adopción en Honduras: requisitos, proceso y plazos',
   description: 'Explica los requisitos legales para adoptar, fases del proceso administrativo ante DINAF, plazos estimados y adopción internacional.',
   publishedAt: '2026-05-27',
+  updatedAt: '2026-06-05',
   category: 'derecho-de-familia',
   tags: ["proceso de adopción honduras","adopción internacional honduras","dinaf adopción","quiénes pueden adoptar en honduras"],
   author: 'Pineda y Asociados',

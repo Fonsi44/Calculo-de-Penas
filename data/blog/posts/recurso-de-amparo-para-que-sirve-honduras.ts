@@ -5,6 +5,7 @@ export const recursoDeAmparoParaQueSirveHonduras: Post = {
   title: 'Recurso de amparo en Honduras: para qué sirve y cómo se interpone',
   description: 'Explica qué es el amparo, contra qué actos procede, plazos, requisitos procesales y qué esperar del trámite.',
   publishedAt: '2026-06-08',
+  updatedAt: '2026-06-17',
   category: 'derecho-administrativo',
   tags: ["cómo interponer amparo honduras","amparo constitucional","sala de lo constitucional amparo","derechos fundamentales honduras"],
   author: 'Pineda y Asociados',

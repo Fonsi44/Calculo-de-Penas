@@ -6,6 +6,7 @@ export const divorcioHondurasPasosRequisitos: Post = {
   description:
     'Todo sobre el divorcio en Honduras: tipos, requisitos legales, pasos del proceso y recomendaciones prácticas. Asesoría de familia en Pineda y Asociados.',
   publishedAt: '2026-06-08',
+  updatedAt: '2026-06-13',
   category: 'derecho-de-familia',
   tags: [
     'divorcio Honduras',

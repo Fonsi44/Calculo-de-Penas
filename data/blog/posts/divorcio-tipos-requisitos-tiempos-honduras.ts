@@ -5,6 +5,7 @@ export const divorcioTiposRequisitosTiemposHonduras: Post = {
   title: 'Divorcio en Honduras: tipos, requisitos y tiempos del proceso',
   description: 'Explica los tipos de divorcio en Honduras (mutuo acuerdo, necesario, causal), requisitos, documentación, tiempos estimados y costos.',
   publishedAt: '2026-05-25',
+  updatedAt: '2026-05-31',
   category: 'derecho-de-familia',
   tags: ["tipos de divorcio honduras","divorcio por mutuo acuerdo honduras","divorcio necesario honduras","cuánto tiempo tarda un divorcio"],
   author: 'Pineda y Asociados',

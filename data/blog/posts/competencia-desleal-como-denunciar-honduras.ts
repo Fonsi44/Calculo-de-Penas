@@ -5,6 +5,7 @@ export const competenciaDeslealComoDenunciarHonduras: Post = {
   title: 'Competencia desleal en Honduras: qué es y cómo denunciarla',
   description: 'Explica qué prácticas constituyen competencia desleal en Honduras, cómo documentarlas, vías administrativas y judiciales de denuncia.',
   publishedAt: '2026-06-04',
+  updatedAt: '2026-06-13',
   category: 'derecho-mercantil',
   tags: ["ley de competencia honduras","denunciar competencia desleal","publicidad engañosa honduras","secretos comerciales"],
   author: 'Pineda y Asociados',

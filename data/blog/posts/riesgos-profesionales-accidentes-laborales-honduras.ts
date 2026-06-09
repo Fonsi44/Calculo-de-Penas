@@ -5,6 +5,7 @@ export const riesgosProfesionalesAccidentesLaboralesHonduras: Post = {
   title: 'Riesgos profesionales y accidentes laborales en Honduras',
   description: 'Explica qué son los riesgos profesionales, cómo se determina una enfermedad profesional, derechos del trabajador accidentado, indemnizaciones y procedimiento ante el IHSS.',
   publishedAt: '2026-05-23',
+  updatedAt: '2026-05-29',
   category: 'derecho-laboral',
   tags: ["riesgo profesional honduras","seguro laboral ihss","indemnización accidente trabajo","enfermedad profesional honduras"],
   author: 'Pineda y Asociados',

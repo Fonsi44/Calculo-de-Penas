@@ -5,6 +5,7 @@ export const residenciaTemporalRequisitosPlazosHonduras: Post = {
   title: 'Residencia temporal en Honduras: requisitos, plazos y tipos de visa',
   description: 'Explica los tipos de residencia temporal, requisitos por categoría, documentación, plazos de trámite y renovación.',
   publishedAt: '2026-06-15',
+  updatedAt: '2026-06-23',
   category: 'extranjeria-migracion',
   tags: ["visa de residencia honduras","cómo vivir en honduras legalmente","permiso de residencia honduras","migración honduras extranjeros"],
   author: 'Pineda y Asociados',

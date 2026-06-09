@@ -5,6 +5,7 @@ export const isvImpuestoVentaTasasObligacionesHonduras: Post = {
   title: 'ISV en Honduras: cómo funciona, tasas y obligaciones',
   description: 'Explica las tasas generales y reducidas, productos exentos y exonerados, cómo declarar y pagar el ISV.',
   publishedAt: '2026-06-27',
+  updatedAt: '2026-07-04',
   category: 'tributario',
   tags: ["impuesto a la venta honduras","tasas isv honduras","productos exentos isv","declaración isv"],
   author: 'Pineda y Asociados',

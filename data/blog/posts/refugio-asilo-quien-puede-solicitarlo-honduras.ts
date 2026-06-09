@@ -5,6 +5,7 @@ export const refugioAsiloQuienPuedeSolicitarloHonduras: Post = {
   title: 'Refugio y asilo en Honduras: quién puede solicitarlo',
   description: 'Explica quién puede solicitar refugio, proceso ante la CONADEH, derechos del refugiado y documentación necesaria.',
   publishedAt: '2026-06-17',
+  updatedAt: '2026-06-20',
   category: 'extranjeria-migracion',
   tags: ["asilo humanitario honduras","conadeh refugio","estatus de refugiado honduras","protección internacional honduras"],
   author: 'Pineda y Asociados',

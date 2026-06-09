@@ -5,6 +5,7 @@ export const pensionAlimenticiaCalcularReclamarHonduras: Post = {
   title: 'Pensión alimenticia en Honduras: cómo calcularla y reclamarla',
   description: 'Explica cómo se calcula la pensión alimenticia, qué ingresos se consideran, cómo presentar la demanda y qué hacer ante el incumplimiento.',
   publishedAt: '2026-05-25',
+  updatedAt: '2026-05-29',
   category: 'derecho-de-familia',
   tags: ["cómo calcular pensión alimenticia hondur","demanda de alimentos honduras","incumplimiento pensión honduras","pensión alimenticia hijos honduras"],
   author: 'Pineda y Asociados',

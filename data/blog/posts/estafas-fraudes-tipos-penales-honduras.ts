@@ -5,6 +5,7 @@ export const estafasFraudesTiposPenalesHonduras: Post = {
   title: 'Estafas y fraudes en Honduras: tipos penales y cómo denunciar',
   description: 'Describe los distintos tipos de estafa en el Código Penal hondureño, cómo se investigan, qué pruebas se necesitan y la ruta de denuncia ante el Ministerio Público.',
   publishedAt: '2026-05-20',
+  updatedAt: '2026-05-24',
   category: 'derecho-penal',
   tags: ["fraude honduras código penal","cómo denunciar una estafa","estafa inmobiliaria honduras","estafa comercial honduras"],
   author: 'Pineda y Asociados',

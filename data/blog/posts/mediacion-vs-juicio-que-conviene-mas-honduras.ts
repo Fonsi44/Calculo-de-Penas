@@ -5,6 +5,7 @@ export const mediacionVsJuicioQueConvieneMasHonduras: Post = {
   title: 'Mediación vs juicio: qué conviene más en un conflicto legal',
   description: 'Compara tiempo, costo, confidencialidad y control sobre el resultado entre mediación, arbitraje y juicio ordinario.',
   publishedAt: '2026-06-30',
+  updatedAt: '2026-07-04',
   category: 'conciliacion-arbitraje',
   tags: ["métodos alternativos solución conflictos","ventajas mediación","cuándo ir a juicio","costo mediación honduras"],
   author: 'Pineda y Asociados',

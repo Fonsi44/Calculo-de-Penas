@@ -5,6 +5,7 @@ export const zonasLibresZoliBeneficiosFiscalesHonduras: Post = {
   title: 'Zonas libres y ZOLI en Honduras: beneficios fiscales y requisitos',
   description: 'Explica los regímenes de zona franca, ZOLI y admisión temporal, requisitos de instalación, beneficios fiscales y obligaciones aduaneras.',
   publishedAt: '2026-06-12',
+  updatedAt: '2026-06-18',
   category: 'derecho-aduanero',
   tags: ["zoli honduras","zonas francas industriales","beneficios fiscales exportación honduras","régimen de zona franca"],
   author: 'Pineda y Asociados',

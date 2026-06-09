@@ -5,6 +5,7 @@ export const contratacionPublicaLicitacionesEmpresasHonduras: Post = {
   title: 'Contratación pública y licitaciones en Honduras: guía para empresas',
   description: 'Explica el sistema de contratación pública, tipos de licitación, requisitos legales, recursos administrativos y cómo impugnar adjudicaciones.',
   publishedAt: '2026-06-07',
+  updatedAt: '2026-06-10',
   category: 'derecho-administrativo',
   tags: ["cómo venderle al estado honduras","oncae compras","contratación pública honduras","requisitos licitación honduras"],
   author: 'Pineda y Asociados',

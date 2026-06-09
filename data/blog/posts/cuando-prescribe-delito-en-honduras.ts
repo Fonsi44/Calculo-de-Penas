@@ -5,6 +5,7 @@ export const cuandoPrescribeDelitoEnHonduras: Post = {
   title: '¿Cuándo prescribe un delito en Honduras? Plazos por tipo penal',
   description: 'Explica cada tipo de prescripción penal, plazos según la gravedad del delito, cuándo se interrumpe y qué delitos son imprescriptibles en Honduras.',
   publishedAt: '2026-05-18',
+  updatedAt: '2026-05-21',
   category: 'derecho-penal',
   tags: ["cuándo prescribe un delito honduras","plazos prescripción penal honduras","extinción de responsabilidad penal hondu","cómputo de prescripción honduras"],
   author: 'Pineda y Asociados',

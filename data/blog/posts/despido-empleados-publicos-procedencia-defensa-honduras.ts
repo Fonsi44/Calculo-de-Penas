@@ -5,6 +5,7 @@ export const despidoEmpleadosPublicosProcedenciaDefensaHonduras: Post = {
   title: 'Despido de empleados públicos en Honduras: procedencia y defensa',
   description: 'Explica las causales de despido de funcionarios públicos, procedimiento administrativo, recursos de impugnación y reintegro.',
   publishedAt: '2026-06-09',
+  updatedAt: '2026-06-19',
   category: 'derecho-administrativo',
   tags: ["funcionario público despido","estabilidad laboral empleado público","ley de servicio civil honduras","cesación de cargos públicos"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const habilitacionClinicasHospitalesPrivadosHonduras: Post = {
   title: 'Habilitación de clínicas y hospitales privados en Honduras',
   description: 'Explica los requisitos legales, sanitarios y administrativos para abrir y operar clínicas privadas en Honduras.',
   publishedAt: '2026-06-15',
+  updatedAt: '2026-06-22',
   category: 'regulacion-sanitaria',
   tags: ["habilitación sanitaria clínicas honduras","permiso funcionamiento centro salud","sesal habilitación","cohem colegiación"],
   author: 'Pineda y Asociados',

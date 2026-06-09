@@ -5,6 +5,7 @@ export const libertadExpresionRedesSocialesHonduras: Post = {
   title: 'Libertad de expresión y redes sociales en Honduras',
   description: 'Explica los límites constitucionales y penales de la libertad de expresión, delitos de injuria, calumnia y difamación en el entorno digital.',
   publishedAt: '2026-07-05',
+  updatedAt: '2026-07-15',
   category: 'derechos-ciudadanos',
   tags: ["delitos en redes sociales honduras","injuria y calumnia honduras","discurso de odio honduras","libertad de prensa honduras"],
   author: 'Pineda y Asociados',

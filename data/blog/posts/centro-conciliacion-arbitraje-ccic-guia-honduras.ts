@@ -5,6 +5,7 @@ export const centroConciliacionArbitrajeCcicGuiaHonduras: Post = {
   title: 'Centro de Conciliación y Arbitraje de la CCIC: guía práctica',
   description: 'Explica el reglamento, costos, procedimiento y ventajas de acudir al centro de arbitraje de la CCIC.',
   publishedAt: '2026-07-01',
+  updatedAt: '2026-07-06',
   category: 'conciliacion-arbitraje',
   tags: ["centro de conciliación ccic","arbitraje ccic san pedro sula","reglamento arbitraje ccic","costos arbitraje ccic"],
   author: 'Pineda y Asociados',

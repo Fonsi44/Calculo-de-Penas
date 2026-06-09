@@ -5,6 +5,7 @@ export const elegirTipoSociedadEmpresaHonduras: Post = {
   title: 'Cómo elegir el tipo de sociedad para su empresa en Honduras',
   description: 'Explica las diferencias entre SA, SRL, EHI y otros tipos societarios en Honduras, capital mínimo, responsabilidad fiscal y recomendaciones según el negocio.',
   publishedAt: '2026-05-31',
+  updatedAt: '2026-06-07',
   category: 'derecho-mercantil',
   tags: ["cómo crear una empresa honduras","sociedad anónima honduras","sociedad de responsabilidad limitada hon","diferencia sa srl"],
   author: 'Pineda y Asociados',

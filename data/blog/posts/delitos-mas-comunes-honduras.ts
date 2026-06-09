@@ -6,6 +6,7 @@ export const delitosMasComunesHonduras: Post = {
   description:
     'Los delitos que más llegan a tribunales en Honduras: penal, familiar, patrimonial. Sepa cómo identificarlos y qué pasos legales tomar en cada situación.',
   publishedAt: '2026-05-20',
+  updatedAt: '2026-05-30',
   category: 'derecho-penal',
   tags: ['delitos comunes Honduras', 'defensa penal', 'abogado penalista', 'justicia Honduras'],
   author: 'Pineda y Asociados',

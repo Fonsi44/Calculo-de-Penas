@@ -5,6 +5,7 @@ export const arbitrajeCuandoConvieneComoFuncionaHonduras: Post = {
   title: 'Arbitraje en Honduras: cuándo conviene y cómo funciona',
   description: 'Explica el proceso arbitral, tipos (institucional vs ad hoc), cuándo incluir cláusula arbitral, ejecución del laudo y costos.',
   publishedAt: '2026-07-01',
+  updatedAt: '2026-07-08',
   category: 'conciliacion-arbitraje',
   tags: ["arbitraje comercial honduras","centro de arbitraje ccic","cláusula arbitral","laudo arbitral"],
   author: 'Pineda y Asociados',

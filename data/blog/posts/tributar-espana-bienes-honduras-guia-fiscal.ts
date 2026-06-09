@@ -5,6 +5,7 @@ export const tributarEspanaBienesHondurasGuiaFiscal: Post = {
   title: 'Cómo tributar si trabaja en España y tiene bienes en Honduras',
   description: 'Explica las obligaciones fiscales de hondureños en España con bienes en Honduras, convenio de doble imposición y cómo declarar correctamente.',
   publishedAt: '2026-06-19',
+  updatedAt: '2026-06-28',
   category: 'hondurenos-en-espana',
   tags: ["doble imposición honduras españa","declaración renta españa bienes extranje","convenio de doble tributación honduras e","irpf no residentes honduras"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const antejuicioEnHonduras: Post = {
   title: 'Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona',
   description: 'Explica qué funcionarios tienen fuero de antejuicio, cómo se tramita, plazos y qué pasa después de la declaratoria de lugar.',
   publishedAt: '2026-05-17',
+  updatedAt: '2026-05-25',
   category: 'derecho-penal',
   tags: ["fuero constitucional honduras","funcionarios públicos antejuicio","corte suprema antejuicio","cómo presentar antejuicio"],
   author: 'Pineda y Asociados',

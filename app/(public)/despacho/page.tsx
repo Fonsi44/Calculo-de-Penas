@@ -187,6 +187,16 @@ export default function DespachoPage() {
               </p>
             </Card>
             <Card padding="md" className="border-l-4 border-l-primary card-premium">
+              <p className="text-xxs font-bold uppercase tracking-widest text-primary mb-1">
+                Credenciales profesionales
+              </p>
+              <p className="text-sm text-text leading-relaxed">
+                Abogado colegiado en Honduras. Registro profesional vigente. Miembro del
+                Colegio de Abogados de Honduras. Consulte en su primera visita la documentación
+                que acredita nuestra habilitación profesional.
+              </p>
+            </Card>
+            <Card padding="md" className="border-l-4 border-l-primary card-premium">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
                   <Gavel size={18} />

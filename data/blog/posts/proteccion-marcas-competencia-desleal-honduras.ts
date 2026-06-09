@@ -5,6 +5,7 @@ export const proteccionMarcasCompetenciaDeslealHonduras: Post = {
   title: 'Protección de marcas frente a la competencia desleal en Honduras',
   description: 'Explica cómo defender la marca registrada ante infracciones, acciones judiciales, medidas cautelares y reclamación de daños.',
   publishedAt: '2026-06-24',
+  updatedAt: '2026-07-04',
   category: 'propiedad-intelectual',
   tags: ["falsificación de marca honduras","denunciar copia de marca","usurpación de marca","defensa propiedad industrial"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const constituirEmpresaGuiaPasoAPasoHonduras: Post = {
   title: '¿Cómo constituir una empresa en Honduras? Guía paso a paso',
   description: 'Explica todo el proceso: el tipo societario, reserva de nombre, escritura, registro mercantil, RTN, permiso de operación y libros contables.',
   publishedAt: '2026-07-09',
+  updatedAt: '2026-07-16',
   category: 'practica-legal',
   tags: ["crear empresa honduras costo","requisitos para formar una sociedad","escritura de constitución","registro mercantil honduras"],
   author: 'Pineda y Asociados',

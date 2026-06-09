@@ -5,6 +5,7 @@ export const patentesRequisitosProcesoSolicitudHonduras: Post = {
   title: 'Patentes en Honduras: requisitos y proceso de solicitud',
   description: 'Explica los requisitos de patentabilidad, proceso de solicitud, examen de fondo, costos y duración de la protección.',
   publishedAt: '2026-06-21',
+  updatedAt: '2026-06-29',
   category: 'propiedad-intelectual',
   tags: ["registrar patente honduras","modelo de utilidad honduras","patente de invención","digepih patentes"],
   author: 'Pineda y Asociados',

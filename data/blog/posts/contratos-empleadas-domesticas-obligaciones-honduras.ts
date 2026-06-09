@@ -5,6 +5,7 @@ export const contratosEmpleadasDomesticasObligacionesHonduras: Post = {
   title: 'Contratos para empleadas domésticas en Honduras: obligaciones legales del empleador',
   description: 'Explica las obligaciones legales de los empleadores domésticos: contrato, salario, IHSS, décimo tercer mes, vacaciones y derechos laborales del personal doméstico.',
   publishedAt: '2026-05-21',
+  updatedAt: '2026-05-26',
   category: 'derecho-laboral',
   tags: ["contrato trabajo doméstico honduras","obligaciones empleador empleada doméstic","salario mínimo trabajo doméstico hondura","seguridad social empleada doméstica"],
   author: 'Pineda y Asociados',

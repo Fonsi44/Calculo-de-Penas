@@ -5,6 +5,7 @@ export const centralRiesgosConsultarImpugnarHonduras: Post = {
   title: 'Central de Riesgos en Honduras: cómo consultarla, impugnar y salir',
   description: 'Explica qué es la Central de Riesgos, cómo consultar el historial, cómo impugnar datos incorrectos y estrategias para salir del buró de crédito.',
   publishedAt: '2026-06-06',
+  updatedAt: '2026-06-10',
   category: 'derecho-bancario',
   tags: ["buró de crédito honduras","cómo salir de central de riesgos","impugnar datos central de riesgos","reporte de crédito honduras"],
   author: 'Pineda y Asociados',

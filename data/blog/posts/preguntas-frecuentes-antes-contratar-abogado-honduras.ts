@@ -5,6 +5,7 @@ export const preguntasFrecuentesAntesContratarAbogadoHonduras: Post = {
   title: 'Preguntas frecuentes antes de contratar un abogado en Honduras',
   description: 'Recopila las dudas más comunes antes de contratar: costos, especialización, duración del proceso, confidencialidad y comunicación.',
   publishedAt: '2026-07-15',
+  updatedAt: '2026-07-20',
   category: 'practica-legal',
   tags: ["qué preguntarle a un abogado","cómo saber si un abogado es bueno","abogado de confianza","consulta legal gratuita"],
   author: 'Pineda y Asociados',

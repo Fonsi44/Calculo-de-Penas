@@ -5,6 +5,7 @@ export const contratosTrabajoTiposClausulasHonduras: Post = {
   title: 'Contratos de trabajo en Honduras: tipos, cláusulas esenciales y derechos',
   description: 'Explica los tipos de contratos laborales en Honduras, cláusulas obligatorias por ley, derechos irrenunciables del trabajador y qué revisar antes de firmar.',
   publishedAt: '2026-05-20',
+  updatedAt: '2026-05-23',
   category: 'derecho-laboral',
   tags: ["contrato indefinido honduras","contrato temporal honduras","contrato por obra honduras","cláusulas obligatorias contrato trabajo"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const importarMercanciasGuiaLegalAduaneraHonduras: Post = {
   title: 'Importar mercancías a Honduras: guía legal y aduanera',
   description: 'Explica el proceso de importación: clasificación arancelaria, documentación, cálculo de impuestos, agentes aduaneros y procedimiento de nacionalización.',
   publishedAt: '2026-06-12',
+  updatedAt: '2026-06-18',
   category: 'derecho-aduanero',
   tags: ["aranceles honduras importación","sar aduanas","despacho aduanero","declaración única aduanera"],
   author: 'Pineda y Asociados',

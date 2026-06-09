@@ -6,6 +6,7 @@ export const custodiaHijosHondurasJuez: Post = {
   description:
     'Cómo se decide la custodia en Honduras, qué factores considera el juez, tipos de custodia y cómo preparar su caso con asesoría legal.',
   publishedAt: '2026-06-01',
+  updatedAt: '2026-06-04',
   category: 'derecho-de-familia',
   tags: [
     'custodia Honduras',

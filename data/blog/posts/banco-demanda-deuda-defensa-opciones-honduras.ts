@@ -5,6 +5,7 @@ export const bancoDemandaDeudaDefensaOpcionesHonduras: Post = {
   title: '¿Qué hacer si un banco me demanda por deuda? Defensa y opciones',
   description: 'Explica qué tipos de demandas bancarias existen, cómo responder, plazos, opciones de defensa y alternativas como la negociación o reestructuración de deuda.',
   publishedAt: '2026-06-03',
+  updatedAt: '2026-06-10',
   category: 'derecho-bancario',
   tags: ["demanda por cobro judicial honduras","qué hacer si no puedo pagar banco","ejecución hipotecaria honduras","defensa deudor bancario"],
   author: 'Pineda y Asociados',

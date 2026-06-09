@@ -5,6 +5,7 @@ export const permisoTrabajoExtranjerosHonduras: Post = {
   title: 'Permiso de trabajo para extranjeros en Honduras',
   description: 'Explica los requisitos para obtener permiso de trabajo, vinculación con visa de residencia, derechos laborales del extranjero y renovación.',
   publishedAt: '2026-06-16',
+  updatedAt: '2026-06-25',
   category: 'extranjeria-migracion',
   tags: ["trabajar en honduras siendo extranjero","visa de trabajo honduras","contrato laboral extranjero honduras","permiso de trabajo migración"],
   author: 'Pineda y Asociados',

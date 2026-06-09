@@ -5,6 +5,7 @@ export const registroSanitarioAlimentosArsaPasoAPasoHonduras: Post = {
   title: 'Registro sanitario de alimentos ante la ARSA: paso a paso',
   description: 'Explica el proceso de registro sanitario de alimentos, clasificación de riesgo, documentación, tiempos y costos.',
   publishedAt: '2026-06-13',
+  updatedAt: '2026-06-18',
   category: 'regulacion-sanitaria',
   tags: ["cómo registrar un alimento en arsa","permiso sanitario alimentos honduras","etiquetado alimentos honduras","notificación sanitaria alimentos"],
   author: 'Pineda y Asociados',

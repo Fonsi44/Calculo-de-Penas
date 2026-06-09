@@ -5,6 +5,7 @@ export const expropiacionForzosaDerechosPropietarioHonduras: Post = {
   title: 'Expropiación forzosa en Honduras: derechos del propietario',
   description: 'Explica el proceso expropiatorio, derecho al justiprecio, cómo impugnar el monto indemnizatorio y plazos para reclamar.',
   publishedAt: '2026-06-09',
+  updatedAt: '2026-06-15',
   category: 'derecho-administrativo',
   tags: ["justiprecio expropiación honduras","indemnización expropiatoria","declaratoria de utilidad pública","ley de expropiación forzosa"],
   author: 'Pineda y Asociados',

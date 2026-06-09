@@ -5,6 +5,7 @@ export const mediacionFamiliarCuandoFuncionaHonduras: Post = {
   title: 'Mediación familiar en Honduras: cuándo es obligatoria y cómo funciona',
   description: 'Explica cuándo es obligatoria la mediación familiar, beneficios, rol del mediador, confidencialidad y homologación judicial del acuerdo.',
   publishedAt: '2026-07-02',
+  updatedAt: '2026-07-05',
   category: 'conciliacion-arbitraje',
   tags: ["mediación divorcio honduras","mediación custodia hijos","conciliación familiar honduras","mediador familiar honduras"],
   author: 'Pineda y Asociados',

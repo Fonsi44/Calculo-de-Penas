@@ -5,6 +5,7 @@ export const contratosArrendamientoDerechosObligacionesHonduras: Post = {
   title: 'Contratos de arrendamiento en Honduras: derechos y obligaciones',
   description: 'Explica derechos y obligaciones de arrendadores e inquilinos, cláusulas esenciales, depósito en garantía, desalojo y resolución de conflictos.',
   publishedAt: '2026-05-28',
+  updatedAt: '2026-06-03',
   category: 'derecho-civil',
   tags: ["derechos inquilino honduras","contrato de alquiler honduras","depósito garantía arrendamiento","desalojo honduras"],
   author: 'Pineda y Asociados',

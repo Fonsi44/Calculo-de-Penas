@@ -5,6 +5,7 @@ export const testamentosSucesionesHerenciaHonduras: Post = {
   title: 'Testamentos y sucesiones en Honduras: cómo heredar sin conflictos',
   description: 'Explica tipos de testamento, requisitos de validez, proceso sucesorio, impuestos y cómo evitar conflictos familiares.',
   publishedAt: '2026-05-28',
+  updatedAt: '2026-06-02',
   category: 'derecho-civil',
   tags: ["cómo hacer un testamento en honduras","herencia sin testamento honduras","sucesión intestada honduras","declaratoria de herederos"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const violenciaDomesticaRutaLegalHonduras: Post = {
   title: 'Violencia doméstica en Honduras: ruta legal, denuncia y protección',
   description: 'Explica cómo y dónde denunciar violencia doméstica en Honduras, qué medidas de protección existen, tiempos del proceso y qué esperar en el juzgado.',
   publishedAt: '2026-05-17',
+  updatedAt: '2026-05-22',
   category: 'derecho-penal',
   tags: ["medidas de protección honduras","ley contra violencia doméstica honduras","cómo denunciar violencia intrafamiliar","juzgado de letras violencia doméstica"],
   author: 'Pineda y Asociados',

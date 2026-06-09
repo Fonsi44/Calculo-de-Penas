@@ -5,6 +5,7 @@ export const derechosConsumidorFinancieroCnbsHonduras: Post = {
   title: 'Derechos del consumidor financiero en Honduras: guía CNBS',
   description: 'Explica la Ley de Protección al Consumidor Financiero, cómo presentar quejas ante la CNBS, plazos de respuesta y derechos básicos del usuario bancario.',
   publishedAt: '2026-06-05',
+  updatedAt: '2026-06-09',
   category: 'derecho-bancario',
   tags: ["cnbs reclamaciones","defensa consumidor financiero","cómo reclamar al banco honduras","tarjetas de crédito derechos"],
   author: 'Pineda y Asociados',

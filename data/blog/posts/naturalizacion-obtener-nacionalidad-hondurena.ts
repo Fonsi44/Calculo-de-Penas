@@ -5,6 +5,7 @@ export const naturalizacionObtenerNacionalidadHondurena: Post = {
   title: 'Naturalización en Honduras: cómo obtener la nacionalidad hondureña',
   description: 'Explica los requisitos de naturalización, plazos de residencia, exámenes, documentación y proceso ante la Secretaría de Gobernación.',
   publishedAt: '2026-06-15',
+  updatedAt: '2026-06-23',
   category: 'extranjeria-migracion',
   tags: ["naturalización honduras requisitos","ciudadanía hondureña por residencia","cuánto tiempo para nacionalidad honduras","carta de naturalización"],
   author: 'Pineda y Asociados',

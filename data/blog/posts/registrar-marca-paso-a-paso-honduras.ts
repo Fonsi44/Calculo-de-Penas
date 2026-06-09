@@ -5,6 +5,7 @@ export const registrarMarcaPasoAPasoHonduras: Post = {
   title: 'Cómo registrar una marca en Honduras: paso a paso',
   description: 'Explica el proceso completo de registro de marca ante DIGEPIH: búsqueda de anterioridad, solicitud, publicación, oposición, resolución y renovación.',
   publishedAt: '2026-05-31',
+  updatedAt: '2026-06-06',
   category: 'propiedad-intelectual',
   tags: ["registro de propiedad intelectual hondur","digepih marcas","cómo registrar un nombre comercial","clases de marca honduras"],
   author: 'Pineda y Asociados',

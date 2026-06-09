@@ -6,6 +6,7 @@ export const medidasSustitutivasPrisionPreventivaHonduras: Post = {
   description:
     'La prisión preventiva no es automática. Conozca las medidas sustitutivas que permite la ley hondureña para garantizar el proceso sin privar de libertad.',
   publishedAt: '2026-05-22',
+  updatedAt: '2026-05-28',
   category: 'derecho-penal',
   tags: ['medidas sustitutivas', 'prisión preventiva Honduras', 'defensa penal', 'Código Procesal Penal'],
   author: 'Pineda y Asociados',

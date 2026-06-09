@@ -5,6 +5,7 @@ export const visasInversionInversionistaRentistaPensionadoHonduras: Post = {
   title: 'Visas de inversión en Honduras: inversionista, rentista y pensionado',
   description: 'Explica las categorías de visa por capacidad económica, montos mínimos de inversión o renta, documentación y beneficios.',
   publishedAt: '2026-06-16',
+  updatedAt: '2026-06-24',
   category: 'extranjeria-migracion',
   tags: ["visa rentista honduras","visa pensionado honduras","invertir en honduras extranjero","vivir en honduras siendo jubilado"],
   author: 'Pineda y Asociados',

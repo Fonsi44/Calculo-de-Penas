@@ -5,6 +5,7 @@ export const acosoLaboralMobbingHonduras: Post = {
   title: 'Acoso laboral (mobbing) en Honduras: cómo identificarlo y denunciarlo',
   description: 'Explica qué conductas constituyen acoso laboral, cómo documentarlo, rutas de denuncia interna y judicial, y protecciones legales disponibles.',
   publishedAt: '2026-05-20',
+  updatedAt: '2026-05-23',
   category: 'derecho-laboral',
   tags: ["mobbing honduras","cómo denunciar acoso laboral","hostigamiento laboral honduras","acoso psicológico trabajo"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const sarNotificaFiscalizacionQueHacerHonduras: Post = {
   title: '¿Qué hacer si el SAR me notifica una fiscalización?',
   description: 'Explica el proceso de fiscalización, plazos para responder, documentación requerida, derechos del contribuyente y cómo defenderse.',
   publishedAt: '2026-06-25',
+  updatedAt: '2026-07-05',
   category: 'tributario',
   tags: ["notificación sar qué hacer","auditoría fiscal sar","requerimiento de información sar","defensa fiscal honduras"],
   author: 'Pineda y Asociados',

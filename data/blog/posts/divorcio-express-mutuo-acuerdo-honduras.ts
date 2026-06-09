@@ -5,6 +5,7 @@ export const divorcioExpressMutuoAcuerdoHonduras: Post = {
   title: 'Divorcio express por mutuo acuerdo en Honduras',
   description: 'Explica el procedimiento de divorcio por mutuo acuerdo, plazos reducidos, documentación necesaria y costos estimados.',
   publishedAt: '2026-05-25',
+  updatedAt: '2026-06-04',
   category: 'derecho-de-familia',
   tags: ["divorcio rápido honduras","divorcio mutuo acuerdo honduras barato","cuánto cuesta divorcio mutuo acuerdo","notaría divorcio honduras"],
   author: 'Pineda y Asociados',

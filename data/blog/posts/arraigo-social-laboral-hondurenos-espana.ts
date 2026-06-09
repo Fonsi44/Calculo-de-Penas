@@ -5,6 +5,7 @@ export const arraigoSocialLaboralHondurenosEspana: Post = {
   title: 'Arraigo social y laboral para hondureños en España',
   description: 'Explica los requisitos y proceso para solicitar arraigo social y laboral, documentación, plazos y qué hacer si deniegan.',
   publishedAt: '2026-06-20',
+  updatedAt: '2026-06-23',
   category: 'hondurenos-en-espana',
   tags: ["arraigo laboral españa","regularización por arraigo","informe de arraigo social","cómo obtener papeles españa hondureños"],
   author: 'Pineda y Asociados',

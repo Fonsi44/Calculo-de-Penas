@@ -5,6 +5,7 @@ export const comoObtenerRtnPersonasEmpresasHonduras: Post = {
   title: '¿Cómo obtener el RTN en Honduras? Guía para personas y empresas',
   description: 'Explica paso a paso cómo obtener el RTN, documentos requeridos, costos, y diferencias entre RTN de persona natural y jurídica.',
   publishedAt: '2026-07-10',
+  updatedAt: '2026-07-20',
   category: 'practica-legal',
   tags: ["rtn honduras requisitos","registro tributario sar","rtn persona natural","rtn persona jurídica"],
   author: 'Pineda y Asociados',

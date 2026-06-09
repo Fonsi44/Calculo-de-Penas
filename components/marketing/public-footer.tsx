@@ -59,6 +59,9 @@ export function PublicFooter() {
             <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
               Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
             </p>
+            <p className="text-xs text-accent/70 leading-relaxed mt-2 text-pretty">
+              Abogado colegiado en Honduras · Registro profesional vigente.
+            </p>
           </div>
 
           {/* Servicios */}

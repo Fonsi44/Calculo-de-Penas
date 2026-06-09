@@ -5,6 +5,7 @@ export const derechosTrabajadoraEmbarazadaHonduras: Post = {
   title: 'Derechos de la trabajadora embarazada en Honduras',
   description: 'Explica derechos de la trabajadora embarazada: fuero de maternidad, licencias, descansos, prohibición de despido y cómo actuar si se vulneran.',
   publishedAt: '2026-05-21',
+  updatedAt: '2026-05-29',
   category: 'derecho-laboral',
   tags: ["despido por embarazo honduras","licencia por maternidad honduras","fuero de maternidad honduras","permiso lactancia honduras"],
   author: 'Pineda y Asociados',

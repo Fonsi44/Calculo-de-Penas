@@ -5,6 +5,7 @@ export const elegirBufeteMultidisciplinarioVentajasHonduras: Post = {
   title: '¿Por qué elegir un bufete multidisciplinario en Honduras?',
   description: 'Explica las ventajas de contratar un bufete con múltiples especialidades: coordinación, visión integral, ahorro de tiempo y respuesta completa.',
   publishedAt: '2026-07-12',
+  updatedAt: '2026-07-20',
   category: 'practica-legal',
   tags: ["ventajas bufete multidisciplinario","abogado generalista vs especialista","varias áreas legales mismo sitio","coordinación legal integral"],
   author: 'Pineda y Asociados',

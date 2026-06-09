@@ -5,6 +5,7 @@ export const titulosValoresChequesSinFondoHonduras: Post = {
   title: 'Títulos valores, cheques sin fondo y protestos en Honduras',
   description: 'Explica qué hacer ante un cheque sin fondo, proceso de protesto, ejecución de títulos valores, plazos de prescripción de la acción cambiaria.',
   publishedAt: '2026-06-04',
+  updatedAt: '2026-06-12',
   category: 'derecho-mercantil',
   tags: ["protesto de cheque honduras","ejecución de títulos valores","pagaré honduras","acción cambiaria directa"],
   author: 'Pineda y Asociados',

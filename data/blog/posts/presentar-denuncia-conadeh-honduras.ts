@@ -5,6 +5,7 @@ export const presentarDenunciaConadehHonduras: Post = {
   title: '¿Cómo presentar una denuncia ante la CONADEH?',
   description: 'Explica qué tipo de violaciones se denuncian, requisitos, proceso, plazos de respuesta y acompañamiento legal.',
   publishedAt: '2026-07-08',
+  updatedAt: '2026-07-12',
   category: 'derechos-ciudadanos',
   tags: ["conadeh quejas","derechos humanos honduras","violación de derechos denuncia","comisionado de derechos humanos"],
   author: 'Pineda y Asociados',

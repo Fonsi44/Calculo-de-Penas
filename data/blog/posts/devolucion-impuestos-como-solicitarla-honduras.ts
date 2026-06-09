@@ -5,6 +5,7 @@ export const devolucionImpuestosComoSolicitarlaHonduras: Post = {
   title: 'Devolución de impuestos en Honduras: cuándo y cómo solicitarla',
   description: 'Explica qué impuestos admiten devolución, requisitos, proceso de solicitud, plazos de respuesta del SAR y recursos ante denegación.',
   publishedAt: '2026-06-28',
+  updatedAt: '2026-07-07',
   category: 'tributario',
   tags: ["saldo a favor isr honduras","devolución isv exportadores","cómo pedir devolución sar","requisitos devolución impuestos"],
   author: 'Pineda y Asociados',

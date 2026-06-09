@@ -5,6 +5,7 @@ export const defensaPenalMenoresEdadHonduras: Post = {
   title: 'Defensa penal para menores de edad en Honduras',
   description: 'Explica el sistema de responsabilidad penal juvenil en Honduras, diferencias con el proceso penal de adultos, derechos del menor, medidas socioeducativas y el rol de la familia.',
   publishedAt: '2026-05-18',
+  updatedAt: '2026-05-26',
   category: 'derecho-penal',
   tags: ["justicia penal juvenil honduras","menores infractores honduras","ley penal juvenil honduras","responsabilidad penal adolescentes"],
   author: 'Pineda y Asociados',

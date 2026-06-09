@@ -5,6 +5,7 @@ export const unionDeHechoRequisitosDerechosHonduras: Post = {
   title: 'Unión de hecho en Honduras: requisitos, efectos patrimoniales y derechos',
   description: 'Explica qué es la unión de hecho, requisitos para su reconocimiento, efectos patrimoniales, separación y derechos sucesorios.',
   publishedAt: '2026-05-26',
+  updatedAt: '2026-05-29',
   category: 'derecho-de-familia',
   tags: ["concubinato honduras","declaración de unión de hecho","derechos parejas no casadas","separación de bienes unión de hecho"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const comoPrepararDemandaGuiaNoAbogadosHonduras: Post = {
   title: 'Cómo preparar una demanda en Honduras: guía para no abogados',
   description: 'Explica los elementos básicos de una demanda, tipos de procesos, documentación necesaria, costos y la importancia de contar con abogado.',
   publishedAt: '2026-07-07',
+  updatedAt: '2026-07-14',
   category: 'practica-legal',
   tags: ["requisitos de una demanda","demanda civil honduras","cuánto cuesta demandar","juzgado competente honduras"],
   author: 'Pineda y Asociados',

@@ -6,6 +6,7 @@ export const problemasLegalesFamiliaresHonduras: Post = {
   description:
     'Divorcio, pensión alimenticia, custodia de hijos y sucesiones. Conozca sus derechos y los pasos concretos para resolver conflictos familiares en Honduras.',
   publishedAt: '2026-05-22',
+  updatedAt: '2026-05-26',
   category: 'derecho-de-familia',
   tags: [
     'problemas legales familiares Honduras',

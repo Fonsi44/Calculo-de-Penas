@@ -5,6 +5,7 @@ export const ejecucionHipotecariaQueHacerHonduras: Post = {
   title: 'Ejecución hipotecaria en Honduras: qué hacer ante una demanda',
   description: 'Explica el proceso de ejecución hipotecaria, etapas, plazos, opciones para detener el remate (dación en pago, negociación, recursos legales).',
   publishedAt: '2026-06-08',
+  updatedAt: '2026-06-13',
   category: 'derecho-bancario',
   tags: ["demanda hipotecaria honduras","perder casa por deuda","remate judicial honduras","dación en pago honduras"],
   author: 'Pineda y Asociados',

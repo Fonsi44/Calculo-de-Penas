@@ -5,6 +5,7 @@ export const derechosIndigenasConsultaPreviaHonduras: Post = {
   title: 'Derechos indígenas y consulta previa en Honduras',
   description: 'Explica el derecho a la consulta previa, libre e informada según el Convenio 169 de la OIT, obligaciones del Estado y empresas, y experiencias en Honduras.',
   publishedAt: '2026-06-30',
+  updatedAt: '2026-07-06',
   category: 'derecho-ambiental',
   tags: ["derechos indígenas honduras","pueblos originarios honduras","consulta libre informada","oit 169 honduras"],
   author: 'Pineda y Asociados',

@@ -5,6 +5,7 @@ export const facturacionElectronicaObligacionesRequisitosSarHonduras: Post = {
   title: 'Facturación electrónica en Honduras: obligaciones y requisitos SAR',
   description: 'Explica el sistema de facturación electrónica obligatoria, requisitos técnicos, plazos de implementación, sanciones y cómo regularizarse.',
   publishedAt: '2026-06-25',
+  updatedAt: '2026-07-02',
   category: 'tributario',
   tags: ["factura en línea honduras","factura electrónica sar","sistema de facturación autorizado sar","requisitos factura electrónica"],
   author: 'Pineda y Asociados',

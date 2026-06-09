@@ -5,6 +5,7 @@ export const sobreseimientoDefinitivoProvisionalDiferenciasHonduras: Post = {
   title: 'Sobreseimiento definitivo vs provisional en Honduras',
   description: 'Explica las diferencias entre ambos tipos de sobreseimiento, causales, efectos y posibilidad de reapertura.',
   publishedAt: '2026-07-03',
+  updatedAt: '2026-07-08',
   category: 'proceso-penal',
   tags: ["diferencia sobreseimiento definitivo pro","cuándo procede sobreseimiento","efectos del sobreseimiento","reapertura de proceso penal"],
   author: 'Pineda y Asociados',

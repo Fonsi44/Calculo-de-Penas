@@ -5,6 +5,7 @@ export const danosPerjuiciosIndemnizacionHonduras: Post = {
   title: 'Daños y perjuicios: cómo reclamar una indemnización en Honduras',
   description: 'Explica los tipos de daños indemnizables, cómo cuantificarlos, el proceso para reclamar y plazos de prescripción.',
   publishedAt: '2026-05-30',
+  updatedAt: '2026-06-02',
   category: 'derecho-civil',
   tags: ["responsabilidad civil honduras","daño moral honduras","indemnización por accidente","daño material honduras"],
   author: 'Pineda y Asociados',

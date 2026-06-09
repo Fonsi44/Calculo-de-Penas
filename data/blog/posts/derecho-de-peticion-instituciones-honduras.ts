@@ -5,6 +5,7 @@ export const derechoDePeticionInstitucionesHonduras: Post = {
   title: 'Derecho de petición en Honduras: cómo usarlo ante instituciones',
   description: 'Explica en qué consiste, ante quiénes se ejerce, plazos de respuesta, silencio administrativo y recurso de amparo por violación.',
   publishedAt: '2026-07-05',
+  updatedAt: '2026-07-08',
   category: 'derechos-ciudadanos',
   tags: ["cómo presentar un derecho de petición","silencio administrativo","plazos respuesta instituciones","petición administrativa honduras"],
   author: 'Pineda y Asociados',

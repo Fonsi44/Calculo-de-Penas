@@ -6,6 +6,7 @@ export const despidoLaboralHondurasDerechos: Post = {
   description:
     'Conozca los tipos de despido en Honduras, sus derechos laborales, cómo calcular la indemnización y los pasos para reclamar ante un despido injustificado.',
   publishedAt: '2026-05-26',
+  updatedAt: '2026-05-31',
   category: 'derecho-laboral',
   tags: [
     'despido laboral Honduras derechos',

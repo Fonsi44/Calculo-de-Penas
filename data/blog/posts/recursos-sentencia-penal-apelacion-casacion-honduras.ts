@@ -5,6 +5,7 @@ export const recursosSentenciaPenalApelacionCasacionHonduras: Post = {
   title: 'Recursos contra una sentencia penal: apelación y casación en Honduras',
   description: 'Explica qué recursos proceden contra sentencias, plazos para interponerlos, requisitos formales y probabilidades de éxito.',
   publishedAt: '2026-07-03',
+  updatedAt: '2026-07-09',
   category: 'proceso-penal',
   tags: ["recurso de apelación penal","recurso de casación penal honduras","plazos para apelar","corte de apelaciones honduras"],
   author: 'Pineda y Asociados',

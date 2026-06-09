@@ -5,6 +5,7 @@ export const jornadaLaboralHorasExtraDescansosHonduras: Post = {
   title: 'Jornada laboral, horas extra y descansos en Honduras',
   description: 'Explica la jornada máxima legal, horas extra diurnas/nocturnas, recargos, descanso semanal obligatorio y días feriados en Honduras.',
   publishedAt: '2026-05-24',
+  updatedAt: '2026-05-28',
   category: 'derecho-laboral',
   tags: ["jornada laboral honduras","descanso semanal honduras","horas extras diurnas nocturnas","trabajo nocturno honduras"],
   author: 'Pineda y Asociados',

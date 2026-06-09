@@ -5,6 +5,7 @@ export const responsabilidadMedicaMalaPraxisHonduras: Post = {
   title: 'Responsabilidad médica y mala praxis en Honduras',
   description: 'Explica cuándo se configura la mala praxis, cómo documentar el daño, vías de reclamación (administrativa, civil, penal) y plazos de prescripción.',
   publishedAt: '2026-06-16',
+  updatedAt: '2026-06-23',
   category: 'regulacion-sanitaria',
   tags: ["responsabilidad médica honduras","negligencia médica reclamación","error médico honduras","cohem quejas"],
   author: 'Pineda y Asociados',

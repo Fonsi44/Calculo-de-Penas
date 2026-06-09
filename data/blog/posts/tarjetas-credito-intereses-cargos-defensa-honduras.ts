@@ -5,6 +5,7 @@ export const tarjetasCreditoInteresesCargosDefensaHonduras: Post = {
   title: 'Tarjetas de crédito: intereses, cargos y defensa legal en Honduras',
   description: 'Explica los límites de intereses según la ley hondureña, cargos permitidos y prohibidos, cómo reclamar cobros indebidos y derechos del tarjetahabiente.',
   publishedAt: '2026-06-08',
+  updatedAt: '2026-06-14',
   category: 'derecho-bancario',
   tags: ["cargos ocultos tarjeta crédito honduras","intereses moratorios tarjeta","ley de tarjetas de crédito honduras","sobregiro tarjeta"],
   author: 'Pineda y Asociados',

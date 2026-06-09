@@ -5,6 +5,7 @@ export const calcularLiquidacionLaboralHonduras: Post = {
   title: '¿Cómo calcular una liquidación laboral en Honduras?',
   description: 'Guía para calcular el finiquito o liquidación laboral en Honduras: prestaciones, aguinaldo, vacaciones, cesantía y diferencias entre despido justificado e injustificado.',
   publishedAt: '2026-05-21',
+  updatedAt: '2026-05-30',
   category: 'derecho-laboral',
   tags: ["cuánto me toca de liquidación honduras","despido injustificado honduras","indemnización laboral honduras","calculadora liquidación honduras"],
   author: 'Pineda y Asociados',

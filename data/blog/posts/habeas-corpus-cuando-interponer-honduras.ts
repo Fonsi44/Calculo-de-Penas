@@ -5,6 +5,7 @@ export const habeasCorpusCuandoInterponerHonduras: Post = {
   title: '¿Qué es el hábeas corpus y cuándo se interpone?',
   description: 'Explica qué es, contra qué actos procede, cómo se interpone, plazos de resolución y diferencias con el amparo.',
   publishedAt: '2026-07-05',
+  updatedAt: '2026-07-11',
   category: 'proceso-penal',
   tags: ["cómo interponer hábeas corpus","detención ilegal honduras","libertad personal","corte suprema hábeas corpus"],
   author: 'Pineda y Asociados',

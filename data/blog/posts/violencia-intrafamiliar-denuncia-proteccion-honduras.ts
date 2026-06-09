@@ -5,6 +5,7 @@ export const violenciaIntrafamiliarDenunciaProteccionHonduras: Post = {
   title: 'Violencia intrafamiliar: cómo denunciar y obtener protección legal',
   description: 'Explica los tipos de violencia intrafamiliar, dónde y cómo denunciar, medidas de protección disponibles y acompañamiento legal.',
   publishedAt: '2026-05-27',
+  updatedAt: '2026-06-01',
   category: 'derecho-de-familia',
   tags: ["medidas de protección honduras","violencia en el hogar honduras","ley de violencia doméstica honduras","dónde denunciar violencia familiar"],
   author: 'Pineda y Asociados',

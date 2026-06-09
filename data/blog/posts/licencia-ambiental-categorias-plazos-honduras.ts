@@ -5,6 +5,7 @@ export const licenciaAmbientalCategoriasPlazosHonduras: Post = {
   title: 'Licencia ambiental en Honduras: categorías, plazos y sanciones',
   description: 'Explica las categorías de licencia ambiental, proyectos obligados, proceso de evaluación, plazos y sanciones por incumplimiento.',
   publishedAt: '2026-06-27',
+  updatedAt: '2026-07-07',
   category: 'derecho-ambiental',
   tags: ["categorías licencia ambiental","miambiente licencia","declaración jurada ambiental","estudio de impacto ambiental"],
   author: 'Pineda y Asociados',
