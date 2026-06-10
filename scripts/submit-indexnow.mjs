@@ -16,7 +16,7 @@ const SITE_HOST = process.env.NEXT_PUBLIC_SITE_URL
   : 'www.pinedayasociadoshn.com';
 
 const HOST = SITE_HOST;
-const KEY = '4ab62a697a3848198e5a6e4fb1f1e7a9';
+const KEY = 'bbbbda6cdb1e4e2cbe8f6f81c1886f58';
 const INDEXNOW_URL = 'https://api.indexnow.org/indexnow';
 const BATCH_SIZE = 100;
 
