@@ -1,5 +1,38 @@
 # Changelog
 
+## Release 14 — WordPress Blog Migration — Child Theme, Plantillas, Script de migración, Redirect Map (2026-06-10)
+
+### Nuevos activos en wordpress/
+- Child theme funcional GeneratePress con 6 plantillas (home, category, single, author, tag, search)
+- `functions.php` con helpers: reading_time, primary_category, category_badge, related_posts, breadcrumbs wrapper, tag noindex, content filters (author box, CTA, share bar)
+- Tabla de contenidos dinámica vía JS (toc.js) en posts de >5min
+- Script de migración `wordpress/scripts/migrate-posts-to-wp.js`: lee 134 posts TypeScript, genera WXR XML + redirect CSV
+- Mapa de redirecciones 301: 11 categorías eliminadas → activas + 9 posts canibalizados → canónicos
+- Configuración Rank Math SEO detallada en `wordpress/rank-math-config.txt`
+
+### Decisiones técnicas
+- Sin Custom Post Types: todo se resuelve con `post` nativo + taxonomías
+- Bloques Gutenberg reemplazados por inyección via `the_content` filters (más simple, sin dependencias)
+- Categorías jerárquicas solo en Derecho Penal (2 subcategorías); resto planas
+- Tags limitados a 40, todos `noindex,follow` por defecto
+- Sin sidebar en blog: contenido full-width, elementos (autor, CTA, relacionados) integrados en el flujo
+
+### Archivos creados
+- `wordpress/themes/generatepress-child/style.css` — 500+ líneas de CSS del blog
+- `wordpress/themes/generatepress-child/functions.php` — 28 hooks + filters
+- `wordpress/themes/generatepress-child/home.php`
+- `wordpress/themes/generatepress-child/category.php`
+- `wordpress/themes/generatepress-child/single.php`
+- `wordpress/themes/generatepress-child/author.php`
+- `wordpress/themes/generatepress-child/tag.php`
+- `wordpress/themes/generatepress-child/search.php`
+- `wordpress/themes/generatepress-child/assets/js/toc.js`
+- `wordpress/scripts/migrate-posts-to-wp.js`
+- `wordpress/redirects/redirect-map.csv`
+- `wordpress/rank-math-config.txt`
+- `README.md` — sección Blog (WordPress) añadida
+- `CHANGELOG.md` — esta entrada
+
 ## Release 13 — Activación GSC/GA4, CSP fix, IndexNow automation y optimización titles (2026-06-10)
 
 ### Activaciones externas

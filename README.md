@@ -116,7 +116,6 @@ El script `scripts/submit-indexnow.mjs` envía todas las URLs a los buscadores c
 **Automatización:** IndexNow se ejecuta automáticamente tras cada build exitoso en Vercel (`postbuild` en `package.json`).
 
 ```bash
-# Manual (simular o enviar):
 npm run indexnow:dry      # Simular
 npm run indexnow          # Enviar URLs reales
 ```
@@ -130,6 +129,64 @@ npm run indexnow          # Enviar URLs reales
 | IndexNow (Bing) | ✅ Automatizado post-build |
 | Indexación | ✅ Activada (`NEXT_PUBLIC_NOINDEX=false`) |
 | CSP | ✅ Compatible con GA4 |
+
+---
+
+## Blog (WordPress)
+
+El blog del sitio se sirve desde `/blog/` como una instalación WordPress independiente con GeneratePress + Child Theme.
+
+### Stack
+
+- **Tema:** GeneratePress (padre) + Pineda Blog Child (hijo)
+- **Plugins:** Rank Math SEO, WP Rocket, Fluent Forms, ShortPixel, UpdraftPlus
+- **Plantillas:** 6 archivos (home, category, single, author, tag, search)
+- **CSS/JS:** Blog en style.css (child theme), TOC en assets/js/toc.js
+
+### Estructura de archivos (en `/wordpress/themes/generatepress-child/`)
+
+```
+generatepress-child/
+├── style.css              # Cabecera del tema + estilos completos del blog
+├── functions.php          # Helpers, filters, hooks, enqueue de assets
+├── home.php               # Blog home con hero, category filter, featured, grid
+├── category.php           # Archivo de categoría con breadcrumbs, grid, pagination
+├── single.php             # Post individual con TOC, author, CTA, related
+├── author.php             # Perfil de autor con avatar, bio, grid de posts
+├── tag.php                # Página de tag con noindex,follow
+├── search.php             # Búsqueda interna con noindex,follow
+├── assets/css/blog.css    # Estilos adicionales (placeholder)
+├── assets/js/toc.js       # Tabla de contenidos dinámica desde H2
+```
+
+### Categorías (9)
+
+| Categoría | Slug | Posts |
+|-----------|------|-------|
+| Derecho Penal | `derecho-penal` | ~37 (incluye proceso-penal) |
+| Derecho de Familia | `derecho-familia` | ~18 |
+| Derecho Laboral | `derecho-laboral` | ~14 |
+| Derecho Civil y Notarial | `derecho-civil` | ~14 |
+| Derecho Mercantil | `derecho-mercantil` | ~10 |
+| Hondureños en España | `hondurenos-espana` | ~9 |
+| Derecho Tributario | `derecho-tributario` | ~6 |
+| Guías y Tutoriales | `guias-legales` | ~10 |
+| Actualidad Legal | `actualidad-legal` | ~5 |
+
+### Etiquetas (40)
+
+Las etiquetas se redujeron de ~300 a ~40. Todas configuradas como `noindex, follow` por defecto.
+
+### Migración
+
+El script `wordpress/scripts/migrate-posts-to-wp.js` lee los posts desde `data/blog/posts/*.ts` y genera:
+1. `wordpress/output/wp-export.xml` — archivo WXR importable por WordPress
+2. `wordpress/output/redirect-map.csv` — redirecciones 301 para Rank Math
+
+### Configuración SEO técnica
+
+Ver `wordpress/rank-math-config.txt` para la configuración exacta de Rank Math SEO.
+
 
 ### Estructura SEO implementada
 
