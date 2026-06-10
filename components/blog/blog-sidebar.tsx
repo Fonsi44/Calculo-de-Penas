@@ -14,7 +14,7 @@ export function BlogSidebar() {
           {blogCategories.map((cat) => (
             <li key={cat.slug}>
               <Link
-                href={`/blog/categoria/${cat.slug}`}
+                href={`/blog/${cat.slug}`}
                 className="block px-3 py-2 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors"
               >
                 {cat.nombre}
