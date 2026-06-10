@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Calendar, Clock, User, ArrowLeft, ArrowRight, Phone, MessageCircle } from 'lucide-react';
+import {
+  Calendar, Clock, User, ArrowLeft, ArrowRight,
+  Phone, MessageCircle,
+} from 'lucide-react';
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -10,6 +13,9 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site, telHref, whatsappHref } from '@/lib/site';
+import { BlogTOC } from '@/components/blog/blog-toc';
+import { ShareButtons } from '@/components/blog/share-buttons';
+import { RelatedService } from '@/components/blog/related-service';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -146,6 +152,7 @@ export default async function BlogPostPage({ params }: Props) {
             {/* Columna principal */}
             <div className="flex-1 min-w-0">
               <article>
+                <BlogTOC />
                 <div className="article-body" dangerouslySetInnerHTML={{ __html: post.body }} />
 
                 {/* Tags */}
@@ -161,6 +168,8 @@ export default async function BlogPostPage({ params }: Props) {
                     </div>
                   </div>
                 )}
+
+                <RelatedService category={post.category} />
 
                 {/* CTA intermedio */}
                 <div className="mt-10 p-6 rounded-xl border border-accent/30 bg-accent/5 text-center">
@@ -238,7 +247,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {/* Compartir este artículo */}
                 <div className="p-5 rounded-xl border border-border/30">
                   <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Compartir</p>
-                  <p className="text-xs text-text-secondary">Si este artículo le resultó útil, compártalo con alguien que pueda necesitarlo.</p>
+                  <ShareButtons title={post.title} url={`/blog/${post.slug}`} />
                 </div>
 
                 {/* RSS Feed */}
