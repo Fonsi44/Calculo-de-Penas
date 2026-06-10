@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
-import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
@@ -170,13 +169,6 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
             )}
 
             <RelatedService category={post.category} />
-
-            {/* CTA intermedio */}
-            <div className="mt-10 p-6 rounded-xl border border-accent/30 bg-accent/5 text-center">
-              <p className="font-serif font-bold text-lg text-primary mb-2">¿Necesita asesoría legal personalizada?</p>
-              <p className="text-sm text-text-secondary mb-4">Cada caso es único. Hable con un abogado y reciba orientación confidencial.</p>
-              <CTAGroup variant="primary" className="justify-center" />
-            </div>
 
             {/* Author Box */}
             <div className="mt-10 pt-6 border-t border-border/30">
