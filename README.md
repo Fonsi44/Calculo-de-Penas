@@ -113,13 +113,23 @@ npm run build          # Turbopack build + TypeScript check
 
 El script `scripts/submit-indexnow.mjs` envía todas las URLs a los buscadores compatibles con IndexNow (Bing, Yandex). El host se deriva de `NEXT_PUBLIC_SITE_URL`.
 
-```bash
-# Simular (sin enviar):
-node scripts/submit-indexnow.mjs --dry-run
+**Automatización:** IndexNow se ejecuta automáticamente tras cada build exitoso en Vercel (`postbuild` en `package.json`).
 
-# Enviar URLs reales:
-node scripts/submit-indexnow.mjs
+```bash
+# Manual (simular o enviar):
+npm run indexnow:dry      # Simular
+npm run indexnow          # Enviar URLs reales
 ```
+
+### Estado actual de servicios SEO
+
+| Servicio | Estado |
+|----------|--------|
+| Google Search Console | ✅ Verificado + sitemap enviado |
+| Google Analytics 4 | ✅ Activo (`G-L2PGBN3SWK`) |
+| IndexNow (Bing) | ✅ Automatizado post-build |
+| Indexación | ✅ Activada (`NEXT_PUBLIC_NOINDEX=false`) |
+| CSP | ✅ Compatible con GA4 |
 
 ### Estructura SEO implementada
 

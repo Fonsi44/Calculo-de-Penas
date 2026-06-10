@@ -12,7 +12,7 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 
 export const metadata: Metadata = {
-  title: 'Hondureños en España',
+  title: `Hondureños en España — Asistencia Legal desde Honduras | ${site.name}`,
   description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. ${site.name}.`,
   alternates: { canonical: '/hondurenos-en-espana' },
   openGraph: {

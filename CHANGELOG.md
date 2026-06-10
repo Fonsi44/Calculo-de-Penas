@@ -1,5 +1,38 @@
 # Changelog
 
+## Release 13 — Activación GSC/GA4, CSP fix, IndexNow automation y optimización titles (2026-06-10)
+
+### Activaciones externas
+- **GSC:** Meta tag `google-site-verification` activa en producción vía `NEXT_PUBLIC_GOOGLE_VERIFICATION` + etiqueta inline en `app/layout.tsx`. Sitemap enviado manualmente.
+- **GA4:** Activado `G-L2PGBN3SWK` en Vercel Production. Funcionando tras corrección CSP.
+- **IndexNow:** Clave regenerada (`bbbbda6cdb1e4e2cbe8f6f81c1886f58`), key file movido a raíz porque Bing valida ahí. 190 URLs enviadas y aceptadas con 200 OK.
+
+### Fixes técnicos
+- **CSP `connect-src`:** Corregido de `https://www.google-analytics.com` a `https://*.google-analytics.com` para permitir servidores regionales de GA4 (`region1.google-analytics.com`).
+- **IndexNow script:** Corregido bug de resumen (boolean vs string `'ok'`). Key location ahora apunta a raíz (`/${KEY}.txt`).
+- **IndexNow automation:** Añadido `postbuild` en `package.json` para ejecutar IndexNow automáticamente tras cada build en Vercel.
+
+### Mejoras de metadata y titles
+- **Derecho Penal:** Title optimizado a `Abogados Penalistas en Nacaome, Valle | Defensa Penal` (incluye ubicación + keywords).
+- **Servicios Jurídicos:** Title optimizado a `Servicios Jurídicos en Nacaome, Valle | 13 Especialidades`.
+- **Hondureños en España:** Title optimizado a `Hondureños en España — Asistencia Legal desde Honduras | Pineda y Asociados`.
+
+### Estado actual del proyecto
+- GSC: ✅ verificado con sitemap enviado
+- GA4: ✅ activo (`G-L2PGBN3SWK`)
+- IndexNow: ✅ corregido, 190 URLs enviadas a Bing
+- Indexación: `NEXT_PUBLIC_NOINDEX=false` en producción
+- CSP: ✅ compatible con GA4
+
+### Archivos modificados
+- `package.json` — `postbuild` script
+- `next.config.ts` — CSP `connect-src` corregido
+- `app/(public)/derecho-penal/page.tsx` — title optimizado
+- `app/(public)/servicios-juridicos/page.tsx` — title optimizado
+- `app/(public)/hondurenos-en-espana/page.tsx` — title optimizado
+- `scripts/submit-indexnow.mjs` — bug fixes
+- `CHANGELOG.md` — esta entrada
+
 ## Release 12 — Correcciones SEO críticas y mejoras estructurales (2026-06-10)
 
 ### Correcciones críticas

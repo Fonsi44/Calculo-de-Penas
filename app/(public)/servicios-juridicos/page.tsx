@@ -13,7 +13,7 @@ import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
-  title: 'Servicios Jurídicos',
+  title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`,
   description: `Conozca las 13 especialidades de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
   alternates: { canonical: '/servicios-juridicos' },
   openGraph: {

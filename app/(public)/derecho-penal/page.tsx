@@ -15,11 +15,11 @@ import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
-  title: 'Derecho Penal',
+  title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
   description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca. ${site.name}.`,
   alternates: { canonical: '/derecho-penal' },
   openGraph: {
-    title: `Derecho Penal — ${site.name}`,
+    title: `Abogados Penalistas — ${site.name}`,
     description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en todo el país.`,
     url: `${site.url}/derecho-penal`,
     siteName: site.name,
