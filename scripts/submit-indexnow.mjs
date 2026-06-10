@@ -67,7 +67,7 @@ function buildUrlList() {
 
 const isDryRun = process.argv.includes('--dry-run');
 const urlList = buildUrlList();
-const keyLocation = `https://${HOST}/.well-known/${KEY}.txt`;
+const keyLocation = `https://${HOST}/${KEY}.txt`;
 
 async function submitBatch(urls) {
   const payload = { host: HOST, key: KEY, keyLocation, urlList: urls };
