@@ -898,4 +898,247 @@ El contenido del blog, aunque abundante (134 posts), presenta riesgos de canibal
 
 ---
 
+# 11. APÉNDICE — GUÍA DE CONFIGURACIONES EXTERNAS
+
+Esta sección explica paso a paso cómo obtener y configurar cada servicio externo necesario para completar la activación SEO del sitio. Las instrucciones asumen que tienes acceso administrativo al proyecto en Vercel y a las cuentas de Google/Microsoft correspondientes.
+
+---
+
+## 11.1 Google Search Console (GSC)
+
+**Qué es:** Herramienta gratuita de Google que permite ver cómo Google rastrea, indexa y muestra tu sitio en los resultados de búsqueda. Imprescindible para cualquier estrategia SEO.
+
+**Qué necesitas:** Una cuenta de Google (Gmail) y acceso al código fuente o al panel de Vercel.
+
+**Paso a paso:**
+
+1. **Crear cuenta / Iniciar sesión:**
+   - Ve a [Google Search Console](https://search.google.com/search-console).
+   - Inicia sesión con tu cuenta de Google. Si no tienes, créala en [accounts.google.com](https://accounts.google.com).
+
+2. **Añadir propiedad:**
+   - Haz clic en "Añadir propiedad" (desplegable superior izquierdo).
+   - Elige **"Prefijo de URL"** (no "Dominio", ya que requiere acceso DNS).
+   - Introduce exactamente: `https://www.pinedayasociadoshn.com`
+   - Haz clic en "Continuar".
+
+3. **Verificar propiedad:**
+   - Google mostrará varios métodos de verificación. Elige **"Etiqueta HTML"**.
+   - Copia **solo el código** que aparece dentro del atributo `content`. Por ejemplo:
+     ```
+     <meta name="google-site-verification" content="AbCdEfGhIjKlMnOpQrStUvWxYz123456" />
+     ```
+     Debes copiar solo: `AbCdEfGhIjKlMnOpQrStUvWxYz123456`
+   - Este código es único para tu propiedad y no caduca.
+
+4. **Configurar en Vercel:**
+   - Ve al dashboard de Vercel → tu proyecto → Settings → Environment Variables.
+   - Añade una nueva variable:
+     - **Name:** `NEXT_PUBLIC_GOOGLE_VERIFICATION`
+     - **Value:** el código que copiaste (ej: `AbCdEfGhIjKlMnOpQrStUvWxYz123456`)
+     - **Environments:** Production (y Preview/Development si quieres verificar también)
+   - Haz clic en "Save".
+   - Vuelve a desplegar (redeploy) el proyecto para que la variable surta efecto.
+
+5. **Completar verificación:**
+   - Tras el deploy (~1-2 minutos), vuelve a GSC y haz clic en "Verificar".
+   - Si todo es correcto, verás "Propiedad verificada".
+
+6. **Enviar sitemap:**
+   - En el menú lateral de GSC, ve a "Sitemaps".
+   - En "Añadir un nuevo sitemap", escribe: `sitemap.xml`
+   - Haz clic en "Enviar".
+   - Google empezará a rastrear el sitemap en las siguientes 24-48h.
+
+7. **Primeros pasos en GSC:**
+   - A los 2-3 días, revisa "Rendimiento" → verás impresiones, clics, CTR y posición media.
+   - Revisa "Cobertura" → verás páginas indexadas y excluidas con sus motivos.
+   - Configura alertas de email para errores críticos (Configuración → Preferencias).
+
+---
+
+## 11.2 Google Analytics 4 (GA4)
+
+**Qué es:** Plataforma de analítica web gratuita que mide el tráfico, comportamiento de usuarios y conversiones en tu sitio.
+
+**Qué necesitas:** Una cuenta de Google (puede ser la misma de GSC).
+
+**Paso a paso:**
+
+1. **Crear cuenta GA4:**
+   - Ve a [Google Analytics](https://analytics.google.com).
+   - Haz clic en "Comenzar a medir" o "Crear cuenta".
+   - Introduce un nombre de cuenta (ej: "Pineda y Asociados").
+   - Configura el uso compartido de datos según tu preferencia.
+   - Haz clic en "Siguiente".
+
+2. **Crear propiedad:**
+   - Nombre de propiedad: `pinedayasociadoshn.com`
+   - Zona horaria: `Honduras (UTC-06:00)`
+   - Moneda: `HNL (HNL)`
+   - Haz clic en "Siguiente".
+
+3. **Configurar flujo de datos:**
+   - Selecciona "Web" como plataforma.
+   - URL del sitio web: `https://www.pinedayasociadoshn.com`
+   - Nombre del flujo: `Web principal`
+   - Haz clic en "Crear flujo".
+
+4. **Obtener ID de medición:**
+   - Tras crear el flujo, verás una pantalla con detalles. Busca **"ID de medición"**.
+   - El formato es `G-XXXXXXXXXX` (ej: `G-ABC123DEF4`).
+   - Copia este ID completo.
+
+5. **Configurar en Vercel:**
+   - Ve al dashboard de Vercel → tu proyecto → Settings → Environment Variables.
+   - Añade una nueva variable:
+     - **Name:** `NEXT_PUBLIC_GA_ID`
+     - **Value:** `G-XXXXXXXXXX` (el ID que copiaste)
+     - **Environments:** Production
+   - Haz clic en "Save".
+   - Redeploy el proyecto.
+
+6. **Verificar funcionamiento:**
+   - Tras el deploy, visita tu sitio web.
+   - Vuelve a GA4 → Informes → Tiempo real.
+   - Deberías ver al menos 1 visitante activo (tú mismo).
+   - Si no aparece en 5 minutos, verifica que la variable esté en Vercel Production y que hayas hecho redeploy.
+
+7. **Configurar eventos de conversión (recomendado):**
+   - En GA4, ve a Administración → Eventos → Crear evento.
+   - Para marcar el envío del formulario de consulta como conversión, el sitio ya está preparado para enviar eventos. Contacta al equipo de desarrollo para implementar `gtag('event', 'consulta_enviada')` en el endpoint `/api/contacto`.
+
+---
+
+## 11.3 Microsoft Clarity (opcional)
+
+**Qué es:** Herramienta gratuita de Microsoft que graba sesiones de usuarios y genera mapas de calor. Complementa a GA4 con datos cualitativos.
+
+**Qué necesitas:** Una cuenta de Microsoft (Outlook, Hotmail, Live).
+
+**Paso a paso:**
+
+1. **Crear cuenta:**
+   - Ve a [Microsoft Clarity](https://clarity.microsoft.com).
+   - Inicia sesión con tu cuenta Microsoft o créala.
+
+2. **Crear proyecto:**
+   - Haz clic en "New project" o "Nuevo proyecto".
+   - Nombre: `pinedayasociadoshn.com`
+   - URL: `https://www.pinedayasociadoshn.com`
+   - Categoría: selecciona "Legal" o "Professional Services".
+   - Haz clic en "Create".
+
+3. **Obtener ID del proyecto:**
+   - Tras crear el proyecto, Clarity te mostrará un código de seguimiento.
+   - Busca el ID del proyecto: es un string alfanumérico (ej: `a1b2c3d4e5`).
+   - El código de instalación se ve así:
+     ```html
+     <script type="text/javascript">
+       (function(c,l,a,r,i,t,y){
+         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+       })(window, document, "clarity", "script", "ID_DEL_PROYECTO");
+     </script>
+     ```
+   - El ID del proyecto es lo que aparece al final: `ID_DEL_PROYECTO`.
+
+4. **Configurar en Vercel:**
+   - Ve al dashboard de Vercel → tu proyecto → Settings → Environment Variables.
+   - Añade una nueva variable:
+     - **Name:** `NEXT_PUBLIC_CLARITY_ID`
+     - **Value:** el ID que copiaste (ej: `a1b2c3d4e5`)
+     - **Environments:** Production
+   - Haz clic en "Save".
+   - Redeploy el proyecto.
+
+5. **Verificar funcionamiento:**
+   - Tras el deploy, visita tu sitio.
+   - Vuelve a Clarity → Dashboard.
+   - En ~30 minutos empezarás a ver grabaciones y mapas de calor.
+
+---
+
+## 11.4 Redes sociales (para el schema `sameAs`)
+
+**Qué es:** Los perfiles de redes sociales del bufete, necesarios para poblar el campo `sameAs` del JSON-LD `LegalService`. Esto ayuda a Google a consolidar la entidad del bufete en el Knowledge Graph.
+
+**Variables a configurar en Vercel (solo si existen los perfiles):**
+
+| Variable | Ejemplo de valor |
+|----------|-------------------|
+| `NEXT_PUBLIC_SOCIAL_FACEBOOK` | `https://www.facebook.com/pinedayasociadoshn` |
+| `NEXT_PUBLIC_SOCIAL_INSTAGRAM` | `https://www.instagram.com/pinedayasociadoshn` |
+| `NEXT_PUBLIC_SOCIAL_TIKTOK` | `https://www.tiktok.com/@pinedayasociadoshn` |
+
+**Importante:**
+- Solo configura las variables de las redes que realmente existan. Si no tienes perfil en alguna, déjala vacía (el código está preparado para omitir `sameAs` si no hay datos).
+- Las URLs deben ser completas, incluyendo `https://`.
+- Tras configurarlas, haz redeploy en Vercel.
+- Verifica el JSON-LD en la home con la [Herramienta de prueba de datos estructurados](https://search.google.com/test/rich-results).
+
+---
+
+## 11.5 IndexNow — Uso y automatización
+
+**Qué es:** Protocolo que notifica instantáneamente a Bing, Yandex y otros buscadores sobre URLs nuevas o actualizadas. El script ya está corregido en el proyecto.
+
+**Uso manual:**
+```bash
+# Simular (ver qué URLs se enviarían sin enviar realmente):
+npm run indexnow:dry
+
+# Enviar URLs reales (producción):
+npm run indexnow
+```
+
+**Automatización post-deploy (recomendado):**
+Para que IndexNow se ejecute automáticamente tras cada deploy en Vercel, puedes configurarlo como paso de postbuild:
+
+1. Añade en `package.json`:
+   ```json
+   "scripts": {
+     "postbuild": "node scripts/submit-indexnow.mjs"
+   }
+   ```
+2. Esto ejecutará IndexNow automáticamente tras cada `npm run build` exitoso en Vercel.
+3. **Precaución:** Asegúrate de que `NEXT_PUBLIC_SITE_URL` esté configurada en Vercel Production con el valor `https://www.pinedayasociadoshn.com`. El script deriva el host de esta variable.
+
+---
+
+## 11.6 Configuración del dominio en Vercel
+
+**Verificación de dominio www → apex:**
+1. Ve al dashboard de Vercel → tu proyecto → Settings → Domains.
+2. Deberías ver `pinedayasociadoshn.com` y `www.pinedayasociadoshn.com`.
+3. Si `www.pinedayasociadoshn.com` no está configurado como redirect al apex (o viceversa):
+   - Haz clic en "Add Domain".
+   - Añade el dominio que falte.
+   - Vercel te guiará para configurar los registros DNS necesarios.
+4. Asegúrate de que `NEXT_PUBLIC_SITE_URL` en Vercel tenga el valor canónico correcto (`https://www.pinedayasociadoshn.com`).
+
+---
+
+## 11.7 Lista de verificación final
+
+Usa esta checklist para confirmar que todo está activo:
+
+| # | Tarea | Estado |
+|---|-------|--------|
+| 1 | `NEXT_PUBLIC_GOOGLE_VERIFICATION` configurada en Vercel | ☐ |
+| 2 | GSC verificado y sitemap enviado | ☐ |
+| 3 | `NEXT_PUBLIC_GA_ID` configurada en Vercel | ☐ |
+| 4 | GA4 mostrando datos en Tiempo Real | ☐ |
+| 5 | `NEXT_PUBLIC_CLARITY_ID` configurada en Vercel (opcional) | ☐ |
+| 6 | Clarity mostrando grabaciones (opcional) | ☐ |
+| 7 | `NEXT_PUBLIC_SOCIAL_*` configuradas según perfiles existentes | ☐ |
+| 8 | IndexNow ejecutado correctamente con `npm run indexnow` | ☐ |
+| 9 | `NEXT_PUBLIC_NOINDEX` configurada como `"false"` en Vercel Production | ☐ |
+| 10 | Redeploy ejecutado tras todos los cambios de variables | ☐ |
+| 11 | Sitemap accesible en `https://www.pinedayasociadoshn.com/sitemap.xml` | ☐ |
+| 12 | Robots.txt accesible en `https://www.pinedayasociadoshn.com/robots.txt` | ☐ |
+
+---
+
 *Informe generado el 10 de junio de 2026. Análisis basado en inspección de código fuente, revisión del sitio en producción, sitemap.xml, robots.txt y archivos de datos del proyecto. Las puntuaciones reflejan el estado actual con los datos disponibles. Se recomienda re-evaluar tras 90 días de implementación del plan.*
