@@ -1,41 +1,62 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Section, Container } from '@/components/marketing/section';
-import { ContactStrip } from '@/components/marketing/cta-buttons';
 import { BlogCard } from '@/components/blog/blog-card';
 import { blogCategories } from '@/data/blog/categories';
-import { getPostsByCategory, getAllCategorySlugs } from '@/lib/blog';
+import { getPostsByCategory, getAllCategorySlugs, getPostsByPage, getTotalPages } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { site } from '@/lib/site';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-type Props = { params: Promise<{ categoria: string }> };
+const ITEMS_PER_PAGE = 12;
+
+type Props = { params: Promise<{ categoria: string }>; searchParams?: Promise<{ page?: string }> };
 
 export function generateStaticParams() {
   return getAllCategorySlugs().map((categoria) => ({ categoria }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { categoria } = await params;
+  const sp = await searchParams;
+  const page = parseInt(sp?.page ?? '1', 10) || 1;
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) return {};
+  const canonicalPath = page > 1 ? `/blog/categoria/${categoria}?page=${page}` : `/blog/categoria/${categoria}`;
   return {
-    title: `${cat.nombre} — Blog Jurídico`,
-    description: cat.descripcion,
-    alternates: { canonical: `/blog/categoria/${categoria}` },
+    title: `${cat.nombre} — Blog Jurídico${page > 1 ? ` — Página ${page}` : ''}`,
+    description: page > 1 ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
+    alternates: { canonical: canonicalPath },
   };
 }
 
-export default async function BlogCategoryPage({ params }: Props) {
-  const { categoria } = await params;
+export default async function BlogCategoryPage(props: Props) {
+  const { categoria } = await props.params;
+  const searchParams = await props.searchParams;
+  const page = parseInt(searchParams?.page ?? '1', 10) || 1;
+
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) notFound();
 
-  const posts = getPostsByCategory(categoria);
+  const categoryPosts = getPostsByCategory(categoria);
+  const totalPages = getTotalPages(categoryPosts, ITEMS_PER_PAGE);
+  const posts = getPostsByPage(categoryPosts, page, ITEMS_PER_PAGE);
+
+  const buildPageUrl = (p: number) => {
+    const base = `/blog/categoria/${categoria}`;
+    return p > 1 ? `${base}?page=${p}` : base;
+  };
 
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Blog Jurídico', href: '/blog' },
+        { label: cat.nombre },
+      ]} />
+
       <section className="relative bg-primary text-text-inverse overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
@@ -76,16 +97,46 @@ export default async function BlogCategoryPage({ params }: Props) {
             </Link>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {posts.map((p) => (
-              <BlogCard key={p.slug} post={p} />
-            ))}
+          <div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {posts.map((p) => (
+                <BlogCard key={p.slug} post={p} />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <nav className="flex justify-center items-center gap-3 mt-8" aria-label="Paginación">
+                {page > 1 ? (
+                  <Link
+                    href={buildPageUrl(page - 1)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
+                  >
+                    <ArrowLeft size={14} /> Anterior
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
+                    <ArrowLeft size={14} /> Anterior
+                  </span>
+                )}
+                <span className="text-sm text-text-secondary px-2">
+                  Página {page} de {totalPages}
+                </span>
+                {page < totalPages ? (
+                  <Link
+                    href={buildPageUrl(page + 1)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
+                  >
+                    Siguiente <ArrowRight size={14} />
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
+                    Siguiente <ArrowRight size={14} />
+                  </span>
+                )}
+              </nav>
+            )}
           </div>
         )}
-      </Section>
-
-      <Section spacing="md">
-        <ContactStrip />
       </Section>
 
       <script
@@ -103,5 +154,3 @@ export default async function BlogCategoryPage({ params }: Props) {
     </>
   );
 }
-
-

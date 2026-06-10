@@ -96,6 +96,8 @@ export const site = {
   gaId: process.env.NEXT_PUBLIC_GA_ID ?? null,
   /** ID Microsoft Clarity (opcional). */
   clarityId: process.env.NEXT_PUBLIC_CLARITY_ID ?? null,
+  /** Código de verificación de Google Search Console (opcional). */
+  googleVerification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? null,
 } as const;
 
 export type SiteConfig = typeof site;
@@ -181,11 +183,15 @@ export function legalServiceSchema() {
       'Conciliación y Arbitraje',
       'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
     ],
-    sameAs: [
-      site.social.facebook,
-      site.social.instagram,
-      site.social.tiktok,
-    ].filter(Boolean),
+    ...(site.social.facebook || site.social.instagram || site.social.tiktok
+      ? {
+          sameAs: [
+            site.social.facebook,
+            site.social.instagram,
+            site.social.tiktok,
+          ].filter(Boolean),
+        }
+      : {}),
   };
   if (site.geo.latitude !== null && site.geo.longitude !== null) {
     base.geo = {
@@ -210,16 +216,18 @@ export function websiteSchema() {
     description: site.description,
     inLanguage: 'es-HN',
     publisher: { '@id': `${site.url}/#legal-service` },
-    potentialAction: [
-      {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: `${site.url}/buscar?q={search_term_string}`,
-        },
-        'query-input': 'required name=search_term_string',
-      },
-    ],
+    // SearchAction omitido hasta que /buscar esté implementado.
+    // Cuando exista, descomentar y verificar que la ruta funciona.
+    // potentialAction: [
+    //   {
+    //     '@type': 'SearchAction',
+    //     target: {
+    //       '@type': 'EntryPoint',
+    //       urlTemplate: `${site.url}/buscar?q={search_term_string}`,
+    //     },
+    //     'query-input': 'required name=search_term_string',
+    //   },
+    // ],
   };
 }
 

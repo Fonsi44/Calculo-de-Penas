@@ -1,5 +1,66 @@
 # Changelog
 
+## Release 12 — Correcciones SEO críticas y mejoras estructurales (2026-06-10)
+
+### Correcciones críticas
+
+- **IndexNow:** Corregido typo en el host (`pinedayasocioshn.com` → `pinedayasociadoshn.com`). El host ahora se deriva de `NEXT_PUBLIC_SITE_URL` para evitar hardcodes frágiles (`scripts/submit-indexnow.mjs`).
+- **images.unoptimized:** Cambiado a `true` en `next.config.ts` para alinear con la documentación del proyecto y evitar errores 400 del optimizador de Next.js en runtime.
+- **SearchAction schema:** Comentado el bloque `potentialAction` en `websiteSchema()` (`lib/site.ts`) porque la ruta `/buscar` no existe. Se reactivará cuando la funcionalidad esté implementada.
+- **sameAs vacío en LegalService:** El campo `sameAs` ahora se omite del JSON-LD si no hay URLs de redes sociales configuradas, en lugar de emitir un array vacío (`lib/site.ts`).
+
+### Mejoras de indexación y verificación
+
+- **Google Search Console:** Añadido soporte para meta tag de verificación vía `NEXT_PUBLIC_GOOGLE_VERIFICATION` en `app/layout.tsx`. La variable está documentada en `.env.example` y `README.md`.
+- **GA4 y Clarity:** Verificada la integración condicional existente (carga solo si las variables de entorno están configuradas). Documentado el procedimiento de activación en `README.md`.
+- **Blog tag filter canonical:** Las URLs con `?tag=` en el blog ahora canonicalizan a `/blog` para evitar indexación de thin content (`app/(public)/blog/page.tsx`). Añadido `robots: { index: false, follow: true }` en páginas con filtro de tag.
+
+### Mejoras estructurales
+
+- **Componente Breadcrumbs:** Creado `components/marketing/breadcrumbs.tsx` reutilizable con schema `BreadcrumbList` JSON-LD integrado. Añadido a: `/despacho`, `/solicitar-consulta`, `/preguntas-frecuentes`, `/blog`, `/blog/[slug]`, `/blog/categoria/[categoria]`.
+- **Blog con paginación real:** Implementada paginación con 12 posts por página en `/blog` y `/blog/categoria/[categoria]`. Navegación prev/next con indicador de página actual. Canonicals correctos por página. Metadata con número de página en title.
+- **Blog post breadcrumbs migrados:** Los breadcrumbs inline de `/blog/[slug]` ahora usan el componente `<Breadcrumbs>` reutilizable.
+
+### Mejoras de sitemap
+
+- **lastmod diferenciado:** Las páginas estáticas ahora usan fechas de referencia en lugar de `new Date()` (la fecha del build). Las páginas legales usan `STATIC_REF_DATE`, las de contenido usan `CONTENT_REF_DATE`. Los posts de blog siguen usando `publishedAt`.
+
+### Mejoras de metadata y configuración
+
+- **site.ts:** Añadido campo `googleVerification` al config centralizado.
+- **.env.example:** Documentadas las variables `NEXT_PUBLIC_GOOGLE_VERIFICATION`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID` con instrucciones de obtención.
+- **README.md:** Sección completa de configuración SEO con tabla de variables, procedimientos de activación de GSC/GA4/Clarity, y descripción de la estructura SEO implementada.
+
+### Archivos modificados
+
+- `scripts/submit-indexnow.mjs` — host derivado de env var
+- `next.config.ts` — `images.unoptimized: true`
+- `lib/site.ts` — SearchAction comentado, sameAs condicional, googleVerification
+- `app/layout.tsx` — verificación GSC vía env var
+- `.env.example` — nuevas variables documentadas
+- `app/sitemap.ts` — lastmod diferenciado
+- `app/(public)/blog/page.tsx` — paginación + breadcrumbs + canonical tag
+- `app/(public)/blog/[slug]/page.tsx` — breadcrumbs con componente
+- `app/(public)/blog/categoria/[categoria]/page.tsx` — paginación + breadcrumbs
+- `app/(public)/despacho/page.tsx` — breadcrumbs
+- `app/(public)/solicitar-consulta/page.tsx` — breadcrumbs
+- `app/(public)/preguntas-frecuentes/page.tsx` — breadcrumbs
+- `components/marketing/breadcrumbs.tsx` (NUEVO)
+- `README.md` — documentación SEO
+- `CHANGELOG.md` — esta entrada
+
+### Pendientes que requieren acción externa
+
+- **GSC:** Configurar `NEXT_PUBLIC_GOOGLE_VERIFICATION` en Vercel con el código de verificación de Google Search Console.
+- **GA4:** Configurar `NEXT_PUBLIC_GA_ID` en Vercel con el ID de medición de Google Analytics 4.
+- **Clarity:** Configurar `NEXT_PUBLIC_CLARITY_ID` en Vercel con el ID de Microsoft Clarity (opcional).
+- **Redes sociales:** Configurar `NEXT_PUBLIC_SOCIAL_FACEBOOK`, `NEXT_PUBLIC_SOCIAL_INSTAGRAM`, `NEXT_PUBLIC_SOCIAL_TIKTOK` para poblar `sameAs` en el schema LegalService.
+- **SearchAction:** Implementar la ruta `/buscar` y reactivar el bloque `potentialAction` en `websiteSchema()`.
+
+### Validación
+
+- Pendiente de ejecutar: `npm run lint`, `npm run build`, `npm test`, `npm run test:e2e`.
+
 ## Release 11 — Auditoría estratégica de contenido y plan maestro SEO (2026-06-08)
 
 ### Diagnóstico de contenido

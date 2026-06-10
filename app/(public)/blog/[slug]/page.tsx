@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Calendar, Clock, User, ArrowLeft, ArrowRight, ChevronRight, Phone, MessageCircle } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft, ArrowRight, Phone, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { RssSidebar } from '@/components/marketing/rss-sidebar';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site, telHref, whatsappHref } from '@/lib/site';
@@ -71,16 +72,13 @@ export default async function BlogPostPage({ params }: Props) {
     <>
       {/* ── BREADCRUMBS ── */}
       <div className="bg-surface-alt border-b border-border/50">
-        <Container size="lg" className="py-3">
-          <nav className="flex items-center gap-1.5 text-xs text-text-muted" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
-            <ChevronRight size={12} />
-            <Link href="/blog" className="hover:text-primary transition-colors">Blog Jurídico</Link>
-            <ChevronRight size={12} />
-            <Link href={`/blog/categoria/${post.category}`} className="hover:text-primary transition-colors">{categoryName}</Link>
-            <ChevronRight size={12} />
-            <span className="text-text-secondary line-clamp-1">{post.title}</span>
-          </nav>
+        <Container size="lg">
+          <Breadcrumbs items={[
+            { label: 'Inicio', href: '/' },
+            { label: 'Blog Jurídico', href: '/blog' },
+            { label: categoryName, href: `/blog/categoria/${post.category}` },
+            { label: post.title },
+          ]} />
         </Container>
       </div>
 

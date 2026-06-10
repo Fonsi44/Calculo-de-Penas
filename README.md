@@ -28,7 +28,7 @@ data/                      → Datos semilla
   ramas_juridicas.json     → 119 registros
   articulos_constitucion.json → 378 registros
 components/
-  marketing/               → 20+ componentes de UI pública
+  marketing/               → 20+ componentes de UI pública (incluye Breadcrumbs, ServiceCard)
   ui/                      → 13 componentes reutilizables
   domain/                  → Componentes de dominio legal
   layout/                  → Layout app-sidebar, app-shell
@@ -71,3 +71,65 @@ npm run build          # Turbopack build + TypeScript check
 - Producción: Vercel (pinedayasociadoshn.com)
 - Base de datos: Neon PostgreSQL (Plan Free, PITR 7 días)
 - CI: GitHub Actions
+
+## Configuración SEO
+
+### Variables de entorno SEO
+
+| Variable | Descripción | Obligatoria |
+|----------|-------------|-------------|
+| `NEXT_PUBLIC_SITE_URL` | URL canónica del sitio | Sí |
+| `NEXT_PUBLIC_NOINDEX` | `"true"` bloquea indexación global | Sí (usar `"false"` en prod) |
+| `NEXT_PUBLIC_GOOGLE_VERIFICATION` | Código de verificación de Google Search Console | No (pero recomendada) |
+| `NEXT_PUBLIC_GA_ID` | ID de medición de Google Analytics 4 (G-XXXXXXXXXX) | No (pero recomendada) |
+| `NEXT_PUBLIC_CLARITY_ID` | ID de proyecto de Microsoft Clarity | No |
+| `NEXT_PUBLIC_SOCIAL_FACEBOOK` | URL del perfil de Facebook | No |
+| `NEXT_PUBLIC_SOCIAL_INSTAGRAM` | URL del perfil de Instagram | No |
+| `NEXT_PUBLIC_SOCIAL_TIKTOK` | URL del perfil de TikTok | No |
+
+### Cómo activar Google Search Console
+
+1. Ir a [Google Search Console](https://search.google.com/search-console) y añadir propiedad (tipo "Prefijo de URL": `https://www.pinedayasociadoshn.com`).
+2. Elegir método "Metaetiqueta HTML".
+3. Copiar el código de verificación (solo el valor del atributo `content`, ej: `AbCdEfGhIjKlMnOpQrStUvWxYz`).
+4. Configurar la variable de entorno en Vercel: `NEXT_PUBLIC_GOOGLE_VERIFICATION=<código>`.
+5. Tras el deploy, hacer clic en "Verificar" en GSC.
+6. Una vez verificada, ir a Sitemaps → Añadir sitemap → `sitemap.xml`.
+
+### Cómo activar Google Analytics 4
+
+1. Crear propiedad en [Google Analytics](https://analytics.google.com).
+2. Obtener el ID de medición (formato `G-XXXXXXXXXX`).
+3. Configurar la variable en Vercel: `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX`.
+4. Tras 24h, verificar que los datos de tráfico aparecen en GA4.
+
+### Cómo activar Microsoft Clarity
+
+1. Crear proyecto en [Microsoft Clarity](https://clarity.microsoft.com).
+2. Obtener el ID del proyecto.
+3. Configurar la variable en Vercel: `NEXT_PUBLIC_CLARITY_ID=<id>`.
+
+### IndexNow
+
+El script `scripts/submit-indexnow.mjs` envía todas las URLs a los buscadores compatibles con IndexNow (Bing, Yandex). El host se deriva de `NEXT_PUBLIC_SITE_URL`.
+
+```bash
+# Simular (sin enviar):
+node scripts/submit-indexnow.mjs --dry-run
+
+# Enviar URLs reales:
+node scripts/submit-indexnow.mjs
+```
+
+### Estructura SEO implementada
+
+- **Sitemap dinámico:** `/sitemap.xml` — incluye páginas estáticas, categorías de blog y posts individuales con prioridades y lastmod diferenciados.
+- **Robots.txt dinámico:** `/robots.txt` — bloquea `/intranet/`, `/api/`, `/_next/`, bots de IA permanentemente.
+- **Breadcrumbs:** Componente `<Breadcrumbs>` reutilizable con schema `BreadcrumbList` integrado. Presente en todas las páginas públicas.
+- **JSON-LD:** `LegalService`, `WebSite`, `Organization`, `FAQPage`, `BlogPosting`, `BreadcrumbList`, `CollectionPage`.
+- **Blog con paginación:** 12 posts por página, navegación prev/next, canonicals correctos.
+- **Canonicals:** Configuradas en todas las páginas. URLs con filtro de tags canonicalizan a `/blog`.
+- **Meta robots:** Dinámicos según `NEXT_PUBLIC_NOINDEX`.
+- **OG images:** Configuradas en todas las páginas (imagen genérica por defecto, cover image en posts).
+- **RSS Feed:** `/blog/feed.xml` declarado en `<link rel="alternate">`.
+- **Seguridad HTTP:** HSTS 2 años con preload, CSP restrictivo, headers de seguridad completos.

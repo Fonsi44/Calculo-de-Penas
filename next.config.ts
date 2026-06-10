@@ -52,7 +52,7 @@ const nextConfig: NextConfig = {
    * configurar `images.remotePatterns` si se sirven URLs externas.
    */
   images: {
-    unoptimized: false,
+    unoptimized: true,
   },
   // El redirect www → apex lo gestiona Vercel a nivel de dominio
   // (Settings → Domains → Redirect). Aquí solo mantenemos los legacy redirects.

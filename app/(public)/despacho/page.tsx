@@ -1,15 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  Scale,
-  ShieldCheck,
-  Briefcase,
-  GraduationCap,
-  BookOpen,
-  HeartHandshake,
-  ArrowRight,
-  CheckCircle2,
-  Gavel,
+  Scale, ShieldCheck, Briefcase, GraduationCap, BookOpen,
+  HeartHandshake, ArrowRight, CheckCircle2, Gavel,
 } from 'lucide-react';
 import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
@@ -20,6 +13,7 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { getCorporateImage } from '@/data/images';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
@@ -84,6 +78,10 @@ export default function DespachoPage() {
   return (
     <>
       {/* HERO */}
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'El Despacho' },
+      ]} />
       <PageHero
         eyebrow="El Despacho"
         badge="Multidisciplinar"

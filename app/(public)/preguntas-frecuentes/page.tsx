@@ -14,6 +14,7 @@ import { faqPageSchema } from '@/lib/schemas/legal-page';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
@@ -143,6 +144,10 @@ export default function FaqPage() {
 
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Preguntas Frecuentes' },
+      ]} />
       <PageHero
         eyebrow="Preguntas Frecuentes"
         badge="Todas las ramas legales"

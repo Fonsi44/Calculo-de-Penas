@@ -9,7 +9,13 @@
 import { readdirSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const HOST = 'www.pinedayasocioshn.com';
+// El host se deriva de la variable de entorno del proyecto o del valor canónico.
+// No usar nunca un hardcode; la fuente de verdad está en lib/site.ts.
+const SITE_HOST = process.env.NEXT_PUBLIC_SITE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SITE_URL).hostname
+  : 'www.pinedayasociadoshn.com';
+
+const HOST = SITE_HOST;
 const KEY = '4ab62a697a3848198e5a6e4fb1f1e7a9';
 const INDEXNOW_URL = 'https://api.indexnow.org/indexnow';
 const BATCH_SIZE = 100;

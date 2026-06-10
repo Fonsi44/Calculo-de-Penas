@@ -16,6 +16,7 @@ import {
 import { telHref, whatsappHref, site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Solicitar consulta',
@@ -41,6 +42,10 @@ const GUARANTEES = [
 export default function SolicitarConsultaPage() {
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Solicitar consulta' },
+      ]} />
       <section className="bg-primary text-text-inverse">
         <Container size="lg" className="py-12 md:py-16">
           <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
