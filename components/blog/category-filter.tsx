@@ -6,7 +6,7 @@ import { blogCategories } from '@/data/blog/categories';
 import { cn } from '@/lib/ui';
 
 export function CategoryFilter() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
 
   return (
     <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
