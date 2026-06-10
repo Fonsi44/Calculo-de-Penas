@@ -50,7 +50,7 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
               </span>
             )}
           </div>
-          <Link href={`/blog/${post.slug}`}>
+          <Link href={`/blog/categoria/${post.category}/${post.slug}`}>
             <h3 className="font-serif font-bold text-lg leading-snug text-text group-hover:text-primary transition-colors">
               {post.title}
             </h3>
@@ -69,7 +69,7 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
             </span>
           </div>
           <Link
-            href={`/blog/${post.slug}`}
+            href={`/blog/categoria/${post.category}/${post.slug}`}
             className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-accent-dark transition-colors"
           >
             Leer más <ArrowRight size={14} />

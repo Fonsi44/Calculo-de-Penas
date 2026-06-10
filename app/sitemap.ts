@@ -88,7 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const blogPostRoutes = getAllPosts().map((p) => ({
-    url: absoluteUrl(`/blog/${p.slug}`),
+    url: absoluteUrl(`/blog/categoria/${p.category}/${p.slug}`),
     lastModified: new Date(p.publishedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
