@@ -86,11 +86,12 @@ async function submitBatch(urls) {
 
   if (res.ok) {
     console.log(`  ✓ ${urls.length} URLs aceptadas (${res.status})`);
+    return true;
   } else {
     const text = await res.text();
     console.error(`  ✗ Error ${res.status}: ${text}`);
+    return false;
   }
-  return res.ok;
 }
 
 async function main() {
@@ -110,7 +111,7 @@ async function main() {
     const totalBatches = Math.ceil(urlList.length / BATCH_SIZE);
     process.stdout.write(`Batch ${batchNum}/${totalBatches}... `);
     const result = await submitBatch(batch);
-    if (result === 'ok') ok++; else fail++;
+    if (result) ok++; else fail++;
     if (i + BATCH_SIZE < urlList.length) await new Promise(r => setTimeout(r, 500));
   }
 
