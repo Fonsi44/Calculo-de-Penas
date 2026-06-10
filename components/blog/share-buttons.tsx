@@ -6,9 +6,10 @@ import { site } from '@/lib/site';
 type Props = {
   title: string;
   url: string;
+  variant?: 'vertical' | 'horizontal';
 };
 
-export function ShareButtons({ title, url }: Props) {
+export function ShareButtons({ title, url, variant = 'vertical' }: Props) {
   const fullUrl = `${site.url}${url}`;
   const encodedUrl = encodeURIComponent(fullUrl);
   const encodedTitle = encodeURIComponent(title);
@@ -35,8 +36,12 @@ export function ShareButtons({ title, url }: Props) {
     },
   ];
 
+  const containerClass = variant === 'horizontal'
+    ? 'flex flex-wrap gap-2'
+    : 'flex flex-col gap-2';
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className={containerClass}>
       {links.map((l) => (
         <a
           key={l.label}

@@ -7,6 +7,7 @@ import { getPostsByCategory, getAllCategorySlugs, getPostsByPage, getTotalPages 
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { site } from '@/lib/site';
+import { CategoryFilter } from '@/components/blog/category-filter';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -74,6 +75,7 @@ export default async function BlogCategoryPage(props: Props) {
       </section>
 
       <Section spacing="md">
+        <CategoryFilter />
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-text-secondary mb-4">No hay artículos publicados en esta categoría aún.</p>

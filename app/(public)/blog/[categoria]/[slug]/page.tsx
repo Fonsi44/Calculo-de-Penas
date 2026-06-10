@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import {
   Calendar, Clock, User, ArrowLeft, ArrowRight,
   Phone, MessageCircle,
@@ -8,7 +8,6 @@ import {
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { RssSidebar } from '@/components/marketing/rss-sidebar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
@@ -125,6 +124,14 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         </Container>
       </Section>
 
+      {/* ── SOCIAL SHARE BAR ── */}
+      <Container size="lg" className="mb-10">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-lg border border-border/30 bg-surface-alt">
+          <span className="text-sm font-semibold text-text">Compartir este artículo</span>
+          <ShareButtons title={post.title} url={postUrl} variant="horizontal" />
+        </div>
+      </Container>
+
       {/* ── COVER IMAGE ── */}
       {post.coverImage && (
         <Container size="lg" className="mt-0 mb-10">
@@ -144,106 +151,91 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
       {/* ── CONTENIDO ── */}
       <Section spacing="md">
         <Container size="lg">
-          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
-            <div className="flex-1 min-w-0">
-              <article>
-                <BlogTOC />
-                <div className="article-body" dangerouslySetInnerHTML={{ __html: post.body }} />
+          <article>
+            <BlogTOC />
+            <div className="article-body" dangerouslySetInnerHTML={{ __html: post.body }} />
 
-                {/* Tags */}
-                {post.tags.length > 0 && (
-                  <div className="mt-10 pt-6 border-t border-border/50">
-                    <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Etiquetas</p>
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <span key={tag} className="inline-block px-3 py-1.5 rounded-full bg-surface-alt text-xs text-text-secondary border border-border/30">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <RelatedService category={post.category} />
-
-                {/* CTA intermedio */}
-                <div className="mt-10 p-6 rounded-xl border border-accent/30 bg-accent/5 text-center">
-                  <p className="font-serif font-bold text-lg text-primary mb-2">¿Necesita asesoría legal personalizada?</p>
-                  <p className="text-sm text-text-secondary mb-4">Cada caso es único. Hable con un abogado y reciba orientación confidencial.</p>
-                  <CTAGroup variant="primary" className="justify-center" />
+            {/* Tags */}
+            {post.tags.length > 0 && (
+              <div className="mt-10 pt-6 border-t border-border/50">
+                <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Etiquetas</p>
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span key={tag} className="inline-block px-3 py-1.5 rounded-full bg-surface-alt text-xs text-text-secondary border border-border/30">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              </article>
+              </div>
+            )}
 
-              {/* Navegación entre posts */}
-              {(prevPost || nextPost) && (
-                <nav className="mt-10 pt-6 border-t border-border/30 grid sm:grid-cols-2 gap-4" aria-label="Navegación entre artículos">
-                  {prevPost ? (
-                    <Link
-                      href={`/blog/${prevPost.category}/${prevPost.slug}`}
-                      className="group flex items-start gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors"
-                    >
-                      <ArrowLeft size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
-                      <div className="min-w-0">
-                        <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Anterior</p>
-                        <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{prevPost.title}</p>
-                      </div>
-                    </Link>
-                  ) : <div />}
-                  {nextPost ? (
-                    <Link
-                      href={`/blog/${nextPost.category}/${nextPost.slug}`}
-                      className="group flex items-start justify-end gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors text-right"
-                    >
-                      <div className="min-w-0">
-                        <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Siguiente</p>
-                        <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{nextPost.title}</p>
-                      </div>
-                      <ArrowRight size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
-                    </Link>
-                  ) : <div />}
-                </nav>
-              )}
+            <RelatedService category={post.category} />
+
+            {/* CTA intermedio */}
+            <div className="mt-10 p-6 rounded-xl border border-accent/30 bg-accent/5 text-center">
+              <p className="font-serif font-bold text-lg text-primary mb-2">¿Necesita asesoría legal personalizada?</p>
+              <p className="text-sm text-text-secondary mb-4">Cada caso es único. Hable con un abogado y reciba orientación confidencial.</p>
+              <CTAGroup variant="primary" className="justify-center" />
             </div>
 
-            {/* Sidebar */}
-            <aside className="lg:w-72 xl:w-80 flex-shrink-0">
-              <div className="lg:sticky lg:top-24 space-y-6">
-                <div className="p-5 rounded-xl border border-border/30 bg-surface-alt">
-                  <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Autor</p>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-base flex-shrink-0">PA</div>
-                    <div>
-                      <p className="font-semibold text-sm text-text">{post.author}</p>
-                      <p className="text-xs text-text-muted">Abogados en Honduras</p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-text-secondary leading-relaxed">
+            {/* Author Box */}
+            <div className="mt-10 pt-6 border-t border-border/30">
+              <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-4">Sobre el autor</p>
+              <div className="flex flex-col sm:flex-row gap-4 p-5 rounded-xl border border-border/30 bg-surface-alt">
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
+                <div className="min-w-0">
+                  <p className="font-semibold text-text">{post.author}</p>
+                  <p className="text-xs text-text-muted">Abogados en Honduras</p>
+                  <p className="text-sm text-text-secondary leading-relaxed mt-2">
                     Bufete multidisciplinario con más de 15 años de experiencia. Abogados
                     colegiados en Honduras, con presencia activa en juzgados del sur del país.
                   </p>
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+                  >
+                    Más artículos del equipo <ArrowRight size={14} />
+                  </Link>
                 </div>
-
-                <div className="p-5 rounded-xl border border-accent/30 bg-accent/5">
-                  <p className="text-xs font-bold uppercase tracking-widest text-accent-dark mb-3">Consulta gratuita</p>
-                  <a href={telHref()} className="flex items-center gap-2.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors mb-2.5">
-                    <Phone size={16} className="text-accent-dark" />
-                    {site.phoneDisplay}
-                  </a>
-                  <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-                    <MessageCircle size={16} className="text-accent-dark" />
-                    WhatsApp
-                  </a>
-                </div>
-
-                <div className="p-5 rounded-xl border border-border/30">
-                  <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Compartir</p>
-                  <ShareButtons title={post.title} url={postUrl} />
-                </div>
-
-                <RssSidebar />
               </div>
-            </aside>
-          </div>
+            </div>
+
+            {/* Share at end */}
+            <div className="mt-8 pt-6 border-t border-border/30">
+              <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Compartir</p>
+              <ShareButtons title={post.title} url={postUrl} variant="horizontal" />
+            </div>
+          </article>
+
+          {/* Navegación entre posts */}
+          {(prevPost || nextPost) && (
+            <nav className="mt-10 pt-6 border-t border-border/30 grid sm:grid-cols-2 gap-4" aria-label="Navegación entre artículos">
+              {prevPost ? (
+                <Link
+                  href={`/blog/${prevPost.category}/${prevPost.slug}`}
+                  className="group flex items-start gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors"
+                >
+                  <ArrowLeft size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
+                  <div className="min-w-0">
+                    <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Anterior</p>
+                    <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{prevPost.title}</p>
+                  </div>
+                </Link>
+              ) : <div />}
+              {nextPost ? (
+                <Link
+                  href={`/blog/${nextPost.category}/${nextPost.slug}`}
+                  className="group flex items-start justify-end gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors text-right"
+                >
+                  <div className="min-w-0">
+                    <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Siguiente</p>
+                    <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{nextPost.title}</p>
+                  </div>
+                  <ArrowRight size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
+                </Link>
+              ) : <div />}
+            </nav>
+          )}
         </Container>
       </Section>
 
@@ -282,6 +274,45 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           </Container>
         </Section>
       )}
+
+      {/* ── FINAL CTA ── */}
+      <Section spacing="md">
+        <Container size="md">
+          <div className="text-center">
+            <p className="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2">Consulta gratuita</p>
+            <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text mb-4">
+              ¿Listo para resolver su caso?
+            </h2>
+            <p className="text-text-secondary mb-6 max-w-lg mx-auto leading-relaxed">
+              Hable directamente con un abogado. Primera consulta sin costo y sin compromiso.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+              <a
+                href={telHref()}
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+              >
+                <Phone size={18} />
+                {site.phoneDisplay}
+              </a>
+              <a
+                href={whatsappHref()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
+              >
+                <MessageCircle size={18} />
+                WhatsApp
+              </a>
+            </div>
+            <Link
+              href="/solicitar-consulta"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+            >
+              O complete el formulario de consulta <ArrowRight size={14} />
+            </Link>
+          </div>
+        </Container>
+      </Section>
 
       {/* ── SCHEMA ── */}
       <script

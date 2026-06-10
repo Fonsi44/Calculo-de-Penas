@@ -3,7 +3,8 @@ import { site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogCard } from '@/components/blog/blog-card';
-import { BlogSidebar } from '@/components/blog/blog-sidebar';
+import { CategoryFilter } from '@/components/blog/category-filter';
+import { NewsletterSection } from '@/components/blog/newsletter-section';
 import { getAllPosts, getFeaturedPosts, getPostsByTag, getPostsByPage, getTotalPages } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -82,95 +83,93 @@ export default async function BlogHubPage(props: Props) {
       </section>
 
       <Section spacing="md">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            {featured.length > 0 && (
-              <div className="mb-8">
-                <h2 className="font-bold text-lg text-text mb-4">Artículo destacado</h2>
-                {featured.map((p) => (
-                  <BlogCard key={p.slug} post={p} featured />
+        <div className="space-y-6">
+          <CategoryFilter />
+
+          {featured.length > 0 && (
+            <div className="mb-8">
+              <h2 className="font-bold text-lg text-text mb-4">Artículo destacado</h2>
+              {featured.map((p) => (
+                <BlogCard key={p.slug} post={p} featured />
+              ))}
+            </div>
+          )}
+
+          {tagFilter && (
+            <div className="mb-6 flex items-center gap-2">
+              <span className="text-sm text-text-secondary">
+                Filtrando por etiqueta:
+              </span>
+              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
+                {tagFilter}
+              </span>
+              <Link
+                href="/blog"
+                className="text-xs text-text-muted hover:text-primary ml-2 transition-colors"
+              >
+                Limpiar filtro
+              </Link>
+            </div>
+          )}
+          {posts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-text-secondary">
+                {tagFilter ? `No hay artículos con la etiqueta "${tagFilter}".` : 'Próximamente publicaremos nuestros primeros artículos.'}
+              </p>
+            </div>
+          ) : (
+            <div>
+              <h2 className="font-bold text-lg text-text mb-4">
+                {featured.length > 0 ? 'Todos los artículos' : tagFilter ? `Artículos etiquetados: ${tagFilter}` : 'Artículos'}
+                {totalPages > 1 && <span className="text-text-muted font-normal text-sm ml-2">— Página {page} de {totalPages}</span>}
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {posts.map((p) => (
+                  <BlogCard key={p.slug} post={p} />
                 ))}
               </div>
-            )}
 
-            {tagFilter && (
-              <div className="mb-6 flex items-center gap-2">
-                <span className="text-sm text-text-secondary">
-                  Filtrando por etiqueta:
-                </span>
-                <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
-                  {tagFilter}
-                </span>
-                <Link
-                  href="/blog"
-                  className="text-xs text-text-muted hover:text-primary ml-2 transition-colors"
-                >
-                  Limpiar filtro
-                </Link>
-              </div>
-            )}
-            {posts.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-text-secondary">
-                  {tagFilter ? `No hay artículos con la etiqueta "${tagFilter}".` : 'Próximamente publicaremos nuestros primeros artículos.'}
-                </p>
-              </div>
-            ) : (
-              <div>
-                <h2 className="font-bold text-lg text-text mb-4">
-                  {featured.length > 0 ? 'Todos los artículos' : tagFilter ? `Artículos etiquetados: ${tagFilter}` : 'Artículos'}
-                  {totalPages > 1 && <span className="text-text-muted font-normal text-sm ml-2">— Página {page} de {totalPages}</span>}
-                </h2>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {posts.map((p) => (
-                    <BlogCard key={p.slug} post={p} />
-                  ))}
-                </div>
-
-                {totalPages > 1 && (
-                  <nav className="flex justify-center items-center gap-3 mt-8" aria-label="Paginación del blog">
-                    {page > 1 ? (
-                      <Link
-                        href={buildPageUrl(page - 1)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
-                      >
-                        <ArrowLeft size={14} /> Anterior
-                      </Link>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
-                        <ArrowLeft size={14} /> Anterior
-                      </span>
-                    )}
-                    <span className="text-sm text-text-secondary px-2">
-                      Página {page} de {totalPages}
+              {totalPages > 1 && (
+                <nav className="flex justify-center items-center gap-3 mt-8" aria-label="Paginación del blog">
+                  {page > 1 ? (
+                    <Link
+                      href={buildPageUrl(page - 1)}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
+                    >
+                      <ArrowLeft size={14} /> Anterior
+                    </Link>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
+                      <ArrowLeft size={14} /> Anterior
                     </span>
-                    {page < totalPages ? (
-                      <Link
-                        href={buildPageUrl(page + 1)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
-                      >
-                        Siguiente <ArrowRight size={14} />
-                      </Link>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
-                        Siguiente <ArrowRight size={14} />
-                      </span>
-                    )}
-                  </nav>
-                )}
+                  )}
+                  <span className="text-sm text-text-secondary px-2">
+                    Página {page} de {totalPages}
+                  </span>
+                  {page < totalPages ? (
+                    <Link
+                      href={buildPageUrl(page + 1)}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
+                    >
+                      Siguiente <ArrowRight size={14} />
+                    </Link>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
+                      Siguiente <ArrowRight size={14} />
+                    </span>
+                  )}
+                </nav>
+              )}
 
-                <div className="mt-8">
-                  <RssButton />
-                </div>
+              <div className="mt-8">
+                <RssButton />
               </div>
-            )}
-          </div>
-
-          <div>
-            <BlogSidebar />
-          </div>
+            </div>
+          )}
         </div>
       </Section>
+
+      <NewsletterSection />
 
       <script
         type="application/ld+json"
