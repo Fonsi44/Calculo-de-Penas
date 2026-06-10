@@ -1,11 +1,12 @@
 {
-  "name": "LEX HONDURAS",
-  "short_name": "LEX",
-  "description": "Motor jurídico de cálculo de penas — Código Penal de Honduras (Decreto 130-2017)",
+  "name": "Pineda y Asociados",
+  "short_name": "Pineda y Asociados",
+  "description": "Bufete jurídico en Nacaome, Valle, Honduras. Defensa penal técnica y representación legal integral.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#F5F2EC",
-  "theme_color": "#1A2B4A",
+  "theme_color": "#0B1B3D",
   "orientation": "portrait",
   "icons": [
     {

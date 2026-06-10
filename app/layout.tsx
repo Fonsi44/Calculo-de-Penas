@@ -32,6 +32,7 @@ const manrope = Manrope({
 const siteUrl = site.url;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s · ${site.name}`,
@@ -77,8 +78,10 @@ export const viewport = { themeColor: "#0B1B3D" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" dir="ltr"       className={`h-full ${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
+    <html lang="es-HN" dir="ltr" className={`h-full ${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="alternate" href={siteUrl} hrefLang="es-HN" />
+        <link rel="alternate" href={siteUrl} hrefLang="x-default" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="apple-touch-icon" href="/icon-192.svg" />
@@ -86,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/icon-192.svg" type="image/svg+xml" />
         <meta name="application-name" content={site.name} />
         <meta name="author" content={site.name} />
-        <meta name="language" content="es" />
+        <meta name="language" content="es-HN" />
         {site.googleVerification && (
           <meta name="google-site-verification" content={site.googleVerification} />
         )}

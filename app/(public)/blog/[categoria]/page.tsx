@@ -52,6 +52,8 @@ export default async function BlogCategoryPage(props: Props) {
 
   return (
     <>
+      {page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
+      {page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
         { label: 'Blog Jurídico', href: '/blog' },

@@ -2,6 +2,31 @@
 
 ## Release 14 — WordPress Blog Migration — Child Theme, Plantillas, Script de migración, Redirect Map (2026-06-10)
 
+### Correcciones SEO (Iteraciones 1–3)
+- **CRIT-1:** `public/manifest.json` corregido — nombre, descripción y theme_color sincronizados con `lib/site.ts` (Pineda y Asociados, `#0B1B3D`).
+- **CRIT-2:** `next.config.ts` — optimización de imágenes activada: `formats: ['image/webp']`, `deviceSizes: [640, 1080, 1920]`.
+- **IMP-2:** `app/layout.tsx` — etiquetas `hreflang="es-HN"` y `hreflang="x-default"` agregadas en `<head>`.
+- **IMP-3:** `app/layout.tsx` — `<html lang="es-HN">` + `<meta language content="es-HN">`.
+- **IMP-4:** Títulos de página mejorados en FAQ, Solicitar consulta y Cómo llegar (localización + nombre del bufete).
+- **IMP-5:** `app/not-found.tsx` — `robots.follow: true` → `false`.
+- **IMP-1:** `app/layout.tsx` — `metadataBase` agregado para resolución de URLs relativas.
+- **IMP-6:** `app/(public)/blog/page.tsx`, `app/(public)/blog/[categoria]/page.tsx` — `<link rel="prev/next">` en paginación.
+- **IMP-7:** `app/(public)/layout.tsx` — OG images y Twitter images unificadas a URLs absolutas.
+- **IMP-8:** `app/(public)/blog/feed.xml/route.ts` — RSS feed verificado (RSS 2.0 funcional con 30 posts).
+
+### Archivos modificados en iteraciones SEO
+- `public/manifest.json`
+- `next.config.ts`
+- `app/layout.tsx`
+- `app/not-found.tsx`
+- `app/(public)/layout.tsx`
+- `app/(public)/preguntas-frecuentes/page.tsx`
+- `app/(public)/solicitar-consulta/page.tsx`
+- `app/(public)/como-llegar/page.tsx`
+- `app/(public)/blog/page.tsx`
+- `app/(public)/blog/[categoria]/page.tsx`
+- `informe-seo.md`
+
 ### Nuevos activos en wordpress/
 - Child theme funcional GeneratePress con 6 plantillas (home, category, single, author, tag, search)
 - `functions.php` con helpers: reading_time, primary_category, category_badge, related_posts, breadcrumbs wrapper, tag noindex, content filters (author box, CTA, share bar)

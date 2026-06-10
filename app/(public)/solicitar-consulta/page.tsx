@@ -19,7 +19,7 @@ import { Card } from '@/components/ui/card';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
-  title: 'Solicitar consulta',
+  title: `Solicitar Consulta Legal — ${site.name}`,
   description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
   alternates: { canonical: '/solicitar-consulta' },
 };

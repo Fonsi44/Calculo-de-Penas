@@ -18,7 +18,7 @@ import Link from 'next/link';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
-  title: 'Preguntas Frecuentes',
+  title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department}`,
   description: `Respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
   alternates: { canonical: '/preguntas-frecuentes' },
 };

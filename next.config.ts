@@ -39,20 +39,18 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   /**
-   * Las imágenes se sirven tal cual desde /public/images/* sin pasar por
-   * el optimizador /_next/image. Justificación:
-   *   - El optimizer añade latencia significativa y devuelve 400 si la
-   *     imagen no encaja en sus dimensiones permitidas.
-   *   - Las fotos corporativas ya están descargadas en su tamaño final
-   *     desde Pexels/Unsplash (100-500 KB cada una) y no requieren
-   *     redimensionado en runtime.
-   *   - El tamaño total del bundle de imágenes (~6.5 MB) es aceptable
-   *     para una web de bufete con audiencias de Honduras/España.
-   * Para volver a habilitar la optimización: cambiar a `false` y
-   * configurar `images.remotePatterns` si se sirven URLs externas.
+   * Optimización de imágenes activada vía /_next/image.
+   *   - Convierte automáticamente a WebP/AVIF cuando el navegador lo soporta.
+   *   - Genera srcset responsivo para cada deviceSize/imageSize configurado.
+   *   - Los componentes ServiceCard y BlogCard ya usan `fill` con contenedores
+   *     de aspecto fijo (aspect-[4/3], aspect-[21/9], etc.), lo que garantiza
+   *     dimensiones conocidas para el optimizador.
+   *   - deviceSizes estándar: móvil (640w), tablet (1080w), desktop (1920w).
    */
   images: {
-    unoptimized: true,
+    formats: ['image/webp'],
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   // El redirect www → apex lo gestiona Vercel a nivel de dominio
   // (Settings → Domains → Redirect). Aquí solo mantenemos los legacy redirects.

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: site.description,
     images: [
       {
-        url: '/og-image.png',
+        url: `${site.url}/og-image.png`,
         width: 1200,
         height: 630,
         alt: `${site.name} — ${site.tagline}`,
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `${site.name} — Bufete multidisciplinar en ${site.address.city}`,
     description: site.description,
-    images: ['/og-image.png'],
+    images: [`${site.url}/og-image.png`],
   },
   robots: isIndexable
     ? {

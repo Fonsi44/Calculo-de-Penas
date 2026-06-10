@@ -6,7 +6,7 @@ import { ArrowLeft, Scale } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Página no encontrada',
   description: `La página que busca no está disponible. ${site.name} — Bufete jurídico en ${site.address.city}, ${site.address.department}.`,
-  robots: { index: false, follow: true },
+  robots: { index: false, follow: false },
   alternates: { canonical: '/_not-found' },
 };
 

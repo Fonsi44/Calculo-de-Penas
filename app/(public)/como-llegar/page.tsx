@@ -18,7 +18,7 @@ import { MapEmbed } from '@/components/marketing/map-embed';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
-  title: 'Cómo llegar al bufete',
+  title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department}`,
   description: `Indicaciones para llegar a ${site.name} en Nacaome, Valle. Dirección exacta, mapa, rutas y referencias para encontrarnos.`,
   alternates: { canonical: '/como-llegar' },
 };

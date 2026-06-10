@@ -53,6 +53,8 @@ export default async function BlogHubPage(props: Props) {
 
   return (
     <>
+      {!tagFilter && page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
+      {!tagFilter && page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
         { label: 'Blog Jurídico' },
