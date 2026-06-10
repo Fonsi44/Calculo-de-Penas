@@ -213,7 +213,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {blogPosts.map((post) => (
-                <Link key={post.slug} href={`/blog/${post.slug}`} className="group block focus-visible:outline-none">
+                <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                     <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
                       <BookOpen size={20} aria-hidden="true" />

@@ -57,9 +57,9 @@ export const elegirTipoSociedadEmpresaHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/contratos-mercantiles-esenciales-empresas-honduras">Contratos mercantiles esenciales para empresas en Honduras</a></li>
-<li><a href="/blog/contratos-franquicia-aspectos-legales-honduras">Contratos de franquicia en Honduras: aspectos legales clave</a></li>
-<li><a href="/blog/titulos-valores-cheques-sin-fondo-honduras">Títulos valores, cheques sin fondo y protestos en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras">Contratos mercantiles esenciales para empresas en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/contratos-franquicia-aspectos-legales-honduras">Contratos de franquicia en Honduras: aspectos legales clave</a></li>
+<li><a href="/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras">Títulos valores, cheques sin fondo y protestos en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Va a formalizar su empresa? Le asesoramos en la elección y constitución de su sociedad.</a></strong></p>
 

@@ -53,9 +53,9 @@ export const violenciaDomesticaRutaLegalHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
-<li><a href="/blog/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
-<li><a href="/blog/defensa-penal-menores-edad-honduras">Defensa penal para menores de edad en Honduras</a></li>
+<li><a href="/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
+<li><a href="/blog/derecho-penal/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
+<li><a href="/blog/derecho-penal/defensa-penal-menores-edad-honduras">Defensa penal para menores de edad en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Si está sufriendo violencia doméstica, no espere. Contáctenos para recibir orientación legal confidencial.</a></strong></p>
 

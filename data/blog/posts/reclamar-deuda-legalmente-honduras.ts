@@ -88,7 +88,7 @@ export const reclamarDeudaLegalmenteHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
+  <li><a href="/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
 </ul>
 
 <p>Si necesita recuperar una deuda, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios jurídicos</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para evaluar su caso.</p>

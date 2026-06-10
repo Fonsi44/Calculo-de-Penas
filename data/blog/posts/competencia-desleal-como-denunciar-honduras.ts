@@ -42,9 +42,9 @@ export const competenciaDeslealComoDenunciarHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/elegir-tipo-sociedad-empresa-honduras">Cómo elegir el tipo de sociedad para su empresa en Honduras</a></li>
-<li><a href="/blog/contratos-mercantiles-esenciales-empresas-honduras">Contratos mercantiles esenciales para empresas en Honduras</a></li>
-<li><a href="/blog/contratos-franquicia-aspectos-legales-honduras">Contratos de franquicia en Honduras: aspectos legales clave</a></li>
+<li><a href="/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras">Cómo elegir el tipo de sociedad para su empresa en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras">Contratos mercantiles esenciales para empresas en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/contratos-franquicia-aspectos-legales-honduras">Contratos de franquicia en Honduras: aspectos legales clave</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su competidor está usando prácticas desleales? Defienda su negocio. Consulte con nuestro equipo mercantil.</a></strong></p>
 

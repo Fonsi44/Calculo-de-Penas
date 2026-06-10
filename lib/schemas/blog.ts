@@ -5,7 +5,7 @@ export function blogPostSchema(post: Post) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    '@id': `${absoluteUrl(`/blog/${post.slug}`)}#blogposting`,
+    '@id': `${absoluteUrl(`/blog/${post.category}/${post.slug}`)}#blogposting`,
     headline: post.title,
     description: post.description,
     datePublished: post.publishedAt,
@@ -21,7 +21,7 @@ export function blogPostSchema(post: Post) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': absoluteUrl(`/blog/${post.slug}`),
+      '@id': absoluteUrl(`/blog/${post.category}/${post.slug}`),
     },
     inLanguage: 'es-HN',
   };

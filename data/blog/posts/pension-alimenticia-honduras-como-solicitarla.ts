@@ -96,8 +96,8 @@ export const pensionAlimenticiaHondurasComoSolicitarla: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/divorcio-honduras-pasos-requisitos">Divorcio en Honduras: pasos, requisitos y consejos legales</a></li>
-  <li><a href="/blog/custodia-hijos-honduras-juez">Custodia de hijos en Honduras: qué valora un juez</a></li>
+  <li><a href="/blog/derecho-de-familia/divorcio-honduras-pasos-requisitos">Divorcio en Honduras: pasos, requisitos y consejos legales</a></li>
+  <li><a href="/blog/derecho-de-familia/custodia-hijos-honduras-juez">Custodia de hijos en Honduras: qué valora un juez</a></li>
 </ul>
 
 <p>Si necesita solicitar o reclamar una pensión alimenticia, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría legal personalizada.</p>

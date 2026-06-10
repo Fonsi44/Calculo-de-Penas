@@ -57,9 +57,9 @@ export const juicioOralEtapasQueEsperarHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/recursos-sentencia-penal-apelacion-casacion-honduras">Recursos contra una sentencia penal: apelación y casación en Honduras</a></li>
-<li><a href="/blog/sobreseimiento-definitivo-provisional-diferencias-honduras">Sobreseimiento definitivo vs provisional en Honduras</a></li>
-<li><a href="/blog/etapa-investigacion-proceso-penal-honduras">Etapa de investigación en el proceso penal hondureño</a></li>
+<li><a href="/blog/proceso-penal/recursos-sentencia-penal-apelacion-casacion-honduras">Recursos contra una sentencia penal: apelación y casación en Honduras</a></li>
+<li><a href="/blog/proceso-penal/sobreseimiento-definitivo-provisional-diferencias-honduras">Sobreseimiento definitivo vs provisional en Honduras</a></li>
+<li><a href="/blog/proceso-penal/etapa-investigacion-proceso-penal-honduras">Etapa de investigación en el proceso penal hondureño</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Va a enfrentar un juicio oral? Necesita defensa penal experimentada. Consúltenos.</a></strong></p>
 

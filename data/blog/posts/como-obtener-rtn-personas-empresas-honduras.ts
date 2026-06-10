@@ -57,9 +57,9 @@ export const comoObtenerRtnPersonasEmpresasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/como-preparar-demanda-guia-no-abogados-honduras">Cómo preparar una demanda en Honduras: guía para no abogados</a></li>
-<li><a href="/blog/lavado-activos-obligaciones-cumplimiento-empresas-honduras">Lavado de activos en Honduras: obligaciones de cumplimiento para empresas</a></li>
-<li><a href="/blog/constituir-empresa-guia-paso-a-paso-honduras">¿Cómo constituir una empresa en Honduras? Guía paso a paso</a></li>
+<li><a href="/blog/practica-legal/como-preparar-demanda-guia-no-abogados-honduras">Cómo preparar una demanda en Honduras: guía para no abogados</a></li>
+<li><a href="/blog/practica-legal/lavado-activos-obligaciones-cumplimiento-empresas-honduras">Lavado de activos en Honduras: obligaciones de cumplimiento para empresas</a></li>
+<li><a href="/blog/practica-legal/constituir-empresa-guia-paso-a-paso-honduras">¿Cómo constituir una empresa en Honduras? Guía paso a paso</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita tramitar su RTN? Le ayudamos con el registro ante el SAR.</a></strong></p>
 

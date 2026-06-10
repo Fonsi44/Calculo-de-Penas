@@ -57,9 +57,9 @@ export const impuestoRentaGuiaPersonasFisicasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/sar-notifica-fiscalizacion-que-hacer-honduras">¿Qué hacer si el SAR me notifica una fiscalización?</a></li>
-<li><a href="/blog/impuestos-pequenas-empresas-guia-basica-honduras">Impuestos para pequeñas empresas en Honduras: guía básica</a></li>
-<li><a href="/blog/isv-impuesto-venta-tasas-obligaciones-honduras">ISV en Honduras: cómo funciona, tasas y obligaciones</a></li>
+<li><a href="/blog/tributario/sar-notifica-fiscalizacion-que-hacer-honduras">¿Qué hacer si el SAR me notifica una fiscalización?</a></li>
+<li><a href="/blog/tributario/impuestos-pequenas-empresas-guia-basica-honduras">Impuestos para pequeñas empresas en Honduras: guía básica</a></li>
+<li><a href="/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras">ISV en Honduras: cómo funciona, tasas y obligaciones</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Tiene dudas con su declaración de renta? Evite errores con asesoría tributaria profesional.</a></strong></p>
 

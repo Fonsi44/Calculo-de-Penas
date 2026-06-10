@@ -53,9 +53,9 @@ export const divorcioExpressMutuoAcuerdoHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/pension-alimenticia-calcular-reclamar-honduras">Pensión alimenticia en Honduras: cómo calcularla y reclamarla</a></li>
-<li><a href="/blog/guarda-custodia-menores-tipos-honduras">Guarda y custodia de menores en Honduras: tipos y cómo solicitarla</a></li>
-<li><a href="/blog/divorcio-tipos-requisitos-tiempos-honduras">Divorcio en Honduras: tipos, requisitos y tiempos del proceso</a></li>
+<li><a href="/blog/derecho-de-familia/pension-alimenticia-calcular-reclamar-honduras">Pensión alimenticia en Honduras: cómo calcularla y reclamarla</a></li>
+<li><a href="/blog/derecho-de-familia/guarda-custodia-menores-tipos-honduras">Guarda y custodia de menores en Honduras: tipos y cómo solicitarla</a></li>
+<li><a href="/blog/derecho-de-familia/divorcio-tipos-requisitos-tiempos-honduras">Divorcio en Honduras: tipos, requisitos y tiempos del proceso</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere divorciarse de forma rápida y sin conflictos? Contáctenos, simplificamos el proceso.</a></strong></p>
 

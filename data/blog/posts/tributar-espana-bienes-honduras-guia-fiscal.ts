@@ -57,9 +57,9 @@ export const tributarEspanaBienesHondurasGuiaFiscal: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/hondurenos-en-espana-guia-legal-completa">Hondureños en España: guía legal completa para migrantes</a></li>
-<li><a href="/blog/herencias-transfronterizas-bienes-honduras-espana">Herencias transfronterizas: bienes en Honduras y España</a></li>
-<li><a href="/blog/arraigo-social-laboral-hondurenos-espana">Arraigo social y laboral para hondureños en España</a></li>
+<li><a href="/blog/hondurenos-en-espana/hondurenos-en-espana-guia-legal-completa">Hondureños en España: guía legal completa para migrantes</a></li>
+<li><a href="/blog/hondurenos-en-espana/herencias-transfronterizas-bienes-honduras-espana">Herencias transfronterizas: bienes en Honduras y España</a></li>
+<li><a href="/blog/hondurenos-en-espana/arraigo-social-laboral-hondurenos-espana">Arraigo social y laboral para hondureños en España</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Tiene bienes en Honduras mientras reside en España? Optimice su declaración fiscal con nuestra asesoría.</a></strong></p>
 

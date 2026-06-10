@@ -42,9 +42,9 @@ export const codigoAduaneroCentroamericanoBasicoHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/importar-mercancias-guia-legal-aduanera-honduras">Importar mercancías a Honduras: guía legal y aduanera</a></li>
-<li><a href="/blog/importar-desde-china-guia-legal-aduanera-honduras">Importar desde China a Honduras: guía legal completa</a></li>
-<li><a href="/blog/zonas-libres-zoli-beneficios-fiscales-honduras">Zonas libres y ZOLI en Honduras: beneficios fiscales y requisitos</a></li>
+<li><a href="/blog/derecho-aduanero/importar-mercancias-guia-legal-aduanera-honduras">Importar mercancías a Honduras: guía legal y aduanera</a></li>
+<li><a href="/blog/derecho-aduanero/importar-desde-china-guia-legal-aduanera-honduras">Importar desde China a Honduras: guía legal completa</a></li>
+<li><a href="/blog/derecho-aduanero/zonas-libres-zoli-beneficios-fiscales-honduras">Zonas libres y ZOLI en Honduras: beneficios fiscales y requisitos</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su empresa opera en comercio exterior? Conozca sus obligaciones aduaneras.</a></strong></p>
 

@@ -42,9 +42,9 @@ export const libertadExpresionRedesSocialesHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/derechos-del-detenido-guia-constitucional-honduras">Derechos del detenido en Honduras: guía constitucional completa</a></li>
-<li><a href="/blog/derecho-de-peticion-instituciones-honduras">Derecho de petición en Honduras: cómo usarlo ante instituciones</a></li>
-<li><a href="/blog/proteccion-datos-personales-derechos-arco-honduras">Protección de datos personales en Honduras: derechos ARCO</a></li>
+<li><a href="/blog/derechos-ciudadanos/derechos-del-detenido-guia-constitucional-honduras">Derechos del detenido en Honduras: guía constitucional completa</a></li>
+<li><a href="/blog/derechos-ciudadanos/derecho-de-peticion-instituciones-honduras">Derecho de petición en Honduras: cómo usarlo ante instituciones</a></li>
+<li><a href="/blog/derechos-ciudadanos/proteccion-datos-personales-derechos-arco-honduras">Protección de datos personales en Honduras: derechos ARCO</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Enfrenta una denuncia por algo que publicó en redes? Defiéndase con asesoría legal.</a></strong></p>
 

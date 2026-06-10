@@ -83,7 +83,7 @@ export const poderLegalHondurasCuandoSeNecesita: Post = {
 <h2>Preguntas frecuentes</h2>
 
 <h3>¿Puedo otorgar un poder si estoy fuera de Honduras?</h3>
-<p>Sí. Puede otorgar un poder ante el consulado de Honduras en el país donde resida, o ante un notario local y luego apostillarlo para que surta efectos en Honduras. Consulte nuestra guía sobre <a href="/blog/poder-desde-espana-para-tramites-honduras">cómo otorgar un poder desde España</a> para más detalles.</p>
+<p>Sí. Puede otorgar un poder ante el consulado de Honduras en el país donde resida, o ante un notario local y luego apostillarlo para que surta efectos en Honduras. Consulte nuestra guía sobre <a href="/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras">cómo otorgar un poder desde España</a> para más detalles.</p>
 
 <h3>¿Un poder otorgado en el extranjero es válido en Honduras?</h3>
 <p>Sí, siempre que cumpla con los requisitos de apostilla (si el país forma parte del Convenio de La Haya) o legalización consular, y el documento esté traducido al español por traductor público autorizado cuando sea necesario.</p>
@@ -96,8 +96,8 @@ export const poderLegalHondurasCuandoSeNecesita: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/documentos-notariales-importantes-honduras">Documentos notariales importantes que todo hondureño debería conocer</a></li>
-  <li><a href="/blog/poder-desde-espana-para-tramites-honduras">Poder desde España para trámites en Honduras: guía completa</a></li>
+  <li><a href="/blog/derecho-notarial/tramites-notariales-frecuentes-honduras">Trámites notariales frecuentes en Honduras: guía práctica</a></li>
+  <li><a href="/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras">Poder desde España para trámites en Honduras: guía completa</a></li>
 </ul>
 
 <p>¿Necesita otorgar un poder o tiene dudas sobre qué tipo de representación legal le conviene? <a href="/solicitar-consulta" target="_blank">Contáctenos</a> para recibir asesoría notarial personalizada.</p>

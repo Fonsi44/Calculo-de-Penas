@@ -90,9 +90,9 @@ export const incumplimientoContratoComercialHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/reclamar-deuda-legalmente-honduras">Cómo reclamar una deuda legalmente en Honduras</a></li>
-  <li><a href="/blog/constitucion-empresas-honduras-pasos-legales">Constitución de empresas en Honduras: pasos legales básicos</a></li>
-  <li><a href="/blog/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
+  <li><a href="/blog/derecho-civil/reclamar-deuda-legalmente-honduras">Cómo reclamar una deuda legalmente en Honduras</a></li>
+  <li><a href="/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales">Constitución de empresas en Honduras: pasos legales básicos</a></li>
+  <li><a href="/blog/derecho-mercantil/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
 </ul>
 
 <p>Si enfrenta un incumplimiento contractual, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios de derecho mercantil</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para evaluar su caso y definir la mejor estrategia legal.</p>

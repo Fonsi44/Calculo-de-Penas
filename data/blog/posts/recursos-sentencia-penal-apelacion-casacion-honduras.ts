@@ -57,9 +57,9 @@ export const recursosSentenciaPenalApelacionCasacionHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/juicio-oral-etapas-que-esperar-honduras">¿Cómo funciona un juicio oral en Honduras? Etapas y qué esperar</a></li>
-<li><a href="/blog/sobreseimiento-definitivo-provisional-diferencias-honduras">Sobreseimiento definitivo vs provisional en Honduras</a></li>
-<li><a href="/blog/etapa-investigacion-proceso-penal-honduras">Etapa de investigación en el proceso penal hondureño</a></li>
+<li><a href="/blog/proceso-penal/juicio-oral-etapas-que-esperar-honduras">¿Cómo funciona un juicio oral en Honduras? Etapas y qué esperar</a></li>
+<li><a href="/blog/proceso-penal/sobreseimiento-definitivo-provisional-diferencias-honduras">Sobreseimiento definitivo vs provisional en Honduras</a></li>
+<li><a href="/blog/proceso-penal/etapa-investigacion-proceso-penal-honduras">Etapa de investigación en el proceso penal hondureño</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Fue condenado y quiere apelar? Los plazos son cortos. Consulte con urgencia a nuestro equipo penal.</a></strong></p>
 

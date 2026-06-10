@@ -57,9 +57,9 @@ export const contratosConfidencialidadNdaSecretoComercialHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/registrar-marca-paso-a-paso-honduras">Cómo registrar una marca en Honduras: paso a paso</a></li>
-<li><a href="/blog/derechos-de-autor-proteccion-registro-honduras">Derechos de autor en Honduras: qué protegen y cómo registrarlos</a></li>
-<li><a href="/blog/patentes-requisitos-proceso-solicitud-honduras">Patentes en Honduras: requisitos y proceso de solicitud</a></li>
+<li><a href="/blog/propiedad-intelectual/registrar-marca-paso-a-paso-honduras">Cómo registrar una marca en Honduras: paso a paso</a></li>
+<li><a href="/blog/propiedad-intelectual/derechos-de-autor-proteccion-registro-honduras">Derechos de autor en Honduras: qué protegen y cómo registrarlos</a></li>
+<li><a href="/blog/propiedad-intelectual/patentes-requisitos-proceso-solicitud-honduras">Patentes en Honduras: requisitos y proceso de solicitud</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita un acuerdo de confidencialidad para su negocio? Lo redactamos a su medida.</a></strong></p>
 

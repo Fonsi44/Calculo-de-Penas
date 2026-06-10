@@ -57,9 +57,9 @@ export const centroConciliacionArbitrajeCcicGuiaHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/mediacion-vs-juicio-que-conviene-mas-honduras">Mediación vs juicio: qué conviene más en un conflicto legal</a></li>
-<li><a href="/blog/arbitraje-cuando-conviene-como-funciona-honduras">Arbitraje en Honduras: cuándo conviene y cómo funciona</a></li>
-<li><a href="/blog/mediacion-familiar-cuando-funciona-honduras">Mediación familiar en Honduras: cuándo es obligatoria y cómo funciona</a></li>
+<li><a href="/blog/conciliacion-arbitraje/mediacion-vs-juicio-que-conviene-mas-honduras">Mediación vs juicio: qué conviene más en un conflicto legal</a></li>
+<li><a href="/blog/conciliacion-arbitraje/arbitraje-cuando-conviene-como-funciona-honduras">Arbitraje en Honduras: cuándo conviene y cómo funciona</a></li>
+<li><a href="/blog/conciliacion-arbitraje/mediacion-familiar-cuando-funciona-honduras">Mediación familiar en Honduras: cuándo es obligatoria y cómo funciona</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita resolver un conflicto comercial? El arbitraje CCIC puede ser su solución.</a></strong></p>
 

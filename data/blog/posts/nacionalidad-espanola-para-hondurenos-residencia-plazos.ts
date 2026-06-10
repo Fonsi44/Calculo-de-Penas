@@ -57,9 +57,9 @@ export const nacionalidadEspanolaParaHondurenosResidenciaPlazos: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/hondurenos-en-espana-guia-legal-completa">Hondureños en España: guía legal completa para migrantes</a></li>
-<li><a href="/blog/tributar-espana-bienes-honduras-guia-fiscal">Cómo tributar si trabaja en España y tiene bienes en Honduras</a></li>
-<li><a href="/blog/herencias-transfronterizas-bienes-honduras-espana">Herencias transfronterizas: bienes en Honduras y España</a></li>
+<li><a href="/blog/hondurenos-en-espana/hondurenos-en-espana-guia-legal-completa">Hondureños en España: guía legal completa para migrantes</a></li>
+<li><a href="/blog/hondurenos-en-espana/tributar-espana-bienes-honduras-guia-fiscal">Cómo tributar si trabaja en España y tiene bienes en Honduras</a></li>
+<li><a href="/blog/hondurenos-en-espana/herencias-transfronterizas-bienes-honduras-espana">Herencias transfronterizas: bienes en Honduras y España</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Cumple los requisitos para la nacionalidad española? Le ayudamos con el trámite completo.</a></strong></p>
 

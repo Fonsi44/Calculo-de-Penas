@@ -60,9 +60,9 @@ export const herenciasTransfronterizasBienesHondurasEspana: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/hondurenos-en-espana-guia-legal-completa">Hondureños en España: guía legal completa para migrantes</a></li>
-<li><a href="/blog/tributar-espana-bienes-honduras-guia-fiscal">Cómo tributar si trabaja en España y tiene bienes en Honduras</a></li>
-<li><a href="/blog/arraigo-social-laboral-hondurenos-espana">Arraigo social y laboral para hondureños en España</a></li>
+<li><a href="/blog/hondurenos-en-espana/hondurenos-en-espana-guia-legal-completa">Hondureños en España: guía legal completa para migrantes</a></li>
+<li><a href="/blog/hondurenos-en-espana/tributar-espana-bienes-honduras-guia-fiscal">Cómo tributar si trabaja en España y tiene bienes en Honduras</a></li>
+<li><a href="/blog/hondurenos-en-espana/arraigo-social-laboral-hondurenos-espana">Arraigo social y laboral para hondureños en España</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Tiene bienes en Honduras y España? Planifique su sucesión con nuestros abogados especializados.</a></strong></p>
 

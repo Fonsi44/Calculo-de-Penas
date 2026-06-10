@@ -57,9 +57,9 @@ export const testamentosSucesionesHerenciaHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/contratos-arrendamiento-derechos-obligaciones-honduras">Contratos de arrendamiento en Honduras: derechos y obligaciones</a></li>
-<li><a href="/blog/prescripcion-deudas-plazos-honduras">Prescripción de deudas en Honduras: plazos y cómo opera</a></li>
-<li><a href="/blog/compraventa-inmuebles-aspectos-legales-honduras">Compraventa de inmuebles en Honduras: aspectos legales clave</a></li>
+<li><a href="/blog/derecho-civil/contratos-arrendamiento-derechos-obligaciones-honduras">Contratos de arrendamiento en Honduras: derechos y obligaciones</a></li>
+<li><a href="/blog/derecho-civil/prescripcion-deudas-plazos-honduras">Prescripción de deudas en Honduras: plazos y cómo opera</a></li>
+<li><a href="/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras">Compraventa de inmuebles en Honduras: aspectos legales clave</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere asegurar su herencia y evitar conflictos? Consulte sobre testamentos y planificación sucesoral.</a></strong></p>
 

@@ -60,9 +60,9 @@ export const creditosReestructuracionDeudasBancariasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/banco-demanda-deuda-defensa-opciones-honduras">¿Qué hacer si un banco me demanda por deuda? Defensa y opciones</a></li>
-<li><a href="/blog/derechos-consumidor-financiero-cnbs-honduras">Derechos del consumidor financiero en Honduras: guía CNBS</a></li>
-<li><a href="/blog/central-riesgos-consultar-impugnar-honduras">Central de Riesgos en Honduras: cómo consultarla, impugnar y salir</a></li>
+<li><a href="/blog/derecho-bancario/banco-demanda-deuda-defensa-opciones-honduras">¿Qué hacer si un banco me demanda por deuda? Defensa y opciones</a></li>
+<li><a href="/blog/derecho-bancario/derechos-consumidor-financiero-cnbs-honduras">Derechos del consumidor financiero en Honduras: guía CNBS</a></li>
+<li><a href="/blog/derecho-bancario/central-riesgos-consultar-impugnar-honduras">Central de Riesgos en Honduras: cómo consultarla, impugnar y salir</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Las deudas le están ahogando? Podemos ayudarle a renegociar con su banco.</a></strong></p>
 

@@ -91,7 +91,7 @@ export const tramitesNotarialesFrecuentesHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/contratos-civiles-honduras-errores-comunes">Contratos civiles en Honduras: errores comunes antes de firmar</a></li>
+  <li><a href="/blog/derecho-civil/contratos-civiles-honduras-errores-comunes">Contratos civiles en Honduras: errores comunes antes de firmar</a></li>
 </ul>
 
 <p>Si necesita realizar un trámite notarial, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios notariales</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para agendar una cita con nuestro equipo.</p>

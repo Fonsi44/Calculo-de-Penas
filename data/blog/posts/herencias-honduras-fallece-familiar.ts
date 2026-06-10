@@ -97,8 +97,8 @@ export const herenciasHondurasFalleceFamiliar: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/contratos-civiles-honduras-errores-comunes">Contratos civiles en Honduras: errores comunes antes de firmar</a></li>
-  <li><a href="/blog/tramites-notariales-frecuentes-honduras">Trámites notariales frecuentes en Honduras</a></li>
+  <li><a href="/blog/derecho-civil/contratos-civiles-honduras-errores-comunes">Contratos civiles en Honduras: errores comunes antes de firmar</a></li>
+  <li><a href="/blog/derecho-notarial/tramites-notariales-frecuentes-honduras">Trámites notariales frecuentes en Honduras</a></li>
 </ul>
 
 <p>Si necesita asesoría para tramitar una herencia, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios jurídicos</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una consulta personalizada.</p>

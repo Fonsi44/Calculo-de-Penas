@@ -57,9 +57,9 @@ export const habilitacionClinicasHospitalesPrivadosHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/registro-sanitario-alimentos-arsa-paso-a-paso-honduras">Registro sanitario de alimentos ante la ARSA: paso a paso</a></li>
-<li><a href="/blog/registro-medicamentos-productos-farmaceuticos-honduras">Registro de medicamentos y productos farmacéuticos en Honduras</a></li>
-<li><a href="/blog/responsabilidad-medica-mala-praxis-honduras">Responsabilidad médica y mala praxis en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/registro-sanitario-alimentos-arsa-paso-a-paso-honduras">Registro sanitario de alimentos ante la ARSA: paso a paso</a></li>
+<li><a href="/blog/regulacion-sanitaria/registro-medicamentos-productos-farmaceuticos-honduras">Registro de medicamentos y productos farmacéuticos en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/responsabilidad-medica-mala-praxis-honduras">Responsabilidad médica y mala praxis en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Va a abrir una clínica privada? Lo asesoramos en toda la habilitación legal y sanitaria.</a></strong></p>
 

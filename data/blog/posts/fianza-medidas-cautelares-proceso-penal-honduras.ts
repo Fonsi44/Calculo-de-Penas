@@ -57,9 +57,9 @@ export const fianzaMedidasCautelaresProcesoPenalHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
-<li><a href="/blog/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
-<li><a href="/blog/defensa-penal-menores-edad-honduras">Defensa penal para menores de edad en Honduras</a></li>
+<li><a href="/blog/derecho-penal/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
+<li><a href="/blog/derecho-penal/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
+<li><a href="/blog/derecho-penal/defensa-penal-menores-edad-honduras">Defensa penal para menores de edad en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Un familiar está detenido? Podemos evaluar medidas cautelares alternativas. Consulte con nuestro equipo penal.</a></strong></p>
 

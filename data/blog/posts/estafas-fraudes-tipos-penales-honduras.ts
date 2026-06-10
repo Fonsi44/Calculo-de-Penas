@@ -60,9 +60,9 @@ export const estafasFraudesTiposPenalesHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
-<li><a href="/blog/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
-<li><a href="/blog/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
+<li><a href="/blog/derecho-penal/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
+<li><a href="/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
+<li><a href="/blog/derecho-penal/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Fue víctima de una estafa? No espere, la denuncia oportuna marca la diferencia. Consúltenos.</a></strong></p>
 

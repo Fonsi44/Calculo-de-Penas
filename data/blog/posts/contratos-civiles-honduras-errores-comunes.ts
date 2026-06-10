@@ -72,9 +72,9 @@ export const contratosCivilesHondurasErroresComunes: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/herencias-honduras-fallece-familiar">Herencias en Honduras: ¿qué hacer cuando fallece un familiar?</a></li>
-  <li><a href="/blog/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
-  <li><a href="/blog/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
+  <li><a href="/blog/derecho-civil/herencias-honduras-fallece-familiar">Herencias en Honduras: ¿qué hacer cuando fallece un familiar?</a></li>
+  <li><a href="/blog/derecho-mercantil/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
+  <li><a href="/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
 </ul>
 
 <p>Si tiene dudas antes de firmar un contrato, <a href="/servicios-juridicos" target="_blank">consulte nuestros servicios de asesoría legal</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una revisión profesional.</p>

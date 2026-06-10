@@ -57,9 +57,9 @@ export const visasInversionInversionistaRentistaPensionadoHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/residencia-temporal-requisitos-plazos-honduras">Residencia temporal en Honduras: requisitos, plazos y tipos de visa</a></li>
-<li><a href="/blog/naturalizacion-obtener-nacionalidad-hondurena">Naturalización en Honduras: cómo obtener la nacionalidad hondureña</a></li>
-<li><a href="/blog/permiso-trabajo-extranjeros-honduras">Permiso de trabajo para extranjeros en Honduras</a></li>
+<li><a href="/blog/extranjeria-migracion/residencia-temporal-requisitos-plazos-honduras">Residencia temporal en Honduras: requisitos, plazos y tipos de visa</a></li>
+<li><a href="/blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena">Naturalización en Honduras: cómo obtener la nacionalidad hondureña</a></li>
+<li><a href="/blog/extranjeria-migracion/permiso-trabajo-extranjeros-honduras">Permiso de trabajo para extranjeros en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere vivir en Honduras como inversionista o pensionado? Le asesoramos en su visa.</a></strong></p>
 

@@ -28,7 +28,7 @@ export const hondurenosEspanaDocumentosLegalesExtranjero: Post = {
 <p>Desde España, puede solicitarse mediante un poder especial a un abogado en Honduras. El certificado debe estar apostillado para ser válido en España. Tenga en cuenta que tiene una vigencia limitada (generalmente tres meses desde su emisión).</p>
 
 <h3>Poderes notariales</h3>
-<p>Si necesita que alguien gestione trámites en su nombre en Honduras (vender una propiedad, cobrar una deuda, iniciar un juicio), debe otorgar un poder. Puede hacerlo desde España ante notario español o ante el consulado de Honduras. Para más información, consulte la guía sobre <a href="/blog/poder-desde-espana-para-tramites-honduras">cómo otorgar un poder desde España</a>.</p>
+<p>Si necesita que alguien gestione trámites en su nombre en Honduras (vender una propiedad, cobrar una deuda, iniciar un juicio), debe otorgar un poder. Puede hacerlo desde España ante notario español o ante el consulado de Honduras. Para más información, consulte la guía sobre <a href="/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras">cómo otorgar un poder desde España</a>.</p>
 
 <h3>Documentos de identidad</h3>
 <p>La renovación de la tarjeta de identidad o el pasaporte hondureño desde España se tramita a través del consulado de Honduras en Madrid o Barcelona. Consulte la cita previa en el sitio web consular y prepare la documentación con suficiente antelación, ya que la demanda suele ser alta.</p>
@@ -80,8 +80,8 @@ export const hondurenosEspanaDocumentosLegalesExtranjero: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/poder-desde-espana-para-tramites-honduras">Poder desde España para trámites en Honduras: guía completa</a></li>
-  <li><a href="/blog/asuntos-familiares-honduras-viviendo-espana">Cómo resolver asuntos familiares en Honduras viviendo en España</a></li>
+  <li><a href="/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras">Poder desde España para trámites en Honduras: guía completa</a></li>
+  <li><a href="/blog/hondurenos-en-espana/asuntos-familiares-honduras-viviendo-espana">Cómo resolver asuntos familiares en Honduras viviendo en España</a></li>
 </ul>
 
 <p>Si necesita gestionar documentos legales en Honduras desde España, <a href="/hondurenos-en-espana" target="_blank">consulte nuestros servicios para hondureños en España</a> o <a href="/solicitar-consulta" target="_blank">contáctenos directamente</a> para recibir asesoría personalizada.</p>

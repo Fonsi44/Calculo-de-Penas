@@ -57,9 +57,9 @@ export const recursoDeAmparoParaQueSirveHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/contratacion-publica-licitaciones-empresas-honduras">Contratación pública y licitaciones en Honduras: guía para empresas</a></li>
-<li><a href="/blog/despido-empleados-publicos-procedencia-defensa-honduras">Despido de empleados públicos en Honduras: procedencia y defensa</a></li>
-<li><a href="/blog/sanciones-administrativas-como-defenderse-honduras">Sanciones administrativas en Honduras: cómo defenderse</a></li>
+<li><a href="/blog/derecho-administrativo/contratacion-publica-licitaciones-empresas-honduras">Contratación pública y licitaciones en Honduras: guía para empresas</a></li>
+<li><a href="/blog/derecho-administrativo/despido-empleados-publicos-procedencia-defensa-honduras">Despido de empleados públicos en Honduras: procedencia y defensa</a></li>
+<li><a href="/blog/derecho-administrativo/sanciones-administrativas-como-defenderse-honduras">Sanciones administrativas en Honduras: cómo defenderse</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Una autoridad está violando sus derechos? Podemos interponer un amparo. Consulte con nuestros abogados.</a></strong></p>
 

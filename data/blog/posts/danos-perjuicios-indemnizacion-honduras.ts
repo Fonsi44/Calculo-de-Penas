@@ -60,9 +60,9 @@ export const danosPerjuiciosIndemnizacionHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/contratos-arrendamiento-derechos-obligaciones-honduras">Contratos de arrendamiento en Honduras: derechos y obligaciones</a></li>
-<li><a href="/blog/prescripcion-deudas-plazos-honduras">Prescripción de deudas en Honduras: plazos y cómo opera</a></li>
-<li><a href="/blog/testamentos-sucesiones-herencia-honduras">Testamentos y sucesiones en Honduras: cómo heredar sin conflictos</a></li>
+<li><a href="/blog/derecho-civil/contratos-arrendamiento-derechos-obligaciones-honduras">Contratos de arrendamiento en Honduras: derechos y obligaciones</a></li>
+<li><a href="/blog/derecho-civil/prescripcion-deudas-plazos-honduras">Prescripción de deudas en Honduras: plazos y cómo opera</a></li>
+<li><a href="/blog/derecho-civil/testamentos-sucesiones-herencia-honduras">Testamentos y sucesiones en Honduras: cómo heredar sin conflictos</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Ha sufrido un daño y quiere reclamar indemnización? Consulte con nuestros abogados civiles.</a></strong></p>
 

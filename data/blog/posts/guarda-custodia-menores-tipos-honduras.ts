@@ -60,9 +60,9 @@ export const guardaCustodiaMenoresTiposHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/pension-alimenticia-calcular-reclamar-honduras">Pensión alimenticia en Honduras: cómo calcularla y reclamarla</a></li>
-<li><a href="/blog/divorcio-tipos-requisitos-tiempos-honduras">Divorcio en Honduras: tipos, requisitos y tiempos del proceso</a></li>
-<li><a href="/blog/divorcio-express-mutuo-acuerdo-honduras">Divorcio express por mutuo acuerdo en Honduras</a></li>
+<li><a href="/blog/derecho-de-familia/pension-alimenticia-calcular-reclamar-honduras">Pensión alimenticia en Honduras: cómo calcularla y reclamarla</a></li>
+<li><a href="/blog/derecho-de-familia/divorcio-tipos-requisitos-tiempos-honduras">Divorcio en Honduras: tipos, requisitos y tiempos del proceso</a></li>
+<li><a href="/blog/derecho-de-familia/divorcio-express-mutuo-acuerdo-honduras">Divorcio express por mutuo acuerdo en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Está en un proceso de custodia? Defienda el interés superior de sus hijos con asesoría legal experta.</a></strong></p>
 

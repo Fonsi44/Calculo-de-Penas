@@ -92,8 +92,8 @@ export const despidoInjustificadoHondurasDerechosTrabajador: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/calcular-prestaciones-laborales-honduras">Cómo calcular prestaciones laborales en Honduras</a></li>
-  <li><a href="/blog/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga?</a></li>
+  <li><a href="/blog/derecho-laboral/calcular-prestaciones-laborales-honduras">Cómo calcular prestaciones laborales en Honduras</a></li>
+  <li><a href="/blog/derecho-laboral/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga?</a></li>
 </ul>
 
 <p>Si ha sido despedido y tiene dudas sobre sus derechos, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una evaluación gratuita de su caso.</p>

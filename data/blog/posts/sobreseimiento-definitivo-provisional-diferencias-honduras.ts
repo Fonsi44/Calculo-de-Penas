@@ -60,9 +60,9 @@ export const sobreseimientoDefinitivoProvisionalDiferenciasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/juicio-oral-etapas-que-esperar-honduras">¿Cómo funciona un juicio oral en Honduras? Etapas y qué esperar</a></li>
-<li><a href="/blog/recursos-sentencia-penal-apelacion-casacion-honduras">Recursos contra una sentencia penal: apelación y casación en Honduras</a></li>
-<li><a href="/blog/etapa-investigacion-proceso-penal-honduras">Etapa de investigación en el proceso penal hondureño</a></li>
+<li><a href="/blog/proceso-penal/juicio-oral-etapas-que-esperar-honduras">¿Cómo funciona un juicio oral en Honduras? Etapas y qué esperar</a></li>
+<li><a href="/blog/proceso-penal/recursos-sentencia-penal-apelacion-casacion-honduras">Recursos contra una sentencia penal: apelación y casación en Honduras</a></li>
+<li><a href="/blog/proceso-penal/etapa-investigacion-proceso-penal-honduras">Etapa de investigación en el proceso penal hondureño</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su caso puede terminar por sobreseimiento? Evaluamos las causas legales aplicables.</a></strong></p>
 

@@ -23,7 +23,7 @@ export const cuandoNecesitoAbogadoPenalistaHonduras: Post = {
 <p>Si recibe una notificación para comparecer ante el Ministerio Público, no espere. Una citación puede ser el primer indicio de que existe una investigación en su contra. Un abogado penalista puede acudir con usted, conocer el estado de la investigación y evitar que declare sin la preparación adecuada. No acuda solo a una citación sin asesoría legal.</p>
 
 <h3>2. En el momento de una detención</h3>
-<p>Si es detenido, su primera llamada debe ser a un abogado penalista. Como explicamos en nuestra guía sobre <a href="/blog/que-hacer-si-me-detienen-en-honduras">qué hacer si lo detienen</a>, la asistencia letrada desde el primer momento es un derecho y una necesidad. Su abogado controlará la legalidad de la detención, evitará que declare sin defensa y solicitará las medidas menos gravosas.</p>
+<p>Si es detenido, su primera llamada debe ser a un abogado penalista. Como explicamos en nuestra guía sobre <a href="/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras">qué hacer si lo detienen</a>, la asistencia letrada desde el primer momento es un derecho y una necesidad. Su abogado controlará la legalidad de la detención, evitará que declare sin defensa y solicitará las medidas menos gravosas.</p>
 
 <h3>3. Durante una audiencia inicial</h3>
 <p>La audiencia inicial es una de las etapas más críticas del proceso. En ella se decide si enfrentará el proceso en libertad o en prisión preventiva. Un abogado penalista con experiencia sabe cómo impugnar la legalidad de la detención, contrarrestar los argumentos del fiscal y proponer medidas sustitutivas viables.</p>
@@ -45,7 +45,7 @@ export const cuandoNecesitoAbogadoPenalistaHonduras: Post = {
 <ul>
   <li><strong>Controlar la legalidad</strong> de cada actuación policial y del Ministerio Público.</li>
   <li><strong>Impugnar pruebas ilícitas</strong> obtenidas con violación de derechos fundamentales.</li>
-  <li><strong>Solicitar medidas sustitutivas</strong> a la prisión preventiva, como las que describimos en nuestro artículo sobre <a href="/blog/medidas-sustitutivas-prision-preventiva-honduras">medidas sustitutivas</a>.</li>
+  <li><strong>Solicitar medidas sustitutivas</strong> a la prisión preventiva, como las que describimos en nuestro artículo sobre <a href="/blog/derecho-penal/medidas-sustitutivas-prision-preventiva-honduras">medidas sustitutivas</a>.</li>
   <li><strong>Negociar criterios de oportunidad</strong> o suspensión condicional del proceso cuando sea legalmente viable.</li>
   <li><strong>Preparar y ejecutar la estrategia de defensa</strong> más adecuada al tipo de delito y las circunstancias del caso.</li>
   <li><strong>Recurrir resoluciones adversas</strong> en todas las instancias, incluyendo apelaciones y casación.</li>
@@ -119,9 +119,9 @@ export const cuandoNecesitoAbogadoPenalistaHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
-  <li><a href="/blog/medidas-sustitutivas-prision-preventiva-honduras">Medidas sustitutivas a la prisión preventiva en Honduras</a></li>
-  <li><a href="/blog/audiencia-inicial-proceso-penal-honduras">Cómo funciona una audiencia inicial en el proceso penal hondureño</a></li>
+  <li><a href="/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/medidas-sustitutivas-prision-preventiva-honduras">Medidas sustitutivas a la prisión preventiva en Honduras</a></li>
+  <li><a href="/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras">Cómo funciona una audiencia inicial en el proceso penal hondureño</a></li>
 </ul>
 
 <h2>Conclusión</h2>

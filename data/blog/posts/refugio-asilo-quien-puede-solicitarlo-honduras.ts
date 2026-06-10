@@ -60,9 +60,9 @@ export const refugioAsiloQuienPuedeSolicitarloHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/residencia-temporal-requisitos-plazos-honduras">Residencia temporal en Honduras: requisitos, plazos y tipos de visa</a></li>
-<li><a href="/blog/naturalizacion-obtener-nacionalidad-hondurena">Naturalización en Honduras: cómo obtener la nacionalidad hondureña</a></li>
-<li><a href="/blog/visas-inversion-inversionista-rentista-pensionado-honduras">Visas de inversión en Honduras: inversionista, rentista y pensionado</a></li>
+<li><a href="/blog/extranjeria-migracion/residencia-temporal-requisitos-plazos-honduras">Residencia temporal en Honduras: requisitos, plazos y tipos de visa</a></li>
+<li><a href="/blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena">Naturalización en Honduras: cómo obtener la nacionalidad hondureña</a></li>
+<li><a href="/blog/extranjeria-migracion/visas-inversion-inversionista-rentista-pensionado-honduras">Visas de inversión en Honduras: inversionista, rentista y pensionado</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita protección internacional en Honduras? Consulte con nuestro equipo de extranjería.</a></strong></p>
 

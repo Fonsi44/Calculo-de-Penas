@@ -60,9 +60,9 @@ export const derechosDeAutorProteccionRegistroHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/registrar-marca-paso-a-paso-honduras">Cómo registrar una marca en Honduras: paso a paso</a></li>
-<li><a href="/blog/patentes-requisitos-proceso-solicitud-honduras">Patentes en Honduras: requisitos y proceso de solicitud</a></li>
-<li><a href="/blog/proteccion-marcas-competencia-desleal-honduras">Protección de marcas frente a la competencia desleal en Honduras</a></li>
+<li><a href="/blog/propiedad-intelectual/registrar-marca-paso-a-paso-honduras">Cómo registrar una marca en Honduras: paso a paso</a></li>
+<li><a href="/blog/propiedad-intelectual/patentes-requisitos-proceso-solicitud-honduras">Patentes en Honduras: requisitos y proceso de solicitud</a></li>
+<li><a href="/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal-honduras">Protección de marcas frente a la competencia desleal en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Ha creado una obra y quiere protegerla? Registre sus derechos de autor con nuestra asesoría.</a></strong></p>
 

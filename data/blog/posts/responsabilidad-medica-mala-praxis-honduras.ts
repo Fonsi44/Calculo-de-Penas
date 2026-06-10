@@ -60,9 +60,9 @@ export const responsabilidadMedicaMalaPraxisHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/registro-sanitario-alimentos-arsa-paso-a-paso-honduras">Registro sanitario de alimentos ante la ARSA: paso a paso</a></li>
-<li><a href="/blog/registro-medicamentos-productos-farmaceuticos-honduras">Registro de medicamentos y productos farmacéuticos en Honduras</a></li>
-<li><a href="/blog/habilitacion-clinicas-hospitales-privados-honduras">Habilitación de clínicas y hospitales privados en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/registro-sanitario-alimentos-arsa-paso-a-paso-honduras">Registro sanitario de alimentos ante la ARSA: paso a paso</a></li>
+<li><a href="/blog/regulacion-sanitaria/registro-medicamentos-productos-farmaceuticos-honduras">Registro de medicamentos y productos farmacéuticos en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales-privados-honduras">Habilitación de clínicas y hospitales privados en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Ha sido víctima de una negligencia médica? Defienda sus derechos. Consúltenos.</a></strong></p>
 

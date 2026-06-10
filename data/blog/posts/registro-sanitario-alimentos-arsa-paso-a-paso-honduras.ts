@@ -57,9 +57,9 @@ export const registroSanitarioAlimentosArsaPasoAPasoHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/registro-medicamentos-productos-farmaceuticos-honduras">Registro de medicamentos y productos farmacéuticos en Honduras</a></li>
-<li><a href="/blog/habilitacion-clinicas-hospitales-privados-honduras">Habilitación de clínicas y hospitales privados en Honduras</a></li>
-<li><a href="/blog/responsabilidad-medica-mala-praxis-honduras">Responsabilidad médica y mala praxis en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/registro-medicamentos-productos-farmaceuticos-honduras">Registro de medicamentos y productos farmacéuticos en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales-privados-honduras">Habilitación de clínicas y hospitales privados en Honduras</a></li>
+<li><a href="/blog/regulacion-sanitaria/responsabilidad-medica-mala-praxis-honduras">Responsabilidad médica y mala praxis en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita registrar un producto alimenticio en ARSA? Lo guiamos en todo el proceso.</a></strong></p>
 

@@ -57,9 +57,9 @@ export const patentesRequisitosProcesoSolicitudHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/registrar-marca-paso-a-paso-honduras">Cómo registrar una marca en Honduras: paso a paso</a></li>
-<li><a href="/blog/derechos-de-autor-proteccion-registro-honduras">Derechos de autor en Honduras: qué protegen y cómo registrarlos</a></li>
-<li><a href="/blog/proteccion-marcas-competencia-desleal-honduras">Protección de marcas frente a la competencia desleal en Honduras</a></li>
+<li><a href="/blog/propiedad-intelectual/registrar-marca-paso-a-paso-honduras">Cómo registrar una marca en Honduras: paso a paso</a></li>
+<li><a href="/blog/propiedad-intelectual/derechos-de-autor-proteccion-registro-honduras">Derechos de autor en Honduras: qué protegen y cómo registrarlos</a></li>
+<li><a href="/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal-honduras">Protección de marcas frente a la competencia desleal en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Ha inventado algo innovador? Proteja su patente en Honduras con nuestro equipo legal.</a></strong></p>
 

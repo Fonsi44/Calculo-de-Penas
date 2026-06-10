@@ -57,9 +57,9 @@ export const bancoDemandaDeudaDefensaOpcionesHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/derechos-consumidor-financiero-cnbs-honduras">Derechos del consumidor financiero en Honduras: guía CNBS</a></li>
-<li><a href="/blog/creditos-reestructuracion-deudas-bancarias-honduras">Créditos bancarios y reestructuración de deudas en Honduras</a></li>
-<li><a href="/blog/central-riesgos-consultar-impugnar-honduras">Central de Riesgos en Honduras: cómo consultarla, impugnar y salir</a></li>
+<li><a href="/blog/derecho-bancario/derechos-consumidor-financiero-cnbs-honduras">Derechos del consumidor financiero en Honduras: guía CNBS</a></li>
+<li><a href="/blog/derecho-bancario/creditos-reestructuracion-deudas-bancarias-honduras">Créditos bancarios y reestructuración de deudas en Honduras</a></li>
+<li><a href="/blog/derecho-bancario/central-riesgos-consultar-impugnar-honduras">Central de Riesgos en Honduras: cómo consultarla, impugnar y salir</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">El banco le está demandando? No ignore la notificación. Consulte con nuestros abogados bancarios hoy.</a></strong></p>
 

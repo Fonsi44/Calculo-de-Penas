@@ -57,9 +57,9 @@ export const contratacionPublicaLicitacionesEmpresasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/recurso-de-amparo-para-que-sirve-honduras">Recurso de amparo en Honduras: para qué sirve y cómo se interpone</a></li>
-<li><a href="/blog/despido-empleados-publicos-procedencia-defensa-honduras">Despido de empleados públicos en Honduras: procedencia y defensa</a></li>
-<li><a href="/blog/sanciones-administrativas-como-defenderse-honduras">Sanciones administrativas en Honduras: cómo defenderse</a></li>
+<li><a href="/blog/derecho-administrativo/recurso-de-amparo-para-que-sirve-honduras">Recurso de amparo en Honduras: para qué sirve y cómo se interpone</a></li>
+<li><a href="/blog/derecho-administrativo/despido-empleados-publicos-procedencia-defensa-honduras">Despido de empleados públicos en Honduras: procedencia y defensa</a></li>
+<li><a href="/blog/derecho-administrativo/sanciones-administrativas-como-defenderse-honduras">Sanciones administrativas en Honduras: cómo defenderse</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere venderle al Estado hondureño? Lo asesoramos en licitaciones y contratación pública.</a></strong></p>
 

@@ -42,7 +42,7 @@ export const queHacerSiMeDetienenEnHonduras: Post = {
 <p>La Policía debe ponerlo a disposición del Ministerio Público dentro del plazo legal. El fiscal revisa los elementos de la detención y decide si formula una imputación. Es aquí donde su abogado puede intervenir para controlar la legalidad de todo lo actuado.</p>
 
 <h3>4. La audiencia inicial</h3>
-<p>Es la primera comparecencia ante un juez. En esta audiencia se controla la legalidad de la detención, se le informan sus derechos, el fiscal formula la imputación y el juez decide las medidas cautelares. Es una de las audiencias más importantes del proceso penal. Puede obtener más información en nuestro artículo sobre <a href="/blog/audiencia-inicial-proceso-penal-honduras">cómo funciona la audiencia inicial</a>.</p>
+<p>Es la primera comparecencia ante un juez. En esta audiencia se controla la legalidad de la detención, se le informan sus derechos, el fiscal formula la imputación y el juez decide las medidas cautelares. Es una de las audiencias más importantes del proceso penal. Puede obtener más información en nuestro artículo sobre <a href="/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras">cómo funciona la audiencia inicial</a>.</p>
 
 <h2>Qué NO hacer durante una detención</h2>
 
@@ -75,9 +75,9 @@ export const queHacerSiMeDetienenEnHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/audiencia-inicial-proceso-penal-honduras">Cómo funciona una audiencia inicial en el proceso penal hondureño</a></li>
-  <li><a href="/blog/medidas-sustitutivas-prision-preventiva-honduras">Medidas sustitutivas a la prisión preventiva en Honduras</a></li>
-  <li><a href="/blog/diferencia-denuncia-querella-acusacion-honduras">Diferencia entre denuncia, querella y acusación en Honduras</a></li>
+  <li><a href="/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras">Cómo funciona una audiencia inicial en el proceso penal hondureño</a></li>
+  <li><a href="/blog/derecho-penal/medidas-sustitutivas-prision-preventiva-honduras">Medidas sustitutivas a la prisión preventiva en Honduras</a></li>
+  <li><a href="/blog/derecho-penal/diferencia-denuncia-querella-acusacion-honduras">Diferencia entre denuncia, querella y acusación en Honduras</a></li>
 </ul>
 
 <h2>Conclusión</h2>

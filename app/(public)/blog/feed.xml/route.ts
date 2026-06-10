@@ -31,8 +31,8 @@ export async function GET() {
     <item>
       <title>${esc(post.title)}</title>
       <description>${esc(post.description)}</description>
-      <link>${esc(siteUrl)}/blog/${esc(post.slug)}</link>
-      <guid isPermaLink="true">${esc(siteUrl)}/blog/${esc(post.slug)}</guid>
+      <link>${esc(siteUrl)}/blog/${esc(post.category)}/${esc(post.slug)}</link>
+      <guid isPermaLink="true">${esc(siteUrl)}/blog/${esc(post.category)}/${esc(post.slug)}</guid>
       <pubDate>${rfc822(post.publishedAt)}</pubDate>
       <category>${esc(categoryName)}</category>
     </item>`;

@@ -57,9 +57,9 @@ export const naturalizacionObtenerNacionalidadHondurena: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/residencia-temporal-requisitos-plazos-honduras">Residencia temporal en Honduras: requisitos, plazos y tipos de visa</a></li>
-<li><a href="/blog/visas-inversion-inversionista-rentista-pensionado-honduras">Visas de inversión en Honduras: inversionista, rentista y pensionado</a></li>
-<li><a href="/blog/permiso-trabajo-extranjeros-honduras">Permiso de trabajo para extranjeros en Honduras</a></li>
+<li><a href="/blog/extranjeria-migracion/residencia-temporal-requisitos-plazos-honduras">Residencia temporal en Honduras: requisitos, plazos y tipos de visa</a></li>
+<li><a href="/blog/extranjeria-migracion/visas-inversion-inversionista-rentista-pensionado-honduras">Visas de inversión en Honduras: inversionista, rentista y pensionado</a></li>
+<li><a href="/blog/extranjeria-migracion/permiso-trabajo-extranjeros-honduras">Permiso de trabajo para extranjeros en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere obtener la nacionalidad hondureña? Le orientamos en el proceso de naturalización.</a></strong></p>
 

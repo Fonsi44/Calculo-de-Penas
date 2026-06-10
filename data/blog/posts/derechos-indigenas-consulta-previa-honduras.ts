@@ -42,9 +42,9 @@ export const derechosIndigenasConsultaPreviaHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/licencia-ambiental-categorias-plazos-honduras">Licencia ambiental en Honduras: categorías, plazos y sanciones</a></li>
-<li><a href="/blog/delitos-ambientales-como-denunciarlos-honduras">Delitos ambientales en Honduras: qué son y cómo denunciarlos</a></li>
-<li><a href="/blog/evaluacion-impacto-ambiental-paso-a-paso-honduras">Evaluación de impacto ambiental en Honduras: paso a paso</a></li>
+<li><a href="/blog/derecho-ambiental/licencia-ambiental-categorias-plazos-honduras">Licencia ambiental en Honduras: categorías, plazos y sanciones</a></li>
+<li><a href="/blog/derecho-ambiental/delitos-ambientales-como-denunciarlos-honduras">Delitos ambientales en Honduras: qué son y cómo denunciarlos</a></li>
+<li><a href="/blog/derecho-ambiental/evaluacion-impacto-ambiental-paso-a-paso-honduras">Evaluación de impacto ambiental en Honduras: paso a paso</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su proyecto afecta territorios indígenas? Asegure el cumplimiento de la consulta previa.</a></strong></p>
 

@@ -60,9 +60,9 @@ export const derechoDePeticionInstitucionesHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/derechos-del-detenido-guia-constitucional-honduras">Derechos del detenido en Honduras: guía constitucional completa</a></li>
-<li><a href="/blog/libertad-expresion-redes-sociales-honduras">Libertad de expresión y redes sociales en Honduras</a></li>
-<li><a href="/blog/proteccion-datos-personales-derechos-arco-honduras">Protección de datos personales en Honduras: derechos ARCO</a></li>
+<li><a href="/blog/derechos-ciudadanos/derechos-del-detenido-guia-constitucional-honduras">Derechos del detenido en Honduras: guía constitucional completa</a></li>
+<li><a href="/blog/derechos-ciudadanos/libertad-expresion-redes-sociales-honduras">Libertad de expresión y redes sociales en Honduras</a></li>
+<li><a href="/blog/derechos-ciudadanos/proteccion-datos-personales-derechos-arco-honduras">Protección de datos personales en Honduras: derechos ARCO</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Una institución no le responde? Exija su derecho de petición con nuestra asesoría.</a></strong></p>
 

@@ -50,9 +50,9 @@ export const ejecucionHipotecariaQueHacerHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/banco-demanda-deuda-defensa-opciones-honduras">¿Qué hacer si un banco me demanda por deuda? Defensa y opciones</a></li>
-<li><a href="/blog/derechos-consumidor-financiero-cnbs-honduras">Derechos del consumidor financiero en Honduras: guía CNBS</a></li>
-<li><a href="/blog/creditos-reestructuracion-deudas-bancarias-honduras">Créditos bancarios y reestructuración de deudas en Honduras</a></li>
+<li><a href="/blog/derecho-bancario/banco-demanda-deuda-defensa-opciones-honduras">¿Qué hacer si un banco me demanda por deuda? Defensa y opciones</a></li>
+<li><a href="/blog/derecho-bancario/derechos-consumidor-financiero-cnbs-honduras">Derechos del consumidor financiero en Honduras: guía CNBS</a></li>
+<li><a href="/blog/derecho-bancario/creditos-reestructuracion-deudas-bancarias-honduras">Créditos bancarios y reestructuración de deudas en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su casa está en riesgo de remate? Actúe antes de que sea demasiado tarde. Consúltenos ahora.</a></strong></p>
 

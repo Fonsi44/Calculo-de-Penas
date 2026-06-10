@@ -95,8 +95,8 @@ export const divorcioHondurasPasosRequisitos: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/custodia-hijos-honduras-juez">Custodia de hijos en Honduras: qué valora un juez</a></li>
-  <li><a href="/blog/pension-alimenticia-honduras-como-solicitarla">Pensión alimenticia en Honduras: cómo solicitarla</a></li>
+  <li><a href="/blog/derecho-de-familia/custodia-hijos-honduras-juez">Custodia de hijos en Honduras: qué valora un juez</a></li>
+  <li><a href="/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla">Pensión alimenticia en Honduras: cómo solicitarla</a></li>
 </ul>
 
 <p>Si está considerando el divorcio y necesita orientación legal, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para una consulta con nuestros abogados de familia.</p>

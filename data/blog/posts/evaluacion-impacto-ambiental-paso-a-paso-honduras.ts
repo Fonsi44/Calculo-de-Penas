@@ -57,9 +57,9 @@ export const evaluacionImpactoAmbientalPasoAPasoHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/licencia-ambiental-categorias-plazos-honduras">Licencia ambiental en Honduras: categorías, plazos y sanciones</a></li>
-<li><a href="/blog/delitos-ambientales-como-denunciarlos-honduras">Delitos ambientales en Honduras: qué son y cómo denunciarlos</a></li>
-<li><a href="/blog/derechos-indigenas-consulta-previa-honduras">Derechos indígenas y consulta previa en Honduras</a></li>
+<li><a href="/blog/derecho-ambiental/licencia-ambiental-categorias-plazos-honduras">Licencia ambiental en Honduras: categorías, plazos y sanciones</a></li>
+<li><a href="/blog/derecho-ambiental/delitos-ambientales-como-denunciarlos-honduras">Delitos ambientales en Honduras: qué son y cómo denunciarlos</a></li>
+<li><a href="/blog/derecho-ambiental/derechos-indigenas-consulta-previa-honduras">Derechos indígenas y consulta previa en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su proyecto requiere Evaluación de Impacto Ambiental? Contamos con experiencia en derecho ambiental.</a></strong></p>
 

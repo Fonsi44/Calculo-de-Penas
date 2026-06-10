@@ -57,9 +57,9 @@ export const zonasLibresZoliBeneficiosFiscalesHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/importar-mercancias-guia-legal-aduanera-honduras">Importar mercancías a Honduras: guía legal y aduanera</a></li>
-<li><a href="/blog/importar-desde-china-guia-legal-aduanera-honduras">Importar desde China a Honduras: guía legal completa</a></li>
-<li><a href="/blog/codigo-aduanero-centroamericano-basico-honduras">Código Aduanero Centroamericano: lo básico para importadores y exportadores</a></li>
+<li><a href="/blog/derecho-aduanero/importar-mercancias-guia-legal-aduanera-honduras">Importar mercancías a Honduras: guía legal y aduanera</a></li>
+<li><a href="/blog/derecho-aduanero/importar-desde-china-guia-legal-aduanera-honduras">Importar desde China a Honduras: guía legal completa</a></li>
+<li><a href="/blog/derecho-aduanero/codigo-aduanero-centroamericano-basico-honduras">Código Aduanero Centroamericano: lo básico para importadores y exportadores</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere invertir en una zona libre en Honduras? Le asesoramos en la instalación.</a></strong></p>
 

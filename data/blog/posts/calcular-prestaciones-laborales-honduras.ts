@@ -90,8 +90,8 @@ export const calcularPrestacionesLaboralesHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/despido-injustificado-honduras-derechos-trabajador">Despido injustificado en Honduras: derechos del trabajador</a></li>
-  <li><a href="/blog/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga en Honduras?</a></li>
+  <li><a href="/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador">Despido injustificado en Honduras: derechos del trabajador</a></li>
+  <li><a href="/blog/derecho-laboral/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga en Honduras?</a></li>
 </ul>
 
 <p>Si necesita ayuda para calcular o reclamar sus prestaciones laborales, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>

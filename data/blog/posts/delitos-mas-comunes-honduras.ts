@@ -101,9 +101,9 @@ export const delitosMasComunesHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/cuando-necesito-abogado-penalista-honduras">¿Cuándo necesito un abogado penalista en Honduras?</a></li>
-  <li><a href="/blog/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
-  <li><a href="/blog/diferencia-denuncia-querella-acusacion-honduras">Diferencia entre denuncia, querella y acusación en Honduras</a></li>
+  <li><a href="/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras">¿Cuándo necesito un abogado penalista en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/diferencia-denuncia-querella-acusacion-honduras">Diferencia entre denuncia, querella y acusación en Honduras</a></li>
 </ul>
 
 <h2>Conclusión</h2>

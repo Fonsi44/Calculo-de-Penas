@@ -57,9 +57,9 @@ export const facturacionElectronicaObligacionesRequisitosSarHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/impuesto-renta-guia-personas-fisicas-honduras">Impuesto sobre la Renta en Honduras: guía para personas físicas</a></li>
-<li><a href="/blog/sar-notifica-fiscalizacion-que-hacer-honduras">¿Qué hacer si el SAR me notifica una fiscalización?</a></li>
-<li><a href="/blog/impuestos-pequenas-empresas-guia-basica-honduras">Impuestos para pequeñas empresas en Honduras: guía básica</a></li>
+<li><a href="/blog/tributario/impuesto-renta-guia-personas-fisicas-honduras">Impuesto sobre la Renta en Honduras: guía para personas físicas</a></li>
+<li><a href="/blog/tributario/sar-notifica-fiscalizacion-que-hacer-honduras">¿Qué hacer si el SAR me notifica una fiscalización?</a></li>
+<li><a href="/blog/tributario/impuestos-pequenas-empresas-guia-basica-honduras">Impuestos para pequeñas empresas en Honduras: guía básica</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita implementar facturación electrónica en su empresa? Le asesoramos en el cumplimiento SAR.</a></strong></p>
 

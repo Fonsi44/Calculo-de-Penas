@@ -57,9 +57,9 @@ export const jornadaLaboralHorasExtraDescansosHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/calcular-liquidacion-laboral-honduras">¿Cómo calcular una liquidación laboral en Honduras?</a></li>
-<li><a href="/blog/acoso-laboral-mobbing-honduras">Acoso laboral (mobbing) en Honduras: cómo identificarlo y denunciarlo</a></li>
-<li><a href="/blog/contratos-trabajo-tipos-clausulas-honduras">Contratos de trabajo en Honduras: tipos, cláusulas esenciales y derechos</a></li>
+<li><a href="/blog/derecho-laboral/calcular-liquidacion-laboral-honduras">¿Cómo calcular una liquidación laboral en Honduras?</a></li>
+<li><a href="/blog/derecho-laboral/acoso-laboral-mobbing-honduras">Acoso laboral (mobbing) en Honduras: cómo identificarlo y denunciarlo</a></li>
+<li><a href="/blog/derecho-laboral/contratos-trabajo-tipos-clausulas-honduras">Contratos de trabajo en Honduras: tipos, cláusulas esenciales y derechos</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su empleador no le paga las horas extra? Defienda sus derechos. Consulte con nuestros abogados.</a></strong></p>
 

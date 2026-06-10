@@ -99,9 +99,9 @@ export const medidasSustitutivasPrisionPreventivaHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
-  <li><a href="/blog/audiencia-inicial-proceso-penal-honduras">Cómo funciona una audiencia inicial en el proceso penal hondureño</a></li>
-  <li><a href="/blog/cuando-necesito-abogado-penalista-honduras">¿Cuándo necesito un abogado penalista en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras">Cómo funciona una audiencia inicial en el proceso penal hondureño</a></li>
+  <li><a href="/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras">¿Cuándo necesito un abogado penalista en Honduras?</a></li>
 </ul>
 
 <h2>Conclusión</h2>

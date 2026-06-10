@@ -53,9 +53,9 @@ export const allanamientoIlegalViolacionDomicilioHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
-<li><a href="/blog/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
-<li><a href="/blog/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
+<li><a href="/blog/derecho-penal/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
+<li><a href="/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
+<li><a href="/blog/derecho-penal/antejuicio-en-honduras">Antejuicio en Honduras: qué es, a quiénes aplica y cómo funciona</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su domicilio fue allanado sin orden judicial? Defienda sus derechos. Consulte con nuestros abogados penalistas.</a></strong></p>
 

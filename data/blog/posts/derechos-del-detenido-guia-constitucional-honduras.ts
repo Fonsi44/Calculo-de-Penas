@@ -57,9 +57,9 @@ export const derechosDelDetenidoGuiaConstitucionalHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/derecho-de-peticion-instituciones-honduras">Derecho de petición en Honduras: cómo usarlo ante instituciones</a></li>
-<li><a href="/blog/libertad-expresion-redes-sociales-honduras">Libertad de expresión y redes sociales en Honduras</a></li>
-<li><a href="/blog/proteccion-datos-personales-derechos-arco-honduras">Protección de datos personales en Honduras: derechos ARCO</a></li>
+<li><a href="/blog/derechos-ciudadanos/derecho-de-peticion-instituciones-honduras">Derecho de petición en Honduras: cómo usarlo ante instituciones</a></li>
+<li><a href="/blog/derechos-ciudadanos/libertad-expresion-redes-sociales-honduras">Libertad de expresión y redes sociales en Honduras</a></li>
+<li><a href="/blog/derechos-ciudadanos/proteccion-datos-personales-derechos-arco-honduras">Protección de datos personales en Honduras: derechos ARCO</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Si usted o un familiar es detenido, conozca sus derechos. Consulte con nuestros abogados penalistas.</a></strong></p>
 

@@ -39,9 +39,9 @@ export const prescripcionDeudasPlazosHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/contratos-arrendamiento-derechos-obligaciones-honduras">Contratos de arrendamiento en Honduras: derechos y obligaciones</a></li>
-<li><a href="/blog/testamentos-sucesiones-herencia-honduras">Testamentos y sucesiones en Honduras: cómo heredar sin conflictos</a></li>
-<li><a href="/blog/compraventa-inmuebles-aspectos-legales-honduras">Compraventa de inmuebles en Honduras: aspectos legales clave</a></li>
+<li><a href="/blog/derecho-civil/contratos-arrendamiento-derechos-obligaciones-honduras">Contratos de arrendamiento en Honduras: derechos y obligaciones</a></li>
+<li><a href="/blog/derecho-civil/testamentos-sucesiones-herencia-honduras">Testamentos y sucesiones en Honduras: cómo heredar sin conflictos</a></li>
+<li><a href="/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras">Compraventa de inmuebles en Honduras: aspectos legales clave</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Le están cobrando una deuda que cree prescrita? Verifíquelo con nuestros abogados civiles.</a></strong></p>
 

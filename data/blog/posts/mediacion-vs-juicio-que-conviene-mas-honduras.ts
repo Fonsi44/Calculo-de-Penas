@@ -39,9 +39,9 @@ export const mediacionVsJuicioQueConvieneMasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/arbitraje-cuando-conviene-como-funciona-honduras">Arbitraje en Honduras: cuándo conviene y cómo funciona</a></li>
-<li><a href="/blog/centro-conciliacion-arbitraje-ccic-guia-honduras">Centro de Conciliación y Arbitraje de la CCIC: guía práctica</a></li>
-<li><a href="/blog/mediacion-familiar-cuando-funciona-honduras">Mediación familiar en Honduras: cuándo es obligatoria y cómo funciona</a></li>
+<li><a href="/blog/conciliacion-arbitraje/arbitraje-cuando-conviene-como-funciona-honduras">Arbitraje en Honduras: cuándo conviene y cómo funciona</a></li>
+<li><a href="/blog/conciliacion-arbitraje/centro-conciliacion-arbitraje-ccic-guia-honduras">Centro de Conciliación y Arbitraje de la CCIC: guía práctica</a></li>
+<li><a href="/blog/conciliacion-arbitraje/mediacion-familiar-cuando-funciona-honduras">Mediación familiar en Honduras: cuándo es obligatoria y cómo funciona</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Tiene un conflicto y no sabe si ir a juicio o mediar? Le orientamos sobre la mejor opción.</a></strong></p>
 

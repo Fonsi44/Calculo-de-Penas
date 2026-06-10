@@ -57,9 +57,9 @@ export const derechosConsumidorFinancieroCnbsHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/banco-demanda-deuda-defensa-opciones-honduras">¿Qué hacer si un banco me demanda por deuda? Defensa y opciones</a></li>
-<li><a href="/blog/creditos-reestructuracion-deudas-bancarias-honduras">Créditos bancarios y reestructuración de deudas en Honduras</a></li>
-<li><a href="/blog/central-riesgos-consultar-impugnar-honduras">Central de Riesgos en Honduras: cómo consultarla, impugnar y salir</a></li>
+<li><a href="/blog/derecho-bancario/banco-demanda-deuda-defensa-opciones-honduras">¿Qué hacer si un banco me demanda por deuda? Defensa y opciones</a></li>
+<li><a href="/blog/derecho-bancario/creditos-reestructuracion-deudas-bancarias-honduras">Créditos bancarios y reestructuración de deudas en Honduras</a></li>
+<li><a href="/blog/derecho-bancario/central-riesgos-consultar-impugnar-honduras">Central de Riesgos en Honduras: cómo consultarla, impugnar y salir</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">El banco le está cobrando comisiones indebidas? Defienda sus derechos como consumidor financiero.</a></strong></p>
 

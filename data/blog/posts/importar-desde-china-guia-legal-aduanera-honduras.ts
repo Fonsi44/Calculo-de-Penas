@@ -57,9 +57,9 @@ export const importarDesdeChinaGuiaLegalAduaneraHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/importar-mercancias-guia-legal-aduanera-honduras">Importar mercancías a Honduras: guía legal y aduanera</a></li>
-<li><a href="/blog/codigo-aduanero-centroamericano-basico-honduras">Código Aduanero Centroamericano: lo básico para importadores y exportadores</a></li>
-<li><a href="/blog/zonas-libres-zoli-beneficios-fiscales-honduras">Zonas libres y ZOLI en Honduras: beneficios fiscales y requisitos</a></li>
+<li><a href="/blog/derecho-aduanero/importar-mercancias-guia-legal-aduanera-honduras">Importar mercancías a Honduras: guía legal y aduanera</a></li>
+<li><a href="/blog/derecho-aduanero/codigo-aduanero-centroamericano-basico-honduras">Código Aduanero Centroamericano: lo básico para importadores y exportadores</a></li>
+<li><a href="/blog/derecho-aduanero/zonas-libres-zoli-beneficios-fiscales-honduras">Zonas libres y ZOLI en Honduras: beneficios fiscales y requisitos</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Importa desde China? Asegure sus operaciones con asesoría legal aduanera.</a></strong></p>
 

@@ -53,9 +53,9 @@ export const contratosFranquiciaAspectosLegalesHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/elegir-tipo-sociedad-empresa-honduras">Cómo elegir el tipo de sociedad para su empresa en Honduras</a></li>
-<li><a href="/blog/contratos-mercantiles-esenciales-empresas-honduras">Contratos mercantiles esenciales para empresas en Honduras</a></li>
-<li><a href="/blog/titulos-valores-cheques-sin-fondo-honduras">Títulos valores, cheques sin fondo y protestos en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras">Cómo elegir el tipo de sociedad para su empresa en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras">Contratos mercantiles esenciales para empresas en Honduras</a></li>
+<li><a href="/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras">Títulos valores, cheques sin fondo y protestos en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Va a invertir en una franquicia? Revise el contrato con nuestros abogados mercantiles antes de firmar.</a></strong></p>
 

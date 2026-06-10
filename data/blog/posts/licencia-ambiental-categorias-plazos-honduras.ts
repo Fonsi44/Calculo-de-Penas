@@ -57,9 +57,9 @@ export const licenciaAmbientalCategoriasPlazosHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/delitos-ambientales-como-denunciarlos-honduras">Delitos ambientales en Honduras: qué son y cómo denunciarlos</a></li>
-<li><a href="/blog/evaluacion-impacto-ambiental-paso-a-paso-honduras">Evaluación de impacto ambiental en Honduras: paso a paso</a></li>
-<li><a href="/blog/derechos-indigenas-consulta-previa-honduras">Derechos indígenas y consulta previa en Honduras</a></li>
+<li><a href="/blog/derecho-ambiental/delitos-ambientales-como-denunciarlos-honduras">Delitos ambientales en Honduras: qué son y cómo denunciarlos</a></li>
+<li><a href="/blog/derecho-ambiental/evaluacion-impacto-ambiental-paso-a-paso-honduras">Evaluación de impacto ambiental en Honduras: paso a paso</a></li>
+<li><a href="/blog/derecho-ambiental/derechos-indigenas-consulta-previa-honduras">Derechos indígenas y consulta previa en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Su proyecto necesita licencia ambiental? Lo asesoramos en todo el proceso ante MiAmbiente+.</a></strong></p>
 

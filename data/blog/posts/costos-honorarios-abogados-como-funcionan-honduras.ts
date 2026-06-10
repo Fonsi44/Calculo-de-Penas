@@ -42,9 +42,9 @@ export const costosHonorariosAbogadosComoFuncionanHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/como-preparar-demanda-guia-no-abogados-honduras">Cómo preparar una demanda en Honduras: guía para no abogados</a></li>
-<li><a href="/blog/lavado-activos-obligaciones-cumplimiento-empresas-honduras">Lavado de activos en Honduras: obligaciones de cumplimiento para empresas</a></li>
-<li><a href="/blog/como-obtener-rtn-personas-empresas-honduras">¿Cómo obtener el RTN en Honduras? Guía para personas y empresas</a></li>
+<li><a href="/blog/practica-legal/como-preparar-demanda-guia-no-abogados-honduras">Cómo preparar una demanda en Honduras: guía para no abogados</a></li>
+<li><a href="/blog/practica-legal/lavado-activos-obligaciones-cumplimiento-empresas-honduras">Lavado de activos en Honduras: obligaciones de cumplimiento para empresas</a></li>
+<li><a href="/blog/practica-legal/como-obtener-rtn-personas-empresas-honduras">¿Cómo obtener el RTN en Honduras? Guía para personas y empresas</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere saber cuánto cuesta una consulta? Contáctenos, le damos presupuesto por escrito sin compromiso.</a></strong></p>
 

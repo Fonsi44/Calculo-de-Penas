@@ -31,7 +31,7 @@ export function BlogSidebar() {
             {recentPosts.map((p) => (
               <li key={p.slug}>
                 <Link
-                  href={`/blog/${p.slug}`}
+                  href={`/blog/${p.category}/${p.slug}`}
                   className="block group"
                 >
                   <p className="text-sm font-semibold text-text group-hover:text-primary transition-colors leading-snug">

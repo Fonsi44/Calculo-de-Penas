@@ -42,9 +42,9 @@ export const despidoEmpleadosPublicosProcedenciaDefensaHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/recurso-de-amparo-para-que-sirve-honduras">Recurso de amparo en Honduras: para qué sirve y cómo se interpone</a></li>
-<li><a href="/blog/contratacion-publica-licitaciones-empresas-honduras">Contratación pública y licitaciones en Honduras: guía para empresas</a></li>
-<li><a href="/blog/sanciones-administrativas-como-defenderse-honduras">Sanciones administrativas en Honduras: cómo defenderse</a></li>
+<li><a href="/blog/derecho-administrativo/recurso-de-amparo-para-que-sirve-honduras">Recurso de amparo en Honduras: para qué sirve y cómo se interpone</a></li>
+<li><a href="/blog/derecho-administrativo/contratacion-publica-licitaciones-empresas-honduras">Contratación pública y licitaciones en Honduras: guía para empresas</a></li>
+<li><a href="/blog/derecho-administrativo/sanciones-administrativas-como-defenderse-honduras">Sanciones administrativas en Honduras: cómo defenderse</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Es empleado público y fue despedido? Defienda su estabilidad laboral con nuestros abogados.</a></strong></p>
 

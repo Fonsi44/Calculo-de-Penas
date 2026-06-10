@@ -42,9 +42,9 @@ export const mediacionFamiliarCuandoFuncionaHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/mediacion-vs-juicio-que-conviene-mas-honduras">Mediación vs juicio: qué conviene más en un conflicto legal</a></li>
-<li><a href="/blog/arbitraje-cuando-conviene-como-funciona-honduras">Arbitraje en Honduras: cuándo conviene y cómo funciona</a></li>
-<li><a href="/blog/centro-conciliacion-arbitraje-ccic-guia-honduras">Centro de Conciliación y Arbitraje de la CCIC: guía práctica</a></li>
+<li><a href="/blog/conciliacion-arbitraje/mediacion-vs-juicio-que-conviene-mas-honduras">Mediación vs juicio: qué conviene más en un conflicto legal</a></li>
+<li><a href="/blog/conciliacion-arbitraje/arbitraje-cuando-conviene-como-funciona-honduras">Arbitraje en Honduras: cuándo conviene y cómo funciona</a></li>
+<li><a href="/blog/conciliacion-arbitraje/centro-conciliacion-arbitraje-ccic-guia-honduras">Centro de Conciliación y Arbitraje de la CCIC: guía práctica</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Quiere resolver un conflicto familiar sin llegar a juicio? La mediación puede ser su mejor opción.</a></strong></p>
 

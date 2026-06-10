@@ -21,7 +21,7 @@ export const audienciaInicialProcesoPenalHonduras: Post = {
 
 <p>La audiencia inicial es la primera comparecencia del imputado ante un juez. Su objetivo principal es garantizar que la detención se haya realizado conforme a la ley y que los derechos del detenido hayan sido respetados. Es, en esencia, un filtro de legalidad que protege al ciudadano frente a posibles abusos de la autoridad.</p>
 
-<p>Si desea conocer qué hacer antes de llegar a esta instancia, le recomendamos leer nuestra guía sobre <a href="/blog/que-hacer-si-me-detienen-en-honduras">qué hacer si lo detienen en Honduras</a>.</p>
+<p>Si desea conocer qué hacer antes de llegar a esta instancia, le recomendamos leer nuestra guía sobre <a href="/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras">qué hacer si lo detienen en Honduras</a>.</p>
 
 <h2>¿Quiénes intervienen en la audiencia inicial?</h2>
 
@@ -88,9 +88,9 @@ export const audienciaInicialProcesoPenalHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
-  <li><a href="/blog/medidas-sustitutivas-prision-preventiva-honduras">Medidas sustitutivas a la prisión preventiva en Honduras</a></li>
-  <li><a href="/blog/cuando-necesito-abogado-penalista-honduras">¿Cuándo necesito un abogado penalista en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras">¿Qué hacer si me detienen en Honduras?</a></li>
+  <li><a href="/blog/derecho-penal/medidas-sustitutivas-prision-preventiva-honduras">Medidas sustitutivas a la prisión preventiva en Honduras</a></li>
+  <li><a href="/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras">¿Cuándo necesito un abogado penalista en Honduras?</a></li>
 </ul>
 
 <h2>Conclusión</h2>

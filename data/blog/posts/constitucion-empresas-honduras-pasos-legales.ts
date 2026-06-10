@@ -81,8 +81,8 @@ export const constitucionEmpresasHondurasPasosLegales: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
-  <li><a href="/blog/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
+  <li><a href="/blog/derecho-mercantil/contratos-mercantiles-proteger-negocio">Contratos mercantiles: claves para proteger tu negocio</a></li>
+  <li><a href="/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras">Qué hacer ante un incumplimiento de contrato comercial</a></li>
 </ul>
 
 <p>Si desea constituir su empresa, <a href="/servicios-juridicos" target="_blank">conozca nuestros servicios de derecho mercantil</a> o <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir asesoría personalizada.</p>

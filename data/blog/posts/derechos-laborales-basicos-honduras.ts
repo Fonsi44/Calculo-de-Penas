@@ -85,9 +85,9 @@ export const derechosLaboralesBasicosHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/despido-injustificado-honduras-derechos-trabajador">Despido injustificado en Honduras: derechos del trabajador</a></li>
-  <li><a href="/blog/calcular-prestaciones-laborales-honduras">Cómo calcular prestaciones laborales en Honduras</a></li>
-  <li><a href="/blog/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga en Honduras?</a></li>
+  <li><a href="/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador">Despido injustificado en Honduras: derechos del trabajador</a></li>
+  <li><a href="/blog/derecho-laboral/calcular-prestaciones-laborales-honduras">Cómo calcular prestaciones laborales en Honduras</a></li>
+  <li><a href="/blog/derecho-laboral/empleador-no-paga-salario-honduras">¿Qué hacer si mi empleador no me paga en Honduras?</a></li>
 </ul>
 
 <p>Si tiene dudas sobre sus derechos laborales, <a href="/solicitar-consulta" target="_blank">contáctenos</a> para recibir orientación legal personalizada.</p>

@@ -35,9 +35,9 @@ export const antejuicioEnHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
-<li><a href="/blog/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
-<li><a href="/blog/defensa-penal-menores-edad-honduras">Defensa penal para menores de edad en Honduras</a></li>
+<li><a href="/blog/derecho-penal/violencia-domestica-ruta-legal-honduras">Violencia doméstica en Honduras: ruta legal, denuncia y protección</a></li>
+<li><a href="/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras">Fianza y medidas cautelares en el proceso penal hondureño</a></li>
+<li><a href="/blog/derecho-penal/defensa-penal-menores-edad-honduras">Defensa penal para menores de edad en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita asesoría sobre un proceso de antejuicio? Somos especialistas en derecho penal y constitucional.</a></strong></p>
 

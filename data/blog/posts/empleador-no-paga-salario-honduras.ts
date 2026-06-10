@@ -88,9 +88,9 @@ export const empleadorNoPagaSalarioHonduras: Post = {
 
 <h2>También puede interesarle</h2>
 <ul>
-  <li><a href="/blog/despido-injustificado-honduras-derechos-trabajador">Despido injustificado en Honduras: derechos del trabajador</a></li>
-  <li><a href="/blog/calcular-prestaciones-laborales-honduras">Cómo calcular prestaciones laborales en Honduras</a></li>
-  <li><a href="/blog/derechos-laborales-basicos-honduras">Derechos laborales básicos que todo trabajador debe conocer</a></li>
+  <li><a href="/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador">Despido injustificado en Honduras: derechos del trabajador</a></li>
+  <li><a href="/blog/derecho-laboral/calcular-prestaciones-laborales-honduras">Cómo calcular prestaciones laborales en Honduras</a></li>
+  <li><a href="/blog/derecho-laboral/derechos-laborales-basicos-honduras">Derechos laborales básicos que todo trabajador debe conocer</a></li>
 </ul>
 
 <p>Si su empleador no le paga, no espere más. <a href="/solicitar-consulta" target="_blank">Contáctenos</a> hoy para una consulta y evaluemos juntos su caso.</p>

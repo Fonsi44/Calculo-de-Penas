@@ -57,9 +57,9 @@ export const contratosTrabajoTiposClausulasHonduras: Post = {
 
 <p><strong>Artículos relacionados:</strong></p>
 <ul>
-<li><a href="/blog/calcular-liquidacion-laboral-honduras">¿Cómo calcular una liquidación laboral en Honduras?</a></li>
-<li><a href="/blog/acoso-laboral-mobbing-honduras">Acoso laboral (mobbing) en Honduras: cómo identificarlo y denunciarlo</a></li>
-<li><a href="/blog/derechos-trabajadora-embarazada-honduras">Derechos de la trabajadora embarazada en Honduras</a></li>
+<li><a href="/blog/derecho-laboral/calcular-liquidacion-laboral-honduras">¿Cómo calcular una liquidación laboral en Honduras?</a></li>
+<li><a href="/blog/derecho-laboral/acoso-laboral-mobbing-honduras">Acoso laboral (mobbing) en Honduras: cómo identificarlo y denunciarlo</a></li>
+<li><a href="/blog/derecho-laboral/derechos-trabajadora-embarazada-honduras">Derechos de la trabajadora embarazada en Honduras</a></li>
 </ul>
 <p><strong><a href="/solicitar-consulta">Necesita redactar o revisar un contrato laboral? Le asesoramos para proteger sus derechos.</a></strong></p>
 
