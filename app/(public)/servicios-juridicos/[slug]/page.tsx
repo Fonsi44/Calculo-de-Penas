@@ -224,7 +224,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
             {blogPosts.length > 0 && (
               <div className="text-center mt-6">
                 <Link
-                  href={`/blog/categoria/${blogCategory}`}
+                  href={`/blog/${blogCategory}`}
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
                 >
                   Ver todos los artículos de {area.titulo.toLowerCase()} <ArrowRight size={16} />

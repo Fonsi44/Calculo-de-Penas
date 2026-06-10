@@ -136,7 +136,7 @@ export default function DerechoPenalPage() {
             </div>
             <div className="text-center mt-6">
               <Link
-                href="/blog/categoria/derecho-penal"
+                href="/blog/derecho-penal"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Ver todos los artículos de derecho penal <ArrowRight size={16} />

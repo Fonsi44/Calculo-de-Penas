@@ -160,7 +160,7 @@ export default function MigrantesPage() {
             </div>
             <div className="text-center mt-6">
               <Link
-                href="/blog/categoria/hondurenos-en-espana"
+                href="/blog/hondurenos-en-espana"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Ver todos los artículos de hondureños en España <ArrowRight size={16} />
