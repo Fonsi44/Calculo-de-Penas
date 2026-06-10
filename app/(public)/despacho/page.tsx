@@ -13,7 +13,7 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { getCorporateImage } from '@/data/images';
-import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
@@ -78,10 +78,6 @@ export default function DespachoPage() {
   return (
     <>
       {/* HERO */}
-      <Breadcrumbs items={[
-        { label: 'Inicio', href: '/' },
-        { label: 'El Despacho' },
-      ]} />
       <PageHero
         eyebrow="El Despacho"
         badge="Multidisciplinar"
