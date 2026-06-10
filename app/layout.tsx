@@ -87,6 +87,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="application-name" content={site.name} />
         <meta name="author" content={site.name} />
         <meta name="language" content="es" />
+        {site.googleVerification && (
+          <meta name="google-site-verification" content={site.googleVerification} />
+        )}
         {site.noindex ? (
           <>
             <meta name="robots" content="noindex, nofollow, nocache" />
