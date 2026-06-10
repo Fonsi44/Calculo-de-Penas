@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   Scale, ShieldCheck, Briefcase, GraduationCap, BookOpen,
-  HeartHandshake, ArrowRight, CheckCircle2, Gavel,
+  HeartHandshake, ArrowRight, CheckCircle2, Gavel, Shield, Award,
 } from 'lucide-react';
 import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
@@ -177,17 +177,32 @@ export default function DespachoPage() {
               </p>
             </Card>
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
-              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
-                Valores
-              </p>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
+                  <HeartHandshake size={18} />
+                </div>
+                <div>
+                  <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
+                    Valores
+                  </p>
+                  <p className="text-sm font-bold leading-tight text-text">Honestidad · Confidencialidad · Rigor técnico</p>
+                </div>
+              </div>
               <p className="text-sm text-text leading-relaxed">
                 Honestidad · Confidencialidad · Rigor técnico · Respeto · Empatía · Discreción
               </p>
             </Card>
             <Card padding="md" className="border-l-4 border-l-primary card-premium">
-              <p className="text-xxs font-bold uppercase tracking-widest text-primary mb-1">
-                Credenciales profesionales
-              </p>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                  <Award size={18} />
+                </div>
+                <div>
+                  <p className="text-xxs font-bold uppercase tracking-widest text-primary mb-1">
+                    Credenciales profesionales
+                  </p>
+                </div>
+              </div>
               <p className="text-sm text-text leading-relaxed">
                 Abogado colegiado en Honduras. Registro profesional vigente. Miembro del
                 Colegio de Abogados de Honduras. Consulte en su primera visita la documentación
