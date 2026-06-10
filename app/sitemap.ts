@@ -81,14 +81,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const blogCategoryRoutes = blogCategories.map((c) => ({
-    url: absoluteUrl(`/blog/categoria/${c.slug}`),
+    url: absoluteUrl(`/blog/${c.slug}`),
     lastModified: now,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }));
 
   const blogPostRoutes = getAllPosts().map((p) => ({
-    url: absoluteUrl(`/blog/categoria/${p.category}/${p.slug}`),
+    url: absoluteUrl(`/blog/${p.category}/${p.slug}`),
     lastModified: new Date(p.publishedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.6,

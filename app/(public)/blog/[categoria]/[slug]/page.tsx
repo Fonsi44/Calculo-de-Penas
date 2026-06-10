@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/blog/categoria/${post.category}/${post.slug}` },
+    alternates: { canonical: `/blog/${post.category}/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `${site.url}/blog/categoria/${post.category}/${post.slug}`,
+      url: `${site.url}/blog/${post.category}/${post.slug}`,
       siteName: site.name,
       locale: 'es_HN',
       type: 'article',
@@ -75,7 +75,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const relatedPosts = getRelatedPosts(slug, post.category, post.tags);
   const categoryName = getCategoryName(post.category) ?? post.category;
 
-  const postUrl = `/blog/categoria/${post.category}/${post.slug}`;
+  const postUrl = `/blog/${post.category}/${post.slug}`;
 
   return (
     <>
@@ -85,7 +85,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           <Breadcrumbs items={[
             { label: 'Inicio', href: '/' },
             { label: 'Blog Jurídico', href: '/blog' },
-            { label: categoryName, href: `/blog/categoria/${post.category}` },
+            { label: categoryName, href: `/blog/${post.category}` },
             { label: post.title },
           ]} />
         </Container>
@@ -96,7 +96,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         <Container size="lg">
           <div className="max-w-3xl mx-auto">
             <Link
-              href={`/blog/categoria/${post.category}`}
+              href={`/blog/${post.category}`}
               className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-eyebrow px-3 py-1.5 rounded-full bg-primary/10 text-primary hover:bg-primary/15 transition-colors mb-5"
             >
               {categoryName}
@@ -179,7 +179,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <nav className="mt-10 pt-6 border-t border-border/30 grid sm:grid-cols-2 gap-4" aria-label="Navegación entre artículos">
                   {prevPost ? (
                     <Link
-                      href={`/blog/categoria/${prevPost.category}/${prevPost.slug}`}
+                      href={`/blog/${prevPost.category}/${prevPost.slug}`}
                       className="group flex items-start gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors"
                     >
                       <ArrowLeft size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
@@ -191,7 +191,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                   ) : <div />}
                   {nextPost ? (
                     <Link
-                      href={`/blog/categoria/${nextPost.category}/${nextPost.slug}`}
+                      href={`/blog/${nextPost.category}/${nextPost.slug}`}
                       className="group flex items-start justify-end gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors text-right"
                     >
                       <div className="min-w-0">
@@ -259,7 +259,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
               {relatedPosts.map((rp) => (
                 <Link
                   key={rp.slug}
-                  href={`/blog/categoria/${rp.category}/${rp.slug}`}
+                  href={`/blog/${rp.category}/${rp.slug}`}
                   className="group block rounded-xl border border-border/30 bg-surface overflow-hidden hover:border-accent/30 hover:shadow-md transition-all"
                 >
                   <div className="relative h-40 overflow-hidden">

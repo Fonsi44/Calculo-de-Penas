@@ -24,7 +24,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const page = parseInt(sp?.page ?? '1', 10) || 1;
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) return {};
-  const canonicalPath = page > 1 ? `/blog/categoria/${categoria}?page=${page}` : `/blog/categoria/${categoria}`;
+  const canonicalPath = page > 1 ? `/blog/${categoria}?page=${page}` : `/blog/${categoria}`;
   return {
     title: `${cat.nombre} — Blog Jurídico${page > 1 ? ` — Página ${page}` : ''}`,
     description: page > 1 ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
@@ -45,7 +45,7 @@ export default async function BlogCategoryPage(props: Props) {
   const posts = getPostsByPage(categoryPosts, page, ITEMS_PER_PAGE);
 
   const buildPageUrl = (p: number) => {
-    const base = `/blog/categoria/${categoria}`;
+    const base = `/blog/${categoria}`;
     return p > 1 ? `${base}?page=${p}` : base;
   };
 
@@ -58,10 +58,6 @@ export default async function BlogCategoryPage(props: Props) {
       ]} />
 
       <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
         <Container size="lg" className="relative py-14 md:py-20">
           <Link
             href="/blog"
@@ -70,15 +66,9 @@ export default async function BlogCategoryPage(props: Props) {
             <ArrowLeft size={14} /> Volver al blog
           </Link>
           <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-              Categoría
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              {cat.nombre}
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {cat.descripcion}
-            </p>
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">Categoría</p>
+            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">{cat.nombre}</h1>
+            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">{cat.descripcion}</p>
           </div>
         </Container>
       </section>
@@ -86,31 +76,20 @@ export default async function BlogCategoryPage(props: Props) {
       <Section spacing="md">
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-text-secondary mb-4">
-              No hay artículos publicados en esta categoría aún.
-            </p>
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold"
-            >
+            <p className="text-text-secondary mb-4">No hay artículos publicados en esta categoría aún.</p>
+            <Link href="/blog" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
               <ArrowLeft size={14} /> Ver todos los artículos
             </Link>
           </div>
         ) : (
           <div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {posts.map((p) => (
-                <BlogCard key={p.slug} post={p} />
-              ))}
+              {posts.map((p) => <BlogCard key={p.slug} post={p} />)}
             </div>
-
             {totalPages > 1 && (
               <nav className="flex justify-center items-center gap-3 mt-8" aria-label="Paginación">
                 {page > 1 ? (
-                  <Link
-                    href={buildPageUrl(page - 1)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
-                  >
+                  <Link href={buildPageUrl(page - 1)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors">
                     <ArrowLeft size={14} /> Anterior
                   </Link>
                 ) : (
@@ -118,14 +97,9 @@ export default async function BlogCategoryPage(props: Props) {
                     <ArrowLeft size={14} /> Anterior
                   </span>
                 )}
-                <span className="text-sm text-text-secondary px-2">
-                  Página {page} de {totalPages}
-                </span>
+                <span className="text-sm text-text-secondary px-2">Página {page} de {totalPages}</span>
                 {page < totalPages ? (
-                  <Link
-                    href={buildPageUrl(page + 1)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
-                  >
+                  <Link href={buildPageUrl(page + 1)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors">
                     Siguiente <ArrowRight size={14} />
                   </Link>
                 ) : (
@@ -139,18 +113,13 @@ export default async function BlogCategoryPage(props: Props) {
         )}
       </Section>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            blogCollectionSchema(
-              `${cat.nombre} | Blog Jurídico | ${site.name}`,
-              cat.descripcion,
-              `${site.url}/blog/categoria/${categoria}`,
-            ),
-          ),
-        }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify(blogCollectionSchema(
+          `${cat.nombre} | Blog Jurídico | ${site.name}`,
+          cat.descripcion,
+          `${site.url}/blog/${categoria}`,
+        )),
+      }} />
     </>
   );
 }
