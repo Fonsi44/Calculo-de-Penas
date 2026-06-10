@@ -20,9 +20,10 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
   const catColor = blogCategories.find((c) => c.slug === post.category)?.color ?? 'muted';
 
   return (
-    <article
+    <Link
+      href={`/blog/${post.category}/${post.slug}`}
       className={cn(
-        'group rounded-xl border border-border bg-background overflow-hidden transition-all hover:border-accent/40 hover:shadow-sm',
+        'group block rounded-xl border border-border bg-background overflow-hidden transition-all hover:border-accent/40 hover:shadow-sm',
         featured && 'md:grid md:grid-cols-2',
       )}
     >
@@ -50,11 +51,9 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
               </span>
             )}
           </div>
-          <Link href={`/blog/${post.category}/${post.slug}`}>
-            <h3 className="font-serif font-bold text-lg leading-snug text-text group-hover:text-primary transition-colors">
-              {post.title}
-            </h3>
-          </Link>
+          <h3 className="font-serif font-bold text-lg leading-snug text-text group-hover:text-primary transition-colors">
+            {post.title}
+          </h3>
           <p className="mt-2 text-sm text-text-secondary leading-relaxed line-clamp-3">
             {post.description}
           </p>
@@ -68,14 +67,11 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
               <Clock size={12} /> {post.readingTime}
             </span>
           </div>
-          <Link
-            href={`/blog/${post.category}/${post.slug}`}
-            className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-accent-dark transition-colors"
-          >
+          <span className="flex items-center gap-1 text-xs font-semibold text-primary group-hover:text-accent-dark transition-colors">
             Leer más <ArrowRight size={14} />
-          </Link>
+          </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
