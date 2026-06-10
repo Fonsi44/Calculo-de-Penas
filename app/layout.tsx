@@ -93,14 +93,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {site.googleVerification && (
           <meta name="google-site-verification" content={site.googleVerification} />
         )}
-        {site.noindex ? (
-          <>
-            <meta name="robots" content="noindex, nofollow, nocache" />
-            <meta name="googlebot" content="noindex, nofollow, noimageindex" />
-          </>
-        ) : (
-          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        )}
         <script dangerouslySetInnerHTML={{
           __html: `
             (function() {

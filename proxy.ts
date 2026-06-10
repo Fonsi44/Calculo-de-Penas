@@ -151,9 +151,9 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Rutas protegidas no reconocidas: redirigir al login de intranet.
-  const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
-  return NextResponse.redirect(loginUrl);
+  // Rutas no reconocidas: pasar a Next.js para que devuelva 404 (not-found.tsx).
+  // Esto evita que crawlers y usuarios vean un redirect 307 en lugar del 404 real.
+  return NextResponse.next();
 }
 
 export const config = {

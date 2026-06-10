@@ -35,7 +35,7 @@ import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
-  title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
+  title: { absolute: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}` },
   description: site.description,
   alternates: { canonical: '/' },
 };
