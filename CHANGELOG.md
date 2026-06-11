@@ -1467,3 +1467,75 @@ Vercel rechazaba el build con `JWT_SECRET environment variable is required (>= 3
 ### Nota de seguridad
 
 El secret añadido a Vercel Production es **diferente** del `lex-honduras-secret-change-in-production-2026` que sigue en `.env` local. El local funciona porque tiene 49 chars (pasa el check `>= 32`) y el fallback dev de `lib/auth.ts:10` cubre entornos sin env. En Vercel ahora se usa el secret seguro.
+
+## Release 22 — SEO completo: Analytics, Search Console, panel SEO, sitemap, robots y metadatos (2026-06-11)
+
+### Google Analytics 4
+- Creada librería server-side `lib/google.ts` con autenticación JWT vía cuenta de servicio.
+- Endpoint `GET /api/admin/analytics` — consulta métricas GA4 (usuarios, sesiones, páginas vistas, fuentes, países, dispositivos).
+- Consulta por rango de fechas (7/28/90 días).
+- GA4 frontend ya existía en `app/layout.tsx` condicionado a `NEXT_PUBLIC_GA_ID`.
+
+### Google Search Console API
+- Endpoint `GET /api/admin/search-console` — consulta clicks, impresiones, CTR, posición media.
+- Desglose por consulta y por página (top 20 cada uno).
+- Consulta por rango de fechas (7/28/90 días).
+
+### URL Inspection API
+- Endpoint `POST /api/admin/seo/inspect` — inspecciona cualquier URL del sitio.
+- Devuelve: estado de indexación, cobertura, canonical, bloqueos (robots/noindex), rich results, último rastreo.
+
+### Panel SEO en /intranet/admin/seo
+- **Resumen SEO**: estado global (noindex), integraciones, métricas rápidas de GA4 y Search Console.
+- **Analytics**: métricas detalladas con selector de días, top páginas, fuentes, países, dispositivos.
+- **Search Console**: clicks, impresiones, CTR, posición, top consultas y páginas.
+- **Indexación**: formulario de inspección con URLs rápidas (home, blog, FAQ, servicios).
+- **Sitemap**: URLs incluidas, estado, acciones (ver sitemap.xml, robots.txt).
+- **Acciones**: checklist de recomendaciones SEO prioritarias.
+
+### Sitemap XML (`app/sitemap.ts`)
+- Actualizado para leer posts desde DB (`blog_posts` tabla) en lugar de helper legacy.
+- lastModified dinámico basado en `updatedAt` o `publishedAt` real de cada post.
+- Incluye todas las URLs públicas indexables: 37 rutas estáticas + 20 categorías blog + posts publicados.
+- Excluye automáticamente rutas cuando `NEXT_PUBLIC_NOINDEX=true`.
+
+### robots.txt (`app/robots.ts`)
+- Ya bloquea `/intranet/`, `/api/`, `/_next/`, AI crawlers.
+- Referencia `sitemap.xml`.
+- Endpoint de verificación: `GET /api/admin/seo/sitemap`.
+
+### Configuración segura de credenciales Google
+- Añadidas variables de entorno en `.env.example`: `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `GOOGLE_ANALYTICS_PROPERTY_ID`, `GOOGLE_SEARCH_CONSOLE_SITE_URL`, `GOOGLE_APPLICATION_CREDENTIALS`.
+- Las variables NO tienen prefijo `NEXT_PUBLIC_` — no se exponen al cliente.
+- La app falla con error claro si faltan variables y se intenta usar.
+
+### Navegación admin
+- Añadido item "SEO" en sidebar del admin (`/intranet/admin/layout.tsx`).
+- Añadido botón "Panel SEO" en acciones rápidas del dashboard admin.
+
+### Dependencias
+- Añadido `googleapis@^144.0.0` — cliente oficial de Google APIs.
+
+### Archivos nuevos
+- `lib/google.ts` — librería Google APIs (GA4 + Search Console + URL Inspection).
+- `app/api/admin/analytics/route.ts` — endpoint GA4.
+- `app/api/admin/search-console/route.ts` — endpoint Search Console.
+- `app/api/admin/seo/inspect/route.ts` — endpoint URL Inspection.
+- `app/api/admin/seo/summary/route.ts` — endpoint resumen SEO combinado.
+- `app/api/admin/seo/sitemap/route.ts` — endpoint verificación sitemap.
+- `app/intranet/admin/seo/page.tsx` — panel SEO completo.
+
+### Archivos modificados
+- `.env.example` — nuevas variables Google APIs + Measurement Protocol.
+- `app/sitemap.ts` — lastModified dinámico, consulta DB real.
+- `app/intranet/admin/layout.tsx` — item SEO en navegación.
+- `app/intranet/admin/page.tsx` — botón Panel SEO.
+
+### Validación
+- `npm run lint`: 0 errores, 0 warnings.
+- `npm run build`: ✓ Compiled successfully, ✓ Finished TypeScript, 247 páginas generadas.
+- IndexNow: 190 URLs enviadas (postbuild).
+- No se han expuesto credenciales en frontend.
+- No se ha rediseñado la web pública.
+- No se usa Indexing API para blog normal.
+- Analytics mide; Search Console audita; Google decide indexación.

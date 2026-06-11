@@ -242,3 +242,69 @@ generatepress-child/
 - **OG images:** Configuradas en todas las páginas (imagen genérica por defecto, cover image en posts).
 - **RSS Feed:** `/blog/feed.xml` declarado en `<link rel="alternate">`.
 - **Seguridad HTTP:** HSTS 2 años con preload, CSP restrictivo, headers de seguridad completos.
+
+## Google APIs (GA4 + Search Console)
+
+### Configuración
+
+1. Crear una cuenta de servicio en [Google Cloud Console](https://console.cloud.google.com) → IAM → Cuentas de servicio.
+2. Generar una clave JSON y guardarla de forma segura.
+3. Añadir la cuenta de servicio a:
+   - **Google Analytics 4**: Administración → Usuarios → Añadir → `Visualizador`.
+   - **Google Search Console**: Ajustes → Usuarios → Añadir → `Propietario completo`.
+4. Configurar las variables de entorno en `.env.local` (ver `.env.example`).
+
+### Variables de entorno
+
+```bash
+# Cuenta de servicio (recomendado para Vercel)
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-sa@project.iam.gserviceaccount.com
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GOOGLE_ANALYTICS_PROPERTY_ID=123456789
+GOOGLE_SEARCH_CONSOLE_SITE_URL=sc-domain:pinedayasociadoshn.com
+
+# Alternativa: archivo JSON (solo local)
+# GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
+```
+
+**IMPORTANTE:**
+- Ninguna variable Google tiene prefijo `NEXT_PUBLIC_` — no se exponen al frontend.
+- La app lanza error claro si faltan variables al consultar las APIs.
+- No committear el JSON de credenciales ni las claves.
+
+### Endpoints API
+
+| Endpoint | Descripción |
+|---|---|
+| `GET /api/admin/analytics?days=28` | Métricas GA4 (usuarios, sesiones, páginas vistas, fuentes, países, dispositivos) |
+| `GET /api/admin/search-console?days=28` | Rendimiento Search Console (clicks, impresiones, CTR, posición, queries, páginas) |
+| `POST /api/admin/seo/inspect` | URL Inspection API (requiere `{"url": "https://..."}`) |
+| `GET /api/admin/seo/summary` | Resumen SEO combinado (GA4 + GSC + contenido) |
+| `GET /api/admin/seo/sitemap` | Estado del sitemap (URLs incluidas, conteo) |
+
+### Panel SEO (`/intranet/admin/seo`)
+
+Accesible solo para usuarios con rol `admin`. Incluye:
+
+- **Resumen**: estado de indexación global, integraciones configuradas, métricas rápidas.
+- **Analytics**: panel completo con métricas GA4 y selector de rango (7/28/90 días).
+- **Search Console**: clicks, impresiones, CTR, posición, top consultas y páginas.
+- **Indexación**: inspección de URLs via URL Inspection API con URLs rápidas predefinidas.
+- **Sitemap**: URLs incluidas, estado y acciones (ver sitemap.xml, robots.txt).
+- **Acciones**: checklist de recomendaciones SEO prioritarias.
+
+### Sitemap
+
+- Generado dinámicamente por `app/sitemap.ts`.
+- Incluye: 37 rutas estáticas + 20 categorías de blog + posts publicados desde DB.
+- `lastModified` dinámico basado en `updatedAt`/`publishedAt` real.
+- Se vacía automáticamente si `NEXT_PUBLIC_NOINDEX=true`.
+- Enviado a Bing IndexNow vía postbuild (`scripts/submit-indexnow.mjs`).
+
+### Limitaciones
+
+- **Google Analytics**: mide tráfico y comportamiento. No indexa páginas.
+- **Search Console**: audita rendimiento SEO e indexación. No garantiza indexación.
+- **URL Inspection API**: requiere que la URL esté en la propiedad de Search Console.
+- **Google decide si indexa cada URL** — el sistema ayuda a detectar y corregir problemas técnicos, pero no garantiza indexación.
+- No se usa Google Indexing API para blog normal (solo contenido soportado oficialmente).

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Users, FileText, MessageSquare, Settings, User, ArrowRight, Plus, PenLine, FileEdit, ExternalLink } from 'lucide-react';
+import { Users, FileText, MessageSquare, Settings, User, ArrowRight, Plus, PenLine, FileEdit, ExternalLink, BarChart3 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -99,6 +99,11 @@ export default function AdminDashboardPage() {
           <Link href="/intranet/admin/blog">
             <Button variant="secondary" size="sm">
               <FileEdit size={14} className="mr-1" /> Gestionar blog
+            </Button>
+          </Link>
+          <Link href="/intranet/admin/seo">
+            <Button variant="secondary" size="sm">
+              <BarChart3 size={14} className="mr-1" /> Panel SEO
             </Button>
           </Link>
           <Link href="/intranet/admin/config">

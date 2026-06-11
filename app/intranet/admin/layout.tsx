@@ -9,7 +9,6 @@ import {
   Users,
   FileText,
   MessageSquare,
-  Settings,
   User,
   ChevronLeft,
   Shield,
@@ -24,9 +23,8 @@ const NAV_ITEMS = [
   { label: 'Páginas', href: '/intranet/admin/pages', icon: Globe, match: (p: string) => p.startsWith('/intranet/admin/pages') },
   { label: 'Blog', href: '/intranet/admin/blog', icon: FileText, match: (p: string) => p.startsWith('/intranet/admin/blog') },
   { label: 'FAQ', href: '/intranet/admin/faq', icon: MessageSquare, match: (p: string) => p.startsWith('/intranet/admin/faq') },
-  { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p: string) => p.startsWith('/intranet/admin/usuarios') },
   { label: 'SEO', href: '/intranet/admin/seo', icon: BarChart3, match: (p: string) => p.startsWith('/intranet/admin/seo') },
-  { label: 'Configuración', href: '/intranet/admin/config', icon: Settings, match: (p: string) => p.startsWith('/intranet/admin/config') },
+  { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p: string) => p.startsWith('/intranet/admin/usuarios') },
   { label: 'Perfil', href: '/intranet/admin/perfil', icon: User, match: (p: string) => p.startsWith('/intranet/admin/perfil') },
 ];
 
