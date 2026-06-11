@@ -13,7 +13,7 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { getCorporateImage } from '@/data/images';
-
+import { getPageContent } from '@/lib/page-content-db';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
 export const metadata: Metadata = {
@@ -31,42 +31,48 @@ export const metadata: Metadata = {
   },
 };
 
-const VALUES = [
-  {
-    icon: ShieldCheck,
-    title: 'Defensa técnica, no promesas',
-    desc: 'Aplicamos el Código Penal con rigor metodológico. Nunca prometemos resultados: le decimos lo que procede y lo que no.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Estudio permanente',
-    desc: 'Nos actualizamos en jurisprudencia, reformas y doctrina. El derecho cambia, y nuestra práctica también.',
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Trato humano',
-    desc: 'Detrás de cada caso hay una persona y una familia. Le escuchamos, le informamos y le acompañamos con respeto.',
-  },
-  {
-    icon: Briefcase,
-    title: 'Tecnología al servicio del caso',
-    desc: 'Motor de cálculo de penas, gestión documental, trazabilidad. Le entregamos cada actuación con fecha y firma.',
-  },
-];
+function despachoContent(content: Record<string, string>) {
+  return {
+    hero: {
+      eyebrow: content['hero.eyebrow'] || 'El Despacho',
+      badge: content['hero.badge'] || 'Multidisciplinar',
+      title: content['hero.title'] || 'Compromiso Legal, Rigor Técnico y Visión de Vanguardia',
+      subtitle: content['hero.subtitle'] || `${site.name} es un bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica.`,
+    },
+    mision: {
+      title: content['mision_vision.mision_title'] || 'Defender con técnica, servir con humanidad',
+      desc: content['mision_vision.mision_desc'] || 'Garantizar que toda persona acceda a una defensa y orientación jurídica seria, técnica y respetuosa de sus derechos.',
+    },
+    vision: {
+      title: content['mision_vision.vision_title'] || 'Justicia accesible y técnica',
+      desc: content['mision_vision.vision_desc'] || 'Un sistema de justicia donde cada persona pueda ejercer su derecho a la defensa con un equipo que domine la técnica y actúe con prudencia.',
+    },
+    values: {
+      sectionTitle: content['values.section_title'] || 'Lo que nos define como bufete',
+      items: [
+        { icon: ShieldCheck, title: content['values.value1_title'] || 'Defensa técnica, no promesas', desc: content['values.value1_desc'] || 'Aplicamos el Código Penal con rigor metodológico. Nunca prometemos resultados: le decimos lo que procede y lo que no.' },
+        { icon: BookOpen, title: content['values.value2_title'] || 'Estudio permanente', desc: content['values.value2_desc'] || 'Nos actualizamos en jurisprudencia, reformas y doctrina. El derecho cambia, y nuestra práctica también.' },
+        { icon: HeartHandshake, title: content['values.value3_title'] || 'Trato humano', desc: content['values.value3_desc'] || 'Detrás de cada caso hay una persona y una familia. Le escuchamos, le informamos y le acompañamos con respeto.' },
+        { icon: Briefcase, title: content['values.value4_title'] || 'Tecnología al servicio del caso', desc: content['values.value4_desc'] || 'Motor de cálculo de penas, gestión documental, trazabilidad. Le entregamos cada actuación con fecha y firma.' },
+      ],
+    },
+    commitments: [
+      content['commitments.c1'] || 'Consulta inicial confidencial y sin compromiso',
+      content['commitments.c2'] || 'Explicación clara de cada etapa procesal',
+      content['commitments.c3'] || 'Honestidad sobre las expectativas reales del caso',
+      content['commitments.c4'] || 'Presupuesto de honorarios por escrito',
+      content['commitments.c5'] || 'Atención directa del abogado responsable',
+      content['commitments.c6'] || 'Trazabilidad documental de cada actuación',
+      content['commitments.c7'] || 'Coordinación interna entre áreas cuando su caso lo requiere',
+      content['commitments.c8'] || 'Información actualizada sobre normativa y reformas',
+    ],
+  };
+}
 
+export default async function DespachoPage() {
+  const contentMap = await getPageContent('despacho');
+  const c = despachoContent(contentMap);
 
-const COMMITMENTS = [
-  'Consulta inicial confidencial y sin compromiso',
-  'Explicación clara de cada etapa procesal',
-  'Honestidad sobre las expectativas reales del caso',
-  'Presupuesto de honorarios por escrito',
-  'Atención directa del abogado responsable',
-  'Trazabilidad documental de cada actuación',
-  'Coordinación interna entre áreas cuando su caso lo requiere',
-  'Información actualizada sobre normativa y reformas',
-];
-
-export default function DespachoPage() {
   const orgLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
@@ -79,20 +85,10 @@ export default function DespachoPage() {
     <>
       {/* HERO */}
       <PageHero
-        eyebrow="El Despacho"
-        badge="Multidisciplinar"
-        title="Compromiso Legal, Rigor Técnico y Visión de Vanguardia"
-        subtitle={
-          <>
-            {site.name} es un bufete multidisciplinario fundado sobre los pilares del
-            rigor metodológico, la confidencialidad y la excelencia jurídica. Nos
-            especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito
-            penal como en las distintas ramas del derecho empresarial y privado. Nuestro
-            enfoque combina una sólida solvencia técnica con la digitalización de procesos,
-            garantizando a cada cliente un respaldo legal robusto, transparente y de alto
-            nivel.
-          </>
-        }
+        eyebrow={c.hero.eyebrow}
+        badge={c.hero.badge}
+        title={c.hero.title}
+        subtitle={c.hero.subtitle}
         cta={<CTAGroup variant="inverse" />}
       />
 
@@ -141,14 +137,14 @@ export default function DespachoPage() {
           <div>
             <SectionHeader
               eyebrow="Misión"
-              title="Defender con técnica, servir con humanidad"
-              subtitle="Nuestra razón de ser es garantizar que toda persona acceda a una defensa y orientación jurídica seria, técnica y respetuosa de sus derechos, en cualquiera de las áreas que atendemos."
+              title={c.mision.title}
+              subtitle={c.mision.desc}
             />
-            <ul className="space-y-2.5 mt-5">
-              {COMMITMENTS.map((c, i) => (
+              <ul className="space-y-2.5 mt-5">
+              {c.commitments.map((commitment, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-text leading-relaxed">
                   <CheckCircle2 size={16} className="text-success flex-shrink-0 mt-0.5" />
-                  <span>{c}</span>
+                  <span>{commitment}</span>
                 </li>
               ))}
             </ul>
@@ -163,14 +159,10 @@ export default function DespachoPage() {
                   <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                     Visión
                   </p>
-                  <p className="text-sm font-bold leading-tight text-text">Justicia accesible y técnica</p>
+                  <p className="text-sm font-bold leading-tight text-text">{c.vision.title}</p>
                 </div>
               </div>
-              <p className="text-sm text-text leading-relaxed text-pretty">
-                Aspiramos a un sistema de justicia donde cada persona, en Nacaome y en el sur de
-                Honduras, pueda ejercer su derecho a la defensa y a la asesoría legal con un
-                equipo que domine la técnica, explique con claridad y actúe con prudencia.
-              </p>
+              <p className="text-sm text-text leading-relaxed text-pretty">{c.vision.desc}</p>
             </Card>
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <div className="flex items-center gap-3 mb-3">
@@ -228,11 +220,11 @@ export default function DespachoPage() {
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Nuestros valores"
-          title="Lo que nos define como bufete"
+          title={c.values.sectionTitle}
           subtitle="Cuatro principios que sostienen cada decisión, cada audiencia, cada escrito."
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {VALUES.map((v) => (
+          {c.values.items.map((v) => (
             <Card key={v.title} padding="md" className="h-full card-premium">
               <div className="w-11 h-11 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center mb-3 border border-accent/30">
                 <v.icon size={20} aria-hidden="true" />

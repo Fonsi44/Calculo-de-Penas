@@ -17,6 +17,7 @@ import { telHref, whatsappHref, site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { getPageContent } from '@/lib/page-content-db';
 
 export const metadata: Metadata = {
   title: `Solicitar Consulta Legal — ${site.name}`,
@@ -24,22 +25,25 @@ export const metadata: Metadata = {
   alternates: { canonical: '/solicitar-consulta' },
 };
 
-const REASONS = [
-  'Familiar detenido',
-  'Citaciones o audiencias próximas',
-  'Investigación en curso',
-  'Querella o denuncia',
-  'Recurso o apelación',
-  'Asesoría preventiva',
-];
+export default async function SolicitarConsultaPage() {
+  const content = await getPageContent('solicitar-consulta');
+  const heroTitle = content['hero.title'] || 'Cuéntenos su caso. Le escuchamos con discreción.';
+  const heroSubtitle = content['hero.subtitle'] || 'Complete el formulario o contáctenos directamente. Toda comunicación es estrictamente confidencial.';
 
-const GUARANTEES = [
-  { icon: ShieldCheck, title: 'Confidencialidad absoluta', desc: 'Su información está protegida por el secreto profesional.' },
-  { icon: CheckCircle2, title: 'Sin compromiso', desc: 'La consulta inicial no le obliga a contratar nuestros servicios.' },
-  { icon: Calendar, title: 'Respuesta en horario hábil', desc: 'Le respondemos el mismo día hábil por el canal que prefiera.' },
-];
+  const REASONS = [
+    content['reasons.r1'] || 'Familiar detenido',
+    content['reasons.r2'] || 'Citaciones o audiencias próximas',
+    content['reasons.r3'] || 'Investigación en curso',
+    content['reasons.r4'] || 'Querella o denuncia',
+    content['reasons.r5'] || 'Recurso o apelación',
+    content['reasons.r6'] || 'Asesoría preventiva',
+  ];
 
-export default function SolicitarConsultaPage() {
+  const GUARANTEES = [
+    { icon: ShieldCheck, title: content['guarantees.g1_title'] || 'Confidencialidad absoluta', desc: content['guarantees.g1_desc'] || 'Su información está protegida por el secreto profesional.' },
+    { icon: CheckCircle2, title: content['guarantees.g2_title'] || 'Sin compromiso', desc: content['guarantees.g2_desc'] || 'La consulta inicial no le obliga a contratar nuestros servicios.' },
+    { icon: Calendar, title: content['guarantees.g3_title'] || 'Respuesta en horario hábil', desc: content['guarantees.g3_desc'] || 'Le respondemos el mismo día hábil por el canal que prefiera.' },
+  ];
   return (
     <>
       <Breadcrumbs items={[
@@ -52,11 +56,10 @@ export default function SolicitarConsultaPage() {
             Solicitar consulta
           </p>
           <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight max-w-3xl">
-            Cuéntenos su caso. Le escuchamos con discreción.
+            {heroTitle}
           </h1>
           <p className="mt-4 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
-            Complete el formulario o contáctenos directamente. Toda comunicación es
-            estrictamente confidencial.
+            {heroSubtitle}
           </p>
         </Container>
       </section>
