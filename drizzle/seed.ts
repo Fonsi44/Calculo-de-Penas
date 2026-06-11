@@ -1,11 +1,14 @@
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { neon as neonSql } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { ramasJuridicas, articulosConstitucion, articulosCp, delitos } from '../lib/schema';
+import { sql as drizzleSql } from 'drizzle-orm';
+import { ramasJuridicas, articulosConstitucion, articulosCp, delitos, categoriasBlog, categoriasFaq, roles, permisos, rolesPermisos, usuarios } from '../lib/schema';
 import * as fs from 'fs';
 import * as path from 'path';
+import { blogCategories } from '../data/blog/categories';
+import { faqCategoriesMeta } from '../data/faq-categories';
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neonSql(process.env.DATABASE_URL!);
 const db = drizzle(sql);
 
 interface RamaSeed {
@@ -129,6 +132,71 @@ async function seed() {
       console.log(`  ${count}/${delitosSeed.length} delitos...`);
     }
     console.log(`✓ Delitos: ${count} insertados`);
+  }
+
+  // Categorías de blog — desde data/blog/categories.ts
+  const existingCats = await sql`SELECT COUNT(*) as total FROM categorias_blog`;
+  if (Number(existingCats[0].total) === 0) {
+    await db.insert(categoriasBlog).values(
+      blogCategories.map((c, i) => ({
+        slug: c.slug,
+        nombre: c.nombre,
+        descripcion: c.descripcion,
+        color: c.color,
+        sortOrder: i,
+      }))
+    ).onConflictDoNothing();
+    console.log(`✓ Categorías blog: ${blogCategories.length} insertadas`);
+  }
+
+  // Categorías FAQ — desde data/faq-categories.ts
+  const existingFaqCats = await sql`SELECT COUNT(*) as total FROM categorias_faq`;
+  if (Number(existingFaqCats[0].total) === 0) {
+    await db.insert(categoriasFaq).values(
+      faqCategoriesMeta.map((c, i) => ({
+        slug: c.slug,
+        titulo: c.titulo,
+        descripcion: c.descripcion,
+        sortOrder: i,
+      }))
+    ).onConflictDoNothing();
+    console.log(`✓ Categorías FAQ: ${faqCategoriesMeta.length} insertadas`);
+  }
+
+  // Roles RBAC
+  const existingRoles = await sql`SELECT COUNT(*) as total FROM roles`;
+  if (Number(existingRoles[0].total) === 0) {
+    const rolesData = [
+      { nombre: 'super_admin', descripcion: 'Acceso completo al sistema' },
+      { nombre: 'admin', descripcion: 'Gestión administrativa del CMS' },
+      { nombre: 'editor', descripcion: 'Creación y edición de contenido' },
+      { nombre: 'seo', descripcion: 'Gestión SEO y analítica' },
+      { nombre: 'viewer', descripcion: 'Solo lectura' },
+    ];
+    await db.insert(roles).values(rolesData).onConflictDoNothing();
+    console.log(`✓ Roles: ${rolesData.length} insertados`);
+
+    // Permisos básicos
+    const recursos = ['paginas', 'blog', 'faq', 'seo', 'usuarios', 'medios', 'ajustes', 'menus', 'redirects', 'auditoria', 'roles'];
+    const acciones = ['crear', 'leer', 'editar', 'publicar', 'eliminar'];
+    const permisosData: { recurso: string; accion: string; descripcion: string }[] = [];
+    for (const recurso of recursos) {
+      for (const accion of acciones) {
+        permisosData.push({ recurso, accion, descripcion: `${accion} ${recurso}` });
+      }
+    }
+    await db.insert(permisos).values(permisosData).onConflictDoNothing();
+    console.log(`✓ Permisos: ${permisosData.length} insertados`);
+
+    // Asignar todos los permisos a super_admin
+    const [superAdminRol] = await db.select({ id: roles.id }).from(roles).where(drizzleSql`nombre = 'super_admin'`).limit(1);
+    if (superAdminRol) {
+      const todosPermisos = await db.select({ id: permisos.id }).from(permisos);
+      await db.insert(rolesPermisos).values(
+        todosPermisos.map(p => ({ rolId: superAdminRol.id, permisoId: p.id }))
+      ).onConflictDoNothing();
+      console.log(`✓ Permisos super_admin: ${todosPermisos.length} asignados`);
+    }
   }
 
   console.log('\n✔ Seed completado');
