@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const createSchema = z.object({
   category: z.string().min(1).max(200),
@@ -33,6 +35,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`faq:create:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const body = await request.json();
     const parsed = createSchema.parse(body);
 

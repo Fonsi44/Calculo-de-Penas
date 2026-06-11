@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const updateSchema = z.object({
   category: z.string().min(1).max(200).optional(),
@@ -18,6 +20,9 @@ const updateSchema = z.object({
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`faq:update:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const { id } = await params;
     const body = await request.json();
     const parsed = updateSchema.parse(body);
@@ -46,6 +51,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`faq:delete:${auth.userId}`, { max: 10, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const { id } = await params;
     const [existing] = await db.select({ id: faqEntries.id, category: faqEntries.category }).from(faqEntries).where(eq(faqEntries.id, id));
     if (!existing) return Response.json({ error: 'FAQ no encontrada' }, { status: 404 });

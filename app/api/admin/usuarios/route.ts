@@ -4,6 +4,8 @@ import { requireAdmin, authFailureResponse, hashPassword, isAllowedAuthEmail } f
 import { eq, ilike, or, and, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const createSchema = z.object({
   email: z.string().email(),
@@ -59,6 +61,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`usuarios:create:${auth.userId}`, { max: 10, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const body = await request.json();
     const parsed = createSchema.parse(body);
 

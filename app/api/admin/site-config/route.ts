@@ -4,6 +4,8 @@ import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const ALLOWED_KEYS = new Set([
   'telefono', 'whatsapp', 'email', 'direccion_line1', 'direccion_line2',
@@ -24,7 +26,12 @@ const validators: Record<string, (v: string) => string | null> = {
 
 const updateSchema = z.record(z.string(), z.string());
 
-export async function GET() {
+export async function GET(request: Request) {
+  try {
+    requireAdmin(request);
+  } catch (err) {
+    return authFailureResponse(err);
+  }
   const rows = await db.select().from(configuracionSitio);
   const config: Record<string, string> = {};
   for (const row of rows) config[row.clave] = row.valor;
@@ -34,6 +41,9 @@ export async function GET() {
 export async function PUT(request: Request) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`site-config:update:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const body = await request.json();
     const parsed = updateSchema.parse(body);
 

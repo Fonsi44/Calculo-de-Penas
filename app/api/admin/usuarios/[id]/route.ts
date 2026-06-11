@@ -4,6 +4,8 @@ import { requireAdmin, authFailureResponse, isAllowedAuthEmail, hashPassword } f
 import { eq, and, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const updateSchema = z.object({
   nombre: z.string().min(1).max(200).optional(),
@@ -18,6 +20,9 @@ export async function PATCH(
 ) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`usuarios:update:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const { id } = await params;
     const body = await request.json();
     const parsed = updateSchema.parse(body);
@@ -88,6 +93,9 @@ export async function DELETE(
 ) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`usuarios:delete:${auth.userId}`, { max: 10, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const { id } = await params;
 
     if (id === auth.userId) {

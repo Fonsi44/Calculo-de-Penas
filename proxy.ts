@@ -2,6 +2,16 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { COOKIE_NAME, COOKIE_NAME_FALLBACK } from '@/lib/auth';
 
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const payload = token.split('.')[1];
+    if (!payload) return null;
+    return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+  } catch {
+    return null;
+  }
+}
+
 const PUBLIC_API_PREFIXES = [
   '/api/auth/login',
   '/api/auth/logout',
@@ -112,6 +122,13 @@ export function proxy(request: NextRequest) {
     if (!token) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
+    // Rutas admin API: verificar rol admin desde el token JWT.
+    if (pathname.startsWith('/api/admin')) {
+      const payload = decodeJwtPayload(token);
+      if (!payload || payload.rol !== 'admin') {
+        return NextResponse.json({ error: 'Acceso denegado: se requiere rol admin' }, { status: 403 });
+      }
+    }
     return NextResponse.next();
   }
 
@@ -127,6 +144,13 @@ export function proxy(request: NextRequest) {
     if (!token) {
       const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
       return NextResponse.redirect(loginUrl);
+    }
+    // Rutas admin: verificar rol admin desde el token JWT.
+    if (pathname.startsWith('/intranet/admin')) {
+      const payload = decodeJwtPayload(token);
+      if (!payload || payload.rol !== 'admin') {
+        return NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url));
+      }
     }
     return NextResponse.next();
   }

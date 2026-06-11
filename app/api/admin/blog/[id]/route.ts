@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
+import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const updateSchema = z.object({
   slug: z.string().min(1).max(300).optional(),
@@ -36,6 +38,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`blog:update:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const { id } = await params;
     const body = await request.json();
     const parsed = updateSchema.parse(body);
@@ -87,6 +92,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`blog:delete:${auth.userId}`, { max: 10, windowMs: 60_000, keyPrefix: 'admin' });
+    if (!rl.ok) return rateLimitResponse(rl);
     const { id } = await params;
     const [existing] = await db.select({ slug: blogPosts.slug, category: blogPosts.category }).from(blogPosts).where(eq(blogPosts.id, id));
     if (!existing) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
