@@ -18,6 +18,7 @@ import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
+import { breadcrumbSchema, webpageSchema } from '@/lib/seo-schema';
 
 export const metadata: Metadata = {
   title: 'Solicitar Consulta Legal',
@@ -210,6 +211,19 @@ export default async function SolicitarConsultaPage() {
         </div>
       </Section>
 
+      <Section spacing="sm">
+        <Container size="md">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary">
+              ¿En qué podemos ayudarle?
+            </h2>
+            <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+              En Pineda y Asociados ofrecemos consulta inicial personalizada para evaluar su caso y determinar la mejor estrategia legal. Atendemos asuntos de derecho penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación. Cada caso es único: le escuchamos con atención y le ofrecemos una valoración honesta antes de cualquier compromiso.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
       <Section background="muted" spacing="md">
         <Container size="lg">
           <div className="text-center mb-8">
@@ -262,6 +276,20 @@ export default async function SolicitarConsultaPage() {
           </div>
         </Container>
       </Section>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify([
+          breadcrumbSchema([
+            { name: 'Inicio', item: '/' },
+            { name: 'Solicitar Consulta', item: '/solicitar-consulta' },
+          ]),
+          webpageSchema(
+            'Solicitar Consulta Legal — Pineda y Asociados',
+            'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle.',
+            '/solicitar-consulta'
+          ),
+        ]),
+      }} />
     </>
   );
 }

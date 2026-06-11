@@ -5,48 +5,49 @@ import { blogPosts } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
 
+function daysAgo(days: number): Date {
+  const d = new Date();
+  d.setDate(d.getDate() - days);
+  return d;
+}
+
 const PUBLIC_ROUTES: Array<{
   path: string;
   priority: number;
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
+  daysAgo: number;
 }> = [
-  { path: '/', priority: 1.0, changeFrequency: 'weekly' },
-  { path: '/despacho', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-de-familia', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-laboral', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-civil-y-notarial', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-mercantil-empresarial', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-bancario-y-financiero', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-administrativo-y-servicio-civil', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/derecho-aduanero-y-comercio-exterior', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/regulacion-sanitaria', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/extranjeria-en-honduras', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/propiedad-intelectual', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/tributario-fiscal', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/ambiental-regulatorio', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/servicios-juridicos/conciliacion-y-arbitraje', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/atencion-casos-penales-litigiosos', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/mediacion-conflictos-penales-y-multas', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/menores-justicia-juvenil', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/proceso-penal-completo', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/recursos-y-defensa-avanzada', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/estrategia-penal-y-litigio', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/derecho-penal/ejecucion-penal-y-beneficios', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/hondurenos-en-espana', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/hondurenos-en-espana/gestion-documental-y-legalizacion', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/hondurenos-en-espana/actos-notariales-internacionales', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/preguntas-frecuentes', priority: 0.7, changeFrequency: 'monthly' },
-  { path: '/blog', priority: 0.7, changeFrequency: 'weekly' },
-  { path: '/solicitar-consulta', priority: 0.95, changeFrequency: 'yearly' },
-  { path: '/como-llegar', priority: 0.6, changeFrequency: 'yearly' },
-  { path: '/aviso-legal', priority: 0.2, changeFrequency: 'yearly' },
-  { path: '/politica-privacidad', priority: 0.2, changeFrequency: 'yearly' },
-  { path: '/politica-cookies', priority: 0.2, changeFrequency: 'yearly' },
-  { path: '/terminos', priority: 0.2, changeFrequency: 'yearly' },
-  { path: '/disclaimer', priority: 0.2, changeFrequency: 'yearly' },
+  { path: '/', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
+  { path: '/servicios-juridicos', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
+  { path: '/derecho-penal', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
+  { path: '/solicitar-consulta', priority: 1.0, changeFrequency: 'monthly', daysAgo: 0 },
+  { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 1 },
+  { path: '/blog', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
+  { path: '/preguntas-frecuentes', priority: 0.8, changeFrequency: 'weekly', daysAgo: 2 },
+  { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
+  { path: '/servicios-juridicos/derecho-de-familia', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/derecho-laboral', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/derecho-civil-y-notarial', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/derecho-mercantil-empresarial', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/derecho-bancario-y-financiero', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/derecho-administrativo-y-servicio-civil', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/derecho-aduanero-y-comercio-exterior', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/regulacion-sanitaria', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/extranjeria-en-honduras', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/propiedad-intelectual', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/tributario-fiscal', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/ambiental-regulatorio', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/servicios-juridicos/conciliacion-y-arbitraje', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/atencion-casos-penales-litigiosos', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/mediacion-conflictos-penales-y-multas', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/menores-justicia-juvenil', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/proceso-penal-completo', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/recursos-y-defensa-avanzada', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/estrategia-penal-y-litigio', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/derecho-penal/ejecucion-penal-y-beneficios', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/hondurenos-en-espana/gestion-documental-y-legalizacion', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/hondurenos-en-espana/actos-notariales-internacionales', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -58,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes = PUBLIC_ROUTES.map((r) => ({
     url: absoluteUrl(r.path),
-    lastModified: now,
+    lastModified: daysAgo(r.daysAgo),
     changeFrequency: r.changeFrequency as MetadataRoute.Sitemap[number]['changeFrequency'],
     priority: r.priority,
   }));

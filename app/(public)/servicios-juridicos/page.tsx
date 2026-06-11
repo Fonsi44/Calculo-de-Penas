@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { site } from '@/lib/site';
-import { Section, SectionHeader } from '@/components/marketing/section';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
@@ -9,6 +10,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { areaHref } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasFromDb } from '@/lib/areas-db';
+import { breadcrumbSchema, webpageSchema } from '@/lib/seo-schema';
 
 export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`,
@@ -68,7 +70,38 @@ export default async function AreasJuridicasPage() {
         </div>
       </Section>
 
+      <Section spacing="sm">
+        <Container size="md">
+          <div className="text-center">
+            <p className="text-sm text-text-secondary leading-relaxed">
+              Defensa penal técnica y confidencial en{' '}
+              <Link href="/derecho-penal" className="font-semibold text-primary hover:text-accent-dark transition-colors">derecho penal</Link>
+              {' · '}Conozca{' '}
+              <Link href="/despacho" className="font-semibold text-primary hover:text-accent-dark transition-colors">nuestro despacho</Link>
+              {' · '}Resuelva dudas en{' '}
+              <Link href="/preguntas-frecuentes" className="font-semibold text-primary hover:text-accent-dark transition-colors">preguntas frecuentes</Link>
+              {' · '}
+              <Link href="/blog" className="font-semibold text-primary hover:text-accent-dark transition-colors">blog jurídico</Link>
+            </p>
+          </div>
+        </Container>
+      </Section>
+
       <ConsultationCTA />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify([
+          breadcrumbSchema([
+            { name: 'Inicio', item: '/' },
+            { name: 'Servicios Jurídicos', item: '/servicios-juridicos' },
+          ]),
+          webpageSchema(
+            'Servicios Jurídicos en Nacaome, Valle | 13 Especialidades',
+            'Conozca las 13 especialidades de Pineda y Asociados en Nacaome, Valle, Honduras.',
+            '/servicios-juridicos'
+          ),
+        ]),
+      }} />
     </>
   );
 }
