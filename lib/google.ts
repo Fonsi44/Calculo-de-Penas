@@ -106,16 +106,16 @@ function getAuth(scopes: string[]) {
   const saKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
   const oauthClient = getOAuthClient();
 
+  if (oauthClient) {
+    return oauthClient;
+  }
+
   if (saEmail && saKey) {
     return new google.auth.JWT({
       email: saEmail,
       key: saKey.replace(/\\n/g, '\n'),
       scopes,
     });
-  }
-
-  if (oauthClient) {
-    return oauthClient;
   }
 
   throw new Error('Sin credenciales. Configura GOOGLE_SERVICE_ACCOUNT_* o OAUTH_CLIENT_* + GOOGLE_REFRESH_TOKEN');
