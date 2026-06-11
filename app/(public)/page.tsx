@@ -282,33 +282,6 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* 13 ÁREAS — GRID CON IMAGEN */}
-      <Section spacing="md" ariaLabel="Todas las Servicios Jurídicos">
-        <SectionHeader
-          eyebrow="Cobertura integral"
-          title={t('services.title')}
-          subtitle={t('services.subtitle')}
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {areasGenerales.map((area) => (
-            <ServiceCard
-              key={area.slug}
-              href={`/servicios-juridicos/${area.slug}`}
-              slug={area.slug}
-              title={area.titulo}
-              description={area.resumen}
-              category="services"
-              tone={area.color as PlaceholderTone}
-            />
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link href="/servicios-juridicos" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-            Explorar todas las áreas <ArrowRight size={14} />
-          </Link>
-        </div>
-      </Section>
-
       {/* TESTIMONIOS */}
       <TestimonialsSection
         title={t('testimonials.title')}
