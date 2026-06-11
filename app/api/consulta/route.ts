@@ -8,7 +8,9 @@ const CONSULTA_WINDOW_MS = 15 * 60 * 1000;
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
-  const rl = await rateLimit(ip, { keyPrefix: 'consulta', windowMs: CONSULTA_WINDOW_MS, max: CONSULTA_MAX });
+  const uaFingerprint = request.headers.get('user-agent')?.slice(0, 64) ?? 'unknown';
+  const identifier = `${ip}|${uaFingerprint}`;
+  const rl = await rateLimit(identifier, { keyPrefix: 'consulta', windowMs: CONSULTA_WINDOW_MS, max: CONSULTA_MAX });
   if (!rl.ok) {
     return rateLimitResponse(rl);
   }
