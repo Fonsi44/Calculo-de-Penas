@@ -65,8 +65,7 @@ export async function PUT(request: Request) {
       request,
     });
 
-    revalidatePath('/');
-    revalidatePath('/solicitar-consulta');
+    try { revalidatePath('/'); revalidatePath('/solicitar-consulta'); } catch {}
 
     const rows = await db.select().from(configuracionSitio);
     const config: Record<string, string> = {};

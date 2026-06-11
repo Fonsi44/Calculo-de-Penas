@@ -84,9 +84,9 @@ export async function POST(request: Request) {
     }).returning();
 
     await logAudit({ usuarioId: auth.userId, accion: 'blog_created', recurso: 'blog', recursoId: post.id, metadata: { slug: post.slug, title: post.title }, request });
-    if (parsed.published) { revalidatePath('/blog'); revalidatePath(`/blog/${slug}`); }
+    if (parsed.published) { try { revalidatePath('/blog'); revalidatePath(`/blog/${slug}`); } catch {} }
 
-    return Response.json({ post }, { status: 201 });
+    return Response.json({ post, slug }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
     return authFailureResponse(err);

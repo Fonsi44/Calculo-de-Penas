@@ -122,7 +122,7 @@ export default function AdminFaqPage() {
           <div className="space-y-2">
             <Input value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))} placeholder="Categoría (ej: derecho-penal)" />
             <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta" />
-            <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} placeholder="Respuesta" />
+            <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} />
             <div className="flex gap-2">
               <Button onClick={createFaq} variant="primary" size="sm"><Save size={14} className="mr-1" /> Crear</Button>
               <Button onClick={cancelEdit} variant="ghost" size="sm">Cancelar</Button>

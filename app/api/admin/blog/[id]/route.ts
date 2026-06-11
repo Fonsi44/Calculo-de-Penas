@@ -65,8 +65,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
     await logAudit({ usuarioId: auth.userId, accion: 'blog_updated', recurso: 'blog', recursoId: id, metadata: { slug: updated.slug }, request });
 
-    revalidatePath('/blog');
-    revalidatePath(`/blog/${updated.slug}`);
+    try { revalidatePath('/blog'); revalidatePath(`/blog/${updated.slug}`); } catch {}
 
     return Response.json({ post: updated });
   } catch (err) {
@@ -85,8 +84,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
     await logAudit({ usuarioId: auth.userId, accion: 'blog_deleted', recurso: 'blog', recursoId: id, metadata: { slug: existing.slug }, request });
 
-    revalidatePath('/blog');
-    revalidatePath(`/blog/${existing.slug}`);
+    try { revalidatePath('/blog'); revalidatePath(`/blog/${existing.slug}`); } catch {}
 
     return Response.json({ deleted: true });
   } catch (err) { return authFailureResponse(err); }

@@ -33,7 +33,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (!updated) return Response.json({ error: 'FAQ no encontrada' }, { status: 404 });
 
     await logAudit({ usuarioId: auth.userId, accion: 'faq_updated', recurso: 'faq', recursoId: id, metadata: { category: updated.category }, request });
-    revalidatePath('/preguntas-frecuentes');
+    try { revalidatePath('/preguntas-frecuentes'); } catch {}
 
     return Response.json({ faq: updated });
   } catch (err) {
@@ -51,7 +51,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
 
     await db.delete(faqEntries).where(eq(faqEntries.id, id));
     await logAudit({ usuarioId: auth.userId, accion: 'faq_deleted', recurso: 'faq', recursoId: id, metadata: { category: existing.category }, request });
-    revalidatePath('/preguntas-frecuentes');
+    try { revalidatePath('/preguntas-frecuentes'); } catch {}
 
     return Response.json({ deleted: true });
   } catch (err) { return authFailureResponse(err); }

@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     }).returning();
 
     await logAudit({ usuarioId: auth.userId, accion: 'faq_created', recurso: 'faq', recursoId: entry.id, metadata: { category: entry.category }, request });
-    revalidatePath('/preguntas-frecuentes');
+    try { revalidatePath('/preguntas-frecuentes'); } catch {}
 
     return Response.json({ faq: entry }, { status: 201 });
   } catch (err) {
