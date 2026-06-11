@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Eye } from 'lucide-react';
-import { Card } from '@/components/ui/card'; // eslint-disable-line @typescript-eslint/no-unused-vars
+import { ArrowLeft, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { useToast } from '@/components/ui/toast';
 import { Spinner } from '@/components/ui/spinner';
 import Link from 'next/link';
@@ -17,7 +17,6 @@ export default function AdminBlogEditorPage() {
   const isNew = params.id === 'nuevo';
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
-  const [preview, setPreview] = useState(false);
   const [form, setForm] = useState({
     slug: '', title: '', description: '', body: '',
     publishedAt: new Date().toISOString().slice(0, 16),
@@ -94,19 +93,12 @@ export default function AdminBlogEditorPage() {
               <Input value={form.description} onChange={e => update('description', e.target.value)} required /></div>
 
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-semibold text-text-secondary">Contenido HTML *</label>
-                <Button type="button" variant="ghost" size="sm" onClick={() => setPreview(!preview)}><Eye size={14} className="mr-1" />{preview ? 'Editor' : 'Preview'}</Button>
-              </div>
-              {preview ? (
-                <div className="border border-border-light rounded-md p-3 bg-white min-h-[300px]">
-                  <iframe sandbox="allow-same-origin" srcDoc={form.body} className="w-full min-h-[300px] border-0"
-                    title="Preview" onLoad={e => { const el = e.target as HTMLIFrameElement; el.style.height = (el.contentWindow?.document?.body?.scrollHeight ?? 300) + 'px'; }} />
-                </div>
-              ) : (
-                <textarea value={form.body} onChange={e => update('body', e.target.value)}
-                  className="w-full min-h-[300px] rounded-md border border-border-light bg-surface px-3 py-2 text-sm font-mono" required />
-              )}
+              <label className="block text-xs font-semibold text-text-secondary mb-1">Contenido *</label>
+              <RichTextEditor
+                content={form.body}
+                onChange={html => update('body', html)}
+                minHeight={400}
+              />
             </div>
           </div>
 

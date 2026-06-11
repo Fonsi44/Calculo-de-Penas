@@ -5,6 +5,7 @@ import { Plus, Trash2, Edit3, ChevronDown, ChevronRight, Save, X, ArrowUp, Arrow
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
@@ -121,8 +122,7 @@ export default function AdminFaqPage() {
           <div className="space-y-2">
             <Input value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))} placeholder="Categoría (ej: derecho-penal)" />
             <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta" />
-            <textarea value={newForm.answer} onChange={e => setNewForm(f => ({ ...f, answer: e.target.value }))}
-              className="w-full rounded-md border border-border-light bg-surface px-3 py-2 text-sm min-h-[80px]" placeholder="Respuesta (HTML permitido)" />
+            <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} placeholder="Respuesta" />
             <div className="flex gap-2">
               <Button onClick={createFaq} variant="primary" size="sm"><Save size={14} className="mr-1" /> Crear</Button>
               <Button onClick={cancelEdit} variant="ghost" size="sm">Cancelar</Button>
@@ -147,8 +147,7 @@ export default function AdminFaqPage() {
                   <div key={f.id} className="p-3 border-b border-border-light space-y-2 bg-surface-alt">
                     <Input value={editForm.category} onChange={e => setEditForm(ff => ({ ...ff, category: e.target.value }))} placeholder="Categoría" />
                     <Input value={editForm.question} onChange={e => setEditForm(ff => ({ ...ff, question: e.target.value }))} placeholder="Pregunta" />
-                    <textarea value={editForm.answer} onChange={e => setEditForm(ff => ({ ...ff, answer: e.target.value }))}
-                      className="w-full rounded-md border border-border-light bg-surface px-3 py-2 text-sm min-h-[60px]" />
+                    <RichTextEditor content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />
                     <div className="flex gap-2">
                       <Button onClick={saveEdit} variant="primary" size="sm"><Save size={14} className="mr-1" /> Guardar</Button>
                       <Button onClick={cancelEdit} variant="ghost" size="sm"><X size={14} className="mr-1" /> Cancelar</Button>
