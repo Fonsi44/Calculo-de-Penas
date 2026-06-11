@@ -210,6 +210,38 @@ El componente `RichTextEditor` (TipTap) no reaccionaba a cambios en la prop `con
 - **Verificación**: 483 verificados (100%), 0 pendientes, 0 rechazados. Fuente: `data/delitos-estados.json`.
 - **API de calidad**: `GET /api/delitos/calidad` devuelve resumen de estados.
 
+#### Fuente de verdad de delitos
+
+| Archivo | Rol |
+|---------|-----|
+| `data/delitos.json` | Catálogo canónico (483 delitos con nombre, artículo, penas) |
+| `data/delitos-estados.json` | Estado de verificación por delito (`verificado`/`pendiente_revision`/`rechazado`) |
+| `data/delitos-validacion.json` | Fuente histórica de validación offline (no usada en runtime) |
+| `lib/estados-delitos.ts` | Módulo de acceso: `getEstadoDelito(nombre, articulo)` y `getResumenEstados()` |
+
+#### Cómo funciona la validación
+
+1. La calculadora (`lib/rules/v1/index.ts`) llama `getEstadoDelito(delito.nombre, delito.articulo)` para cada delito.
+2. `getEstadoDelito` busca en `delitos-estados.json` por clave `"${nombre}__${articulo}"`.
+3. Si encuentra la entrada, devuelve su `estado` (`verificado`/`pendiente_revision`/`rechazado`).
+4. Si no la encuentra, devuelve por defecto `estado: 'verificado'`.
+5. El resultado se expone en `DelitoAnalizado.confianza`.
+6. Si `confianza !== 'verificado'`, aparece la alerta de "datos no verificados".
+
+#### Normalización de artículos
+
+Los artículos se identifican por su formato canónico (`Art. NNN CP`). Para búsquedas:
+- `342` → `342`
+- `Art. 342` → `342`
+- `Artículo 342` → `342`
+- `342 CP` → `342`
+- `Art. 342 CP` → `342`
+
+#### Tests de delitos
+
+- `tests/catalogo-delitos.test.ts` — 129 tests: integridad del catálogo, estados de validación, normalización de artículos, penas del Art. 342 CP, alerta de datos no verificados y cálculo de muestra representativa.
+- `npm test` — 314 tests totales (14 archivos).
+
 ---
 
 ## Blog (WordPress) — LEGACY

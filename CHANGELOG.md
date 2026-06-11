@@ -1,5 +1,46 @@
 # Changelog
 
+## Release 24 — Corrección de validación de delitos y penas (2026-06-11)
+
+### Bug crítico corregido: alerta falsa "datos no verificados"
+
+**Causa raíz**: `data/delitos-estados.json` usaba `"estado": "validado"` para los 483 delitos, pero el tipo TypeScript `EstadoDelito` solo acepta `'verificado' | 'pendiente_revision' | 'rechazado'`. El valor `"validado"` no coincidía con `"verificado"`, haciendo que la calculadora marcara TODOS los delitos como no verificados.
+
+**Corrección**: Reemplazado `"validado"` por `"verificado"` en las 483 entradas de `data/delitos-estados.json`.
+
+### Penas corregidas
+
+| Delito | Artículo | Antes | Después | Fuente CP |
+|--------|----------|-------|---------|-----------|
+| Abandono de animales | Art. 342 CP | 0-0 meses | 6-8 meses | "prestación de servicios... de 6 a 8 meses" |
+| Bigamia | Art. 278 CP | 0-0 meses | 12-36 meses | "servicios... de 1 a 3 años" |
+| Celebración de matrimonio inválido | Art. 279 CP | 0-0 meses | 6-12 meses | "servicios... de 6 meses a 1 año" |
+| Resp. personas jurídicas | Art. 296 CP | multa 500-1 | multa 500-1000 | "multa de 500 a 1000 días" |
+| Loterías y juegos no autorizados | Art. 387 CP | multa 500-1 | multa 500-1000 | "multa de 500 a 1000 días" |
+| Resp. personas jurídicas | Art. 397 CP | multa 500-1 | multa 500-1000 | "multa de 500 a 1000 días" |
+| Falta registro clientes | Art. 522 CP | multa 700-1 | multa 700-1000 | "multa de 700 a 1000 días" |
+
+### Tests añadidos (129 nuevos → 314 total)
+
+`tests/catalogo-delitos.test.ts`:
+- **Catálogo**: total=483, sin duplicados (nombre+artículo), mín≤máx, sin negativos, encoding preservado
+- **Estados de validación**: 483 verificados, 0 pendientes, 0 rechazados, ningún `"validado"` residual
+- **Normalización de artículos**: `342`, `Art. 342`, `Artículo 342`, `342 CP`, `Art. 342 CP` → todos resuelven a `342`
+- **Art. 342 CP**: penas 6-8 meses, estado verificado, multa 100-200 días, inhabilitación especial
+- **Alerta**: delito verificado NO produce confianza≠verificado, muestra de 50 delitos todos verificados
+- **Cálculo**: muestra de 30 delitos sin NaN, sin null, confianza verificada
+- **Regresión**: Art. 342 no produce alerta, penas no son 0-0
+
+### Archivos modificados
+- `data/delitos-estados.json` — 483 entradas `"validado"` → `"verificado"`
+- `data/delitos.json` — Art. 342 (6-8), Art. 278 (12-36), Art. 279 (6-12), Art. 296/387/397/522 (alt_max corregido)
+- `tests/catalogo-delitos.test.ts` — nuevo, 129 tests
+
+### Validación
+- `npm run lint`: 0 errores, 0 warnings
+- `npm test`: 314 tests pasados (14 archivos)
+- `npm run build`: ✓ Compiled successfully, 247 páginas
+
 ## Release 23 — Pages muestra contenido existente de la web con defaults reales (2026-06-11)
 
 ### Problema: Pages no mostraba el contenido existente de la web
