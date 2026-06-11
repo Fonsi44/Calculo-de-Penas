@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useEditor, EditorContent, type Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -36,6 +36,9 @@ function Tb({ editor, onClick, active, title, children }: {
 }
 
 export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextEditorProps) {
+  const isInternalUpdate = useRef(false);
+  const lastExternalContent = useRef(content);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
@@ -54,8 +57,24 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
         style: `min-height: ${minHeight}px`,
       },
     },
-    onUpdate: ({ editor }) => { onChange(editor.getHTML()); },
+    onUpdate: ({ editor }) => {
+      isInternalUpdate.current = true;
+      onChange(editor.getHTML());
+    },
   });
+
+  useEffect(() => {
+    if (!editor || editor.isDestroyed) return;
+    if (isInternalUpdate.current) {
+      isInternalUpdate.current = false;
+      lastExternalContent.current = editor.getHTML();
+      return;
+    }
+    if (content !== lastExternalContent.current) {
+      lastExternalContent.current = content;
+      editor.commands.setContent(content, { emitUpdate: false });
+    }
+  }, [content, editor]);
 
   const setLink = useCallback(() => {
     if (!editor) return;

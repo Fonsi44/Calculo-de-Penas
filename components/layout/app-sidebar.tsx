@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Keyboard } from 'lucide-react';
+import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Keyboard, Shield } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
@@ -23,6 +23,7 @@ const NAV: NavItem[] = [
   { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp' || p.startsWith('/cp/') },
   { label: 'Catálogo de delitos', href: '/intranet/delitos', icon: FileText, match: (p) => p.startsWith('/intranet/delitos') || p === '/delitos' || p.startsWith('/delitos/') },
   { label: 'Atajos de teclado', href: '/intranet/atajos', icon: Keyboard, match: (p) => p.startsWith('/intranet/atajos') || p === '/atajos' || p.startsWith('/atajos/') },
+  { label: 'Web Admin', href: '/intranet/admin', icon: Shield, match: (p) => p.startsWith('/intranet/admin') },
 ];
 
 export function AppSidebar({ className, onNavigate }: { className?: string; onNavigate?: () => void }) {

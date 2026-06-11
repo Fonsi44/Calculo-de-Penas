@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -10,6 +10,7 @@ import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { blogCategories } from '@/data/blog/categories';
 import { useToast } from '@/components/ui/toast';
 import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/ui';
 import Link from 'next/link';
 
 const FUNNY_COMMENTS = [
@@ -38,6 +39,8 @@ interface GeneratedPost {
   category: string;
 }
 
+type EditorTab = 'visual' | 'code';
+
 export default function AdminBlogEditorPage() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
@@ -50,6 +53,11 @@ export default function AdminBlogEditorPage() {
   const [funnyComment, setFunnyComment] = useState('');
   const [genTopic, setGenTopic] = useState('');
   const [genCategory, setGenCategory] = useState('derecho-penal');
+  const [activeTab, setActiveTab] = useState<EditorTab>('visual');
+  const [codeValue, setCodeValue] = useState('');
+  const [codeError, setCodeError] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+  const initialFormRef = useRef<string>('');
 
   const [form, setForm] = useState({
     slug: '', title: '', description: '', body: '',
@@ -60,28 +68,48 @@ export default function AdminBlogEditorPage() {
 
   useEffect(() => {
     if (isNew) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     fetch(`/api/admin/blog/${params.id}`)
       .then(r => r.json())
       .then(data => {
         if (data.post) {
           const p = data.post;
-          setForm({
+          const newForm = {
             slug: p.slug || '', title: p.title || '', description: p.description || '',
             body: p.body || '', publishedAt: p.publishedAt ? new Date(p.publishedAt).toISOString().slice(0, 16) : '',
             category: p.category || 'derecho-penal',
             tags: Array.isArray(p.tags) ? p.tags.join(', ') : '',
             author: p.author || 'Pineda y Asociados', readingTime: p.readingTime || '3 min',
             coverImage: p.coverImage || '', featured: p.featured || false, published: p.published || false,
-          });
+          };
+          setForm(newForm);
+          setCodeValue(p.body || '');
+          initialFormRef.current = JSON.stringify(newForm);
         }
       })
       .catch(() => toast.danger('Error al cargar'))
       .finally(() => setLoading(false));
   }, [isNew, params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleSave = async (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!loading) {
+      const current = JSON.stringify(form);
+      setIsDirty(current !== initialFormRef.current && initialFormRef.current !== '');
+    }
+  }, [form, loading]);
+
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isDirty]);
+
+  const handleSave = async (e: React.FormEvent, saveAsDraft?: boolean) => {
     e.preventDefault();
     setSaving(true);
     try {
@@ -90,7 +118,7 @@ export default function AdminBlogEditorPage() {
         publishedAt: new Date(form.publishedAt).toISOString(),
         category: form.category, tags: form.tags.split(',').map(t => t.trim()).filter(Boolean),
         author: form.author, readingTime: form.readingTime,
-        coverImage: form.coverImage || null, featured: form.featured, published: form.published,
+        coverImage: form.coverImage || null, featured: form.featured, published: saveAsDraft ? false : form.published,
       };
       if (form.slug && !isNew) body.slug = form.slug;
 
@@ -99,12 +127,46 @@ export default function AdminBlogEditorPage() {
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
       toast.success(isNew ? 'Post creado' : 'Post actualizado');
+      setIsDirty(false);
       router.push('/intranet/admin/blog');
     } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
     finally { setSaving(false); }
   };
 
-  const update = (k: string, v: string | boolean) => setForm(f => ({ ...f, [k]: v }));
+  const update = (k: string, v: string | boolean) => {
+    setForm(f => ({ ...f, [k]: v }));
+  };
+
+  const handleBodyChange = useCallback((html: string) => {
+    setForm(f => ({ ...f, body: html }));
+    if (activeTab === 'visual') {
+      setCodeValue(html);
+    }
+  }, [activeTab]);
+
+  const handleCodeChange = useCallback((code: string) => {
+    setCodeValue(code);
+    setCodeError(null);
+    try {
+      const div = document.createElement('div');
+      div.innerHTML = code;
+      setForm(f => ({ ...f, body: code }));
+    } catch {
+      setCodeError('El HTML contiene errores de sintaxis');
+    }
+  }, []);
+
+  const switchToVisual = useCallback(() => {
+    setForm(f => ({ ...f, body: codeValue }));
+    setActiveTab('visual');
+  }, [codeValue]);
+
+  const switchToCode = useCallback(() => {
+    setCodeValue(form.body);
+    setCodeError(null);
+    setActiveTab('code');
+  }, [form.body]);
+
   const slugFromTitle = () => {
     if (!form.slug && form.title) {
       const slug = form.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -201,6 +263,7 @@ export default function AdminBlogEditorPage() {
         featured: false,
         published: false,
       });
+      setCodeValue(post.body);
       setFunnyComment('');
       toast.success('Post generado! Revisa y personaliza el contenido.');
       setGenTopic('');
@@ -216,9 +279,26 @@ export default function AdminBlogEditorPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <Link href="/intranet/admin/blog"><Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button></Link>
-        <h1 className="text-xl font-extrabold text-primary">{isNew ? 'Nuevo Post' : 'Editar Post'}</h1>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Link href="/intranet/admin/blog"><Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button></Link>
+          <div>
+            <h1 className="text-xl font-extrabold text-primary">{isNew ? 'Nuevo Post' : 'Editar Post'}</h1>
+            {isDirty && (
+              <p className="text-xxs text-warning flex items-center gap-1">
+                <AlertTriangle size={10} /> Cambios sin guardar
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Button type="button" variant="secondary" size="sm" onClick={(e) => handleSave(e as unknown as React.FormEvent, true)} disabled={saving}>
+            <Save size={14} className="mr-1" /> Guardar borrador
+          </Button>
+          <Button type="button" variant="primary" size="sm" onClick={(e) => handleSave(e as unknown as React.FormEvent)} loading={saving}>
+            <Save size={14} className="mr-1" /> {isNew ? 'Publicar' : 'Actualizar'}
+          </Button>
+        </div>
       </div>
 
       {/* GENERADOR AI */}
@@ -285,30 +365,83 @@ export default function AdminBlogEditorPage() {
         </Card>
       )}
 
-      <form onSubmit={handleSave} className="space-y-4">
+      {/* FORMULARIO */}
+      <form onSubmit={(e) => handleSave(e)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Columna principal: metadata del post + editor */}
           <div className="md:col-span-2 space-y-4">
             <div>
               <label className="block text-xs font-semibold text-text-secondary mb-1">Título *</label>
-              <Input value={form.title} onChange={e => { update('title', e.target.value); if (!form.slug) slugFromTitle(); }} required />
+              <Input value={form.title} onChange={e => { update('title', e.target.value); if (!form.slug) slugFromTitle(); }} required placeholder="Título del artículo" />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-text-secondary mb-1">Slug</label>
-              <Input value={form.slug} onChange={e => update('slug', e.target.value)} placeholder="auto-generado" />
+              <Input value={form.slug} onChange={e => update('slug', e.target.value)} placeholder="auto-generado desde el título" />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-text-secondary mb-1">Descripción *</label>
-              <Input value={form.description} onChange={e => update('description', e.target.value)} required />
+              <label className="block text-xs font-semibold text-text-secondary mb-1">Descripción (extracto) *</label>
+              <Input value={form.description} onChange={e => update('description', e.target.value)} required placeholder="Breve descripción del artículo" />
             </div>
 
+            {/* EDITOR CON DOBLE PESTAÑA */}
             <div>
-              <label className="block text-xs font-semibold text-text-secondary mb-1">Contenido *</label>
-              <RichTextEditor content={form.body} onChange={html => update('body', html)} minHeight={400} />
+              <div className="flex items-center justify-between mb-1">
+                <label className="text-xs font-semibold text-text-secondary">Contenido *</label>
+                <div className="flex rounded-md border border-border-light overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => activeTab === 'code' ? switchToVisual() : null}
+                    className={cn(
+                      'flex items-center gap-1 px-3 py-1 text-xs font-medium transition-colors',
+                      activeTab === 'visual'
+                        ? 'bg-accent/15 text-primary'
+                        : 'text-text-secondary hover:bg-surface-alt'
+                    )}
+                  >
+                    <Eye size={12} /> Editor visual
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => activeTab === 'visual' ? switchToCode() : null}
+                    className={cn(
+                      'flex items-center gap-1 px-3 py-1 text-xs font-medium transition-colors',
+                      activeTab === 'code'
+                        ? 'bg-accent/15 text-primary'
+                        : 'text-text-secondary hover:bg-surface-alt'
+                    )}
+                  >
+                    <Code2 size={12} /> Código
+                  </button>
+                </div>
+              </div>
+
+              {activeTab === 'visual' ? (
+                <RichTextEditor content={form.body} onChange={handleBodyChange} minHeight={400} />
+              ) : (
+                <div className="space-y-1">
+                  <textarea
+                    value={codeValue}
+                    onChange={e => handleCodeChange(e.target.value)}
+                    className="w-full min-h-[400px] p-3 rounded-md border border-border-light bg-surface font-mono text-xs text-text leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/30 resize-y"
+                    spellCheck={false}
+                    placeholder="<p>Escribe el contenido HTML aquí...</p>"
+                  />
+                  {codeError && (
+                    <p className="text-xs text-danger flex items-center gap-1">
+                      <AlertTriangle size={10} /> {codeError}
+                    </p>
+                  )}
+                  <p className="text-xxs text-text-muted">
+                    Puedes escribir HTML directamente. Los cambios se convertirán al editor visual al cambiar de pestaña. Antes de guardar, verifica el contenido en ambas pestañas.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
+          {/* Columna lateral: metadatos */}
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-semibold text-text-secondary mb-1">Categoría</label>
@@ -329,7 +462,7 @@ export default function AdminBlogEditorPage() {
                   <Tag size={11} /> Auto
                 </button>
               </div>
-              <Input value={form.tags} onChange={e => update('tags', e.target.value)} placeholder="ej: divorcio, familia" />
+              <Input value={form.tags} onChange={e => update('tags', e.target.value)} placeholder="ej: divorcio, familia, custodia" />
             </div>
 
             <div>
@@ -365,9 +498,14 @@ export default function AdminBlogEditorPage() {
               <input type="checkbox" checked={form.published} onChange={e => update('published', e.target.checked)} className="rounded" /> Publicado
             </label>
 
-            <Button type="submit" variant="primary" fullWidth loading={saving}>
-              <Save size={14} className="mr-1" />{isNew ? 'Crear post' : 'Guardar cambios'}
-            </Button>
+            <div className="flex flex-col gap-2 pt-2 border-t border-border-light">
+              <Button type="button" variant="secondary" size="sm" onClick={(e) => handleSave(e as unknown as React.FormEvent, true)} disabled={saving} fullWidth>
+                <Save size={14} className="mr-1" /> Guardar borrador
+              </Button>
+              <Button type="button" variant="primary" size="sm" onClick={(e) => handleSave(e as unknown as React.FormEvent)} loading={saving} fullWidth>
+                <Save size={14} className="mr-1" /> {isNew ? 'Publicar post' : 'Actualizar post'}
+              </Button>
+            </div>
           </div>
         </div>
       </form>
