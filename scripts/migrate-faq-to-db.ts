@@ -3,6 +3,7 @@
  * Ejecutar con: npx tsx scripts/migrate-faq-to-db.ts
  */
 
+import 'dotenv/config';
 import { db } from '../lib/db';
 import { faqEntries } from '../lib/schema';
 import { categoriasFaq } from '../data/faq';

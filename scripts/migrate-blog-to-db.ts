@@ -3,6 +3,7 @@
  * Ejecutar con: npx tsx scripts/migrate-blog-to-db.ts
  */
 
+import 'dotenv/config';
 import { db } from '../lib/db';
 import { blogPosts } from '../lib/schema';
 import { posts as allPosts } from '../data/blog/posts/index';
