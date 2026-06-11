@@ -30,7 +30,16 @@ export async function GET(request: Request) {
 
     const result = await getSearchConsoleData(days as 7 | 28 | 90);
 
-    return NextResponse.json({ configured: true, ...result });
+    return NextResponse.json({
+      configured: true,
+      topQueries: result.queries,
+      topPages: result.pages,
+      totalClicks: result.totalClicks,
+      totalImpressions: result.totalImpressions,
+      totalCtr: result.totalCtr,
+      averagePosition: result.averagePosition,
+      dateRange: result.dateRange,
+    });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Error desconocido';
     return NextResponse.json(

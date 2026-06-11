@@ -35,6 +35,12 @@ Profesionales del derecho que necesitan determinar penas con precisión técnica
 
 ---
 
+### Google Cloud Platform (GCP)
+
+El proyecto de GCP asociado es **`pineda-asociados-forms-nuevo`** (no `justicia-verdadera`). Todos los comandos de gcloud deben usar `--project=pineda-asociados-forms-nuevo`.
+
+---
+
 ## 2. Arquitectura actual
 
 ### Estructura de directorios
