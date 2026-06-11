@@ -28,6 +28,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArticuloAutocomplete } from '@/components/domain/articulo-autocomplete';
 import { site } from '@/lib/site';
+import { useAuth } from '@/app/auth-context';
 
 interface Feature {
   icon: React.ComponentType<{ size?: number; className?: string }>;
@@ -85,6 +86,7 @@ const RULES = [
 ];
 
 export default function IntranetDashboard() {
+  const { user } = useAuth();
   const [stats, setStats] = useState({ total: 0, clasificaciones: 0 });
   const [now, setNow] = useState<Date | null>(() => new Date());
 
@@ -299,6 +301,25 @@ export default function IntranetDashboard() {
           </div>
           <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
         </Link>
+
+        {/* Admin Panel */}
+        {user?.rol === 'admin' && (
+          <Link
+            href="/intranet/admin"
+            className="flex items-center bg-surface p-3 rounded-md border border-accent/30 shadow-sm hover:shadow-md hover:border-accent transition-all focus-visible:outline-none"
+          >
+            <div className="w-10 h-10 rounded-md bg-accent/15 flex items-center justify-center mr-3 flex-shrink-0">
+              <ShieldCheck size={20} className="text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-bold text-text text-sm">Panel de Administración</p>
+              <p className="text-text-secondary text-xxs">
+                Gestionar usuarios, blog, FAQ y configuración del sitio
+              </p>
+            </div>
+            <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
+          </Link>
+        )}
 
         {/* Add custom delito */}
         <Link

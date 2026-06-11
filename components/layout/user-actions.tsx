@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/auth-context';
 import { useTheme } from '@/app/theme-context';
-import { LogOut, Moon, Sun, ChevronDown, User as UserIcon } from 'lucide-react';
+import { LogOut, Moon, Sun, ChevronDown, User as UserIcon, Shield } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 
 export function UserActions() {
@@ -65,6 +65,16 @@ export function UserActions() {
                 <p className="text-xs font-bold text-text truncate">{user.nombre}</p>
                 <p className="text-xxs text-text-secondary truncate">{user.email}</p>
               </div>
+              {user.rol === 'admin' && (
+                <Link
+                  href="/intranet/admin"
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text hover:bg-surface-alt"
+                >
+                  <Shield size={14} className="text-accent-dark" /> Panel Admin
+                </Link>
+              )}
               <button
                 type="button"
                 role="menuitem"
