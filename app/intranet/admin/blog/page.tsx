@@ -10,7 +10,6 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
-import { blogCategories } from '@/data/blog/categories';
 
 type SortField = 'publishedAt' | 'title' | 'published';
 type SortDir = 'asc' | 'desc';
@@ -59,6 +58,15 @@ export default function AdminBlogPage() {
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [duplicating, setDuplicating] = useState<string | null>(null);
   const limit = 20;
+  const [dbCategories, setDbCategories] = useState<{ slug: string; nombre: string }[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/categorias-blog').then(r => r.json()).then(data => {
+      if (data.categorias) setDbCategories(data.categorias);
+    }).catch(() => {});
+  }, []);
+
+  const categoryName = (slug: string) => dbCategories.find(c => c.slug === slug)?.nombre ?? slug;
 
   const fetchPosts = useCallback(() => {
     const params = new URLSearchParams({ page: String(page), limit: String(limit), published: status });
@@ -172,7 +180,6 @@ export default function AdminBlogPage() {
   };
 
   const totalPages = Math.ceil(total / limit);
-  const categoryName = (slug: string) => blogCategories.find(c => c.slug === slug)?.nombre ?? slug;
 
   return (
     <div className="space-y-4">
@@ -233,7 +240,7 @@ export default function AdminBlogPage() {
         </div>
         <select value={category} onChange={e => { setCategory(e.target.value); setPage(1); }} className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
           <option value="">Todas las categorías</option>
-          {blogCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
+          {dbCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
         </select>
         <select value={status} onChange={e => { setStatus(e.target.value); setPage(1); }} className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
           <option value="all">Todos los estados</option>

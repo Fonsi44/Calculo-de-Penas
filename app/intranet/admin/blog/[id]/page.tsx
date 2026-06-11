@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
-import { blogCategories } from '@/data/blog/categories';
 import { useToast } from '@/components/ui/toast';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/ui';
@@ -61,12 +60,19 @@ export default function AdminBlogEditorPage() {
   const [uploadPreview, setUploadPreview] = useState<string | null>(null);
   const initialFormRef = useRef<string>('');
 
+  const [dbCategories, setDbCategories] = useState<{ slug: string; nombre: string }[]>([]);
   const [form, setForm] = useState({
     slug: '', title: '', description: '', body: '',
     publishedAt: new Date().toISOString().slice(0, 16),
     category: 'derecho-penal', tags: '', author: 'Pineda y Asociados',
     readingTime: '3 min', coverImage: '', featured: false, published: false,
   });
+
+  useEffect(() => {
+    fetch('/api/admin/categorias-blog').then(r => r.json()).then(data => {
+      if (data.categorias) setDbCategories(data.categorias);
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (isNew) return;
@@ -199,7 +205,7 @@ export default function AdminBlogEditorPage() {
   };
 
   const handleAutoCover = () => {
-    const cat = blogCategories.find(c => c.slug === form.category);
+    const cat = dbCategories.find(c => c.slug === form.category);
     const slug = cat ? cat.slug : 'derecho-penal';
     const imageMap: Record<string, string> = {
       'derecho-penal': '/images/blog/defensa-penal.webp',
@@ -360,7 +366,7 @@ export default function AdminBlogEditorPage() {
               onChange={e => setGenCategory(e.target.value)}
               className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm"
             >
-              {blogCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
+              {dbCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
             </select>
             <Button
               onClick={handleGeneratePost}
@@ -482,7 +488,7 @@ export default function AdminBlogEditorPage() {
             <div>
               <label className="block text-xs font-semibold text-text-secondary mb-1">Categoría</label>
               <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
-                {blogCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
+                {dbCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
               </select>
             </div>
 

@@ -10,13 +10,7 @@ import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
-import { faqCategoriesMeta } from '@/data/faq-categories';
 import Link from 'next/link';
-
-const VALID_CATEGORY_SLUGS = new Set(faqCategoriesMeta.map(c => c.slug));
-const categoryNamesBySlug: Record<string, string> = Object.fromEntries(
-  faqCategoriesMeta.map(c => [c.slug, c.titulo])
-);
 
 interface FaqEntry {
   id: string;
@@ -42,6 +36,21 @@ export default function AdminFaqPage() {
   const [filterCategory, setFilterCategory] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [saving, setSaving] = useState(false);
+  const [dbCategories, setDbCategories] = useState<{ slug: string; titulo: string; color?: string }[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/categorias-faq').then(r => r.json()).then(data => {
+      if (data.categorias) setDbCategories(data.categorias);
+    }).catch(() => {});
+  }, []);
+
+  const catMap = useMemo(() => {
+    const m: Record<string, string> = {};
+    for (const c of dbCategories) m[c.slug] = c.titulo;
+    return m;
+  }, [dbCategories]);
+
+  const validSlugs = useMemo(() => new Set(dbCategories.map(c => c.slug)), [dbCategories]);
 
   const displayCategories = useMemo(() => {
     const fromDb = faqs.reduce<string[]>((acc, f) => {
@@ -49,11 +58,11 @@ export default function AdminFaqPage() {
       return acc;
     }, []).sort();
     if (fromDb.length > 0) return fromDb;
-    return faqCategoriesMeta.map(c => c.slug);
-  }, [faqs]);
+    return dbCategories.map(c => c.slug);
+  }, [faqs, dbCategories]);
 
-  const categoryName = (slug: string) => categoryNamesBySlug[slug] ?? slug;
-  const isCategoryValid = (slug: string) => VALID_CATEGORY_SLUGS.has(slug);
+  const categoryName = (slug: string) => catMap[slug] ?? slug;
+  const isCategoryValid = (slug: string) => validSlugs.has(slug);
 
   const fetchFaqs = useCallback(() => {
     const params = new URLSearchParams();
@@ -248,7 +257,7 @@ export default function AdminFaqPage() {
               <select value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))}
                 className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
                 <option value="">Seleccionar categoría...</option>
-                {faqCategoriesMeta.map(c => <option key={c.slug} value={c.slug}>{c.titulo}</option>)}
+                {dbCategories.map(c => <option key={c.slug} value={c.slug}>{c.titulo}</option>)}
               </select>
               {newForm.category && !isCategoryValid(newForm.category) && (
                 <p className="text-xxs text-danger mt-1">Categoría no reconocida</p>
@@ -303,7 +312,7 @@ export default function AdminFaqPage() {
                     <label className="text-xs font-semibold text-text-secondary">Categoría</label>
                     <select value={editForm.category} onChange={e => setEditForm(ff => ({ ...ff, category: e.target.value }))}
                       className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
-                      {faqCategoriesMeta.map(c => <option key={c.slug} value={c.slug}>{c.titulo}</option>)}
+                      {dbCategories.map(c => <option key={c.slug} value={c.slug}>{c.titulo}</option>)}
                     </select>
                     <Input value={editForm.question} onChange={e => setEditForm(ff => ({ ...ff, question: e.target.value }))} placeholder="Pregunta" />
                     <RichTextEditor content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />
