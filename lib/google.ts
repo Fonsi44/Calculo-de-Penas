@@ -1,35 +1,23 @@
 import { google } from 'googleapis';
 
-function getCredentials() {
-  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const key = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
+function getOAuthClient() {
+  const clientId = process.env.OAUTH_CLIENT_ID;
+  const clientSecret = process.env.OAUTH_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
 
-  if (!email || !key) {
-    throw new Error(
-      'Faltan credenciales de Google. Define GOOGLE_SERVICE_ACCOUNT_EMAIL y GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY en .env.local',
-    );
-  }
+  if (!clientId || !clientSecret || !refreshToken) return null;
 
-  return {
-    client_email: email,
-    private_key: key.replace(/\\n/g, '\n'),
-  };
+  const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, 'http://localhost');
+  oauth2Client.setCredentials({ refresh_token: refreshToken });
+  return oauth2Client;
 }
 
-function getAnalyticsPropertyId(): string {
-  const id = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
-  if (!id) {
-    throw new Error('Falta GOOGLE_ANALYTICS_PROPERTY_ID en .env.local');
-  }
-  return id;
-}
-
-function getSearchConsoleSiteUrl(): string {
-  const url = process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL;
-  if (!url) {
-    throw new Error('Falta GOOGLE_SEARCH_CONSOLE_SITE_URL en .env.local');
-  }
-  return url;
+function isOAuthConfigured(): boolean {
+  return !!(
+    process.env.OAUTH_CLIENT_ID &&
+    process.env.OAUTH_CLIENT_SECRET &&
+    process.env.GOOGLE_REFRESH_TOKEN
+  );
 }
 
 export function getGoogleServiceAccountEmail(): string | null {
@@ -52,11 +40,13 @@ export function isGoogleConfigured(): boolean {
 }
 
 export function isAnalyticsConfigured(): boolean {
-  return isGoogleConfigured() && !!process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
+  return (isGoogleConfigured() && !!process.env.GOOGLE_ANALYTICS_PROPERTY_ID)
+    || (isOAuthConfigured() && !!process.env.GOOGLE_ANALYTICS_PROPERTY_ID);
 }
 
 export function isSearchConsoleConfigured(): boolean {
-  return isGoogleConfigured() && !!process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL;
+  return (isGoogleConfigured() && !!process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL)
+    || (isOAuthConfigured() && !!process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL);
 }
 
 export type AnalyticsDateRange = {
@@ -99,18 +89,44 @@ function mapRow(
   };
 }
 
+function requirePropertyId(): string {
+  const id = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
+  if (!id) throw new Error('Falta GOOGLE_ANALYTICS_PROPERTY_ID en .env.local');
+  return id;
+}
+
+function requireSearchConsoleSiteUrl(): string {
+  const url = process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL;
+  if (!url) throw new Error('Falta GOOGLE_SEARCH_CONSOLE_SITE_URL en .env.local');
+  return url;
+}
+
+function getAuth(scopes: string[]) {
+  const saEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+  const saKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
+  const oauthClient = getOAuthClient();
+
+  if (saEmail && saKey) {
+    return new google.auth.JWT({
+      email: saEmail,
+      key: saKey.replace(/\\n/g, '\n'),
+      scopes,
+    });
+  }
+
+  if (oauthClient) {
+    return oauthClient;
+  }
+
+  throw new Error('Sin credenciales. Configura GOOGLE_SERVICE_ACCOUNT_* o OAUTH_CLIENT_* + GOOGLE_REFRESH_TOKEN');
+}
+
 export async function getAnalyticsData(
   days: 7 | 28 | 90 = 28,
 ): Promise<AnalyticsResponse> {
-  const propertyId = getAnalyticsPropertyId();
-  const credentials = getCredentials();
-
-  const auth = new google.auth.JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
-  });
-
+  const propertyId = requirePropertyId();
+  const property = `properties/${propertyId}`;
+  const auth = getAuth(['https://www.googleapis.com/auth/analytics.readonly']);
   const analytics = google.analyticsdata({ version: 'v1beta', auth });
 
   const endDate = new Date().toISOString().split('T')[0];
@@ -119,7 +135,6 @@ export async function getAnalyticsData(
     .split('T')[0];
 
   const dateRange: AnalyticsDateRange = { startDate, endDate };
-  const property = `properties/${propertyId}`;
 
   const [metricsRes, pagesRes, sourcesRes, countriesRes, devicesRes] =
     await Promise.all([
@@ -205,14 +220,8 @@ export async function getAnalyticsForUrl(
   urlPath: string,
   days: 7 | 28 | 90 = 28,
 ): Promise<{ pageViews: number | null; activeUsers: number | null }> {
-  const propertyId = getAnalyticsPropertyId();
-  const credentials = getCredentials();
-
-  const auth = new google.auth.JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
-  });
+  const propertyId = requirePropertyId();
+  const auth = getAuth(['https://www.googleapis.com/auth/analytics.readonly']);
 
   const analytics = google.analyticsdata({ version: 'v1beta', auth });
 
@@ -276,14 +285,8 @@ export type SearchConsoleResponse = {
 export async function getSearchConsoleData(
   days: 7 | 28 | 90 = 28,
 ): Promise<SearchConsoleResponse> {
-  const siteUrl = getSearchConsoleSiteUrl();
-  const credentials = getCredentials();
-
-  const auth = new google.auth.JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
-  });
+  const siteUrl = requireSearchConsoleSiteUrl();
+  const auth = getAuth(['https://www.googleapis.com/auth/webmasters.readonly']);
 
   const searchconsole = google.searchconsole({ version: 'v1', auth });
 
@@ -359,14 +362,8 @@ export async function getSearchConsoleForUrl(
   ctr: number;
   position: number;
 } | null> {
-  const siteUrl = getSearchConsoleSiteUrl();
-  const credentials = getCredentials();
-
-  const auth = new google.auth.JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
-  });
+  const siteUrl = requireSearchConsoleSiteUrl();
+  const auth = getAuth(['https://www.googleapis.com/auth/webmasters.readonly']);
 
   const searchconsole = google.searchconsole({ version: 'v1', auth });
 
@@ -432,14 +429,8 @@ export type UrlInspectionResult = {
 export async function inspectUrl(
   urlToInspect: string,
 ): Promise<UrlInspectionResult> {
-  const siteUrl = getSearchConsoleSiteUrl();
-  const credentials = getCredentials();
-
-  const auth = new google.auth.JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
-  });
+  const siteUrl = requireSearchConsoleSiteUrl();
+  const auth = getAuth(['https://www.googleapis.com/auth/webmasters.readonly']);
 
   const searchconsole = google.searchconsole({ version: 'v1', auth });
 
