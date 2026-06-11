@@ -405,6 +405,9 @@ export default async function HomePage() {
                 <Users size={12} /> Equipo coordinado
               </span>
             </div>
+            <Link href="/despacho" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+              Conozca nuestro despacho <ArrowRight size={14} />
+            </Link>
           </div>
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">
             {[
@@ -525,6 +528,9 @@ export default async function HomePage() {
             />
             <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
               Ver todas las preguntas <ArrowRight size={14} />
+            </Link>
+            <Link href="/blog" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+              Visitar nuestro blog <ArrowRight size={14} />
             </Link>
           </div>
           <div className="lg:col-span-2 space-y-3">

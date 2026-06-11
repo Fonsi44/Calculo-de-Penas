@@ -20,9 +20,18 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 
 export const metadata: Metadata = {
-  title: `Solicitar Consulta Legal — ${site.name}`,
+  title: 'Solicitar Consulta Legal',
   description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
   alternates: { canonical: '/solicitar-consulta' },
+  openGraph: {
+    title: `Solicitar Consulta Legal — ${site.name}`,
+    description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
+    url: `${site.url}/solicitar-consulta`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Solicitar Consulta Legal` }],
+  },
 };
 
 export default async function SolicitarConsultaPage() {

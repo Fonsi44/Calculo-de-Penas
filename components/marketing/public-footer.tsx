@@ -20,10 +20,13 @@ const AREAS = [
 
 const DESPACHO = [
   { label: 'El Despacho', href: '/despacho' },
-  { label: 'Cómo llegar', href: '/como-llegar' },
   { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
-  { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
+  { label: 'Derecho Penal', href: '/derecho-penal' },
+  { label: 'Blog Jurídico', href: '/blog' },
   { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
+  { label: 'Solicitar Consulta', href: '/solicitar-consulta' },
+  { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
+  { label: 'Cómo llegar', href: '/como-llegar' },
 ];
 
 const LEGALES = [

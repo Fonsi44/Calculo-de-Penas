@@ -1,6 +1,6 @@
 import { db } from './db';
 import { areasJuridicas } from './schema';
-import { eq, or, asc } from 'drizzle-orm';
+import { eq, asc } from 'drizzle-orm';
 import { cache } from 'react';
 
 export interface AreaFromDb {

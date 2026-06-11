@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
-import { categoriasBlog } from '@/lib/schema';
+import { categoriasBlog, type AuditoriaAccion } from '@/lib/schema';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
-import { eq, asc } from 'drizzle-orm';
+import { asc } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = schema.parse(body);
     const [cat] = await db.insert(categoriasBlog).values(parsed).returning();
-    await logAudit({ usuarioId: auth.userId, accion: 'categoria_blog_created' as any, recurso: 'categoria_blog', recursoId: cat.id, metadata: { slug: cat.slug }, request });
+    await logAudit({ usuarioId: auth.userId, accion: 'categoria_blog_created' as AuditoriaAccion, recurso: 'categoria_blog', recursoId: cat.id, metadata: { slug: cat.slug }, request });
     return Response.json({ categoria: cat }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });

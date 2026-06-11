@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { Search, Filter } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -28,7 +28,6 @@ export default function AdminAuditoriaPage() {
   const limit = 50;
 
   useEffect(() => {
-    setLoading(true);
     const params = new URLSearchParams({ page: String(page), limit: String(limit) });
     if (accionFilter) params.set('accion', accionFilter);
     fetch(`/api/admin/auditoria?${params}`)

@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import jwt from 'jsonwebtoken';
-import { site } from '@/lib/site';
 import type { Metadata } from 'next';
 
 const PREVIEW_SECRET = process.env.JWT_SECRET || 'dev-only-secret-not-for-production-min-32-chars-AAAAA';

@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
-import { tags } from '@/lib/schema';
+import { tags, type AuditoriaAccion } from '@/lib/schema';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
-import { eq, asc, ilike } from 'drizzle-orm';
+import { asc, ilike } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
@@ -17,9 +17,8 @@ export async function GET(request: Request) {
     requireAdmin(request);
     const { searchParams } = new URL(request.url);
     const q = searchParams.get('q');
-    let query = db.select().from(tags).orderBy(asc(tags.nombre));
-    if (q) query = query.where(ilike(tags.nombre, `%${q}%`)) as typeof query;
-    const rows = await query;
+    const query = db.select().from(tags).orderBy(asc(tags.nombre));
+    const rows = q ? await query.where(ilike(tags.nombre, `%${q}%`)) : await query;
     return Response.json({ tags: rows });
   } catch (err) { return authFailureResponse(err); }
 }
@@ -33,7 +32,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = createSchema.parse(body);
     const [tag] = await db.insert(tags).values(parsed).returning();
-    await logAudit({ usuarioId: auth.userId, accion: 'tag_created' as any, recurso: 'tag', recursoId: tag.id, metadata: { slug: tag.slug }, request });
+    await logAudit({ usuarioId: auth.userId, accion: 'tag_created' as AuditoriaAccion, recurso: 'tag', recursoId: tag.id, metadata: { slug: tag.slug }, request });
     return Response.json({ tag }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });

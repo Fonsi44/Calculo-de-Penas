@@ -17,9 +17,6 @@ export const metadata: Metadata = {
   creator: site.name,
   publisher: site.name,
   metadataBase: new URL(site.url),
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     locale: 'es_HN',

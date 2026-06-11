@@ -61,7 +61,6 @@ export const metadata: Metadata = {
     ? { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } }
     : { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   alternates: {
-    canonical: siteUrl,
     types: {
       'application/rss+xml': `${siteUrl}/blog/feed.xml`,
     },
@@ -80,8 +79,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es-HN" dir="ltr" className={`h-full ${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="alternate" href={siteUrl} hrefLang="es-HN" />
-        <link rel="alternate" href={siteUrl} hrefLang="x-default" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />

@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
-import { redirects } from '@/lib/schema';
+import { redirects, type AuditoriaAccion } from '@/lib/schema';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
-import { eq, desc } from 'drizzle-orm';
+import { desc } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = schema.parse(body);
     const [r] = await db.insert(redirects).values(parsed).returning();
-    await logAudit({ usuarioId: auth.userId, accion: 'redirect_created' as any, recurso: 'redirect', recursoId: r.id, metadata: { origen: r.origen, destino: r.destino }, request });
+    await logAudit({ usuarioId: auth.userId, accion: 'redirect_created' as AuditoriaAccion, recurso: 'redirect', recursoId: r.id, metadata: { origen: r.origen, destino: r.destino }, request });
     return Response.json({ redirect: r }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });

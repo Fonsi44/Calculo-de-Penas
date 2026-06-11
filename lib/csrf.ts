@@ -1,5 +1,3 @@
-import { getClientIp } from './rate-limit';
-
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
   'http://localhost:3001',

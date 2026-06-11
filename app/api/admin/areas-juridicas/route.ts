@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { areasJuridicas } from '@/lib/schema';
+import { areasJuridicas, type AuditoriaAccion } from '@/lib/schema';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { eq, asc } from 'drizzle-orm';
 import { z } from 'zod';
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = createSchema.parse(body);
     const [area] = await db.insert(areasJuridicas).values(parsed).returning();
-    await logAudit({ usuarioId: auth.userId, accion: 'area_juridica_created' as any, recurso: 'area_juridica', recursoId: area.id, metadata: { slug: area.slug }, request });
+    await logAudit({ usuarioId: auth.userId, accion: 'area_juridica_created' as AuditoriaAccion, recurso: 'area_juridica', recursoId: area.id, metadata: { slug: area.slug }, request });
     return Response.json({ area }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });

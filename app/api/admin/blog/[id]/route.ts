@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
-import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
 
 const updateSchema = z.object({

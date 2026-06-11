@@ -98,6 +98,43 @@ npm run build          # Turbopack build + TypeScript check
 5. Tras el deploy, hacer clic en "Verificar" en GSC.
 6. Una vez verificada, ir a Sitemaps → Añadir sitemap → `sitemap.xml`.
 
+### Indexabilidad de páginas públicas (SEO técnico)
+
+Todas las páginas bajo `/(public)/` deben cumplir estos requisitos para ser indexables:
+
+**Requisitos por página:**
+- ✅ HTTP 200 (sin redirecciones)
+- ✅ `<meta name="robots" content="index, follow">`
+- ✅ `<link rel="canonical">` autocanónico (apuntando a sí misma)
+- ✅ `<title>` único y descriptivo
+- ✅ `<meta name="description">` única
+- ✅ `<meta property="og:url">` apuntando a la URL correcta (no a home)
+- ✅ `<meta property="og:title">` específico de la página
+- ✅ Incluida en `sitemap.xml`
+- ✅ Enlazada desde home, footer o navegación principal
+- ✅ `<meta name="googlebot">` configurado (hereda del layout público)
+- ✅ Contenido visible en HTML inicial (SSR)
+
+**Problemas comunes ya corregidos (Release 30):**
+1. Hreflang apuntando a home en todas las páginas → Eliminado (sitio monolingüe, no necesario)
+2. OG tags (url, title) heredando los de la home → Cada página define sus propios OG tags
+3. Canonical default `'/'` en layout público → Eliminado (cada página debe definir el suyo)
+4. Título duplicado por plantilla → Corregido
+5. Blog sin googleBot en robots → Corregido
+6. Páginas huérfanas sin enlace en footer → Blog y Solicitar Consulta añadidos al footer
+
+**Para verificar que una página es indexable:**
+```bash
+curl -sI https://www.pinedayasociadoshn.com/servicios-juridicos | findstr -i "x-robots"
+curl -s https://www.pinedayasociadoshn.com/servicios-juridicos | findstr -i "robots canonical og:url"
+```
+
+**Para solicitar reindexación tras cambios:**
+1. Ir a Google Search Console → URL Inspection
+2. Pegar la URL y presionar Enter
+3. Hacer clic en "Solicitar indexación"
+4. Alternativamente: solicitar recrawleo del sitemap completo
+
 ### Cómo activar Google Analytics 4
 
 1. Crear propiedad en [Google Analytics](https://analytics.google.com).

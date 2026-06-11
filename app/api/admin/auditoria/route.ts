@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { auditoriaEventos } from '@/lib/schema';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
-import { eq, desc, ilike } from 'drizzle-orm';
+import { desc, ilike } from 'drizzle-orm';
 import { z } from 'zod';
 
 const querySchema = z.object({

@@ -124,6 +124,15 @@ export async function generateMetadata(): Promise<Metadata> {
     title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department}`,
     description: `${total} respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
     alternates: { canonical: '/preguntas-frecuentes' },
+    openGraph: {
+      title: `${site.name} — Preguntas Frecuentes`,
+      description: `${total} respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
+      url: `${site.url}/preguntas-frecuentes`,
+      siteName: site.name,
+      locale: 'es_HN',
+      type: 'website',
+      images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Preguntas Frecuentes` }],
+    },
   };
 }
 

@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { categoriasBlog } from '@/lib/schema';
+import { categoriasBlog, type AuditoriaAccion } from '@/lib/schema';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
@@ -28,7 +28,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (Object.keys(parsed).length === 0) return Response.json({ error: 'Sin campos' }, { status: 400 });
     const [updated] = await db.update(categoriasBlog).set({ ...parsed, actualizadoEn: new Date() }).where(eq(categoriasBlog.id, id)).returning();
     if (!updated) return Response.json({ error: 'No encontrada' }, { status: 404 });
-    await logAudit({ usuarioId: auth.userId, accion: 'categoria_blog_updated' as any, recurso: 'categoria_blog', recursoId: id, metadata: { slug: updated.slug }, request });
+    await logAudit({ usuarioId: auth.userId, accion: 'categoria_blog_updated' as AuditoriaAccion, recurso: 'categoria_blog', recursoId: id, metadata: { slug: updated.slug }, request });
     return Response.json({ categoria: updated });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
@@ -46,7 +46,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     const [existing] = await db.select({ id: categoriasBlog.id }).from(categoriasBlog).where(eq(categoriasBlog.id, id));
     if (!existing) return Response.json({ error: 'No encontrada' }, { status: 404 });
     await db.delete(categoriasBlog).where(eq(categoriasBlog.id, id));
-    await logAudit({ usuarioId: auth.userId, accion: 'categoria_blog_deleted' as any, recurso: 'categoria_blog', recursoId: id, request });
+    await logAudit({ usuarioId: auth.userId, accion: 'categoria_blog_deleted' as AuditoriaAccion, recurso: 'categoria_blog', recursoId: id, request });
     return Response.json({ deleted: true });
   } catch (err) { return authFailureResponse(err); }
 }

@@ -1,6 +1,104 @@
 # Changelog
 
-## Release 29 — Health checks reales en panel SEO + script gcloud reproducible (2026-06-11)
+## Release 30 — Corrección integral de indexabilidad SEO en páginas públicas (2026-06-12)
+
+### Problema detectado
+
+6 páginas públicas (`/servicios-juridicos`, `/despacho`, `/derecho-penal`, `/blog`, `/preguntas-frecuentes`, `/solicitar-consulta`) no eran indexables o no estaban siendo indexadas por Google.
+
+### Causas raíz
+
+1. **CRÍTICO — Hreflang siempre apuntando a home** (`app/layout.tsx`): Todas las páginas tenían `<link rel="alternate" href="https://www.pinedayasociadoshn.com" hreflang="es-HN">`, indicando a Google que la versión española de CADA página era la home. Esto generaba una señal de canonicalización cruzada incorrecta.
+
+2. **ALTO — OG tags con url y title de la home en 3 páginas**: `/blog`, `/preguntas-frecuentes` y `/solicitar-consulta` heredaban del layout público `og:url` = home, `og:title` = genérico, creando conflicto de señales con el canonical real.
+
+3. **ALTO — Canonical default '/' en layout público** (`app/(public)/layout.tsx`): Cualquier página sin canonical explícito heredaba `canonical: '/'`, señalando a Google que su versión principal era la home.
+
+4. **MEDIO — Título duplicado en `/solicitar-consulta`**: El title contenía "Pineda y Asociados" dos veces por combinación de metadata literal + template del layout.
+
+5. **MEDIO — Blog sin googleBot en robots**: `/blog` sobrescribía `robots` sin incluir `googleBot`, perdiendo directivas `max-image-preview` y `max-snippet`.
+
+6. **MEDIO — Internal linking insuficiente**: `/blog` no aparecía en footer ni en home; `/despacho` no tenía enlace contextual en home; `/solicitar-consulta` no aparecía en footer.
+
+### Cambios aplicados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/layout.tsx` | Eliminados `<link rel="alternate">` con hreflang apuntando a home. Eliminado `alternates.canonical: siteUrl` del root layout. |
+| `app/(public)/layout.tsx` | Eliminado `alternates.canonical: '/'` peligroso. |
+| `app/(public)/blog/page.tsx` | Añadido `openGraph` completo (title, description, url, image). Añadido `googleBot` config en robots. |
+| `app/(public)/preguntas-frecuentes/page.tsx` | Añadido `openGraph` completo con url propia. |
+| `app/(public)/solicitar-consulta/page.tsx` | Corregido title (eliminado duplicado de marca). Añadido `openGraph` completo. |
+| `app/(public)/page.tsx` | Añadidos enlaces a `/despacho` (sección multidisciplinar) y `/blog` (sección FAQ). |
+| `components/marketing/public-footer.tsx` | Añadidos enlaces a `/blog`, `/solicitar-consulta`, `/derecho-penal` en footer. |
+
+### Archivos modificados
+
+- `app/layout.tsx`
+- `app/(public)/layout.tsx`
+- `app/(public)/blog/page.tsx`
+- `app/(public)/preguntas-frecuentes/page.tsx`
+- `app/(public)/solicitar-consulta/page.tsx`
+- `app/(public)/page.tsx`
+- `components/marketing/public-footer.tsx`
+- `CHANGELOG.md`
+- `README.md`
+
+### Validación
+
+- ✅ Build: Compiled successfully, 257 páginas generadas
+- ✅ TypeScript: Finished, 0 errores nuevos
+- ✅ Tests: 325 passed (16 suites)
+- ✅ IndexNow: 190 URLs enviadas a Bing
+- ⚠️ Lint: 8 errores pre-existentes (ninguno en archivos modificados)
+
+### Pasos para producción
+
+1. Hacer deploy del branch main a Vercel
+2. En Google Search Console, solicitar indexación individual para cada URL via URL Inspection → "Solicitar indexación"
+3. O usar el bulk: solicitar recrawleo del sitemap completo
+4. Monitorear en GSC el estado de indexación en los próximos 7-14 días
+
+### Hotfix — Corrección de lint (8 errores + 15 warnings pre-existentes)
+
+Como parte de la puesta a punto del repositorio, se corrigieron todos los errores y warnings de ESLint existentes:
+
+**8 errores corregidos (`@typescript-eslint/no-explicit-any`, `react-hooks/set-state-in-effect`):**
+
+| Archivo | Error | Solución |
+|---------|-------|----------|
+| `app/api/admin/areas-juridicas/route.ts` | `as any` | Reemplazado con `as AuditoriaAccion` |
+| `app/api/admin/categorias-blog/[id]/route.ts` | `as any` (×2) | Reemplazado con `as AuditoriaAccion` |
+| `app/api/admin/categorias-blog/route.ts` | `as any` | Reemplazado con `as AuditoriaAccion` |
+| `app/api/admin/categorias-faq/route.ts` | `as any` | Reemplazado con `as AuditoriaAccion` |
+| `app/api/admin/redirects/route.ts` | `as any` | Reemplazado con `as AuditoriaAccion` |
+| `app/api/admin/tags/route.ts` | `as any` | Reemplazado con `as AuditoriaAccion`. También refactorizada query para eliminar `as typeof query` |
+| `app/intranet/admin/auditoria/page.tsx` | `setState in effect` | Eliminado `setLoading(true)` redundante (state ya inicializa como `true`) |
+
+**15 warnings corregidos (unused imports/vars):**
+
+| Archivo | Import eliminado |
+|---------|-----------------|
+| `app/(public)/preview/[token]/page.tsx` | `site` |
+| `app/api/admin/auditoria/route.ts` | `eq` |
+| `app/api/admin/blog/[id]/route.ts` | `getClientIp` |
+| `app/api/admin/blog/route.ts` | `getClientIp` |
+| `app/api/admin/categorias-blog/route.ts` | `eq` |
+| `app/api/admin/categorias-faq/route.ts` | `eq` |
+| `app/api/admin/redirects/route.ts` | `eq` |
+| `app/api/admin/tags/route.ts` | `eq` |
+| `app/intranet/admin/auditoria/page.tsx` | `Search` (icono lucide) |
+| `app/intranet/admin/blog/[id]/page.tsx` | `previewUrl` |
+| `lib/areas-db.ts` | `or` |
+| `lib/csrf.ts` | `getClientIp` |
+| `lib/permissions.ts` | `usuarios`, `sql`, `verifyToken` |
+
+### Validación final
+
+- ✅ Lint: 0 errores, 0 warnings
+- ✅ Build: Compiled successfully + TypeScript OK, 257 páginas
+- ✅ Tests: 325 passed (16 suites)
+- ✅ IndexNow: 190 URLs enviadas a Bing
 
 ### Nueva funcionalidad: health checks con llamadas reales a Google APIs
 

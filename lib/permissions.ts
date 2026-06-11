@@ -1,7 +1,7 @@
 import { db } from './db';
-import { roles, permisos, rolesPermisos, usuariosRoles, usuarios } from './schema';
-import { eq, and, sql } from 'drizzle-orm';
-import { requireAdmin, verifyToken, type AuthUser } from './auth';
+import { roles, permisos, rolesPermisos, usuariosRoles } from './schema';
+import { eq, and } from 'drizzle-orm';
+import { requireAdmin, type AuthUser } from './auth';
 
 export function requirePermission(recurso: string, accion: string) {
   return async (request: Request): Promise<AuthUser> => {

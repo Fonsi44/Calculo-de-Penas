@@ -48,7 +48,7 @@ export default function AdminBlogEditorPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [, setPreviewUrl] = useState<string | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [genProgress, setGenProgress] = useState(0);
   const [funnyComment, setFunnyComment] = useState('');

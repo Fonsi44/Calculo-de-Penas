@@ -29,7 +29,16 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     title: `Blog Jurídico${page > 1 ? ` — Página ${page}` : ''}`,
     description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
-    robots: tagFilter ? { index: false, follow: true } : { index: true, follow: true },
+    robots: tagFilter ? { index: false, follow: true, googleBot: { index: false, follow: true } } : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+    openGraph: {
+      title: `Blog Jurídico — ${site.name}`,
+      description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
+      url: `${site.url}/blog`,
+      siteName: site.name,
+      locale: 'es_HN',
+      type: 'website',
+      images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Blog Jurídico` }],
+    },
   };
 }
 
