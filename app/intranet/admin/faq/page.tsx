@@ -31,6 +31,11 @@ export default function AdminFaqPage() {
   const [showNew, setShowNew] = useState(false);
   const [newForm, setNewForm] = useState({ category: '', question: '', answer: '' });
 
+  const categoriesList = faqs.reduce<string[]>((acc, f) => {
+    if (!acc.includes(f.category)) acc.push(f.category);
+    return acc;
+  }, []).sort();
+
   const fetchFaqs = () => {
     setLoading(true);
     fetch('/api/admin/faq').then(r => r.json()).then(data => {
@@ -120,7 +125,12 @@ export default function AdminFaqPage() {
         <Card padding="md">
           <h2 className="font-bold text-sm text-primary mb-3">Nueva pregunta</h2>
           <div className="space-y-2">
-            <Input value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))} placeholder="Categoría (ej: derecho-penal)" />
+            <label className="text-xs font-semibold text-text-secondary">Categoría</label>
+            <select value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))}
+              className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
+              <option value="">Seleccionar categoría...</option>
+              {categoriesList.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
             <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta" />
             <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} />
             <div className="flex gap-2">
@@ -145,7 +155,11 @@ export default function AdminFaqPage() {
               <div className="border-t border-border-light">
                 {entries.map(f => editing === f.id ? (
                   <div key={f.id} className="p-3 border-b border-border-light space-y-2 bg-surface-alt">
-                    <Input value={editForm.category} onChange={e => setEditForm(ff => ({ ...ff, category: e.target.value }))} placeholder="Categoría" />
+                    <label className="text-xs font-semibold text-text-secondary">Categoría</label>
+                    <select value={editForm.category} onChange={e => setEditForm(ff => ({ ...ff, category: e.target.value }))}
+                      className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
+                      {categoriesList.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
                     <Input value={editForm.question} onChange={e => setEditForm(ff => ({ ...ff, question: e.target.value }))} placeholder="Pregunta" />
                     <RichTextEditor content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />
                     <div className="flex gap-2">

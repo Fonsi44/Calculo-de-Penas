@@ -6,6 +6,7 @@ import { ArrowLeft, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
+import { blogCategories } from '@/data/blog/categories';
 import { useToast } from '@/components/ui/toast';
 import { Spinner } from '@/components/ui/spinner';
 import Link from 'next/link';
@@ -105,7 +106,7 @@ export default function AdminBlogEditorPage() {
           <div className="space-y-3">
             <div><label className="block text-xs font-semibold text-text-secondary mb-1">Categoría</label>
               <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
-                {['derecho-penal','derecho-de-familia','derecho-laboral','derecho-civil','derecho-mercantil','extranjeria-migracion','hondurenos-en-espana','tributario','derecho-bancario','derecho-administrativo','derecho-aduanero','regulacion-sanitaria','propiedad-intelectual','derecho-ambiental','conciliacion-arbitraje'].map(c => <option key={c} value={c}>{c}</option>)}
+                {blogCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
               </select></div>
 
             <div><label className="block text-xs font-semibold text-text-secondary mb-1">Fecha publicación</label>
