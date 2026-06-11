@@ -1,5 +1,123 @@
 # Changelog
 
+## Release 26 — Corrección: publicación de home desde admin pages editor (2026-06-11)
+
+### Bug crítico: cambios guardados en admin pages no se reflejaban en la web pública
+
+**Causa raíz**: El editor `/intranet/admin/pages/home` guardaba correctamente en la tabla `page_content` de PostgreSQL, pero la home pública `app/(public)/page.tsx` tenía **todo el contenido hardcodeado** en constantes JS y nunca leía de la DB. La función `getPageContent()` en `lib/page-content-db.ts` estaba definida pero nunca era llamada por ninguna página pública. Era un sistema "solo escritura".
+
+### Cambios aplicados
+
+#### Conexión de datos (FASE 2)
+
+- **`app/(public)/page.tsx`**: Convertida a server component asíncrono que llama `getPageContent('home')` y `getEditablePagesMeta()` para obtener contenido desde la DB, fusionándolo con valores por defecto. Reemplazadas todas las strings hardcodeadas con `{t('...')}` donde `t()` es helper de look-up por clave `section.field`.
+- **Módulo de constantes**: Las 4 constantes de arrays (`REAL_QUESTIONS`, `PROCESS`, `WHY`, `FAQ`) se construyen dinámicamente desde la DB. Incluye las preguntas frecuentes, procesos, razones y testimonios.
+- **`FAQ answers`**: Se renderizan con `dangerouslySetInnerHTML` porque el admin las define como tipo `richtext` (pueden contener HTML sanitizado).
+
+#### ISR y revalidación (FASE 4)
+
+- **`app/(public)/page.tsx`**: Añadido `export const revalidate = 3600` para habilitar ISR en la home.
+- **`app/api/admin/pages/route.ts`**: El POST handler ya llamaba `revalidatePath('/')`. Se añadió campo `revalidated` en la respuesta JSON para que el admin pueda mostrar estado de revalidación.
+
+#### Editor admin (FASE 5)
+
+- **`app/intranet/admin/pages/[page]/page.tsx`**: Mensaje de éxito cambiado de "Contenido guardado (X campos)" a "Campo guardado y publicado — ya visible en la web." Se añadió lectura del campo `revalidated` de la API y advertencia si la revalidación falló.
+
+#### Tests (FASE 7)
+
+- **`tests/page-content.test.ts`**: Nuevo archivo con 7 tests que validan:
+  - La estructura de `getEditablePagesMeta()` para la home
+  - Que todos los campos requeridos por el template `t()` existen en la metadata
+  - Que todos los campos tienen valor por defecto
+  - El orden esperado de las secciones
+  - La lógica de merge (DB sobreescribe default, fallback a default si no hay DB)
+  - Que `t()` retorna string vacío para claves desconocidas
+
+#### Documentación (FASE 8)
+
+- **`README.md`**: Nueva sección "Páginas editables (CMS)" con tabla de páginas, flujo de edición, fuente de datos y guía de verificación. Sección "Publicación y caché" actualizada con page_content e ISR.
+- **Este changelog**: Documentación del bug, causa raíz y todos los cambios aplicados.
+
+### Archivos modificados
+
+1. `app/(public)/page.tsx` — Conexión a DB + ISR + strings dinámicas
+2. `app/api/admin/pages/route.ts` — Campo `revalidated` en respuesta
+3. `app/intranet/admin/pages/[page]/page.tsx` — Mensajes de éxito con estado real
+4. `tests/page-content.test.ts` — Nuevo: 7 tests de integración
+5. `README.md` — Documentación del CMS de páginas
+6. `CHANGELOG.md` — Este registro
+
+### Pruebas realizadas
+
+- ✅ Build: `Compiled successfully` + `Finished TypeScript` sin errores
+- ✅ ISR: `/` muestra `1h` en la tabla de rutas del build
+- ✅ Tests unit: 321 tests (15 suites) pasan
+- ✅ Lint: 0 errores
+- ✅ Tests de page-content: 7 tests específicos de la integración
+
+### Limitaciones pendientes
+
+- El editor admin guarda cada campo con una petición HTTP individual (20+ requests por guardado completo). No hay distinción entre "Guardar borrador" y "Publicar" — guardar es publicar directamente.
+- `getSiteConfigOverrides()` en `lib/site-config-db.ts` sigue definida pero no es llamada por las páginas públicas. La configuración del sitio (teléfono, horario, dirección) sigue usando exclusivamente variables de entorno.
+
+---
+
+## Release 25 — Corrección integral del panel SEO y configuración de indexación (2026-06-11)
+
+### Corrección: panel SEO mostraba avisos obsoletos y contradictorios
+
+**Causa raíz**: el panel `/intranet/admin/seo` tenía la pestaña "Acciones" con recomendaciones estáticas que no reaccionaban al estado real del sistema. Además, no distinguía entre GA4 frontend (`NEXT_PUBLIC_GA_ID`) y GA4 Data API backend (`GOOGLE_*`).
+
+### Cambios aplicados
+
+#### NOINDEX
+- `.env.example`: cambiado `NEXT_PUBLIC_NOINDEX="true"` → `NEXT_PUBLIC_NOINDEX=false` (valor de producción).
+- La lógica de noindex ya era correcta: una sola variable controla meta robots, X-Robots-Tag, robots.txt y sitemap.
+- Sin cambios en `lib/site.ts`, `app/layout.tsx`, `app/robots.ts`, `next.config.ts` — ya implementaban la lógica correcta.
+
+#### GA4 Frontend
+- Ya implementado correctamente en `app/layout.tsx:121-128` con `NEXT_PUBLIC_GA_ID`.
+- El panel ahora distingue entre "GA4 Frontend" (tracking público, `NEXT_PUBLIC_GA_ID`) y "GA4 Data API" (métricas backend, `GOOGLE_*`).
+- Añadida tarjeta de estado "GA4 Frontend" en el resumen del panel.
+
+#### GA4 Data API + Search Console API
+- Ya implementados correctamente en `lib/google.ts` con `googleapis`.
+- El panel muestra mensajes claros cuando faltan credenciales, sin errores 500.
+- Añadidas instrucciones de configuración en `.env.example`.
+
+#### IndexNow
+- **Corregido**: dos keys distintas hardcodeadas (`scripts/submit-indexnow.mjs` usaba una, `app/api/indexnow-key/route.ts` otra).
+- Unificado a `INDEXNOW_KEY` de variable de entorno en ambos archivos.
+- El script postbuild ahora salta con aviso (exit 0) si falta `INDEXNOW_KEY`, sin fallar el build.
+- `lib/site.ts`: añadido `indexNowKey`.
+
+#### Panel SEO (`/intranet/admin/seo`)
+- **Tipo `SummaryData` actualizado** con nuevos campos: `gaFrontendConfigured`, `indexNowConfigured`, `indexNowStatus`, `status`.
+- **Pestaña "Acciones" dinámica**: las recomendaciones ahora reflejan el estado real del sistema. Si NOINDEX=false, muestra check verde en vez de alerta roja. Si GA4 está configurado, muestra check en vez de aviso.
+- **Resumen ampliado**: 4 tarjetas de integraciones (GA4 Data API, Search Console API, GA4 Frontend, IndexNow).
+- **Variables de entorno**: nueva sección que muestra qué variables están configuradas y cuáles pendientes.
+- Eliminadas las 3 tarjetas estáticas de avisos (NOINDEX activo, GA4 no configurado, Search Console no configurado).
+
+#### API SEO summary
+- `app/api/admin/seo/summary/route.ts`: añadidos campos `gaFrontendConfigured`, `indexNowConfigured`, `indexNowStatus`, y objeto `status` con estado de sitemap, robots, jsonLd, indexNow, noindex, gaFrontend, gaBackend, searchConsole.
+
+#### API SEO sitemap
+- `app/api/admin/seo/sitemap/route.ts`: corregido `totalIncluded` para incluir posts publicados. URLs de muestra ahora priorizan rutas estáticas y categorías.
+
+### Variables de entorno actualizadas
+- `.env.example`: `NEXT_PUBLIC_NOINDEX=false`, añadido `INDEXNOW_KEY=`, mejor documentadas las variables Google.
+
+### Pruebas
+- `npm run lint`: 0 errores, 0 warnings.
+- `npm run build`: ✓ Compiled successfully, ✓ Finished TypeScript, 247 páginas generadas.
+- `npm run test`: 314 tests pasados (14 suites).
+- IndexNow postbuild: salta correctamente si falta `INDEXNOW_KEY`.
+- No se han expuesto credenciales en frontend.
+- No se ha rediseñado la web pública.
+- Sin datos mock como solución final.
+
+---
+
 ## Release 24 — Corrección de validación de delitos y penas (2026-06-11)
 
 ### Bug crítico corregido: alerta falsa "datos no verificados"

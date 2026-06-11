@@ -1,5 +1,12 @@
 export async function GET() {
-  return new Response("4ab62a697a3848198e5a6e4fb1f1e7a9", {
-    headers: { "Content-Type": "text/plain" },
+  const key = process.env.INDEXNOW_KEY;
+  if (!key) {
+    return new Response("IndexNow no configurado. Define INDEXNOW_KEY en .env.local", {
+      status: 404,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
+  return new Response(key, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }

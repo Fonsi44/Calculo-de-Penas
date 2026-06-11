@@ -60,10 +60,31 @@ type SCData = {
 };
 
 type SummaryData = {
-  site: { url: string; noindex: boolean; gaConfigured: boolean; gscConfigured: boolean; serviceAccountEmail: string | null; analyticsPropertyId: string | null; searchConsoleSiteUrl: string | null };
+  site: {
+    url: string;
+    noindex: boolean;
+    gaConfigured: boolean;
+    gscConfigured: boolean;
+    gaFrontendConfigured: boolean;
+    indexNowConfigured: boolean;
+    indexNowStatus: string;
+    serviceAccountEmail: string | null;
+    analyticsPropertyId: string | null;
+    searchConsoleSiteUrl: string | null;
+  };
   content: { totalPosts: number; publishedPosts: number; draftPosts: number; publicPages: number };
   analytics: AnalyticsData | { configured: false; error: string | null };
   searchConsole: SCData | { configured: false; error: string | null };
+  status?: {
+    sitemap: string;
+    robots: string;
+    jsonLd: string;
+    indexNow: string;
+    noindex: string;
+    gaFrontend: string;
+    gaBackend: string;
+    searchConsole: string;
+  };
 };
 
 type InspectResult = {
@@ -268,7 +289,7 @@ export default function SeoDashboardPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Activity size={16} className={s.site.gaConfigured ? 'text-success' : 'text-text-muted'} />
-                  <span className="text-sm font-medium text-text">Google Analytics 4</span>
+                  <span className="text-sm font-medium text-text">GA4 Data API</span>
                 </div>
                 <Badge tone={s.site.gaConfigured ? 'success' : 'neutral'}>
                   {s.site.gaConfigured ? 'Configurado' : 'Sin configurar'}
@@ -291,6 +312,28 @@ export default function SeoDashboardPage() {
               {s.site.gscConfigured && s.site.searchConsoleSiteUrl && (
                 <p className="text-xxs text-text-muted mt-1">Site: {s.site.searchConsoleSiteUrl}</p>
               )}
+            </Card>
+            <Card padding="sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <BarChart3 size={16} className={s.site.gaFrontendConfigured ? 'text-success' : 'text-text-muted'} />
+                  <span className="text-sm font-medium text-text">GA4 Frontend</span>
+                </div>
+                <Badge tone={s.site.gaFrontendConfigured ? 'success' : 'neutral'}>
+                  {s.site.gaFrontendConfigured ? 'Activo' : 'Sin configurar'}
+                </Badge>
+              </div>
+            </Card>
+            <Card padding="sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 size={16} className={s.site.indexNowConfigured ? 'text-success' : 'text-text-muted'} />
+                  <span className="text-sm font-medium text-text">IndexNow</span>
+                </div>
+                <Badge tone={s.site.indexNowConfigured ? 'success' : 'neutral'}>
+                  {s.site.indexNowConfigured ? 'Configurado' : 'Sin configurar'}
+                </Badge>
+              </div>
             </Card>
           </div>
         </div>
@@ -852,67 +895,137 @@ export default function SeoDashboardPage() {
   }
 
   function renderAcciones() {
+    if (!summary) return <div className="flex justify-center py-12"><Spinner /></div>;
+
+    const s = summary;
+    const isProd = typeof window !== 'undefined' && window.location.hostname === 'www.pinedayasociadoshn.com';
+
+    const recommendations: { icon: typeof CheckCircle2; tone: 'success' | 'warning' | 'danger' | 'neutral'; text: string }[] = [];
+
+    if (s.site.noindex) {
+      recommendations.push({
+        icon: AlertTriangle,
+        tone: 'danger',
+        text: 'NEXT_PUBLIC_NOINDEX=true — El sitio completo está bloqueado para indexación. Cambiar a false en .env.local para producción.',
+      });
+    } else {
+      recommendations.push({
+        icon: CheckCircle2,
+        tone: 'success',
+        text: 'Indexación permitida — NEXT_PUBLIC_NOINDEX=false. Google puede indexar el sitio.',
+      });
+    }
+
+    if (!s.site.gaFrontendConfigured) {
+      recommendations.push({
+        icon: AlertTriangle,
+        tone: 'warning',
+        text: 'GA4 Frontend — Establecer NEXT_PUBLIC_GA_ID en .env.local para activar Google Analytics en la web pública.',
+      });
+    } else {
+      recommendations.push({
+        icon: CheckCircle2,
+        tone: 'success',
+        text: `GA4 Frontend activo — Tracking configurado con ID de medición.`,
+      });
+    }
+
+    if (!s.site.gaConfigured) {
+      recommendations.push({
+        icon: AlertTriangle,
+        tone: 'warning',
+        text: 'GA4 Data API — Configurar GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY y GOOGLE_ANALYTICS_PROPERTY_ID en .env.local para ver métricas en este panel.',
+      });
+    } else {
+      recommendations.push({
+        icon: CheckCircle2,
+        tone: 'success',
+        text: 'GA4 Data API configurada — Las métricas se muestran en la pestaña Analytics.',
+      });
+    }
+
+    if (!s.site.gscConfigured) {
+      recommendations.push({
+        icon: AlertTriangle,
+        tone: 'warning',
+        text: 'Search Console API — Configurar GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY y GOOGLE_SEARCH_CONSOLE_SITE_URL en .env.local.',
+      });
+    } else {
+      recommendations.push({
+        icon: CheckCircle2,
+        tone: 'success',
+        text: 'Search Console API configurada — Datos de rendimiento SEO disponibles.',
+      });
+    }
+
+    recommendations.push({
+      icon: CheckCircle2,
+      tone: 'success',
+      text: 'Sitemap dinámico — Implementado con app/sitemap.ts. Incluye páginas públicas, categorías de blog y posts publicados.',
+    });
+
+    recommendations.push({
+      icon: CheckCircle2,
+      tone: 'success',
+      text: 'robots.txt dinámico — Implementado con app/robots.ts. Bloquea intranet, API y AI crawlers. Permite rastreo público.',
+    });
+
+    recommendations.push({
+      icon: CheckCircle2,
+      tone: 'success',
+      text: 'Datos estructurados — JSON-LD completo (LegalService, Organization, WebSite, FAQPage, BlogPosting, BreadcrumbList).',
+    });
+
+    if (!s.site.indexNowConfigured) {
+      recommendations.push({
+        icon: AlertTriangle,
+        tone: 'warning',
+        text: 'IndexNow — Definir INDEXNOW_KEY en .env.local para activar notificaciones a Bing y otros buscadores.',
+      });
+    } else {
+      recommendations.push({
+        icon: CheckCircle2,
+        tone: 'success',
+        text: 'IndexNow configurado — Clave y script postbuild activos.',
+      });
+    }
+
     return (
       <div className="space-y-4">
         <Card padding="md">
-          <p className="text-sm font-bold text-text mb-2">NOINDEX activo</p>
-          <p className="text-xs text-text-secondary">
-            {summary?.site.noindex
-              ? 'El sitio está configurado con NEXT_PUBLIC_NOINDEX=true. Para producción, cambiar a false.'
-              : 'El sitio permite indexación.'}
+          <p className="text-sm font-bold text-text mb-2">Recomendaciones y estado</p>
+          <p className="text-xs text-text-secondary mb-3">
+            Estado actual de cada componente SEO.{' '}
+            {isProd && <span className="text-success font-medium">Entorno de producción detectado.</span>}
           </p>
-        </Card>
-
-        <Card padding="md">
-          <p className="text-sm font-bold text-text mb-2">GA4 no configurado</p>
-          <p className="text-xs text-text-secondary">
-            {summary?.site.gaConfigured
-              ? 'Google Analytics 4 está configurado y funcionando.'
-              : 'Define GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY y GOOGLE_ANALYTICS_PROPERTY_ID en .env.local'}
-          </p>
-        </Card>
-
-        <Card padding="md">
-          <p className="text-sm font-bold text-text mb-2">Search Console no configurado</p>
-          <p className="text-xs text-text-secondary">
-            {summary?.site.gscConfigured
-              ? 'Search Console API está configurada.'
-              : 'Define GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY y GOOGLE_SEARCH_CONSOLE_SITE_URL en .env.local'}
-          </p>
-        </Card>
-
-        <Card padding="md">
-          <p className="text-sm font-bold text-text mb-2">Recomendaciones prioritarias</p>
-          <ul className="space-y-2 text-xs text-text-secondary">
-            <li className="flex items-start gap-2">
-              <AlertTriangle size={12} className="text-danger flex-shrink-0 mt-0.5" />
-              <span>                <strong className="text-text">NEXT_PUBLIC_NOINDEX=false</strong> &mdash; Cambiar a false en producción para permitir indexación.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <AlertTriangle size={12} className="text-warning flex-shrink-0 mt-0.5" />
-              <span><strong className="text-text">Configurar GA4</strong> &mdash; Establecer NEXT_PUBLIC_GA_ID para activar Google Analytics.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <AlertTriangle size={12} className="text-warning flex-shrink-0 mt-0.5" />
-              <span><strong className="text-text">Configurar Google APIs</strong> &mdash; Añadir credenciales de cuenta de servicio para GA4 y Search Console API.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 size={12} className="text-success flex-shrink-0 mt-0.5" />
-              <span><strong className="text-text">Sitemap dinámico</strong> — Ya implementado con app/sitemap.ts.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 size={12} className="text-success flex-shrink-0 mt-0.5" />
-              <span><strong className="text-text">robots.txt dinámico</strong> — Ya implementado con app/robots.ts. Bloquea intranet, API y AI crawlers.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 size={12} className="text-success flex-shrink-0 mt-0.5" />
-              <span><strong className="text-text">Datos estructurados</strong> — JSON-LD completo (LegalService, FAQPage, BlogPosting, etc.).</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 size={12} className="text-success flex-shrink-0 mt-0.5" />
-              <span><strong className="text-text">IndexNow</strong> — Configurado con key y script postbuild.</span>
-            </li>
+          <ul className="space-y-2 text-xs">
+            {recommendations.map((rec, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <rec.icon
+                  size={12}
+                  className={`flex-shrink-0 mt-0.5 ${
+                    rec.tone === 'success' ? 'text-success' :
+                    rec.tone === 'danger' ? 'text-danger' :
+                    rec.tone === 'warning' ? 'text-warning' : 'text-text-muted'
+                  }`}
+                />
+                <span className="text-text-secondary">{rec.text}</span>
+              </li>
+            ))}
           </ul>
+        </Card>
+
+        <Card padding="md">
+          <p className="text-sm font-bold text-text mb-2">Variables de entorno necesarias</p>
+          <div className="space-y-1.5 text-xs text-text-secondary font-mono bg-surface-alt p-3 rounded">
+            <p>NEXT_PUBLIC_NOINDEX=false{s.site.noindex ? ' ← actualmente true' : ' ✓'}</p>
+            <p>NEXT_PUBLIC_GA_ID={s.site.gaFrontendConfigured ? '✓' : '(pendiente)'}</p>
+            <p>GOOGLE_SERVICE_ACCOUNT_EMAIL={s.site.serviceAccountEmail ? '✓' : '(pendiente)'}</p>
+            <p>GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY={s.site.serviceAccountEmail ? '✓' : '(pendiente)'}</p>
+            <p>GOOGLE_ANALYTICS_PROPERTY_ID={s.site.analyticsPropertyId ? '✓' : '(pendiente)'}</p>
+            <p>GOOGLE_SEARCH_CONSOLE_SITE_URL={s.site.searchConsoleSiteUrl ? '✓' : '(pendiente)'}</p>
+            <p>INDEXNOW_KEY={s.site.indexNowConfigured ? '✓' : '(pendiente)'}</p>
+          </div>
         </Card>
       </div>
     );

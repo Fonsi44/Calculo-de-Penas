@@ -61,16 +61,23 @@ export async function GET(request: Request) {
     ? []
     : [...staticRoutes, ...categoryRoutes];
 
+  const publishedSampleUrls = site.noindex
+    ? []
+    : [
+        ...staticRoutes.slice(0, 10),
+        ...categoryRoutes.slice(0, 3),
+      ];
+
   return NextResponse.json({
     url: `${site.url}/sitemap.xml`,
     noindex: site.noindex,
-    totalIncluded: included.length,
+    totalIncluded: included.length + publishedPosts,
     staticRoutes: staticRoutes.length,
     categories: categoryRoutes.length,
     blogPostsTotal: totalPosts,
     blogPostsPublished: publishedPosts,
     blogPostsDrafts: totalPosts - publishedPosts,
-    sampleUrls: included.slice(0, 10),
+    sampleUrls: publishedSampleUrls,
     note: site.noindex
       ? 'El sitemap está VACÍO porque NEXT_PUBLIC_NOINDEX=true. Cambiar a false para activar indexación.'
       : 'Sitemap activo. Incluye todas las URLs públicas indexables.',

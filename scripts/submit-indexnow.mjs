@@ -6,8 +6,15 @@
  *   node scripts/submit-indexnow.mjs           # enviar
  *   node scripts/submit-indexnow.mjs --dry-run  # simular
  */
+import { config } from 'dotenv';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { readdirSync, existsSync } from 'fs';
 import { join } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+config({ path: resolve(__dirname, '..', '.env.local') });
+config({ path: resolve(__dirname, '..', '.env') });
 
 // El host se deriva de la variable de entorno del proyecto o del valor canónico.
 // No usar nunca un hardcode; la fuente de verdad está en lib/site.ts.
@@ -16,7 +23,7 @@ const SITE_HOST = process.env.NEXT_PUBLIC_SITE_URL
   : 'www.pinedayasociadoshn.com';
 
 const HOST = SITE_HOST;
-const KEY = 'bbbbda6cdb1e4e2cbe8f6f81c1886f58';
+const KEY = process.env.INDEXNOW_KEY;
 const INDEXNOW_URL = 'https://api.indexnow.org/indexnow';
 const BATCH_SIZE = 100;
 
@@ -67,7 +74,7 @@ function buildUrlList() {
 
 const isDryRun = process.argv.includes('--dry-run');
 const urlList = buildUrlList();
-const keyLocation = `https://${HOST}/${KEY}.txt`;
+const keyLocation = KEY ? `https://${HOST}/${KEY}.txt` : null;
 
 async function submitBatch(urls) {
   const payload = { host: HOST, key: KEY, keyLocation, urlList: urls };
@@ -95,6 +102,12 @@ async function submitBatch(urls) {
 }
 
 async function main() {
+  if (!KEY) {
+    console.log('⚠️  INDEXNOW_KEY no está definida. Saltando envío a IndexNow.');
+    console.log('   Define INDEXNOW_KEY en .env.local o en Vercel para activar.');
+    process.exit(0);
+  }
+
   console.log(`IndexNow — ${HOST}`);
   console.log(`Clave: ${KEY}`);
   console.log(`Key location: ${keyLocation}`);

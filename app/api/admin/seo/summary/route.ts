@@ -64,12 +64,21 @@ export async function GET(request: Request) {
     '/politica-privacidad', '/politica-cookies', '/terminos', '/disclaimer',
   ];
 
+  const gaFrontendConfigured = !!site.gaId;
+  const indexNowConfigured = !!site.indexNowKey;
+  const indexNowStatus = indexNowConfigured
+    ? 'Configurado'
+    : 'Sin configurar';
+
   return NextResponse.json({
     site: {
       url: site.url,
       noindex: site.noindex,
       gaConfigured: isAnalyticsConfigured(),
       gscConfigured: isSearchConsoleConfigured(),
+      gaFrontendConfigured,
+      indexNowConfigured,
+      indexNowStatus,
       serviceAccountEmail: getGoogleServiceAccountEmail(),
       analyticsPropertyId: getAnalyticsPropertyIdOrNull(),
       searchConsoleSiteUrl: getSearchConsoleSiteUrlOrNull(),
@@ -101,5 +110,15 @@ export async function GET(request: Request) {
           dateRange: searchConsole.dateRange,
         }
       : { configured: false, error: errorSearchConsole },
+    status: {
+      sitemap: site.noindex ? 'noindex-bloqueado' : 'activo',
+      robots: site.noindex ? 'noindex-bloqueado' : 'activo',
+      jsonLd: 'activo',
+      indexNow: indexNowStatus,
+      noindex: site.noindex ? 'activo' : 'inactivo',
+      gaFrontend: gaFrontendConfigured ? 'activo' : 'inactivo',
+      gaBackend: isAnalyticsConfigured() ? 'activo' : 'inactivo',
+      searchConsole: isSearchConsoleConfigured() ? 'activo' : 'inactivo',
+    },
   });
 }

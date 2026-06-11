@@ -21,6 +21,7 @@ import {
   Landmark,
 } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
+import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
@@ -40,60 +41,63 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
+export const revalidate = 3600;
+
 const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
 
-const REAL_QUESTIONS = [
-  { q: '¿Me pueden detener sin orden judicial?', badge: 'Penal' },
-  { q: '¿Cuánto me corresponde si me despiden sin justa causa?', badge: 'Laboral' },
-  { q: '¿Cómo tramito mi divorcio en Honduras?', badge: 'Familia' },
-  { q: '¿Me puede embargar el banco si no pago?', badge: 'Bancario' },
-  { q: '¿Necesito licencia ambiental para mi negocio?', badge: 'Ambiental' },
-  { q: '¿Cuánto tarda el registro de una marca?', badge: 'Propiedad Intelectual' },
-];
+export default async function HomePage() {
+  const [contentMap, metaList] = await Promise.all([
+    getPageContent('home'),
+    getEditablePagesMeta(),
+  ]);
+  const homeMeta = metaList.find(m => m.page === 'home');
+  const defaults: Record<string, string> = {};
+  if (homeMeta) {
+    for (const section of homeMeta.sections) {
+      for (const field of section.fields) {
+        const key = `${section.key}.${field.key}`;
+        if ((field as { default?: string }).default !== undefined) {
+          defaults[key] = (field as { default?: string }).default!;
+        }
+      }
+    }
+  }
+  const merged: Record<string, string> = { ...defaults, ...contentMap };
+  const t = (k: string): string => merged[k] ?? '';
 
-const PROCESS = [
-  { step: 1, title: 'Consulta inicial', desc: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad.' },
-  { step: 2, title: 'Estrategia legal', desc: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima para su caso.' },
-  { step: 3, title: 'Gestión y litigio', desc: 'Tramitamos su asunto con diligencia. Actuamos en sede administrativa, judicial o notarial según corresponda.' },
-  { step: 4, title: 'Cierre y seguimiento', desc: 'Le entregamos un informe claro del resultado y, si procede, los recursos disponibles.' },
-];
+  const REAL_QUESTIONS = [
+    { q: t('questions.q1'), badge: t('questions.q1_badge') },
+    { q: t('questions.q2'), badge: t('questions.q2_badge') },
+    { q: t('questions.q3'), badge: t('questions.q3_badge') },
+    { q: t('questions.q4'), badge: t('questions.q4_badge') },
+    { q: t('questions.q5'), badge: t('questions.q5_badge') },
+    { q: t('questions.q6'), badge: t('questions.q6_badge') },
+  ];
 
-const WHY = [
-  { icon: MapPin, title: 'Presencia local en Nacaome', desc: 'Conocemos el sistema de justicia del departamento de Valle y los juzgados de la zona sur.' },
-  { icon: Scale, title: 'Enfoque ético y prudente', desc: 'Nunca prometemos resultados. Le decimos lo que procede y lo que no, con honestidad.' },
-  { icon: ShieldCheck, title: 'Defensa penal especializada', desc: 'Experiencia en derecho penal, desde asistencias a detenidos hasta recursos de casación.' },
-  { icon: HeartHandshake, title: 'Lenguaje claro', desc: 'Le explicamos el proceso en términos comprensibles, sin tecnicismos innecesarios.' },
-  { icon: BookOpen, title: 'Metodología documentada', desc: 'Cada actuación queda registrada y trazable. Trabajamos con procesos internos auditables.' },
-];
+  const PROCESS = [
+    { step: 1, title: t('process.step1_title'), desc: t('process.step1_desc') },
+    { step: 2, title: t('process.step2_title'), desc: t('process.step2_desc') },
+    { step: 3, title: t('process.step3_title'), desc: t('process.step3_desc') },
+    { step: 4, title: t('process.step4_title'), desc: t('process.step4_desc') },
+  ];
 
-const FAQ = [
-  {
-    q: '¿Atienden casos urgentes fuera del horario?',
-    a: 'Atendemos de lunes a sábado de 7:00 a 20:00. Para emergencias con persona detenida, contáctenos por WhatsApp y le orientaremos de inmediato durante el horario de atención.',
-  },
-  {
-    q: '¿Qué documentos necesito para la primera consulta?',
-    a: 'Identificación oficial, documentos relacionados con su caso (contratos, notificaciones, actas) y cualquier prueba que considere relevante. Nosotros le orientaremos sobre lo que hace falta.',
-  },
-  {
-    q: '¿Qué debo hacer si recibo una citación judicial?',
-    a: 'No la ignore. Contacte a un abogado de inmediato. Una citación tiene plazos que corren y, si no se atiende, puede generar sanciones o perjudicar su defensa.',
-  },
-  {
-    q: '¿Ofrecen asesoría preventiva para empresas?',
-    a: 'Sí. Asesoramos en cumplimiento normativo, contratos, gobierno corporativo y prevención de contingencias laborales, tributarias y mercantiles antes de que surja el conflicto.',
-  },
-  {
-    q: '¿Pueden llevar mi caso penal y mi caso laboral a la vez?',
-    a: 'Sí. De hecho, esa coordinación es una de las ventajas de un bufete multidisciplinar. Analizamos su situación de manera global para evitar que una decisión en un frente afecte a otro.',
-  },
-  {
-    q: '¿Qué pasa si mi problema involucra varias áreas del derecho?',
-    a: 'Convocamos al especialista de cada área implicada, definimos una estrategia común y unificamos el expediente. Usted recibe una sola línea de comunicación, no varias.',
-  },
-];
+  const WHY = [
+    { icon: MapPin, title: t('why_us.reason1_title'), desc: t('why_us.reason1_desc') },
+    { icon: Scale, title: t('why_us.reason2_title'), desc: t('why_us.reason2_desc') },
+    { icon: ShieldCheck, title: t('why_us.reason3_title'), desc: t('why_us.reason3_desc') },
+    { icon: HeartHandshake, title: t('why_us.reason4_title'), desc: t('why_us.reason4_desc') },
+    { icon: BookOpen, title: t('why_us.reason5_title'), desc: t('why_us.reason5_desc') },
+  ];
 
-export default function HomePage() {
+  const FAQ = [
+    { q: t('faq.q1'), a: t('faq.a1') },
+    { q: t('faq.q2'), a: t('faq.a2') },
+    { q: t('faq.q3'), a: t('faq.a3') },
+    { q: t('faq.q4'), a: t('faq.a4') },
+    { q: t('faq.q5'), a: t('faq.a5') },
+    { q: t('faq.q6'), a: t('faq.a6') },
+  ];
+
   const heroLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -131,24 +135,22 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-2 mb-5">
                 <HeroOfficeBadge />
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/40 border border-primary-light/30 text-text-inverse/85">
-                  <span className="text-xxs font-bold tracking-wider">Asesoría integral</span>
+                  <span className="text-xxs font-bold tracking-wider">{t('hero.badge')}</span>
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tighter text-text-inverse text-balance">
-                <span className="block">Defensa penal y asesoría jurídica</span>
-                <span className="block text-gradient-accent mt-1">en Nacaome y todo Honduras</span>
+                <span className="block">{t('hero.title_line1')}</span>
+                <span className="block text-gradient-accent mt-1">{t('hero.title_line2')}</span>
               </h1>
               <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
-                Defensa penal especializada y representación jurídica integral para personas y empresas.
-                Presencia activa en los juzgados de {site.address.city}, Valle y todo Honduras,
-                con comunicación clara y un equipo coordinado en cada área del derecho.
+                {t('hero.subtitle')}
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6">
                 <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/80">
-                  <CheckCircle2 size={14} className="text-accent" /> Primera consulta sin compromiso
+                  <CheckCircle2 size={14} className="text-accent" /> {t('hero.check1')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/80">
-                  <CheckCircle2 size={14} className="text-accent" /> Atención directa del abogado
+                  <CheckCircle2 size={14} className="text-accent" /> {t('hero.check2')}
                 </span>
               </div>
               <CTAGroup variant="inverse" className="mt-7" />
@@ -158,7 +160,7 @@ export default function HomePage() {
                 <Card padding="md" className="bg-surface text-text border-accent/30 border-2 shadow-2xl card-premium">
                   <div className="flex items-center gap-2 mb-3">
                     <Phone size={16} className="text-primary" />
-                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Contacto directo</p>
+                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">{t('contact_card.title')}</p>
                   </div>
                   <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
                     {site.phoneDisplay}
@@ -166,7 +168,7 @@ export default function HomePage() {
                   <p className="text-sm text-text-secondary mt-1">{site.hours}</p>
                   <div className="divider-accent my-4" />
                   <a
-                    href={whatsappHref('Hola, necesito una consulta jurídica.')}
+                    href={whatsappHref(t('contact_card.whatsapp_msg'))}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-md bg-success/10 hover:bg-success/15 transition-colors"
@@ -187,8 +189,8 @@ export default function HomePage() {
                       <Calendar size={16} className="text-text-inverse" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-primary">Formulario confidencial</p>
-                      <p className="text-xxs text-text-secondary">Le respondemos en horario hábil</p>
+                      <p className="text-sm font-bold text-primary">{t('contact_card.form_text')}</p>
+                      <p className="text-xxs text-text-secondary">{t('contact_card.form_hint')}</p>
                     </div>
                   </Link>
                   <div className="divider-accent my-4" />
@@ -209,9 +211,9 @@ export default function HomePage() {
       {/* REAL QUESTIONS */}
       <Section spacing="md" ariaLabel="Preguntas reales">
         <SectionHeader
-          eyebrow="¿Tiene un problema legal y no sabe cómo actuar?"
-          title="Las preguntas que nos hacen a diario"
-          subtitle="Respondemos con honestidad, sin importar el área del derecho. Si su pregunta no aparece aquí, escríbanos."
+          eyebrow={t('questions.eyebrow')}
+          title={t('questions.title')}
+          subtitle={t('questions.subtitle')}
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {REAL_QUESTIONS.map((item, i) => (
@@ -248,8 +250,8 @@ export default function HomePage() {
       <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
         <SectionHeader
           eyebrow="Especialidades principales"
-          title="Cuatro áreas con presencia constante"
-          subtitle="Derecho penal, familia, laboral y civil son nuestras áreas de mayor demanda. Cada una con equipo y experiencia dedicados."
+          title={t('specialties.title')}
+          subtitle={t('specialties.subtitle')}
         />
         <div className="grid md:grid-cols-2 gap-4">
           {areasGenerales
@@ -276,8 +278,8 @@ export default function HomePage() {
       <Section spacing="md" ariaLabel="Todas las Servicios Jurídicos">
         <SectionHeader
           eyebrow="Cobertura integral"
-          title="Nuestros Servicios Jurídicos"
-          subtitle="Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir bajo una misma dirección letrada."
+          title={t('services.title')}
+          subtitle={t('services.subtitle')}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {areasGenerales.map((area) => (
@@ -301,28 +303,28 @@ export default function HomePage() {
 
       {/* TESTIMONIOS */}
       <TestimonialsSection
-        title="Lo que dicen quienes confían en nosotros"
-        subtitle="Casos reales, resultados verificables. Publicamos con autorización y anonimizamos por confidencialidad."
+        title={t('testimonials.title')}
+        subtitle={t('testimonials.subtitle')}
         columns={3}
         items={[
           {
-            name: 'Caso anonimizado · Defensa penal',
+            name: t('testimonials.testimonial1_name'),
             rating: 5,
-            body: 'Mi familia y yo estábamos pasando por una situación muy difícil. El equipo nos orientó desde el primer día con claridad y profesionalismo. Logramos una resolución favorable que no esperábamos.',
+            body: t('testimonials.testimonial1_body'),
             date: '2025',
             source: 'CASO ANONIMIZADO',
           },
           {
-            name: 'Caso anonimizado · Derecho laboral',
+            name: t('testimonials.testimonial2_name'),
             rating: 5,
-            body: 'Me despidieron sin previo aviso después de 8 años en la empresa. Los abogados calcularon cada prestación y lograron que me pagaran lo que me correspondía. Muy agradecido.',
+            body: t('testimonials.testimonial2_body'),
             date: '2025',
             source: 'CASO ANONIMIZADO',
           },
           {
-            name: 'Caso anonimizado · Derecho de familia',
+            name: t('testimonials.testimonial3_name'),
             rating: 5,
-            body: 'Un proceso de divorcio complicado con hijos de por medio. La abogada fue muy sensible pero firme. Se logró un acuerdo que protege a mis hijos. Recomiendo totalmente.',
+            body: t('testimonials.testimonial3_body'),
             date: '2024',
             source: 'CASO ANONIMIZADO',
           },
@@ -333,8 +335,8 @@ export default function HomePage() {
       <Section spacing="md" ariaLabel="Proceso de atención">
         <SectionHeader
           eyebrow="Cómo trabajamos"
-          title="Cuatro pasos, sin importar el área"
-          subtitle="Un método claro y trazable para cada caso, desde la consulta inicial hasta el cierre."
+          title={t('process.title')}
+          subtitle={t('process.subtitle')}
         />
         <ProcessStepper steps={PROCESS} withConnector />
       </Section>
@@ -344,8 +346,8 @@ export default function HomePage() {
         <div className="text-text-inverse">
           <SectionHeader
             eyebrow="Por qué elegirnos"
-            title="Cinco razones que marcan la diferencia"
-            subtitle="Nuestra práctica se sostiene sobre principios técnicos, no sobre promesas."
+            title={t('why_us.title')}
+            subtitle={t('why_us.subtitle')}
             invert
           />
         </div>
@@ -376,15 +378,13 @@ export default function HomePage() {
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           <div className="lg:col-span-5">
             <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
-              Visión integral
+              {t('multidisciplinary.title')}
             </p>
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text leading-tight text-balance">
-              Un mismo problema jurídico puede tocar varias ramas del derecho a la vez
+              {t('multidisciplinary.subtitle')}
             </h2>
             <p className="mt-4 text-sm text-text-secondary leading-relaxed text-pretty">
-              Atender su asunto con un equipo multidisciplinar evita que tenga que contratar abogados
-              distintos para cada frente. Coordinamos estrategia, plazos y piezas procesales desde un
-              solo bufete, con comunicación directa y un expediente unificado.
+              {t('multidisciplinary.description')}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
@@ -402,23 +402,23 @@ export default function HomePage() {
             {[
               {
                 icon: Gavel,
-                title: 'Penal + familia + civil',
-                desc: 'Una acusación penal con hijos, bienes y familia de por medio exige coordinación inmediata entre las áreas para protegerle en todos los frentes.',
+                title: t('multidisciplinary.combo1_title'),
+                desc: t('multidisciplinary.combo1_desc'),
               },
               {
                 icon: Briefcase,
-                title: 'Laboral + mercantil',
-                desc: 'Despidos en empresas con contratos mercantiles, sociedades o deudas cruzadas requieren análisis simultáneo del derecho del trabajo y el societario.',
+                title: t('multidisciplinary.combo2_title'),
+                desc: t('multidisciplinary.combo2_desc'),
               },
               {
                 icon: Building,
-                title: 'Civil + tributario + bancario',
-                desc: 'Embargos, cobros judiciales, contratos y obligaciones tributarias se cruzan en la práctica. Una defensa conjunta es más rápida y más barata.',
+                title: t('multidisciplinary.combo3_title'),
+                desc: t('multidisciplinary.combo3_desc'),
               },
               {
                 icon: Landmark,
-                title: 'Notarial + registral',
-                desc: 'Compras, donaciones, sociedades y traspasos requieren acompañamiento notarial, registral y, a veces, fiscal. Lo resolvemos internamente.',
+                title: t('multidisciplinary.combo4_title'),
+                desc: t('multidisciplinary.combo4_desc'),
               },
             ].map((it) => (
               <Card key={it.title} padding="md" className="h-full card-premium">
@@ -512,8 +512,8 @@ export default function HomePage() {
           <div>
             <SectionHeader
               eyebrow="FAQ"
-              title="Respuestas a sus dudas"
-              subtitle="Las preguntas que más recibimos. Si tiene una diferente, escríbanos."
+              title={t('faq.title')}
+              subtitle={t('faq.subtitle')}
             />
             <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
               Ver todas las preguntas <ArrowRight size={14} />
@@ -531,9 +531,7 @@ export default function HomePage() {
                     <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 transition-transform" />
                   </span>
                 </summary>
-                <div className="faq-content px-4 pb-4 -mt-1 text-sm text-text-secondary leading-relaxed text-pretty">
-                  {f.a}
-                </div>
+                <div className="faq-content px-4 pb-4 -mt-1 text-sm text-text-secondary leading-relaxed text-pretty" dangerouslySetInnerHTML={{ __html: f.a }} />
               </details>
             ))}
           </div>

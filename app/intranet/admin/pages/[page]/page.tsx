@@ -124,6 +124,7 @@ export default function AdminPageEditor() {
     const entries = Object.entries(values);
     let success = 0;
     let error = 0;
+    let allRevalidated = true;
 
     for (const [key, content] of entries) {
       const [section, field] = key.includes('.') ? key.split('.', 2) : ['', key];
@@ -134,16 +135,25 @@ export default function AdminPageEditor() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ page: params.page, section, field, content }),
         });
-        if (res.ok) success++;
-        else error++;
+        if (res.ok) {
+          const data = await res.json();
+          success++;
+          if (data.revalidated === false) allRevalidated = false;
+        } else error++;
       } catch { error++; }
     }
 
     setSaving(false);
     if (error === 0) {
-      toast.success(`Contenido guardado (${success} campos)`);
+      const msg = success === 1
+        ? 'Campo guardado y publicado — ya visible en la web.'
+        : `${success} campos guardados y publicados — ya visibles en la web.`;
+      toast.success(msg);
+      if (!allRevalidated) {
+        toast.warning('Contenido guardado. La caché puede tardar unos segundos en reflejarse.');
+      }
     } else {
-      toast.danger(`Guardado con ${error} errores`);
+      toast.danger(`Guardado con ${error} errores (${success} correctos)`);
     }
   };
 

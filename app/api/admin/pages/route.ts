@@ -93,6 +93,7 @@ export async function POST(request: Request) {
       request,
     });
 
+    let revalidated = false;
     try {
       const pageRoutes: Record<string, string> = {
         home: '/',
@@ -106,10 +107,13 @@ export async function POST(request: Request) {
         disclaimer: '/disclaimer',
       };
       const route = pageRoutes[parsed.page];
-      if (route) revalidatePath(route);
+      if (route) {
+        revalidatePath(route);
+        revalidated = true;
+      }
     } catch {}
 
-    return Response.json({ ok: true });
+    return Response.json({ ok: true, revalidated });
   } catch (err) {
     if (err instanceof z.ZodError) {
       return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });

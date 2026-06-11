@@ -92,12 +92,14 @@ export const site = {
   },
   /** Si true, todo el sitio emite noindex,nofollow y bloquea rastreadores. */
   noindex: noindexActive,
-  /** ID GA4 (opcional). */
+  /** ID GA4 (opcional) — tracking frontend. */
   gaId: process.env.NEXT_PUBLIC_GA_ID ?? null,
   /** ID Microsoft Clarity (opcional). */
   clarityId: process.env.NEXT_PUBLIC_CLARITY_ID ?? null,
   /** Código de verificación de Google Search Console (opcional). */
   googleVerification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? null,
+  /** Clave IndexNow (opcional). */
+  indexNowKey: process.env.INDEXNOW_KEY ?? null,
 } as const;
 
 export type SiteConfig = typeof site;

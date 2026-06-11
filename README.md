@@ -173,6 +173,51 @@ El panel `/intranet/admin/` permite gestionar Blog y FAQ con editor WYSIWYG (Tip
 - **Categorías**: Dropdown usa `data/faq-categories.ts` — 11 categorías predefinidas. Validación en frontend y backend.
 - **Aviso de categorías inválidas**: Banner de advertencia si hay FAQs con categoría no reconocida.
 
+### Páginas editables (CMS) — `/intranet/admin/pages`
+
+El panel de páginas editables permite modificar el contenido textual de las páginas públicas sin tocar código. Cada página tiene secciones y campos definidos en `lib/page-content-db.ts` (`getEditablePagesMeta()`).
+
+#### Páginas disponibles
+
+| Página | Ruta pública | Secciones editables |
+|--------|-------------|-------------------|
+| Inicio | `/` | hero, contact_card, questions, specialties, services, testimonials, process, why_us, multidisciplinary, faq |
+| El Despacho | `/despacho` | hero, mision_vision, values, commitments |
+| Solicitar Consulta | `/solicitar-consulta` | hero, reasons, guarantees |
+| Cómo llegar | `/como-llegar` | hero, ref_points, routes |
+| Términos | `/terminos` | hero, content |
+| Aviso Legal | `/aviso-legal` | hero, content |
+| Política de Privacidad | `/politica-privacidad` | hero, content |
+| Política de Cookies | `/politica-cookies` | hero, content |
+| Disclaimer | `/disclaimer` | hero, content |
+| Configuración | — | contacto, direccion, redes, geo |
+
+#### Flujo de edición
+
+1. **Carga**: El admin carga el contenido actual desde la tabla `page_content` en PostgreSQL.
+2. **Campos**: Cada sección tiene campos de tipo `text`, `textarea` o `richtext` (TipTap).
+3. **Guardar**: Al pulsar "Guardar todo", cada campo se envía individualmente a `POST /api/admin/pages`.
+4. **Persistencia**: La API hace upsert en `page_content` con `(page, section, field, lang='es-HN')`.
+5. **Publicación**: No hay distinción guardar/publicar. Al guardar, la API llama `revalidatePath(ruta)` para invalidar la caché ISR de la página afectada.
+6. **Éxito**: El admin muestra "Campo guardado y publicado — ya visible en la web."
+
+#### Fuente de datos
+
+- **Escritura**: `POST /api/admin/pages` → tabla `page_content` (PostgreSQL).
+- **Lectura pública**: Las páginas públicas (server components) llaman `getPageContent(page)` desde `lib/page-content-db.ts`.
+- **Fallback**: Si no hay datos en DB para un campo, se usa el valor por defecto definido en `getEditablePagesMeta()`.
+- **ISR**: Las páginas públicas tienen `revalidate = 3600` (1 hora). La revalidación on-demand via `revalidatePath()` actualiza el contenido inmediatamente después de guardar.
+- **FAQ respuestas**: Las respuestas FAQ pueden contener HTML (tipo `richtext`). Se renderizan con `dangerouslySetInnerHTML` previa sanitización server-side.
+
+#### Cómo verificar que un cambio se publicó
+
+1. Guardar desde `/intranet/admin/pages/home`.
+2. Abrir `https://www.pinedayasocioshn.com/` en una ventana de incógnito.
+3. Hard refresh (Ctrl+F5). Si el cambio no aparece:
+   - Esperar unos segundos (la revalidación es asíncrona).
+   - Verificar que la DB tiene el valor: conectar a Neon y consultar `SELECT * FROM page_content WHERE page='home'`.
+   - Verificar que el cambio está en la DB pero no se ve → forzar ISR con `revalidatePath('/')` desde la API.
+
 ### Categorías
 
 - **Blog**: 20 categorías definidas en `data/blog/categories.ts`. Los dropdowns del admin cargan desde este archivo. Las categorías se guardan por slug en la DB.
@@ -180,12 +225,13 @@ El panel `/intranet/admin/` permite gestionar Blog y FAQ con editor WYSIWYG (Tip
 
 ### Publicación y caché
 
-- **Persistencia**: PostgreSQL (Neon) — tabla `blog_posts` y `faq_entries`.
+- **Persistencia**: PostgreSQL (Neon) — tablas `blog_posts`, `faq_entries` y `page_content`.
 - **Formato**: HTML sanitizado (desde TipTap, limpiado con `lib/sanitize.ts`).
-- **ISR**: Todas las páginas públicas de blog y FAQ tienen `revalidate = 3600` (1 hora).
+- **ISR**: Todas las páginas públicas (blog, FAQ, páginas editables) tienen `revalidate = 3600` (1 hora).
 - **Revalidación on-demand**: Cada create/update/delete llama `revalidatePath()` en todas las rutas afectadas.
 - **Páginas dinámicas**: `/blog` y `/blog/[categoria]` usan `searchParams` → renderizado dinámico.
-- **Verificación**: Si un post/FAQ no aparece tras publicar, esperar ~60s y recargar. Si persiste, verificar que `published = true` en la DB.
+- **Páginas estáticas con ISR**: `/`, `/despacho`, `/solicitar-consulta`, etc. se regeneran bajo demanda tras guardar en el admin.
+- **Verificación**: Si un cambio no aparece tras guardar, esperar ~30s y recargar con hard refresh (Ctrl+F5). Si persiste, verificar el contenido en la tabla `page_content` de la DB.
 
 ### Seguridad
 
@@ -340,3 +386,87 @@ Accesible solo para usuarios con rol `admin`. Incluye:
 - **URL Inspection API**: requiere que la URL esté en la propiedad de Search Console.
 - **Google decide si indexa cada URL** — el sistema ayuda a detectar y corregir problemas técnicos, pero no garantiza indexación.
 - No se usa Google Indexing API para blog normal (solo contenido soportado oficialmente).
+
+## SEO
+
+### Control de indexación (NOINDEX)
+
+Una sola variable controla todo el sistema de indexación: `NEXT_PUBLIC_NOINDEX`.
+
+| Valor | Meta robots | X-Robots-Tag | robots.txt | Sitemap |
+|-------|------------|--------------|------------|---------|
+| `true` | `noindex, nofollow` | `noindex, nofollow, noarchive, nosnippet, noimageindex` | Disallow: `/` | Vacío |
+| `false` | `index, follow` | `index, follow, max-image-preview:large, max-snippet:-1` | Allow: `/` (bloquea `/intranet/`, `/api/`, AI crawlers) | Completo |
+
+- **Desarrollo/staging**: `NEXT_PUBLIC_NOINDEX=true` (por defecto en `.env.local` de desarrollo)
+- **Producción**: `NEXT_PUBLIC_NOINDEX=false`
+- Las rutas privadas (`/intranet/`, `/api/`) siempre tienen `X-Robots-Tag: noindex, nofollow` independientemente del valor.
+- El panel SEO muestra "NOINDEX" o "INDEXABLE" según el valor actual.
+
+### Google Analytics 4
+
+**GA4 Frontend** (`NEXT_PUBLIC_GA_ID`):
+- Script gtag cargado en `app/layout.tsx` vía `next/script` con `strategy="afterInteractive"`.
+- Solo se activa si `NEXT_PUBLIC_GA_ID` está definido.
+- No requiere credenciales de cuenta de servicio.
+- El panel SEO muestra "GA4 Frontend: Activo" o "Sin configurar".
+
+**GA4 Data API** (backend, requiere cuenta de servicio):
+- Variables: `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `GOOGLE_ANALYTICS_PROPERTY_ID`.
+- La clave privada debe tener `\n` escapados: `"-----BEGIN PRIVATE KEY-----\\nMIIEv...\\n-----END PRIVATE KEY-----\\n"`.
+- Si faltan credenciales, el panel muestra "GA4 Data API: Sin configurar" sin error 500.
+- Si están configuradas, muestra métricas reales en la pestaña Analytics.
+
+### Google Search Console API (backend)
+
+- Variables: `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `GOOGLE_SEARCH_CONSOLE_SITE_URL`.
+- `GOOGLE_SEARCH_CONSOLE_SITE_URL` acepta formatos: `sc-domain:pinedayasociadoshn.com` o `https://www.pinedayasociadoshn.com/`.
+- La cuenta de servicio debe tener rol "Propietario completo" en Search Console → Ajustes → Usuarios.
+- Si faltan credenciales, el panel muestra "Search Console API: Sin configurar".
+- Si están configuradas, muestra clicks, impresiones, CTR, posición media, top queries y páginas.
+
+### Cómo añadir la cuenta de servicio a GA4 y Search Console
+
+1. Crear proyecto en [Google Cloud Console](https://console.cloud.google.com) → APIs y Servicios → Biblioteca → Activar:
+   - Google Analytics Data API (`analyticsdata.googleapis.com`)
+   - Google Search Console API (`searchconsole.googleapis.com`)
+2. IAM y administración → Cuentas de servicio → Crear cuenta → Generar clave JSON.
+3. Copiar `client_email` y `private_key` del JSON a las variables de entorno.
+4. Añadir la cuenta de servicio como usuario:
+   - **GA4**: Administración → Usuarios de la propiedad → Añadir usuario → rol "Visualizador".
+   - **Search Console**: Ajustes → Usuarios y permisos → Añadir usuario → rol "Propietario completo".
+
+### Sitemap dinámico
+
+- `app/sitemap.ts` genera `/sitemap.xml` con:
+  - 37 rutas estáticas (home, despacho, servicios, blog, FAQ, legales).
+  - 20 categorías de blog.
+  - Todos los posts publicados desde `blog_posts` con `lastModified` real.
+- Excluye: `/intranet/*`, `/api/*`, borradores, páginas noindex.
+- Se vacía automáticamente si `NEXT_PUBLIC_NOINDEX=true`.
+
+### robots.txt dinámico
+
+- `app/robots.ts` genera `/robots.txt`:
+  - Producción: permite rastreo público, bloquea `/intranet/`, `/api/`, `/_next/`, `/404`, `/500`.
+  - Bloquea permanentemente bots de IA (GPTBot, ClaudeBot, PerplexityBot, etc.).
+  - Declara `sitemap.xml`.
+  - Desarrollo: bloquea todo.
+
+### Datos estructurados (JSON-LD)
+
+- **LegalService + LocalBusiness**: `lib/site.ts` → `legalServiceSchema()`. Inyectado en layout público.
+- **Organization**: `lib/site.ts` → `organizationSchema()`. Inyectado en layout público.
+- **WebSite**: `lib/site.ts` → `websiteSchema()`. Inyectado en layout público.
+- **Service**: `lib/schemas/legal-page.ts` → `serviceSchema()`. Para páginas de área jurídica.
+- **FAQPage**: `lib/schemas/legal-page.ts` → `faqPageSchema()`. Para FAQs con preguntas/respuestas.
+- **BreadcrumbList**: `lib/schemas/legal-page.ts` → `breadcrumbsSchema()`. Para migas de pan.
+- **BlogPosting/Article**: implementado en páginas de blog individual.
+
+### IndexNow
+
+- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`).
+- Script postbuild: `scripts/submit-indexnow.mjs` — envía URLs públicas a Bing, Yandex, Seznam.
+- Solo envía URLs públicas (no intranet, no API, no borradores).
+- Si `INDEXNOW_KEY` no está definida, el postbuild salta con aviso (no falla el build).
+- Generar clave en: https://www.bing.com/indexnow/getstarted

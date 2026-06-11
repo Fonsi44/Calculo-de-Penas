@@ -80,6 +80,8 @@ const nextConfig: NextConfig = {
       { source: '/intranet/cp/:id', destination: '/cp/:id' },
       { source: '/intranet/delitos', destination: '/delitos' },
       { source: '/intranet/atajos', destination: '/atajos' },
+      // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key
+      { source: '/:key.txt', destination: '/api/indexnow-key' },
     ];
   },
   async headers() {
