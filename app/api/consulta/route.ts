@@ -3,8 +3,8 @@ import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { sendConsultaEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
 
-const CONSULTA_MAX = 3;
-const CONSULTA_WINDOW_MS = 60 * 60 * 1000;
+const CONSULTA_MAX = 10;
+const CONSULTA_WINDOW_MS = 15 * 60 * 1000;
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);

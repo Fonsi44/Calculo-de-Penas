@@ -15,7 +15,8 @@ El rate limit está implementado en `lib/rate-limit.ts` usando la tabla `rate_li
 |------|--------|--------|---------|
 | `/api/auth/login` | POST | 5 | 1 minuto |
 | `/api/auth/register` | POST | 5 | 1 minuto |
-| `/api/contacto` | POST | 3 | 1 hora |
+| `/api/consulta` | POST | 10 | 15 minutos |
+| `/api/contacto` | POST | 10 | 15 minutos |
 | `/api/seed` | POST | 3 | 1 hora |
 | `/api/calcular` | POST | 30 | 1 minuto |
 
