@@ -44,3 +44,33 @@ export function ipFromRequest(request: Request): string {
 export function uaFromRequest(request: Request): string {
   return (request.headers.get('user-agent') || 'unknown').slice(0, 500);
 }
+
+export async function logAudit(params: {
+  usuarioId: string;
+  accion: AuditoriaAccion;
+  recurso: string;
+  recursoId?: string;
+  metadata?: Record<string, unknown>;
+  exito?: boolean;
+  mensaje?: string;
+  request?: Request;
+}) {
+  try {
+    const ip = params.request ? ipFromRequest(params.request) : null;
+    const userAgent = params.request ? uaFromRequest(params.request) : null;
+
+    await db.insert(auditoriaEventos).values({
+      usuarioId: params.usuarioId,
+      accion: params.accion,
+      recurso: params.recurso,
+      recursoId: params.recursoId ?? null,
+      ip,
+      userAgent,
+      metadata: params.metadata ?? null,
+      exito: params.exito ?? true,
+      mensaje: params.mensaje ?? null,
+    });
+  } catch {
+    console.error('[audit] Error al registrar evento de auditoría');
+  }
+}

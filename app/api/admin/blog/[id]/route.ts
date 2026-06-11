@@ -1,0 +1,93 @@
+import { db } from '@/lib/db';
+import { blogPosts } from '@/lib/schema';
+import { requireAdmin, authFailureResponse } from '@/lib/auth';
+import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { logAudit } from '@/lib/audit';
+import { revalidatePath } from 'next/cache';
+
+const updateSchema = z.object({
+  slug: z.string().min(1).max(300).optional(),
+  title: z.string().min(1).max(500).optional(),
+  description: z.string().min(1).optional(),
+  body: z.string().min(1).optional(),
+  publishedAt: z.string().optional(),
+  updatedAt: z.string().optional().nullable(),
+  category: z.string().min(1).max(200).optional(),
+  tags: z.array(z.string()).optional(),
+  author: z.string().max(200).optional(),
+  readingTime: z.string().max(20).optional(),
+  coverImage: z.string().max(500).optional().nullable(),
+  featured: z.boolean().optional(),
+  published: z.boolean().optional(),
+});
+
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    requireAdmin(request);
+    const { id } = await params;
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    if (!post) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
+    return Response.json({ post });
+  } catch (err) { return authFailureResponse(err); }
+}
+
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const auth = requireAdmin(request);
+    const { id } = await params;
+    const body = await request.json();
+    const parsed = updateSchema.parse(body);
+    if (Object.keys(parsed).length === 0) return Response.json({ error: 'Sin campos para actualizar' }, { status: 400 });
+
+    if (parsed.slug) {
+      const [dup] = await db.select({ id: blogPosts.id }).from(blogPosts).where(eq(blogPosts.slug, parsed.slug));
+      if (dup && dup.id !== id) return Response.json({ error: 'Ya existe un post con ese slug' }, { status: 409 });
+    }
+
+    const values: Record<string, unknown> = {};
+    if (parsed.slug !== undefined) values.slug = parsed.slug;
+    if (parsed.title !== undefined) values.title = parsed.title;
+    if (parsed.description !== undefined) values.description = parsed.description;
+    if (parsed.body !== undefined) values.body = parsed.body;
+    if (parsed.publishedAt !== undefined) values.publishedAt = new Date(parsed.publishedAt);
+    if (parsed.updatedAt !== undefined) values.updatedAt = parsed.updatedAt ? new Date(parsed.updatedAt) : null;
+    if (parsed.category !== undefined) values.category = parsed.category;
+    if (parsed.tags !== undefined) values.tags = parsed.tags;
+    if (parsed.author !== undefined) values.author = parsed.author;
+    if (parsed.readingTime !== undefined) values.readingTime = parsed.readingTime;
+    if (parsed.coverImage !== undefined) values.coverImage = parsed.coverImage;
+    if (parsed.featured !== undefined) values.featured = parsed.featured;
+    if (parsed.published !== undefined) values.published = parsed.published;
+
+    const [updated] = await db.update(blogPosts).set(values).where(eq(blogPosts.id, id)).returning();
+    if (!updated) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
+
+    await logAudit({ usuarioId: auth.userId, accion: 'blog_updated', recurso: 'blog', recursoId: id, metadata: { slug: updated.slug }, request });
+
+    revalidatePath('/blog');
+    revalidatePath(`/blog/${updated.slug}`);
+
+    return Response.json({ post: updated });
+  } catch (err) {
+    if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
+    return authFailureResponse(err);
+  }
+}
+
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const auth = requireAdmin(request);
+    const { id } = await params;
+    const [existing] = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id));
+    if (!existing) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
+
+    await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    await logAudit({ usuarioId: auth.userId, accion: 'blog_deleted', recurso: 'blog', recursoId: id, metadata: { slug: existing.slug }, request });
+
+    revalidatePath('/blog');
+    revalidatePath(`/blog/${existing.slug}`);
+
+    return Response.json({ deleted: true });
+  } catch (err) { return authFailureResponse(err); }
+}

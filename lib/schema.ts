@@ -70,9 +70,12 @@ export const usuarios = pgTable('usuarios', {
   nombre: varchar('nombre', { length: 200 }).notNull(),
   rol: varchar('rol', { length: 50 }).notNull().default('abogado'),
   bufeteId: uuid('bufete_id'),
+  active: boolean('active').default(true),
+  mustChangePassword: boolean('must_change_password').default(false),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
   bufeteRef: foreignKey({ columns: [table.bufeteId], foreignColumns: [bufetes.id] }),
+  activeIdx: index('usuarios_active_idx').on(table.active),
 }));
 
 export const casos = pgTable('casos', {
@@ -115,6 +118,18 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'delito_deleted',
   'rate_limited',
   'unauthorized_access',
+  'usuario_created',
+  'usuario_updated',
+  'usuario_deleted',
+  'password_reset',
+  'password_changed',
+  'blog_created',
+  'blog_updated',
+  'blog_deleted',
+  'faq_created',
+  'faq_updated',
+  'faq_deleted',
+  'site_config_updated',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {
@@ -177,3 +192,59 @@ export const solicitudesConsulta = pgTable('solicitudes_consulta', {
 
 export type SolicitudConsulta = typeof solicitudesConsulta.$inferSelect;
 export type SolicitudConsultaInsert = typeof solicitudesConsulta.$inferInsert;
+
+export const blogPosts = pgTable('blog_posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 300 }).notNull().unique(),
+  title: varchar('title', { length: 500 }).notNull(),
+  description: text('description').notNull(),
+  body: text('body').notNull(),
+  publishedAt: timestamp('published_at', { withTimezone: true }).notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }),
+  category: varchar('category', { length: 200 }).notNull(),
+  tags: text('tags').array().default([]),
+  author: varchar('author', { length: 200 }).default('Pineda y Asociados'),
+  readingTime: varchar('reading_time', { length: 20 }).default('3 min'),
+  coverImage: varchar('cover_image', { length: 500 }),
+  featured: boolean('featured').default(false),
+  published: boolean('published').default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  slugIdx: index('blog_posts_slug_idx').on(table.slug),
+  categoryIdx: index('blog_posts_category_idx').on(table.category),
+  publishedAtIdx: index('blog_posts_published_at_idx').on(table.publishedAt),
+  publishedIdx: index('blog_posts_published_idx').on(table.published),
+  featuredIdx: index('blog_posts_featured_idx').on(table.featured),
+}));
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type BlogPostInsert = typeof blogPosts.$inferInsert;
+
+export const faqEntries = pgTable('faq_entries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  category: varchar('category', { length: 200 }).notNull(),
+  question: text('question').notNull(),
+  answer: text('answer').notNull(),
+  sortOrder: integer('sort_order').default(0),
+  published: boolean('published').default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  categoryIdx: index('faq_entries_category_idx').on(table.category),
+  sortOrderIdx: index('faq_entries_sort_order_idx').on(table.sortOrder),
+  publishedIdx: index('faq_entries_published_idx').on(table.published),
+}));
+
+export type FaqEntry = typeof faqEntries.$inferSelect;
+export type FaqEntryInsert = typeof faqEntries.$inferInsert;
+
+export const configuracionSitio = pgTable('configuracion_sitio', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  clave: varchar('clave', { length: 100 }).notNull().unique(),
+  valor: text('valor').notNull(),
+  descripcion: varchar('descripcion', { length: 300 }),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).defaultNow(),
+});
+
+export type ConfiguracionSitio = typeof configuracionSitio.$inferSelect;
+export type ConfiguracionSitioInsert = typeof configuracionSitio.$inferInsert;

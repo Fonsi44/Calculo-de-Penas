@@ -26,6 +26,7 @@ export function BlogTOC() {
       items.push({ id: h2.id, text: h2.textContent?.trim() || '' });
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(items);
   }, []);
 

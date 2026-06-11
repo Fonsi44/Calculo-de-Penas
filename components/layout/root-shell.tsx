@@ -29,6 +29,7 @@ const PUBLIC_PREFIXES = ['/servicios-juridicos', '/derecho-penal', '/hondurenos-
 function isPublicRoute(pathname: string): boolean {
   if (PUBLIC_ROUTES.has(pathname)) return true;
   if (PUBLIC_PREFIXES.some(p => pathname === p.replace(/\/$/, '') || pathname.startsWith(p))) return true;
+  if (pathname.startsWith('/intranet/admin')) return true; // admin tiene su propio layout
   return false;
 }
 
