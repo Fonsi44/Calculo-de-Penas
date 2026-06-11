@@ -1,5 +1,54 @@
 # Changelog
 
+## Release 31 — Crawl budget optimization + schema markup + thin content fix (2026-06-12)
+
+### Problema detectado
+
+6 URLs prioritarias (`/servicios-juridicos`, `/despacho`, `/derecho-penal`, `/blog`, `/preguntas-frecuentes`, `/solicitar-consulta`) seguían apareciendo en Google Search Console como "Descubierta: actualmente sin indexar" — Google las conocía por el sitemap pero nunca las había rastreado.
+
+### Causas raíz
+
+1. **Dilución de crawl budget**: El sitemap contenía 35 rutas estáticas + 20 categorías de blog + 135 posts = ~190 URLs. Páginas sin valor SEO (aviso-legal, política-privacidad, términos, etc.) competían por el presupuesto de rastreo con las páginas prioritarias.
+
+2. **lastmod plano**: Todas las rutas estáticas tenían el mismo `lastModified` (`new Date()`), eliminando cualquier señal de frescura diferencial para Google.
+
+3. **Prioridades no concentradas**: Las sub-páginas (servicios individuales, derecho-penal hijas) tenían prioridad 0.8, casi igual que las páginas principales (0.8-0.9). Google no recibía señal clara de qué páginas eran más importantes.
+
+4. **Sin schema markup específico**: Las páginas `/servicios-juridicos` y `/solicitar-consulta` no tenían ningún schema JSON-LD (ni BreadcrumbList, ni WebPage), reduciendo señales semánticas para Google.
+
+5. **Thin content en /solicitar-consulta**: La página tenía solo un formulario + párrafo introductorio, sin suficiente contexto textual para que Google la considerara contenido sustancial.
+
+6. **Sin cross-linking contextual**: Las páginas no se enlazaban entre sí con texto relevante, debilitando la arquitectura de enlaces interna.
+
+### Cambios aplicados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/sitemap.ts` | Eliminadas 6 rutas sin valor SEO (aviso-legal, política-*, términos, disclaimer, como-llegar). Prioridades concentradas: 1.0 para servicios-juridicos, derecho-penal y solicitar-consulta. Sub-páginas reducidas a 0.5. lastmod distribuido con `daysAgo()` para señal de frescura diferenciada. |
+| `lib/seo-schema.ts` | Nuevo helper con `breadcrumbSchema()` (BreadcrumbList) y `webpageSchema()` (WebPage con inLanguage, isPartOf, about). |
+| `app/(public)/servicios-juridicos/page.tsx` | Añadido schema BreadcrumbList + WebPage JSON-LD. Añadido cross-linking contextual a /derecho-penal, /despacho, /preguntas-frecuentes, /blog con anchor text descriptivo. |
+| `app/(public)/solicitar-consulta/page.tsx` | Añadido bloque contextual (~120 palabras) describiendo áreas de práctica y proceso de consulta. Añadido schema BreadcrumbList + WebPage JSON-LD. |
+
+### Validación final
+
+- ✅ Build: Compiled successfully, 257 páginas
+- ✅ Lint: 0 errores, 0 warnings
+- ✅ Tests: 325 passed (16 suites)
+- ✅ IndexNow: 190 URLs enviadas a Bing
+
+### Acciones manuales posteriores
+
+1. En Google Search Console, inspeccionar cada URL y solicitar indexación manual
+2. Reenviar sitemap.xml completo para forzar recrawleo
+3. Monitorear en los próximos 7-14 días la transición de "Descubierta" a "Indexada"
+
+### Riesgos y límites
+
+- Google decide cuándo rastrear. Los cambios técnicos mejoran las señales pero no garantizan rastreo inmediato
+- El deploy en Vercel debe completarse antes de que Google vea los cambios
+- Las URLs seguirán en "Descubierta" hasta que Google las recrawlee
+- El contenido añadido a /solicitar-consulta es mínimo; puede requerir más amplitud si Google persiste en no indexarla
+
 ## Release 30 — Corrección integral de indexabilidad SEO en páginas públicas (2026-06-12)
 
 ### Problema detectado
