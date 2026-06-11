@@ -59,7 +59,7 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
     content: decodeHtmlEntities(content),
     editorProps: {
       attributes: {
-        class: 'prose prose-sm max-w-none focus:outline-none px-3 py-2 text-text',
+        class: 'rich-editor-content focus:outline-none px-3 py-2 text-text',
         style: `min-height: ${minHeight}px`,
       },
     },
@@ -162,6 +162,92 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
       </div>
 
       <EditorContent editor={editor} />
+
+      <style>{`
+        .rich-editor-content h2 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin: 1.5rem 0 0.75rem;
+          line-height: 1.3;
+          color: var(--color-text, #0B1B3D);
+        }
+        .rich-editor-content h3 {
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin: 1.2rem 0 0.5rem;
+          line-height: 1.35;
+          color: var(--color-text, #0B1B3D);
+        }
+        .rich-editor-content p {
+          margin: 0 0 0.75rem;
+          line-height: 1.7;
+        }
+        .rich-editor-content strong {
+          font-weight: 700;
+          color: var(--color-text, #0B1B3D);
+        }
+        .rich-editor-content em {
+          font-style: italic;
+        }
+        .rich-editor-content ul,
+        .rich-editor-content ol {
+          margin: 0.5rem 0 0.75rem;
+          padding-left: 1.5rem;
+        }
+        .rich-editor-content ul {
+          list-style-type: disc;
+        }
+        .rich-editor-content ol {
+          list-style-type: decimal;
+        }
+        .rich-editor-content li {
+          margin-bottom: 0.25rem;
+          line-height: 1.6;
+        }
+        .rich-editor-content a {
+          color: var(--color-accent, #C5A55A);
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+        .rich-editor-content a:hover {
+          color: var(--color-primary, #0B1B3D);
+        }
+        .rich-editor-content blockquote {
+          border-left: 3px solid var(--color-accent, #C5A55A);
+          padding: 0.5rem 1rem;
+          margin: 0.75rem 0;
+          background: var(--color-surface-alt, #f5f5f5);
+          font-style: italic;
+        }
+        .rich-editor-content pre {
+          background: #1e1e1e;
+          color: #d4d4d4;
+          padding: 1rem;
+          border-radius: 0.375rem;
+          overflow-x: auto;
+          font-family: ui-monospace, monospace;
+          font-size: 0.85rem;
+          line-height: 1.5;
+        }
+        .rich-editor-content code {
+          font-family: ui-monospace, monospace;
+          font-size: 0.85em;
+          background: var(--color-surface-alt, #f5f5f5);
+          padding: 0.1em 0.3em;
+          border-radius: 0.25rem;
+        }
+        .rich-editor-content img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 0.375rem;
+          margin: 0.75rem 0;
+        }
+        .rich-editor-content hr {
+          border: none;
+          border-top: 1px solid var(--color-border-light, #e2e2e2);
+          margin: 1.5rem 0;
+        }
+      `}</style>
     </div>
   );
 }

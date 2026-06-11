@@ -1,5 +1,39 @@
 # Changelog
 
+## Release 19 — Corrección render visual del editor TipTap (estilos semánticos) (2026-06-11)
+
+### Bug: Editor visual mostraba H2/H3/strong/listas sin formato jerárquico
+
+**Causa raíz**: El editor TipTap tenía las clases `prose prose-sm` en sus atributos, pero `@tailwindcss/typography` **no está instalado** como dependencia del proyecto. Sin ese plugin, las clases `prose`/`prose-sm` no generan CSS. El contenido HTML (`h2`, `h3`, `strong`, `ul`, `ol`, `li`, `a`) se renderizaba dentro de `.ProseMirror` sin ningún estilo, mostrando todo con el mismo tamaño y peso.
+
+**Solución**:
+- Reemplazadas las clases `prose prose-sm max-w-none` (sin efecto) por `rich-editor-content` (clase única para scoping).
+- Añadido bloque `<style>` dentro del componente con estilos semánticos scoped a `.rich-editor-content`:
+  - `h2`: 1.5rem, bold, margen vertical, color primario
+  - `h3`: 1.2rem, semibold, margen vertical
+  - `p`: line-height 1.7, margen inferior
+  - `strong`: font-weight 700, color primario
+  - `em`: italic
+  - `ul`/`ol`: padding-left, disc/decimal list-style
+  - `li`: line-height 1.6, margen inferior
+  - `a`: color acento, subrayado, hover a primario
+  - `blockquote`: borde izquierdo, fondo, italic
+  - `pre`/`code`: fuente mono, fondo oscuro
+  - `img`: max-width 100%, border-radius
+  - `hr`: separador visual
+
+**Archivo modificado**:
+- `components/ui/rich-text-editor.tsx`
+
+**Cobertura**:
+- Todos los tests existentes pasan (185/185)
+- Lint: 0 errores
+- Build: 239 páginas, 0 errores TypeScript
+
+**Verificación**: Ningún archivo de la web pública (`app/(public)/*`) fue modificado.
+
+---
+
 ## Release 18 — Corrección editor visual (HTML escapado) + contador publicados (2026-06-11)
 
 ### Bug 1: Editor visual mostraba HTML escapado como texto plano
