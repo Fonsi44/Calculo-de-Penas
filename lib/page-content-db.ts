@@ -269,5 +269,31 @@ export const getEditablePagesMeta = cache(async (): Promise<{
         ]},
       ],
     },
+    {
+      page: 'configuracion', label: 'Configuración Global',
+      sections: [
+        { key: 'contacto', label: 'Contacto', fields: [
+          { key: 'telefono', label: 'Teléfono', type: 'text' },
+          { key: 'whatsapp', label: 'WhatsApp', type: 'text' },
+          { key: 'email', label: 'Email', type: 'text' },
+        ]},
+        { key: 'direccion', label: 'Dirección', fields: [
+          { key: 'direccion_line1', label: 'Línea 1', type: 'text' },
+          { key: 'direccion_line2', label: 'Línea 2', type: 'text' },
+          { key: 'ciudad', label: 'Ciudad', type: 'text' },
+          { key: 'departamento', label: 'Departamento', type: 'text' },
+          { key: 'horario', label: 'Horario', type: 'text' },
+        ]},
+        { key: 'redes', label: 'Redes Sociales', fields: [
+          { key: 'facebook', label: 'Facebook URL', type: 'text' },
+          { key: 'instagram', label: 'Instagram URL', type: 'text' },
+          { key: 'tiktok', label: 'TikTok URL', type: 'text' },
+        ]},
+        { key: 'geo', label: 'Geolocalización', fields: [
+          { key: 'geo_lat', label: 'Latitud', type: 'text' },
+          { key: 'geo_lng', label: 'Longitud', type: 'text' },
+        ]},
+      ],
+    },
   ];
 });

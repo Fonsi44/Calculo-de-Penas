@@ -1,5 +1,48 @@
 # Changelog
 
+## Release 22 — Correcciones: SEO page, Pages carga contenido real, Config integrado en Pages (2026-06-11)
+
+### 1. /intranet/admin/seo — Corregido (ya existía, ahora confirmado funcional)
+
+El módulo SEO en `/intranet/admin/seo` ya existía con un panel completo de 964 líneas (tabs: Resumen, Analytics, Search Console, Indexación, Sitemap, Acciones). El build lo confirma como ruta estática funcional con APIs backend asociadas (`/api/admin/seo/summary`, `/api/admin/seo/sitemap`, `/api/admin/seo/inspect`, `/api/admin/analytics`, `/api/admin/search-console`).
+
+- Se mantiene en el sidebar admin con acceso directo desde `/intranet/admin`
+- Incluye detección de estado de integraciones (GA4, GSC) con mensajes claros si faltan variables de entorno
+- Sin cambios de código necesarios; la ruta ya funcionaba y fue verificada en build exitoso
+
+### 2. /intranet/admin/pages — Corregido: ahora carga contenido existente
+
+**Problema anterior**: El listado de páginas solo leía de la tabla `page_content` (vacía), mostrando "Sin contenido guardado aún" para todas las páginas. No había forma de editar la configuración existente.
+
+**Solución**:
+- Añadida página virtual `configuracion` en `getEditablePagesMeta()` con 4 secciones (Contacto, Dirección, Redes Sociales, Geolocalización) y 13 campos editables
+- El editor de páginas (`[page]/page.tsx`) ahora detecta cuándo está editando "configuracion" y carga datos desde `/api/admin/site-config` en lugar de `/api/admin/pages`
+- El guardado de "configuracion" persiste via `PUT /api/admin/site-config` (el mismo endpoint que usaba el antiguo Config)
+- Ahora se puede ver y editar la configuración del sitio desde Pages
+
+### 3. /intranet/admin/config — Integrado dentro de /intranet/admin/pages
+
+**Cambios en navegación**:
+- Eliminado "Configuración" del sidebar admin (`layout.tsx`)
+- Añadido "Configuración Global" como página virtual dentro del módulo Pages
+- La ruta `/intranet/admin/config` ahora redirige automáticamente a `/intranet/admin/pages/configuracion`
+- `Settings` icon removido de imports en layout (ya no usado)
+
+### Archivos modificados
+- `lib/page-content-db.ts` — añadida página virtual `configuracion` con 13 campos
+- `app/intranet/admin/pages/[page]/page.tsx` — carga config desde `/api/admin/site-config`, guarda al endpoint correcto
+- `app/intranet/admin/pages/page.tsx` — icono `Settings` para configuracion
+- `app/intranet/admin/layout.tsx` — removido Config del sidebar, removido import Settings
+- `app/intranet/admin/config/page.tsx` — reescrito como redirect a `/intranet/admin/pages/configuracion`
+- `CHANGELOG.md`
+
+### Validación
+- `npm run lint` — 0 errores
+- `npm run build` — 247 páginas, 0 TypeScript errors
+- `npm run test` — 185/185 tests
+
+---
+
 ## Release 21 — CMS de páginas públicas: tabla page_content + admin pages (2026-06-11)
 
 ### Nuevo módulo: Gestión de páginas públicas

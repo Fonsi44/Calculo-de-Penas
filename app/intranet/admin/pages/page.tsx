@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Globe, FileText, Layers, Edit3 } from 'lucide-react';
+import { ArrowRight, Globe, FileText, Layers, Edit3, Settings } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { getEditablePagesMeta } from '@/lib/page-content-db';
@@ -24,6 +24,7 @@ const ICONS: Record<string, typeof Globe> = {
   'politica-privacidad': FileText,
   'politica-cookies': FileText,
   disclaimer: FileText,
+  configuracion: Settings,
 };
 
 export default function AdminPagesPage() {

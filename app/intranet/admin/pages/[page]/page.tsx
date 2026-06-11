@@ -35,6 +35,7 @@ export default function AdminPageEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const isConfig = params.page === 'configuracion';
 
   useEffect(() => {
     getEditablePagesMeta().then(all => {
@@ -49,22 +50,25 @@ export default function AdminPageEditor() {
 
   useEffect(() => {
     if (!meta) return;
-    fetch(`/api/admin/pages?page=${params.page}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.grouped) {
+    const loadContent = isConfig
+      ? fetch('/api/admin/site-config').then(r => r.json()).then(d => d.config ?? {})
+      : fetch(`/api/admin/pages?page=${params.page}`).then(r => r.json()).then(d => {
           const flat: Record<string, string> = {};
-          for (const [section, fields] of Object.entries(data.grouped as Record<string, Record<string, string>>)) {
-            for (const [field, content] of Object.entries(fields)) {
-              flat[`${section}.${field}`] = content;
+          if (d.grouped) {
+            for (const [section, fields] of Object.entries(d.grouped as Record<string, Record<string, string>>)) {
+              for (const [field, content] of Object.entries(fields)) {
+                flat[`${section}.${field}`] = content;
+              }
             }
           }
-          setValues(flat);
-        }
-      })
+          return flat;
+        });
+
+    loadContent
+      .then(flat => setValues(flat))
       .catch(() => toast.danger('Error al cargar contenido'))
       .finally(() => setLoading(false));
-  }, [meta, params.page, toast]);
+  }, [meta, params.page, toast, isConfig]);
 
   const update = (key: string, value: string) => {
     setValues(v => ({ ...v, [key]: value }));
@@ -73,6 +77,41 @@ export default function AdminPageEditor() {
   const handleSave = async () => {
     if (!meta) return;
     setSaving(true);
+
+    if (isConfig) {
+      const toSave: Record<string, string> = {};
+      for (const [key, content] of Object.entries(values)) {
+        const [, field] = key.includes('.') ? key.split('.', 2) : ['', key];
+        if (field && content) toSave[field] = content;
+      }
+      if (Object.keys(toSave).length === 0) {
+        toast.danger('No hay cambios para guardar');
+        setSaving(false);
+        return;
+      }
+      try {
+        const res = await fetch('/api/admin/site-config', {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(toSave),
+        });
+        if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
+        toast.success('Configuración guardada. Los cambios se reflejarán en la web.');
+        const data = await res.json();
+        setValues(v => {
+          const merged = { ...v };
+          for (const [k, val] of Object.entries(data.config ?? {})) {
+            for (const section of meta.sections) {
+              const key = `${section.key}.${k}`;
+              if (merged[key] !== undefined) merged[key] = val as string;
+            }
+          }
+          return merged;
+        });
+      } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+      setSaving(false);
+      return;
+    }
+
     const entries = Object.entries(values);
     let success = 0;
     let error = 0;
