@@ -1,5 +1,50 @@
 # Changelog
 
+## Release 21 — CMS de páginas públicas: tabla page_content + admin pages (2026-06-11)
+
+### Nuevo módulo: Gestión de páginas públicas
+
+Implementada la FASE A del plan CMS: infraestructura base para editar páginas públicas desde `/intranet/admin/pages`.
+
+**Nueva tabla DB**: `page_content` (9 columnas: id, page, section, field, content, lang, updated_by, updated_at, created_at).
+
+**Nuevo helper**: `lib/page-content-db.ts` con:
+- `getPageContent(page)` — obtiene todos los campos de una página como Record<string,string>
+- `getPageContentBySection(page, section)` — obtiene campos de una sección específica
+- `upsertPageContent(params)` — inserta o actualiza un campo
+- `getEditablePagesMeta()` — metadatos de 9 páginas editables con secciones y campos
+
+**Nuevo endpoint**: `POST/GET /api/admin/pages` con `requireAdmin()`, sanitización HTML, auditoría y revalidación ISR de la ruta afectada.
+
+**Nuevo módulo admin**:
+- `/intranet/admin/pages` — listado de 9 páginas editables con stats (secciones, campos)
+- `/intranet/admin/pages/[page]` — editor por secciones con sidebar de navegación
+- Soporta campos tipo: text, textarea, richtext (TipTap)
+
+**Páginas editables**: home, despacho, solicitar-consulta, como-llegar, terminos, aviso-legal, politica-privacidad, politica-cookies, disclaimer.
+
+**Sidebar admin**: nuevo item "Páginas" con icono Globe.
+
+### Archivos nuevos
+- `lib/page-content-db.ts`
+- `app/api/admin/pages/route.ts`
+- `app/intranet/admin/pages/page.tsx`
+- `app/intranet/admin/pages/[page]/page.tsx`
+- `drizzle/migrations/0011_great_abomination.sql`
+
+### Archivos modificados
+- `lib/schema.ts` — tabla `page_content`
+- `app/intranet/admin/layout.tsx` — item "Páginas" en sidebar
+- `CHANGELOG.md`
+
+### Validación
+- `npm run lint` — 0 errores
+- `npm run build` — 247 páginas, 0 TypeScript errors
+- `npm run test` — 185/185 tests
+- Migración Drizzle: `0011_great_abomination.sql` generada y aplicada (16 tablas)
+
+---
+
 ## Release 20 — Corrección contadores incoherentes al filtrar por categoría en admin/blog (2026-06-11)
 
 ### Bug: Contadores mezclaban total filtrado con publicados globales al filtrar por categoría

@@ -249,3 +249,21 @@ export const configuracionSitio = pgTable('configuracion_sitio', {
 
 export type ConfiguracionSitio = typeof configuracionSitio.$inferSelect;
 export type ConfiguracionSitioInsert = typeof configuracionSitio.$inferInsert;
+
+export const pageContent = pgTable('page_content', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  page: varchar('page', { length: 200 }).notNull(),
+  section: varchar('section', { length: 200 }).notNull(),
+  field: varchar('field', { length: 100 }).notNull(),
+  content: text('content').notNull().default(''),
+  lang: varchar('lang', { length: 10 }).default('es-HN'),
+  updatedBy: uuid('updated_by'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  pageSectionFieldIdx: index('page_content_page_section_field_idx').on(table.page, table.section, table.field),
+  pageIdx: index('page_content_page_idx').on(table.page),
+}));
+
+export type PageContent = typeof pageContent.$inferSelect;
+export type PageContentInsert = typeof pageContent.$inferInsert;

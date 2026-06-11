@@ -56,6 +56,7 @@ app/
     admin/
       blog/                → CRUD posts (POST / PATCH / DELETE)
       faq/                 → CRUD FAQs (POST / PATCH / DELETE)
+      pages/               → Gestión de contenido de páginas públicas (GET / POST)
       usuarios/            → CRUD usuarios + reset-password
       site-config/         → Configuración del sitio (GET público / PUT admin)
       upload/              → Subida de imágenes
@@ -75,7 +76,7 @@ app/
     [transport]/           → Transport handler genérico
 lib/
   rules/v1/                → Motor de cálculo (9 archivos)
-  schema.ts                → Esquema Drizzle ORM (14 tablas)
+  schema.ts                → Esquema Drizzle ORM (15 tablas)
   auth.ts                  → JWT + bcrypt
   audit.ts                 → Auditoría no bloqueante
   blog-db.ts               → Blog: helper de lectura (DB)
@@ -83,6 +84,7 @@ lib/
   blog.ts                  → Blog: tipos legacy
   faq-db.ts                → FAQ: helper de lectura (DB)
   site-config-db.ts        → Site config: helper
+  page-content-db.ts       → Page content: helper + metadatos
   cache.ts                 → Caché/revalidación
   datetime.ts              → Zona horaria Honduras (UTC-6)
   email.ts                 → Resend (email transaccional)
@@ -133,7 +135,7 @@ proxy.ts                   → Edge proxy (reemplaza middleware.ts)
 - **ISR**: Páginas públicas con `revalidate = 3600` (1 hora). On-demand via `revalidatePath()`
 - **Layout**: `app/layout.tsx` usa `RootShell` que oculta sidebar en rutas públicas y admin
 
-### Base de datos (14 tablas)
+### Base de datos (15 tablas)
 
 | Tabla | Propósito |
 |-------|-----------|
@@ -152,6 +154,7 @@ proxy.ts                   → Edge proxy (reemplaza middleware.ts)
 | `blog_posts` | Posts del blog |
 | `faq_entries` | Entradas de FAQ |
 | `configuracion_sitio` | Configuración clave-valor |
+| `page_content` | Contenido de páginas públicas editable por secciones |
 
 Migraciones: `npx drizzle-kit generate` + `npx drizzle-kit push`. No modificar Neon directamente.
 Seed (`drizzle/seed.ts`) tiene guarda: si ya hay datos, no ejecuta nada.
@@ -200,6 +203,14 @@ Accesible solo para usuarios con rol `admin`. Layout propio con sidebar admin (i
 - **Generador AI**: botón "Generar post" → `POST /api/admin/blog/generate` — crea artículo completo con estructura legal. Rate limit: 10/5min por usuario
 - **Aviso cambios no guardados**: indicador visual + confirmación beforeunload
 - **Vista previa**: enlace "Ver en web" para posts publicados
+
+#### Páginas — Gestión (`/intranet/admin/pages/`)
+- **Listado**: 9 páginas públicas editables con stats (secciones, campos)
+- **Editor**: `/intranet/admin/pages/[page]` — navegación por secciones, edición inline
+- **Campos**: text, textarea, rich text (TipTap)
+- **Persistencia**: `page_content` tabla en DB
+- **API**: `POST/GET /api/admin/pages` con `requireAdmin()`, sanitización, auditoría, revalidación ISR
+- **Páginas editables**: home, despacho, solicitar-consulta, como-llegar, terminos, aviso-legal, politica-privacidad, politica-cookies, disclaimer
 
 #### FAQ — Gestión (`/intranet/admin/faq/page.tsx`)
 - Agrupado por categoría (acordeones expandibles)

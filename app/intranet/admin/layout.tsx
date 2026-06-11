@@ -13,15 +13,19 @@ import {
   User,
   ChevronLeft,
   Shield,
+  BarChart3,
+  Globe,
 } from 'lucide-react';
 import { cn } from '@/lib/ui';
 import { Spinner } from '@/components/ui/spinner';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/intranet/admin', icon: LayoutDashboard, match: (p: string) => p === '/intranet/admin' },
-  { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p: string) => p.startsWith('/intranet/admin/usuarios') },
+  { label: 'Páginas', href: '/intranet/admin/pages', icon: Globe, match: (p: string) => p.startsWith('/intranet/admin/pages') },
   { label: 'Blog', href: '/intranet/admin/blog', icon: FileText, match: (p: string) => p.startsWith('/intranet/admin/blog') },
   { label: 'FAQ', href: '/intranet/admin/faq', icon: MessageSquare, match: (p: string) => p.startsWith('/intranet/admin/faq') },
+  { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p: string) => p.startsWith('/intranet/admin/usuarios') },
+  { label: 'SEO', href: '/intranet/admin/seo', icon: BarChart3, match: (p: string) => p.startsWith('/intranet/admin/seo') },
   { label: 'Configuración', href: '/intranet/admin/config', icon: Settings, match: (p: string) => p.startsWith('/intranet/admin/config') },
   { label: 'Perfil', href: '/intranet/admin/perfil', icon: User, match: (p: string) => p.startsWith('/intranet/admin/perfil') },
 ];
