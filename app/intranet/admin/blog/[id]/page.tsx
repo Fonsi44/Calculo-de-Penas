@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle, Upload, X } from 'lucide-react';
+import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle, Upload, X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -48,6 +48,8 @@ export default function AdminBlogEditorPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
   const [genProgress, setGenProgress] = useState(0);
   const [funnyComment, setFunnyComment] = useState('');
   const [genTopic, setGenTopic] = useState('');
@@ -334,6 +336,22 @@ export default function AdminBlogEditorPage() {
           </div>
         </div>
         <div className="flex gap-2">
+          <Button type="button" variant="secondary" size="sm" onClick={async () => {
+            if (!form.body || !form.title) { toast.danger('Guarda antes de previsualizar'); return; }
+            setPreviewLoading(true);
+            try {
+              const res = await fetch('/api/admin/preview', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: form.title, body: form.body, category: form.category, slug: form.slug, description: form.description }),
+              });
+              const data = await res.json();
+              if (data.url) { setPreviewUrl(data.url); window.open(data.url, '_blank'); }
+            } catch { toast.danger('Error al generar preview'); }
+            finally { setPreviewLoading(false); }
+          }} disabled={saving || previewLoading}>
+            {previewLoading ? <Loader2 size={14} className="animate-spin mr-1" /> : <ExternalLink size={14} className="mr-1" />}
+            Vista previa
+          </Button>
           <Button type="button" variant="secondary" size="sm" onClick={(e) => handleSave(e as unknown as React.FormEvent, true)} disabled={saving}>
             <Save size={14} className="mr-1" /> Guardar borrador
           </Button>

@@ -6,10 +6,9 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
-import { areasGenerales } from '@/data/areas-juridicas';
 import { areaHref } from '@/lib/schemas/legal-page';
-import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { getAreasFromDb } from '@/lib/areas-db';
 
 export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`,
@@ -26,7 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AreasJuridicasPage() {
+export default async function AreasJuridicasPage() {
+  const areas = await getAreasFromDb('servicio');
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function AreasJuridicasPage() {
         title="Todos los servicios jurídicos que su caso necesita, bajo una misma dirección letrada"
         subtitle={
           <>
-            Desde Nacaome, Valle, ofrecemos cobertura legal integral en {areasGenerales.length}{' '}
+            Desde Nacaome, Valle, ofrecemos cobertura legal integral en {areas.length}{' '}
             disciplinas del derecho hondureño. La defensa penal es nuestra especialidad destacada
             y la acompañamos con servicios especializados en familia, laboral, civil, mercantil,
             tributario y más.
@@ -54,15 +54,15 @@ export default function AreasJuridicasPage() {
           subtitle="Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {areasGenerales.map((area) => (
+          {areas.map((area) => (
             <ServiceCard
               key={area.slug}
               href={areaHref(area.slug)}
               slug={area.slug}
               title={area.titulo}
-              description={area.resumen}
+              description={area.descripcionCorta}
               category="services"
-              tone={area.color as PlaceholderTone}
+              tone="primary"
             />
           ))}
         </div>

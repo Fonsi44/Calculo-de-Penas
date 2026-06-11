@@ -14,6 +14,7 @@ import {
   Shield,
   BarChart3,
   Globe,
+  ClipboardList,
 } from 'lucide-react';
 import { cn } from '@/lib/ui';
 import { Spinner } from '@/components/ui/spinner';
@@ -26,6 +27,7 @@ const NAV_ITEMS = [
   { label: 'SEO', href: '/intranet/admin/seo', icon: BarChart3, match: (p: string) => p.startsWith('/intranet/admin/seo') },
   { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p: string) => p.startsWith('/intranet/admin/usuarios') },
   { label: 'Perfil', href: '/intranet/admin/perfil', icon: User, match: (p: string) => p.startsWith('/intranet/admin/perfil') },
+  { label: 'Auditoría', href: '/intranet/admin/auditoria', icon: ClipboardList, match: (p: string) => p.startsWith('/intranet/admin/auditoria') },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
