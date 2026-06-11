@@ -56,7 +56,6 @@ export default function AdminFaqPage() {
   const isCategoryValid = (slug: string) => VALID_CATEGORY_SLUGS.has(slug);
 
   const fetchFaqs = useCallback(() => {
-    setLoading(true);
     const params = new URLSearchParams();
     if (filterCategory) params.set('category', filterCategory);
     fetch(`/api/admin/faq?${params}`)
@@ -69,7 +68,7 @@ export default function AdminFaqPage() {
       .finally(() => setLoading(false));
   }, [filterCategory, toast]);
 
-  useEffect(() => { fetchFaqs(); }, [fetchFaqs]);
+  useEffect(() => { setLoading(true); fetchFaqs(); }, [fetchFaqs]); // eslint-disable-line react-hooks/set-state-in-effect
 
   const publishedCount = faqs.filter(f => f.published).length;
   const draftCount = faqs.filter(f => !f.published).length;

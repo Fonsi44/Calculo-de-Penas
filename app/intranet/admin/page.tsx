@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Users, FileText, MessageSquare, Settings, User, ArrowRight, Plus, PenLine, Eye, EyeOff, FileEdit, ExternalLink } from 'lucide-react';
+import { Users, FileText, MessageSquare, Settings, User, ArrowRight, Plus, PenLine, FileEdit, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Spinner } from '@/components/ui/spinner';
-import { cn } from '@/lib/ui';
 
 interface AdminStats {
   usuarios: number;

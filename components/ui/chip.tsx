@@ -58,8 +58,8 @@ export function Chip({
   return (
     <button
       type={type}
-      role="button"
-      aria-pressed={selected}
+      role="switch"
+      aria-checked={selected}
       className={cn(
         'inline-flex items-center gap-1.5 rounded-full border font-semibold transition-colors',
         'focus-visible:outline-none disabled:opacity-50',

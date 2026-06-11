@@ -12,6 +12,26 @@ import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
 import { blogCategories } from '@/data/blog/categories';
 
+type SortField = 'publishedAt' | 'title' | 'published';
+type SortDir = 'asc' | 'desc';
+
+function SortHeader({ field, label, className, sortField, onToggle }: {
+  field: SortField; label: string; className?: string;
+  sortField: SortField; sortDir: SortDir; onToggle: (f: SortField) => void;
+}) {
+  return (
+    <th
+      className={`text-left p-3 text-xxs font-bold uppercase cursor-pointer select-none hover:text-primary transition-colors ${className ?? ''}`}
+      onClick={() => onToggle(field)}
+    >
+      <span className="inline-flex items-center gap-1">
+        {label}
+        <ArrowUpDown size={10} className={sortField === field ? 'text-accent' : 'text-text-muted'} />
+      </span>
+    </th>
+  );
+}
+
 interface Post {
   id: string;
   slug: string;
@@ -22,9 +42,6 @@ interface Post {
   publishedAt: string;
   updatedAt: string | null;
 }
-
-type SortField = 'publishedAt' | 'title' | 'published';
-type SortDir = 'asc' | 'desc';
 
 export default function AdminBlogPage() {
   const toast = useToast();
@@ -42,7 +59,6 @@ export default function AdminBlogPage() {
   const limit = 20;
 
   const fetchPosts = useCallback(() => {
-    setLoading(true);
     const params = new URLSearchParams({ page: String(page), limit: String(limit), published: status });
     if (q) params.set('q', q);
     if (category) params.set('category', category);
@@ -51,9 +67,9 @@ export default function AdminBlogPage() {
       .then(data => { setPosts(data.posts ?? []); setTotal(data.total ?? 0); })
       .catch(() => toast.danger('Error al cargar posts'))
       .finally(() => setLoading(false));
-  }, [page, q, category, status]);
+  }, [page, q, category, status, toast]);
 
-  useEffect(() => { fetchPosts(); }, [fetchPosts]);
+  useEffect(() => { setLoading(true); fetchPosts(); }, [fetchPosts]); // eslint-disable-line react-hooks/set-state-in-effect
 
   const sortedPosts = [...posts].sort((a, b) => {
     let cmp = 0;
@@ -148,18 +164,6 @@ export default function AdminBlogPage() {
   const publishedCount = posts.filter(p => p.published).length;
   const draftCount = posts.filter(p => !p.published).length;
 
-  const SortHeader = ({ field, label, className }: { field: SortField; label: string; className?: string }) => (
-    <th
-      className={`text-left p-3 text-xxs font-bold uppercase cursor-pointer select-none hover:text-primary transition-colors ${className ?? ''}`}
-      onClick={() => toggleSort(field)}
-    >
-      <span className="inline-flex items-center gap-1">
-        {label}
-        <ArrowUpDown size={10} className={sortField === field ? 'text-accent' : 'text-text-muted'} />
-      </span>
-    </th>
-  );
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -228,10 +232,10 @@ export default function AdminBlogPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border-light text-text-secondary">
-                  <SortHeader field="title" label="Título" />
+                  <SortHeader field="title" label="Título" sortField={sortField} sortDir={sortDir} onToggle={toggleSort} />
                   <th className="text-left p-3 text-xxs font-bold uppercase hidden sm:table-cell">Categoría</th>
-                  <SortHeader field="published" label="Estado" className="hidden md:table-cell" />
-                  <SortHeader field="publishedAt" label="Fecha" className="hidden md:table-cell" />
+                  <SortHeader field="published" label="Estado" className="hidden md:table-cell" sortField={sortField} sortDir={sortDir} onToggle={toggleSort} />
+                  <SortHeader field="publishedAt" label="Fecha" className="hidden md:table-cell" sortField={sortField} sortDir={sortDir} onToggle={toggleSort} />
                   <th className="text-right p-3 text-xxs font-bold uppercase">Acciones</th>
                 </tr>
               </thead>

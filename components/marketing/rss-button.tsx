@@ -5,8 +5,6 @@ import { useState } from 'react';
 export function RssButton() {
   const [copied, setCopied] = useState(false);
 
-  const feedUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/blog/feed.xml`;
-
   const handleClick = async () => {
     const url = `${window.location.origin}/blog/feed.xml`;
     try {

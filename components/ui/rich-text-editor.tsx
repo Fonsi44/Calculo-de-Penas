@@ -14,7 +14,7 @@ import {
   Bold, Italic, Underline as UnderlineIcon, Strikethrough,
   Heading2, Heading3, List, ListOrdered, ListChecks,
   Link as LinkIcon, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  Undo2, Redo2, Type, Palette, Highlighter, Minus, RemoveFormatting,
+  Undo2, Redo2, Type, Palette, Highlighter, RemoveFormatting,
 } from 'lucide-react';
 
 interface RichTextEditorProps {
@@ -23,7 +23,7 @@ interface RichTextEditorProps {
   minHeight?: number;
 }
 
-function Tb({ editor, onClick, active, title, children }: {
+function Tb({ onClick, active, title, children }: {
   editor: Editor; onClick: () => void; active: boolean; title?: string; children: React.ReactNode;
 }) {
   return (
@@ -87,7 +87,6 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
 
   const setColor = useCallback(() => {
     if (!editor) return;
-    const colors = ['#000000','#1e40af','#166534','#854d0e','#991b1b','#6b21a8','#0e7490','#4b5563'];
     const current = editor.getAttributes('textStyle').color || '#000000';
     const color = prompt(`Color hex (ej: rojo #991b1b, azul #1e40af):`, current);
     if (color) editor.chain().focus().setColor(color).run();
@@ -105,7 +104,6 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
 
   if (!editor) return null;
 
-  const S = 'p-1.5 rounded hover:bg-border-light transition-colors text-text-secondary';
   const sep = <div className="w-px h-5 bg-border-light mx-0.5" />;
 
   return (

@@ -11,6 +11,6 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     setupFiles: ['./tests/setup.ts'],
-    exclude: ['node_modules', '.next', '.opencode/**', 'e2e/**', 'playwright-report/**'],
+    exclude: ['node_modules', '.next', '.kilo/**', '.opencode/**', 'e2e/**', 'playwright-report/**'],
   },
 });

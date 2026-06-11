@@ -21,37 +21,22 @@ interface EstadosFile {
   entradas: Record<string, EntradaEstado>;
 }
 
-let cache: EstadosFile | null = null;
-
 function load(): EstadosFile {
-  if (cache) return cache;
   const p = join(process.cwd(), 'data', 'delitos-estados.json');
   if (!existsSync(p)) {
-    cache = {
-      generado_en: '',
-      fuente: '',
-      total_registros: 0,
-      verificados: 0,
-      pendientes_revision: 0,
-      rechazados: 0,
-      entradas: {},
+    return {
+      generado_en: '', fuente: '', total_registros: 0,
+      verificados: 0, pendientes_revision: 0, rechazados: 0, entradas: {},
     };
-    return cache;
   }
   try {
-    cache = JSON.parse(readFileSync(p, 'utf8')) as EstadosFile;
+    return JSON.parse(readFileSync(p, 'utf8')) as EstadosFile;
   } catch {
-    cache = {
-      generado_en: '',
-      fuente: '',
-      total_registros: 0,
-      verificados: 0,
-      pendientes_revision: 0,
-      rechazados: 0,
-      entradas: {},
+    return {
+      generado_en: '', fuente: '', total_registros: 0,
+      verificados: 0, pendientes_revision: 0, rechazados: 0, entradas: {},
     };
   }
-  return cache;
 }
 
 export function getEstadoDelito(nombre: string, articulo: string): EntradaEstado {
@@ -59,8 +44,7 @@ export function getEstadoDelito(nombre: string, articulo: string): EntradaEstado
   const key = `${nombre}__${articulo}`;
   if (file.entradas[key]) return file.entradas[key];
   return {
-    nombre,
-    articulo,
+    nombre, articulo,
     estado: 'verificado',
     nota: 'No indexado en validación; tratado como verificado por defecto.',
     articulo_sugerido: null,

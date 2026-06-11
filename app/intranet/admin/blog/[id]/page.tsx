@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -57,6 +57,8 @@ export default function AdminBlogEditorPage() {
   const [codeValue, setCodeValue] = useState('');
   const [codeError, setCodeError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadPreview, setUploadPreview] = useState<string | null>(null);
   const initialFormRef = useRef<string>('');
 
   const [form, setForm] = useState({
@@ -68,7 +70,6 @@ export default function AdminBlogEditorPage() {
 
   useEffect(() => {
     if (isNew) return;
-    setLoading(true);
     fetch(`/api/admin/blog/${params.id}`)
       .then(r => r.json())
       .then(data => {
@@ -224,6 +225,41 @@ export default function AdminBlogEditorPage() {
     };
     update('coverImage', imageMap[slug] ?? '/images/blog/pineda-asociados-bufete-multidisciplinario-honduras.webp');
     toast.success('Imagen de portada asignada');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      toast.danger('Solo se permiten imágenes JPEG, PNG o WebP');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.danger('La imagen no puede superar los 10 MB');
+      return;
+    }
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const imageSlug = form.slug || (form.title ? form.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '') : file.name.replace(/\.[^.]+$/, ''));
+      fd.append('slug', imageSlug);
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+      if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
+      const data = await res.json();
+      update('coverImage', data.url);
+      setUploadPreview(data.url);
+      toast.success('Imagen subida y optimizada');
+    } catch (err) {
+      toast.danger(err instanceof Error ? err.message : 'Error al subir imagen');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const clearCoverImage = () => {
+    update('coverImage', '');
+    setUploadPreview(null);
   };
 
   const handleGeneratePost = async () => {
@@ -482,12 +518,34 @@ export default function AdminBlogEditorPage() {
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-semibold text-text-secondary">Imagen portada (URL)</label>
+                <label className="text-xs font-semibold text-text-secondary">Imagen portada</label>
                 <button type="button" onClick={handleAutoCover} className="text-xxs text-accent hover:text-accent-dark flex items-center gap-1 transition-colors">
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
                   <Image size={11} /> Auto
                 </button>
               </div>
               <Input value={form.coverImage} onChange={e => update('coverImage', e.target.value)} placeholder="/images/blog/..." />
+              <div className="mt-2">
+                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border-light bg-surface hover:bg-surface-alt text-xs text-text-secondary cursor-pointer transition-colors">
+                  <Upload size={12} />
+                  {uploading ? 'Subiendo...' : 'Subir imagen'}
+                  <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageUpload} className="hidden" disabled={uploading} />
+                </label>
+                {form.coverImage && (
+                  <button type="button" onClick={clearCoverImage} className="ml-2 inline-flex items-center gap-1 text-xxs text-danger hover:text-danger-dark transition-colors">
+                    <X size={11} /> Quitar
+                  </button>
+                )}
+              </div>
+              {(form.coverImage || uploadPreview) && (
+                <div className="mt-2 relative aspect-video rounded-md overflow-hidden border border-border-light bg-surface-alt">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={form.coverImage} alt="Vista previa" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                </div>
+              )}
+              <p className="text-xxs text-text-muted mt-1">
+                Formatos: JPEG, PNG, WebP. Máx. 10 MB. Se convierte a WebP optimizado y se nombra según el slug.
+              </p>
             </div>
 
             <label className="flex items-center gap-2 text-sm">

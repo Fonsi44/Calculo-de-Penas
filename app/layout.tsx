@@ -83,7 +83,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" href={siteUrl} hrefLang="es-HN" />
         <link rel="alternate" href={siteUrl} hrefLang="x-default" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon-192.svg" type="image/svg+xml" />

@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { ArrowRight, Scale } from 'lucide-react';
-import { site, absoluteUrl } from '@/lib/site';
+
+import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { areasGenerales } from '@/data/areas-juridicas';
-import { areaHref, breadcrumbsSchema, itemListSchema, serviceSchema } from '@/lib/schemas/legal-page';
+import { areaHref } from '@/lib/schemas/legal-page';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
@@ -28,17 +27,6 @@ export const metadata: Metadata = {
 };
 
 export default function AreasJuridicasPage() {
-  const url = absoluteUrl('/servicios-juridicos');
-  const breadcrumbs = breadcrumbsSchema([{ name: 'Inicio', url: absoluteUrl('/') }, { name: 'Servicios Jurídicos', url }]);
-  const itemList = itemListSchema('Servicios Jurídicos', areasGenerales.map((a) => ({ name: a.titulo, url: areaHref(a.slug) })));
-  const servSchema = serviceSchema({
-    slug: 'servicios-juridicos',
-    name: 'Servicios Jurídicos — Pineda y Asociados',
-    description: 'Bufete multidisciplinario con 13 especialidades en Nacaome, Valle, Honduras.',
-    serviceType: 'LegalService',
-    keywords: site.keywords,
-    url,
-  });
 
   return (
     <>

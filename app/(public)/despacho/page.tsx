@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   Scale, ShieldCheck, Briefcase, GraduationCap, BookOpen,
-  HeartHandshake, ArrowRight, CheckCircle2, Gavel, Shield, Award,
+  HeartHandshake, ArrowRight, CheckCircle2, Gavel, Award,
 } from 'lucide-react';
 import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { LiveOfficeStatus, StatsCounter } from '@/components/marketing/live-widgets';
 import { PageHero } from '@/components/marketing/page-hero';

@@ -144,25 +144,32 @@ El panel `/intranet/admin/` permite gestionar Blog y FAQ con editor WYSIWYG (Tip
 
 ### Blog — `/intranet/admin/blog`
 
-- **Listado**: Tabla con título, categoría, estado (publicado/borrador), fecha, acciones (editar/publicar/eliminar).
+- **Listado**: Tabla con título, categoría, estado (publicado/borrador), fecha, acciones (editar/publicar/eliminar/duplicar/ver).
 - **Buscar**: Por texto (título/descripción).
 - **Filtros**: Por categoría (dropdown con categorías reales de `data/blog/categories.ts`) y por estado (todos/publicados/borradores).
+- **Orden**: Por fecha, título o estado (clic en cabecera de columna).
 - **Crear/Editar**: Ruta `/intranet/admin/blog/[id]` (usa `nuevo` para crear).
-  - Editor WYSIWYG: **TipTap** con soporte para párrafos, H2/H3, negrita, cursiva, subrayado, tachado, color, highlight, alineación, listas, enlaces, undo/redo.
-  - Campos: título, slug (auto-generado), descripción, contenido HTML, categoría (dropdown), fecha publicación, tags, autor, tiempo lectura, imagen portada, destacado, publicado.
+  - **Editor con doble pestaña**: Visual (WYSIWYG TipTap) y Código (HTML directo). Conversión bidireccional.
+  - Editor WYSIWYG: **TipTap** con soporte para párrafos, H2/H3, negrita, cursiva, subrayado, tachado, color, highlight, alineación, listas (bullet, numerada, checklist), enlaces, undo/redo.
+  - Campos: título, slug (auto-generado desde título), descripción, contenido HTML, categoría (dropdown real), fecha publicación, tags (con auto-generación), autor, tiempo lectura (con cálculo automático), imagen portada (URL o subida), destacado, publicado.
+  - **Subida de imagen destacada**: Botón "Subir imagen" que envía el archivo a `POST /api/admin/upload`. La imagen se valida (JPEG/PNG/WebP, máx 10 MB), se nombra según el slug del post y se guarda en `/public/images/blog/`. Muestra vista previa.
+  - **Generador automático de posts**: El botón "Generar post" crea un artículo completo con título, slug, descripción, cuerpo HTML estructurado (introducción, marco legal, requisitos, plazos, documentación, recomendaciones, conclusión), tiempo de lectura y tags. El cuerpo se genera en formato HTML compatible con los posts existentes. **Rate limit**: 10 generaciones cada 5 minutos por usuario.
   - Al guardar: el contenido se sanitiza (elimina scripts, iframes, event handlers) y se persiste en PostgreSQL (`blog_posts` table).
   - Al publicar: `revalidatePath` invalida caché ISR de `/blog`, `/blog/[categoria]` y `/blog/[categoria]/[slug]`.
+  - **Aviso de cambios sin guardar**: Indicador visual y confirmación beforeunload.
+  - **Vista previa**: Enlace "Ver en web" disponible para posts publicados.
 
 ### FAQ — `/intranet/admin/faq`
 
 - **Listado**: Agrupado por categoría, expandible, con estado (público/borrador) y orden.
 - **Buscar**: Filtro por texto (pregunta/respuesta).
-- **Filtros**: Por categoría (dropdown) y por estado (todos/publicados/borradores).
-- **Crear**: Formulario con categoría (dropdown), pregunta y respuesta (editor TipTap).
+- **Filtros**: Por categoría (dropdown real) y por estado (todos/publicados/borradores).
+- **Crear**: Formulario con categoría (dropdown de `data/faq-categories.ts`), pregunta y respuesta (editor WYSIWYG TipTap con soporte para párrafos, negrita, cursiva, listas y enlaces).
 - **Editar**: Inline, con editor WYSIWYG + checkbox de publicado.
 - **Reordenar**: Flechas arriba/abajo ajustan `sortOrder`.
 - **Eliminar**: Con confirmación modal.
-- **Categorías**: Dropdown usa `data/faq-categories.ts` — 11 categorías predefinidas.
+- **Categorías**: Dropdown usa `data/faq-categories.ts` — 11 categorías predefinidas. Validación en frontend y backend.
+- **Aviso de categorías inválidas**: Banner de advertencia si hay FAQs con categoría no reconocida.
 
 ### Categorías
 
@@ -184,7 +191,22 @@ El panel `/intranet/admin/` permite gestionar Blog y FAQ con editor WYSIWYG (Tip
 - **Sanitización**: `sanitizeHtml()` elimina `<script>`, `<iframe>`, `on*` handlers, `javascript:` protocol.
 - **Validación**: Zod schemas en todas las rutas POST/PATCH.
 - **Auditoría**: `logAudit()` registra todas las operaciones CRUD en `auditoria_eventos`.
-- **CSRF**: Next.js Server Actions protection implícita en API routes.
+- **CSRF**: SameSite=Lax en cookies. Next.js Server Actions protection implícita en API routes.
+- **Rate limiting**: Blog generate (10/5min), login (5/60s), contacto (10/15min), consulta (10/15min), calcular (30/min).
+
+### Corrección de bug crítico (2026-06-11)
+
+El componente `RichTextEditor` (TipTap) no reaccionaba a cambios en la prop `content` después del montaje inicial. Esto causaba que:
+- Al editar un post existente, el editor aparecía vacío.
+- El generador IA mostraba el cuerpo en blanco aunque el HTML se generaba correctamente.
+
+**Solución**: Añadido `useEffect` en `components/ui/rich-text-editor.tsx` que sincroniza cambios externos mediante `editor.commands.setContent()` con detección de origen interno/externo para evitar bucles.
+
+### Calculadora de penas
+
+- **Catálogo**: 483 delitos del Código Penal hondureño (Decreto 130-2017) más reformas.
+- **Verificación**: 483 verificados (100%), 0 pendientes, 0 rechazados. Fuente: `data/delitos-estados.json`.
+- **API de calidad**: `GET /api/delitos/calidad` devuelve resumen de estados.
 
 ---
 

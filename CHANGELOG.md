@@ -1,5 +1,45 @@
 # Changelog
 
+## Release 16 — Corrección RichTextEditor, subida de imágenes y seguridad (2026-06-11)
+
+### Corrección de bug crítico: RichTextEditor no cargaba contenido
+
+**BUG: Editor visual (TipTap) no mostraba contenido al editar posts existentes o al generar con IA**
+- Causa raíz: `useEditor({ content })` de TipTap solo usa la prop `content` en la inicialización. Cambios posteriores (fetch de API, generación IA) no se reflejaban en el editor.
+- Solución: Añadido `useEffect` en `components/ui/rich-text-editor.tsx` que detecta cambios en la prop `content` desde el exterior y actualiza el editor con `setContent(content, { emitUpdate: false })`.
+- Esto corrige: "Editar post carga sin formato", "Generador IA muestra cuerpo vacío", "Editor visual no refleja contenido generado".
+- Archivo modificado: `components/ui/rich-text-editor.tsx`.
+
+### Subida de imagen destacada
+
+- **Nuevo endpoint**: `POST /api/admin/upload` — recibe archivo de imagen vía FormData.
+- **Validaciones**: Tipo MIME (JPEG/PNG/WebP), tamaño máximo 10 MB, sanitización de slug.
+- **Naming**: La imagen se nombra según el slug del post (`slug-del-post.ext`), manteniendo la extensión original.
+- **Ubicación**: Guardado en `/public/images/blog/` (misma ubicación que imágenes existentes).
+- **Integración en editor**: Añadido botón "Subir imagen" con vista previa en el formulario de crear/editar post.
+- **Compresión**: Pendiente de integrar `sharp` para conversión a WebP (problema de compatibilidad de tipos con Next.js Turbopack). Documentado como mejora futura.
+- Archivos nuevos: `app/api/admin/upload/route.ts`.
+- Archivos modificados: `app/intranet/admin/blog/[id]/page.tsx`.
+
+### Seguridad
+
+- **Rate limiting en generador IA**: Añadido rate limit (10 peticiones / 5 minutos por usuario) al endpoint `/api/admin/blog/generate`. Previene abuso de recursos.
+- Archivo modificado: `app/api/admin/blog/generate/route.ts`.
+
+### Corrección de tipo
+
+- **TypeScript**: Corregido error `'stats' is possibly 'null'` en `app/intranet/admin/page.tsx` que bloqueaba el build. Añadida comprobación explícita en el branch ternario.
+- Archivo modificado: `app/intranet/admin/page.tsx`.
+
+### Auditoría de seguridad (0 críticos, 0 altos, 3 medios)
+
+- Verificadas 11 rutas admin API — todas tienen `requireAdmin()`.
+- CSRF: SameSite=Lax como defensa primaria. Recomendado añadir token CSRF en futura release.
+- Register endpoint: sin rate limiting. Mitigado por restricción de dominio `@pinedayasociadoshn.com`.
+- Nota: `DISABLE_RATE_LIMIT` puede desactivar rate limits si se activa en producción.
+
+---
+
 ## Release 15 — Panel Admin WordPress-style: Blog + FAQ con persistencia real y WYSIWYG (2026-06-11)
 
 ### Corrección de bugs críticos

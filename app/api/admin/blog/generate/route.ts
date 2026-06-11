@@ -1,6 +1,7 @@
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
+import { rateLimit } from '@/lib/rate-limit';
 
 const generateSchema = z.object({
   topic: z.string().min(1).max(200),
@@ -62,6 +63,11 @@ export async function POST(request: Request) {
     const auth = requireAdmin(request);
     const body = await request.json();
     const parsed = generateSchema.parse(body);
+
+    const rateLimitResult = await rateLimit(`blog-generate:${auth.userId}`, { max: 10, windowMs: 300_000 });
+    if (!rateLimitResult.ok) {
+      return Response.json({ error: 'Demasiadas generaciones. Espera 5 minutos.' }, { status: 429 });
+    }
 
     const slug = generateSlug(parsed.topic);
     const title = parsed.topic;
