@@ -77,195 +77,320 @@ export const getPagesList = cache(async (): Promise<{ page: string; sections: nu
   }));
 });
 
-export const getEditablePagesMeta = cache(async (): Promise<{
-  page: string;
-  label: string;
-  sections: { key: string; label: string; fields: { key: string; label: string; type: string }[] }[];
-}[]> => {
+type FieldDef = { key: string; label: string; type: 'text' | 'textarea' | 'richtext'; default?: string };
+type SectionDef = { key: string; label: string; fields: FieldDef[] };
+type PageDef = { page: string; label: string; sections: SectionDef[] };
+
+export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
   return [
     {
-      page: 'home', label: 'Inicio',
+      page: 'home', label: 'Inicio (/)',
       sections: [
-        { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título principal', type: 'text' },
-          { key: 'subtitle', label: 'Subtítulo', type: 'textarea' },
-          { key: 'check1', label: 'Check 1', type: 'text' },
-          { key: 'check2', label: 'Check 2', type: 'text' },
-        ]},
-        { key: 'faq', label: 'Preguntas frecuentes', fields: [
-          { key: 'q1', label: 'Pregunta 1', type: 'text' },
-          { key: 'a1', label: 'Respuesta 1', type: 'richtext' },
-          { key: 'q2', label: 'Pregunta 2', type: 'text' },
-          { key: 'a2', label: 'Respuesta 2', type: 'richtext' },
-          { key: 'q3', label: 'Pregunta 3', type: 'text' },
-          { key: 'a3', label: 'Respuesta 3', type: 'richtext' },
-        ]},
-        { key: 'process', label: 'Cómo trabajamos', fields: [
-          { key: 'step1_title', label: 'Paso 1 título', type: 'text' },
-          { key: 'step1_desc', label: 'Paso 1 descripción', type: 'text' },
-          { key: 'step2_title', label: 'Paso 2 título', type: 'text' },
-          { key: 'step2_desc', label: 'Paso 2 descripción', type: 'text' },
-          { key: 'step3_title', label: 'Paso 3 título', type: 'text' },
-          { key: 'step3_desc', label: 'Paso 3 descripción', type: 'text' },
-          { key: 'step4_title', label: 'Paso 4 título', type: 'text' },
-          { key: 'step4_desc', label: 'Paso 4 descripción', type: 'text' },
-        ]},
-        { key: 'why', label: 'Por qué elegirnos', fields: [
-          { key: 'reason1_title', label: 'Razón 1 título', type: 'text' },
-          { key: 'reason1_desc', label: 'Razón 1 descripción', type: 'textarea' },
-          { key: 'reason2_title', label: 'Razón 2 título', type: 'text' },
-          { key: 'reason2_desc', label: 'Razón 2 descripción', type: 'textarea' },
-          { key: 'reason3_title', label: 'Razón 3 título', type: 'text' },
-          { key: 'reason3_desc', label: 'Razón 3 descripción', type: 'textarea' },
-          { key: 'reason4_title', label: 'Razón 4 título', type: 'text' },
-          { key: 'reason4_desc', label: 'Razón 4 descripción', type: 'textarea' },
-          { key: 'reason5_title', label: 'Razón 5 título', type: 'text' },
-          { key: 'reason5_desc', label: 'Razón 5 descripción', type: 'textarea' },
-        ]},
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Asesoría integral' },
+            { key: 'title_line1', label: 'Título línea 1', type: 'text', default: 'Defensa penal y asesoría jurídica' },
+            { key: 'title_line2', label: 'Título línea 2', type: 'text', default: 'en Nacaome y todo Honduras' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Defensa penal especializada y representación jurídica integral para personas y empresas. Presencia activa en los juzgados de Nacaome, Valle y todo Honduras, con comunicación clara y un equipo coordinado en cada área del derecho.' },
+            { key: 'check1', label: 'Check 1', type: 'text', default: 'Primera consulta sin compromiso' },
+            { key: 'check2', label: 'Check 2', type: 'text', default: 'Atención directa del abogado' },
+          ],
+        },
+        {
+          key: 'contact_card', label: 'Tarjeta de contacto', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Contacto directo' },
+            { key: 'whatsapp_msg', label: 'Mensaje WhatsApp', type: 'text', default: 'Hola, necesito una consulta jurídica.' },
+            { key: 'form_text', label: 'Texto formulario', type: 'text', default: 'Formulario confidencial' },
+            { key: 'form_hint', label: 'Hint formulario', type: 'text', default: 'Le respondemos en horario hábil' },
+          ],
+        },
+        {
+          key: 'questions', label: 'Preguntas rápidas', fields: [
+            { key: 'eyebrow', label: 'Título de sección', type: 'text', default: '¿Tiene un problema legal y no sabe cómo actuar?' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Las preguntas que nos hacen a diario' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Respondemos con honestidad, sin importar el área del derecho. Si su pregunta no aparece aquí, escríbanos.' },
+            { key: 'q1', label: 'Pregunta 1', type: 'text', default: '¿Me pueden detener sin orden judicial?' },
+            { key: 'q1_badge', label: 'Badge 1', type: 'text', default: 'Penal' },
+            { key: 'q2', label: 'Pregunta 2', type: 'text', default: '¿Cuánto me corresponde si me despiden sin justa causa?' },
+            { key: 'q2_badge', label: 'Badge 2', type: 'text', default: 'Laboral' },
+            { key: 'q3', label: 'Pregunta 3', type: 'text', default: '¿Cómo tramito mi divorcio en Honduras?' },
+            { key: 'q3_badge', label: 'Badge 3', type: 'text', default: 'Familia' },
+            { key: 'q4', label: 'Pregunta 4', type: 'text', default: '¿Me puede embargar el banco si no pago?' },
+            { key: 'q4_badge', label: 'Badge 4', type: 'text', default: 'Bancario' },
+            { key: 'q5', label: 'Pregunta 5', type: 'text', default: '¿Necesito licencia ambiental para mi negocio?' },
+            { key: 'q5_badge', label: 'Badge 5', type: 'text', default: 'Ambiental' },
+            { key: 'q6', label: 'Pregunta 6', type: 'text', default: '¿Cuánto tarda el registro de una marca?' },
+            { key: 'q6_badge', label: 'Badge 6', type: 'text', default: 'Propiedad Intelectual' },
+          ],
+        },
+        {
+          key: 'specialties', label: 'Especialidades principales', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Cuatro áreas con presencia constante' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Derecho penal, familia, laboral y civil son nuestras áreas de mayor demanda. Cada una con equipo y experiencia dedicados.' },
+          ],
+        },
+        {
+          key: 'services', label: 'Servicios jurídicos', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Nuestros Servicios Jurídicos' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Del derecho penal a la conciliación y arbitraje. Todas las ramas jurídicas que su caso pueda requerir bajo una misma dirección letrada.' },
+          ],
+        },
+        {
+          key: 'testimonials', label: 'Testimonios', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Lo que dicen quienes confían en nosotros' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Casos reales, resultados verificables. Publicamos con autorización y anonimizamos por confidencialidad.' },
+            { key: 'testimonial1_name', label: 'Testimonio 1 — nombre', type: 'text', default: 'Caso anonimizado · Defensa penal' },
+            { key: 'testimonial1_body', label: 'Testimonio 1 — texto', type: 'textarea', default: 'Mi familia y yo estábamos pasando por una situación muy difícil. El equipo nos orientó desde el primer día con claridad y profesionalismo. Logramos una resolución favorable que no esperábamos.' },
+            { key: 'testimonial2_name', label: 'Testimonio 2 — nombre', type: 'text', default: 'Caso anonimizado · Derecho laboral' },
+            { key: 'testimonial2_body', label: 'Testimonio 2 — texto', type: 'textarea', default: 'Me despidieron sin previo aviso después de 8 años en la empresa. Los abogados calcularon cada prestación y lograron que me pagaran lo que me correspondía. Muy agradecido.' },
+            { key: 'testimonial3_name', label: 'Testimonio 3 — nombre', type: 'text', default: 'Caso anonimizado · Derecho de familia' },
+            { key: 'testimonial3_body', label: 'Testimonio 3 — texto', type: 'textarea', default: 'Un proceso de divorcio complicado con hijos de por medio. La abogada fue muy sensible pero firme. Se logró un acuerdo que protege a mis hijos. Recomiendo totalmente.' },
+          ],
+        },
+        {
+          key: 'process', label: 'Cómo trabajamos', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Cuatro pasos, sin importar el área' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Un método claro y trazable para cada caso, desde la consulta inicial hasta el cierre.' },
+            { key: 'step1_title', label: 'Paso 1 — título', type: 'text', default: 'Consulta inicial' },
+            { key: 'step1_desc', label: 'Paso 1 — descripción', type: 'textarea', default: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad.' },
+            { key: 'step2_title', label: 'Paso 2 — título', type: 'text', default: 'Estrategia legal' },
+            { key: 'step2_desc', label: 'Paso 2 — descripción', type: 'textarea', default: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima para su caso.' },
+            { key: 'step3_title', label: 'Paso 3 — título', type: 'text', default: 'Gestión y litigio' },
+            { key: 'step3_desc', label: 'Paso 3 — descripción', type: 'textarea', default: 'Tramitamos su asunto con diligencia. Actuamos en sede administrativa, judicial o notarial según corresponda.' },
+            { key: 'step4_title', label: 'Paso 4 — título', type: 'text', default: 'Cierre y seguimiento' },
+            { key: 'step4_desc', label: 'Paso 4 — descripción', type: 'textarea', default: 'Le entregamos un informe claro del resultado y, si procede, los recursos disponibles.' },
+          ],
+        },
+        {
+          key: 'why_us', label: 'Por qué elegirnos', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Cinco razones que marcan la diferencia' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Nuestra práctica se sostiene sobre principios técnicos, no sobre promesas.' },
+            { key: 'reason1_title', label: 'Razón 1 — título', type: 'text', default: 'Presencia local en Nacaome' },
+            { key: 'reason1_desc', label: 'Razón 1 — descripción', type: 'textarea', default: 'Conocemos el sistema de justicia del departamento de Valle y los juzgados de la zona sur.' },
+            { key: 'reason2_title', label: 'Razón 2 — título', type: 'text', default: 'Enfoque ético y prudente' },
+            { key: 'reason2_desc', label: 'Razón 2 — descripción', type: 'textarea', default: 'Nunca prometemos resultados. Le decimos lo que procede y lo que no, con honestidad.' },
+            { key: 'reason3_title', label: 'Razón 3 — título', type: 'text', default: 'Defensa penal especializada' },
+            { key: 'reason3_desc', label: 'Razón 3 — descripción', type: 'textarea', default: 'Experiencia en derecho penal, desde asistencias a detenidos hasta recursos de casación.' },
+            { key: 'reason4_title', label: 'Razón 4 — título', type: 'text', default: 'Lenguaje claro' },
+            { key: 'reason4_desc', label: 'Razón 4 — descripción', type: 'textarea', default: 'Le explicamos el proceso en términos comprensibles, sin tecnicismos innecesarios.' },
+            { key: 'reason5_title', label: 'Razón 5 — título', type: 'text', default: 'Metodología documentada' },
+            { key: 'reason5_desc', label: 'Razón 5 — descripción', type: 'textarea', default: 'Cada actuación queda registrada y trazable. Trabajamos con procesos internos auditables.' },
+          ],
+        },
+        {
+          key: 'multidisciplinary', label: 'Visión multidisciplinar', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Visión integral' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Un mismo problema jurídico puede tocar varias ramas del derecho a la vez.' },
+            { key: 'description', label: 'Descripción', type: 'textarea', default: 'Atender su asunto con un equipo multidisciplinar evita que tenga que contratar abogados distintos para cada frente. Coordinamos estrategia, plazos y piezas procesales desde un solo bufete, con comunicación directa y un expediente unificado.' },
+            { key: 'combo1_title', label: 'Combinación 1 — título', type: 'text', default: 'Penal + familia + civil' },
+            { key: 'combo1_desc', label: 'Combinación 1 — descripción', type: 'textarea', default: 'Una acusación penal con hijos, bienes y familia de por medio exige coordinación inmediata entre las áreas.' },
+            { key: 'combo2_title', label: 'Combinación 2 — título', type: 'text', default: 'Laboral + mercantil' },
+            { key: 'combo2_desc', label: 'Combinación 2 — descripción', type: 'textarea', default: 'Despidos en empresas con contratos mercantiles requieren análisis simultáneo del derecho del trabajo y el societario.' },
+            { key: 'combo3_title', label: 'Combinación 3 — título', type: 'text', default: 'Civil + tributario + bancario' },
+            { key: 'combo3_desc', label: 'Combinación 3 — descripción', type: 'textarea', default: 'Embargos, cobros judiciales, contratos y obligaciones tributarias. Una defensa conjunta es más rápida y más barata.' },
+            { key: 'combo4_title', label: 'Combinación 4 — título', type: 'text', default: 'Notarial + registral' },
+            { key: 'combo4_desc', label: 'Combinación 4 — descripción', type: 'textarea', default: 'Compras, donaciones, sociedades y traspasos requieren acompañamiento notarial y registral. Lo resolvemos internamente.' },
+          ],
+        },
+        {
+          key: 'faq', label: 'Preguntas frecuentes', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Respuestas a sus dudas' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Las preguntas que más recibimos. Si tiene una diferente, escríbanos.' },
+            { key: 'q1', label: 'Pregunta 1', type: 'text', default: '¿Atienden casos urgentes fuera del horario?' },
+            { key: 'a1', label: 'Respuesta 1', type: 'richtext', default: 'Atendemos de lunes a sábado de 7:00 a 20:00. Para emergencias con persona detenida, contáctenos por WhatsApp y le orientaremos de inmediato durante el horario de atención.' },
+            { key: 'q2', label: 'Pregunta 2', type: 'text', default: '¿Qué documentos necesito para la primera consulta?' },
+            { key: 'a2', label: 'Respuesta 2', type: 'richtext', default: 'Identificación oficial, documentos relacionados con su caso (contratos, notificaciones, actas) y cualquier prueba que considere relevante. Nosotros le orientaremos sobre lo que hace falta.' },
+            { key: 'q3', label: 'Pregunta 3', type: 'text', default: '¿Qué debo hacer si recibo una citación judicial?' },
+            { key: 'a3', label: 'Respuesta 3', type: 'richtext', default: 'No la ignore. Contacte a un abogado de inmediato. Una citación tiene plazos que corren y, si no se atiende, puede generar sanciones o perjudicar su defensa.' },
+            { key: 'q4', label: 'Pregunta 4', type: 'text', default: '¿Ofrecen asesoría preventiva para empresas?' },
+            { key: 'a4', label: 'Respuesta 4', type: 'richtext', default: 'Sí. Asesoramos en cumplimiento normativo, contratos, gobierno corporativo y prevención de contingencias antes de que surja el conflicto.' },
+            { key: 'q5', label: 'Pregunta 5', type: 'text', default: '¿Pueden llevar mi caso penal y mi caso laboral a la vez?' },
+            { key: 'a5', label: 'Respuesta 5', type: 'richtext', default: 'Sí. Esa coordinación es una de las ventajas de un bufete multidisciplinar. Analizamos su situación global para evitar conflictos entre frentes.' },
+            { key: 'q6', label: 'Pregunta 6', type: 'text', default: '¿Qué pasa si mi problema involucra varias áreas del derecho?' },
+            { key: 'a6', label: 'Respuesta 6', type: 'richtext', default: 'Convocamos al especialista de cada área implicada, definimos una estrategia común y unificamos el expediente. Usted recibe una sola línea de comunicación.' },
+          ],
+        },
       ],
     },
     {
-      page: 'despacho', label: 'El Despacho',
+      page: 'despacho', label: 'El Despacho (/despacho)',
       sections: [
-        { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
-          { key: 'subtitle', label: 'Subtítulo', type: 'textarea' },
-        ]},
-        { key: 'values', label: 'Valores', fields: [
-          { key: 'value1_title', label: 'Valor 1 título', type: 'text' },
-          { key: 'value1_desc', label: 'Valor 1 descripción', type: 'textarea' },
-          { key: 'value2_title', label: 'Valor 2 título', type: 'text' },
-          { key: 'value2_desc', label: 'Valor 2 descripción', type: 'textarea' },
-          { key: 'value3_title', label: 'Valor 3 título', type: 'text' },
-          { key: 'value3_desc', label: 'Valor 3 descripción', type: 'textarea' },
-          { key: 'value4_title', label: 'Valor 4 título', type: 'text' },
-          { key: 'value4_desc', label: 'Valor 4 descripción', type: 'textarea' },
-        ]},
-        { key: 'mision', label: 'Misión y Visión', fields: [
-          { key: 'mision_title', label: 'Título misión', type: 'text' },
-          { key: 'mision_desc', label: 'Texto misión', type: 'textarea' },
-          { key: 'vision_title', label: 'Título visión', type: 'text' },
-          { key: 'vision_desc', label: 'Texto visión', type: 'textarea' },
-        ]},
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'El Despacho' },
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Multidisciplinar' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Compromiso Legal, Rigor Técnico y Visión de Vanguardia' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica. Combinamos solvencia técnica con digitalización de procesos.' },
+          ],
+        },
+        {
+          key: 'mision_vision', label: 'Misión y Visión', fields: [
+            { key: 'mision_title', label: 'Título misión', type: 'text', default: 'Defender con técnica, servir con humanidad' },
+            { key: 'mision_desc', label: 'Texto misión', type: 'textarea', default: 'Garantizar que toda persona acceda a una defensa y orientación jurídica seria, técnica y respetuosa de sus derechos.' },
+            { key: 'vision_title', label: 'Título visión', type: 'text', default: 'Justicia accesible y técnica' },
+            { key: 'vision_desc', label: 'Texto visión', type: 'textarea', default: 'Un sistema de justicia donde cada persona pueda ejercer su derecho a la defensa con un equipo que domine la técnica y actúe con prudencia.' },
+          ],
+        },
+        {
+          key: 'values', label: 'Valores', fields: [
+            { key: 'section_title', label: 'Título de sección', type: 'text', default: 'Lo que nos define como bufete' },
+            { key: 'value1_title', label: 'Valor 1 — título', type: 'text', default: 'Defensa técnica, no promesas' },
+            { key: 'value1_desc', label: 'Valor 1 — descripción', type: 'textarea', default: 'Aplicamos el Código Penal con rigor metodológico. Nunca prometemos resultados: le decimos lo que procede y lo que no.' },
+            { key: 'value2_title', label: 'Valor 2 — título', type: 'text', default: 'Estudio permanente' },
+            { key: 'value2_desc', label: 'Valor 2 — descripción', type: 'textarea', default: 'Nos actualizamos en jurisprudencia, reformas y doctrina. El derecho cambia, y nuestra práctica también.' },
+            { key: 'value3_title', label: 'Valor 3 — título', type: 'text', default: 'Trato humano' },
+            { key: 'value3_desc', label: 'Valor 3 — descripción', type: 'textarea', default: 'Detrás de cada caso hay una persona y una familia. Le escuchamos, le informamos y le acompañamos con respeto.' },
+            { key: 'value4_title', label: 'Valor 4 — título', type: 'text', default: 'Tecnología al servicio del caso' },
+            { key: 'value4_desc', label: 'Valor 4 — descripción', type: 'textarea', default: 'Motor de cálculo de penas, gestión documental, trazabilidad. Le entregamos cada actuación con fecha y firma.' },
+          ],
+        },
+        {
+          key: 'commitments', label: 'Compromisos', fields: [
+            { key: 'label', label: 'Etiqueta', type: 'text', default: 'Nuestros compromisos' },
+            { key: 'c1', label: 'Compromiso 1', type: 'text', default: 'Consulta inicial confidencial y sin compromiso' },
+            { key: 'c2', label: 'Compromiso 2', type: 'text', default: 'Explicación clara de cada etapa procesal' },
+            { key: 'c3', label: 'Compromiso 3', type: 'text', default: 'Honestidad sobre las expectativas reales del caso' },
+            { key: 'c4', label: 'Compromiso 4', type: 'text', default: 'Presupuesto de honorarios por escrito' },
+            { key: 'c5', label: 'Compromiso 5', type: 'text', default: 'Atención directa del abogado responsable' },
+            { key: 'c6', label: 'Compromiso 6', type: 'text', default: 'Trazabilidad documental de cada actuación' },
+            { key: 'c7', label: 'Compromiso 7', type: 'text', default: 'Coordinación interna entre áreas' },
+            { key: 'c8', label: 'Compromiso 8', type: 'text', default: 'Información actualizada sobre normativa y reformas' },
+          ],
+        },
       ],
     },
     {
-      page: 'solicitar-consulta', label: 'Solicitar Consulta',
+      page: 'solicitar-consulta', label: 'Solicitar Consulta (/solicitar-consulta)',
       sections: [
-        { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
-          { key: 'subtitle', label: 'Subtítulo', type: 'textarea' },
-        ]},
-        { key: 'reasons', label: 'Motivos frecuentes', fields: [
-          { key: 'reason1', label: 'Motivo 1', type: 'text' },
-          { key: 'reason2', label: 'Motivo 2', type: 'text' },
-          { key: 'reason3', label: 'Motivo 3', type: 'text' },
-          { key: 'reason4', label: 'Motivo 4', type: 'text' },
-          { key: 'reason5', label: 'Motivo 5', type: 'text' },
-          { key: 'reason6', label: 'Motivo 6', type: 'text' },
-        ]},
-        { key: 'guarantees', label: 'Garantías', fields: [
-          { key: 'guarantee1_title', label: 'Garantía 1 título', type: 'text' },
-          { key: 'guarantee1_desc', label: 'Garantía 1 descripción', type: 'textarea' },
-          { key: 'guarantee2_title', label: 'Garantía 2 título', type: 'text' },
-          { key: 'guarantee2_desc', label: 'Garantía 2 descripción', type: 'textarea' },
-          { key: 'guarantee3_title', label: 'Garantía 3 título', type: 'text' },
-          { key: 'guarantee3_desc', label: 'Garantía 3 descripción', type: 'textarea' },
-        ]},
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Cuéntenos su caso. Le escuchamos con discreción.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Complete el formulario o contáctenos directamente. Toda comunicación es estrictamente confidencial.' },
+          ],
+        },
+        {
+          key: 'reasons', label: 'Motivos frecuentes', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Motivos frecuentes' },
+            { key: 'r1', label: 'Motivo 1', type: 'text', default: 'Familiar detenido' },
+            { key: 'r2', label: 'Motivo 2', type: 'text', default: 'Citaciones o audiencias próximas' },
+            { key: 'r3', label: 'Motivo 3', type: 'text', default: 'Investigación en curso' },
+            { key: 'r4', label: 'Motivo 4', type: 'text', default: 'Querella o denuncia' },
+            { key: 'r5', label: 'Motivo 5', type: 'text', default: 'Recurso o apelación' },
+            { key: 'r6', label: 'Motivo 6', type: 'text', default: 'Asesoría preventiva' },
+          ],
+        },
+        {
+          key: 'guarantees', label: 'Garantías', fields: [
+            { key: 'g1_title', label: 'Garantía 1 — título', type: 'text', default: 'Confidencialidad absoluta' },
+            { key: 'g1_desc', label: 'Garantía 1 — descripción', type: 'textarea', default: 'Su información está protegida por el secreto profesional.' },
+            { key: 'g2_title', label: 'Garantía 2 — título', type: 'text', default: 'Sin compromiso' },
+            { key: 'g2_desc', label: 'Garantía 2 — descripción', type: 'textarea', default: 'La consulta inicial no le obliga a contratar nuestros servicios.' },
+            { key: 'g3_title', label: 'Garantía 3 — título', type: 'text', default: 'Respuesta en horario hábil' },
+            { key: 'g3_desc', label: 'Garantía 3 — descripción', type: 'textarea', default: 'Le respondemos el mismo día hábil por el canal que prefiera.' },
+          ],
+        },
       ],
     },
     {
-      page: 'como-llegar', label: 'Cómo llegar',
+      page: 'como-llegar', label: 'Cómo llegar (/como-llegar)',
       sections: [
-        { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
-          { key: 'subtitle', label: 'Subtítulo', type: 'textarea' },
-        ]},
-        { key: 'ref_points', label: 'Puntos de referencia', fields: [
-          { key: 'ref1_name', label: 'Referencia 1 nombre', type: 'text' },
-          { key: 'ref1_desc', label: 'Referencia 1 descripción', type: 'textarea' },
-          { key: 'ref2_name', label: 'Referencia 2 nombre', type: 'text' },
-          { key: 'ref2_desc', label: 'Referencia 2 descripción', type: 'textarea' },
-          { key: 'ref3_name', label: 'Referencia 3 nombre', type: 'text' },
-          { key: 'ref3_desc', label: 'Referencia 3 descripción', type: 'textarea' },
-          { key: 'ref4_name', label: 'Referencia 4 nombre', type: 'text' },
-          { key: 'ref4_desc', label: 'Referencia 4 descripción', type: 'textarea' },
-        ]},
-        { key: 'routes', label: 'Rutas desde ciudades', fields: [
-          { key: 'city1_name', label: 'Ciudad 1 nombre', type: 'text' },
-          { key: 'city1_desc', label: 'Ciudad 1 descripción', type: 'text' },
-          { key: 'city2_name', label: 'Ciudad 2 nombre', type: 'text' },
-          { key: 'city2_desc', label: 'Ciudad 2 descripción', type: 'text' },
-          { key: 'city3_name', label: 'Ciudad 3 nombre', type: 'text' },
-          { key: 'city3_desc', label: 'Ciudad 3 descripción', type: 'text' },
-          { key: 'city4_name', label: 'Ciudad 4 nombre', type: 'text' },
-          { key: 'city4_desc', label: 'Ciudad 4 descripción', type: 'text' },
-        ]},
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'title', label: 'Título', type: 'text', default: 'Visítenos en Nacaome, Valle' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'GGJ7+239 · Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA.' },
+          ],
+        },
+        {
+          key: 'ref_points', label: 'Puntos de referencia', fields: [
+            { key: 'section_title', label: 'Título de sección', type: 'text', default: 'Cómo encontrarnos fácilmente' },
+            { key: 'ref1_name', label: 'Referencia 1 — nombre', type: 'text', default: 'Hondutel Nacaome' },
+            { key: 'ref1_desc', label: 'Referencia 1 — descripción', type: 'text', default: 'Punto de referencia principal. Estamos una cuadra y media al este.' },
+            { key: 'ref2_name', label: 'Referencia 2 — nombre', type: 'text', default: 'Clínica Dental Dra. ANDARA' },
+            { key: 'ref2_desc', label: 'Referencia 2 — descripción', type: 'text', default: 'Nuestra oficina queda contigua a esta clínica dental.' },
+            { key: 'ref3_name', label: 'Referencia 3 — nombre', type: 'text', default: 'Parque Central de Nacaome' },
+            { key: 'ref3_desc', label: 'Referencia 3 — descripción', type: 'text', default: 'Camine al este por el boulevard principal (~3 min caminando).' },
+            { key: 'ref4_name', label: 'Referencia 4 — nombre', type: 'text', default: 'Alcaldía Municipal de Nacaome' },
+            { key: 'ref4_desc', label: 'Referencia 4 — descripción', type: 'text', default: 'Desde la alcaldía, tome dirección este sobre la calle principal (~5 min en vehículo).' },
+          ],
+        },
+        {
+          key: 'routes', label: 'Rutas desde ciudades', fields: [
+            { key: 'section_title', label: 'Título de sección', type: 'text', default: 'Rutas y tiempos aproximados' },
+            { key: 'city1_name', label: 'Ciudad 1 — nombre', type: 'text', default: 'Tegucigalpa' },
+            { key: 'city1_desc', label: 'Ciudad 1 — descripción', type: 'text', default: '~90 km · 1 h 45 min · Carretera CA-5 sur → desvío a Nacaome' },
+            { key: 'city2_name', label: 'Ciudad 2 — nombre', type: 'text', default: 'Choluteca' },
+            { key: 'city2_desc', label: 'Ciudad 2 — descripción', type: 'text', default: '~65 km · 1 h 10 min · Carretera Panamericana CA-1 oeste' },
+            { key: 'city3_name', label: 'Ciudad 3 — nombre', type: 'text', default: 'San Lorenzo' },
+            { key: 'city3_desc', label: 'Ciudad 3 — descripción', type: 'text', default: '~30 km · 40 min · Carretera CA-1 hacia Nacaome' },
+            { key: 'city4_name', label: 'Ciudad 4 — nombre', type: 'text', default: 'Amapala' },
+            { key: 'city4_desc', label: 'Ciudad 4 — descripción', type: 'text', default: '~50 km · 1 h 20 min · Vía Goascorán → Nacaome' },
+          ],
+        },
       ],
     },
     {
-      page: 'terminos', label: 'Términos y Condiciones',
+      page: 'terminos', label: 'Términos y Condiciones (/terminos)',
       sections: [
         { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
-          { key: 'subtitle', label: 'Subtítulo', type: 'textarea' },
+          { key: 'title', label: 'Título', type: 'text', default: 'Términos y Condiciones' },
+          { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Reglas que rigen el acceso y la utilización de la calculadora de penas y de los demás servicios publicados en este sitio web.' },
         ]},
         { key: 'content', label: 'Contenido', fields: [
-          { key: 'body', label: 'Cuerpo del documento', type: 'richtext' },
-          { key: 'version', label: 'Versión', type: 'text' },
-          { key: 'last_updated', label: 'Última actualización', type: 'text' },
+          { key: 'body', label: 'Cuerpo del documento', type: 'richtext', default: 'Documento legal de términos y condiciones de uso del sitio web y servicios.' },
+          { key: 'version', label: 'Versión', type: 'text', default: '0.2' },
+          { key: 'last_updated', label: 'Última actualización', type: 'text', default: 'Junio 2026' },
         ]},
       ],
     },
     {
-      page: 'aviso-legal', label: 'Aviso Legal',
+      page: 'aviso-legal', label: 'Aviso Legal (/aviso-legal)',
       sections: [
         { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
+          { key: 'title', label: 'Título', type: 'text', default: 'Aviso Legal' },
         ]},
         { key: 'content', label: 'Contenido', fields: [
-          { key: 'body', label: 'Cuerpo del documento', type: 'richtext' },
-          { key: 'version', label: 'Versión', type: 'text' },
-          { key: 'last_updated', label: 'Última actualización', type: 'text' },
+          { key: 'body', label: 'Cuerpo del documento', type: 'richtext', default: 'Documento legal de aviso del sitio web.' },
+          { key: 'version', label: 'Versión', type: 'text', default: '0.1' },
+          { key: 'last_updated', label: 'Última actualización', type: 'text', default: 'Junio 2026' },
         ]},
       ],
     },
     {
-      page: 'politica-privacidad', label: 'Política de Privacidad',
+      page: 'politica-privacidad', label: 'Política de Privacidad (/politica-privacidad)',
       sections: [
         { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
+          { key: 'title', label: 'Título', type: 'text', default: 'Política de Privacidad' },
         ]},
         { key: 'content', label: 'Contenido', fields: [
-          { key: 'body', label: 'Cuerpo del documento', type: 'richtext' },
-          { key: 'version', label: 'Versión', type: 'text' },
-          { key: 'last_updated', label: 'Última actualización', type: 'text' },
+          { key: 'body', label: 'Cuerpo del documento', type: 'richtext', default: 'Documento legal de política de privacidad del sitio web.' },
+          { key: 'version', label: 'Versión', type: 'text', default: '0.2' },
+          { key: 'last_updated', label: 'Última actualización', type: 'text', default: 'Junio 2026' },
         ]},
       ],
     },
     {
-      page: 'politica-cookies', label: 'Política de Cookies',
+      page: 'politica-cookies', label: 'Política de Cookies (/politica-cookies)',
       sections: [
         { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
+          { key: 'title', label: 'Título', type: 'text', default: 'Política de Cookies' },
         ]},
         { key: 'content', label: 'Contenido', fields: [
-          { key: 'body', label: 'Cuerpo del documento', type: 'richtext' },
-          { key: 'version', label: 'Versión', type: 'text' },
-          { key: 'last_updated', label: 'Última actualización', type: 'text' },
+          { key: 'body', label: 'Cuerpo del documento', type: 'richtext', default: 'Documento legal de política de cookies del sitio web.' },
+          { key: 'version', label: 'Versión', type: 'text', default: '0.1' },
+          { key: 'last_updated', label: 'Última actualización', type: 'text', default: 'Junio 2026' },
         ]},
       ],
     },
     {
-      page: 'disclaimer', label: 'Disclaimer',
+      page: 'disclaimer', label: 'Disclaimer (/disclaimer)',
       sections: [
         { key: 'hero', label: 'Hero', fields: [
-          { key: 'title', label: 'Título', type: 'text' },
+          { key: 'title', label: 'Título', type: 'text', default: 'Disclaimer' },
         ]},
         { key: 'content', label: 'Contenido', fields: [
-          { key: 'body', label: 'Cuerpo del documento', type: 'richtext' },
-          { key: 'version', label: 'Versión', type: 'text' },
-          { key: 'last_updated', label: 'Última actualización', type: 'text' },
+          { key: 'body', label: 'Cuerpo del documento', type: 'richtext', default: 'Documento legal de exención de responsabilidad.' },
+          { key: 'version', label: 'Versión', type: 'text', default: '0.1' },
+          { key: 'last_updated', label: 'Última actualización', type: 'text', default: 'Junio 2026' },
         ]},
       ],
     },

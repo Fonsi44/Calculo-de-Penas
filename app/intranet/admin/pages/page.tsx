@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Globe, FileText, Layers, Edit3, Settings } from 'lucide-react';
+import { ArrowRight, Globe, FileText, Layers, Edit3, Settings, CheckCircle2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { getEditablePagesMeta } from '@/lib/page-content-db';
@@ -85,20 +85,24 @@ export default function AdminPagesPage() {
                       <ArrowRight size={14} className="text-text-muted group-hover:text-accent-dark transition-colors flex-shrink-0" />
                     </div>
                     <p className="text-xxs text-text-secondary mt-0.5">/{pageMeta.page}</p>
-                    {hasContent ? (
-                      <div className="flex items-center gap-3 mt-2 text-xxs text-text-muted">
-                        <span className="flex items-center gap-1">
-                          <Layers size={10} /> {p.sections} secciones
+                    <div className="flex items-center gap-3 mt-2 text-xxs text-text-muted">
+                      <span className="flex items-center gap-1">
+                        <Layers size={10} /> {pageMeta.sections.length} secciones
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Edit3 size={10} /> {pageMeta.sections.reduce((acc, s) => acc + s.fields.length, 0)} campos
+                      </span>
+                      {pageMeta.sections.some(s => s.fields.some(f => 'default' in f)) && (
+                        <span className="flex items-center gap-1 text-success">
+                          <CheckCircle2 size={10} /> Con contenido
                         </span>
-                        <span className="flex items-center gap-1">
-                          <Edit3 size={10} /> {p.fields} campos
+                      )}
+                      {hasContent && p.sections > 0 && (
+                        <span className="flex items-center gap-1 text-accent-dark">
+                          <Edit3 size={10} /> Personalizado
                         </span>
-                      </div>
-                    ) : (
-                      <p className="text-xxs text-text-muted mt-2 italic">
-                        Sin contenido guardado aún
-                      </p>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </Card>

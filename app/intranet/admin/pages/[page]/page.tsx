@@ -65,7 +65,16 @@ export default function AdminPageEditor() {
         });
 
     loadContent
-      .then(flat => setValues(flat))
+      .then(flat => {
+        const merged: Record<string, string> = {};
+        for (const section of meta.sections) {
+          for (const field of section.fields) {
+            const key = `${section.key}.${field.key}`;
+            merged[key] = flat[key] ?? (field as { default?: string }).default ?? '';
+          }
+        }
+        setValues(merged);
+      })
       .catch(() => toast.danger('Error al cargar contenido'))
       .finally(() => setLoading(false));
   }, [meta, params.page, toast, isConfig]);

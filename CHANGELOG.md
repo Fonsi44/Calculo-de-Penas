@@ -1,5 +1,48 @@
 # Changelog
 
+## Release 23 — Pages muestra contenido existente de la web con defaults reales (2026-06-11)
+
+### Problema: Pages no mostraba el contenido existente de la web
+
+El módulo `/intranet/admin/pages` solo mostraba contenido de la tabla `page_content` (vacía). El usuario no veía el contenido real de las páginas públicas (hardcodeado en JSX).
+
+### Solución
+
+1. **`getEditablePagesMeta()` reescrita completamente** con el contenido real de cada página pública como valores por defecto (`default`). Cada página ahora tiene SUS campos reales con SUS textos actuales del sitio.
+
+2. **Editor de páginas** (`[page]/page.tsx`) ahora:
+   - Carga valores de la DB si existen
+   - Rellena con los defaults del archivo de metadatos para campos sin DB
+   - Muestra el contenido actual del sitio aunque no se haya guardado nada aún
+   - Al guardar, persiste en DB y sobrescribe el default
+
+3. **Listado de páginas** ahora muestra:
+   - Número de secciones y campos aunque no haya DB
+   - Badge "Con contenido" si tiene defaults
+   - Badge "Personalizado" si ya se guardó contenido en DB
+
+### Páginas con contenido real precargado
+
+| Página | Secciones | Campos con contenido |
+|--------|-----------|---------------------|
+| home (/) | 10 | 62 (hero, preguntas, especialidades, servicios, testimonios, proceso, why-us, multidisciplinar, FAQ, contacto) |
+| despacho (/despacho) | 4 | 21 (hero, misión/visión, valores, compromisos) |
+| solicitar-consulta | 3 | 12 (hero, motivos, garantías) |
+| como-llegar | 3 | 14 (hero, referencias, rutas) |
+| 5 páginas legales | 2 c/u | título, cuerpo, versión |
+
+### Archivos modificados
+- `lib/page-content-db.ts` — reescrita con 10 páginas, 30+ secciones, 120+ campos con defaults del sitio real
+- `app/intranet/admin/pages/[page]/page.tsx` — merge de DB + defaults al cargar
+- `app/intranet/admin/pages/page.tsx` — siempre muestra secciones/campos, badges de estado
+- `CHANGELOG.md`
+
+### Validación
+- `npm run lint` — 0 errores
+- `npm run build` — 247 páginas, 0 TypeScript errors
+
+---
+
 ## Release 22 — Correcciones: SEO page, Pages carga contenido real, Config integrado en Pages (2026-06-11)
 
 ### 1. /intranet/admin/seo — Corregido (ya existía, ahora confirmado funcional)
