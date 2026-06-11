@@ -64,10 +64,13 @@ export default function AdminBlogPage() {
     const params = new URLSearchParams({ page: String(page), limit: String(limit), published: status });
     if (q) params.set('q', q);
     if (category) params.set('category', category);
+    const countParams = new URLSearchParams();
+    if (q) countParams.set('q', q);
+    if (category) countParams.set('category', category);
     Promise.all([
       fetch(`/api/admin/blog?${params}`).then(r => r.json()),
-      fetch('/api/admin/blog?published=true&limit=1').then(r => r.json()),
-      fetch('/api/admin/blog?published=false&limit=1').then(r => r.json()),
+      fetch(`/api/admin/blog?published=true&limit=1&${countParams}`).then(r => r.json()),
+      fetch(`/api/admin/blog?published=false&limit=1&${countParams}`).then(r => r.json()),
     ])
       .then(([data, pubData, draftData]) => {
         setPosts(data.posts ?? []);
@@ -201,14 +204,14 @@ export default function AdminBlogPage() {
         </div>
       )}
 
-      {!loading && publishedTotal !== total && (
+      {!loading && !category && !q && draftTotal > 0 && (
         <Card padding="md" className="border-warning/50 bg-warning-bg">
           <div className="flex items-center justify-between">
             <p className="text-xs text-warning font-semibold">
-              {total - publishedTotal} posts sin publicar. Si todos deberían estar visibles, usa &ldquo;Publicar todos&rdquo;.
+              {draftTotal} posts sin publicar. Si todos deberían estar visibles, usa &ldquo;Publicar todos&rdquo;.
             </p>
             <Button variant="secondary" size="sm" onClick={async () => {
-              if (!await confirm({ title: '¿Publicar todos?', description: `${total - publishedTotal} posts se marcarán como publicados y serán visibles en la web.` })) return;
+              if (!await confirm({ title: '¿Publicar todos?', description: `${draftTotal} posts se marcarán como publicados y serán visibles en la web.` })) return;
               try {
                 const res = await fetch('/api/admin/blog/publish-all', { method: 'POST' });
                 if (!res.ok) throw new Error();

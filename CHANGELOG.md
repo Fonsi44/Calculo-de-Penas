@@ -1,5 +1,38 @@
 # Changelog
 
+## Release 20 — Corrección contadores incoherentes al filtrar por categoría en admin/blog (2026-06-11)
+
+### Bug: Contadores mezclaban total filtrado con publicados globales al filtrar por categoría
+
+**Causa raíz**: En `fetchPosts()` de `app/intranet/admin/blog/page.tsx`, las llamadas a la API para obtener `publishedTotal` y `draftTotal` NO incluían el filtro `category` ni `q`. Al filtrar por categoría:
+- `total` = 15 (filtrado correctamente)
+- `publishedTotal` = 133 (global, sin filtro)
+- `draftTotal` = 0 (global)
+- `total - publishedTotal` = 15 - 133 = **-118** (número negativo)
+- El banner "Publicar todos" aparecía incorrectamente
+
+**Solución**:
+1. Las llamadas a `/api/admin/blog?published=true` y `/api/admin/blog?published=false` ahora incluyen los mismos filtros (`category`, `q`) que la llamada principal.
+2. El banner "Publicar todos" ahora:
+   - Solo se muestra cuando NO hay filtro activo (`!category && !q`)
+   - Solo se muestra cuando hay borradores reales (`draftTotal > 0`)
+   - Usa `draftTotal` en lugar de `total - publishedTotal` para evitar negativos
+3. Los contadores siempre reflejan el mismo alcance:
+   - Sin filtro: contadores globales
+   - Con filtro: contadores del filtro
+
+**Comportamiento corregido**:
+- Sin filtro: Total 133, Publicados 133, Borradores 0, Sin publicar 0
+- Con filtro por categoría: Total 15, Publicados 15, Borradores 0, Sin publicar 0
+- Nunca aparecen números negativos
+- "Publicar todos" solo aparece globalmente cuando hay drafts
+
+**Archivo modificado**: `app/intranet/admin/blog/page.tsx`
+
+**Validación**: lint 0 errores, build 239 páginas, 0 TypeScript errors.
+
+---
+
 ## Release 19 — Corrección render visual del editor TipTap (estilos semánticos) (2026-06-11)
 
 ### Bug: Editor visual mostraba H2/H3/strong/listas sin formato jerárquico
