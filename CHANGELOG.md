@@ -1,5 +1,78 @@
 # Changelog
 
+## Release 28 — Corrección: datos anidados en APIs Analytics y Search Console del panel SEO (2026-06-11)
+
+### Bug: panel SEO mostraba "Sin datos" o datos incorrectos en pestañas Analytics y Search Console
+
+**Causa raíz**: Las APIs `/api/admin/analytics` y `/api/admin/search-console` envolvían los datos en un objeto `data` anidado (`{ configured: true, data: { metrics: ..., topPages: ... } }`), pero el frontend del panel SEO accedía directamente a `metrics`, `topPages`, `totalClicks`, etc. como propiedades del primer nivel. Esto provocaba que los datos nunca se renderizaran correctamente.
+
+**Además**: El inspector de URLs no mostraba mensajes de error cuando Search Console no estaba configurado o cuando la API fallaba.
+
+### Cambios aplicados
+
+1. **`app/api/admin/analytics/route.ts`**: Los datos de GA4 ahora se devuelven aplanados (`{ configured: true, metrics, topPages, ... }`), eliminando el wrapper `data`.
+2. **`app/api/admin/search-console/route.ts`**: Los datos de Search Console ahora se devuelven aplanados, mismo patrón.
+3. **`app/intranet/admin/seo/page.tsx`**: El handler `doInspect` ahora captura y muestra errores del API (Search Console no configurado, error de API), no solo el resultado exitoso.
+
+### Archivos modificados
+
+- `app/api/admin/analytics/route.ts`
+- `app/api/admin/search-console/route.ts`
+- `app/intranet/admin/seo/page.tsx`
+- `CHANGELOG.md`
+
+### Pruebas realizadas
+
+- ✅ Build: `Compiled successfully` + `Finished TypeScript`
+- ✅ Lint: 0 errores
+- ✅ Tests: 321 passed (15 suites)
+- ✅ Revisión manual: APIs devuelven datos aplanados sin wrapper `data`
+
+### Estado del panel SEO
+
+| Componente | Estado |
+|------------|--------|
+| Resumen SEO | ✅ Funcional (depende de GA4 + SC config) |
+| Analytics | ✅ Corregido (datos aplanados) |
+| Search Console | ✅ Corregido (datos aplanados) |
+| Indexación (URL Inspect) | ✅ Corregido (errores visibles) |
+| Sitemap | ✅ Funcional |
+| Acciones | ✅ Funcional (recomendaciones dinámicas) |
+| GA4 Frontend | ✅ Funcional (vía NEXT_PUBLIC_GA_ID) |
+| GA4 Data API | ✅ Implementado (requiere env vars) |
+| Search Console API | ✅ Implementado (requiere env vars) |
+| IndexNow | ✅ Implementado (requiere INDEXNOW_KEY) |
+
+---
+
+## Release 27 — Corrección: flash del menú de intranet en web pública + SEO fixes (2026-06-11)
+
+### Bug crítico: el menú de intranet aparecía momentáneamente en la web pública
+
+**Causa raíz**: `RootShell` en `app/layout.tsx` era un componente `'use client'` que decidía entre layout público o privado mediante `usePathname()`. Aunque el SSR generaba HTML correcto, durante la hidratación o navegación SPA el sidebar de intranet podía renderizarse brevemente antes de evaluar la ruta.
+
+**Corrección**: Separación física de layouts:
+1. **`components/layout/root-shell.tsx`** — simplificado: siempre renderiza `<div>{children}</div>` (layout público, sin sidebar).
+2. **`app/intranet/layout.tsx`** — nuevo layout para rutas bajo `/intranet/*` con `AppSidebar`, `MobileNavDrawer` y `MobileNavToggle`.
+3. **`components/layout/app-shell.tsx`** — añadido `withSidebar` prop. Cuando es `true` (default para páginas legacy: casos, cp, delitos, atajos, dashboard), renderiza el sidebar. La calculadora usa `withSidebar={false}`.
+4. **Admin routes** — excluidas del sidebar de intranet (tienen su propio layout admin).
+
+### SEO fixes
+- **`app/api/admin/analytics/route.ts`** — corregido: spread de resultado en vez de nested `{ data }`.
+- **`app/api/admin/search-console/route.ts`** — misma corrección.
+- **`app/intranet/admin/seo/page.tsx`** — manejado caso "Search Console no configurado" en URL Inspection (antes crasheaba).
+
+### Verificación
+- `npm run lint`: 0 errores, 0 warnings.
+- `npm run build`: ✓ Compiled successfully, 247 páginas.
+- `npm run test`: 321 tests pasados (15 suites).
+- Web pública: sin sidebar de intranet en SSR, sin flash en hidratación.
+- Intranet: sidebar funcional en dashboard, casos, cp, delitos, atajos.
+- Admin: sidebar admin propio sin duplicación.
+- Calculadora: sin sidebar (focus wizard UX).
+
+---
+
 ## Release 26 — Corrección: publicación de home desde admin pages editor (2026-06-11)
 
 ### Bug crítico: cambios guardados en admin pages no se reflejaban en la web pública

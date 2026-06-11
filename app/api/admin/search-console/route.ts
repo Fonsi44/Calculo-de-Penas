@@ -28,9 +28,9 @@ export async function GET(request: Request) {
     const daysParam = searchParams.get('days');
     const days = daysParam === '7' ? 7 : daysParam === '90' ? 90 : 28;
 
-    const data = await getSearchConsoleData(days as 7 | 28 | 90);
+    const result = await getSearchConsoleData(days as 7 | 28 | 90);
 
-    return NextResponse.json({ configured: true, data });
+    return NextResponse.json({ configured: true, ...result });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Error desconocido';
     return NextResponse.json(

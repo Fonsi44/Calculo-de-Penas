@@ -204,7 +204,13 @@ export default function SeoDashboardPage() {
         body: JSON.stringify({ url: inspectUrl.trim() }),
       });
       const data = await res.json();
-      setInspectResult(data.result ?? null);
+      if (!data.configured) {
+        setInspectResult({ url: inspectUrl.trim(), error: data.message ?? 'Search Console no configurado', indexStatus: null, coverageState: null, crawlingDate: null, indexingState: null, pageFetchState: null, robotsTxtState: null, sitemapState: null, canonical: null, userCanonical: null, isIndexable: null, isBlockedByRobots: null, isBlockedByNoindex: null, richResults: null });
+      } else if (data.error) {
+        setInspectResult({ url: inspectUrl.trim(), error: data.error, indexStatus: null, coverageState: null, crawlingDate: null, indexingState: null, pageFetchState: null, robotsTxtState: null, sitemapState: null, canonical: null, userCanonical: null, isIndexable: null, isBlockedByRobots: null, isBlockedByNoindex: null, richResults: null });
+      } else {
+        setInspectResult(data.result);
+      }
     } catch { /* ignore */ }
     setInspecting(false);
   }, [inspectUrl]);
