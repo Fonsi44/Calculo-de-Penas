@@ -59,6 +59,37 @@ type SCData = {
   error?: string | null;
 };
 
+type HealthStatus = 'active' | 'not_configured' | 'permission_error' | 'api_error' | 'property_error' | 'key_file_error' | 'error' | 'partial';
+
+interface IntegrationHealth {
+  id: string;
+  label: string;
+  status: HealthStatus;
+  isActive: boolean;
+  detail: string;
+  errorCode: string | null;
+}
+
+type HealthData = {
+  integrations: {
+    ga4DataApi: IntegrationHealth;
+    searchConsoleApi: IntegrationHealth;
+    ga4Frontend: IntegrationHealth;
+    indexNow: IntegrationHealth;
+    sitemap: IntegrationHealth;
+    robots: IntegrationHealth;
+    jsonLd: IntegrationHealth;
+  };
+  summary: {
+    activeIntegrations: number;
+    totalIntegrations: number;
+    isFullyActive: boolean;
+    globalIndexability: string;
+    noindexActive: boolean;
+  };
+  checkedAt: string;
+};
+
 type SummaryData = {
   site: {
     url: string;
@@ -158,9 +189,63 @@ function StatusBadge({ status }: { status: string | null | undefined }) {
   return <Badge tone="neutral">{status}</Badge>;
 }
 
+function IndexNowSubmitBlock() {
+  const [url, setUrl] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [resultTone, setResultTone] = useState<'success' | 'danger' | null>(null);
+
+  const handleSubmit = async () => {
+    if (!url.trim()) return;
+    setSubmitting(true);
+    setResult(null);
+    try {
+      const res = await fetch('/api/admin/seo/indexnow-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: [url.trim()] }),
+      });
+      const data = await res.json();
+      if (res.ok && data.summary?.submitted > 0) {
+        setResult(`URL enviada correctamente a IndexNow.`);
+        setResultTone('success');
+      } else {
+        setResult(data.error || data.results?.[0]?.error || 'Error desconocido');
+        setResultTone('danger');
+      }
+    } catch {
+      setResult('Error de red al enviar a IndexNow.');
+      setResultTone('danger');
+    }
+    setSubmitting(false);
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex gap-2">
+        <Input
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="https://www.pinedayasociadoshn.com/..."
+          className="flex-1"
+        />
+        <Button variant="primary" size="sm" onClick={handleSubmit} disabled={submitting || !url.trim()}>
+          {submitting ? <Spinner /> : 'Enviar'}
+        </Button>
+      </div>
+      {result && (
+        <p className={`text-xxs ${resultTone === 'success' ? 'text-success' : 'text-danger'}`}>
+          {result}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function SeoDashboardPage() {
   const [tab, setTab] = useState<TabId>('resumen');
   const [summary, setSummary] = useState<SummaryData | null>(null);
+  const [health, setHealth] = useState<HealthData | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [scData, setScData] = useState<SCData | null>(null);
   const [sitemapData, setSitemapData] = useState<SitemapData | null>(null);
@@ -170,6 +255,7 @@ export default function SeoDashboardPage() {
   const [loadingSummary, setLoadingSummary] = useState(true);
   const [loadingAnalytics, setLoadingAnalytics] = useState(false);
   const [loadingSC, setLoadingSC] = useState(false);
+  const [loadingHealth, setLoadingHealth] = useState(false);
   const [analyticsDays, setAnalyticsDays] = useState<7 | 28 | 90>(28);
   const [scDays, setScDays] = useState<7 | 28 | 90>(28);
 
@@ -215,17 +301,30 @@ export default function SeoDashboardPage() {
     setInspecting(false);
   }, [inspectUrl]);
 
+  const fetchHealth = useCallback(async () => {
+    setLoadingHealth(true);
+    try {
+      const res = await fetch('/api/admin/seo/health');
+      const data = await res.json();
+      setHealth(data);
+    } catch { /* ignore */ }
+    setLoadingHealth(false);
+  }, []);
+
   useEffect(() => {
     const load = async () => {
       try {
-        const [s, sm] = await Promise.all([
+        const [s, sm, h] = await Promise.all([
           fetch('/api/admin/seo/summary'),
           fetch('/api/admin/seo/sitemap'),
+          fetch('/api/admin/seo/health'),
         ]);
         const summaryData = await s.json();
         const sitemapData = await sm.json();
+        const healthData = await h.json();
         setSummary(summaryData);
         setSitemapData(sitemapData);
+        setHealth(healthData);
       } catch { /* ignore */ }
       setLoadingSummary(false);
     };
@@ -289,60 +388,136 @@ export default function SeoDashboardPage() {
 
         {/* API Status */}
         <div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">Estado de integraciones</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <Card padding="sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Activity size={16} className={s.site.gaConfigured ? 'text-success' : 'text-text-muted'} />
-                  <span className="text-sm font-medium text-text">GA4 Data API</span>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-bold text-text-muted uppercase tracking-wider">Estado de integraciones</p>
+            <Button variant="ghost" size="sm" onClick={fetchHealth} disabled={loadingHealth}>
+              {loadingHealth ? <Spinner /> : <Activity size={14} />}
+              <span className="ml-1 text-xxs">{loadingHealth ? 'Verificando...' : 'Revalidar'}</span>
+            </Button>
+          </div>
+          {health ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {[
+                health.integrations.ga4DataApi,
+                health.integrations.searchConsoleApi,
+                health.integrations.ga4Frontend,
+                health.integrations.indexNow,
+                health.integrations.sitemap,
+                health.integrations.robots,
+                health.integrations.jsonLd,
+              ].map((item) => (
+                <Card key={item.id} padding="sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                          item.status === 'active' ? 'bg-success' :
+                          item.status === 'not_configured' ? 'bg-text-muted' :
+                          item.status === 'partial' ? 'bg-warning' :
+                          'bg-danger'
+                        }`} />
+                        <span className="text-sm font-medium text-text">{item.label}</span>
+                      </div>
+                      <Badge tone={
+                        item.status === 'active' ? 'success' :
+                        item.status === 'not_configured' ? 'neutral' :
+                        item.status === 'partial' ? 'warning' :
+                        'danger'
+                      }>
+                        {item.status === 'active' ? 'Activo' :
+                         item.status === 'not_configured' ? 'Sin configurar' :
+                         item.status === 'permission_error' ? 'Error permisos' :
+                         item.status === 'api_error' ? 'Error API' :
+                         item.status === 'property_error' ? 'Error propiedad' :
+                         item.status === 'key_file_error' ? 'Error key file' :
+                         item.status === 'partial' ? 'Parcial' :
+                         item.status}
+                      </Badge>
+                    </div>
+                    <p className="text-xxs text-text-secondary leading-relaxed">{item.detail}</p>
+                    {item.errorCode && (
+                      <p className="text-xxs text-text-muted font-mono">código: {item.errorCode}</p>
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <Card padding="sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Activity size={16} className={s.site.gaConfigured ? 'text-success' : 'text-text-muted'} />
+                    <span className="text-sm font-medium text-text">GA4 Data API</span>
+                  </div>
+                  <Badge tone={s.site.gaConfigured ? 'success' : 'neutral'}>
+                    {s.site.gaConfigured ? 'Configurado' : 'Sin configurar'}
+                  </Badge>
                 </div>
-                <Badge tone={s.site.gaConfigured ? 'success' : 'neutral'}>
-                  {s.site.gaConfigured ? 'Configurado' : 'Sin configurar'}
-                </Badge>
-              </div>
-              {s.site.gaConfigured && s.site.analyticsPropertyId && (
-                <p className="text-xxs text-text-muted mt-1">Property: {s.site.analyticsPropertyId}</p>
-              )}
+                {s.site.gaConfigured && s.site.analyticsPropertyId && (
+                  <p className="text-xxs text-text-muted mt-1">Property: {s.site.analyticsPropertyId}</p>
+                )}
+              </Card>
+              <Card padding="sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Search size={16} className={s.site.gscConfigured ? 'text-success' : 'text-text-muted'} />
+                    <span className="text-sm font-medium text-text">Search Console API</span>
+                  </div>
+                  <Badge tone={s.site.gscConfigured ? 'success' : 'neutral'}>
+                    {s.site.gscConfigured ? 'Configurado' : 'Sin configurar'}
+                  </Badge>
+                </div>
+                {s.site.gscConfigured && s.site.searchConsoleSiteUrl && (
+                  <p className="text-xxs text-text-muted mt-1">Site: {s.site.searchConsoleSiteUrl}</p>
+                )}
+              </Card>
+              <Card padding="sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <BarChart3 size={16} className={s.site.gaFrontendConfigured ? 'text-success' : 'text-text-muted'} />
+                    <span className="text-sm font-medium text-text">GA4 Frontend</span>
+                  </div>
+                  <Badge tone={s.site.gaFrontendConfigured ? 'success' : 'neutral'}>
+                    {s.site.gaFrontendConfigured ? 'Activo' : 'Sin configurar'}
+                  </Badge>
+                </div>
+              </Card>
+              <Card padding="sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={16} className={s.site.indexNowConfigured ? 'text-success' : 'text-text-muted'} />
+                    <span className="text-sm font-medium text-text">IndexNow</span>
+                  </div>
+                  <Badge tone={s.site.indexNowConfigured ? 'success' : 'neutral'}>
+                    {s.site.indexNowConfigured ? 'Configurado' : 'Sin configurar'}
+                  </Badge>
+                </div>
+              </Card>
+            </div>
+          )}
+          {health && (
+            <Card padding="sm" className={`mt-2 text-center ${health.summary.isFullyActive ? 'bg-success/5 border-success/20' : 'bg-warning/5 border-warning/20'}`}>
+              <p className={`text-sm font-bold ${health.summary.isFullyActive ? 'text-success' : 'text-warning'}`}>
+                {health.summary.activeIntegrations}/{health.summary.totalIntegrations} integraciones activas
+              </p>
+              <p className="text-xxs text-text-secondary mt-0.5">
+                {health.summary.isFullyActive ? 'Todas las integraciones funcionando correctamente.' : 'Algunas integraciones requieren atencion.'}
+                {' '}· Revisado: {fmtDate(health.checkedAt)}
+              </p>
             </Card>
+          )}
+        </div>
+
+        {/* IndexNow quick submit */}
+        {health?.integrations.indexNow.isActive && (
+          <div>
+            <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">Enviar URL a IndexNow</p>
             <Card padding="sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Search size={16} className={s.site.gscConfigured ? 'text-success' : 'text-text-muted'} />
-                  <span className="text-sm font-medium text-text">Search Console API</span>
-                </div>
-                <Badge tone={s.site.gscConfigured ? 'success' : 'neutral'}>
-                  {s.site.gscConfigured ? 'Configurado' : 'Sin configurar'}
-                </Badge>
-              </div>
-              {s.site.gscConfigured && s.site.searchConsoleSiteUrl && (
-                <p className="text-xxs text-text-muted mt-1">Site: {s.site.searchConsoleSiteUrl}</p>
-              )}
-            </Card>
-            <Card padding="sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <BarChart3 size={16} className={s.site.gaFrontendConfigured ? 'text-success' : 'text-text-muted'} />
-                  <span className="text-sm font-medium text-text">GA4 Frontend</span>
-                </div>
-                <Badge tone={s.site.gaFrontendConfigured ? 'success' : 'neutral'}>
-                  {s.site.gaFrontendConfigured ? 'Activo' : 'Sin configurar'}
-                </Badge>
-              </div>
-            </Card>
-            <Card padding="sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={16} className={s.site.indexNowConfigured ? 'text-success' : 'text-text-muted'} />
-                  <span className="text-sm font-medium text-text">IndexNow</span>
-                </div>
-                <Badge tone={s.site.indexNowConfigured ? 'success' : 'neutral'}>
-                  {s.site.indexNowConfigured ? 'Configurado' : 'Sin configurar'}
-                </Badge>
-              </div>
+              <IndexNowSubmitBlock />
             </Card>
           </div>
-        </div>
+        )}
 
         {/* Quick metrics from Analytics */}
         {'configured' in s.analytics && s.analytics.configured && 'metrics' in s.analytics && s.analytics.metrics && (

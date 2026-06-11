@@ -1,5 +1,71 @@
 # Changelog
 
+## Release 29 — Health checks reales en panel SEO + script gcloud reproducible (2026-06-11)
+
+### Nueva funcionalidad: health checks con llamadas reales a Google APIs
+
+**Problema**: El panel SEO solo verificaba si las variables de entorno existían (`isAnalyticsConfigured()`, `isSearchConsoleConfigured()`), pero no comprobaba si las APIs realmente funcionaban. Si las credenciales estaban presentes pero la service account no tenía permisos en GA4 o Search Console, el panel mostraba "Configurado" aunque las llamadas fallaran.
+
+**Solución**: Nuevo endpoint de health check que ejecuta llamadas reales a las APIs y clasifica el error:
+
+1. **`app/api/admin/seo/health/route.ts`** (nuevo) — Endpoint que intenta:
+   - Consultar GA4 Data API con `getAnalyticsData(7)` → clasifica: `active`, `not_configured`, `permission_error`, `api_error`, `property_error`
+   - Consultar Search Console API con `getSearchConsoleData(7)` → misma clasificación
+   - Verificar archivo de clave IndexNow accesible públicamente → verifica HTTP 200 + contenido correcto
+   - Verificar sitemap consultando DB para conteo de posts
+   - Verificar GA4 Frontend vía `site.gaId`
+
+2. **`app/intranet/admin/seo/page.tsx`** (modificado) — Panel SEO actualizado:
+   - Nueva sección de health checks con estados reales: Activo / Sin configurar / Error permisos / Error API / Error propiedad / Error key file
+   - Botón "Revalidar" para ejecutar health checks bajo demanda
+   - Muestra detalle accionable con el código de error
+   - Badge resumen con conteo de integraciones activas
+
+3. **`scripts/seo/google-cloud-setup.ps1`** (nuevo) — Script PowerShell para Windows:
+   - Diagnostica instalación de gcloud CLI
+   - Verifica autenticación y proyecto activo
+   - Habilita APIs necesarias (analyticsdata, analyticsadmin, searchconsole)
+   - Diagnostica acceso de service account
+   - Muestra instrucciones detalladas para permisos manuales en GA4 y Search Console
+   - Idempotente y seguro
+
+### Archivos modificados
+
+- `app/api/admin/seo/health/route.ts` — nuevo endpoint
+- `app/intranet/admin/seo/page.tsx` — panel actualizado con health checks reales
+- `scripts/seo/google-cloud-setup.ps1` — script PowerShell reproducible
+- `CHANGELOG.md`
+
+### Pruebas
+
+- ✅ Build: Compiled successfully, 248 páginas
+- ✅ Lint: 0 errores, 0 warnings
+- ✅ TypeScript: sin errores
+
+### Estado del panel SEO
+
+| Componente | Estado |
+|------------|--------|
+| Resumen SEO | ✅ Health checks reales con revalidación |
+| Analytics | ✅ Funcional |
+| Search Console | ✅ Funcional |
+| Indexación (URL Inspect) | ✅ Funcional |
+| Sitemap | ✅ Funcional |
+| Acciones | ✅ Funcional |
+| GA4 Frontend | ✅ Activo (NEXT_PUBLIC_GA_ID) |
+| GA4 Data API | 🟡 Requiere permisos SA en GA4 |
+| Search Console API | 🟡 Requiere permisos SA en Search Console |
+| IndexNow | 🟡 Key file pendiente de despliegue en prod |
+
+### Pasos pendientes para producción
+
+1. Añadir service account `id-seo-api-v2@pineda-asociados-forms-nuevo.iam.gserviceaccount.com` como usuario "Lector" en GA4 propiedad 541022095
+2. Añadir la misma service account como usuario "Restringido" en Search Console para `https://www.pinedayasociadoshn.com/`
+3. Verificar variables de entorno en Vercel (GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY, GOOGLE_ANALYTICS_PROPERTY_ID, GOOGLE_SEARCH_CONSOLE_SITE_URL, INDEXNOW_KEY)
+4. Ejecutar `scripts/seo/google-cloud-setup.ps1` para diagnóstico automatizado
+
+---
+
 ## Release 28 — Corrección: datos anidados en APIs Analytics y Search Console del panel SEO (2026-06-11)
 
 ### Bug: panel SEO mostraba "Sin datos" o datos incorrectos en pestañas Analytics y Search Console

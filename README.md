@@ -436,6 +436,39 @@ Una sola variable controla todo el sistema de indexación: `NEXT_PUBLIC_NOINDEX`
    - **GA4**: Administración → Usuarios de la propiedad → Añadir usuario → rol "Visualizador".
    - **Search Console**: Ajustes → Usuarios y permisos → Añadir usuario → rol "Propietario completo".
 
+### Panel SEO - Health Check
+
+El panel SEO (`/intranet/admin/seo`) incluye un sistema de health check real que verifica cada integración:
+
+- **Endpoint**: `GET /api/admin/seo/health` (requiere autenticación admin)
+- **Verificaciones**:
+  - GA4 Data API: consulta real a `analyticsdata.googleapis.com`
+  - Search Console API: consulta real a `searchconsole.googleapis.com`
+  - GA4 Frontend: verifica `NEXT_PUBLIC_GA_ID`
+  - IndexNow: verifica que el archivo de clave responde HTTP 200 con el contenido correcto
+  - Sitemap: verifica conteo de posts en base de datos
+- **Estados posibles**: `active`, `not_configured`, `permission_error`, `api_error`, `property_error`, `key_file_error`, `error`
+- **Botón "Revalidar"**: en la pestaña Resumen SEO para ejecutar health checks bajo demanda
+
+### Script gcloud de diagnóstico
+
+Para diagnosticar y configurar Google Cloud desde Windows:
+
+```powershell
+.\scripts\seo\google-cloud-setup.ps1 `
+  -ProjectId "pineda-asociados-forms-nuevo" `
+  -ServiceAccount "id-seo-api-v2@pineda-asociados-forms-nuevo.iam.gserviceaccount.com" `
+  -Ga4PropertyId "541022095"
+```
+
+El script:
+1. Verifica instalación de gcloud CLI
+2. Autentica (abre navegador si es necesario)
+3. Configura el proyecto activo
+4. Habilita APIs (analyticsdata, analyticsadmin, searchconsole)
+5. Diagnostica la service account
+6. Muestra instrucciones paso a paso para permisos manuales
+
 ### Sitemap dinámico
 
 - `app/sitemap.ts` genera `/sitemap.xml` con:
