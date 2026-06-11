@@ -126,6 +126,7 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'blog_created',
   'blog_updated',
   'blog_deleted',
+  'blog_generated',
   'faq_created',
   'faq_updated',
   'faq_deleted',

@@ -1,0 +1,1 @@
+ALTER TYPE "public"."auditoria_accion" ADD VALUE 'blog_generated' BEFORE 'faq_created';
