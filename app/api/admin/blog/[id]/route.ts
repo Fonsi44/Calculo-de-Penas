@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const updateSchema = z.object({
   slug: z.string().min(1).max(300).optional(),
@@ -45,11 +46,15 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       if (dup && dup.id !== id) return Response.json({ error: 'Ya existe un post con ese slug' }, { status: 409 });
     }
 
+    const [existing] = await db.select({ slug: blogPosts.slug, category: blogPosts.category }).from(blogPosts).where(eq(blogPosts.id, id));
+    if (!existing) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
+    const oldCategory = existing.category;
+
     const values: Record<string, unknown> = {};
     if (parsed.slug !== undefined) values.slug = parsed.slug;
     if (parsed.title !== undefined) values.title = parsed.title;
     if (parsed.description !== undefined) values.description = parsed.description;
-    if (parsed.body !== undefined) values.body = parsed.body;
+    if (parsed.body !== undefined) values.body = sanitizeHtml(parsed.body);
     if (parsed.publishedAt !== undefined) values.publishedAt = new Date(parsed.publishedAt);
     if (parsed.updatedAt !== undefined) values.updatedAt = parsed.updatedAt ? new Date(parsed.updatedAt) : null;
     if (parsed.category !== undefined) values.category = parsed.category;
@@ -65,7 +70,12 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
     await logAudit({ usuarioId: auth.userId, accion: 'blog_updated', recurso: 'blog', recursoId: id, metadata: { slug: updated.slug }, request });
 
-    try { revalidatePath('/blog'); revalidatePath(`/blog/${updated.slug}`); } catch {}
+    try {
+      revalidatePath('/blog');
+      revalidatePath(`/blog/${updated.slug}`);
+      revalidatePath(`/blog/${updated.category}`);
+      if (oldCategory !== updated.category) revalidatePath(`/blog/${oldCategory}`);
+    } catch {}
 
     return Response.json({ post: updated });
   } catch (err) {
@@ -78,13 +88,13 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   try {
     const auth = requireAdmin(request);
     const { id } = await params;
-    const [existing] = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id));
+    const [existing] = await db.select({ slug: blogPosts.slug, category: blogPosts.category }).from(blogPosts).where(eq(blogPosts.id, id));
     if (!existing) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
 
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
     await logAudit({ usuarioId: auth.userId, accion: 'blog_deleted', recurso: 'blog', recursoId: id, metadata: { slug: existing.slug }, request });
 
-    try { revalidatePath('/blog'); revalidatePath(`/blog/${existing.slug}`); } catch {}
+    try { revalidatePath('/blog'); revalidatePath(`/blog/${existing.slug}`); revalidatePath(`/blog/${existing.category}`); } catch {}
 
     return Response.json({ deleted: true });
   } catch (err) { return authFailureResponse(err); }

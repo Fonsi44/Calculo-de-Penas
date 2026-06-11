@@ -12,6 +12,8 @@ import Link from 'next/link';
 import { RssButton } from '@/components/marketing/rss-button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
+export const revalidate = 3600;
+
 const ITEMS_PER_PAGE = 12;
 
 type Props = { searchParams?: Promise<{ tag?: string; page?: string }> };

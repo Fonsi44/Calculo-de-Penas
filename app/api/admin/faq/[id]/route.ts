@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const updateSchema = z.object({
   category: z.string().min(1).max(200).optional(),
@@ -24,8 +25,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
     const values: Record<string, unknown> = { actualizadoEn: new Date() };
     if (parsed.category !== undefined) values.category = parsed.category;
-    if (parsed.question !== undefined) values.question = parsed.question;
-    if (parsed.answer !== undefined) values.answer = parsed.answer;
+    if (parsed.question !== undefined) values.question = sanitizeHtml(parsed.question);
+    if (parsed.answer !== undefined) values.answer = sanitizeHtml(parsed.answer);
     if (parsed.sortOrder !== undefined) values.sortOrder = parsed.sortOrder;
     if (parsed.published !== undefined) values.published = parsed.published;
 

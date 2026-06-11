@@ -11,6 +11,8 @@ import { CategoryFilter } from '@/components/blog/category-filter';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
+export const revalidate = 3600;
+
 const ITEMS_PER_PAGE = 12;
 
 type Props = { params: Promise<{ categoria: string }>; searchParams?: Promise<{ page?: string }> };

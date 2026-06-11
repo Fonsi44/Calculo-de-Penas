@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
+import { blogCategories } from '@/data/blog/categories';
 
 interface Post {
   id: string;
@@ -83,21 +84,7 @@ export default function AdminBlogPage() {
         <div className="flex-1 min-w-[200px]"><Input value={q} onChange={e => { setQ(e.target.value); setPage(1); }} placeholder="Buscar..." iconLeft={<Search size={14} />} /></div>
         <select value={category} onChange={e => { setCategory(e.target.value); setPage(1); }} className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
           <option value="">Todas las categorías</option>
-          <option value="derecho-penal">Derecho Penal</option>
-          <option value="derecho-de-familia">Derecho de Familia</option>
-          <option value="derecho-laboral">Derecho Laboral</option>
-          <option value="derecho-civil">Derecho Civil</option>
-          <option value="derecho-mercantil">Derecho Mercantil</option>
-          <option value="extranjeria-migracion">Extranjería</option>
-          <option value="hondurenos-en-espana">HN en España</option>
-          <option value="tributario">Tributario</option>
-          <option value="derecho-bancario">Bancario</option>
-          <option value="derecho-administrativo">Administrativo</option>
-          <option value="derecho-aduanero">Aduanero</option>
-          <option value="regulacion-sanitaria">Sanitario</option>
-          <option value="propiedad-intelectual">Prop. Intelectual</option>
-          <option value="derecho-ambiental">Ambiental</option>
-          <option value="conciliacion-arbitraje">Conciliación</option>
+          {blogCategories.map(c => <option key={c.slug} value={c.slug}>{c.nombre}</option>)}
         </select>
         <select value={status} onChange={e => { setStatus(e.target.value); setPage(1); }} className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
           <option value="all">Todos</option>

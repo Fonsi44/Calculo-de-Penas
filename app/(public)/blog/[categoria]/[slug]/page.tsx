@@ -15,6 +15,8 @@ import { BlogTOC } from '@/components/blog/blog-toc';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 
+export const revalidate = 3600;
+
 type Props = { params: Promise<{ categoria: string; slug: string }> };
 
 export async function generateStaticParams() {

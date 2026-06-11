@@ -5,6 +5,7 @@ import { eq, asc } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const createSchema = z.object({
   category: z.string().min(1).max(200),
@@ -36,7 +37,8 @@ export async function POST(request: Request) {
     const parsed = createSchema.parse(body);
 
     const [entry] = await db.insert(faqEntries).values({
-      category: parsed.category, question: parsed.question, answer: parsed.answer,
+      category: parsed.category, question: sanitizeHtml(parsed.question),
+      answer: sanitizeHtml(parsed.answer),
       sortOrder: parsed.sortOrder, published: parsed.published,
     }).returning();
 

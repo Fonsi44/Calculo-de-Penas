@@ -1,5 +1,89 @@
 # Changelog
 
+## Release 15 — Panel Admin WordPress-style: Blog + FAQ con persistencia real y WYSIWYG (2026-06-11)
+
+### Corrección de bugs críticos
+
+**BUG-1 (FAQ): Página pública no leía de la base de datos**
+- Causa raíz: `app/(public)/preguntas-frecuentes/page.tsx` importaba `categoriasFaq` de `data/faq.ts` (archivo estático con 73 FAQs hardcodeadas), mientras que el admin escribía en `faq_entries` (PostgreSQL).
+- Solución: La página pública ahora consulta la DB vía `getFaqsForPublicPage()` en `lib/faq-db.ts`. Las FAQs creadas/editadas desde el admin se reflejan en la web pública.
+- Archivo modificado: `app/(public)/preguntas-frecuentes/page.tsx` (reescrito completo).
+- Archivo nuevo: `data/faq-categories.ts` — metadatos centralizados de categorías FAQ (slug, título, descripción).
+
+**BUG-2 (Blog): Páginas SSG no se revalidaban correctamente**
+- Causa raíz: Las páginas `/blog/[categoria]/[slug]` y `/blog/[categoria]` usaban `generateStaticParams` sin `export const revalidate`, resultando en SSG puro sin ISR.
+- Solución: Añadido `export const revalidate = 3600` (ISR 1 hora) a todas las páginas de blog y FAQ. `revalidatePath` ahora funciona correctamente para invalidación on-demand.
+
+**BUG-3 (Blog): Páginas de categoría no se revalidaban**
+- Causa raíz: Los handlers POST/PATCH/DELETE de blog solo llamaban `revalidatePath('/blog')` y `revalidatePath('/blog/${slug}')` pero NO `revalidatePath('/blog/${category}')`.
+- Solución: Añadido `revalidatePath('/blog/${category}')` en los 3 handlers (POST, PATCH, DELETE) de `app/api/admin/blog/`.
+
+**BUG-4 (Admin): Categorías hardcodeadas en filtro de blog**
+- Causa raíz: El `<select>` de categorías en `app/intranet/admin/blog/page.tsx` tenía opciones hardcodeadas, mientras el editor sí usaba `blogCategories`.
+- Solución: El filtro ahora carga desde `data/blog/categories.ts` (misma fuente que el editor).
+
+### Mejoras de seguridad
+
+- **Sanitización HTML**: Nuevo módulo `lib/sanitize.ts` con `sanitizeHtml()` que elimina `<script>`, `<iframe>`, `on*` handlers y `javascript:` protocol.
+- **Aplicación en todas las rutas de escritura**: POST/PATCH en `/api/admin/blog` y `/api/admin/faq` sanitizan `body` y `answer` respectivamente antes de guardar en DB.
+- **Defensa en profundidad**: TipTap ya genera HTML limpio, pero la sanitización server-side bloquea inyección maliciosa.
+
+### Mejoras del panel FAQ (`/intranet/admin/faq`)
+
+- **Búsqueda**: Filtro por texto en pregunta/respuesta (client-side).
+- **Filtro por categoría**: Dropdown con nombres legibles (usa `faqCategoriesMeta`).
+- **Filtro por estado**: Todos / Publicados / Borradores.
+- **Badges de estado**: "Público" (success) / "Borrador" (warning) visibles en cada FAQ.
+- **Expandir/colapsar todo**: Botones para navegación rápida.
+- **Categorías con nombres legibles**: Los títulos de categoría se muestran como nombres (ej. "Derecho Penal General") en lugar de slugs.
+- **Checkbox de publicado**: Visible en el formulario de edición.
+
+### Centralización de categorías
+
+- **FAQ**: `data/faq-categories.ts` — `faqCategoriesMeta[]`, `faqCategorySlugToName`, `faqCategorySlugToDescription`. Usado por admin y página pública.
+- **Blog**: Ya centralizado en `data/blog/categories.ts`. El admin ahora lo usa consistentemente (listado + editor).
+
+### ISR y revalidación
+
+- Todas las páginas públicas de blog y FAQ ahora tienen `export const revalidate = 3600`.
+- Build output confirma: `/blog/[categoria]/[slug]` muestra `1h` revalidation, `/preguntas-frecuentes` muestra `1h`.
+- `revalidatePath` cubre todas las rutas afectadas: hub, categoría y post individual.
+
+### Archivos principales modificados
+
+| Archivo | Tipo de cambio |
+|---------|---------------|
+| `app/(public)/preguntas-frecuentes/page.tsx` | Reescrito — ahora lee de DB |
+| `app/(public)/blog/page.tsx` | Añadido `revalidate = 3600` |
+| `app/(public)/blog/[categoria]/page.tsx` | Añadido `revalidate = 3600` |
+| `app/(public)/blog/[categoria]/[slug]/page.tsx` | Añadido `revalidate = 3600` |
+| `app/api/admin/blog/route.ts` | Sanitización + revalidación de categoría |
+| `app/api/admin/blog/[id]/route.ts` | Sanitización + revalidación de categoría |
+| `app/api/admin/faq/route.ts` | Sanitización |
+| `app/api/admin/faq/[id]/route.ts` | Sanitización |
+| `app/intranet/admin/blog/page.tsx` | Dropdown de categorías usa `blogCategories` |
+| `app/intranet/admin/faq/page.tsx` | Reescrito — búsqueda, filtros, badges, categorías |
+| `lib/faq-db.ts` | Añadido `getFaqsForPublicPage()`, tipos exportados |
+| `lib/sanitize.ts` | NUEVO — sanitización HTML server-side |
+| `data/faq-categories.ts` | NUEVO — metadatos centralizados de categorías FAQ |
+| `README.md` | Actualizado con sección Panel de Administración |
+| `CHANGELOG.md` | Esta entrada |
+
+### Pruebas ejecutadas
+
+- `npm run lint` → 0 errores, 17 warnings preexistentes
+- `npm run build` → Compiled successfully + Finished TypeScript, 235 páginas generadas
+- `npm run test` → 154 suites pasadas (2 fallos preexistentes en `chip.test.tsx`, no relacionados)
+
+### Limitaciones pendientes
+
+- La migración de WordPress a Next.js está en curso. Actualmente coexisten el blog Next.js (DB) y el child theme WordPress.
+- El seed de FAQs en `data/faq.ts` no se ha migrado automáticamente a la DB. Para poblar la DB con las 73 FAQs existentes, ejecutar un script de seed manual.
+- No hay upload de imágenes desde el admin (las imágenes de portada se introducen como URL).
+- `revalidatePath` depende de Vercel ISR — en entornos distintos a Vercel puede requerir configuración adicional.
+
+---
+
 ## Release 14 — WordPress Blog Migration — Child Theme, Plantillas, Script de migración, Redirect Map (2026-06-10)
 
 ### Correcciones SEO (Iteraciones 1–3)

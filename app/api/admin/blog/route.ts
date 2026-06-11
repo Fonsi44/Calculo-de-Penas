@@ -5,6 +5,7 @@ import { eq, ilike, or, and, sql, desc } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { revalidatePath } from 'next/cache';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const createSchema = z.object({
   slug: z.string().min(1).max(300).optional(),
@@ -75,7 +76,8 @@ export async function POST(request: Request) {
 
     const now = new Date();
     const [post] = await db.insert(blogPosts).values({
-      slug, title: parsed.title, description: parsed.description, body: parsed.body,
+      slug, title: parsed.title, description: parsed.description,
+      body: sanitizeHtml(parsed.body),
       publishedAt: parsed.publishedAt ? new Date(parsed.publishedAt) : now,
       updatedAt: parsed.updatedAt ? new Date(parsed.updatedAt) : null,
       category: parsed.category, tags: parsed.tags, author: parsed.author,
@@ -84,7 +86,13 @@ export async function POST(request: Request) {
     }).returning();
 
     await logAudit({ usuarioId: auth.userId, accion: 'blog_created', recurso: 'blog', recursoId: post.id, metadata: { slug: post.slug, title: post.title }, request });
-    if (parsed.published) { try { revalidatePath('/blog'); revalidatePath(`/blog/${slug}`); } catch {} }
+    if (parsed.published) {
+      try {
+        revalidatePath('/blog');
+        revalidatePath(`/blog/${slug}`);
+        revalidatePath(`/blog/${parsed.category}`);
+      } catch {}
+    }
 
     return Response.json({ post, slug }, { status: 201 });
   } catch (err) {

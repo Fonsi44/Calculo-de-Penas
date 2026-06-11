@@ -1,14 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Plus, Trash2, Edit3, ChevronDown, ChevronRight, Save, X, ArrowUp, ArrowDown } from 'lucide-react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
+import { Plus, Trash2, Edit3, ChevronDown, ChevronRight, Save, X, ArrowUp, ArrowDown, Search } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
+import { faqCategoriesMeta } from '@/data/faq-categories';
+
+const categoryNamesBySlug: Record<string, string> = Object.fromEntries(
+  faqCategoriesMeta.map(c => [c.slug, c.titulo])
+);
 
 interface FaqEntry {
   id: string;
@@ -30,29 +36,62 @@ export default function AdminFaqPage() {
   const [editForm, setEditForm] = useState({ category: '', question: '', answer: '', sortOrder: 0, published: true });
   const [showNew, setShowNew] = useState(false);
   const [newForm, setNewForm] = useState({ category: '', question: '', answer: '' });
+  const [q, setQ] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
 
-  const categoriesList = faqs.reduce<string[]>((acc, f) => {
-    if (!acc.includes(f.category)) acc.push(f.category);
-    return acc;
-  }, []).sort();
+  const displayCategories = useMemo(() => {
+    const fromDb = faqs.reduce<string[]>((acc, f) => {
+      if (!acc.includes(f.category)) acc.push(f.category);
+      return acc;
+    }, []).sort();
+    if (fromDb.length > 0) return fromDb;
+    return faqCategoriesMeta.map(c => c.slug);
+  }, [faqs]);
 
-  const defaultFaqCategories = [
-    'derecho-penal-general', 'asistencia-detenidos', 'proceso-penal',
-    'derecho-de-familia', 'derecho-laboral', 'derecho-civil',
-    'derecho-mercantil', 'extranjeria-migracion', 'tributario-sar',
-    'bufete-honorarios', 'otras-areas',
-  ];
-  const displayCategories = categoriesList.length > 0 ? categoriesList : defaultFaqCategories;
+  const categoryName = (slug: string) => categoryNamesBySlug[slug] ?? slug;
 
-  const fetchFaqs = () => {
+  const fetchFaqs = useCallback(() => {
     setLoading(true);
-    fetch('/api/admin/faq').then(r => r.json()).then(data => {
-      setFaqs(data.faqs ?? []);
-      setGrouped(data.grouped ?? {});
-    }).catch(() => toast.danger('Error al cargar FAQs')).finally(() => setLoading(false));
+    const params = new URLSearchParams();
+    if (filterCategory) params.set('category', filterCategory);
+    fetch(`/api/admin/faq?${params}`)
+      .then(r => r.json())
+      .then(data => {
+        setFaqs(data.faqs ?? []);
+        setGrouped(data.grouped ?? {});
+      })
+      .catch(() => toast.danger('Error al cargar FAQs'))
+      .finally(() => setLoading(false));
+  }, [filterCategory, toast]);
+
+  useEffect(() => { fetchFaqs(); }, [fetchFaqs]); // eslint-disable-line react-hooks/set-state-in-effect
+
+  const filteredGrouped = useMemo(() => {
+    const entries = Object.entries(grouped) as [string, FaqEntry[]][];
+    return entries
+      .map(([cat, entries]) => {
+        let filtered = entries;
+        if (q) {
+          const lower = q.toLowerCase();
+          filtered = filtered.filter(f =>
+            f.question.toLowerCase().includes(lower) ||
+            (f.answer || '').toLowerCase().includes(lower)
+          );
+        }
+        if (filterStatus === 'true') filtered = filtered.filter(f => f.published);
+        if (filterStatus === 'false') filtered = filtered.filter(f => !f.published);
+        return [cat, filtered] as [string, FaqEntry[]];
+      })
+      .filter(([, entries]) => entries.length > 0);
+  }, [grouped, q, filterStatus]);
+
+  const allExpanded = () => {
+    const cats = filteredGrouped.map(([cat]) => cat);
+    setExpanded(new Set(cats));
   };
 
-  useEffect(() => { fetchFaqs(); }, []); // eslint-disable-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
+  const collapseAll = () => setExpanded(new Set());
 
   const toggleCategory = (cat: string) => {
     const next = new Set(expanded);
@@ -129,34 +168,51 @@ export default function AdminFaqPage() {
         </Button>
       </div>
 
+      <div className="flex flex-wrap gap-2">
+        <div className="flex-1 min-w-[200px]">
+          <Input value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar..." iconLeft={<Search size={14} />} />
+        </div>
+        <select value={filterCategory} onChange={e => { setFilterCategory(e.target.value); }} className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
+          <option value="">Todas las categorías</option>
+          {displayCategories.map(c => <option key={c} value={c}>{categoryName(c)}</option>)}
+        </select>
+        <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
+          <option value="all">Todos</option>
+          <option value="true">Publicados</option>
+          <option value="false">Borradores</option>
+        </select>
+        <Button variant="ghost" size="sm" onClick={allExpanded}>Expandir todo</Button>
+        <Button variant="ghost" size="sm" onClick={collapseAll}>Colapsar todo</Button>
+      </div>
+
       {showNew && (
         <Card padding="md">
           <h2 className="font-bold text-sm text-primary mb-3">Nueva pregunta</h2>
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-text-secondary">Categoría</label>
+            <label className="text-xs font-semibold text-text-secondary">Categoría *</label>
             <select value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))}
               className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
               <option value="">Seleccionar categoría...</option>
-              {displayCategories.map(c => <option key={c} value={c}>{c}</option>)}
+              {displayCategories.map(c => <option key={c} value={c}>{categoryName(c)}</option>)}
             </select>
-            <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta" />
+            <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta *" />
             <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} />
             <div className="flex gap-2">
-              <Button onClick={createFaq} variant="primary" size="sm"><Save size={14} className="mr-1" /> Crear</Button>
+              <Button onClick={createFaq} variant="primary" size="sm"><Save size={14} className="mr-1" /> Crear y publicar</Button>
               <Button onClick={cancelEdit} variant="ghost" size="sm">Cancelar</Button>
             </div>
           </div>
         </Card>
       )}
 
-      {Object.keys(grouped).length === 0 ? (
-        <Card padding="md"><p className="text-center text-text-secondary text-sm">No hay FAQs. Usa el botón para crear la primera.</p></Card>
+      {filteredGrouped.length === 0 ? (
+        <Card padding="md"><p className="text-center text-text-secondary text-sm">No se encontraron FAQs.</p></Card>
       ) : (
-        Object.entries(grouped).map(([cat, entries]) => (
+        filteredGrouped.map(([cat, entries]) => (
           <Card key={cat} padding="none">
             <button type="button" onClick={() => toggleCategory(cat)}
               className="w-full flex items-center justify-between p-3 hover:bg-surface-alt transition-colors text-left">
-              <span className="font-bold text-sm text-primary">{cat} <span className="text-text-muted font-normal text-xs">({entries.length})</span></span>
+              <span className="font-bold text-sm text-primary">{categoryName(cat)} <span className="text-text-muted font-normal text-xs">({entries.length})</span></span>
               {expanded.has(cat) ? <ChevronDown size={16} className="text-text-secondary" /> : <ChevronRight size={16} className="text-text-secondary" />}
             </button>
             {expanded.has(cat) && (
@@ -166,10 +222,13 @@ export default function AdminFaqPage() {
                     <label className="text-xs font-semibold text-text-secondary">Categoría</label>
                     <select value={editForm.category} onChange={e => setEditForm(ff => ({ ...ff, category: e.target.value }))}
                       className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
-                      {displayCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                      {displayCategories.map(c => <option key={c} value={c}>{categoryName(c)}</option>)}
                     </select>
                     <Input value={editForm.question} onChange={e => setEditForm(ff => ({ ...ff, question: e.target.value }))} placeholder="Pregunta" />
                     <RichTextEditor content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />
+                    <label className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={editForm.published} onChange={e => setEditForm(ff => ({ ...ff, published: e.target.checked }))} className="rounded" /> Publicado
+                    </label>
                     <div className="flex gap-2">
                       <Button onClick={saveEdit} variant="primary" size="sm"><Save size={14} className="mr-1" /> Guardar</Button>
                       <Button onClick={cancelEdit} variant="ghost" size="sm"><X size={14} className="mr-1" /> Cancelar</Button>
@@ -178,7 +237,13 @@ export default function AdminFaqPage() {
                 ) : (
                   <div key={f.id} className="p-3 border-b border-border-light hover:bg-surface-alt flex items-start gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-text">{f.question}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-semibold text-text">{f.question}</p>
+                        {f.published
+                          ? <Badge tone="success" className="flex-shrink-0">Público</Badge>
+                          : <Badge tone="warning" className="flex-shrink-0">Borrador</Badge>
+                        }
+                      </div>
                       <p className="text-xs text-text-secondary mt-0.5 line-clamp-2" dangerouslySetInnerHTML={{ __html: f.answer }} />
                     </div>
                     <div className="flex items-center gap-0.5 flex-shrink-0">

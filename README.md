@@ -16,7 +16,7 @@ app/
   api/                     → API routes (18+ endpoints)
 lib/
   rules/v1/                → Motor de cálculo modular (9 archivos)
-  schema.ts                → Esquema Drizzle ORM (11 tablas)
+   schema.ts                → Esquema Drizzle ORM (14 tablas)
   auth.ts                  → JWT + bcrypt
   rate-limit.ts            → Rate limiting via Neon DB
   audit.ts                 → Auditoría no bloqueante
@@ -132,60 +132,78 @@ npm run indexnow          # Enviar URLs reales
 
 ---
 
-## Blog (WordPress)
+## Panel de Administración (Intranet)
 
-El blog del sitio se sirve desde `/blog/` como una instalación WordPress independiente con GeneratePress + Child Theme.
+El panel `/intranet/admin/` permite gestionar Blog y FAQ con editor WYSIWYG (TipTap), categorías reales y persistencia directa en base de datos.
 
-### Stack
+### Acceso
 
-- **Tema:** GeneratePress (padre) + Pineda Blog Child (hijo)
-- **Plugins:** Rank Math SEO, WP Rocket, Fluent Forms, ShortPixel, UpdraftPlus
-- **Plantillas:** 6 archivos (home, category, single, author, tag, search)
-- **CSS/JS:** Blog en style.css (child theme), TOC en assets/js/toc.js
+- URL: `https://www.pinedayasociadoshn.com/intranet/admin/blog`
+- Autenticación JWT requerida (solo usuarios con rol `admin`).
+- La sesión se gestiona mediante cookies `__Host-token` + `__Host-profile`.
+
+### Blog — `/intranet/admin/blog`
+
+- **Listado**: Tabla con título, categoría, estado (publicado/borrador), fecha, acciones (editar/publicar/eliminar).
+- **Buscar**: Por texto (título/descripción).
+- **Filtros**: Por categoría (dropdown con categorías reales de `data/blog/categories.ts`) y por estado (todos/publicados/borradores).
+- **Crear/Editar**: Ruta `/intranet/admin/blog/[id]` (usa `nuevo` para crear).
+  - Editor WYSIWYG: **TipTap** con soporte para párrafos, H2/H3, negrita, cursiva, subrayado, tachado, color, highlight, alineación, listas, enlaces, undo/redo.
+  - Campos: título, slug (auto-generado), descripción, contenido HTML, categoría (dropdown), fecha publicación, tags, autor, tiempo lectura, imagen portada, destacado, publicado.
+  - Al guardar: el contenido se sanitiza (elimina scripts, iframes, event handlers) y se persiste en PostgreSQL (`blog_posts` table).
+  - Al publicar: `revalidatePath` invalida caché ISR de `/blog`, `/blog/[categoria]` y `/blog/[categoria]/[slug]`.
+
+### FAQ — `/intranet/admin/faq`
+
+- **Listado**: Agrupado por categoría, expandible, con estado (público/borrador) y orden.
+- **Buscar**: Filtro por texto (pregunta/respuesta).
+- **Filtros**: Por categoría (dropdown) y por estado (todos/publicados/borradores).
+- **Crear**: Formulario con categoría (dropdown), pregunta y respuesta (editor TipTap).
+- **Editar**: Inline, con editor WYSIWYG + checkbox de publicado.
+- **Reordenar**: Flechas arriba/abajo ajustan `sortOrder`.
+- **Eliminar**: Con confirmación modal.
+- **Categorías**: Dropdown usa `data/faq-categories.ts` — 11 categorías predefinidas.
+
+### Categorías
+
+- **Blog**: 20 categorías definidas en `data/blog/categories.ts`. Los dropdowns del admin cargan desde este archivo. Las categorías se guardan por slug en la DB.
+- **FAQ**: 11 categorías definidas en `data/faq-categories.ts`. Los dropdowns usan `faqCategoriesMeta`. Las categorías se guardan por slug, la página pública muestra el nombre legible.
+
+### Publicación y caché
+
+- **Persistencia**: PostgreSQL (Neon) — tabla `blog_posts` y `faq_entries`.
+- **Formato**: HTML sanitizado (desde TipTap, limpiado con `lib/sanitize.ts`).
+- **ISR**: Todas las páginas públicas de blog y FAQ tienen `revalidate = 3600` (1 hora).
+- **Revalidación on-demand**: Cada create/update/delete llama `revalidatePath()` en todas las rutas afectadas.
+- **Páginas dinámicas**: `/blog` y `/blog/[categoria]` usan `searchParams` → renderizado dinámico.
+- **Verificación**: Si un post/FAQ no aparece tras publicar, esperar ~60s y recargar. Si persiste, verificar que `published = true` en la DB.
+
+### Seguridad
+
+- **Autenticación**: `requireAdmin(request)` en todas las rutas API de escritura.
+- **Sanitización**: `sanitizeHtml()` elimina `<script>`, `<iframe>`, `on*` handlers, `javascript:` protocol.
+- **Validación**: Zod schemas en todas las rutas POST/PATCH.
+- **Auditoría**: `logAudit()` registra todas las operaciones CRUD en `auditoria_eventos`.
+- **CSRF**: Next.js Server Actions protection implícita en API routes.
+
+---
+
+## Blog (WordPress) — LEGACY
+
+El blog se sirvió históricamente desde WordPress con GeneratePress. La migración a Next.js (DB nativa) está en curso.
+
+### Migración
+
+El script `wordpress/scripts/migrate-posts-to-wp.js` lee posts desde `data/blog/posts/*.ts` y genera WXR + redirect map.
 
 ### Estructura de archivos (en `/wordpress/themes/generatepress-child/`)
 
 ```
 generatepress-child/
-├── style.css              # Cabecera del tema + estilos completos del blog
-├── functions.php          # Helpers, filters, hooks, enqueue de assets
-├── home.php               # Blog home con hero, category filter, featured, grid
-├── category.php           # Archivo de categoría con breadcrumbs, grid, pagination
-├── single.php             # Post individual con TOC, author, CTA, related
-├── author.php             # Perfil de autor con avatar, bio, grid de posts
-├── tag.php                # Página de tag con noindex,follow
-├── search.php             # Búsqueda interna con noindex,follow
-├── assets/css/blog.css    # Estilos adicionales (placeholder)
-├── assets/js/toc.js       # Tabla de contenidos dinámica desde H2
+├── style.css, functions.php, home.php, category.php
+├── single.php, author.php, tag.php, search.php
+└── assets/css/blog.css, assets/js/toc.js
 ```
-
-### Categorías (9)
-
-| Categoría | Slug | Posts |
-|-----------|------|-------|
-| Derecho Penal | `derecho-penal` | ~37 (incluye proceso-penal) |
-| Derecho de Familia | `derecho-familia` | ~18 |
-| Derecho Laboral | `derecho-laboral` | ~14 |
-| Derecho Civil y Notarial | `derecho-civil` | ~14 |
-| Derecho Mercantil | `derecho-mercantil` | ~10 |
-| Hondureños en España | `hondurenos-espana` | ~9 |
-| Derecho Tributario | `derecho-tributario` | ~6 |
-| Guías y Tutoriales | `guias-legales` | ~10 |
-| Actualidad Legal | `actualidad-legal` | ~5 |
-
-### Etiquetas (40)
-
-Las etiquetas se redujeron de ~300 a ~40. Todas configuradas como `noindex, follow` por defecto.
-
-### Migración
-
-El script `wordpress/scripts/migrate-posts-to-wp.js` lee los posts desde `data/blog/posts/*.ts` y genera:
-1. `wordpress/output/wp-export.xml` — archivo WXR importable por WordPress
-2. `wordpress/output/redirect-map.csv` — redirecciones 301 para Rank Math
-
-### Configuración SEO técnica
-
-Ver `wordpress/rank-math-config.txt` para la configuración exacta de Rank Math SEO.
 
 
 ### Estructura SEO implementada

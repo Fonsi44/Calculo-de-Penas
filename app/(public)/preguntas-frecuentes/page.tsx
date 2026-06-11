@@ -2,26 +2,20 @@ import type { Metadata } from 'next';
 import {
   Scale, ShieldAlert, Gavel, Users, Briefcase, FileText,
   Building2, Globe, DollarSign, Shield, HelpCircle,
-  ChevronDown, MessageCircle, ArrowRight,
+  ChevronDown,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
-import { categoriasFaq, totalPreguntas } from '@/data/faq';
-import type { FaqCategory } from '@/data/faq';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { getFaqsForPublicPage, type FaqCategoryPublic } from '@/lib/faq-db';
 import { faqPageSchema } from '@/lib/schemas/legal-page';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
-
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 
-export const metadata: Metadata = {
-  title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department}`,
-  description: `Respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
-  alternates: { canonical: '/preguntas-frecuentes' },
-};
+export const revalidate = 3600;
 
 type CatMeta = {
   icon: LucideIcon;
@@ -111,7 +105,7 @@ const CAT_META: Record<string, CatMeta> = {
   },
 };
 
-function SectionChip({ cat }: { cat: FaqCategory }) {
+function SectionChip({ cat }: { cat: FaqCategoryPublic }) {
   const m = CAT_META[cat.slug];
   const Icon = m?.icon ?? HelpCircle;
   const colorCls = m?.iconColor ?? 'text-text-muted';
@@ -123,9 +117,25 @@ function SectionChip({ cat }: { cat: FaqCategory }) {
   );
 }
 
-export default function FaqPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const categoriasFaq = await getFaqsForPublicPage();
+  const total = categoriasFaq.reduce((acc, c) => acc + c.preguntas.length, 0);
+  return {
+    title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department}`,
+    description: `${total} respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
+    alternates: { canonical: '/preguntas-frecuentes' },
+  };
+}
+
+export default async function FaqPage() {
+  const categoriasFaq = await getFaqsForPublicPage();
+  const totalPreguntas = categoriasFaq.reduce((acc, cat) => acc + cat.preguntas.length, 0);
+
   const flatFaqs = categoriasFaq.flatMap((c) =>
-    c.preguntas.map((p) => ({ pregunta: p.pregunta, respuesta: p.respuesta })),
+    c.preguntas.map((p) => ({
+      pregunta: p.pregunta,
+      respuesta: p.respuesta.replace(/<[^>]*>/g, ''),
+    })),
   );
 
   const breadcrumbLd = {
@@ -227,9 +237,10 @@ export default function FaqPage() {
                     <div className="faq-body-inner">
                       <div className="border-t border-border/40 pt-4 px-5 pb-5">
                         <SectionChip cat={cat} />
-                        <p className="text-sm text-text leading-relaxed max-w-prose mt-3 text-pretty">
-                          {p.respuesta}
-                        </p>
+                        <div
+                          className="text-sm text-text leading-relaxed max-w-prose mt-3 text-pretty faq-answer"
+                          dangerouslySetInnerHTML={{ __html: p.respuesta }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -253,5 +264,3 @@ export default function FaqPage() {
     </>
   );
 }
-
-
