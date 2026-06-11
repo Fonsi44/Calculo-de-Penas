@@ -48,6 +48,8 @@ export default function AdminBlogPage() {
   const confirm = useConfirm();
   const [posts, setPosts] = useState<Post[]>([]);
   const [total, setTotal] = useState(0);
+  const [publishedTotal, setPublishedTotal] = useState(0);
+  const [draftTotal, setDraftTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState('');
   const [category, setCategory] = useState('');
@@ -62,9 +64,17 @@ export default function AdminBlogPage() {
     const params = new URLSearchParams({ page: String(page), limit: String(limit), published: status });
     if (q) params.set('q', q);
     if (category) params.set('category', category);
-    fetch(`/api/admin/blog?${params}`)
-      .then(r => r.json())
-      .then(data => { setPosts(data.posts ?? []); setTotal(data.total ?? 0); })
+    Promise.all([
+      fetch(`/api/admin/blog?${params}`).then(r => r.json()),
+      fetch('/api/admin/blog?published=true&limit=1').then(r => r.json()),
+      fetch('/api/admin/blog?published=false&limit=1').then(r => r.json()),
+    ])
+      .then(([data, pubData, draftData]) => {
+        setPosts(data.posts ?? []);
+        setTotal(data.total ?? 0);
+        setPublishedTotal(pubData.total ?? 0);
+        setDraftTotal(draftData.total ?? 0);
+      })
       .catch(() => toast.danger('Error al cargar posts'))
       .finally(() => setLoading(false));
   }, [page, q, category, status, toast]);
@@ -161,15 +171,12 @@ export default function AdminBlogPage() {
   const totalPages = Math.ceil(total / limit);
   const categoryName = (slug: string) => blogCategories.find(c => c.slug === slug)?.nombre ?? slug;
 
-  const publishedCount = posts.filter(p => p.published).length;
-  const draftCount = posts.filter(p => !p.published).length;
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-extrabold text-primary">Blog</h1>
-          <p className="text-xs text-text-secondary">{total} posts ({publishedCount} publicados, {draftCount} borradores)</p>
+          <p className="text-xs text-text-secondary">{total} posts ({publishedTotal} publicados, {draftTotal} borradores)</p>
         </div>
         <Link href="/intranet/admin/blog/nuevo">
           <Button variant="primary" size="sm"><Plus size={14} className="mr-1" /> Nuevo post</Button>
@@ -184,14 +191,36 @@ export default function AdminBlogPage() {
             <p className="text-xxs text-text-muted">Total</p>
           </Card>
           <Card padding="sm" className="text-center">
-            <p className="text-lg font-extrabold text-success">{publishedCount}</p>
+            <p className="text-lg font-extrabold text-success">{publishedTotal}</p>
             <p className="text-xxs text-text-muted">Publicados</p>
           </Card>
           <Card padding="sm" className="text-center">
-            <p className="text-lg font-extrabold text-warning">{draftCount}</p>
+            <p className="text-lg font-extrabold text-warning">{draftTotal}</p>
             <p className="text-xxs text-text-muted">Borradores</p>
           </Card>
         </div>
+      )}
+
+      {!loading && publishedTotal !== total && (
+        <Card padding="md" className="border-warning/50 bg-warning-bg">
+          <div className="flex items-center justify-between">
+            <p className="text-xs text-warning font-semibold">
+              {total - publishedTotal} posts sin publicar. Si todos deberían estar visibles, usa &ldquo;Publicar todos&rdquo;.
+            </p>
+            <Button variant="secondary" size="sm" onClick={async () => {
+              if (!await confirm({ title: '¿Publicar todos?', description: `${total - publishedTotal} posts se marcarán como publicados y serán visibles en la web.` })) return;
+              try {
+                const res = await fetch('/api/admin/blog/publish-all', { method: 'POST' });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                toast.success(`${data.published} posts publicados`);
+                fetchPosts();
+              } catch { toast.danger('Error al publicar'); }
+            }}>
+              Publicar todos
+            </Button>
+          </div>
+        </Card>
       )}
 
       {/* Filters */}

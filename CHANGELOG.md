@@ -1,5 +1,90 @@
 # Changelog
 
+## Release 18 — Corrección editor visual (HTML escapado) + contador publicados (2026-06-11)
+
+### Bug 1: Editor visual mostraba HTML escapado como texto plano
+
+**Causa raíz**: El contenido de ciertos posts se guardó en DB con entidades HTML (`&lt;` en vez de `<`). Al pasar ese string a `editor.commands.setContent()` de TipTap, este no interpreta las entidades como etiquetas HTML sino como texto literal, mostrando las etiquetas visibles en el editor.
+
+**Solución**: Añadida función `decodeHtmlEntities()` en `components/ui/rich-text-editor.tsx` que decodifica entidades HTML antes de pasarlas a TipTap:
+- En `useEditor({ content: decodeHtmlEntities(content) })` — inicialización
+- En `editor.commands.setContent(decodeHtmlEntities(content))` — sincronización vía useEffect
+- La función usa el método DOM `document.createElement('textarea')` que decodifica entidades de forma nativa y segura
+- Es segura para contenido que ya está en HTML puro (no hay doble decodificación)
+
+Archivo modificado:
+- `components/ui/rich-text-editor.tsx`
+
+### Bug 2: Contador de publicados incorrecto (mostraba 20 en vez de 133)
+
+**Causa raíz doble**:
+1. **Datos en DB**: Solo 20 posts tenían `published = true`. Los posts legacy se importaron a la BD sin establecer el campo, quedando como `false`.
+2. **Cálculo en UI**: `app/intranet/admin/blog/page.tsx` calculaba `publishedCount` filtrando SOLO la página actual (20 items) con `posts.filter(p => p.published).length`, no el total real de la BD.
+
+**Solución**:
+1. **Nuevo endpoint** `POST /api/admin/blog/publish-all` — actualiza todos los posts existentes a `published = true` con auditoría y revalidación ISR.
+2. **Corrección del listado admin**: El blog list ahora obtiene `publishedTotal` y `draftTotal` mediante llamadas separadas a la API (`/api/admin/blog?published=true&limit=1` y `published=false`), en lugar de filtrar la página actual.
+3. **Banner informativo**: Si hay posts sin publicar, se muestra un banner con botón "Publicar todos" que confirma con modal y llama al endpoint.
+
+Archivos modificados:
+- `app/intranet/admin/blog/page.tsx` — contadores desde API, nuevos estados `publishedTotal`/`draftTotal`, banner de publicación masiva
+- `app/api/admin/blog/publish-all/route.ts` — NUEVO endpoint de publicación masiva
+
+### Validaciones realizadas
+
+- `npm run build` no ejecutado (requiere confirmación del usuario para la publicación masiva de posts en DB).
+
+### Nota importante
+
+Para que el contador refleje el valor correcto (133 publicados), usar el botón "Publicar todos" en `/intranet/admin/blog` que aparecerá automáticamente al detectar posts sin publicar. Esto actualizará los 113 posts restantes a `published = true`.
+
+---
+
+## Release 17 — Auditoría y actualización de documentación IA (2026-06-11)
+
+### Archivos IA localizados y auditados
+
+| Archivo | Estado | Acción |
+|---------|--------|--------|
+| `AGENTS.md` | ✅ Existente | Actualizado — protocolo completo (~260 líneas nuevas) |
+| `CLAUDE.md` | ✅ Existente | Sin cambios — referencia a AGENTS.md |
+
+**No encontrados** (no existen en el repositorio): `GEMINI.md`, `COPILOT.md`, `.cursorrules`, `.cursor/rules/*`, `.windsurfrules`, `.github/copilot-instructions.md`, `docs/ai/*`, `docs/agents/*`, `.continue/*`.
+
+### AGENTS.md — Contenido añadido/actualizado
+
+- **Secciones 1-15**: Reestructuración completa con numeración y contenido nuevo.
+- **Sección 1 — Descripción del proyecto**: Tabla de módulos con rutas y estado.
+- **Sección 2 — Arquitectura actual**: Directorio completo, sistema de rutas, 14 tablas DB, auth, zona horaria.
+- **Sección 3 — Intranet/Admin**: Dashboard, Blog listado + editor, FAQ, Usuarios, Configuración, Perfil, Calculadora (rewrite).
+- **Sección 4 — Blog CMS**: Admin, fuente de datos (DB primaria, legacy TS fallback), creación, edición, publicación, categorías, imágenes, 10 reglas obligatorias para IA.
+- **Sección 5 — FAQ CMS**: Admin, fuente de datos, creación/edición, categorías, publicación, 7 reglas obligatorias.
+- **Sección 6 — Categorías**: Blog (20 categorías, slugs), FAQ (11 categorías, helpers), reglas de uso.
+- **Sección 7 — Calculadora de penas**: Rutas, motor (9 archivos), catálogo (483 delitos, 100% verificado), API, 9 reglas para IA.
+- **Sección 8 — Restricciones críticas**: 16 "No debe hacer" + 10 "Siempre debe hacer".
+- **Sección 9 — Flujo obligatorio por cambio**: Lint → Build → Test → Commit → Push → Vercel.
+- **Sección 10 — Comandos por área**: 10 áreas documentadas con comandos exactos.
+- **Sección 12 — Investigación inicial**: Orden de lectura obligatorio (README → package.json → opencode.jsonc → global config → AGENTS.md → CHANGELOG.md).
+- **Sección 14 — Forma de trabajo**: Antes/durante/después de modificar, con instrucciones de proxy.ts.
+- Actualizadas referencias: DB tables (11 → 14), tests (13 suites, 185 tests, 29 E2E), API routes (18+ → 25+), componentes marketing (20+ → 25+).
+
+### README.md
+
+- Añadida referencia a `AGENTS.md` como fuente de verdad para agentes IA.
+- Sin cambios de contenido funcional.
+
+### Archivos modificados
+
+- `AGENTS.md`
+- `CHANGELOG.md`
+- `README.md`
+
+### Validaciones
+
+- `npm run lint` y `npm run build` no ejecutados (solo cambios de documentación, 0 cambios en código funcional).
+
+---
+
 ## Release 16 — Corrección RichTextEditor, subida de imágenes y seguridad (2026-06-11)
 
 ### Corrección de bug crítico: RichTextEditor no cargaba contenido

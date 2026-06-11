@@ -17,6 +17,12 @@ import {
   Undo2, Redo2, Type, Palette, Highlighter, RemoveFormatting,
 } from 'lucide-react';
 
+function decodeHtmlEntities(text: string): string {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+}
+
 interface RichTextEditorProps {
   content: string;
   onChange: (html: string) => void;
@@ -50,7 +56,7 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       LinkExtension.configure({ openOnClick: false, HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' } }),
     ],
-    content,
+    content: decodeHtmlEntities(content),
     editorProps: {
       attributes: {
         class: 'prose prose-sm max-w-none focus:outline-none px-3 py-2 text-text',
@@ -71,8 +77,9 @@ export function RichTextEditor({ content, onChange, minHeight = 300 }: RichTextE
       return;
     }
     if (content !== lastExternalContent.current) {
-      lastExternalContent.current = content;
-      editor.commands.setContent(content, { emitUpdate: false });
+      const decoded = decodeHtmlEntities(content);
+      lastExternalContent.current = decoded;
+      editor.commands.setContent(decoded, { emitUpdate: false });
     }
   }, [content, editor]);
 

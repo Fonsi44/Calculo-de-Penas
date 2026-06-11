@@ -2,7 +2,548 @@
 
 Este repositorio requiere precisión, trazabilidad, verificación real y honestidad operativa. Ningún agente puede afirmar que algo está implementado, corregido, validado o completado si no lo ha comprobado mediante lectura de archivos, cambios reales y comandos de validación cuando correspondan. Las reglas son permanentes, no una tarea puntual.
 
-## Principios obligatorios
+---
+
+## 1. Descripción del proyecto
+
+**Nombre**: LEX HONDURAS — Motor de Cálculo de Penas + Web Corporativa  
+**Sitio**: `https://www.pinedayasociadoshn.com` (Vercel)  
+**Base de datos**: Neon PostgreSQL (Plan Free, PITR 7 días)  
+**Framework**: Next.js 16.2.7 + React 19 + Tailwind CSS v4  
+**ORM**: Drizzle ORM (v0.45.2)  
+**Auth**: JWT + bcryptjs (cookies `__Host-token` + `__Host-profile`)  
+**Editor**: TipTap (rich text)  
+**Testing**: Vitest (185 tests) + Playwright (29 tests E2E)  
+**CI**: GitHub Actions (`lint → tsc → test → build → validate`)  
+
+### Módulos principales
+
+| Módulo | Rutas | Estado |
+|--------|-------|--------|
+| Web pública (marketing) | `/(public)/*` | ✅ Producción |
+| Blog | `/blog`, `/blog/[categoria]/[slug]` | ✅ DB nativa + ISR |
+| FAQ | `/preguntas-frecuentes` | ✅ DB nativa + ISR |
+| Calculadora de penas | `/calculadora` (8 pasos) | ✅ Motor v1 |
+| Intranet dashboard | `/intranet/dashboard` | ✅ Autenticado |
+| Intranet admin | `/intranet/admin/*` | ✅ CMS completo |
+| API REST | `/api/*` (25+ endpoints) | ✅ |
+| WordPress (legacy) | `wordpress/` | ⏳ Migración en curso |
+
+### Público objetivo
+
+Profesionales del derecho que necesitan determinar penas con precisión técnica según el **Código Penal de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024).
+
+---
+
+## 2. Arquitectura actual
+
+### Estructura de directorios
+
+```
+app/
+  (public)/                → Sitio web público (marketing + blog + FAQ) — sin auth
+  calculadora/             → Calculadora de penas (8 pasos, wizard)
+  intranet/
+    dashboard/             → Dashboard principal (autenticado)
+    admin/                 → Panel admin (solo rol admin)
+      blog/                → Gestión de blog (lista + editor)
+      faq/                 → Gestión de FAQ
+      config/              → Configuración del sitio
+      usuarios/            → Gestión de usuarios
+      perfil/              → Perfil y cambio de contraseña
+    login/                 → Login de intranet
+  api/
+    admin/
+      blog/                → CRUD posts (POST / PATCH / DELETE)
+      faq/                 → CRUD FAQs (POST / PATCH / DELETE)
+      usuarios/            → CRUD usuarios + reset-password
+      site-config/         → Configuración del sitio (GET público / PUT admin)
+      upload/              → Subida de imágenes
+    auth/                  → login, logout, register, me, change-password, terminos
+    calcular/              → Motor de cálculo + PDF
+    calculos/              → CRUD cálculos guardados
+    casos/                 → CRUD casos + PDF
+    delitos/               → Catálogo de delitos + calidad + count
+    cp/                    → Artículos del CP
+    health/                → Health check
+    seed/                  → Seed de base de datos
+    contacto/              → Formulario de contacto (Resend)
+    consulta/              → Solicitud de consulta
+    clasificaciones/       → Clasificaciones/ramas jurídicas
+    whatsapp/              → WhatsApp redirección
+    indexnow-key/          → Clave IndexNow
+    [transport]/           → Transport handler genérico
+lib/
+  rules/v1/                → Motor de cálculo (9 archivos)
+  schema.ts                → Esquema Drizzle ORM (14 tablas)
+  auth.ts                  → JWT + bcrypt
+  audit.ts                 → Auditoría no bloqueante
+  blog-db.ts               → Blog: helper de lectura (DB)
+  blog-helpers.ts          → Blog: helpers varios
+  blog.ts                  → Blog: tipos legacy
+  faq-db.ts                → FAQ: helper de lectura (DB)
+  site-config-db.ts        → Site config: helper
+  cache.ts                 → Caché/revalidación
+  datetime.ts              → Zona horaria Honduras (UTC-6)
+  email.ts                 → Resend (email transaccional)
+  rate-limit.ts            → Rate limiting via Neon DB
+  sanitize.ts              → Sanitización HTML server-side
+  validation.ts            → Zod schemas
+  db.ts                    → Conexión a base de datos
+  site.ts                  → Configuración del sitio (centralizada)
+  ui.ts                    → Helpers de UI
+  utils.ts                 → Motor: aumentar/reducir grado, mitades
+  catalogos.ts             → Catálogos legales (agravantes, atenuantes, eximentes)
+  pdf-document.tsx         → Generación de PDF (@react-pdf)
+data/
+  delitos.json             → 483 delitos del CP hondureño
+  ramas_juridicas.json     → 119 registros
+  articulos_constitucion.json → 378 artículos Constitución
+  articulos_cp.json        → Artículos del CP
+  blog/
+    categories.ts          → 20 categorías de blog (fuente de verdad)
+    posts/                 → 134 posts (legacy, previo a migración DB)
+    types.ts               → Tipo Post
+  faq-categories.ts        → 11 categorías FAQ (fuente de verdad)
+  faq.ts                   → FAQs legacy (73 preguntas)
+  images.ts                → Catálogo de imágenes
+  areas-juridicas.ts       → Taxonomía de áreas jurídicas
+  delitos-estados.json     → Estado de verificación de delitos
+  delitos-validacion.json  → Validación detallada por delito
+components/
+  marketing/               → 25+ componentes de UI pública
+  ui/                      → 13 componentes reutilizables (Button, Input, Card, Badge, etc.)
+  domain/                  → Componentes de dominio legal
+  layout/                  → AppShell, AppSidebar, RootShell, etc.
+  blog/                    → BlogCard, BlogSidebar, etc.
+tests/                     → 13 suites (~185 tests)
+e2e/                       → 3 spec files (~29 tests)
+docs/                      → 26+ documentos técnicos
+scripts/                   → load-env.cjs, submit-indexnow.mjs
+wordpress/                 → Child theme GeneratePress + scripts migración
+proxy.ts                   → Edge proxy (reemplaza middleware.ts)
+```
+
+### Sistema de rutas App Router
+
+- **Route Groups**: `(public)/` para web pública, `intranet/` para área autenticada
+- **Rewrites**: `/intranet/calculadora` → `/calculadora`, `/intranet/casos` → `/casos`, etc.
+- **Redirects**: `/contacto` → `/solicitar-consulta`, `/areas-de-practica` → `/servicios-juridicos`, etc.
+- **Proxy** (`proxy.ts`): Edge function que protege rutas `/intranet/*` y `/api/*` con JWT
+- **ISR**: Páginas públicas con `revalidate = 3600` (1 hora). On-demand via `revalidatePath()`
+- **Layout**: `app/layout.tsx` usa `RootShell` que oculta sidebar en rutas públicas y admin
+
+### Base de datos (14 tablas)
+
+| Tabla | Propósito |
+|-------|-----------|
+| `ramas_juridicas` | Taxonomía de ramas del derecho (119 registros) |
+| `articulos_constitucion` | Artículos de la Constitución (378) |
+| `articulos_cp` | Artículos del Código Penal (635+) |
+| `delitos` | Catálogo de delitos (483) — unique(`nombre`, `articulo`) |
+| `bufetes` | Bufetes registrados |
+| `usuarios` | Usuarios del sistema (con `active`, `must_change_password`) |
+| `casos` | Casos legales |
+| `calculos` | Cálculos de penas (JSONB) |
+| `auditoria_eventos` | Auditoría de acciones (con enum de 25+ acciones) |
+| `rate_limits` | Rate limiting |
+| `aceptaciones_legales` | Aceptaciones de términos |
+| `solicitudes_consulta` | Solicitudes de consulta pública |
+| `blog_posts` | Posts del blog |
+| `faq_entries` | Entradas de FAQ |
+| `configuracion_sitio` | Configuración clave-valor |
+
+Migraciones: `npx drizzle-kit generate` + `npx drizzle-kit push`. No modificar Neon directamente.
+Seed (`drizzle/seed.ts`) tiene guarda: si ya hay datos, no ejecuta nada.
+
+### Autenticación y autorización
+
+- **JWT**: `lib/auth.ts` — `signToken()`, `verifyToken()`, `requireAdmin()`, `requireAuth()`
+- **Cookies**: `__Host-token` (JWT) + `__Host-profile` (datos usuario)
+- **Proxy**: `proxy.ts` verifica token para rutas `/intranet/*` y `/api/*` no públicas
+- **Admin**: solo rol `admin` accede a `/intranet/admin/*` — verificado en `requireAdmin()`
+- **Rate limiting**: login (5/60s), contacto (10/15min), consulta (10/15min), calcular (30/min), generate (10/5min)
+- **Auditoría**: `lib/audit.ts` con helper `logAudit()` y `audit()` — registra en `auditoria_eventos`
+
+### Zona horaria
+
+- Honduras: CST (UTC-6, `America/Tegucigalpa`)
+- Fechas mostradas al usuario: helpers de `lib/datetime.ts`
+- Fechas internas: UTC/ISO
+
+---
+
+## 3. Intranet / Admin
+
+### `/intranet/admin/` — Panel de Administración
+
+Accesible solo para usuarios con rol `admin`. Layout propio con sidebar admin (independiente del sidebar principal).
+
+#### Dashboard (`/intranet/admin/page.tsx`)
+- Cards con stats: total posts, publicados, borradores, FAQs
+- Acciones rápidas: nuevo post, nueva FAQ, gestionar blog, configuración
+- Tabla de posts recientes
+- Sidebar con módulos: Blog, FAQ, Usuarios, Configuración, Perfil
+
+#### Blog — Listado (`/intranet/admin/blog/page.tsx`)
+- Tabla paginada (20 por página) con: título, categoría, estado, fecha, acciones
+- Búsqueda por texto (título/descripción)
+- Filtros: categoría (dropdown de `data/blog/categories.ts`), estado (todos/publicados/borradores)
+- Orden: por fecha, título o estado (clic en cabecera)
+- Acciones por fila: editar, publicar/despublicar, duplicar, eliminar, ver en web
+- Enlace "Nuevo post" → `/intranet/admin/blog/nuevo`
+
+#### Blog — Editor (`/intranet/admin/blog/[id]/page.tsx`)
+- **Doble pestaña**: Visual (WYSIWYG TipTap) y Código (HTML directo). Conversión bidireccional.
+- Campos: título, slug (auto-generado), descripción, contenido HTML, categoría (dropdown real), fecha publicación, tags (con auto-generación), autor, tiempo lectura (auto), imagen portada (URL o subida), destacado, publicado
+- **Subida de imagen**: `POST /api/admin/upload` — valida tipo MIME, tamaño máx 10 MB, nombra según slug
+- **Generador AI**: botón "Generar post" → `POST /api/admin/blog/generate` — crea artículo completo con estructura legal. Rate limit: 10/5min por usuario
+- **Aviso cambios no guardados**: indicador visual + confirmación beforeunload
+- **Vista previa**: enlace "Ver en web" para posts publicados
+
+#### FAQ — Gestión (`/intranet/admin/faq/page.tsx`)
+- Agrupado por categoría (acordeones expandibles)
+- Búsqueda por texto (pregunta/respuesta)
+- Filtros: categoría (dropdown real), estado (todos/publicados/borradores)
+- Edición inline con RichTextEditor
+- Reordenar: flechas arriba/abajo (ajusta `sortOrder`)
+- Crear: formulario con categoría (dropdown de `data/faq-categories.ts`), pregunta y respuesta
+- Banner de advertencia si hay FAQs con categoría no reconocida
+- Badges: "Público" (success) / "Borrador" (warning)
+
+#### Usuarios (`/intranet/admin/usuarios/`)
+- Lista + formulario crear
+- Editar usuario por ID
+- Reset password con contraseña temporal
+
+#### Configuración (`/intranet/admin/config/page.tsx`)
+- Formulario: contacto, dirección, horario, redes sociales, geo
+
+#### Perfil (`/intranet/admin/perfil/page.tsx`)
+- Datos del usuario actual + cambiar contraseña
+
+### `/intranet/dashboard/` — Dashboard de la Intranet
+
+- Panel principal del bufete (visible para todos los roles autenticados)
+- Stats: delitos (483), arts. CP (635), ramas (119), pasos (8)
+- Búsqueda rápida de artículos CP via `ArticuloAutocomplete`
+- Cards de funcionalidades: Calcular pena, Mis casos, Biblioteca CP, Catálogo de delitos
+- Enlace a Admin (solo si rol = admin)
+- Marco normativo: referencia al CP Decreto 130-2017 y reformas
+
+### `/intranet/calculadora` → rewrite → `/calculadora`
+
+Ver sección 7 (Calculadora).
+
+---
+
+## 4. Blog CMS
+
+### Admin
+- **Ruta**: `/intranet/admin/blog/` (listado) y `/intranet/admin/blog/[id]` (editar/crear)
+- **API**: `app/api/admin/blog/` — CRUD completo con `requireAdmin()`
+
+### Fuente de datos
+- **Primaria**: PostgreSQL, tabla `blog_posts`
+- **Lectura pública**: `lib/blog-db.ts` — `getPublishedPosts()`, `getPostBySlug()`, `getBlogCategories()`, `getRelatedPosts()`
+- **Legacy**: `data/blog/posts/*.ts` (134 posts en TS, importados desde `data/blog/posts/index.ts`). NO usar como fuente primaria para escritura.
+
+### Creación de posts
+- Desde el admin: formulario con TipTap (visual) + pestaña código (HTML)
+- Desde generador AI: botón "Generar post" que llama a `/api/admin/blog/generate`
+- El generador crea título, slug, descripción, cuerpo HTML estructurado (introducción, marco legal, requisitos, plazos, etc.)
+
+### Edición
+- Editar post existente desde `/intranet/admin/blog/[id]`
+- El RichTextEditor carga contenido desde la DB y permite edición visual
+- Doble pestaña: Visual (TipTap) ↔ Código (HTML). Conversión bidireccional
+
+### Publicación
+- Al guardar: sanitización HTML server-side (`lib/sanitize.ts` — elimina scripts, iframes, handlers)
+- Al publicar: `revalidatePath()` invalida caché de `/blog`, `/blog/[categoria]`, `/blog/[categoria]/[slug]`
+- ISR: páginas públicas con `revalidate = 3600`
+- Formato: HTML sanitizado
+
+### Categorías
+- 20 categorías definidas en `data/blog/categories.ts`
+- Los dropdowns del admin cargan desde este archivo (misma fuente en listado y editor)
+- Las categorías se guardan por slug en la DB
+
+### Imágenes destacadas
+- Subida via `POST /api/admin/upload`
+- Validación: JPEG/PNG/WebP, máx 10 MB
+- Naming: `slug-del-post.ext`
+- Guardado: `/public/images/blog/`
+- Preview en el formulario
+
+### Publicación masiva
+- **Endpoint**: `POST /api/admin/blog/publish-all` — solo admin
+- Marca todos los posts con `published = false` como `published = true`
+- Incluye auditoría y revalidación ISR de todas las rutas del blog
+- Botón "Publicar todos" visible en el listado si hay posts sin publicar
+
+### Manejo de HTML escapado
+- `components/ui/rich-text-editor.tsx` incluye `decodeHtmlEntities()` que decodifica entidades HTML (`&lt;` → `<`) antes de pasar contenido a TipTap
+- Se aplica tanto en la inicialización (`useEditor`) como en la sincronización (`setContent`)
+- Es segura para contenido HTML puro (no produce doble decodificación)
+
+### Reglas obligatorias para la IA
+
+- No guardar posts en una fuente distinta a la DB (`blog_posts`).
+- No usar `data/blog/posts/` como solución final para escritura (solo legacy).
+- No dejar cuerpos de posts vacíos.
+- No crear posts automáticos sin cuerpo completo.
+- No romper formato HTML existente.
+- No perder contenido al editar (el editor TipTap sincroniza con `setContent()` vía `useEffect`).
+- No cambiar slugs existentes sin motivo justificado.
+- No modificar diseño público (`/blog/*` pages).
+- No permitir categorías inválidas (deben estar en `data/blog/categories.ts`).
+- No almacenar en localStorage como persistencia.
+
+---
+
+## 5. FAQ CMS
+
+### Admin
+- **Ruta**: `/intranet/admin/faq/`
+- **API**: `app/api/admin/faq/` — CRUD completo con `requireAdmin()`
+
+### Fuente de datos
+- **Primaria**: PostgreSQL, tabla `faq_entries`
+- **Lectura pública**: `lib/faq-db.ts` — `getFaqsForPublicPage()` (cacheada con `cache()` de React), `getPublishedFaqs()`, `getFaqsGrouped()`
+- **Legacy**: `data/faq.ts` (73 FAQs). Solo usado como fallback si la DB no tiene FAQs.
+
+### Creación y edición
+- Formulario con categoría (dropdown de `data/faq-categories.ts`), pregunta y respuesta
+- Respuesta usa editor TipTap con soporte para párrafos, negrita, cursiva, listas y enlaces
+- Edición inline en la misma página de listado
+- Checkbox de publicado
+
+### Categorías
+- 11 categorías definidas en `data/faq-categories.ts`
+- Centralizadas: `faqCategoriesMeta[]`, `faqCategorySlugToName`, `faqCategorySlugToDescription`
+- Validación frontend y backend
+- Banner de advertencia si hay categorías no reconocidas en la DB
+
+### Publicación y caché
+- Sanitización HTML server-side antes de guardar
+- `revalidatePath('/preguntas-frecuentes')` al crear/editar/eliminar
+- ISR: página pública con `revalidate = 3600`
+
+### Reglas obligatorias para la IA
+
+- No guardar FAQ en una fuente distinta a la DB (`faq_entries`).
+- No crear categorías falsas (deben estar en `data/faq-categories.ts`).
+- No permitir categorías inválidas.
+- No perder formato HTML al editar.
+- No duplicar FAQ al actualizar.
+- No modificar diseño público.
+- No usar mocks como solución final.
+
+---
+
+## 6. Categorías
+
+### Blog — 20 categorías
+- **Fuente**: `data/blog/categories.ts`
+- **Estructura**: `{ slug, nombre, descripcion, color }`
+- **Slugs**: `derecho-penal`, `proceso-penal`, `derecho-de-familia`, `derecho-laboral`, `derecho-civil`, `derecho-mercantil`, `extranjeria-migracion`, `hondurenos-en-espana`, `derecho-notarial`, `tributario`, `noticias-legales`, `practica-legal`, `derechos-ciudadanos`, `derecho-bancario`, `derecho-administrativo`, `derecho-aduanero`, `regulacion-sanitaria`, `propiedad-intelectual`, `derecho-ambiental`, `conciliacion-arbitraje`
+- Los dropdowns del admin usan `blogCategories` (importado directamente del archivo)
+- Las categorías se guardan por slug en `blog_posts.category`
+
+### FAQ — 11 categorías
+- **Fuente**: `data/faq-categories.ts`
+- **Estructura**: `{ slug, titulo, descripcion }`
+- **Slugs**: `derecho-penal-general`, `asistencia-detenidos`, `proceso-penal`, `derecho-de-familia`, `derecho-laboral`, `derecho-civil`, `derecho-mercantil`, `extranjeria-migracion`, `tributario-sar`, `bufete-honorarios`, `otras-areas`
+- Helpers: `faqCategorySlugToName`, `faqCategorySlugToDescription`
+- Los dropdowns del admin usan `faqCategoriesMeta`
+
+### Reglas
+- Las categorías deben venir de la fuente real (archivo TS), no de texto libre.
+- No duplicar listas de categorías. Ya están centralizadas.
+- Si se añade una categoría nueva, actualizar el array en el archivo fuente y la DB si aplica.
+- No permitir categorías que no existan en la fuente.
+
+---
+
+## 7. Calculadora de penas
+
+### Rutas
+- **Pública**: `/calculadora` — 8 pasos (flujo wizard)
+- **Intranet**: `/intranet/calculadora` → rewrite → `/calculadora`
+- **Código**: `app/calculadora/` (page.tsx + 14 componentes y hooks)
+- **Estado**: vía `configs` (array de `DelitoConfig`). Preservar inmutabilidad.
+
+### Motor de cálculo
+- `lib/rules/v1/` — 9 archivos: `pena-base.ts`, `circunstancias.ts`, `tentativa.ts`, `grado-autoria.ts`, `concurso.ts`, `eximentes.ts`, `analisis.ts`, `types.ts`, `index.ts`
+- `lib/calculo.ts` — re-exporta desde `lib/rules/v1/`
+- `lib/utils.ts` — aumentar/reducir grado, mitad superior/inferior
+- `lib/catalogos.ts` — catálogos legales (agravantes Art. 32 CP, atenuantes Art. 31 CP, eximentes Art. 30 CP)
+
+### Catálogo de delitos
+- **483 delitos** del Código Penal hondureño (Decreto 130-2017) más reformas
+- **Verificación**: 483 verificados (100%), 0 pendientes, 0 rechazados — `data/delitos-estados.json`
+- **API calidad**: `GET /api/delitos/calidad` devuelve resumen de estados
+- **Validación**: contra CP Decreto 130-2017 y reformas 119-2019, 46-2020, 93-2021, 59-2024
+- **Fuente**: `data/delitos.json` (unique constraint en `(nombre, articulo)`)
+
+### API
+- `POST /api/calcular` — `CalculoRequest`, devuelve resultado JSON
+- `POST /api/calcular/pdf` — genera PDF vía @react-pdf
+- `GET /api/delitos` — listar delitos
+- `GET /api/delitos/[id]` — detalle delito
+- `GET /api/delitos/count` — contador
+- `GET /api/delitos/calidad` — resumen verificación
+
+### Reglas para la IA
+
+- No cambiar solo el texto del contador (debe reflejar datos reales).
+- No marcar registros como verificados sin validar contra el CP.
+- No alterar fórmulas legales sin causa justificada y verificación legal expresa.
+- `meses_a_texto()` debe mantener formato "X años y Y meses".
+- Paso 4: `eximente_completa` es `string | null`, no booleano.
+- Paso 8: resultado envuelto en `ErrorBoundary`.
+- La calculadora NO usa `AppShell` (UX de wizard de foco).
+- La API `/api/calcular` es POST y espera `CalculoRequest`. No cambiar el contrato.
+- No cambiar reglas de compensación agravantes/atenuantes sin verificación legal expresa.
+
+---
+
+## 8. Restricciones críticas para agentes IA
+
+### Lo que NO debe hacer la IA
+
+1. **No rediseñar la web pública**. Las páginas `/(public)/*` tienen diseño establecido. Solo tocar por bug técnico imprescindible.
+2. **No modificar SEO ni URLs públicas**. No romper slugs, breadcrumbs, JSON-LD, sitemap, robots.txt, OG tags, hreflang.
+3. **No usar datos mock como solución final**. Toda persistencia debe ser en DB (PostgreSQL) a menos que el sistema explícitamente use otra fuente.
+4. **No usar localStorage como persistencia final** salvo que sea la fuente real explícita del subsistema.
+5. **No cambiar arquitectura sin justificar** (framework, app router, proxy, auth, DB schema).
+6. **No duplicar lógica** (helpers, tipos, schemas, configuraciones).
+7. **No crear categorías falsas** para blog o FAQ. Usar `data/blog/categories.ts` y `data/faq-categories.ts`.
+8. **No introducir cambios destructivos** sin migración/backup (DELETE sin WHERE, DROP table, etc.).
+9. **No marcar datos como verificados sin validación real** contra el CP de Honduras.
+10. **No dejar posts generados automáticamente sin cuerpo completo**.
+11. **No eliminar contenido existente** sin migración o backup verificable.
+12. **No modificar configuración de modelos, proveedores o APIs** (IA, email, analytics) sin instrucción explícita.
+13. **No mezclar refactors grandes con correcciones puntuales**.
+14. **No crear rutas nuevas si ya existen rutas oficiales** del proyecto.
+15. **No permitir categorías inválidas** en formularios de blog o FAQ.
+16. **No guardar en fuentes incorrectas** (blog debe ir a `blog_posts`, FAQ a `faq_entries`).
+
+### Lo que SIEMPRE debe hacer la IA
+
+1. **Auditar antes de tocar código**: leer README.md, CHANGELOG.md, AGENTS.md.
+2. **Identificar la fuente real de datos** antes de escribir.
+3. **Hacer cambios mínimos y coherentes** con el código existente.
+4. **Ejecutar build/lint/tests** (`npm run lint && npm run build && npm run test`).
+5. **Probar rutas afectadas** después del cambio.
+6. **Actualizar documentación** (README.md, CHANGELOG.md) cuando aplique.
+7. **Reportar NO VALIDADO** si un comando no puede ejecutarse, con la causa exacta.
+8. **Distinguir** entre IMPLEMENTADO, VALIDADO, NO VALIDADO, PENDIENTE, RIESGO.
+9. **Responder en español**, claro y breve.
+10. **Usar el formato de respuesta final** (ver sección 11).
+
+---
+
+## 9. Flujo obligatorio por cambio
+
+Ejecutar en orden. No saltar pasos.
+
+### 1. Lint + Build
+```bash
+npm run lint
+npm run build
+```
+- `lint`: 0 errores. (Puede haber warnings preexistentes.)
+- `build`: `Compiled successfully` + `Finished TypeScript` sin errores.
+- Si `build` falla por `EPERM` en `.next` (OneDrive lock en Windows): `Remove-Item -LiteralPath .next -Recurse -Force -ErrorAction SilentlyContinue` y reintentar.
+
+### 2. Tests unit + E2E
+```bash
+npm run test
+npm run test:e2e
+```
+- `test` (Vitest): debe pasar todos los tests (~185 en 13 archivos).
+- `test:e2e` (Playwright): debe pasar todas las pruebas E2E (3 spec files, ~29 tests, suite pública sin auth).
+- Si `test:e2e` falla por `EPERM` en `test-results` o `.next`: limpiar y reintentar.
+- Si el webServer de Playwright no arranca por build sucia: `Remove-Item -LiteralPath .next -Recurse -Force` antes de reintentar.
+
+### 3. Commit + Push (solo si pasos 1 y 2 pasan)
+```bash
+git add <archivos específicos>
+git commit -m "<mensaje descriptivo en español>"
+git push origin main
+```
+- Commits atómicos (un cambio lógico por commit). Mensaje en español, con prefijo (`feat:`, `fix:`, `docs:`, `chore:`).
+- NO usar `git add .` a ciegas; revisar `git status` y `git diff --stat` antes.
+- `push` solo a `main` (no hay branches de feature).
+
+### 4. Verificar deploy de Vercel (después de push)
+```bash
+Start-Sleep -Seconds 30
+vercel ls calculo-de-penas-nextjs
+vercel inspect <url-del-nuevo-deploy>
+```
+- Vercel CLI autenticado. El deploy debe pasar de `Building` a `Ready` en ~30-60s.
+- Verificar alias de producción: `calculo-de-penas-nextjs.vercel.app`.
+
+---
+
+## 10. Comandos por área modificada
+
+| Área | Comando |
+|------|---------|
+| Motor de cálculo (`lib/calculo.ts`, `lib/rules/v1/`, `lib/utils.ts`, `lib/catalogos.ts`) | `npm run build` + verificar API `/api/calcular` con `Invoke-RestMethod` |
+| Schema DB (`lib/schema.ts`) | `npx drizzle-kit generate` |
+| Dependencias, build, Vercel o estructura del proyecto | `npm run build` |
+| Datos semilla (`data/*.json`) | `node -e "const d=require('./data/delitos.json'); console.log(d.length)"` + verificar sin duplicados por `(nombre, articulo)` y UTF-8 |
+| Blog admin | `npm run build` + verificar GET `/api/admin/blog` |
+| FAQ admin | `npm run build` + verificar GET `/api/admin/faq` |
+| Blog público | `npm run build` + `npm run test:e2e` |
+| API routes | `npm run build` + verificar endpoint con `Invoke-RestMethod` |
+| UI / componentes públicos | `npm run build` + `npm run test` |
+| Imágenes / assets | `npm run build` + verificar rutas públicas |
+
+---
+
+## 11. Comunicación con el usuario
+
+- Responder siempre en español, claro y breve.
+- No usar respuestas complacientes. Si algo está mal, decirlo.
+- Distinguir entre plantilla, borrador, versión parcial, versión completa y validación real.
+- No llenar con teoría innecesaria.
+
+### Formato de respuesta final
+
+```
+Porcentaje completado:
+Porcentaje restante:
+Archivos modificados:
+Comandos ejecutados:
+Resultado de cada comando:
+Cambios aplicados:
+Errores corregidos:
+Riesgos pendientes:
+NO VALIDADO:
+Próximo paso recomendado:
+```
+
+---
+
+## 12. Investigación inicial en este repositorio
+
+Cuando se inicia una sesión, leer en orden:
+1. `README*`, `package.json`, `opencode.jsonc` (proyecto)
+2. Config global: `~/.config/opencode/opencode.jsonc` — puede contener MCP servers, plugins y config que afectan el comportamiento
+3. `AGENTS.md` (este archivo)
+4. Archivos de entrypoint y config de build/test
+5. `CHANGELOG.md` (últimas releases para contexto de cambios recientes)
+
+No asumir que la configuración del proyecto es la única que existe. Verificar también la global.
+
+---
+
+## 13. Principios obligatorios
 
 1. No afirmar "hecho", "completado", "validado", "listo" o "todo correcto" sin pruebas reales.
 2. No inventar resultados de comandos, URLs, fuentes legales, APIs, rutas, dependencias ni comportamiento del sistema.
@@ -26,177 +567,36 @@ Distinguir entre:
 
 Está prohibido usar "hecho", "listo", "completado" o "validado" si no corresponde exactamente. Si una tarea está parcialmente completada, reportar porcentaje completado y restante.
 
-## Forma de trabajo
+---
 
-Antes de modificar:
+## 14. Forma de trabajo
+
+### Antes de modificar
 - Leer archivos afectados y entender el cambio mínimo necesario.
-- Revisar `README.md`, `CHANGELOG.md`, `opencode.json` (proyecto Y global `~/.config/opencode/`), y archivos de reglas existentes.
-- Confirmar si el cambio afecta API routes, motor de cálculo, DB schema, seed, metadata, UI de la calculadora o validación de penas.
+- Revisar `README.md`, `CHANGELOG.md`, `opencode.json` (proyecto Y global), y archivos de reglas existentes.
+- Confirmar si el cambio afecta API routes, motor de cálculo, DB schema, seed, metadata, UI de la calculadora, blog CMS, FAQ CMS, o validación de penas.
 - **Siempre revisar la configuración GLOBAL** (`~/.config/opencode/opencode.jsonc`) además de la del proyecto.
 
-Durante la modificación:
+### Durante la modificación
 - Cambios mínimos y controlados. No eliminar lógica funcional sin justificación.
 - No crear rutas nuevas si ya existen rutas oficiales del proyecto.
 - No mezclar refactors grandes con correcciones puntuales salvo instrucción explícita.
 - No cambiar nombres de API routes, parámetros, schema DB o metadata sin justificación.
 
-Después de modificar:
+### Después de modificar
 - Ejecutar validaciones reales. Revisar regresiones.
 - Si algo falla, corregirlo o reportarlo como riesgo pendiente.
 - Si se modifica comportamiento del proyecto, actualizar `README.md` o `CHANGELOG.md` si existe.
+- Si se añaden rutas públicas, agregar a `PUBLIC_PAGE_EXACT` o `PUBLIC_PAGE_PREFIXES` en `proxy.ts`.
+- Si se añaden rutas intranet legacy, agregar a `INTRANET_LEGACY_EXACT` o `INTRANET_LEGACY_PREFIXES`.
+- Si se añaden páginas admin, asegurar que están protegidas por `requireAdmin()`.
 
-## Flujo obligatorio por cambio
+---
 
-Ejecutar en orden. No saltar pasos.
+## 15. Criterio de cierre
 
-### 1. Lint + Build
-```bash
-npm run lint
-npm run build
-```
-- `lint`: 0 errores. (Puede haber warnings; no bloqueante pero revisar.)
-- `build`: `Compiled successfully` + `Finished TypeScript` sin errores.
-- Si `build` falla por `EPERM` en `.next` (OneDrive lock en Windows): `Remove-Item -LiteralPath .next -Recurse -Force -ErrorAction SilentlyContinue` y reintentar.
-
-### 2. Tests unit + E2E
-```bash
-npm run test
-npm run test:e2e
-```
-- `test` (Vitest): debe pasar todos los tests en 13 archivos.
-- `test:e2e` (Playwright): debe pasar todas las pruebas E2E (suite pública sin auth).
-- Si `test:e2e` falla por `EPERM` en `test-results` o `.next`: limpiar y reintentar.
-- Si el webServer de Playwright no arranca por build sucia: `Remove-Item -LiteralPath .next -Recurse -Force` antes de reintentar.
-
-### 3. Commit + Push (solo si pasos 1 y 2 pasan)
-```bash
-git add <archivos específicos>
-git commit -m "<mensaje descriptivo en español>"
-git push origin main
-```
-- Commits atómicos (un cambio lógico por commit). Mensaje en español, con prefijo (`feat:`, `fix:`, `docs:`, `chore:`).
-- NO usar `git add .` a ciegas; revisar `git status` y `git diff --stat` antes.
-- `push` solo a `main` (no hay branches de feature).
-
-### 4. Verificar deploy de Vercel (después de push)
-```bash
-Start-Sleep -Seconds 30
-vercel ls calculo-de-penas-nextjs
-vercel inspect <url-del-nuevo-deploy>
-```
-- Vercel CLI autenticado. El deploy debe pasar de `Building` a `Ready` en ~30-60s.
-- Verificar alias de producción: `calculo-de-penas-nextjs.vercel.app`.
-
-## Comandos por área modificada
-
-| Área | Comando |
-|------|---------|
-| Motor de cálculo (`lib/calculo.ts`, `lib/rules/v1/`, `lib/utils.ts`, `lib/catalogos.ts`) | `npm run build` + verificar API `/api/calcular` con `Invoke-RestMethod` |
-| Schema DB (`lib/schema.ts`) | `npx drizzle-kit generate` |
-| Dependencias, build, Vercel o estructura del proyecto | `npm run build` |
-| Datos semilla (`data/*.json`) | `node -e "const d=require('./data/delitos.json'); console.log(d.length)"` + verificar sin duplicados por `(nombre, articulo)` y UTF-8 |
-
-## Reglas específicas del proyecto
-
-### Motor de cálculo de penas
-- `lib/calculo.ts` re-exporta desde `lib/rules/v1/` (analisis, circunstancias, concurso, eximentes, grado-autoria, pena-base, tentativa, types, index). Preservar compatibilidad con API `/api/calcular`.
-- `lib/utils.ts` (aumentar/reducir grado, mitad superior/inferior): cambiar una fórmula afecta TODOS los cálculos.
-- `lib/catalogos.ts`: catálogos legales (agravantes Art. 32 CP, atenuantes Art. 31 CP, eximentes Art. 30 CP). Referencia: CP Honduras Decreto 130-2017.
-- No cambiar reglas de compensación agravantes/atenuantes sin verificación legal expresa.
-- `meses_a_texto()` debe mantener formato "X años y Y meses".
-
-### Base de datos
-- `lib/schema.ts`: 11 tablas (`ramas_juridicas`, `articulos_constitucion`, `articulos_cp`, `delitos`, `bufetes`, `usuarios`, `casos`, `calculos`, `auditoria_eventos`, `rate_limits`, `aceptaciones_legales`).
-- `delitos` tiene unique constraint en `(nombre, articulo)`.
-- Migraciones: `npx drizzle-kit generate` + `npx drizzle-kit push`. No modificar Neon directamente.
-- Seed (`drizzle/seed.ts`) tiene guarda: si ya hay datos, no ejecuta nada.
-
-### Datos
-- `data/delitos.json`: 483 delitos validados contra CP Decreto 130-2017 y reformas (119-2019, 46-2020, 93-2021, 59-2024).
-- `data/ramas_juridicas.json`: 119 registros.
-- `data/articulos_constitucion.json`: 378 artículos.
-- También existen: `areas-juridicas.ts`, `articulos_cp.json`, `auditoria-cruzada.json`, `correcciones-pendientes.json`, `cp-indice.json`, `delitos-estados.json`, `delitos-validacion.json/csv`, `faq.ts`, `images.ts`, `blog/`.
-- Mantener UTF-8 en todos los JSON.
-
-### UI de la calculadora
-- `app/calculadora/page.tsx`: flujo de 8 pasos. No romper navegación.
-- Estado vía `configs` (array de `DelitoConfig`). Preservar inmutabilidad.
-- Paso 4: `eximente_completa` es `string | null`, no booleano.
-- Paso 8: resultado envuelto en `ErrorBoundary`.
-- La calculadora NO usa `AppShell` (UX de wizard de foco).
-
-### API routes
-- Todas en `app/api/`. Rutas: `/api/calcular`, `/api/delitos`, `/api/calculos/[id]`, `/api/casos`, `/api/seed`, `/api/health`, `/api/auth/*`, `/api/contacto`, `/api/consulta`, `/api/clasificaciones`, `/api/cp`.
-- `/api/calcular` es POST y espera `CalculoRequest`. No cambiar el contrato.
-- `/api/seed` verifica si hay datos antes de insertar.
-
-### Layout y shell
-- `app/layout.tsx` usa `RootShell` (sidebar desktop, drawer móvil, oculto en rutas públicas).
-- `root-shell.tsx` define `PUBLIC_ROUTES` (`/login`, `/terminos`, `/privacidad`, `/_not-found`). Agregar nuevas rutas públicas ahí.
-- `e2e/smoke.spec.ts` cubre solo rutas públicas (sin auth).
-
-### Sistema de imágenes
-- `next.config.ts` debe mantener `images: { unoptimized: true }`.
-- `proxy.ts` debe mantener `images/` en el negative lookahead del `matcher`.
-- NO reintroducir CSP `upgrade-insecure-requests`.
-- Catálogo en `data/images.ts`: `SERVICES` (13), `PENAL` (7), `CORPORATE` (6). Slugs coinciden con `data/areas-juridicas.ts`.
-- 31 JPG + 1 WebP en `/public/images/{services,penal,corporate,blog}/`. NO convertir a WebP/AVIF ni optimizar en build.
-- `ServiceCard` usa `next/image` con `fill` + `sizes` + `object-cover`. NO migrar a `<img>` plano.
-- Si un slug no existe en el mapa, usar `PlaceholderPhoto`.
-
-### Zona horaria de Honduras (obligatoria)
-- Toda fecha mostrada al usuario debe ser CST (UTC-6, `America/Tegucigalpa`).
-- Usar helpers de `lib/datetime.ts` (`formatHondurasDateTime`, `formatHondurasDate`, `formatHondurasTime`, `getHondurasClock`).
-- NO usar `toLocaleString`/`getHours()`/`getDay()` sin `timeZone: 'America/Tegucigalpa'`.
-- Fechas técnicas internas (DB, health, rate-limit, sitemap) van en UTC/ISO.
-
-### Acceso a intranet
-- URL: `https://pinedayasociadoshn.com/intranet/dashboard`. El redirect `www` → apex lo gestiona Vercel.
-- Solo se accede desde botón "Acceso Intranet" en `components/marketing/public-header.tsx`.
-- Ningún otro enlace público puede apuntar a `/intranet/`.
-
-## Comunicación con el usuario
-- Responder siempre en español, claro y breve.
-- No usar respuestas complacientes. Si algo está mal, decirlo.
-- Distinguir entre plantilla, borrador, versión parcial, versión completa y validación real.
-- No llenar con teoría innecesaria.
-
-## Formato de respuesta final
-```
-Porcentaje completado:
-Porcentaje restante:
-Archivos modificados:
-Comandos ejecutados:
-Resultado de cada comando:
-Cambios aplicados:
-Errores corregidos:
-Riesgos pendientes:
-NO VALIDADO:
-Próximo paso recomendado:
-```
-
-## Investigación inicial en este repositorio
-Cuando se inicia una sesión, leer en orden:
-1. `README*`, `package.json`, `opencode.jsonc` (proyecto)
-2. Config global: `~/.config/opencode/opencode.jsonc` — puede contener MCP servers, plugins y config que afectan el comportamiento
-3. `AGENTS.md` (este archivo)
-4. Archivos de entrypoint y config de build/test
-
-No asumir que la configuración del proyecto es la única que existe. Verificar también la global.
-
-## Prohibiciones absolutas
-- Inventar resultados, URLs, fuentes legales o validaciones.
-- Ocultar errores. Decir "todo correcto" sin comandos reales.
-- Reescribir archivos completos sin necesidad.
-- Cambiar arquitectura sin justificación.
-- Borrar datos de BD o semillas sin autorización explícita.
-- Dejar código roto reportado como completado.
-- Ignorar errores de validación.
-- Mezclar tareas no solicitadas.
-- Modificar configuración de modelos/proveedores sin instrucción explícita.
-
-## Criterio de cierre
 Una tarea se cierra solo si: archivos revisados → cambios aplicados → comandos ejecutados → resultados reportados → riesgos declarados → no verificable marcado como `NO VALIDADO` → sin funciones truncadas, rutas rotas ni validaciones inventadas.
 
 ## Instrucción final
+
 La prioridad del agente es preservar integridad, trazabilidad, seguridad y verificabilidad del repositorio. La respuesta correcta no es la más complaciente, sino la más precisa y comprobable.
