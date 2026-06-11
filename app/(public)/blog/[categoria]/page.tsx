@@ -15,8 +15,9 @@ const ITEMS_PER_PAGE = 12;
 
 type Props = { params: Promise<{ categoria: string }>; searchParams?: Promise<{ page?: string }> };
 
-export function generateStaticParams() {
-  return getAllCategorySlugs().map((categoria) => ({ categoria }));
+export async function generateStaticParams() {
+  const slugs = await getAllCategorySlugs();
+  return slugs.map((categoria) => ({ categoria }));
 }
 
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
@@ -41,7 +42,7 @@ export default async function BlogCategoryPage(props: Props) {
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) notFound();
 
-  const categoryPosts = getPostsByCategory(categoria);
+  const categoryPosts = await getPostsByCategory(categoria);
   const totalPages = getTotalPages(categoryPosts, ITEMS_PER_PAGE);
   const posts = getPostsByPage(categoryPosts, page, ITEMS_PER_PAGE);
 

@@ -1,31 +1,52 @@
 import type { Post } from '@/data/blog/types';
 import { blogCategories } from '@/data/blog/categories';
-import { posts as allPosts } from '@/data/blog/posts';
 import { formatHondurasDate } from '@/lib/datetime';
+import type { BlogPost } from '@/lib/schema';
+import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
 
-export function getAllPosts(): Post[] {
-  return allPosts;
+export async function getAllPosts(): Promise<Post[]> {
+  const posts = await getPublishedPosts();
+  return posts.map(mapToPost);
 }
 
-export function getPostBySlug(slug: string): Post | undefined {
-  return getAllPosts().find((p) => p.slug === slug);
+export async function getPostBySlug(slug: string): Promise<Post | undefined> {
+  const post = await getPostBySlugDb(slug);
+  return post ? mapToPost(post) : undefined;
 }
 
-export function getPostsByCategory(categorySlug: string): Post[] {
-  return getAllPosts().filter((p) => p.category === categorySlug);
+export async function getPostsByCategory(categorySlug: string): Promise<Post[]> {
+  const posts = await getPublishedPosts({ category: categorySlug });
+  return posts.map(mapToPost);
 }
 
-export function getPostsByTag(tag: string): Post[] {
-  return getAllPosts().filter((p) => p.tags.includes(tag));
+export async function getFeaturedPosts(): Promise<Post[]> {
+  const posts = await getPublishedPosts({ featured: true });
+  return posts.map(mapToPost);
 }
 
-export function getFeaturedPosts(): Post[] {
-  return getAllPosts().filter((p) => p.featured);
+export async function getRecentPosts(count?: number): Promise<Post[]> {
+  const posts = await getPublishedPosts({ limit: count });
+  return posts.map(mapToPost);
 }
 
-export function getRecentPosts(count?: number): Post[] {
-  const posts = getAllPosts();
-  return posts.slice(0, count ?? posts.length);
+export async function getAllCategorySlugs(): Promise<string[]> {
+  return getBlogCategories();
+}
+
+export async function getAllTags(): Promise<string[]> {
+  const posts = await getPublishedPosts();
+  const tags = new Set<string>();
+  for (const post of posts) {
+    for (const tag of post.tags ?? []) {
+      tags.add(tag);
+    }
+  }
+  return Array.from(tags).sort();
+}
+
+export async function getPostsByTag(tag: string): Promise<Post[]> {
+  const posts = await getPublishedPosts();
+  return posts.filter(p => (p.tags ?? []).includes(tag)).map(mapToPost);
 }
 
 export function getCategoryName(slug: string): string | undefined {
@@ -36,34 +57,16 @@ export function getCategoryDescription(slug: string): string | undefined {
   return blogCategories.find((c) => c.slug === slug)?.descripcion;
 }
 
-export function getAllCategorySlugs(): string[] {
-  return blogCategories.map((c) => c.slug);
-}
-
 export function formatDate(dateString: string): string {
   return formatHondurasDate(dateString, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    year: 'numeric', month: 'long', day: 'numeric',
   });
 }
 
 export function formatDateShort(dateString: string): string {
   return formatHondurasDate(dateString, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+    year: 'numeric', month: 'short', day: 'numeric',
   });
-}
-
-export function getAllTags(): string[] {
-  const tags = new Set<string>();
-  for (const post of getAllPosts()) {
-    for (const tag of post.tags) {
-      tags.add(tag);
-    }
-  }
-  return Array.from(tags).sort();
 }
 
 export function getPostsByPage(posts: Post[], page: number, perPage: number): Post[] {
@@ -73,4 +76,15 @@ export function getPostsByPage(posts: Post[], page: number, perPage: number): Po
 
 export function getTotalPages(posts: Post[], perPage: number): number {
   return Math.max(1, Math.ceil(posts.length / perPage));
+}
+
+function mapToPost(p: BlogPost): Post {
+  return {
+    slug: p.slug, title: p.title, description: p.description, body: p.body,
+    publishedAt: p.publishedAt.toISOString(), category: p.category,
+    tags: p.tags ?? [], author: p.author ?? '', readingTime: p.readingTime ?? '',
+    coverImage: p.coverImage ?? undefined,
+    featured: p.featured ?? false,
+    updatedAt: p.updatedAt?.toISOString(),
+  };
 }

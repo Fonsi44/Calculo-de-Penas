@@ -19,7 +19,7 @@ function rfc822(dateStr: string): string {
 }
 
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const siteUrl = site.url;
   const now = new Date();
 

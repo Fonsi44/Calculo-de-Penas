@@ -18,13 +18,13 @@ import { RelatedService } from '@/components/blog/related-service';
 type Props = { params: Promise<{ categoria: string; slug: string }> };
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   return posts.map((p) => ({ categoria: p.category, slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categoria, slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post || post.category !== categoria) return {};
 
   return {
@@ -46,8 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function getRelatedPosts(slug: string, category: string, tags: string[], limit = 3) {
-  const all = getAllPosts();
+async function getRelatedPosts(slug: string, category: string, tags: string[], limit = 3) {
+  const all = await getAllPosts();
   return all
     .filter((p) => p.slug !== slug)
     .map((p) => {
@@ -63,14 +63,14 @@ function getRelatedPosts(slug: string, category: string, tags: string[], limit =
 
 export default async function BlogPostByCategoryPage({ params }: Props) {
   const { categoria, slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post || post.category !== categoria) notFound();
 
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPosts();
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-  const relatedPosts = getRelatedPosts(slug, post.category, post.tags);
+  const relatedPosts = await getRelatedPosts(slug, post.category, post.tags);
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;

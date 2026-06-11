@@ -36,6 +36,14 @@ export default function AdminFaqPage() {
     return acc;
   }, []).sort();
 
+  const defaultFaqCategories = [
+    'derecho-penal-general', 'asistencia-detenidos', 'proceso-penal',
+    'derecho-de-familia', 'derecho-laboral', 'derecho-civil',
+    'derecho-mercantil', 'extranjeria-migracion', 'tributario-sar',
+    'bufete-honorarios', 'otras-areas',
+  ];
+  const displayCategories = categoriesList.length > 0 ? categoriesList : defaultFaqCategories;
+
   const fetchFaqs = () => {
     setLoading(true);
     fetch('/api/admin/faq').then(r => r.json()).then(data => {
@@ -129,7 +137,7 @@ export default function AdminFaqPage() {
             <select value={newForm.category} onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))}
               className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
               <option value="">Seleccionar categoría...</option>
-              {categoriesList.map(c => <option key={c} value={c}>{c}</option>)}
+              {displayCategories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
             <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta" />
             <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} />
@@ -158,7 +166,7 @@ export default function AdminFaqPage() {
                     <label className="text-xs font-semibold text-text-secondary">Categoría</label>
                     <select value={editForm.category} onChange={e => setEditForm(ff => ({ ...ff, category: e.target.value }))}
                       className="w-full h-9 rounded-md border border-border-light bg-surface px-2 text-sm">
-                      {categoriesList.map(c => <option key={c} value={c}>{c}</option>)}
+                      {displayCategories.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                     <Input value={editForm.question} onChange={e => setEditForm(ff => ({ ...ff, question: e.target.value }))} placeholder="Pregunta" />
                     <RichTextEditor content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />

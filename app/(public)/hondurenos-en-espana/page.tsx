@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MigrantesPage() {
+export default async function MigrantesPage() {
   const url = migrantesHubHref();
   const ldSchemas = areaSchemas({
     service: {
@@ -44,6 +44,8 @@ export default function MigrantesPage() {
     ],
     url,
   });
+
+  const blogPosts = (await getPostsByCategory('hondurenos-en-espana')).slice(0, 3);
 
   return (
     <>
@@ -125,50 +127,46 @@ export default function MigrantesPage() {
         </div>
       </Section>
 
-      {(() => {
-        const blogPosts = getPostsByCategory('hondurenos-en-espana').slice(0, 3);
-        if (blogPosts.length === 0) return null;
-        return (
-          <Section spacing="md">
-            <SectionHeader
-              eyebrow="Artículos relacionados"
-              title="Aprenda más sobre trámites para hondureños en España"
-              subtitle="Guías, consejos y análisis legales escritos por nuestro equipo."
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {blogPosts.map((post) => (
-                <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
-                  <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                    <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
-                      <BookOpen size={20} aria-hidden="true" />
-                    </div>
-                    <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
-                      {formatDate(post.publishedAt)}
-                    </p>
-                    <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-xs text-text-secondary mt-1.5 leading-relaxed line-clamp-2">
-                      {post.description}
-                    </p>
-                    <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                      Leer artículo <ArrowRight size={12} />
-                    </span>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-            <div className="text-center mt-6">
-              <Link
-                href="/blog/hondurenos-en-espana"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-              >
-                Ver todos los artículos de hondureños en España <ArrowRight size={16} />
+      {blogPosts.length > 0 && (
+        <Section spacing="md">
+          <SectionHeader
+            eyebrow="Artículos relacionados"
+            title="Aprenda más sobre trámites para hondureños en España"
+            subtitle="Guías, consejos y análisis legales escritos por nuestro equipo."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {blogPosts.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
+                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
+                    <BookOpen size={20} aria-hidden="true" />
+                  </div>
+                  <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
+                    {formatDate(post.publishedAt)}
+                  </p>
+                  <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-text-secondary mt-1.5 leading-relaxed line-clamp-2">
+                    {post.description}
+                  </p>
+                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                    Leer artículo <ArrowRight size={12} />
+                  </span>
+                </Card>
               </Link>
-            </div>
-          </Section>
-        );
-      })()}
+            ))}
+          </div>
+          <div className="text-center mt-6">
+            <Link
+              href="/blog/hondurenos-en-espana"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+            >
+              Ver todos los artículos de hondureños en España <ArrowRight size={16} />
+            </Link>
+          </div>
+        </Section>
+      )}
 
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

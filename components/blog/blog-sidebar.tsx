@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { blogCategories } from '@/data/blog/categories';
 import { getAllTags, getRecentPosts, formatDateShort } from '@/lib/blog';
 
-export function BlogSidebar() {
-  const recentPosts = getRecentPosts(5);
-  const allTags = getAllTags();
+export async function BlogSidebar() {
+  const recentPosts = await getRecentPosts(5);
+  const allTags = await getAllTags();
 
   return (
     <aside className="space-y-8">

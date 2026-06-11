@@ -64,7 +64,7 @@ const PUBLIC_ROUTES: Array<{ path: string; priority: number; changeFrequency: Me
   { path: '/disclaimer', priority: 0.2, changeFrequency: 'yearly', lastModified: STATIC_REF_DATE },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Modo noindex: devolvemos sitemap vacío para no entregar nada
   // a los motores. Al lanzar (NEXT_PUBLIC_NOINDEX=false) se enumera todo.
   if (site.noindex) {
@@ -87,7 +87,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const blogPostRoutes = getAllPosts().map((p) => ({
+  const blogPostRoutes = (await getAllPosts()).map((p) => ({
     url: absoluteUrl(`/blog/${p.category}/${p.slug}`),
     lastModified: new Date(p.publishedAt),
     changeFrequency: 'monthly' as const,

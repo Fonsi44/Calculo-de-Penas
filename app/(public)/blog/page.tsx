@@ -36,11 +36,11 @@ export default async function BlogHubPage(props: Props) {
   const tagFilter = searchParams?.tag;
   const page = parseInt(searchParams?.page ?? '1', 10) || 1;
 
-  const allPosts = getAllPosts();
-  const filteredPosts = tagFilter ? getPostsByTag(tagFilter) : allPosts;
+  const allPosts = await getAllPosts();
+  const filteredPosts = tagFilter ? await getPostsByTag(tagFilter) : allPosts;
   const totalPages = getTotalPages(filteredPosts, ITEMS_PER_PAGE);
   const posts = getPostsByPage(filteredPosts, page, ITEMS_PER_PAGE);
-  const featured = tagFilter || page > 1 ? [] : getFeaturedPosts();
+  const featured = tagFilter || page > 1 ? [] : await getFeaturedPosts();
 
   const buildPageUrl = (p: number) => {
     const base = '/blog';
