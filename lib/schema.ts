@@ -160,3 +160,20 @@ export const aceptacionesLegales = pgTable('aceptaciones_legales', {
 export type AuditoriaAccion = typeof auditoriaAccionEnum.enumValues[number];
 export type AuditoriaEvento = typeof auditoriaEventos.$inferSelect;
 export type AuditoriaEventoInsert = typeof auditoriaEventos.$inferInsert;
+
+export const solicitudesConsulta = pgTable('solicitudes_consulta', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  telefono: varchar('telefono', { length: 50 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  motivo: varchar('motivo', { length: 100 }).notNull(),
+  resumen: text('resumen').notNull(),
+  ip: varchar('ip', { length: 45 }),
+  userAgent: text('user_agent'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  creadoEnIdx: index('solicitudes_consulta_creado_en_idx').on(table.creadoEn),
+}));
+
+export type SolicitudConsulta = typeof solicitudesConsulta.$inferSelect;
+export type SolicitudConsultaInsert = typeof solicitudesConsulta.$inferInsert;

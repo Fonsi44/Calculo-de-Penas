@@ -2,6 +2,8 @@ import { consultaSchema, validate } from '@/lib/validation';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { sendConsultaEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
+import { db } from '@/lib/db';
+import { solicitudesConsulta } from '@/lib/schema';
 
 const CONSULTA_MAX = 10;
 const CONSULTA_WINDOW_MS = 15 * 60 * 1000;
@@ -27,18 +29,8 @@ export async function POST(request: Request) {
     return Response.json({ error: parsed.error }, { status: 400 });
   }
 
-  if (!isEmailConfigured()) {
-    console.warn('[consulta] RESEND_API_KEY no configurada; mensaje no enviado', {
-      ip,
-      nombre: parsed.data.nombre,
-    });
-    return Response.json(
-      { error: 'El servicio de correo no está configurado. Intente más tarde.' },
-      { status: 503 },
-    );
-  }
-
-  const result = await sendConsultaEmail({
+  // Guardar en BD — siempre funciona, no depende de servicio externo
+  const insertResult = await db.insert(solicitudesConsulta).values({
     nombre: parsed.data.nombre,
     telefono: parsed.data.telefono,
     email: parsed.data.email ?? null,
@@ -46,16 +38,27 @@ export async function POST(request: Request) {
     resumen: parsed.data.resumen,
     ip: ipFromRequest(request),
     userAgent: uaFromRequest(request),
-    submittedAt: new Date(),
-  });
+  }).returning({ id: solicitudesConsulta.id });
 
-  if (!result.ok) {
-    console.error('[consulta] error al enviar email:', result.error);
-    return Response.json(
-      { error: 'No se pudo enviar la solicitud. Intente de nuevo más tarde.' },
-      { status: 502 },
-    );
+  const savedId = insertResult[0]?.id;
+
+  // Intentar enviar email — best effort, no bloquea la respuesta
+  if (isEmailConfigured()) {
+    sendConsultaEmail({
+      nombre: parsed.data.nombre,
+      telefono: parsed.data.telefono,
+      email: parsed.data.email ?? null,
+      motivo: parsed.data.motivo,
+      resumen: parsed.data.resumen,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+      submittedAt: new Date(),
+    }).then(result => {
+      if (!result.ok) console.error('[consulta] email falló:', result.error);
+    }).catch(e => {
+      console.error('[consulta] error enviando email:', e);
+    });
   }
 
-  return Response.json({ ok: true, id: result.id });
+  return Response.json({ ok: true, id: savedId });
 }
