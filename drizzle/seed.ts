@@ -2,11 +2,12 @@ import 'dotenv/config';
 import { neon as neonSql } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { sql as drizzleSql } from 'drizzle-orm';
-import { ramasJuridicas, articulosConstitucion, articulosCp, delitos, categoriasBlog, categoriasFaq, roles, permisos, rolesPermisos, usuarios } from '../lib/schema';
+import { ramasJuridicas, articulosConstitucion, articulosCp, delitos, categoriasBlog, categoriasFaq, roles, permisos, rolesPermisos, usuarios, areasJuridicas } from '../lib/schema';
 import * as fs from 'fs';
 import * as path from 'path';
 import { blogCategories } from '../data/blog/categories';
 import { faqCategoriesMeta } from '../data/faq-categories';
+import { areasGenerales, hubPenal, hubMigrantes } from '../data/areas-juridicas';
 
 const sql = neonSql(process.env.DATABASE_URL!);
 const db = drizzle(sql);
@@ -48,9 +49,8 @@ async function seed() {
   // Check if data already exists to prevent duplicate seeding
   const existing = await sql`SELECT COUNT(*) as total FROM delitos`;
   if (Number(existing[0].total) > 0) {
-    console.log(`✓ BD ya contiene ${existing[0].total} delitos — saltando seed`);
-    return;
-  }
+    console.log(`✓ BD ya contiene ${existing[0].total} delitos — continuando con secciones nuevas...`);
+  } else {
 
   // Ramas jurídicas — batch insert
   const ramasPath = path.resolve('data/ramas_juridicas.json');
@@ -133,6 +133,7 @@ async function seed() {
     }
     console.log(`✓ Delitos: ${count} insertados`);
   }
+  } // end else (delitos ya existían)
 
   // Categorías de blog — desde data/blog/categories.ts
   const existingCats = await sql`SELECT COUNT(*) as total FROM categorias_blog`;
@@ -197,6 +198,39 @@ async function seed() {
       ).onConflictDoNothing();
       console.log(`✓ Permisos super_admin: ${todosPermisos.length} asignados`);
     }
+  }
+
+  // Áreas jurídicas — desde data/areas-juridicas.ts
+  const existingAreas = await sql`SELECT COUNT(*) as total FROM areas_juridicas`;
+  if (Number(existingAreas[0].total) === 0) {
+    const allAreas: (typeof areasJuridicas.$inferInsert)[] = [];
+
+    for (const a of areasGenerales) {
+      allAreas.push({
+        slug: a.slug, titulo: a.titulo, descripcionCorta: a.resumen, descripcionLarga: a.descripcion,
+        icono: a.icono, categoria: 'servicio', grupo: null,
+        subservicios: a.subservicios as any, faqs: a.faqs as any, sortOrder: allAreas.length,
+      });
+    }
+    for (const g of hubPenal.grupos) {
+      allAreas.push({
+        slug: g.slug, titulo: g.titulo, descripcionCorta: g.resumen, descripcionLarga: g.descripcion,
+        icono: g.icono, categoria: 'penal', grupo: 'penal',
+        subservicios: g.subservicios as any, faqs: g.faqs as any, sortOrder: allAreas.length,
+      });
+    }
+    for (const s of hubMigrantes.subareas) {
+      allAreas.push({
+        slug: s.slug, titulo: s.titulo, descripcionCorta: s.resumen, descripcionLarga: s.descripcion,
+        icono: s.icono, categoria: 'migrante', grupo: 'migrante',
+        subservicios: s.subservicios as any, faqs: s.faqs as any, sortOrder: allAreas.length,
+      });
+    }
+
+    for (const area of allAreas) {
+      await db.insert(areasJuridicas).values(area).onConflictDoNothing();
+    }
+    console.log(`✓ Áreas jurídicas: ${allAreas.length} insertadas`);
   }
 
   console.log('\n✔ Seed completado');
