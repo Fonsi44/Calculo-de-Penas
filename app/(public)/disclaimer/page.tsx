@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
 import { site } from '@/lib/site';
+import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
   title: 'Disclaimer · Exención de responsabilidad',
@@ -10,14 +11,15 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function DisclaimerPage() {
+export default async function DisclaimerPage() {
+  const c = await getLegalPageContent('disclaimer');
   return (
     <LegalDocument
       eyebrow="Exención de responsabilidad"
-      title="Disclaimer"
-      subtitle="Información clara y transparente sobre los límites de la calculadora de penas, de los contenidos publicados y de los servicios jurídicos ofrecidos por el bufete."
-      version="0.1"
-      lastUpdated="Junio 2026"
+      title={c.title}
+      subtitle={c.subtitle}
+      version={c.version}
+      lastUpdated={c.lastUpdated}
     >
       <LegalCallout variant="danger">
         <strong className="font-semibold text-primary">Mensaje principal.</strong>{' '}

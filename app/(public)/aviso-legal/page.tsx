@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
 import { site } from '@/lib/site';
+import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
   title: 'Aviso Legal',
@@ -10,14 +11,15 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function AvisoLegalPage() {
+export default async function AvisoLegalPage() {
+  const c = await getLegalPageContent('aviso-legal');
   return (
     <LegalDocument
       eyebrow="Identificación del titular"
-      title="Aviso Legal"
-      subtitle="Información general sobre el titular, el régimen aplicable y la responsabilidad derivada del uso de este sitio web, de conformidad con la legislación de la República de Honduras."
-      version="0.1"
-      lastUpdated="Junio 2026"
+      title={c.title}
+      subtitle={c.subtitle}
+      version={c.version}
+      lastUpdated={c.lastUpdated}
     >
       <LegalSection number="1" title="Datos identificativos del titular">
         <p>

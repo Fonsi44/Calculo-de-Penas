@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
 import { site } from '@/lib/site';
+import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
   title: 'Política de Cookies',
@@ -10,14 +11,15 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function PoliticaCookiesPage() {
+export default async function PoliticaCookiesPage() {
+  const c = await getLegalPageContent('politica-cookies');
   return (
     <LegalDocument
       eyebrow="Almacenamiento local del navegador"
-      title="Política de Cookies"
-      subtitle="Información detallada sobre las cookies y tecnologías similares empleadas por este sitio web, su finalidad y las opciones disponibles para administrarlas."
-      version="0.1"
-      lastUpdated="Junio 2026"
+      title={c.title}
+      subtitle={c.subtitle}
+      version={c.version}
+      lastUpdated={c.lastUpdated}
     >
       <LegalSection number="1" title="¿Qué son las cookies?">
         <p>

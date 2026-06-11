@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
 import { site } from '@/lib/site';
+import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones',
@@ -10,14 +11,15 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function TerminosPage() {
+export default async function TerminosPage() {
+  const c = await getLegalPageContent('terminos');
   return (
     <LegalDocument
       eyebrow="Condiciones de uso del servicio"
-      title="Términos y Condiciones"
-      subtitle="Reglas que rigen el acceso y la utilización de la calculadora de penas y de los demás servicios publicados en este sitio web."
-      version="0.2"
-      lastUpdated="Junio 2026"
+      title={c.title}
+      subtitle={c.subtitle}
+      version={c.version}
+      lastUpdated={c.lastUpdated}
     >
       <LegalCallout variant="warning">
         <strong className="font-semibold text-primary">Aviso importante.</strong>{' '}

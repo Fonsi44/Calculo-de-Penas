@@ -7,6 +7,7 @@ import {
   LegalCallout,
 } from '@/components/marketing/legal-document';
 import { site } from '@/lib/site';
+import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad',
@@ -16,14 +17,15 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function PoliticaPrivacidadPage() {
+export default async function PoliticaPrivacidadPage() {
+  const c = await getLegalPageContent('politica-privacidad');
   return (
     <LegalDocument
       eyebrow="Tratamiento de datos personales"
-      title="Política de Privacidad"
-      subtitle="Información detallada sobre cómo el bufete recoge, utiliza, almacena y protege los datos personales facilitados por los usuarios a través de este sitio web y de la calculadora de penas."
-      version="0.2"
-      lastUpdated="Junio 2026"
+      title={c.title}
+      subtitle={c.subtitle}
+      version={c.version}
+      lastUpdated={c.lastUpdated}
     >
       <LegalSection number="1" title="Responsable del tratamiento">
         <p>
