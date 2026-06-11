@@ -46,11 +46,19 @@ export const revalidate = 3600;
 const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
 
 export default async function HomePage() {
-  const [contentMap, metaList] = await Promise.all([
-    getPageContent('home'),
-    getEditablePagesMeta(),
-  ]);
-  const homeMeta = metaList.find(m => m.page === 'home');
+  let contentMap: Record<string, string> = {};
+  let homeMeta: { page: string; label: string; sections: { key: string; label: string; fields: { key: string; label: string; type: string; default?: string }[] }[] } | undefined;
+  try {
+    const [cm, ml] = await Promise.all([
+      getPageContent('home'),
+      getEditablePagesMeta(),
+    ]);
+    contentMap = cm;
+    homeMeta = ml.find(m => m.page === 'home');
+  } catch {
+    // DB unavailable — use defaults only
+  }
+
   const defaults: Record<string, string> = {};
   if (homeMeta) {
     for (const section of homeMeta.sections) {
