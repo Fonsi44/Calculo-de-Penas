@@ -10,6 +10,7 @@ import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { getAreasFromDb } from '@/lib/areas-db';
 
 export const metadata: Metadata = {
   title: `Hondureños en España — Asistencia Legal desde Honduras | ${site.name}`,
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
 
 export default async function MigrantesPage() {
   const url = migrantesHubHref();
+  const migrantesSubareas = await getAreasFromDb('migrante');
   const ldSchemas = areaSchemas({
     service: {
       slug: 'hondurenos-en-espana',
@@ -79,7 +81,7 @@ export default async function MigrantesPage() {
           subtitle={hubMigrantes.resumen}
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {hubMigrantes.subareas.map((sub) => {
+          {migrantesSubareas.map((sub) => {
             const Icon = getIcon(sub.icono);
             return (
               <Link
@@ -95,7 +97,7 @@ export default async function MigrantesPage() {
                     {sub.titulo}
                   </h3>
                   <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
-                    {sub.resumen}
+                    {sub.descripcionCorta}
                   </p>
                   <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
                     Conocer más <ArrowRight size={12} />

@@ -11,8 +11,8 @@ import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
-import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { getAreasFromDb } from '@/lib/areas-db';
 
 export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 
 export default async function DerechoPenalPage() {
   const url = penalHubHref();
+  const penalGroups = await getAreasFromDb('penal');
   const ldSchemas = areaSchemas({
     service: {
       slug: 'derecho-penal',
@@ -69,15 +70,15 @@ export default async function DerechoPenalPage() {
           subtitle={hubPenal.resumen}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {hubPenal.grupos.map((grupo) => (
+          {penalGroups.map((grupo) => (
             <ServiceCard
               key={grupo.slug}
               href={`/derecho-penal/${grupo.slug}`}
               slug={grupo.slug}
               title={grupo.titulo}
-              description={grupo.resumen}
+              description={grupo.descripcionCorta}
               category="penal"
-              tone={(grupo.color as PlaceholderTone) ?? 'primary'}
+              tone="primary"
             />
           ))}
         </div>
