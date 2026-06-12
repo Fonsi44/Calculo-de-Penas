@@ -76,7 +76,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
               {grupo.titulo}
             </h1>
             <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {grupo.descripcion}
+              {grupo.resumen}
             </p>
             <div className="mt-7">
               <CTAGroup variant="inverse" />
