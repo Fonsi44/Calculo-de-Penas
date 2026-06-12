@@ -92,7 +92,7 @@ export async function POST(request: Request) {
     return Response.json({
       message: `${results.length} posts actualizados (restados ${daysToSubtract} días)`,
       updated: results.length,
-      daysSubtracted,
+      daysSubtracted: daysToSubtract,
       prevLatest: latestFuture.toISOString().split('T')[0],
       newLatest: results[0]?.newDate,
       sample: results.slice(0, 3),
