@@ -87,15 +87,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-de-familia',
     titulo: 'Derecho de Familia',
-    resumen: 'Divorcio, custodia, alimentos, sucesiones y protección de menores en Honduras.',
+    resumen: 'Abogado de familia en Nacaome y Honduras: divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores con atención personalizada.',
     descripcion:
-      'Asesoramiento y litigio en asuntos de familia ante Juzgados de Familia y Tribunales de Sentencia en Honduras. Mediación previa, procesos contenciosos y cumplimiento efectivo de resoluciones.',
+      'Somos un bufete de abogados de familia en Honduras con experiencia en divorcios, custodia compartida, pensión de alimentos, régimen de visitas, violencia intrafamiliar, sucesiones, testamentos, adopciones y restitución internacional de menores. Atendemos en los Juzgados de Familia de Nacaome, San Lorenzo, Choluteca y Tegucigalpa, y en el Centro de Mediación del Poder Judicial cuando conviene una solución pactada. Le acompañamos desde la primera consulta confidencial hasta la ejecución de la sentencia, con comunicación directa del abogado responsable, plazos claros y un presupuesto por escrito. Si atraviesa un momento difícil en su familia, le escuchamos, le informamos sus derechos reales y le ayudamos a tomar decisiones con la serenidad que su caso requiere.',
     icono: 'users',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho de Familia en Honduras',
     heroSubtitle:
-      'Acompañamiento legal en momentos sensibles: divorcios, custodia, alimentos y sucesiones con un equipo que prioriza el interés superior del menor y la solución pactada.',
+      'Le acompañamos en divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores en Nacaome, Valle y todo Honduras. Atención humana, estrategia legal clara y defensa técnica ante Juzgados de Familia y Tribunales de Sentencia.',
     subservicios: [
       { titulo: 'Divorcio por mutuo acuerdo', descripcion: 'Tramitación express ante el Juzgado de Familia cuando no hay menores ni bienes en disputa.' },
       { titulo: 'Divorcio contencioso', descripcion: 'Litigio por causales taxativas con estrategia probatoria robusta.' },
@@ -135,15 +135,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-laboral',
     titulo: 'Derecho Laboral',
-    resumen: 'Despidos, prestaciones, riesgos profesionales, contratos y conflictos laborales en Honduras.',
+    resumen: 'Abogado laboralista en Nacaome y Honduras: despidos injustificados, cálculo de prestaciones, aguinaldo, riesgos profesionales, acoso laboral y asesoría preventiva a empresas.',
     descripcion:
-      'Defensa de trabajadores y asesoría a empresas en el marco del Código de Trabajo y los convenios de la OIT ratificados por Honduras. Actuación ante Juzgados del Trabajo y Tribunales de Conciliación.',
+      'Despachos de abogados laboralistas en Honduras con actuación en Tegucigalpa, San Pedro Sula, Choluteca, Nacaome y todo el país. Calculamos y reclamamos preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes en despidos injustificados; defendemos trabajadores en riesgos profesionales y accidentes laborales ante el IHSS; representamos a empresas en cumplimiento normativo, redacción de contratos, reglamentos internos y prevención de contingencias. Actuamos en Inspecciones del Trabajo, Tribunales de Conciliación, Juzgados del Trabajo y Corte Suprema en casación. Le entregamos un presupuesto por escrito, le explicamos cada etapa del proceso y le acompañamos con un abogado responsable. Si fue despedido, no cobró su aguinaldo o sufre acoso laboral, contáctenos antes de firmar cualquier documento.',
     icono: 'briefcase',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Laboral en Honduras',
     heroSubtitle:
-      'Defendemos sus derechos como trabajador o acompañamos a su empresa con cumplimiento normativo. Actuación en despidos, prestaciones, riesgos profesionales y negociación colectiva.',
+      'Defendemos sus derechos como trabajador o acompañamos a su empresa con cumplimiento normativo. Reclamamos prestaciones, despidos, aguinaldo, décimo tercer mes, riesgos profesionales, acoso laboral y negociación colectiva ante Juzgados del Trabajo, Tribunales de Conciliación y Corte Suprema de Justicia en todo Honduras.',
     subservicios: [
       { titulo: 'Despido injustificado', descripcion: 'Cálculo y reclamación de prestaciones: preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes.' },
       { titulo: 'Despido indirecto por incumplimiento del empleador', descripcion: 'Artículo 113 del Código de Trabajo: reclamo por falta de condiciones dignas.' },
@@ -180,15 +180,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-civil-y-notarial',
     titulo: 'Derecho Civil y Notarial',
-    resumen: 'Contratos, obligaciones, propiedad, sucesiones y actos notariales en Honduras.',
+    resumen: 'Abogado civil y notario en Nacaome y Honduras: contratos, compraventas, arrendamientos, hipotecas, sucesiones, protocolización, cobros judiciales y derecho de daños.',
     descripcion:
-      'Redacción, revisión y litigio en actos civiles y notariales. Contratos de compraventa, arrendamiento, hipoteca, permuta, donación, mandato, gestión de negocios y sucesiones.',
+      'Brindamos asesoría legal civil y notarial en Honduras para personas, empresas y familias. Redactamos y revisamos contratos de compraventa, arrendamiento, hipoteca, permuta, donación, mandato y fideicomiso; tramitamos protocolizaciones, poderes notariales, capitulaciones, testamentos y declaratorias de herederos ante el Instituto de la Propiedad. Litigamos en acciones posesorias, reivindicatorias, prescripción adquisitiva, usucapión, servidumbres, deslindes, cobros judiciales por la vía ejecutiva o monitoria, y reclamaciones de daños y perjuicios por responsabilidad civil contractual o extracontractual. Trabajamos con un equipo de notarios en Nacaome, Tegucigalpa y San Pedro Sula para ofrecerle un servicio completo, con presupuesto por escrito y trazabilidad de cada actuación.',
     icono: 'file-text',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Civil y Notarial',
     heroSubtitle:
-      'Contratos sólidos, actos notariales seguros y litigio civil estratégico. Acompañamiento desde la negociación hasta la protocolización y, si es necesario, la defensa judicial.',
+      'Contratos sólidos, actos notariales seguros y litigio civil estratégico en Honduras. Le acompañamos en compraventas, arrendamientos, hipotecas, sucesiones, donaciones, mandatos, poderes, protocolización, cobros judiciales y responsabilidad civil, con estudio de títulos, registro de la propiedad y defensa ante Juzgados de Letras.',
     subservicios: [
       { titulo: 'Compraventa de inmuebles', descripcion: 'Estudio de títulos, redacción de contrato y protocolización.' },
       { titulo: 'Arrendamiento de vivienda y local comercial', descripcion: 'Contrato, garantía, cobro de rentas y desahucio.' },
@@ -225,15 +225,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-mercantil-empresarial',
     titulo: 'Derecho Mercantil y Empresarial',
-    resumen: 'Constitución de sociedades, contratos comerciales, propiedad intelectual y litigio mercantil.',
+    resumen: 'Abogado mercantil y corporativo en Honduras: constitución de sociedades, contratos comerciales, fusiones, registro de marcas, franquicias, gobierno corporativo y arbitraje.',
     descripcion:
-      'Acompañamiento integral a empresas nacionales y extranjeras: constitución, gobierno corporativo, contratos comerciales, fusiones, adquisiciones, defensa judicial y arbitraje.',
+      'Asesoramos a emprendedores, PYMEs, sociedades anónimas, sucursales extranjeras y corporativos en todo el ciclo de vida empresarial. Constituimos y reformamos sociedades (S.A., S. de R.L., comandita, cooperativas), redactamos contratos mercantiles de suministro, distribución, franquicia, joint venture, agencia, concesión y licencia; acompañamos fusiones, adquisiciones, due diligence, gobierno corporativo, compliance y competencia desleal. Tramitamos el registro de marcas, patentes, modelos de utilidad, derechos de autor y nombres de dominio. Litigamos en Juzgados de Letras de lo Mercantil y en arbitraje institucional (CIAM, CICA) cuando es la vía más eficiente. Si va a invertir, expandir, contratar o defender su empresa en Honduras, consúltenos: le entregamos un diagnóstico inicial y un plan de acción con plazos y costos claros.',
     icono: 'building-2',
     color: 'accent',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Mercantil y Empresarial',
     heroSubtitle:
-      'Constituya, haga crecer y defienda su empresa con seguridad jurídica. Atención personalizada a emprendedores, PYMEs, sociedades anónimas y corporativos en Honduras.',
+      'Constituya, haga crecer y defienda su empresa con seguridad jurídica en Honduras. Atención personalizada a emprendedores, PYMEs, sociedades anónimas, sucursales y corporativos: contratos mercantiles, fusiones y adquisiciones, gobierno corporativo, propiedad industrial, arbitraje y litigio estratégico ante Juzgados de Letras de lo Mercantil.',
     subservicios: [
       { titulo: 'Constitución de sociedades', descripcion: 'Sociedad anónima, de responsabilidad limitada, en comandita, cooperativa y sucursal.' },
       { titulo: 'Reformas estatutarias', descripcion: 'Aumento de capital, modificación de objeto social, transformación y fusión.' },
@@ -269,15 +269,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-bancario-y-financiero',
     titulo: 'Derecho Bancario y Financiero',
-    resumen: 'Defensa ante bancos, regulación financiera CNBS, contratos crediticios y cobranzas.',
+    resumen: 'Abogado bancario en Honduras: defensa del usuario financiero, cláusulas abusivas, reestructuras, embargos bancarios, ejecución de garantías, CNBS y lavado de activos.',
     descripcion:
-      'Asesoría y defensa legal en el sector financiero regulado por la Comisión Nacional de Bancos y Seguros (CNBS). Defensa de usuarios financieros y acompañamiento a entidades.',
+      'Defendemos a usuarios financieros y asesoramos a entidades reguladas por la Comisión Nacional de Bancos y Seguros (CNBS) en Honduras. Revisamos contratos crediticios, identificamos cláusulas abusivas en tarjetas de crédito, préstamos personales, hipotecarios y líneas de capital de trabajo; negociamos reestructuras antes del embargo y, cuando es inevitable, ejecutamos la defensa técnica del cliente. Representamos en cobro judicial bancario, juicios ejecutivos cambiarios, garantías mobiliarias, prendarias, hipotecarias y fiduciarias. Atendemos sanciones de la CNBS,multas por incumplimiento de PLD/FT, procedimientos de la UAF, recursos de reconsideración y nulidad, y acusaciones por captación ilegal de dinero. Si tiene un crédito en mora, enfrenta un embargo bancario o requiere asesoría preventiva para su entidad financiera, consúltenos.',
     icono: 'banknote',
     color: 'accent',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Bancario y Financiero',
     heroSubtitle:
-      'Defensa frente a bancos, financieras y cooperativas. Revisión de contratos crediticios, reestructuras, ejecución de garantías y asesoría preventiva.',
+      'Defensa frente a bancos, financieras, cooperativas y la CNBS en Honduras. Revisión de contratos crediticios, defensa del usuario financiero, reestructuras, ejecución de garantías, sanciones administrativas, lavado de activos, leasing, factoraje y cumplimiento normativo. Actuación en Juzgados de Letras de lo Mercantil y ante la Comisión Nacional de Bancos y Seguros.',
     subservicios: [
       { titulo: 'Revisión de contratos crediticios', descripcion: 'Identificación de cláusulas abusivas y tasas excesivas.' },
       { titulo: 'Reestructuración de deudas', descripcion: 'Negociación con entidades financieras.' },
@@ -309,15 +309,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-administrativo-y-servicio-civil',
     titulo: 'Derecho Administrativo y Servicio Civil',
-    resumen: 'Sanciones, recurso de revisión, contratos públicos, responsabilidad del Estado y servicio civil.',
+    resumen: 'Abogado administrativo en Honduras: contencioso-administrativo, sanciones del SAR, ENEE, ARSA, CONATEL, despido de servidores públicos, licitaciones y habeas data.',
     descripcion:
-      'Defensa frente a actos administrativos, sanciones regulatorias y procedimientos disciplinarios. Litigio ante el Contencioso Administrativo y Juzgados de Letras de lo Contencioso.',
+      'Defendemos a personas y empresas frente a actos de la Administración Pública hondureña. Interponemos recursos de reposición y apelación para agotar la vía administrativa; impugnamos multas del SAR, ARSA, ENEE, CONATEL, CNBS y otras entidades reguladoras; llevamos demandas contencioso-administrativas ante los Juzgados de Letras de lo Contencioso y la Corte Suprema de Justicia. Asesoramos a servidores públicos en estabilidad laboral, reinstalación, indemnizaciones, concursos públicos y procedimientos disciplinarios ante la Dirección General de Servicio Civil. Redactamos y revisamos contratos del Estado (licitación, concurso, contratación directa y excepciones), acompañamos al IAIP en acceso a la información y tramitamos habeas data, habeas corpus y acciones de inconstitucionalidad. Si recibió una sanción, fue despedido del Estado o necesita impugnar un acto administrativo, consúltenos antes de que venza el plazo.',
     icono: 'landmark',
     color: 'muted',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Administrativo y Servicio Civil',
     heroSubtitle:
-      'Defensa frente a la Administración Pública: sanciones, despidos de servidores, contratos administrativos, licitaciones y responsabilidad del Estado.',
+      'Defensa frente a la Administración Pública en Honduras: sanciones del SAR, ENEE, ARSA, CONATEL y CNBS; despidos de servidores públicos; estabilidad laboral; contencioso-administrativo; licitaciones y contratos del Estado; responsabilidad patrimonial del Estado; acceso a la información pública (IAIP); habeas data y habeas corpus. Actuación ante Juzgados de Letras de lo Contencioso y la Corte Suprema de Justicia.',
     subservicios: [
       { titulo: 'Recurso de reposición y apelación administrativa', descripcion: 'Agotamiento de la vía administrativa.' },
       { titulo: 'Demanda contencioso-administrativa', descripcion: 'Nulidad de actos, indemnizaciones, silencio administrativo.' },
@@ -348,15 +348,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-aduanero-y-comercio-exterior',
     titulo: 'Derecho Aduanero y Comercio Exterior',
-    resumen: 'Importación, exportación, regímenes aduaneros, valoración y defensa ante SAR.',
+    resumen: 'Abogado aduanero en Honduras: clasificación arancelaria, valoración, importación, exportación, ZOLI, defensa por contrabando, devolución de impuestos al exportador y litigio ante el SAR.',
     descripcion:
-      'Asesoría integral en operaciones de comercio exterior: clasificación arancelaria, valoración, regímenes suspensivos, zonas libres, devolución de impuestos y litigio aduanero.',
+      'Asesoramos integralmente a importadores, exportadores, despachadores aduaneros y operadores de zonas libres en Honduras. Realizamos clasificación arancelaria, valoración conforme al Acuerdo de la OMC, gestión de regímenes suspensivos (importación temporal, tránsito aduanero DUA-T, depósito), exportación definitiva con devolución de impuestos ante el SAR, y constitución de empresas en ZOLI, ZIP y ZAL. Tramitamos permisos VUCE, declaraciones de comercio de servicios, derechos compensatorios y antidumping. Defendemos técnicamente en investigaciones por contrabando y defraudación fiscal aduanera, recursos de reconsideración, apelación ante el SAR y litigio contencioso-administrativo. Si importa, exporta, opera una zona libre o enfrenta una sanción aduanera, le acompañamos con experiencia directa en Puerto Cortés, Amapala, San Lorenzo y las aduanas del país.',
     icono: 'ship',
     color: 'accent',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Aduanero y Comercio Exterior',
     heroSubtitle:
-      'Importación, exportación, regímenes especiales y defensa ante la Administración Aduanera. Operativa ágil con cumplimiento normativo.',
+      'Importación, exportación, regímenes especiales y defensa ante la Administración Aduanera en Honduras. Clasificación arancelaria, valoración OMC, ZOLI, ZIP, ZAL, devolución de impuestos, defensa por contrabando y defraudación, recursos ante el SAR y litigio contencioso-administrativo. Operativa ágil con cumplimiento normativo en Puerto Cortés, Amapala, San Lorenzo y el resto del país.',
     subservicios: [
       { titulo: 'Clasificación arancelaria', descripcion: 'Determinación del código correcto y consulta a la Administración Aduanera.' },
       { titulo: 'Valoración aduanera', descripcion: 'Métodos principales y auxiliares según el Acuerdo de Valoración de la OMC.' },
@@ -389,15 +389,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'regulacion-sanitaria',
     titulo: 'Regulación Sanitaria y Salud',
-    resumen: 'ARSA, registro sanitario, alimentos, medicamentos, cosméticos, dispositivos médicos y derecho sanitario.',
+    resumen: 'Abogado sanitario en Honduras: registro sanitario de medicamentos y alimentos ante ARSA, Buenas Prácticas (BPM, BPAD), defensa de establecimientos, sanciones y mala praxis médica.',
     descripcion:
-      'Acompañamiento legal integral en el sector regulado por la Agencia de Regulación Sanitaria (ARSA). Registro sanitario, buenas prácticas, fiscalización, sanciones y litigio.',
+      'Acompañamos a laboratorios, fabricantes, importadores, distribuidores, farmacias, clínicas y profesionales de la salud en el cumplimiento de la normativa de la Agencia de Regulación Sanitaria (ARSA) y la Secretaría de Salud. Tramitamos registros sanitarios de medicamentos, alimentos, bebidas, cosméticos, productos de higiene, dispositivos médicos, plaguicidas y agroquímicos; implementamos Buenas Prácticas de Manufactura (BPM), Buenas Prácticas de Almacenamiento y Distribución (BPAD) y procedimientos de farmacovigilancia. Asesoramos la apertura y renovación de establecimientos farmacéuticos, botiquines, droguerías y consultorios. Defendemos en sanciones de la ARSA, recursos de reposición y apelación, litigio contencioso-administrativo y casos de responsabilidad médica y mala praxis. Si su establecimiento fue fiscalizado, debe renovar un registro o enfrenta una denuncia por publicidad engañosa, consúltenos antes de responder.',
     icono: 'heart-pulse',
     color: 'success',
     heroEyebrow: 'Área legal',
     heroTitle: 'Regulación Sanitaria',
     heroSubtitle:
-      'Cumplimiento normativo en alimentos, medicamentos, cosméticos, dispositivos médicos y establecimientos de salud. Defensa ante ARSA y litigio contencioso-administrativo.',
+      'Cumplimiento normativo en alimentos, medicamentos, cosméticos, dispositivos médicos, plaguicidas, establecimientos de salud y telemedicina. Registro sanitario, Buenas Prácticas de Manufactura y Almacenamiento, defensa ante ARSA, mala praxis médica, consentimiento informado y litigio contencioso-administrativo en todo Honduras.',
     subservicios: [
       { titulo: 'Registro sanitario de medicamentos', descripcion: 'Tramitación ante la ARSA y la Secretaría de Salud.' },
       { titulo: 'Registro de alimentos y bebidas', descripcion: 'Notificación y registro según riesgo.' },
@@ -429,15 +429,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'extranjeria-en-honduras',
     titulo: 'Extranjería en Honduras',
-    resumen: 'Visas, residencia, naturalización, permisos de trabajo y defensa ante el INM.',
+    resumen: 'Abogado migratorio en Honduras: visas de trabajo, residencia temporal y permanente, visa de inversionista, naturalización ordinaria y por matrimonio, defensa ante el INM y deportaciones.',
     descripcion:
-      'Asesoría y trámite ante el Instituto Nacional de Migración (INM) y la Cancillería. Visas de turista, trabajo, residencia, inversionista, rentista, pensionado y naturalización.',
+      'Asesoramos a extranjeros que viven, trabajan, invierten, estudian o se casan con nacionales en Honduras. Tramitamos ante el Instituto Nacional de Migración (INM) y la Cancillería: visas de turista con sus prórrogas y conversión de estatus, visas de trabajo por oferta de empleo o transferencia intraempresarial, residencia temporal por vínculo familiar, laboral, inversión o estudios, residencia permanente, visa de inversionista, rentista y pensionado. Gestionamos naturalización ordinaria (7 años), por matrimonio (2 años), por servicios prestados y doble nacionalidad. Acompañamos permisos de salida de menores, apostilla de documentos, registro civil de hijos nacidos en Honduras, filiación y defensa frente a procedimientos de deportación, recursos de revisión y habeas corpus. Si su empresa contrata personal extranjero o usted necesita regularizar su estatus migratorio, le acompañamos con discreción y criterio técnico.',
     icono: 'globe',
     color: 'accent',
     heroEyebrow: 'Área legal',
     heroTitle: 'Extranjería en Honduras',
     heroSubtitle:
-      'Acompañamiento integral al extranjero que vive, trabaja, invierte o se casa con un hondureño. Visas, residencia, naturalización y defensa ante el INM.',
+      'Acompañamiento integral al extranjero que vive, trabaja, invierte, estudia o se casa con un hondureño. Visas de turista, trabajo, residencia temporal y permanente, visa de inversionista, rentista, pensionado, naturalización ordinaria y por matrimonio, doble nacionalidad, permisos de salida de menores, apostilla, traducción y defensa ante el INM y la Cancillería.',
     subservicios: [
       { titulo: 'Visa de turista', descripcion: 'Prórrogas y conversión de estatus.' },
       { titulo: 'Visa de trabajo', descripcion: 'Por oferta de empleo o transferencia intraempresarial.' },
@@ -470,15 +470,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'propiedad-intelectual',
     titulo: 'Propiedad Intelectual',
-    resumen: 'Registro de marcas, patentes, derechos de autor y defensa frente a infracciones.',
+    resumen: 'Abogado de propiedad intelectual en Honduras: registro de marcas, patentes, modelos de utilidad, derechos de autor, transferencia de tecnología, licencias y defensa frente a infracciones.',
     descripcion:
-      'Protección y defensa de los activos intangibles de su empresa o creación personal. Marcas, patentes, modelos de utilidad, diseños, derechos de autor y secretos empresariales.',
+      'Protegemos y defendemos los activos intangibles de empresas, emprendedores y creadores en Honduras. Realizamos búsqueda, presentación, seguimiento y renovación de marcas (incluidas marcas de certificación, colectivas y denominaciones de origen), patentes de invención, modelos de utilidad, diseños industriales, esquemas de trazado de circuitos integrados y derechos de autor sobre obras literarias, artísticas, musicales, software y audiovisuales. Redactamos y negociamos contratos de cesión, licenciamiento, transferencia de tecnología, confidencialidad y secretos empresariales. Tramitamos procedimientos de oposición al registro y defendemos frente a infracciones con medidas cautelares, demolición de productos y demandas judiciales, incluyendo disputas de nombres de dominio (.hn, .com, UDRP). Si va a lanzar un producto, registrar una marca o enfrenta una infracción, le entregamos un diagnóstico inicial y un plan de protección con tiempos y costos.',
     icono: 'lightbulb',
     color: 'accent',
     heroEyebrow: 'Área legal',
     heroTitle: 'Propiedad Intelectual',
     heroSubtitle:
-      'Registre, defienda y monetice sus marcas, patentes, obras y secretos empresariales. Asesoría integral en Honduras y coordinación internacional.',
+      'Registre, defienda y monetice sus marcas, patentes, modelos de utilidad, derechos de autor, diseños industriales, secretos empresariales y nombres de dominio en Honduras. Redacción de contratos de cesión, licenciamiento y transferencia de tecnología, oposición al registro, medidas cautelares, defensa judicial y arbitraje internacional. Asesoría integral con coordinación con oficinas de propiedad intelectual de la región.',
     subservicios: [
       { titulo: 'Registro de marcas', descripcion: 'Búsqueda, presentación, seguimiento y renovación.' },
       { titulo: 'Marcas de certificación y colectivas', descripcion: 'Asociación de productores, denominaciones de origen.' },
@@ -511,15 +511,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'tributario-fiscal',
     titulo: 'Derecho Tributario y Fiscal',
-    resumen: 'Asesoría fiscal, defensa ante el SAR, fiscalización, devoluciones y planificación tributaria.',
+    resumen: 'Abogado tributario en Honduras: liquidación de ISR e ISV, fiscalización del SAR, precios de transferencia, devolución de impuestos, planificación fiscal y contencioso tributario.',
     descripcion:
-      'Acompañamiento tributario para personas naturales y jurídicas. Cumplimiento, fiscalización, recursos, planificación, precios de transferencia y régimen simplificado.',
+      'Asesoramos en materia fiscal a personas naturales, profesionales independientes, PYMEs, sociedades anónimas y grupos empresariales con operaciones en Honduras. Liquidamos el impuesto sobre la renta (ISR) y el impuesto al valor agregado (ISV), planificamos la aportación solidaria, régimen simplificado, SAR-Fácil, retenciones y percepciones; estructuramos operaciones de precios de transferencia con estudio, declaración informativa y documentación de soporte. Defendemos técnicamente al contribuyente en fiscalizaciones del Servicio de Administración de Rentas (SAR), acompañamos visitas, interponemos recursos de reconsideración y apelación, y litigamos ante los Juzgados de Letras de lo Tributario. Gestionamos devoluciones de pagos indebidos, beneficios fiscales en zonas libres, exoneraciones sectoriales y regímenes especiales. Si recibió un requerimiento del SAR, fue fiscalizado o necesita optimizar su carga tributaria, consúltenos antes de presentar descargos.',
     icono: 'receipt',
     color: 'warning',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Tributario y Fiscal',
     heroSubtitle:
-      'Defensa y planificación tributaria estratégica frente al Servicio de Administración de Rentas (SAR). Personas naturales, empresas y regímenes especiales.',
+      'Defensa y planificación tributaria estratégica frente al Servicio de Administración de Rentas (SAR) en Honduras. Impuesto sobre la renta (ISR), impuesto al valor agregado (ISV), aportación solidaria, regímenes simplificados, precios de transferencia, fiscalización, recursos administrativos, devolución de impuestos, beneficios fiscales en zonas libres y contencioso tributario ante Juzgados de Letras.',
     subservicios: [
       { titulo: 'Impuesto sobre la renta (personas naturales y jurídicas)', descripcion: 'Liquidación anual, declaraciones, regímenes especiales.' },
       { titulo: 'Impuesto al valor agregado (ISV)', descripcion: 'Declaración mensual, créditos fiscales y devoluciones.' },
@@ -551,15 +551,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'ambiental-regulatorio',
     titulo: 'Derecho Ambiental y Regulatorio',
-    resumen: 'Licencia ambiental, evaluación de impacto, sanciones MiAmbiente y litigio ambiental.',
+    resumen: 'Abogado ambiental en Honduras: licencia ambiental, evaluación de impacto, permisos de vertimiento, residuos sólidos, sanciones de MiAmbiente, cambio climático y litigio ambiental.',
     descripcion:
-      'Acompañamiento en el cumplimiento de la Ley General del Ambiente y normativas de MiAmbiente, SERNA y alcaldías. Licencias, estudios de impacto, sanciones y defensa.',
+      'Acompañamos a empresas, municipalidades y proyectos productivos en el cumplimiento de la Ley General del Ambiente, los reglamentos de MiAmbiente, la SERNA y las ordenanzas municipales en Honduras. Tramitamos la licencia ambiental por categoría, evaluaciones de impacto ambiental, diagnósticos ambientales, permisos de vertimiento y emisiones, manejo de residuos sólidos y peligrosos, y aprovechamientos forestales en áreas protegidas. Implementamos auditorías ambientales voluntarias, programas de cumplimiento y protocolos de cambio climático, bonos de carbono y créditos ambientales. Defendemos técnicamente en sanciones de MiAmbiente, recursos administrativos, acciones populares ambientales, responsabilidad por daño ambiental y litigio climático estratégico. Si su proyecto requiere licencia ambiental, enfrenta una sanción de MiAmbiente o necesita acreditar cumplimiento normativo, consúltenos desde la fase de diseño para ahorrar tiempo y costos.',
     icono: 'leaf',
     color: 'success',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Ambiental y Regulatorio',
     heroSubtitle:
-      'Cumplimiento ambiental preventivo y defensa frente a MiAmbiente. Licencias, evaluaciones de impacto, auditorías y litigio ambiental estratégico.',
+      'Cumplimiento ambiental preventivo y defensa frente a MiAmbiente y la SERNA en Honduras. Licencias ambientales por categoría, evaluaciones de impacto ambiental, permisos de vertimiento y emisiones, manejo de residuos sólidos y peligrosos, aprovechamientos forestales, sanciones administrativas, acciones populares ambientales, responsabilidad por daño ambiental, bonos de carbono y litigio climático.',
     subservicios: [
       { titulo: 'Licencia ambiental', descripcion: 'Tramitación por categoría según el proyecto.' },
       { titulo: 'Evaluación de impacto ambiental', descripcion: 'Estudio y presentación.' },
@@ -590,15 +590,15 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'conciliacion-y-arbitraje',
     titulo: 'Conciliación y Arbitraje',
-    resumen: 'Métodos alternos de solución de conflictos en Honduras, nacionales e internacionales.',
+    resumen: 'Abogado de arbitraje y mediación en Honduras: cláusulas compromisorias, arbitraje CIAM, CICA, CCI, CIADI, mediación prejudicial, dispute boards y homologación de laudos extranjeros.',
     descripcion:
-      'Resolución de disputas por vías más rápidas y especializadas que la justicia ordinaria. Conciliación, mediación y arbitraje nacional e internacional.',
+      'Resolvemos disputas civiles, mercantiles, de familia y contratos de construcción por vías más ágiles, confidenciales y especializadas que la justicia ordinaria. Redactamos cláusulas compromisorias y convenciones arbitrales; actuamos como abogados de parte en arbitrajes institucionales (CIAM, Centro de Conciliación del CICA, CCIC) y arbitrajes ad hoc con reglas de procedimiento y selección de árbitros. Llevamos arbitrajes internacionales bajo reglas de la CCI, CIADI, UNCITRAL y LACIAC, así como dispute boards en proyectos de infraestructura de larga duración. Tramitamos conciliación prejudicial en el Centro de Mediación del Poder Judicial, mediación privada con efectos de cosa juzgada, mediación penal para criterios de oportunidad, y mediación familiar internacional. Homologamos laudos arbitrales extranjeros ante la Corte Suprema de Justicia, ejecutamos el laudo como título ejecutivo y recurrimos en nulidad cuando corresponde. Si quiere resolver un conflicto sin un juicio que dure años, consúltenos sobre la mejor vía.',
     icono: 'scale',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Conciliación y Arbitraje',
     heroSubtitle:
-      'Resuelva sus disputas de forma rápida, confidencial y especializada. Conciliación, mediación y arbitraje nacional e internacional, institucional o ad hoc.',
+      'Resuelva sus disputas de forma rápida, confidencial y especializada en Honduras. Redacción de cláusulas compromisorias, arbitraje institucional (CIAM, CICA) y ad hoc, arbitraje internacional (CCI, CIADI, UNCITRAL, LACIAC), mediación prejudicial, mediación privada, mediación penal y familiar, dispute boards, homologación de laudos extranjeros ante la Corte Suprema y ejecución del laudo.',
     subservicios: [
       { titulo: 'Cláusula compromisoria', descripcion: 'Redacción e incorporación a sus contratos.' },
       { titulo: 'Convención arbitral', descripcion: 'Someter una controversia ya existente a arbitraje.' },
@@ -635,13 +635,13 @@ export const areasGenerales: AreaStandalone[] = [
 export const hubPenal: HubPenal = {
   slug: 'derecho-penal',
   titulo: 'Derecho Penal',
-  resumen: 'Defensa penal estratégica en Honduras, desde la primera actuación procesal hasta la ejecución.',
+  resumen: 'Abogados penalistas en Nacaome, Valle y todo Honduras: defensa penal estratégica en cualquier etapa del proceso, asistencia a detenidos, juicios orales, casación y ejecución penal.',
   descripcion:
-    'Defensa técnica en todas las etapas del proceso penal hondureño, con presencia activa en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca y Nacaome. Conocimiento profundo del Código Penal (Decreto 130-2017 y reformas 119-2019, 46-2020, 93-2021, 59-2024), la jurisprudencia de la CSJ y la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Corte Suprema.',
+    'Defensa penal técnica en todas las etapas del proceso penal hondureño, con presencia activa en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca y Nacaome. Conocimiento profundo del Código Penal (Decreto 130-2017 y reformas 119-2019, 46-2020, 93-2021, 59-2024), de la jurisprudencia de la Sala de lo Penal de la Corte Suprema de Justicia y de la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Cortes de Apelaciones. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal y los beneficios de ley. Si enfrenta una imputación, una investigación fiscal, una citación judicial, una orden de captura o requiere asistencia inmediata por la detención de un familiar, consúltenos: la defensa temprana y especializada es determinante.',
   heroEyebrow: 'Área principal',
   heroTitle: 'Abogados Penalistas en Nacaome, Valle — Defensa Penal Técnica',
   heroSubtitle:
-    'Atendemos casos penales en toda Honduras. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal y los beneficios de ley.',
+    'Atendemos casos penales en toda Honduras, desde Nacaome, Valle. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal, beneficios de ley, recursos de casación y cumplimiento de penas. Defensa técnica, comunicación directa y presupuesto por escrito.',
   faqs: [
     { pregunta: '¿Pueden defenderme si acabo de ser detenido?', respuesta: 'Sí. La asistencia letrada es un derecho irrenunciable desde el primer momento. Podemos acudir a la estación policial o al juzgado y ejercer defensa inmediata.' },
     { pregunta: '¿Cuánto cuesta una defensa penal en Honduras?', respuesta: 'Depende de la complejidad. Ofrecemos consulta inicial confidencial para evaluar el caso y emitir un presupuesto claro por escrito.' },
@@ -665,9 +665,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'atencion-casos-penales-litigiosos',
       titulo: 'Atención de casos penales litigiosos',
-      resumen: 'Defensa técnica en casos penales en todas las etapas del proceso.',
+      resumen: 'Abogado penalista litigioso en Honduras: defensa técnica en homicidio, femicidio, robo, estafa, narcotráfico, lavado de activos, delitos sexuales, económicos y de tránsito en todas las etapas del proceso.',
       descripcion:
-        'Atendemos casos penales activos: imputaciones, acusaciones, acusaciones alternativas, recursos y defensa en juicio oral. Experiencia en delitos contra la vida, patrimonio, libertad sexual, drogas, económicos y de tránsito.',
+        'Atendemos casos penales activos en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca, Nacaome y todo Honduras. Asumimos la defensa desde la primera declaración del imputado, pasando por la audiencia inicial, etapa intermedia, acusación y acusación alternativa, hasta el juicio oral, los recursos de apelación, casación y revisión ante la Corte Suprema de Justicia. Tenemos experiencia directa en delitos contra la vida (homicidio simple, agravado, asesinato, parricidio, femicidio, tentativas y homicidios imprudentes por accidentes de tránsito), lesiones, violencia intrafamiliar, delitos contra la libertad e indemnidad sexual (abuso, agresión, violación, estupro, explotación sexual, pornografía infantil), sustracción de menores, delitos patrimoniales (robo, hurto, receptación, estafas, defraudación, fraudes corporativos, esquemas Ponzi, clonación de tarjetas), delitos económicos (lavado de activos, testaferrato, quiebra fraudulenta, delitos societarios), narcotráfico y tráfico de drogas, tenencia y facilitación de locales, contrabando y defraudación fiscal aduanera, cohecho, prevaricato, abuso de autoridad, trata de personas, tráfico ilícito de armas, delitos de prensa (calumnia, injuria, difamación, linchamiento digital) y allanamiento de morada. Si usted o un familiar enfrenta una imputación penal, consúltenos de inmediato: la defensa temprana marca la diferencia.',
       icono: 'gavel',
       color: 'danger',
       subservicios: [
@@ -732,9 +732,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'mediacion-conflictos-penales-y-multas',
       titulo: 'Mediación, conflictos penales y multas',
-      resumen: 'Solución temprana de conflictos, mediación penal y recurso de multas administrativas.',
+      resumen: 'Abogado penal en Honduras: mediación penal, criterios de oportunidad, suspensión condicional del proceso, conciliación penal, justicia restaurativa y recurso de multas administrativas.',
       descripcion:
-        'Estrategia orientada a extinguir la acción penal por la vía del acuerdo restaurativo, la mediación o los criterios de oportunidad, cuando proceda. También recurrimos sanciones administrativas y multas.',
+        'Estrategia orientada a extinguir la acción penal por la vía del acuerdo restaurativo, la mediación, los criterios de oportunidad, la suspensión condicional del proceso o el procedimiento abreviado, según proceda en su caso. Tramitamos criterios de oportunidad del artículo 27 del Código Procesal Penal, suspensión condicional con régimen de prueba, conciliación en delitos perseguibles por instancia particular, acuerdo reparatorio con la víctima, mediación penal en el Centro de Mediación del Poder Judicial o con mediadores privados, y aplicación del principio de mínima intervención penal. Gestionamos archivo de denuncias, desistimiento de querellas y solicitudes de prescripción, muerte del reo y otras causales de extinción. En el plano administrativo, recurrimos multas de tránsito, del SAR, ARSA, ENEE, CONATEL, municipalidades y cualquier entidad reguladora: reposición, apelación, nulidad, sustitución de la pena de multa y pago de reparación civil. Si busca una salida temprana del proceso penal o impugnar una sanción administrativa, le orientamos con un plan procesal y un presupuesto por escrito.',
       icono: 'handshake',
       color: 'accent',
       subservicios: [
@@ -763,9 +763,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'menores-justicia-juvenil',
       titulo: 'Menores, justicia juvenil y protección',
-      resumen: 'Defensa de adolescentes en conflicto con la ley y medidas de protección para menores.',
+      resumen: 'Abogado de justicia juvenil y protección de menores en Honduras: defensa de adolescentes, medidas socioeducativas, restitución de derechos, adopción, DINAF, CNA y trabajo infantil.',
       descripcion:
-        'Asistencia técnica especializada en el sistema de justicia juvenil, regido por el Código de la Niñez y la Adolescencia. Defensa, seguimiento y representación ante Jueces de Niñez.',
+        'Asistencia técnica especializada en el sistema de justicia juvenil y protección de la niñez, regido por el Código de la Niñez y la Adolescencia (CNA) y supervisado por la DINAF. Defendemos a adolescentes en conflicto con la ley ante Jueces de Niñez y Adolescencia, solicitando, revisando o impugnando medidas socioeducativas: amonestación, libertad asistida, servicio a la comunidad, y privación de libertad únicamente como último recurso. Tramitamos restitución de derechos del niño, medidas de protección (acogimiento familiar o institucional), revisión, cesación o sustitución de medidas, y procedimientos contravencionales por faltas cometidas por adolescentes. Actuamos en patria potestad y su suspensión, obligaciones alimentarias, autorización para viajar, justicia terapéutica para adolescentes con consumo problemático y trabajo infantil. Acompañamos procesos de adopción nacional e internacional conforme al Convenio de La Haya de 1993, y casos de tráfico y explotación sexual de menores. Si un menor de su familia está involucrado en un proceso penal juvenil o necesita protección, consúltenos con la mayor prontitud.',
       icono: 'baby',
       color: 'warning',
       subservicios: [
@@ -795,9 +795,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'proceso-penal-completo',
       titulo: 'Proceso penal completo: de la investigación al juicio',
-      resumen: 'Acompañamiento legal integral en todas las fases del proceso penal hondureño.',
+      resumen: 'Defensa penal en Honduras en todas las fases: audiencia inicial, etapa intermedia, juicio oral, prueba pericial, testigos, alegatos, sentencia absolutoria o condenatoria, casación y ejecución.',
       descripcion:
-        'Defensa técnica desde la etapa preparatoria (investigación fiscal) hasta el juicio oral, recursos y ejecución. Conocimiento profundo de los Juzgados de Letras, Tribunales de Sentencia y Cortes de Apelaciones.',
+        'Acompañamiento legal integral del proceso penal hondureño, desde la investigación preliminar fiscal hasta la sentencia firme y su ejecución. Actuamos en la audiencia inicial del artículo 296 del Código Procesal Penal (imputación, formulación de cargos, defensa, solicitud de sobreseimiento, revisión de medidas cautelares y, en su caso, prisión preventiva), en la etapa intermedia con excepciones, oferta probatoria y exclusión de prueba ilícita, en la audiencia de auto de apertura a juicio, en el debate oral y público con preparación y contrainterrogatorio de testigos, prueba pericial, prueba anticipada, alegatos de apertura y clausura, y en los recursos de apelación, casación y revisión. Tenemos presencia directa en Juzgados de Letras, Tribunales de Sentencia, Cortes de Apelaciones, Sala de lo Penal de la Corte Suprema de Justicia y Juzgados de Ejecución Penal. Coordinamos con el Ministerio Público, Policía Nacional, IHSS, DINAF y otras instituciones para una defensa coherente. Si necesita un abogado que conozca el proceso penal hondureño de principio a fin, le entregamos una estrategia escrita con plazos y honorarios.',
       icono: 'book-open',
       color: 'primary',
       subservicios: [
@@ -827,9 +827,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'recursos-y-defensa-avanzada',
       titulo: 'Recursos y defensa avanzada',
-      resumen: 'Apelación, casación, revisión y amparo en procesos penales.',
+      resumen: 'Recursos en proceso penal en Honduras: reposición, apelación, casación, revisión, amparo, habeas corpus, habeas data, queja ante la CSJ y procedimientos ante la Corte IDH.',
       descripcion:
-        'Recursos contra resoluciones judiciales en todas las instancias. Apelación ante Cortes de Apelaciones, casación y revisión ante la Sala de lo Penal de la Corte Suprema de Justicia.',
+        'Interponemos recursos y acciones constitucionales para revertir resoluciones judiciales contrarias a derecho en procesos penales hondureños. Actuamos en reposición ante el mismo juez que dictó la resolución, en apelación ante la Corte de Apelaciones Penal, en casación y revisión ante la Sala de lo Penal de la Corte Suprema de Justicia, y en queja ante la CSJ cuando se deniega un recurso. Solicitamos nulidad de actuaciones por violación de garantías procesales, excepciones en el proceso penal (falta de competencia, prescripción, cosa juzgada, amnistía), habeas corpus por detención ilegal, prisión preventiva desproporcionada, tortura o condiciones indignas de reclusión, habeas data penal para acceder a antecedentes y datos personales, acción de inconstitucionalidad contra leyes contrarias a la Constitución y amparo constitucional por violación de derechos fundamentales. Cuando se agotan los recursos internos, redactamos quejas ante la Comisión Interamericana de Derechos Humanos y llevamos el caso ante la Corte IDH. Si recibió una resolución desfavorable en cualquier instancia, analizamos la viabilidad del recurso y los plazos perentorios antes de que precluya su derecho.',
       icono: 'shield-alert',
       color: 'danger',
       subservicios: [
@@ -859,9 +859,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'estrategia-penal-y-litigio',
       titulo: 'Estrategia penal y litigio',
-      resumen: 'Asesoría preventiva, peritajes, pruebas, testigos y estrategia integral de defensa.',
+      resumen: 'Estrategia penal en Honduras: auditoría de riesgo penal corporativo, compliance penal, peritajes privados, contrainformes, defensa corporativa y negociación con el Ministerio Público.',
       descripcion:
-        'Análisis de riesgo penal, construcción de estrategia de defensa desde el inicio, identificación de pruebas favorables, negociación con el Ministerio Público y control de prueba pericial.',
+        'Asesoría preventiva y construcción de estrategia procesal desde las primeras horas del caso penal. Realizamos auditoría de riesgo penal corporativo, mapas de riesgos por actividad, políticas de compliance penal, códigos de ética, canales de denuncias e investigaciones internas con cadena de custodia, en línea con estándares OEA, ONU y ONUDD. En el litigio, identificamos pruebas favorables, analizamos la viabilidad probatoria, contratamos peritajes privados y contrainformes periciales, coordinamos con investigadores privados legalmente habilitados y preparamos estrategia de negociación con el Ministerio Público para alcanzar acuerdos, conformidad o criterios de oportunidad. Asumimos la defensa corporativa de personas jurídicas y administradores, llevamos la asistencia a declaración del imputado, la defensa en flagrancia durante las primeras horas críticas y la querella o acusación particular en nombre de la víctima. Antes de imputar o de declarar, una buena estrategia evita condenas y reduce penas: consúltenos con un plan de defensa documentado y un presupuesto por escrito.',
       icono: 'target',
       color: 'primary',
       subservicios: [
@@ -891,9 +891,9 @@ export const hubPenal: HubPenal = {
     {
       slug: 'ejecucion-penal-y-beneficios',
       titulo: 'Ejecución penal y beneficios',
-      resumen: 'Libertad condicional, redención de pena, traslado, indulto y derechos del condenado.',
+      resumen: 'Beneficios penitenciarios en Honduras: libertad condicional, redención de pena por trabajo y estudio, indulto, conmutación, reclusión domiciliaria, habeas corpus en prisión y derechos del condenado.',
       descripcion:
-        'Acompañamiento durante la etapa de cumplimiento de la pena. Solicitud de beneficios penitenciarios, defensa ante el Instituto Nacional Penitenciario y los Juzgados de Ejecución Penal.',
+        'Acompañamos a personas privadas de libertad y a sus familias durante toda la etapa de cumplimiento de la pena ante el Instituto Nacional Penitenciario (INP) y los Juzgados de Ejecución Penal. Solicitamos y tramitamos libertad condicional, redención de pena por trabajo y estudio, período de seguridad, permisos de salida, visita íntima, indulto y conmutación ante el Congreso Nacional o el Presidente de la República, suspensión de la ejecución de la pena y reclusión en domicilio con monitoreo electrónico cuando proceda. Gestionamos traslados de centro penal por acercamiento familiar, salud o seguridad, beneficios humanitarios para personas con enfermedad terminal o discapacidad grave, revisión de cómputo de pena, excarcelación inmediata por cumplimiento, amnistía o revisión, y defensa ante sanciones disciplinarias mediante recurso de alzada y contencioso-administrativo. Interponemos habeas corpus por detención ilegal, tortura o condiciones indignas en prisión y coordinamos con pastoral penitenciaria y organizaciones de derechos humanos. Si un familiar suyo está privado de libertad, consúltenos: le informamos los requisitos exactos y los plazos para cada beneficio.',
       icono: 'key',
       color: 'success',
       subservicios: [
@@ -929,13 +929,13 @@ export const hubPenal: HubPenal = {
 export const hubMigrantes: HubMigrantes = {
   slug: 'hondurenos-en-espana',
   titulo: 'Hondureños en España',
-  resumen: 'Gestión documental, actos notariales internacionales y asuntos civiles y familiares desde España.',
+  resumen: 'Abogado para hondureños en España: apostilla de La Haya, poderes notariales, divorcios internacionales, custodia, alimentos, sucesiones, nacionalidad española y reagrupación familiar.',
   descripcion:
-    'Atención jurídica especializada para la comunidad hondureña residente en España. Coordinamos con notarías, registros civiles, consulados y autoridades españolas para validar y ejecutar actos jurídicos con pleno efecto en Honduras y Europa.',
+    'Atención jurídica especializada para la comunidad hondureña residente en España y para españoles con intereses en Honduras. Coordinamos con notarías, registros civiles, consulados, la Secretaría de Relaciones Exteriores de Honduras y autoridades españolas para validar y ejecutar actos jurídicos con pleno efecto en ambos países. Cubrimos gestión documental y legalización (apostilla, traducción jurada, partidas, antecedentes), actos notariales internacionales (poderes para pleitos, ventas y sucesiones, testamentos mancomunados, compraventas de inmuebles en Honduras desde España) y asuntos civiles y familiares transfronterizos (divorcio internacional, custodia, sustracción parental, alimentos bajo el Convenio de La Haya 2007, sucesiones internacionales, nacionalidad española, reagrupación familiar y arraigo). Si reside en España y su asunto legal está en Honduras, le entregamos un plan de trabajo con plazos, costos y los documentos que necesita aportar.',
   heroEyebrow: 'Asistencia transnacional',
   heroTitle: 'Hondureños en España: asistencia legal integral',
   heroSubtitle:
-    'Resolvemos sus trámites legales entre Honduras y España. Documentación, notariado, familia, sucesiones y reconocimientos con pleno efecto jurídico en ambos países.',
+    'Resolvemos sus trámites legales entre Honduras y España con pleno efecto jurídico en ambos países. Gestión documental, apostilla de La Haya, traducción jurada, poderes notariales, divorcios internacionales, custodia, alimentos, sucesiones, nacionalidad española, reagrupación familiar y actos notariales coordinados con consulado y notarías en Honduras.',
   faqs: [
     { pregunta: '¿Pueden hacer poderes notariales en Honduras desde España?', respuesta: 'Sí. Coordinamos con notarios en Honduras para que usted firme en el Consulado o por poder especial, con apostilla y traducción cuando corresponda.' },
     { pregunta: '¿Cuánto tarda una legalización?', respuesta: 'La apostilla de La Haya en Honduras se obtiene en 1-3 días hábiles. Las traducciones juradas en España, según disponibilidad del traductor.' },
@@ -958,9 +958,9 @@ export const hubMigrantes: HubMigrantes = {
     {
       slug: 'gestion-documental-y-legalizacion',
       titulo: 'Gestión documental y legalización',
-      resumen: 'Apostilla, traducción, registro civil, partidas y documentación para efectos en Honduras y Europa.',
+      resumen: 'Apostilla de La Haya en Honduras, traducción jurada español-hondureño, partidas de nacimiento y matrimonio, antecedentes penales, DNI, pasaporte y certificaciones consulares para España.',
       descripcion:
-        'Tramitación integral de documentos entre Honduras y España. Apostilla de La Haya, traducción jurada, registro civil, partidas literales, antecedentes penales, poderes y certificaciones consulares.',
+        'Tramitamos integralmente la documentación que los hondureños en España y los españoles con intereses en Honduras necesitan con validez jurídica en ambos países. Gestionamos la apostilla de La Haya ante la Secretaría de Relaciones Exteriores de Honduras, legalización consular para países no firmantes del Convenio, traducción jurada español-hondureño válida para juicios y registros, partidas de nacimiento, matrimonio y defunción, antecedentes penales y su cancelación en España, certificados de nacimiento actualizados para procedimientos migratorios, certificación de la Dirección General del RNP, renovación de DNI y pasaporte hondureño en el Consulado, carta de soltería, fe de vida para pensiones, permisos de residencia y NIE, renovación del pasaporte español para hijos nacidos en Honduras, apostilla de documentos académicos y equivalencia de estudios, certificados de vida laboral, paquetes de apostilla múltiple para expedientes, coordinación con notarías para protocolización de actos en España, gestión integral de escrituras notariales (compraventa, herencia, matrimonio, poderes), documentos de identidad para recién nacidos y asesoría en doble nacionalidad por nacimiento, matrimonio o carta de naturaleza.',
       icono: 'file-check-2',
       color: 'primary',
       subservicios: [
@@ -1000,9 +1000,9 @@ export const hubMigrantes: HubMigrantes = {
     {
       slug: 'actos-notariales-internacionales',
       titulo: 'Actos notariales internacionales',
-      resumen: 'Poderes, testamentos, compraventas y protocolización con efecto en Honduras y España.',
+      resumen: 'Poderes notariales desde España, testamentos mancomunados, compraventas de inmuebles en Honduras, capitulaciones, donaciones y asesoría sobre derecho internacional privado Honduras-España.',
       descripcion:
-        'Coordinación con notarías en Honduras y España para otorgamiento de actos notariales con eficacia transnacional. Poderes especiales, poderes para pleitos, declaraciones, capitulaciones y protocolización de actos.',
+        'Coordinamos con notarías en Honduras y España el otorgamiento de actos notariales con eficacia transnacional, de modo que tengan pleno efecto jurídico en ambos países. Otorgamos poderes generales para pleitos, poderes especiales para actos específicos (venta, herencia, divorcio), poderes para administración de bienes inmuebles en Honduras desde España, para representación tributaria ante el SAR, para trámites bancarios en Honduras, para sucesión y aceptación de herencia, revocación y sustitución de poderes, y asesoría para la redacción de testamentos ológrafos en España válidos en Honduras, testamentos mancomunados, protocolización de testamentos otorgados en el extranjero ante el RNP, capitulaciones matrimoniales, actas de manifestaciones, actas de protocolización de documentos privados, compraventas e hipotecas sobre inmuebles en Honduras desde España, donaciones entre padres e hijos con planificación patrimonial, renuncias de derechos hereditarios, disolución de comunidad de bienes y asesoría sobre ley aplicable conforme al Convenio de derecho internacional privado Honduras-España. Si vive en España y necesita resolver un asunto patrimonial en Honduras, podemos hacerlo por poder sin que tenga que viajar.',
       icono: 'scroll',
       color: 'accent',
       subservicios: [
@@ -1036,9 +1036,9 @@ export const hubMigrantes: HubMigrantes = {
     {
       slug: 'asuntos-civiles-y-familiares-desde-el-extranjero',
       titulo: 'Asuntos civiles y familiares desde el extranjero',
-      resumen: 'Divorcios, alimentos, custodia, sucesiones y reconocimiento de sentencias entre Honduras y España.',
+      resumen: 'Abogado Honduras-España: divorcio internacional, custodia y sustracción de menores (Convenio de La Haya 1980), alimentos internacionales, sucesiones, nacionalidad española y reagrupación familiar.',
       descripcion:
-        'Asistencia legal en derecho de familia internacional: divorcios, custodia de hijos, alimentos, sucesiones y reconocimiento de sentencias extranjeras. Aplicación del Convenio de La Haya cuando corresponde.',
+        'Asistencia legal en derecho de familia internacional entre Honduras y España. Tramitamos divorcios internacionales (mutuo acuerdo o contencioso) eligiendo la jurisdicción más favorable, reconocimiento (exequátur) de sentencias de divorcio españolas en Honduras ante la CSJ y de sentencias hondureñas en España ante la Audiencia Provincial. Llevamos custodia internacional de menores, sustracción parental, restitución de menores ilícitamente trasladados (Convenio de La Haya 1980), regímenes de visita transfronterizos, pensión de alimentos internacional (Convenio de La Haya 2007) y ejecución forzosa cuando el obligado reside en el otro país. Atendemos sucesiones internacionales (ley aplicable y jurisdicción competente), reconocimiento de testamentos otorgados en España, adopción internacional (Convenio de La Haya 1993), matrimonio civil de residentes en España, capitulaciones con bienes en dos países, mediación familiar internacional, reagrupación familiar en España, arraigo social, laboral y familiar, renovación y modificación de autorizaciones de residencia, nacionalidad española por residencia (1, 2 o 10 años), por carta de naturaleza, para hijos de españoles nacidos en Honduras (Ley de Memoria Democrática), doble nacionalidad Honduras-España, inscripción de matrimonio celebrado en Honduras en el Registro Civil español e inscripción de nacimiento en el Consulado. Si vive en España y su asunto legal está en Honduras, le acompañamos con un equipo que conoce ambos ordenamientos.',
       icono: 'plane',
       color: 'warning',
       subservicios: [
