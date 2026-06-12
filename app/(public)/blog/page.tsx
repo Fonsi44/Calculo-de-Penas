@@ -8,6 +8,8 @@ import { NewsletterSection } from '@/components/blog/newsletter-section';
 import { getAllPosts, getFeaturedPosts, getPostsByTag, getPostsByPage, getTotalPages } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
 import { RssButton } from '@/components/marketing/rss-button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -78,29 +80,15 @@ export default async function BlogHubPage(props: Props) {
         { label: 'Blog Jurídico' },
       ]} />
 
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
-        <Container size="lg" className="relative py-14 md:py-20">
-          <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-              Blog Jurídico
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              Blog Jurídico de Abogados en Honduras
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              Artículos, análisis y guías escritos por nuestro equipo. Información clara y práctica
-              sobre el sistema legal hondureño.
-            </p>
-            <div className="mt-7">
-              <CTAGroup variant="inverse" />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Blog Jurídico"
+        badge="Artículos y guías"
+        title="Blog Jurídico de Abogados en Honduras"
+        subtitle="Artículos, análisis y guías escritos por nuestro equipo. Información clara y práctica sobre el sistema legal hondureño."
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      <TrustBar background="light" />
 
       <Section spacing="md">
         <div className="space-y-6">

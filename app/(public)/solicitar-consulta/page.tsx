@@ -16,6 +16,9 @@ import {
 import { telHref, whatsappHref, site } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { webpageSchema } from '@/lib/seo-schema';
@@ -67,19 +70,14 @@ export default async function SolicitarConsultaPage() {
         { label: 'Inicio', href: '/' },
         { label: 'Solicitar consulta' },
       ]} />
-      <section className="bg-primary text-text-inverse">
-        <Container size="lg" className="py-12 md:py-16">
-          <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-            Solicitar consulta
-          </p>
-          <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight max-w-3xl">
-            {heroTitle}
-          </h1>
-          <p className="mt-4 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
-            {heroSubtitle}
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Solicitar consulta"
+        title={heroTitle}
+        subtitle={<>{heroSubtitle}</>}
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      <TrustBar background="light" />
 
       <Section spacing="md">
         <div className="grid lg:grid-cols-5 gap-6">
