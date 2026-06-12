@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/api/og?tag=Especialidad+Destacada&title=${encodeURIComponent(`Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`)}&subtitle=${encodeURIComponent('Defensa penal técnica y confidencial en todas las etapas del proceso penal hondureño.')}`, width: 1200, height: 630, alt: `${site.name} — Derecho Penal` }],
+    images: [{ url: `${site.url}/og/penal.png`, width: 1200, height: 630, alt: `${site.name} — Derecho Penal` }],
   },
 };
 

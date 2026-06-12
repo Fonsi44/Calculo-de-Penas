@@ -40,10 +40,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const area = getAreaBySlug(slug);
   if (!area) return {};
+
+  const OG_IMAGES: Record<string, string> = {
+    'derecho-de-familia': '/og/familia.png',
+    'derecho-laboral': '/og/laboral.png',
+    'derecho-civil-y-notarial': '/og/civil.png',
+    'derecho-penal': '/og/penal.png',
+  };
+  const ogImage = OG_IMAGES[slug];
+
   return {
     title: area.titulo,
     description: `${area.descripcion.substring(0, 160)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
     alternates: { canonical: `/servicios-juridicos/${slug}` },
+    ...(ogImage ? {
+      openGraph: {
+        images: [{ url: `${site.url}${ogImage}`, width: 1200, height: 630, alt: area.titulo }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        images: [`${site.url}${ogImage}`],
+      },
+    } : {}),
   };
 }
 
