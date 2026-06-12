@@ -661,7 +661,7 @@ Cada breadcrumb debe incluir `BreadcrumbList` schema.
 
 ## 13. Prompts de Implementación
 
-> **Estado global**: 7/10 corregidos · 2 falsos positivos (ya implementados) · 1 pendiente
+> **Estado global**: 8/10 corregidos · 2 falsos positivos (ya implementados)
 
 ### Prompt #1: Implementar FAQPage Schema ✅ FALSO POSITIVO
 
@@ -934,9 +934,10 @@ En la sección "Especialidad destacada" de `/despacho`, añadir al final del pá
 
 ---
 
-### Prompt #10: Corregir Error de Hidratación React ⏳ PENDIENTE
+### Prompt #10: Corregir Error de Hidratación React ✅ CORREGIDO
 
-**Estado**: ⏳ Pendiente — Requiere debug del componente SSR/CSR en `/despacho`. Error "Minified React error #418" por discrepancia de texto entre servidor y cliente.  
+**Estado**: ✅ Corregido — 12 junio 2026. Añadido `suppressHydrationWarning` en `LiveClock`, `HeroOfficeBadge` y `LiveOfficeStatus` en `components/marketing/live-widgets.tsx`. El error ocurría porque los componentes de reloj renderizaban `new Date()` que difiere entre SSR y cliente por segundos.  
+**Archivo**: `components/marketing/live-widgets.tsx`  
 **Título**: Solucionar error de hidratación React en /despacho
 
 **Objetivo**: Eliminar inconsistencia entre HTML del servidor y renderizado del cliente
@@ -986,7 +987,7 @@ Corregir la causa raíz para que el HTML del servidor coincida exactamente con e
 | # | Elemento | Bloqueo | Acción necesaria |
 |---|----------|---------|-----------------|
 | P1 | Fechas de blog en futuro (jul 2026) | DATABASE_URL cifrada con dotenvx — solo Next.js runtime puede leerla | Las fechas `publishedAt` en `blog_posts` están en julio 2026 (~133 posts). Se creó script `scripts/fix-blog-dates.mjs` que corrige todas las fechas restándoles los días necesarios. **Para ejecutarlo se necesita acceso a la BD de Neon**. Alternativa: corregir manualmente desde `/intranet/admin/blog`. |
-| P2 | Error de hidratación React #418 en /despacho | Requiere debug de componente | Identificar discrepancia SSR/CSR en renderizado de texto |
+| P2 | Error de hidratación React #418 en /despacho | ✅ Corregido | Añadido `suppressHydrationWarning` en `LiveClock`, `HeroOfficeBadge` y `LiveOfficeStatus` (components/marketing/live-widgets.tsx) |
 | P3 | Elementos alert en DOM | Requiere investigación | Posiblemente relacionados con CookieConsent/Toast |
 | P4 | og:image genérica | Requiere diseño | Crear imágenes sociales por página/sección |
 | P5 | og:title distinto del title SEO en /despacho | Decisión editorial | Unificar o justificar la diferencia |
