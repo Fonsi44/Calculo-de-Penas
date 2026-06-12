@@ -41,6 +41,11 @@ interface TrustBarProps {
  * Strip horizontal de sellos de confianza. Sustituye el antiguo marquee
  * plano por una banda legible con iconos y microcopy. Funciona como
  * prueba social inmediata.
+ *
+ * Layout: cada item tiene el icono centrado arriba y el texto centrado
+ * debajo, de modo que las cuatro tarjetas tienen la misma anchura
+ * visual y la misma distancia entre icono, título y descripción,
+ * independientemente de la longitud del título.
  */
 export function TrustBar({
   items = DEFAULT_ITEMS,
@@ -51,34 +56,32 @@ export function TrustBar({
   const wrapperCls = isDark
     ? 'bg-primary-dark text-text-inverse border-y border-primary-light/20'
     : 'bg-surface border-y border-border-light';
-  const itemCls = isDark
-    ? 'flex items-start gap-3'
-    : 'flex items-start gap-3';
+  const cardCls = isDark
+    ? 'flex flex-col items-center text-center h-full px-2'
+    : 'flex flex-col items-center text-center h-full px-2';
   const iconBoxCls = isDark
-    ? 'w-9 h-9 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0'
-    : 'w-9 h-9 rounded-md bg-primary/8 text-primary flex items-center justify-center flex-shrink-0';
+    ? 'w-11 h-11 rounded-full bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
+    : 'w-11 h-11 rounded-full bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
   const titleCls = isDark
-    ? 'text-sm font-bold text-text-inverse leading-tight'
-    : 'text-sm font-bold text-text leading-tight';
+    ? 'text-sm font-bold text-text-inverse leading-tight mt-3'
+    : 'text-sm font-bold text-text leading-tight mt-3';
   const descCls = isDark
-    ? 'text-xxs text-text-inverse/70 leading-snug mt-0.5'
-    : 'text-xxs text-text-secondary leading-snug mt-0.5';
+    ? 'text-xxs text-text-inverse/70 leading-snug mt-1 max-w-[18ch]'
+    : 'text-xxs text-text-secondary leading-snug mt-1 max-w-[20ch]';
 
   return (
     <div className={`${wrapperCls} ${className ?? ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-7 md:py-9">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 items-stretch">
           {items.map((it) => {
             const Icon = it.icon;
             return (
-              <div key={it.title} className={itemCls}>
+              <div key={it.title} className={cardCls}>
                 <div className={iconBoxCls}>
-                  <Icon size={18} aria-hidden="true" />
+                  <Icon size={20} aria-hidden="true" />
                 </div>
-                <div className="min-w-0">
-                  <p className={titleCls}>{it.title}</p>
-                  <p className={descCls}>{it.description}</p>
-                </div>
+                <p className={titleCls}>{it.title}</p>
+                <p className={descCls}>{it.description}</p>
               </div>
             );
           })}
