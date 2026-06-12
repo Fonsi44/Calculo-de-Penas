@@ -1,5 +1,24 @@
 # Changelog
 
+## Release 38 — Limpieza de claims y mejoras de contraste frontend público (2026-06-12)
+
+### Cambios de contenido
+- **`StatsCounter`** (`components/marketing/live-widgets.tsx`): eliminada métrica "635 Artículos CP". Cuatro → tres stats: +15 años, 60h horario continuo, 100% privacidad legal. Grid ajustado de `sm:grid-cols-4` a `sm:grid-cols-3`.
+- **`TrustBar`** (`components/marketing/trust-bar.tsx`): eliminados items "Penal actualizado" y "13 áreas integradas". DEFAULT_ITEMS pasa de 6 a 4. Grid ajustado de `lg:grid-cols-6` a `lg:grid-cols-4`.
+- **`/servicios-juridicos`**: H1, title metadata, description, OG, Twitter y JSON-LD Schema.org actualizados. Se elimina el claim "13 Especialidades" y se sustituye por "Ramas principales del derecho" (lenguaje coherente con la realidad del bufete).
+- **`/despacho`**: enlace final "Ver las 13 áreas del bufete" → "Ver las ramas principales del derecho".
+- **`/derecho-penal`**: "Explore las 13 áreas jurídicas del bufete" → "Explore las ramas principales del derecho".
+- **`/aviso-legal`**: "asesoría, consultoría y litigio en 13 áreas del derecho" → "asesoría, consultoría y litigio en las principales ramas del derecho" (texto legal).
+
+### Mejoras de contraste y layout
+- **`/despacho` "Visión multidisciplinar"** (cards en fondo navy): el fondo `bg-primary-light/20` con `text-text-inverse/80` daba texto invisible. Cambiado a `bg-white/10 border-white/15` con `text-white` (h3) y `text-white/85` (descripción). Ratio de contraste final **≈ 14:1 blanco puro sobre navy** (WCAG AAA).
+- **`/despacho` "Defensa técnica, no promesas"** (cards en fondo crema): icono suelto arriba con `mb-3` cambiado a layout horizontal `flex items-start gap-3` igual que el resto de cards públicas. Coherencia visual.
+- **`LeadMagnetCTA`** (`components/marketing/lead-magnet-cta.tsx`): contenedor con `mt-8 p-5` (espaciado excesivo y casi pegado a la siguiente tarjeta) cambiado a `mt-4 p-4 sm:p-5`. Header con `items-start` y `min-w-0` para alineación correcta. Ahora aparece con respiración adecuada en su `Section spacing="sm"`.
+
+### Limpieza
+- Eliminados imports no usados: `Scale` y `MessageCircle` en `live-widgets.tsx`; `Scale` y `MessageCircle` en `trust-bar.tsx`.
+- Lint 0/0. Build OK. Deploy READY en producción.
+
 ## Release 37 — Corrección regresión tipográfica: H1/H2 con presencia corporativa (2026-06-12)
 
 ### Problema detectado
