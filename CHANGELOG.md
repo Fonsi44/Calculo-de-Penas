@@ -1,5 +1,42 @@
 # Changelog
 
+## Release 39 — Sistema de agente SEO para Kilo Code (2026-06-12)
+
+### Agente SEO principal
+- **`.kilo/agent/SEO Senior.md`**: Agente SEO senior con autoridad para optimizar metadatos, schemas, headings, enlazado interno y contenido editorial. Modo `primary`, color `#2E7D32`. Incluye metodología de trabajo en 3 fases (contexto → diagnóstico → implementación) y principios SEO detallados.
+
+### Reglas SEO persistentes
+- **`.kilo/rules/seo.md`**: 12 reglas vinculantes para toda modificación con impacto SEO. Cubren intención de búsqueda (R1), canibalización (R2), alineación semántica (R3), anti-keyword-stuffing (R4), prohibición de datos inventados (R5), priorización por impacto (R6), coherencia arquitectura-enlazado (R7), schemas obligatorios por página (R8), no-degradación (R9), validación obligatoria (R10), SEO local (R11) e IndexNow/sitemap (R12).
+
+### Skills SEO (`.kilo/skills/`)
+- **`auditoria-seo`**: Auditoría SEO técnica completa (indexación, on-page, schemas, arquitectura, enlazado, rendimiento, local, conversión).
+- **`brief-seo`**: Briefs de contenido optimizados con keyword, intención, headings, enlazado y schemas.
+- **`enlazado-interno`**: Análisis y optimización de interlinking, anchors, huérfanas y silos temáticos.
+- **`seo-local`**: Optimización de presencia local (NAP, geo tags, LocalBusiness schema, keywords geográficas).
+- **`on-page`**: Optimización por página (titles, metas, headings, OG, schemas, contenido, CRO).
+
+### Comandos SEO (`.kilo/command/`)
+- **`/auditar-seo`**: Auditoría SEO completa automatizada. Usa el skill `auditoria-seo`.
+- **`/brief-seo`**: Crear brief SEO para contenido. Usa el skill `brief-seo`.
+- **`/enlazado-interno`**: Analizar y optimizar enlazado. Usa el skill `enlazado-interno`.
+- **`/seo-local`**: Optimizar presencia local. Usa el skill `seo-local`.
+- **`/fix-seo`**: Corregir problemas SEO según prioridad.
+
+### Configuración del proyecto
+- **`kilo.json`**: Creado en raíz del proyecto con modelo `deepseek1/deepseek-v4-pro`, permisos configurados, paths de skills e instructions.
+- Habilita la carga automática de `.kilo/rules/*.md` como instrucciones persistentes.
+
+### Correcciones en AGENTS.md
+- **§8.2**: Aclarada la restricción "No modificar SEO". Ahora permite cambios intencionados y validados por el agente SEO.
+- **§8.1**: Aclarado que "No rediseñar" aplica al diseño visual, no a la optimización SEO de contenido/metadatos.
+- **§12**: Actualizadas referencias de `~/.config/opencode/` a `~/.config/kilo/`. Añadidas referencias a `.kilo/agent/` y `.kilo/rules/`.
+- **§14**: Actualizadas referencias de `opencode.json` a `kilo.json`. Añadida verificación de reglas SEO antes de cambios.
+- **§16 (nuevo)**: Gobernanza SEO. Define autoridad del agente SEO, reglas vinculantes, resolución de conflictos y referencias a skills/comandos.
+
+### Documentación
+- **`README.md`**: Añadida sección "Agente SEO y herramientas de posicionamiento" con tabla completa de recursos (agentes, reglas, skills, comandos).
+- **`docs/auditoria-seo.md`** y **`docs/pagespeed.md`**: Movidos desde raíz a `docs/`.
+
 ## Release 38 — Limpieza de claims y mejoras de contraste frontend público (2026-06-12)
 
 ### Cambios de contenido

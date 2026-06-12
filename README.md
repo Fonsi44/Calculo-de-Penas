@@ -235,6 +235,29 @@ npm run indexnow          # Enviar URLs reales
 | Indexación | ✅ Activada (`NEXT_PUBLIC_NOINDEX=false`) |
 | CSP | ✅ Compatible con GA4 |
 
+### Agente SEO y herramientas de posicionamiento
+
+El proyecto dispone de un sistema completo de agentes, reglas, skills y comandos SEO para Kilo Code:
+
+| Recurso | Ruta | Propósito |
+|----------|------|-----------|
+| **Agente SEO** | `.kilo/agent/SEO Senior.md` | Agente principal con autoridad para optimizar metadatos, schemas, headings, enlazado interno y contenido editorial. Modo `primary`, invocable como `/SEO Senior` o desde `@SEO Senior`. |
+| **Reglas SEO** | `.kilo/rules/seo.md` | 12 reglas vinculantes para cualquier modificación con impacto SEO. Incluyen intención de búsqueda, canibalización, priorización, schemas obligatorios y SEO local. |
+| **Skill: Auditoría SEO** | `.kilo/skills/auditoria-seo/SKILL.md` | Auditoría técnica completa: indexación, on-page, schemas, arquitectura, enlazado, conversión. |
+| **Skill: Brief SEO** | `.kilo/skills/brief-seo/SKILL.md` | Briefs de contenido optimizados con keyword, intención, headings, enlazado y schemas. |
+| **Skill: Enlazado interno** | `.kilo/skills/enlazado-interno/SKILL.md` | Análisis de interlinking, anchors, páginas huérfanas y silos temáticos. |
+| **Skill: SEO local** | `.kilo/skills/seo-local/SKILL.md` | Optimización local: NAP, geo tags, LocalBusiness schema, keywords geográficas. |
+| **Skill: On-page** | `.kilo/skills/on-page/SKILL.md` | Optimización por página: titles, metas, headings, OG, schemas, contenido. |
+| **Comando: `/auditar-seo`** | `.kilo/command/auditar-seo.md` | Auditoría SEO completa automatizada. |
+| **Comando: `/brief-seo`** | `.kilo/command/brief-seo.md` | Crear brief SEO para nuevo contenido. |
+| **Comando: `/enlazado-interno`** | `.kilo/command/enlazado-interno.md` | Analizar y optimizar enlazado interno. |
+| **Comando: `/seo-local`** | `.kilo/command/seo-local.md` | Optimizar presencia en búsquedas locales. |
+| **Comando: `/fix-seo`** | `.kilo/command/fix-seo.md` | Corregir problemas SEO detectados en auditorías. |
+
+**Uso del agente SEO**: Invocar con `/SEO Senior` o seleccionando el agente "SEO Senior" en el menú de agentes. Para tareas específicas, usar los comandos `/auditar-seo`, `/brief-seo`, etc.
+
+**Gobernanza**: Las reglas en `.kilo/rules/seo.md` son vinculantes. El agente SEO tiene autoridad para modificar metadatos, schemas y contenido editorial. Los cambios estructurales de URLs requieren aprobación explícita. Ver `AGENTS.md` §16 para la política completa.
+
 ---
 
 ## Panel de Administración (Intranet)

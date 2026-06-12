@@ -430,8 +430,8 @@ Ver sección 7 (Calculadora).
 
 ### Lo que NO debe hacer la IA
 
-1. **No rediseñar la web pública**. Las páginas `/(public)/*` tienen diseño establecido. Solo tocar por bug técnico imprescindible.
-2. **No modificar SEO ni URLs públicas**. No romper slugs, breadcrumbs, JSON-LD, sitemap, robots.txt, OG tags, hreflang.
+1. **No rediseñar la web pública**. Las páginas `/(public)/*` tienen diseño visual establecido. Solo tocar la apariencia visual por bug técnico imprescindible. La optimización SEO (metadatos, schemas, headings semánticos, datos estructurados, enlazado interno) no constituye rediseño y es responsabilidad del agente SEO.
+ 2. **No romper SEO ni URLs públicas sin justificación**. Los cambios de slugs, breadcrumbs, JSON-LD, sitemap, robots.txt, OG tags o hreflang deben ser intencionados, trazables y validados. El agente SEO tiene autoridad para optimizar metadatos, schemas, headings, enlazado interno y arquitectura de contenido siempre que no degrade el SEO existente. Cualquier cambio estructural en URLs requiere aprobación explícita.
 3. **No usar datos mock como solución final**. Toda persistencia debe ser en DB (PostgreSQL) a menos que el sistema explícitamente use otra fuente.
 4. **No usar localStorage como persistencia final** salvo que sea la fuente real explícita del subsistema.
 5. **No cambiar arquitectura sin justificar** (framework, app router, proxy, auth, DB schema).
@@ -550,9 +550,9 @@ Próximo paso recomendado:
 ## 12. Investigación inicial en este repositorio
 
 Cuando se inicia una sesión, leer en orden:
-1. `README*`, `package.json`, `opencode.jsonc` (proyecto)
-2. Config global: `~/.config/opencode/opencode.jsonc` — puede contener MCP servers, plugins y config que afectan el comportamiento
-3. `AGENTS.md` (este archivo)
+1. `README*`, `package.json`, `kilo.json` (proyecto), `opencode.jsonc` (legacy)
+2. Config global: `~/.config/kilo/kilo.json` (moderno) o `~/.config/kilo/kilo.jsonc` — puede contener agentes, MCP servers, plugins y config que afectan el comportamiento
+3. `AGENTS.md` (este archivo), `.kilo/agent/*.md` (agentes del proyecto), `.kilo/rules/*.md` (reglas del proyecto)
 4. Archivos de entrypoint y config de build/test
 5. `CHANGELOG.md` (últimas releases para contexto de cambios recientes)
 
@@ -590,9 +590,10 @@ Está prohibido usar "hecho", "listo", "completado" o "validado" si no correspon
 
 ### Antes de modificar
 - Leer archivos afectados y entender el cambio mínimo necesario.
-- Revisar `README.md`, `CHANGELOG.md`, `opencode.json` (proyecto Y global), y archivos de reglas existentes.
+- Revisar `README.md`, `CHANGELOG.md`, `kilo.json` (proyecto y global), y archivos de reglas existentes (`.kilo/rules/*.md`).
 - Confirmar si el cambio afecta API routes, motor de cálculo, DB schema, seed, metadata, UI de la calculadora, blog CMS, FAQ CMS, o validación de penas.
-- **Siempre revisar la configuración GLOBAL** (`~/.config/opencode/opencode.jsonc`) además de la del proyecto.
+- Si el cambio es de ámbito SEO, verificar que cumple las reglas de `.kilo/rules/seo.md` y no degrada el SEO existente.
+- **Siempre revisar la configuración GLOBAL** (`~/.config/kilo/kilo.json`) además de la del proyecto.
 
 ### Durante la modificación
 - Cambios mínimos y controlados. No eliminar lógica funcional sin justificación.
@@ -613,6 +614,50 @@ Está prohibido usar "hecho", "listo", "completado" o "validado" si no correspon
 ## 15. Criterio de cierre
 
 Una tarea se cierra solo si: archivos revisados → cambios aplicados → comandos ejecutados → resultados reportados → riesgos declarados → no verificable marcado como `NO VALIDADO` → sin funciones truncadas, rutas rotas ni validaciones inventadas.
+
+---
+
+## 16. Gobernanza SEO
+
+### Agente SEO
+
+El proyecto dispone de un agente SEO especializado en `.kilo/agent/SEO Senior.md`. Este agente tiene autoridad para:
+
+- Optimizar metadatos (title, description, OG, Twitter Cards, robots)
+- Mejorar datos estructurados (JSON-LD, Schema.org)
+- Ajustar headings (H1-H6) con criterio semántico
+- Proponer y ejecutar mejoras de enlazado interno
+- Auditar y corregir canibalización de keywords
+- Optimizar contenido para intención de búsqueda
+- Revisar y mejorar la arquitectura de información
+- Gestionar sitemap.xml y robots.txt
+- Implementar y validar hreflang, canonical, alternates
+- Trabajar SEO local (Google Business Profile, geo tags, NAP)
+
+### Reglas SEO persistentes
+
+Las reglas en `.kilo/rules/seo.md` son vinculantes para cualquier modificación con impacto SEO:
+
+- Una URL = una intención de búsqueda principal
+- Revisar canibalización antes de crear nuevas páginas
+- Alinear title, H1, primer párrafo y headings con la intención
+- Evitar keyword stuffing y repetición artificial
+- No inventar datos, métricas, rankings ni ubicaciones
+- Priorizar cambios por impacto SEO (crítico > importante > recomendable)
+- Mantener coherencia entre contenido, arquitectura y enlazado interno
+
+### Conflictos con otras reglas
+
+En caso de conflicto entre una regla SEO y una regla general del proyecto:
+1. Las reglas de seguridad e integridad de datos prevalecen sobre las SEO
+2. Las reglas de no-rediseño aplican solo al diseño visual, no al contenido SEO
+3. El agente SEO puede modificar metadatos, schemas y contenido editorial sin aprobación adicional
+4. Los cambios estructurales de URLs requieren aprobación explícita
+
+### Skills y comandos SEO
+
+- Skills: `.kilo/skills/auditoria-seo/`, `.kilo/skills/brief-seo/`, `.kilo/skills/enlazado-interno/`, `.kilo/skills/seo-local/`, `.kilo/skills/on-page/`
+- Comandos: `/auditar-seo`, `/brief-seo`, `/enlazado-interno`, `/seo-local`, `/fix-seo`
 
 ## Instrucción final
 

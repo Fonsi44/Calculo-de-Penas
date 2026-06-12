@@ -1,0 +1,23 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "model": "deepseek1/deepseek-v4-pro",
+  "default_agent": "code",
+  "permission": {
+    "bash": "allow",
+    "read": "allow",
+    "edit": "allow",
+    "webfetch": "allow",
+    "task": "allow",
+    "skill": "allow",
+    "question": "allow",
+    "todowrite": "allow",
+    "external_directory": "deny"
+  },
+  "instructions": [
+    "AGENTS.md",
+    ".kilo/rules/*.md"
+  ],
+  "skills": {
+    "paths": [".kilo/skills"]
+  }
+}
