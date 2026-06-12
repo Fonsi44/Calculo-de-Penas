@@ -144,10 +144,10 @@ export function PublicFooter() {
           <p className="text-xs text-text-inverse/70">
             © {year} {site.name}. Todos los derechos reservados.
           </p>
-          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
             {LEGALES.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="text-xs text-text-inverse/70 hover:text-accent transition-colors">
+                <Link href={l.href} className="text-xs text-text-inverse/70 hover:text-accent transition-colors py-1 block">
                   {l.label}
                 </Link>
               </li>

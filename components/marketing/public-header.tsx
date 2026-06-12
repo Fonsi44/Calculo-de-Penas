@@ -75,7 +75,7 @@ export function PublicHeader() {
         <Link
           href="/"
           className="flex items-center gap-2.5 focus-visible:outline-none"
-          aria-label={`${site.name} — Inicio`}
+          aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
           <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center flex-shrink-0">
             <Scale size={20} className="text-primary" strokeWidth={2.4} />

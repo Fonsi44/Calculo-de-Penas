@@ -66,6 +66,7 @@ export function TestimonialsSection({
                   </h3>
                   <div
                     className="flex items-center gap-0.5 text-accent flex-shrink-0"
+                    role="img"
                     aria-label={`${rating} de 5 estrellas`}
                   >
                     {Array.from({ length: 5 }).map((_, i) => (
