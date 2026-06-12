@@ -39,6 +39,13 @@ export const metadata: Metadata = {
   title: { absolute: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}` },
   description: site.description,
   alternates: { canonical: '/' },
+  keywords: ['abogados Nacaome', 'bufete jurídico Honduras', 'defensa penal Honduras', 'abogado penalista Valle', 'asesoría legal Honduras', 'despacho jurídico Nacaome', 'abogados sur Honduras', 'consulta legal gratuita'],
+  twitter: {
+    card: 'summary_large_image',
+    title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
+    description: site.description,
+    images: [`${site.url}/og-image.png`],
+  },
 };
 
 export const revalidate = 3600;

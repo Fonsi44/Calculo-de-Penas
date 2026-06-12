@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   title: `Hondureños en España — Asistencia Legal desde Honduras | ${site.name}`,
   description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. ${site.name}.`,
   alternates: { canonical: '/hondurenos-en-espana' },
+  keywords: ['hondureños en España', 'asistencia legal migrantes', 'poder notarial desde España', 'divorcio internacional Honduras', 'herencias transfronterizas', 'reagrupación familiar Honduras España', 'nacionalidad española hondureños'],
+  twitter: {
+    card: 'summary_large_image',
+    title: `Hondureños en España — Asistencia Legal Internacional | ${site.name}`,
+    description: 'Gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España. Asistencia legal para hondureños en el extranjero.',
+    images: [`${site.url}/og-image.png`],
+  },
   openGraph: {
     title: `Hondureños en España — ${site.name}`,
     description: `Asistencia legal para hondureños en España: gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España.`,

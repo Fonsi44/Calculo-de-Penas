@@ -20,10 +20,10 @@ const PUBLIC_ROUTES: Array<{
   { path: '/', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
   { path: '/servicios-juridicos', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
   { path: '/derecho-penal', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
-  { path: '/solicitar-consulta', priority: 1.0, changeFrequency: 'monthly', daysAgo: 0 },
-  { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 1 },
-  { path: '/blog', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
-  { path: '/preguntas-frecuentes', priority: 0.9, changeFrequency: 'weekly', daysAgo: 2 },
+  { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
+  { path: '/preguntas-frecuentes', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
+  { path: '/blog', priority: 0.3, changeFrequency: 'weekly', daysAgo: 1 },
+  { path: '/solicitar-consulta', priority: 0.3, changeFrequency: 'monthly', daysAgo: 2 },
   { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
   { path: '/servicios-juridicos/derecho-de-familia', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/servicios-juridicos/derecho-laboral', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
@@ -68,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: absoluteUrl(`/blog/${c.slug}`),
     lastModified: now,
     changeFrequency: 'weekly' as const,
-    priority: 0.6,
+    priority: 0.4,
   }));
 
   const dbPosts = await db
@@ -88,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ? new Date(p.updatedAt)
       : new Date(p.publishedAt),
     changeFrequency: 'monthly' as const,
-    priority: 0.6,
+    priority: 0.8,
   }));
 
   return [...staticRoutes, ...categoryRoutes, ...blogPostRoutes];

@@ -24,6 +24,13 @@ export const metadata: Metadata = {
   title: 'Solicitar Consulta Legal Gratuita | Abogados en Nacaome, Valle',
   description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
   alternates: { canonical: '/solicitar-consulta' },
+  keywords: ['consulta legal gratuita Honduras', 'abogado consulta Nacaome', 'asesoría legal sin costo', 'consulta penal confidencial', 'contactar abogado Honduras', 'cita legal Valle'],
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Consulta Legal Gratuita — Abogados en Nacaome, Valle',
+    description: 'Solicite una consulta confidencial sin costo. Abogados penalistas en Nacaome, Valle. Le respondemos en horario hábil.',
+    images: [`${site.url}/og-image.png`],
+  },
   openGraph: {
     title: `Solicitar Consulta Legal — ${site.name}`,
     description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',

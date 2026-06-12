@@ -33,6 +33,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.title,
     description: post.description,
     alternates: { canonical: `/blog/${post.category}/${post.slug}` },
+    keywords: post.tags,
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      ...(post.coverImage ? { images: [`${site.url}${post.coverImage}`] } : { images: [`${site.url}/og-image.png`] }),
+    },
     openGraph: {
       title: post.title,
       description: post.description,

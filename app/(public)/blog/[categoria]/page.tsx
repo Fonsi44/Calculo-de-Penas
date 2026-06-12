@@ -33,6 +33,13 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
     title: `${cat.nombre} — Blog Jurídico${page > 1 ? ` — Página ${page}` : ''}`,
     description: page > 1 ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
     alternates: { canonical: canonicalPath },
+    keywords: [cat.nombre.toLowerCase(), 'artículos legales Honduras', 'blog jurídico Honduras', `${cat.nombre.toLowerCase()} Honduras`],
+    twitter: {
+      card: 'summary_large_image',
+      title: `${cat.nombre} — Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,
+      description: cat.descripcion,
+      images: [`${site.url}/og-image.png`],
+    },
   };
 }
 

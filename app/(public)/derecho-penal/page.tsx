@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
   description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca. ${site.name}.`,
   alternates: { canonical: '/derecho-penal' },
+  keywords: ['abogado penalista Honduras', 'defensa penal Nacaome', 'derecho penal Honduras', 'asistencia detenidos', 'proceso penal hondureño', 'audiencia inicial penal', 'juicio oral Honduras', 'recursos penales casación'],
+  twitter: {
+    card: 'summary_large_image',
+    title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} — Defensa Penal Técnica`,
+    description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados. Presencia en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca.`,
+    images: [`${site.url}/og-image.png`],
+  },
   openGraph: {
     title: `Abogados Penalistas — ${site.name}`,
     description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en todo el país.`,

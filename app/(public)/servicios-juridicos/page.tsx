@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`,
   description: `Conozca las 13 especialidades de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
   alternates: { canonical: '/servicios-juridicos' },
+  keywords: ['servicios jurídicos Honduras', 'áreas legales Nacaome', 'especialidades bufete', 'derecho familia Honduras', 'derecho laboral Valle', 'derecho mercantil Honduras', 'derecho civil Nacaome', 'cobertura legal integral'],
+  twitter: {
+    card: 'summary_large_image',
+    title: `13 Especialidades Jurídicas en ${site.address.city}, ${site.address.department}`,
+    description: `Cobertura legal integral: derecho penal, familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario y más. ${site.name}.`,
+    images: [`${site.url}/og-image.png`],
+  },
   openGraph: {
     title: `Servicios Jurídicos — ${site.name}`,
     description: `Conozca las 13 especialidades de ${site.name}: cobertura legal integral en Nacaome, Valle, Honduras.`,

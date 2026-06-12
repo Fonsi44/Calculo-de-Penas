@@ -21,6 +21,13 @@ export const metadata: Metadata = {
   title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
   description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
   alternates: { canonical: '/despacho' },
+  keywords: ['bufete Nacaome', 'despacho jurídico Honduras', 'abogados Nacaome Valle', 'equipo legal Honduras', 'misión bufete jurídico', 'valores despacho abogados', 'trayectoria legal Honduras', 'consulta confidencial'],
+  twitter: {
+    card: 'summary_large_image',
+    title: `El Despacho — Bufete multidisciplinar en ${site.address.city}, ${site.address.department}`,
+    description: `Conoce ${site.name}: bufete multidisciplinario con más de 15 años de ejercicio profesional. Rigor técnico y soluciones legales estratégicas.`,
+    images: [`${site.url}/og-image.png`],
+  },
   openGraph: {
     title: `El Despacho — Bufete multidisciplinar en ${site.address.city} | ${site.name}`,
     description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,

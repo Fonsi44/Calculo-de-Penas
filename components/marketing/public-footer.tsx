@@ -155,9 +155,12 @@ export function PublicFooter() {
 
           </ul>
         </div>
-        <p className="text-xxs text-text-inverse/50 mt-3 italic text-pretty">
-          La información publicada en este sitio es de carácter general y orientativo. No sustituye la asesoría legal personalizada. Cada caso requiere análisis individual por un abogado habilitado.
-        </p>
+        <details className="mt-3 text-xxs text-text-inverse/50 italic text-pretty group">
+          <summary className="cursor-pointer hover:text-text-inverse/70 transition-colors select-none">
+            La información publicada en este sitio es de carácter general y orientativo. No sustituye la asesoría legal personalizada.
+          </summary>
+          <p className="mt-1">Cada caso requiere análisis individual por un abogado habilitado. Consulte directamente con nuestro despacho antes de tomar decisiones legales basadas en el contenido de este sitio.</p>
+        </details>
       </div>
     </footer>
   );

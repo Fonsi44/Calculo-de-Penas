@@ -29,7 +29,14 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     title: `Blog Jurídico de Abogados en Honduras | Derecho Penal, Familia, Laboral y Más${page > 1 ? ` — Página ${page}` : ''}`,
     description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
+    keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],
     robots: tagFilter ? { index: false, follow: true, googleBot: { index: false, follow: true } } : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Blog Jurídico — Artículos de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}`,
+      description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
+      images: [`${site.url}/og-image.png`],
+    },
     openGraph: {
       title: `Blog Jurídico — ${site.name}`,
       description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,

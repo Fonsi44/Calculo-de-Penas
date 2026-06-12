@@ -12,7 +12,6 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  keywords: site.keywords,
   authors: [{ name: site.name }],
   creator: site.name,
   publisher: site.name,
@@ -35,8 +34,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} — Bufete multidisciplinar en ${site.address.city}`,
-    description: site.description,
     images: [`${site.url}/og-image.png`],
   },
   robots: isIndexable
