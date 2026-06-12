@@ -169,7 +169,7 @@ export default async function DerechoPenalPage() {
             href="/servicios-juridicos"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
           >
-            Explore las 13 áreas jurídicas del bufete <ArrowRight size={16} />
+              Explore las ramas principales del derecho <ArrowRight size={16} />
           </Link>
         </div>
       </Section>

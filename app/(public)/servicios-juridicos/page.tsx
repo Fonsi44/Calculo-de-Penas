@@ -13,19 +13,19 @@ import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
-  title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`,
-  description: `Conozca las 13 especialidades de ${site.name}: derecho penal, de familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, tributario, ambiental, conciliación y arbitraje en Nacaome, Valle, Honduras.`,
+  title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | Ramas principales del derecho`,
+  description: `Cobertura legal integral en Nacaome, Valle, Honduras: derecho penal, de familia, laboral, civil, mercantil, tributario, bancario, administrativo y más. ${site.name}, bufete multidisciplinar.`,
   alternates: { canonical: '/servicios-juridicos' },
-  keywords: ['servicios jurídicos Honduras', 'áreas legales Nacaome', 'especialidades bufete', 'derecho familia Honduras', 'derecho laboral Valle', 'derecho mercantil Honduras', 'derecho civil Nacaome', 'cobertura legal integral'],
+  keywords: ['servicios jurídicos Honduras', 'áreas legales Nacaome', 'ramas del derecho Honduras', 'derecho familia Honduras', 'derecho laboral Valle', 'derecho mercantil Honduras', 'derecho civil Nacaome', 'cobertura legal integral'],
   twitter: {
     card: 'summary_large_image',
-    title: `13 Especialidades Jurídicas en ${site.address.city}, ${site.address.department}`,
-    description: `Cobertura legal integral: derecho penal, familia, laboral, civil, mercantil, bancario, administrativo, aduanero, sanitario y más. ${site.name}.`,
+    title: `Servicios Jurídicos en ${site.address.city}, Valle — Ramas principales del derecho`,
+    description: `Cobertura legal integral en Nacaome, Valle: penal, familia, laboral, civil, mercantil, tributario, bancario y más. ${site.name}.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades | ${site.name}`,
-    description: `Conozca las 13 especialidades de ${site.name}: cobertura legal integral en Nacaome, Valle, Honduras.`,
+    title: `Servicios Jurídicos en ${site.address.city}, Valle — Ramas principales del derecho | ${site.name}`,
+    description: `Cobertura legal integral en Nacaome, Valle, Honduras: las ramas principales del derecho bajo un mismo bufete.`,
     url: `${site.url}/servicios-juridicos`,
     siteName: site.name,
     locale: 'es_HN',
@@ -46,12 +46,12 @@ export default async function AreasJuridicasPage() {
       <PageHero
         eyebrow="Servicios Jurídicos"
         badge="Cobertura integral"
-        title={`Servicios Jurídicos en ${site.address.city}, ${site.address.department} — ${areas.length} Especialidades Legales`}
+        title={`Servicios Jurídicos en ${site.address.city}, ${site.address.department} — Ramas principales del derecho`}
         subtitle={
           <>
-            Desde Nacaome, Valle, ofrecemos cobertura legal integral en {areas.length}{' '}
-            disciplinas del derecho hondureño. La defensa penal es nuestra especialidad destacada
-            y la acompañamos con servicios especializados en familia, laboral, civil, mercantil,
+            Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas
+            del derecho hondureño. La defensa penal es nuestra especialidad destacada y la
+            acompañamos con servicios especializados en familia, laboral, civil, mercantil,
             tributario y más.
           </>
         }
@@ -103,8 +103,8 @@ export default async function AreasJuridicasPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify(
           webpageSchema(
-            'Servicios Jurídicos en Nacaome, Valle | 13 Especialidades',
-            'Conozca las 13 especialidades de Pineda y Asociados en Nacaome, Valle, Honduras.',
+            'Servicios Jurídicos en Nacaome, Valle | Ramas principales del derecho',
+            'Cobertura legal integral en las principales ramas del derecho en Nacaome, Valle, Honduras.',
             '/servicios-juridicos'
           ),
         ),

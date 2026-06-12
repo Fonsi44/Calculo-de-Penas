@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Activity, MapPin, Phone, MessageCircle } from 'lucide-react';
+import { Activity, Phone, MessageCircle } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 
@@ -199,10 +199,9 @@ export function Ticker() {
 
 export function StatsCounter() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {[
         { value: '+15', label: 'Años de ejercicio', icon: Activity },
-        { value: '635', label: 'Artículos CP', icon: MapPin },
         { value: '60h', label: 'Horario continuo', icon: Phone },
         { value: '100%', label: 'Privacidad legal', icon: MessageCircle },
       ].map((s, i) => (

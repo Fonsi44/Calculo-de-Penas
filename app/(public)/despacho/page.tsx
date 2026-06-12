@@ -244,11 +244,15 @@ export default async function DespachoPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {c.values.items.map((v) => (
             <Card key={v.title} padding="md" className="h-full card-premium">
-              <div className="w-11 h-11 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center mb-3 border border-accent/30">
-                <v.icon size={20} aria-hidden="true" />
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+                  <v.icon size={20} aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm text-text leading-tight text-balance">{v.title}</h3>
+                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed text-pretty">{v.desc}</p>
+                </div>
               </div>
-              <h3 className="font-bold text-sm text-text leading-tight text-balance">{v.title}</h3>
-              <p className="text-sm text-text-secondary mt-2 leading-relaxed text-pretty">{v.desc}</p>
             </Card>
           ))}
         </div>
@@ -343,14 +347,14 @@ export default async function DespachoPage() {
             { icon: Scale, title: 'Civil + tributario + bancario', desc: 'Embargos, cobros, contratos y obligaciones tributarias.' },
             { icon: BookOpen, title: 'Notarial + registral', desc: 'Compraventas, donaciones, sociedades y traspasos.' },
           ].map((it) => (
-            <div key={it.title} className="rounded-md border border-primary-light/40 bg-primary-light/20 p-4 backdrop-blur-sm card-premium">
+            <div key={it.title} className="rounded-md border border-white/15 bg-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                <div className="w-10 h-10 rounded-md bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
                   <it.icon size={18} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-sm text-text-inverse leading-tight text-balance">{it.title}</h3>
-                  <p className="text-xs text-text-inverse/80 leading-relaxed mt-1 text-pretty">{it.desc}</p>
+                  <h3 className="font-bold text-sm text-white leading-tight text-balance">{it.title}</h3>
+                  <p className="text-xs text-white/85 leading-relaxed mt-1 text-pretty">{it.desc}</p>
                 </div>
               </div>
             </div>
@@ -358,7 +362,7 @@ export default async function DespachoPage() {
         </div>
         <div className="mt-8 text-center">
           <Link href="/servicios-juridicos" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-text-inverse transition-colors">
-            Ver las 13 áreas del bufete <ArrowRight size={14} />
+            Ver las ramas principales del derecho <ArrowRight size={14} />
           </Link>
         </div>
       </Section>

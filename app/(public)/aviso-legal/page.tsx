@@ -34,7 +34,7 @@ export default async function AvisoLegalPage() {
             <>Domicilio profesional: {site.address.full}</>,
             <>Teléfono: {site.phoneDisplay}</>,
             <>Correo electrónico: {site.email}</>,
-            <>Actividad: Bufete multidisciplinario de servicios jurídicos (asesoría, consultoría y litigio en 13 áreas del derecho).</>,
+            <>Actividad: Bufete multidisciplinario de servicios jurídicos (asesoría, consultoría y litigio en las principales ramas del derecho).</>,
           ]}
         />
       </LegalSection>

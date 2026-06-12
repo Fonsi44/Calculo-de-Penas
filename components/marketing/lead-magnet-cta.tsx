@@ -48,14 +48,14 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
   }
 
   return (
-    <div className="mt-8 p-5 rounded-xl bg-accent/5 border border-accent/20">
-      <div className="flex items-center gap-3 mb-2">
+    <div className="mt-4 p-4 sm:p-5 rounded-xl bg-accent/5 border border-accent/20">
+      <div className="flex items-start gap-3">
         <div className="w-9 h-9 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
           <FileDown size={18} className="text-accent-dark" />
         </div>
-        <div>
-          <p className="font-bold text-sm text-primary">{titulo}</p>
-          <p className="text-xs text-text-secondary">{descripcion}</p>
+        <div className="min-w-0 flex-1">
+          <p className="font-bold text-sm text-primary leading-snug">{titulo}</p>
+          <p className="text-xs text-text-secondary mt-1 leading-relaxed">{descripcion}</p>
         </div>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mt-3">
