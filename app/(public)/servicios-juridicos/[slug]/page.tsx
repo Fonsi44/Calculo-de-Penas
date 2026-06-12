@@ -42,10 +42,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!area) return {};
 
   const OG_IMAGES: Record<string, string> = {
-    'derecho-de-familia': '/og/familia.png',
-    'derecho-laboral': '/og/laboral.png',
-    'derecho-civil-y-notarial': '/og/civil.png',
-    'derecho-penal': '/og/penal.png',
+    'derecho-de-familia': '/og/familia.webp',
+    'derecho-laboral': '/og/laboral.webp',
+    'derecho-civil-y-notarial': '/og/civil.webp',
+    'derecho-penal': '/og/penal.webp',
   };
   const ogImage = OG_IMAGES[slug];
 
