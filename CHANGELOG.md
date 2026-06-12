@@ -1,8 +1,26 @@
 # Changelog
 
-## Release 32 — SEO/CRO Auditoría: Quick Wins + 7-Day + 30-Day (2026-06-12)
+## Release 32 — SEO/CRO: Auditoría completa + implementación + verificación (2026-06-12)
 
-Implementación de `auditoria-seo.md` — fuente única de verdad.
+**Hito**: Google confirmó indexación del sitio el 10 junio 2026. 190 URLs en sitemap. Verificación GSC activa.
+
+### Estado final
+
+| Hallazgo | Estado | Verificación producción |
+|----------|--------|------------------------|
+| H1 BlogPosting | ✅ Corregido | `@type:BlogPosting` + articleBody + image |
+| H2 OG titles | ✅ Corregido | 6 páginas: og:title = title |
+| H3 Sitemap | ✅ Corregido | 190 URLs, 6 páginas legales, prioridades optimizadas |
+| H4 JSON-LD SSR | ✅ Corregido | 10-14 scripts por página sin JS |
+| H5 H1 semánticos | ✅ Corregido | Keywords geo en H1 de servicios, penal, blog |
+| H6 Newsletter | ✅ Corregido | `POST /api/subscribe` → 200 OK |
+| H7 Lead magnets | ✅ Corregido | `GET /api/descargar` → application/pdf, 13 guías |
+| H8 OG images | ✅ Corregido | 5 WebP 1200x630 (penal 52KB, blog 72KB, civil 60KB, familia 66KB, laboral 31KB) |
+| H9 rel=prev | ✅ Corregido | `rel=prev` + `rel=next` en blog?page=2 |
+| H10 Article schema | ✅ Corregido | articleBody + image + datePublished en posts |
+| #11 SEO admin | ✅ Implementado | 7 campos en DB + generateMetadata() |
+| #12 KPIs dashboard | ✅ Implementado | conversion: subscribers, consultas, consultas/mes |
+| IndexNow | ✅ Activado | 57 URLs enviadas a Bing/Yandex/Seznam en cada build |
 
 ### FASE 1 — Quick Wins
 
