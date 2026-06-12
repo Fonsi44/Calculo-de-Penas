@@ -757,6 +757,10 @@ export const hubPenal: HubPenal = {
       ],
       faqs: [
         { pregunta: '¿Es posible evitar el juicio oral?', respuesta: 'Sí, mediante conciliación, criterio de oportunidad, suspensión condicional o procedimiento abreviado, según el caso.' },
+        { pregunta: '¿Qué es el criterio de oportunidad y cómo se solicita?', respuesta: 'Es una facultad del Ministerio Público para archivar el caso cuando el hecho no afecta gravemente el bien jurídico o el imputado ha reparado el daño. Se solicita mediante escrito al fiscal del caso, acompañado de pruebas de reparación o de la escasa lesividad.' },
+        { pregunta: '¿Cuánto tiempo dura la suspensión condicional del proceso?', respuesta: 'El juez fija un período de prueba de 1 a 3 años, durante el cual el imputado debe cumplir reglas de conducta. Si las cumple, se extingue la acción penal. Si las incumple, se reanuda el proceso.' },
+        { pregunta: '¿Qué delitos admiten conciliación penal en Honduras?', respuesta: 'Los delitos perseguibles por instancia particular, como lesiones leves, amenazas, injurias, daños y algunos delitos patrimoniales sin violencia. La conciliación extingue la acción penal si se cumple el acuerdo.' },
+        { pregunta: '¿Puedo impugnar una multa de tránsito o del SAR?', respuesta: 'Sí. Para multas de tránsito, cabe recurso de reposición ante la autoridad municipal o el juzgado de faltas. Para multas del SAR, ARSA, ENEE o CONATEL, se interpone recurso de reconsideración en 15 días y, si se rechaza, demanda contencioso-administrativa.' },
       ],
       areasRelacionadas: ['atencion-casos-penales-litigiosos', 'asesoria-preventiva'],
       keywords: ['mediación penal Honduras', 'criterio de oportunidad', 'conciliación penal'],
