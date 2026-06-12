@@ -661,6 +661,7 @@ async function main() {
             category: post.category,
             tags: post.tags,
             readingTime: post.readingTime,
+            coverImage: `/images/blog/${post.slug}.webp`,
             updatedAt: new Date(),
           })
           .where(eq(blogPosts.id, existing.id));
@@ -678,6 +679,7 @@ async function main() {
           tags: post.tags,
           author: 'Pineda y Asociados',
           readingTime: post.readingTime,
+          coverImage: `/images/blog/${post.slug}.webp`,
           featured: false,
           published: true,
         }).returning({ id: blogPosts.id });
