@@ -8,12 +8,21 @@ import {
   isGoogleConfigured,
   isAnalyticsConfigured,
   isSearchConsoleConfigured,
-  getGoogleServiceAccountEmail,
   getAnalyticsPropertyIdOrNull,
   getSearchConsoleSiteUrlOrNull,
   getAnalyticsData,
   getSearchConsoleData,
 } from '@/lib/google';
+
+function getAuthMethod(): string {
+  if (process.env.OAUTH_CLIENT_ID && process.env.OAUTH_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN) {
+    return 'OAuth 2.0';
+  }
+  if (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY) {
+    return `Service Account (${process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL})`;
+  }
+  return 'ninguno';
+}
 
 type HealthStatus = 'active' | 'not_configured' | 'permission_error' | 'api_error' | 'property_error' | 'key_file_error' | 'error' | 'partial';
 
@@ -80,12 +89,12 @@ async function checkGa4DataApi(): Promise<IntegrationHealth> {
 
   if (!isGoogleConfigured()) {
     return inactive(id, label, 'not_configured',
-      'Service account no configurada. Define GOOGLE_SERVICE_ACCOUNT_EMAIL y GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY en .env.local o Vercel.');
+      'Sin credenciales Google. Define OAUTH_CLIENT_ID + OAUTH_CLIENT_SECRET + GOOGLE_REFRESH_TOKEN (recomendado) o GOOGLE_SERVICE_ACCOUNT_EMAIL + GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.');
   }
 
   if (!isAnalyticsConfigured()) {
     return inactive(id, label, 'not_configured',
-      `Service account OK (${getGoogleServiceAccountEmail()}), pero falta GOOGLE_ANALYTICS_PROPERTY_ID.`,
+      `Autenticación configurada (${getAuthMethod()}), pero falta GOOGLE_ANALYTICS_PROPERTY_ID.`,
       'missing_property_id');
   }
 
@@ -100,7 +109,7 @@ async function checkGa4DataApi(): Promise<IntegrationHealth> {
 
     if (code === 'permission_denied') {
       return inactive(id, label, 'permission_error',
-        `Acceso denegado. Anade ${getGoogleServiceAccountEmail()} como "Lector" en GA4 > Admin > Acceso a la propiedad.`,
+        `Acceso denegado. Verifica que la cuenta asociada (${getAuthMethod()}) tenga acceso como "Lector" en GA4 > Admin > Acceso a la propiedad.`,
         'ga4_permission_denied');
     }
     if (code === 'not_found') {
@@ -127,12 +136,12 @@ async function checkSearchConsoleApi(): Promise<IntegrationHealth> {
 
   if (!isGoogleConfigured()) {
     return inactive(id, label, 'not_configured',
-      'Service account no configurada. Define GOOGLE_SERVICE_ACCOUNT_EMAIL y GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.');
+      'Sin credenciales Google. Define OAUTH_CLIENT_ID + OAUTH_CLIENT_SECRET + GOOGLE_REFRESH_TOKEN o GOOGLE_SERVICE_ACCOUNT_EMAIL + GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.');
   }
 
   if (!isSearchConsoleConfigured()) {
     return inactive(id, label, 'not_configured',
-      'Falta GOOGLE_SEARCH_CONSOLE_SITE_URL.', 'missing_site_url');
+      `Autenticación configurada (${getAuthMethod()}), pero falta GOOGLE_SEARCH_CONSOLE_SITE_URL.`, 'missing_site_url');
   }
 
   try {
@@ -145,7 +154,7 @@ async function checkSearchConsoleApi(): Promise<IntegrationHealth> {
 
     if (code === 'permission_denied') {
       return inactive(id, label, 'permission_error',
-        `Acceso denegado. Anade ${getGoogleServiceAccountEmail()} como usuario en Search Console > Ajustes > Usuarios y permisos.`,
+        `Acceso denegado. Verifica que la cuenta asociada (${getAuthMethod()}) tenga acceso como usuario en Search Console > Ajustes > Usuarios y permisos.`,
         'gsc_permission_denied');
     }
     if (code === 'not_found') {

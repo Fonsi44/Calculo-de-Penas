@@ -34,8 +34,11 @@ export function getSearchConsoleSiteUrlOrNull(): string | null {
 
 export function isGoogleConfigured(): boolean {
   return !!(
-    process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
-    process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
+    (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
+     process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY) ||
+    (process.env.OAUTH_CLIENT_ID &&
+     process.env.OAUTH_CLIENT_SECRET &&
+     process.env.GOOGLE_REFRESH_TOKEN)
   );
 }
 
