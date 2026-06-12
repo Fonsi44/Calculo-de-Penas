@@ -699,43 +699,8 @@ details.faq-anim:not([open]) > summary:hover {
   background-color: rgba(212, 175, 55, 0.04);
 }
 
-/* Marcador del mapa (Leaflet divIcon) — pin dorado coherente con la marca. */
-.bufete-map-marker {
-  background: transparent !important;
-  border: 0 !important;
-}
-.bufete-map-marker__pin {
-  display: block;
-  width: 26px;
-  height: 38px;
-  position: relative;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
-}
-.bufete-map-marker__pin::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #D4AF37;
-  border: 2px solid #0B1B3D;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  transform-origin: center;
-}
-.bufete-map-marker__pin::after {
-  content: "";
-  position: absolute;
-  top: 9px;
-  left: 9px;
-  width: 8px;
-  height: 8px;
-  background: #0B1B3D;
-  border-radius: 50%;
-}
-/* Leaflet requiere que el contenedor tenga altura explícita. */
-.leaflet-container {
-  font-family: inherit;
-  background: #FAF7F1;
-}
+/* Mapa embebido de Google Maps. No requiere estilos: el iframe ocupa
+   el 100% del contenedor padre. */
 
 /* ============================================================
    PLANTILLA EDITORIAL PREMIUM — ARTÍCULOS DEL BLOG (R9)

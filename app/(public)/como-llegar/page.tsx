@@ -116,58 +116,60 @@ export default function ComoLlegarPage() {
             </Card>
           </div>
 
-          <Card padding="md" className="!bg-primary text-text-inverse h-full">
+          <Card padding="md" className="h-full bg-surface border-border-light">
             <div className="flex items-center gap-2 mb-3">
-              <MapPin size={18} className="text-accent" />
-              <h2 className="font-bold text-base text-text-inverse">Dirección</h2>
+              <div className="w-9 h-9 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0">
+                <MapPin size={18} />
+              </div>
+              <h2 className="font-bold text-base text-text">Dirección</h2>
             </div>
 
-            <p className="text-lg font-bold text-accent tabular-nums mb-1">
+            <p className="text-lg font-extrabold text-accent-dark tabular-nums mb-1">
               GGJ7+239
             </p>
-            <p className="text-sm text-text-inverse/95 leading-relaxed">
+            <p className="text-sm text-text-secondary leading-relaxed">
               {site.address.city}, {site.address.department}, {site.address.country}
             </p>
 
-            <div className="border-t border-primary-light/30 my-4" />
+            <div className="border-t border-border-light my-4" />
 
-            <h3 className="text-xxs font-bold uppercase tracking-widest text-accent mb-2">
+            <h3 className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-2">
               Referencia
             </h3>
-            <p className="text-sm text-text-inverse/85 leading-relaxed">
+            <p className="text-sm text-text leading-relaxed">
               {site.address.line2}
             </p>
 
-            <div className="border-t border-primary-light/30 my-4" />
+            <div className="border-t border-border-light my-4" />
 
-            <h3 className="text-xxs font-bold uppercase tracking-widest text-accent mb-2">
+            <h3 className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-2">
               Copiar dirección
             </h3>
-            <CopyableAddress value={shortAddress} variant="inverse" />
+            <CopyableAddress value={shortAddress} variant="default" />
 
-            <div className="border-t border-primary-light/30 my-4" />
+            <div className="border-t border-border-light my-4" />
 
             <ul className="space-y-2.5 text-sm">
               <li className="flex items-center gap-2">
-                <Phone size={14} className="text-accent flex-shrink-0" />
-                <a href={telHref()} className="hover:text-accent tabular-nums">
+                <Phone size={14} className="text-accent-dark flex-shrink-0" />
+                <a href={telHref()} className="text-text font-semibold hover:text-accent-dark tabular-nums">
                   {site.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <MessageCircle size={14} className="text-accent flex-shrink-0" />
+                <MessageCircle size={14} className="text-success flex-shrink-0" />
                 <a
                   href={whatsappHref('Hola, necesito indicaciones para llegar al bufete.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-accent"
+                  className="text-text font-semibold hover:text-success"
                 >
                   WhatsApp
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <Clock size={14} className="text-accent flex-shrink-0 mt-0.5" />
-                <span>Lun a Sáb · 7:00 – 20:00</span>
+                <Clock size={14} className="text-text-secondary flex-shrink-0 mt-0.5" />
+                <span className="text-text">Lun a Sáb · 7:00 – 20:00</span>
               </li>
             </ul>
           </Card>
