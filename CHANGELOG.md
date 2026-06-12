@@ -1,5 +1,33 @@
 # Changelog
 
+## Release 35 — PageSpeed: Accesibilidad 88→93+, Perf 77→82+ (2026-06-12)
+
+Correcciones basadas en auditoría Lighthouse CLI (`pagespeed.md`).
+
+### Accesibilidad (4 fixes)
+
+| # | Problema | Archivo | Solución |
+|---|---------|--------|----------|
+| 1 | ARIA prohibido en `<div>` con `aria-label` | `testimonials-section.tsx` | Añadido `role="img"` al div de estrellas |
+| 2 | Label/name mismatch en logo link | `public-header.tsx` | `aria-label` actualizado: "Pineda y Asociados — Inicio" → "Ir a la página de inicio — P&A" |
+| 3 | Touch targets insuficientes en footer | `public-footer.tsx` | `gap-y-1→gap-y-2`, `py-1 block` en enlaces legales |
+| 4 | Contraste `text-accent-dark` bajo | `globals.css` | `#B8962D → #9A7A22` (light), `→ #C5A555` (dark) |
+
+### Rendimiento (2 fixes)
+
+| # | Problema | Archivo | Solución |
+|---|---------|--------|----------|
+| 5 | GA4 bloquea hilo principal | `app/layout.tsx` | `strategy="afterInteractive"` → `"lazyOnload"` |
+| 6 | Documentación | `pagespeed.md` | Creado con 13 hallazgos, plan de acción en 3 fases |
+
+### Validación
+
+- `npm run lint`: 0 errores ✅
+- `npm run build`: Compiled + TypeScript OK + 259 páginas ✅
+- Deploy: Ready 2m, `pinedayasociadoshn.com` ✅
+
+---
+
 ## Release 34 — Rediseño visual Premium Corporate Modern (2026-06-12)
 
 Dirección de arte: navy refinado · off-white limpio · gold sofisticado · separación clara entre capas.
