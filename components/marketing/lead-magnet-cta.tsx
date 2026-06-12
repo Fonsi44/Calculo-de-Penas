@@ -48,17 +48,17 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
   }
 
   return (
-    <div className="mt-4 p-4 sm:p-5 rounded-xl bg-accent/5 border border-accent/20">
+    <div className="mt-8 mb-10 p-5 sm:p-6 md:p-7 rounded-xl bg-accent/5 border border-accent/20 shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_8px_24px_-12px_rgba(201,165,92,0.35)] max-w-3xl mx-auto">
       <div className="flex items-start gap-3">
-        <div className="w-9 h-9 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
-          <FileDown size={18} className="text-accent-dark" />
+        <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+          <FileDown size={20} className="text-accent-dark" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="font-bold text-sm text-primary leading-snug">{titulo}</p>
-          <p className="text-xs text-text-secondary mt-1 leading-relaxed">{descripcion}</p>
+          <p className="font-bold text-sm md:text-base text-primary leading-snug">{titulo}</p>
+          <p className="text-xs md:text-sm text-text-secondary mt-1.5 leading-relaxed">{descripcion}</p>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mt-3">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mt-4">
         <label htmlFor="lead-magnet-email" className="sr-only">Correo electrónico para recibir la guía</label>
         <input
           id="lead-magnet-email"
@@ -67,12 +67,12 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Su correo electrónico"
           required
-          className="flex-1 h-10 px-3 rounded-lg border border-border/40 bg-background text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-accent/60"
+          className="flex-1 h-11 px-3 rounded-lg border border-border/40 bg-background text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-accent/60"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors flex-shrink-0 disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors flex-shrink-0 disabled:opacity-60"
         >
           {status === 'loading' ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />}
           Descargar guía gratuita
@@ -81,7 +81,7 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
       {status === 'error' && (
         <p className="text-xs text-aggravation mt-2">Error al generar la guía. Intente de nuevo.</p>
       )}
-      <p className="text-xxs text-text-muted mt-2">
+      <p className="text-xxs text-text-muted mt-3">
         <Mail size={10} className="inline mr-1" />
         Recibirá la guía en PDF. No compartimos su correo. Consulte nuestra{' '}
         <a href="/politica-privacidad" className="underline hover:text-primary">política de privacidad</a>.

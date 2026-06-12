@@ -267,7 +267,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
         </div>
       </Section>
 
-      <Section spacing="sm">
+      <Section spacing="md">
         {(() => {
           const magnet = getLeadMagnetByArea(slug);
           if (magnet) {
@@ -281,7 +281,9 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           }
           return null;
         })()}
-        <ContactStrip />
+        <div className="mt-2">
+          <ContactStrip />
+        </div>
       </Section>
 
       {ldSchemas.map((schema, i) => (
