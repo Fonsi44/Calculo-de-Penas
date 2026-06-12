@@ -66,6 +66,19 @@ const nextConfig: NextConfig = {
       { source: '/proceso-penal', destination: '/hondurenos-en-espana', permanent: true },
       { source: '/contacto', destination: '/solicitar-consulta', permanent: true },
       { source: '/privacidad', destination: '/politica-privacidad', permanent: true },
+      // === CONSOLIDACIÓN DE BLOG: redirecciones 301 post-auditoría (Jun 2026) ===
+      // Fusiones por canibalización: 2 posts → 1
+      { source: '/blog/derecho-de-familia/pension-alimenticia-calcular-reclamar-honduras', destination: '/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla', permanent: true },
+      { source: '/blog/derecho-de-familia/guarda-custodia-menores-tipos-honduras', destination: '/blog/derecho-de-familia/custodia-hijos-honduras-juez', permanent: true },
+      { source: '/blog/derecho-laboral/despido-laboral-honduras-derechos', destination: '/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador', permanent: true },
+      { source: '/blog/derecho-laboral/calcular-prestaciones-laborales-honduras', destination: '/blog/derecho-laboral/calcular-liquidacion-laboral-honduras', permanent: true },
+      { source: '/blog/derecho-mercantil/contratos-mercantiles-proteger-negocio', destination: '/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras', permanent: true },
+      { source: '/blog/derecho-civil/herencias-honduras-fallece-familiar', destination: '/blog/derecho-civil/testamentos-sucesiones-herencia-honduras', permanent: true },
+      // Posts genéricos redirigidos a páginas de categoría/servicio
+      { source: '/blog/hondurenos-en-espana/hondurenos-en-espana-guia-legal-completa', destination: '/hondurenos-en-espana', permanent: true },
+      { source: '/blog/derecho-notarial/tramites-notariales-frecuentes-honduras', destination: '/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita', permanent: true },
+      // Canibalización cruzada: derechos del detenido → guía práctica de detención
+      { source: '/blog/derechos-ciudadanos/derechos-del-detenido-guia-constitucional-honduras', destination: '/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras', permanent: true },
     ];
   },
   // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*

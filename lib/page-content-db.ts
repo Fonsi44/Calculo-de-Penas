@@ -395,6 +395,63 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
       ],
     },
     {
+      page: 'servicios-juridicos', label: 'Servicios Jurídicos (/servicios-juridicos)',
+      sections: [
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'Servicios Jurídicos' },
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Cobertura integral' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Servicios Jurídicos en Nacaome, Valle — Ramas principales del derecho' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.' },
+          ],
+        },
+        {
+          key: 'content', label: 'Contenido', fields: [
+            { key: 'section_title', label: 'Título de sección', type: 'text', default: 'Cobertura legal completa en la zona sur de Honduras' },
+            { key: 'section_subtitle', label: 'Subtítulo de sección', type: 'textarea', default: 'Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes.' },
+          ],
+        },
+      ],
+    },
+    {
+      page: 'derecho-penal', label: 'Derecho Penal (/derecho-penal)',
+      sections: [
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'Área principal' },
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Especialidad destacada' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Abogados Penalistas en Nacaome, Valle — Defensa Penal Técnica' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Atendemos casos penales en la zona sur de Honduras, desde nuestro despacho en Nacaome, Valle. Cubrimos San Lorenzo, Choluteca y municipios aledaños. Trabajamos desde la primera actuación procesal hasta la ejecución penal, beneficios de ley, recursos de casación y cumplimiento de penas.' },
+          ],
+        },
+        {
+          key: 'content', label: 'Contenido', fields: [
+            { key: 'section_title', label: 'Título de sección', type: 'text', default: 'Defensa penal especializada en la zona sur de Honduras' },
+            { key: 'section_subtitle', label: 'Subtítulo', type: 'textarea', default: 'Grupos especializados que cubren todas las etapas del proceso penal hondureño, desde la asistencia a detenidos hasta los recursos de casación.' },
+          ],
+        },
+      ],
+    },
+    {
+      page: 'hondurenos-en-espana', label: 'Hondureños en España (/hondurenos-en-espana)',
+      sections: [
+        {
+          key: 'hero', label: 'Hero', fields: [
+            { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'Asistencia transnacional' },
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Asistencia transnacional' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Hondureños en España: asistencia legal integral' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Ponemos a su disposición nuestra solvencia legal y técnica para gestionar de forma remota todos sus asuntos jurídicos en territorio hondureño.' },
+          ],
+        },
+        {
+          key: 'content', label: 'Contenido', fields: [
+            { key: 'section_title', label: 'Título de sección', type: 'text', default: 'Asistencia legal para hondureños en España' },
+            { key: 'section_subtitle', label: 'Subtítulo', type: 'textarea', default: 'Gestión documental, actos notariales internacionales, divorcios, custodias y sucesiones entre Honduras y España.' },
+          ],
+        },
+      ],
+    },
+    {
       page: 'configuracion', label: 'Configuración Global',
       sections: [
         { key: 'contacto', label: 'Contacto', fields: [

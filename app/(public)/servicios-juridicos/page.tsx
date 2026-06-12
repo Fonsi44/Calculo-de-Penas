@@ -11,6 +11,7 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { getPageContent } from '@/lib/page-content-db';
 
 export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | Ramas principales del derecho`,
@@ -36,6 +37,7 @@ export const metadata: Metadata = {
 
 export default async function AreasJuridicasPage() {
   const areas = await getAreasFromDb('servicio');
+  const contentMap = await getPageContent('servicios-juridicos');
 
   return (
     <>
@@ -44,17 +46,10 @@ export default async function AreasJuridicasPage() {
         { label: 'Servicios Jurídicos' },
       ]} />
       <PageHero
-        eyebrow="Servicios Jurídicos"
-        badge="Cobertura integral"
-        title={`Servicios Jurídicos en ${site.address.city}, ${site.address.department} — Ramas principales del derecho`}
-        subtitle={
-          <>
-            Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas
-            del derecho hondureño. La defensa penal es nuestra especialidad destacada y la
-            acompañamos con servicios especializados en familia, laboral, civil, mercantil,
-            tributario y más.
-          </>
-        }
+        eyebrow={contentMap['hero.eyebrow'] || 'Servicios Jurídicos'}
+        badge={contentMap['hero.badge'] || 'Cobertura integral'}
+        title={contentMap['hero.title'] || `Servicios Jurídicos en ${site.address.city}, ${site.address.department} — Ramas principales del derecho`}
+        subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.'}
         cta={<CTAGroup variant="inverse" />}
       />
 
@@ -63,8 +58,8 @@ export default async function AreasJuridicasPage() {
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Servicios Jurídicos"
-          title="Cobertura legal completa en la zona sur de Honduras"
-          subtitle="Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes."
+          title={contentMap['content.section_title'] || 'Cobertura legal completa en la zona sur de Honduras'}
+          subtitle={contentMap['content.section_subtitle'] || 'Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes.'}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {areas.map((area) => (

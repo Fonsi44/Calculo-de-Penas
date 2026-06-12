@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Save, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Save, ExternalLink, LayoutDashboard, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -10,6 +10,7 @@ import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { Spinner } from '@/components/ui/spinner';
 import { useToast } from '@/components/ui/toast';
 import { getEditablePagesMeta } from '@/lib/page-content-db';
+import { VisualEditor } from '@/components/admin/visual-editor';
 import Link from 'next/link';
 
 type SectionMeta = { key: string; label: string; fields: { key: string; label: string; type: string }[] };
@@ -35,7 +36,10 @@ export default function AdminPageEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [mode, setMode] = useState<'form' | 'visual'>('visual');
   const isConfig = params.page === 'configuracion';
+
+  const VISUAL_PAGES = ['home', 'despacho', 'solicitar-consulta', 'como-llegar', 'terminos', 'aviso-legal', 'politica-privacidad', 'politica-cookies', 'disclaimer', 'servicios-juridicos', 'derecho-penal', 'hondurenos-en-espana'];
 
   useEffect(() => {
     getEditablePagesMeta().then(all => {
@@ -167,96 +171,164 @@ export default function AdminPageEditor() {
   );
 
   const currentRoute = PAGE_ROUTES[params.page];
+  const canVisual = VISUAL_PAGES.includes(params.page) && !isConfig;
   const activeSectionMeta = meta.sections.find(s => s.key === activeSection);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <>
+      <div className={`flex items-center justify-between ${mode === 'visual' ? 'mb-0' : 'mb-4'}`}>
         <div className="flex items-center gap-3">
-          <Link href="/intranet/admin/pages">
-            <Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button>
-          </Link>
+          {mode === 'form' && (
+            <Link href="/intranet/admin/pages">
+              <Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button>
+            </Link>
+          )}
           <div>
             <h1 className="text-xl font-extrabold text-primary">{meta.label}</h1>
             <p className="text-xs text-text-secondary">/{params.page}</p>
           </div>
         </div>
         <div className="flex gap-2">
-          {currentRoute && (
+          {currentRoute && mode === 'form' && (
             <Link href={currentRoute} target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" size="sm">
                 <ExternalLink size={14} className="mr-1" /> Ver página
               </Button>
             </Link>
           )}
-          <Button variant="primary" size="sm" onClick={handleSave} loading={saving}>
-            <Save size={14} className="mr-1" /> Guardar todo
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex gap-4">
-        <nav className="w-48 flex-shrink-0 space-y-0.5">
-          {meta.sections.map(s => (
-            <button
-              key={s.key}
-              type="button"
-              onClick={() => setActiveSection(s.key)}
-              className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                activeSection === s.key
-                  ? 'bg-accent/15 text-primary'
-                  : 'text-text-secondary hover:bg-surface-alt hover:text-text'
-              }`}
-            >
-              {s.label}
-            </button>
-          ))}
-        </nav>
-
-        <div className="flex-1 space-y-4">
-          {activeSectionMeta ? (
-            <Card padding="md">
-              <h2 className="font-bold text-sm text-primary mb-3">{activeSectionMeta.label}</h2>
-              <div className="space-y-3">
-                {activeSectionMeta.fields.map(field => {
-                  const key = `${activeSectionMeta.key}.${field.key}`;
-                  const value = values[key] ?? '';
-
-                  return (
-                    <div key={key}>
-                      <label className="block text-xs font-semibold text-text-secondary mb-1">
-                        {field.label}
-                      </label>
-                      {field.type === 'richtext' ? (
-                        <RichTextEditor
-                          content={value}
-                          onChange={html => update(key, html)}
-                          minHeight={200}
-                        />
-                      ) : field.type === 'textarea' ? (
-                        <textarea
-                          value={value}
-                          onChange={e => update(key, e.target.value)}
-                          className="w-full min-h-[80px] p-2 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 resize-y"
-                        />
-                      ) : (
-                        <Input
-                          value={value}
-                          onChange={e => update(key, e.target.value)}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-          ) : (
-            <Card padding="lg">
-              <p className="text-center text-text-secondary">Selecciona una sección.</p>
-            </Card>
+          {mode === 'form' && (
+            <Button variant="primary" size="sm" onClick={handleSave} loading={saving}>
+              <Save size={14} className="mr-1" /> Guardar todo
+            </Button>
+          )}
+          {mode === 'visual' && (
+            <Link href="/intranet/admin/pages">
+              <Button variant="ghost" size="sm"><ArrowLeft size={14} className="mr-1" /> Volver</Button>
+            </Link>
           )}
         </div>
       </div>
-    </div>
+
+      {canVisual && (
+        <div className={`flex gap-0.5 bg-surface-alt rounded-lg p-0.5 border border-border-light w-fit ${mode === 'visual' ? 'mt-2 mb-3' : 'mb-4'}`}>
+          <button
+            type="button"
+            onClick={() => setMode('visual')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+              mode === 'visual'
+                ? 'bg-white text-primary shadow-sm border border-border-light'
+                : 'text-text-secondary hover:text-text'
+            }`}
+          >
+            <Eye size={14} />
+            Editor visual
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode('form')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+              mode === 'form'
+                ? 'bg-white text-primary shadow-sm border border-border-light'
+                : 'text-text-secondary hover:text-text'
+            }`}
+          >
+            <LayoutDashboard size={14} />
+            Formulario
+          </button>
+        </div>
+      )}
+
+      {mode === 'visual' && canVisual ? (
+        <div
+          style={{
+            position: 'fixed',
+            left: '14rem',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            zIndex: 40,
+          }}
+        >
+          <VisualEditor
+            page={params.page}
+            pageLabel={meta.label}
+          />
+        </div>
+      ) : mode === 'visual' && !canVisual ? (
+        <Card padding="lg">
+          <div className="text-center py-8">
+            <Eye size={48} className="mx-auto mb-3 text-text-muted opacity-30" />
+            <p className="text-text-secondary text-sm">
+              El editor visual no está disponible para esta página. Usa el formulario.
+            </p>
+          </div>
+        </Card>
+      ) : (
+        <div className="flex gap-4">
+          <nav className="w-48 flex-shrink-0 space-y-0.5">
+            {meta.sections.map(s => (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => setActiveSection(s.key)}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeSection === s.key
+                    ? 'bg-accent/15 text-primary'
+                    : 'text-text-secondary hover:bg-surface-alt hover:text-text'
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="flex-1 space-y-4">
+            {activeSectionMeta ? (
+              <Card padding="md">
+                <h2 className="font-bold text-sm text-primary mb-3">
+                  {activeSectionMeta.label as string}
+                </h2>
+                <div className="space-y-3">
+                  {activeSectionMeta.fields.map(field => {
+                    const key = `${activeSectionMeta.key}.${field.key}`;
+                    const value = values[key] ?? '';
+
+                    return (
+                      <div key={key}>
+                        <label className="block text-xs font-semibold text-text-secondary mb-1">
+                          {field.label}
+                        </label>
+                        {field.type === 'richtext' ? (
+                          <RichTextEditor
+                            content={value}
+                            onChange={html => update(key, html)}
+                            minHeight={200}
+                          />
+                        ) : field.type === 'textarea' ? (
+                          <textarea
+                            value={value}
+                            onChange={e => update(key, e.target.value)}
+                            className="w-full min-h-[80px] p-2 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 resize-y"
+                          />
+                        ) : (
+                          <Input
+                            value={value}
+                            onChange={e => update(key, e.target.value)}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            ) : (
+              <Card padding="lg">
+                <p className="text-center text-text-secondary">Selecciona una sección.</p>
+              </Card>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

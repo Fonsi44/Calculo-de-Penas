@@ -16,6 +16,7 @@ import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { getPageContent } from '@/lib/page-content-db';
 
 export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
 export default async function DerechoPenalPage() {
   const url = penalHubHref();
   const penalGroups = await getAreasFromDb('penal');
+  const contentMap = await getPageContent('derecho-penal');
   const ldSchemas = areaSchemas({
     service: {
       slug: 'derecho-penal',
@@ -68,10 +70,10 @@ export default async function DerechoPenalPage() {
         { label: 'Derecho Penal' },
       ]} />
       <PageHero
-        eyebrow={hubPenal.heroEyebrow}
-        badge="Especialidad destacada"
-        title={hubPenal.heroTitle}
-        subtitle={<>{hubPenal.heroSubtitle}</>}
+        eyebrow={contentMap['hero.eyebrow'] || hubPenal.heroEyebrow}
+        badge={contentMap['hero.badge'] || 'Especialidad destacada'}
+        title={contentMap['hero.title'] || hubPenal.heroTitle}
+        subtitle={contentMap['hero.subtitle'] || hubPenal.heroSubtitle}
         cta={<CTAGroup variant="inverse" />}
       />
 
@@ -80,8 +82,8 @@ export default async function DerechoPenalPage() {
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Grupos especializados"
-          title={hubPenal.titulo}
-          subtitle={hubPenal.resumen}
+          title={contentMap['content.section_title'] || hubPenal.titulo}
+          subtitle={contentMap['content.section_subtitle'] || hubPenal.resumen}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {penalGroups.map((grupo) => (

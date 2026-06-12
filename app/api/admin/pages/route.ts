@@ -110,6 +110,9 @@ export async function POST(request: Request) {
         'politica-privacidad': '/politica-privacidad',
         'politica-cookies': '/politica-cookies',
         disclaimer: '/disclaimer',
+        'servicios-juridicos': '/servicios-juridicos',
+        'derecho-penal': '/derecho-penal',
+        'hondurenos-en-espana': '/hondurenos-en-espana',
       };
       const route = pageRoutes[parsed.page];
       if (route) {

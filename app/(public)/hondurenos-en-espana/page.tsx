@@ -16,6 +16,7 @@ import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { getPageContent } from '@/lib/page-content-db';
 
 export const metadata: Metadata = {
   title: `Hondureños en España — Asistencia Legal desde Honduras | ${site.name}`,
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
 export default async function MigrantesPage() {
   const url = migrantesHubHref();
   const migrantesSubareas = await getAreasFromDb('migrante');
+  const contentMap = await getPageContent('hondurenos-en-espana');
   const ldSchemas = areaSchemas({
     service: {
       slug: 'hondurenos-en-espana',
@@ -68,10 +70,10 @@ export default async function MigrantesPage() {
         { label: 'Hondureños en España' },
       ]} />
       <PageHero
-        eyebrow={hubMigrantes.heroEyebrow}
-        badge="Asistencia transnacional"
-        title={hubMigrantes.heroTitle}
-        subtitle={<>{hubMigrantes.heroSubtitle}</>}
+        eyebrow={contentMap['hero.eyebrow'] || hubMigrantes.heroEyebrow}
+        badge={contentMap['hero.badge'] || 'Asistencia transnacional'}
+        title={contentMap['hero.title'] || hubMigrantes.heroTitle}
+        subtitle={contentMap['hero.subtitle'] || hubMigrantes.heroSubtitle}
         cta={<CTAGroup variant="inverse" />}
       />
 
@@ -80,8 +82,8 @@ export default async function MigrantesPage() {
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Asistencia transnacional"
-          title={hubMigrantes.titulo}
-          subtitle={hubMigrantes.resumen}
+          title={contentMap['content.section_title'] || hubMigrantes.titulo}
+          subtitle={contentMap['content.section_subtitle'] || hubMigrantes.resumen}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {migrantesSubareas.map((sub) => (
