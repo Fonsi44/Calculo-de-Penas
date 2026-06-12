@@ -23,7 +23,7 @@ const PUBLIC_ROUTES: Array<{
   { path: '/solicitar-consulta', priority: 1.0, changeFrequency: 'monthly', daysAgo: 0 },
   { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 1 },
   { path: '/blog', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
-  { path: '/preguntas-frecuentes', priority: 0.8, changeFrequency: 'weekly', daysAgo: 2 },
+  { path: '/preguntas-frecuentes', priority: 0.9, changeFrequency: 'weekly', daysAgo: 2 },
   { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
   { path: '/servicios-juridicos/derecho-de-familia', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/servicios-juridicos/derecho-laboral', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
