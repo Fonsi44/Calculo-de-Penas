@@ -6,12 +6,15 @@ import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
 import { hubMigrantes, type AreaBase } from '@/data/areas-juridicas';
 import { areaSchemas, migrantesHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export function generateStaticParams() {
   return hubMigrantes.subareas.map((s) => ({ slug: s.slug }));
@@ -63,28 +66,19 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
 
   return (
     <>
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
-        <Container size="lg" className="relative py-14 md:py-20">
-          <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-              Hondureños en España
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              {subarea.titulo}
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {subarea.resumen}
-            </p>
-            <div className="mt-7">
-              <CTAGroup variant="inverse" />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Hondureños en España', href: url },
+        { label: subarea.titulo },
+      ]} />
+      <PageHero
+        eyebrow="Hondureños en España"
+        title={subarea.titulo}
+        subtitle={<>{subarea.resumen}</>}
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      <TrustBar background="light" />
 
       <Section background="default" spacing="md">
         <div className="max-w-3xl mb-8">
@@ -196,7 +190,6 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
               </p>
             </Card>
           )}
-
         </div>
       </Section>
 
@@ -252,4 +245,3 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
     </>
   );
 }
-

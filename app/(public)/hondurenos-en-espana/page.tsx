@@ -2,15 +2,20 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Section, SectionHeader } from '@/components/marketing/section';
+import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
+import { ServiceCard } from '@/components/marketing/service-card';
 import { hubMigrantes } from '@/data/areas-juridicas';
 import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
-import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
+import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `Hondureños en España — Asistencia Legal desde Honduras | ${site.name}`,
@@ -58,28 +63,19 @@ export default async function MigrantesPage() {
 
   return (
     <>
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
-        </div>
-        <Container size="lg" className="relative py-14 md:py-20">
-          <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-              {hubMigrantes.heroEyebrow}
-            </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              {hubMigrantes.heroTitle}
-            </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {hubMigrantes.heroSubtitle}
-            </p>
-            <div className="mt-7">
-              <CTAGroup variant="inverse" />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Hondureños en España' },
+      ]} />
+      <PageHero
+        eyebrow={hubMigrantes.heroEyebrow}
+        badge="Asistencia transnacional"
+        title={hubMigrantes.heroTitle}
+        subtitle={<>{hubMigrantes.heroSubtitle}</>}
+        cta={<CTAGroup variant="inverse" />}
+      />
+
+      <TrustBar background="light" />
 
       <Section background="muted" spacing="md">
         <SectionHeader
@@ -87,32 +83,18 @@ export default async function MigrantesPage() {
           title={hubMigrantes.titulo}
           subtitle={hubMigrantes.resumen}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {migrantesSubareas.map((sub) => {
-            const Icon = getIcon(sub.icono);
-            return (
-              <Link
-                key={sub.slug}
-                href={`/hondurenos-en-espana/${sub.slug}`}
-                className="group block focus-visible:outline-none"
-              >
-                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
-                    <Icon size={22} aria-hidden="true" />
-                  </div>
-                  <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
-                    {sub.titulo}
-                  </h3>
-                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
-                    {sub.descripcionCorta}
-                  </p>
-                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                    Conocer más <ArrowRight size={12} />
-                  </span>
-                </Card>
-              </Link>
-            );
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {migrantesSubareas.map((sub) => (
+            <ServiceCard
+              key={sub.slug}
+              href={`/hondurenos-en-espana/${sub.slug}`}
+              slug={sub.slug}
+              title={sub.titulo}
+              description={sub.descripcionCorta}
+              category="services"
+              tone="primary"
+            />
+          ))}
         </div>
       </Section>
 
@@ -180,8 +162,24 @@ export default async function MigrantesPage() {
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
+
+      <Section spacing="sm">
+        {(() => {
+          const magnet = getLeadMagnetByArea('hondurenos-en-espana');
+          if (magnet) {
+            return (
+              <LeadMagnetCTA
+                area={magnet.area}
+                titulo={magnet.titulo}
+                descripcion={magnet.descripcion}
+              />
+            );
+          }
+          return null;
+        })()}
+      </Section>
+
       <ConsultationCTA />
     </>
   );
 }
-
