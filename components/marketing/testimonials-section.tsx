@@ -42,12 +42,12 @@ export function TestimonialsSection({
         aria-hidden="true"
       />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="mb-8 md:mb-10">
-          <h2 className="font-serif font-bold text-xl md:text-2xl lg:text-3xl leading-tight">
+        <div className="mb-10 md:mb-12">
+          <h2 className="font-serif font-extrabold text-2xl md:text-3xl leading-tight text-balance">
             {title}
           </h2>
           {subtitle && (
-            <p className="mt-2 text-sm md:text-base text-text-inverse/80 leading-relaxed max-w-2xl">
+            <p className="mt-3 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
               {subtitle}
             </p>
           )}

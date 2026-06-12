@@ -87,7 +87,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       )}
       <h2
         className={cn(
-          'font-serif font-bold text-xl md:text-2xl lg:text-3xl leading-tight text-balance',
+          'font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-balance',
           invert ? 'text-text-inverse' : 'text-primary',
         )}
       >
