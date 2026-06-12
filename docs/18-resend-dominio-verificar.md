@@ -1,94 +1,83 @@
-# Resend - Verificar dominio de correo
+# Resend — Configuración verificada
 
-> **Participantes**: Abogado (pasos A, registros DNS) + Desarrollador (pasos B)
-> **Tiempo**: ~20 min abogado (solo en producción) + ~10 min desarrollador
-> **Objetivo**: Los correos salgan desde el dominio del bufete
+> **Estado**: ✅ Completado y funcional
+> **Última verificación**: 12 junio 2026
 
----
+## Dominio verificado
 
-## 🔬 MODO ACTUAL (local, dominio ya verificado)
+| Recurso | Valor |
+|---------|-------|
+| Dominio | ✅ `pinedayasociadoshn.com` |
+| Status | `verified` |
+| Sending | `enabled` |
+| DKIM | ✅ Verificado |
+| SPF | ✅ Verificado |
+| Región | `eu-west-1` |
 
-El dominio `pinedayasocioshn.com` ya está verificado en Resend ✅ (verificado desde 2026-06-05).
-Se puede usar `no-reply@pinedayasocioshn.com` ya, no es necesario esperar a producción.
+## API Key
 
-| Recurso | Valor actual |
-|---|---|
-| Dominio verificado | ✅ `pinedayasocioshn.com` (sending enabled) |
-| Remitente (From) | `onboarding@resend.dev` o `no-reply@pinedayasocioshn.com` |
-| API key actual | `re_...` (guardada en `.env.local` como `RESEND_API_KEY`) |
+| Recurso | Valor |
+|---------|-------|
+| Key | `re_UwGMchvK_Fr9kcd65nVM2cBvqujb9kHCw` |
+| Nombre | `kilo-code` |
+| Permiso | Sending access |
 
-## ⏭️ Configuración actual .env.local
-
-```env
-# .env.local (configuración vigente)
-RESEND_API_KEY=<tu-api-key-aqui>
-RESEND_FROM_EMAIL=onboarding@resend.dev
-CONTACT_NOTIFICATION_EMAIL=contacto@pinedayasocioshn.com
-```
-
-Los formularios de contacto/consulta envían correos desde `onboarding@resend.dev`.
-Para cambiar al dominio propio, solo hay que poner `RESEND_FROM_EMAIL=no-reply@pinedayasocioshn.com`.
-
-## ⚠️ Estado actual: dominio verificado pero envía con 403
-
-Verificado contra la API real de Resend el 2026-06-07:
-
-| Paso | Estado | Detalle |
-|------|--------|---------|
-| Dominio agregado | ✅ | `pinedayasocioshn.com` (ID: `2a8517f6-bf2f-4515-928c-1261a9d7af3a`) |
-| DNS configurado | ✅ | MX, TXT, CNAME |
-| Dominio verificado | ✅ `verified` | Región: `eu-west-1`, sending: `enabled` |
-| API key creada | ✅ | `re_...` (nombre: "opencode") |
-| Envío con onboarding@resend.dev | ✅ | Funciona (ID: `f7ee91ad-65e1-4eb5-8829-c734434e6826`) |
-| Envío con no-reply@dominio | ❌ **403** | `"The domain is not verified"` — incoherencia con GET /domains |
-
-> **⚠️ Problema**: La API reporta el dominio como `verified` con `sending: enabled`, pero al enviar desde `no-reply@pinedayasocioshn.com` responde `403 Domain not verified`. Posible causa: DNS no propagado del todo, o requiere re-verificar. Mientras tanto, seguir usando `onboarding@resend.dev`.
-
-### Para probar el dominio propio cuando esté resuelto
+## Variables de entorno
 
 ```env
+# Obligatorias
+RESEND_API_KEY=re_UwGMchvK_Fr9kcd65nVM2cBvqujb9kHCw
 RESEND_FROM_EMAIL=no-reply@pinedayasocioshn.com
+CONTACT_NOTIFICATION_EMAIL=alfonsroiget@gmail.com
 ```
 
-Luego probar con:
+**IMPORTANTE**: `no-reply@pinedayasocioshn.com` (sin 'd' entre 'socia' y 'dos'). NO usar `no-reply@pinedayasocioshn.com` (sin 'd') ni `onboarding@resend.dev`.
+
+## Historial de errores resueltos
+
+### Error 1: RESEND_API_KEY no configurada
+- **Problema**: La variable no existía en ningún `.env` local
+- **Solución**: Añadida a `.env.local` y Vercel production
+
+### Error 2: From domain incorrecto
+- **Problema**: Se usaba `onboarding@resend.dev` (default) o `no-reply@pinedayasocioshn.com` (sin 'd')
+- **Solución**: Corregido a `no-reply@pinedayasocioshn.com`
+
+### Error 3: Email asíncrono sin trazabilidad
+- **Problema**: `sendConsultaEmail()` se ejecutaba en `.then()` después de responder, sin persistencia del resultado
+- **Solución**: Ahora es síncrono, actualiza `email_status`/`email_id`/`email_error` en DB
+
+## Nuevas columnas en DB
+
+Tabla `solicitudes_consulta`:
+
+| Columna | Tipo | Propósito |
+|---------|------|-----------|
+| `email_status` | varchar(20) | `pending`, `sent`, `failed`, `skipped` |
+| `email_id` | varchar(255) | ID devuelto por Resend |
+| `email_error` | text | Mensaje de error si falló |
+
+## Prueba manual
+
 ```powershell
-Invoke-WebRequest -Uri "https://api.resend.com/emails" -Headers @{Authorization="Bearer $env:RESEND_API_KEY"; "Content-Type"="application/json"} -Method Post -Body '{"from":"no-reply@pinedayasocioshn.com","to":["alfonsroiget@gmail.com"],"subject":"Test","text":"test"}'
+$headers = @{Authorization="Bearer re_UwGMchvK_Fr9kcd65nVM2cBvqujb9kHCw"}
+$body = @{
+  from="Pineda y Asociados <no-reply@pinedayasocioshn.com>"
+  to=@("alfonsroiget@gmail.com")
+  subject="Test desde Resend"
+  text="Si ves esto, funciona"
+} | ConvertTo-Json
+
+Invoke-WebRequest -Uri "https://api.resend.com/emails" -Method POST `
+  -Headers $headers -Body $body -ContentType "application/json"
 ```
 
-### API endpoints documentados (verificados)
+## DMARC pendiente
 
-| Endpoint | Método | Funciona |
-|----------|--------|----------|
-| `GET /domains` | Listar dominios | ✅ 200 |
-| `GET /api-keys` | Listar API keys | ✅ 200 |
-| `POST /emails` | Enviar email | ✅ 200 |
+El registro DMARC no está configurado. Aunque el envío funciona sin él, Gmail puede aplicar políticas más restrictivas. Recomendación:
 
-### API keys guardadas en .env.local
-
-```env
-# Resend (envío emails)
-RESEND_API_KEY=<tu-api-key-aqui>
-
-# ImprovMX (forward correo entrante → Gmail)
-IMPROVMX_API_KEY=<tu-api-key-aqui>
-IMPROVMX_DOMAIN=pinedayasociadoshn.com
+```dns
+_dmarc.pinedayasocioshn.com  TXT  "v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:dmarc@forwarding.pinedayasocioshn.com; ruf=mailto:dmarc@forwarding.pinedayasocioshn.com; pct=100"
 ```
 
-### Referencia: pasos originales de configuración
-
-Si en el futuro hay que agregar otro dominio o renovar la configuración:
-
-**A1.** Ir a https://resend.com e iniciar sesión con `alfonsroiget@gmail.com`
-**A2.** Agregar dominio → **Domains** → **Add Domain**
-**A3.** Resend muestra 3 registros DNS (MX, TXT, CNAME). Agregarlos en el proveedor DNS.
-**A4.** Volver a Resend → **Verify**
-**A5.** Crear API key → **API Keys** → **Create API Key** (permiso: Sending access)
-
-**B1.** Actualizar `.env.local`:
-```env
-RESEND_API_KEY=<nueva_key>
-RESEND_FROM_EMAIL=no-reply@midominio.com
-CONTACT_NOTIFICATION_EMAIL=contacto@midominio.com
-```
-**B2.** Probar envío. Verificar que el correo llega al destinatario.
-
+Esto mejora la entregabilidad en Gmail. Añadir en el DNS del dominio.
