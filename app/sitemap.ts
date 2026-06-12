@@ -22,9 +22,15 @@ const PUBLIC_ROUTES: Array<{
   { path: '/derecho-penal', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
   { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
   { path: '/preguntas-frecuentes', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
-  { path: '/blog', priority: 0.3, changeFrequency: 'weekly', daysAgo: 1 },
-  { path: '/solicitar-consulta', priority: 0.3, changeFrequency: 'monthly', daysAgo: 2 },
+  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', daysAgo: 1 },
+  { path: '/solicitar-consulta', priority: 0.7, changeFrequency: 'monthly', daysAgo: 2 },
   { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
+  { path: '/como-llegar', priority: 0.3, changeFrequency: 'monthly', daysAgo: 7 },
+  { path: '/aviso-legal', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/politica-privacidad', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/politica-cookies', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/terminos', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/disclaimer', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/servicios-juridicos/derecho-de-familia', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/servicios-juridicos/derecho-laboral', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/servicios-juridicos/derecho-civil-y-notarial', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
@@ -68,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: absoluteUrl(`/blog/${c.slug}`),
     lastModified: now,
     changeFrequency: 'weekly' as const,
-    priority: 0.4,
+    priority: 0.5,
   }));
 
   const dbPosts = await db

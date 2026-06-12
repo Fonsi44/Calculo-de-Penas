@@ -38,7 +38,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       images: [`${site.url}/og-image.png`],
     },
     openGraph: {
-      title: `Blog Jurídico — ${site.name}`,
+      title: `Blog Jurídico de Abogados en Honduras | Derecho Penal, Familia, Laboral y Más | ${site.name}${page > 1 ? ` — Página ${page}` : ''}`,
       description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
       url: `${site.url}/blog`,
       siteName: site.name,
@@ -89,7 +89,7 @@ export default async function BlogHubPage(props: Props) {
               Blog Jurídico
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-              Conocimiento legal al servicio de sus derechos
+              Blog Jurídico de Abogados en Honduras
             </h1>
             <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
               Artículos, análisis y guías escritos por nuestro equipo. Información clara y práctica

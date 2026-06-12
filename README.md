@@ -531,7 +531,11 @@ El script:
 - **Service**: `lib/schemas/legal-page.ts` → `serviceSchema()`. Para páginas de área jurídica.
 - **FAQPage**: `lib/schemas/legal-page.ts` → `faqPageSchema()`. Para FAQs con preguntas/respuestas.
 - **BreadcrumbList**: `lib/schemas/legal-page.ts` → `breadcrumbsSchema()`. Para migas de pan.
-- **BlogPosting/Article**: implementado en páginas de blog individual.
+- **BlogPosting/Article**: `lib/schemas/blog.ts` → `blogPostSchema()`. Incluye headline, description, datePublished, dateModified, author (Person), publisher (LegalService reference), image, articleBody e inLanguage. Inyectado en páginas de blog individual.
+- **ContactPage/ContactPoint**: schema específico en `/solicitar-consulta` con telephone, contactType, areaServed, availableLanguage, hoursAvailable.
+- **Lead Magnets**: `lib/lead-magnets.ts` — 13 guías descargables. Endpoint `GET /api/descargar?area=X&email=Y`.
+- **Newsletter**: `POST /api/subscribe` — tabla `newsletter_subscriptions`. Rate limit 10/15min.
+- **KPIs Conversión**: dashboard SEO expone `newsletterSubscribers`, `totalConsultas`, `consultasUltimoMes`.
 
 ### IndexNow
 

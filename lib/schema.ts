@@ -522,3 +522,21 @@ export const usuariosRoles = pgTable('usuarios_roles', {
   rolRef: foreignKey({ columns: [table.rolId], foreignColumns: [roles.id] }),
   pk: unique('usuarios_roles_pk').on(table.usuarioId, table.rolId),
 }));
+
+// ============================================================
+// Newsletter subscriptions
+// ============================================================
+
+export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  source: varchar('source', { length: 50 }).default('blog'),
+  confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+  unsubscribedAt: timestamp('unsubscribed_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  emailIdx: index('newsletter_email_idx').on(table.email),
+}));
+
+export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
+export type NewsletterSubscriptionInsert = typeof newsletterSubscriptions.$inferInsert;

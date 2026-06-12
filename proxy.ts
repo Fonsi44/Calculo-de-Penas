@@ -26,6 +26,8 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/indexnow-key',
   '/api/contacto',
   '/api/consulta',
+  '/api/subscribe',
+  '/api/descargar',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>([

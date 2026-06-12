@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Servicios Jurídicos — ${site.name}`,
+    title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades | ${site.name}`,
     description: `Conozca las 13 especialidades de ${site.name}: cobertura legal integral en Nacaome, Valle, Honduras.`,
     url: `${site.url}/servicios-juridicos`,
     siteName: site.name,
@@ -46,7 +46,7 @@ export default async function AreasJuridicasPage() {
       <PageHero
         eyebrow="Servicios Jurídicos"
         badge="Cobertura integral"
-        title="Todos los servicios jurídicos que su caso necesita, bajo una misma dirección letrada"
+        title={`Servicios Jurídicos en ${site.address.city}, ${site.address.department} — ${areas.length} Especialidades Legales`}
         subtitle={
           <>
             Desde Nacaome, Valle, ofrecemos cobertura legal integral en {areas.length}{' '}

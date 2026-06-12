@@ -418,6 +418,15 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
           { key: 'geo_lat', label: 'Latitud', type: 'text' },
           { key: 'geo_lng', label: 'Longitud', type: 'text' },
         ]},
+        { key: 'seo', label: 'SEO Global', fields: [
+          { key: 'seo_title', label: 'Meta title global', type: 'text' },
+          { key: 'seo_description', label: 'Meta description global', type: 'textarea' },
+          { key: 'seo_keywords', label: 'Keywords (separadas por coma)', type: 'text' },
+          { key: 'seo_og_image', label: 'OG Image URL', type: 'text' },
+          { key: 'seo_google_verification', label: 'Google Verification', type: 'text' },
+          { key: 'seo_noindex', label: 'Noindex global (true/false)', type: 'text' },
+          { key: 'seo_sitemap_auto', label: 'Sitemap auto-submit (true/false)', type: 'text' },
+        ]},
       ],
     },
   ];

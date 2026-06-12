@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Abogados Penalistas — ${site.name}`,
-    description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en todo el país.`,
+    title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal | ${site.name}`,
+    description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca.`,
     url: `${site.url}/derecho-penal`,
     siteName: site.name,
     locale: 'es_HN',

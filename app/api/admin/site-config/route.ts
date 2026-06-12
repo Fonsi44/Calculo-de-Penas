@@ -11,6 +11,8 @@ const ALLOWED_KEYS = new Set([
   'telefono', 'whatsapp', 'email', 'direccion_line1', 'direccion_line2',
   'ciudad', 'departamento', 'horario', 'facebook', 'instagram', 'tiktok',
   'geo_lat', 'geo_lng',
+  'seo_title', 'seo_description', 'seo_keywords', 'seo_og_image',
+  'seo_google_verification', 'seo_noindex', 'seo_sitemap_auto',
 ]);
 
 const validators: Record<string, (v: string) => string | null> = {

@@ -133,7 +133,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [`${site.url}/og-image.png`],
     },
     openGraph: {
-      title: `${site.name} — Preguntas Frecuentes`,
+      title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
       description: `${total} respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
       url: `${site.url}/preguntas-frecuentes`,
       siteName: site.name,

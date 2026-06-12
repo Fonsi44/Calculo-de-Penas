@@ -1,5 +1,44 @@
 # Changelog
 
+## Release 32 — SEO/CRO Auditoría: Quick Wins + 7-Day + 30-Day (2026-06-12)
+
+Implementación de `auditoria-seo.md` — fuente única de verdad.
+
+### FASE 1 — Quick Wins
+
+- **OG titles corregidos** en 5 páginas (`servicios-juridicos`, `derecho-penal`, `blog`, `preguntas-frecuentes`, `solicitar-consulta`): `openGraph.title` ahora coincide con `<title>`.
+- **Sitemap**: añadidas 6 páginas legales (aviso-legal, politica-privacidad, politica-cookies, terminos, disclaimer, como-llegar). `/blog` priority 0.3→0.6, `/solicitar-consulta` 0.3→0.7, categorías blog 0.4→0.5.
+- **BlogPosting schema mejorado**: campos `image` y `articleBody` añadidos al schema existente en `lib/schemas/blog.ts`.
+- **Newsletter backend**: tabla `newsletter_subscriptions`, endpoint `POST /api/subscribe`, frontend conectado con estados UX. Migración `0013_add_newsletter_subscriptions`.
+
+### FASE 2 — 7 Días
+
+- **JSON-LD server-side**: verificado — ya implementado (scripts SSR en `app/(public)/layout.tsx`).
+- **H1 semánticos**: actualizados en `/servicios-juridicos`, `/derecho-penal`, `/blog` con keywords geo y de servicio.
+- **Service schema**: verificado — ya implementado vía `areaSchemas()` en páginas individuales de servicio.
+- **rel=prev**: verificado — ya implementado en paginación del blog.
+- **ContactPoint schema**: mejorado en `/solicitar-consulta` — `ContactPoint` real con telephone, areaServed, availableLanguage.
+
+### FASE 3 — 30 Días
+
+- **Campos SEO admin**: 7 claves nuevas (`seo_title`, `seo_description`, `seo_keywords`, `seo_og_image`, `seo_google_verification`, `seo_noindex`, `seo_sitemap_auto`) en `ALLOWED_KEYS` + sección "SEO Global" en UI de configuración.
+- **Lead magnets**: catálogo `lib/lead-magnets.ts` con 13 guías + endpoint `GET /api/descargar`. PDFs reales pendientes.
+- **KPIs conversión**: bloque `conversion` en `GET /api/admin/seo/summary` con `newsletterSubscribers`, `totalConsultas`, `consultasUltimoMes`.
+
+### Validación (2026-06-12)
+
+- `npm run lint`: 0 errores ✅ | `npm run build`: Compiled successfully ✅ | `npm run test`: 325 tests ✅
+- `POST /api/subscribe` → 200 OK, email registrado en Neon ✅
+- `GET /api/descargar` → 200 OK, PDF 8261 bytes generado por @react-pdf ✅
+- BlogPosting schema: articleBody + image + datePublished + dateModified confirmados en HTML de producción ✅
+- Sitemap: 95+ URLs, prioridades corregidas verificadas ✅
+
+### Adiciones posteriores al primer despliegue
+
+- **Lead magnets PDFs dinámicos**: `lib/lead-magnet-pdf.tsx` genera guías legales con @react-pdf (v4.5.1). Portada + secciones prácticas + FAQ + CTA. Endpoint `GET /api/descargar` devuelve PDF on-demand.
+- **Proxy actualizado**: `/api/subscribe` y `/api/descargar` añadidas a `PUBLIC_API_EXACT` en `proxy.ts`.
+- **GA4/GSC**: credenciales SA removidas de Vercel. El sistema usa OAuth 2.0 (`alfonsroiget@gmail.com`) vía `OAUTH_CLIENT_ID` + `OAUTH_CLIENT_SECRET` + `GOOGLE_REFRESH_TOKEN`.
+
 ## Release 31 — Crawl budget optimization + schema markup + thin content fix (2026-06-12)
 
 ### Problema detectado

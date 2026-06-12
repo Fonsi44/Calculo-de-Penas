@@ -23,6 +23,12 @@ export function blogPostSchema(post: Post) {
       '@type': 'WebPage',
       '@id': absoluteUrl(`/blog/${post.category}/${post.slug}`),
     },
+    image: post.coverImage
+      ? `${site.url}${post.coverImage}`
+      : `${site.url}/og-image.png`,
+    articleBody: post.body
+      ? post.body.replace(/<[^>]*>/g, '').substring(0, 5000)
+      : undefined,
     inLanguage: 'es-HN',
   };
 }

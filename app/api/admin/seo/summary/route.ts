@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { blogPosts } from '@/lib/schema';
+import { blogPosts, newsletterSubscriptions, solicitudesConsulta } from '@/lib/schema';
 import { eq, sql } from 'drizzle-orm';
 import { site } from '@/lib/site';
 import {
@@ -35,6 +35,23 @@ export async function GET(request: Request) {
 
   const publishedCount = publishedPosts;
   const draftCount = draftPosts;
+
+  const [subscriberRow] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(newsletterSubscriptions);
+
+  const [consultaRow] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(solicitudesConsulta);
+
+  const [consultaMesRow] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(solicitudesConsulta)
+    .where(sql`${solicitudesConsulta.creadoEn} >= now() - interval '30 days'`);
+
+  const totalSubscribers = subscriberRow?.count ?? 0;
+  const totalConsultas = consultaRow?.count ?? 0;
+  const consultasUltimoMes = consultaMesRow?.count ?? 0;
 
   let analytics = null;
   let searchConsole = null;
@@ -119,6 +136,11 @@ export async function GET(request: Request) {
       gaFrontend: gaFrontendConfigured ? 'activo' : 'inactivo',
       gaBackend: isAnalyticsConfigured() ? 'activo' : 'inactivo',
       searchConsole: isSearchConsoleConfigured() ? 'activo' : 'inactivo',
+    },
+    conversion: {
+      newsletterSubscribers: totalSubscribers,
+      totalConsultas,
+      consultasUltimoMes,
     },
   });
 }
