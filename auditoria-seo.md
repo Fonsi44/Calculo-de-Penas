@@ -50,6 +50,10 @@ El sitio web de Pineda y Asociados ha pasado de una **base técnica SEO sólida 
 - **GA4/GSC**: OAuth 2.0 configurado con `alfonsroiget@gmail.com`. Si el dashboard SEO no muestra datos, regenerar el refresh token desde https://developers.google.com/oauthplayground con scope `analytics.readonly` + `webmasters.readonly`.
 - **Validación Google Rich Results**: validar BlogPosting y FAQPage schemas manualmente en https://search.google.com/test/rich-results
 
+### 🎉 HITO: Indexación confirmada por Google (12 junio 2026)
+
+Google Search Console confirmó que el sitio comenzó a recibir impresiones el **10 de junio de 2026**. El sitemap contiene **190 URLs**, la verificación de Search Console está activa (`DzWyeKuME1pSzwjCuV4vkfZH80UMwULmyiQhg2qhhUE`), y el robots.txt está correctamente configurado. Las páginas del sitio ya aparecen en resultados de búsqueda de Google.
+
 ---
 
 ## ÍNDICE

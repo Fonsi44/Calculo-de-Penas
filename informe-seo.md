@@ -6,6 +6,7 @@
 **Versión**: 1.0  
 **Tipo**: Auditoría SEO técnica, de contenido, indexación y arquitectura  
 **Alcance**: Parte pública del sitio web (6 URLs prioritarias)  
+**🎉 Indexación Google**: CONFIRMADA — impresiones desde 10 junio 2026, 190 URLs en sitemap, verificación GSC activa  
 
 ---
 
