@@ -10,6 +10,8 @@ import { areasGenerales, getAreaBySlug, type AreaStandalone } from '@/data/areas
 import { areaHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
+import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 
 /** Mapa de slug de servicio a slug de categoría de blog */
@@ -248,6 +250,19 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       </Section>
 
       <Section spacing="sm">
+        {(() => {
+          const magnet = getLeadMagnetByArea(slug);
+          if (magnet) {
+            return (
+              <LeadMagnetCTA
+                area={magnet.area}
+                titulo={magnet.titulo}
+                descripcion={magnet.descripcion}
+              />
+            );
+          }
+          return null;
+        })()}
         <ContactStrip />
       </Section>
 
