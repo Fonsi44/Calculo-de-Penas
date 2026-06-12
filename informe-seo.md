@@ -630,16 +630,18 @@ Los anchor texts son generalmente descriptivos y naturales:
 - **Propuesto**: `Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visión de Vanguardia`
 - **Justificación**: Mantiene el branding pero añade keywords de alto valor SEO
 
-### 12.2 FAQs sugeridas para añadir en `/preguntas-frecuentes`
+### 12.2 FAQs añadidas en `/preguntas-frecuentes` ✅ COMPLETADO — 12 junio 2026
 
-**Categoría "Derecho Penal General"** (ampliar de 8 a 10):
-- "¿Qué debo hacer si recibo una citación del Ministerio Público?"
-- "¿Cuál es la diferencia entre un delito grave y un delito menos grave en Honduras?"
+**5 nuevas FAQs insertadas vía endpoint temporal**. La página pasó de 73 a 78 preguntas:
 
-**Categoría "El Bufete y Honorarios"** (ampliar de 7 a 10):
-- "¿Qué áreas geográficas cubren en Honduras?"
-- "¿Cuál es la diferencia entre consulta inicial y representación legal?"
-- "¿Qué documentación necesito para iniciar un caso penal?"
+**Categoría "Derecho Penal General"** (8 → 10):
+- ✅ "¿Qué debo hacer si recibo una citación del Ministerio Público?"
+- ✅ "¿Cuál es la diferencia entre un delito grave y un delito menos grave en Honduras?"
+
+**Categoría "El Bufete y Honorarios"** (7 → 10):
+- ✅ "¿Qué áreas geográficas cubren en Honduras?"
+- ✅ "¿Cuál es la diferencia entre consulta inicial y representación legal?"
+- ✅ "¿Qué documentación necesito para iniciar un caso penal?"
 
 ### 12.3 Enlaces internos recomendados
 
