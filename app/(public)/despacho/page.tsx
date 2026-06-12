@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
   alternates: { canonical: '/despacho' },
   openGraph: {
-    title: `${site.name} — Bufete multidisciplinario en Nacaome, Valle`,
+    title: `El Despacho — Bufete multidisciplinar en ${site.address.city} | ${site.name}`,
     description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
     url: `${site.url}/despacho`,
     siteName: site.name,

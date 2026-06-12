@@ -7,7 +7,6 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
-import { areaHref } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
@@ -64,7 +63,7 @@ export default async function AreasJuridicasPage() {
           {areas.map((area) => (
             <ServiceCard
               key={area.slug}
-              href={areaHref(area.slug)}
+              href={`/servicios-juridicos/${area.slug}`}
               slug={area.slug}
               title={area.titulo}
               description={area.descripcionCorta}
