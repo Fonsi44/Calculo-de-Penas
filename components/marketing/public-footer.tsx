@@ -3,30 +3,30 @@ import { Scale, Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 
 const AREAS = [
-  { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Derecho de Familia', href: '/servicios-juridicos/derecho-de-familia' },
-  { label: 'Derecho Laboral', href: '/servicios-juridicos/derecho-laboral' },
-  { label: 'Derecho Civil y Notarial', href: '/servicios-juridicos/derecho-civil-y-notarial' },
-  { label: 'Derecho Mercantil', href: '/servicios-juridicos/derecho-mercantil-empresarial' },
-  { label: 'Derecho Tributario', href: '/servicios-juridicos/tributario-fiscal' },
-  { label: 'Derecho Bancario', href: '/servicios-juridicos/derecho-bancario-y-financiero' },
-  { label: 'Administrativo', href: '/servicios-juridicos/derecho-administrativo-y-servicio-civil' },
-  { label: 'Regulación Sanitaria', href: '/servicios-juridicos/regulacion-sanitaria' },
-  { label: 'Extranjería', href: '/servicios-juridicos/extranjeria-en-honduras' },
-  { label: 'Propiedad Intelectual', href: '/servicios-juridicos/propiedad-intelectual' },
-  { label: 'Ambiental Regulatorio', href: '/servicios-juridicos/ambiental-regulatorio' },
-  { label: 'Conciliación y Arbitraje', href: '/servicios-juridicos/conciliacion-y-arbitraje' },
+  { label: 'Derecho Penal', title: 'Abogados penalistas en Nacaome, Valle — defensa penal técnica', href: '/derecho-penal' },
+  { label: 'Derecho de Familia', title: 'Abogados de familia en Nacaome: divorcios, custodias, alimentos', href: '/servicios-juridicos/derecho-de-familia' },
+  { label: 'Derecho Laboral', title: 'Abogados laborales en Nacaome: despidos, indemnizaciones, acoso laboral', href: '/servicios-juridicos/derecho-laboral' },
+  { label: 'Derecho Civil y Notarial', title: 'Abogados civiles y notariales en Nacaome, Valle', href: '/servicios-juridicos/derecho-civil-y-notarial' },
+  { label: 'Derecho Mercantil', title: 'Abogados mercantiles en Nacaome: sociedades, contratos, compliance', href: '/servicios-juridicos/derecho-mercantil-empresarial' },
+  { label: 'Derecho Tributario', title: 'Asesoría tributaria y fiscal en Nacaome, Valle', href: '/servicios-juridicos/tributario-fiscal' },
+  { label: 'Derecho Bancario', title: 'Abogados bancarios y financieros en Nacaome', href: '/servicios-juridicos/derecho-bancario-y-financiero' },
+  { label: 'Administrativo', title: 'Derecho administrativo y servicio civil en Honduras', href: '/servicios-juridicos/derecho-administrativo-y-servicio-civil' },
+  { label: 'Regulación Sanitaria', title: 'Asesoría en regulación sanitaria en Honduras', href: '/servicios-juridicos/regulacion-sanitaria' },
+  { label: 'Extranjería', title: 'Trámites de extranjería y migración en Honduras', href: '/servicios-juridicos/extranjeria-en-honduras' },
+  { label: 'Propiedad Intelectual', title: 'Registro de marcas y propiedad intelectual en Honduras', href: '/servicios-juridicos/propiedad-intelectual' },
+  { label: 'Ambiental Regulatorio', title: 'Derecho ambiental y regulatorio en Honduras', href: '/servicios-juridicos/ambiental-regulatorio' },
+  { label: 'Conciliación y Arbitraje', title: 'Conciliación y arbitraje: resolución extrajudicial de conflictos', href: '/servicios-juridicos/conciliacion-y-arbitraje' },
 ];
 
 const DESPACHO = [
-  { label: 'El Despacho', href: '/despacho' },
-  { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
-  { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Blog Jurídico', href: '/blog' },
-  { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
-  { label: 'Solicitar Consulta', href: '/solicitar-consulta' },
-  { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
-  { label: 'Cómo llegar', href: '/como-llegar' },
+  { label: 'El Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
+  { label: 'Servicios Jurídicos', title: 'Servicios jurídicos en Nacaome: todas las ramas del derecho', href: '/servicios-juridicos' },
+  { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo y Choluteca', href: '/derecho-penal' },
+  { label: 'Blog Jurídico', title: 'Artículos y guías legales para Honduras', href: '/blog' },
+  { label: 'Preguntas Frecuentes', title: 'Respuestas a dudas legales frecuentes en Honduras', href: '/preguntas-frecuentes' },
+  { label: 'Solicitar Consulta', title: 'Solicite una consulta legal gratuita y confidencial', href: '/solicitar-consulta' },
+  { label: 'Hondureños en España', title: 'Asistencia legal para hondureños residentes en España', href: '/hondurenos-en-espana' },
+  { label: 'Cómo llegar', title: 'Indicaciones para llegar al bufete en Nacaome, Valle', href: '/como-llegar' },
 ];
 
 const LEGALES = [
@@ -87,7 +87,7 @@ export function PublicFooter() {
             <ul className="space-y-1.5">
               {AREAS.map((a) => (
                 <li key={a.href}>
-                  <Link href={a.href} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link href={a.href} title={a.title} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
                     {a.label}
                   </Link>
                 </li>
@@ -105,7 +105,7 @@ export function PublicFooter() {
             <ul className="space-y-1.5">
               {DESPACHO.map((d) => (
                 <li key={d.href}>
-                  <Link href={d.href} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link href={d.href} title={d.title} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
                     {d.label}
                   </Link>
                 </li>

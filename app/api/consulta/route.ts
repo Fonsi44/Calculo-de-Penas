@@ -4,6 +4,7 @@ import { sendConsultaEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { db } from '@/lib/db';
 import { solicitudesConsulta } from '@/lib/schema';
+import { eq } from 'drizzle-orm';
 
 const CONSULTA_MAX = 10;
 const CONSULTA_WINDOW_MS = 15 * 60 * 1000;
@@ -38,27 +39,62 @@ export async function POST(request: Request) {
     resumen: parsed.data.resumen,
     ip: ipFromRequest(request),
     userAgent: uaFromRequest(request),
+    emailStatus: 'pending',
   }).returning({ id: solicitudesConsulta.id });
 
   const savedId = insertResult[0]?.id;
-
-  // Intentar enviar email — best effort, no bloquea la respuesta
-  if (isEmailConfigured()) {
-    sendConsultaEmail({
-      nombre: parsed.data.nombre,
-      telefono: parsed.data.telefono,
-      email: parsed.data.email ?? null,
-      motivo: parsed.data.motivo,
-      resumen: parsed.data.resumen,
-      ip: ipFromRequest(request),
-      userAgent: uaFromRequest(request),
-      submittedAt: new Date(),
-    }).then(result => {
-      if (!result.ok) console.error('[consulta] email falló:', result.error);
-    }).catch(e => {
-      console.error('[consulta] error enviando email:', e);
-    });
+  if (!savedId) {
+    console.error('[consulta] no se pudo insertar en DB');
+    return Response.json({ error: 'Error al guardar la solicitud' }, { status: 500 });
   }
 
-  return Response.json({ ok: true, id: savedId });
+  // Enviar email — ahora es parte del flujo principal con actualización en DB
+  let emailOk = true;
+
+  if (isEmailConfigured()) {
+    try {
+      const result = await sendConsultaEmail({
+        nombre: parsed.data.nombre,
+        telefono: parsed.data.telefono,
+        email: parsed.data.email ?? null,
+        motivo: parsed.data.motivo,
+        resumen: parsed.data.resumen,
+        ip: ipFromRequest(request),
+        userAgent: uaFromRequest(request),
+        submittedAt: new Date(),
+      });
+
+      if (result.ok) {
+        await db.update(solicitudesConsulta)
+          .set({ emailStatus: 'sent', emailId: result.id })
+          .where(eq(solicitudesConsulta.id, savedId));
+        console.log('[consulta] email enviado correctamente:', result.id);
+      } else {
+        emailOk = false;
+        const errorMsg = result.error ?? 'Error desconocido';
+        console.error('[consulta] email falló:', errorMsg);
+        await db.update(solicitudesConsulta)
+          .set({ emailStatus: 'failed', emailError: errorMsg })
+          .where(eq(solicitudesConsulta.id, savedId));
+      }
+    } catch (e) {
+      emailOk = false;
+      const errorMsg = e instanceof Error ? e.message : 'Error desconocido';
+      console.error('[consulta] excepción enviando email:', errorMsg);
+      await db.update(solicitudesConsulta)
+        .set({ emailStatus: 'failed', emailError: errorMsg })
+        .where(eq(solicitudesConsulta.id, savedId));
+    }
+  } else {
+    await db.update(solicitudesConsulta)
+      .set({ emailStatus: 'skipped', emailError: 'RESEND_API_KEY no configurada' })
+      .where(eq(solicitudesConsulta.id, savedId));
+  }
+
+  // Siempre devolvemos ok aunque el email falle (la consulta está guardada)
+  return Response.json({
+    ok: true,
+    id: savedId,
+    email: emailOk ? 'sent' : 'failed',
+  });
 }

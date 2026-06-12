@@ -52,11 +52,12 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found'],
       },
-      // IA y scrapers siguen bloqueados por protección de contenido原创
+      // IA y scrapers: bloqueo consistente con politica de proteccion de contenido
       { userAgent: 'GPTBot', disallow: '/' },
       { userAgent: 'ChatGPT-User', disallow: '/' },
       { userAgent: 'Google-Extended', disallow: '/' },
       { userAgent: 'PerplexityBot', disallow: '/' },
+      { userAgent: 'Perplexity-User', disallow: '/' },
       { userAgent: 'anthropic-ai', disallow: '/' },
       { userAgent: 'ClaudeBot', disallow: '/' },
       { userAgent: 'Claude-Web', disallow: '/' },
@@ -66,6 +67,10 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'Applebot-Extended', disallow: '/' },
       { userAgent: 'FacebookBot', disallow: '/' },
       { userAgent: 'Meta-ExternalAgent', disallow: '/' },
+      { userAgent: 'OAI-SearchBot', disallow: '/' },
+      { userAgent: 'Diffbot', disallow: '/' },
+      { userAgent: 'ImagesiftBot', disallow: '/' },
+      { userAgent: 'Omgilibot', disallow: '/' },
     ],
     sitemap: `${site.url}/sitemap.xml`,
   };

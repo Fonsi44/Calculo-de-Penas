@@ -16,12 +16,32 @@ const CAT_COLORS: Record<string, string> = {
   info: 'bg-accent/15 text-accent-dark',
 };
 
+const CTA_LABELS: Record<string, string> = {
+  'derecho-penal': 'Leer sobre derecho penal',
+  'derecho-de-familia': 'Leer sobre derecho de familia',
+  'derecho-laboral': 'Leer sobre derecho laboral',
+  'derecho-civil': 'Leer sobre derecho civil',
+  'derecho-mercantil': 'Leer sobre derecho mercantil',
+  'extranjeria-migracion': 'Leer sobre extranjería',
+  'derecho-notarial': 'Leer sobre derecho notarial',
+  'tributario': 'Leer sobre derecho tributario',
+  'derecho-administrativo': 'Leer sobre derecho administrativo',
+  'derecho-bancario': 'Leer sobre derecho bancario',
+  'derecho-aduanero': 'Leer sobre derecho aduanero',
+  'regulacion-sanitaria': 'Leer sobre regulación sanitaria',
+  'propiedad-intelectual': 'Leer sobre propiedad intelectual',
+  'derecho-ambiental': 'Leer sobre derecho ambiental',
+  'conciliacion-arbitraje': 'Leer sobre conciliación y arbitraje',
+};
+
 export function BlogCard({ post, featured }: { post: Post; featured?: boolean }) {
   const catColor = blogCategories.find((c) => c.slug === post.category)?.color ?? 'muted';
+  const ctaLabel = CTA_LABELS[post.category] ?? 'Leer artículo completo';
 
   return (
     <Link
       href={`/blog/${post.category}/${post.slug}`}
+      title={post.title}
       className={cn(
         'group block rounded-xl border border-border bg-background overflow-hidden transition-all hover:border-accent/40 hover:shadow-sm',
         featured && 'md:grid md:grid-cols-2',
@@ -68,7 +88,7 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
             </span>
           </div>
           <span className="flex items-center gap-1 text-xs font-semibold text-primary group-hover:text-accent-dark transition-colors">
-            Leer más <ArrowRight size={14} />
+            {ctaLabel} <ArrowRight size={14} />
           </span>
         </div>
       </div>

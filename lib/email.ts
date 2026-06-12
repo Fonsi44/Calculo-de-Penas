@@ -11,16 +11,22 @@ function getClient(): Resend | null {
   return _client;
 }
 
+const VERIFIED_DOMAIN = 'pinedayasociadoshn.com';
+
 export function isEmailConfigured(): boolean {
   return Boolean(process.env.RESEND_API_KEY);
 }
 
 export function getFromAddress(): string {
-  return process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev';
+  return process.env.RESEND_FROM_EMAIL ?? `no-reply@${VERIFIED_DOMAIN}`;
 }
 
 export function getNotificationEmail(): string {
   return process.env.CONTACT_NOTIFICATION_EMAIL ?? 'alfonsroiget@gmail.com';
+}
+
+export function getFromName(): string {
+  return 'Pineda y Asociados';
 }
 
 export interface ContactEmailPayload {
@@ -88,9 +94,11 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
     `UA: ${payload.userAgent ?? 'desconocido'}`,
   ].join('\n');
 
+  const fromName = getFromName();
+
   try {
     const { data, error } = await client.emails.send({
-      from: `Web Pineda y Asociados <${from}>`,
+      from: `${fromName} <${from}>`,
       to: [to],
       replyTo,
       subject,
@@ -98,11 +106,14 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
       text,
     });
     if (error) {
+      console.error('[email] sendContactEmail error de API:', error);
       return { ok: false, error: error.message };
     }
     return { ok: true, id: data?.id };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : 'Error desconocido' };
+    const msg = e instanceof Error ? e.message : 'Error desconocido';
+    console.error('[email] sendContactEmail excepción:', msg);
+    return { ok: false, error: msg };
   }
 }
 
@@ -165,9 +176,11 @@ export async function sendConsultaEmail(payload: ConsultaEmailPayload): Promise<
     `UA: ${payload.userAgent ?? 'desconocido'}`,
   ].join('\n');
 
+  const fromName = getFromName();
+
   try {
     const { data, error } = await client.emails.send({
-      from: `Web Pineda y Asociados <${from}>`,
+      from: `${fromName} <${from}>`,
       to: [to],
       replyTo,
       subject,
@@ -175,11 +188,14 @@ export async function sendConsultaEmail(payload: ConsultaEmailPayload): Promise<
       text,
     });
     if (error) {
+      console.error('[email] sendConsultaEmail error de API:', error);
       return { ok: false, error: error.message };
     }
     return { ok: true, id: data?.id };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : 'Error desconocido' };
+    const msg = e instanceof Error ? e.message : 'Error desconocido';
+    console.error('[email] sendConsultaEmail excepción:', msg);
+    return { ok: false, error: msg };
   }
 }
 

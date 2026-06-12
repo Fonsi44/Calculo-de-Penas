@@ -90,10 +90,23 @@ export default async function BlogCategoryPage(props: Props) {
         <CategoryFilter />
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-text-secondary mb-4">No hay artículos publicados en esta categoría aún.</p>
-            <Link href="/blog" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
-              <ArrowLeft size={14} /> Ver todos los artículos
-            </Link>
+            <p className="text-text-secondary mb-4">Aún no hay artículos publicados en la categoría <strong>{cat.nombre.toLowerCase()}</strong>.</p>
+            <p className="text-sm text-text-muted mb-6 max-w-md mx-auto leading-relaxed">
+              Estamos preparando contenido sobre este tema. Mientras tanto, puede explorar
+              otras categorías del blog, consultar nuestras preguntas frecuentes o solicitar
+              una consulta legal personalizada.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/blog" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
+                <ArrowLeft size={14} /> Ver todos los artículos
+              </Link>
+              <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
+                Preguntas frecuentes
+              </Link>
+              <Link href="/solicitar-consulta" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
+                Solicitar consulta
+              </Link>
+            </div>
           </div>
         ) : (
           <div>

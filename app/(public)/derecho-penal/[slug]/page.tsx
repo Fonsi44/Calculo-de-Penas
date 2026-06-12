@@ -106,9 +106,9 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
                 <Icon size={16} className="text-accent-dark" />
               </span>
               <div className="min-w-0 flex-1">
-                <h4 className="font-bold text-sm md:text-base text-primary leading-snug">
+                <h3 className="font-bold text-sm md:text-base text-primary leading-snug">
                   {s.titulo}
-                </h4>
+                </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mt-1">
                   {s.descripcion}
                 </p>

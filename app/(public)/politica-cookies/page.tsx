@@ -90,7 +90,12 @@ export default async function PoliticaCookiesPage() {
           Además de las cookies descritas, este sitio puede utilizar
           tecnologías equivalentes de almacenamiento local del navegador
           (localStorage, sessionStorage) con las mismas finalidades
-          técnicas. Estos datos no abandonan el dispositivo del usuario.
+          técnicas. Estos datos no abandonan el dispositivo del usuario
+          y no son accesibles por terceros. Se emplean exclusivamente
+          para preservar preferencias de interfaz durante la navegación
+          y para el funcionamiento de la calculadora de penas, que
+          almacena temporalmente los datos del cálculo en curso sin
+          transmitirlos a ningún servidor externo.
         </p>
       </LegalSection>
 
@@ -98,10 +103,13 @@ export default async function PoliticaCookiesPage() {
         <p>
           Este sitio no incorpora de forma predeterminada cookies
           publicitarias, píxeles de redes sociales ni servicios de
-          analítica masiva (Google Analytics, Meta Pixel, TikTok Pixel,
-          etc.). En caso de incorporarse en el futuro, esta política se
-          actualizará y se solicitará el consentimiento expreso del
-          usuario con carácter previo.
+          analítica masiva. En caso de que el administrador del sitio
+          active Google Analytics 4 mediante la variable de entorno
+          correspondiente, se informará al usuario y se solicitará el
+          consentimiento expreso con carácter previo a la instalación
+          de cualquier cookie no esencial. Esta política se actualizará
+          para reflejar cualquier cambio en el uso de servicios de
+          terceros.
         </p>
       </LegalSection>
 

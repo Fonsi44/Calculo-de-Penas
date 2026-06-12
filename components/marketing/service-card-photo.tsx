@@ -10,6 +10,7 @@ interface ServiceCardPhotoProps {
   aspect?: PlaceholderAspect;
   label?: string;
   className?: string;
+  ctaLabel?: string;
 }
 
 export function ServiceCardPhoto({
@@ -20,7 +21,9 @@ export function ServiceCardPhoto({
   aspect = '4/3',
   label,
   className,
+  ctaLabel,
 }: ServiceCardPhotoProps) {
+  const ctaText = ctaLabel ?? `Conocer más sobre ${title.toLowerCase()}`;
   return (
     <Link
       href={href}
@@ -37,7 +40,7 @@ export function ServiceCardPhoto({
           </p>
         )}
         <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
-          Conocer mas
+          {ctaText}
           <ArrowRight size={14} aria-hidden="true" />
         </span>
       </div>

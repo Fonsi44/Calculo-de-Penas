@@ -26,6 +26,8 @@ interface ServiceCardProps {
   className?: string;
   /** Si true, no renderiza el enlace (uso en grids estaticas). */
   static?: boolean;
+  /** Texto del CTA. Por defecto: "Conocer servicios de [título]" */
+  ctaLabel?: string;
 }
 
 const ASPECT_CLASS: Record<PlaceholderAspect, string> = {
@@ -64,8 +66,10 @@ export function ServiceCard({
   eyebrow,
   className,
   static: isStatic = false,
+  ctaLabel,
 }: ServiceCardProps) {
   const resolvedImage = resolveImage(imageSrc, slug, category);
+  const ctaText = ctaLabel ?? `Conocer servicios de ${title.toLowerCase()}`;
 
   const inner = (
     <>
@@ -108,7 +112,7 @@ export function ServiceCard({
           </p>
         )}
         <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
-          Conocer más
+          {ctaText}
           <ArrowRight size={14} aria-hidden="true" />
         </span>
       </div>

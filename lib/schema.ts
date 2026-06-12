@@ -215,9 +215,13 @@ export const solicitudesConsulta = pgTable('solicitudes_consulta', {
   resumen: text('resumen').notNull(),
   ip: varchar('ip', { length: 45 }),
   userAgent: text('user_agent'),
+  emailStatus: varchar('email_status', { length: 20 }).default('pending'),
+  emailId: varchar('email_id', { length: 255 }),
+  emailError: text('email_error'),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
   creadoEnIdx: index('solicitudes_consulta_creado_en_idx').on(table.creadoEn),
+  emailStatusIdx: index('solicitudes_consulta_email_status_idx').on(table.emailStatus),
 }));
 
 export type SolicitudConsulta = typeof solicitudesConsulta.$inferSelect;

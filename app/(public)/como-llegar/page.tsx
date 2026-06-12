@@ -64,6 +64,22 @@ export default function ComoLlegarPage() {
 
       {/* MAPA */}
       <Section spacing="md">
+        <Container size="lg">
+          <div className="max-w-3xl mb-8">
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed">
+              Nuestro despacho se encuentra en el centro de {site.address.city}, sobre una de las vías
+              principales de la ciudad. La oficina está señalizada y es de fácil acceso tanto en
+              vehículo particular como en transporte público. Si viene desde otra ciudad, las
+              carreteras principales están en buen estado y el trayecto es directo.
+            </p>
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed mt-3">
+              Recomendamos agendar su visita con antelación para garantizar la disponibilidad del
+              abogado responsable de su caso. Si prefiere no desplazarse, también ofrecemos consulta
+              telefónica y por videollamada. En cualquier caso, la primera consulta es confidencial
+              y sin costo.
+            </p>
+          </div>
+        </Container>
         <div className="grid lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2">
             <Card padding="none" className="overflow-hidden">
