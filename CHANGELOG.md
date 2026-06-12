@@ -1,5 +1,26 @@
 # Changelog
 
+## Release 33 — Accesibilidad WCAG 2.2: 88 → 95+ (2026-06-12)
+
+Correcciones de accesibilidad en componentes compartidos (formularios, navegación, semántica, contraste).
+
+| # | Problema | WCAG | Archivo | Solución |
+|---|---------|------|--------|----------|
+| 1 | Input email sin label | 4.1.2 | `lead-magnet-cta.tsx` | `<label htmlFor>` sr-only |
+| 2 | Input newsletter sin label | 4.1.2 | `newsletter-section.tsx` | `<label htmlFor>` sr-only |
+| 3 | `<select>` sin label asociado | 1.3.1 | `solicitar-consulta-form.tsx` | `htmlFor` + `id` |
+| 4 | `<textarea>` sin label asociado | 1.3.1 | `solicitar-consulta-form.tsx` | `htmlFor` + `id` |
+| 5 | `aria-current` en div decorativo | 4.1.2 | `stepper.tsx` | Movido a `<button>` |
+| 6 | Toolbar sin `aria-label` | 4.1.2 | `rich-text-editor.tsx` | `aria-label` en `Tb` |
+| 7 | Dropdown sin teclado | 2.1.1 | `user-actions.tsx` | ArrowUp/Down/Escape |
+| 8 | Contraste warning 2.65:1 | 1.4.3 | `globals.css` | #C58A2E → #8B5E1A (4.96:1) |
+| 9 | Contraste info 4.10:1 | 1.4.3 | `globals.css` | #2D6CDF → #1A4DB8 (6.36:1) |
+| 10 | Contraste exemption heredado | 1.4.3 | `globals.css` | Cambiado a #8B5E1A |
+
+**Validación**: lint 0, build OK, 325 tests.
+
+**Puntuaciones**: Accesibilidad 88→95+, Rendimiento 98, Prácticas 100, SEO 100.
+
 ## Release 32 — SEO/CRO: Auditoría completa + implementación + verificación (2026-06-12)
 
 **Hito**: Google confirmó indexación del sitio el 10 junio 2026. 190 URLs en sitemap. Verificación GSC activa.

@@ -59,7 +59,9 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
         </div>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mt-3">
+        <label htmlFor="lead-magnet-email" className="sr-only">Correo electrónico para recibir la guía</label>
         <input
+          id="lead-magnet-email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

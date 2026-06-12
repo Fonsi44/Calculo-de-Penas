@@ -60,6 +60,25 @@ export function UserActions() {
             <div
               role="menu"
               className="absolute right-0 top-full mt-1 w-56 bg-surface rounded-md border border-border-light shadow-lg overflow-hidden z-50"
+              onKeyDown={(e) => {
+                const items = (e.currentTarget as HTMLElement).querySelectorAll<HTMLElement>('[role="menuitem"]');
+                const idx = Array.from(items).indexOf(document.activeElement as HTMLElement);
+                if (e.key === 'ArrowDown') {
+                  e.preventDefault();
+                  const next = Math.min(idx + 1, items.length - 1);
+                  items[next >= 0 ? next : 0]?.focus();
+                }
+                if (e.key === 'ArrowUp') {
+                  e.preventDefault();
+                  const prev = Math.max(idx - 1, 0);
+                  items[prev]?.focus();
+                }
+                if (e.key === 'Escape') {
+                  setOpen(false);
+                  const btn = (e.currentTarget as HTMLElement).previousElementSibling as HTMLElement;
+                  btn?.focus();
+                }
+              }}
             >
               <div className="px-3 py-2 border-b border-border-light">
                 <p className="text-xs font-bold text-text truncate">{user.nombre}</p>

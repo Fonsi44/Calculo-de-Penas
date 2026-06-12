@@ -32,6 +32,7 @@ export function Stepper({ steps, current, variant = 'horizontal', className, onS
                 'flex items-center gap-2 py-1.5 px-1 rounded text-left w-full',
                 interactive && 'hover:bg-white/5 focus-visible:outline-none',
               )}
+              aria-current={active ? 'step' : undefined}
             >
               <div
                 className={cn(
@@ -40,7 +41,6 @@ export function Stepper({ steps, current, variant = 'horizontal', className, onS
                   done && 'bg-accent/70 text-primary',
                   !active && !done && 'bg-white/15 text-text-inverse',
                 )}
-                aria-current={active ? 'step' : undefined}
               >
                 {done ? <Check size={14} /> : s.num}
               </div>

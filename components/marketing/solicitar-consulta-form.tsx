@@ -111,10 +111,11 @@ export function SolicitarConsultaForm() {
         onChange={onText('email')}
       />
       <div>
-        <label className="block text-xs font-bold text-text mb-1">
+        <label htmlFor="consulta-motivo" className="block text-xs font-bold text-text mb-1">
           Motivo de la consulta
         </label>
         <select
+          id="consulta-motivo"
           value={form.motivo}
           onChange={onText('motivo')}
           className="w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
@@ -127,10 +128,11 @@ export function SolicitarConsultaForm() {
         </select>
       </div>
       <div>
-        <label className="block text-xs font-bold text-text mb-1">
+        <label htmlFor="consulta-resumen" className="block text-xs font-bold text-text mb-1">
           Resumen de la situación
         </label>
         <textarea
+          id="consulta-resumen"
           value={form.resumen}
           onChange={onText('resumen')}
           rows={6}

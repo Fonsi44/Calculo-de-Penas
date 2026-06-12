@@ -61,18 +61,18 @@
   --color-danger-bg: #FBECEC;
   --color-danger-border: #E5B5BB;
 
-  --color-warning: #C58A2E;
+  --color-warning: #8B5E1A;
   --color-warning-bg: #FBF1DE;
-  --color-warning-border: #E5C99A;
+  --color-warning-border: #D4B680;
 
-  --color-info: #2D6CDF;
+  --color-info: #1A4DB8;
   --color-info-bg: #E7EFFB;
-  --color-info-border: #B8C9E8;
+  --color-info-border: #A0BDE0;
 
   /* Tonos jurídicos (semánticos de dominio) */
-  --color-exemption: #C58A2E;
+  --color-exemption: #8B5E1A;
   --color-exemption-bg: #FBF1DE;
-  --color-exemption-border: #E5C99A;
+  --color-exemption-border: #D4B680;
 
   --color-mitigation: #0E7A4F;
   --color-mitigation-bg: #E6F4ED;

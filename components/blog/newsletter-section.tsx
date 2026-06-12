@@ -60,7 +60,9 @@ export function NewsletterSection() {
             </div>
           ) : (
             <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={handleSubmit}>
+              <label htmlFor="newsletter-email" className="sr-only">Dirección de correo electrónico para suscripción</label>
               <input
+                id="newsletter-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

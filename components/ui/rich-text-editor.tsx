@@ -33,7 +33,7 @@ function Tb({ onClick, active, title, children }: {
   editor: Editor; onClick: () => void; active: boolean; title?: string; children: React.ReactNode;
 }) {
   return (
-    <button type="button" title={title} onClick={onClick}
+    <button type="button" title={title} aria-label={title} onClick={onClick}
       className={`p-1.5 rounded hover:bg-border-light transition-colors ${active ? 'bg-accent/20 text-primary' : 'text-text-secondary'}`}
       onMouseDown={e => e.preventDefault()}>
       {children}
