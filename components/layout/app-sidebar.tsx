@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Shield } from 'lucide-react';
+import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Shield, PlusCircle } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
@@ -22,6 +22,7 @@ const NAV: NavItem[] = [
   { label: 'Mis casos', href: '/intranet/casos', icon: Briefcase, match: (p) => p.startsWith('/intranet/casos') || p === '/casos' || p.startsWith('/casos/') },
   { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp' || p.startsWith('/cp/') },
   { label: 'Catálogo de delitos', href: '/intranet/delitos', icon: FileText, match: (p) => p.startsWith('/intranet/delitos') || p === '/delitos' || p.startsWith('/delitos/') },
+  { label: 'Registrar delito', href: '/delito-form', icon: PlusCircle, match: (p) => p === '/delito-form' || p.startsWith('/delito-form/') },
   { label: 'Web Admin', href: '/intranet/admin', icon: Shield, match: (p) => p.startsWith('/intranet/admin') },
 ];
 
