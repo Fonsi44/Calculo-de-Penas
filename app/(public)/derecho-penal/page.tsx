@@ -12,6 +12,8 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
+import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Derecho Penal` }],
+    images: [{ url: `${site.url}/api/og?tag=Especialidad+Destacada&title=${encodeURIComponent(`Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`)}&subtitle=${encodeURIComponent('Defensa penal técnica y confidencial en todas las etapas del proceso penal hondureño.')}`, width: 1200, height: 630, alt: `${site.name} — Derecho Penal` }],
   },
 };
 
@@ -176,6 +178,23 @@ export default async function DerechoPenalPage() {
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
+
+      <Section spacing="sm">
+        {(() => {
+          const magnet = getLeadMagnetByArea('derecho-penal');
+          if (magnet) {
+            return (
+              <LeadMagnetCTA
+                area={magnet.area}
+                titulo={magnet.titulo}
+                descripcion={magnet.descripcion}
+              />
+            );
+          }
+          return null;
+        })()}
+      </Section>
+
       <ConsultationCTA />
     </>
   );

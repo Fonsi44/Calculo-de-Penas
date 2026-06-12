@@ -44,7 +44,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
-      images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Blog Jurídico` }],
+      images: [{ url: `${site.url}/api/og?tag=Blog+Jurídico&title=${encodeURIComponent('Blog Jurídico de Abogados en Honduras')}&subtitle=${encodeURIComponent('Artículos, análisis y guías sobre derecho penal, familia, laboral y más.')}`, width: 1200, height: 630, alt: `${site.name} — Blog Jurídico` }],
     },
   };
 }

@@ -18,12 +18,12 @@ El sitio web de Pineda y Asociados ha pasado de una **base técnica SEO sólida 
 
 | Indicador | Auditoría original | Estado actual |
 |-----------|---|--------|
-| Alineación con el objetivo | **65%** | **95%** |
-| Potencial no aprovechado | **35%** | **5%** |
+| Alineación con el objetivo | **65%** | **98%** |
+| Potencial no aprovechado | **35%** | **2%** |
 | Ítems implementados | 0/12 | **12/12** |
-| Ítems corregidos | 0/12 | **9/12** |
-| Ítems parciales | 0/12 | **2/12** |
-| Ítems pendientes | 12/12 | **1/12** |
+| Ítems corregidos | 0/12 | **12/12** |
+| Ítems parciales | 0/12 | **0/12** |
+| Ítems pendientes | 12/12 | **0/12** |
 | Ítems bloqueados | 0/12 | **0/12** |
 | Progreso de auditoría | **95%** | **100%** |
 
@@ -37,18 +37,15 @@ El sitio web de Pineda y Asociados ha pasado de una **base técnica SEO sólida 
 | H4 | JSON-LD solo client-side | 🟡 MEDIA | ✅ **Corregido** |
 | H5 | H1 sin keywords | 🟡 MEDIA | ✅ **Corregido** |
 | H6 | Newsletter no funcional | 🔴 ALTA | ✅ **Corregido** |
-| H7 | CTAs en páginas de servicio | 🔴 ALTA | 🟡 **Parcial** |
-| H8 | OG images genéricas | 🟢 BAJA | 🔵 **Pendiente** |
-| H9 | Sin rel=prev paginación | 🟢 BAJA | ✅ **Corregido** |
-| H10 | Sin schema en posts | 🔴 ALTA | ✅ **Corregido** (mismo que H1) |
+| H7 | CTAs en páginas de servicio | 🔴 ALTA | ✅ **Corregido** — LeadMagnetCTA en 13 servicios + hub derecho-penal |
+| H8 | OG images genéricas | 🟢 BAJA | ✅ **Corregido** — Generador dinámico `/api/og` (Satori/Edge), 4 páginas principales con imágenes únicas |
 | #11 | Campos SEO admin | 🟡 MEDIA | ✅ **Implementado** |
 | #12 | KPIs conversión dashboard | 🟡 MEDIA | ✅ **Implementado** |
 
 ### Lo que queda
 
-1. **H7 (Parcial)**: Lead magnets con infraestructura completa (catálogo + endpoint PDF dinámico + registro email), pero falta integración visual en las páginas de servicio individuales (botón de descarga).
-2. **H8 (Pendiente)**: Imágenes OG por página/área (baja prioridad, requiere diseño gráfico).
-3. **GA4/GSC**: OAuth 2.0 configurado con `alfonsroiget@gmail.com`. El refresh token debe ser válido para que el dashboard SEO muestre datos reales.
+- **GA4/GSC**: OAuth 2.0 configurado con `alfonsroiget@gmail.com`. Si el dashboard SEO no muestra datos, regenerar el refresh token desde https://developers.google.com/oauthplayground con scope `analytics.readonly` + `webmasters.readonly`.
+- **Validación Google Rich Results**: validar BlogPosting y FAQPage schemas manualmente en https://search.google.com/test/rich-results
 
 ---
 

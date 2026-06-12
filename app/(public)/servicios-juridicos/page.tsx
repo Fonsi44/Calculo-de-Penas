@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Servicios Jurídicos` }],
+    images: [{ url: `${site.url}/api/og?tag=Servicios+Jurídicos&title=${encodeURIComponent(`Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`)}&subtitle=${encodeURIComponent(`Cobertura legal integral en derecho penal, familia, laboral, civil, mercantil, tributario y más.`)})`, width: 1200, height: 630, alt: `${site.name} — Servicios Jurídicos` }],
   },
 };
 
