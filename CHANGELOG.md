@@ -1,5 +1,35 @@
 # Changelog
 
+## Release 37 — Corrección regresión tipográfica: H1/H2 con presencia corporativa (2026-06-12)
+
+### Problema detectado
+Tras el rediseño del Release 36, los h1/h2 de páginas internas (`/despacho`, `/servicios-juridicos`, `/derecho-penal`, `/preguntas-frecuentes`, etc.) se renderizaban demasiado pequeños:
+- `body` estaba fijado a `15px` (no estándar web, hace que `text-base` rinda a 15px reales).
+- `PageHero` h1 reducido a `text-2xl sm:text-3xl lg:text-4xl` + `font-bold` → 24-36px / 700 (tímido para un hero).
+- `SectionHeader` h2 reducido a `text-xl md:text-2xl lg:text-3xl` + `font-bold` → 20-30px / 700 (perdió jerarquía).
+
+### Cambios
+- `app/globals.css` → `body` font-size `15px → 16px` (estándar web, párrafos con presencia real).
+- `PageHero` h1 → `text-3xl sm:text-4xl lg:text-5xl` + `font-extrabold` (peso 800) → **30-48px / 800** (presencia de hero corporativo).
+- `PageHero` subtitle → `text-base md:text-lg` (16-18px) con `text-inverse/90` para mejor contraste.
+- `SectionHeader` h2 → `text-2xl md:text-3xl lg:text-4xl` + `font-extrabold` → **24-36px / 800** (coherente con la home, donde ya estaba así).
+- `TestimonialsSection` h2 → `text-2xl md:text-3xl` + `font-extrabold` → **24-30px / 800** (antes 20-30px / 700).
+
+### Validado en navegador real (Chrome DevTools, `getComputedStyle`)
+| Página | H1 (desktop) | H2 (sección) | body |
+|---|---|---|---|
+| `/despacho` | 48px / 800 ✓ | 36px / 800 ✓ | 16px ✓ |
+| `/servicios-juridicos` | 48px / 800 ✓ | 36px / 800 ✓ | 16px ✓ |
+| `/preguntas-frecuentes` | 48px / 800 ✓ | 36px / 800 ✓ | 16px ✓ |
+| `/` (home) | 68px / 800 ✓ | 30-36px / 800 ✓ | 16px ✓ |
+| `/despacho` móvil 375px | 30px / 800 ✓ | 24px / 800 ✓ | 16px ✓ |
+
+### Compatibilidad
+- Sin cambios estructurales. Solo ajuste de tokens CSS y clases utility.
+- `text-balance`, `text-pretty`, fuentes, line-heights y responsive breakpoints intactos.
+- Accesibilidad, SEO y rendimiento no afectados (cambios puramente tipográficos).
+- Lint y build OK. Despliegue READY en producción.
+
 ## Release 36 — Rediseño visual: profundidad, atmósfera y jerarquía premium (2026-06-12)
 
 Evolución del lenguaje visual "Premium Corporate Luxury" hacia una experiencia más viva, profunda y elegante, sin perder accesibilidad, rendimiento ni coherencia de marca.

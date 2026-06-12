@@ -20,6 +20,27 @@ Dirección de arte: **Navy refinado (#0F1D3A) · Off-white limpio (#F9F8F5) · G
 - **Bordes**: `--color-border`, `--color-border-light`, `--color-border-strong`.
 - **Sombras premium** (tintadas con navy, 3 capas: contacto cercano + halo medio + profundidad amplia): `--shadow-xs/sm/md/lg/xl`, `--shadow-card`, `--shadow-card-hover`, `--shadow-btn-primary/secondary/accent`.
 
+### Escala tipográfica (Release 37 — referencia)
+
+Sistema fijo en `app/globals.css`. Todo el frontend público debe respetarlo.
+
+| Elemento | Mobile | Desktop | Peso | Notas |
+|---|---|---|---|---|
+| `body` | 16px | 16px | 400 | Estándar web, párrafos con presencia real |
+| Hero H1 (página interna) | 30px | 48px | 800 (`font-extrabold`) | `PageHero` — presencia de hero corporativo |
+| Hero H1 (home) | 36px | 68px | 800 | Inline en `app/(public)/page.tsx` |
+| H2 sección | 24px | 36px | 800 | `SectionHeader` — coherente con la home |
+| H3 card / bloque | 18px | 18-20px | 700 | `card-title` |
+| Subtítulo hero | 16px | 18px | 400 | `leading-relaxed`, `max-w-3xl` |
+| Texto base | 16px | 16px | 400 | `text-base` |
+| Eyebrow | 11px | 11px | 700 | `.eyebrow-rule` — uppercase + tracking 0.3em |
+
+**Reglas**:
+- No usar `text-base` por debajo de 16px. No usar `text-sm` (14px) en cuerpo de párrafo (sí допустимо en captions, meta, labels).
+- No bajar H1 por debajo de 30px en mobile ni 48px en desktop.
+- No usar `font-bold` (700) en hero/sección — usar `font-extrabold` (800) para presencia corporativa.
+- Si una sección parece "tímida" o "encogida", el problema casi siempre es body demasiado bajo, no un componente concreto. Verificar primero `getComputedStyle(body).fontSize`.
+
 ### Utilities compartidas
 
 - `.card-premium` — superficie con gradiente interno + sombra multicapa + halo dorado al hover.
