@@ -8,8 +8,10 @@ export default function IntranetLayout({ children }: { children: React.ReactNode
   const pathname = usePathname();
   const { open, setOpen } = useMobileNav();
   const isAdminRoute = pathname.startsWith('/intranet/admin');
+  const isDashboard = pathname === '/intranet/dashboard';
 
-  if (isAdminRoute) {
+  // Admin tiene su propio layout. Dashboard usa AppShell con sidebar propio.
+  if (isAdminRoute || isDashboard) {
     return <>{children}</>;
   }
 
