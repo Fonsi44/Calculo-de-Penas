@@ -93,6 +93,9 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight">
             Servicios de {grupo.titulo.toLowerCase()}
           </h2>
+          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
+            {grupo.descripcion}
+          </p>
         </div>
       </Section>
 
