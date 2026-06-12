@@ -171,58 +171,12 @@ export default async function HomePage() {
               </div>
               <CTAGroup variant="inverse" className="mt-8" />
             </div>
-            <div className="lg:col-span-5">
-              <div className="hero-card p-5 md:p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center border border-primary/15">
-                    <Phone size={14} className="text-primary" />
-                  </div>
-                  <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">{t('contact_card.title')}</p>
-                </div>
-                <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
-                  {site.phoneDisplay}
-                </a>
-                <p className="text-sm text-text-secondary mt-1">{site.hours}</p>
-                <div className="divider-accent my-4" />
-                <a
-                  href={whatsappHref(t('contact_card.whatsapp_msg'))}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-md bg-success/10 hover:bg-success/15 border border-success/15 transition-colors"
-                >
-                  <div className="w-9 h-9 rounded-md bg-success flex items-center justify-center flex-shrink-0 shadow-[0_4px_10px_-2px_rgba(14,122,79,0.45)]">
-                    <MessageCircle size={16} className="text-white" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold text-success">WhatsApp directo</p>
-                    <p className="text-xxs text-text-secondary">Respuesta durante horario de atención</p>
-                  </div>
-                </a>
-                <Link
-                  href="/solicitar-consulta"
-                  className="mt-3 flex items-center gap-3 p-3 rounded-md bg-primary/8 hover:bg-primary/12 border border-primary/15 transition-colors"
-                >
-                  <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center flex-shrink-0">
-                    <Calendar size={16} className="text-text-inverse" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold text-primary">{t('contact_card.form_text')}</p>
-                    <p className="text-xxs text-text-secondary">{t('contact_card.form_hint')}</p>
-                  </div>
-                </Link>
-                <div className="divider-accent my-4" />
-                <div className="flex items-start gap-2 text-xs text-text-secondary">
-                  <MapPin size={14} className="text-accent-dark flex-shrink-0 mt-0.5" />
-                  <span className="leading-relaxed">{site.address.line1}, {site.address.line2}</span>
-                </div>
-              </div>
-            </div>
           </div>
         </Container>
       </section>
 
       {/* TRUST BAR — sellos de autoridad */}
-      <TrustBar background="dark" />
+      <TrustBar background="light" />
 
       {/* REAL QUESTIONS */}
       <Section spacing="md" ariaLabel="Preguntas reales">
@@ -331,22 +285,12 @@ export default async function HomePage() {
       </Section>
 
       {/* WHY US */}
-      <Section background="primary" spacing="md" ariaLabel="Por qué elegirnos" className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            background:
-              'radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.10) 0%, transparent 60%), radial-gradient(50% 50% at 0% 100%, rgba(168,136,64,0.08) 0%, transparent 60%)',
-          }}
-        />
-        <div className="absolute inset-0 pointer-events-none bg-grid opacity-40" aria-hidden="true" />
-        <div className="text-text-inverse relative">
+      <Section background="warm" spacing="md" ariaLabel="Por qué elegirnos" className="relative overflow-hidden">
+        <div className="relative">
           <SectionHeader
             eyebrow="Por qué elegirnos"
             title={t('why_us.title')}
             subtitle={t('why_us.subtitle')}
-            invert
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative">
@@ -360,10 +304,10 @@ export default async function HomePage() {
                   <w.icon size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-sm leading-tight text-text-inverse text-balance">
+                  <h3 className="font-bold text-sm leading-tight text-text text-balance">
                     {w.title}
                   </h3>
-                  <p className="text-xs leading-relaxed text-text-inverse/80 mt-1 text-pretty">
+                  <p className="text-xs leading-relaxed text-text-secondary mt-1 text-pretty">
                     {w.desc}
                   </p>
                 </div>
@@ -401,7 +345,7 @@ export default async function HomePage() {
               Conozca nuestro despacho <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3.5 auto-rows-fr">
+          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3 auto-rows-fr">
             {[
               {
                 icon: Gavel,
@@ -424,14 +368,14 @@ export default async function HomePage() {
                 desc: t('multidisciplinary.combo4_desc'),
               },
             ].map((it) => (
-              <Card key={it.title} padding="md" className="h-full flex">
-                <div className="flex items-start gap-3 w-full">
-                  <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
-                    <it.icon size={18} aria-hidden="true" />
+              <Card key={it.title} padding="sm" className="h-full flex">
+                <div className="flex items-start gap-2.5 w-full">
+                  <div className="w-8 h-8 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+                    <it.icon size={15} aria-hidden="true" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <h3 className="font-bold text-sm text-text leading-tight text-balance">{it.title}</h3>
-                    <p className="text-xs text-text-secondary leading-relaxed mt-1 text-pretty">
+                    <p className="text-xs text-text-secondary leading-relaxed mt-0.5 text-pretty">
                       {it.desc}
                     </p>
                   </div>
