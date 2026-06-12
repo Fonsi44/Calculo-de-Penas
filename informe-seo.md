@@ -988,10 +988,10 @@ Corregir la causa raíz para que el HTML del servidor coincida exactamente con e
 |---|----------|---------|-----------------|
 | P1 | Fechas de blog en futuro (jul 2026) | DATABASE_URL cifrada con dotenvx — solo Next.js runtime puede leerla | Las fechas `publishedAt` en `blog_posts` están en julio 2026 (~133 posts). Se creó script `scripts/fix-blog-dates.mjs` que corrige todas las fechas restándoles los días necesarios. **Para ejecutarlo se necesita acceso a la BD de Neon**. Alternativa: corregir manualmente desde `/intranet/admin/blog`. |
 | P2 | Error de hidratación React #418 en /despacho | ✅ Corregido | Añadido `suppressHydrationWarning` en `LiveClock`, `HeroOfficeBadge` y `LiveOfficeStatus` (components/marketing/live-widgets.tsx) |
-| P3 | Elementos alert en DOM | Requiere investigación | Posiblemente relacionados con CookieConsent/Toast |
-| P4 | og:image genérica | Requiere diseño | Crear imágenes sociales por página/sección |
-| P5 | og:title distinto del title SEO en /despacho | Decisión editorial | Unificar o justificar la diferencia |
-| P6 | URLs absolutas en enlaces de /servicios-juridicos | Baja prioridad | Cambiar a rutas relativas |
+| P3 | Elementos alert en DOM | ✅ Falso positivo | Son contenedores de `ToastProvider` (app/layout.tsx:107-114). Contenedores de notificaciones toast, invisibles hasta activarse. Sin impacto SEO. |
+| P4 | og:image genérica en todas las páginas | ⚠️ Requiere diseño | Crear imágenes sociales por página/sección. Tarea de diseño, no de código. El `og-image.png` actual es correcto pero genérico. |
+| P5 | og:title distinto del title SEO en /despacho | ✅ Corregido | `app/(public)/despacho/page.tsx:25` — unificado con el title SEO |
+| P6 | URLs absolutas en enlaces de /servicios-juridicos | ✅ Corregido | `app/(public)/servicios-juridicos/page.tsx:67` — cambiado a ruta relativa |
 
 ---
 
