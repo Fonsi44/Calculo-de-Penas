@@ -375,8 +375,8 @@ export default async function HomePage() {
 
       {/* POR QUÉ MULTIDISCIPLINAR */}
       <Section background="warm" spacing="md" ariaLabel="Por qué un bufete multidisciplinar">
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-          <div className="lg:col-span-5">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+          <div className="lg:col-span-5 flex flex-col justify-center">
             <div className="eyebrow-rule text-accent-dark mb-4">
               {t('multidisciplinary.title')}
             </div>
@@ -401,7 +401,7 @@ export default async function HomePage() {
               Conozca nuestro despacho <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3.5">
+          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3.5 auto-rows-fr">
             {[
               {
                 icon: Gavel,
@@ -424,12 +424,12 @@ export default async function HomePage() {
                 desc: t('multidisciplinary.combo4_desc'),
               },
             ].map((it) => (
-              <Card key={it.title} padding="md" className="h-full">
-                <div className="flex items-start gap-3">
+              <Card key={it.title} padding="md" className="h-full flex">
+                <div className="flex items-start gap-3 w-full">
                   <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
                     <it.icon size={18} aria-hidden="true" />
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <h3 className="font-bold text-sm text-text leading-tight text-balance">{it.title}</h3>
                     <p className="text-xs text-text-secondary leading-relaxed mt-1 text-pretty">
                       {it.desc}
