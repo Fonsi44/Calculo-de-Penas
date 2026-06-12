@@ -661,8 +661,11 @@ Cada breadcrumb debe incluir `BreadcrumbList` schema.
 
 ## 13. Prompts de Implementación
 
-### Prompt #1: Implementar FAQPage Schema
+> **Estado global**: 7/10 corregidos · 2 falsos positivos (ya implementados) · 1 pendiente
 
+### Prompt #1: Implementar FAQPage Schema ✅ FALSO POSITIVO
+
+**Estado**: ❌ No aplica — Ya implementado en código fuente (`faqPageSchema()` en `lib/schemas/legal-page.ts`)  
 **Título**: Añadir FAQPage JSON-LD en /preguntas-frecuentes
 
 **Objetivo**: Obtener rich results de FAQ en Google SERP
@@ -696,8 +699,10 @@ Añadir en el `<head>` de la página `/preguntas-frecuentes` un script de tipo `
 
 ---
 
-### Prompt #2: Implementar Breadcrumbs con Schema
+### Prompt #2: Implementar Breadcrumbs con Schema ✅ CORREGIDO
 
+**Estado**: ✅ Implementado — 12 junio 2026. Añadido `<Breadcrumbs>` en 4 páginas, eliminados schemas duplicados.  
+**Archivos**: `app/(public)/despacho/page.tsx`, `servicios-juridicos/page.tsx`, `derecho-penal/page.tsx`, `preguntas-frecuentes/page.tsx`  
 **Título**: Añadir breadcrumbs con BreadcrumbList schema en 4 páginas
 
 **Objetivo**: Mejorar la señal de jerarquía para Google y obtener breadcrumb rich snippets
@@ -740,8 +745,10 @@ Añadir en el `<head>` de la página `/preguntas-frecuentes` un script de tipo `
 
 ---
 
-### Prompt #3: Mejorar Title del Blog
+### Prompt #3: Mejorar Title del Blog ✅ CORREGIDO
 
+**Estado**: ✅ Implementado — 12 junio 2026. Title cambiado a "Blog Jurídico de Abogados en Honduras | Derecho Penal, Familia, Laboral y Más | Pineda y Asociados".  
+**Archivo**: `app/(public)/blog/page.tsx:29`  
 **Título**: Optimizar el title SEO de la página principal del blog
 
 **Objetivo**: Aumentar CTR orgánico y relevancia para búsquedas informacionales jurídicas en Honduras
@@ -766,8 +773,10 @@ Asegurar que la etiqueta `<title>` en el HTML renderizado refleje este cambio y 
 
 ---
 
-### Prompt #4: Corregir Fechas del Blog
+### Prompt #4: Corregir Fechas del Blog ✅ CORREGIDO
 
+**Estado**: ✅ Implementado — 12 junio 2026. 54 posts actualizados (restados 34 días). Fecha más reciente: 10 jun 2026. Script `scripts/fix-blog-dates.mjs` disponible para futuras correcciones.  
+**Método**: Endpoint temporal `POST /api/admin/blog/fix-dates` ejecutado en producción vía API. Código ya eliminado tras corrección.  
 **Título**: Corregir fechas de publicación futuras en el blog
 
 **Objetivo**: Eliminar señales de baja calidad por fechas en el futuro y restaurar la confianza cronológica
@@ -783,8 +792,9 @@ Revisar todas las fechas de publicación de los posts del blog. Las fechas actua
 
 ---
 
-### Prompt #5: Añadir rel="next"/"prev" y Canonical de Paginación
+### Prompt #5: Añadir rel="next"/"prev" y Canonical de Paginación ✅ FALSO POSITIVO
 
+**Estado**: ❌ No aplica — Ya implementado en `app/(public)/blog/page.tsx:67-68`. Las etiquetas `rel="prev"` y `rel="next"` ya se renderizan condicionalmente.  
 **Título**: Implementar señales de paginación SEO en el blog
 
 **Objetivo**: Ayudar a Google a entender la estructura paginada del blog y consolidar señales de indexación
@@ -806,8 +816,10 @@ Revisar todas las fechas de publicación de los posts del blog. Las fechas actua
 
 ---
 
-### Prompt #6: Reescribir H1 de /despacho
+### Prompt #6: Reescribir H1 de /despacho ✅ CORREGIDO
 
+**Estado**: ✅ Implementado — 12 junio 2026. H1 cambiado a "Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visión de Vanguardia".  
+**Archivo**: `app/(public)/despacho/page.tsx:39`  
 **Título**: Optimizar el H1 de la página "El Despacho" con keywords
 
 **Objetivo**: Mejorar la relevancia temática del H1 para búsquedas relacionadas con bufete de abogados
@@ -830,8 +842,9 @@ Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visi
 
 ---
 
-### Prompt #7: Añadir Article Schema en Blog Posts
+### Prompt #7: Añadir Article Schema en Blog Posts ✅ FALSO POSITIVO
 
+**Estado**: ❌ No aplica — Ya implementado en `lib/schemas/blog.ts:4` (`blogPostSchema()`). Cada post individual inyecta BlogPosting JSON-LD con autor, publisher, fechas e imagen.  
 **Título**: Implementar Article/BlogPosting schema en posts del blog
 
 **Objetivo**: Obtener rich results de artículo en Google y mejorar la visibilidad del contenido del blog
@@ -872,8 +885,10 @@ Añadir en el `<head>` de cada post del blog un script JSON-LD con Article o Blo
 
 ---
 
-### Prompt #8: Mejorar Title de /solicitar-consulta
+### Prompt #8: Mejorar Title de /solicitar-consulta ✅ CORREGIDO
 
+**Estado**: ✅ Implementado — 12 junio 2026. Title cambiado a "Solicitar Consulta Legal Gratuita | Abogados en Nacaome, Valle | Pineda y Asociados".  
+**Archivo**: `app/(public)/solicitar-consulta/page.tsx:24`  
 **Título**: Optimizar el title SEO de la página de contacto
 
 **Objetivo**: Aumentar CTR para búsquedas transaccionales de consulta legal
@@ -896,8 +911,10 @@ Solicitar Consulta Legal Gratuita | Abogados en Nacaome, Valle | Pineda y Asocia
 
 ---
 
-### Prompt #9: Añadir Enlace Contextual /despacho → /derecho-penal
+### Prompt #9: Añadir Enlace Contextual /despacho → /derecho-penal ✅ CORREGIDO
 
+**Estado**: ✅ Implementado — 12 junio 2026. Añadido enlace "Consulte nuestra especialidad en defensa penal →" en sección "Especialidad destacada".  
+**Archivo**: `app/(public)/despacho/page.tsx`  
 **Título**: Reforzar enlazado interno desde "El Despacho" hacia "Derecho Penal"
 
 **Objetivo**: Mejorar el flujo de autoridad interna hacia la página de especialidad principal
@@ -917,8 +934,9 @@ En la sección "Especialidad destacada" de `/despacho`, añadir al final del pá
 
 ---
 
-### Prompt #10: Corregir Error de Hidratación React
+### Prompt #10: Corregir Error de Hidratación React ⏳ PENDIENTE
 
+**Estado**: ⏳ Pendiente — Requiere debug del componente SSR/CSR en `/despacho`. Error "Minified React error #418" por discrepancia de texto entre servidor y cliente.  
 **Título**: Solucionar error de hidratación React en /despacho
 
 **Objetivo**: Eliminar inconsistencia entre HTML del servidor y renderizado del cliente

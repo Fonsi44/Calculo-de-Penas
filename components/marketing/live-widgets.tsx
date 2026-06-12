@@ -38,7 +38,7 @@ export function LiveClock() {
     return <span className="tabular-nums">--:--:--</span>;
   }
   return (
-    <span className="tabular-nums">
+    <span className="tabular-nums" suppressHydrationWarning>
       {formatHondurasTime(now, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
     </span>
   );
@@ -75,7 +75,7 @@ export function HeroOfficeBadge() {
     : '';
 
   return (
-    <span className="inline-flex items-center gap-1.5 bg-primary-light/50 border border-primary-light/30 rounded-full px-3 py-1">
+    <span className="inline-flex items-center gap-1.5 bg-primary-light/50 border border-primary-light/30 rounded-full px-3 py-1" suppressHydrationWarning>
       <span className="relative w-2 h-2 flex-shrink-0">
         <span className={`absolute inset-0 rounded-full ${dotColor} ${pulseClass}`} />
       </span>
