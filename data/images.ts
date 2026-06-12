@@ -33,6 +33,9 @@ const SERVICES: Record<string, string> = {
   'tributario-fiscal': '/images/services/tributario.jpg',
   'ambiental-regulatorio': '/images/services/ambiental.jpg',
   'conciliacion-y-arbitraje': '/images/services/arbitraje.jpg',
+  'gestion-documental-y-legalizacion': '/images/services/gestion-documental-y-legalizacion.webp',
+  'actos-notariales-internacionales': '/images/services/actos-notariales-internacionales.webp',
+  'asuntos-civiles-y-familiares-desde-el-extranjero': '/images/services/asuntos-civiles-y-familiares-desde-el-extranjero.webp',
 };
 
 const PENAL: Record<string, string> = {
