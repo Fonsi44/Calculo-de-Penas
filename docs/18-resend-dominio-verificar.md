@@ -31,7 +31,7 @@ RESEND_FROM_EMAIL=no-reply@pinedayasocioshn.com
 CONTACT_NOTIFICATION_EMAIL=alfonsroiget@gmail.com
 ```
 
-**IMPORTANTE**: `no-reply@pinedayasocioshn.com` (sin 'd' entre 'socia' y 'dos'). NO usar `no-reply@pinedayasocioshn.com` (sin 'd') ni `onboarding@resend.dev`.
+**IMPORTANTE**: `no-reply@pinedayasocioshn.com` es el dominio verificado. NO usar `onboarding@resend.dev` (dominio de pruebas limitado a destinatarios verificados en Resend).
 
 ## Historial de errores resueltos
 
