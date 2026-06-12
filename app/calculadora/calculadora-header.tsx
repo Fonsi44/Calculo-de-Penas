@@ -18,14 +18,19 @@ interface Props {
 export function CalculadoraHeader({ step, pasoActual, steps, modificandoCaso, onGoPrev, onExit, onSalirModificacion }: Props) {
   return (
     <>
-      <header className="bg-primary px-3 py-2 no-print">
+      <header className="bg-hero-gradient px-3 py-2.5 no-print border-b border-primary-light/40 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.45)]">
         <div className="flex items-center">
           <IconButton label="Paso anterior" variant="solid" onClick={onGoPrev} disabled={step === 1}>
             <ChevronLeft size={18} />
           </IconButton>
-          <div className="flex-1 ml-2">
-            <h1 className="text-text-inverse font-bold text-sm">Calculadora de Penas</h1>
-            <p className="text-xxs text-text-inverse/70">Paso {step} de 8 · {pasoActual.label}</p>
+          <div className="flex-1 ml-3">
+            <div className="flex items-center gap-2">
+              <h1 className="text-text-inverse font-bold text-sm">Calculadora de Penas</h1>
+              <span className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-accent/15 border border-accent/30 text-accent text-[10px] font-bold uppercase tracking-wider">
+                Motor v1
+              </span>
+            </div>
+            <p className="text-xxs text-text-inverse/70 mt-0.5">Paso {step} de 8 · {pasoActual.label}</p>
           </div>
           <UserActions />
           <IconButton label="Salir al inicio" variant="solid" onClick={onExit} className="ml-1">
@@ -40,7 +45,9 @@ export function CalculadoraHeader({ step, pasoActual, steps, modificandoCaso, on
       {modificandoCaso && (
         <div className="bg-accent/15 border-b border-accent/30 px-3 py-2 no-print">
           <div className="flex items-center gap-2 max-w-3xl mx-auto">
-            <FileEdit size={16} className="text-primary flex-shrink-0" />
+            <div className="w-7 h-7 rounded-md bg-accent/20 flex items-center justify-center flex-shrink-0">
+              <FileEdit size={14} className="text-primary" />
+            </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold text-primary">Modificando cálculo del caso</p>
               <p className="text-xxs text-text-secondary truncate">
@@ -63,12 +70,26 @@ export function CalculadoraHeader({ step, pasoActual, steps, modificandoCaso, on
 
 export function CalculadoraSidebar({ step, steps, onSelect }: { step: number; steps: StepperStep[]; onSelect: (n: number) => void }) {
   return (
-    <aside className="hidden lg:flex lg:flex-col desktop-sidebar bg-primary px-3 py-4 overflow-y-auto">
-      <div className="flex items-center gap-2 mb-4">
-        <Scale size={16} className="text-accent" />
-        <span className="text-xxs font-bold text-accent tracking-widest">PASO {step} DE 8</span>
+    <aside className="hidden lg:flex lg:flex-col desktop-sidebar bg-hero-gradient px-4 py-5 overflow-y-auto relative">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'radial-gradient(60% 50% at 0% 0%, rgba(201,165,92,0.10) 0%, transparent 60%)',
+        }}
+      />
+      <div className="relative flex items-center gap-2 mb-5">
+        <div className="w-7 h-7 rounded-md bg-accent/15 border border-accent/30 flex items-center justify-center flex-shrink-0">
+          <Scale size={14} className="text-accent" />
+        </div>
+        <div>
+          <p className="text-xxs font-bold text-accent tracking-widest">PASO {step} DE 8</p>
+          <p className="text-[10px] text-text-inverse/50 uppercase tracking-wider">Calculadora</p>
+        </div>
       </div>
-      <Stepper steps={steps} current={step} variant="vertical" onSelect={onSelect} />
+      <div className="relative">
+        <Stepper steps={steps} current={step} variant="vertical" onSelect={onSelect} />
+      </div>
     </aside>
   );
 }

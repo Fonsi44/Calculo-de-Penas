@@ -39,9 +39,12 @@
   --color-accent-light: #E5C97A;
   --color-accent-dark: #9A7A22;
 
-  /* Superficies — jerarquía clara: fondo < alt < card < overlay */
+  /* Superficies — jerarquía clara: fondo < alt < card < overlay
+     Refuerzo: surface-2 añade un nivel sutil entre alt y card para
+     dar profundidad sin oscurecer la composición. */
   --color-background: #F9F8F5;
   --color-surface: #FFFFFF;
+  --color-surface-2: #FCFBF8;        /* Nuevo: superficie elevada con tinte cálido */
   --color-surface-alt: #F3F1EB;
   --color-surface-raised: #FFFFFF;
   --color-overlay: rgba(15, 29, 58, 0.50);
@@ -87,16 +90,34 @@
   --color-aggravation-bg: #FBECEC;
   --color-aggravation-border: #E5B5BB;
 
-  /* Sombras premium — tintadas con navy (no negro puro) para sofisticación */
+  /* Sombras premium — multicapa, tintadas con navy para sofisticación.
+     Cada nivel combina: contacto cercano + halo medio + profundidad amplia. */
   --shadow-xs: 0 1px 2px rgba(15,29,58,0.04);
   --shadow-sm: 0 1px 3px rgba(15,29,58,0.06), 0 1px 2px rgba(15,29,58,0.04);
-  --shadow-md: 0 4px 14px rgba(15,29,58,0.07), 0 1px 3px rgba(15,29,58,0.05);
-  --shadow-lg: 0 12px 32px rgba(15,29,58,0.08), 0 2px 6px rgba(15,29,58,0.04);
-  --shadow-xl: 0 24px 56px rgba(15,29,58,0.10), 0 4px 12px rgba(15,29,58,0.05);
+  --shadow-md: 0 2px 4px rgba(15,29,58,0.04), 0 4px 12px rgba(15,29,58,0.06), 0 8px 24px -8px rgba(15,29,58,0.08);
+  --shadow-lg: 0 2px 6px rgba(15,29,58,0.04), 0 8px 20px rgba(15,29,58,0.07), 0 24px 48px -12px rgba(15,29,58,0.12);
+  --shadow-xl: 0 4px 10px rgba(15,29,58,0.05), 0 16px 32px rgba(15,29,58,0.08), 0 32px 64px -16px rgba(15,29,58,0.16);
   --shadow-glow: 0 0 32px rgba(212,175,55,0.22);
   --shadow-glow-accent: 0 8px 36px -8px rgba(212,175,55,0.40);
-  --shadow-card: 0 1px 0 0 rgba(255,255,255,0.60) inset, 0 2px 8px rgba(15,29,58,0.06), 0 8px 24px -8px rgba(15,29,58,0.10);
-  --shadow-card-hover: 0 1px 0 0 rgba(255,255,255,0.60) inset, 0 4px 16px rgba(15,29,58,0.08), 0 16px 40px -12px rgba(15,29,58,0.15);
+  --shadow-gold-ring: 0 0 0 1px rgba(212,175,55,0.45), 0 8px 24px -6px rgba(212,175,55,0.35);
+  --shadow-card: 0 1px 0 0 rgba(255,255,255,0.60) inset, 0 1px 2px rgba(15,29,58,0.04), 0 4px 12px rgba(15,29,58,0.05), 0 12px 32px -8px rgba(15,29,58,0.10);
+  --shadow-card-hover: 0 1px 0 0 rgba(255,255,255,0.70) inset, 0 2px 4px rgba(15,29,58,0.05), 0 8px 20px rgba(15,29,58,0.07), 0 24px 48px -12px rgba(15,29,58,0.18), 0 0 0 1px rgba(212,175,55,0.18);
+  --shadow-button-primary: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(15,29,58,0.20), 0 4px 12px -2px rgba(15,29,58,0.30);
+  --shadow-button-primary-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(15,29,58,0.20), 0 8px 20px -2px rgba(15,29,58,0.35), 0 0 0 1px rgba(212,175,55,0.20);
+  --shadow-btn-primary: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(15,29,58,0.20), 0 4px 12px -2px rgba(15,29,58,0.30);
+  --shadow-btn-primary-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(15,29,58,0.20), 0 8px 20px -2px rgba(15,29,58,0.35), 0 0 0 1px rgba(212,175,55,0.20);
+  --shadow-btn-secondary: 0 1px 0 0 rgba(255,255,255,0.60) inset, 0 1px 2px rgba(15,29,58,0.04), 0 2px 6px rgba(15,29,58,0.05);
+  --shadow-btn-secondary-hover: 0 1px 0 0 rgba(255,255,255,0.70) inset, 0 2px 4px rgba(15,29,58,0.05), 0 6px 14px rgba(15,29,58,0.08);
+  --shadow-btn-accent: 0 1px 0 0 rgba(255,255,255,0.30) inset, 0 1px 2px rgba(154,122,34,0.30), 0 4px 12px -2px rgba(212,175,55,0.40);
+  --shadow-btn-accent-hover: 0 1px 0 0 rgba(255,255,255,0.40) inset, 0 2px 4px rgba(154,122,34,0.30), 0 8px 22px -2px rgba(212,175,55,0.55), 0 0 0 1px rgba(212,175,55,0.20);
+
+  /* Radios — escala más amplia y consistente */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
 
   /* Easing & motion */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -157,6 +178,7 @@
 
   --color-background: #0F1117;
   --color-surface: #1A1C24;
+  --color-surface-2: #20232C;
   --color-surface-alt: #22252F;
   --color-surface-raised: #252832;
   --color-overlay: rgba(0, 0, 0, 0.68);
@@ -197,6 +219,16 @@
   --color-aggravation: #E07080;
   --color-aggravation-bg: #2E1A1D;
   --color-aggravation-border: #5A2A30;
+
+  /* Sombras en dark: más profundas y con acentos dorados más sutiles */
+  --shadow-card: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 1px 2px rgba(0,0,0,0.30), 0 4px 12px rgba(0,0,0,0.30), 0 12px 32px -8px rgba(0,0,0,0.50);
+  --shadow-card-hover: 0 1px 0 0 rgba(255,255,255,0.06) inset, 0 2px 4px rgba(0,0,0,0.30), 0 8px 20px rgba(0,0,0,0.40), 0 24px 48px -12px rgba(0,0,0,0.60), 0 0 0 1px rgba(212,175,55,0.20);
+  --shadow-btn-primary: 0 1px 0 0 rgba(255,255,255,0.06) inset, 0 1px 2px rgba(0,0,0,0.30), 0 4px 12px -2px rgba(0,0,0,0.50);
+  --shadow-btn-primary-hover: 0 1px 0 0 rgba(255,255,255,0.08) inset, 0 2px 4px rgba(0,0,0,0.30), 0 8px 20px -2px rgba(0,0,0,0.55), 0 0 0 1px rgba(212,175,55,0.20);
+  --shadow-btn-secondary: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 1px 2px rgba(0,0,0,0.30), 0 2px 6px rgba(0,0,0,0.30);
+  --shadow-btn-secondary-hover: 0 1px 0 0 rgba(255,255,255,0.06) inset, 0 2px 4px rgba(0,0,0,0.30), 0 6px 14px rgba(0,0,0,0.40);
+  --shadow-btn-accent: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(0,0,0,0.30), 0 4px 12px -2px rgba(212,175,55,0.20);
+  --shadow-btn-accent-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(0,0,0,0.30), 0 8px 22px -2px rgba(212,175,55,0.30), 0 0 0 1px rgba(212,175,55,0.20);
 }
 
 /* Scroll suave */
@@ -221,6 +253,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Atmósfera global sutil para páginas públicas: gradiente vertical cálido
+   que da profundidad sin saturar. Capa 0 (background sólido) → capa 1 (gradiente). */
+.bg-page-warm {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(243, 241, 235, 0.55) 60%, rgba(243, 241, 235, 0.85) 100%),
+    var(--color-background);
+}
+.bg-page-warm-inverse {
+  background:
+    linear-gradient(180deg, rgba(15, 29, 58, 0.0) 0%, rgba(6, 14, 32, 0.5) 100%),
+    var(--color-primary);
+}
+
 /* Glassmorphism utilitario — header fijo con desenfoque premium */
 .glass {
   background: rgba(249, 248, 245, 0.78);
@@ -231,6 +276,7 @@ body {
 .dark .glass {
   background: rgba(14, 16, 21, 0.82);
   backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -240,9 +286,9 @@ body {
   font-feature-settings: "lnum", "pnum";
 }
 
-/* Foco visible accesible */
+/* Foco visible accesible — anillo dorado consistente */
 *:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 3px solid var(--color-accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -317,18 +363,26 @@ body {
 .text-balance { text-wrap: balance; }
 .text-pretty  { text-wrap: pretty; }
 
-/* Card premium — sombra tintada + hover lift + halo dorado sutil */
+/* Card premium — superficie con gradiente interno + sombra multicapa + halo dorado al hover.
+   Refuerza profundidad y separa la card del fondo. */
 .card-premium {
-  background: var(--color-surface);
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--color-surface-2) 0%, var(--color-surface) 60%),
+    var(--color-surface);
+  background-blend-mode: normal;
   border: 1px solid var(--color-border-light);
-  border-radius: 12px;
+  border-radius: 14px;
   box-shadow: var(--shadow-card);
-  transition: transform 280ms var(--ease-spring), box-shadow 280ms var(--ease-spring), border-color 280ms var(--ease-spring);
+  transition:
+    transform 320ms var(--ease-spring),
+    box-shadow 320ms var(--ease-spring),
+    border-color 320ms var(--ease-spring);
 }
 .card-premium:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-card-hover), 0 0 0 1px rgba(212,175,55,0.15);
-  border-color: rgba(212,175,55,0.35);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(212, 175, 55, 0.35);
 }
 
 /* Premium card con top-bar dorado (patrón del repo fuente).
@@ -539,7 +593,84 @@ body {
 
 /* Halo dorado para acentos premium (iconos destacados, etc). */
 .halo-accent {
-  box-shadow: 0 0 0 1px rgba(212,175,55,0.35), 0 8px 24px -8px rgba(212,175,55,0.55);
+  box-shadow: var(--shadow-gold-ring);
+}
+
+/* Glow dorado superior para footer y separadores hero. */
+.glow-accent-top {
+  position: relative;
+}
+.glow-accent-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.55) 50%, transparent 100%);
+  pointer-events: none;
+}
+.glow-accent-top::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 28px;
+  background: radial-gradient(50% 100% at 50% 0%, rgba(212, 175, 55, 0.30) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+/* Hero card con borde dorado y glow. */
+.hero-card {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.80) inset,
+    0 2px 6px rgba(15, 29, 58, 0.06),
+    0 12px 28px -6px rgba(15, 29, 58, 0.18),
+    0 28px 60px -16px rgba(15, 29, 58, 0.22),
+    0 0 0 1px rgba(212, 175, 55, 0.30);
+  overflow: hidden;
+}
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.55) 0%, rgba(212, 175, 55, 0) 40%, rgba(212, 175, 55, 0) 60%, rgba(212, 175, 55, 0.30) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dark surface card (zonas navy): más contraste y borde luminoso sutil. */
+.card-dark {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
+    rgba(31, 50, 96, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 4px 16px rgba(0, 0, 0, 0.20);
+  transition: transform 320ms var(--ease-spring), box-shadow 320ms var(--ease-spring), border-color 320ms var(--ease-spring);
+  backdrop-filter: blur(6px);
+}
+.card-dark:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
+    0 8px 24px rgba(0, 0, 0, 0.30),
+    0 0 0 1px rgba(212, 175, 55, 0.20);
 }
 
 /* FAQ summary marker (chevron nativo) oculto en todos los browsers. */

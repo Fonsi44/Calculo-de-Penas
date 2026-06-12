@@ -37,20 +37,20 @@ export function PageHero({
 }: PageHeroProps) {
   const isPrimary = variant !== 'muted';
   const containerCls = isPrimary
-    ? 'relative bg-primary text-text-inverse overflow-hidden'
-    : 'relative bg-surface-alt text-text overflow-hidden border-b border-border-light';
+    ? 'relative bg-hero-gradient text-text-inverse overflow-hidden'
+    : 'relative bg-page-warm text-text overflow-hidden border-b border-border-light';
 
   const eyebrowCls = isPrimary
-    ? 'text-xxs font-bold uppercase tracking-widest text-accent'
-    : 'text-xxs font-bold uppercase tracking-widest text-accent-dark';
+    ? 'eyebrow-rule text-accent'
+    : 'eyebrow-rule text-accent-dark';
 
   const titleCls = isPrimary
     ? 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tighter text-text-inverse text-balance'
     : 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tighter text-primary text-balance';
 
   const subtitleCls = isPrimary
-    ? 'mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-3xl'
-    : 'mt-5 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl';
+    ? 'mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-3xl text-pretty'
+    : 'mt-5 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl text-pretty';
 
   const alignCls = align === 'center' ? 'text-center mx-auto' : 'max-w-3xl';
 
@@ -71,9 +71,9 @@ export function PageHero({
             : 'radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.10) 0%, transparent 60%)',
         }}
       />
-      <Container size="lg" className="relative py-14 md:py-20 lg:py-24">
+      <Container size="lg" className="relative py-16 md:py-24 lg:py-28">
         <div className={alignCls}>
-          <div className="flex flex-wrap items-center gap-2 mb-4">
+          <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className={eyebrowCls}>{eyebrow}</span>
             {badge && (
               <span
@@ -89,7 +89,7 @@ export function PageHero({
           </div>
           <h1 className={titleCls}>{title}</h1>
           {subtitle && <p className={subtitleCls}>{subtitle}</p>}
-          {cta && <div className="mt-7">{cta}</div>}
+          {cta && <div className="mt-8">{cta}</div>}
         </div>
       </Container>
     </section>

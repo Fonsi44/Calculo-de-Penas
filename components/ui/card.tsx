@@ -5,36 +5,53 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   tone?: 'default' | 'accent' | 'success' | 'danger' | 'warning';
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  /** Variante visual: por defecto 'default' usa card-premium (profundidad + halo al hover). */
+  variant?: 'default' | 'flat' | 'elevated';
+  /** Aplica la franja dorada superior al hacer hover (premium-bar). */
+  premium?: boolean;
 }
 
 const TONE: Record<NonNullable<CardProps['tone']>, string> = {
-  default: 'bg-surface border-border-light',
-  accent: 'bg-surface border-accent/30',
-  success: 'bg-surface border-success/30',
-  danger: 'bg-surface border-danger/30',
-  warning: 'bg-surface border-warning/30',
+  default: 'border-border-light',
+  accent: 'border-accent/30',
+  success: 'border-success/30',
+  danger: 'border-danger/30',
+  warning: 'border-warning/30',
 };
 
 const PAD: Record<NonNullable<CardProps['padding']>, string> = {
   none: '',
-  sm: 'p-3',
-  md: 'p-4',
-  lg: 'p-5',
+  sm: 'p-3.5',
+  md: 'p-5',
+  lg: 'p-6',
 };
 
 export function Card({
   children,
   tone = 'default',
   padding = 'md',
+  variant = 'default',
+  premium = false,
   className,
   ...rest
 }: CardProps) {
+  const variantCls =
+    variant === 'flat'
+      ? 'bg-surface border border-border-light shadow-xs'
+      : variant === 'elevated'
+        ? 'bg-surface border border-border-light shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300'
+        : 'card-premium';
+  // 'default' (card-premium) ya incluye su propio border y background.
+  // 'flat' y 'elevated' usan TONE[tone] para colorear el borde.
+  const toneCls = variant === 'default' ? '' : TONE[tone];
   return (
     <div
       className={cn(
-        'rounded-md border shadow-sm',
-        TONE[tone],
+        'rounded-md',
+        variantCls,
+        toneCls,
         PAD[padding],
+        premium && 'premium-bar',
         className,
       )}
       {...rest}

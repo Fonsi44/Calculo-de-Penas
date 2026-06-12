@@ -17,7 +17,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-primary text-white text-sm font-bold border border-primary-light/40 shadow-[0_1px_0_0_rgba(255,255,255,0.10)_inset,0_4px_12px_-2px_rgba(15,29,58,0.30)] hover:-translate-y-0.5 hover:bg-primary-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.12)_inset,0_6px_18px_-2px_rgba(15,29,58,0.35),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={16} aria-hidden="true" />
           Llamar ahora
@@ -26,7 +26,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           href={whatsappHref(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-success text-white text-sm font-bold border border-success/40 shadow-[0_1px_0_0_rgba(255,255,255,0.10)_inset,0_4px_12px_-2px_rgba(14,122,79,0.40)] hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
         >
           <MessageCircle size={16} aria-hidden="true" />
           WhatsApp
@@ -39,14 +39,14 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-primary text-white text-base font-bold border border-primary-light/40 shadow-[0_1px_0_0_rgba(255,255,255,0.10)_inset,0_4px_12px_-2px_rgba(15,29,58,0.30)] hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={18} aria-hidden="true" />
           {site.phoneDisplay}
         </a>
         <Link
           href="/solicitar-consulta"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
@@ -59,14 +59,14 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <Link
           href="/solicitar-consulta"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
         </Link>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-primary-light/40 hover:border-text-inverse/70 transition-colors focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none"
         >
           <Phone size={18} aria-hidden="true" />
           Llamar {site.phoneDisplay}
@@ -78,14 +78,14 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
       <Link
         href="/solicitar-consulta"
-        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-aggravation text-white text-base font-bold hover:opacity-90 transition-opacity focus-visible:outline-none"
+        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
       >
         <Calendar size={18} aria-hidden="true" />
         Solicitar consulta
       </Link>
       <a
         href={telHref()}
-        className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-primary/30 text-primary text-base font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none"
+        className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-primary/25 text-primary bg-surface text-base font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_1px_2px_rgba(15,29,58,0.04),0_2px_6px_rgba(15,29,58,0.05)]"
       >
         <Phone size={18} aria-hidden="true" />
         Llamar {site.phoneDisplay}
@@ -107,12 +107,12 @@ export function UrgencyCallout({
 }: UrgencyCalloutProps) {
   return (
     <div
-      className={`rounded-lg border-2 border-aggravation/40 bg-danger-bg p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4 ${className ?? ''}`}
+      className={`rounded-lg border border-danger/30 bg-danger-bg p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4 shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_2px_8px_rgba(178,34,52,0.06),0_8px_24px_-8px_rgba(178,34,52,0.10)] ${className ?? ''}`}
       role="complementary"
       aria-label="Atención urgente"
     >
       <div className="flex items-start gap-3 flex-1 min-w-0">
-        <div className="w-10 h-10 rounded-md bg-aggravation flex items-center justify-center flex-shrink-0">
+        <div className="w-10 h-10 rounded-md bg-danger flex items-center justify-center flex-shrink-0 shadow-[0_4px_10px_-2px_rgba(178,34,52,0.45)]">
           <ShieldAlert size={20} className="text-white" aria-hidden="true" />
         </div>
         <div className="min-w-0">
@@ -151,13 +151,13 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
     <div className={(gridCls + (className ? ' ' + className : '')).trim()}>
       {items.map((it) => {
         const inner = (
-          <div className="flex items-start gap-3 p-4 rounded-md bg-surface border border-border-light hover:border-accent/50 transition-colors h-full">
-            <div className="w-9 h-9 rounded-md bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+          <div className="card-premium flex items-start gap-3 p-4 h-full">
+            <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15">
               {it.icon}
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">{it.label}</p>
-              <p className="text-sm font-semibold text-text leading-tight mt-0.5 tabular-nums">{it.value}</p>
+              <p className="text-sm font-semibold text-text leading-tight mt-1 tabular-nums">{it.value}</p>
             </div>
           </div>
         );

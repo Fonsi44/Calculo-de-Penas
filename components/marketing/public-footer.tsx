@@ -40,13 +40,23 @@ const LEGALES = [
 export function PublicFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-primary text-text-inverse">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <footer className="relative bg-primary text-text-inverse overflow-hidden glow-accent-top">
+      {/* Capas de fondo: gradiente sutil + grid */}
+      <div className="absolute inset-0 pointer-events-none bg-grid opacity-50" aria-hidden="true" />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background:
+            'radial-gradient(60% 70% at 80% 0%, rgba(201,165,92,0.10) 0%, transparent 60%), radial-gradient(50% 50% at 10% 100%, rgba(168,136,64,0.08) 0%, transparent 60%)',
+        }}
+      />
+      <div className="relative max-w-7xl mx-auto px-4 py-14 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {/* Identidad */}
           <div>
-            <Link href="/" className="flex items-center gap-2.5 mb-4 focus-visible:outline-none" aria-label={site.name}>
-              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
+              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center shadow-[0_0_0_1px_rgba(154,122,34,0.45),0_4px_10px_-2px_rgba(212,175,55,0.45)]">
                 <Scale size={20} className="text-primary" strokeWidth={2.4} />
               </div>
               <div>
@@ -62,14 +72,14 @@ export function PublicFooter() {
             <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
               Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
             </p>
-            <p className="text-xs text-accent/70 leading-relaxed mt-2 text-pretty">
+            <p className="text-xs text-accent/80 leading-relaxed mt-2 text-pretty">
               Abogado colegiado en Honduras · Registro profesional vigente.
             </p>
           </div>
 
           {/* Servicios */}
           <div>
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
+            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 Servicios Jurídicos
               </h3>
@@ -87,7 +97,7 @@ export function PublicFooter() {
 
           {/* Despacho */}
           <div>
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
+            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 El Despacho
               </h3>
@@ -105,7 +115,7 @@ export function PublicFooter() {
 
           {/* Contacto */}
           <div>
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
+            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 Contacto
               </h3>

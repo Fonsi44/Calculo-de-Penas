@@ -8,6 +8,51 @@ Público objetivo: profesionales del derecho que necesitan determinar penas con 
 
 Stack: Next.js 16 + React 19 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM + JWT + Vitest + Playwright.
 
+## Sistema visual (Premium Corporate Luxury)
+
+Dirección de arte: **Navy refinado (#0F1D3A) · Off-white limpio (#F9F8F5) · Gold sofisticado (#D4AF37)**.
+
+### Tokens principales (`app/globals.css` — bloque `@theme`)
+
+- **Color**: `--color-primary`, `--color-primary-light`, `--color-primary-dark`, `--color-accent`, `--color-accent-light`, `--color-accent-dark`.
+- **Superficies** (jerarquía clara): `background < surface-alt < surface-2 < surface`. `surface-2` (nuevo) añade un nivel sutil con tinte cálido para dar profundidad sin oscurecer.
+- **Texto**: `--color-text`, `--color-text-secondary`, `--color-text-muted`, `--color-text-inverse`.
+- **Bordes**: `--color-border`, `--color-border-light`, `--color-border-strong`.
+- **Sombras premium** (tintadas con navy, 3 capas: contacto cercano + halo medio + profundidad amplia): `--shadow-xs/sm/md/lg/xl`, `--shadow-card`, `--shadow-card-hover`, `--shadow-btn-primary/secondary/accent`.
+
+### Utilities compartidas
+
+- `.card-premium` — superficie con gradiente interno + sombra multicapa + halo dorado al hover.
+- `.card-dark` — tarjeta para zonas navy con borde luminoso sutil.
+- `.hero-card` — borde con gradiente dorado + 4 niveles de sombra + glow.
+- `.glass` — header con `backdrop-blur 16px` + saturate.
+- `.eyebrow-rule` — línea dorada + uppercase tracking (eyebrows consistentes).
+- `.ring-gradient-accent` — borde con gradiente dorado.
+- `.btn-shimmer` — pasada de luz en hover para CTAs.
+- `.text-gradient-accent` — texto con gradiente dorado.
+- `.bg-hero-gradient` — gradiente navy 165° con transiciones suaves.
+- `.bg-page-warm` — gradiente vertical cálido global para páginas públicas.
+- `.bg-grid` / `.bg-grid-soft` — grid sutil 1px (zonas oscuras/claras).
+- `.glow-accent-top` — línea + halo radial dorado superior (hero, footer).
+- `.premium-bar` — franja dorada superior en hover (cards premium).
+- `.divider-accent` — separador con gradiente dorado horizontal.
+
+### Componentes UI base
+
+- `Button` (`components/ui/button.tsx`) — variants: `primary` (navy + halo dorado), `secondary` (surface + borde), `tertiary`, `danger`, `ghost`, `accent` (oro sólido). Todos con hover lift `-translate-y-0.5`, focus visible dorado, transición `ease-out 200ms`.
+- `Card` (`components/ui/card.tsx`) — variants: `default` (card-premium), `flat`, `elevated`. Soporte `premium` para añadir barra dorada al hover.
+- `Input` / `Textarea` / `Field` — focus con anillo dorado 3px, hover con borde más fuerte, mensajes de error refinados.
+- `Badge`, `Chip`, `Stepper`, `EmptyState`, `Modal`, `Toast`, `Confirm`, `Spinner` — mantienen coherencia visual con el sistema.
+
+### Reglas de oro del rediseño
+
+1. **NO usar rojo** para CTAs primarios en la web pública (usar accent dorado). El rojo se reserva para estados semánticos (`danger`, `aggravation`) en calculadora.
+2. **NO usar gradientes baratos** ni efectos llamativos. Solo gradientes navy→dorado sutiles y glows refinados.
+3. **NO romper el ritmo** — todos los espacios en múltiplos de 4 (4/8/12/16/20/24).
+4. **NO usar glassmorphism exagerado** — solo en header sticky y zonas con scroll.
+5. **Separar siempre las cards del fondo** — usar `card-premium` (o `card-dark` en zonas navy) garantiza profundidad.
+6. **Respetar el focus visible** — nunca `outline: none` sin alternativa.
+
 ## Estructura
 
 ```

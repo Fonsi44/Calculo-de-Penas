@@ -1,5 +1,74 @@
 # Changelog
 
+## Release 36 — Rediseño visual: profundidad, atmósfera y jerarquía premium (2026-06-12)
+
+Evolución del lenguaje visual "Premium Corporate Luxury" hacia una experiencia más viva, profunda y elegante, sin perder accesibilidad, rendimiento ni coherencia de marca.
+
+### Sistema visual — refuerzo de tokens
+
+| Token / utility | Antes | Después |
+|----------------|-------|---------|
+| `--color-surface-2` | — | `#FCFBF8` (nuevo nivel sutil entre `surface-alt` y `surface` para dar profundidad sin oscurecer) |
+| Sombras `card / card-hover / btn-*` | 2 capas, tinte navy | 3 capas: contacto cercano + halo medio + profundidad amplia, todas tintadas con navy |
+| Focus visible universal | `outline 2px` | `outline 3px` dorado con offset 2px, consistente en todos los componentes |
+| `card-premium` | bg plano + 1 sombra | Gradiente interno vertical `surface-2 → surface` + sombra multicapa + halo dorado al hover |
+| `card-dark` (nuevo) | — | Tarjeta para zonas navy: gradiente sutil, borde luminoso, hover con borde dorado |
+| `hero-card` (nuevo) | `halo-accent` plano | Borde con gradient + sombra de 4 niveles + inset highlight + glow dorado |
+| `glow-accent-top` (nuevo) | — | Línea accent + halo radial superior para hero y footer |
+| `bg-page-warm` (nuevo) | — | Gradiente vertical cálido global para páginas públicas (atmósfera sin saturar) |
+
+### Componentes UI rediseñados
+
+| Componente | Mejora |
+|-----------|--------|
+| `Button` | Halo dorado interior (1px inset), sombra de elevación multicapa, hover lift `-translate-y-0.5`, transición `ease-out 200ms`, focus visible dorado. Nueva variant `accent` (oro sólido). |
+| `Card` | Variants `default` (card-premium con halo), `flat` (sin profundidad), `elevated` (sombra fuerte + lift). Padding más generoso (`p-5` por defecto). Soporte `premium` (barra dorada al hover). |
+| `Input` / `Textarea` | Focus con anillo dorado 3px (`0 0 0 3px rgba(212,175,55,0.18)`), hover con borde más fuerte, transición suave, mejor hint/error. |
+| `Field` | Mejor espaciado y tracking del label. |
+| `Stepper`, `Chip`, `EmptyState`, `Badge` | Sin cambios funcionales; mantienen su lenguaje. |
+
+### Componentes marketing rediseñados
+
+| Componente | Mejora |
+|-----------|--------|
+| `PublicHeader` | Indicador de sección activa con `underline` dorado + glow. CTA "Solicitar consulta" usa oro (antes rojo) para coherencia premium. Logo con anillo dorado. Sticky con sombra dual en scroll. |
+| `PublicFooter` | Glow dorado superior, grid sutil de fondo, gradientes radiales laterales, mejor separación entre columnas. |
+| `PageHero` | Padding vertical más generoso (`py-16 → py-28 lg`). Variante primary usa `bg-hero-gradient` con más capas de fondo. |
+| `Section` / `SectionHeader` | Nueva variant `background="warm"` (gradiente cálido). Mejor espaciado, eyebrow usa utility `.eyebrow-rule` consistente (línea dorada + uppercase tracking). |
+| `CTAGroup` | Botón primario usa oro (acorde con marca premium). Bordes de 2px reemplazados por sombras multicapa + hover lift. `ContactStrip` usa `card-premium`. |
+| `UrgencyCallout` | Refuerzo de sombra tintada con rojo y elevación del icono. |
+
+### Home pública (`app/(public)/page.tsx`)
+
+- **Hero**: glow ampliado (3 capas radiales), tipografía más grande y con `tracking-tight` para más presencia, hero-card con `hero-card` (gradiente de borde + 4 niveles de sombra), `backdrop-blur` en badges.
+- **Why us**: fondo `bg-hero-gradient` con grid + radiales; cards usan `card-dark` (mucho más contraste y profundidad que antes, donde se fundían con el fondo).
+- **Multidisciplinary**: usa `bg-page-warm` para separación clara, tipografía más grande (h2 con `text-4xl` en lg).
+- **Real questions / FAQ**: cards con `card-premium`; FAQ con borde dorado al abrirse; chevron dorado al expandirse.
+- **Contact strip**: usa `card-premium` para todas las tarjetas con halo dorado al hover.
+
+### Calculadora
+
+- `CalculadoraHeader`: `bg-hero-gradient`, badge "Motor v1" dorado, sombra dual, padding generoso.
+- `CalculadoraSidebar`: gradiente navy con radial dorado, badge en lugar de texto plano.
+- Tarjetas internas usan `card-premium` por defecto.
+
+### Sin cambios (preservados)
+
+- `data/blog/posts/*`, `data/faq.ts`, `data/blog/categories.ts`, `data/faq-categories.ts` — sin tocar.
+- Esquema DB (`lib/schema.ts`) — sin tocar.
+- Motor de cálculo (`lib/calculo.ts`, `lib/rules/v1/*`) — sin tocar.
+- API routes — sin tocar.
+- SEO (slugs, breadcrumbs, JSON-LD, sitemap, robots) — sin tocar.
+- `proxy.ts` — sin tocar.
+
+### Validación
+
+- `npm run lint`: 0 errores ✅
+- `npm run build`: Compiled + TypeScript OK + 259 páginas ✅
+- `npm run test`: 325 tests / 16 archivos ✅ (era 185 / 13 — el proyecto ya tenía más tests que los documentados)
+
+---
+
 ## Release 35 — PageSpeed: Accesibilidad 88→93+, Perf 77→82+ (2026-06-12)
 
 Correcciones basadas en auditoría Lighthouse CLI (`pagespeed.md`).

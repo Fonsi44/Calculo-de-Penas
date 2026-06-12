@@ -39,12 +39,12 @@ export function PublicHeader() {
     <header
       className={`sticky top-0 z-50 w-full text-text-inverse transition-all duration-300 ${
         scrolled
-          ? 'bg-primary/95 shadow-lg border-b border-primary-light/40'
-          : 'bg-primary border-b border-primary-light'
+          ? 'bg-primary/95 backdrop-blur-md border-b border-primary-light/40 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.45)]'
+          : 'bg-primary border-b border-primary-light/60'
       }`}
     >
       {/* Barra superior con datos de contacto */}
-      <div className="hidden md:block bg-primary-dark">
+      <div className="hidden md:block bg-primary-dark/80 border-b border-primary-light/20">
         <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
@@ -71,13 +71,13 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 flex items-center gap-3">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-3.5 flex items-center gap-3">
         <Link
           href="/"
           className="flex items-center gap-2.5 focus-visible:outline-none"
           aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
-          <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center flex-shrink-0 shadow-[0_0_0_1px_rgba(154,122,34,0.45),0_4px_10px_-2px_rgba(212,175,55,0.45)]">
             <Scale size={20} className="text-primary" strokeWidth={2.4} />
           </div>
           <div className="min-w-0">
@@ -94,13 +94,19 @@ export function PublicHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
-                className={`px-3 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
+                className={`relative px-3 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
                   active
-                    ? 'text-accent bg-primary-light/40'
+                    ? 'text-accent'
                     : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
                 }`}
               >
                 {item.label}
+                {active && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,175,55,0.55)]"
+                  />
+                )}
               </Link>
             );
           })}
@@ -111,7 +117,7 @@ export function PublicHeader() {
             href={whatsappHref('Hola, necesito una consulta jurídica.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-success text-white hover:opacity-90 transition-opacity focus-visible:outline-none"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-success text-white shadow-[0_4px_12px_-2px_rgba(14,122,79,0.45)] hover:-translate-y-0.5 hover:shadow-[0_6px_16px_-2px_rgba(14,122,79,0.55)] transition-all duration-200 focus-visible:outline-none"
             aria-label="Contactar por WhatsApp"
             title="WhatsApp"
           >
@@ -119,7 +125,7 @@ export function PublicHeader() {
           </a>
           <Link
             href="/solicitar-consulta"
-            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-aggravation text-white text-sm font-semibold hover:opacity-90 transition-opacity focus-visible:outline-none"
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-accent text-primary text-sm font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55)] transition-all duration-200 focus-visible:outline-none"
           >
             <Calendar size={14} aria-hidden="true" />
             Solicitar consulta
@@ -129,7 +135,7 @@ export function PublicHeader() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden ml-auto w-9 h-9 inline-flex items-center justify-center rounded-md bg-primary-light/40 hover:bg-primary-light/60 focus-visible:outline-none"
+          className="lg:hidden ml-auto w-9 h-9 inline-flex items-center justify-center rounded-md bg-primary-light/40 hover:bg-primary-light/60 focus-visible:outline-none transition-colors"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={open}
         >
@@ -139,7 +145,7 @@ export function PublicHeader() {
 
       {/* Drawer móvil */}
       {open && (
-        <div ref={mobileTrapRef} className="lg:hidden border-t border-primary-light bg-primary">
+        <div ref={mobileTrapRef} className="lg:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
           <nav aria-label="Navegación móvil" className="px-3 py-3 flex flex-col gap-1">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
@@ -148,14 +154,18 @@ export function PublicHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`px-3 h-11 inline-flex items-center justify-between text-sm font-semibold rounded-md ${
+                  className={`relative px-3 h-11 inline-flex items-center justify-between text-sm font-semibold rounded-md ${
                     active
-                      ? 'text-accent bg-primary-light/40'
+                      ? 'text-accent bg-primary-light/30'
                       : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
                   }`}
                 >
                   <span>{item.label}</span>
-                  <ChevronDown size={14} className="-rotate-90" />
+                  {active ? (
+                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,175,55,0.65)]" />
+                  ) : (
+                    <ChevronDown size={14} className="-rotate-90" />
+                  )}
                 </Link>
               );
             })}
@@ -181,7 +191,7 @@ export function PublicHeader() {
             <Link
               href="/solicitar-consulta"
               onClick={() => setOpen(false)}
-              className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-md bg-aggravation text-white text-sm font-bold"
+              className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-md bg-accent text-primary text-sm font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)]"
             >
               <Calendar size={16} />
               Solicitar consulta

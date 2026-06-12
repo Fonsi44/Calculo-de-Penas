@@ -22,23 +22,24 @@ interface SectionProps {
   children: ReactNode;
   className?: string;
   containerSize?: 'sm' | 'md' | 'lg' | 'xl';
-  background?: 'default' | 'muted' | 'primary' | 'accent';
+  background?: 'default' | 'muted' | 'primary' | 'accent' | 'warm';
   id?: string;
   ariaLabel?: string;
   spacing?: 'sm' | 'md' | 'lg';
 }
 
-const BG = {
+const BG: Record<NonNullable<SectionProps['background']>, string> = {
   default: 'bg-background',
   muted: 'bg-surface-alt',
   primary: 'bg-primary text-text-inverse',
   accent: 'bg-accent/10',
+  warm: 'bg-page-warm',
 };
 
 const SPACING = {
-  sm: 'py-8 md:py-10',
-  md: 'py-10 md:py-14',
-  lg: 'py-14 md:py-20',
+  sm: 'py-10 md:py-14',
+  md: 'py-14 md:py-20',
+  lg: 'py-16 md:py-24',
 };
 
 export function Section({
@@ -74,24 +75,19 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
   return (
     <div
       className={cn(
-        'mb-6 md:mb-8',
+        'mb-8 md:mb-10',
         align === 'center' && 'text-center max-w-3xl mx-auto',
         className,
       )}
     >
       {eyebrow && (
-        <p
-          className={cn(
-            'text-xxs font-bold uppercase tracking-widest mb-3',
-            invert ? 'text-accent' : 'text-accent-dark',
-          )}
-        >
+        <div className={cn('eyebrow-rule mb-4', invert ? 'text-accent' : 'text-accent-dark')}>
           {eyebrow}
-        </p>
+        </div>
       )}
       <h2
         className={cn(
-          'font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight font-serif',
+          'font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-balance',
           invert ? 'text-text-inverse' : 'text-primary',
         )}
       >
@@ -100,7 +96,8 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       {subtitle && (
         <p
           className={cn(
-            'mt-4 text-sm md:text-base leading-relaxed',
+            'mt-4 text-sm md:text-base leading-relaxed text-pretty max-w-3xl',
+            align === 'center' && 'mx-auto',
             invert ? 'text-text-inverse/85' : 'text-text-secondary',
           )}
         >

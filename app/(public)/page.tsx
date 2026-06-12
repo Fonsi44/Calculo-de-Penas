@@ -133,87 +133,88 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative bg-primary text-text-inverse overflow-hidden">
+      <section className="relative bg-hero-gradient text-text-inverse overflow-hidden">
         {/* Capas de fondo no fotográficas: grid sutil + halos dorados radiales. */}
         <div className="absolute inset-0 pointer-events-none bg-grid opacity-50" aria-hidden="true" />
         <div className="absolute inset-0 opacity-95 pointer-events-none" aria-hidden="true">
-          <div className="absolute -top-24 -right-24 w-[32rem] h-[32rem] rounded-full bg-accent/20 blur-[120px]" />
-          <div className="absolute -bottom-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-accent-dark/15 blur-[100px]" />
+          <div className="absolute -top-24 -right-24 w-[36rem] h-[36rem] rounded-full bg-accent/20 blur-[140px]" />
+          <div className="absolute -bottom-32 -left-24 w-[32rem] h-[32rem] rounded-full bg-accent-dark/15 blur-[120px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full bg-primary-light/20 blur-[160px]" />
         </div>
         <div
           className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-accent/20 to-transparent pointer-events-none"
           aria-hidden="true"
         />
-        <Container size="lg" className="relative py-14 md:py-20 lg:py-24">
+        <Container size="lg" className="relative py-16 md:py-24 lg:py-28">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7">
               <div className="flex flex-wrap items-center gap-2 mb-5">
                 <HeroOfficeBadge />
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/40 border border-primary-light/30 text-text-inverse/85">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/50 border border-primary-light/40 text-text-inverse/90 backdrop-blur-sm">
                   <span className="text-xxs font-bold tracking-wider">{t('hero.badge')}</span>
                 </span>
               </div>
-              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tighter text-text-inverse text-balance">
+              <h1 className="font-serif font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.05] tracking-tight text-text-inverse text-balance">
                 <span className="block">{t('hero.title_line1')}</span>
                 <span className="block text-gradient-accent mt-1">{t('hero.title_line2')}</span>
               </h1>
-              <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
+              <p className="mt-6 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
               </p>
-              <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6">
-                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/80">
+              <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7">
+                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/85">
                   <CheckCircle2 size={14} className="text-accent" /> {t('hero.check1')}
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/80">
+                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/85">
                   <CheckCircle2 size={14} className="text-accent" /> {t('hero.check2')}
                 </span>
               </div>
-              <CTAGroup variant="inverse" className="mt-7" />
+              <CTAGroup variant="inverse" className="mt-8" />
             </div>
             <div className="lg:col-span-5">
-              <div className="halo-accent rounded-md">
-                <Card padding="md" className="bg-surface text-text border-accent/30 border-2 shadow-2xl card-premium">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Phone size={16} className="text-primary" />
-                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">{t('contact_card.title')}</p>
+              <div className="hero-card p-5 md:p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center border border-primary/15">
+                    <Phone size={14} className="text-primary" />
                   </div>
-                  <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
-                    {site.phoneDisplay}
-                  </a>
-                  <p className="text-sm text-text-secondary mt-1">{site.hours}</p>
-                  <div className="divider-accent my-4" />
-                  <a
-                    href={whatsappHref(t('contact_card.whatsapp_msg'))}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-md bg-success/10 hover:bg-success/15 transition-colors"
-                  >
-                    <div className="w-9 h-9 rounded-md bg-success flex items-center justify-center flex-shrink-0">
-                      <MessageCircle size={16} className="text-white" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-success">WhatsApp directo</p>
-                      <p className="text-xxs text-text-secondary">Respuesta durante horario de atención</p>
-                    </div>
-                  </a>
-                  <Link
-                    href="/solicitar-consulta"
-                    className="mt-3 flex items-center gap-3 p-3 rounded-md bg-primary/8 hover:bg-primary/12 transition-colors"
-                  >
-                    <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center flex-shrink-0">
-                      <Calendar size={16} className="text-text-inverse" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-primary">{t('contact_card.form_text')}</p>
-                      <p className="text-xxs text-text-secondary">{t('contact_card.form_hint')}</p>
-                    </div>
-                  </Link>
-                  <div className="divider-accent my-4" />
-                  <div className="flex items-start gap-2 text-xs text-text-secondary">
-                    <MapPin size={14} className="text-accent-dark flex-shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">{site.address.line1}, {site.address.line2}</span>
+                  <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">{t('contact_card.title')}</p>
+                </div>
+                <a href={telHref()} className="block text-2xl md:text-3xl font-extrabold text-primary tabular-nums leading-tight hover:text-primary-light transition-colors">
+                  {site.phoneDisplay}
+                </a>
+                <p className="text-sm text-text-secondary mt-1">{site.hours}</p>
+                <div className="divider-accent my-4" />
+                <a
+                  href={whatsappHref(t('contact_card.whatsapp_msg'))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-md bg-success/10 hover:bg-success/15 border border-success/15 transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-md bg-success flex items-center justify-center flex-shrink-0 shadow-[0_4px_10px_-2px_rgba(14,122,79,0.45)]">
+                    <MessageCircle size={16} className="text-white" />
                   </div>
-                </Card>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-success">WhatsApp directo</p>
+                    <p className="text-xxs text-text-secondary">Respuesta durante horario de atención</p>
+                  </div>
+                </a>
+                <Link
+                  href="/solicitar-consulta"
+                  className="mt-3 flex items-center gap-3 p-3 rounded-md bg-primary/8 hover:bg-primary/12 border border-primary/15 transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center flex-shrink-0">
+                    <Calendar size={16} className="text-text-inverse" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-primary">{t('contact_card.form_text')}</p>
+                    <p className="text-xxs text-text-secondary">{t('contact_card.form_hint')}</p>
+                  </div>
+                </Link>
+                <div className="divider-accent my-4" />
+                <div className="flex items-start gap-2 text-xs text-text-secondary">
+                  <MapPin size={14} className="text-accent-dark flex-shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">{site.address.line1}, {site.address.line2}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -330,8 +331,17 @@ export default async function HomePage() {
       </Section>
 
       {/* WHY US */}
-      <Section background="primary" spacing="md" ariaLabel="Por qué elegirnos">
-        <div className="text-text-inverse">
+      <Section background="primary" spacing="md" ariaLabel="Por qué elegirnos" className="relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.10) 0%, transparent 60%), radial-gradient(50% 50% at 0% 100%, rgba(168,136,64,0.08) 0%, transparent 60%)',
+          }}
+        />
+        <div className="absolute inset-0 pointer-events-none bg-grid opacity-40" aria-hidden="true" />
+        <div className="text-text-inverse relative">
           <SectionHeader
             eyebrow="Por qué elegirnos"
             title={t('why_us.title')}
@@ -339,16 +349,16 @@ export default async function HomePage() {
             invert
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative">
           {WHY.map((w) => (
             <div
               key={w.title}
-              className="rounded-md border border-primary-light/40 bg-primary-light/20 p-5 backdrop-blur-sm card-premium"
+              className="card-dark p-5"
             >
-              <div className="w-12 h-12 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
                 <w.icon size={22} aria-hidden="true" />
               </div>
-              <div className="mt-2.5">
+              <div className="mt-3">
                 <h3 className="font-bold text-sm leading-tight text-text-inverse text-balance">
                   {w.title}
                 </h3>
@@ -362,16 +372,16 @@ export default async function HomePage() {
       </Section>
 
       {/* POR QUÉ MULTIDISCIPLINAR */}
-      <Section spacing="md" ariaLabel="Por qué un bufete multidisciplinar">
+      <Section background="warm" spacing="md" ariaLabel="Por qué un bufete multidisciplinar">
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           <div className="lg:col-span-5">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
+            <div className="eyebrow-rule text-accent-dark mb-4">
               {t('multidisciplinary.title')}
-            </p>
-            <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text leading-tight text-balance">
+            </div>
+            <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
               {t('multidisciplinary.subtitle')}
             </h2>
-            <p className="mt-4 text-sm text-text-secondary leading-relaxed text-pretty">
+            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
               {t('multidisciplinary.description')}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
@@ -385,11 +395,11 @@ export default async function HomePage() {
                 <Users size={12} /> Equipo coordinado
               </span>
             </div>
-            <Link href="/despacho" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+            <Link href="/despacho" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
               Conozca nuestro despacho <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">
+          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3.5">
             {[
               {
                 icon: Gavel,
@@ -412,7 +422,7 @@ export default async function HomePage() {
                 desc: t('multidisciplinary.combo4_desc'),
               },
             ].map((it) => (
-              <Card key={it.title} padding="md" className="h-full card-premium">
+              <Card key={it.title} padding="md" className="h-full">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
                     <it.icon size={18} aria-hidden="true" />
@@ -517,12 +527,12 @@ export default async function HomePage() {
             {FAQ.map((f, i) => (
               <details
                 key={i}
-                className="group rounded-md border border-border-light bg-surface faq-anim open:border-accent/40"
+                className="group rounded-md border border-border-light bg-surface card-premium open:border-accent/40 faq-anim"
               >
                 <summary className="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
                   <span className="font-semibold text-sm text-text leading-snug text-balance">{f.q}</span>
-                  <span className="w-6 h-6 rounded-full bg-surface-alt group-open:bg-accent/15 flex items-center justify-center flex-shrink-0 transition-colors">
-                    <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 transition-transform" />
+                  <span className="w-6 h-6 rounded-full bg-surface-alt group-open:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
+                    <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 group-open:text-accent-dark transition-transform" />
                   </span>
                 </summary>
                 <div className="faq-content px-4 pb-4 -mt-1 text-sm text-text-secondary leading-relaxed text-pretty" dangerouslySetInnerHTML={{ __html: f.a }} />
