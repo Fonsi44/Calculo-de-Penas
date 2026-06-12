@@ -15,6 +15,7 @@ import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { getCorporateImage } from '@/data/images';
 import { getPageContent } from '@/lib/page-content-db';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
@@ -36,7 +37,7 @@ function despachoContent(content: Record<string, string>) {
     hero: {
       eyebrow: content['hero.eyebrow'] || 'El Despacho',
       badge: content['hero.badge'] || 'Multidisciplinar',
-      title: content['hero.title'] || 'Compromiso Legal, Rigor Técnico y Visión de Vanguardia',
+      title: content['hero.title'] || 'Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visión de Vanguardia',
       subtitle: content['hero.subtitle'] || `${site.name} es un bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica.`,
     },
     mision: {
@@ -83,6 +84,10 @@ export default async function DespachoPage() {
 
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'El Despacho' },
+      ]} />
       {/* HERO */}
       <PageHero
         eyebrow={c.hero.eyebrow}
@@ -211,6 +216,12 @@ export default async function DespachoPage() {
                 con experiencia en asistencia a detenidos, audiencias iniciales, preliminares,
                 juicio oral y recursos de casación.
               </p>
+              <Link
+                href="/derecho-penal"
+                className="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Consulte nuestra especialidad en defensa penal <ArrowRight size={14} />
+              </Link>
             </Card>
           </div>
         </div>

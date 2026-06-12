@@ -13,6 +13,7 @@ import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasFromDb } from '@/lib/areas-db';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
@@ -53,6 +54,10 @@ export default async function DerechoPenalPage() {
 
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Derecho Penal' },
+      ]} />
       <PageHero
         eyebrow={hubPenal.heroEyebrow}
         badge="Especialidad destacada"
@@ -141,8 +146,16 @@ export default async function DerechoPenalPage() {
             >
               Ver todos los artículos de derecho penal <ArrowRight size={16} />
             </Link>
-          </div>
-        </Section>
+        </div>
+        <div className="max-w-3xl mx-auto mt-6 text-center">
+          <Link
+            href="/preguntas-frecuentes#derecho-penal-general"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Ver todas las preguntas frecuentes sobre derecho penal <ArrowRight size={16} />
+          </Link>
+        </div>
+      </Section>
       )}
 
       {ldSchemas.map((schema, i) => (

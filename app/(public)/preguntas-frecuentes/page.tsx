@@ -14,6 +14,7 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const revalidate = 3600;
 
@@ -147,22 +148,12 @@ export default async function FaqPage() {
     })),
   );
 
-  const breadcrumbLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Inicio', item: site.url },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Preguntas Frecuentes',
-        item: `${site.url}/preguntas-frecuentes`,
-      },
-    ],
-  };
-
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Preguntas Frecuentes' },
+      ]} />
       <PageHero
         eyebrow="Preguntas Frecuentes"
         badge="Todas las ramas legales"
@@ -263,10 +254,9 @@ export default async function FaqPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+          __html: JSON.stringify(
             faqPageSchema(flatFaqs, `${site.url}/preguntas-frecuentes`),
-            breadcrumbLd,
-          ]),
+          ),
         }}
       />
       <ConsultationCTA />

@@ -10,7 +10,8 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { areaHref } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasFromDb } from '@/lib/areas-db';
-import { breadcrumbSchema, webpageSchema } from '@/lib/seo-schema';
+import { webpageSchema } from '@/lib/seo-schema';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 13 Especialidades`,
@@ -32,6 +33,10 @@ export default async function AreasJuridicasPage() {
 
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Servicios Jurídicos' },
+      ]} />
       <PageHero
         eyebrow="Servicios Jurídicos"
         badge="Cobertura integral"
@@ -90,17 +95,13 @@ export default async function AreasJuridicasPage() {
       <ConsultationCTA />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify([
-          breadcrumbSchema([
-            { name: 'Inicio', item: '/' },
-            { name: 'Servicios Jurídicos', item: '/servicios-juridicos' },
-          ]),
+        __html: JSON.stringify(
           webpageSchema(
             'Servicios Jurídicos en Nacaome, Valle | 13 Especialidades',
             'Conozca las 13 especialidades de Pineda y Asociados en Nacaome, Valle, Honduras.',
             '/servicios-juridicos'
           ),
-        ]),
+        ),
       }} />
     </>
   );

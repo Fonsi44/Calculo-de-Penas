@@ -26,7 +26,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     ? `/blog${page > 1 ? `?page=${page}` : ''}${tagFilter ? `${page > 1 ? '&' : '?'}tag=${encodeURIComponent(tagFilter)}` : ''}`
     : '/blog';
   return {
-    title: `Blog Jurídico${page > 1 ? ` — Página ${page}` : ''}`,
+    title: `Blog Jurídico de Abogados en Honduras | Derecho Penal, Familia, Laboral y Más${page > 1 ? ` — Página ${page}` : ''}`,
     description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
     robots: tagFilter ? { index: false, follow: true, googleBot: { index: false, follow: true } } : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },

@@ -18,10 +18,10 @@ import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
-import { breadcrumbSchema, webpageSchema } from '@/lib/seo-schema';
+import { webpageSchema } from '@/lib/seo-schema';
 
 export const metadata: Metadata = {
-  title: 'Solicitar Consulta Legal',
+  title: 'Solicitar Consulta Legal Gratuita | Abogados en Nacaome, Valle',
   description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
   alternates: { canonical: '/solicitar-consulta' },
   openGraph: {
@@ -279,15 +279,26 @@ export default async function SolicitarConsultaPage() {
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify([
-          breadcrumbSchema([
-            { name: 'Inicio', item: '/' },
-            { name: 'Solicitar Consulta', item: '/solicitar-consulta' },
-          ]),
           webpageSchema(
             'Solicitar Consulta Legal — Pineda y Asociados',
             'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle.',
             '/solicitar-consulta'
           ),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ContactPage',
+            name: 'Solicitar Consulta Legal — Pineda y Asociados',
+            description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
+            url: `${site.url}/solicitar-consulta`,
+            inLanguage: 'es-HN',
+            mainEntity: {
+              '@type': 'LegalService',
+              '@id': `${site.url}/#legal-service`,
+              name: site.name,
+              telephone: site.phone,
+              email: site.email,
+            },
+          },
         ]),
       }} />
     </>
