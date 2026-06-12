@@ -70,7 +70,7 @@ const nextConfig: NextConfig = {
       // Fusiones por canibalización: 2 posts → 1
       { source: '/blog/derecho-de-familia/pension-alimenticia-calcular-reclamar-honduras', destination: '/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla', permanent: true },
       { source: '/blog/derecho-de-familia/guarda-custodia-menores-tipos-honduras', destination: '/blog/derecho-de-familia/custodia-hijos-honduras-juez', permanent: true },
-      { source: '/blog/derecho-laboral/despido-laboral-honduras-derechos', destination: '/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador', permanent: true },
+      { source: '/blog/derecho-laboral/despido-laboral-honduras-derechos', destination: '/blog/derecho-laboral/despido-laboral-honduras-guia-completa', permanent: true },
       { source: '/blog/derecho-laboral/calcular-prestaciones-laborales-honduras', destination: '/blog/derecho-laboral/calcular-liquidacion-laboral-honduras', permanent: true },
       { source: '/blog/derecho-mercantil/contratos-mercantiles-proteger-negocio', destination: '/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras', permanent: true },
       { source: '/blog/derecho-civil/herencias-honduras-fallece-familiar', destination: '/blog/derecho-civil/testamentos-sucesiones-herencia-honduras', permanent: true },
@@ -79,6 +79,33 @@ const nextConfig: NextConfig = {
       { source: '/blog/derecho-notarial/tramites-notariales-frecuentes-honduras', destination: '/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita', permanent: true },
       // Canibalización cruzada: derechos del detenido → guía práctica de detención
       { source: '/blog/derechos-ciudadanos/derechos-del-detenido-guia-constitucional-honduras', destination: '/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras', permanent: true },
+      // === FASE 1: Cluster DIVORCIO (4→1) ===
+      { source: '/blog/derecho-de-familia/divorcio-honduras-pasos-requisitos', destination: '/blog/derecho-de-familia/divorcio-honduras-guia-completa', permanent: true },
+      { source: '/blog/derecho-de-familia/divorcio-tipos-requisitos-tiempos-honduras', destination: '/blog/derecho-de-familia/divorcio-honduras-guia-completa', permanent: true },
+      { source: '/blog/derecho-de-familia/divorcio-express-mutuo-acuerdo-honduras', destination: '/blog/derecho-de-familia/divorcio-honduras-guia-completa', permanent: true },
+      { source: '/blog/derecho-de-familia/problemas-legales-familiares-honduras', destination: '/blog/derecho-de-familia/divorcio-honduras-guia-completa', permanent: true },
+      // === FASE 1: Cluster PENSIÓN (2→1 + redirect al nuevo pilar) ===
+      { source: '/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla', destination: '/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa', permanent: true },
+      // === FASE 1: Cluster ELEGIR ABOGADO (4→1) ===
+      { source: '/blog/practica-legal/como-elegir-buen-abogado-guia-practica-honduras', destination: '/blog/practica-legal/como-elegir-abogado-honduras', permanent: true },
+      { source: '/blog/practica-legal/elegir-bufete-abogados-nacaome', destination: '/blog/practica-legal/como-elegir-abogado-honduras', permanent: true },
+      { source: '/blog/practica-legal/elegir-bufete-multidisciplinario-ventajas-honduras', destination: '/blog/practica-legal/como-elegir-abogado-honduras', permanent: true },
+      // === FASE 1: Cluster DESPIDO LABORAL (3→1) ===
+      { source: '/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador', destination: '/blog/derecho-laboral/despido-laboral-honduras-guia-completa', permanent: true },
+      { source: '/blog/derecho-laboral/empleador-no-paga-salario-honduras', destination: '/blog/derecho-laboral/despido-laboral-honduras-guia-completa', permanent: true },
+      // === FASE 2: Posts plantilla reescritos (slugs cambiados) ===
+      { source: '/blog/derecho-administrativo/recurso-de-amparo-para-que-sirve-honduras', destination: '/blog/derecho-administrativo/recurso-de-amparo-honduras-guia-completa', permanent: true },
+      { source: '/blog/derecho-bancario/ejecucion-hipotecaria-que-hacer-honduras', destination: '/blog/derecho-bancario/ejecucion-hipotecaria-honduras-que-hacer', permanent: true },
+      { source: '/blog/noticias-legales/actualizacion-legislativa-mensual-honduras', destination: '/blog/noticias-legales/reformas-legales-recientes-honduras', permanent: true },
+      { source: '/blog/derecho-bancario/derechos-consumidor-financiero-cnbs-honduras', destination: '/blog/derecho-bancario/derechos-consumidor-financiero-honduras-cnbs', permanent: true },
+      // Posts débil/fusionados con contenido mejorado
+      { source: '/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales', destination: '/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras', permanent: true },
+      { source: '/blog/derecho-de-familia/violencia-intrafamiliar-denuncia-proteccion-honduras', destination: '/blog/derecho-penal/violencia-domestica-ruta-legal-honduras', permanent: true },
+      // === FASE 2: Posts plantilla adicionales ===
+      { source: '/blog/conciliacion-arbitraje/arbitraje-cuando-conviene-como-funciona-honduras', destination: '/blog/conciliacion-arbitraje/arbitraje-honduras-guia-completa', permanent: true },
+      // === FASE 3: Redirects de posts plantilla residuales ===
+      { source: '/blog/derecho-ambiental/evaluacion-impacto-ambiental-paso-a-paso-honduras', destination: '/blog/derecho-ambiental/evaluacion-impacto-ambiental-honduras', permanent: true },
+      { source: '/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras', destination: '/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras', permanent: true },
     ];
   },
   // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*
