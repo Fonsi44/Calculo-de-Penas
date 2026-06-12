@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { Scale } from 'lucide-react';
 import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from '@/components/layout/app-sidebar';
 
 export default function IntranetLayout({ children }: { children: React.ReactNode }) {
@@ -17,13 +18,13 @@ export default function IntranetLayout({ children }: { children: React.ReactNode
 
   return (
     <div className="flex flex-1 bg-background">
-      <aside className="hidden lg:flex desktop-sidebar bg-surface border-r border-border-light flex-col p-4 sticky top-0 h-screen overflow-y-auto no-print">
+      <aside className="hidden lg:flex desktop-sidebar bg-surface-alt border-r border-border-light flex-col p-4 sticky top-0 h-screen overflow-y-auto no-print">
         <Link
           href="/"
-          className="flex items-center gap-2 mb-6 focus-visible:outline-none"
+          className="flex items-center gap-2.5 px-1 mb-6 focus-visible:outline-none group"
         >
-          <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center">
-            <span className="text-accent font-extrabold text-sm">L</span>
+          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+            <Scale size={17} className="text-accent" />
           </div>
           <div>
             <p className="font-extrabold text-xs text-primary tracking-widest leading-none">LEX HONDURAS</p>
