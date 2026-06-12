@@ -355,16 +355,18 @@ export default async function HomePage() {
               key={w.title}
               className="card-dark p-5"
             >
-              <div className="w-12 h-12 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
-                <w.icon size={22} aria-hidden="true" />
-              </div>
-              <div className="mt-3">
-                <h3 className="font-bold text-sm leading-tight text-text-inverse text-balance">
-                  {w.title}
-                </h3>
-                <p className="text-xs leading-relaxed text-text-inverse/80 mt-1.5 text-pretty">
-                  {w.desc}
-                </p>
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                  <w.icon size={20} aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm leading-tight text-text-inverse text-balance">
+                    {w.title}
+                  </h3>
+                  <p className="text-xs leading-relaxed text-text-inverse/80 mt-1 text-pretty">
+                    {w.desc}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
@@ -429,7 +431,7 @@ export default async function HomePage() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-text leading-tight text-balance">{it.title}</h3>
-                    <p className="text-xs text-text-secondary leading-relaxed mt-1.5 text-pretty">
+                    <p className="text-xs text-text-secondary leading-relaxed mt-1 text-pretty">
                       {it.desc}
                     </p>
                   </div>

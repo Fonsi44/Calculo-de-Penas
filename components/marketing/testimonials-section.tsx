@@ -34,20 +34,20 @@ export function TestimonialsSection({
       className={`relative py-16 md:py-24 bg-primary-dark text-text-inverse overflow-hidden ${className ?? ''}`}
     >
       <div
-        className="absolute inset-0 opacity-25 pointer-events-none"
+        className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 30% 20%, rgba(201,165,92,0.25) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(45,64,112,0.5) 0%, transparent 60%)',
+            'radial-gradient(circle at 30% 20%, rgba(201,165,92,0.18) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(45,64,112,0.4) 0%, transparent 60%)',
         }}
         aria-hidden="true"
       />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="mb-8 md:mb-12">
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
+        <div className="mb-8 md:mb-10">
+          <h2 className="font-serif font-bold text-xl md:text-2xl lg:text-3xl leading-tight">
             {title}
           </h2>
           {subtitle && (
-            <p className="mt-3 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
+            <p className="mt-2 text-sm md:text-base text-text-inverse/80 leading-relaxed max-w-2xl">
               {subtitle}
             </p>
           )}

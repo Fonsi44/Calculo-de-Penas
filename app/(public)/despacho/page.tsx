@@ -344,9 +344,15 @@ export default async function DespachoPage() {
             { icon: BookOpen, title: 'Notarial + registral', desc: 'Compraventas, donaciones, sociedades y traspasos.' },
           ].map((it) => (
             <div key={it.title} className="rounded-md border border-primary-light/40 bg-primary-light/20 p-4 backdrop-blur-sm card-premium">
-              <it.icon size={22} className="text-accent mb-2" aria-hidden="true" />
-              <h3 className="font-bold text-sm text-text-inverse leading-tight text-balance">{it.title}</h3>
-              <p className="text-xs text-text-inverse/80 leading-relaxed mt-1.5 text-pretty">{it.desc}</p>
+              <div className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                  <it.icon size={18} aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm text-text-inverse leading-tight text-balance">{it.title}</h3>
+                  <p className="text-xs text-text-inverse/80 leading-relaxed mt-1 text-pretty">{it.desc}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
