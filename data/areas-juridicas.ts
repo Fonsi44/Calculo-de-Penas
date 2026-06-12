@@ -95,7 +95,7 @@ export const areasGenerales: AreaStandalone[] = [
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho de Familia en Honduras',
     heroSubtitle:
-      'Le acompañamos en divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores en Nacaome, Valle y todo Honduras. Atención humana, estrategia legal clara y defensa técnica ante Juzgados de Familia y Tribunales de Sentencia.',
+      'Le acompañamos en divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores en Nacaome, Valle, San Lorenzo y Choluteca. Atención humana, estrategia legal clara y defensa técnica ante Juzgados de Familia y Tribunales de Sentencia en la zona sur de Honduras.',
     subservicios: [
       { titulo: 'Divorcio por mutuo acuerdo', descripcion: 'Tramitación express ante el Juzgado de Familia cuando no hay menores ni bienes en disputa.' },
       { titulo: 'Divorcio contencioso', descripcion: 'Litigio por causales taxativas con estrategia probatoria robusta.' },
@@ -130,20 +130,20 @@ export const areasGenerales: AreaStandalone[] = [
       'sucesiones Honduras',
       'violencia intrafamiliar Honduras',
     ],
-    destacado: 'Conocemos a los Juzgados de Familia de Nacaome, San Lorenzo, Choluteca y Tegucigalpa.',
+    destacado: 'Conocemos a los Juzgados de Familia de Nacaome, San Lorenzo y Choluteca.',
   },
   {
     slug: 'derecho-laboral',
     titulo: 'Derecho Laboral',
     resumen: 'Abogado laboralista en Nacaome y Honduras: despidos injustificados, cálculo de prestaciones, aguinaldo, riesgos profesionales, acoso laboral y asesoría preventiva a empresas.',
     descripcion:
-      `Reclamamos <strong>preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes</strong> en despidos injustificados. Defendemos trabajadores en riesgos profesionales y accidentes laborales ante el <strong><a href="https://www.ihss.hn" target="_blank" rel="noopener noreferrer">IHSS</a></strong>, y representamos a empresas en cumplimiento normativo, contratos y reglamentos internos. Actuamos ante <strong>Inspecciones del Trabajo, Tribunales de Conciliación y Juzgados del Trabajo</strong> en todo Honduras. Le entregamos un presupuesto por escrito y le explicamos cada etapa del proceso.`,
+      `Reclamamos <strong>preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes</strong> en despidos injustificados. Defendemos trabajadores en riesgos profesionales y accidentes laborales ante el <strong><a href="https://www.ihss.hn" target="_blank" rel="noopener noreferrer">IHSS</a></strong>, y representamos a empresas en cumplimiento normativo, contratos y reglamentos internos. Actuamos ante <strong>Inspecciones del Trabajo, Tribunales de Conciliación y Juzgados del Trabajo</strong> en la zona sur de Honduras. Le entregamos un presupuesto por escrito y le explicamos cada etapa del proceso.`,
     icono: 'briefcase',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Laboral en Honduras',
     heroSubtitle:
-      'Defendemos sus derechos como trabajador o acompañamos a su empresa con cumplimiento normativo. Reclamamos prestaciones, despidos, aguinaldo, décimo tercer mes, riesgos profesionales, acoso laboral y negociación colectiva ante Juzgados del Trabajo, Tribunales de Conciliación y Corte Suprema de Justicia en todo Honduras.',
+      'Defendemos sus derechos como trabajador o acompañamos a su empresa con cumplimiento normativo. Reclamamos prestaciones, despidos, aguinaldo, décimo tercer mes, riesgos profesionales, acoso laboral y negociación colectiva ante Juzgados del Trabajo, Tribunales de Conciliación y Corte Suprema de Justicia en la zona sur de Honduras.',
     subservicios: [
       { titulo: 'Despido injustificado', descripcion: 'Cálculo y reclamación de prestaciones: preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes.' },
       { titulo: 'Despido indirecto por incumplimiento del empleador', descripcion: 'Artículo 113 del Código de Trabajo: reclamo por falta de condiciones dignas.' },
@@ -182,7 +182,7 @@ export const areasGenerales: AreaStandalone[] = [
     titulo: 'Derecho Civil y Notarial',
     resumen: 'Abogado civil y notario en Nacaome y Honduras: contratos, compraventas, arrendamientos, hipotecas, sucesiones, protocolización, cobros judiciales y derecho de daños.',
     descripcion:
-      `Brindamos <strong>asesoría civil y notarial</strong> para personas, empresas y familias en Honduras. Redactamos contratos de compraventa, arrendamiento, hipoteca y fideicomiso; tramitamos protocolizaciones, poderes notariales, testamentos y declaratorias de herederos ante el <strong><a href="https://www.ip.gob.hn" target="_blank" rel="noopener noreferrer">Instituto de la Propiedad</a></strong>. Litigamos acciones posesorias, prescripción adquisitiva, cobros judiciales por vía ejecutiva o monitoria, y reclamaciones por responsabilidad civil. Trabajamos con notarios en Nacaome, Tegucigalpa y San Pedro Sula, con presupuesto por escrito y trazabilidad de cada actuación.`,
+      `Brindamos <strong>asesoría civil y notarial</strong> para personas, empresas y familias en la zona sur de Honduras. Redactamos contratos de compraventa, arrendamiento, hipoteca y fideicomiso; tramitamos protocolizaciones, poderes notariales, testamentos y declaratorias de herederos ante el <strong><a href="https://www.ip.gob.hn" target="_blank" rel="noopener noreferrer">Instituto de la Propiedad</a></strong>. Litigamos acciones posesorias, prescripción adquisitiva, cobros judiciales por vía ejecutiva o monitoria, y reclamaciones por responsabilidad civil. Trabajamos con notarios en Nacaome, San Lorenzo y Choluteca, con presupuesto por escrito y trazabilidad de cada actuación.`,
     icono: 'file-text',
     color: 'primary',
     heroEyebrow: 'Área legal',
@@ -397,7 +397,7 @@ export const areasGenerales: AreaStandalone[] = [
     heroEyebrow: 'Área legal',
     heroTitle: 'Regulación Sanitaria',
     heroSubtitle:
-      'Cumplimiento normativo en alimentos, medicamentos, cosméticos, dispositivos médicos, plaguicidas, establecimientos de salud y telemedicina. Registro sanitario, Buenas Prácticas de Manufactura y Almacenamiento, defensa ante ARSA, mala praxis médica, consentimiento informado y litigio contencioso-administrativo en todo Honduras.',
+      'Cumplimiento normativo en alimentos, medicamentos, cosméticos, dispositivos médicos, plaguicidas, establecimientos de salud y telemedicina. Registro sanitario, Buenas Prácticas de Manufactura y Almacenamiento, defensa ante ARSA, mala praxis médica, consentimiento informado y litigio contencioso-administrativo en la zona sur de Honduras.',
     subservicios: [
       { titulo: 'Registro sanitario de medicamentos', descripcion: 'Tramitación ante la ARSA y la Secretaría de Salud.' },
       { titulo: 'Registro de alimentos y bebidas', descripcion: 'Notificación y registro según riesgo.' },
@@ -635,17 +635,17 @@ export const areasGenerales: AreaStandalone[] = [
 export const hubPenal: HubPenal = {
   slug: 'derecho-penal',
   titulo: 'Derecho Penal',
-  resumen: 'Abogados penalistas en Nacaome, Valle y todo Honduras: defensa penal estratégica en cualquier etapa del proceso, asistencia a detenidos, juicios orales, casación y ejecución penal.',
+  resumen: 'Abogados penalistas en Nacaome, Valle, San Lorenzo y Choluteca: defensa penal estratégica en cualquier etapa del proceso, asistencia a detenidos, juicios orales, casación y ejecución penal en la zona sur de Honduras.',
   descripcion:
-    `Defensa penal técnica en todas las etapas del proceso penal hondureño, con presencia en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca y Nacaome. Conocemos el <strong>Código Penal (Decreto 130-2017)</strong> y sus reformas, la jurisprudencia de la <strong><a href="https://www.poderjudicial.gob.hn" target="_blank" rel="noopener noreferrer">Sala de lo Penal de la CSJ</a></strong> y la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Cortes de Apelaciones. Si enfrenta una imputación, investigación fiscal u orden de captura, consúltenos: <strong>la defensa temprana es determinante</strong>.`,
+    `Defensa penal técnica en todas las etapas del proceso penal hondureño, con sede en Nacaome y cobertura en la zona sur de Honduras: Valle, San Lorenzo, Choluteca y municipios aledaños. Conocemos el <strong>Código Penal (Decreto 130-2017)</strong> y sus reformas, la jurisprudencia de la <strong><a href="https://www.poderjudicial.gob.hn" target="_blank" rel="noopener noreferrer">Sala de lo Penal de la CSJ</a></strong> y la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Cortes de Apelaciones. Si enfrenta una imputación, investigación fiscal u orden de captura, consúltenos: <strong>la defensa temprana es determinante</strong>.`,
   heroEyebrow: 'Área principal',
   heroTitle: 'Abogados Penalistas en Nacaome, Valle — Defensa Penal Técnica',
   heroSubtitle:
-    'Atendemos casos penales en toda Honduras, desde Nacaome, Valle. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal, beneficios de ley, recursos de casación y cumplimiento de penas. Defensa técnica, comunicación directa y presupuesto por escrito.',
+    'Atendemos casos penales en la zona sur de Honduras, desde nuestro despacho en Nacaome, Valle. Cubrimos San Lorenzo, Choluteca y municipios aledaños. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal, beneficios de ley, recursos de casación y cumplimiento de penas. Defensa técnica, comunicación directa y presupuesto por escrito.',
   faqs: [
     { pregunta: '¿Pueden defenderme si acabo de ser detenido?', respuesta: 'Sí. La asistencia letrada es un derecho irrenunciable desde el primer momento. Podemos acudir a la estación policial o al juzgado y ejercer defensa inmediata.' },
     { pregunta: '¿Cuánto cuesta una defensa penal en Honduras?', respuesta: 'Depende de la complejidad. Ofrecemos consulta inicial confidencial para evaluar el caso y emitir un presupuesto claro por escrito.' },
-    { pregunta: '¿Trabajan en todo el país?', respuesta: 'Sí. Tenemos presencia activa en Tegucigalpa, San Pedro Sula, Comayagua, Choluteca y Nacaome, y nos desplazamos a cualquier jurisdicción.' },
+    { pregunta: '¿En qué zonas trabajan?', respuesta: 'Nuestra sede está en Nacaome, Valle, y cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca y municipios aledaños. Para casos que requieran desplazamiento fuera de esta zona, consúltenos y valoramos la viabilidad.' },
     { pregunta: '¿Atienden casos graves (homicidio, narcotráfico, delitos sexuales)?', respuesta: 'Sí, con la misma dedicación y un equipo preparado. La gravedad no reduce la defensa: la aumenta.' },
   ],
   areasRelacionadas: [
@@ -655,11 +655,12 @@ export const hubPenal: HubPenal = {
   ],
   keywords: [
     'abogado penalista Nacaome',
-    'defensa penal Honduras',
+    'defensa penal Valle Honduras',
+    'abogado penal San Lorenzo',
+    'abogado penalista Choluteca',
     'Código Penal Honduras',
     'asistencia a detenidos Valle',
-    'abogado penal Tegucigalpa',
-    'proceso penal Honduras',
+    'defensa penal sur Honduras',
   ],
   grupos: [
     {
@@ -667,7 +668,7 @@ export const hubPenal: HubPenal = {
       titulo: 'Atención de casos penales litigiosos',
       resumen: 'Abogado penalista litigioso en Honduras: defensa técnica en homicidio, femicidio, robo, estafa, narcotráfico, lavado de activos, delitos sexuales, económicos y de tránsito en todas las etapas del proceso.',
       descripcion:
-        `Defendemos <strong>casos penales activos</strong> en todo Honduras. Asumimos la defensa desde la primera declaración hasta el juicio oral, apelación, casación y revisión ante la <strong><a href="https://www.poderjudicial.gob.hn" target="_blank" rel="noopener noreferrer">Corte Suprema de Justicia</a></strong>. Tenemos experiencia en <strong>delitos contra la vida</strong> (homicidio, femicidio, asesinato), delitos sexuales, delitos patrimoniales (robo, estafa, fraude), <strong>narcotráfico, lavado de activos</strong>, delitos económicos, contrabando, cohecho, prevaricato, trata de personas y delitos de prensa. Si usted o un familiar enfrenta una imputación penal, consúltenos de inmediato: la defensa temprana marca la diferencia.`,
+        `Defendemos <strong>casos penales activos</strong> en la zona sur de Honduras. Asumimos la defensa desde la primera declaración hasta el juicio oral, apelación, casación y revisión ante la <strong><a href="https://www.poderjudicial.gob.hn" target="_blank" rel="noopener noreferrer">Corte Suprema de Justicia</a></strong>. Tenemos experiencia en <strong>delitos contra la vida</strong> (homicidio, femicidio, asesinato), delitos sexuales, delitos patrimoniales (robo, estafa, fraude), <strong>narcotráfico, lavado de activos</strong>, delitos económicos, contrabando, cohecho, prevaricato, trata de personas y delitos de prensa. Si usted o un familiar enfrenta una imputación penal, consúltenos de inmediato: la defensa temprana marca la diferencia.`,
       icono: 'gavel',
       color: 'danger',
       subservicios: [
@@ -724,9 +725,9 @@ export const hubPenal: HubPenal = {
       ],
       areasRelacionadas: ['estrategia-penal-y-litigio', 'recursos-y-defensa-avanzada'],
       keywords: [
-        'defensa penal Tegucigalpa',
-        'abogado penalista San Pedro Sula',
-        'homicidio abogado Honduras',
+        'defensa penal Nacaome',
+        'abogado penalista sur Honduras',
+        'homicidio abogado Valle',
       ],
     },
     {

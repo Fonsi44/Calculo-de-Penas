@@ -19,18 +19,18 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
-  description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca. ${site.name}.`,
+  description: `Defensa penal técnica y confidencial en Nacaome, Valle, San Lorenzo y Choluteca. ${hubPenal.grupos.length} grupos especializados con sede en Nacaome y cobertura en la zona sur de Honduras. ${site.name}.`,
   alternates: { canonical: '/derecho-penal' },
-  keywords: ['abogado penalista Honduras', 'defensa penal Nacaome', 'derecho penal Honduras', 'asistencia detenidos', 'proceso penal hondureño', 'audiencia inicial penal', 'juicio oral Honduras', 'recursos penales casación'],
+  keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penal San Lorenzo', 'abogado penalista Choluteca', 'asistencia detenidos sur Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'recursos penales casación'],
   twitter: {
     card: 'summary_large_image',
     title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} — Defensa Penal Técnica`,
-    description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados. Presencia en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca.`,
+    description: `Defensa penal técnica y confidencial en la zona sur de Honduras. ${hubPenal.grupos.length} grupos especializados. Sede en Nacaome, cobertura en San Lorenzo y Choluteca.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
     title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal | ${site.name}`,
-    description: `Defensa penal técnica y confidencial en Honduras. ${hubPenal.grupos.length} grupos especializados con presencia activa en Nacaome, Tegucigalpa, San Pedro Sula, Comayagua y Choluteca.`,
+    description: `Defensa penal técnica y confidencial en Nacaome, Valle. ${hubPenal.grupos.length} grupos especializados con presencia activa en la zona sur de Honduras: San Lorenzo y Choluteca.`,
     url: `${site.url}/derecho-penal`,
     siteName: site.name,
     locale: 'es_HN',

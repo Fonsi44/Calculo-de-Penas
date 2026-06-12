@@ -187,10 +187,10 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
                 <div className="min-w-0">
                   <p className="font-semibold text-text">{post.author}</p>
-                  <p className="text-xs text-text-muted">Abogados en Honduras</p>
+                  <p className="text-xs text-text-muted">Abogados en Nacaome, Valle, zona sur de Honduras</p>
                   <p className="text-sm text-text-secondary leading-relaxed mt-2">
-                    Bufete multidisciplinario con más de 15 años de experiencia. Abogados
-                    colegiados en Honduras, con presencia activa en juzgados del sur del país.
+                    Bufete multidisciplinario con sede en Nacaome y más de 15 años de experiencia. Abogados
+                    colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                   </p>
                   <Link
                     href="/blog"
@@ -281,12 +281,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
       <Section spacing="md">
         <Container size="md">
           <div className="text-center">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2">Consulta gratuita</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2">Consulta confidencial en Nacaome</p>
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text mb-4">
-              ¿Listo para resolver su caso?
+              ¿Necesita asesoría legal en la zona sur?
             </h2>
             <p className="text-text-secondary mb-6 max-w-lg mx-auto leading-relaxed">
-              Hable directamente con un abogado. Primera consulta sin costo y sin compromiso.
+              Hable directamente con un abogado en Nacaome, Valle. Primera consulta sin costo y sin compromiso.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <a

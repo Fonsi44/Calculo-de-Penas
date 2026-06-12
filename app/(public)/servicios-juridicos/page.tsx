@@ -14,9 +14,9 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | Ramas principales del derecho`,
-  description: `Cobertura legal integral en Nacaome, Valle, Honduras: derecho penal, de familia, laboral, civil, mercantil, tributario, bancario, administrativo y más. ${site.name}, bufete multidisciplinar.`,
+  description: `Cobertura legal integral en la zona sur de Honduras: Nacaome, Valle, San Lorenzo y Choluteca. Derecho penal, de familia, laboral, civil, mercantil, tributario, bancario, administrativo y más. ${site.name}, bufete multidisciplinar.`,
   alternates: { canonical: '/servicios-juridicos' },
-  keywords: ['servicios jurídicos Honduras', 'áreas legales Nacaome', 'ramas del derecho Honduras', 'derecho familia Honduras', 'derecho laboral Valle', 'derecho mercantil Honduras', 'derecho civil Nacaome', 'cobertura legal integral'],
+  keywords: ['servicios jurídicos Nacaome', 'áreas legales Valle', 'ramas del derecho Honduras', 'derecho familia sur Honduras', 'derecho laboral Valle', 'derecho mercantil Nacaome', 'derecho civil Choluteca', 'cobertura legal integral'],
   twitter: {
     card: 'summary_large_image',
     title: `Servicios Jurídicos en ${site.address.city}, Valle — Ramas principales del derecho`,
@@ -63,7 +63,7 @@ export default async function AreasJuridicasPage() {
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Servicios Jurídicos"
-          title="Cobertura legal completa en Honduras"
+          title="Cobertura legal completa en la zona sur de Honduras"
           subtitle="Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

@@ -359,8 +359,8 @@ export const categoriasFaq: FaqCategory[] = [
     descripcion: 'Cómo trabajamos, qué esperar de nuestros servicios y preguntas sobre honorarios.',
     preguntas: [
       {
-        pregunta: '¿Trabajan en todo Honduras?',
-        respuesta: 'Sí. Asumimos defensas en todo el territorio nacional. Coordinamos las audiencias y los traslados según corresponda. Tenemos presencia activa en Tegucigalpa, San Pedro Sula, Nacaome, Choluteca y Comayagua.',
+        pregunta: '¿En qué zonas de Honduras trabajan?',
+        respuesta: 'Nuestra sede está en Nacaome, Valle. Cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca y municipios aledaños. Para casos que requieran desplazamiento fuera de esta zona, puede consultarnos y valoramos la viabilidad del caso.',
       },
       {
         pregunta: '¿Ofrecen consulta inicial gratuita?',

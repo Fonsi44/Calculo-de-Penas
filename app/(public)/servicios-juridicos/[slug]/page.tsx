@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return {
     title: area.titulo,
-    description: `${area.descripcion.substring(0, 160)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
+    description: `${area.descripcion.substring(0, 155)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
     alternates: { canonical: `/servicios-juridicos/${slug}` },
     ...(ogImage ? {
       openGraph: {

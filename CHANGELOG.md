@@ -1,5 +1,31 @@
 # Changelog
 
+## Release 40 — Corrección de cobertura geográfica y SEO local (2026-06-12)
+
+### 🔴 CRÍTICO: Corrección de mensajes de cobertura nacional → zona sur
+Todos los textos que sugerían cobertura nacional o presencia en ciudades fuera de la zona sur de Honduras han sido corregidos:
+- **`data/areas-juridicas.ts` — `hubPenal`**: Resumen, descripción, heroSubtitle, FAQ "¿Trabajan en todo el país?" → ahora reflejan exclusivamente zona sur (Nacaome, Valle, San Lorenzo, Choluteca).
+- **`data/areas-juridicas.ts` — `areasGenerales`**: Derecho de Familia, Derecho Laboral, Derecho Civil y Notarial, Regulación Sanitaria: eliminadas referencias a "todo Honduras", "Tegucigalpa", "San Pedro Sula" y "Comayagua".
+- **`data/faq.ts`**: Pregunta "¿Trabajan en todo Honduras?" → "¿En qué zonas de Honduras trabajan?" con respuesta acotada a zona sur.
+- **`app/(public)/derecho-penal/page.tsx`**: Metadata (title, description, keywords, OG, Twitter) corregido: eliminadas menciones a Tegucigalpa, San Pedro Sula y Comayagua.
+
+### 🟡 IMPORTANTE: Optimización de keywords y metadatos para SEO local
+- **`lib/site.ts`**: Descripción del sitio actualizada con keywords de zona sur (San Lorenzo, Choluteca). Keywords default reducidas y enfocadas en búsquedas locales reales (eliminadas "asistencia legal 24 horas Honduras" y otras genéricas).
+- **`app/(public)/page.tsx`**: Keywords de home actualizadas: "abogados San Lorenzo", "abogados Choluteca", "abogados zona sur Honduras".
+- **`app/(public)/servicios-juridicos/page.tsx`**: Título de sección "Cobertura legal completa en Honduras" → "en la zona sur de Honduras". Keywords localizadas.
+- **`app/(public)/despacho/page.tsx`**: Keywords localizadas (eliminadas referencias genéricas a "Honduras").
+- **`app/(public)/solicitar-consulta/page.tsx`**: Description acortada a <160 caracteres. Keywords con San Lorenzo y Choluteca.
+
+### 🟢 RECOMENDABLE: Mejora de mensajes de conversión regional
+- **`components/marketing/consultation-cta.tsx`**: Añadida mención geográfica en el CTA ("consulta confidencial sin costo en Nacaome, Valle"). Texto reforzado con cobertura de zona sur.
+- **`app/(public)/servicios-juridicos/[slug]/page.tsx`**: Description dinámica acortada a <160 caracteres para cumplir con el límite de SERP.
+
+### Validación
+- `npm run build`: ✅ 259 páginas estáticas generadas, TypeScript sin errores.
+- `npm run test`: ✅ 325 tests pasados (16 suites).
+
+---
+
 ## Release 39 — Sistema de agente SEO para Kilo Code (2026-06-12)
 
 ### Agente SEO principal

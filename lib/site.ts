@@ -49,10 +49,10 @@ export const site = {
     'Bufete de Abogados en Nacaome, Valle',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete de abogados en Nacaome, Valle: defensa penal técnica, asesoría legal integral y atención directa con más de 15 años de experiencia en la zona sur de Honduras.',
+    'Bufete de abogados en Nacaome, Valle, Honduras. Especialistas en defensa penal técnica y asesoría legal integral en la zona sur: San Lorenzo, Choluteca y municipios aledaños. Más de 15 años de experiencia con atención directa y presupuesto por escrito.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'bufete multidisciplinar Nacaome, bufete multidisciplinario Honduras, abogados Nacaome Valle, abogado penalista Nacaome, defensa penal Honduras, asistencia legal 24 horas Honduras, abogado de familia Honduras, abogado laboral Valle, derecho civil Nacaome, abogado mercantil Honduras, abogado tributario Honduras, derecho bancario Honduras, derecho administrativo Honduras, derecho aduanero Honduras, regulación sanitaria ARSA, extranjería Honduras, propiedad intelectual Honduras, derecho ambiental Honduras, conciliación y arbitraje Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
+      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete multidisciplinario sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   phoneDisplay: '+504 9536-3724',
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
