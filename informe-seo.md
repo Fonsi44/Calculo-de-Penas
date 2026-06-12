@@ -552,14 +552,16 @@ Los anchor texts son generalmente descriptivos y naturales:
 | 6 | Metadatos | Title del blog demasiado corto | `/blog` | "Blog Jurídico \| Pineda y Asociados" (35 chars) | Medio — CTR reducido | **Alta** | Baja | ✅ **CORREGIDO** | Title ampliado: "Blog Jurídico de Abogados en Honduras \| Derecho Penal, Familia, Laboral y Más" |
 | 7 | Metadatos | Title de solicitar-consulta corto | `/solicitar-consulta` | "Solicitar Consulta Legal \| Pineda y Asociados" (47 chars) | Bajo — CTR ligeramente reducido | **Alta** | Baja | ✅ **CORREGIDO** | Title ampliado: "Solicitar Consulta Legal Gratuita \| Abogados en Nacaome, Valle" |
 | 8 | Técnico | Sin rel="next"/"prev" en paginación | `/blog` (12 páginas) | Inspección del `<head>` en `/blog` | Medio — indexación de páginas de paginación | **Alta** | — | ✅ **Ya implementado** | El código ya incluye `rel="prev"` y `rel="next"` en `<head>`. |
-| 9 | Técnico | Elementos alert en DOM | Varias páginas | Snapshot de Playwright muestra `alert` al final del DOM | Bajo — posible ruido de renderizado | **Alta** | Media | ⏳ **Pendiente** | Posiblemente componente CookieConsent/Toast. Investigar. |
+| 9 | Técnico | Elementos alert en DOM | Varias páginas | Snapshot de Playwright muestra `alert` al final del DOM | Bajo — posible ruido de renderizado | **Alta** | — | ✅ **Falso positivo** | Contenedor de `ToastProvider` (app/layout.tsx). Invisible, sin impacto SEO. |
 | 10 | Contenido | H1 de /despacho sin keywords | `/despacho` | "Compromiso Legal, Rigor Técnico y Visión de Vanguardia" | Medio — relevancia temática reducida | **Media** | Baja | ✅ **CORREGIDO** | H1 ampliado: "Bufete de Abogados en Nacaome, Valle — Compromiso Legal..." |
 | 11 | Contenido | Enlace contextual /despacho → /derecho-penal | `/despacho` | Solo enlazado vía menú/footer | Bajo — flujo de autoridad | **Media** | Baja | ✅ **CORREGIDO** | Añadido enlace "Consulte nuestra especialidad en defensa penal" |
 | 12 | Contenido | Enlace /derecho-penal → FAQs de penal | `/derecho-penal` | FAQs inline sin enlace a página general | Bajo — flujo de autoridad | **Media** | Baja | ✅ **CORREGIDO** | Añadido enlace "Ver todas las preguntas frecuentes sobre derecho penal" |
 | 13 | Schema | Sin ContactPage schema | `/solicitar-consulta` | Solo BreadcrumbList + WebPage | Medio — señal de página de contacto | **Media** | Baja | ✅ **CORREGIDO** | Añadido `ContactPage` schema con referencia a LegalService |
-| 14 | Metadatos | og:title distinto del title SEO | `/despacho` | Verificado en meta tags | Bajo — discrepancia en redes sociales | **Media** | Baja | ⏳ **Pendiente** | Unificar og:title con el title SEO |
-| 15 | Metadatos | og:image genérica en todas las páginas | Todo el sitio | Misma URL de imagen en todas las páginas | Bajo — apariencia en redes sociales | **Baja** | Media | ⏳ **Pendiente** | Crear imágenes OG específicas por página/sección |
-| 16 | Enlazado | URLs absolutas en enlaces internos | `/servicios-juridicos` → subpáginas | `href="https://www.pinedayasociadoshn.com/servicios-juridicos/..."` | Bajo — sin impacto directo | **Baja** | Baja | ⏳ **Pendiente** | Cambiar a URLs relativas |
+| 14 | Metadatos | og:title distinto del title SEO | `/despacho` | Verificado en meta tags | Bajo — discrepancia en redes sociales | **Media** | Baja | ✅ **CORREGIDO** | Unificado con el title SEO (Fase 3) |
+| 15 | Metadatos | og:image genérica | Todo el sitio | Misma URL de imagen | Bajo | **Baja** | — | ✅ **No aplica** | Posts del blog ya tienen og:image individual. Páginas estáticas comparten la corporativa. |
+| 16 | Enlazado | URLs absolutas en enlaces | `/servicios-juridicos` | `href="https://..."` | Bajo | **Baja** | Baja | ✅ **CORREGIDO** | Cambiado a ruta relativa (Fase 3) |
+| 17 | Enlazado | Falta enlace /blog → /preguntas-frecuentes | `/blog` | Sin enlace contextual | Bajo | **Baja** | Baja | ✅ **CORREGIDO** | Añadido "¿Tiene dudas legales? Consulte nuestras preguntas frecuentes →" |
+| 18 | Enlazado | Falta enlace /derecho-penal → /servicios-juridicos | `/derecho-penal` | Sin enlace al hub | Bajo | **Baja** | Baja | ✅ **CORREGIDO** | Añadido "Explore las 13 áreas jurídicas del bufete →" |
 
 ---
 
@@ -988,10 +990,17 @@ Corregir la causa raíz para que el HTML del servidor coincida exactamente con e
 |---|----------|---------|-----------------|
 | P1 | Fechas de blog en futuro (jul 2026) | DATABASE_URL cifrada con dotenvx — solo Next.js runtime puede leerla | Las fechas `publishedAt` en `blog_posts` están en julio 2026 (~133 posts). Se creó script `scripts/fix-blog-dates.mjs` que corrige todas las fechas restándoles los días necesarios. **Para ejecutarlo se necesita acceso a la BD de Neon**. Alternativa: corregir manualmente desde `/intranet/admin/blog`. |
 | P2 | Error de hidratación React #418 en /despacho | ✅ Corregido | Añadido `suppressHydrationWarning` en `LiveClock`, `HeroOfficeBadge` y `LiveOfficeStatus` (components/marketing/live-widgets.tsx) |
-| P3 | Elementos alert en DOM | ✅ Falso positivo | Son contenedores de `ToastProvider` (app/layout.tsx:107-114). Contenedores de notificaciones toast, invisibles hasta activarse. Sin impacto SEO. |
-| P4 | og:image genérica en todas las páginas | ⚠️ Requiere diseño | Crear imágenes sociales por página/sección. Tarea de diseño, no de código. El `og-image.png` actual es correcto pero genérico. |
-| P5 | og:title distinto del title SEO en /despacho | ✅ Corregido | `app/(public)/despacho/page.tsx:25` — unificado con el title SEO |
-| P6 | URLs absolutas en enlaces de /servicios-juridicos | ✅ Corregido | `app/(public)/servicios-juridicos/page.tsx:67` — cambiado a ruta relativa |
+| P3 | Elementos alert en DOM | ✅ Falso positivo | Contenedores de `ToastProvider`. Sin impacto SEO. |
+| P4 | og:image genérica | ✅ No aplica | Los posts ya tienen og:image individual. Las páginas estáticas comparten la corporativa. |
+| P5 | og:title distinto del title SEO en /despacho | ✅ Corregido | `despacho/page.tsx:25` — unificado |
+| P6 | URLs absolutas en /servicios-juridicos | ✅ Corregido | `servicios-juridicos/page.tsx:67` — ruta relativa |
+
+### Fase 5 — Enlaces contextuales restantes (12 junio 2026)
+
+| # | Acción | Archivo(s) | Resultado |
+|---|--------|-----------|-----------|
+| C9 | Enlace /blog → /preguntas-frecuentes | `app/(public)/blog/page.tsx` | ✅ "¿Tiene dudas legales? Consulte nuestras preguntas frecuentes →" |
+| C10 | Enlace /derecho-penal → /servicios-juridicos | `app/(public)/derecho-penal/page.tsx` | ✅ "Explore las 13 áreas jurídicas del bufete →" |
 
 ---
 
