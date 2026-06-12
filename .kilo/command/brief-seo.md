@@ -1,6 +1,6 @@
 ---
 description: Crea un brief de contenido optimizado para SEO. Define keyword, intención, estructura de headings, metadatos, enlazado interno recomendado, schemas y diferenciadores. Ideal antes de redactar nuevos posts o páginas.
-agent: SEO Senior
+agent: SEOSenior
 skill: brief-seo
 ---
 Crea un brief SEO para contenido nuevo o para reformular contenido existente.

@@ -1,6 +1,6 @@
 ---
 description: Corrige problemas SEO detectados en una auditoría previa. Aplica correcciones on-page, schemas, metadatos, headings y enlazado según prioridad. Usa los hallazgos de /auditar-seo como base.
-agent: SEO Senior
+agent: SEOSenior
 ---
 Corrige problemas SEO específicos detectados en el sitio.
 

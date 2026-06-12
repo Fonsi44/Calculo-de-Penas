@@ -1,6 +1,6 @@
 ---
 description: Realiza una auditoría SEO técnica completa del sitio web. Analiza indexación, crawling, on-page, schemas, arquitectura, enlazado, rendimiento y conversión. Genera informe priorizado con quick wins y plan de implementación.
-agent: SEO Senior
+agent: SEOSenior
 skill: auditoria-seo
 ---
 Realiza una auditoría SEO completa del sitio pinedayasociadoshn.com.

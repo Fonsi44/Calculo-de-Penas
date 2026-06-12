@@ -1,6 +1,6 @@
 ---
 description: Optimiza el SEO local del bufete. Revisa NAP, Google Business Profile, geo tags, LocalBusiness schema, keywords geográficas y presencia en directorios para mejorar el posicionamiento en búsquedas locales.
-agent: SEO Senior
+agent: SEOSenior
 skill: seo-local
 ---
 Optimiza la presencia en búsquedas locales del bufete en Nacaome, Valle, Honduras.

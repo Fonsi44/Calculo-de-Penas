@@ -1,6 +1,6 @@
 ---
 description: Analiza y optimiza el enlazado interno del sitio. Revisa distribución de enlaces, anchors, páginas huérfanas, silos temáticos y oportunidades de interlinking para mejorar la arquitectura de información.
-agent: SEO Senior
+agent: SEOSenior
 skill: enlazado-interno
 ---
 Analiza la estructura de enlazado interno del sitio y propone mejoras.

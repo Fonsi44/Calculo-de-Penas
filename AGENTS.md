@@ -621,7 +621,7 @@ Una tarea se cierra solo si: archivos revisados → cambios aplicados → comand
 
 ### Agente SEO
 
-El proyecto dispone de un agente SEO especializado en `.kilo/agent/SEO Senior.md`. Este agente tiene autoridad para:
+El proyecto dispone de un agente SEO especializado en `.kilo/agent/SEOSenior.md`. Este agente tiene autoridad para:
 
 - Optimizar metadatos (title, description, OG, Twitter Cards, robots)
 - Mejorar datos estructurados (JSON-LD, Schema.org)
