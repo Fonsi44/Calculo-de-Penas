@@ -10,6 +10,7 @@ import { hubMigrantes, type AreaBase } from '@/data/areas-juridicas';
 import { areaSchemas, migrantesHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 
 export function generateStaticParams() {
@@ -93,9 +94,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight">
             Servicios de {subarea.titulo.toLowerCase()}
           </h2>
-          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
-            {subarea.descripcion}
-          </p>
+          <div className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed [&_a]:text-accent-dark [&_a]:underline [&_a]:font-medium [&_strong]:font-semibold" dangerouslySetInnerHTML={{ __html: sanitizeHtml(subarea.descripcion) }} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {subarea.subservicios.map((s, i) => (

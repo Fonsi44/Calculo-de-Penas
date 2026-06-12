@@ -10,6 +10,7 @@ import { areasGenerales, getAreaBySlug, type AreaStandalone } from '@/data/areas
 import { areaHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { sanitizeHtml } from '@/lib/sanitize';
 import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
@@ -131,9 +132,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight">
             Servicios de {area.titulo.toLowerCase()}
           </h2>
-          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
-            {area.descripcion}
-          </p>
+          <div className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed [&_a]:text-accent-dark [&_a]:underline [&_a]:font-medium [&_strong]:font-semibold" dangerouslySetInnerHTML={{ __html: sanitizeHtml(area.descripcion) }} />
         </div>
       </Section>
 

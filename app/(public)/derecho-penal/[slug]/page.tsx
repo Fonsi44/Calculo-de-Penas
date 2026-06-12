@@ -10,6 +10,7 @@ import { hubPenal, type AreaBase } from '@/data/areas-juridicas';
 import { areaSchemas, penalHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 
 export function generateStaticParams() {
@@ -93,9 +94,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight">
             Servicios de {grupo.titulo.toLowerCase()}
           </h2>
-          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
-            {grupo.descripcion}
-          </p>
+          <div className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed [&_a]:text-accent-dark [&_a]:underline [&_a]:font-medium [&_strong]:font-semibold" dangerouslySetInnerHTML={{ __html: sanitizeHtml(grupo.descripcion) }} />
         </div>
       </Section>
 
