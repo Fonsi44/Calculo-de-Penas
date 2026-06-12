@@ -7,8 +7,8 @@ import {
   Scale,
   Calculator,
   BookOpen,
-  PlusCircle,
   ArrowRight,
+  FilePlus,
   ShieldCheck,
   ClipboardList,
   Search,
@@ -74,6 +74,14 @@ const FEATURES: Feature[] = [
     href: '/intranet/delitos',
     cta: 'Explorar catálogo',
     tone: 'neutral',
+  },
+  {
+    icon: FilePlus,
+    title: 'Registrar nuevo delito',
+    desc: 'Añadir un tipo penal personalizado al catálogo de delitos.',
+    href: '/delito-form',
+    cta: 'Añadir delito',
+    tone: 'accent',
   },
 ];
 
@@ -320,23 +328,6 @@ export default function IntranetDashboard() {
             <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
           </Link>
         )}
-
-        {/* Add custom delito */}
-        <Link
-          href="/delito-form"
-          className="flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm hover:shadow-md transition-shadow focus-visible:outline-none"
-        >
-          <div className="w-10 h-10 rounded-md bg-surface-alt flex items-center justify-center mr-3 flex-shrink-0">
-            <PlusCircle size={20} className="text-text-secondary" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-text text-sm">Registrar nuevo delito</p>
-            <p className="text-text-secondary text-xxs">
-              Añadir un tipo penal personalizado al catálogo
-            </p>
-          </div>
-          <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
-        </Link>
 
         {/* Disclaimer */}
         <div className="flex gap-2 p-3 bg-warning-bg rounded-md border border-warning/30">
