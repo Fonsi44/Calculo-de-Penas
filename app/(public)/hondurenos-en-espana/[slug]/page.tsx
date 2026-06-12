@@ -76,7 +76,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
               {subarea.titulo}
             </h1>
             <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
-              {subarea.descripcion}
+              {subarea.resumen}
             </p>
             <div className="mt-7">
               <CTAGroup variant="inverse" />
@@ -93,6 +93,9 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight">
             Servicios de {subarea.titulo.toLowerCase()}
           </h2>
+          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
+            {subarea.descripcion}
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {subarea.subservicios.map((s, i) => (
