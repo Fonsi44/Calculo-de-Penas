@@ -45,7 +45,7 @@ function despachoContent(content: Record<string, string>) {
       eyebrow: content['hero.eyebrow'] || 'El Despacho',
       badge: content['hero.badge'] || 'Multidisciplinar',
       title: content['hero.title'] || 'Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visión de Vanguardia',
-      subtitle: content['hero.subtitle'] || `${site.name} es un bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica.`,
+      subtitle: content['hero.subtitle'] || `${site.name} es un bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad absoluta y la excelencia jurídica. Nos especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito penal como en las distintas ramas del derecho empresarial y privado. Nuestro enfoque combina una sólida solvencia técnica con la digitalización de procesos, garantizando a cada cliente un respaldo legal robusto, transparente y de alto nivel en un entorno global.`,
     },
     mision: {
       title: content['mision_vision.mision_title'] || 'Defender con técnica, servir con humanidad',
