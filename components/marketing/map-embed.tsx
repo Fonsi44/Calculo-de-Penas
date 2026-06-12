@@ -10,18 +10,11 @@ interface MapEmbedProps {
 }
 
 /**
- * Mapa embebido de Google Maps.
+ * Mapa embebido con OpenStreetMap (gratuito, sin API key).
  *
- * Se utiliza la URL pública `https://maps.google.com/maps?q=lat,lng&z=...&output=embed`
- * que Google sirve sin necesidad de clave de la Google Maps Embed API
- * (es la misma vista que se obtiene al pulsar "Compartir > Insertar un mapa"
- * en Google Maps). Funciona tanto con coordenadas como con una dirección
- * textual.
- *
- * Reemplaza al mapa Leaflet + OpenStreetMap anterior, que mostraba un
- * marcador de la marca propio pero una cartografía menos reconocible
- * para los usuarios finales. Google Maps es la referencia visual que
- * todo el mundo espera ver en un sitio de bufete jurídico.
+ * Usa el export embed de OpenStreetMap, que no requiere clave,
+ * no tiene cuotas y no bloquea por referrer.
+ * Incluye un enlace directo visible sin JavaScript.
  */
 export function MapEmbed({
   latitude,
@@ -31,7 +24,12 @@ export function MapEmbed({
   zoom = 16,
   className,
 }: MapEmbedProps) {
-  const src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=${zoom}&hl=es&output=embed`;
+  const offset = 0.004;
+  const minLon = longitude - offset;
+  const minLat = latitude - offset;
+  const maxLon = longitude + offset;
+  const maxLat = latitude + offset;
+  const src = `https://www.openstreetmap.org/export/embed.html?bbox=${minLon},${minLat},${maxLon},${maxLat}&layer=mapnik&marker=${latitude},${longitude}`;
 
   return (
     <div className={className ?? 'relative w-full h-full'}>
@@ -40,9 +38,18 @@ export function MapEmbed({
         src={src}
         className="w-full h-full border-0"
         loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        allowFullScreen
       />
+      <div className="absolute bottom-0 left-0 right-0 bg-white/90 text-[10px] text-center text-text-tertiary py-0.5 px-2 leading-tight">
+        <a
+          href={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=${zoom}/${latitude}/${longitude}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-accent-dark"
+        >
+          OpenStreetMap
+        </a>
+        {' contributors'}
+      </div>
       <noscript>
         <div className="flex items-center gap-2 p-3 text-xs text-text-secondary">
           <MapPin size={14} className="text-accent-dark" />
