@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ChevronLeft, Home, Scale } from 'lucide-react';
+import { ChevronLeft, Home } from 'lucide-react';
 import { UserActions } from './user-actions';
 import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from './app-sidebar';
 
@@ -32,13 +32,13 @@ export function AppShell({
     return (
       <>
         {!hideHeader && (
-          <header className="bg-surface border-b border-border-light px-4 py-2.5 no-print sticky top-0 z-30 shadow-sm">
-            <div className="flex items-center gap-3">
+          <header className="bg-surface border-b border-border-light px-3 py-2 no-print sticky top-0 z-30">
+            <div className="flex items-center gap-2">
               {backHref ? (
                 <Link
                   href={backHref}
                   aria-label={backLabel}
-                  className="w-9 h-9 rounded-lg bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none transition-colors"
+                  className="w-9 h-9 rounded-md bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none"
                 >
                   <ChevronLeft size={18} className="text-text-secondary" />
                 </Link>
@@ -46,14 +46,14 @@ export function AppShell({
                 <Link
                   href="/"
                   aria-label="Ir al inicio"
-                  className="w-9 h-9 rounded-lg bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none transition-colors"
+                  className="w-9 h-9 rounded-md bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none"
                 >
                   <Home size={18} className="text-text-secondary" />
                 </Link>
               )}
               <div className="flex-1 min-w-0">
                 <h1 className="font-bold text-base text-text truncate">{title}</h1>
-                {subtitle && <p className="text-xxs text-text-muted truncate mt-0.5">{subtitle}</p>}
+                {subtitle && <p className="text-xxs text-text-muted truncate">{subtitle}</p>}
               </div>
               <UserActions />
               {headerRight}
@@ -70,13 +70,13 @@ export function AppShell({
 
   return (
     <div className="flex flex-1 bg-background">
-      <aside className="hidden lg:flex desktop-sidebar bg-surface-alt border-r border-border-light flex-col p-4 sticky top-0 h-screen overflow-y-auto no-print">
+      <aside className="hidden lg:flex desktop-sidebar bg-surface border-r border-border-light flex-col p-4 sticky top-0 h-screen overflow-y-auto no-print">
         <Link
           href="/"
-          className="flex items-center gap-2.5 px-1 mb-6 focus-visible:outline-none group"
+          className="flex items-center gap-2 mb-6 focus-visible:outline-none"
         >
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-            <Scale size={17} className="text-accent" />
+          <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center">
+            <span className="text-accent font-extrabold text-sm">L</span>
           </div>
           <div>
             <p className="font-extrabold text-xs text-primary tracking-widest leading-none">LEX HONDURAS</p>
@@ -88,13 +88,13 @@ export function AppShell({
 
       <div className="flex-1 flex flex-col min-w-0">
         {!hideHeader && (
-          <header className="bg-surface border-b border-border-light px-4 py-2.5 no-print sticky top-0 z-30 shadow-sm">
-            <div className="flex items-center gap-3">
+          <header className="bg-surface border-b border-border-light px-3 py-2 no-print sticky top-0 z-30">
+            <div className="flex items-center gap-2">
               {backHref ? (
                 <Link
                   href={backHref}
                   aria-label={backLabel}
-                  className="w-9 h-9 rounded-lg bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none transition-colors"
+                  className="w-9 h-9 rounded-md bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none"
                 >
                   <ChevronLeft size={18} className="text-text-secondary" />
                 </Link>
@@ -102,14 +102,14 @@ export function AppShell({
                 <Link
                   href="/"
                   aria-label="Ir al inicio"
-                  className="w-9 h-9 rounded-lg bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none transition-colors"
+                  className="w-9 h-9 rounded-md bg-surface-alt flex items-center justify-center hover:bg-border-light focus-visible:outline-none"
                 >
                   <Home size={18} className="text-text-secondary" />
                 </Link>
               )}
               <div className="flex-1 min-w-0">
                 <h1 className="font-bold text-base text-text truncate">{title}</h1>
-                {subtitle && <p className="text-xxs text-text-muted truncate mt-0.5">{subtitle}</p>}
+                {subtitle && <p className="text-xxs text-text-muted truncate">{subtitle}</p>}
               </div>
               <UserActions />
               {headerRight}

@@ -14,7 +14,6 @@ import { Paso8Resultado } from './paso8-resultado';
 import { CalculadoraHeader, CalculadoraSidebar } from './calculadora-header';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import Link from 'next/link';
-import { Scale } from 'lucide-react';
 import { SaveModal } from './save-modal';
 import { ComparadorView } from './comparador';
 import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
@@ -75,11 +74,11 @@ function CalculadoraShell() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Intranet sidebar: navegación + logo */}
-        <aside className="hidden lg:flex lg:flex-col desktop-sidebar bg-surface-alt border-r border-border-light">
+        <aside className="hidden lg:flex lg:flex-col desktop-sidebar bg-surface border-r border-border-light">
           <div className="p-4 border-b border-border-light">
-            <Link href="/" className="flex items-center gap-2.5 focus-visible:outline-none group">
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                <Scale size={17} className="text-accent" />
+            <Link href="/" className="flex items-center gap-2 focus-visible:outline-none">
+              <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center">
+                <span className="text-accent font-extrabold text-sm">L</span>
               </div>
               <div>
                 <p className="font-extrabold text-xs text-primary tracking-widest leading-none">LEX HONDURAS</p>

@@ -130,50 +130,46 @@ export default function IntranetDashboard() {
 
   return (
     <AppShell title={site.name} subtitle="Intranet · Motor jurídico de cálculo de penas">
-      <div className="p-4 max-w-3xl mx-auto w-full space-y-4">
+      <div className="p-3 max-w-3xl mx-auto w-full space-y-3">
         {/* Hero / bienvenida */}
-        <Card padding="lg" className="relative overflow-hidden border-l-4 border-l-accent">
-          <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-accent/8 blur-3xl pointer-events-none" />
-          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-primary/5 blur-2xl pointer-events-none" />
-          <div className="flex items-start gap-4 relative">
-            <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20">
-              <Scale size={24} className="text-accent" />
+        <Card padding="md" className="relative overflow-hidden border-l-4 border-l-accent">
+          <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-accent/10 blur-2xl pointer-events-none" />
+          <div className="flex items-start gap-3 relative">
+            <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 shadow-md">
+              <Scale size={22} className="text-accent" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-                <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
-                  {greeting}
-                </p>
-              </div>
-              <h2 className="font-extrabold text-xl text-primary leading-tight">
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
+                {greeting}
+              </p>
+              <h2 className="font-extrabold text-lg text-primary leading-tight mt-0.5">
                 Bienvenido al panel del bufete
               </h2>
-              <p className="text-sm text-text-secondary mt-1.5 leading-5 capitalize">
+              <p className="text-xs text-text-secondary mt-1 leading-5 capitalize">
                 {dateStr} · {site.address.city}, {site.address.department}
               </p>
             </div>
-            <Badge tone="success" className="hidden sm:inline-flex shadow-sm">
+            <Badge tone="success" className="hidden sm:inline-flex">
               <Activity size={10} className="mr-1" /> Sesión activa
             </Badge>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
             {[
-              { value: stats.total, label: 'Delitos tipificados', icon: FileCheck, accent: 'border-l-accent bg-accent/5' },
-              { value: '635', label: 'Artículos del CP', icon: BookOpen, accent: 'border-l-info bg-info/5' },
-              { value: stats.clasificaciones, label: 'Ramas jurídicas', icon: Layers, accent: 'border-l-accent-dark bg-accent-dark/5' },
-              { value: '8', label: 'Pasos del cálculo', icon: Zap, accent: 'border-l-warning bg-warning/5' },
+              { value: stats.total, label: 'Delitos', icon: FileCheck, tone: 'text-primary' },
+              { value: '635', label: 'Arts. CP', icon: BookOpen, tone: 'text-info' },
+              { value: stats.clasificaciones, label: 'Ramas', icon: Layers, tone: 'text-accent-dark' },
+              { value: '8', label: 'Pasos', icon: Zap, tone: 'text-aggravation' },
             ].map((s, i) => (
               <div
                 key={i}
-                className={`relative bg-surface rounded-lg p-3 border-l-2 ${s.accent} shadow-sm hover:shadow-md transition-shadow overflow-hidden`}
+                className="relative bg-surface-alt rounded-md p-2.5 text-center overflow-hidden"
               >
-                <s.icon size={14} className="text-text-muted mb-1.5" aria-hidden="true" />
-                <p className="text-primary font-extrabold text-xl tabular-nums leading-none">
+                <s.icon size={14} className={`mx-auto mb-1 ${s.tone}`} aria-hidden="true" />
+                <p className="text-primary font-extrabold text-lg tabular-nums leading-none">
                   {s.value}
                 </p>
-                <p className="text-xxs text-text-muted mt-1">
+                <p className="text-xxs text-text-muted uppercase tracking-wider mt-1">
                   {s.label}
                 </p>
               </div>
@@ -182,15 +178,15 @@ export default function IntranetDashboard() {
         </Card>
 
         {/* Quick search */}
-        <Card padding="lg" className="border-l-4 border-l-accent">
-          <div className="flex items-center gap-2 mb-3">
+        <Card padding="md" className="border-l-4 border-l-accent">
+          <div className="flex items-center gap-2 mb-2">
             <div className="w-7 h-7 rounded-md bg-accent/15 flex items-center justify-center">
-              <Search size={15} className="text-accent-dark" />
+              <Search size={14} className="text-accent-dark" />
             </div>
-            <h2 className="font-bold text-base text-primary">Búsqueda rápida de artículos</h2>
-            <Badge tone="info" size="sm">CP Honduras</Badge>
+            <h2 className="font-bold text-sm text-primary">Búsqueda rápida de artículos</h2>
+            <Badge tone="info">CP Honduras</Badge>
           </div>
-          <p className="text-sm text-text-secondary mb-3 leading-5">
+          <p className="text-xxs text-text-secondary mb-2 leading-4">
             Buscá por número (Art. 19), epígrafe (hurto) o tema (eximente).
           </p>
           <ArticuloAutocomplete />
@@ -198,70 +194,69 @@ export default function IntranetDashboard() {
 
         {/* Features */}
         <div>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-md bg-accent/15 flex items-center justify-center">
-                  <TrendingUp size={12} className="text-accent-dark" />
-                </div>
-                <p className="text-xs font-bold text-text-secondary uppercase tracking-wider">
-                  Funcionalidades
-                </p>
-              </div>
-              <Badge tone="accent" size="sm">4 módulos</Badge>
-            </div>
-            <div className="space-y-2.5">
-              {FEATURES.map((f) => {
-                const tone = toneClasses[f.tone];
-                return (
-                  <Link
-                    key={f.href}
-                    href={f.href}
-                    className={`group flex items-center bg-surface p-4 rounded-lg border border-border-light shadow-sm hover:shadow-md hover:border-accent/30 hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 ${tone.ring}`}
+          <div className="flex items-center justify-between mb-2 px-1">
+            <p className="text-xxs font-bold text-text-muted uppercase tracking-wider">
+              Funcionalidades
+            </p>
+            <p className="text-xxs text-text-muted inline-flex items-center gap-1">
+              <TrendingUp size={10} /> 4 módulos activos
+            </p>
+          </div>
+          <div className="space-y-2">
+            {FEATURES.map((f) => {
+              const tone = toneClasses[f.tone];
+              return (
+                <Link
+                  key={f.href}
+                  href={f.href}
+                  className={`group flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm hover:shadow-md hover:border-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 ${tone.ring}`}
+                >
+                  <div
+                    className={`w-11 h-11 rounded-md flex items-center justify-center mr-3 flex-shrink-0 ${tone.bg}`}
                   >
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 ${tone.bg} transition-transform group-hover:scale-105`}
-                    >
-                      <f.icon size={22} className={tone.icon} />
+                    <f.icon size={20} className={tone.icon} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <p className="font-bold text-text text-sm">{f.title}</p>
+                      {f.badge && (
+                        <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full bg-accent/15 text-accent-dark text-xxs font-bold uppercase tracking-wider">
+                          {f.badge}
+                        </span>
+                      )}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-bold text-text text-sm">{f.title}</p>
-                        {f.badge && (
-                          <Badge tone="accent" size="sm">{f.badge}</Badge>
-                        )}
-                      </div>
-                      <p className="text-text-secondary text-xs leading-5 mt-1">{f.desc}</p>
-                    </div>
-                    <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
-                      <span className="text-xs font-semibold text-accent-dark hidden sm:inline group-hover:text-primary transition-colors">
-                        {f.cta}
-                      </span>
-                      <ArrowRight
-                        size={16}
-                        className="text-text-muted group-hover:translate-x-1 group-hover:text-accent-dark transition-all"
-                      />
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+                    <p className="text-text-secondary text-xxs leading-4 mt-0.5">{f.desc}</p>
+                  </div>
+                  <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                    <span className="text-xxs font-semibold text-accent-dark hidden sm:inline group-hover:text-primary transition-colors">
+                      {f.cta}
+                    </span>
+                    <ArrowRight
+                      size={16}
+                      className="text-text-muted group-hover:translate-x-0.5 group-hover:text-accent-dark transition-all"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         {/* Rules applied */}
-        <Card padding="lg">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-accent/10 rounded-full w-fit mb-3">
-            <ShieldCheck size={14} className="text-accent-dark" />
-            <span className="font-bold text-xs text-primary uppercase tracking-wider">
-              Reglas técnicas del motor
+        <Card padding="md">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 bg-primary/10 rounded-full w-fit mb-2">
+            <ShieldCheck size={12} className="text-accent-dark" />
+            <span className="font-bold text-xxs text-primary uppercase tracking-wider">
+              Reglas técnicas que aplica el motor
             </span>
           </div>
-          <ul className="space-y-2">
+          <ul className="space-y-1.5">
             {RULES.map((r, i) => (
               <li
                 key={i}
-                className="flex items-center gap-3 text-sm text-text-secondary p-2 rounded-md hover:bg-surface-alt transition-colors"
+                className="flex items-center gap-2 text-xs text-text-secondary"
               >
-                <r.icon size={16} className="text-accent-dark flex-shrink-0" />
+                <r.icon size={14} className="text-accent-dark flex-shrink-0" />
                 <span>{r.label}</span>
               </li>
             ))}
@@ -269,15 +264,13 @@ export default function IntranetDashboard() {
         </Card>
 
         {/* Marco normativo */}
-        <Card padding="lg" className="border-l-4 border-l-info">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-7 h-7 rounded-md bg-info/15 flex items-center justify-center">
-              <BookOpen size={15} className="text-info" />
-            </div>
-            <h2 className="font-bold text-base text-primary">Marco normativo</h2>
-            <Badge tone="info" size="sm">Vigente</Badge>
+        <Card padding="md" className="border-l-4 border-l-info">
+          <div className="flex items-center gap-2 mb-2">
+            <BookOpen size={14} className="text-info" />
+            <h2 className="font-bold text-sm text-primary">Marco normativo</h2>
+            <Badge tone="info">Vigente</Badge>
           </div>
-          <p className="text-sm text-text leading-6">
+          <p className="text-xs text-text leading-5">
             El cálculo se basa en el <strong>Código Penal de Honduras</strong> (Decreto 130-2017,
             publicado en el Diario Oficial el 18 de enero de 2018) y sus reformas vigentes
             (Decretos 119-2019, 46-2020, 93-2021 y 59-2024).
@@ -286,73 +279,73 @@ export default function IntranetDashboard() {
           </p>
           <Link
             href="/derecho-penal"
-            className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+            className="inline-flex items-center gap-1 mt-2 text-xxs font-semibold text-primary hover:text-accent-dark"
           >
-            Ver marco normativo completo <ArrowRight size={14} />
+            Ver marco normativo completo <ArrowRight size={12} />
           </Link>
         </Card>
 
         {/* Equipo */}
         <Link
           href="/despacho"
-          className="flex items-center bg-surface p-4 rounded-lg border border-border-light shadow-sm hover:shadow-md hover:border-accent/30 hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none group"
+          className="flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm hover:shadow-md transition-shadow focus-visible:outline-none"
         >
-          <div className="w-11 h-11 rounded-xl bg-surface-alt flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-accent/10 transition-colors">
-            <Users size={22} className="text-text-secondary" />
+          <div className="w-10 h-10 rounded-md bg-surface-alt flex items-center justify-center mr-3 flex-shrink-0">
+            <Users size={20} className="text-text-secondary" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-bold text-text text-sm">El Despacho</p>
-            <p className="text-text-secondary text-xs mt-0.5">
+            <p className="text-text-secondary text-xxs">
               Conoce a {site.name} y al equipo detrás del bufete
             </p>
           </div>
-          <ArrowRight size={16} className="text-text-muted group-hover:translate-x-1 transition-all flex-shrink-0" />
+          <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
         </Link>
 
         {/* Admin Panel */}
         {user?.rol === 'admin' && (
           <Link
             href="/intranet/admin"
-            className="flex items-center bg-surface p-4 rounded-lg border border-accent/20 shadow-sm hover:shadow-md hover:border-accent hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none group"
+            className="flex items-center bg-surface p-3 rounded-md border border-accent/30 shadow-sm hover:shadow-md hover:border-accent transition-all focus-visible:outline-none"
           >
-            <div className="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-accent/20 transition-colors">
-              <ShieldCheck size={22} className="text-primary" />
+            <div className="w-10 h-10 rounded-md bg-accent/15 flex items-center justify-center mr-3 flex-shrink-0">
+              <ShieldCheck size={20} className="text-primary" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-bold text-text text-sm">Panel de Administración</p>
-              <p className="text-text-secondary text-xs mt-0.5">
+              <p className="text-text-secondary text-xxs">
                 Gestionar usuarios, blog, FAQ y configuración del sitio
               </p>
             </div>
-            <ArrowRight size={16} className="text-text-muted group-hover:translate-x-1 transition-all flex-shrink-0" />
+            <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
           </Link>
         )}
 
         {/* Add custom delito */}
         <Link
           href="/delito-form"
-          className="flex items-center bg-surface p-4 rounded-lg border border-border-light shadow-sm hover:shadow-md hover:border-border hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none group"
+          className="flex items-center bg-surface p-3 rounded-md border border-border-light shadow-sm hover:shadow-md transition-shadow focus-visible:outline-none"
         >
-          <div className="w-11 h-11 rounded-xl bg-surface-alt flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-accent/10 transition-colors">
-            <PlusCircle size={22} className="text-text-secondary" />
+          <div className="w-10 h-10 rounded-md bg-surface-alt flex items-center justify-center mr-3 flex-shrink-0">
+            <PlusCircle size={20} className="text-text-secondary" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-bold text-text text-sm">Registrar nuevo delito</p>
-            <p className="text-text-secondary text-xs mt-0.5">
+            <p className="text-text-secondary text-xxs">
               Añadir un tipo penal personalizado al catálogo
             </p>
           </div>
-          <ArrowRight size={16} className="text-text-muted group-hover:translate-x-1 transition-all flex-shrink-0" />
+          <ArrowRight size={16} className="text-text-muted flex-shrink-0" />
         </Link>
 
         {/* Disclaimer */}
-        <div className="flex gap-3 p-4 bg-warning/5 rounded-lg border border-warning/20">
+        <div className="flex gap-2 p-3 bg-warning-bg rounded-md border border-warning/30">
           <AlertTriangle
-            size={16}
-            className="text-warning flex-shrink-0 mt-0.5"
+            size={14}
+            className="text-text-secondary flex-shrink-0 mt-0.5"
             aria-hidden="true"
           />
-          <p className="text-text-secondary text-xs leading-5 italic">
+          <p className="text-text-secondary text-xxs leading-4 italic">
             Este cálculo es <strong>orientativo y técnico</strong>. No sustituye la función
             jurisdiccional ni la valoración de pruebas que realiza el juez competente.
             Cualquier aplicación práctica debe ser supervisada por un abogado habilitado.
