@@ -155,6 +155,14 @@ export default async function DerechoPenalPage() {
             Ver todas las preguntas frecuentes sobre derecho penal <ArrowRight size={16} />
           </Link>
         </div>
+        <div className="max-w-3xl mx-auto mt-4 text-center">
+          <Link
+            href="/servicios-juridicos"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Explore las 13 áreas jurídicas del bufete <ArrowRight size={16} />
+          </Link>
+        </div>
       </Section>
       )}
 

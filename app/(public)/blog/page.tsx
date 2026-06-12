@@ -177,6 +177,16 @@ export default async function BlogHubPage(props: Props) {
               <div className="mt-8">
                 <RssButton />
               </div>
+
+              <p className="mt-4 text-center">
+                ¿Tiene dudas legales?{' '}
+                <Link
+                  href="/preguntas-frecuentes"
+                  className="text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                >
+                  Consulte nuestras preguntas frecuentes →
+                </Link>
+              </p>
             </div>
           )}
         </div>
