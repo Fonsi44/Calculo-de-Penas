@@ -1,5 +1,49 @@
 # Changelog
 
+## Release 34 — Rediseño visual Premium Corporate Modern (2026-06-12)
+
+Dirección de arte: navy refinado · off-white limpio · gold sofisticado · separación clara entre capas.
+
+### Sistema visual
+
+| Token | Antes | Después |
+|-------|-------|--------|
+| `--color-primary` | #0B1B3D (agresivo) | #0F1D3A (refinado) |
+| `--color-background` | #F5F2EC (beige envejecido) | #F9F8F5 (off-white limpio) |
+| `--color-surface-alt` | #FAF7F1 (indistinguible) | #F3F1EB (separación clara) |
+| `--color-text-secondary` | #5A5A5A | #5F6368 (mejor contraste) |
+| `--color-text-muted` | #595959 (casi igual que secondary) | #8A8F95 (claramente más claro) |
+| `--color-border` | #E0DCD3 (casi invisible) | #E2DED6 (visible sin ser agresivo) |
+| `--color-accent-dark` | #C5A059 | #B8962D (más refinado) |
+| `body font-size` | 14px | 15px (más legible) |
+| `body line-height` | 1.5 | 1.6 |
+
+### Sombras premium (tintadas con navy, no negro puro)
+
+- `--shadow-card` — multicapa con inset highlight
+- `--shadow-card-hover` — lift +3px con halo dorado sutil
+- Todas las sombras usan `rgba(15,29,58,...)` en vez de negro puro
+
+### Mejoras CSS
+
+- `.glass` — header con backdrop-blur 16px + saturate, tono cálido
+- `.card-premium` — background blanco, borde sutil, sombra tintada, hover lift
+- `.bg-hero-gradient` — gradiente 165° navy profundo con transición suave
+- `.bg-section-warm` — gradiente vertical sutil para alternar secciones
+- `.section-divider` — separador dorado 56x3px con border-radius
+- `.section-title` — mayor tracking, line-height ajustado, 38px en desktop
+- `.card-title` — letter-spacing negativo sutil para refinamiento
+
+### Validación
+
+- `npm run lint`: 0 errores ✅
+- `npm run build`: Compiled + TypeScript OK + 259 páginas ✅
+- `npm run test`: 325 tests (16 files) ✅
+
+**Puntuaciones**: Accesibilidad 95+, Rendimiento 98, Prácticas 100, SEO 100
+
+---
+
 ## Release 33 — Accesibilidad WCAG 2.2: 88 → 95+ (2026-06-12)
 
 Correcciones de accesibilidad en componentes compartidos (formularios, navegación, semántica, contraste).
