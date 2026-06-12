@@ -936,7 +936,7 @@ export const hubMigrantes: HubMigrantes = {
   heroEyebrow: 'Asistencia transnacional',
   heroTitle: 'Hondureños en España: asistencia legal integral',
   heroSubtitle:
-    'Resolvemos sus trámites legales entre Honduras y España con pleno efecto jurídico en ambos países. Gestión documental, apostilla de La Haya, traducción jurada, poderes notariales, divorcios internacionales, custodia, alimentos, sucesiones, nacionalidad española, reagrupación familiar y actos notariales coordinados con consulado y notarías en Honduras.',
+    'Ponemos a su disposición nuestra solvencia legal y técnica para gestionar de forma remota todos sus asuntos jurídicos en territorio hondureño. Facilitamos la emisión de documentación oficial, actos notariales, poderes internacionales, gestión de herencias y procesos de derecho de familia, garantizando que sus trámites locales se ejecuten con pleno efecto jurídico desde Honduras para sus necesidades en el extranjero',
   faqs: [
     { pregunta: '¿Pueden hacer poderes notariales en Honduras desde España?', respuesta: 'Sí. Coordinamos con notarios en Honduras para que usted firme en el Consulado o por poder especial, con apostilla y traducción cuando corresponda.' },
     { pregunta: '¿Cuánto tarda una legalización?', respuesta: 'La apostilla de La Haya en Honduras se obtiene en 1-3 días hábiles. Las traducciones juradas en España, según disponibilidad del traductor.' },
