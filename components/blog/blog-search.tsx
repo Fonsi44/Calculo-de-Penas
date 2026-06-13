@@ -20,7 +20,8 @@ export function BlogSearch({ posts }: Props) {
       (p) =>
         p.title.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
-        p.tags?.some((t) => t.toLowerCase().includes(q))
+        p.tags?.some((t) => t.toLowerCase().includes(q)) ||
+        (p.body && p.body.replace(/<[^>]+>/g, '').toLowerCase().includes(q))
     );
   }, [query, posts]);
 
