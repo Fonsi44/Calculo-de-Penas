@@ -145,20 +145,10 @@ export async function pageHasContent(page: string): Promise<boolean> {
   return rows.length > 0;
 }
 
-/** Ensure a page is published if it has content. Returns the resolved status. */
-export async function ensurePagePublished(page: string): Promise<'published' | 'draft' | 'inactive'> {
-  const hasContent = await pageHasContent(page);
-  if (!hasContent) return 'draft';
-
-  const meta = await getPageMeta(page);
-  if (meta.status === 'published') return 'published';
-
-  // If page has content but status is not published, auto-publish (conservative: was likely published before)
-  await setPageStatus(page, 'published');
-  return 'published';
-}
-
-/** Load metadata for a page from `_meta.*` fields in page_content. */
+/** Load metadata for a page from `_meta.*` fields in page_content.
+ *  Status is determined by explicit _meta.status. If not set, defaults to 'draft'.
+ *  NEVER auto-publishes — status changes only happen via explicit PATCH set-status.
+ */
 export async function getPageMeta(page: string): Promise<PageMetaData> {
   const rows = await db.select().from(pageContent)
     .where(and(
@@ -171,20 +161,11 @@ export async function getPageMeta(page: string): Promise<PageMetaData> {
     map[row.field] = row.content;
   }
 
-  // Determine status: if _meta.status is set explicitly, use it.
-  // Otherwise, if page has content, default to 'published' (conservative).
   const explicitStatus = map.status as PageMetaData['status'] | undefined;
-  const hasContentHint = (Object.keys(map).length > 0) || null; // non-meta content exists
-
-  let status: PageMetaData['status'];
-  if (explicitStatus && ['published', 'draft', 'inactive'].includes(explicitStatus)) {
-    status = explicitStatus;
-  } else if (hasContentHint) {
-    // If we found meta fields but no explicit status, default to published
-    status = 'published';
-  } else {
-    status = DEFAULT_PAGE_META.status;
-  }
+  const status: PageMetaData['status'] =
+    (explicitStatus && ['published', 'draft', 'inactive'].includes(explicitStatus))
+      ? explicitStatus
+      : DEFAULT_PAGE_META.status;
 
   return {
     status,
@@ -345,9 +326,8 @@ export const getAllPagesMeta = cache(async (): Promise<PageListItem[]> => {
     let hasSeo = false;
 
     try {
-      // Use ensurePagePublished to auto-restore published status for pages with content
-      status = await ensurePagePublished(pm.page);
       const meta = await getPageMeta(pm.page);
+      status = meta.status;
       publishedAt = meta.publishedAt;
       hasSeo = !!(meta.metaTitle || meta.metaDescription || meta.ogImage);
     } catch {}

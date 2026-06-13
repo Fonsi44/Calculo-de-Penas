@@ -1,5 +1,5 @@
 export const EDITOR_CSS = `
-/* ─── Mode indicator ────────────────────────────────────────── */
+/* ─── Mode indicator bar ─────────────────────────────────── */
 .ve-active::before {
   content: '✎ MODO EDICIÓN — Los clics no navegan. Seleccioná un elemento para editarlo.';
   position: fixed;
@@ -42,17 +42,16 @@ export const EDITOR_CSS = `
   border: 1px solid rgba(111, 207, 151, 0.3);
 }
 
-/* ─── Element-level editing ──────────────────────────────── */
+/* ─── Editable element highlight ────────────────────────── */
 .ve-active .ve-el {
-  outline: 2px dashed rgba(212,175,55,0.3);
+  outline: 2px dashed rgba(212,175,55,0.25);
   outline-offset: 1px;
   cursor: pointer;
-  transition: outline-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+  transition: outline-color 0.12s ease, background-color 0.12s ease;
   border-radius: 2px;
-  position: relative;
 }
 .ve-active .ve-el:hover {
-  outline-color: rgba(212,175,55,0.7);
+  outline-color: rgba(212,175,55,0.65);
   background-color: rgba(212,175,55,0.04);
 }
 .ve-active .ve-el.ve-selected {
@@ -67,11 +66,10 @@ export const EDITOR_CSS = `
   box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
   cursor: text;
 }
-
-/* Selection highlight ring for parents */
-.ve-active .ve-parent-highlight {
-  outline: 1px dashed rgba(15,29,58,0.15);
-  outline-offset: 0px;
+.ve-active .ve-el.ve-parent-highlight {
+  outline: 2px solid rgba(15,29,58,0.2);
+  outline-offset: 1px;
+  background-color: rgba(15,29,58,0.03);
 }
 
 .ve-tooltip {
@@ -88,6 +86,7 @@ export const EDITOR_CSS = `
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   border: 1px solid rgba(255,255,255,0.1);
   line-height: 1.4;
+  will-change: left, top;
 }
 .ve-tooltip em {
   color: #c9a55c;
@@ -95,7 +94,7 @@ export const EDITOR_CSS = `
   font-weight: 600;
 }
 
-/* Hidden block indicator */
+/* ─── Block states ───────────────────────────────────────── */
 .ve-block-hidden {
   opacity: 0.4;
   filter: grayscale(0.8);
@@ -118,7 +117,6 @@ export const EDITOR_CSS = `
   font-family: system-ui, sans-serif;
 }
 
-/* Removed element marker */
 .ve-removed {
   opacity: 0.2;
   pointer-events: none;
@@ -142,7 +140,7 @@ export const EDITOR_CSS = `
   pointer-events: none;
 }
 
-/* ─── Preview mode resets everything ─────────────────────── */
+/* ─── Preview: reset all editing visuals ─────────────────── */
 .ve-preview .ve-el {
   outline: none !important;
   cursor: auto !important;
@@ -175,10 +173,13 @@ export const EDITOR_CSS = `
 .ve-preview .ve-hidden-by-editor {
   display: none !important;
 }
+.ve-preview::before {
+  z-index: 2147483646;
+}
 
-/* No interactive elements in edit mode */
+/* Block interactive elements in edit mode */
 .ve-active a, .ve-active button, .ve-active [onclick], .ve-active [role="button"],
-.ve-active input, .ve-active select, .ve-active textarea, .ve-active [tabindex]:not(.ve-el) {
+.ve-active input, .ve-active select, .ve-active textarea {
   pointer-events: none !important;
 }
 .ve-active .ve-el {

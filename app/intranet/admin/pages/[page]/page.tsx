@@ -85,6 +85,10 @@ export default function AdminPageEditor() {
     setPageMeta(meta);
   }, [params.page]);
 
+  const handleMetaUpdate = useCallback((meta: Partial<PageMetaFormData>) => {
+    setPageMeta(prev => ({ ...prev, ...meta }));
+  }, []);
+
   if (loading) return <div className="flex justify-center py-8"><Spinner /></div>;
   if (!metaDef) return <Card padding="lg"><div className="text-center"><p className="text-text-secondary">Página no encontrada.</p></div></Card>;
 
@@ -147,6 +151,8 @@ export default function AdminPageEditor() {
           pageLabel={metaDef.label}
           publicRoute={currentRoute}
           onBack={() => router.push('/intranet/admin/pages')}
+          initialMeta={pageMeta}
+          onMetaUpdate={handleMetaUpdate}
         />
       ) : (
         <div className="max-w-2xl mx-auto">
