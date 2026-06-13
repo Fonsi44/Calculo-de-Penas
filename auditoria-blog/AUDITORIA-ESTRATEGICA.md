@@ -431,9 +431,9 @@ La arquitectura del blog debe separar dos tipos de activos SEO con funciones y m
 | Fusionar contenidos solapados residuales | 2 horas | 🟡 Media | Medio | Medio | Ediciones en BD |
 | Convertir categorías débiles en clusters útiles | 4 horas | 🟡 Media | Medio | Bajo | Plan de contenidos |
 
-**Progreso FASE 4:** 80% completado | 20% restante 🔄
+**Progreso FASE 4:** 95% completado | 5% restante ✅
 
-***Actualización 13-Jun-2026:** Cluster aduanero reestructurado con `abogado-aduanero-san-lorenzo` como página de servicio y `importaciones-san-lorenzo` como satélite. Cluster ambiental con `evaluacion-impacto-ambiental-honduras` (categoría `derecho-ambiental`). Enlazado interno implementado en cada post (pilar→satélite, satélite→dinero). Pendiente: verificar cobertura completa de enlazado entre clusters.*
+***Actualización 13-Jun-2026:** Cluster aduanero con `guia-aduanera-importaciones-honduras` como pilar + `abogado-aduanero-san-lorenzo` (dinero) + `importaciones-san-lorenzo` (satélite). Cluster ambiental con `derecho-ambiental-honduras` como pilar + posts satélite existentes. Enlazado interno implementado en cada post. Pendiente: verificar cobertura de enlazado cruzado entre clusters.*
 
 ### FASE 5 — Conversión a leads (1 semana)
 **Objetivo:** Transformar tráfico orgánico en consultas reales.
@@ -449,9 +449,9 @@ La arquitectura del blog debe separar dos tipos de activos SEO con funciones y m
 | Añadir checklist descargables para posts transaccionales | 3 horas | 🟡 Media | Alto | PDFs descargables |
 | Medición de conversiones por URL (GA4 + GSC) | 2 horas | 🟡 Alta | — | Dashboard configurado |
 
-**Progreso FASE 5:** 90% completado | 10% restante ✅
+**Progreso FASE 5:** 95% completado | 5% restante ✅
 
-***Actualización 13-Jun-2026:** FloatingContactRail activado en el layout público con botones WhatsApp y teléfono. Blog CTAs actualizados con componente `BlogCtaBar` que incluye GA4 events. CTAs locales en cada página de dinero y post satélite. Pendiente: formulario corto contextual (3 campos) en páginas de servicio local.*
+***Actualización 13-Jun-2026:** FloatingContactRail activado. BlogCtaBar con GA4 events. Formulario corto contextual (LocalConsultForm) creado. CTAs locales en 71 posts. Señales de confianza (colegiación, 15 años, presencia local) añadidas en 9 páginas de dinero. Pendiente: formulario en páginas locales renderizado.*
 
 ### FASE 6 — Medición y mejora continua (permanente)
 **Objetivo:** Medir qué contenidos posicionan y convierten, ajustar estrategia.
@@ -742,9 +742,9 @@ Todo post prioritario debe seguir esta estructura exacta:
 | **Versión 2.1: Ajuste de métricas de keywords locales** | ✅ Completado | 100% | 0% |
 | **Versión 2.1: Reordenación secciones 7.3 y 7.4** | ✅ Completado | 100% | 0% |
 
-**Progreso global del plan estratégico:** 85% estimado | **Restante:** 15% estimado
+**Progreso global del plan estratégico:** 94% estimado | **Restante:** 6% estimado
 
-***Actualización 13-Jun-2026:** Fases 1-3 completadas al 100%. Fase 4 (clusters) al 80%. Fase 5 (CRO) al 90%. Fase 6 (medición) al 50%. Las 14 páginas locales (6 dinero + 8 satélite) han sido creadas e insertadas en la base de datos. El FloatingContactRail con WhatsApp y teléfono está activo en todo el sitio público. Los eventos GA4 están configurados para WhatsApp, teléfono y formularios.*
+***Actualización final 13-Jun-2026:** Fases 1-3 completadas al 100%. Fase 4 (clusters) al 95% (pilares Aduanero y Ambiental creados). Fase 5 (CRO) al 95% (señales de confianza añadidas). Fase 6 (medición) al 50%. 286 páginas generadas en build. 2 guías pilar nuevas creadas. Pendiente: medición GA4 avanzada, FAQ schema automatizado, guías pilar de contenido avanzado.*
 
 ---
 
