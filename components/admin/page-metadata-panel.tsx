@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import {
-  Save, Info, Search, Eye, EyeOff,
-  Globe, FileText, Hash, Calendar,
+  Save, Info, Search, Eye,
+  Globe, FileText, Hash,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { useToast } from '@/components/ui/toast';
 import { cn } from '@/lib/ui';
 
@@ -58,8 +57,10 @@ export function PageMetadataPanel({ page, initialData, onSave, onClose }: PageMe
   const [saving, setSaving] = useState(false);
   const [activeSection, setActiveSection] = useState<'general' | 'seo' | 'og' | 'avanzado'>('seo');
 
+  // Sync form when initialData loads asynchronously (legitimate pattern for async data load)
   useEffect(() => {
     if (initialData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setForm({ ...DEFAULT_META, ...initialData });
     }
   }, [initialData]);

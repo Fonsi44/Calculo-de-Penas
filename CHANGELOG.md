@@ -1,5 +1,103 @@
 # Changelog
 
+## Release 50 — Rediseño completo del módulo de páginas admin: metadatos vs editor visual (2026-06-13)
+
+### Resumen
+
+Reestructuración completa del módulo `/intranet/admin/pages`. El contenido visible de cada página se edita ahora desde un **visor visual inline** que muestra la página pública real con controles contextuales. La sección de **metadatos y SEO** queda separada en un panel de formulario exclusivo para configuración técnica. Se eliminó el editor tradicional de secciones/campos como interfaz principal de contenido.
+
+### Filosofía aplicada
+
+- **Metadatos en formulario**: título interno, slug, estado, meta title, meta description, OG tags, canonical, robots, keywords, orden, idioma, página padre. Solo configuración editorial y SEO.
+- **Contenido en visor visual**: la página pública se renderiza en un iframe dentro del admin. Cada elemento editable (textos, títulos, párrafos, badges) se marca con `data-section` y `data-field`. El administrador puede editar inline (click → contenteditable), y los cambios se registran como pendientes hasta guardar.
+- **Estados**: publicado (visible en web), borrador (solo en admin), inactivo (no visible). Se cambian desde la barra superior del editor visual.
+- **Sin deploy para contenido**: todos los cambios se guardan en DB (`page_content`) y se publican con revalidación ISR.
+- **Permisos**: solo admin puede acceder a `/intranet/admin/pages/*`. El rol se verifica en `proxy.ts` y `requireAdmin()`.
+
+### Panel de Metadatos (nuevo)
+
+`components/admin/page-metadata-panel.tsx` — Formulario organizado en pestañas:
+- **General**: slug personalizado, idioma, página padre, orden
+- **SEO**: meta title (con contador de caracteres), meta description (con contador), keywords (con badges), canonical, robots (select), noindex checkbox
+- **Open Graph**: OG title, OG description, OG image URL (con preview visual)
+- **Avanzado**: info técnica de la página, recordatorio de estados
+
+Los metadatos se guardan en `page_content` bajo la sección `_meta.` (convención: `_meta.meta_title`, `_meta.meta_description`, etc.).
+
+### Editor Visual (mejorado)
+
+`components/admin/page-visual-editor.tsx` — Overhaul completo del editor visual existente:
+- **Barra superior**: volver al listado, nombre de página, badge de estado (con menú desplegable para cambiar), contador de cambios pendientes, deshacer/rehacer, toggle vista previa, recargar, ver página pública, abrir metadatos, toggle panel de propiedades, guardar todo
+- **Panel de propiedades** (derecha): muestra campos del elemento seleccionado con editor rich text / texto plano, botones de formato, edición HTML directa
+- **Vista previa**: toggle que desactiva la edición y muestra la página como la verá el público
+- **Barra de estado inferior**: ruta de página, badges informativos, indicador de cambios pendientes
+- **Bloques**: el script del editor (`lib/visual-editor/script.ts`) ahora soporta `data-section` y `data-field` mejorados, oculta bloques marcados como no visibles, y maneja layout sections desde la DB
+
+### Bloques visuales
+
+Nuevos componentes para gestión de bloques desde la vista previa:
+- `components/admin/page-block-toolbar.tsx` — Barra de acciones por bloque: mover arriba/abajo, ocultar/mostrar, duplicar, eliminar
+- `components/admin/page-block-inserter.tsx` — Selector de 15 tipos de bloque (hero, texto enriquecido, imagen+texto, galería, cards, servicios, CTA, FAQ, testimonios, documentos, banner, métricas, mapa, formulario, separador)
+
+El layout de secciones se almacena en `_layout.sections` (array JSON de claves de sección). La visibilidad en `_visibility.{section}` (visible/hidden).
+
+### API extendida
+
+`app/api/admin/pages/route.ts` — Nuevos endpoints:
+- **PUT** `/api/admin/pages` — Guardado masivo de metadatos (`{ page, meta: { ... } }`)
+- **PATCH** `/api/admin/pages` — Acciones: `set-status` (cambiar estado), `duplicate-section` (duplicar bloque)
+- **DELETE** `/api/admin/pages?page=X&section=Y` — Eliminar un bloque completo
+
+### Listado de páginas (rediseñado)
+
+`app/intranet/admin/pages/page.tsx` — Nueva tabla con:
+- Stats bar: total, publicadas, borradores, inactivas, con SEO
+- Filtros por estado (Todas / Publicado / Borrador / Inactivo)
+- Búsqueda por texto
+- Columnas: página (icono + nombre + slug), estado (badge), contenido (secciones y campos), SEO (configurado/pendiente), actualizado (fecha), acciones (editor visual, metadatos, ver pública, menú con duplicar/eliminar)
+- Menú contextual por fila
+
+### Páginas legales
+
+La página `configuracion` sigue usando el editor de formulario legacy (sin cambios). Las páginas legales (`terminos`, `aviso-legal`, etc.) mantienen su estructura de contenido actual; la edición visual aplica a sus campos editables (título, subtítulo, versión, fecha).
+
+### Nuevos archivos
+
+| Archivo | Propósito |
+|---------|-----------|
+| `components/admin/page-metadata-panel.tsx` | Panel de metadatos y SEO con pestañas |
+| `components/admin/page-visual-editor.tsx` | Editor visual mejorado con barra de estado y metadatos integrados |
+| `components/admin/page-block-toolbar.tsx` | Barra de acciones por bloque (mover, ocultar, duplicar, eliminar) |
+| `components/admin/page-block-inserter.tsx` | Selector de tipos de bloque para añadir |
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/intranet/admin/pages/page.tsx` | Rediseño completo: tabla con estados, filtros, búsqueda, acciones |
+| `app/intranet/admin/pages/[page]/page.tsx` | Reescrito: tabs Editor visual / Metadatos, editor legacy para configuracion |
+| `app/api/admin/pages/route.ts` | Añadidos PUT (metadatos), PATCH (status/duplicate), DELETE (section) |
+| `lib/page-content-db.ts` | Añadidos helpers: getPageMeta, upsertPageMeta, getPageLayout, getPageVisibility, setSectionVisibility, deleteSection, duplicateSection, setPageStatus, getAllPagesMeta |
+| `lib/visual-editor/script.ts` | Soporte para layout, visibilidad, status; mejor manejo de errores |
+| `lib/visual-editor/styles.ts` | Estilos para bloques, hidden blocks, image/button editing badges |
+| `app/api/admin/visual-editor/proxy/route.ts` | Carga layout + visibilidad + meta en paralelo |
+
+### Pendiente / limitaciones
+
+1. **Edición de imágenes**: el script marca imágenes como editables con overlay visual, pero el flujo de reemplazo (abrir biblioteca de medios) requiere conectar el modal desde el iframe al admin
+2. **Bloques visuales**: los componentes BlockToolbar y BlockInserter están creados pero requieren integrarse en el script del editor para mostrar overlays reales sobre la página renderizada
+3. **Reordenamiento drag & drop**: actualmente se usa mover arriba/abajo mediante botones; implementar drag & drop real requiere integración más profunda
+4. **Versiones de contenido**: el sistema `_layout.sections` y `_visibility.*` están listos, pero la UI de arrastrar bloques en el iframe necesita desarrollo adicional
+5. **Configuración global**: `configuracion` sigue usando el formulario legacy; migrar a metadatos requiere modificar `lib/site.ts`
+6. **Páginas legales**: el cuerpo de las 5 páginas legales sigue siendo hardcodeado en sus respectivos `page.tsx`; la edición visual solo alcanza campos de title/subtitle
+
+### Validación
+
+- `npm run build`: Pendiente
+- `npm run lint`: Pendiente
+
+---
+
 ## Release 49 — Auditoría CMS + nuevos módulos de gestión de contenido (2026-06-13)
 
 ### Resumen

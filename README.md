@@ -381,6 +381,13 @@ El proyecto cuenta con un sistema CMS en evolución que permite gestionar todo e
 - [x] Admin pages para menús, medios, áreas jurídicas
 - [x] Sidebar actualizado con nuevos módulos
 
+**Fase 3a (Release 50) — Editor visual de páginas** ✅
+- [x] Editor visual con preview en iframe y edición inline
+- [x] Panel de metadatos y SEO separado del contenido
+- [x] Sistema de bloques visuales (15 tipos)
+- [x] Estados: publicado, borrador, inactivo
+- [x] API extendida para metadatos, estado y bloques
+
 **Fase 2 — Contenido crítico al admin** 🟡 Pendiente
 - [ ] Seed de `data/areas-juridicas.ts` → tabla `areas_juridicas`
 - [ ] Conectar `public-header.tsx` a DB (`GET /api/admin/menus?nombre=principal`)
@@ -388,11 +395,12 @@ El proyecto cuenta con un sistema CMS en evolución que permite gestionar todo e
 - [ ] Admin page para editar secciones de home (stats, ticker, CTA)
 - [ ] Editor completo de áreas jurídicas (subservicios, FAQs, SEO)
 
-**Fase 3 — Páginas y legal** 🟡 Pendiente
-- [ ] Admin page para páginas dinámicas (`paginas_cms`)
-- [ ] Migrar cuerpo de páginas legales a DB
-- [ ] Editor de contenido con bloques (hero, texto, cards, galería, CTA, FAQs)
-- [ ] Preview en tiempo real de páginas
+**Fase 3 — Páginas y legal** ✅ Completado (Release 50)
+- [x] Editor visual con preview en tiempo real y edición inline
+- [x] Panel de metadatos SEO separado del contenido
+- [x] Sistema de bloques visuales (hero, texto, galería, cards, CTA, FAQs, etc.)
+- [x] Estados: publicado / borrador / inactivo con ISR on-demand
+- [ ] Migrar cuerpo de páginas legales a DB (pendiente)
 
 **Fase 4 — Equipo y testimonios** 🟢 Pendiente
 - [ ] Tabla + API + admin page para equipo profesional
@@ -444,7 +452,10 @@ La calculadora de penas está integrada en `/intranet/admin/calculadora` dentro 
 
 ### Páginas editables (CMS) — `/intranet/admin/pages`
 
-El panel de páginas editables permite modificar el contenido textual de las páginas públicas sin tocar código. Cada página tiene secciones y campos definidos en `lib/page-content-db.ts` (`getEditablePagesMeta()`).
+Filosofía: **metadatos en formulario, contenido en visor visual**. El módulo se divide en dos áreas conceptuales:
+
+1. **Editor visual** (pestaña principal): la página pública se renderiza en un iframe. Cada elemento editable (textos, títulos, párrafos, badges) se marca con overlay al pasar el cursor. Click para editar inline, doble click para edición en profundidad. Los cambios quedan pendientes hasta guardar.
+2. **Metadatos y SEO** (pestaña secundaria): formulario exclusivo para configuración técnica (meta title, meta description, OG tags, canonical, robots, keywords, slug, idioma, orden, página padre).
 
 #### Páginas disponibles
 
@@ -459,33 +470,62 @@ El panel de páginas editables permite modificar el contenido textual de las pá
 | Política de Privacidad | `/politica-privacidad` | hero, content |
 | Política de Cookies | `/politica-cookies` | hero, content |
 | Disclaimer | `/disclaimer` | hero, content |
-| Configuración | — | contacto, direccion, redes, geo |
+| Configuración | — | contacto, direccion, redes, geo (editor legacy) |
 
-#### Flujo de edición
+#### Flujo de edición (contenido visual)
 
-1. **Carga**: El admin carga el contenido actual desde la tabla `page_content` en PostgreSQL.
-2. **Campos**: Cada sección tiene campos de tipo `text`, `textarea` o `richtext` (TipTap).
-3. **Guardar**: Al pulsar "Guardar todo", cada campo se envía individualmente a `POST /api/admin/pages`.
-4. **Persistencia**: La API hace upsert en `page_content` con `(page, section, field, lang='es-HN')`.
-5. **Publicación**: No hay distinción guardar/publicar. Al guardar, la API llama `revalidatePath(ruta)` para invalidar la caché ISR de la página afectada.
-6. **Éxito**: El admin muestra "Campo guardado y publicado — ya visible en la web."
+1. **Seleccionar página** desde el listado → clic en "Editor visual" (icono `Eye`).
+2. **Editar inline**: la página pública se renderiza en el iframe. Cada elemento con contenido editable muestra un outline dorado al pasar el cursor. Click para seleccionar, click de nuevo o doble click para editar inline.
+3. **Panel de propiedades**: a la derecha, el panel muestra el campo seleccionado con editor rich text (TipTap) o texto plano, botones de formato (negrita, cursiva, subrayado, alineación) y edición HTML directa.
+4. **Cambios pendientes**: cada edición se registra como "cambio pendiente" (no se guarda automáticamente). La barra superior muestra el contador de cambios.
+5. **Guardar**: clic en "Guardar todo" → todos los cambios pendientes se envían a `POST /api/admin/pages` (uno por uno). La API hace upsert en `page_content` y llama `revalidatePath(ruta)` para actualizar ISR.
+6. **Estados**: Publicado (visible en web), Borrador (solo admin), Inactivo (oculto). Se cambian desde la barra superior del editor visual.
 
-#### Fuente de datos
+#### Flujo de edición (metadatos)
 
-- **Escritura**: `POST /api/admin/pages` → tabla `page_content` (PostgreSQL).
-- **Lectura pública**: Las páginas públicas (server components) llaman `getPageContent(page)` desde `lib/page-content-db.ts`.
-- **Fallback**: Si no hay datos en DB para un campo, se usa el valor por defecto definido en `getEditablePagesMeta()`.
-- **ISR**: Las páginas públicas tienen `revalidate = 3600` (1 hora). La revalidación on-demand via `revalidatePath()` actualiza el contenido inmediatamente después de guardar.
-- **FAQ respuestas**: Las respuestas FAQ pueden contener HTML (tipo `richtext`). Se renderizan con `dangerouslySetInnerHTML` previa sanitización server-side.
+1. Desde el editor visual, clic en icono `List` (Metadatos y SEO) en la barra superior, o desde el listado, clic en icono `FileEdit`.
+2. Pestañas: General (slug, idioma, padre, orden), SEO (meta title, meta description, keywords, canonical, robots), Open Graph (OG title, OG description, OG image), Avanzado (info técnica).
+3. Guardar → `PUT /api/admin/pages` con todos los campos → los metadatos se almacenan en `page_content` bajo la sección `_meta.*`.
 
-#### Cómo verificar que un cambio se publicó
+#### Cambios que NO requieren deploy
 
-1. Guardar desde `/intranet/admin/pages/home`.
-2. Abrir `https://www.pinedayasocioshn.com/` en una ventana de incógnito.
-3. Hard refresh (Ctrl+F5). Si el cambio no aparece:
-   - Esperar unos segundos (la revalidación es asíncrona).
-   - Verificar que la DB tiene el valor: conectar a Neon y consultar `SELECT * FROM page_content WHERE page='home'`.
-   - Verificar que el cambio está en la DB pero no se ve → forzar ISR con `revalidatePath('/')` desde la API.
+- **Contenido visual**: textos, títulos, subtítulos, párrafos, badges, testimonios, FAQs, etc. → solo guardar desde el editor visual.
+- **Metadatos SEO**: meta title, description, OG tags, keywords, canonical, robots. → guardar desde el panel de metadatos.
+- **Estado de página**: publicado/borrador/inactivo → cambiar desde la barra superior del editor visual.
+
+#### Cambios que SÍ requieren deploy
+
+- Modificaciones estructurales de las páginas públicas (`app/(public)/**/*.tsx`).
+- Nuevos campos o secciones en `getEditablePagesMeta()` (`lib/page-content-db.ts`).
+- Cambios en componentes de marketing (`components/marketing/*.tsx`).
+- Migraciones de base de datos (`lib/schema.ts`).
+- Nuevos bloques visuales o plantillas.
+
+#### API
+
+| Método | Endpoint | Propósito |
+|--------|----------|-----------|
+| `GET` | `/api/admin/pages` | Listar estadísticas de páginas |
+| `GET` | `/api/admin/pages?page=X` | Obtener contenido de una página |
+| `POST` | `/api/admin/pages` | Guardar un campo individual |
+| `PUT` | `/api/admin/pages` | Guardar metadatos en lote |
+| `PATCH` | `/api/admin/pages` | Cambiar estado / duplicar bloque |
+| `DELETE` | `/api/admin/pages?page=X&section=Y` | Eliminar un bloque completo |
+
+#### Almacenamiento
+
+- **Contenido visible**: `page_content` con claves `{page}.{section}.{field}`.
+- **Metadatos**: `page_content` con sección `_meta` (ej: `_meta.meta_title`, `_meta.status`).
+- **Layout (orden de bloques)**: `_layout.sections` (array JSON).
+- **Visibilidad de bloques**: `_visibility.{section}` (visible/hidden).
+- La tabla `page_content` no requiere migraciones para añadir nuevos campos o metadatos.
+
+#### Verificar publicación
+
+1. Guardar desde el editor visual → el badge "Guardado" aparece en la barra superior.
+2. Abrir la página pública en ventana de incógnito y hacer hard refresh (Ctrl+F5).
+3. Si el cambio no aparece: esperar ~30s (la revalidación ISR es asíncrona) y recargar.
+4. Si persiste: verificar en DB → `SELECT * FROM page_content WHERE page='home' AND section='hero' AND field='title'`.
 
 ### Categorías
 

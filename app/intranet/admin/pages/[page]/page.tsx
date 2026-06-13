@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import {
-  ArrowLeft, LayoutDashboard, Eye, FileEdit, Save,
+  ArrowLeft, Eye, FileEdit, Save,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -29,7 +29,6 @@ export default function AdminPageEditor() {
   const params = useParams<{ page: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const toast = useToast();
   const [metaDef, setMetaDef] = useState<PageMeta | null>(null);
   const [loading, setLoading] = useState(true);
   const [pageMeta, setPageMeta] = useState<Partial<PageMetaFormData> | undefined>(undefined);
@@ -166,7 +165,8 @@ export default function AdminPageEditor() {
 }
 
 // Legacy config editor for the special 'configuracion' page
-function LegacyConfigEditor({ page }: { page: string }) {
+function LegacyConfigEditor(_props: { page: string }) {
+  void _props;
   const [meta, setMeta] = useState<{ label: string; sections: { key: string; label: string; fields: { key: string; label: string; type: string; default?: string }[] }[] } | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);

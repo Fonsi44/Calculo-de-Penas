@@ -6,7 +6,6 @@ import {
   MessageSquare, Star, FileText, MapPin, Grid3X3,
   Monitor, SeparatorHorizontal, SquareDashed,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/ui';
 
 interface BlockTemplate {

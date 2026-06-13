@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { BookOpen, Gavel, ArrowRight, FileCheck, ExternalLink, AlertTriangle } from 'lucide-react';
+import { BookOpen, ArrowRight, FileCheck, ExternalLink, AlertTriangle } from 'lucide-react';
 import type { Delito } from '@/app/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -20,6 +20,7 @@ export default function AdminDelitoDetailPage() {
 
   useEffect(() => {
     if (!params?.id) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     fetch(`/api/delitos/${params.id}`)
       .then(r => r.json())

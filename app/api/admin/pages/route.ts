@@ -84,7 +84,6 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = searchParams.get('page');
     const section = searchParams.get('section');
-    const meta = searchParams.get('meta');
 
     let rows;
     if (page && section) {

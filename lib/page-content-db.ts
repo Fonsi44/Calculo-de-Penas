@@ -83,10 +83,6 @@ type PageDef = { page: string; label: string; sections: SectionDef[] };
 
 // ─── Metadata helpers (SEO, status, layout) ─────────────────────
 
-const META_PREFIX = '_meta.';
-const LAYOUT_PREFIX = '_layout.';
-const VISIBILITY_PREFIX = '_visibility.';
-
 export type PageMetaData = {
   status: 'published' | 'draft' | 'inactive';
   metaTitle: string;

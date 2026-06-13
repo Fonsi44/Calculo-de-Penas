@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   Eye, EyeOff, Save, Undo2, Redo2, PanelRightOpen, PanelRightClose,
   RefreshCw, FileText, CheckCircle2, AlertTriangle, ArrowLeft,
-  Globe, LayoutDashboard, List, Layers, Plus,
+  Globe, List, Layers,
   Download, Upload,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -314,7 +314,7 @@ export function PageVisualEditor({ page, pageLabel, publicRoute, onBack }: PageV
           <div className="flex items-center gap-2">
             {onBack && (
               <Button variant="ghost" size="sm" onClick={onBack}>
-                <LayoutDashboard size={14} /> Volver al listado
+                <ArrowLeft size={14} /> Volver al listado
               </Button>
             )}
           </div>

@@ -3,10 +3,10 @@
 import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
-  Globe, FileText, Settings, ArrowRight, ExternalLink,
-  Eye, PenLine, Copy, Trash2, Search, MoreHorizontal,
+  Globe, ExternalLink,
+  Eye, Copy, Trash2, Search, MoreHorizontal,
   Layers, Edit3, CheckCircle2, AlertCircle, Clock,
-  EyeOff, FileEdit,
+  FileEdit,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
