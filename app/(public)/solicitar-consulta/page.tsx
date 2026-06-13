@@ -216,18 +216,6 @@ export default async function SolicitarConsultaPage() {
         </div>
       </Section>
 
-      <Section spacing="sm">
-        <Container size="md">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary">
-              ¿En qué podemos ayudarle?
-            </h2>
-            <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-              En Pineda y Asociados ofrecemos consulta inicial personalizada para evaluar su caso y determinar la mejor estrategia legal. Atendemos asuntos de derecho penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación. Cada caso es único: le escuchamos con atención y le ofrecemos una valoración honesta antes de cualquier compromiso.
-            </p>
-          </div>
-        </Container>
-      </Section>
 
       <Section background="muted" spacing="md">
         <Container size="lg">
