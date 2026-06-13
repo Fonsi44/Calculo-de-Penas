@@ -26,6 +26,9 @@ const PAGE_ROUTES: Record<string, string> = {
   'politica-privacidad': '/politica-privacidad',
   'politica-cookies': '/politica-cookies',
   disclaimer: '/disclaimer',
+  'servicios-juridicos': '/servicios-juridicos',
+  'derecho-penal': '/derecho-penal',
+  'hondurenos-en-espana': '/hondurenos-en-espana',
 };
 
 export default function AdminPageEditor() {
@@ -36,7 +39,7 @@ export default function AdminPageEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
-  const [mode, setMode] = useState<'form' | 'visual'>('visual');
+  const [mode, setMode] = useState<'form' | 'visual'>('form');
   const isConfig = params.page === 'configuracion';
 
   const VISUAL_PAGES = ['home', 'despacho', 'solicitar-consulta', 'como-llegar', 'terminos', 'aviso-legal', 'politica-privacidad', 'politica-cookies', 'disclaimer', 'servicios-juridicos', 'derecho-penal', 'hondurenos-en-espana'];
@@ -108,7 +111,7 @@ export default function AdminPageEditor() {
           body: JSON.stringify(toSave),
         });
         if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
-        toast.success('Configuración guardada. Los cambios se reflejarán en la web.');
+        toast.success('Configuracion guardada. Los cambios se reflejaran en la web.');
         const data = await res.json();
         setValues(v => {
           const merged = { ...v };
@@ -154,7 +157,7 @@ export default function AdminPageEditor() {
         : `${success} campos guardados y publicados — ya visibles en la web.`;
       toast.success(msg);
       if (!allRevalidated) {
-        toast.warning('Contenido guardado. La caché puede tardar unos segundos en reflejarse.');
+        toast.warning('Contenido guardado. La cache puede tardar unos segundos en reflejarse.');
       }
     } else {
       toast.danger(`Guardado con ${error} errores (${success} correctos)`);
@@ -165,7 +168,7 @@ export default function AdminPageEditor() {
   if (!meta) return (
     <Card padding="lg">
       <div className="text-center">
-        <p className="text-text-secondary">Página no encontrada.</p>
+        <p className="text-text-secondary">Pagina no encontrada.</p>
       </div>
     </Card>
   );
@@ -174,55 +177,36 @@ export default function AdminPageEditor() {
   const canVisual = VISUAL_PAGES.includes(params.page) && !isConfig;
   const activeSectionMeta = meta.sections.find(s => s.key === activeSection);
 
+  const isVisualMode = mode === 'visual' && canVisual;
+
   return (
     <>
-      <div className={`flex items-center justify-between ${mode === 'visual' ? 'mb-0' : 'mb-4'}`}>
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          {mode === 'form' && (
-            <Link href="/intranet/admin/pages">
-              <Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button>
-            </Link>
-          )}
+          <Link href="/intranet/admin/pages">
+            <Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button>
+          </Link>
           <div>
             <h1 className="text-xl font-extrabold text-primary">{meta.label}</h1>
             <p className="text-xs text-text-secondary">/{params.page}</p>
           </div>
         </div>
         <div className="flex gap-2">
-          {currentRoute && mode === 'form' && (
+          {currentRoute && (
             <Link href={currentRoute} target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" size="sm">
-                <ExternalLink size={14} className="mr-1" /> Ver página
+                <ExternalLink size={14} className="mr-1" /> Ver pagina
               </Button>
             </Link>
           )}
-          {mode === 'form' && (
-            <Button variant="primary" size="sm" onClick={handleSave} loading={saving}>
-              <Save size={14} className="mr-1" /> Guardar todo
-            </Button>
-          )}
-          {mode === 'visual' && (
-            <Link href="/intranet/admin/pages">
-              <Button variant="ghost" size="sm"><ArrowLeft size={14} className="mr-1" /> Volver</Button>
-            </Link>
-          )}
+          <Button variant="primary" size="sm" onClick={handleSave} loading={saving}>
+            <Save size={14} className="mr-1" /> Guardar todo
+          </Button>
         </div>
       </div>
 
       {canVisual && (
-        <div className={`flex gap-0.5 bg-surface-alt rounded-lg p-0.5 border border-border-light w-fit ${mode === 'visual' ? 'mt-2 mb-3' : 'mb-4'}`}>
-          <button
-            type="button"
-            onClick={() => setMode('visual')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-              mode === 'visual'
-                ? 'bg-white text-primary shadow-sm border border-border-light'
-                : 'text-text-secondary hover:text-text'
-            }`}
-          >
-            <Eye size={14} />
-            Editor visual
-          </button>
+        <div className="flex gap-0.5 bg-surface-alt rounded-lg p-0.5 border border-border-light w-fit mb-4">
           <button
             type="button"
             onClick={() => setMode('form')}
@@ -235,10 +219,22 @@ export default function AdminPageEditor() {
             <LayoutDashboard size={14} />
             Formulario
           </button>
+          <button
+            type="button"
+            onClick={() => setMode('visual')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+              mode === 'visual'
+                ? 'bg-white text-primary shadow-sm border border-border-light'
+                : 'text-text-secondary hover:text-text'
+            }`}
+          >
+            <Eye size={14} />
+            Vista previa
+          </button>
         </div>
       )}
 
-      {mode === 'visual' && canVisual ? (
+      {isVisualMode ? (
         <div
           style={{
             position: 'fixed',
@@ -252,17 +248,9 @@ export default function AdminPageEditor() {
           <VisualEditor
             page={params.page}
             pageLabel={meta.label}
+            onSwitchToForm={() => setMode('form')}
           />
         </div>
-      ) : mode === 'visual' && !canVisual ? (
-        <Card padding="lg">
-          <div className="text-center py-8">
-            <Eye size={48} className="mx-auto mb-3 text-text-muted opacity-30" />
-            <p className="text-text-secondary text-sm">
-              El editor visual no está disponible para esta página. Usa el formulario.
-            </p>
-          </div>
-        </Card>
       ) : (
         <div className="flex gap-4">
           <nav className="w-48 flex-shrink-0 space-y-0.5">
@@ -282,7 +270,7 @@ export default function AdminPageEditor() {
             ))}
           </nav>
 
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 min-w-0 space-y-4">
             {activeSectionMeta ? (
               <Card padding="md">
                 <h2 className="font-bold text-sm text-primary mb-3">
@@ -323,10 +311,59 @@ export default function AdminPageEditor() {
               </Card>
             ) : (
               <Card padding="lg">
-                <p className="text-center text-text-secondary">Selecciona una sección.</p>
+                <p className="text-center text-text-secondary">Selecciona una seccion.</p>
               </Card>
             )}
           </div>
+
+          <div className="w-72 flex-shrink-0 hidden xl:block">
+            <Card padding="md" className="sticky top-4">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                <span className="text-xs font-semibold text-primary uppercase tracking-wider">Vista previa</span>
+              </div>
+              {activeSectionMeta ? (
+                <div className="space-y-2.5">
+                  {activeSectionMeta.fields.map(field => {
+                    const key = `${activeSectionMeta.key}.${field.key}`;
+                    const value = values[key] ?? '';
+                    const rte = field.type === 'richtext';
+
+                    return (
+                      <div key={`pv-${key}`} className="border-b border-border-light pb-2.5 last:border-b-0 last:pb-0">
+                        <p className="text-xxs text-text-muted uppercase tracking-wide mb-1">{field.label}</p>
+                        {!value ? (
+                          <p className="text-xxs text-text-muted italic">Sin contenido</p>
+                        ) : rte ? (
+                          <div
+                            className="preview-richtext text-xs text-text leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: value }}
+                          />
+                        ) : (
+                          <p className="text-xs text-text leading-relaxed whitespace-pre-wrap">{value}</p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-xxs text-text-muted text-center py-6">Selecciona una seccion para ver su contenido.</p>
+              )}
+            </Card>
+          </div>
+
+          <style>{`
+            .preview-richtext h2 { font-size: 1.25rem; font-weight: 700; margin: 0.75rem 0 0.5rem; color: #0F1D3A; }
+            .preview-richtext h3 { font-size: 1.1rem; font-weight: 600; margin: 0.6rem 0 0.4rem; color: #0F1D3A; }
+            .preview-richtext p { margin: 0 0 0.5rem; }
+            .preview-richtext strong { font-weight: 700; color: #0F1D3A; }
+            .preview-richtext em { font-style: italic; }
+            .preview-richtext a { color: #9A7A22; text-decoration: underline; }
+            .preview-richtext ul, .preview-richtext ol { padding-left: 1.2rem; margin: 0.3rem 0 0.5rem; }
+            .preview-richtext ul { list-style-type: disc; }
+            .preview-richtext ol { list-style-type: decimal; }
+            .preview-richtext li { margin-bottom: 0.2rem; }
+          `}</style>
         </div>
       )}
     </>

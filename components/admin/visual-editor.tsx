@@ -13,6 +13,7 @@ import { PropertyPanel, SelectedElement } from '@/components/admin/visual-editor
 interface VisualEditorProps {
   page: string;
   pageLabel: string;
+  onSwitchToForm?: () => void;
 }
 
 interface PendingChange {
@@ -22,7 +23,7 @@ interface PendingChange {
   timestamp: number;
 }
 
-export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
+export function VisualEditor({ page, pageLabel, onSwitchToForm }: VisualEditorProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const toast = useToast();
 
@@ -38,6 +39,7 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
 
   const [history, setHistory] = useState<PendingChange[][]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const proxyUrl = `/api/admin/visual-editor/proxy?page=${page}`;
 
@@ -49,9 +51,27 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
 
   useEffect(() => {
     const handler = (event: MessageEvent) => {
+      if (event.data?.type === 've:error') {
+        console.warn('[VisualEditor] Iframe error:', event.data.message);
+        return;
+      }
+
       if (event.data?.type === 've:ready') {
+        if (loadTimeoutRef.current) {
+          clearTimeout(loadTimeoutRef.current);
+          loadTimeoutRef.current = null;
+        }
+        if (event.data.proxyError) {
+          setLoading(false);
+          setError(event.data.reason || 'El editor visual no pudo cargar la página.');
+          return;
+        }
+        if (event.data.initError) {
+          console.warn('[VisualEditor] Script init warning:', event.data.message);
+        }
         setEditorReady(true);
         setLoading(false);
+        return;
       }
 
       if (event.data?.type === 've:select') {
@@ -64,10 +84,12 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
           tagName: event.data.tagName,
           className: event.data.className,
         });
+        return;
       }
 
       if (event.data?.type === 've:deselect') {
         setSelected(null);
+        return;
       }
 
       if (event.data?.type === 've:update') {
@@ -84,12 +106,23 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
           return [...filtered, change];
         });
         setSaveStatus('idle');
+        return;
       }
     };
 
     window.addEventListener('message', handler);
-    return () => window.removeEventListener('message', handler);
+    return () => {
+      window.removeEventListener('message', handler);
+      if (loadTimeoutRef.current) clearTimeout(loadTimeoutRef.current);
+    };
   }, []);
+
+  useEffect(() => {
+    if (editorReady && loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+  }, [editorReady]);
 
   useEffect(() => {
     if (!loading && editorReady && previewMode) {
@@ -195,10 +228,12 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
   }, [history.length]);
 
   const handleRefresh = useCallback(() => {
+    if (loadTimeoutRef.current) clearTimeout(loadTimeoutRef.current);
     setLoading(true);
     setEditorReady(false);
     setSelected(null);
     setPendingChanges([]);
+    setError(null);
     if (iframeRef.current) {
       iframeRef.current.src = proxyUrl;
     }
@@ -210,10 +245,17 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <AlertTriangle size={48} className="text-danger mb-4" />
-        <p className="text-text-secondary text-sm mb-4">{error}</p>
-        <Button variant="primary" size="sm" onClick={() => window.location.reload()}>
-          Reintentar
-        </Button>
+        <p className="text-text-secondary text-sm mb-4 max-w-md text-center">{error}</p>
+        <div className="flex gap-2">
+          <Button variant="primary" size="sm" onClick={handleRefresh}>
+            Reintentar
+          </Button>
+          {onSwitchToForm && (
+            <Button variant="ghost" size="sm" onClick={onSwitchToForm}>
+              Usar formulario
+            </Button>
+          )}
+        </div>
       </div>
     );
   }
@@ -323,12 +365,13 @@ export function VisualEditor({ page, pageLabel }: VisualEditorProps) {
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
             onLoad={() => {
               if (!editorReady) {
-                setTimeout(() => {
+                if (loadTimeoutRef.current) clearTimeout(loadTimeoutRef.current);
+                loadTimeoutRef.current = setTimeout(() => {
                   if (!editorReady) {
                     setLoading(false);
                     setError('El editor no pudo inicializarse. Recarga la página.');
                   }
-                }, 8000);
+                }, 15000);
               }
             }}
             onError={() => {

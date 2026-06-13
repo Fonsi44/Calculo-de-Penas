@@ -19,6 +19,101 @@ const PAGE_ROUTES: Record<string, string> = {
   'hondurenos-en-espana': '/hondurenos-en-espana',
 };
 
+function buildCandidateUrls(request: NextRequest, publicPath: string): string[] {
+  const urls: string[] = [];
+  const host = request.headers.get('host');
+
+  if (host) {
+    const protocol = process.env.VERCEL ? 'https' : 'http';
+    urls.push(`${protocol}://${host}${publicPath}`);
+  }
+
+  try {
+    const reqUrl = new URL(request.url);
+    urls.push(`${reqUrl.protocol}//${reqUrl.host}${publicPath}`);
+  } catch {}
+
+  if (process.env.VERCEL_URL) {
+    const vercelUrl = process.env.VERCEL_URL.replace(/^https?:\/\//, '');
+    const vUrl = `https://${vercelUrl}${publicPath}`;
+    if (!urls.includes(vUrl)) urls.push(vUrl);
+  }
+
+  return urls;
+}
+
+async function fetchOne(url: string, timeoutMs: number): Promise<string | null> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) return null;
+    const html = await res.text();
+    if (!html.includes('</body>')) return null;
+    return html;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function tryFetchPage(urls: string[]): Promise<string | null> {
+  for (const url of urls) {
+    const html = await fetchOne(url, 5000);
+    if (html) return html;
+  }
+  return null;
+}
+
+function escapeAttr(s: string): string {
+  return s.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function buildEditorPage(page: string, contentMap: Record<string, string>): string {
+  const entries = Object.entries(contentMap)
+    .filter(([, v]) => v.length > 0)
+    .map(([key, value]) => {
+      const lastDot = key.lastIndexOf('.');
+      const section = lastDot >= 0 ? key.substring(0, lastDot) : key;
+      const field = lastDot >= 0 ? key.substring(lastDot + 1) : key;
+      const isRichtext = value.includes('<');
+
+      return `<div
+  data-section="${escapeAttr(section)}"
+  data-field="${escapeAttr(field)}"
+  data-page="${escapeAttr(page)}"
+  class="ve-el"
+  contenteditable="${isRichtext ? 'true' : 'false'}"${isRichtext ? ' data-richtext="true"' : ''}
+>${isRichtext ? value : value.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
+    })
+    .join('\n');
+
+  const script = generateEditorScript(contentMap, page);
+
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+<style>body{font-family:system-ui;padding:2rem;max-width:820px;margin:0 auto;line-height:1.6;color:#333;background:#fafafa}.ve-el{margin:0.5rem 0;padding:0.25rem 0.5rem;border-radius:4px;min-height:1em;transition:background .15s}.ve-el[data-richtext=true]{min-height:3em;line-height:1.7}</style>
+<style id="ve-styles">${EDITOR_CSS}</style>
+</head>
+<body class="ve-active">
+${entries}
+<script id="ve-script">${script}</script>
+</body>
+</html>`;
+}
+
+function buildResponse(html: string) {
+  return new Response(html, {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+    },
+  });
+}
+
 export async function GET(request: NextRequest) {
   try {
     requireAdmin(request);
@@ -34,41 +129,21 @@ export async function GET(request: NextRequest) {
 
   const publicPath = PAGE_ROUTES[page];
 
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : `http://localhost:${process.env.PORT || 3000}`;
-
-  const pageUrl = `${baseUrl}${publicPath}`;
-
-  let html: string;
+  let contentMap: Record<string, string> = {};
   try {
-    const res = await fetch(pageUrl, { next: { revalidate: 0 } });
-    if (!res.ok) {
-      return new Response(`Error fetching page: ${res.status}`, { status: 502 });
-    }
-    html = await res.text();
-  } catch {
-    return new Response('Could not fetch page. Ensure the server is running.', { status: 502 });
+    contentMap = await getPageContent(page);
+  } catch {}
+
+  const candidateUrls = buildCandidateUrls(request, publicPath);
+  const rawHtml = await tryFetchPage(candidateUrls);
+
+  if (rawHtml) {
+    const modified = rawHtml
+      .replace('</head>', `<style id="ve-styles">${EDITOR_CSS}</style></head>`)
+      .replace('</body>',
+        `<script id="ve-script">${generateEditorScript(contentMap, page)}</script></body>`);
+    return buildResponse(modified);
   }
 
-  const contentMap = await getPageContent(page);
-
-  html = html.replace(
-    '</head>',
-    `<style id="ve-styles">${EDITOR_CSS}</style></head>`
-  );
-
-  const script = generateEditorScript(contentMap, page);
-  html = html.replace(
-    '</body>',
-    `<script id="ve-script">${script}</script></body>`
-  );
-
-  return new Response(html, {
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'X-Frame-Options': 'SAMEORIGIN',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-    },
-  });
+  return buildResponse(buildEditorPage(page, contentMap));
 }

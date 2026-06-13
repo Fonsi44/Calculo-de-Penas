@@ -13,7 +13,7 @@ const csp = [
   "font-src 'self' data: https://fonts.gstatic.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://*.tile.openstreetmap.org https://*.openstreetmap.org",
   "frame-src 'self' https://www.openstreetmap.org",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
@@ -24,7 +24,6 @@ const csp = [
 
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
-  { key: 'X-Frame-Options', value: 'DENY' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
@@ -53,6 +52,9 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 1080, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
   },
+  // Nota: `X-Frame-Options` se fuerza a DENY por seguridad en la mayor parte del sitio.
+  // Para el proxy del editor visual necesitamos permitir framing same-origin,
+  // por eso añadimos una excepción específica en `headers()` más abajo.
   // El redirect www → apex lo gestiona Vercel a nivel de dominio
   // (Settings → Domains → Redirect). Aquí solo mantenemos los legacy redirects.
   // IMPORTANTE: NO redirigir /login → /intranet/login (causaba bucles).
@@ -108,6 +110,9 @@ const nextConfig: NextConfig = {
       { source: '/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras', destination: '/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras', permanent: true },
       // Fusion: despido-empleados-publicos-procedencia-defensa → despido-empleados-publicos
       { source: '/blog/derecho-administrativo/despido-empleados-publicos-procedencia-defensa-honduras', destination: '/blog/derecho-administrativo/despido-empleados-publicos-honduras', permanent: true },
+      // === FASE 4: Redirects posts canibalizados restantes (Jun 2026) ===
+      { source: '/blog/derecho-bancario/central-riesgos-consultar-impugnar-honduras', destination: '/blog/derecho-bancario/central-riesgos-honduras-consultar-impugnar', permanent: true },
+      { source: '/blog/derecho-civil/contratos-civiles-honduras-errores-comunes', destination: '/blog/derecho-civil/errores-contratos-civiles-honduras', permanent: true },
     ];
   },
   // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*
@@ -129,10 +134,22 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Regla específica para el proxy del editor visual (permitir framing same-origin)
       {
-        source: '/:path*',
-        headers: [...securityHeaders, robotsHeader],
+        source: '/api/admin/visual-editor/proxy',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'Content-Security-Policy', value: csp },
+          ...(isProd ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }] : []),
+          { key: 'Cache-Control', value: 'no-store, max-age=0' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
       },
+      // Cabeceras para API en general
       {
         source: '/api/:path*',
         headers: [
@@ -141,6 +158,7 @@ const nextConfig: NextConfig = {
           { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
         ],
       },
+      // Intranet: política más restrictiva (clickjacking DENY)
       {
         source: '/intranet/:path*',
         headers: [
@@ -148,12 +166,17 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
+      // Cache estático: imágenes, fuentes, JS/CSS build de Next.js
       {
-        // Cache estático: imágenes, fuentes, JS/CSS build de Next.js
         source: '/:path(.+\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2?|ttf|js|css))',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
+      },
+      // Regla por defecto para el resto de rutas
+      {
+        source: '/:path*',
+        headers: [...securityHeaders, robotsHeader],
       },
     ];
   },
