@@ -184,11 +184,11 @@ export default async function HomePage() {
 
       {/* BUSCADOR GLOBAL */}
       {allPosts.length > 0 && (
-        <Section spacing="sm">
-          <Container size="lg">
+        <div className="bg-background py-4 md:py-5">
+          <div className="mx-auto px-4 sm:px-6 max-w-7xl">
             <BlogSearch posts={allPosts} scope="toda la web" />
-          </Container>
-        </Section>
+          </div>
+        </div>
       )}
 
       {/* REAL QUESTIONS */}

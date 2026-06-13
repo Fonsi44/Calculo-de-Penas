@@ -54,8 +54,8 @@ export default async function AreasJuridicasPage() {
         cta={<CTAGroup variant="inverse" />}
       />
 
-      <Section spacing="sm">
-        <Container size="lg">
+      <div className="bg-background py-4 md:py-5">
+        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
             items={areas.map((a) => ({
               href: `/servicios-juridicos/${a.slug}`,
@@ -65,8 +65,8 @@ export default async function AreasJuridicasPage() {
             placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"...'
             domain="servicios-juridicos"
           />
-        </Container>
-      </Section>
+        </div>
+      </div>
 
       <TrustBar background="light" />
 

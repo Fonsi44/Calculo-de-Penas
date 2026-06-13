@@ -78,8 +78,8 @@ export default async function DerechoPenalPage() {
         cta={<CTAGroup variant="inverse" />}
       />
 
-      <Section spacing="sm">
-        <Container size="lg">
+      <div className="bg-background py-4 md:py-5">
+        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
             items={penalGroups.map((g) => ({
               href: `/derecho-penal/${g.slug}`,
@@ -89,8 +89,8 @@ export default async function DerechoPenalPage() {
             placeholder='Buscar en derecho penal: "defensa", "detención", "audiencia"...'
             domain="derecho-penal"
           />
-        </Container>
-      </Section>
+        </div>
+      </div>
 
       <TrustBar background="light" />
 

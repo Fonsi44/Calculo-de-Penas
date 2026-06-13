@@ -30,15 +30,15 @@ export function ServiceSearch({ items, placeholder, domain }: Props) {
   }, [query, items]);
 
   return (
-    <div className="rounded-xl border-2 border-accent/20 bg-gradient-to-br from-surface to-surface-alt p-5 shadow-sm">
+    <div className="rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md shadow-accent/5">
       <div className="relative">
-        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
+        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder || `Buscar en ${domain}...`}
-          className="w-full pl-11 pr-10 py-3 rounded-lg border-2 border-accent/20 bg-white text-sm text-text placeholder:text-text-muted/60 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all font-medium"
+          className="w-full pl-12 pr-10 py-3.5 rounded-lg border border-accent/25 bg-white text-sm text-text placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all font-medium shadow-sm"
         />
         {query && (
           <button
