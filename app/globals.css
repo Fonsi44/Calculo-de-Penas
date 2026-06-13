@@ -351,6 +351,39 @@ body {
 }
 .scrollbar-none::-webkit-scrollbar { display: none; }
 
+/* Select por defecto — estilizado para consistencia con los inputs */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8F95' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 14px;
+  padding-right: 2rem !important;
+  cursor: pointer;
+}
+
+/* Checkbox por defecto — estilizado */
+input[type="checkbox"] {
+  accent-color: var(--color-accent);
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+/* Preview richtext para editor de páginas */
+.preview-richtext h2 { font-size: 1.25rem; font-weight: 700; margin: 0.75rem 0 0.5rem; color: var(--color-primary); }
+.preview-richtext h3 { font-size: 1.1rem; font-weight: 600; margin: 0.6rem 0 0.4rem; color: var(--color-primary); }
+.preview-richtext p { margin: 0 0 0.5rem; }
+.preview-richtext strong { font-weight: 700; color: var(--color-primary); }
+.preview-richtext em { font-style: italic; }
+.preview-richtext a { color: var(--color-accent-dark); text-decoration: underline; }
+.preview-richtext ul, .preview-richtext ol { padding-left: 1.2rem; margin: 0.3rem 0 0.5rem; }
+.preview-richtext ul { list-style-type: disc; }
+.preview-richtext ol { list-style-type: decimal; }
+.preview-richtext li { margin-bottom: 0.2rem; }
+
 /* Tabular nums para datos numéricos */
 .tabular-nums {
   font-variant-numeric: tabular-nums;

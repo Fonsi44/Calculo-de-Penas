@@ -11,6 +11,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/ui/page-header';
+import { StatCards } from '@/components/ui/stat-cards';
 import { DashboardCharts } from '@/components/admin/dashboard-charts';
 
 type TabId = 'resumen' | 'analytics' | 'search-console' | 'indexacion' | 'sitemap' | 'acciones';
@@ -373,27 +375,15 @@ export default function SeoDashboardPage() {
 
     return (
       <div className="space-y-5">
-        {/* Status cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <Card padding="sm" className="text-center">
-            <p className="text-xl font-extrabold text-primary tabular-nums">{s.content.publicPages}</p>
-            <p className="text-xxs text-text-muted uppercase tracking-wider">Páginas públicas</p>
-          </Card>
-          <Card padding="sm" className="text-center">
-            <p className="text-xl font-extrabold text-success tabular-nums">{s.content.publishedPosts}</p>
-            <p className="text-xxs text-text-muted uppercase tracking-wider">Posts publicados</p>
-          </Card>
-          <Card padding="sm" className="text-center">
-            <p className="text-xl font-extrabold text-warning tabular-nums">{s.content.draftPosts}</p>
-            <p className="text-xxs text-text-muted uppercase tracking-wider">Borradores</p>
-          </Card>
-          <Card padding="sm" className="text-center">
-            <p className={`text-xl font-extrabold tabular-nums ${s.site.noindex ? 'text-danger' : 'text-success'}`}>
-              {s.site.noindex ? 'NOINDEX' : 'INDEXABLE'}
-            </p>
-            <p className="text-xxs text-text-muted uppercase tracking-wider">Estado global</p>
-          </Card>
-        </div>
+        <StatCards
+          columns={4}
+          items={[
+            { value: s.content.publicPages, label: 'Páginas públicas', tone: 'default' },
+            { value: s.content.publishedPosts, label: 'Posts publicados', tone: 'success' },
+            { value: s.content.draftPosts, label: 'Borradores', tone: 'warning' },
+            { value: s.site.noindex ? 'NOINDEX' : 'INDEXABLE', label: 'Estado global', tone: s.site.noindex ? 'danger' : 'success' },
+          ]}
+        />
 
         {s.site.noindex && (
           <Card padding="md" className="border-danger/50 bg-danger/5">
@@ -543,61 +533,35 @@ export default function SeoDashboardPage() {
           </div>
         )}
 
-        {/* Quick metrics from Analytics */}
         {'configured' in s.analytics && s.analytics.configured && 'metrics' in s.analytics && s.analytics.metrics && (
           <div>
-            <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">Méticas rápidas (28 días)</p>
-            <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtNum(s.analytics.metrics.activeUsers)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Usuarios</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtNum(s.analytics.metrics.sessions)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Sesiones</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtNum(s.analytics.metrics.screenPageViews)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Páginas vistas</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtNum(s.analytics.metrics.newUsers)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Nuevos</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtDuration(s.analytics.metrics.averageSessionDuration)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Duración media</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtPct(s.analytics.metrics.bounceRate !== null ? s.analytics.metrics.bounceRate / 100 : null)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Rebote</p>
-              </Card>
-            </div>
+            <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">Métricas rápidas (28 días)</p>
+            <StatCards
+              columns={6}
+              items={[
+                { value: fmtNum(s.analytics.metrics.activeUsers), label: 'Usuarios', tone: 'default' },
+                { value: fmtNum(s.analytics.metrics.sessions), label: 'Sesiones', tone: 'info' },
+                { value: fmtNum(s.analytics.metrics.screenPageViews), label: 'Páginas vistas', tone: 'success' },
+                { value: fmtNum(s.analytics.metrics.newUsers), label: 'Nuevos', tone: 'accent' },
+                { value: fmtDuration(s.analytics.metrics.averageSessionDuration), label: 'Duración media', tone: 'default' },
+                { value: fmtPct(s.analytics.metrics.bounceRate !== null ? s.analytics.metrics.bounceRate / 100 : null), label: 'Rebote', tone: 'default' },
+              ]}
+            />
           </div>
         )}
 
-        {/* Search Console quick metrics */}
         {'configured' in s.searchConsole && s.searchConsole.configured && 'totalClicks' in s.searchConsole && (
           <div>
             <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-2">Search Console (28 días)</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtNum(s.searchConsole.totalClicks)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Clicks</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtNum(s.searchConsole.totalImpressions)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Impresiones</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtPct(s.searchConsole.totalCtr)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">CTR</p>
-              </Card>
-              <Card padding="sm" className="text-center">
-                <p className="text-lg font-extrabold text-primary tabular-nums">{fmtPos(s.searchConsole.averagePosition)}</p>
-                <p className="text-xxs text-text-muted uppercase tracking-wider">Posición media</p>
-              </Card>
-            </div>
+            <StatCards
+              columns={4}
+              items={[
+                { value: fmtNum(s.searchConsole.totalClicks), label: 'Clicks', tone: 'default' },
+                { value: fmtNum(s.searchConsole.totalImpressions), label: 'Impresiones', tone: 'info' },
+                { value: fmtPct(s.searchConsole.totalCtr), label: 'CTR', tone: 'success' },
+                { value: fmtPos(s.searchConsole.averagePosition), label: 'Posición media', tone: 'default' },
+              ]}
+            />
           </div>
         )}
 
@@ -1273,12 +1237,7 @@ export default function SeoDashboardPage() {
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-xl font-extrabold text-primary">Panel SEO</h1>
-        <p className="text-xs text-text-secondary mt-1">
-          Analítica, Search Console, indexación y sitemap
-        </p>
-      </div>
+      <PageHeader title="Panel SEO" subtitle="Analítica, Search Console, indexación y sitemap" />
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-1 border-b border-border/50 pb-2">

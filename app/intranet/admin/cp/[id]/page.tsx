@@ -10,17 +10,7 @@ import { Button } from '@/components/ui/button';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
 
-interface ArticuloCP {
-  id: number;
-  articulo: string;
-  libro: string | null;
-  titulo: string | null;
-  capitulo: string | null;
-  epigrafe: string | null;
-  texto: string;
-  tema: string | null;
-  delitos_relacionados?: { id: string; nombre: string; articulo: string }[];
-}
+interface ArticuloCP { id: number; articulo: string; libro: string | null; titulo: string | null; capitulo: string | null; epigrafe: string | null; texto: string; tema: string | null; delitos_relacionados?: { id: string; nombre: string; articulo: string }[]; }
 
 const TEMA_LABELS: Record<string, string> = {
   delitos: 'Delitos', garantias_penales: 'Garantías penales', circunstancias: 'Circunstancias',
@@ -50,10 +40,8 @@ export default function AdminArticuloCPPage() {
   if (loading) return <CenteredSpinner label="Cargando artículo..." />;
 
   if (error || !articulo) {
-    return (
-      <EmptyState icon={<BookOpen size={48} />} title="Artículo no disponible" description={error || 'El artículo solicitado no existe.'}
-        action={<Link href="/intranet/admin/cp"><Button variant="primary">Volver a la biblioteca</Button></Link>} />
-    );
+    return <EmptyState icon={<BookOpen size={48} />} title="Artículo no disponible" description={error || 'El artículo solicitado no existe.'}
+      action={<Link href="/intranet/admin/cp"><Button variant="primary">Volver a la biblioteca</Button></Link>} />;
   }
 
   return (

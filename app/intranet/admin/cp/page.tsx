@@ -12,45 +12,19 @@ import { Button } from '@/components/ui/button';
 import { useDebounce } from '@/hooks/use-debounce';
 import { pluralizar } from '@/lib/ui';
 
-interface ArticuloCP {
-  id: number;
-  articulo: string;
-  libro: string | null;
-  titulo: string | null;
-  capitulo: string | null;
-  seccion: string | null;
-  epigrafe: string | null;
-  texto: string;
-  tema: string | null;
-}
+interface ArticuloCP { id: number; articulo: string; libro: string | null; titulo: string | null; capitulo: string | null; seccion: string | null; epigrafe: string | null; texto: string; tema: string | null; }
 
-interface ArticuloResponse {
-  data: ArticuloCP[];
-  total: number;
-  limit: number;
-  offset: number;
-  hasMore: boolean;
-}
+interface ArticuloResponse { data: ArticuloCP[]; total: number; limit: number; offset: number; hasMore: boolean; }
 
 const TEMA_LABELS: Record<string, string> = {
-  delitos: 'Delitos',
-  garantias_penales: 'Garantías penales',
-  circunstancias: 'Circunstancias',
-  consecuencias_juridicas: 'Consecuencias jurídicas',
-  hecho_penal: 'Hecho penal',
-  autoria_participacion: 'Autoría y participación',
-  parte_general: 'Parte general',
-  penas: 'Penas',
-  ejecucion_medidas: 'Ejecución',
-  responsabilidad_civil: 'Resp. civil',
-  prescripcion: 'Prescripción',
-  ejecucion: 'Ejecución',
-  autoria: 'Autoría',
+  delitos: 'Delitos', garantias_penales: 'Garantías penales', circunstancias: 'Circunstancias',
+  consecuencias_juridicas: 'Consecuencias jurídicas', hecho_penal: 'Hecho penal',
+  autoria_participacion: 'Autoría y participación', parte_general: 'Parte general',
+  penas: 'Penas', ejecucion_medidas: 'Ejecución', responsabilidad_civil: 'Resp. civil',
+  prescripcion: 'Prescripción', ejecucion: 'Ejecución', autoria: 'Autoría',
 };
 
-function ubicacion(a: ArticuloCP): string {
-  return [a.libro, a.titulo, a.capitulo, a.seccion].filter(Boolean).join(' › ') || '';
-}
+function ubicacion(a: ArticuloCP): string { return [a.libro, a.titulo, a.capitulo, a.seccion].filter(Boolean).join(' › ') || ''; }
 
 const PAGE_SIZE = 30;
 
@@ -63,10 +37,7 @@ export default function AdminBibliotecaCP() {
   const [loading, setLoading] = useState(true);
   const debouncedSearch = useDebounce(search, 300);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPage(0);
-  }, [debouncedSearch, tema]);
+  useEffect(() => { setPage(0); }, [debouncedSearch, tema]); // eslint-disable-line react-hooks/set-state-in-effect
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -100,35 +71,25 @@ export default function AdminBibliotecaCP() {
         </div>
         <div>
           <h1 className="font-extrabold text-lg text-primary leading-tight">Biblioteca del Código Penal</h1>
-          <p className="text-xs text-text-secondary">
-            Decreto 130-2017 y reformas vigentes · {pluralizar(total, 'artículo', 'artículos')}
-          </p>
+          <p className="text-xs text-text-secondary">Decreto 130-2017 y reformas vigentes · {pluralizar(total, 'artículo', 'artículos')}</p>
         </div>
       </div>
 
       <div className="relative">
-        <Input
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Buscar por artículo, epígrafe o texto..."
+        <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar por artículo, epígrafe o texto..."
           iconLeft={<Search size={16} />}
-          iconRight={search ? (
-            <button type="button" onClick={() => setSearch('')} aria-label="Limpiar"><X size={16} /></button>
-          ) : undefined}
-        />
+          iconRight={search ? <button type="button" onClick={() => setSearch('')} aria-label="Limpiar"><X size={16} /></button> : undefined} />
       </div>
 
       <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
         <button type="button" onClick={() => setTema(null)}
-          className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
-            !tema ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
+          className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors flex-shrink-0 ${!tema ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
           Todos
           <span className={`px-1.5 py-0.5 rounded-full text-xxs font-bold ${!tema ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'}`}>{total}</span>
         </button>
         {Object.entries(TEMA_LABELS).map(([id, label]) => (
           <button key={id} type="button" onClick={() => setTema(tema === id ? null : id)}
-            className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
-              tema === id ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
+            className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors flex-shrink-0 ${tema === id ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
             {label}
           </button>
         ))}
@@ -158,7 +119,7 @@ export default function AdminBibliotecaCP() {
                   </div>
                   {ubicacion(a) && <p className="text-text-muted text-xxs italic truncate">{ubicacion(a)}</p>}
                 </Link>
-                <div className="flex border-t border-border-light">
+                <div className="flex border-t border-border">
                   <Link href={`/intranet/admin/cp/${a.id}`}
                     className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-primary hover:bg-surface-alt">
                     <ArrowRight size={14} /> Ver detalle
@@ -170,9 +131,9 @@ export default function AdminBibliotecaCP() {
 
           {totalPages > 1 && (
             <div className="flex items-center justify-between py-2">
-              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} iconLeft={<ChevronLeft size={14} />}>Anterior</Button>
+              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}><ChevronLeft size={14} className="mr-1" />Anterior</Button>
               <span className="text-xxs text-text-muted tabular-nums">Página {page + 1} de {totalPages}</span>
-              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} iconRight={<ChevronRight size={14} />}>Siguiente</Button>
+              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1}>Siguiente<ChevronRight size={14} className="ml-1" /></Button>
             </div>
           )}
         </>

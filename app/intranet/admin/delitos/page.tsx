@@ -17,16 +17,11 @@ import { formatRama, pluralizar } from '@/lib/ui';
 
 const PAGE_SIZE = 30;
 
-interface DelitosResponse {
-  data: Delito[];
-  total: number;
-  hasMore: boolean;
-}
+interface DelitosResponse { data: Delito[]; total: number; hasMore: boolean; }
 
 export default function AdminDelitosCatalog() {
   const toast = useToast();
   const confirm = useConfirm();
-
   const [delitos, setDelitos] = useState<Delito[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
@@ -39,8 +34,7 @@ export default function AdminDelitosCatalog() {
   const offset = page * PAGE_SIZE;
 
   const fetchDelitos = useCallback(async () => {
-    setLoading(true);
-    setError(false);
+    setLoading(true); setError(false);
     try {
       const [dRes, rRes] = await Promise.all([
         fetch(`/api/delitos?limit=${PAGE_SIZE}&offset=${offset}${activeRama ? `&rama=${encodeURIComponent(activeRama)}` : ''}${debouncedSearch ? `&busqueda=${encodeURIComponent(debouncedSearch)}` : ''}`),
@@ -55,14 +49,10 @@ export default function AdminDelitosCatalog() {
     finally { setLoading(false); }
   }, [offset, activeRama, debouncedSearch]);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchDelitos();
-  }, [fetchDelitos]);
+  useEffect(() => { fetchDelitos(); }, [fetchDelitos]); // eslint-disable-line react-hooks/set-state-in-effect
 
   const handleDelete = async (delito: Delito) => {
-    const ok = await confirm({ title: `¿Eliminar "${delito.nombre}"?`, description: 'Esta acción no se puede deshacer.', confirmLabel: 'Eliminar', tone: 'danger' });
-    if (!ok) return;
+    if (!await confirm({ title: `¿Eliminar "${delito.nombre}"?`, description: 'Esta acción no se puede deshacer.', confirmLabel: 'Eliminar', tone: 'danger' })) return;
     try {
       const res = await fetch(`/api/delitos/${delito.id}`, { method: 'DELETE' });
       if (res.ok) { setDelitos(prev => prev.filter(d => d.id !== delito.id)); setTotal(t => Math.max(0, t - 1)); toast.success('Delito eliminado'); }
@@ -73,10 +63,7 @@ export default function AdminDelitosCatalog() {
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   if (loading && page === 0) return <CenteredSpinner label="Cargando catálogo..." />;
-
-  if (error) {
-    return <ErrorState title="No se pudo cargar el catálogo" description="Verifica tu conexión e inténtalo nuevamente." onRetry={fetchDelitos} />;
-  }
+  if (error) return <ErrorState title="No se pudo cargar el catálogo" description="Verifica tu conexión e inténtalo nuevamente." onRetry={fetchDelitos} />;
 
   return (
     <div className="space-y-4">
@@ -90,16 +77,12 @@ export default function AdminDelitosCatalog() {
             <p className="text-xs text-text-secondary">{pluralizar(total, 'resultado', 'resultados')}</p>
           </div>
         </div>
-        <Link href="/delito-form">
-          <Button variant="primary" size="sm"><Plus size={14} className="mr-1" /> Nuevo delito</Button>
-        </Link>
+        <Link href="/delito-form"><Button variant="primary" size="sm"><Plus size={14} /> Nuevo delito</Button></Link>
       </div>
 
       <div className="flex items-start gap-2 p-2 bg-success-bg border border-success/30 rounded-md text-xxs leading-4">
         <CheckCircle2 size={14} className="text-success shrink-0 mt-0.5" />
-        <div className="text-text-secondary">
-          <strong className="text-text">Catálogo validado.</strong> Los {total} tipos penales han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes.
-        </div>
+        <div className="text-text-secondary"><strong className="text-text">Catálogo validado.</strong> Los {total} tipos penales han sido verificados contra el Código Penal (Decreto 130-2017) y reformas vigentes.</div>
       </div>
 
       <div className="relative">
@@ -111,8 +94,7 @@ export default function AdminDelitosCatalog() {
 
       <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
         <button type="button" onClick={() => { setPage(0); setActiveRama(null); }}
-          className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
-            !activeRama ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
+          className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors flex-shrink-0 ${!activeRama ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
           Todas
           <span className={`px-1.5 py-0.5 rounded-full text-xxs font-bold ${!activeRama ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'}`}>{total}</span>
         </button>
@@ -120,8 +102,7 @@ export default function AdminDelitosCatalog() {
           const isActive = activeRama === r.id;
           return (
             <button key={r.id} type="button" onClick={() => { setPage(0); setActiveRama(isActive ? null : r.id); }}
-              className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
-                isActive ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
+              className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors flex-shrink-0 ${isActive ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
               {formatRama(r.id) || r.id}
               <span className={`px-1.5 py-0.5 rounded-full text-xxs font-bold ${isActive ? 'bg-primary text-accent' : 'bg-surface-alt text-text-secondary'}`}>{r.cantidad}</span>
             </button>
@@ -131,7 +112,7 @@ export default function AdminDelitosCatalog() {
 
       {delitos.length === 0 ? (
         <EmptyState icon={<BookOpen size={48} />} title="Sin resultados" description="Modifica la búsqueda o registra un nuevo delito."
-          action={<Link href="/delito-form"><Button variant="primary" iconLeft={<Plus size={16} />}>Nuevo delito</Button></Link>} />
+          action={<Link href="/delito-form"><Button variant="primary"><Plus size={16} /> Nuevo delito</Button></Link>} />
       ) : (
         <>
           <div className="grid md:grid-cols-2 gap-2">
@@ -154,12 +135,12 @@ export default function AdminDelitosCatalog() {
                   </div>
                   <p className="text-text-muted text-xxs italic truncate">{formatRama(item.rama_id)}</p>
                 </Link>
-                <div className="flex border-t border-border-light">
+                <div className="flex border-t border-border">
                   <Link href={`/delito-form?id=${item.id}`}
                     className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-primary hover:bg-surface-alt">
                     <Edit3 size={14} /> Editar
                   </Link>
-                  <div className="w-px bg-border-light" />
+                  <div className="w-px bg-border" />
                   <button type="button" onClick={() => handleDelete(item)}
                     className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-danger hover:bg-danger-bg">
                     <Trash2 size={14} /> Eliminar
@@ -171,9 +152,9 @@ export default function AdminDelitosCatalog() {
 
           {totalPages > 1 && (
             <div className="flex items-center justify-between py-2">
-              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} iconLeft={<ChevronLeft size={14} />}>Anterior</Button>
+              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}><ChevronLeft size={14} className="mr-1" />Anterior</Button>
               <span className="text-xxs text-text-muted tabular-nums">Página {page + 1} de {totalPages}</span>
-              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} iconRight={<ChevronRight size={14} />}>Siguiente</Button>
+              <Button variant="ghost" size="sm" onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1}>Siguiente<ChevronRight size={14} className="ml-1" /></Button>
             </div>
           )}
         </>

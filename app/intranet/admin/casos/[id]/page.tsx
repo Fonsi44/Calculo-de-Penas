@@ -14,21 +14,8 @@ import { useConfirm } from '@/components/ui/confirm';
 import { formatFechaCorta, pluralizar } from '@/lib/ui';
 import type { DelitoConfig, ResultadoCalculo } from '@/lib/rules/v1/types';
 
-interface Calculo {
-  id: string;
-  config: DelitoConfig;
-  resultado: ResultadoCalculo;
-  creadoEn: string;
-}
-
-interface Caso {
-  id: string;
-  titulo: string;
-  cliente: string | null;
-  estado: string;
-  creadoEn: string;
-  calculos: Calculo[];
-}
+interface Calculo { id: string; config: DelitoConfig; resultado: ResultadoCalculo; creadoEn: string; }
+interface Caso { id: string; titulo: string; cliente: string | null; estado: string; creadoEn: string; calculos: Calculo[]; }
 
 export default function AdminCasoDetailPage() {
   const params = useParams();
@@ -45,41 +32,28 @@ export default function AdminCasoDetailPage() {
     if (!params?.id) return;
     fetch(`/api/casos/${params.id}`)
       .then(r => r.json())
-      .then(data => {
-        if (data.error) throw new Error(data.error);
-        setCaso(data);
-        setEditTitulo(data.titulo);
-      })
+      .then(data => { if (data.error) throw new Error(data.error); setCaso(data); setEditTitulo(data.titulo); })
       .catch(() => router.push('/intranet/admin/casos'))
       .finally(() => setLoading(false));
   }, [params?.id, router]);
 
   const updateCaso = async () => {
     if (!editTitulo.trim() || !caso) return;
-    await fetch(`/api/casos/${caso.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ titulo: editTitulo }),
-    });
-    setCaso({ ...caso, titulo: editTitulo });
-    setEditing(false);
+    await fetch(`/api/casos/${caso.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ titulo: editTitulo }) });
+    setCaso({ ...caso, titulo: editTitulo }); setEditing(false);
   };
 
   const deleteCalculo = async (calculoId: string) => {
     if (!caso) return;
-    const ok = await confirm({ title: '¿Eliminar cálculo?', description: 'Esta acción no se puede deshacer.', confirmLabel: 'Eliminar', tone: 'danger' });
-    if (!ok) return;
+    if (!await confirm({ title: '¿Eliminar cálculo?', description: 'Esta acción no se puede deshacer.', confirmLabel: 'Eliminar', tone: 'danger' })) return;
     const res = await fetch(`/api/calculos/${calculoId}`, { method: 'DELETE' });
-    if (res.ok) {
-      setCaso({ ...caso, calculos: caso.calculos.filter(c => c.id !== calculoId) });
-      toast.success('Cálculo eliminado');
-    } else toast.danger('Error al eliminar');
+    if (res.ok) { setCaso({ ...caso, calculos: caso.calculos.filter(c => c.id !== calculoId) }); toast.success('Cálculo eliminado'); }
+    else toast.danger('Error al eliminar');
   };
 
   const deleteCaso = async () => {
     if (!caso) return;
-    const ok = await confirm({ title: `¿Eliminar caso "${caso.titulo}"?`, description: 'Se eliminará el caso y todos sus cálculos.', confirmLabel: 'Eliminar', tone: 'danger' });
-    if (!ok) return;
+    if (!await confirm({ title: `¿Eliminar caso "${caso.titulo}"?`, description: 'Se eliminará el caso y todos sus cálculos.', confirmLabel: 'Eliminar', tone: 'danger' })) return;
     const res = await fetch(`/api/casos/${caso.id}`, { method: 'DELETE' });
     if (res.ok) { toast.success('Caso eliminado'); router.push('/intranet/admin/casos'); }
     else toast.danger('Error al eliminar');
@@ -93,27 +67,19 @@ export default function AdminCasoDetailPage() {
       if (!res.ok) { alert('No se pudo generar el PDF'); return; }
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
+      const a = document.createElement('a'); a.href = url;
       const cd = res.headers.get('content-disposition') || '';
       const match = cd.match(/filename="?([^"]+)"?/);
       a.download = match?.[1] || 'informe.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     } catch { alert('Error de red al generar el PDF'); }
     finally { setDownloading(false); }
   };
 
   if (loading) return <CenteredSpinner label="Cargando caso..." />;
-
-  if (!caso) {
-    return (
-      <EmptyState title="Caso no encontrado" description="El caso solicitado no existe o fue eliminado."
-        action={<Link href="/intranet/admin/casos"><Button variant="primary">Volver a mis casos</Button></Link>} />
-    );
-  }
+  if (!caso) return <EmptyState title="Caso no encontrado" description="El caso solicitado no existe o fue eliminado."
+    action={<Link href="/intranet/admin/casos"><Button variant="primary">Volver a mis casos</Button></Link>} />;
 
   const subtitle = [caso.cliente && `Cliente: ${caso.cliente}`, pluralizar(caso.calculos.length, 'cálculo', 'cálculos')].filter(Boolean).join(' · ');
 
@@ -156,7 +122,7 @@ export default function AdminCasoDetailPage() {
 
       {caso.calculos.length === 0 ? (
         <EmptyState icon={<Calculator size={48} />} title="Sin cálculos" description="Realiza un cálculo desde la calculadora y guárdalo en este caso."
-          action={<Link href={`/intranet/admin/calculadora?casoId=${caso.id}`}><Button variant="primary" iconLeft={<Calculator size={16} />}>Ir a la calculadora</Button></Link>} />
+          action={<Link href={`/intranet/admin/calculadora?casoId=${caso.id}`}><Button variant="primary"><Calculator size={16} /> Ir a la calculadora</Button></Link>} />
       ) : (
         <div className="space-y-2 max-w-2xl">
           {caso.calculos.map(calc => (
@@ -169,7 +135,7 @@ export default function AdminCasoDetailPage() {
               <div className="text-xs text-text-secondary leading-4 line-clamp-3 mb-2">
                 {calc.resultado?.analisis_juridico?.split('\n').slice(0, 5).join(' · ')}
               </div>
-              <div className="flex gap-2 pt-2 border-t border-border-light">
+              <div className="flex gap-2 pt-2 border-t border-border">
                 <Link href={`/intranet/admin/calculadora?casoId=${caso.id}&calculoId=${calc.id}`}
                   className="flex-1 flex items-center justify-center gap-1 h-8 px-2 rounded-md bg-accent/15 text-primary text-xxs font-bold hover:bg-accent/25 focus-visible:outline-none">
                   <Pencil size={12} /> Modificar
@@ -183,7 +149,7 @@ export default function AdminCasoDetailPage() {
         </div>
       )}
 
-      <div className="sticky bottom-0 bg-surface border-t border-border-light px-3 py-2 rounded-md shadow-sm no-print -mx-1">
+      <div className="sticky bottom-0 bg-surface border-t border-border px-3 py-2 rounded-md shadow-sm no-print -mx-1">
         <Link href={`/intranet/admin/calculadora?casoId=${caso.id}`}
           className="flex items-center justify-center gap-2 h-10 rounded-md bg-primary text-text-inverse font-bold text-sm hover:bg-primary-light">
           <Calculator size={16} /> Nuevo cálculo en este caso <ArrowRight size={16} />

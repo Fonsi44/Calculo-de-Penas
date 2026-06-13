@@ -9,16 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
+import { PageHeader } from '@/components/ui/page-header';
 import { formatFechaCorta, pluralizar } from '@/lib/ui';
 
-interface Caso {
-  id: string;
-  titulo: string;
-  cliente: string | null;
-  estado: string;
-  creadoEn: string;
-  totalCalculos: number;
-}
+interface Caso { id: string; titulo: string; cliente: string | null; estado: string; creadoEn: string; totalCalculos: number; }
 
 export default function AdminCasosPage() {
   const [casos, setCasos] = useState<Caso[]>([]);
@@ -38,16 +32,10 @@ export default function AdminCasosPage() {
   const createCaso = async () => {
     if (!newTitulo.trim()) return;
     try {
-      const res = await fetch('/api/casos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ titulo: newTitulo, cliente: newCliente }),
-      });
+      const res = await fetch('/api/casos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ titulo: newTitulo, cliente: newCliente }) });
       const data = await res.json();
       setCasos(prev => [data, ...prev]);
-      setShowNewForm(false);
-      setNewTitulo('');
-      setNewCliente('');
+      setShowNewForm(false); setNewTitulo(''); setNewCliente('');
     } catch {}
   };
 
@@ -55,67 +43,33 @@ export default function AdminCasosPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
-            <ClipboardList size={18} className="text-accent" />
-          </div>
-          <div>
-            <h1 className="font-extrabold text-lg text-primary leading-tight">Mis casos</h1>
-            <p className="text-xs text-text-secondary">{pluralizar(casos.length, 'caso', 'casos')}</p>
-          </div>
-        </div>
-        <Button variant="primary" size="sm" onClick={() => setShowNewForm(true)}>
-          <Plus size={14} className="mr-1" /> Nuevo caso
-        </Button>
-      </div>
+      <PageHeader
+        title="Mis casos"
+        subtitle={pluralizar(casos.length, 'caso', 'casos')}
+        icon={<ClipboardList size={18} className="text-accent" />}
+        actions={<Button variant="primary" size="sm" onClick={() => setShowNewForm(true)}><Plus size={14} /> Nuevo caso</Button>}
+      />
 
       {showNewForm && (
         <Card padding="md" tone="accent">
           <h2 className="font-bold text-sm text-text mb-3">Nuevo caso</h2>
-          <Input
-            placeholder="Título del caso *"
-            value={newTitulo}
-            onChange={e => setNewTitulo(e.target.value)}
-            autoFocus
-            className="mb-2"
-          />
-          <Input
-            placeholder="Nombre del cliente (opcional)"
-            value={newCliente}
-            onChange={e => setNewCliente(e.target.value)}
-            className="mb-3"
-          />
+          <Input placeholder="Título del caso *" value={newTitulo} onChange={e => setNewTitulo(e.target.value)} autoFocus className="mb-2" />
+          <Input placeholder="Nombre del cliente (opcional)" value={newCliente} onChange={e => setNewCliente(e.target.value)} className="mb-3" />
           <div className="flex gap-2">
-            <Button variant="secondary" onClick={() => setShowNewForm(false)}>
-              Cancelar
-            </Button>
-            <Button variant="primary" disabled={!newTitulo.trim()} onClick={createCaso}>
-              Crear caso
-            </Button>
+            <Button variant="secondary" onClick={() => setShowNewForm(false)}>Cancelar</Button>
+            <Button variant="primary" disabled={!newTitulo.trim()} onClick={createCaso}>Crear caso</Button>
           </div>
         </Card>
       )}
 
       {casos.length === 0 && !showNewForm ? (
-        <EmptyState
-          icon={<Briefcase size={48} />}
-          title="Sin casos todavía"
-          description="Crea tu primer caso para guardar cálculos y construir tu expediente."
-          action={
-            <Button variant="primary" iconLeft={<Plus size={16} />} onClick={() => setShowNewForm(true)}>
-              Crear primer caso
-            </Button>
-          }
-        />
+        <EmptyState icon={<Briefcase size={48} />} title="Sin casos todavía" description="Crea tu primer caso para guardar cálculos y construir tu expediente."
+          action={<Button variant="primary" onClick={() => setShowNewForm(true)}><Plus size={16} /> Crear primer caso</Button>} />
       ) : (
         <div className="space-y-2 max-w-2xl">
           {casos.map(c => (
-            <Link
-              key={c.id}
-              href={`/intranet/admin/casos/${c.id}`}
-              className="block bg-surface border border-border-light rounded-md p-3 hover:shadow-md transition-shadow focus-visible:outline-none"
-            >
+            <Link key={c.id} href={`/intranet/admin/casos/${c.id}`}
+              className="block bg-surface border border-border rounded-md p-3 hover:shadow-md transition-shadow focus-visible:outline-none">
               <div className="flex items-start gap-2 mb-1">
                 <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <FileText size={16} className="text-primary" />

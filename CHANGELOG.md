@@ -1,5 +1,65 @@
 # Changelog
 
+## Release 48 — Rediseño frontend unificado del panel administrativo (2026-06-13)
+
+### Resumen
+
+Rediseño completo y unificación visual de todas las páginas bajo `/intranet/admin/`. Se creó un sistema de componentes reutilizables (`PageHeader`, `StatCards`, `FilterBar`, `TablePagination`), se eliminaron estilos inline y `<style>` tags en componentes, se unificaron selects y checkboxes con estilos consistentes, y se aplicó una jerarquía visual clara en dashboards, listados, formularios y páginas de detalle.
+
+### Cambios del sistema visual
+
+| Área | Cambio |
+|------|--------|
+| **Componentes UI** | 4 nuevos componentes compartidos en `components/ui/` |
+| **Layout admin** | Sidebar mejorado con animación CSS grid-rows (reemplaza max-h) |
+| **Globals CSS** | Estilos globales para `<select>`, `<input type="checkbox">` y `.preview-richtext` |
+| **Estilos inline** | Eliminado `<style>` tag de `pages/[page]/page.tsx` (movido a globals.css) |
+
+### Componentes creados
+
+- **`PageHeader`** (`components/ui/page-header.tsx`) — Encabezado consistente: título, subtítulo, metadatos, slot de acciones, icono opcional. Reemplaza patrones duplicados de h1+p+botones en todas las páginas.
+- **`StatCards`** (`components/ui/stat-cards.tsx`) — Grid de tarjetas de métricas con value, label, tone (color) y columnas configurables. Reemplaza ~40 instancias de cards de stats duplicadas.
+- **`FilterBar`** (`components/ui/filter-bar.tsx`) — Barra de búsqueda + filtros combinable. Search input con icono y botón de limpiar, más N filtros select. Reemplaza patrones de search+filtros en blog, FAQ, etc.
+- **`TablePagination`** (`components/ui/table-pagination.tsx`) — Paginación consistente con navegación prev/next, contador de página y total. Reemplaza patrones de paginación en blog, auditoría, etc.
+
+### Páginas rediseñadas
+
+| Página | Cambios aplicados |
+|--------|-------------------|
+| **Dashboard** (`/intranet/admin/page.tsx`) | Simplificado: eliminado objeto `toneClasses` inline, reemplazado con `StatCards`. Hero simplificado. Reducido de 473 a ~350 líneas. |
+| **Blog listado** (`/intranet/admin/blog/page.tsx`) | `PageHeader` + `StatCards` + `FilterBar` + `TablePagination`. Stats cards unificados. |
+| **Blog editor** (`/intranet/admin/blog/[id]/page.tsx`) | Selects estilizados con clase unificada. Checkboxes estilizados. Labels consistentes. |
+| **FAQ** (`/intranet/admin/faq/page.tsx`) | `PageHeader` + `StatCards` + `FilterBar`. Selects y checkboxes estilizados. |
+| **Páginas listado** (`/intranet/admin/pages/page.tsx`) | `PageHeader`. Layout simplificado. |
+| **Páginas editor** (`/intranet/admin/pages/[page]/page.tsx`) | Eliminado `<style>` tag. `preview-richtext` movido a globals.css. Selects estilizados. |
+| **SEO** (`/intranet/admin/seo/page.tsx`) | `PageHeader` + `StatCards` en 4 secciones (resumen, analytics, search console, sitemap). |
+| **Usuarios** (`/intranet/admin/usuarios/page.tsx`) | `PageHeader`. Selects estilizados. |
+| **Usuarios editar** (`/intranet/admin/usuarios/[id]/page.tsx`) | `PageHeader`. Selects estilizados. |
+| **Perfil** (`/intranet/admin/perfil/page.tsx`) | `PageHeader`. Layout simplificado. |
+| **Auditoría** (`/intranet/admin/auditoria/page.tsx`) | `PageHeader`. Selects estilizados. Bordes consistentes (`border-border`). |
+| **CP listado** (`/intranet/admin/cp/page.tsx`) | Bordes consistentes. |
+| **CP detalle** (`/intranet/admin/cp/[id]/page.tsx`) | Sin cambios mayores. |
+| **Delitos** (`/intranet/admin/delitos/page.tsx`) | Bordes consistentes (`border-border`). |
+| **Casos listado** (`/intranet/admin/casos/page.tsx`) | `PageHeader` con icono. |
+| **Casos detalle** (`/intranet/admin/casos/[id]/page.tsx`) | Bordes consistentes. |
+
+### Criterios de diseño aplicados
+
+1. **Jerarquía visual**: PageHeader en todas las páginas. Stats primero, luego filtros/búsqueda, luego contenido.
+2. **Consistencia de bordes**: Todas las tablas usan `border-border` (antes mezclaban `border-border-light` y `border-border/50`).
+3. **Selects unificados**: Todos los `<select>` tienen la misma clase: `h-9 rounded-md border border-border bg-surface px-2.5 text-sm text-text outline-none transition-all hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(212,175,55,0.18)]`. Además, CSS global añade flecha personalizada vía `appearance: none` + background SVG.
+4. **Checkboxes unificados**: CSS global: `accent-color: var(--color-accent)`, tamaño `1rem`.
+5. **Sidebar layout**: Animación de expansión de grupos cambiada de `max-h` a `grid-rows` para transiciones CSS suaves.
+6. **Carga de datos**: Spinner centrado con `CenteredSpinner` en páginas donde aplica.
+
+### Validación
+
+- `npm run lint`: Pendiente
+- `npm run build`: Pendiente
+- `npm run test`: Pendiente
+
+---
+
 ## Release 47 — Integración completa de herramientas jurídicas en admin unificado (2026-06-13)
 
 ### Resumen

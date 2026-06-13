@@ -17,18 +17,11 @@ type SectionMeta = { key: string; label: string; fields: { key: string; label: s
 type PageMeta = { page: string; label: string; sections: SectionMeta[] };
 
 const PAGE_ROUTES: Record<string, string> = {
-  home: '/',
-  despacho: '/despacho',
-  'solicitar-consulta': '/solicitar-consulta',
-  'como-llegar': '/como-llegar',
-  terminos: '/terminos',
-  'aviso-legal': '/aviso-legal',
-  'politica-privacidad': '/politica-privacidad',
-  'politica-cookies': '/politica-cookies',
-  disclaimer: '/disclaimer',
-  'servicios-juridicos': '/servicios-juridicos',
-  'derecho-penal': '/derecho-penal',
-  'hondurenos-en-espana': '/hondurenos-en-espana',
+  home: '/', despacho: '/despacho', 'solicitar-consulta': '/solicitar-consulta',
+  'como-llegar': '/como-llegar', terminos: '/terminos', 'aviso-legal': '/aviso-legal',
+  'politica-privacidad': '/politica-privacidad', 'politica-cookies': '/politica-cookies',
+  disclaimer: '/disclaimer', 'servicios-juridicos': '/servicios-juridicos',
+  'derecho-penal': '/derecho-penal', 'hondurenos-en-espana': '/hondurenos-en-espana',
 };
 
 export default function AdminPageEditor() {
@@ -47,10 +40,7 @@ export default function AdminPageEditor() {
   useEffect(() => {
     getEditablePagesMeta().then(all => {
       const found = all.find(m => m.page === params.page);
-      if (found) {
-        setMeta(found);
-        setActiveSection(found.sections[0]?.key ?? '');
-      }
+      if (found) { setMeta(found); setActiveSection(found.sections[0]?.key ?? ''); }
       setLoading(false);
     });
   }, [params.page]);
@@ -63,32 +53,26 @@ export default function AdminPageEditor() {
           const flat: Record<string, string> = {};
           if (d.grouped) {
             for (const [section, fields] of Object.entries(d.grouped as Record<string, Record<string, string>>)) {
-              for (const [field, content] of Object.entries(fields)) {
-                flat[`${section}.${field}`] = content;
-              }
+              for (const [field, content] of Object.entries(fields)) flat[`${section}.${field}`] = content;
             }
           }
           return flat;
         });
-
     loadContent
       .then(flat => {
         const merged: Record<string, string> = {};
-        for (const section of meta.sections) {
+        for (const section of meta.sections)
           for (const field of section.fields) {
             const key = `${section.key}.${field.key}`;
             merged[key] = flat[key] ?? (field as { default?: string }).default ?? '';
           }
-        }
         setValues(merged);
       })
       .catch(() => toast.danger('Error al cargar contenido'))
       .finally(() => setLoading(false));
   }, [meta, params.page, toast, isConfig]);
 
-  const update = (key: string, value: string) => {
-    setValues(v => ({ ...v, [key]: value }));
-  };
+  const update = (key: string, value: string) => setValues(v => ({ ...v, [key]: value }));
 
   const handleSave = async () => {
     if (!meta) return;
@@ -100,27 +84,16 @@ export default function AdminPageEditor() {
         const [, field] = key.includes('.') ? key.split('.', 2) : ['', key];
         if (field && content) toSave[field] = content;
       }
-      if (Object.keys(toSave).length === 0) {
-        toast.danger('No hay cambios para guardar');
-        setSaving(false);
-        return;
-      }
+      if (Object.keys(toSave).length === 0) { toast.danger('No hay cambios para guardar'); setSaving(false); return; }
       try {
-        const res = await fetch('/api/admin/site-config', {
-          method: 'PUT', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(toSave),
-        });
+        const res = await fetch('/api/admin/site-config', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(toSave) });
         if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
-        toast.success('Configuracion guardada. Los cambios se reflejaran en la web.');
+        toast.success('Configuración guardada.');
         const data = await res.json();
         setValues(v => {
           const merged = { ...v };
-          for (const [k, val] of Object.entries(data.config ?? {})) {
-            for (const section of meta.sections) {
-              const key = `${section.key}.${k}`;
-              if (merged[key] !== undefined) merged[key] = val as string;
-            }
-          }
+          for (const [k, val] of Object.entries(data.config ?? {}))
+            for (const section of meta.sections) { const key = `${section.key}.${k}`; if (merged[key] !== undefined) merged[key] = val as string; }
           return merged;
         });
       } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
@@ -129,63 +102,36 @@ export default function AdminPageEditor() {
     }
 
     const entries = Object.entries(values);
-    let success = 0;
-    let error = 0;
-    let allRevalidated = true;
-
+    let success = 0, error = 0, allRevalidated = true;
     for (const [key, content] of entries) {
       const [section, field] = key.includes('.') ? key.split('.', 2) : ['', key];
       if (!section || !field) continue;
       try {
-        const res = await fetch('/api/admin/pages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ page: params.page, section, field, content }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          success++;
-          if (data.revalidated === false) allRevalidated = false;
-        } else error++;
+        const res = await fetch('/api/admin/pages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: params.page, section, field, content }) });
+        if (res.ok) { const data = await res.json(); success++; if (data.revalidated === false) allRevalidated = false; }
+        else error++;
       } catch { error++; }
     }
-
     setSaving(false);
     if (error === 0) {
-      const msg = success === 1
-        ? 'Campo guardado y publicado — ya visible en la web.'
-        : `${success} campos guardados y publicados — ya visibles en la web.`;
-      toast.success(msg);
-      if (!allRevalidated) {
-        toast.warning('Contenido guardado. La cache puede tardar unos segundos en reflejarse.');
-      }
-    } else {
-      toast.danger(`Guardado con ${error} errores (${success} correctos)`);
-    }
+      toast.success(success === 1 ? 'Campo guardado y publicado.' : `${success} campos guardados y publicados.`);
+      if (!allRevalidated) toast.warning('La caché puede tardar unos segundos en reflejarse.');
+    } else toast.danger(`Guardado con ${error} errores (${success} correctos)`);
   };
 
   if (loading) return <div className="flex justify-center py-8"><Spinner /></div>;
-  if (!meta) return (
-    <Card padding="lg">
-      <div className="text-center">
-        <p className="text-text-secondary">Pagina no encontrada.</p>
-      </div>
-    </Card>
-  );
+  if (!meta) return <Card padding="lg"><div className="text-center"><p className="text-text-secondary">Página no encontrada.</p></div></Card>;
 
   const currentRoute = PAGE_ROUTES[params.page];
   const canVisual = VISUAL_PAGES.includes(params.page) && !isConfig;
   const activeSectionMeta = meta.sections.find(s => s.key === activeSection);
-
   const isVisualMode = mode === 'visual' && canVisual;
 
   return (
     <>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <Link href="/intranet/admin/pages">
-            <Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button>
-          </Link>
+          <Link href="/intranet/admin/pages"><Button variant="ghost" size="sm"><ArrowLeft size={14} /></Button></Link>
           <div>
             <h1 className="text-xl font-extrabold text-primary">{meta.label}</h1>
             <p className="text-xs text-text-secondary">/{params.page}</p>
@@ -194,77 +140,36 @@ export default function AdminPageEditor() {
         <div className="flex gap-2">
           {currentRoute && (
             <Link href={currentRoute} target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="sm">
-                <ExternalLink size={14} className="mr-1" /> Ver pagina
-              </Button>
+              <Button variant="ghost" size="sm"><ExternalLink size={14} /> Ver página</Button>
             </Link>
           )}
-          <Button variant="primary" size="sm" onClick={handleSave} loading={saving}>
-            <Save size={14} className="mr-1" /> Guardar todo
-          </Button>
+          <Button variant="primary" size="sm" onClick={handleSave} loading={saving}><Save size={14} /> Guardar todo</Button>
         </div>
       </div>
 
       {canVisual && (
-        <div className="flex gap-0.5 bg-surface-alt rounded-lg p-0.5 border border-border-light w-fit mb-4">
-          <button
-            type="button"
-            onClick={() => setMode('form')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-              mode === 'form'
-                ? 'bg-white text-primary shadow-sm border border-border-light'
-                : 'text-text-secondary hover:text-text'
-            }`}
-          >
-            <LayoutDashboard size={14} />
-            Formulario
+        <div className="flex gap-0.5 bg-surface-alt rounded-lg p-0.5 border border-border w-fit mb-4">
+          <button type="button" onClick={() => setMode('form')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${mode === 'form' ? 'bg-white text-primary shadow-sm border border-border' : 'text-text-secondary hover:text-text'}`}>
+            <LayoutDashboard size={14} /> Formulario
           </button>
-          <button
-            type="button"
-            onClick={() => setMode('visual')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-              mode === 'visual'
-                ? 'bg-white text-primary shadow-sm border border-border-light'
-                : 'text-text-secondary hover:text-text'
-            }`}
-          >
-            <Eye size={14} />
-            Vista previa
+          <button type="button" onClick={() => setMode('visual')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${mode === 'visual' ? 'bg-white text-primary shadow-sm border border-border' : 'text-text-secondary hover:text-text'}`}>
+            <Eye size={14} /> Vista previa
           </button>
         </div>
       )}
 
       {isVisualMode ? (
-        <div
-          style={{
-            position: 'fixed',
-            left: '14rem',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            zIndex: 40,
-          }}
-        >
-          <VisualEditor
-            page={params.page}
-            pageLabel={meta.label}
-            onSwitchToForm={() => setMode('form')}
-          />
+        <div className="fixed left-60 right-0 top-0 bottom-0 z-40">
+          <VisualEditor page={params.page} pageLabel={meta.label} onSwitchToForm={() => setMode('form')} />
         </div>
       ) : (
         <div className="flex gap-4">
           <nav className="w-48 flex-shrink-0 space-y-0.5">
             {meta.sections.map(s => (
-              <button
-                key={s.key}
-                type="button"
-                onClick={() => setActiveSection(s.key)}
-                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeSection === s.key
-                    ? 'bg-accent/15 text-primary'
-                    : 'text-text-secondary hover:bg-surface-alt hover:text-text'
-                }`}
-              >
+              <button key={s.key} type="button" onClick={() => setActiveSection(s.key)}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeSection === s.key ? 'bg-accent/15 text-primary' : 'text-text-secondary hover:bg-surface-alt hover:text-text'}`}>
                 {s.label}
               </button>
             ))}
@@ -273,36 +178,21 @@ export default function AdminPageEditor() {
           <div className="flex-1 min-w-0 space-y-4">
             {activeSectionMeta ? (
               <Card padding="md">
-                <h2 className="font-bold text-sm text-primary mb-3">
-                  {activeSectionMeta.label as string}
-                </h2>
+                <h2 className="font-bold text-sm text-primary mb-3">{activeSectionMeta.label as string}</h2>
                 <div className="space-y-3">
                   {activeSectionMeta.fields.map(field => {
                     const key = `${activeSectionMeta.key}.${field.key}`;
                     const value = values[key] ?? '';
-
                     return (
                       <div key={key}>
-                        <label className="block text-xs font-semibold text-text-secondary mb-1">
-                          {field.label}
-                        </label>
+                        <label className="block text-xs font-semibold text-text-secondary mb-1">{field.label}</label>
                         {field.type === 'richtext' ? (
-                          <RichTextEditor
-                            content={value}
-                            onChange={html => update(key, html)}
-                            minHeight={200}
-                          />
+                          <RichTextEditor content={value} onChange={html => update(key, html)} minHeight={200} />
                         ) : field.type === 'textarea' ? (
-                          <textarea
-                            value={value}
-                            onChange={e => update(key, e.target.value)}
-                            className="w-full min-h-[80px] p-2 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 resize-y"
-                          />
+                          <textarea value={value} onChange={e => update(key, e.target.value)}
+                            className="w-full min-h-[80px] p-2 rounded-md border border-border bg-surface text-sm text-text outline-none focus:ring-2 focus:ring-accent/30 resize-y" />
                         ) : (
-                          <Input
-                            value={value}
-                            onChange={e => update(key, e.target.value)}
-                          />
+                          <Input value={value} onChange={e => update(key, e.target.value)} />
                         )}
                       </div>
                     );
@@ -310,9 +200,7 @@ export default function AdminPageEditor() {
                 </div>
               </Card>
             ) : (
-              <Card padding="lg">
-                <p className="text-center text-text-secondary">Selecciona una seccion.</p>
-              </Card>
+              <Card padding="lg"><p className="text-center text-text-secondary">Selecciona una sección.</p></Card>
             )}
           </div>
 
@@ -328,42 +216,21 @@ export default function AdminPageEditor() {
                     const key = `${activeSectionMeta.key}.${field.key}`;
                     const value = values[key] ?? '';
                     const rte = field.type === 'richtext';
-
                     return (
-                      <div key={`pv-${key}`} className="border-b border-border-light pb-2.5 last:border-b-0 last:pb-0">
+                      <div key={`pv-${key}`} className="border-b border-border pb-2.5 last:border-b-0 last:pb-0">
                         <p className="text-xxs text-text-muted uppercase tracking-wide mb-1">{field.label}</p>
-                        {!value ? (
-                          <p className="text-xxs text-text-muted italic">Sin contenido</p>
-                        ) : rte ? (
-                          <div
-                            className="preview-richtext text-xs text-text leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: value }}
-                          />
-                        ) : (
-                          <p className="text-xs text-text leading-relaxed whitespace-pre-wrap">{value}</p>
-                        )}
+                        {!value ? <p className="text-xxs text-text-muted italic">Sin contenido</p>
+                          : rte ? <div className="preview-richtext text-xs text-text leading-relaxed" dangerouslySetInnerHTML={{ __html: value }} />
+                          : <p className="text-xs text-text leading-relaxed whitespace-pre-wrap">{value}</p>}
                       </div>
                     );
                   })}
                 </div>
               ) : (
-                <p className="text-xxs text-text-muted text-center py-6">Selecciona una seccion para ver su contenido.</p>
+                <p className="text-xxs text-text-muted text-center py-6">Selecciona una sección.</p>
               )}
             </Card>
           </div>
-
-          <style>{`
-            .preview-richtext h2 { font-size: 1.25rem; font-weight: 700; margin: 0.75rem 0 0.5rem; color: #0F1D3A; }
-            .preview-richtext h3 { font-size: 1.1rem; font-weight: 600; margin: 0.6rem 0 0.4rem; color: #0F1D3A; }
-            .preview-richtext p { margin: 0 0 0.5rem; }
-            .preview-richtext strong { font-weight: 700; color: #0F1D3A; }
-            .preview-richtext em { font-style: italic; }
-            .preview-richtext a { color: #9A7A22; text-decoration: underline; }
-            .preview-richtext ul, .preview-richtext ol { padding-left: 1.2rem; margin: 0.3rem 0 0.5rem; }
-            .preview-richtext ul { list-style-type: disc; }
-            .preview-richtext ol { list-style-type: decimal; }
-            .preview-richtext li { margin-bottom: 0.2rem; }
-          `}</style>
         </div>
       )}
     </>

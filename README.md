@@ -313,6 +313,33 @@ Cada grupo tiene submenús colapsables que se expanden automáticamente al naveg
 
 El estilo del dashboard prevalece: bordes gold (`border-l-accent`), tarjetas con iconos, badges tonales, tipografía compacta (`text-xxs` uppercase), sombras sutiles tintadas con navy, paleta navy+gold. El contenido derecho usa `max-w-7xl` para mejor aprovechamiento del espacio.
 
+### Sistema de diseño del panel admin (Release 48)
+
+El panel administrativo usa 4 componentes compartidos para mantener consistencia visual en todas las páginas:
+
+| Componente | Archivo | Propósito |
+|-----------|---------|-----------|
+| `PageHeader` | `components/ui/page-header.tsx` | Encabezado con título, subtítulo, metadatos y acciones |
+| `StatCards` | `components/ui/stat-cards.tsx` | Grid de tarjetas de métricas con colores por tonalidad |
+| `FilterBar` | `components/ui/filter-bar.tsx` | Búsqueda + filtros combinables |
+| `TablePagination` | `components/ui/table-pagination.tsx` | Paginación con navegación prev/next |
+
+**Reglas visuales del admin:**
+- Toda página debe comenzar con `PageHeader`.
+- Stats van después del header, antes de filtros.
+- Filtros usan `FilterBar` cuando hay búsqueda + selects.
+- Paginación usa `TablePagination` (se oculta si `totalPages <= 1`).
+- Todos los `<select>` están estilizados globalmente con `appearance: none` y flecha SVG.
+- Todos los `<input type="checkbox">` usan `accent-color: var(--color-accent)`.
+- Bordes de tabla y card usan `border-border` (consistente en todas las páginas).
+- Sidebar usa animación `grid-rows` para submenús colapsables.
+
+**Para añadir una nueva página admin:**
+1. Importar `PageHeader` y colocarlo al inicio del JSX.
+2. Si tiene métricas, usar `StatCards` con `items={[...]}`.
+3. Si tiene búsqueda/filtros, usar `FilterBar`.
+4. Si tiene tabla, envolver en `<Card padding="none"><div className="overflow-x-auto"><table>...</table></div></Card>` y añadir `TablePagination`.
+
 ### Calculadora de penas
 
 La calculadora de penas está integrada en `/intranet/admin/calculadora` dentro del layout admin unificado. Usa el mismo motor de cálculo (`lib/rules/v1/`) y los mismos componentes paso. Los usuarios admin son redirigidos automáticamente desde `/intranet/calculadora` a la ruta admin. Los usuarios no-admin siguen accediendo a la calculadora clásica.

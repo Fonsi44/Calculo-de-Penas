@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/toast';
 import { useAuth } from '@/app/auth-context';
 import { Badge } from '@/components/ui/badge';
+import { PageHeader } from '@/components/ui/page-header';
 
 export default function AdminPerfilPage() {
   const { user } = useAuth();
@@ -17,20 +18,11 @@ export default function AdminPerfilPage() {
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (cpForm.newPassword !== cpForm.confirmPassword) {
-      toast.danger('Las contraseñas no coinciden');
-      return;
-    }
-    if (cpForm.newPassword.length < 6) {
-      toast.danger('La contraseña debe tener al menos 6 caracteres');
-      return;
-    }
+    if (cpForm.newPassword !== cpForm.confirmPassword) { toast.danger('Las contraseñas no coinciden'); return; }
+    if (cpForm.newPassword.length < 6) { toast.danger('La contraseña debe tener al menos 6 caracteres'); return; }
     setSaving(true);
     try {
-      const res = await fetch('/api/auth/change-password', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ currentPassword: cpForm.currentPassword, newPassword: cpForm.newPassword }),
-      });
+      const res = await fetch('/api/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: cpForm.currentPassword, newPassword: cpForm.newPassword }) });
       if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
       toast.success('Contraseña actualizada correctamente');
       setCpForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
@@ -40,10 +32,7 @@ export default function AdminPerfilPage() {
 
   return (
     <div className="space-y-4 max-w-lg">
-      <div>
-        <h1 className="text-xl font-extrabold text-primary">Perfil</h1>
-        <p className="text-xs text-text-secondary">Gestiona tu cuenta y credenciales</p>
-      </div>
+      <PageHeader title="Perfil" subtitle="Gestiona tu cuenta y credenciales" />
 
       <Card padding="md">
         <div className="flex items-center gap-3 mb-4">
@@ -62,18 +51,18 @@ export default function AdminPerfilPage() {
         <h2 className="font-bold text-sm text-primary mb-3 flex items-center gap-2"><Lock size={14} /> Cambiar contraseña</h2>
         <form onSubmit={handleChangePassword} className="space-y-3">
           <div>
-            <label className="block text-xxs font-semibold text-text-secondary mb-1">Contraseña actual</label>
+            <label className="block text-xs font-semibold text-text-secondary mb-1">Contraseña actual</label>
             <Input type="password" value={cpForm.currentPassword} onChange={e => setCpForm(f => ({ ...f, currentPassword: e.target.value }))} required placeholder="••••••" />
           </div>
           <div>
-            <label className="block text-xxs font-semibold text-text-secondary mb-1">Nueva contraseña</label>
+            <label className="block text-xs font-semibold text-text-secondary mb-1">Nueva contraseña</label>
             <Input type="password" value={cpForm.newPassword} onChange={e => setCpForm(f => ({ ...f, newPassword: e.target.value }))} required placeholder="Mínimo 6 caracteres" />
           </div>
           <div>
-            <label className="block text-xxs font-semibold text-text-secondary mb-1">Confirmar nueva contraseña</label>
+            <label className="block text-xs font-semibold text-text-secondary mb-1">Confirmar nueva contraseña</label>
             <Input type="password" value={cpForm.confirmPassword} onChange={e => setCpForm(f => ({ ...f, confirmPassword: e.target.value }))} required placeholder="Repite la contraseña" />
           </div>
-          <Button type="submit" variant="primary" size="sm" loading={saving}><Save size={14} className="mr-1" /> Actualizar contraseña</Button>
+          <Button type="submit" variant="primary" size="sm" loading={saving}><Save size={14} /> Actualizar contraseña</Button>
         </form>
       </Card>
     </div>
