@@ -17,7 +17,7 @@ import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
-import { BlogSearch } from '@/components/blog/blog-search';
+import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
@@ -62,8 +62,7 @@ export default async function DerechoPenalPage() {
     url,
   });
 
-  const allPenalPosts = await getPostsByCategory('derecho-penal');
-  const blogPosts = allPenalPosts.slice(0, 3);
+  const blogPosts = (await getPostsByCategory('derecho-penal')).slice(0, 3);
 
   return (
     <>
@@ -81,7 +80,15 @@ export default async function DerechoPenalPage() {
 
       <Section spacing="sm">
         <Container size="lg">
-          <BlogSearch posts={allPenalPosts} />
+          <ServiceSearch
+            items={penalGroups.map((g) => ({
+              href: `/derecho-penal/${g.slug}`,
+              title: g.titulo,
+              description: g.descripcionCorta || '',
+            }))}
+            placeholder='Buscar en derecho penal: "defensa", "detención", "audiencia"...'
+            domain="derecho-penal"
+          />
         </Container>
       </Section>
 

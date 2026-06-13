@@ -186,7 +186,7 @@ export default async function HomePage() {
       {allPosts.length > 0 && (
         <Section spacing="sm">
           <Container size="lg">
-            <BlogSearch posts={allPosts} />
+            <BlogSearch posts={allPosts} scope="toda la web" />
           </Container>
         </Section>
       )}
