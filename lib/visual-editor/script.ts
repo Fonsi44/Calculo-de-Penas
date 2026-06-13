@@ -1,9 +1,17 @@
 export function generateEditorScript(
   contentMap: Record<string, string>,
-  page: string
+  page: string,
+  options?: {
+    layout?: string[];
+    visibility?: Record<string, boolean>;
+    status?: string;
+  }
 ): string {
   const mapJson = JSON.stringify(contentMap);
   const pageJson = JSON.stringify(page);
+  const layoutJson = JSON.stringify(options?.layout ?? []);
+  const visibilityJson = JSON.stringify(options?.visibility ?? {});
+  const statusJson = JSON.stringify(options?.status ?? 'draft');
 
   return `
 (function(){
@@ -12,7 +20,11 @@ if (VE_ROOT) return;
 
 var PAGE = ${pageJson};
 var CONTENT_MAP = ${mapJson};
+var LAYOUT = ${layoutJson};
+var VISIBILITY = ${visibilityJson};
+var STATUS = ${statusJson};
 var REVERSE_MAP = {};
+
 for (var k in CONTENT_MAP) {
   var v = CONTENT_MAP[k];
   if (v && v.length > 2) REVERSE_MAP[v] = k;
@@ -44,6 +56,22 @@ function normalizeText(t) {
 function veReportError(msg) {
   try {
     window.parent.postMessage({ type: 've:error', page: PAGE, message: msg }, '*');
+  } catch(e) {}
+}
+
+function markHiddenBlocks() {
+  try {
+    for (var section in VISIBILITY) {
+      if (VISIBILITY[section] === false) {
+        var els = document.querySelectorAll('[data-section="' + section + '"]');
+        for (var i = 0; i < els.length; i++) {
+          var block = els[i].closest('section') || els[i].parentElement;
+          if (block) {
+            block.classList.add('ve-block-hidden');
+          }
+        }
+      }
+    }
   } catch(e) {}
 }
 
@@ -116,6 +144,8 @@ function matchElements() {
         allVeEls[i].setAttribute('contenteditable', 'true');
       } catch(e) {}
     }
+
+    markHiddenBlocks();
   } catch(e) {
     veReportError('matchElements: ' + (e.message || e));
   }
@@ -361,7 +391,6 @@ function sendUpdate(el) {
 function applyStyle(data) {
   try {
     if (!SELECTED) return;
-    var el = SELECTED;
     if (data.bold !== undefined) {
       document.execCommand('bold');
     }
@@ -372,15 +401,15 @@ function applyStyle(data) {
       document.execCommand('underline');
     }
     if (data.fontSize) {
-      el.style.fontSize = data.fontSize;
+      SELECTED.style.fontSize = data.fontSize;
     }
     if (data.color) {
       document.execCommand('foreColor', false, data.color);
     }
     if (data.textAlign) {
-      el.style.textAlign = data.textAlign;
+      SELECTED.style.textAlign = data.textAlign;
     }
-    sendUpdate(el);
+    sendUpdate(SELECTED);
   } catch(e) {
     veReportError('applyStyle: ' + (e.message || e));
   }
@@ -394,6 +423,7 @@ function refreshEditor() {
       try { el.classList.remove('ve-selected', 've-editing'); } catch(e) {}
     });
     matchElements();
+    markHiddenBlocks();
   } catch(e) {
     veReportError('refreshEditor: ' + (e.message || e));
   }
@@ -405,6 +435,7 @@ try {
   setupEvents();
   createTooltip();
   hideTooltip();
+  markHiddenBlocks();
   window.__veReady = true;
   window.parent.postMessage({ type: 've:ready', page: PAGE }, '*');
 } catch(e) {

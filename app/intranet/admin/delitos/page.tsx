@@ -118,7 +118,7 @@ export default function AdminDelitosCatalog() {
           <div className="grid md:grid-cols-2 gap-2">
             {delitos.map(item => (
               <Card key={item.id} padding="none" className="hover:shadow-md transition-shadow">
-                <Link href={`/delito-form?id=${item.id}`} className="block p-3 focus-visible:outline-none">
+                <Link href={`/intranet/admin/delitos/${item.id}`} className="block p-3 focus-visible:outline-none">
                   <div className="flex items-start gap-2 mb-1.5">
                     <div className="min-w-0 flex-1">
                       <h3 className="font-bold text-sm text-text mb-1 line-clamp-2">{item.nombre}</h3>
