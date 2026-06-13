@@ -81,6 +81,242 @@ type FieldDef = { key: string; label: string; type: 'text' | 'textarea' | 'richt
 type SectionDef = { key: string; label: string; fields: FieldDef[] };
 type PageDef = { page: string; label: string; sections: SectionDef[] };
 
+// ─── Metadata helpers (SEO, status, layout) ─────────────────────
+
+const META_PREFIX = '_meta.';
+const LAYOUT_PREFIX = '_layout.';
+const VISIBILITY_PREFIX = '_visibility.';
+
+export type PageMetaData = {
+  status: 'published' | 'draft' | 'inactive';
+  metaTitle: string;
+  metaDescription: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  canonical: string;
+  robots: string;
+  noindex: boolean;
+  keywords: string;
+  slug: string;
+  parent: string;
+  sortOrder: number;
+  lang: string;
+  publishedAt: string | null;
+  updatedAt: string | null;
+};
+
+export const DEFAULT_PAGE_META: PageMetaData = {
+  status: 'draft',
+  metaTitle: '',
+  metaDescription: '',
+  ogTitle: '',
+  ogDescription: '',
+  ogImage: '',
+  canonical: '',
+  robots: 'index, follow',
+  noindex: false,
+  keywords: '',
+  slug: '',
+  parent: '',
+  sortOrder: 0,
+  lang: 'es-HN',
+  publishedAt: null,
+  updatedAt: null,
+};
+
+/** Load metadata for a page from `_meta.*` fields in page_content. */
+export async function getPageMeta(page: string): Promise<PageMetaData> {
+  const rows = await db.select().from(pageContent)
+    .where(and(
+      eq(pageContent.page, page),
+      eq(pageContent.lang, 'es-HN'),
+      sql`${pageContent.section} = '_meta'`,
+    ));
+  const map: Record<string, string> = {};
+  for (const row of rows) {
+    map[row.field] = row.content;
+  }
+  return {
+    status: (map.status as PageMetaData['status']) ?? DEFAULT_PAGE_META.status,
+    metaTitle: map.meta_title ?? DEFAULT_PAGE_META.metaTitle,
+    metaDescription: map.meta_description ?? DEFAULT_PAGE_META.metaDescription,
+    ogTitle: map.og_title ?? DEFAULT_PAGE_META.ogTitle,
+    ogDescription: map.og_description ?? DEFAULT_PAGE_META.ogDescription,
+    ogImage: map.og_image ?? DEFAULT_PAGE_META.ogImage,
+    canonical: map.canonical ?? DEFAULT_PAGE_META.canonical,
+    robots: map.robots ?? DEFAULT_PAGE_META.robots,
+    noindex: map.noindex ? map.noindex === 'true' : DEFAULT_PAGE_META.noindex,
+    keywords: map.keywords ?? DEFAULT_PAGE_META.keywords,
+    slug: map.slug ?? DEFAULT_PAGE_META.slug,
+    parent: map.parent ?? DEFAULT_PAGE_META.parent,
+    sortOrder: map.sort_order ? parseInt(map.sort_order, 10) : DEFAULT_PAGE_META.sortOrder,
+    lang: map.lang ?? DEFAULT_PAGE_META.lang,
+    publishedAt: map.published_at ?? null,
+    updatedAt: map.updated_at ?? null,
+  };
+}
+
+/** Save all metadata fields for a page (upsert each). */
+export async function upsertPageMeta(page: string, meta: Partial<PageMetaData>, userId?: string) {
+  const fieldMap: Record<string, string | undefined | null> = {
+    status: meta.status,
+    meta_title: meta.metaTitle,
+    meta_description: meta.metaDescription,
+    og_title: meta.ogTitle,
+    og_description: meta.ogDescription,
+    og_image: meta.ogImage,
+    canonical: meta.canonical,
+    robots: meta.robots,
+    noindex: meta.noindex !== undefined ? String(meta.noindex) : undefined,
+    keywords: meta.keywords,
+    slug: meta.slug,
+    parent: meta.parent,
+    sort_order: meta.sortOrder !== undefined ? String(meta.sortOrder) : undefined,
+    lang: meta.lang,
+    published_at: meta.publishedAt,
+    updated_at: new Date().toISOString(),
+  };
+  for (const [field, content] of Object.entries(fieldMap)) {
+    if (content === undefined || content === null) continue;
+    await upsertPageContent({ page, section: '_meta', field, content: String(content), updatedBy: userId });
+  }
+}
+
+/** Get section order (layout) for a page from `_layout.sections`. */
+export async function getPageLayout(page: string): Promise<string[]> {
+  const rows = await db.select({ content: pageContent.content }).from(pageContent)
+    .where(and(
+      eq(pageContent.page, page),
+      eq(pageContent.section, '_layout'),
+      eq(pageContent.field, 'sections'),
+      eq(pageContent.lang, 'es-HN'),
+    )).limit(1);
+  if (rows.length === 0 || !rows[0].content) return [];
+  try { return JSON.parse(rows[0].content) as string[]; }
+  catch { return []; }
+}
+
+/** Save section order for a page. */
+export async function upsertPageLayout(page: string, sections: string[]) {
+  await upsertPageContent({ page, section: '_layout', field: 'sections', content: JSON.stringify(sections) });
+}
+
+/** Get visibility map for a page sections. */
+export async function getPageVisibility(page: string): Promise<Record<string, boolean>> {
+  const rows = await db.select().from(pageContent)
+    .where(and(
+      eq(pageContent.page, page),
+      eq(pageContent.section, '_visibility'),
+      eq(pageContent.lang, 'es-HN'),
+    ));
+  const map: Record<string, boolean> = {};
+  for (const row of rows) {
+    map[row.field] = row.content === 'visible';
+  }
+  return map;
+}
+
+/** Set a section's visibility. */
+export async function setSectionVisibility(page: string, section: string, visible: boolean, userId?: string) {
+  await upsertPageContent({
+    page, section: '_visibility', field: section,
+    content: visible ? 'visible' : 'hidden',
+    updatedBy: userId,
+  });
+}
+
+/** Delete an entire section (all its fields) from page_content. */
+export async function deleteSection(page: string, section: string) {
+  await db.delete(pageContent)
+    .where(and(
+      eq(pageContent.page, page),
+      eq(pageContent.section, section),
+      eq(pageContent.lang, 'es-HN'),
+    ));
+}
+
+/** Duplicate a section's fields under a new section key. */
+export async function duplicateSection(page: string, sourceSection: string, targetSection: string) {
+  const rows = await db.select().from(pageContent)
+    .where(and(
+      eq(pageContent.page, page),
+      eq(pageContent.section, sourceSection),
+      eq(pageContent.lang, 'es-HN'),
+    ));
+  for (const row of rows) {
+    await upsertPageContent({
+      page, section: targetSection, field: row.field,
+      content: row.content,
+    });
+  }
+}
+
+/** Get the publication status for a page. */
+export async function getPageStatus(page: string): Promise<'published' | 'draft' | 'inactive'> {
+  const meta = await getPageMeta(page);
+  return meta.status;
+}
+
+/** Set the publication status and optionally the published_at date. */
+export async function setPageStatus(page: string, status: 'published' | 'draft' | 'inactive', userId?: string) {
+  const updates: Record<string, string> = { status, updated_at: new Date().toISOString() };
+  if (status === 'published') {
+    updates.published_at = new Date().toISOString();
+  }
+  for (const [field, content] of Object.entries(updates)) {
+    await upsertPageContent({ page, section: '_meta', field, content, updatedBy: userId });
+  }
+}
+
+/** Get all pages with their status/metadata for the list view. */
+export type PageListItem = {
+  page: string;
+  label: string;
+  status: 'published' | 'draft' | 'inactive';
+  sections: number;
+  fields: number;
+  updatedAt: string | null;
+  publishedAt: string | null;
+  hasSeo: boolean;
+};
+
+export const getAllPagesMeta = cache(async (): Promise<PageListItem[]> => {
+  const pagesMeta = await getEditablePagesMeta();
+  const stats = await getPagesList();
+  const statMap = new Map(stats.map(s => [s.page, s]));
+
+  const items: PageListItem[] = [];
+
+  for (const pm of pagesMeta) {
+    if (pm.page === 'configuracion') continue; // skip config, handled separately
+    const s = statMap.get(pm.page);
+    let status: PageListItem['status'] = 'draft';
+    let publishedAt: string | null = null;
+    let hasSeo = false;
+
+    try {
+      const meta = await getPageMeta(pm.page);
+      status = meta.status;
+      publishedAt = meta.publishedAt;
+      hasSeo = !!(meta.metaTitle || meta.metaDescription || meta.ogImage);
+    } catch {}
+
+    items.push({
+      page: pm.page,
+      label: pm.label,
+      status,
+      sections: pm.sections.length,
+      fields: pm.sections.reduce((acc, s) => acc + s.fields.length, 0),
+      updatedAt: s?.updatedAt ?? null,
+      publishedAt,
+      hasSeo,
+    });
+  }
+
+  return items;
+});
+
 export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
   return [
     {

@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
-import { getPageContent } from '@/lib/page-content-db';
+import { getPageContent, getPageLayout, getPageVisibility, getPageMeta } from '@/lib/page-content-db';
 import { generateEditorScript } from '@/lib/visual-editor/script';
 import { EDITOR_CSS } from '@/lib/visual-editor/styles';
 
@@ -66,54 +66,6 @@ async function tryFetchPage(urls: string[]): Promise<string | null> {
   return null;
 }
 
-function escapeAttr(s: string): string {
-  return s.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function buildEditorPage(page: string, contentMap: Record<string, string>): string {
-  const entries = Object.entries(contentMap)
-    .filter(([, v]) => v.length > 0)
-    .map(([key, value]) => {
-      const lastDot = key.lastIndexOf('.');
-      const section = lastDot >= 0 ? key.substring(0, lastDot) : key;
-      const field = lastDot >= 0 ? key.substring(lastDot + 1) : key;
-      const isRichtext = value.includes('<');
-
-      return `<div
-  data-section="${escapeAttr(section)}"
-  data-field="${escapeAttr(field)}"
-  data-page="${escapeAttr(page)}"
-  class="ve-el"
-  contenteditable="${isRichtext ? 'true' : 'false'}"${isRichtext ? ' data-richtext="true"' : ''}
->${isRichtext ? value : value.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
-    })
-    .join('\n');
-
-  const script = generateEditorScript(contentMap, page);
-
-  return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8">
-<style>body{font-family:system-ui;padding:2rem;max-width:820px;margin:0 auto;line-height:1.6;color:#333;background:#fafafa}.ve-el{margin:0.5rem 0;padding:0.25rem 0.5rem;border-radius:4px;min-height:1em;transition:background .15s}.ve-el[data-richtext=true]{min-height:3em;line-height:1.7}</style>
-<style id="ve-styles">${EDITOR_CSS}</style>
-</head>
-<body class="ve-active">
-${entries}
-<script id="ve-script">${script}</script>
-</body>
-</html>`;
-}
-
-function buildResponse(html: string) {
-  return new Response(html, {
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'X-Frame-Options': 'SAMEORIGIN',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-    },
-  });
-}
-
 export async function GET(request: NextRequest) {
   try {
     requireAdmin(request);
@@ -129,21 +81,69 @@ export async function GET(request: NextRequest) {
 
   const publicPath = PAGE_ROUTES[page];
 
+  // Load all editor data in parallel
   let contentMap: Record<string, string> = {};
+  let layout: string[] = [];
+  let visibility: Record<string, boolean> = {};
+  let meta = { status: 'draft' as string };
+
   try {
-    contentMap = await getPageContent(page);
+    const [cm, lo, vi, me] = await Promise.all([
+      getPageContent(page),
+      getPageLayout(page),
+      getPageVisibility(page),
+      getPageMeta(page),
+    ]);
+    contentMap = cm;
+    layout = lo;
+    visibility = vi;
+    meta = { status: me.status };
   } catch {}
 
   const candidateUrls = buildCandidateUrls(request, publicPath);
   const rawHtml = await tryFetchPage(candidateUrls);
 
+  const script = generateEditorScript(contentMap, page, { layout, visibility, status: meta.status });
+
   if (rawHtml) {
     const modified = rawHtml
       .replace('</head>', `<style id="ve-styles">${EDITOR_CSS}</style></head>`)
-      .replace('</body>',
-        `<script id="ve-script">${generateEditorScript(contentMap, page)}</script></body>`);
-    return buildResponse(modified);
+      .replace('</body>', `<script id="ve-script">${script}</script></body>`);
+    return new Response(modified, {
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Frame-Options': 'SAMEORIGIN',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+      },
+    });
   }
 
-  return buildResponse(buildEditorPage(page, contentMap));
+  // Fallback: build a simple editor page
+  const entries = Object.entries(contentMap)
+    .filter(([, v]) => v.length > 0)
+    .map(([key, value]) => {
+      const lastDot = key.lastIndexOf('.');
+      const section = lastDot >= 0 ? key.substring(0, lastDot) : key;
+      const field = lastDot >= 0 ? key.substring(lastDot + 1) : key;
+      const isRichtext = value.includes('<');
+      const attr = `data-section="${section}" data-field="${field}" data-page="${page}"`;
+      const cls = `ve-el${isRichtext ? ' ve-richtext' : ''}`;
+      if (isRichtext) {
+        return `<div ${attr} class="${cls}" data-richtext="true">${value}</div>`;
+      }
+      return `<div ${attr} class="${cls}">${value.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
+    })
+    .join('\n');
+
+  return new Response(`<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>body{font-family:system-ui;padding:2rem;max-width:820px;margin:0 auto;line-height:1.6;color:#333;background:#fafafa}.ve-el{margin:0.5rem 0;padding:0.25rem 0.5rem;border-radius:4px;min-height:1em;transition:background .15s}.ve-el[data-richtext=true]{min-height:3em;line-height:1.7}</style>
+<style id="ve-styles">${EDITOR_CSS}</style>
+</head><body class="ve-active">${entries}<script id="ve-script">${script}</script></body></html>`, {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+    },
+  });
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRight, CheckCircle2, FileCheck } from 'lucide-react';
+import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRight, CheckCircle2, FileCheck, ArrowRight } from 'lucide-react';
 import type { Delito } from '@/app/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -74,7 +74,7 @@ export default function AdminDelitosCatalog() {
           </div>
           <div>
             <h1 className="font-extrabold text-lg text-primary leading-tight">Catálogo de delitos</h1>
-            <p className="text-xs text-text-secondary">{pluralizar(total, 'resultado', 'resultados')}</p>
+            <p className="text-xs text-text-secondary">Código Penal de Honduras · {pluralizar(total, 'tipo penal', 'tipos penales')}</p>
           </div>
         </div>
         <Link href="/delito-form"><Button variant="primary" size="sm"><Plus size={14} /> Nuevo delito</Button></Link>
@@ -92,7 +92,7 @@ export default function AdminDelitosCatalog() {
           iconRight={search ? <button type="button" onClick={() => { setPage(0); setSearch(''); }} aria-label="Limpiar búsqueda"><X size={16} /></button> : undefined} />
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+      <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
         <button type="button" onClick={() => { setPage(0); setActiveRama(null); }}
           className={`flex items-center gap-1 h-8 px-3 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors flex-shrink-0 ${!activeRama ? 'bg-accent border-accent text-primary' : 'bg-surface border-border text-text-secondary hover:border-accent'}`}>
           Todas
@@ -119,18 +119,19 @@ export default function AdminDelitosCatalog() {
             {delitos.map(item => (
               <Card key={item.id} padding="none" className="hover:shadow-md transition-shadow">
                 <Link href={`/delito-form?id=${item.id}`} className="block p-3 focus-visible:outline-none">
-                  <div className="flex items-start mb-1.5">
-                    <div className="flex-1 min-w-0">
+                  <div className="flex items-start gap-2 mb-1.5">
+                    <div className="min-w-0 flex-1">
                       <h3 className="font-bold text-sm text-text mb-1 line-clamp-2">{item.nombre}</h3>
                       <div className="flex flex-wrap gap-1.5">
                         <Badge tone="primary">{item.articulo}</Badge>
                         {item.es_grave && <Badge tone="aggravation">GRAVE</Badge>}
                       </div>
                     </div>
+                    <ArrowRight size={16} className="text-text-muted flex-shrink-0 mt-1" />
                   </div>
-                  {item.conducta && <p className="text-text-secondary text-xs leading-4 line-clamp-2 mb-1">{item.conducta}</p>}
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <Gavel size={14} className="text-accent" />
+                  {item.conducta && <p className="text-xs text-text-secondary line-clamp-2 leading-5 mb-2 font-serif">{item.conducta}</p>}
+                  <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                    <Gavel size={14} className="text-accent flex-shrink-0" />
                     <span className="text-xs font-bold text-primary tabular-nums">{item.pena_texto || `${item.pena_minima_meses}-${item.pena_maxima_meses} meses`}</span>
                   </div>
                   <p className="text-text-muted text-xxs italic truncate">{formatRama(item.rama_id)}</p>
