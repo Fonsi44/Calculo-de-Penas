@@ -360,7 +360,7 @@ export default function AdminBlogEditorPage() {
                 </div>
               </div>
               {activeTab === 'visual' ? (
-                <RichTextEditor content={form.body} onChange={handleBodyChange} minHeight={400} />
+                <RichTextEditor key="blog-body" content={form.body} onChange={handleBodyChange} minHeight={400} />
               ) : (
                 <div className="space-y-1">
                   <textarea value={codeValue} onChange={e => handleCodeChange(e.target.value)}

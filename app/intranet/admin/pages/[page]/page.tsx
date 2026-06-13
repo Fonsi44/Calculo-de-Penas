@@ -187,7 +187,7 @@ export default function AdminPageEditor() {
                       <div key={key}>
                         <label className="block text-xs font-semibold text-text-secondary mb-1">{field.label}</label>
                         {field.type === 'richtext' ? (
-                          <RichTextEditor content={value} onChange={html => update(key, html)} minHeight={200} />
+                          <RichTextEditor key={key} content={value} onChange={html => update(key, html)} minHeight={200} />
                         ) : field.type === 'textarea' ? (
                           <textarea value={value} onChange={e => update(key, e.target.value)}
                             className="w-full min-h-[80px] p-2 rounded-md border border-border bg-surface text-sm text-text outline-none focus:ring-2 focus:ring-accent/30 resize-y" />

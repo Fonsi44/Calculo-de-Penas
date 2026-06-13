@@ -209,7 +209,7 @@ export default function AdminFaqPage() {
             <Input value={newForm.question} onChange={e => setNewForm(f => ({ ...f, question: e.target.value }))} placeholder="Pregunta *" />
             <div>
               <label className="text-xs font-semibold text-text-secondary mb-1 block">Respuesta *</label>
-              <RichTextEditor content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} />
+              <RichTextEditor key="new-faq" content={newForm.answer} onChange={html => setNewForm(f => ({ ...f, answer: html }))} minHeight={150} />
             </div>
             <div className="flex gap-2">
               <Button onClick={createFaq} variant="primary" size="sm" loading={saving}><Save size={14} /> Crear y publicar</Button>
@@ -252,7 +252,7 @@ export default function AdminFaqPage() {
                       {dbCategories.map(c => <option key={c.slug} value={c.slug}>{c.titulo}</option>)}
                     </select>
                     <Input value={editForm.question} onChange={e => setEditForm(ff => ({ ...ff, question: e.target.value }))} placeholder="Pregunta" />
-                    <RichTextEditor content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />
+                    <RichTextEditor key={`edit-${f.id}`} content={editForm.answer} onChange={html => setEditForm(ff => ({ ...ff, answer: html }))} minHeight={150} />
                     <label className="flex items-center gap-2 text-sm cursor-pointer">
                       <input type="checkbox" checked={editForm.published} onChange={e => setEditForm(ff => ({ ...ff, published: e.target.checked }))} className="w-4 h-4 rounded border-border text-accent focus:ring-accent/30" /> Publicado
                     </label>
