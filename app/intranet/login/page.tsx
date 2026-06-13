@@ -42,7 +42,8 @@ export default function IntranetLoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Error');
       toast.success(mode === 'login' ? 'Sesión iniciada' : 'Cuenta creada');
-      window.location.href = '/intranet/dashboard';
+      const isAdmin = data.user?.rol === 'admin';
+      window.location.href = isAdmin ? '/intranet/admin' : '/intranet/dashboard';
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error desconocido');
     } finally {

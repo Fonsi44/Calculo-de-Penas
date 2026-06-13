@@ -60,7 +60,7 @@ export function PublicHeader() {
             <span className="text-text-inverse/80">{site.address.city}, {site.address.department}</span>
           </div>
           <Link
-            href="/intranet/dashboard"
+            href="/intranet/admin"
             className="flex items-center gap-1.5 text-text-inverse/50 hover:text-accent transition-colors focus-visible:outline-none"
             title="Acceso exclusivo para personal del bufete"
           >
