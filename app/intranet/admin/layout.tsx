@@ -180,6 +180,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [stuck, setStuck] = useState(false);
+
+  useEffect(() => {
+    if (loading) {
+      const t = setTimeout(() => setStuck(true), 8000);
+      return () => clearTimeout(t);
+    }
+  }, [loading]);
 
   useEffect(() => {
     if (!loading && (!user || user.rol !== 'admin')) {
@@ -187,12 +195,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [user, loading, router]);
 
-  // Mobile menu closes on pathname change via onNavigate in Link components
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
-        <Spinner size="lg" />
+        {stuck ? (
+          <div className="text-center space-y-3 max-w-sm px-4">
+            <div className="w-14 h-14 rounded-xl bg-danger-bg flex items-center justify-center mx-auto">
+              <span className="text-danger font-extrabold text-xl">!</span>
+            </div>
+            <p className="font-bold text-sm text-primary">La sesión está tardando en cargar</p>
+            <p className="text-xs text-text-secondary">Esto puede ocurrir si la sesión expiró o hay un problema de conexión.</p>
+            <a href="/intranet/login"
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-primary text-text-inverse font-bold text-sm hover:bg-primary-light">
+              Ir al inicio de sesión
+            </a>
+          </div>
+        ) : (
+          <Spinner size="lg" />
+        )}
       </div>
     );
   }
