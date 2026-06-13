@@ -112,9 +112,11 @@ export function useCalculadoraState() {
   }, [loadingCalculoId, toast]);
 
   const selectDelito = useCallback((d: Delito) => {
+    const tienePrision = d.pena_minima_meses > 0 || d.pena_maxima_meses > 0;
+    const tieneMulta = d.pena_alternativa_min > 0 || d.pena_alternativa_max > 0;
     const cfg: DelitoConfig = {
       delito: d,
-      pena_seleccionada: 'prision',
+      pena_seleccionada: tienePrision ? 'prision' : 'multa',
       variables_activas: [],
       grado_autoria: 'autor_directo',
       grado_ejecucion: 'consumado',
@@ -129,7 +131,8 @@ export function useCalculadoraState() {
       next[currentIdx] = cfg;
       return next;
     });
-    setStep(d.tiene_pena_alternativa ? 2 : 3);
+    const mostrarPaso2 = tienePrision && tieneMulta;
+    setStep(mostrarPaso2 ? 2 : 3);
   }, [currentIdx]);
 
   const updateCurrent = useCallback((patch: Partial<DelitoConfig>) => {
@@ -150,7 +153,9 @@ export function useCalculadoraState() {
           toast.danger('Delito no verificado: confirma manualmente que el artículo coincide con la fuente oficial antes de continuar.');
           return prev;
         }
-        return d && !d.tiene_pena_alternativa ? 3 : 2;
+        const tienePrision = d.pena_minima_meses > 0 || d.pena_maxima_meses > 0;
+        const tieneMulta = d.pena_alternativa_min > 0 || d.pena_alternativa_max > 0;
+        return (tienePrision && tieneMulta) ? 2 : 3;
       }
       if (prev === 5 && configs.length === 1) return 7;
       if (prev === 7) return prev;
@@ -162,8 +167,13 @@ export function useCalculadoraState() {
   const goPrev = useCallback(() => {
     setStep(prev => {
       if (prev === 7 && configs.length === 1) return 5;
-      if (prev === 3 && current?.delito && !current.delito.tiene_pena_alternativa) {
-        return configs.length > 1 ? 5 : 1;
+      if (prev === 3 && current?.delito) {
+        const d = current.delito;
+        const tienePrision = d.pena_minima_meses > 0 || d.pena_maxima_meses > 0;
+        const tieneMulta = d.pena_alternativa_min > 0 || d.pena_alternativa_max > 0;
+        if (!(tienePrision && tieneMulta)) {
+          return configs.length > 1 ? 5 : 1;
+        }
       }
       return Math.max(1, prev - 1) as Step;
     });
