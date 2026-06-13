@@ -7,8 +7,9 @@ import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from '@/co
 export default function IntranetLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { open, setOpen } = useMobileNav();
+  const PUBLIC_INTRANET = ['/intranet/login', '/intranet/recuperar-clave', '/intranet/acceso-denegado'];
   // Admin tiene su propio layout. Dashboard redirige a admin.
-  if (pathname.startsWith('/intranet/admin') || pathname === '/intranet/dashboard') {
+  if (pathname.startsWith('/intranet/admin') || pathname === '/intranet/dashboard' || PUBLIC_INTRANET.includes(pathname)) {
     return <>{children}</>;
   }
 
