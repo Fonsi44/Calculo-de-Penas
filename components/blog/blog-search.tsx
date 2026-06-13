@@ -8,15 +8,9 @@ import { getCategoryName, formatDate } from '@/lib/blog';
 
 type Props = {
   posts: Post[];
-  totalPages: number;
-  currentPage: number;
-  buildPageUrl: (p: number) => string;
-  searchParams: {
-    page?: string;
-  };
 };
 
-export function BlogSearch({ posts, totalPages, currentPage, buildPageUrl }: Props) {
+export function BlogSearch({ posts }: Props) {
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {

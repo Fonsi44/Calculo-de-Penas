@@ -4,6 +4,7 @@ import { Section, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogCard } from '@/components/blog/blog-card';
 import { CategoryFilter } from '@/components/blog/category-filter';
+import { BlogSearch } from '@/components/blog/blog-search';
 import { NewsletterSection } from '@/components/blog/newsletter-section';
 import { getAllPosts, getFeaturedPosts, getPostsByTag, getPostsByPage, getTotalPages } from '@/lib/blog';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
@@ -92,7 +93,10 @@ export default async function BlogHubPage(props: Props) {
 
       <Section spacing="md">
         <div className="space-y-6">
-          <CategoryFilter />
+          <div className="mb-6">
+            <CategoryFilter />
+          </div>
+          <BlogSearch posts={allPosts} />
 
           {featured.length > 0 && (
             <div className="mb-8">

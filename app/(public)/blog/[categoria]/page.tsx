@@ -91,13 +91,7 @@ export default async function BlogCategoryPage(props: Props) {
         <div className="mb-6">
           <CategoryFilter />
         </div>
-        <BlogSearch
-          posts={categoryPosts}
-          totalPages={totalPages}
-          currentPage={page}
-          buildPageUrl={buildPageUrl}
-          searchParams={searchParams ?? {}}
-        />
+        <BlogSearch posts={categoryPosts} />
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-text-secondary mb-4">Aún no hay artículos publicados en la categoría <strong>{cat.nombre.toLowerCase()}</strong>.</p>
