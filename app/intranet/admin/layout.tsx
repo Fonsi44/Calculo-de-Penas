@@ -22,6 +22,9 @@ import {
   ChevronDown,
   Settings,
   Menu,
+  MenuSquare,
+  Image,
+  Briefcase,
 } from 'lucide-react';
 import { cn } from '@/lib/ui';
 import { Spinner } from '@/components/ui/spinner';
@@ -75,6 +78,9 @@ const NAV_GROUPS: NavGroup[] = [
       { label: 'Blog', href: '/intranet/admin/blog', icon: FileText, match: (p) => p.startsWith('/intranet/admin/blog'), adminOnly: true },
       { label: 'FAQ', href: '/intranet/admin/faq', icon: MessageSquare, match: (p) => p.startsWith('/intranet/admin/faq'), adminOnly: true },
       { label: 'Páginas', href: '/intranet/admin/pages', icon: Globe, match: (p) => p.startsWith('/intranet/admin/pages'), adminOnly: true },
+      { label: 'Menús', href: '/intranet/admin/menus', icon: MenuSquare, match: (p) => p.startsWith('/intranet/admin/menus'), adminOnly: true },
+      { label: 'Biblioteca medios', href: '/intranet/admin/medios', icon: Image, match: (p) => p.startsWith('/intranet/admin/medios'), adminOnly: true },
+      { label: 'Áreas jurídicas', href: '/intranet/admin/servicios', icon: Briefcase, match: (p) => p.startsWith('/intranet/admin/servicios'), adminOnly: true },
     ],
   },
   {

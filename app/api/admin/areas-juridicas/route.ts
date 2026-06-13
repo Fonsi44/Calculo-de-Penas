@@ -49,3 +49,32 @@ export async function POST(request: Request) {
     return authFailureResponse(err);
   }
 }
+
+export async function PATCH(request: Request) {
+  try {
+    const auth = requireAdmin(request);
+    validateCsrf(request);
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) return Response.json({ error: 'id requerido' }, { status: 400 });
+    const body = await request.json();
+    const [area] = await db.update(areasJuridicas).set({ ...body, actualizadoEn: new Date() }).where(eq(areasJuridicas.id, id)).returning();
+    if (!area) return Response.json({ error: 'Área no encontrada' }, { status: 404 });
+    await logAudit({ usuarioId: auth.userId, accion: 'area_juridica_updated' as AuditoriaAccion, recurso: 'area_juridica', recursoId: id, request });
+    return Response.json({ area });
+  } catch (err) { return authFailureResponse(err); }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const auth = requireAdmin(request);
+    validateCsrf(request);
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) return Response.json({ error: 'id requerido' }, { status: 400 });
+    const [area] = await db.delete(areasJuridicas).where(eq(areasJuridicas.id, id)).returning();
+    if (!area) return Response.json({ error: 'Área no encontrada' }, { status: 404 });
+    await logAudit({ usuarioId: auth.userId, accion: 'area_juridica_deleted' as AuditoriaAccion, recurso: 'area_juridica', recursoId: id, request });
+    return Response.json({ deleted: true });
+  } catch (err) { return authFailureResponse(err); }
+}

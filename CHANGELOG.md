@@ -1,5 +1,97 @@
 # Changelog
 
+## Release 49 — Auditoría CMS + nuevos módulos de gestión de contenido (2026-06-13)
+
+### Resumen
+
+Auditoría funcional completa de la intranet administrativa. Se identificaron todos los contenidos de la web pública que aún dependen de código estático y no son gestionables desde el admin. Se implementaron 3 nuevos módulos admin (Menús, Medios, Áreas Jurídicas) con sus APIs y páginas de gestión, y se actualizó la navegación del sidebar.
+
+### Auditoría de contenido
+
+**Inventario de lo gestionable desde admin (antes de Release 49):**
+- Blog posts (CRUD completo)
+- FAQ entries (CRUD con categorías)
+- Page content (12 páginas, secciones y campos)
+- Site config (contacto, dirección, redes, geo, SEO)
+- Usuarios (CRUD + roles básicos)
+- SEO dashboard (GA4, GSC, IndexNow, health checks)
+- Calculadora de penas y casos
+- Auditoría de eventos
+
+**Contenido web NO gestionable (identificado en auditoría):**
+
+| Tipo | Dónde | Impacto |
+|------|-------|---------|
+| Navegación principal (7 items) | `components/marketing/public-header.tsx` | CRÍTICO |
+| Footer: 13 áreas, 8 despacho, 5 legales | `components/marketing/public-footer.tsx` | CRÍTICO |
+| 13 áreas jurídicas completas | `data/areas-juridicas.ts` (1122 líneas) | CRÍTICO |
+| CTA callout | `components/marketing/consultation-cta.tsx` | CRÍTICO |
+| Trust bar (4 sellos) | `components/marketing/trust-bar.tsx` | CRÍTICO |
+| Features bar (4 cards) | `components/marketing/features-bar.tsx` | CRÍTICO |
+| Stats counter (3 stats) | `components/marketing/live-widgets.tsx` | ALTO |
+| Ticker (3 mensajes) | `components/marketing/live-widgets.tsx` | ALTO |
+| Team members (2 perfiles) | `app/(public)/despacho/page.tsx` | ALTO |
+| Process steps (4 pasos) | `app/(public)/despacho/page.tsx` | ALTO |
+| CTA contact strip (4 items) | `components/marketing/cta-buttons.tsx` | ALTO |
+| Motivos formulario (8 opciones) | `components/marketing/solicitar-consulta-form.tsx` | ALTO |
+| 5 páginas legales (cuerpo completo) | `app/(public)/{aviso-legal,terminos,etc}` | ALTO |
+| Cómo llegar (sin DB) | `app/(public)/como-llegar/page.tsx` | ALTO |
+| Home: badges, CTA, contacto | `app/(public)/page.tsx` | MEDIO |
+| Blog: hero text, categorías | `app/(public)/blog/page.tsx` | MEDIO |
+| FAQ: categorías metadata | `data/faq-categories.ts` | MEDIO |
+| Blog categories (20) | `data/blog/categories.ts` | MEDIO |
+| OG images mapping | `data/images.ts` | BAJO |
+
+### Módulos implementados
+
+| Módulo | API | Admin page | Tabla DB |
+|--------|-----|-----------|----------|
+| **Menús** | `GET/POST/PATCH/DELETE /api/admin/menus` | `/intranet/admin/menus` | `menus` |
+| **Medios** | `GET/POST/DELETE /api/admin/medios` | `/intranet/admin/medios` | `medios` |
+| **Áreas jurídicas** | `PATCH/DELETE añadidos` | `/intranet/admin/servicios` | `areas_juridicas` |
+
+### Sidebar actualizado
+
+Se añadieron 3 nuevas entradas en "Gestión de contenido":
+- **Menús**: Gestionar navegación principal, footer, legal y otros menús
+- **Biblioteca medios**: Subir, buscar, copiar URL y eliminar archivos multimedia
+- **Áreas jurídicas**: Listar servicios/penal/migrante con estados y acciones
+
+### Nuevos archivos
+
+| Archivo | Propósito |
+|---------|-----------|
+| `app/api/admin/menus/route.ts` | API CRUD para menús |
+| `app/api/admin/medios/route.ts` | API CRUD + upload para biblioteca de medios |
+| `app/intranet/admin/menus/page.tsx` | Admin page: listar, crear, editar menús |
+| `app/intranet/admin/medios/page.tsx` | Admin page: galería de archivos con upload y preview |
+| `app/intranet/admin/servicios/page.tsx` | Admin page: listar y gestionar áreas jurídicas |
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/api/admin/areas-juridicas/route.ts` | Añadidas funciones PATCH y DELETE |
+| `app/intranet/admin/layout.tsx` | Añadidos 3 nuevos items al sidebar |
+
+### Próximos pasos (roadmap)
+
+1. **Migrar `data/areas-juridicas.ts` a DB**: Seed de la tabla `areas_juridicas` con los datos actuales
+2. **Conectar frontend con DB**: Header/footer deben leer desde `menus` en vez de arrays hardcoded
+3. **Editor de áreas**: Formulario completo para crear/editar servicios con subservicios, FAQs, SEO
+4. **Páginas legales dinámicas**: Migrar cuerpo legal a DB (tabla `paginas_cms` o `page_content`)
+5. **Equipo profesional**: Nueva tabla + admin page + frontend dinámico
+6. **Testimonios**: Nueva tabla + admin page + slider dinámico
+7. **Home sections**: Widgets configurables (stats, ticker, trust bar, features)
+8. **Versiones de contenido**: Activar versionado para recuperar cambios anteriores
+
+### Validación
+
+- `npm run lint`: 0 errores, 14 warnings (todos preexistentes) ✅
+- `npm run build`: Compiled successfully + TypeScript OK, 299 rutas ✅
+
+---
+
 ## Release 48 — Rediseño frontend unificado del panel administrativo (2026-06-13)
 
 ### Resumen

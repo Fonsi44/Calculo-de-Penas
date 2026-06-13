@@ -340,6 +340,75 @@ El panel administrativo usa 4 componentes compartidos para mantener consistencia
 3. Si tiene búsqueda/filtros, usar `FilterBar`.
 4. Si tiene tabla, envolver en `<Card padding="none"><div className="overflow-x-auto"><table>...</table></div></Card>` y añadir `TablePagination`.
 
+### Arquitectura CMS — Gestión dinámica de contenido
+
+El proyecto cuenta con un sistema CMS en evolución que permite gestionar todo el contenido desde el admin sin tocar código. La Fase 1 del CMS añadió las tablas en `lib/schema.ts` (líneas 304+). Release 49 implementó los primeros módulos funcionales.
+
+#### Tablas CMS disponibles
+
+| Tabla | Propósito | Admin page |
+|-------|-----------|-----------|
+| `menus` | Menús de navegación (JSONB items) | `/intranet/admin/menus` ✅ |
+| `medios` | Biblioteca de medios (imágenes, PDFs) | `/intranet/admin/medios` ✅ |
+| `areas_juridicas` | Áreas de servicio (con subservicios, FAQs, SEO) | `/intranet/admin/servicios` ✅ |
+| `paginas_cms` | Páginas dinámicas (contenido JSONB, SEO, plantilla) | Pendiente |
+| `categorias_blog` | Categorías de blog en DB | Pendiente |
+| `categorias_faq` | Categorías de FAQ en DB | Pendiente |
+| `autores` | Autores de blog | Pendiente |
+| `versiones_contenido` | Versionado de contenido | Pendiente |
+| `redirects` | Redirecciones 301/302 | Pendiente |
+
+#### Contenido que aún depende de código estático (NO gestionable)
+
+| Contenido | Archivo/s | Prioridad |
+|-----------|----------|-----------|
+| Navegación header/footer | `components/marketing/public-header.tsx`, `public-footer.tsx` | 🔴 Crítica |
+| 13 áreas jurídicas (títulos, descripciones, FAQs) | `data/areas-juridicas.ts` (1122 líneas) | 🔴 Crítica |
+| CTA callout, trust bar, features bar | `components/marketing/*.tsx` | 🔴 Crítica |
+| Cuerpo de 5 páginas legales | `app/(public)/{aviso-legal,terminos,politica-*}.tsx` | 🟡 Alta |
+| Equipo profesional (2 perfiles) | `app/(public)/despacho/page.tsx` | 🟡 Alta |
+| Cómo llegar (puntos ref, rutas) | `app/(public)/como-llegar/page.tsx` | 🟡 Alta |
+| Stats, ticker, motivos formulario | `components/marketing/live-widgets.tsx`, `solicitar-consulta-form.tsx` | 🟡 Alta |
+| 20 categorías blog, 11 categorías FAQ | `data/blog/categories.ts`, `data/faq-categories.ts` | 🟢 Media |
+| Mapeo de imágenes OG | `data/images.ts` | 🟢 Media |
+
+#### Hoja de ruta para migración completa
+
+**Fase 1 (Release 49) — Módulos base** ✅
+- [x] API CRUD para menús
+- [x] API upload/búsqueda/eliminación para medios
+- [x] API completa para áreas jurídicas (GET/POST/PATCH/DELETE)
+- [x] Admin pages para menús, medios, áreas jurídicas
+- [x] Sidebar actualizado con nuevos módulos
+
+**Fase 2 — Contenido crítico al admin** 🟡 Pendiente
+- [ ] Seed de `data/areas-juridicas.ts` → tabla `areas_juridicas`
+- [ ] Conectar `public-header.tsx` a DB (`GET /api/admin/menus?nombre=principal`)
+- [ ] Conectar `public-footer.tsx` a DB (`GET /api/admin/menus?nombre=footer`)
+- [ ] Admin page para editar secciones de home (stats, ticker, CTA)
+- [ ] Editor completo de áreas jurídicas (subservicios, FAQs, SEO)
+
+**Fase 3 — Páginas y legal** 🟡 Pendiente
+- [ ] Admin page para páginas dinámicas (`paginas_cms`)
+- [ ] Migrar cuerpo de páginas legales a DB
+- [ ] Editor de contenido con bloques (hero, texto, cards, galería, CTA, FAQs)
+- [ ] Preview en tiempo real de páginas
+
+**Fase 4 — Equipo y testimonios** 🟢 Pendiente
+- [ ] Tabla + API + admin page para equipo profesional
+- [ ] Tabla + API + admin page para testimonios
+- [ ] Frontend dinámico para despacho y home
+
+**Fase 5 — Categorías en DB** 🟢 Pendiente
+- [ ] Seed categorías blog/FAQ a DB
+- [ ] Admin pages para gestionar categorías
+- [ ] Migrar frontend a DB como fuente de verdad
+
+**Fase 6 — Versionado y permisos** 🟢 Pendiente
+- [ ] Activar tabla `versiones_contenido` (auto-save on update)
+- [ ] UI de historial de cambios en cada editor
+- [ ] Roles RBAC (`roles`, `permisos`, `usuarios_roles`)
+
 ### Calculadora de penas
 
 La calculadora de penas está integrada en `/intranet/admin/calculadora` dentro del layout admin unificado. Usa el mismo motor de cálculo (`lib/rules/v1/`) y los mismos componentes paso. Los usuarios admin son redirigidos automáticamente desde `/intranet/calculadora` a la ruta admin. Los usuarios no-admin siguen accediendo a la calculadora clásica.
