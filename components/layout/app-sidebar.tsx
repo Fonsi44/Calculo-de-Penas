@@ -17,7 +17,7 @@ interface NavItem {
 }
 
 const NAV: NavItem[] = [
-  { label: 'Inicio', href: '/intranet/dashboard', icon: Home, match: (p) => p === '/intranet/dashboard' },
+  { label: 'Inicio', href: '/intranet/admin', icon: Home, match: (p) => p.startsWith('/intranet/admin') || p === '/intranet/dashboard' },
   { label: 'Calculadora', href: '/intranet/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/calculadora') || p === '/calculadora' || p.startsWith('/calculadora/') },
   { label: 'Mis casos', href: '/intranet/casos', icon: Briefcase, match: (p) => p.startsWith('/intranet/casos') || p === '/casos' || p.startsWith('/casos/') },
   { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp' || p.startsWith('/cp/') },

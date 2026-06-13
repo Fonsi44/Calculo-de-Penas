@@ -29,12 +29,13 @@ import { Spinner } from '@/components/ui/spinner';
 type NavGroup = {
   label: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
+  adminOnly?: boolean;
   items: {
     label: string;
     href: string;
     icon: React.ComponentType<{ size?: number; className?: string }>;
     match: (p: string) => boolean;
-    external?: boolean;
+    adminOnly?: boolean;
   }[];
 };
 
@@ -44,15 +45,6 @@ const NAV_GROUPS: NavGroup[] = [
     icon: LayoutDashboard,
     items: [
       { label: 'Panel general', href: '/intranet/admin', icon: LayoutDashboard, match: (p) => p === '/intranet/admin' },
-    ],
-  },
-  {
-    label: 'Gestión de contenido',
-    icon: FileText,
-    items: [
-      { label: 'Blog', href: '/intranet/admin/blog', icon: FileText, match: (p) => p.startsWith('/intranet/admin/blog') },
-      { label: 'FAQ', href: '/intranet/admin/faq', icon: MessageSquare, match: (p) => p.startsWith('/intranet/admin/faq') },
-      { label: 'Páginas', href: '/intranet/admin/pages', icon: Globe, match: (p) => p.startsWith('/intranet/admin/pages') },
     ],
   },
   {
@@ -68,10 +60,21 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: 'Administración',
     icon: Shield,
+    adminOnly: true,
     items: [
-      { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p) => p.startsWith('/intranet/admin/usuarios') },
-      { label: 'SEO', href: '/intranet/admin/seo', icon: BarChart3, match: (p) => p.startsWith('/intranet/admin/seo') },
-      { label: 'Auditoría', href: '/intranet/admin/auditoria', icon: ClipboardList, match: (p) => p.startsWith('/intranet/admin/auditoria') },
+      { label: 'Usuarios', href: '/intranet/admin/usuarios', icon: Users, match: (p) => p.startsWith('/intranet/admin/usuarios'), adminOnly: true },
+      { label: 'SEO', href: '/intranet/admin/seo', icon: BarChart3, match: (p) => p.startsWith('/intranet/admin/seo'), adminOnly: true },
+      { label: 'Auditoría', href: '/intranet/admin/auditoria', icon: ClipboardList, match: (p) => p.startsWith('/intranet/admin/auditoria'), adminOnly: true },
+    ],
+  },
+  {
+    label: 'Gestión de contenido',
+    icon: FileText,
+    adminOnly: true,
+    items: [
+      { label: 'Blog', href: '/intranet/admin/blog', icon: FileText, match: (p) => p.startsWith('/intranet/admin/blog'), adminOnly: true },
+      { label: 'FAQ', href: '/intranet/admin/faq', icon: MessageSquare, match: (p) => p.startsWith('/intranet/admin/faq'), adminOnly: true },
+      { label: 'Páginas', href: '/intranet/admin/pages', icon: Globe, match: (p) => p.startsWith('/intranet/admin/pages'), adminOnly: true },
     ],
   },
   {
@@ -84,11 +87,13 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
-function SidebarNav({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+function SidebarNav({ pathname, isAdmin, onNavigate }: { pathname: string; isAdmin: boolean; onNavigate?: () => void }) {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(() => {
     const autoOpen = new Set<string>();
     for (const group of NAV_GROUPS) {
+      if (group.adminOnly && !isAdmin) continue;
       for (const item of group.items) {
+        if (item.adminOnly && !isAdmin) continue;
         if (item.match(pathname)) {
           autoOpen.add(group.label);
           break;
@@ -107,11 +112,15 @@ function SidebarNav({ pathname, onNavigate }: { pathname: string; onNavigate?: (
     });
   };
 
+  const visibleGroups = NAV_GROUPS.filter(g => !g.adminOnly || isAdmin);
+
   return (
     <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-1">
-      {NAV_GROUPS.map((group) => {
+      {visibleGroups.map((group) => {
+        const visibleItems = group.items.filter(i => !i.adminOnly || isAdmin);
+        if (visibleItems.length === 0) return null;
         const isExpanded = expandedGroups.has(group.label);
-        const groupActive = group.items.some((item) => item.match(pathname));
+        const groupActive = visibleItems.some((item) => item.match(pathname));
 
         return (
           <div key={group.label}>
@@ -141,7 +150,7 @@ function SidebarNav({ pathname, onNavigate }: { pathname: string; onNavigate?: (
               )}
             >
               <div className="pl-2 pt-0.5 space-y-0.5">
-                {group.items.map((item) => {
+                {visibleItems.map((item) => {
                   const active = item.match(pathname);
                   return (
                     <Link
@@ -160,9 +169,6 @@ function SidebarNav({ pathname, onNavigate }: { pathname: string; onNavigate?: (
                       )}
                       <item.icon size={15} className={active ? 'text-accent-dark' : ''} />
                       <span>{item.label}</span>
-                      {item.external && (
-                        <span className="ml-auto text-xxs text-text-muted opacity-50">↗</span>
-                      )}
                     </Link>
                   );
                 })}
@@ -189,8 +195,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [loading]);
 
+  const isAdmin = user?.rol === 'admin';
+
   useEffect(() => {
-    if (!loading && (!user || user.rol !== 'admin')) {
+    if (!loading && !user) {
       router.replace('/intranet/login');
     }
   }, [user, loading, router]);
@@ -217,7 +225,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  if (!user || user.rol !== 'admin') {
+  if (!user) {
     return null;
   }
 
@@ -252,7 +260,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Navigation */}
-        <SidebarNav pathname={pathname} onNavigate={() => setMobileOpen(false)} />
+        <SidebarNav pathname={pathname} isAdmin={isAdmin} onNavigate={() => setMobileOpen(false)} />
 
         {/* Status indicator */}
         <div className="px-4 py-2 border-t border-border-light">
@@ -265,11 +273,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Footer */}
         <div className="p-2 border-t border-border-light">
           <Link
-            href="/intranet/dashboard"
+            href="/"
             className="flex items-center gap-2 px-2.5 py-2 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-text transition-colors"
           >
             <ChevronLeft size={16} />
-            Ir al dashboard
+            Ir al sitio web
           </Link>
         </div>
       </aside>

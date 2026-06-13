@@ -140,9 +140,7 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/intranet')) {
     if (INTRANET_PUBLIC_EXACT.has(pathname)) {
       if (pathname === INTRANET_LOGIN_PATH && token) {
-        const payload = decodeJwtPayload(token);
-        const redirectPath = payload?.rol === 'admin' ? '/intranet/admin' : '/intranet/dashboard';
-        return NextResponse.redirect(new URL(redirectPath, request.url));
+        return NextResponse.redirect(new URL('/intranet/admin', request.url));
       }
       return NextResponse.next();
     }

@@ -7,11 +7,8 @@ import { AppSidebar, MobileNavDrawer, MobileNavToggle, useMobileNav } from '@/co
 export default function IntranetLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { open, setOpen } = useMobileNav();
-  const isAdminRoute = pathname.startsWith('/intranet/admin');
-  const isDashboard = pathname === '/intranet/dashboard';
-
-  // Admin tiene su propio layout. Dashboard usa AppShell con sidebar propio.
-  if (isAdminRoute || isDashboard) {
+  // Admin tiene su propio layout. Dashboard redirige a admin.
+  if (pathname.startsWith('/intranet/admin') || pathname === '/intranet/dashboard') {
     return <>{children}</>;
   }
 
