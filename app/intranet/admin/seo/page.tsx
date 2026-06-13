@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Input } from '@/components/ui/input';
+import { DashboardCharts } from '@/components/admin/dashboard-charts';
 
 type TabId = 'resumen' | 'analytics' | 'search-console' | 'indexacion' | 'sitemap' | 'acciones';
 
@@ -599,6 +600,12 @@ export default function SeoDashboardPage() {
             </div>
           </div>
         )}
+
+        {/* Dashboard Charts */}
+        <div className="pt-4 border-t border-border/30">
+          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">Dashboard analítico</p>
+          <DashboardCharts />
+        </div>
       </div>
     );
   }
