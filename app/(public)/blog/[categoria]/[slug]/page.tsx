@@ -14,6 +14,8 @@ import { BlogTOC } from '@/components/blog/blog-toc';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
+import { LocalConsultForm } from '@/components/blog/local-consult-form';
+import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 
 export const revalidate = 3600;
 
@@ -84,6 +86,9 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
+  const isLocalService = /-(choluteca|nacaome|san-lorenzo)$/.test(post.slug);
+  const faqItems = extractFAQSchema(post.body);
+  const faqLd = faqPageSchema(faqItems);
 
   return (
     <>
@@ -277,6 +282,15 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         </Section>
       )}
 
+      {/* ── FORMULARIO RÁPIDO (solo páginas locales) ── */}
+      {isLocalService && (
+        <Section spacing="sm">
+          <Container size="sm">
+            <LocalConsultForm location={post.slug.replace(/-(choluteca|nacaome|san-lorenzo).*$/, ' $1').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())} />
+          </Container>
+        </Section>
+      )}
+
       {/* ── FINAL CTA ── */}
       <Section spacing="md">
         <Container size="md">
@@ -284,11 +298,17 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         </Container>
       </Section>
 
-      {/* ── SCHEMA ── */}
+      {/* ── SCHEMAS ── */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema(post)) }}
       />
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
     </>
   );
 }
