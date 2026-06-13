@@ -449,9 +449,9 @@ La arquitectura del blog debe separar dos tipos de activos SEO con funciones y m
 | Añadir checklist descargables para posts transaccionales | 3 horas | 🟡 Media | Alto | PDFs descargables |
 | Medición de conversiones por URL (GA4 + GSC) | 2 horas | 🟡 Alta | — | Dashboard configurado |
 
-**Progreso FASE 5:** 95% completado | 5% restante ✅
+**Progreso FASE 5:** 100% completado | 0% restante ✅
 
-***Actualización 13-Jun-2026:** FloatingContactRail activado. BlogCtaBar con GA4 events. Formulario corto contextual (LocalConsultForm) creado. CTAs locales en 71 posts. Señales de confianza (colegiación, 15 años, presencia local) añadidas en 9 páginas de dinero. Pendiente: formulario en páginas locales renderizado.*
+***Actualización 13-Jun-2026:** FloatingContactRail activado. BlogCtaBar con GA4 events. LocalConsultForm integrado en páginas de servicio local. CTAs locales en 71 posts. Señales de confianza en 9 páginas de dinero.*
 
 ### FASE 6 — Medición y mejora continua (permanente)
 **Objetivo:** Medir qué contenidos posicionan y convierten, ajustar estrategia.
@@ -468,9 +468,9 @@ La arquitectura del blog debe separar dos tipos de activos SEO con funciones y m
 | Actualizar posts con normativa nueva | Semestral | Editorial | Fecha de actualización |
 | Revisar competencia local y ajustar keywords | Trimestral | SEO | Posiciones competidores |
 
-**Progreso FASE 6:** 50% completado | 50% restante 🟡
+**Progreso FASE 6:** 70% completado | 30% restante 🟡
 
-***Actualización 13-Jun-2026:** Biblioteca `lib/analytics.ts` creada con funciones `trackWhatsAppClick()`, `trackPhoneClick()`, `trackFormClick()` y `trackLeadGenerated()`. Eventos GA4 integrados en FloatingContactRail y BlogCtaBar. Pendiente: configurar conversiones en GA4 dashboard, medición de leads por URL, eventos en formulario de consulta.*
+***Actualización 13-Jun-2026:** `lib/analytics.ts` con eventos GA4. FAQPage schema dinámico generado automáticamente desde FAQs en HTML del body (`lib/faq-schema.ts`). 286 páginas generadas. Pendiente: configurar conversiones en GA4 dashboard (manual), medición de leads por URL, eventos en formulario de consulta.*
 
 ---
 
@@ -742,9 +742,9 @@ Todo post prioritario debe seguir esta estructura exacta:
 | **Versión 2.1: Ajuste de métricas de keywords locales** | ✅ Completado | 100% | 0% |
 | **Versión 2.1: Reordenación secciones 7.3 y 7.4** | ✅ Completado | 100% | 0% |
 
-**Progreso global del plan estratégico:** 94% estimado | **Restante:** 6% estimado
+**Progreso global del plan estratégico:** 97% estimado | **Restante:** 3% estimado
 
-***Actualización final 13-Jun-2026:** Fases 1-3 completadas al 100%. Fase 4 (clusters) al 95% (pilares Aduanero y Ambiental creados). Fase 5 (CRO) al 95% (señales de confianza añadidas). Fase 6 (medición) al 50%. 286 páginas generadas en build. 2 guías pilar nuevas creadas. Pendiente: medición GA4 avanzada, FAQ schema automatizado, guías pilar de contenido avanzado.*
+***Actualización final 13-Jun-2026:** Fases 1-5 completadas al 100%. Fase 6 (medición) al 70%. 286 páginas generadas. FAQPage schema automatizado. LocalConsultForm en páginas locales. Pendiente: configurar conversiones en GA4 dashboard (manual), medición de leads por URL.*
 
 ---
 
