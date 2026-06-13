@@ -339,6 +339,29 @@ export default function SeoDashboardPage() {
     'https://www.pinedayasociadoshn.com/blog',
     'https://www.pinedayasociadoshn.com/preguntas-frecuentes',
     'https://www.pinedayasociadoshn.com/solicitar-consulta',
+    // Páginas de dinero locales (9)
+    'https://www.pinedayasociadoshn.com/abogados-en-nacaome',
+    'https://www.pinedayasociadoshn.com/abogados-en-choluteca',
+    'https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo',
+    'https://www.pinedayasociadoshn.com/abogado-penalista-choluteca',
+    'https://www.pinedayasociadoshn.com/abogado-laboral-choluteca',
+    'https://www.pinedayasociadoshn.com/abogado-familia-choluteca',
+    'https://www.pinedayasociadoshn.com/abogado-civil-choluteca',
+    'https://www.pinedayasociadoshn.com/abogado-aduanero-san-lorenzo',
+    'https://www.pinedayasociadoshn.com/abogado-empresas-san-lorenzo',
+    // Posts satélite (12)
+    'https://www.pinedayasociadoshn.com/divorcio-choluteca',
+    'https://www.pinedayasociadoshn.com/pension-alimenticia-choluteca',
+    'https://www.pinedayasociadoshn.com/demanda-laboral-choluteca',
+    'https://www.pinedayasociadoshn.com/accidente-transito-choluteca',
+    'https://www.pinedayasociadoshn.com/cobro-deudas-choluteca',
+    'https://www.pinedayasociadoshn.com/defensa-sar-choluteca',
+    'https://www.pinedayasociadoshn.com/importaciones-san-lorenzo',
+    'https://www.pinedayasociadoshn.com/tramites-legales-nacaome',
+    'https://www.pinedayasociadoshn.com/abogados-en-marcovia-choluteca',
+    'https://www.pinedayasociadoshn.com/abogados-en-san-marcos-de-colon-choluteca',
+    'https://www.pinedayasociadoshn.com/abogados-en-pespire-choluteca',
+    'https://www.pinedayasociadoshn.com/abogados-en-amapala-valle',
   ];
 
   function renderSummary() {
@@ -983,6 +1006,20 @@ export default function SeoDashboardPage() {
               <div className="flex items-start gap-2 p-3 rounded bg-warning/5 border border-warning/30 mt-3">
                 <AlertTriangle size={14} className="text-warning flex-shrink-0 mt-0.5" />
                 <p className="text-xs text-text-secondary">El canonical que Google ha elegido difiere del declarado. Revisar la etiqueta canonical.</p>
+              </div>
+            )}
+
+            {!inspectResult.error && inspectResult.indexStatus && (
+              <div className="mt-4 pt-3 border-t border-border/30 text-center">
+                <a
+                  href={`https://search.google.com/search-console/inspect?resource_id=${encodeURIComponent('sc-domain:pinedayasociadoshn.com')}&id=${encodeURIComponent(inspectResult.url)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+                >
+                  <ExternalLink size={14} />
+                  Solicitar indexación en Google Search Console
+                </a>
               </div>
             )}
           </Card>
