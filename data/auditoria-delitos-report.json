@@ -1,0 +1,1466 @@
+[
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 235 CP - Privación ilegal de libertad",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 235 CP - Privación ilegal de libertad",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 236 CP - Privación ilegal de libertad agravada",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 237 CP - Privación ilegal de libertad atenuada",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 238 CP - Privación ilegal de libertad realizada por funcionario o empleado público",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 239 CP - Secuestro",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 240 CP - Secuestro agravado (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 240 CP - Secuestro agravado (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 240 CP - Secuestro agravado (modalidad 3)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 241 CP - Secuestro atenuado",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 242 CP - Secuestro realizado por funcionario o empleado público nacional o extranjero",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 243 CP - Punibilidad de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 244 CP - Concursos",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 245 CP - Coacciones",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 246 CP - Amenazas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 247 CP - Chantaje",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 247 CP - Chantaje",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 248 CP - Desplazamiento forzado",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 286 CP - Sustracción de menores o discapacitados necesitados de especial protección",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 294 CP - Acoso laboral vertical",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 294 CP - Acoso laboral vertical",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 308 CP - Inhabilitación",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 308 CP - Inhabilitación",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 308 CP - Inhabilitación",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 309 CP - Responsabilidad de la personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "MULTA_SIN_VALOR",
+    "articulo": "Art. 309 CP - Responsabilidad de la personas jurídicas",
+    "desc": "Solo multa pero sin valor extraído",
+    "valorActual": "multa=0-0 cuantia_variable",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 310 CP - Delito imprudente contra la salud pública y agravante especial",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 343 CP - Urbanización ilegal",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 344 CP - Aprobación irregular por parte de funcionario público",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 345 CP - Responsabilidad del funcionario público por omisión",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 346 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 347 CP - Demolición de lo ilícitamente construido",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 348 CP - Tráfico ilícito de bienes del patrimonio cultural",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 349 CP - Alteración de inmuebles pertenecientes al patrimonio cultural",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 350 CP - Expolio de zonas arqueológicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 351 CP - Agravantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 352 CP - Responsabilidad del funcionario o empleado público",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 352 CP - Responsabilidad del funcionario o empleado público",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 352 CP - Responsabilidad del funcionario o empleado público",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 353 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 354 CP - Atenuantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 355 CP - Restauración del patrimonio cultural",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 356 CP - Reincidencia internacional",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 357 CP - Hurto simple",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 358 CP - Hurto de ganado o cosechas (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 358 CP - Hurto de ganado o cosechas (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 358 CP - Hurto de ganado o cosechas (modalidad 3)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 358 CP - Hurto de ganado o cosechas (modalidad 4)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 359 CP - Hurto de posesión",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 360 CP - Robo con fuerza",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 361 CP - Robo con violencia o intimidación",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 362 CP - Robo de ganado (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 362 CP - Robo de ganado (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 362 CP - Robo de ganado (modalidad 3)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 363 CP - Agravantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 364 CP - Hurto y robo de uso de vehículo automotor (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 364 CP - Hurto y robo de uso de vehículo automotor (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 370 CP - Administración fraudulenta",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 371 CP - Apropiación y retención indebidas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 372 CP - Apropiación irregular",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 386 CP - Usura",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 387 CP - Loterías y juegos no autorizados",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 393 CP - Uso ilegítimo de patente",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 394 CP - Uso ilegítimo de distintivos o marcas registradas (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 394 CP - Uso ilegítimo de distintivos o marcas registradas (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 394 CP - Uso ilegítimo de distintivos o marcas registradas (modalidad 3)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 394 CP - Uso ilegítimo de distintivos o marcas registradas (modalidad 4)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 396 CP - Agravantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 397 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 406 CP - Delito de quiebra fraudulenta",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 407 CP - Agravantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 408 CP - Alzamiento de bienes",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 409 CP - Insolvencia fraudulenta",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 410 CP - Liquidación forzosa de instituciones financieras",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 411 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 412 CP - Detracción de materias primas u otros productos",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 413 CP - Difusión de noticias o rumores falsos y abuso de información privilegiada",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 414 CP - Agiotaje",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 415 CP - Acuerdos y prácticas restrictivas de la competencia",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 416 CP - Obstaculización de procesos de licitación o subastas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 417 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 418 CP - Corrupción en los negocios entre particulares",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 419 CP - Corrupción en el deporte",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 420 CP - Punición de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 421 CP - Atenuantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 431 CP - Defraudación fiscal",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 432 CP - Fraude de subvenciones y ayudas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 433 CP - Delito contable",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 434 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 435 CP - Fraude a la Seguridad Social o al Sistema de Pensiones",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 436 CP - Apropiación indebida de cuotas o aportaciones",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 437 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 447 CP - Falsificación de moneda",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 448 CP - Tráfico de monedas falsas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 449 CP - Tenencia de moneda falsa para su puesta en circulación",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 450 CP - Fabricación o tenencia de instrumentos para la falsificación de moneda",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 451 CP - Agravantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 452 CP - Reincidencia internacional",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 453 CP - Falsificación de sellos y otros efectos timbrados",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 454 CP - Tráfico de sellos y otros efectos timbrados falsos",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 455 CP - Agravantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 459 CP - Uso de documento falso",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 459 CP - Uso de documento falso",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 470 CP - Usurpación de la personalidad de otro",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 471 CP - Usurpación de funciones públicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 472 CP - Intrusismo profesional",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 473 CP - Uso indebido de uniforme, insignias y equipo policial o militar",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 486 CP - Negociaciones incompatibles de perito, árbitro y contadores",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 496 CP - Cohecho cometido por particular",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 507 CP - Usurpación de funciones y simulación de cargo por particular",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 513 CP - Encubrimiento",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 513 CP - Encubrimiento",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "MULTA_SIN_VALOR",
+    "articulo": "Art. 522 CP - Delito de falta de registro de clientes y su identificación",
+    "desc": "Solo multa pero sin valor extraído",
+    "valorActual": "multa=0-0 otra",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 523 CP - Coacción judicial",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 524 CP - Cohecho a sujetos procesales",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 525 CP - Desobediencia a mandato fiscal o judicial",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 526 CP - Quebrantamiento de condena o medida",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 527 CP - Favorecimiento de la evasión (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 527 CP - Favorecimiento de la evasión (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 527 CP - Favorecimiento de la evasión (modalidad 3)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 531 CP - Delitos contra la administración de justicia de la Corte Penal Internacional",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 532 CP - Rebelión (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 532 CP - Rebelión (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 533 CP - Punición de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 534 CP - Infracción del deber de resistencia",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 535 CP - Sedición",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 536 CP - Punición de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 537 CP - Disposiciones comunes",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 538 CP - Ultraje a los símbolos nacionales",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 539 CP - Muerte, lesiones o secuestro del Presidente de la República",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 539 CP - Muerte, lesiones o secuestro del Presidente de la República",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-9999",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "INFO",
+    "tipo": "PERPETUIDAD",
+    "articulo": "Art. 539 CP - Muerte, lesiones o secuestro del Presidente de la República",
+    "desc": "Prisión a perpetuidad",
+    "valorActual": "0-9999 meses",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 540 CP - Punición de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 540 CP - Punición de actos preparatorios",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 540 CP - Punición de actos preparatorios",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 541 CP - Perturbación ilícita del funcionamiento de las instituciones (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 541 CP - Perturbación ilícita del funcionamiento de las instituciones (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 541 CP - Perturbación ilícita del funcionamiento de las instituciones (modalidad 3)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 542 CP - Coacción y amenaza electoral",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 542 CP - Coacción y amenaza electoral",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 543 CP - Falsificación de documentos electorales",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 544 CP - Otros delitos electorales",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 544 CP - Otros delitos electorales",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 545 CP - Pena adicional a los extranjeros",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 546 CP - Suplantación de identidad hondureña para ejercer sufragio",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 546 CP - Suplantación de identidad hondureña para ejercer sufragio",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 547 CP - Destrucción de propaganda",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 555 CP - Traición a la patria",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 556 CP - Inducción a actos de agresión contra la nación",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 557 CP - Ataque a señales fronterizas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 558 CP - Levantamiento ilegal de planos de fortificaciones u otras obras",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 559 CP - Declaratoria ilegal de guerra o de paz",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 560 CP - Delitos que comprometen la neutralidad",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 561 CP - Punición de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 562 CP - Pena de pérdida de la ciudadanía y nacionalidad",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 562 CP - Pena de pérdida de la ciudadanía y nacionalidad",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 562 CP - Pena de pérdida de la ciudadanía y nacionalidad",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 563 CP - Espionaje",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "INFO",
+    "tipo": "PERPETUIDAD",
+    "articulo": "Art. 579 CP - Introducción de objetos prohibidos",
+    "desc": "Prisión a perpetuidad",
+    "valorActual": "500-1000 meses",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 580 CP - Tenencia o porte ilegal de armas de fuego",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 580 CP - Tenencia o porte ilegal de armas de fuego",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 586 CP - Penas privativas de derechos",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 586 CP - Penas privativas de derechos",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "OOCERO_LEGACY",
+    "articulo": "Art. 586 CP - Penas privativas de derechos",
+    "desc": "Legacy 0-0 meses pero clasificado con prisión",
+    "valorActual": "0-0 meses",
+    "valorEsperado": "0-0 meses"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 587 CP - Asociación terrorista",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 588 CP - Colaboración sin pertenencia a la asociación terrorista (modalidad 1)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 588 CP - Colaboración sin pertenencia a la asociación terrorista (modalidad 2)",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 589 CP - Delitos de terrorismo en particular",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 590 CP - Atenuantes específicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 591 CP - Asistencia a campos de entrenamiento",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 592 CP - Ciberterrorismo o terrorismo electrónico",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 593 CP - Punición de actos preparatorios",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 594 CP - Penas privativas de derechos",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 594 CP - Penas privativas de derechos",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 595 CP - Reincidencia internacional",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "SIN_RAMA",
+    "articulo": "Art. 596 CP - Responsabilidad de las personas jurídicas",
+    "desc": "Sin rama jurídica",
+    "valorActual": "",
+    "valorEsperado": ""
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 196 CP - Aborto",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 151 CP - Espionaje",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 196 CP - Aborto consentido",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 196 CP - Aborto forzado",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 196 CP - Aborto imprudente",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "CRITICAL",
+    "tipo": "PRISION_SIN_VALOR",
+    "articulo": "Art. 196 CP - Aborto sin consentimiento agravado",
+    "desc": "Clasificado con prisión pero sin valores",
+    "valorActual": "prision=0-0",
+    "valorEsperado": "CP establece prisión"
+  },
+  {
+    "severity": "WARNING",
+    "tipo": "MULTA_SIN_VALOR",
+    "articulo": "Art. 130 CP - Atentado contra el derecho a la educación",
+    "desc": "Solo multa pero sin valor extraído",
+    "valorActual": "multa=0-0 otra",
+    "valorEsperado": ""
+  }
+]
