@@ -44,29 +44,29 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           <Phone size={18} aria-hidden="true" />
           {site.phoneDisplay}
         </a>
-        <Link
+        <a
           href="/solicitar-consulta#formulario"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
-        </Link>
+        </a>
       </div>
     );
   }
   if (variant === 'inverse') {
     return (
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
-        <Link
+        <a
           href="/solicitar-consulta#formulario"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
-        </Link>
+        </a>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none cursor-pointer"
         >
           <Phone size={18} aria-hidden="true" />
           Llamar {site.phoneDisplay}
@@ -76,13 +76,13 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
   }
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
-      <Link
+      <a
         href="/solicitar-consulta#formulario"
-        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
+        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={18} aria-hidden="true" />
         Solicitar consulta
-      </Link>
+      </a>
       <a
         href={telHref()}
         className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-primary/25 text-primary bg-surface text-base font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_1px_2px_rgba(15,29,58,0.04),0_2px_6px_rgba(15,29,58,0.05)]"
