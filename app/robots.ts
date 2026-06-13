@@ -39,7 +39,6 @@ export default function robots(): MetadataRoute.Robots {
         { userAgent: 'Diffbot', disallow: '/' },
         { userAgent: 'ImagesiftBot', disallow: '/' },
         { userAgent: 'Omgilibot', disallow: '/' },
-        { userAgent: 'OAI-SearchBot', disallow: '/' },
       ],
     };
   }
@@ -67,7 +66,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'Applebot-Extended', disallow: '/' },
       { userAgent: 'FacebookBot', disallow: '/' },
       { userAgent: 'Meta-ExternalAgent', disallow: '/' },
-      { userAgent: 'OAI-SearchBot', disallow: '/' },
       { userAgent: 'Diffbot', disallow: '/' },
       { userAgent: 'ImagesiftBot', disallow: '/' },
       { userAgent: 'Omgilibot', disallow: '/' },
