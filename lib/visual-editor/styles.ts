@@ -1,25 +1,77 @@
 export const EDITOR_CSS = `
+/* ─── Mode indicator ────────────────────────────────────────── */
+.ve-active::before {
+  content: '✎ MODO EDICIÓN — Los clics no navegan. Seleccioná un elemento para editarlo.';
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483646;
+  background: #0f1d3a;
+  color: #c9a55c;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(201, 165, 92, 0.3);
+}
+
+.ve-preview::before {
+  content: '👁 VISTA PREVIA — Navegación activa. Volvé al editor para hacer cambios.';
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483646;
+  background: #1a3a2a;
+  color: #6fcf97;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(111, 207, 151, 0.3);
+}
+
 /* ─── Element-level editing ──────────────────────────────── */
 .ve-active .ve-el {
-  outline: 2px dashed rgba(212,175,55,0.4);
-  outline-offset: 2px;
-  cursor: text;
-  transition: outline-color 0.15s, background-color 0.15s;
+  outline: 2px dashed rgba(212,175,55,0.3);
+  outline-offset: 1px;
+  cursor: pointer;
+  transition: outline-color 0.15s, background-color 0.15s, box-shadow 0.15s;
   border-radius: 2px;
+  position: relative;
 }
 .ve-active .ve-el:hover {
-  outline-color: rgba(212,175,55,0.8);
+  outline-color: rgba(212,175,55,0.7);
   background-color: rgba(212,175,55,0.04);
 }
 .ve-active .ve-el.ve-selected {
-  outline: 2px solid #c9a55c;
-  outline-offset: 2px;
+  outline: 2.5px solid #c9a55c;
+  outline-offset: 1px;
   background-color: rgba(212,175,55,0.08);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
 }
 .ve-active .ve-el.ve-selected.ve-editing {
-  outline: 2px solid #a68840;
+  outline: 2.5px solid #a68840;
   background-color: rgba(255,255,255,0.95);
   box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
+  cursor: text;
+}
+
+/* Selection highlight ring for parents */
+.ve-active .ve-parent-highlight {
+  outline: 1px dashed rgba(15,29,58,0.15);
+  outline-offset: 0px;
 }
 
 .ve-tooltip {
@@ -43,97 +95,6 @@ export const EDITOR_CSS = `
   font-weight: 600;
 }
 
-/* ─── Block-level editing ────────────────────────────────── */
-.ve-block {
-  position: relative;
-  transition: box-shadow 0.15s;
-}
-.ve-block:hover {
-  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.25);
-}
-.ve-block.ve-block-selected {
-  box-shadow: inset 0 0 0 2px rgba(212,175,55,0.5);
-}
-
-/* Block toolbar — appears on hover */
-.ve-block-toolbar {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
-.ve-block:hover > .ve-block-toolbar {
-  display: block;
-}
-
-/* Block inserter — appears between blocks */
-.ve-block-inserter {
-  position: relative;
-  z-index: 50;
-}
-
-/* Image editing badges */
-.ve-image-editable {
-  position: relative;
-  cursor: pointer;
-}
-.ve-image-editable::after {
-  content: "🖼 Reemplazar imagen";
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  background: rgba(15,29,58,0.85);
-  color: #fff;
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.15s;
-  pointer-events: none;
-  font-family: system-ui, sans-serif;
-}
-.ve-image-editable:hover::after {
-  opacity: 1;
-}
-
-/* Button editing badges */
-.ve-btn-editable {
-  position: relative;
-  cursor: pointer;
-}
-.ve-btn-editable::after {
-  content: "🔗 Editar enlace";
-  position: absolute;
-  bottom: calc(100% + 4px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(15,29,58,0.85);
-  color: #fff;
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.15s;
-  pointer-events: none;
-  white-space: nowrap;
-  font-family: system-ui, sans-serif;
-}
-.ve-btn-editable:hover::after {
-  opacity: 1;
-}
-
-/* Section highlight for block-level selection */
-.ve-section-highlight {
-  outline: 2px dashed rgba(15,29,58,0.12);
-  outline-offset: -2px;
-  position: relative;
-}
-.ve-section-highlight:hover {
-  outline-color: rgba(15,29,58,0.35);
-}
-
 /* Hidden block indicator */
 .ve-block-hidden {
   opacity: 0.4;
@@ -141,7 +102,7 @@ export const EDITOR_CSS = `
   position: relative;
 }
 .ve-block-hidden::before {
-  content: "BLOQUE OCULTO — Visible solo en admin";
+  content: "BLOQUE OCULTO — Solo visible en admin";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -155,5 +116,72 @@ export const EDITOR_CSS = `
   z-index: 10;
   white-space: nowrap;
   font-family: system-ui, sans-serif;
+}
+
+/* Removed element marker */
+.ve-removed {
+  opacity: 0.2;
+  pointer-events: none;
+  position: relative;
+}
+.ve-removed::after {
+  content: "ELEMENTO ELIMINADO — Guardá para confirmar";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(220,38,38,0.85);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 24px;
+  border-radius: 6px;
+  z-index: 10;
+  white-space: nowrap;
+  font-family: system-ui, sans-serif;
+  pointer-events: none;
+}
+
+/* ─── Preview mode resets everything ─────────────────────── */
+.ve-preview .ve-el {
+  outline: none !important;
+  cursor: auto !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.ve-preview .ve-el:hover {
+  outline: none !important;
+  background-color: transparent !important;
+}
+.ve-preview .ve-el.ve-selected,
+.ve-preview .ve-el.ve-editing {
+  outline: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.ve-preview .ve-block-hidden {
+  opacity: 1 !important;
+  filter: none !important;
+}
+.ve-preview .ve-block-hidden::before {
+  display: none !important;
+}
+.ve-preview .ve-removed {
+  display: none !important;
+}
+.ve-preview .ve-removed::after {
+  display: none !important;
+}
+.ve-preview .ve-hidden-by-editor {
+  display: none !important;
+}
+
+/* No interactive elements in edit mode */
+.ve-active a, .ve-active button, .ve-active [onclick], .ve-active [role="button"],
+.ve-active input, .ve-active select, .ve-active textarea, .ve-active [tabindex]:not(.ve-el) {
+  pointer-events: none !important;
+}
+.ve-active .ve-el {
+  pointer-events: auto !important;
 }
 `;

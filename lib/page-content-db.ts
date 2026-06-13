@@ -6,7 +6,17 @@ import { cache } from 'react';
 export type PageContentRow = typeof pageContent.$inferSelect;
 export type PageContentInsert = typeof pageContent.$inferInsert;
 
-export async function getPageContent(page: string): Promise<Record<string, string>> {
+export async function getPageContent(page: string, options?: { includeUnpublished?: boolean }): Promise<Record<string, string>> {
+  // If the page is not published and we're not explicitly including unpublished, return empty
+  if (!options?.includeUnpublished) {
+    try {
+      const meta = await getPageMeta(page);
+      if (meta.status !== 'published') {
+        return {};
+      }
+    } catch {}
+  }
+
   const rows = await db.select().from(pageContent)
     .where(and(eq(pageContent.page, page), eq(pageContent.lang, 'es-HN')));
   const map: Record<string, string> = {};
@@ -121,6 +131,33 @@ export const DEFAULT_PAGE_META: PageMetaData = {
   updatedAt: null,
 };
 
+/** Check if a page has any content (non-meta fields). */
+export async function pageHasContent(page: string): Promise<boolean> {
+  const rows = await db.select({ id: pageContent.id }).from(pageContent)
+    .where(and(
+      eq(pageContent.page, page),
+      eq(pageContent.lang, 'es-HN'),
+      sql`${pageContent.section} != '_meta'`,
+      sql`${pageContent.section} != '_layout'`,
+      sql`${pageContent.section} != '_visibility'`,
+    ))
+    .limit(1);
+  return rows.length > 0;
+}
+
+/** Ensure a page is published if it has content. Returns the resolved status. */
+export async function ensurePagePublished(page: string): Promise<'published' | 'draft' | 'inactive'> {
+  const hasContent = await pageHasContent(page);
+  if (!hasContent) return 'draft';
+
+  const meta = await getPageMeta(page);
+  if (meta.status === 'published') return 'published';
+
+  // If page has content but status is not published, auto-publish (conservative: was likely published before)
+  await setPageStatus(page, 'published');
+  return 'published';
+}
+
 /** Load metadata for a page from `_meta.*` fields in page_content. */
 export async function getPageMeta(page: string): Promise<PageMetaData> {
   const rows = await db.select().from(pageContent)
@@ -133,8 +170,24 @@ export async function getPageMeta(page: string): Promise<PageMetaData> {
   for (const row of rows) {
     map[row.field] = row.content;
   }
+
+  // Determine status: if _meta.status is set explicitly, use it.
+  // Otherwise, if page has content, default to 'published' (conservative).
+  const explicitStatus = map.status as PageMetaData['status'] | undefined;
+  const hasContentHint = (Object.keys(map).length > 0) || null; // non-meta content exists
+
+  let status: PageMetaData['status'];
+  if (explicitStatus && ['published', 'draft', 'inactive'].includes(explicitStatus)) {
+    status = explicitStatus;
+  } else if (hasContentHint) {
+    // If we found meta fields but no explicit status, default to published
+    status = 'published';
+  } else {
+    status = DEFAULT_PAGE_META.status;
+  }
+
   return {
-    status: (map.status as PageMetaData['status']) ?? DEFAULT_PAGE_META.status,
+    status,
     metaTitle: map.meta_title ?? DEFAULT_PAGE_META.metaTitle,
     metaDescription: map.meta_description ?? DEFAULT_PAGE_META.metaDescription,
     ogTitle: map.og_title ?? DEFAULT_PAGE_META.ogTitle,
@@ -285,15 +338,16 @@ export const getAllPagesMeta = cache(async (): Promise<PageListItem[]> => {
   const items: PageListItem[] = [];
 
   for (const pm of pagesMeta) {
-    if (pm.page === 'configuracion') continue; // skip config, handled separately
+    if (pm.page === 'configuracion') continue;
     const s = statMap.get(pm.page);
     let status: PageListItem['status'] = 'draft';
     let publishedAt: string | null = null;
     let hasSeo = false;
 
     try {
+      // Use ensurePagePublished to auto-restore published status for pages with content
+      status = await ensurePagePublished(pm.page);
       const meta = await getPageMeta(pm.page);
-      status = meta.status;
       publishedAt = meta.publishedAt;
       hasSeo = !!(meta.metaTitle || meta.metaDescription || meta.ogImage);
     } catch {}

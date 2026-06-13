@@ -3,10 +3,12 @@
 import { useState, useCallback } from 'react';
 import {
   Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight,
-  Type, X, Eye, EyeOff, RotateCcw,
+  Type, X, Eye, EyeOff, RotateCcw, Trash2, Eye as EyeIcon,
+  ArrowUp, ArrowDown, Copy,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
+import { useConfirm } from '@/components/ui/confirm';
 
 export interface SelectedElement {
   page: string;
@@ -18,19 +20,37 @@ export interface SelectedElement {
   className: string;
 }
 
+interface BreadcrumbItem {
+  tag: string;
+  section: string;
+}
+
 interface PropertyPanelProps {
   selected: SelectedElement | null;
+  breadcrumbs: BreadcrumbItem[];
   onUpdateContent: (section: string, field: string, content: string) => void;
   onStyle: (style: Record<string, string | boolean>) => void;
   onClose: () => void;
+  onRemove: (section: string) => void;
+  onHide: (section: string) => void;
+  onMoveUp: (section: string) => void;
+  onMoveDown: (section: string) => void;
+  onDuplicate: (section: string) => void;
 }
 
 export function PropertyPanel({
   selected,
+  breadcrumbs,
   onUpdateContent,
   onStyle,
   onClose,
+  onRemove,
+  onHide,
+  onMoveUp,
+  onMoveDown,
+  onDuplicate,
 }: PropertyPanelProps) {
+  const confirm = useConfirm();
   const [previewMode, setPreviewMode] = useState(false);
   const [showHtml, setShowHtml] = useState(false);
   const [editContent, setEditContent] = useState(selected?.content ?? '');
@@ -43,11 +63,25 @@ export function PropertyPanel({
     onUpdateContent(selected.section, selected.field, editContent);
   }, [selected, editContent, onUpdateContent]);
 
+  const handleRemove = useCallback(async () => {
+    if (!selected) return;
+    if (await confirm({
+      title: '¿Eliminar este bloque?',
+      description: `Se eliminará la sección "${sectionLabel}". Podés guardar los cambios o descartarlos después.`,
+      tone: 'danger',
+    })) {
+      onRemove(selected.section);
+    }
+  }, [selected, sectionLabel, confirm, onRemove]);
+
   if (!selected) {
     return (
-      <div className="p-4 text-center text-text-secondary text-xs">
+      <div className="p-4 text-center text-text-secondary text-xs space-y-3">
         <Type size={24} className="mx-auto mb-2 opacity-30" />
-        <p>Selecciona un elemento en la página para editar sus propiedades</p>
+        <p>Seleccioná un elemento en la página para editar sus propiedades</p>
+        <p className="text-xxs text-text-muted">
+          Hacé clic en cualquier texto, botón o bloque editable
+        </p>
       </div>
     );
   }
@@ -65,6 +99,7 @@ export function PropertyPanel({
 
   return (
     <div className="h-full flex flex-col bg-surface border-l border-border-light" key={selectionId}>
+      {/* Header */}
       <div className="flex items-center justify-between px-3 py-2 border-b border-border-light bg-white">
         <h3 className="text-xs font-bold text-primary uppercase tracking-wider">
           Propiedades
@@ -106,6 +141,7 @@ export function PropertyPanel({
         </div>
       ) : (
         <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Section/Field info */}
           <div className="px-3 py-2 border-b border-border-light">
             <div className="text-xxs font-bold uppercase tracking-wider text-accent-dark">
               {sectionLabel}
@@ -113,16 +149,36 @@ export function PropertyPanel({
             <div className="text-xs font-semibold text-text mt-0.5">
               {fieldLabel}
             </div>
-            <div className="text-xxs text-text-muted mt-0.5">
+            <div className="text-xxs text-text-muted mt-0.5 flex items-center gap-2 flex-wrap">
               <code className="bg-surface-alt px-1 rounded">&lt;{selected.tagName}&gt;</code>
               {selected.isRichtext && (
-                <span className="ml-2 px-1.5 py-0.5 rounded bg-accent/10 text-accent-dark text-xxs">
+                <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent-dark text-xxs">
                   HTML enriquecido
                 </span>
               )}
             </div>
           </div>
 
+          {/* Breadcrumbs */}
+          {breadcrumbs.length > 0 && (
+            <div className="px-3 py-1.5 border-b border-border-light bg-surface-alt/20">
+              <div className="text-xxs text-text-muted mb-1">Jerarquía:</div>
+              <div className="flex items-center gap-1 flex-wrap">
+                {breadcrumbs.map((crumb, i) => (
+                  <span key={i} className="flex items-center gap-0.5">
+                    <code className="text-xxs bg-white px-1 rounded border border-border-light">
+                      {crumb.tag}
+                    </code>
+                    {i < breadcrumbs.length - 1 && (
+                      <span className="text-text-muted text-xxs">›</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Style toolbar */}
           <div className="px-3 py-2 flex items-center gap-1 border-b border-border-light flex-wrap">
             {toolButtons.map((btn) => (
               <button
@@ -146,6 +202,7 @@ export function PropertyPanel({
             </button>
           </div>
 
+          {/* Content editor */}
           <div className="flex-1 overflow-auto p-3">
             {selected.isRichtext ? (
               <div className="space-y-2">
@@ -187,15 +244,64 @@ export function PropertyPanel({
             )}
           </div>
 
-          <div className="p-3 border-t border-border-light bg-white">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleApply}
-              className="w-full"
-            >
-              Aplicar cambio
-            </Button>
+          {/* Action buttons */}
+          <div className="p-3 border-t border-border-light bg-white space-y-2">
+            {/* Element actions */}
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => onMoveUp(selected.section)}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xxs font-semibold text-text-secondary hover:bg-surface-alt transition-colors border border-border-light"
+                title="Mover arriba"
+              >
+                <ArrowUp size={12} /> Arriba
+              </button>
+              <button
+                type="button"
+                onClick={() => onMoveDown(selected.section)}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xxs font-semibold text-text-secondary hover:bg-surface-alt transition-colors border border-border-light"
+                title="Mover abajo"
+              >
+                <ArrowDown size={12} /> Abajo
+              </button>
+              <button
+                type="button"
+                onClick={() => onDuplicate(selected.section)}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xxs font-semibold text-text-secondary hover:bg-surface-alt transition-colors border border-border-light"
+                title="Duplicar"
+              >
+                <Copy size={12} /> Duplicar
+              </button>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => onHide(selected.section)}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xxs font-semibold text-warning hover:bg-warning-bg transition-colors border border-warning/30"
+                title="Ocultar bloque"
+              >
+                <EyeIcon size={12} /> Ocultar
+              </button>
+              <button
+                type="button"
+                onClick={handleRemove}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xxs font-semibold text-danger hover:bg-danger-bg transition-colors border border-danger/30"
+                title="Eliminar bloque"
+              >
+                <Trash2 size={12} /> Eliminar
+              </button>
+            </div>
+
+            <div className="border-t border-border-light pt-2">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleApply}
+                className="w-full"
+              >
+                Aplicar cambio
+              </Button>
+            </div>
           </div>
         </div>
       )}

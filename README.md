@@ -475,11 +475,16 @@ Filosofía: **metadatos en formulario, contenido en visor visual**. El módulo s
 #### Flujo de edición (contenido visual)
 
 1. **Seleccionar página** desde el listado → clic en "Editor visual" (icono `Eye`).
-2. **Editar inline**: la página pública se renderiza en el iframe. Cada elemento con contenido editable muestra un outline dorado al pasar el cursor. Click para seleccionar, click de nuevo o doble click para editar inline.
-3. **Panel de propiedades**: a la derecha, el panel muestra el campo seleccionado con editor rich text (TipTap) o texto plano, botones de formato (negrita, cursiva, subrayado, alineación) y edición HTML directa.
-4. **Cambios pendientes**: cada edición se registra como "cambio pendiente" (no se guarda automáticamente). La barra superior muestra el contador de cambios.
-5. **Guardar**: clic en "Guardar todo" → todos los cambios pendientes se envían a `POST /api/admin/pages` (uno por uno). La API hace upsert en `page_content` y llama `revalidatePath(ruta)` para actualizar ISR.
-6. **Estados**: Publicado (visible en web), Borrador (solo admin), Inactivo (oculto). Se cambian desde la barra superior del editor visual.
+2. **Dos modos**: la barra superior tiene un toggle **Editar / Previsualizar**.
+   - **Modo Editar** (activo por defecto): todos los eventos de navegación, formularios y clics están bloqueados vía capture-phase event delegation. Los elementos editables muestran outline dorado al pasar el cursor. Un indicador "✎ MODO EDICIÓN" aparece al pie de la página.
+   - **Modo Previsualizar**: la página se comporta como en producción. Todos los enlaces, botones y formularios funcionan normalmente. Indicador "👁 VISTA PREVIA" en verde.
+3. **Seleccionar elemento**: en modo editar, hacer clic sobre cualquier elemento editable (texto, botón, título, etc.) para seleccionarlo. El panel derecho muestra sus propiedades.
+4. **Panel de componentes** (izquierdo): catálogo de 25+ componentes predefinidos reutilizables (botones, tarjetas, CTA, secciones, grids, textos, imágenes, avisos legales, etc.). Arrastrar o hacer clic para insertar en la página.
+5. **Panel de propiedades** (derecha): editor rich text (TipTap) o texto plano, breadcrumbs de jerarquía DOM, botones para mover arriba/abajo, duplicar, ocultar o eliminar el bloque (con confirmación).
+6. **Cambios pendientes**: cada edición se registra como pendiente. La barra superior muestra el contador. **No se guarda automáticamente.**
+7. **Guardar borrador**: clic en "Borrador" → guarda los cambios sin afectar la web pública.
+8. **Publicar**: clic en "Publicar" o "Actualizar publicación" → guarda los cambios, cambia el estado a `published` y revalida la ruta ISR. Requiere confirmación si hay cambios sin guardar.
+9. **Estados**: Publicado (visible en web), Borrador (solo admin), Inactivo (oculto). Se cambian desde la barra superior del editor visual, con confirmación al despublicar o marcar como inactivo.
 
 #### Flujo de edición (metadatos)
 

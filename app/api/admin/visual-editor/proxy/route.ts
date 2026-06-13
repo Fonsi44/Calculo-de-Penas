@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
-import { getPageContent, getPageLayout, getPageVisibility, getPageMeta } from '@/lib/page-content-db';
+import { getPageContent, getPageLayout, getPageVisibility, getPageMeta, ensurePagePublished, pageHasContent } from '@/lib/page-content-db';
 import { generateEditorScript } from '@/lib/visual-editor/script';
 import { EDITOR_CSS } from '@/lib/visual-editor/styles';
 
@@ -85,11 +85,11 @@ export async function GET(request: NextRequest) {
   let contentMap: Record<string, string> = {};
   let layout: string[] = [];
   let visibility: Record<string, boolean> = {};
-  let meta = { status: 'draft' as string };
+  let meta = { status: 'published' as string };
 
   try {
     const [cm, lo, vi, me] = await Promise.all([
-      getPageContent(page),
+      getPageContent(page, { includeUnpublished: true }),
       getPageLayout(page),
       getPageVisibility(page),
       getPageMeta(page),
@@ -97,7 +97,9 @@ export async function GET(request: NextRequest) {
     contentMap = cm;
     layout = lo;
     visibility = vi;
-    meta = { status: me.status };
+    // Use ensurePagePublished to auto-resolve status conservatively
+    const resolvedStatus = await ensurePagePublished(page);
+    meta = { status: resolvedStatus };
   } catch {}
 
   const candidateUrls = buildCandidateUrls(request, publicPath);

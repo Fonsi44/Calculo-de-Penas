@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
-import { upsertPageContent, duplicateSection, setPageStatus, getEditablePagesMeta, getPageMeta, getPagesList } from '@/lib/page-content-db';
+import { upsertPageContent, duplicateSection, setPageStatus, getEditablePagesMeta, getPageMeta, getPagesList, pageHasContent } from '@/lib/page-content-db';
 
 const upsertSchema = z.object({
   page: z.string().min(1).max(200),
@@ -162,6 +162,11 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = upsertSchema.parse(body);
 
+    // Never change _meta.status here — only the PATCH endpoint does that
+    if (parsed.section === '_meta' && parsed.field === 'status') {
+      return Response.json({ error: 'Usá PATCH set-status para cambiar el estado de publicación' }, { status: 400 });
+    }
+
     const content = parsed.content.length > 0 ? sanitizeHtml(parsed.content) : '';
 
     const existing = await db.select({ id: pageContent.id })
@@ -197,7 +202,11 @@ export async function POST(request: Request) {
       request,
     });
 
-    revalidatePage(parsed.page);
+    // Only revalidate if status is published (no point revalidating draft pages)
+    const meta = await getPageMeta(parsed.page);
+    if (meta.status === 'published') {
+      revalidatePage(parsed.page);
+    }
 
     return Response.json({ ok: true });
   } catch (err) {

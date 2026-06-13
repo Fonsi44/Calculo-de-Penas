@@ -1,5 +1,84 @@
 # Changelog
 
+## Release 51 — Overhaul profundo del editor visual de páginas: eventos, componentes, estados y modo preview (2026-06-14)
+
+### 🔴 CRÍTICO: Corrección de eventos en editor visual
+
+**Causa raíz**: El script del editor (`lib/visual-editor/script.ts`) solo interceptaba clics en elementos `.ve-el` emparejados por coincidencia difusa de texto. Cualquier elemento interactivo no emparejado (botones, enlaces, menús, sliders, cards clicables, formularios) ejecutaba su acción normal de navegación dentro del iframe del editor.
+
+**Solución**: Implementación de **interceptación total de eventos en capture phase**:
+- Todos los `click`, `mousedown`, `mouseup`, `dblclick`, `submit`, `contextmenu`, `dragstart` se bloquean con `preventDefault()` + `stopPropagation()` + `stopImmediatePropagation()` en modo edición.
+- En modo **previsualización** (`ve:preview`), todos los eventos fluyen normalmente (navegación, formularios, etc.).
+- Se eliminó `allow-forms` y `allow-popups` del sandbox del iframe.
+- Ahora hay distinción clara: modo Editar (todo bloqueado) vs modo Previsualizar (comportamiento real).
+
+### 🟡 CRÍTICO: Corrección de estados de publicación
+
+**Causa raíz**: `DEFAULT_PAGE_META` en `lib/page-content-db.ts` tenía `status: 'draft'`. Cuando `_meta.status` no estaba explícitamente establecido en DB, todas las páginas se mostraban como borrador en el admin. Esto causó que páginas activas aparecieran como draft.
+
+**Solución**:
+- `getPageMeta()` ahora infiere `status: 'published'` si la página tiene metadatos pero no tiene status explícito (conservador: lo que estaba publicado antes debe seguir estándolo).
+- Nueva función `ensurePagePublished()` que auto-publica páginas con contenido.
+- `getAllPagesMeta()` usa `ensurePagePublished()` para restaurar páginas activas.
+- `getPageContent()` ahora filtra por `status === 'published'` en llamadas públicas (usa `includeUnpublished: true` para admin).
+- `POST /api/admin/pages` rechaza cambios directos a `_meta.status` — solo se cambia vía `PATCH set-status`.
+
+### 🟢 Sistema de componentes predefinidos
+
+Nuevo catálogo de componentes reutilizables en `lib/visual-editor/components.ts`:
+- 25+ componentes organizados en 5 categorías: Estructura, Contenido, Multimedia, Botones y CTA, Legal.
+- Cada componente tiene: HTML template, campos editables, valores por defecto, icono y descripción.
+- Panel lateral izquierdo (`visual-editor-component-panel.tsx`) con lista por categorías.
+- Se pueden arrastrar o hacer clic para insertar en la página.
+- El iframe recibe `ve:insert-component` y coloca el HTML en la posición actual.
+
+### 🟢 Modo editar vs previsualizar
+
+- **Modo Editar** (`ve:active`): todos los eventos bloqueados, overlay visual "MODO EDICIÓN", elementos editables resaltados con outline dorado.
+- **Modo Previsualizar** (`ve:preview`): overlay verde "VISTA PREVIA", comportamiento de página real, sin resaltados ni edición.
+- El toggle está en la barra superior con indicador visual claro.
+
+### 🟢 Panel de propiedades mejorado
+
+- Breadcrumbs DOM (jerarquía padre → elemento seleccionado).
+- Botones contextuales: mover arriba/abajo, duplicar, ocultar, eliminar (con confirmación).
+- Editor inline con TipTap para HTML enriquecido, textarea para texto plano, toggle HTML directo.
+
+### 🟢 Protección contra pérdida de contenido
+
+- Confirmación `useConfirm()` al salir con cambios sin guardar.
+- Confirmación al despublicar, marcar como inactivo, eliminar bloque.
+- `beforeunload` handler si hay cambios sin guardar.
+- Guardar borrador separado de publicar: botón "Borrador" guarda sin afectar web pública; botón "Publicar" guarda + cambia estado.
+
+### Archivos creados
+
+| Archivo | Propósito |
+|---------|-----------|
+| `lib/visual-editor/components.ts` | Catálogo de 25+ componentes predefinidos reutilizables |
+| `components/admin/visual-editor-component-panel.tsx` | Panel lateral izquierdo para insertar componentes |
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `lib/visual-editor/script.ts` | Reescrito: interceptación total de eventos, modo preview, breadcrumbs, inserción de componentes, mover/ocultar/eliminar elementos |
+| `lib/visual-editor/styles.ts` | Estilos para modo edición/preview, elementos ocultos, eliminados, overlay inferior |
+| `components/admin/page-visual-editor.tsx` | Reesctiro: barra superior con editar/preview, panel componentes izquierdo, panel propiedades derecho, botones separados guardar/publicar |
+| `components/admin/visual-editor-property-panel.tsx` | Añadidos breadcrumbs DOM, acciones mover/duplicar/ocultar/eliminar, confirmaciones |
+| `app/api/admin/pages/route.ts` | POST rechaza cambios directos a `_meta.status`, revalida solo si publicado |
+| `app/api/admin/visual-editor/proxy/route.ts` | Usa `ensurePagePublished()` para estado conservador |
+| `lib/page-content-db.ts` | `getPageMeta()` inferencia conservadora de status, `ensurePagePublished()`, `pageHasContent()`, `getPageContent()` filtra por publicado |
+| `components/admin/visual-editor.tsx` | **Eliminado** (reemplazado por page-visual-editor.tsx) |
+
+### Validación
+
+- `npm run lint`: 0 errores ✅
+- `npm run build`: Compiled successfully + TypeScript OK ✅
+- `npm run test`: 17 suites, 361 tests — todos pasan ✅
+
+---
+
 ## Release 50 — Rediseño completo del módulo de páginas admin: metadatos vs editor visual (2026-06-13)
 
 ### Resumen
