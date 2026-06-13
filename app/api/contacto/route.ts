@@ -1,6 +1,6 @@
 import { contactoSchema, validate } from '@/lib/validation';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
-import { sendContactEmail, isEmailConfigured } from '@/lib/email';
+import { sendContactEmail, sendAutoReplyEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 const CONTACTO_MAX = 10;
@@ -53,6 +53,25 @@ export async function POST(request: Request) {
       { error: 'No se pudo enviar el mensaje. Intente de nuevo más tarde.' },
       { status: 502 },
     );
+  }
+
+  // Auto-respuesta al usuario si proporcionó email
+  if (parsed.data.email) {
+    try {
+      const autoResult = await sendAutoReplyEmail({
+        nombre: parsed.data.nombre,
+        email: parsed.data.email,
+        tipo: 'contacto',
+        asunto: parsed.data.asunto,
+      });
+      if (autoResult.ok) {
+        console.log('[contacto] auto-respuesta enviada:', autoResult.id);
+      } else {
+        console.warn('[contacto] auto-respuesta falló:', autoResult.error);
+      }
+    } catch (e) {
+      console.error('[contacto] excepción auto-respuesta:', e instanceof Error ? e.message : 'Error');
+    }
   }
 
   return Response.json({ ok: true, id: result.id });

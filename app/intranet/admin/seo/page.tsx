@@ -1012,7 +1012,7 @@ export default function SeoDashboardPage() {
             {!inspectResult.error && (
               <div className="mt-4 pt-3 border-t border-border/30 text-center space-y-2">
                 <p className="text-xxs text-text-muted">
-                  Para solicitar indexación, abre GSC y pega la URL en el inspector, o usa el botón "Reenviar sitemap" en la pestaña Sitemap para recrawlear todas las URLs a la vez.
+                  Para solicitar indexación, abre GSC y pega la URL en el inspector, o usa el botón &ldquo;Reenviar sitemap&rdquo; en la pestaña Sitemap para recrawlear todas las URLs a la vez.
                 </p>
                 <a
                   href={`https://search.google.com/search-console/inspect?resource_id=${encodeURIComponent('https://www.pinedayasociadoshn.com/')}`}

@@ -82,7 +82,7 @@ export default async function SolicitarConsultaPage() {
       <Section spacing="md">
         <div className="grid lg:grid-cols-5 gap-6">
           <div className="lg:col-span-3">
-            <Card padding="md" className="border-l-4 border-l-accent">
+            <Card id="formulario" padding="md" className="border-l-4 border-l-accent">
               <h2 className="font-bold text-base text-primary">Formulario de consulta</h2>
               <p className="text-sm text-text-secondary mt-1 mb-5">
                 Los campos marcados con * son obligatorios. Por seguridad, no incluya

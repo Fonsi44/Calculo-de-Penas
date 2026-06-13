@@ -24,7 +24,7 @@ const DESPACHO = [
   { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo y Choluteca', href: '/derecho-penal' },
   { label: 'Blog Jurídico', title: 'Artículos y guías legales para la zona sur de Honduras', href: '/blog' },
   { label: 'Preguntas Frecuentes', title: 'Respuestas a dudas legales frecuentes', href: '/preguntas-frecuentes' },
-  { label: 'Solicitar Consulta', title: 'Solicite una consulta legal gratuita y confidencial', href: '/solicitar-consulta' },
+  { label: 'Solicitar Consulta', title: 'Solicite una consulta legal gratuita y confidencial', href: '/solicitar-consulta#formulario' },
   { label: 'Hondureños en España', title: 'Asistencia legal para hondureños residentes en España', href: '/hondurenos-en-espana' },
   { label: 'Cómo llegar', title: 'Indicaciones para llegar al bufete en Nacaome, Valle', href: '/como-llegar' },
 ];

@@ -38,7 +38,7 @@ export function BlogCtaBar() {
         </a>
       </div>
       <Link
-        href="/solicitar-consulta"
+        href="/solicitar-consulta#formulario"
         onClick={() => trackFormClick('blog_cta')}
         className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
       >

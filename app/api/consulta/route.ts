@@ -1,6 +1,6 @@
 import { consultaSchema, validate } from '@/lib/validation';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
-import { sendConsultaEmail, isEmailConfigured } from '@/lib/email';
+import { sendConsultaEmail, sendAutoReplyEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { db } from '@/lib/db';
 import { solicitudesConsulta } from '@/lib/schema';
@@ -89,6 +89,25 @@ export async function POST(request: Request) {
     await db.update(solicitudesConsulta)
       .set({ emailStatus: 'skipped', emailError: 'RESEND_API_KEY no configurada' })
       .where(eq(solicitudesConsulta.id, savedId));
+  }
+
+  // Auto-respuesta al usuario si proporcionó email
+  if (parsed.data.email) {
+    try {
+      const autoResult = await sendAutoReplyEmail({
+        nombre: parsed.data.nombre,
+        email: parsed.data.email,
+        tipo: 'consulta',
+        motivo: parsed.data.motivo,
+      });
+      if (autoResult.ok) {
+        console.log('[consulta] auto-respuesta enviada:', autoResult.id);
+      } else {
+        console.warn('[consulta] auto-respuesta falló:', autoResult.error);
+      }
+    } catch (e) {
+      console.error('[consulta] excepción auto-respuesta:', e instanceof Error ? e.message : 'Error');
+    }
   }
 
   // Siempre devolvemos ok aunque el email falle (la consulta está guardada)

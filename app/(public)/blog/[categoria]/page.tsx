@@ -107,7 +107,7 @@ export default async function BlogCategoryPage(props: Props) {
               <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
                 Preguntas frecuentes
               </Link>
-              <Link href="/solicitar-consulta" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
+              <Link href="/solicitar-consulta#formulario" className="inline-flex items-center gap-1.5 text-primary hover:text-accent-dark transition-colors text-sm font-semibold">
                 Solicitar consulta
               </Link>
             </div>
