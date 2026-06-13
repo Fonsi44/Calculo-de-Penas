@@ -1106,7 +1106,19 @@ export default function SeoDashboardPage() {
                 <FileText size={14} className="mr-1" /> Ver robots.txt
               </Button>
             </a>
+            <a
+              href="https://search.google.com/search-console/sitemaps?resource_id=sc-domain:pinedayasociadoshn.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="accent" size="sm">
+                <ExternalLink size={14} className="mr-1" /> Reenviar sitemap a Google
+              </Button>
+            </a>
           </div>
+          <p className="text-xxs text-text-muted mt-2">
+            Al reenviar el sitemap, Google recrawlea todas las URLs incluidas (las 22 nuevas páginas locales ya están en el sitemap). Es la forma más rápida de solicitar indexación múltiple.
+          </p>
         </Card>
       </div>
     );
