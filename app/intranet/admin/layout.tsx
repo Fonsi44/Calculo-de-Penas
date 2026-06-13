@@ -25,6 +25,7 @@ import {
   MenuSquare,
   Image,
   Briefcase,
+  LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/ui';
 import { Spinner } from '@/components/ui/spinner';
@@ -190,7 +191,7 @@ function SidebarNav({ pathname, isAdmin, onNavigate }: { pathname: string; isAdm
 }
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -270,23 +271,48 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Navigation */}
         <SidebarNav pathname={pathname} isAdmin={isAdmin} onNavigate={() => setMobileOpen(false)} />
 
-        {/* Status indicator */}
-        <div className="px-4 py-2 border-t border-border-light">
-          <div className="flex items-center gap-2 px-2.5 py-2">
-            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            <span className="text-xxs text-text-muted">{user.email}</span>
+        {/* User section */}
+        <div className="border-t border-border-light">
+          <div className="p-3 space-y-1.5">
+            <div className="flex items-center gap-2.5 px-2.5">
+              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center flex-shrink-0 shadow-sm">
+                <User size={13} className="text-accent" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-bold text-text leading-tight truncate">{user.nombre || user.email}</p>
+                <p className="text-xxs text-text-muted truncate">{isAdmin ? 'Administrador' : 'Usuario'}</p>
+              </div>
+            </div>
+            <div className="flex gap-1">
+              <Link
+                href="/intranet/admin/perfil"
+                className="flex-1 flex items-center justify-center gap-1 h-8 rounded-md text-xxs font-semibold text-text-secondary hover:bg-surface-alt hover:text-text transition-colors"
+              >
+                <User size={12} />
+                Perfil
+              </Link>
+              <button
+                type="button"
+                onClick={async () => {
+                  await logout();
+                  router.push('/intranet/login');
+                }}
+                className="flex-1 flex items-center justify-center gap-1 h-8 rounded-md text-xxs font-semibold text-danger hover:bg-danger-bg transition-colors"
+              >
+                <LogOut size={12} />
+                Salir
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-2 border-t border-border-light">
-          <Link
-            href="/"
-            className="flex items-center gap-2 px-2.5 py-2 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-text transition-colors"
-          >
-            <ChevronLeft size={16} />
-            Ir al sitio web
-          </Link>
+          <div className="px-3 pb-2">
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xxs text-text-secondary hover:bg-surface-alt hover:text-text transition-colors"
+            >
+              <ChevronLeft size={12} />
+              Ir al sitio web
+            </Link>
+          </div>
         </div>
       </aside>
 
