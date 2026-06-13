@@ -1,0 +1,169 @@
+Persisting failed: Unable to write SST file 00000021.sst
+
+Caused by:
+    El sistema no puede encontrar la ruta especificada. (os error 3)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+⨯ Error: Cannot find module 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\server\middleware-manifest.json'
+Require stack:
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\dev\next-dev-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\lib\start-server.js
+    at ignore-listed frames {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\static\development\_buildManifest.js.tmp.uxiix7zdep'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\.next\\dev\\static\\development\\_buildManifest.js.tmp.uxiix7zdep'
+}
+⨯ Error: Cannot find module 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\server\middleware-manifest.json'
+Require stack:
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\dev\next-dev-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\lib\start-server.js
+    at ignore-listed frames {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+Error: Cannot find module 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\server\middleware-manifest.json'
+Require stack:
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\dev\next-dev-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\lib\start-server.js
+    at ignore-listed frames {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\.next\\dev\\routes-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\.next\\dev\\routes-manifest.json'
+}
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\.next\\dev\\routes-manifest.json'
+}
+Error: Cannot find module 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\server\middleware-manifest.json'
+Require stack:
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\dev\next-dev-server.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\next.js
+- C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\node_modules\next\dist\server\lib\start-server.js
+    at ignore-listed frames {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\next.js',
+    'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+⨯ Error: ENOENT: no such file or directory, open 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\.next\\dev\\routes-manifest.json'
+}
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Admin\\OneDrive - Alfons Roiget\\Calculo de penas\\.next\\dev\\routes-manifest.json'
+}
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)

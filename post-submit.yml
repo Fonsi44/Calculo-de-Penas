@@ -1,0 +1,340 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - link "+504 9536-3724" [ref=e9] [cursor=pointer]:
+            - /url: tel:+50495363724
+            - img [ref=e10]
+            - generic [ref=e12]: +504 9536-3724
+          - generic [ref=e13]: ·
+          - generic [ref=e14]: Lun a Sáb 7:00 – 20:00
+          - generic [ref=e15]: ·
+          - generic [ref=e16]: Nacaome, Valle
+        - link "Acceso Intranet" [ref=e17] [cursor=pointer]:
+          - /url: /intranet/dashboard
+          - img [ref=e18]
+          - generic [ref=e21]: Acceso Intranet
+      - generic [ref=e22]:
+        - link "Ir a la página de inicio — Pineda y Asociados" [ref=e23] [cursor=pointer]:
+          - /url: /
+          - img [ref=e25]
+          - generic [ref=e29]:
+            - paragraph [ref=e30]: Pineda y Asociados
+            - paragraph [ref=e31]: Bufete multidisciplinario
+        - navigation "Navegación principal" [ref=e32]:
+          - link "El Despacho" [ref=e33] [cursor=pointer]:
+            - /url: /despacho
+          - link "Servicios Jurídicos" [ref=e34] [cursor=pointer]:
+            - /url: /servicios-juridicos
+          - link "Derecho Penal" [ref=e35] [cursor=pointer]:
+            - /url: /derecho-penal
+          - link "Hondureños en España" [ref=e36] [cursor=pointer]:
+            - /url: /hondurenos-en-espana
+          - link "FAQ" [ref=e37] [cursor=pointer]:
+            - /url: /preguntas-frecuentes
+          - link "Blog" [ref=e38] [cursor=pointer]:
+            - /url: /blog
+          - link "Contacto" [ref=e39] [cursor=pointer]:
+            - /url: /solicitar-consulta
+            - text: Contacto
+        - generic [ref=e41]:
+          - link "Contactar por WhatsApp" [ref=e42] [cursor=pointer]:
+            - /url: https://wa.me/50495363724?text=Hola%2C%20necesito%20una%20consulta%20jur%C3%ADdica.
+            - img [ref=e43]
+          - link "Solicitar consulta" [ref=e45] [cursor=pointer]:
+            - /url: /solicitar-consulta
+            - img [ref=e46]
+            - text: Solicitar consulta
+    - main [ref=e48]:
+      - navigation "Breadcrumb" [ref=e49]:
+        - link "Inicio" [ref=e51] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e52]:
+          - img [ref=e53]
+          - generic [ref=e55]: Solicitar consulta
+      - generic [ref=e58]:
+        - generic [ref=e60]: Solicitar consulta
+        - heading "Cuéntenos su caso. Le escuchamos con discreción." [level=1] [ref=e61]
+        - paragraph [ref=e62]: Complete el formulario o contáctenos directamente. Toda comunicación es estrictamente confidencial.
+        - generic [ref=e64]:
+          - link "Solicitar consulta" [ref=e65] [cursor=pointer]:
+            - /url: /solicitar-consulta
+            - img [ref=e66]
+            - text: Solicitar consulta
+          - link "Llamar +504 9536-3724" [ref=e68] [cursor=pointer]:
+            - /url: tel:+50495363724
+            - img [ref=e69]
+            - text: Llamar +504 9536-3724
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - img [ref=e76]
+          - paragraph [ref=e79]: Consulta inicial sin costo
+          - paragraph [ref=e80]: Evaluación confidencial para conocer su caso
+        - generic [ref=e81]:
+          - img [ref=e83]
+          - paragraph [ref=e86]: Presupuesto por escrito
+          - paragraph [ref=e87]: Honorarios claros, acordados y documentados
+        - generic [ref=e88]:
+          - img [ref=e90]
+          - paragraph [ref=e92]: Abogado responsable
+          - paragraph [ref=e93]: Atención directa sin intermediarios
+        - generic [ref=e94]:
+          - img [ref=e96]
+          - paragraph [ref=e99]: +15 años
+          - paragraph [ref=e100]: Experiencia jurídica en el sur de Honduras
+      - generic [ref=e103]:
+        - generic [ref=e105]:
+          - heading "Formulario de consulta" [level=2] [ref=e106]
+          - paragraph [ref=e107]: Los campos marcados con * son obligatorios. Por seguridad, no incluya contraseñas, números de tarjeta ni documentos de identidad completos.
+          - generic [ref=e394]:
+            - img [ref=e395]
+            - paragraph [ref=e398]: Solicitud recibida
+            - paragraph [ref=e399]: Hemos registrado su consulta. Le contactaremos en horario hábil por el canal que haya indicado. Si requiere atención inmediata, use el teléfono o WhatsApp.
+            - button "Enviar otra solicitud" [ref=e400]
+        - generic [ref=e137]:
+          - generic [ref=e138]:
+            - heading "Contacto directo" [level=3] [ref=e139]:
+              - img [ref=e140]
+              - text: Contacto directo
+            - paragraph [ref=e142]: Si prefiere hablar con nosotros directamente, estamos disponibles en horario hábil.
+            - generic [ref=e143]:
+              - link "Teléfono +504 9536-3724" [ref=e144] [cursor=pointer]:
+                - /url: tel:+50495363724
+                - img [ref=e146]
+                - generic [ref=e148]:
+                  - paragraph [ref=e149]: Teléfono
+                  - paragraph [ref=e150]: +504 9536-3724
+                - img [ref=e151]
+              - link "WhatsApp Respuesta inmediata" [ref=e153] [cursor=pointer]:
+                - /url: https://wa.me/50495363724?text=Hola%2C%20necesito%20una%20consulta%20jur%C3%ADdica.
+                - img [ref=e155]
+                - generic [ref=e157]:
+                  - paragraph [ref=e158]: WhatsApp
+                  - paragraph [ref=e159]: Respuesta inmediata
+                - img [ref=e160]
+          - generic [ref=e162]:
+            - generic [ref=e163]:
+              - img [ref=e165]
+              - generic [ref=e167]:
+                - heading "¿Emergencia con detenido?" [level=3] [ref=e168]
+                - paragraph [ref=e169]: Si un familiar está siendo detenido o necesita asistencia inmediata, no espere un minuto.
+            - generic [ref=e170]:
+              - link "Llamar ahora" [ref=e171] [cursor=pointer]:
+                - /url: tel:+50495363724
+                - img [ref=e172]
+                - text: Llamar ahora
+              - link "WhatsApp" [ref=e174] [cursor=pointer]:
+                - /url: https://wa.me/50495363724?text=Emergencia%3A%20necesito%20asistencia%20legal%20inmediata.
+                - img [ref=e175]
+                - text: WhatsApp
+          - generic [ref=e177]:
+            - heading "Motivos frecuentes" [level=3] [ref=e178]:
+              - img [ref=e179]
+              - text: Motivos frecuentes
+            - generic [ref=e181]:
+              - generic [ref=e182]: Familiar detenido
+              - generic [ref=e184]: Citaciones o audiencias próximas
+              - generic [ref=e186]: Investigación en curso
+              - generic [ref=e188]: Querella o denuncia
+              - generic [ref=e190]: Recurso o apelación
+              - generic [ref=e192]: Asesoría preventiva
+          - generic [ref=e194]:
+            - heading "Nuestras garantías" [level=3] [ref=e195]:
+              - img [ref=e196]
+              - text: Nuestras garantías
+            - generic [ref=e199]:
+              - generic [ref=e200]:
+                - img [ref=e202]
+                - generic [ref=e205]:
+                  - paragraph [ref=e206]: Confidencialidad absoluta
+                  - paragraph [ref=e207]: Su información está protegida por el secreto profesional.
+              - generic [ref=e208]:
+                - img [ref=e210]
+                - generic [ref=e213]:
+                  - paragraph [ref=e214]: Sin compromiso
+                  - paragraph [ref=e215]: La consulta inicial no le obliga a contratar nuestros servicios.
+              - generic [ref=e216]:
+                - img [ref=e218]
+                - generic [ref=e220]:
+                  - paragraph [ref=e221]: Respuesta en horario hábil
+                  - paragraph [ref=e222]: Le respondemos el mismo día hábil por el canal que prefiera.
+          - generic [ref=e223]:
+            - img [ref=e225]
+            - generic [ref=e228]:
+              - paragraph [ref=e229]: Horario de atención
+              - paragraph [ref=e230]: Lun–sáb 7:00–20:00 · Nacaome, Valle
+      - generic [ref=e234]:
+        - heading "¿En qué podemos ayudarle?" [level=2] [ref=e235]
+        - paragraph [ref=e236]: "En Pineda y Asociados ofrecemos consulta inicial personalizada para evaluar su caso y determinar la mejor estrategia legal. Atendemos asuntos de derecho penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación. Cada caso es único: le escuchamos con atención y le ofrecemos una valoración honesta antes de cualquier compromiso."
+      - generic [ref=e239]:
+        - generic [ref=e240]:
+          - paragraph [ref=e241]: Visítenos
+          - heading "Prefiere vernos en persona" [level=2] [ref=e242]
+          - paragraph [ref=e243]: Con cita previa. Estaremos encantados de atenderle en nuestro despacho.
+        - generic [ref=e244]:
+          - generic [ref=e245]:
+            - img [ref=e247]
+            - paragraph [ref=e250]: Dirección
+            - paragraph [ref=e251]: GGJ7+239
+            - paragraph [ref=e252]: Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA
+          - generic [ref=e253]:
+            - img [ref=e255]
+            - paragraph [ref=e258]: Horario
+            - paragraph [ref=e259]: Lun–sáb 7:00–20:00
+            - paragraph [ref=e260]: Con cita previa
+          - generic [ref=e261]:
+            - img [ref=e263]
+            - paragraph [ref=e266]: Despacho
+            - paragraph [ref=e267]: Pineda y Asociados
+            - link "Ver cómo llegar" [ref=e268] [cursor=pointer]:
+              - /url: /como-llegar
+              - text: Ver cómo llegar
+              - img [ref=e269]
+        - link "Indicaciones para llegar" [ref=e272] [cursor=pointer]:
+          - /url: /como-llegar
+          - img [ref=e273]
+          - text: Indicaciones para llegar
+    - contentinfo [ref=e276]:
+      - generic [ref=e277]:
+        - generic [ref=e278]:
+          - generic [ref=e279]:
+            - link "Pineda y Asociados" [ref=e280] [cursor=pointer]:
+              - /url: /
+              - img [ref=e282]
+              - generic [ref=e286]:
+                - paragraph [ref=e287]: Pineda y Asociados
+                - paragraph [ref=e288]: Bufete multidisciplinario
+            - paragraph [ref=e289]:
+              - strong [ref=e290]: Bufete jurídico
+              - text: en Nacaome, Valle, con más de 15 años de ejercicio profesional y
+              - strong [ref=e291]: defensa penal
+              - text: como pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
+            - paragraph [ref=e292]: Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
+            - paragraph [ref=e293]: Abogado colegiado en Honduras · Registro profesional vigente.
+          - generic [ref=e294]:
+            - heading "Servicios Jurídicos" [level=3] [ref=e296]
+            - list [ref=e297]:
+              - listitem [ref=e298]:
+                - link "Derecho Penal" [ref=e299] [cursor=pointer]:
+                  - /url: /derecho-penal
+              - listitem [ref=e300]:
+                - link "Derecho de Familia" [ref=e301] [cursor=pointer]:
+                  - /url: /servicios-juridicos/derecho-de-familia
+              - listitem [ref=e302]:
+                - link "Derecho Laboral" [ref=e303] [cursor=pointer]:
+                  - /url: /servicios-juridicos/derecho-laboral
+              - listitem [ref=e304]:
+                - link "Derecho Civil y Notarial" [ref=e305] [cursor=pointer]:
+                  - /url: /servicios-juridicos/derecho-civil-y-notarial
+              - listitem [ref=e306]:
+                - link "Derecho Mercantil" [ref=e307] [cursor=pointer]:
+                  - /url: /servicios-juridicos/derecho-mercantil-empresarial
+              - listitem [ref=e308]:
+                - link "Derecho Tributario" [ref=e309] [cursor=pointer]:
+                  - /url: /servicios-juridicos/tributario-fiscal
+              - listitem [ref=e310]:
+                - link "Derecho Bancario" [ref=e311] [cursor=pointer]:
+                  - /url: /servicios-juridicos/derecho-bancario-y-financiero
+              - listitem [ref=e312]:
+                - link "Administrativo" [ref=e313] [cursor=pointer]:
+                  - /url: /servicios-juridicos/derecho-administrativo-y-servicio-civil
+              - listitem [ref=e314]:
+                - link "Regulación Sanitaria" [ref=e315] [cursor=pointer]:
+                  - /url: /servicios-juridicos/regulacion-sanitaria
+              - listitem [ref=e316]:
+                - link "Extranjería" [ref=e317] [cursor=pointer]:
+                  - /url: /servicios-juridicos/extranjeria-en-honduras
+              - listitem [ref=e318]:
+                - link "Propiedad Intelectual" [ref=e319] [cursor=pointer]:
+                  - /url: /servicios-juridicos/propiedad-intelectual
+              - listitem [ref=e320]:
+                - link "Ambiental Regulatorio" [ref=e321] [cursor=pointer]:
+                  - /url: /servicios-juridicos/ambiental-regulatorio
+              - listitem [ref=e322]:
+                - link "Conciliación y Arbitraje" [ref=e323] [cursor=pointer]:
+                  - /url: /servicios-juridicos/conciliacion-y-arbitraje
+          - generic [ref=e324]:
+            - heading "El Despacho" [level=3] [ref=e326]
+            - list [ref=e327]:
+              - listitem [ref=e328]:
+                - link "El Despacho" [ref=e329] [cursor=pointer]:
+                  - /url: /despacho
+              - listitem [ref=e330]:
+                - link "Servicios Jurídicos" [ref=e331] [cursor=pointer]:
+                  - /url: /servicios-juridicos
+              - listitem [ref=e332]:
+                - link "Derecho Penal" [ref=e333] [cursor=pointer]:
+                  - /url: /derecho-penal
+              - listitem [ref=e334]:
+                - link "Blog Jurídico" [ref=e335] [cursor=pointer]:
+                  - /url: /blog
+              - listitem [ref=e336]:
+                - link "Preguntas Frecuentes" [ref=e337] [cursor=pointer]:
+                  - /url: /preguntas-frecuentes
+              - listitem [ref=e338]:
+                - link "Solicitar Consulta" [ref=e339] [cursor=pointer]:
+                  - /url: /solicitar-consulta
+              - listitem [ref=e340]:
+                - link "Hondureños en España" [ref=e341] [cursor=pointer]:
+                  - /url: /hondurenos-en-espana
+              - listitem [ref=e342]:
+                - link "Cómo llegar" [ref=e343] [cursor=pointer]:
+                  - /url: /como-llegar
+          - generic [ref=e344]:
+            - heading "Contacto" [level=3] [ref=e346]
+            - list [ref=e347]:
+              - listitem [ref=e348]:
+                - img [ref=e349]
+                - generic [ref=e352]:
+                  - text: GGJ7+239
+                  - text: Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA
+                  - text: Nacaome, Valle
+                  - text: Honduras
+              - listitem [ref=e353]:
+                - img [ref=e354]
+                - link "+504 9536-3724" [ref=e356] [cursor=pointer]:
+                  - /url: tel:+50495363724
+              - listitem [ref=e357]:
+                - img [ref=e358]
+                - link "WhatsApp" [ref=e360] [cursor=pointer]:
+                  - /url: https://wa.me/50495363724
+              - listitem [ref=e361]:
+                - img [ref=e362]
+                - link "contacto@pinedayasociadoshn.com" [ref=e365] [cursor=pointer]:
+                  - /url: mailto:contacto@pinedayasociadoshn.com
+              - listitem [ref=e366]:
+                - img [ref=e367]
+                - generic [ref=e370]: "Lunes a sábado: 7:00 – 20:00"
+        - generic [ref=e371]:
+          - paragraph [ref=e372]: © 2026 Pineda y Asociados. Todos los derechos reservados.
+          - list [ref=e373]:
+            - listitem [ref=e374]:
+              - link "Aviso Legal" [ref=e375] [cursor=pointer]:
+                - /url: /aviso-legal
+            - listitem [ref=e376]:
+              - link "Política de Privacidad" [ref=e377] [cursor=pointer]:
+                - /url: /politica-privacidad
+            - listitem [ref=e378]:
+              - link "Política de Cookies" [ref=e379] [cursor=pointer]:
+                - /url: /politica-cookies
+            - listitem [ref=e380]:
+              - link "Términos de Uso" [ref=e381] [cursor=pointer]:
+                - /url: /terminos
+            - listitem [ref=e382]:
+              - link "Disclaimer" [ref=e383] [cursor=pointer]:
+                - /url: /disclaimer
+        - group [ref=e384]:
+          - generic "La información publicada en este sitio es de carácter general y orientativo. No sustituye la asesoría legal personalizada." [ref=e385] [cursor=pointer]
+    - generic "Acceso rápido de contacto" [ref=e386]:
+      - link "Contactar por WhatsApp" [ref=e387] [cursor=pointer]:
+        - /url: https://wa.me/50495363724?text=Hola%2C%20necesito%20orientaci%C3%B3n%20jur%C3%ADdica.
+        - img [ref=e388]
+        - generic: WhatsApp
+      - link "Llamar al bufete" [ref=e390] [cursor=pointer]:
+        - /url: tel:+50495363724
+        - img [ref=e391]
+        - generic: +504 9536-3724
+  - alert [ref=e393]

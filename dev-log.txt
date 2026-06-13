@@ -1,0 +1,8 @@
+▲ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.230:3000
+- Environments: .env.local, .env
+✓ Ready in 834ms
+
+
+C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas>
