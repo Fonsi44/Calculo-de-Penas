@@ -150,6 +150,13 @@ export function proxy(request: NextRequest) {
       const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
       return NextResponse.redirect(loginUrl);
     }
+    // Redirigir admin users de /intranet/calculadora a /intranet/admin/calculadora
+    if (pathname === '/intranet/calculadora') {
+      const payload = decodeJwtPayload(token);
+      if (payload?.rol === 'admin') {
+        return NextResponse.redirect(new URL('/intranet/admin/calculadora', request.url));
+      }
+    }
     // Rutas admin: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/intranet/admin')) {
       const payload = decodeJwtPayload(token);

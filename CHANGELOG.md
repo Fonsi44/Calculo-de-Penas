@@ -1,5 +1,47 @@
 # Changelog
 
+## Release 46 — Integración de la calculadora de penas dentro del admin unificado (2026-06-13)
+
+### Resumen
+
+Se integró la calculadora de penas dentro del panel admin (`/intranet/admin/calculadora`), eliminando la salida al diseño antiguo. Ahora la calculadora se abre dentro del layout admin unificado, con menú lateral fijo visible, contenido a la derecha y el mismo estilo visual del dashboard.
+
+### Causa raíz
+
+El enlace "Calculadora" en el menú lateral de admin apuntaba a `/intranet/calculadora` con `external: true`, lo que forzaba una navegación fuera del layout admin y cargaba la calculadora con su diseño antiguo (intranet sidebar + CalculadoraSidebar navy).
+
+### Cambios aplicados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/intranet/admin/calculadora/page.tsx` | **NUEVO**: Página de calculadora dentro del admin. Reutiliza `useCalculadoraState` y todos los componentes paso (`Paso1Delito`, `Paso2Variantes`, etc.) de `app/calculadora/`. Renderiza dentro del layout admin con un step indicator compacto horizontal, cabecera clara y área de contenido rediseñada. |
+| `app/intranet/admin/layout.tsx` | El enlace "Calculadora" en "Herramientas Jurídicas" ahora apunta a `/intranet/admin/calculadora` como ruta interna (sin `external`). `match` actualizado para detectar rutas `/intranet/admin/calculadora`. |
+| `proxy.ts` | Los usuarios admin que accedan a `/intranet/calculadora` son redirigidos automáticamente a `/intranet/admin/calculadora`. Usuarios no-admin siguen viendo la calculadora clásica. |
+
+### Nueva integración
+
+- Ruta: `/intranet/admin/calculadora` — dentro del layout admin con sidebar fijo
+- Step indicator compacto horizontal (en lugar del sidebar izquierdo navy)
+- Cabecera clara con título, paso actual y badge "Motor v1"
+- Área de contenido centrada (max-w-2xl) con los mismos 8 pasos funcionales
+- Bottom action bar sticky con botones Atrás/Continuar/Calcular
+- Acceso directo desde el menú "Herramientas Jurídicas" → "Calculadora"
+
+### Redirecciones y compatibilidad
+
+- `/intranet/calculadora` (rewrite a `/calculadora`) se mantiene para usuarios no-admin
+- Admin users: `/intranet/calculadora` → redirect 307 a `/intranet/admin/calculadora`
+- La calculadora clásica (`app/calculadora/page.tsx`) permanece intacta para no-admin
+- Todos los enlaces desde dashboard/admin ahora apuntan a la ruta admin
+
+### Validación
+
+- `npm run lint`: 0 errores, 9 warnings preexistentes ✅
+- `npm run build`: Compiled successfully + TypeScript OK, nueva ruta `/intranet/admin/calculadora` ✅
+- `npm run test`: 17 suites, 361 tests — todos pasan ✅
+
+---
+
 ## Release 45 — Integración del dashboard en admin unificado (2026-06-13)
 
 ### Resumen

@@ -59,7 +59,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'Herramientas jurídicas',
     icon: Scale,
     items: [
-      { label: 'Calculadora', href: '/intranet/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/calculadora') || p === '/calculadora', external: true },
+      { label: 'Calculadora', href: '/intranet/admin/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/admin/calculadora') || p.startsWith('/intranet/calculadora') || p === '/calculadora' },
       { label: 'Mis casos', href: '/intranet/casos', icon: ClipboardList, match: (p) => p.startsWith('/intranet/casos') || p === '/casos', external: true },
       { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp', external: true },
       { label: 'Catálogo delitos', href: '/intranet/delitos', icon: FileCheck, match: (p) => p.startsWith('/intranet/delitos') || p === '/delitos', external: true },

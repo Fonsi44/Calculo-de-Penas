@@ -313,6 +313,10 @@ Cada grupo tiene submenús colapsables que se expanden automáticamente al naveg
 
 El estilo del dashboard prevalece: bordes gold (`border-l-accent`), tarjetas con iconos, badges tonales, tipografía compacta (`text-xxs` uppercase), sombras sutiles tintadas con navy, paleta navy+gold. El contenido derecho usa `max-w-7xl` para mejor aprovechamiento del espacio.
 
+### Calculadora de penas
+
+La calculadora de penas está integrada en `/intranet/admin/calculadora` dentro del layout admin unificado. Usa el mismo motor de cálculo (`lib/rules/v1/`) y los mismos componentes paso. Los usuarios admin son redirigidos automáticamente desde `/intranet/calculadora` a la ruta admin. Los usuarios no-admin siguen accediendo a la calculadora clásica.
+
 ### Blog — `/intranet/admin/blog`
 
 - **Listado**: Tabla con título, categoría, estado (publicado/borrador), fecha, acciones (editar/publicar/eliminar/duplicar/ver).
