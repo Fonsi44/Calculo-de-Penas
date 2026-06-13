@@ -1,5 +1,79 @@
 # Changelog
 
+## Release 41 — Implementación plan estratégico SEO local: páginas de dinero, posts satélite, clusters, CRO y medición (2026-06-13)
+
+### 🔴 FASE 1: Saneamiento SEO urgente — COMPLETADA
+- ✅ Verificación: 13 thin posts ya reescritos con contenido sustancial (2500-3500 bytes cada uno) en base de datos.
+- ✅ Redirect 301 añadido en `next.config.ts` para `despido-empleados-publicos-procedencia-defensa-honduras` → `despido-empleados-publicos-honduras`.
+- ✅ Validado: 0 posts publicados con <400 palabras, 0 duplicados activos.
+
+### 🔴 FASE 2: Páginas de dinero locales — COMPLETADA
+- **6 nuevas páginas de servicio local** insertadas en DB PostgreSQL via `scripts/fase34-insertar-satelites-locales.ts`:
+  - `abogado-penalista-choluteca` (derecho-penal, 576 palabras)
+  - `abogado-laboral-choluteca` (derecho-laboral, 517 palabras)
+  - `abogado-familia-choluteca` (derecho-de-familia, 424 palabras)
+  - `abogado-civil-choluteca` (derecho-civil, 440 palabras)
+  - `abogado-aduanero-san-lorenzo` (derecho-aduanero, 498 palabras)
+  - `abogado-empresas-san-lorenzo` (derecho-mercantil, 469 palabras)
+- Cada página incluye: H1 local, propuesta de valor, servicios, proceso, zonas cubiertas, FAQs, CTA local, enlaces internos.
+
+### 🟡 FASE 3: Posts satélite de alta conversión — COMPLETADA
+- **8 nuevos posts satélite** insertados en DB:
+  - `divorcio-choluteca` (Choluteca → abogado-familia-choluteca)
+  - `pension-alimenticia-choluteca` (Choluteca → abogado-familia-choluteca)
+  - `demanda-laboral-choluteca` (Choluteca → abogado-laboral-choluteca)
+  - `accidente-transito-choluteca` (Choluteca → abogado-civil-choluteca)
+  - `cobro-deudas-choluteca` (Choluteca → abogado-civil-choluteca)
+  - `defensa-sar-choluteca` (Choluteca → página tributaria)
+  - `importaciones-san-lorenzo` (San Lorenzo → abogado-aduanero-san-lorenzo)
+  - `tramites-legales-nacaome` (Nacaome → abogados-en-nacaome)
+- Cada post incluye: problema real, respuesta directa, marco legal, pasos, documentos, plazos, riesgos, errores frecuentes, ejemplo práctico hondureño, FAQs, CTA local, enlaces internos a páginas de dinero y pilares.
+
+### 🟡 FASE 4: Arquitectura y clusters — EN PROGRESO (80%)
+- Cluster aduanero: `abogado-aduanero-san-lorenzo` como página de servicio + `importaciones-san-lorenzo` como satélite.
+- Cluster ambiental: `evaluacion-impacto-ambiental-honduras` permanece en categoría `derecho-ambiental` (separado del aduanero).
+- Enlazado interno implementado: páginas dinero → posts satélite, posts satélite → páginas dinero, posts → pilares del cluster.
+
+### 🟢 FASE 5: CRO y conversión — COMPLETADA (90%)
+- **`FloatingContactRail` activado**: componente de WhatsApp + teléfono flotante ahora visible en todo el sitio público vía `app/(public)/layout.tsx`.
+- **`BlogCtaBar`**: nuevo componente cliente que reemplaza el CTA estático en posts, con GA4 events integrados.
+- **CTAs locales** implementados en cada página de dinero y post satélite con fórmulas seguras ("Solicite una evaluación inicial").
+- Pendiente: formulario corto contextual de 3 campos.
+
+### 🟢 FASE 6: Medición GA4 — EN PROGRESO (50%)
+- **`lib/analytics.ts`**: nueva librería cliente con funciones `trackEvent()`, `trackWhatsAppClick()`, `trackPhoneClick()`, `trackFormClick()`, `trackLeadGenerated()`.
+- GA4 events integrados en:
+  - `FloatingContactRail` (`whatsapp_click`, `phone_click`)
+  - `BlogCtaBar` (`whatsapp_click`, `phone_click`, `form_click`)
+- Pendiente: conversiones en GA4 dashboard, medición de leads por URL, eventos en formulario de consulta.
+
+### Archivos creados
+- `auditoria-blog/M4-abogado-penalista-choluteca.html` — Contenido HTML
+- `auditoria-blog/M5-abogado-laboral-choluteca.html`
+- `auditoria-blog/M6-abogado-familia-choluteca.html`
+- `auditoria-blog/M7-abogado-civil-choluteca.html`
+- `auditoria-blog/M8-abogado-aduanero-san-lorenzo.html`
+- `auditoria-blog/M9-abogado-empresas-san-lorenzo.html`
+- `auditoria-blog/S1-divorcio-choluteca.html` hasta `S8-tramites-legales-nacaome.html`
+- `scripts/fase34-insertar-satelites-locales.ts` — Script de inserción en BD
+- `lib/analytics.ts` — Biblioteca de eventos GA4
+- `components/blog/blog-cta-bar.tsx` — Componente CTA con tracking
+
+### Archivos modificados
+- `next.config.ts` — Redirect 301 para fusión de post
+- `components/marketing/live-widgets.tsx` — GA4 events en FloatingContactRail
+- `app/(public)/layout.tsx` — FloatingContactRail activado
+- `app/(public)/blog/[categoria]/[slug]/page.tsx` — BlogCtaBar integrado
+- `auditoria-blog/AUDITORIA-ESTRATEGICA.md` — Fases actualizadas al 85%
+- `CHANGELOG.md` — Este registro
+
+### Validación
+- `npm run lint`: 0 errores, 6 warnings pre-existentes ✅
+- `npm run build`: Compiled successfully + TypeScript OK, 273 páginas ✅
+- 14 páginas insertadas en DB PostgreSQL vía Neon ✅
+
+---
+
 ## Release 40 — Corrección de cobertura geográfica y SEO local (2026-06-12)
 
 ### 🔴 CRÍTICO: Corrección de mensajes de cobertura nacional → zona sur

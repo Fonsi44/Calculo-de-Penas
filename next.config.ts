@@ -106,6 +106,8 @@ const nextConfig: NextConfig = {
       // === FASE 3: Redirects de posts plantilla residuales ===
       { source: '/blog/derecho-ambiental/evaluacion-impacto-ambiental-paso-a-paso-honduras', destination: '/blog/derecho-ambiental/evaluacion-impacto-ambiental-honduras', permanent: true },
       { source: '/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras', destination: '/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras', permanent: true },
+      // Fusion: despido-empleados-publicos-procedencia-defensa → despido-empleados-publicos
+      { source: '/blog/derecho-administrativo/despido-empleados-publicos-procedencia-defensa-honduras', destination: '/blog/derecho-administrativo/despido-empleados-publicos-honduras', permanent: true },
     ];
   },
   // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*

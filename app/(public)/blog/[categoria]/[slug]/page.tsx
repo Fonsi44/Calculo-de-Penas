@@ -3,17 +3,17 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import {
   Calendar, Clock, User, ArrowLeft, ArrowRight,
-  Phone, MessageCircle,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
-import { site, telHref, whatsappHref } from '@/lib/site';
+import { site } from '@/lib/site';
 import { BlogTOC } from '@/components/blog/blog-toc';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
+import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 
 export const revalidate = 3600;
 
@@ -280,39 +280,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
       {/* ── FINAL CTA ── */}
       <Section spacing="md">
         <Container size="md">
-          <div className="text-center">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-dark mb-2">Consulta confidencial en Nacaome</p>
-            <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-text mb-4">
-              ¿Necesita asesoría legal en la zona sur?
-            </h2>
-            <p className="text-text-secondary mb-6 max-w-lg mx-auto leading-relaxed">
-              Hable directamente con un abogado en Nacaome, Valle. Primera consulta sin costo y sin compromiso.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-              <a
-                href={telHref()}
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
-              >
-                <Phone size={18} />
-                {site.phoneDisplay}
-              </a>
-              <a
-                href={whatsappHref()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
-              >
-                <MessageCircle size={18} />
-                WhatsApp
-              </a>
-            </div>
-            <Link
-              href="/solicitar-consulta"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
-            >
-              O complete el formulario de consulta <ArrowRight size={14} />
-            </Link>
-          </div>
+          <BlogCtaBar />
         </Container>
       </Section>
 

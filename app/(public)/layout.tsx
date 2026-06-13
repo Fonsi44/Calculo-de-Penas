@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
+import { FloatingContactRail } from '@/components/marketing/live-widgets';
 import { site, legalServiceSchema, organizationSchema, websiteSchema } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
 
@@ -95,6 +96,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <PublicFooter />
+      <FloatingContactRail />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalLd) }}

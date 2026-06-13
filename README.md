@@ -256,6 +256,32 @@ El proyecto dispone de un sistema completo de agentes, reglas, skills y comandos
 
 **Uso del agente SEO**: Invocar con `/SEOSenior` o seleccionando el agente "SEOSenior" en el menú de agentes. Para tareas específicas, usar los comandos `/auditar-seo`, `/brief-seo`, etc.
 
+### Implementación SEO local — Zona Sur de Honduras (Jun 2026)
+
+El blog ha sido reforzado con una estrategia SEO local orientada a captar leads en la zona sur de Honduras. La implementación sigue el plan definido en `auditoria-blog/AUDITORIA-ESTRATEGICA.md`.
+
+**Páginas de dinero locales** (9 activas):
+- `abogados-en-nacaome` — Sede del despacho (página principal)
+- `abogados-en-choluteca` — Principal núcleo de captación
+- `abogados-en-san-lorenzo` — Eje comercial y aduanero
+- `abogado-penalista-choluteca` — Defensa penal local
+- `abogado-laboral-choluteca` — Despidos y liquidaciones
+- `abogado-familia-choluteca` — Divorcio, pensión, custodia
+- `abogado-civil-choluteca` — Contratos, herencias, propiedades
+- `abogado-aduanero-san-lorenzo` — Importaciones y comercio exterior
+- `abogado-empresas-san-lorenzo` — Constitución y asesoría empresarial
+
+**Posts satélite** (8 activos):
+- `divorcio-choluteca`, `pension-alimenticia-choluteca`, `demanda-laboral-choluteca`
+- `accidente-transito-choluteca`, `cobro-deudas-choluteca`, `defensa-sar-choluteca`
+- `importaciones-san-lorenzo`, `tramites-legales-nacaome`
+
+**Arquitectura**: Cada página de dinero contiene propuesta de valor local, servicios específicos, proceso de atención, zonas cubiertas, FAQs, CTA contextual y enlaces a posts satélite. Cada post satélite enlaza hacia su página de dinero correspondiente.
+
+**Conversión**: FloatingContactRail (WhatsApp + teléfono flotante) activo globalmente. Eventos GA4 para clics en WhatsApp, teléfono y formularios en todos los CTAs del blog.
+
+**Medición**: Biblioteca `lib/analytics.ts` con funciones `trackWhatsAppClick()`, `trackPhoneClick()`, `trackFormClick()` y `trackLeadGenerated()`.
+
 **Gobernanza**: Las reglas en `.kilo/rules/seo.md` son vinculantes. El agente SEO tiene autoridad para modificar metadatos, schemas y contenido editorial. Los cambios estructurales de URLs requieren aprobación explícita. Ver `AGENTS.md` §16 para la política completa.
 
 ---

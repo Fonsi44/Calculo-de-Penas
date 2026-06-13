@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Activity, Phone, MessageCircle } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
+import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 
 /**
  * Indicador "vivo": pulso animado, número de visitantes simulados,
@@ -145,6 +146,7 @@ export function FloatingContactRail() {
         href={whatsappHref('Hola, necesito orientación jurídica.')}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackWhatsAppClick('floating_button')}
         className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center shadow-lg shadow-success/30 hover:scale-105 transition-transform"
         aria-label="Contactar por WhatsApp"
         title="WhatsApp"
@@ -156,6 +158,7 @@ export function FloatingContactRail() {
       </a>
       <a
         href={telHref()}
+        onClick={() => trackPhoneClick('floating_button')}
         className="group w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform"
         aria-label="Llamar al bufete"
         title={`Llamar ${site.phoneDisplay}`}
