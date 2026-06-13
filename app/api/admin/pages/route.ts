@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
-import { upsertPageContent, duplicateSection, setPageStatus } from '@/lib/page-content-db';
+import { upsertPageContent, duplicateSection, setPageStatus, getEditablePagesMeta, getPageMeta, getPagesList } from '@/lib/page-content-db';
 
 const upsertSchema = z.object({
   page: z.string().min(1).max(200),
@@ -84,6 +84,43 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = searchParams.get('page');
     const section = searchParams.get('section');
+    const list = searchParams.get('list');
+
+    // Full pages list with metadata (for the main list view)
+    if (list === 'all') {
+      const pagesMeta = await getEditablePagesMeta();
+      const stats = await getPagesList();
+      const statMap = new Map(stats.map(s => [s.page, s]));
+
+      const items = [];
+      for (const pm of pagesMeta) {
+        if (pm.page === 'configuracion') continue;
+        const s = statMap.get(pm.page);
+        let status = 'draft';
+        let publishedAt: string | null = null;
+        let hasSeo = false;
+
+        try {
+          const meta = await getPageMeta(pm.page);
+          status = meta.status;
+          publishedAt = meta.publishedAt;
+          hasSeo = !!(meta.metaTitle || meta.metaDescription || meta.ogImage);
+        } catch {}
+
+        items.push({
+          page: pm.page,
+          label: pm.label,
+          status,
+          sections: pm.sections.length,
+          fields: pm.sections.reduce((acc, sec) => acc + sec.fields.length, 0),
+          updatedAt: s?.updatedAt ?? null,
+          publishedAt,
+          hasSeo,
+        });
+      }
+
+      return Response.json({ pages: items });
+    }
 
     let rows;
     if (page && section) {

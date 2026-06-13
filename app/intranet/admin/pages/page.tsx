@@ -15,7 +15,6 @@ import { Spinner } from '@/components/ui/spinner';
 import { PageHeader } from '@/components/ui/page-header';
 import { cn } from '@/lib/ui';
 import { useToast } from '@/components/ui/toast';
-import { getAllPagesMeta } from '@/lib/page-content-db';
 
 type PageStatus = 'published' | 'draft' | 'inactive';
 
@@ -65,8 +64,9 @@ export default function AdminPagesPage() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   useEffect(() => {
-    getAllPagesMeta()
-      .then(setItems)
+    fetch('/api/admin/pages?list=all')
+      .then(r => r.json())
+      .then(data => setItems(data.pages ?? []))
       .catch(() => toast.danger('Error al cargar páginas'))
       .finally(() => setLoading(false));
   }, [toast]);

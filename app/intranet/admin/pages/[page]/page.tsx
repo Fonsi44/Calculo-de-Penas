@@ -165,8 +165,8 @@ export default function AdminPageEditor() {
 }
 
 // Legacy config editor for the special 'configuracion' page
-function LegacyConfigEditor(_props: { page: string }) {
-  void _props;
+function LegacyConfigEditor({ page: _page }: { page: string }) {
+  void _page;
   const [meta, setMeta] = useState<{ label: string; sections: { key: string; label: string; fields: { key: string; label: string; type: string; default?: string }[] }[] } | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
