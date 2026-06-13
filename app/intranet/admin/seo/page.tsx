@@ -1009,16 +1009,19 @@ export default function SeoDashboardPage() {
               </div>
             )}
 
-            {!inspectResult.error && inspectResult.indexStatus && (
-              <div className="mt-4 pt-3 border-t border-border/30 text-center">
+            {!inspectResult.error && (
+              <div className="mt-4 pt-3 border-t border-border/30 text-center space-y-2">
+                <p className="text-xxs text-text-muted">
+                  Para solicitar indexación, abre GSC y pega la URL en el inspector, o usa el botón "Reenviar sitemap" en la pestaña Sitemap para recrawlear todas las URLs a la vez.
+                </p>
                 <a
-                  href={`https://search.google.com/search-console/inspect?resource_id=${encodeURIComponent('sc-domain:pinedayasociadoshn.com')}&id=${encodeURIComponent(inspectResult.url)}`}
+                  href={`https://search.google.com/search-console/inspect?resource_id=${encodeURIComponent('https://www.pinedayasociadoshn.com/')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
                 >
                   <ExternalLink size={14} />
-                  Solicitar indexación en Google Search Console
+                  Abrir GSC URL Inspection
                 </a>
               </div>
             )}
@@ -1107,7 +1110,7 @@ export default function SeoDashboardPage() {
               </Button>
             </a>
             <a
-              href="https://search.google.com/search-console/sitemaps?resource_id=sc-domain:pinedayasociadoshn.com"
+              href="https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fwww.pinedayasociadoshn.com%2F"
               target="_blank"
               rel="noopener noreferrer"
             >
