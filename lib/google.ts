@@ -92,7 +92,7 @@ function mapRow(
   };
 }
 
-function requirePropertyId(): string {
+export function requirePropertyId(): string {
   const id = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
   if (!id) throw new Error('Falta GOOGLE_ANALYTICS_PROPERTY_ID en .env.local');
   return id;
@@ -104,7 +104,7 @@ function requireSearchConsoleSiteUrl(): string {
   return url;
 }
 
-function getAuth(scopes: string[]) {
+export function getAuth(scopes: string[]) {
   const saEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const saKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
   const oauthClient = getOAuthClient();
