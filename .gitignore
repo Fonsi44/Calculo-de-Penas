@@ -78,3 +78,10 @@ scripts/validate-opencode-config.cjs
 
 # security: no commitear claves públicas ni archivos de infraestructura
 *.pub
+
+# legacy wordpress
+/wordpress/
+
+# imagenes RAW
+docs/imagenes/*.png
+docs/imagenes/*.jpg
