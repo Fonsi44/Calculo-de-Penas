@@ -106,7 +106,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
         </div>
-        <Container size="lg" className="relative py-14 md:py-20">
+        <Container size="lg" className="relative py-10 md:py-14">
           <div className="max-w-3xl">
             <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
               {area.heroEyebrow}

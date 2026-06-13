@@ -72,7 +72,7 @@ export default async function BlogCategoryPage(props: Props) {
       ]} />
 
       <section className="relative bg-primary text-text-inverse overflow-hidden">
-        <Container size="lg" className="relative py-14 md:py-20">
+        <Container size="lg" className="relative py-10 md:py-14">
           <Link
             href="/blog"
             className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-accent-dark transition-colors mb-4"

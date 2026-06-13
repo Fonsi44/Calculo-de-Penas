@@ -149,7 +149,7 @@ export default async function HomePage() {
           className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-accent/20 to-transparent pointer-events-none"
           aria-hidden="true"
         />
-        <Container size="lg" className="relative py-16 md:py-24 lg:py-28">
+        <Container size="lg" className="relative py-12 md:py-16 lg:py-20">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7">
               <div className="flex flex-wrap items-center gap-2 mb-5">

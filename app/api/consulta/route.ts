@@ -92,7 +92,9 @@ export async function POST(request: Request) {
   }
 
   // Auto-respuesta al usuario si proporcionó email
+  console.log('[consulta] debug auto-reply: email=', parsed.data.email, 'tipo=', typeof parsed.data.email);
   if (parsed.data.email) {
+    console.log('[consulta] debug auto-reply: intentando enviar a', parsed.data.email);
     try {
       const autoResult = await sendAutoReplyEmail({
         nombre: parsed.data.nombre,
@@ -108,6 +110,8 @@ export async function POST(request: Request) {
     } catch (e) {
       console.error('[consulta] excepción auto-respuesta:', e instanceof Error ? e.message : 'Error');
     }
+  } else {
+    console.log('[consulta] debug auto-reply: email vacío, se omite');
   }
 
   // Siempre devolvemos ok aunque el email falle (la consulta está guardada)

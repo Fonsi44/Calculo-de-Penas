@@ -40,7 +40,7 @@ export function FeaturesBar({ className, eyebrow, title }: FeaturesBarProps) {
   return (
     <section
       className={cn(
-        'bg-surface-alt border-y border-border-light py-12 md:py-16',
+        'bg-surface-alt border-y border-border-light py-8 md:py-12',
         className,
       )}
       aria-label="Atributos del bufete"

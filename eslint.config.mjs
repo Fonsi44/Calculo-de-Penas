@@ -19,6 +19,7 @@ const eslintConfig = defineConfig([
     "_archived_unused/**",
     // Binarios auxiliares de OpenCode en CommonJS (no son código de la app).
     ".opencode/bin/**",
+    "wordpress/**",
   ]),
 ]);
 

@@ -71,7 +71,7 @@ export function PageHero({
             : 'radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.10) 0%, transparent 60%)',
         }}
       />
-      <Container size="lg" className="relative py-16 md:py-24 lg:py-28">
+      <Container size="lg" className="relative py-10 md:py-14 lg:py-16">
         <div className={alignCls}>
           <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className={eyebrowCls}>{eyebrow}</span>

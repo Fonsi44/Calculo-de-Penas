@@ -31,7 +31,7 @@ export function TestimonialsSection({
 }: TestimonialsSectionProps) {
   return (
     <section
-      className={`relative py-20 md:py-28 bg-primary-dark text-text-inverse overflow-hidden ${className ?? ''}`}
+      className={`relative py-12 md:py-16 bg-primary-dark text-text-inverse overflow-hidden ${className ?? ''}`}
     >
       <div
         className="absolute inset-0 pointer-events-none bg-grid opacity-30"
@@ -54,7 +54,7 @@ export function TestimonialsSection({
         aria-hidden="true"
       />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        <header className="max-w-3xl mb-12 md:mb-16">
+        <header className="max-w-3xl mb-8 md:mb-10">
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="w-8 h-px bg-accent" aria-hidden="true" />
             <p className="text-xxs font-bold uppercase tracking-[0.18em] text-accent">

@@ -37,9 +37,9 @@ const BG: Record<NonNullable<SectionProps['background']>, string> = {
 };
 
 const SPACING = {
-  sm: 'py-10 md:py-14',
-  md: 'py-14 md:py-20',
-  lg: 'py-16 md:py-24',
+  sm: 'py-6 md:py-8',
+  md: 'py-8 md:py-12',
+  lg: 'py-12 md:py-16',
 };
 
 export function Section({
