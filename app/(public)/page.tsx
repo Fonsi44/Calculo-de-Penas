@@ -34,6 +34,8 @@ import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { BlogSearch } from '@/components/blog/blog-search';
+import { getAllPosts } from '@/lib/blog';
 
 export const metadata: Metadata = {
   title: { absolute: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}` },
@@ -53,6 +55,8 @@ export const revalidate = 3600;
 const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
 
 export default async function HomePage() {
+  let allPosts: Awaited<ReturnType<typeof getAllPosts>> = [];
+  try { allPosts = await getAllPosts(); } catch {}
   let contentMap: Record<string, string> = {};
   let homeMeta: { page: string; label: string; sections: { key: string; label: string; fields: { key: string; label: string; type: string; default?: string }[] }[] } | undefined;
   try {
@@ -177,6 +181,15 @@ export default async function HomePage() {
 
       {/* TRUST BAR — sellos de autoridad */}
       <TrustBar background="light" />
+
+      {/* BUSCADOR GLOBAL */}
+      {allPosts.length > 0 && (
+        <Section spacing="sm">
+          <Container size="lg">
+            <BlogSearch posts={allPosts} />
+          </Container>
+        </Section>
+      )}
 
       {/* REAL QUESTIONS */}
       <Section spacing="md" ariaLabel="Preguntas reales">

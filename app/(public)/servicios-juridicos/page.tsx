@@ -12,6 +12,8 @@ import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
+import { BlogSearch } from '@/components/blog/blog-search';
+import { getAllPosts } from '@/lib/blog';
 
 export const metadata: Metadata = {
   title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | Ramas principales del derecho`,
@@ -38,6 +40,7 @@ export const metadata: Metadata = {
 export default async function AreasJuridicasPage() {
   const areas = await getAreasFromDb('servicio');
   const contentMap = await getPageContent('servicios-juridicos');
+  const allPosts = await getAllPosts();
 
   return (
     <>
@@ -52,6 +55,12 @@ export default async function AreasJuridicasPage() {
         subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.'}
         cta={<CTAGroup variant="inverse" />}
       />
+
+      <Section spacing="sm">
+        <Container size="lg">
+          <BlogSearch posts={allPosts} />
+        </Container>
+      </Section>
 
       <TrustBar background="light" />
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
-import { Section, SectionHeader } from '@/components/marketing/section';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -17,6 +17,7 @@ import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
+import { BlogSearch } from '@/components/blog/blog-search';
 
 export const metadata: Metadata = {
   title: `Abogados Penalistas en ${site.address.city}, ${site.address.department} | Defensa Penal`,
@@ -61,7 +62,8 @@ export default async function DerechoPenalPage() {
     url,
   });
 
-  const blogPosts = (await getPostsByCategory('derecho-penal')).slice(0, 3);
+  const allPenalPosts = await getPostsByCategory('derecho-penal');
+  const blogPosts = allPenalPosts.slice(0, 3);
 
   return (
     <>
@@ -76,6 +78,12 @@ export default async function DerechoPenalPage() {
         subtitle={contentMap['hero.subtitle'] || hubPenal.heroSubtitle}
         cta={<CTAGroup variant="inverse" />}
       />
+
+      <Section spacing="sm">
+        <Container size="lg">
+          <BlogSearch posts={allPenalPosts} />
+        </Container>
+      </Section>
 
       <TrustBar background="light" />
 
