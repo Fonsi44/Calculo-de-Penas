@@ -115,7 +115,7 @@ function SidebarNav({ pathname, isAdmin, onNavigate }: { pathname: string; isAdm
   const visibleGroups = NAV_GROUPS.filter(g => !g.adminOnly || isAdmin);
 
   return (
-    <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-1">
+    <nav className="flex-1 px-2 py-3 overflow-y-auto space-y-0.5">
       {visibleGroups.map((group) => {
         const visibleItems = group.items.filter(i => !i.adminOnly || isAdmin);
         if (visibleItems.length === 0) return null;
@@ -145,33 +145,35 @@ function SidebarNav({ pathname, isAdmin, onNavigate }: { pathname: string; isAdm
             </button>
             <div
               className={cn(
-                'overflow-hidden transition-all duration-200',
-                isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0',
+                'grid transition-all duration-200',
+                isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
               )}
             >
-              <div className="pl-2 pt-0.5 space-y-0.5">
-                {visibleItems.map((item) => {
-                  const active = item.match(pathname);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={onNavigate}
-                      className={cn(
-                        'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors relative',
-                        active
-                          ? 'bg-accent/15 text-primary font-semibold'
-                          : 'text-text-secondary hover:bg-surface-alt/70 hover:text-text',
-                      )}
-                    >
-                      {active && (
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-full bg-accent" />
-                      )}
-                      <item.icon size={15} className={active ? 'text-accent-dark' : ''} />
-                      <span>{item.label}</span>
-                    </Link>
-                  );
-                })}
+              <div className="overflow-hidden">
+                <div className="pl-2 pt-0.5 space-y-0.5">
+                  {visibleItems.map((item) => {
+                    const active = item.match(pathname);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={onNavigate}
+                        className={cn(
+                          'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors relative',
+                          active
+                            ? 'bg-accent/15 text-primary font-semibold'
+                            : 'text-text-secondary hover:bg-surface-alt/70 hover:text-text',
+                        )}
+                      >
+                        {active && (
+                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-full bg-accent" />
+                        )}
+                        <item.icon size={15} className={active ? 'text-accent-dark' : ''} />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
