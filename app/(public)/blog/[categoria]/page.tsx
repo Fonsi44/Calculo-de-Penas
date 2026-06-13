@@ -8,6 +8,7 @@ import { blogCollectionSchema } from '@/lib/schemas/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { site } from '@/lib/site';
 import { CategoryFilter } from '@/components/blog/category-filter';
+import { BlogSearch } from '@/components/blog/blog-search';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -87,7 +88,16 @@ export default async function BlogCategoryPage(props: Props) {
       </section>
 
       <Section spacing="md">
-        <CategoryFilter />
+        <div className="mb-6">
+          <CategoryFilter />
+        </div>
+        <BlogSearch
+          posts={categoryPosts}
+          totalPages={totalPages}
+          currentPage={page}
+          buildPageUrl={buildPageUrl}
+          searchParams={searchParams ?? {}}
+        />
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-text-secondary mb-4">Aún no hay artículos publicados en la categoría <strong>{cat.nombre.toLowerCase()}</strong>.</p>
