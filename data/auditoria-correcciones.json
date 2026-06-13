@@ -1,0 +1,82 @@
+[
+  {
+    "articulo": "Art. 211 CP",
+    "estado_anterior": "Longitud: 688 chars",
+    "problema": "Texto terminaba en coma en lugar de punto. Error ortográfico \"aúna\" por \"a una\".",
+    "accion": "Corregido",
+    "fuente": "Decreto 130-2017 (TSC PDF)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 232 CP",
+    "estado_anterior": "Longitud: 1051 chars",
+    "problema": "Texto sin punto final.",
+    "accion": "Corregido",
+    "fuente": "Decreto 130-2017 (TSC PDF)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 317 CP",
+    "estado_anterior": "Longitud: 1022 chars",
+    "problema": "Texto sin punto final. Artículo aparece como \"Derogado\" en Decreto 130-2017 original pero activo en TSC PDF (reforma posterior). Se conserva texto activo.",
+    "accion": "Corregido",
+    "fuente": "TSC PDF (La Gaceta)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 337 CP",
+    "estado_anterior": "Longitud: 1371 chars",
+    "problema": "Párrafo final duplicado (repite el primer párrafo). Eliminado. Artículo aparece como \"Derogado\" en Decreto 130-2017 original pero activo en TSC PDF.",
+    "accion": "Corregido",
+    "fuente": "TSC PDF (La Gaceta)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 363 CP",
+    "estado_anterior": "Longitud: 119 chars",
+    "problema": "Texto severamente truncado: solo contenía la primera oración (119 chars). Faltaban las 9 circunstancias agravantes y el párrafo final. Completado con texto íntegro.",
+    "accion": "Corregido",
+    "fuente": "Decreto 130-2017 (TSC PDF)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 521 CP",
+    "estado_anterior": "Longitud: 514 chars",
+    "problema": "Texto sin punto final.",
+    "accion": "Corregido",
+    "fuente": "Decreto 130-2017 (TSC PDF)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 610 CP",
+    "estado_anterior": "Longitud: 236 chars",
+    "problema": "El texto incluía el encabezado \"DISPOSICIONES ADICIONALES\" que corresponde a una sección posterior, no al Art. 610.",
+    "accion": "Corregido",
+    "fuente": "Decreto 130-2017 (TSC PDF)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  },
+  {
+    "articulo": "Art. 613 CP",
+    "estado_anterior": "Longitud: 1223 chars",
+    "problema": "El texto incluía el encabezado \"DISPOSICIONES TRANSITORIAS\" que corresponde a una sección posterior. Corregido typo \"tiernas\" por \"tierras\". Artículo aparece como \"Derogado\" en Decreto 130-2017 original pero activo en TSC PDF.",
+    "accion": "Corregido",
+    "fuente": "TSC PDF (La Gaceta)",
+    "nivel_confianza": "ALTO",
+    "fecha_revision": "2026-06-13",
+    "requiere_revision": false
+  }
+]

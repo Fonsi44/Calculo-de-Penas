@@ -1,5 +1,31 @@
 # Changelog
 
+## Release 52 — Auditoría y corrección integral de la Biblioteca del Código Penal (635 artículos) (2026-06-14)
+
+### 🔴 CORRECCIÓN: Artículos truncados y mal formateados en la Biblioteca CP
+
+**Causa raíz**: La importación inicial de los 635 artículos del Código Penal (Decreto 130-2017) presentó múltiples problemas: truncamiento de artículos completos (Art. 363 con solo 119 chars de 1040), pérdida de puntos finales, fusión de encabezados de sección dentro del texto de artículos, duplicación de párrafos, y errores ortográficos por OCR.
+
+**Artículos corregidos (8)**:
+- **Art. 211 CP**: Coma final → punto; "aúna" → "a una"
+- **Art. 232 CP**: Punto final añadido
+- **Art. 317 CP**: Punto final añadido. Verificado: aparece "Derogado" en Decreto 130-2017 original pero activo en versión TSC (reforma posterior)
+- **Art. 337 CP**: Párrafo final duplicado eliminado. Misma situación de conflicto de versión que Art. 317
+- **Art. 363 CP**: **Severamente truncado** — restaurado texto completo con 9 circunstancias agravantes + párrafo final (de 119 a 1040 chars)
+- **Art. 521 CP**: Punto final añadido
+- **Art. 610 CP**: Encabezado "DISPOSICIONES ADICIONALES" eliminado del texto del artículo
+- **Art. 613 CP**: Encabezado "DISPOSICIONES TRANSITORIAS" eliminado; typo "tiernas" → "tierras"
+- **Art. 632 CP**: Encabezado "DISPOSICIONES FINALES" eliminado del texto del artículo
+
+**Fuentes legales consultadas**:
+- Decreto 130-2017 (TSC): https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf
+- Código Penal (Poder Judicial / CEDIJ)
+- UNPH repositorio (original + actualizado julio 2024)
+
+**Herramienta creada**: `scripts/auditar-cp.js` — auditoría reutilizable de 635 artículos con detección de truncamiento, HTML roto, duplicados, typos, encabezados mal ubicados y más.
+
+**Backups**: `data/articulos_cp.json.BACKUP_20260614_*` (pre-fix)
+
 ## Release 51 — Overhaul profundo del editor visual de páginas: eventos, componentes, estados y modo preview (2026-06-14)
 
 ### 🔴 CRÍTICO: Corrección de eventos en editor visual
