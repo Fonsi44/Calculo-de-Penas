@@ -16,6 +16,14 @@ export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase)
   let { pena_min, pena_max } = base;
   const { tipo_pena, unidad, pena_base_min, pena_base_max } = base;
 
+  if (pena_base_min === 0 && pena_base_max === 0 && config.pena_seleccionada === 'prision') {
+    return {
+      delito: { id: delito.id, nombre: delito.nombre, articulo: delito.articulo, clasificacion: delito.clasificacion, penas_accesorias: delito.penas_accesorias },
+      pena_min: 0, pena_max: 0, pena_recomendada: 0, gravedad: 'Sin pena', tipo_pena, unidad, exento: false,
+      pena_base_min, pena_base_max, modificaciones: ['Sin pena privativa de libertad'],
+    };
+  }
+
   const eximente = evaluarEximenteCompleta(config.eximente_completa);
   if (eximente.aplica) {
     return {
@@ -132,12 +140,21 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
   const penas_activas = penas_para_concurso.filter((p) => !p.exento);
   const todas_multas = penas_activas.length > 0 && penas_activas.every((p) => p.unidad === 'dias');
   const tipo_pena_principal = todas_multas ? 'multa' : 'prisión';
+  const hayExentos = penas_para_concurso.some((p) => p.exento);
+  const todosExentos = penas_para_concurso.length > 0 && penas_para_concurso.every((p) => p.exento);
 
-  const pena_principal_texto = resultado_concurso.pena_max === 0
-    ? 'EXENTO'
-    : todas_multas
-      ? `${resultado_concurso.pena_min} a ${resultado_concurso.pena_max} días de ${tipo_pena_principal}`
-      : `${meses_a_texto(resultado_concurso.pena_min)} a ${meses_a_texto(resultado_concurso.pena_max)} de ${tipo_pena_principal}`;
+  let pena_principal_texto: string;
+  if (todosExentos) {
+    pena_principal_texto = 'EXENTO';
+  } else if (resultado_concurso.pena_max === 0 && hayExentos && penas_activas.length === 0) {
+    pena_principal_texto = 'EXENTO';
+  } else if (resultado_concurso.pena_max === 0) {
+    pena_principal_texto = 'Sin pena privativa de libertad';
+  } else if (todas_multas) {
+    pena_principal_texto = `${resultado_concurso.pena_min} a ${resultado_concurso.pena_max} días de ${tipo_pena_principal}`;
+  } else {
+    pena_principal_texto = `${meses_a_texto(resultado_concurso.pena_min)} a ${meses_a_texto(resultado_concurso.pena_max)} de ${tipo_pena_principal}`;
+  }
 
   const analisis_juridico = generarAnalisisJuridico(resultados_individuales, request.tipo_concurso, resultado_concurso);
 

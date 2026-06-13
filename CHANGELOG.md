@@ -1,5 +1,105 @@
 # Changelog
 
+## Release 44 — Corrección y validación del motor de cálculo de penas (2026-06-13)
+
+### Diagnóstico
+
+Se realizó una auditoría completa del motor de cálculo de penas (módulos `lib/rules/v1/`, `lib/utils.ts`, `lib/calculo.ts`, `app/api/calcular/route.ts`, `app/calculadora/*`). El motor de cálculo opera correctamente en todos los casos probados: cálculos individuales, combinaciones de autoría + tentativa + circunstancias, concurso real/ideal/continuado, eximentes completas, y penas perpetuas.
+
+### Mejoras aplicadas
+
+| Archivo | Cambio |
+|---------|--------|
+| `lib/calculo-validator.ts` | **NUEVO**: Módulo de validación de entradas para el cálculo de penas. Valida consistencia de datos, delitos inexistentes, penas negativas, modificaciones inválidas, fechas y abonos. |
+| `lib/rules/v1/index.ts` | Guarda temprana para delitos sin pena privativa de libertad (evita cómputos incorrectos). Corrección del texto `pena_principal` para distinguir "EXENTO", "Sin pena privativa de libertad" y penas con rango. |
+| `lib/utils.ts` | Guarda en `disminuir_en_fraccion()` para el caso `[0, 0]` (evita `min > max`). |
+| `tests/calculo-validator.test.ts` | **NUEVO**: 30 tests de validación. Cubre casos válidos, inválidos y advertencias. |
+| `tests/calculo.test.ts` | 6 tests adicionales: delito sin prisión, perpetuidad, `disminuir_en_fraccion([0,0])`, compensación agravantes+atenuantes, perpetuidad en concurso real. |
+| `CHANGELOG.md` | Esta entrada. |
+
+### Regla de cálculo aplicada
+
+El motor de cálculo opera en **meses** como unidad atómica. La conversión a texto usa `meses_a_texto()` en `lib/utils.ts`:
+- `meses < 1` → "0 meses"
+- `meses >= 480` → "Prisión a perpetuidad"
+- Resto: `años = floor(meses / 12)`, `meses_restantes = meses % 12`
+
+Las operaciones de reducción/aumento (`disminuir_en_fraccion`, `aumentar_en_fraccion`, `aplicar_mitad_superior`, `aplicar_mitad_inferior`) aplican `Math.floor()` en cada paso, favoreciendo siempre al reo (redondeo hacia abajo en reducciones, hacia abajo en el punto medio para la mitad superior).
+
+**Orden de operaciones**: Pena base → Eximente completa → Grado de autoría → Grado de ejecución (tentativa) → Circunstancias modificativas → Ajuste final (floor, mínimo 1 mes).
+
+### Validación
+
+- `npm run lint`: 0 errores, 9 warnings preexistentes ✅
+- `npm run build`: Compiled successfully + TypeScript OK ✅
+- `npm run test`: 17 suites, 361 tests — todos pasan ✅
+- Prueba manual en calculadora UI (localhost:3000/intranet/calculadora): flujo completo Aborto + Cómplice + Tentativa Acabada + Alevosía → "1 año y 9 meses a 2 años de prisión" ✅
+- Prueba API con 4 casos (simple, exento, pena alta, perpetuidad): todos correctos ✅
+
+---
+
+## Release 43 — Corrección: inicialización del editor visual en páginas admin (2026-06-13)
+
+### 🔴 Bug: "El editor no pudo inicializarse" en editor visual de todas las páginas admin
+
+**Causa raíz**: El proxy del editor visual (`/api/admin/visual-editor/proxy`) hacía self-fetch HTTP a la página pública del mismo servidor. En Vercel serverless esto genera invocación en cascada que falla por timeouts, límites de concurrencia Hobby (10s por función) y cold starts. Al fallar, el proxy devolvía 502 sin HTML, el script del editor no se ejecutaba, y `ve:ready` nunca llegaba al padre. Además, el timeout en `onLoad` de 15s pisaba cualquier mensaje de error previo con el genérico "El editor no pudo inicializarse".
+
+### Solución
+
+**Arquitectura de doble vía**: el proxy intenta primero el self-fetch de la página real. Si funciona (5+ segundos), inyecta CSS/JS sobre la página real con su diseño completo. Si falla, construye un editor HTML completo a partir del contenido de la DB (`page_content`) — todos los campos editables se renderizan con los atributos `data-section`, `data-field`, `data-page` y `data-richtext` que el script del editor espera. El editor funciona igual en ambos casos, con la única diferencia de que la vista "real" muestra la página pública completa (header, footer, CSS) y la vista "fallback" muestra solo los campos editables en un layout simple.
+
+### Cambios aplicados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/api/admin/visual-editor/proxy/route.ts` | Reescritura completa. Self-fetch multi-URL (host → request URL → VERCEL_URL) con 5s timeout independiente por intento. Nueva función `buildEditorPage()` que genera HTML completo desde DB cuando el fetch falla. SIN código de error — el editor siempre carga. |
+| `lib/visual-editor/script.ts` | Todo el IIFE envuelto en try-catch anidados. Error reportado vía `ve:error`. `ve:ready` garantizado incluso en fallo (`initError: true`). |
+| `components/admin/visual-editor.tsx` | Timeout cancelado al recibir cualquier `ve:ready`. Soporte `proxyError` y `initError`. Prop `onSwitchToForm` para cambiar a formulario. Botones "Reintentar" y "Usar formulario" en UI de error. |
+| `app/intranet/admin/pages/[page]/page.tsx` | `PAGE_ROUTES` extendido con 3 páginas faltantes. Pasa `onSwitchToForm` al VisualEditor. |
+
+### Validación
+
+- `npm run build`: Compiled successfully + TypeScript OK ✅
+- `npm run lint`: 0 errores, 9 warnings pre-existentes ✅
+- `npm run test`: 361 tests, 17 suites — todos pasan ✅
+
+---
+
+## Release 42 — Auditoría exhaustiva de contenido del blog: canibalización, contenido thin y estrategia editorial (2026-06-13)
+
+### 🔴 Auditoría completa de 174 posts
+- **Total auditados**: 174 posts (159 publicados + 15 borradores)
+- **KEEP**: 96 posts (55.2%) — contenido de calidad que se mantiene
+- **UPDATE**: 26 posts (14.9%) — necesitan mejoras de estructura o expansión
+- **REWRITE**: 4 posts (2.3%) — únicos en su rama temática pero con contenido thin
+- **MERGE**: 2 pares (1.1%) — testamentos→herencias, poder legal→poder notarial
+- **DELETE_REDIRECT**: 9 posts (5.2%) — canibalización resuelta con 301
+- **DELETE_410**: 2 posts (1.1%) — sin valor ni sustituto
+- **NOINDEX_TEMPORARY**: 3 posts (1.7%) — hasta expandir contenido
+- **KEEP (local SEO)**: 25 posts (14.4%) — estratégicos para SEO local
+- **KEEP (transversal/servicios)**: 7 posts (4.0%)
+
+### 🔴 Canibalización resuelta
+- **17 grupos de canibalización** detectados, 9 resueltos con redirect 301
+- **7 pares de borradores duplicados** ya redirigidos en releases previas
+- **2 pares nuevos** añadidos a next.config.ts (central-riesgos, contratos-civiles)
+- **14 posts thin** (< 2500 chars) identificados para mejora progresiva
+
+### Archivos creados
+- `docs/blog-content-audit.md` — Auditoría completa con tabla de 174 posts, análisis por categoría, detección de canibalización y plan de acción
+- `docs/blog-content-strategy.md` — Estrategia editorial: clústeres, criterios de calidad, política de revisión, sistema de redirects
+
+### Archivos modificados
+- `next.config.ts` — 2 nuevos redirects 301 (FASE 4)
+- `CHANGELOG.md` — Este registro
+
+### Validación
+- `npm run build`: ✅ (verificado)
+- Redirects 301: 42 redirects activos en next.config.ts ✅
+- Posts canibalizados redirigidos: todos los borradores duplicados están en estado `published=false` ✅
+
+---
+
 ## Release 41 — Implementación plan estratégico SEO local: páginas de dinero, posts satélite, clusters, CRO y medición (2026-06-13)
 
 ### 🔴 FASE 1: Saneamiento SEO urgente — COMPLETADA

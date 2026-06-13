@@ -428,4 +428,69 @@ describe('calcular_pena — integración end-to-end', () => {
     const map = new Map<string, DelitoBase>();
     expect(() => calcular_pena(request, map)).toThrow('no encontrado');
   });
+
+  it('delito sin pena privativa retorna Sin pena', () => {
+    const delitoSinPrision: DelitoBase = {
+      id: 'test-zero',
+      nombre: 'Solo multa',
+      articulo: 'Art. 999 CP',
+      clasificacion: '',
+      penas_accesorias: [],
+      pena_minima_meses: 0,
+      pena_maxima_meses: 0,
+      tiene_pena_alternativa: true,
+      pena_alternativa_min: 100,
+      pena_alternativa_max: 200,
+    };
+    const request: CalculoRequest = {
+      delitos: [makeConfig({ delito_id: 'test-zero', pena_seleccionada: 'prision' })],
+      tipo_concurso: 'ninguno',
+    };
+    const map = new Map<string, DelitoBase>([['test-zero', delitoSinPrision]]);
+    const r = calcular_pena(request, map);
+    expect(r.pena_principal).toBe('Sin pena privativa de libertad');
+    expect(r.pena_principal_minimo_meses).toBe(0);
+    expect(r.pena_principal_maximo_meses).toBe(0);
+  });
+
+  it('pena máxima no excede límite perpetuo en concurso real', () => {
+    const delitoGraveExtra: DelitoBase = {
+      id: 'test-grave',
+      nombre: 'Homicidio agravado',
+      articulo: 'Art. 194 CP',
+      clasificacion: 'Vida',
+      penas_accesorias: [],
+      pena_minima_meses: 360,
+      pena_maxima_meses: 480,
+      tiene_pena_alternativa: false,
+      pena_alternativa_min: 0,
+      pena_alternativa_max: 0,
+    };
+    const r1 = calcular_pena_individual(makeConfig({ delito_id: 'test-grave' }), delitoGraveExtra);
+    const r2 = calcular_pena_individual(makeConfig({ delito_id: 'test-grave' }), delitoGraveExtra);
+    const r = aplicar_concurso([r1, r2], 'real');
+    expect(r.pena_max).toBe(480);
+    expect(r.pena_min).toBeGreaterThanOrEqual(360);
+  });
+
+  it('meses_a_texto: perpetuidad desde 480 meses', () => {
+    expect(meses_a_texto(480)).toBe('Prisión a perpetuidad');
+    expect(meses_a_texto(481)).toBe('Prisión a perpetuidad');
+  });
+
+  it('disminuir_en_fraccion con [0, 0] retorna [0, 0]', () => {
+    const [min, max] = disminuir_en_fraccion(0, 0, 1 / 3);
+    expect(min).toBe(0);
+    expect(max).toBe(0);
+  });
+
+  it('3 agravantes + 2 atenuantes: compensación', () => {
+    const r = calcular_pena_individual(makeConfig({
+      agravantes: ['alevosia', 'discriminacion', 'reincidencia'],
+      atenuantes: ['confesion', 'reparacion'],
+    }), delitoBase);
+    expect(r.modificaciones[0]).toContain('compensados');
+    expect(r.pena_min).toBe(6);
+    expect(r.pena_max).toBe(24);
+  });
 });

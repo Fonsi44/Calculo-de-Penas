@@ -25,8 +25,10 @@ export function aumentar_en_fraccion(min: number, max: number, fraccion: number)
 }
 
 export function disminuir_en_fraccion(min: number, max: number, fraccion: number): [number, number] {
+  if (min === 0 && max === 0) return [0, 0];
   const nuevo_min = Math.max(1, Math.floor(min * (1 - fraccion)));
   const nuevo_max = min;
+  if (nuevo_min > nuevo_max) return [nuevo_max, nuevo_max];
   return [nuevo_min, nuevo_max];
 }
 
