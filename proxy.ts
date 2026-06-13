@@ -136,11 +136,13 @@ export function proxy(request: NextRequest) {
   }
 
   // Páginas de la intranet: si no hay token, ir al login de intranet.
-  // Si hay token y está en el login, mandarlo al dashboard.
+  // Si hay token y está en el login, mandarlo al dashboard o admin según rol.
   if (pathname.startsWith('/intranet')) {
     if (INTRANET_PUBLIC_EXACT.has(pathname)) {
       if (pathname === INTRANET_LOGIN_PATH && token) {
-        return NextResponse.redirect(new URL('/intranet/dashboard', request.url));
+        const payload = decodeJwtPayload(token);
+        const redirectPath = payload?.rol === 'admin' ? '/intranet/admin' : '/intranet/dashboard';
+        return NextResponse.redirect(new URL(redirectPath, request.url));
       }
       return NextResponse.next();
     }

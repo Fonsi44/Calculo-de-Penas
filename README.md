@@ -286,15 +286,32 @@ El blog ha sido reforzado con una estrategia SEO local orientada a captar leads 
 
 ---
 
-## Panel de Administración (Intranet)
+## Panel de Administración (Intranet Unificado)
 
-El panel `/intranet/admin/` permite gestionar Blog y FAQ con editor WYSIWYG (TipTap), categorías reales y persistencia directa en base de datos.
+El panel `/intranet/admin/` es el centro de control unificado que integra todas las funciones del antiguo dashboard (`/intranet/dashboard`) y del panel admin previo. Los usuarios con rol `admin` son redirigidos automáticamente aquí tras iniciar sesión.
 
 ### Acceso
 
-- URL: `https://www.pinedayasociadoshn.com/intranet/admin/blog`
+- URL: `https://www.pinedayasociadoshn.com/intranet/admin`
 - Autenticación JWT requerida (solo usuarios con rol `admin`).
 - La sesión se gestiona mediante cookies `__Host-token` + `__Host-profile`.
+- Los usuarios no-admin siguen accediendo a `/intranet/dashboard`.
+
+### Navegación
+
+El menú lateral fijo (w-60, visible en escritorio, colapsable en móvil) organiza las funciones en 5 grupos:
+
+1. **Inicio** — Panel general con indicadores, acciones rápidas, herramientas jurídicas y posts recientes
+2. **Gestión de contenido** — Blog, FAQ, Páginas editables
+3. **Herramientas jurídicas** — Calculadora de penas, Mis casos, Biblioteca CP, Catálogo de delitos
+4. **Administración** — Usuarios, SEO, Auditoría
+5. **Configuración** — Perfil, Configuración del sitio
+
+Cada grupo tiene submenús colapsables que se expanden automáticamente al navegar a una ruta de ese grupo. Las herramientas jurídicas abren en sus propias rutas (`/intranet/calculadora`, `/intranet/casos`, etc.) manteniendo su experiencia de uso original.
+
+### Estilo visual
+
+El estilo del dashboard prevalece: bordes gold (`border-l-accent`), tarjetas con iconos, badges tonales, tipografía compacta (`text-xxs` uppercase), sombras sutiles tintadas con navy, paleta navy+gold. El contenido derecho usa `max-w-7xl` para mejor aprovechamiento del espacio.
 
 ### Blog — `/intranet/admin/blog`
 

@@ -1,5 +1,68 @@
 # Changelog
 
+## Release 45 — Integración del dashboard en admin unificado (2026-06-13)
+
+### Resumen
+
+Se integró completamente el contenido y funciones del dashboard (`/intranet/dashboard`) dentro del panel de administración (`/intranet/admin`), creando un único panel administrativo unificado. El estilo visual del dashboard prevalece sobre el admin, y se rediseñó el área de contenido derecha para ser más intuitiva y profesional.
+
+### Cambios aplicados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/intranet/admin/layout.tsx` | **Reescrito completamente**. Nuevo layout con sidebar fijo (w-60), navegación agrupada en 5 secciones (Inicio, Gestión de contenido, Herramientas jurídicas, Administración, Configuración), submenús colapsables con auto-expansión según ruta activa, indicador visual de sección activa con barra dorada, brand header con logo LEX HONDURAS, estado de sesión, diseño responsive con menú móvil. Estilo visual alineado con el dashboard. |
+| `app/intranet/admin/page.tsx` | **Reescrito completamente**. Nuevo dashboard unificado que combina: bienvenida con saludo contextual y fecha (del dashboard), stats de 8 indicadores (delitos, arts. CP, ramas, pasos, posts, publicados, borradores, FAQs), acciones rápidas, búsqueda rápida de artículos (ArticuloAutocomplete), 5 tarjetas de herramientas jurídicas (Calculadora, Casos, Biblioteca CP, Catálogo delitos, Registrar delito), tabla de posts recientes, reglas técnicas del motor, módulos de gestión, marco normativo. |
+| `proxy.ts` | Los usuarios con rol `admin` ahora redirigen a `/intranet/admin` en lugar de `/intranet/dashboard` tras login. Usuarios no-admin siguen yendo a `/intranet/dashboard`. |
+
+### Funciones del dashboard integradas en admin
+
+- Bienvenida con saludo contextual (Buenos días/tardes/noches según hora Honduras)
+- Stats: Delitos, Arts. CP, Ramas, Pasos
+- Búsqueda rápida de artículos del CP (ArticuloAutocomplete)
+- 5 herramientas jurídicas: Calculadora, Mis casos, Biblioteca CP, Catálogo delitos, Registrar delito
+- Reglas técnicas del motor de cálculo
+- Marco normativo (Decreto 130-2017 y reformas)
+- Enlace a El Despacho
+- Enlace a Admin (redundante, eliminado al estar ya dentro del admin)
+
+### Nueva arquitectura del menú lateral
+
+El menú lateral fijo se reorganizó en 5 grupos lógicos con submenús colapsables:
+
+1. **Inicio** — Panel general (dashboard unificado)
+2. **Gestión de contenido** — Blog, FAQ, Páginas
+3. **Herramientas jurídicas** — Calculadora, Mis casos, Biblioteca CP, Catálogo delitos
+4. **Administración** — Usuarios, SEO, Auditoría
+5. **Configuración** — Perfil, Sitio
+
+### Estilo aplicado
+
+El estilo visual del dashboard (bordes gold `border-l-accent`, tarjetas con iconos, badges tonales, tipografía `text-xxs` uppercase, sombras sutiles, paleta navy+gold, espaciado compacto) se aplicó al layout completo del admin. El sidebar usa los mismos tokens CSS (bg-surface, border-border-light, text-primary, text-text-secondary, accent/gold para estados activos). El contenido derecho usa max-w-7xl (más amplio que el anterior max-w-5xl) para mejor aprovechamiento del espacio.
+
+### Permisos y seguridad
+
+- El layout admin mantiene la verificación `user.rol === 'admin'` mediante `useAuth()`
+- `proxy.ts` mantiene la protección de rutas `/intranet/admin/*` con verificación JWT
+- Las herramientas jurídicas externas (Calculadora, Casos, CP, Delitos) se abren fuera del admin pero mantienen su propia protección
+
+### Redirecciones
+
+- Admin users: login → `/intranet/admin` (antes: `/intranet/dashboard`)
+- Non-admin users: login → `/intranet/dashboard` (sin cambios)
+- `/intranet/dashboard` se mantiene por compatibilidad para usuarios no-admin
+
+### Validación
+
+- `npm run lint`: 0 errores, 9 warnings preexistentes ✅
+- `npm run build`: Compiled successfully + TypeScript OK ✅
+- `npm run test`: 17 suites, 361 tests — todos pasan ✅
+- Rutas /intranet/admin funcionan correctamente ✅
+- Menú lateral fijo visible y funcional ✅
+- Estilo visual del dashboard aplicado al admin ✅
+- Todas las funciones del dashboard accesibles desde admin ✅
+
+---
+
 ## Release 44 — Corrección y validación del motor de cálculo de penas (2026-06-13)
 
 ### Diagnóstico
