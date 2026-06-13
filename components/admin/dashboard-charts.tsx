@@ -8,7 +8,18 @@ import { BaseLineChart } from './base-line-chart';
 import { BaseDonutChart } from './base-donut-chart';
 import { BaseBarChart } from './base-bar-chart';
 
-type DashboardData = Record<string, unknown> | null;
+type ChartStatus = 'ok' | 'not_configured' | 'permission_denied' | 'no_data' | 'error';
+
+interface DashboardData {
+  status?: ChartStatus;
+  data?: TimelinePoint[];
+  totals?: Record<string, number>;
+  previousPeriod?: { totals?: Record<string, number>; changes?: Record<string, number | null> };
+  deviceBreakdown?: BreakdownItem[];
+  sourceBreakdown?: BreakdownItem[];
+  topQueries?: BreakdownItem[];
+  [key: string]: unknown;
+}
 
 interface BreakdownItem {
   device?: string;
@@ -28,8 +39,8 @@ interface TimelinePoint {
 
 export function DashboardCharts() {
   const [days, setDays] = useState<7 | 28 | 90>(28);
-  const [ga4, setGa4] = useState<DashboardData>(null);
-  const [gsc, setGsc] = useState<DashboardData>(null);
+  const [ga4, setGa4] = useState<DashboardData>(null as unknown as DashboardData);
+  const [gsc, setGsc] = useState<DashboardData>(null as unknown as DashboardData);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -97,25 +108,25 @@ export function DashboardCharts() {
         <>
           {metricCards}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <ChartCard title="Usuarios y sesiones" status={ga4.status}>
+            <ChartCard title="Usuarios y sesiones" status={ga4.status as ChartStatus}>
               <BaseLineChart
-                data={ga4.data}
+                data={ga4.data as { date: string; [key: string]: string | number }[]}
                 lines={[
                   { key: 'activeUsers', color: '#D4AF37', label: 'Usuarios' },
                   { key: 'sessions', color: '#0F1D3A', label: 'Sesiones' },
                 ]}
               />
             </ChartCard>
-            <ChartCard title="Dispositivos" status={ga4.status}>
+            <ChartCard title="Dispositivos" status={ga4.status as ChartStatus}>
               <BaseDonutChart data={(ga4.deviceBreakdown as BreakdownItem[] ?? []).map((d) => ({ name: d.device ?? '', value: d.users ?? 0 }))} />
             </ChartCard>
             {((ga4.sourceBreakdown as BreakdownItem[] ?? []).length) > 0 && (
-              <ChartCard title="Fuentes de tráfico" status={ga4.status}>
+              <ChartCard title="Fuentes de tráfico" status={ga4.status as ChartStatus}>
                 <BaseBarChart data={(ga4.sourceBreakdown as BreakdownItem[] ?? []).slice(0, 5).map((s) => ({ name: s.source ?? '', value: s.sessions ?? 0 }))} horizontal color="#D4AF37" height={150} />
               </ChartCard>
             )}
             {ga4ok && (
-              <ChartCard title="Tráfico diario" status={ga4.status}>
+              <ChartCard title="Tráfico diario" status={ga4.status as ChartStatus}>
                 <BaseBarChart
                   data={(ga4.data as TimelinePoint[] ?? []).map((d) => ({ name: (d.date ?? '').slice(5), value: d.activeUsers ?? 0 }))}
                   color="#D4AF37"
@@ -134,9 +145,9 @@ export function DashboardCharts() {
 
       {gscOk && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <ChartCard title="Clics e impresiones (GSC)" status={gsc.status}>
+          <ChartCard title="Clics e impresiones (GSC)" status={gsc.status as ChartStatus}>
             <BaseLineChart
-              data={gsc.data as TimelinePoint[] ?? []}
+              data={(gsc.data as { date: string; [key: string]: string | number }[])}
               lines={[
                 { key: 'clicks', color: '#D4AF37', label: 'Clics' },
                 { key: 'impressions', color: '#8A8F95', label: 'Impresiones' },
@@ -144,7 +155,7 @@ export function DashboardCharts() {
             />
           </ChartCard>
           {((gsc.topQueries as BreakdownItem[] ?? []).length) > 0 && (
-            <ChartCard title="Top consultas" status={gsc.status}>
+            <ChartCard title="Top consultas" status={gsc.status as ChartStatus}>
               <BaseBarChart
                 data={(gsc.topQueries as BreakdownItem[] ?? []).slice(0, 10).map((q) => ({ name: (q.query ?? '').length > 25 ? (q.query ?? '').substring(0, 25) + '...' : q.query ?? '', value: q.clicks ?? 0 }))}
                 horizontal
