@@ -45,7 +45,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           {site.phoneDisplay}
         </a>
         <a
-          href="/solicitar-consulta#formulario"
+          href="https://www.pinedayasocioshn.com/solicitar-consulta#formulario"
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
@@ -58,7 +58,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     return (
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <a
-          href="/solicitar-consulta#formulario"
+          href="https://www.pinedayasocioshn.com/solicitar-consulta#formulario"
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
@@ -77,7 +77,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
       <a
-        href="/solicitar-consulta#formulario"
+        href="https://www.pinedayasocioshn.com/solicitar-consulta#formulario"
         className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={18} aria-hidden="true" />
@@ -185,3 +185,4 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
     </div>
   );
 }
+
