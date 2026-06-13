@@ -60,9 +60,9 @@ const NAV_GROUPS: NavGroup[] = [
     icon: Scale,
     items: [
       { label: 'Calculadora', href: '/intranet/admin/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/admin/calculadora') || p.startsWith('/intranet/calculadora') || p === '/calculadora' },
-      { label: 'Mis casos', href: '/intranet/casos', icon: ClipboardList, match: (p) => p.startsWith('/intranet/casos') || p === '/casos', external: true },
-      { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp', external: true },
-      { label: 'Catálogo delitos', href: '/intranet/delitos', icon: FileCheck, match: (p) => p.startsWith('/intranet/delitos') || p === '/delitos', external: true },
+      { label: 'Mis casos', href: '/intranet/admin/casos', icon: ClipboardList, match: (p) => p.startsWith('/intranet/admin/casos') || p.startsWith('/intranet/casos') || p === '/casos' },
+      { label: 'Biblioteca CP', href: '/intranet/admin/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/admin/cp') || p.startsWith('/intranet/cp') || p === '/cp' },
+      { label: 'Catálogo delitos', href: '/intranet/admin/delitos', icon: FileCheck, match: (p) => p.startsWith('/intranet/admin/delitos') || p.startsWith('/intranet/delitos') || p === '/delitos' },
     ],
   },
   {

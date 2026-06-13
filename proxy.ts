@@ -150,11 +150,30 @@ export function proxy(request: NextRequest) {
       const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
       return NextResponse.redirect(loginUrl);
     }
-    // Redirigir admin users de /intranet/calculadora a /intranet/admin/calculadora
-    if (pathname === '/intranet/calculadora') {
+    // Redirigir admin users de rutas intranet legacy a sus versiones admin
+    if (token) {
       const payload = decodeJwtPayload(token);
       if (payload?.rol === 'admin') {
-        return NextResponse.redirect(new URL('/intranet/admin/calculadora', request.url));
+        const adminRedirects: Record<string, string> = {
+          '/intranet/calculadora': '/intranet/admin/calculadora',
+          '/intranet/casos': '/intranet/admin/casos',
+          '/intranet/cp': '/intranet/admin/cp',
+          '/intranet/delitos': '/intranet/admin/delitos',
+        };
+        const adminRedirect = adminRedirects[pathname];
+        if (adminRedirect) {
+          return NextResponse.redirect(new URL(adminRedirect, request.url));
+        }
+        // También redirigir rutas legacy con ID bajo /intranet/
+        if (pathname.startsWith('/intranet/casos/') && !pathname.startsWith('/intranet/admin/')) {
+          return NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url));
+        }
+        if (pathname.startsWith('/intranet/cp/') && !pathname.startsWith('/intranet/admin/')) {
+          return NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url));
+        }
+        if (pathname.startsWith('/intranet/delitos/') && !pathname.startsWith('/intranet/admin/')) {
+          return NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url));
+        }
       }
     }
     // Rutas admin: verificar rol admin desde el token JWT.

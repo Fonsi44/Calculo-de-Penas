@@ -1,43 +1,51 @@
 # Changelog
 
-## Release 46 — Integración de la calculadora de penas dentro del admin unificado (2026-06-13)
+## Release 47 — Integración completa de herramientas jurídicas en admin unificado (2026-06-13)
 
 ### Resumen
 
-Se integró la calculadora de penas dentro del panel admin (`/intranet/admin/calculadora`), eliminando la salida al diseño antiguo. Ahora la calculadora se abre dentro del layout admin unificado, con menú lateral fijo visible, contenido a la derecha y el mismo estilo visual del dashboard.
+Se integraron todas las herramientas jurídicas (Calculadora, Mis casos, Biblioteca CP, Catálogo de delitos) dentro del panel admin unificado. Ahora todas se abren dentro del layout admin con menú lateral fijo, contenido a la derecha y estilo visual del dashboard. Ninguna sale del contexto admin.
 
 ### Causa raíz
 
-El enlace "Calculadora" en el menú lateral de admin apuntaba a `/intranet/calculadora` con `external: true`, lo que forzaba una navegación fuera del layout admin y cargaba la calculadora con su diseño antiguo (intranet sidebar + CalculadoraSidebar navy).
+Los enlaces en "Herramientas Jurídicas" del menú lateral apuntaban a rutas externas (`/intranet/calculadora`, `/intranet/casos`, `/intranet/cp`, `/intranet/delitos`) con `external: true`, forzando navegación fuera del layout admin y cargando cada herramienta con su diseño independiente (AppShell + sidebar intranet).
 
 ### Cambios aplicados
 
 | Archivo | Cambio |
 |---------|--------|
-| `app/intranet/admin/calculadora/page.tsx` | **NUEVO**: Página de calculadora dentro del admin. Reutiliza `useCalculadoraState` y todos los componentes paso (`Paso1Delito`, `Paso2Variantes`, etc.) de `app/calculadora/`. Renderiza dentro del layout admin con un step indicator compacto horizontal, cabecera clara y área de contenido rediseñada. |
-| `app/intranet/admin/layout.tsx` | El enlace "Calculadora" en "Herramientas Jurídicas" ahora apunta a `/intranet/admin/calculadora` como ruta interna (sin `external`). `match` actualizado para detectar rutas `/intranet/admin/calculadora`. |
-| `proxy.ts` | Los usuarios admin que accedan a `/intranet/calculadora` son redirigidos automáticamente a `/intranet/admin/calculadora`. Usuarios no-admin siguen viendo la calculadora clásica. |
+| `app/intranet/admin/calculadora/page.tsx` | **NUEVO** (Release 46): Calculadora integrada con step indicator compacto horizontal. |
+| `app/intranet/admin/casos/page.tsx` | **NUEVO**: Listado de casos sin AppShell, con cabecera integrada, formulario inline de creación. |
+| `app/intranet/admin/casos/[id]/page.tsx` | **NUEVO**: Detalle de caso con edición de título, lista de cálculos, botón PDF, acceso a calculadora. |
+| `app/intranet/admin/cp/page.tsx` | **NUEVO**: Biblioteca CP con búsqueda, filtros por tema, paginación, grid de 2 columnas. |
+| `app/intranet/admin/cp/[id]/page.tsx` | **NUEVO**: Detalle de artículo CP con metadatos y delitos relacionados. |
+| `app/intranet/admin/delitos/page.tsx` | **NUEVO**: Catálogo de delitos con búsqueda, filtros por rama, paginación, acciones editar/eliminar. |
+| `app/intranet/admin/layout.tsx` | Los 4 enlaces de "Herramientas Jurídicas" ahora apuntan a rutas admin internas sin `external`. |
+| `proxy.ts` | Bloque de redirección unificado: admin users redirigidos de rutas legacy (`/intranet/calculadora`, `/intranet/casos`, `/intranet/cp`, `/intranet/delitos`) a sus versiones admin. |
 
 ### Nueva integración
 
-- Ruta: `/intranet/admin/calculadora` — dentro del layout admin con sidebar fijo
-- Step indicator compacto horizontal (en lugar del sidebar izquierdo navy)
-- Cabecera clara con título, paso actual y badge "Motor v1"
-- Área de contenido centrada (max-w-2xl) con los mismos 8 pasos funcionales
-- Bottom action bar sticky con botones Atrás/Continuar/Calcular
-- Acceso directo desde el menú "Herramientas Jurídicas" → "Calculadora"
+Cada herramienta ahora tiene su propia página dentro de `/intranet/admin/`:
+- `/intranet/admin/calculadora` — Calculadora de penas con step indicator horizontal
+- `/intranet/admin/casos` — Listado de casos + creación inline
+- `/intranet/admin/casos/[id]` — Detalle de caso con cálculos + PDF
+- `/intranet/admin/cp` — Biblioteca del CP con búsqueda y filtros
+- `/intranet/admin/cp/[id]` — Artículo del CP con delitos relacionados
+- `/intranet/admin/delitos` — Catálogo de delitos con búsqueda y CRUD
+
+Todas las páginas reutilizan las APIs existentes y el mismo motor de datos.
 
 ### Redirecciones y compatibilidad
 
-- `/intranet/calculadora` (rewrite a `/calculadora`) se mantiene para usuarios no-admin
-- Admin users: `/intranet/calculadora` → redirect 307 a `/intranet/admin/calculadora`
-- La calculadora clásica (`app/calculadora/page.tsx`) permanece intacta para no-admin
-- Todos los enlaces desde dashboard/admin ahora apuntan a la ruta admin
+- Admin users: todas las rutas legacy (`/intranet/calculadora`, `/intranet/casos`, `/intranet/cp`, `/intranet/delitos`) redirigen a sus versiones admin
+- Las rutas `/intranet/casos/[id]`, `/intranet/cp/[id]` también redirigen a admin
+- Usuarios no-admin: las rutas legacy siguen funcionando sin cambios
+- Las páginas originales (`app/casos/`, `app/cp/`, `app/delitos/`) permanecen intactas
 
 ### Validación
 
 - `npm run lint`: 0 errores, 9 warnings preexistentes ✅
-- `npm run build`: Compiled successfully + TypeScript OK, nueva ruta `/intranet/admin/calculadora` ✅
+- `npm run build`: Compiled successfully + TypeScript OK, 294 rutas ✅
 - `npm run test`: 17 suites, 361 tests — todos pasan ✅
 
 ---
