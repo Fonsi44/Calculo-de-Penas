@@ -46,10 +46,10 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Bufete de Abogados en Nacaome, Valle',
+    'Bufete en Nacaome, Valle',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete de abogados en Nacaome, Valle, Honduras. Especialistas en defensa penal técnica y asesoría legal integral en la zona sur: San Lorenzo, Choluteca y municipios aledaños. Más de 15 años de experiencia con atención directa y presupuesto por escrito.',
+    'Bufete de abogados en Nacaome, Valle, Honduras. Especialistas en defensa penal técnica y asesoría legal integral en la zona sur. Más de 15 años de experiencia con atención directa y presupuesto por escrito.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete multidisciplinario sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),

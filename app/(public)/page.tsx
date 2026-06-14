@@ -36,7 +36,7 @@ import { BlogSearch } from '@/components/blog/blog-search';
 import { getAllPosts } from '@/lib/blog';
 
 export const metadata: Metadata = {
-  title: { absolute: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}` },
+  title: { absolute: `${site.name} — ${site.tagline}` },
   description: site.description,
   alternates: { canonical: '/' },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
