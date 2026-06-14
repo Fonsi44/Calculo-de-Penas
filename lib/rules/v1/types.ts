@@ -25,6 +25,17 @@ export interface DelitoBase {
   observaciones_pena?: string | null;
   requiere_revision_humana?: boolean;
   confianza_extraccion?: number | null;
+  pena_por_remision_normativa?: boolean;
+  articulos_remitidos_para_pena?: string | null;
+  pena_base_resuelta_desde_articulo?: string | null;
+  condicion_para_aplicar_pena_remitida?: string | null;
+  agravacion_por_articulo_remitido?: string | null;
+  formula_calculo_remision?: string | null;
+  requiere_datos_economicos?: boolean;
+  variables_necesarias_para_calculo?: string | null;
+  pena_resuelta_min_meses?: number | null;
+  pena_resuelta_max_meses?: number | null;
+  observaciones_remision_normativa?: string | null;
 }
 
 export interface DelitoConfig {
@@ -102,6 +113,15 @@ export interface DelitoAnalizado {
   exento: boolean;
   requiere_revision_humana: boolean;
   confianza_extraccion: number | null;
+  pena_por_remision_normativa?: boolean;
+  articulos_remitidos_para_pena?: string | null;
+  pena_base_resuelta_desde_articulo?: string | null;
+  condicion_para_aplicar_pena_remitida?: string | null;
+  agravacion_por_articulo_remitido?: string | null;
+  formula_calculo_remision?: string | null;
+  requiere_datos_economicos?: boolean;
+  variables_necesarias_para_calculo?: string | null;
+  observaciones_remision_normativa?: string | null;
 }
 
 export interface ResultadoCalculo {

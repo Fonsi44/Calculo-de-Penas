@@ -1,0 +1,61 @@
+=== INFORME DE AUDITORÍA INICIAL ===
+Total artículos: 635
+Apariencia completa: 628
+Posiblemente truncados: 7
+Sospechosos: 0
+
+Distribución por tema:
+  delitos: 362
+  garantias_penales: 72
+  circunstancias: 59
+  consecuencias_juridicas: 46
+  hecho_penal: 37
+  autoria_participacion: 19
+  parte_general: 15
+  penas: 12
+  ejecucion_medidas: 4
+  responsabilidad_civil: 4
+  prescripcion: 3
+  ejecucion: 1
+  autoria: 1
+
+Distribución por libro:
+  Libro I: 138
+  Libro II: 458
+  Libro III: 39
+
+=== ARTÍCULOS CON PROBLEMAS ===
+
+Art. 211 CP (688 chars):
+  - TRUNCADO: texto termina en signo de puntuación
+  - SOSPECHOSO: último párrafo sin punto final
+  Últimos 100 chars: cientos (200) días e inhabilitación especial para empleo o cargo público de uno (1) a tres (3) años,
+
+Art. 232 CP (1051 chars):
+  - TRUNCADO: texto termina abruptamente sin punto final
+  - SOSPECHOSO: último párrafo sin punto final
+  Últimos 100 chars: señale y a cargo de la persona condenada.\n\nEsta disposición es también aplicable en caso de retracto
+
+Art. 317 CP (1022 chars):
+  - TRUNCADO: texto termina abruptamente sin punto final
+  - SOSPECHOSO: último párrafo sin punto final
+  Últimos 100 chars:  incentivos fiscales o de la Seguridad Social, por un plazo que no pueda exceder de quince (15) años
+
+Art. 337 CP (1371 chars):
+  - TRUNCADO: texto termina en signo de puntuación
+  - SOSPECHOSO: último párrafo sin punto final
+  Últimos 100 chars: do o del beneficio obtenido. Adicionalmente se le pueda imponer algunas de las sanciones siguientes:
+
+Art. 363 CP (119 chars):
+  - TRUNCADO: texto termina en signo de puntuación
+  Últimos 100 chars: o robo se deben aumentar en un tercio (1/3) cuando concurra alguna de las circunstancias siguientes:
+
+Art. 521 CP (514 chars):
+  - TRUNCADO: texto termina abruptamente sin punto final
+  - SOSPECHOSO: último párrafo sin punto final
+  Últimos 100 chars: a de inhabilitación especial de cargo u oficio público por el doble del tiempo de la pena de prisión
+
+Art. 635 CP (310 chars):
+  - TRUNCADO: texto termina abruptamente sin punto final
+  - SOSPECHOSO: último párrafo sin punto final
+  Últimos 100 chars: CENTRALIZACIÓN\n\nHÉCTOR LEONEL AVALA ALVARADO\n\nSecretaría de Gobernación Justicia y Descentralización

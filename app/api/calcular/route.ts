@@ -47,6 +47,17 @@ export async function POST(request: Request) {
         tiene_pena_alternativa: row.tienePenaAlternativa ?? false,
         pena_alternativa_min: row.penaAlternativaMin ?? 0,
         pena_alternativa_max: row.penaAlternativaMax ?? 0,
+        pena_por_remision_normativa: row.penaPorRemisionNormativa ?? false,
+        articulos_remitidos_para_pena: row.articulosRemitidosParaPena ?? null,
+        pena_base_resuelta_desde_articulo: row.penaBaseResueltaDesdeArticulo ?? null,
+        condicion_para_aplicar_pena_remitida: row.condicionParaAplicarPenaRemitida ?? null,
+        agravacion_por_articulo_remitido: row.agravacionPorArticuloRemitido ?? null,
+        formula_calculo_remision: row.formulaCalculoRemision ?? null,
+        requiere_datos_economicos: row.requiereDatosEconomicos ?? false,
+        variables_necesarias_para_calculo: row.variablesNecesariasParaCalculo ?? null,
+        pena_resuelta_min_meses: row.penaResueltaMinMeses ?? null,
+        pena_resuelta_max_meses: row.penaResueltaMaxMeses ?? null,
+        observaciones_remision_normativa: row.observacionesRemisionNormativa ?? null,
       });
     }
 

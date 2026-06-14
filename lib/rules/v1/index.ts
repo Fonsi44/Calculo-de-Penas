@@ -146,6 +146,15 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
       exento: resultado.exento,
       requiere_revision_humana: delito.requiere_revision_humana ?? false,
       confianza_extraccion: delito.confianza_extraccion ?? null,
+      pena_por_remision_normativa: delito.pena_por_remision_normativa ?? false,
+      articulos_remitidos_para_pena: delito.articulos_remitidos_para_pena ?? null,
+      pena_base_resuelta_desde_articulo: delito.pena_base_resuelta_desde_articulo ?? null,
+      condicion_para_aplicar_pena_remitida: delito.condicion_para_aplicar_pena_remitida ?? null,
+      agravacion_por_articulo_remitido: delito.agravacion_por_articulo_remitido ?? null,
+      formula_calculo_remision: delito.formula_calculo_remision ?? null,
+      requiere_datos_economicos: delito.requiere_datos_economicos ?? false,
+      variables_necesarias_para_calculo: delito.variables_necesarias_para_calculo ?? null,
+      observaciones_remision_normativa: delito.observaciones_remision_normativa ?? null,
     });
   }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Gavel, Scale, FileText, AlertCircle, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { Gavel, Scale, FileText, AlertCircle, CheckCircle2, ShieldAlert, ArrowRightLeft } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatFechaCompleta } from '@/lib/ui';
@@ -18,6 +18,15 @@ interface DelitoAnalizado {
   agravantes_aplicadas?: string[];
   atenuantes_aplicadas?: string[];
   exento?: boolean;
+  pena_por_remision_normativa?: boolean;
+  articulos_remitidos_para_pena?: string | null;
+  pena_base_resuelta_desde_articulo?: string | null;
+  condicion_para_aplicar_pena_remitida?: string | null;
+  agravacion_por_articulo_remitido?: string | null;
+  formula_calculo_remision?: string | null;
+  requiere_datos_economicos?: boolean;
+  variables_necesarias_para_calculo?: string | null;
+  observaciones_remision_normativa?: string | null;
 }
 
 export interface PenaltyResult {
@@ -185,6 +194,70 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
               <span className="font-bold text-mitigation">Atenuantes aplicadas:</span>{' '}
               {d.atenuantes_aplicadas.join(', ')}
             </p>
+          )}
+
+          {d.pena_por_remision_normativa && (
+            <div className="mt-3 pt-3 border-t border-warning/40">
+              <div className="flex items-center gap-1.5 mb-2">
+                <ArrowRightLeft size={14} className="text-warning flex-shrink-0" />
+                <p className="text-xxs font-bold text-warning uppercase tracking-wider">
+                  Pena determinada por remisión normativa
+                </p>
+              </div>
+              <dl className="grid grid-cols-1 gap-x-4 gap-y-1 text-xxs">
+                {d.articulos_remitidos_para_pena && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Artículos remitidos para pena</dt>
+                    <dd className="text-text font-semibold">{d.articulos_remitidos_para_pena}</dd>
+                  </>
+                )}
+                {d.pena_base_resuelta_desde_articulo && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Pena base resuelta desde</dt>
+                    <dd className="text-text">{d.pena_base_resuelta_desde_articulo}</dd>
+                  </>
+                )}
+                {d.condicion_para_aplicar_pena_remitida && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Condición para aplicar</dt>
+                    <dd className="text-text italic">{d.condicion_para_aplicar_pena_remitida}</dd>
+                  </>
+                )}
+                {d.agravacion_por_articulo_remitido && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Agravación por artículo remitido</dt>
+                    <dd className="text-text">{d.agravacion_por_articulo_remitido}</dd>
+                  </>
+                )}
+                {d.formula_calculo_remision && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Fórmula de cálculo</dt>
+                    <dd className="text-text font-mono">{d.formula_calculo_remision}</dd>
+                  </>
+                )}
+                {d.requiere_datos_economicos && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Requiere datos económicos</dt>
+                    <dd className="text-warning font-semibold">Sí — requiere datos adicionales</dd>
+                  </>
+                )}
+                {d.variables_necesarias_para_calculo && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Variables necesarias</dt>
+                    <dd className="text-text">{d.variables_necesarias_para_calculo}</dd>
+                  </>
+                )}
+                {d.observaciones_remision_normativa && (
+                  <>
+                    <dt className="text-text-muted font-semibold">Observaciones</dt>
+                    <dd className="text-text">{d.observaciones_remision_normativa}</dd>
+                  </>
+                )}
+              </dl>
+              <p className="text-xxs text-warning mt-2 font-semibold italic">
+                Advertencia: Este cálculo es orientativo y requiere revisión profesional. Los rangos mostrados dependen de la correcta determinación de las variables necesarias.
+              </p>
+            </div>
           )}
         </Card>
       ))}
