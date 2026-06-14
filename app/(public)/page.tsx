@@ -162,10 +162,10 @@ export default async function HomePage() {
                   <span className="text-xxs font-bold tracking-wider">{t('hero.badge')}</span>
                 </span>
               </div>
-              <h1 className="font-serif font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.05] tracking-tight text-text-inverse text-balance">
+              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-text-inverse text-balance">
                 Defensa penal y asesoría jurídica en Nacaome y Honduras
               </h1>
-              <p className="mt-6 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
+              <p className="mt-5 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty">
                 {t('hero.subtitle')}
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7">
