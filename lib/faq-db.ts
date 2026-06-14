@@ -19,19 +19,15 @@ export type FaqCategoryPublic = {
 
 const faqMetaMap = new Map(faqCategoriesMeta.map((c) => [c.slug, c]));
 
-function isDbError(err: unknown): boolean {
-  return err instanceof Error && (err.message?.includes('connect') || err.message?.includes('fetch failed') || err.message?.includes('ECONNREFUSED'));
-}
+const IS_DB_REACHABLE = Boolean(
+  process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
+);
 
 export async function getPublishedFaqs() {
-  try {
-    return await db.select().from(faqEntries)
-      .where(eq(faqEntries.published, true))
-      .orderBy(asc(faqEntries.sortOrder), asc(faqEntries.creadoEn));
-  } catch (err) {
-    if (isDbError(err)) return [];
-    throw err;
-  }
+  if (!IS_DB_REACHABLE) return [];
+  return db.select().from(faqEntries)
+    .where(eq(faqEntries.published, true))
+    .orderBy(asc(faqEntries.sortOrder), asc(faqEntries.creadoEn));
 }
 
 export async function getFaqsGrouped() {
@@ -84,14 +80,10 @@ export const getFaqsForPublicPage = cache(async (): Promise<FaqCategoryPublic[]>
 });
 
 export async function getFaqCategories() {
-  try {
-    const rows = await db.selectDistinct({ category: faqEntries.category })
-      .from(faqEntries)
-      .where(eq(faqEntries.published, true))
-      .orderBy(faqEntries.category);
-    return rows.map(r => r.category);
-  } catch (err) {
-    if (isDbError(err)) return [];
-    throw err;
-  }
+  if (!IS_DB_REACHABLE) return [];
+  const rows = await db.selectDistinct({ category: faqEntries.category })
+    .from(faqEntries)
+    .where(eq(faqEntries.published, true))
+    .orderBy(faqEntries.category);
+  return rows.map(r => r.category);
 }

@@ -17,14 +17,9 @@ export async function getPageContent(page: string, options?: { includeUnpublishe
     } catch {}
   }
 
-  let rows: (typeof pageContent.$inferSelect)[];
-  try {
-    rows = await db.select().from(pageContent)
-      .where(and(eq(pageContent.page, page), eq(pageContent.lang, 'es-HN')));
-  } catch (err) {
-    if (err instanceof Error && (err.message?.includes('connect') || err.message?.includes('fetch failed'))) return {};
-    throw err;
-  }
+  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder') || process.env.DATABASE_URL.includes('localhost:5432/placeholder')) return {};
+  const rows = await db.select().from(pageContent)
+    .where(and(eq(pageContent.page, page), eq(pageContent.lang, 'es-HN')));
   const map: Record<string, string> = {};
   for (const row of rows) {
     map[`${row.section}.${row.field}`] = row.content;
@@ -33,6 +28,7 @@ export async function getPageContent(page: string, options?: { includeUnpublishe
 }
 
 export async function getPageContentBySection(page: string, section: string): Promise<Record<string, string>> {
+  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder') || process.env.DATABASE_URL.includes('localhost:5432/placeholder')) return {};
   const rows = await db.select().from(pageContent)
     .where(and(eq(pageContent.page, page), eq(pageContent.section, section), eq(pageContent.lang, 'es-HN')));
   const map: Record<string, string> = {};
