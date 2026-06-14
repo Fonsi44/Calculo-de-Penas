@@ -9,6 +9,22 @@ export interface DelitoBase {
   tiene_pena_alternativa: boolean;
   pena_alternativa_min: number;
   pena_alternativa_max: number;
+  tipo_pena_principal?: string | null;
+  tiene_prision?: boolean;
+  prision_min_valor?: number | null;
+  prision_max_valor?: number | null;
+  tiene_multa?: boolean;
+  multa_min_valor?: number | null;
+  multa_max_valor?: number | null;
+  multa_unidad?: string | null;
+  multa_descripcion_legal?: string | null;
+  inhabilitacion_min_valor?: number | null;
+  inhabilitacion_max_valor?: number | null;
+  inhabilitacion_unidad?: string | null;
+  reglas_especiales_pena?: string | null;
+  observaciones_pena?: string | null;
+  requiere_revision_humana?: boolean;
+  confianza_extraccion?: number | null;
 }
 
 export interface DelitoConfig {
@@ -58,6 +74,7 @@ export interface DelitoAnalizado {
   articulo: string;
   clasificacion: string;
   confianza: ConfianzaDelito;
+  tipo_pena_principal: string | null;
   pena_base_min: number;
   pena_base_max: number;
   pena_base_texto: string;
@@ -66,14 +83,25 @@ export interface DelitoAnalizado {
   pena_individual_texto: string;
   pena_recomendada_meses: number;
   pena_recomendada_texto: string;
+  tiene_multa: boolean;
+  multa_min_valor: number | null;
+  multa_max_valor: number | null;
+  multa_unidad: string | null;
+  multa_descripcion_legal: string | null;
   gravedad: string;
   grado_autoria: string;
   grado_ejecucion: string;
   agravantes_aplicadas: string[];
   atenuantes_aplicadas: string[];
   penas_accesorias: string[];
+  inhabilitacion_min_valor: number | null;
+  inhabilitacion_max_valor: number | null;
+  inhabilitacion_unidad: string | null;
+  reglas_especiales_pena: string | null;
   modificaciones: string[];
   exento: boolean;
+  requiere_revision_humana: boolean;
+  confianza_extraccion: number | null;
 }
 
 export interface ResultadoCalculo {
@@ -83,10 +111,13 @@ export interface ResultadoCalculo {
   concurso_descripcion: string;
   concurso_articulo: string;
   pena_principal: string;
+  pena_principal_tipo: string | null;
   pena_principal_minimo_meses: number;
   pena_principal_maximo_meses: number;
   penas_accesorias: string[];
   analisis_juridico: string;
   fecha: string;
   disclaimer: string;
+  requiere_revision: boolean;
+  advertencias: string[];
 }

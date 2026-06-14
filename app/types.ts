@@ -14,6 +14,16 @@ export interface Delito {
   penas_accesorias: string[];
   observaciones?: string | null;
   es_grave: boolean;
+  tipo_pena_principal?: string | null;
+  tiene_prision?: boolean;
+  prision_min_valor?: number | null;
+  prision_max_valor?: number | null;
+  tiene_multa?: boolean;
+  multa_min_valor?: number | null;
+  multa_max_valor?: number | null;
+  multa_unidad?: string | null;
+  requiere_revision_humana?: boolean;
+  confianza_extraccion?: number | null;
   pena_texto?: string;
   estado?: 'verificado' | 'pendiente_revision' | 'rechazado';
   estado_nota?: string | null;

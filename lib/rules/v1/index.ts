@@ -106,12 +106,15 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
     const grado_ejecucion_nombre = GRADOS_EJECUCION.find((g) => g.id === config.grado_ejecucion)?.nombre || config.grado_ejecucion;
     const estado = getEstadoDelito(delito.nombre, delito.articulo);
 
+    const tipo_pena = delito.tipo_pena_principal || (resultado.unidad === 'dias' ? 'Multa' : 'Prisión');
+
     resultados_individuales.push({
       delito_id: delito.id,
       nombre: delito.nombre,
       articulo: delito.articulo,
       clasificacion: delito.clasificacion || '',
       confianza: estado.estado,
+      tipo_pena_principal: tipo_pena,
       pena_base_min: resultado.pena_base_min,
       pena_base_max: resultado.pena_base_max,
       pena_base_texto: resultado.unidad === 'dias'
@@ -124,14 +127,25 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
       pena_recomendada_texto: resultado.unidad === 'dias'
         ? `${resultado.pena_recomendada} días`
         : meses_a_texto(resultado.pena_recomendada),
+      tiene_multa: delito.tiene_multa ?? false,
+      multa_min_valor: delito.multa_min_valor ?? null,
+      multa_max_valor: delito.multa_max_valor ?? null,
+      multa_unidad: delito.multa_unidad ?? null,
+      multa_descripcion_legal: delito.multa_descripcion_legal ?? null,
       gravedad: resultado.gravedad,
       grado_autoria: grado_autoria_nombre,
       grado_ejecucion: grado_ejecucion_nombre,
       agravantes_aplicadas: agravantes_nombres,
       atenuantes_aplicadas: atenuantes_nombres,
       penas_accesorias: delito.penas_accesorias,
+      inhabilitacion_min_valor: delito.inhabilitacion_min_valor ?? null,
+      inhabilitacion_max_valor: delito.inhabilitacion_max_valor ?? null,
+      inhabilitacion_unidad: delito.inhabilitacion_unidad ?? null,
+      reglas_especiales_pena: delito.reglas_especiales_pena ?? null,
       modificaciones: resultado.modificaciones,
       exento: resultado.exento,
+      requiere_revision_humana: delito.requiere_revision_humana ?? false,
+      confianza_extraccion: delito.confianza_extraccion ?? null,
     });
   }
 
@@ -158,6 +172,22 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
 
   const analisis_juridico = generarAnalisisJuridico(resultados_individuales, request.tipo_concurso, resultado_concurso);
 
+  const advertencias: string[] = [];
+  for (const r of resultados_individuales) {
+    if (r.requiere_revision_humana) {
+      advertencias.push(`${r.nombre} (${r.articulo}): requiere revisión humana.`);
+    }
+    if (r.confianza === 'pendiente_revision' || r.confianza === 'rechazado') {
+      advertencias.push(`${r.nombre}: verificación ${r.confianza === 'pendiente_revision' ? 'pendiente' : 'rechazada'}.`);
+    }
+    if (r.tipo_pena_principal && !['Prisión', 'Multa', 'Arresto domiciliario', 'Prestación de servicios de utilidad pública', 'Localización permanente', 'Disolución de la persona jurídica', 'Inhabilitación'].includes(r.tipo_pena_principal)) {
+      advertencias.push(`${r.nombre}: tipo de pena no estándar (${r.tipo_pena_principal}).`);
+    }
+  }
+  const requiereRevision = resultados_individuales.some(r => r.requiere_revision_humana) ||
+    resultados_individuales.some(r => r.confianza === 'rechazado');
+  const tipoPenaPrincipal = todas_multas ? 'Multa' : 'Prisión';
+
   return {
     version_motor: 'v1',
     delitos_analizados: resultados_individuales,
@@ -165,12 +195,15 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
     concurso_descripcion: resultado_concurso.descripcion,
     concurso_articulo: resultado_concurso.articulo,
     pena_principal: pena_principal_texto,
+    pena_principal_tipo: tipoPenaPrincipal,
     pena_principal_minimo_meses: resultado_concurso.pena_min,
     pena_principal_maximo_meses: resultado_concurso.pena_max,
     penas_accesorias: [...new Set(todas_penas_accesorias)],
     analisis_juridico,
     fecha,
     disclaimer: 'Este cálculo es orientativo y no sustituye la función jurisdiccional. La determinación definitiva de la pena corresponde exclusivamente a los tribunales de justicia de Honduras.',
+    requiere_revision: requiereRevision,
+    advertencias,
   };
 }
 
