@@ -8,7 +8,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "patrimonio",
     "constitucion_articulo_id": 68,
     "es_grave": false,
@@ -500,7 +502,9 @@
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 1,
     "pena_alternativa_max": 2,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "honor_intimidad.calumnias",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -842,7 +846,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -980,7 +986,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -1014,7 +1022,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -1048,7 +1058,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -1082,7 +1094,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -1116,7 +1130,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -1699,8 +1715,8 @@
     "nombre": "Bigamia",
     "articulo": "Art. 278 CP",
     "conducta": "Quien contrae matrimonio, tiene unión de hecho legalmente reconocida, subsistiendo legalmente los anteriores, debe ser castigado con las penas de prestación de servicios de utilidad pública o a las víctimas de uno (1) a tres (3) años o multa de cient",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 12,
+    "pena_maxima_meses": 36,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 150,
     "pena_alternativa_max": 300,
@@ -1733,8 +1749,8 @@
     "nombre": "Celebración de matrimonio inválido",
     "articulo": "Art. 279 CP",
     "conducta": "Quien, con conocimiento de su invalidez, contrae matrimonio, debe ser castigado con la pena de prestación de servicios de utilidad pública o a las víctimas de seis (6) meses a un (1) año, o multa de ciento cincuenta (150) a trescientos (300) días.  Q",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 72,
+    "pena_maxima_meses": 12,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 150,
     "pena_alternativa_max": 300,
@@ -1767,8 +1783,8 @@
     "nombre": "Autorización de matrimonio inválido",
     "articulo": "Art. 280 CP",
     "conducta": "Quien autoriza matrimonio prohibido por la Ley o sin la concurrencia de los requisitos necesarios para su validez, debe ser castigado con la pena de prestación de servicios de utilidad pública o a las víctimas de ocho (8) meses a un (1) año o multa d",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 96,
+    "pena_maxima_meses": 12,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 200,
     "pena_alternativa_max": 500,
@@ -2317,8 +2333,8 @@
     "nombre": "Acoso laboral vertical",
     "articulo": "Art. 294 CP",
     "conducta": "Quien, en el ámbito de cualquier relación laboral y aprovechándose de una relación de superioridad, realiza contra otra persona de forma reiterada actos hostiles o despreciativos que, sin llegar a constituir individualmente trato degradante, provocan",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 12,
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
@@ -2944,7 +2960,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -3041,8 +3059,8 @@
     "nombre": "Agravantes específicas del tráfico de drogas",
     "articulo": "Art. 312 CP",
     "conducta": "En el caso del párrafo primero del artículo anterior se deben imponer las penas de prisión de diez (10) a quince (15) años y multa de trescientos (300) a quinientos (500) días, si concurre alguna de las circunstancias siguientes:  1) Las sustancias o",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 120,
+    "pena_maxima_meses": 180,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 300,
     "pena_alternativa_max": 500,
@@ -3143,8 +3161,8 @@
     "nombre": "Agravantes específicas del tráfico de precursores",
     "articulo": "Art. 315 CP",
     "conducta": "Se debe imponer la pena de prisión de seis (6) a diez (10) años y multa de cien (100) a quinientos (500) días si concurre alguna de las circunstancias contempladas en el Artículo 312 del presente Código, o si el culpable, estando autorizado administr",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 72,
+    "pena_maxima_meses": 120,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 100,
     "pena_alternativa_max": 500,
@@ -3177,8 +3195,8 @@
     "nombre": "Atenuantes específicas del tráfico de precursores",
     "articulo": "Art. 316 CP",
     "conducta": "Se debe imponer la pena de uno (1) a tres (3) años de prisión y multa de cincuenta (50) a cien (100) días, si concurre alguna de las circunstancias contempladas en el Artículo 313 del presente Código.",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 50,
+    "pena_maxima_meses": 100,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 50,
     "pena_alternativa_max": 100,
@@ -3216,7 +3234,9 @@
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 500,
     "pena_alternativa_max": 1000,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "patrimonio",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -3934,7 +3954,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "territorio_ambiente.medio_ambiente",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -4101,8 +4123,8 @@
     "nombre": "Abandono de animales",
     "articulo": "Art. 342 CP",
     "conducta": "Quien abandona a un animal doméstico o domesticado en condiciones peligrosas para su vida o integridad física debe ser castigado con la pena de prestación de servicios de utilidad pública o a las víctimas de seis (6) a ocho (8) meses o multa de cien",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 6,
+    "pena_maxima_meses": 8,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 100,
     "pena_alternativa_max": 200,
@@ -4248,7 +4270,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -4418,7 +4442,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -4488,7 +4514,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -5745,8 +5773,8 @@
     "nombre": "Daños imprudentes",
     "articulo": "Art. 384 CP",
     "conducta": "Los daños causados por imprudencia grave cuya cuantía excede de Quinientos Mil Lempiras (L.500,000), deben ser castigados con multa de cien (100) a trescientos sesenta (360) días o con pena de prestación de servicios de utilidad pública o a las vícti",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 36,
+    "pena_maxima_meses": 72,
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 100,
     "pena_alternativa_max": 360,
@@ -5949,8 +5977,8 @@
     "nombre": "Agravantes específicas",
     "articulo": "Art. 390 CP",
     "conducta": "Debe ser castigado con las penas de prisión de cuatro (4) a seis (6) años, multa por una cantidad igual al doble o hasta el triple del beneficio obtenido o pretendido e inhabilitación especial para el ejercicio de la profesión, oficio, industria o co",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 48,
+    "pena_maxima_meses": 72,
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
@@ -6364,7 +6392,9 @@
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 500,
     "pena_alternativa_max": 1000,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -6916,7 +6946,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -7122,7 +7154,9 @@
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 500,
     "pena_alternativa_max": 1000,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -7574,7 +7608,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "patrimonio",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -7710,7 +7746,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": 103,
     "es_grave": false,
@@ -7814,7 +7852,9 @@
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 500,
     "pena_alternativa_max": 2000,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -8054,7 +8094,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "patrimonio",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -8500,7 +8542,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "patrimonio",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -9219,8 +9263,8 @@
     "nombre": "Agravantes específicas",
     "articulo": "Art. 478 CP",
     "conducta": "Los hechos a que se refieren los artículos anteriores deben ser castigados con la pena de prisión de seis (6) a nueve (9) años, multa por una cantidad igual al doble o hasta cuatro (4) veces el valor de lo malversado e inhabilitación absoluta por el",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 72,
+    "pena_maxima_meses": 108,
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
@@ -10469,7 +10513,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "constitucion.electoral",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -10532,8 +10578,8 @@
     "nombre": "Encubrimiento",
     "articulo": "Art. 513 CP",
     "conducta": "Quien con conocimiento de la comisión de un delito y sin haber participado en el mismo, interviene posteriormente en auxilio de los responsables, concurriendo alguna de las circunstancias siguientes:  1) Ocultando, alterando o inutilizando el cuerpo,",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 48,
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
@@ -12043,8 +12089,8 @@
     "nombre": "Ofensas a los sentimientos religiosos",
     "articulo": "Art. 551 CP",
     "conducta": "Debe ser castigado con la pena de arresto domiciliario de seis (6) a nueve (9) meses o prestación de servicios de utilidad pública o a las víctimas de cinco (5) meses a un (1) año, quien para ofender los sentimientos religiosos de quienes practican o",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 72,
+    "pena_maxima_meses": 108,
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
@@ -12680,7 +12726,9 @@
     "tiene_pena_alternativa": true,
     "pena_alternativa_min": 500,
     "pena_alternativa_max": 1000,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "orden_publico.desordenes",
     "constitucion_articulo_id": null,
     "es_grave": false,
@@ -13051,8 +13099,8 @@
     "nombre": "Tenencia o porte ilegal de armas de fuego",
     "articulo": "Art. 580 CP",
     "conducta": "La tenencia de armas de fuego o municiones careciendo de las licencias o permisos necesarios debe ser castigada con las penas siguientes:  1) De uno (1) a cuatro (4) años y localización permanente de hasta dos (2) años, si se trata de armas o municio",
-    "pena_minima_meses": 0,
-    "pena_maxima_meses": 0,
+    "pena_minima_meses": 24,
+    "pena_maxima_meses": 48,
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
@@ -14360,7 +14408,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "libertad_sexual",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -14394,7 +14444,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "libertad_sexual",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -15775,7 +15827,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "libertad_sexual.agresiones.violacion",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -16334,7 +16388,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Prohibición de residencia/aproximación"
+    ],
     "rama_id": "libertad_sexual.agresiones.agravada",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -16472,7 +16528,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "libertad_sexual.explotacion",
     "constitucion_articulo_id": null,
     "es_grave": true,
@@ -16506,7 +16564,9 @@
     "tiene_pena_alternativa": false,
     "pena_alternativa_min": 0,
     "pena_alternativa_max": 0,
-    "penas_accesorias": [],
+    "penas_accesorias": [
+      "Inhabilitación"
+    ],
     "rama_id": "libertad_sexual.explotacion",
     "constitucion_articulo_id": null,
     "es_grave": true,
