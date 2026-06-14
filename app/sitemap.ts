@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { site, absoluteUrl } from '@/lib/site';
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
 
 function daysAgo(days: number): Date {
@@ -88,9 +88,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       category: blogPosts.category,
       publishedAt: blogPosts.publishedAt,
       updatedAt: blogPosts.updatedAt,
+      noindex: blogPosts.noindex,
     })
     .from(blogPosts)
-    .where(eq(blogPosts.published, true))
+    .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))
     .orderBy(desc(blogPosts.publishedAt)) : [];
 
   const blogPostRoutes = dbPosts.map((p) => ({

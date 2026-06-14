@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/ui';
 import { blogCategories } from '@/data/blog/categories';
 import { formatDateShort } from '@/lib/blog';
@@ -35,7 +35,9 @@ const CTA_LABELS: Record<string, string> = {
 };
 
 export function BlogCard({ post, featured }: { post: Post; featured?: boolean }) {
-  const catColor = blogCategories.find((c) => c.slug === post.category)?.color ?? 'muted';
+  const catMeta = blogCategories.find((c) => c.slug === post.category);
+  const catColor = catMeta?.color ?? 'muted';
+  const catNombre = catMeta?.nombre ?? post.category;
   const ctaLabel = CTA_LABELS[post.category] ?? 'Leer artículo completo';
 
   return (
@@ -63,7 +65,7 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
                 CAT_COLORS[catColor] ?? CAT_COLORS.muted,
               )}
             >
-              {post.category}
+              {catNombre}
             </span>
             {post.featured && (
               <span className="text-xxs font-bold uppercase tracking-wider text-accent-dark">
@@ -86,6 +88,11 @@ export function BlogCard({ post, featured }: { post: Post; featured?: boolean })
             <span className="flex items-center gap-1">
               <Clock size={12} /> {post.readingTime}
             </span>
+            {post.author && (
+              <span className="flex items-center gap-1 hidden sm:inline-flex">
+                <User size={12} /> {post.author}
+              </span>
+            )}
           </div>
           <span className="flex items-center gap-1 text-xs font-semibold text-primary group-hover:text-accent-dark transition-colors">
             {ctaLabel} <ArrowRight size={14} />

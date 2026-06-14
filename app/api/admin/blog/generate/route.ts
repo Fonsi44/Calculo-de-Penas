@@ -9,39 +9,100 @@ const generateSchema = z.object({
 });
 
 const BLOG_STRUCTURE_INTROS: Record<string, string> = {
-  'derecho-penal': 'El Código Penal hondureño (Decreto 130-2017) regula los delitos y las penas en Honduras. En este artículo analizamos en profundidad',
-  'derecho-de-familia': 'El derecho de familia en Honduras protege los vínculos familiares y regula aspectos fundamentales de la vida cotidiana. A continuación explicamos',
-  'derecho-laboral': 'El Código del Trabajo hondureño establece los derechos y obligaciones de trabajadores y empleadores. En esta guía detallamos',
-  'derecho-civil': 'El Código Civil de Honduras regula las relaciones entre particulares. En este artículo abordamos',
-  'derecho-mercantil': 'El Código de Comercio hondureño regula la actividad empresarial y mercantil. Analizamos aquí',
-  'tributario': 'El sistema tributario hondureño, administrado por el SAR, establece obligaciones fiscales para personas y empresas. En este artículo explicamos',
-  'extranjeria-migracion': 'La Ley de Migración y Extranjería de Honduras regula la entrada, permanencia y salida de extranjeros. A continuación detallamos',
-  'derecho-bancario': 'El sistema financiero hondureño, supervisado por la CNBS, regula las relaciones entre bancos y consumidores. En este artículo analizamos',
+  'derecho-penal': 'El Código Penal hondureño (Decreto 130-2017, con reformas hasta 2024) regula los delitos y las penas en el país. En este artículo analizamos de forma práctica',
+  'proceso-penal': 'El proceso penal hondureño, regulado por el Código Procesal Penal, sigue una estructura de etapas que van desde la investigación hasta la sentencia. Aquí explicamos',
+  'derecho-de-familia': 'El derecho de familia en Honduras protege los vínculos familiares y regula aspectos como el matrimonio, el divorcio, la filiación y la protección de menores. A continuación abordamos',
+  'derecho-laboral': 'El Código del Trabajo hondureño establece los derechos y obligaciones de trabajadores y empleadores. En esta guía práctica explicamos',
+  'derecho-civil': 'El Código Civil de Honduras regula las relaciones entre particulares, desde contratos hasta herencias y propiedad. En este artículo tratamos',
+  'derecho-mercantil': 'El Código de Comercio hondureño regula la actividad empresarial y los actos de comercio. Analizamos aquí',
+  'tributario': 'El sistema tributario hondureño, administrado por el SAR (Servicio de Administración de Rentas), establece obligaciones fiscales para personas y empresas. En este artículo detallamos',
+  'extranjeria-migracion': 'La Ley de Migración y Extranjería de Honduras regula la entrada, permanencia y salida de personas del territorio nacional. A continuación explicamos',
+  'hondurenos-en-espana': 'Los hondureños residentes en España enfrentan desafíos legales específicos que requieren asesoría especializada tanto en derecho español como hondureño. En esta guía abordamos',
+  'derecho-notarial': 'La fe pública notarial en Honduras otorga seguridad jurídica a los actos y contratos entre particulares. Aquí explicamos',
+  'derecho-bancario': 'El sistema financiero hondureño, supervisado por la CNBS, regula las relaciones entre entidades bancarias y consumidores. En este artículo analizamos',
+  'noticias-legales': 'El ordenamiento jurídico hondureño está en constante evolución. En este artículo repasamos',
+  'practica-legal': 'La práctica legal en Honduras requiere conocimiento actualizado de procedimientos, normativa y estrategia. Aquí ofrecemos una guía práctica sobre',
+  'derechos-ciudadanos': 'La Constitución de Honduras y los tratados internacionales garantizan derechos fundamentales a los ciudadanos. En este artículo explicamos',
+  'derecho-administrativo': 'El derecho administrativo hondureño regula las relaciones entre los ciudadanos y la administración pública. Abordamos aquí',
+  'derecho-aduanero': 'El Código Aduanero Centroamericano y su normativa complementaria en Honduras regulan el comercio internacional. En esta guía explicamos',
+  'regulacion-sanitaria': 'La regulación sanitaria en Honduras, a cargo de la ARSA y la Secretaría de Salud, establece requisitos para productos y servicios de salud. Aquí detallamos',
+  'propiedad-intelectual': 'La propiedad intelectual en Honduras protege las creaciones del intelecto humano. En este artículo abordamos',
+  'derecho-ambiental': 'La legislación ambiental hondureña, basada en la Ley General del Ambiente, regula la protección de los recursos naturales. Explicamos aquí',
+  'conciliacion-arbitraje': 'Los métodos alternos de resolución de conflictos, como la conciliación y el arbitraje, ofrecen vías eficientes para resolver disputas sin juicio. En este artículo analizamos',
 };
 
-const BLOG_STRUCTURE_SECTIONS = `\n
-<h2>1. Marco legal aplicable</h2>
-<p>La legislación hondureña establece un marco jurídico completo que regula esta materia. Es fundamental conocer las disposiciones legales aplicables para entender los derechos y obligaciones de las partes involucradas.</p>
+function getStructure(category: string): string {
+  const sectionSets: Record<string, string> = {
+    'derecho-penal': `\n
+<h2>1. Marco normativo aplicable</h2>
+<p>La regulación de esta materia se encuentra principalmente en el Código Penal (Decreto 130-2017) y sus reformas, así como en el Código Procesal Penal. Es importante identificar con precisión el tipo penal aplicable y las circunstancias específicas del caso.</p>
 
-<h2>2. Requisitos y procedimiento</h2>
-<p>Para iniciar cualquier trámite o reclamación en este ámbito, es necesario cumplir con ciertos requisitos legales. El procedimiento puede variar según la complejidad del caso y la jurisdicción competente.</p>
+<h2>2. Elementos del tipo penal</h2>
+<p>Para que una conducta sea considerada delito deben concurrir todos los elementos del tipo penal: acción u omisión, tipicidad, antijuridicidad y culpabilidad. Cada uno de estos elementos debe analizarse a la luz de los hechos concretos.</p>
 
-<h2>3. Plazos y términos legales</h2>
-<p>La ley establece plazos específicos que deben respetarse. El incumplimiento de estos términos puede tener consecuencias graves, incluyendo la pérdida de derechos o la prescripción de la acción.</p>
+<h2>3. Penas y circunstancias modificativas</h2>
+<p>La pena aplicable depende del delito concreto y de las circunstancias agravantes o atenuantes que concurran. El Código Penal establece un sistema de determinación de la pena que considera, entre otros factores, la participación del autor y el grado de ejecución del delito.</p>
 
-<h2>4. Documentación necesaria</h2>
-<p>Es imprescindible contar con la documentación completa y en regla. Los documentos deben estar debidamente autenticados y, en su caso, apostillados conforme al Convenio de La Haya.</p>
+<h2>4. Defensa y estrategia procesal</h2>
+<p>Una defensa penal eficaz comienza con la asistencia legal inmediata. Las primeras horas tras una detención son críticas para la estrategia de defensa, especialmente en la audiencia inicial donde se deciden las medidas cautelares.</p>
 
 <h2>5. Recomendaciones prácticas</h2>
-<p>Contar con asesoría legal especializada es la mejor garantía para proteger sus derechos. Un abogado experto puede orientarle sobre la estrategia más adecuada para su caso concreto.</p>`;
+<p>Si enfrenta un proceso penal, busque asesoría legal especializada cuanto antes. Un abogado penalista con experiencia en el sistema judicial hondureño puede marcar la diferencia en el resultado del caso. La defensa temprana y la presencia local son factores determinantes.</p>`,
+    'derecho-de-familia': `\n
+<h2>1. Base legal en Honduras</h2>
+<p>El Código de Familia (Decreto 76-84) y sus reformas constituyen el marco normativo principal en esta materia. Adicionalmente, la Ley contra la Violencia Doméstica y los tratados internacionales sobre derechos de la infancia complementan la regulación.</p>
+
+<h2>2. Requisitos y procedimiento</h2>
+<p>Los requisitos varían según la materia específica: divorcio, pensión alimenticia, custodia o adopción. En general, se requiere presentar una solicitud ante el Juzgado de Familia competente, acompañada de la documentación que acredite los hechos y las pretensiones.</p>
+
+<h2>3. Tiempos estimados del proceso</h2>
+<p>Los plazos judiciales dependen de la complejidad del caso y de la carga de trabajo del juzgado. Un divorcio por mutuo acuerdo puede resolverse en semanas, mientras que un proceso contencioso de custodia puede extenderse varios meses.</p>
+
+<h2>4. Documentación que debe reunir</h2>
+<p>La documentación básica incluye: documentos de identidad, certificados de matrimonio o nacimiento, pruebas de ingresos, y cualquier evidencia que respalde su solicitud. Es recomendable contar con asesoría legal para preparar correctamente la documentación.</p>
+
+<h2>5. Consejos prácticos</h2>
+<p>Antes de iniciar cualquier proceso de familia, consulte con un abogado especializado. Una orientación legal temprana le ayudará a conocer sus derechos, evitar errores procesales y tomar decisiones informadas sobre su caso.</p>`,
+    'derecho-laboral': `\n
+<h2>1. Marco legal aplicable</h2>
+<p>El Código del Trabajo de Honduras y sus reformas establecen los derechos y obligaciones fundamentales en las relaciones laborales. La Secretaría de Trabajo y Seguridad Social es la entidad encargada de velar por su cumplimiento.</p>
+
+<h2>2. Derechos del trabajador</h2>
+<p>Todo trabajador en Honduras tiene derechos básicos: salario mínimo, jornada laboral máxima de 8 horas diarias y 44 semanales, descanso semanal, vacaciones remuneradas, aguinaldo, decimocuarto mes de salario y protección contra el despido injustificado.</p>
+
+<h2>3. Cálculo de prestaciones</h2>
+<p>Cuando termina la relación laboral, el trabajador tiene derecho al pago de prestaciones: salarios pendientes, vacaciones no gozadas, aguinaldo proporcional, decimocuarto proporcional y, en caso de despido injustificado, la indemnización correspondiente según el tiempo de servicio.</p>
+
+<h2>4. Procedimiento de reclamación</h2>
+<p>Si sus derechos laborales han sido vulnerados, puede presentar una denuncia ante la Inspección de Trabajo o iniciar una demanda ante el Juzgado de Trabajo. Existen plazos de caducidad que deben respetarse para no perder el derecho a reclamar.</p>
+
+<h2>5. Recomendaciones prácticas</h2>
+<p>Conserve toda la documentación laboral: contrato de trabajo, recibos de salario, constancias de cargo y cualquier comunicación con su empleador. Ante un despido o conflicto laboral, busque asesoría legal lo antes posible.</p>`,
+  };
+  return sectionSets[category] ?? `\n
+<h2>1. Marco legal aplicable</h2>
+<p>La legislación hondureña establece un marco jurídico específico para esta materia. Conocer las disposiciones legales aplicables es el primer paso para entender los derechos y obligaciones de las partes involucradas.</p>
+
+<h2>2. Requisitos y procedimiento</h2>
+<p>Para iniciar cualquier trámite o gestión en este ámbito, es necesario cumplir con los requisitos establecidos por la ley. El procedimiento puede variar según la complejidad del caso y la autoridad competente.</p>
+
+<h2>3. Plazos a considerar</h2>
+<p>La normativa establece plazos específicos que deben respetarse. El incumplimiento de estos términos puede tener consecuencias como la pérdida de derechos o la caducidad de la acción. Es importante actuar dentro de los plazos legales.</p>
+
+<h2>4. Documentación necesaria</h2>
+<p>Contar con la documentación completa y en regla es esencial para cualquier gestión legal. Los documentos deben estar debidamente autenticados cuando la normativa así lo requiera.</p>
+
+<h2>5. Recomendaciones prácticas</h2>
+<p>La asesoría legal especializada es la mejor garantía para proteger sus derechos. Un abogado experto puede orientarle sobre la estrategia más adecuada para su caso concreto y evitar errores que puedan costarle tiempo y dinero.</p>`;
+}
 
 const BLOG_STRUCTURE_CONCLUSION = `\n
 <h2>Conclusión</h2>
-<p>El conocimiento de sus derechos y de los procedimientos legales aplicables es fundamental para tomar decisiones informadas. En <strong>Pineda y Asociados</strong> contamos con un equipo de abogados especializados que pueden asesorarle en cada etapa del proceso.</p>
-<p>Si necesita orientación legal personalizada, no dude en <strong>contactarnos</strong> para una consulta inicial sin compromiso. Estamos a su disposición para proteger sus intereses.</p>`;
+<p>Conocer sus derechos y los procedimientos legales aplicables le permite tomar decisiones informadas. En <strong>Pineda y Asociados</strong> contamos con un equipo de abogados especializados con presencia en Nacaome, Choluteca y San Lorenzo, atendiendo casos en toda la zona sur de Honduras.</p>
+<p>Si necesita orientación legal personalizada, puede <strong>solicitar una consulta inicial</strong> para recibir asesoría adaptada a su caso concreto.</p>`;
 
 const SEO_FOOTER = `\n
-<p><em>Este artículo tiene carácter informativo y no constituye asesoramiento legal. Para obtener asesoramiento personalizado sobre su caso, contacte con un abogado colegiado.</em></p>`;
+<p><em>Este artículo tiene carácter informativo y no sustituye la asesoría legal personalizada. Para obtener orientación específica sobre su caso, contacte con un abogado colegiado en Honduras.</em></p>`;
 
 function generateSlug(topic: string): string {
   return topic
@@ -71,17 +132,18 @@ export async function POST(request: Request) {
 
     const slug = generateSlug(parsed.topic);
     const title = parsed.topic;
-    const description = `Guía legal completa sobre ${parsed.topic.toLowerCase()} en Honduras. Requisitos, procedimiento, plazos, documentación necesaria y recomendaciones prácticas.`;
+    const description = `Guía legal sobre ${parsed.topic.toLowerCase()} en Honduras. Aspectos clave, requisitos y recomendaciones prácticas del equipo de Pineda y Asociados.`;
     const intro = getIntro(parsed.category, parsed.topic);
-    const content = `${intro}${BLOG_STRUCTURE_SECTIONS}${BLOG_STRUCTURE_CONCLUSION}${SEO_FOOTER}`;
+    const structure = getStructure(parsed.category);
+    const content = `${intro}${structure}${BLOG_STRUCTURE_CONCLUSION}${SEO_FOOTER}`;
 
     const estimateReadingTime = Math.max(2, Math.round(content.replace(/<[^>]*>/g, '').split(/\s+/).length / 200)) + ' min';
 
     const tagSuggestions = [
       parsed.category.replace(/-/g, ' '),
       'Honduras',
-      ...parsed.topic.toLowerCase().split(' ').filter((w: string) => w.length > 5),
-    ].slice(0, 5);
+      ...parsed.topic.toLowerCase().split(' ').filter((w: string) => w.length > 4),
+    ].slice(0, 6);
 
     await logAudit({
       usuarioId: auth.userId,

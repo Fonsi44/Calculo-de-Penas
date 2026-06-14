@@ -86,5 +86,18 @@ function mapToPost(p: BlogPost): Post {
     coverImage: p.coverImage ?? undefined,
     featured: p.featured ?? false,
     updatedAt: p.updatedAt?.toISOString(),
+
+    metaTitle: p.metaTitle ?? undefined,
+    metaDescription: p.metaDescription ?? undefined,
+    ogImage: p.ogImage ?? undefined,
+    noindex: p.noindex ?? undefined,
+    canonicalUrl: p.canonicalUrl ?? undefined,
+    authorId: p.authorId ?? undefined,
+    reviewStatus: p.reviewStatus ?? undefined,
+    reviewedBy: p.reviewedBy ?? undefined,
+    reviewedAt: p.reviewedAt?.toISOString() ?? undefined,
+    legalReviewNotes: p.legalReviewNotes ?? undefined,
+    lastReviewedAt: p.lastReviewedAt?.toISOString() ?? undefined,
+    nextReviewDueAt: p.nextReviewDueAt?.toISOString() ?? undefined,
   };
 }

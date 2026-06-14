@@ -421,6 +421,98 @@ El proyecto cuenta con un sistema CMS en evolución que permite gestionar todo e
 
 La calculadora de penas está integrada en `/intranet/admin/calculadora` dentro del layout admin unificado. Usa el mismo motor de cálculo (`lib/rules/v1/`) y los mismos componentes paso. Los usuarios admin son redirigidos automáticamente desde `/intranet/calculadora` a la ruta admin. Los usuarios no-admin siguen accediendo a la calculadora clásica.
 
+## Estrategia editorial y mantenimiento del blog
+
+### Criterios de calidad editorial
+Cada artículo del blog debe cumplir estos estándares mínimos:
+
+- **Utilidad real**: Responde a una pregunta concreta que un usuario real se haría. No existe por rellenar.
+- **Estructura clara**: Introducción directa que explica qué problema resuelve el artículo. Desarrollo con H2/H3 semánticos. Conclusión que sintetiza y ofrece opciones de contacto.
+- **Contenido práctico**: Incluye pasos concretos, plazos reales, documentos necesarios, costes orientativos o ejemplos cuando sea pertinente.
+- **Lenguaje profesional pero accesible**: Evita jerga innecesaria. Explica los términos legales cuando se usan por primera vez.
+- **Disclaimer legal**: Todos los posts deben incluir al final el texto: "Este artículo tiene carácter informativo y no sustituye la asesoría legal personalizada. Para obtener orientación específica sobre su caso, contacte con un abogado colegiado."
+- **Longitud mínima**: Ningún post debe tener menos de 300 palabras de contenido sustancial.
+
+### SEO on-page por artículo
+- **Título**: Único, descriptivo, orientado a búsqueda. Máximo 60 caracteres.
+- **Meta description**: Entre 120–160 caracteres, con intención clara y llamada a la lectura cuando tenga sentido.
+- **H1**: Único por página. No debe aparecer otro `<h1>` dentro del body del artículo.
+- **Encabezados**: Jerarquía semántica H1 → H2 → H3. Sin saltos de nivel.
+- **Slug**: Descriptivo, con palabras clave, sin fechas ni números de versión. No cambiar sin redirección 301.
+- **Imagen destacada**: Todas las entradas deben tener `cover_image` configurada.
+- **Enlaces internos**: Cada artículo debe enlazar al menos a otro artículo relacionado, a la página de contacto o a servicios jurídicos relevantes. Los anchors deben ser descriptivos y variados.
+
+### Autoría y E-E-A-T
+- **Autor visible**: "Pineda y Asociados" o el autor real del despacho. Se muestra tanto en el card del listado como en la página del artículo.
+- **Fecha de publicación**: Visible en cada artículo.
+- **Fecha de actualización**: Se muestra automáticamente cuando `updatedAt` está presente.
+- **Disclaimer**: Mensaje visible en todos los artículos indicando que el contenido es informativo y no sustituye asesoría legal.
+- **Biografía del autor**: Cada artículo incluye una sección "Sobre el autor" con información del bufete y enlace al blog.
+
+### Enlaces internos
+- Los artículos deben enlazarse entre sí cuando traten materias relacionadas.
+- Usar anchors descriptivos y variados (no repetir siempre "más información" o "haga clic aquí").
+- Enlazar a páginas de servicio relevantes cuando el artículo trate sobre una materia que el bufete cubre.
+- Enlazar a la página de contacto `/solicitar-consulta` cuando sea natural.
+- La navegación "Anterior / Siguiente" conecta artículos por orden cronológico.
+- La sección "También puede interesarle" muestra artículos relacionados por categoría y coincidencia de etiquetas.
+
+### Taxonomía
+- **Categorías**: 20 categorías definidas en `data/blog/categories.ts`. Cada artículo pertenece exactamente a una categoría.
+- **Etiquetas**: Array de texto libre. Se usan para búsqueda y filtros. Recomendado: 3–6 etiquetas por artículo.
+- No crear categorías nuevas sin actualizar `data/blog/categories.ts`. Cualquier categoría no listada en ese archivo se considera inválida.
+
+### Generación de contenido asistida
+El endpoint `POST /api/admin/blog/generate` produce borradores estructurados con:
+- Introducción adaptada a la categoría (20 categorías con texto personalizado).
+- Secciones variables: penal, familia y laboral tienen estructura específica; el resto usa una genérica mejorada.
+- Conclusión y disclaimer legal.
+- Estimación de tiempo de lectura y sugerencias de etiquetas.
+
+Los borradores generados son un punto de partida. Todo artículo debe ser editado y personalizado antes de publicarse.
+
+### Revisión legal
+Todo contenido que mencione leyes, artículos, plazos, procedimientos o instituciones debe poder verificarse contra la fuente legal correspondiente. No inventar datos legales. Si no se puede verificar, no debe publicarse.
+
+### Mantenimiento periódico
+- Revisar trimestralmente los artículos con menos de 300 palabras para expandirlos o fusionarlos.
+- Actualizar `updatedAt` en artículos que reciban cambios sustanciales.
+- Verificar que los enlaces internos no estén rotos (especialmente tras cambios de slug o categoría).
+- Revisar que el disclaimer legal esté presente en todos los artículos nuevos.
+
+## Control de fechas del blog
+
+### Política de fechas
+Ningún artículo del blog puede tener una fecha de publicación (`published_at`) o de modificación (`updated_at`) posterior a la fecha actual del sistema. Esto aplica a:
+- El campo `published_at` en la tabla `blog_posts`.
+- El campo `updated_at` en la tabla `blog_posts`.
+- Los datos estructurados JSON-LD (`datePublished`, `dateModified`).
+- Las etiquetas Open Graph (`article:published_time`, `article:modified_time`).
+- El sitemap XML (`lastmod`).
+- El feed RSS (`pubDate`, `lastBuildDate`).
+- Cualquier metadata visible o estructurada que contenga fechas.
+
+### Validación automática
+El script `scripts/validar-fechas-blog.ts` comprueba que ningún artículo tenga fechas futuras:
+
+```bash
+npx tsx scripts/validar-fechas-blog.ts
+```
+
+El script falla (código 1) si detecta:
+- `published_at` posterior a la fecha máxima permitida.
+- `updated_at` posterior a la fecha máxima permitida.
+- `published_at` anterior a `updated_at` (orden incorrecto).
+
+### Última corrección (2026-06-14)
+Se redistribuyeron las fechas de los 159 artículos publicados para que:
+- Ninguna fecha supere el 2026-06-14.
+- La distribución sea realista (pausas en fines de semana, ocasionalmente 2 artículos en lunes).
+- `updated_at` sea siempre posterior a `published_at` (por 3–20 días).
+- La última fecha de publicación sea el 2026-05-27 (18 días antes del presente, margen natural).
+
+Ver `docs/blog-date-audit.md` para el informe detallado.
+
 ### Blog — `/intranet/admin/blog`
 
 - **Listado**: Tabla con título, categoría, estado (publicado/borrador), fecha, acciones (editar/publicar/eliminar/duplicar/ver).
@@ -432,7 +524,7 @@ La calculadora de penas está integrada en `/intranet/admin/calculadora` dentro 
   - Editor WYSIWYG: **TipTap** con soporte para párrafos, H2/H3, negrita, cursiva, subrayado, tachado, color, highlight, alineación, listas (bullet, numerada, checklist), enlaces, undo/redo.
   - Campos: título, slug (auto-generado desde título), descripción, contenido HTML, categoría (dropdown real), fecha publicación, tags (con auto-generación), autor, tiempo lectura (con cálculo automático), imagen portada (URL o subida), destacado, publicado.
   - **Subida de imagen destacada**: Botón "Subir imagen" que envía el archivo a `POST /api/admin/upload`. La imagen se valida (JPEG/PNG/WebP, máx 10 MB), se nombra según el slug del post y se guarda en `/public/images/blog/`. Muestra vista previa.
-  - **Generador automático de posts**: El botón "Generar post" crea un artículo completo con título, slug, descripción, cuerpo HTML estructurado (introducción, marco legal, requisitos, plazos, documentación, recomendaciones, conclusión), tiempo de lectura y tags. El cuerpo se genera en formato HTML compatible con los posts existentes. **Rate limit**: 10 generaciones cada 5 minutos por usuario.
+   - **Generador automático de posts**: El botón "Generar post" crea un artículo completo con título, slug, descripción, cuerpo HTML estructurado (introducción adaptada a la categoría, secciones variables según categoría, conclusión, disclaimer legal), tiempo de lectura y tags. **20 categorías con intros personalizadas**. Categorías penal, familia y laboral tienen estructura de secciones específica. **Rate limit**: 10 generaciones cada 5 minutos por usuario.
   - Al guardar: el contenido se sanitiza (elimina scripts, iframes, event handlers) y se persiste en PostgreSQL (`blog_posts` table).
   - Al publicar: `revalidatePath` invalida caché ISR de `/blog`, `/blog/[categoria]` y `/blog/[categoria]/[slug]`.
   - **Aviso de cambios sin guardar**: Indicador visual y confirmación beforeunload.
@@ -601,6 +693,142 @@ Los artículos se identifican por su formato canónico (`Art. NNN CP`). Para bú
 
 - `tests/catalogo-delitos.test.ts` — 129 tests: integridad del catálogo, estados de validación, normalización de artículos, penas del Art. 342 CP, alerta de datos no verificados y cálculo de muestra representativa.
 - `npm test` — 314 tests totales (14 archivos).
+
+---
+
+## Metadatos SEO dedicados por artículo
+
+Cada post de blog tiene tres campos SEO opcionales que sobreescriben los valores por defecto:
+
+| Campo | Fallback | Uso |
+|-------|----------|-----|
+| `meta_title` | `title` | `<title>`, OG `og:title`, Twitter `twitter:title` |
+| `meta_description` | `description` | `<meta name="description">`, OG `og:description` |
+| `og_image` | `cover_image` → `/og-image.png` | OG `og:image`, Twitter `twitter:image` |
+
+Si el campo SEO está vacío o es `null`, se usa el valor del campo base correspondiente. No hay duplicación de metadatos.
+
+Configuración desde el admin: al crear/editar un post, los campos SEO se guardan directamente en `blog_posts.meta_title`, `blog_posts.meta_description`, `blog_posts.og_image`.
+
+## Control de indexación por artículo (`noindex`)
+
+Campo booleano `noindex` en `blog_posts` (por defecto `false`).
+
+- Si `noindex = true`: la página emite `<meta name="robots" content="noindex, follow">`, se excluye del sitemap y del feed RSS.
+- Si `noindex = false` (default): comportamiento normal, indexable.
+
+No se ha marcado ningún post como `noindex` de forma masiva. El campo está disponible para casos concretos (contenido duplicado, páginas de aterrizaje temporales, etc.).
+
+## Canonical override (`canonical_url`)
+
+Campo opcional `canonical_url` en `blog_posts` (varchar 500).
+
+- Si está vacío: cada post usa su URL canónica normal (`/blog/[categoria]/[slug]`).
+- Si contiene una URL absoluta HTTPS válida: se usa como `rel="canonical"` y en Open Graph `og:url`.
+- No se permite loops ni URL relativas. La validación está a cargo del admin al guardar.
+
+## Autores
+
+El proyecto ya dispone de la tabla `autores` (id, slug, nombre, email, bio, foto, redes). Los posts se relacionan con autores mediante `blog_posts.author_id`.
+
+### Autor por defecto
+- **Nombre**: "Equipo legal de Pineda y Asociados"
+- **Bio**: "Bufete multidisciplinario con sede en Nacaome, Valle, y más de 15 años de experiencia en la zona sur de Honduras. Abogados colegiados en derecho penal, civil, laboral, familia, mercantil y aduanero. Presencia activa en juzgados de Choluteca, Nacaome y San Lorenzo."
+
+Los 159 posts existentes están vinculados a este autor por defecto. En el futuro, el admin podrá crear autores adicionales y asignarlos a posts concretos.
+
+### Autoría visible
+- En el listado del blog (BlogCard): nombre del autor visible en desktop.
+- En la página del artículo: nombre + bio + iniciales.
+- En JSON-LD: `author` de tipo `Person` con el nombre del autor.
+
+## Workflow de revisión legal
+
+Cada post tiene un `review_status` que controla su estado editorial:
+
+| Estado | Descripción |
+|--------|-------------|
+| `draft` | Borrador, no visible al público |
+| `pending_review` | Pendiente de revisión legal |
+| `approved` | Aprobado, listo para publicar |
+| `published` | Publicado y visible |
+| `archived` | Archivado, no visible |
+
+Campos asociados: `reviewed_by` (quién revisó), `reviewed_at` (cuándo), `legal_review_notes` (notas internas).
+
+Los 159 posts existentes tienen `review_status = 'published'` (migrados desde el estado anterior). Los posts nuevos creados desde el admin deberán pasar por el flujo: `draft` → `pending_review` → `approved` → `published`.
+
+## Programa de revisión trimestral de contenido
+
+Cada post tiene dos campos de auditoría:
+- `last_reviewed_at`: última vez que se revisó el contenido.
+- `next_review_due_at`: fecha estimada para la próxima revisión (~3 meses después de `last_reviewed_at`).
+
+### Script de auditoría
+
+```bash
+npm run content:audit
+```
+
+Este script:
+1. Lee todos los posts publicados desde la DB.
+2. Identifica posts vencidos (`next_review_due_at` ≤ hoy) y próximos a vencer (próximos 30 días).
+3. Genera un informe en `docs/content-review-schedule.md`.
+4. Falla con código 1 si hay posts vencidos (útil para CI).
+
+Los 159 posts existentes tienen `next_review_due_at = updated_at + 3 meses`.
+
+## Validaciones automáticas
+
+### Fechas
+```bash
+npm run validate:dates
+```
+Script en `scripts/validar-fechas-blog.ts`. Comprueba que:
+- Ningún `published_at` sea posterior a la fecha actual.
+- Ningún `updated_at` sea posterior a la fecha actual.
+- Ningún `published_at` sea posterior a `updated_at`.
+
+Falla con código 1 si encuentra errores.
+
+### Auditoría de contenido
+```bash
+npm run content:audit
+```
+Script en `scripts/content-audit.ts`. Comprueba que ningún post tenga la revisión vencida.
+
+### Integración en CI
+Ambos scripts pueden añadirse a GitHub Actions:
+
+```yaml
+- name: Validar fechas del blog
+  run: npx tsx scripts/validar-fechas-blog.ts
+  env:
+    DATABASE_URL: ${{ secrets.DATABASE_URL }}
+- name: Auditoría de contenido
+  run: npx tsx scripts/content-audit.ts
+  env:
+    DATABASE_URL: ${{ secrets.DATABASE_URL }}
+```
+
+## IndexNow
+
+### Estado actual
+- **Variable de entorno**: `INDEXNOW_KEY=6faddf836cbd448fad29083c8f31d573` en `.env` y en Vercel.
+- **Archivo de verificación**: `public/6faddf836cbd448fad29083c8f31d573.txt` (contiene la clave).
+- **Endpoint**: `https://api.indexnow.org/indexnow`.
+- **Script**: `node scripts/submit-indexnow.mjs` (se ejecuta automáticamente en `postbuild`).
+
+### Error 403 — Solución
+Si el `postbuild` muestra `Error 403: UserForbiddedToAccessSite`, la causa es que el archivo de clave pública no está accesible en el dominio de producción. Para resolverlo:
+
+1. Verificar que `public/<KEY>.txt` existe y contiene exactamente el valor de `INDEXNOW_KEY`.
+2. Verificar que el archivo es accesible públicamente en `https://www.pinedayasociadoshn.com/<KEY>.txt`.
+3. Hacer deploy a Vercel para que el archivo se publique.
+4. Ejecutar `node scripts/submit-indexnow.mjs --dry-run` para simular.
+5. Ejecutar `node scripts/submit-indexnow.mjs` para enviar.
+
+> **Nota**: El error 403 desaparecerá tras el primer deploy que incluya el archivo de clave correcto.
 
 ---
 

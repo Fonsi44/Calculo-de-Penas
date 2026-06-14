@@ -13,7 +13,9 @@
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install --with-deps chromium",
     "indexnow": "node scripts/submit-indexnow.mjs",
-    "indexnow:dry": "node scripts/submit-indexnow.mjs --dry-run"
+    "indexnow:dry": "node scripts/submit-indexnow.mjs --dry-run",
+    "content:audit": "npx tsx scripts/content-audit.ts",
+    "validate:dates": "npx tsx scripts/validar-fechas-blog.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

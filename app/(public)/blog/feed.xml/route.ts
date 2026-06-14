@@ -24,6 +24,7 @@ export async function GET() {
   const now = new Date();
 
   const items = posts
+    .filter((p) => !p.noindex)
     .slice(0, 30)
     .map((post) => {
       const categoryName = getCategoryName(post.category) ?? post.category;

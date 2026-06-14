@@ -254,6 +254,30 @@ export const blogPosts = pgTable('blog_posts', {
   featured: boolean('featured').default(false),
   published: boolean('published').default(true),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+
+  // SEO metadata
+  metaTitle: varchar('meta_title', { length: 500 }),
+  metaDescription: text('meta_description'),
+  ogImage: varchar('og_image', { length: 500 }),
+
+  // Indexation control
+  noindex: boolean('noindex').default(false),
+
+  // Canonical override
+  canonicalUrl: varchar('canonical_url', { length: 500 }),
+
+  // Author relationship
+  authorId: uuid('author_id'),
+
+  // Legal review workflow
+  reviewStatus: varchar('review_status', { length: 50 }).default('published'),
+  reviewedBy: varchar('reviewed_by', { length: 200 }),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  legalReviewNotes: text('legal_review_notes'),
+
+  // Content audit
+  lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }),
+  nextReviewDueAt: timestamp('next_review_due_at', { withTimezone: true }),
 }, (table) => ({
   slugIdx: index('blog_posts_slug_idx').on(table.slug),
   categoryIdx: index('blog_posts_category_idx').on(table.category),

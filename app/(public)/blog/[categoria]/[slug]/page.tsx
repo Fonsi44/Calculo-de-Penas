@@ -31,29 +31,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(slug);
   if (!post || post.category !== categoria) return {};
 
+  const metaTitle = post.metaTitle || post.title;
+  const metaDesc = post.metaDescription || post.description;
+  const ogImg = post.ogImage || post.coverImage || '/og-image.png';
+  const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
+  const noindex = post.noindex === true;
+
   return {
-    title: post.title,
-    description: post.description,
-    alternates: { canonical: `/blog/${post.category}/${post.slug}` },
+    title: metaTitle,
+    description: metaDesc,
+    alternates: { canonical },
     keywords: post.tags,
-    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+    robots: noindex
+      ? { index: false, follow: true, googleBot: { index: false, follow: true } }
+      : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
-      description: post.description,
-      ...(post.coverImage ? { images: [`${site.url}${post.coverImage}`] } : { images: [`${site.url}/og-image.png`] }),
+      title: metaTitle,
+      description: metaDesc,
+      images: [`${site.url}${ogImg}`],
     },
     openGraph: {
-      title: post.title,
-      description: post.description,
-      url: `${site.url}/blog/${post.category}/${post.slug}`,
+      title: metaTitle,
+      description: metaDesc,
+      url: `${site.url}${canonical}`,
       siteName: site.name,
       locale: 'es_HN',
       type: 'article',
       publishedTime: post.publishedAt,
+      modifiedTime: post.updatedAt,
       authors: [post.author],
       tags: post.tags,
-      ...(post.coverImage ? { images: [{ url: `${site.url}${post.coverImage}`, width: 1200, height: 630, alt: post.title }] } : {}),
+      images: [{ url: `${site.url}${ogImg}`, width: 1200, height: 630, alt: metaTitle }],
     },
   };
 }
@@ -125,6 +134,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <Calendar size={15} className="text-accent-dark" />
                 <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
               </span>
+              {post.updatedAt && (
+                <span className="flex items-center gap-1.5" title="Última actualización">
+                  <Clock size={15} className="text-accent-dark" />
+                  <time dateTime={post.updatedAt}>Actualizado: {formatDate(post.updatedAt)}</time>
+                </span>
+              )}
               <span className="flex items-center gap-1.5">
                 <Clock size={15} className="text-accent-dark" />
                 {post.readingTime}

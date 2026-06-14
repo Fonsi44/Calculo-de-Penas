@@ -1,5 +1,175 @@
 # Changelog
 
+## Release 57 — Infraestructura SEO, autoría, workflow editorial y validaciones (2026-06-14)
+
+### 🟢 Nuevas columnas en blog_posts (migración DB)
+| Grupo | Columnas |
+|-------|----------|
+| SEO metadata | `meta_title`, `meta_description`, `og_image` |
+| Indexación | `noindex` (boolean, default false) |
+| Canonical | `canonical_url` (override opcional) |
+| Autoría | `author_id` (FK a `autores`) |
+| Workflow editorial | `review_status`, `reviewed_by`, `reviewed_at`, `legal_review_notes` |
+| Auditoría contenidos | `last_reviewed_at`, `next_review_due_at` |
+
+### 🟢 Tabla autores (existente, ahora poblada)
+- **1 autor por defecto**: "Equipo legal de Pineda y Asociados" con bio profesional.
+- **159 posts vinculados** al autor por defecto vía `author_id`.
+
+### 🟢 SEO on-page por artículo
+- **meta_title**: Si se define, se usa como `<title>` y OG title. Fallback a `title`.
+- **meta_description**: Si se define, se usa como meta description y OG description. Fallback a `description`.
+- **og_image**: Si se define, se usa para Open Graph y Twitter Cards. Fallback a `cover_image` → OG global.
+- **noindex**: Si está activo, la página emite `noindex, follow`, se excluye del sitemap y del RSS.
+- **canonical_url**: Si se define, se usa como `rel=canonical` y en Open Graph. Debe ser URL absoluta HTTPS.
+
+### 🟢 Workflow de revisión legal
+- **review_status**: `draft` → `pending_review` → `approved` → `published` → `archived`.
+- Campos `reviewed_by`, `reviewed_at`, `legal_review_notes` para trazabilidad.
+- Los 159 posts existentes se migraron con `review_status = 'published'`.
+
+### 🟢 Programa de revisión trimestral
+- `last_reviewed_at` + `next_review_due_at` por post.
+- `next_review_due_at` calculado como `published_at` + 3 meses.
+- Nuevo script `npm run content:audit`: lista artículos vencidos o próximos a revisar.
+
+### 🟢 IndexNow — corrección del error 403
+- **Causa raíz**: El archivo de clave pública (`public/<KEY>.txt`) no coincidía con la variable `INDEXNOW_KEY` del entorno.
+- **Solución**: Creado archivo `public/6faddf836cbd448fad29083c8f31d573.txt` que coincide con el valor de `.env`.
+- El error 403 persistirá hasta el próximo deploy a Vercel, que subirá el archivo correcto.
+
+### 🟢 Validaciones automáticas
+- `npm run validate:dates`: comprueba que ningún post tenga fechas futuras ni `published_at > updated_at`.
+- `npm run content:audit`: comprueba que ningún post esté vencido para revisión trimestral.
+
+### 🟢 Sitemap y RSS
+- Sitemap (`app/sitemap.ts`): excluye posts con `noindex = true`.
+- RSS (`/blog/feed.xml`): excluye posts con `noindex = true`.
+
+### 🟢 Metadatos en blog rendering
+- `generateMetadata`: usa `metaTitle`, `metaDescription`, `ogImage`, `canonicalUrl`, `noindex` con fallbacks.
+- OpenGraph: incluye `modifiedTime` cuando `updatedAt` está presente.
+- JSON-LD: compatible con los nuevos campos de autoría.
+
+### Archivos modificados/creados
+| Archivo | Cambio |
+|---------|--------|
+| `lib/schema.ts` | Nuevas 12 columnas en `blogPosts` |
+| `data/blog/types.ts` | Tipo `Post` expandido con campos SEO, autoría y workflow |
+| `lib/blog.ts` | `mapToPost()` mapea todos los campos nuevos |
+| `app/(public)/blog/[categoria]/[slug]/page.tsx` | Metadatos con fallbacks SEO, noindex, canonical |
+| `app/sitemap.ts` | Excluye posts noindex |
+| `app/(public)/blog/feed.xml/route.ts` | Excluye posts noindex |
+| `scripts/migrate-seo-columns.ts` | **NUEVO**: migración DB |
+| `scripts/content-audit.ts` | **NUEVO**: auditoría trimestral |
+| `public/6faddf836cbd448fad29083c8f31d573.txt` | **NUEVO**: clave IndexNow corregida |
+| `docs/blog-date-audit.md` | Actualizado |
+| `package.json` | Scripts `content:audit` y `validate:dates` |
+| `README.md` | 4 nuevas secciones |
+| `CHANGELOG.md` | Esta entrada |
+
+### Base de datos
+| Operación | Registros |
+|-----------|-----------|
+| Columnas añadidas | 12 |
+| Autor por defecto insertado | 1 |
+| Posts vinculados a autor | 159 |
+| review_status establecido | 159 |
+| next_review_due_at establecido | 159 |
+
+### Validación
+- `npm run lint`: 0 errores, 1 warning preexistente
+- `npm run build`: Compiled successfully (296 páginas)
+- `npm run test`: 361 tests passed (17 files)
+- `npx tsx scripts/content-audit.ts`: ✅
+
+---
+
+## Release 56 — Normalización de fechas de publicación y actualización en 159 artículos (2026-06-14)
+
+### 🔴 Corrección de fechas en base de datos
+- **159 artículos redistribuidos cronológicamente**: las fechas `published_at` se reorganizaron desde 2025-12-01 hasta 2026-05-27 con un patrón de publicación realista (pausas en fines de semana, 2 artículos los lunes).
+- **0 fechas futuras**: ningún `published_at` ni `updated_at` supera 2026-06-14.
+- **updated_at normalizado**: siempre posterior a `published_at` (entre 3 y 20 días después), nunca futuro.
+- **15 posts no publicados**: no se modificaron (se corregirán al publicarse).
+
+### 🟡 Validación automática
+- **Nuevo script `scripts/validar-fechas-blog.ts`**: comprueba que ningún artículo tenga fechas futuras o `published_at > updated_at`. Falla con código 1 si encuentra errores. Puede integrarse en CI.
+
+### 🟢 Documentación
+- **Nuevo `docs/blog-date-audit.md`**: informe de auditoría con criterios, detalle de cambios y limitaciones.
+- **README.md**: nueva sección "Control de fechas del blog" con política, validación y última corrección.
+- **CHANGELOG.md**: esta entrada.
+
+### Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `scripts/validar-fechas-blog.ts` | **NUEVO**: script de validación de fechas |
+| `docs/blog-date-audit.md` | **NUEVO**: informe de auditoría |
+| `README.md` | Nueva sección "Control de fechas del blog" |
+| `CHANGELOG.md` | Esta entrada |
+
+### Base de datos
+| Operación | Registros |
+|-----------|-----------|
+| `published_at` actualizado | 159 |
+| `updated_at` actualizado | 159 |
+
+### Validación
+- `npm run lint`: 0 errores, 1 warning preexistente
+- `npm run build`: Compiled successfully
+- `npm run test`: 361 tests passed (17 files)
+
+---
+
+## Release 55 — Auditoría y optimización editorial de 159 artículos del blog (2026-06-14)
+
+### 🔴 Contenido: correcciones estructurales
+- **H1 duplicados corregidos**: 20 posts tenían `<h1>` en el body que duplicaban el H1 de la página. Convertidos a `<h2>` para jerarquía de encabezados correcta.
+- **4 posts locales expandidos**: `abogados-en-amapala-valle`, `abogados-en-marcovia-choluteca`, `abogados-en-pespire-choluteca` y `abogados-en-san-marcos-de-colon-choluteca` pasaron de ~100–120 caracteres a ~2,100+ caracteres cada uno, con contenido sustancial sobre servicios legales, áreas de práctica y presencia local.
+- **Disclaimer legal añadido**: 159 posts ahora incluyen al final el texto: "Este artículo tiene carácter informativo y no sustituye la asesoría legal personalizada." (antes solo 4 lo tenían).
+- **updated_at normalizado**: Todos los posts publicados tienen `updated_at = NOW()` para señal de frescura ante buscadores.
+
+### 🟡 SEO on-page y metadatos
+- **OpenGraph modifiedTime**: Añadido `modifiedTime` a los metadatos OG de los posts individuales cuando `updatedAt` está presente.
+- **BlogCard mejorada**: La tarjeta de listado ahora muestra el nombre legible de la categoría (no el slug), e incluye el autor en la metadata (visible en pantallas medianas+).
+- **Fecha de actualización visible**: Los posts con `updatedAt` muestran "Actualizado: [fecha]" en el hero de metadatos.
+
+### 🟢 Generador de contenido (template)
+- **Intros específicas por categoría**: Completadas las 20 categorías (antes solo 8 tenían introducción personalizada). Cada categoría ahora tiene un párrafo introductorio adaptado a su materia.
+- **Secciones variables por categoría**: 3 categorías principales (penal, familia, laboral) tienen estructura de secciones personalizada con contenido práctico y específico. Las 17 restantes usan una estructura genérica mejorada.
+- **Disclaimer actualizado**: El pie del generador ahora usa el mismo texto que los posts existentes, usando "asesoría legal personalizada" y especificando "abogado colegiado en Honduras".
+- **Tags mejorados**: Acepta palabras desde 4 caracteres (antes 6) para sugerencias más precisas.
+
+### 🟢 E-E-A-T
+- **Autoría visible**: BlogCard muestra autor en cards de listado.
+- **Fechas de actualización**: Señal de frescura en artículos individuales.
+- **Disclaimer consistente**: Todos los posts ahora advierten que el contenido es informativo.
+
+### Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `app/api/admin/blog/generate/route.ts` | Intros 20 categorías, secciones variables, disclaimer mejorado, tags más precisos |
+| `app/(public)/blog/[categoria]/[slug]/page.tsx` | OpenGraph modifiedTime, fecha actualización visible |
+| `components/blog/blog-card.tsx` | Nombre categoría legible, autor visible en metadata |
+| `CHANGELOG.md` | Esta entrada |
+| `README.md` | Nueva sección Estrategia editorial |
+
+### Base de datos — 159 posts actualizados
+| Operación | Cantidad |
+|-----------|----------|
+| H1→H2 en body | 20 posts |
+| Posts expandidos (thin→completo) | 4 posts |
+| Disclaimer añadido | 155 posts |
+| updated_at actualizado | Todos los publicados |
+
+### Validación
+- `npm run lint`: 0 errores, 1 warning preexistente
+- `npm run build`: Compiled successfully
+- `npm run test`: 361 tests passed (17 files)
+
+---
+
 ## Release 54 — SEO integral on-page: H1, meta, rendimiento, accesibilidad, E-E-A-T y AI/GEO (2026-06-14)
 
 ### 🔴 H1 y jerarquía de encabezados
