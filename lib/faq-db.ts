@@ -25,7 +25,7 @@ function isDbError(err: unknown): boolean {
 
 export async function getPublishedFaqs() {
   try {
-    return db.select().from(faqEntries)
+    return await db.select().from(faqEntries)
       .where(eq(faqEntries.published, true))
       .orderBy(asc(faqEntries.sortOrder), asc(faqEntries.creadoEn));
   } catch (err) {

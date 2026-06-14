@@ -18,7 +18,7 @@ export async function getPublishedPosts(opts?: { limit?: number; category?: stri
 
     if (opts?.limit) query.limit(opts.limit);
 
-    return query;
+    return await query;
   } catch (err) {
     if (isDbError(err)) return [];
     throw err;
@@ -51,7 +51,7 @@ export async function getBlogCategories() {
 
 export async function getRelatedPosts(slug: string, category: string, limit = 3) {
   try {
-    return db.select().from(blogPosts)
+    return await db.select().from(blogPosts)
       .where(and(
         eq(blogPosts.published, true),
         eq(blogPosts.category, category),

@@ -17,8 +17,14 @@ export async function getPageContent(page: string, options?: { includeUnpublishe
     } catch {}
   }
 
-  const rows = await db.select().from(pageContent)
-    .where(and(eq(pageContent.page, page), eq(pageContent.lang, 'es-HN')));
+  let rows: (typeof pageContent.$inferSelect)[];
+  try {
+    rows = await db.select().from(pageContent)
+      .where(and(eq(pageContent.page, page), eq(pageContent.lang, 'es-HN')));
+  } catch (err) {
+    if (err instanceof Error && (err.message?.includes('connect') || err.message?.includes('fetch failed'))) return {};
+    throw err;
+  }
   const map: Record<string, string> = {};
   for (const row of rows) {
     map[`${row.section}.${row.field}`] = row.content;
