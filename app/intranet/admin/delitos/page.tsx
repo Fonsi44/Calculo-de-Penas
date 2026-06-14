@@ -6,7 +6,6 @@ import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRi
 import type { Delito } from '@/app/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { EmptyState, ErrorState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
@@ -86,10 +85,16 @@ export default function AdminDelitosCatalog() {
       </div>
 
       <div className="relative">
-        <Input value={search} onChange={e => { setPage(0); setSearch(e.target.value); }}
+        <input value={search} onChange={e => { setPage(0); setSearch(e.target.value); }}
           placeholder="Buscar por nombre, artículo o conducta..."
-          iconLeft={<Search size={16} />}
-          iconRight={search ? <button type="button" onClick={() => { setPage(0); setSearch(''); }} aria-label="Limpiar búsqueda"><X size={16} /></button> : undefined} />
+          className="w-full h-10 rounded-md border bg-surface text-sm text-text px-3.5 pl-10 pr-10 outline-none transition-all duration-200 placeholder:text-text-muted hover:border-border-strong focus:bg-surface focus:border-accent focus:shadow-[0_0_0_3px_rgba(212,175,55,0.18)]" />
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none z-10"><Search size={16} /></span>
+        {search ? (
+          <button type="button" onClick={() => { setPage(0); setSearch(''); }} aria-label="Limpiar búsqueda"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text z-10">
+            <X size={16} />
+          </button>
+        ) : null}
       </div>
 
       <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
