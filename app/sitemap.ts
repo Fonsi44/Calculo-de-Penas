@@ -57,6 +57,10 @@ const PUBLIC_ROUTES: Array<{
   { path: '/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
 ];
 
+const IS_DB_REACHABLE = Boolean(
+  process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
+);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (site.noindex) {
     return [];
@@ -78,7 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
-  const dbPosts = await db
+  const dbPosts = IS_DB_REACHABLE ? await db
     .select({
       slug: blogPosts.slug,
       category: blogPosts.category,
@@ -87,7 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     .from(blogPosts)
     .where(eq(blogPosts.published, true))
-    .orderBy(desc(blogPosts.publishedAt));
+    .orderBy(desc(blogPosts.publishedAt)) : [];
 
   const blogPostRoutes = dbPosts.map((p) => ({
     url: absoluteUrl(`/blog/${p.category}/${p.slug}`),
