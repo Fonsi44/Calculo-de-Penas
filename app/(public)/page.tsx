@@ -34,16 +34,17 @@ import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { getAllPosts } from '@/lib/blog';
+import { SocialShare } from '@/components/marketing/social-share';
 
 export const metadata: Metadata = {
   title: { absolute: `${site.name} — ${site.tagline}` },
-  description: site.description,
+  description: 'Bufete de abogados en Nacaome, Valle. Defensa penal, asesoría jurídica y atención legal directa con presupuesto por escrito.',
   alternates: { canonical: '/' },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
   twitter: {
     card: 'summary_large_image',
     title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
-    description: site.description,
+    description: 'Bufete de abogados en Nacaome, Valle. Defensa penal, asesoría jurídica y atención legal directa con presupuesto por escrito.',
     images: [`${site.url}/og-image.png`],
   },
 };
@@ -53,8 +54,20 @@ export const revalidate = 3600;
 const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
 
 export default async function HomePage() {
-  let allPosts: Awaited<ReturnType<typeof getAllPosts>> = [];
-  try { allPosts = await getAllPosts(); } catch {}
+  let searchIndex: { slug: string; title: string; description: string; category: string; tags: string[]; publishedAt: string; readingTime: string; coverImage?: string }[] = [];
+  try {
+    const allPosts = await getAllPosts();
+    searchIndex = allPosts.map(p => ({
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      category: p.category,
+      tags: p.tags,
+      publishedAt: p.publishedAt,
+      readingTime: p.readingTime,
+      coverImage: p.coverImage,
+    }));
+  } catch {}
   let contentMap: Record<string, string> = {};
   let homeMeta: { page: string; label: string; sections: { key: string; label: string; fields: { key: string; label: string; type: string; default?: string }[] }[] } | undefined;
   try {
@@ -115,13 +128,6 @@ export default async function HomePage() {
     { q: t('faq.q6'), a: t('faq.a6') },
   ];
 
-  const heroLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: `${site.name} — Inicio`,
-    url: site.url,
-    inLanguage: 'es-HN',
-  };
   const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -157,8 +163,7 @@ export default async function HomePage() {
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.05] tracking-tight text-text-inverse text-balance">
-                <span className="block">{t('hero.title_line1')}</span>
-                <span className="block text-gradient-accent mt-1">{t('hero.title_line2')}</span>
+                Defensa penal y asesoría jurídica en Nacaome y Honduras
               </h1>
               <p className="mt-6 text-base md:text-lg text-text-inverse/85 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
@@ -181,10 +186,10 @@ export default async function HomePage() {
       <TrustBar background="light" />
 
       {/* BUSCADOR GLOBAL */}
-      {allPosts.length > 0 && (
-        <div className="bg-background py-4 md:py-5">
+      {searchIndex.length > 0 && (
+        <div className="bg-background py-6 md:py-8">
           <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-            <BlogSearch posts={allPosts} scope="toda la web" />
+            <BlogSearch posts={searchIndex} scope="toda la web" />
           </div>
         </div>
       )}
@@ -196,7 +201,7 @@ export default async function HomePage() {
           title={t('questions.title')}
           subtitle={t('questions.subtitle')}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {REAL_QUESTIONS.map((item, i) => (
             <Link
               key={i}
@@ -222,7 +227,7 @@ export default async function HomePage() {
         </div>
         <div className="mt-8 text-center">
           <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-            Ver todas las preguntas frecuentes <ArrowRight size={14} />
+            consultar preguntas frecuentes <ArrowRight size={14} />
           </Link>
         </div>
       </Section>
@@ -249,6 +254,7 @@ export default async function HomePage() {
                   category="services"
                   tone={area.color as PlaceholderTone}
                   aspect="3/2"
+                  priority={area.slug === 'derecho-penal'}
                 />
               );
             })}
@@ -304,7 +310,7 @@ export default async function HomePage() {
             subtitle={t('why_us.subtitle')}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 relative">
           {WHY.map((w) => (
             <div
               key={w.title}
@@ -315,9 +321,9 @@ export default async function HomePage() {
                   <w.icon size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-sm leading-tight text-text text-balance">
+                  <strong className="font-bold text-sm leading-tight text-text text-balance block">
                     {w.title}
-                  </h3>
+                  </strong>
                   <p className="text-xs leading-relaxed text-text-secondary mt-1 text-pretty">
                     {w.desc}
                   </p>
@@ -332,12 +338,12 @@ export default async function HomePage() {
       <Section background="warm" spacing="md" ariaLabel="Por qué un bufete multidisciplinar">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <div className="eyebrow-rule text-accent-dark mb-4">
+            <p className="eyebrow-rule text-accent-dark mb-4">
               {t('multidisciplinary.title')}
-            </div>
-            <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
+            </p>
+            <p className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
               {t('multidisciplinary.subtitle')}
-            </h2>
+            </p>
             <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
               {t('multidisciplinary.description')}
             </p>
@@ -353,10 +359,10 @@ export default async function HomePage() {
               </span>
             </div>
             <Link href="/despacho" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-              Conozca nuestro despacho <ArrowRight size={14} />
+              sobre nuestro bufete <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3 auto-rows-fr">
+          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4 auto-rows-fr">
             {[
               {
                 icon: Gavel,
@@ -385,7 +391,7 @@ export default async function HomePage() {
                     <it.icon size={15} aria-hidden="true" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-bold text-sm text-text leading-tight text-balance">{it.title}</h3>
+                    <strong className="font-bold text-sm text-text leading-tight text-balance block">{it.title}</strong>
                     <p className="text-xs text-text-secondary leading-relaxed mt-0.5 text-pretty">
                       {it.desc}
                     </p>
@@ -442,7 +448,7 @@ export default async function HomePage() {
                 </li>
               </ul>
               <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark">
-                Ver indicaciones para llegar <ArrowRight size={14} />
+                indicaciones para llegar al bufete <ArrowRight size={14} />
               </Link>
             </Card>
           </div>
@@ -458,7 +464,7 @@ export default async function HomePage() {
               />
             </Card>
             <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-primary hover:text-accent-dark">
-              Cómo llegar y ver indicaciones <ArrowRight size={12} />
+              cómo llegar a Nacaome <ArrowRight size={12} />
             </Link>
           </div>
         </div>
@@ -474,10 +480,10 @@ export default async function HomePage() {
               subtitle={t('faq.subtitle')}
             />
             <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
-              Ver todas las preguntas <ArrowRight size={14} />
+              explorar preguntas frecuentes <ArrowRight size={14} />
             </Link>
             <Link href="/blog" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-              Visitar nuestro blog <ArrowRight size={14} />
+              leer el blog jurídico <ArrowRight size={14} />
             </Link>
           </div>
           <div className="lg:col-span-2 space-y-3">
@@ -499,10 +505,16 @@ export default async function HomePage() {
         </div>
       </Section>
 
+      {/* SOCIAL SHARE */}
+      <Section spacing="sm" ariaLabel="Compartir sitio">
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <SocialShare />
+        </div>
+      </Section>
+
       <ConsultationCTA />
 
       {/* Schema.org JSON-LD */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(heroLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
     </>
   );

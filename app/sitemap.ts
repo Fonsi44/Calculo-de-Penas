@@ -27,6 +27,7 @@ const PUBLIC_ROUTES: Array<{
   { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
   { path: '/como-llegar', priority: 0.3, changeFrequency: 'monthly', daysAgo: 7 },
   { path: '/aviso-legal', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
+  { path: '/politica-editorial', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/politica-privacidad', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/politica-cookies', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/terminos', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },

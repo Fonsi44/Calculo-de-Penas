@@ -28,6 +28,8 @@ interface ServiceCardProps {
   static?: boolean;
   /** Texto del CTA. Por defecto: "Conocer servicios de [título]" */
   ctaLabel?: string;
+  /** Prioridad de carga (LCP). Solo para la imagen visible inicialmente. */
+  priority?: boolean;
 }
 
 const ASPECT_CLASS: Record<PlaceholderAspect, string> = {
@@ -67,6 +69,7 @@ export function ServiceCard({
   className,
   static: isStatic = false,
   ctaLabel,
+  priority = false,
 }: ServiceCardProps) {
   const resolvedImage = resolveImage(imageSrc, slug, category);
   const ctaText = ctaLabel ?? `Conocer servicios de ${title.toLowerCase()}`;
@@ -82,6 +85,7 @@ export function ServiceCard({
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+              priority={priority}
             />
             <div
               aria-hidden="true"

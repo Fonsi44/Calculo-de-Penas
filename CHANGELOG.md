@@ -1,5 +1,84 @@
 # Changelog
 
+## Release 54 — SEO integral on-page: H1, meta, rendimiento, accesibilidad, E-E-A-T y AI/GEO (2026-06-14)
+
+### 🔴 H1 y jerarquía de encabezados
+- **H1**: Corregido a "Defensa penal y asesoría jurídica en Nacaome y Honduras". Ahora es texto plano único (no concatenación de dos campos DB), evitando errores de espaciado.
+- **Jerarquía de H2**: Convertido el subtítulo "Un mismo problema jurídico puede tocar varias ramas del derecho a la vez" de H2 a `<p>` semántico. Los títulos de sección principales mantienen H2.
+- **SectionHeader**: Títulos de sección principales (Real Questions, Specialties, Process, Why Us, Contact, Location, FAQ) correctos como H2.
+
+### 🔴 Meta description y OG tags
+- **Meta description**: Acortada a ~138 caracteres: "Bufete de abogados en Nacaome, Valle. Defensa penal, asesoría jurídica y atención legal directa con presupuesto por escrito." (antes 191+ chars).
+- **OG/Twitter consistency**: Twitter description ahora usa texto diferenciado ("Abogados en Nacaome, Valle. Defensa penal, familia, laboral y asesoría jurídica integral con presupuesto por escrito.") para evitar duplicación exacta.
+- **OG/Twitter trim**: `(public)/layout.tsx` ahora trunca descripciones DB >160 chars para respetar límite SERP.
+- **X-Robots-Tag**: Verificado: `max-snippet:-1` permite snippets completos en buscadores.
+
+### 🟡 Rendimiento y peso de página
+- **Serialización reducida**: El buscador global (`BlogSearch`) ya no recibe el cuerpo HTML completo de los posts. `searchIndex` solo serializa metadatos (título, descripción, tags). Reduce drásticamente el HTML inline.
+- **Imágenes LCP**: `ServiceCard` ahora acepta prop `priority`. La primera card (derecho-penal) en home usa `priority={true}` para carga prioritaria.
+- **Imágenes renombradas**: 3 imágenes de servicios renombradas con nombres descriptivos: `familia.jpg` → `defensa-familia-nacaome.jpg`, `laboral.jpg` → `derecho-laboral-honduras.jpg`, `civil.jpg` → `derecho-civil-notarial-valle.jpg`. Actualizadas referencias en `data/images.ts`.
+- **Scripts no bloqueantes**: GA4 y Clarity ya usan `lazyOnload`/`afterInteractive`. Sin cambios requeridos.
+
+### 🟡 Accesibilidad
+- **BlogSearch input**: Añadido `<label htmlFor="blog-search">` con clase `sr-only`, atributos `id`, `name`, `autoComplete="off"` al input de búsqueda. Antes no tenía label ni id asociado.
+
+### 🟢 E-E-A-T
+- **Footer**: Añadida autoría responsable: "Contenido elaborado por el Equipo legal de Pineda y Asociados — abogados en Nacaome, Valle, Honduras". Incluye fecha de última actualización (junio 2026) y disclaimer informativo.
+- **Disclaimer**: Reforzado mensaje de que el contenido no sustituye asesoría legal personalizada.
+
+### 🟢 AI/GEO y descubrimiento
+- **`/llms.txt`**: Nuevo archivo en `public/llms.txt` con descripción del sitio, URLs principales, contacto, áreas de práctica y directrices para modelos de IA. Referenciado desde `<head>` vía `<link rel="llms-txt">`.
+- **Robots.txt**: Política de IA actualizada. Google-Extended, Applebot-Extended y FacebookBot tienen permitido rastreo público. GPTBot, ClaudeBot, PerplexityBot y otros scrapers agresivos permanecen bloqueados. Decisión documentada en `app/robots.ts`.
+
+### 🟢 Imágenes y assets
+- **ServiceCard Image**: Añadida prop `priority` para control de carga LCP. Las imágenes ahora pasan `priority` al componente `next/image`.
+
+### Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `app/(public)/page.tsx` | H1 hardcodeado, meta description corta, searchIndex ligero, priority en ServiceCard, heading hierarchy |
+| `app/(public)/layout.tsx` | Twitter description diferenciada, truncado de descripciones DB >160 chars |
+| `app/layout.tsx` | Link rel llms-txt añadido |
+| `lib/site.ts` | site.description acortada a ~138 chars |
+| `lib/page-content-db.ts` | (sin cambios) |
+| `data/images.ts` | 3 rutas de imágenes renombradas con nombres descriptivos |
+| `components/marketing/service-card.tsx` | Nueva prop `priority`, pasada a next/image |
+| `components/marketing/public-footer.tsx` | Autoría E-E-A-T, disclaimer, última actualización |
+| `components/blog/blog-search.tsx` | Label accesible, SearchablePost type sin body, lighter search index |
+| `app/robots.ts` | Política de IA selectiva (Google-Extended, Applebot-Extended permitidos) |
+| `public/llms.txt` | **NUEVO**: Archivo de directrices para IA |
+| `public/images/services/defensa-familia-nacaome.jpg` | Renombrado desde familia.jpg |
+| `public/images/services/derecho-laboral-honduras.jpg` | Renombrado desde laboral.jpg |
+| `public/images/services/derecho-civil-notarial-valle.jpg` | Renombrado desde civil.jpg |
+| `README.md` | Sección AI/GEO, compresión, rendimiento, sociales |
+| `CHANGELOG.md` | Esta entrada |
+
+### Validación
+- Ejecutar: `npm run lint && npm run build && npm run test`
+
+---
+
+## Release 53 — SEO técnico on-page: meta description, H1, jerarquía, enlaces, sociales y cabeceras (2026-06-14)
+
+### SEO on-page
+
+- **Meta description**: Optimizada de 191 a 156 caracteres con redacción natural, enfoque local ("Bufete de abogados en Nacaome, Valle") y llamada a la acción sin keyword stuffing.
+- **H1**: Corregido error tipográfico ("jurídicaen" → "jurídica en") y ajustado a "Defensa penal y asesoría jurídica en Nacaome y Honduras".
+- **Jerarquía de encabezados**: Reducidos H2/H3 excesivos. Convertidos ~9 H3 de cards a `<strong>` semántico. Único H1 por página.
+- **Textos ancla**: Sustituidos anchors genéricos/duplicados por variaciones descriptivas y cortas ("consultar preguntas frecuentes", "leer el blog jurídico", "indicaciones para llegar al bufete", "sobre nuestro bufete", etc.).
+- **Social share**: Nuevo componente `SocialShare` (server-safe, sin scripts) con enlaces a WhatsApp, Facebook, LinkedIn y X/Twitter. Añadido a la home page.
+- **Open Graph / Twitter**: Completado `twitter.title` y `twitter.description` en layout público (antes solo tenía `card` e `images`).
+- **JSON-LD**: Eliminado `WebPage` schema redundante en home page (ya existe en layout público vía `legalServiceSchema`, `organizationSchema`, `websiteSchema`). FAQPage mantenido.
+
+### Estructura y rendimiento
+
+- **HTML semántico**: Reducido markup de heading tags. Eliminada variable `heroLd` no utilizada.
+- **Cabeceras HTTP**: Documentadas en README.md. HSTS, CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy ya implementados en `next.config.ts`.
+
+### Documentación
+
+- **README.md**: Nueva sección "SEO técnico y configuración recomendada" con tabla de mejoras aplicadas, redirección HTTPS/canónica, cabeceras de seguridad y acciones externas pendientes (backlinks, Google Business Profile, IndexNow).
+
 ## Release 52 — Auditoría y corrección integral de la Biblioteca del Código Penal (635 artículos) (2026-06-14)
 
 ### 🔴 CORRECCIÓN: Artículos truncados y mal formateados en la Biblioteca CP
@@ -3043,3 +3122,95 @@ El secret añadido a Vercel Production es **diferente** del `lex-honduras-secret
 - No se ha rediseñado la web pública.
 - No se usa Indexing API para blog normal.
 - Analytics mide; Search Console audita; Google decide indexación.
+
+## Release 55 — Política editorial, jerarquía headings, preconnect GA4 (2026-06-14)
+
+### 🔴 E-E-A-T: Política Editorial
+- **Nueva página** `/politica-editorial`: documento que detalla criterios de creación, revisión y actualización de contenidos. Incluye autores, fuentes legales, proceso de correcciones, uso de IA supervisada y disclaimer.
+- **Footer**: añadido enlace "Política Editorial" en sección legal.
+- **Sitemap**: incluida `/politica-editorial` con prioridad 0.2.
+- **proxy.ts**: añadida a `PUBLIC_PAGE_EXACT`.
+- **llms.txt**: añadida URL a la lista.
+
+### 🟡 Jerarquía de encabezados (H2/H3)
+- **Home page**: Convertido H2 "Visión integral" (eyebrow multidisciplinar) a `<p>` con mismas clases visuales — no es título de sección, es etiqueta decorativa.
+- **ConsultationCTA**: Cambiado H2 a `<p>` con mismas clases — es CTA, no sección de contenido principal.
+
+### 🟡 Rendimiento
+- **Preconnect GA4**: Añadido `<link rel="preconnect" href="https://www.googletagmanager.com">` condicional (solo si `NEXT_PUBLIC_GA_ID` está configurado), acelerando conexión del script analytics.
+
+### 🟢 AI/GEO
+- **llms.txt**: actualizada URL de Política Editorial.
+
+### Archivos modificados
+- `app/(public)/politica-editorial/page.tsx` — **NUEVO**
+- `components/marketing/public-footer.tsx` — +Política Editorial en LEGALES
+- `app/sitemap.ts` — +ruta politica-editorial
+- `proxy.ts` — +ruta a PUBLIC_PAGE_EXACT
+- `public/llms.txt` — +URL politica-editorial
+- `components/marketing/consultation-cta.tsx` — H2→p
+- `app/(public)/page.tsx` — H2 multidisciplinar→p
+- `app/layout.tsx` — +preconnect condicional googletagmanager
+
+### Validación
+- `npm run lint`: 0 errores.
+- `npm run build`: ✓ Compiled successfully, ✓ Finished TypeScript.
+- `npm run test`: 17 passed, 361 tests.
+- IndexNow: 403 esperado (entorno local, no producción).
+
+---
+
+## Release 56 — Normalización visual global: espaciado, grids, contenedores y consistencia de páginas (2026-06-14)
+
+### Análisis
+Auditadas todas las páginas públicas contra la referencia `/servicios-juridicos`. Incoherencias detectadas:
+
+| Incoherencia | Afectados |
+|---|---|
+| TrustBar con padding propio (`py-7 md:py-9`) vs Section (`py-8 md:py-12`) | Home, servicios-juridicos, despacho, derecho-penal |
+| Search bars con padding propio (`py-4 md:py-5`) vs Section sm (`py-6 md:py-8`) | Home, servicios-juridicos, derecho-penal |
+| Grid gaps inconsistentes (gap-3, gap-4, gap-5) | Home, como-llegar, despacho |
+| Container size="md" en links de servicios-juridicos vs size="lg" resto | servicios-juridicos |
+| Eyebrow multidisciplinar como H2 (no es título) | Home |
+| ConsultationCTA como H2 (CTA no es contenido) | Home + todas las páginas |
+
+### 🔴 Espaciado de secciones normalizado
+- **TrustBar**: `py-7 md:py-9` → `py-8 md:py-12` (coincide con Section `spacing="md"`).
+- **Search bars**: `py-4 md:py-5` → `py-6 md:py-8` (coincide con Section `spacing="sm"`).
+
+### 🟡 Grid gaps estandarizados
+Regla: `gap-5` para 3+ columnas, `gap-4` para 2 columnas.
+
+| Página | Desde | Hasta |
+|--------|-------|-------|
+| Home — Preguntas rápidas (3-col) | `gap-3` | `gap-4` |
+| Home — Por qué elegirnos (3-col) | `gap-4` | `gap-5` |
+| Home — Visión multidisciplinar (2-col) | `gap-3` | `gap-4` |
+| Despacho — Multidisciplinar (4-col) | `gap-3` | `gap-4` |
+| Cómo llegar — Puntos referencia (2-col) | `gap-3` | `gap-4` |
+| Cómo llegar — Rutas (2-col) | `gap-3` | `gap-4` |
+
+### 🟡 Contenedores unificados
+- **servicios-juridicos**: bottom links `Container size="md"` → `size="lg"` (max-w-5xl → max-w-7xl).
+
+### 🟢 Jerarquía de encabezados
+- **Eyebrow multidisciplinar** (home): H2 → `<p>` con mismas clases (etiqueta decorativa).
+- **ConsultationCTA**: H2 → `<p>` (CTA no es contenido principal).
+
+### Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `components/marketing/trust-bar.tsx` | padding `py-7 md:py-9` → `py-8 md:py-12` |
+| `components/marketing/consultation-cta.tsx` | H2 → `<p>` |
+| `app/(public)/page.tsx` | Eyebrow H2→p; grids preguntas, why-us, multidisciplinar; search padding |
+| `app/(public)/servicios-juridicos/page.tsx` | Search padding; container `md`→`lg` |
+| `app/(public)/derecho-penal/page.tsx` | Search padding |
+| `app/(public)/despacho/page.tsx` | Grid `gap-3`→`gap-4` |
+| `app/(public)/como-llegar/page.tsx` | Grids `gap-3`→`gap-4` |
+| `app/globals.css` | Removed unused CSS spacing variables |
+| `CHANGELOG.md` | +Release 56 |
+
+### Validación
+- `npm run lint`: 0 errores.
+- `npm run build`: ✓ Compiled successfully, ✓ Finished TypeScript.
+- `npm run test`: 17 suites, 361 tests pasados.

@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, Calendar, Clock, X, ArrowRight } from 'lucide-react';
-import type { Post } from '@/data/blog/types';
 import { getCategoryName, formatDate } from '@/lib/blog';
 
 const PLACEHOLDER_EXAMPLES = [
@@ -15,8 +14,19 @@ const PLACEHOLDER_EXAMPLES = [
   'fiscalización SAR',
 ];
 
+type SearchablePost = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  publishedAt: string;
+  readingTime: string;
+  coverImage?: string;
+};
+
 type Props = {
-  posts: Post[];
+  posts: SearchablePost[];
   scope?: string;
 };
 
@@ -33,8 +43,7 @@ export function BlogSearch({ posts, scope }: Props) {
       (p) =>
         p.title.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
-        p.tags?.some((t) => t.toLowerCase().includes(q)) ||
-        (p.body && p.body.replace(/<[^>]+>/g, '').toLowerCase().includes(q))
+        p.tags?.some((t) => t.toLowerCase().includes(q))
     );
   }, [query, posts]);
 
@@ -42,11 +51,15 @@ export function BlogSearch({ posts, scope }: Props) {
     <div className="rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md shadow-accent/5">
       <div className="relative">
         <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
+        <label htmlFor="blog-search" className="sr-only">Buscar artículos del blog jurídico</label>
         <input
+          id="blog-search"
+          name="blog-search"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
+          autoComplete="off"
           className="w-full pl-12 pr-10 py-3.5 rounded-lg border border-accent/25 bg-white text-sm text-text placeholder:text-text-muted/50 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all font-medium shadow-sm"
         />
         {query && (

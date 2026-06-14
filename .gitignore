@@ -85,3 +85,23 @@ scripts/validate-opencode-config.cjs
 # imagenes RAW
 docs/imagenes/*.png
 docs/imagenes/*.jpg
+
+# screenshots y capturas de pantalla
+*-fullpage.png
+*-mobile.png
+*-after.png
+
+# artifactos de test/benchmark
+servicios-juridicos-accessibility.yml
+post-submit.yml
+solicitar-consulta-form.yml
+
+# logs locales
+build-output.log
+dev-log.txt
+dev-server-err.log
+dev-server.log
+cookies.txt
+
+# auditorias exportadas
+auditoria-blog/

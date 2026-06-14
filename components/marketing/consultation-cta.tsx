@@ -9,9 +9,9 @@ export function ConsultationCTA() {
         <p className="text-xs font-bold uppercase tracking-eyebrow text-accent-dark mb-2">
           Consulta confidencial sin costo en Nacaome, Valle
         </p>
-        <h2 className="font-serif font-bold text-2xl md:text-3xl text-primary leading-tight mb-3">
+        <p className="font-serif font-bold text-2xl md:text-3xl text-primary leading-tight mb-3">
           Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso.
-        </h2>
+        </p>
         <p className="text-sm md:text-base text-text-secondary max-w-lg mx-auto leading-relaxed mb-6">
           Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones
           legales disponibles. Atendemos en Nacaome, San Lorenzo, Choluteca y toda la zona sur

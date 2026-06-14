@@ -83,6 +83,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon-192.svg" type="image/svg+xml" />
+        <link rel="llms-txt" href="/llms.txt" />
+        {site.gaId && <link rel="preconnect" href="https://www.googletagmanager.com" />}
         <meta name="application-name" content={site.name} />
         <meta name="author" content={site.name} />
         <meta name="language" content="es-HN" />

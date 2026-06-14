@@ -10,8 +10,17 @@ import { site } from '@/lib/site';
  * NEXT_PUBLIC_NOINDEX a "false" y este archivo pasa a permitir el
  * rastreo completo con declaración de sitemap.
  *
- * Bots de IA y scrapers quedan permanentemente bloqueados por
- * decisión de protección de contenido jurídico原创.
+ * Política para bots de IA (Jun 2026):
+ *   - Google-Extended, Applebot-Extended y FacebookBot/Crawler: PERMITIDOS
+ *     para rastreo general del sitio público, para facilitar descubrimiento
+ *     por asistentes de IA y motores de búsqueda generativa.
+ *   - El resto de crawlers de IA/scrapers agresivos (GPTBot, Claude, etc.)
+ *     permanecen bloqueados por protección de contenido.
+ *   - Rutas privadas (/intranet/, /api/) bloqueadas para todos.
+ *
+ * Decisión documentada: permite IA selectiva para visibilidad en ecosistemas
+ * emergentes (Google SGE, Apple Intelligence, Meta AI) sin exponer
+ * contenido jurídico原创 a scrapers no regulados.
  */
 export default function robots(): MetadataRoute.Robots {
   if (site.noindex) {
@@ -21,10 +30,8 @@ export default function robots(): MetadataRoute.Robots {
           userAgent: '*',
           disallow: '/',
         },
-        // Bloqueo explícito a bots de IA y scrapers comunes
         { userAgent: 'GPTBot', disallow: '/' },
         { userAgent: 'ChatGPT-User', disallow: '/' },
-        { userAgent: 'Google-Extended', disallow: '/' },
         { userAgent: 'PerplexityBot', disallow: '/' },
         { userAgent: 'Perplexity-User', disallow: '/' },
         { userAgent: 'anthropic-ai', disallow: '/' },
@@ -33,9 +40,6 @@ export default function robots(): MetadataRoute.Robots {
         { userAgent: 'CCBot', disallow: '/' },
         { userAgent: 'Bytespider', disallow: '/' },
         { userAgent: 'Amazonbot', disallow: '/' },
-        { userAgent: 'Applebot-Extended', disallow: '/' },
-        { userAgent: 'FacebookBot', disallow: '/' },
-        { userAgent: 'Meta-ExternalAgent', disallow: '/' },
         { userAgent: 'Diffbot', disallow: '/' },
         { userAgent: 'ImagesiftBot', disallow: '/' },
         { userAgent: 'Omgilibot', disallow: '/' },
@@ -51,10 +55,9 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found'],
       },
-      // IA y scrapers: bloqueo consistente con politica de proteccion de contenido
+      // Bots de IA/scrapers bloqueados
       { userAgent: 'GPTBot', disallow: '/' },
       { userAgent: 'ChatGPT-User', disallow: '/' },
-      { userAgent: 'Google-Extended', disallow: '/' },
       { userAgent: 'PerplexityBot', disallow: '/' },
       { userAgent: 'Perplexity-User', disallow: '/' },
       { userAgent: 'anthropic-ai', disallow: '/' },
@@ -63,9 +66,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'CCBot', disallow: '/' },
       { userAgent: 'Bytespider', disallow: '/' },
       { userAgent: 'Amazonbot', disallow: '/' },
-      { userAgent: 'Applebot-Extended', disallow: '/' },
-      { userAgent: 'FacebookBot', disallow: '/' },
-      { userAgent: 'Meta-ExternalAgent', disallow: '/' },
       { userAgent: 'Diffbot', disallow: '/' },
       { userAgent: 'ImagesiftBot', disallow: '/' },
       { userAgent: 'Omgilibot', disallow: '/' },

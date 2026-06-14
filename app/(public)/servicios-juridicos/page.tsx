@@ -54,7 +54,7 @@ export default async function AreasJuridicasPage() {
         cta={<CTAGroup variant="inverse" />}
       />
 
-      <div className="bg-background py-4 md:py-5">
+      <div className="bg-background py-6 md:py-8">
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
             items={areas.map((a) => ({
@@ -92,7 +92,7 @@ export default async function AreasJuridicasPage() {
       </Section>
 
       <Section spacing="sm">
-        <Container size="md">
+        <Container size="lg">
           <div className="text-center">
             <p className="text-sm text-text-secondary leading-relaxed">
               Defensa penal técnica y confidencial en{' '}

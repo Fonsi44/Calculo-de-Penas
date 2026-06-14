@@ -821,3 +821,65 @@ El script:
 - Solo envía URLs públicas (no intranet, no API, no borradores).
 - Si `INDEXNOW_KEY` no está definida, el postbuild salta con aviso (no falla el build).
 - Generar clave en: https://www.bing.com/indexnow/getstarted
+
+---
+
+## SEO técnico y configuración recomendada
+
+### Mejoras aplicadas (Jun 2026)
+
+| Área | Cambio |
+|------|--------|
+| **Meta description** | Optimizada a ~156 caracteres con enfoque local + comercial, sin keyword stuffing |
+| **H1** | Corregido typo: "jurídicaen" → "jurídica en"; eliminado "todo" para naturalidad |
+| **Jerarquía de encabezados** | Reducido número de H2/H3; convertidos H3 de cards a `<strong>` semántico. Único H1 por página |
+| **Textos ancla (internal links)** | Variados, descriptivos y sin duplicación: "consultar preguntas frecuentes", "leer el blog jurídico", "indicaciones para llegar al bufete", etc. |
+| **Open Graph / Twitter** | Completados con title + description explícitos en Twitter Card |
+| **Social share** | Botones ligeros (sin scripts) para WhatsApp, Facebook, LinkedIn, X/Twitter con aria-label |
+| **HTML semántico** | Eliminado JSON-LD `WebPage` redundante (ya inyectado vía layout público) |
+| **Content-Security-Policy** | CSP existente reforzado con HSTS y cabeceras de seguridad |
+| **JSON-LD** | Validado: LegalService + LocalBusiness + Organization con datos consistentes, geo, horarios, área servida |
+
+### Redirección HTTPS y canónica
+
+- **HTTP → HTTPS**: Gestionado por Vercel a nivel de plataforma (Settings → Domains). No requiere configuración en código.
+- **www → apex**: Vercel redirige automáticamente `pinedayasociadoshn.com` → `https://www.pinedayasociadoshn.com/`. Confirmar en Vercel Dashboard → Domains.
+- **Canonical**: `rel="canonical"` configurado en metadata de cada página via Next.js Metadata API.
+
+### Cabeceras HTTP de seguridad
+
+Configuradas en `next.config.ts` (`async headers()`):
+
+| Cabecera | Valor |
+|----------|-------|
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` (solo producción) |
+| `X-Content-Type-Options` | `nosniff` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Permissions-Policy` | `camera=(), microphone=(), geolocation=(), interest-cohort=()` |
+| `X-Robots-Tag` | `index, follow, max-image-preview:large, max-snippet:-1` (producción) |
+| `X-Frame-Options` | `DENY` (intranet) / `SAMEORIGIN` (proxy editor visual) |
+| `X-Powered-By` | Deshabilitado (`poweredByHeader: false`) |
+
+### Compresión y rendimiento
+
+- **Brotli/Gzip**: Vercel aplica compresión Brotli automáticamente en el edge network para todas las respuestas. No requiere configuración adicional. Verificar en producción: `curl -H "Accept-Encoding: br" -I https://www.pinedayasociadoshn.com/` debe devolver `Content-Encoding: br`.
+- **Imágenes LCP**: La primera ServiceCard (`derecho-penal`) usa `priority={true}` y `fetchPriority="high"` para carga prioritaria. Las imágenes tienen `sizes` y `fill` correctamente configurados.
+- **JavaScript**: Los scripts de analytics (GA4, Clarity) usan `next/script` con estrategias `lazyOnload`/`afterInteractive`. No se cargan en entornos sin la variable de entorno configurada.
+- **Server Components**: La home page y todas las páginas públicas son Server Components por defecto. Solo `BlogSearch`, `PublicHeader` y `FloatingContactRail` son client components, minimizando el JavaScript de hidratación.
+- **Datos serializados**: El buscador global de la home page ya no serializa el cuerpo HTML de los posts en la página. Solo se transfieren metadatos ligeros (título, descripción, tags, slug) para reducir el HTML inicial.
+
+### AI/GEO Readiness
+
+- **`/llms.txt`**: Archivo estático en `public/llms.txt` con descripción del sitio, URLs principales, contacto público, áreas de práctica y directrices para modelos de IA. Referenciado desde el `<head>` vía `<link rel="llms-txt" href="/llms.txt" />`.
+- **Robots.txt para IA**: Política selectiva — Google-Extended, Applebot-Extended y FacebookBot tienen permitido el rastreo público. GPTBot, ClaudeBot, PerplexityBot y otros scrapers agresivos permanecen bloqueados. Ver `app/robots.ts` para la lista completa.
+- **Datos estructurados**: LegalService + LocalBusiness + Organization + WebSite con datos consistentes, geo-coordenadas, horarios y área servida. SearchAction solo si existe buscador funcional (BlogSearch en home).
+
+### Acciones externas pendientes
+
+1. **Backlinks**: Gestionar campaña de backlinks desde directorios jurídicos hondureños, medios locales y referencias cruzadas con otras firmas legales. El sitio está preparado con JSON-LD y contenido enlazable (blog, FAQ, guías).
+2. **Google Business Profile**: Verificar que la ficha de Google My Business de "Pineda y Asociados" tenga NAP consistente con el sitio (nombre, dirección, teléfono). Incluir enlace al sitio web.
+3. **NTP / Hora del servidor**: Vercel maneja la sincronización horaria automáticamente (UTC). No requiere acción.
+4. **IndexNow**: Ya configurado vía postbuild (`scripts/submit-indexnow.mjs`). Verificar que `INDEXNOW_KEY` está en variables de entorno de Vercel.
+5. **Sitemap**: Se genera dinámicamente en `/sitemap.xml` con todas las rutas públicas. Enviar a Google Search Console y Bing Webmaster Tools.
+6. **Redes sociales**: Las URLs de Facebook, Instagram y TikTok se configuran vía `NEXT_PUBLIC_SOCIAL_*`. Si no están definidas, no se renderizan enlaces sociales ni se incluyen en el JSON-LD `sameAs`. Configurar en Vercel Environment Variables cuando los perfiles estén activos.
+7. **Verificación de compresión**: Confirmar en producción que Vercel sirve con Brotli. Ejecutar: `curl -sI -H "Accept-Encoding: br" https://www.pinedayasociadoshn.com/ | grep -i "content-encoding"`

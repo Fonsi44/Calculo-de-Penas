@@ -20,9 +20,9 @@
 export type ImageCategory = 'corporate' | 'services' | 'penal';
 
 const SERVICES: Record<string, string> = {
-  'derecho-de-familia': '/images/services/familia.jpg',
-  'derecho-laboral': '/images/services/laboral.jpg',
-  'derecho-civil-y-notarial': '/images/services/civil.jpg',
+  'derecho-de-familia': '/images/services/defensa-familia-nacaome.jpg',
+  'derecho-laboral': '/images/services/derecho-laboral-honduras.jpg',
+  'derecho-civil-y-notarial': '/images/services/derecho-civil-notarial-valle.jpg',
   'derecho-mercantil-empresarial': '/images/services/mercantil.jpg',
   'derecho-bancario-y-financiero': '/images/services/bancario.jpg',
   'derecho-administrativo-y-servicio-civil': '/images/services/administrativo.jpg',

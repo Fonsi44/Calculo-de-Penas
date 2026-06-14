@@ -11,7 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const isIndexable = seo.noindex !== undefined ? !seo.noindex : !site.noindex;
 
   const title = seo.title ?? `${site.name} — ${site.tagline}`;
-  const description = seo.description ?? site.description;
+  const description = seo.description && seo.description.length <= 160
+    ? seo.description
+    : site.description;
   const ogImage = seo.ogImage ?? `${site.url}/og-image.png`;
   const verification: Record<string, string> = {};
   if (seo.googleVerification || site.googleVerification) {
@@ -46,6 +48,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
+      title,
+      description: 'Abogados en Nacaome, Valle. Defensa penal, familia, laboral y asesoría jurídica integral con presupuesto por escrito.',
       images: [ogImage],
     },
     robots: isIndexable

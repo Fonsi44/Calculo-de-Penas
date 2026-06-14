@@ -71,7 +71,7 @@ export function TrustBar({
 
   return (
     <div className={`${wrapperCls} ${className ?? ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-7 md:py-9">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 items-stretch">
           {items.map((it) => {
             const Icon = it.icon;

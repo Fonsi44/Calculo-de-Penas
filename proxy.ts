@@ -44,6 +44,7 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/politica-privacidad',
   '/politica-cookies',
   '/disclaimer',
+  '/politica-editorial',
   '/despacho',
   '/solicitar-consulta',
   '/como-llegar',

@@ -78,7 +78,7 @@ export default async function DerechoPenalPage() {
         cta={<CTAGroup variant="inverse" />}
       />
 
-      <div className="bg-background py-4 md:py-5">
+      <div className="bg-background py-6 md:py-8">
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
             items={penalGroups.map((g) => ({

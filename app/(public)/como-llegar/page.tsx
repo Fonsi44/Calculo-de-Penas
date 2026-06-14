@@ -199,7 +199,7 @@ export default function ComoLlegarPage() {
           title="Cómo encontrarnos fácilmente"
           subtitle="Cuatro puntos clave que le permitirán ubicarnos sin dificultad."
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {REF_POINTS.map((p) => (
             <Card key={p.name} padding="md" className="h-full">
               <div className="flex items-start gap-3">
@@ -224,7 +224,7 @@ export default function ComoLlegarPage() {
           title="Rutas y tiempos aproximados"
           subtitle="Distancias y tiempos de viaje por carretera. Considere tráfico y condiciones climáticas."
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {FROM_CITIES.map((c) => (
             <Card key={c.from} padding="md" className="h-full">
               <div className="flex items-start gap-3">
