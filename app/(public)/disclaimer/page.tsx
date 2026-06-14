@@ -75,7 +75,7 @@ export default async function DisclaimerPage() {
       <LegalSection number="3" title="Sobre la base de datos de delitos">
         <p>
           La base de datos incluida en la calculadora contiene{' '}
-          <strong className="font-semibold text-primary">466 delitos del Código Penal</strong>{' '}
+          <strong className="font-semibold text-primary">483 delitos del Código Penal</strong>{' '}
           validados contra el Decreto 130-2017 y las reformas vigentes
           (119-2019, 46-2020, 93-2021 y 59-2024). Si bien se ha puesto
           especial cuidado en su actualización, pueden existir errores

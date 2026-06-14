@@ -65,7 +65,7 @@ const nextConfig: NextConfig = {
       { source: '/areas-de-practica', destination: '/servicios-juridicos', permanent: true },
       { source: '/areas-de-practica/:path*', destination: '/servicios-juridicos/:path*', permanent: true },
       { source: '/derecho-penal-hondureno', destination: '/derecho-penal', permanent: true },
-      { source: '/proceso-penal', destination: '/hondurenos-en-espana', permanent: true },
+      { source: '/proceso-penal', destination: '/derecho-penal', permanent: true },
       { source: '/contacto', destination: '/solicitar-consulta', permanent: true },
       { source: '/privacidad', destination: '/politica-privacidad', permanent: true },
       // === CONSOLIDACIÓN DE BLOG: redirecciones 301 post-auditoría (Jun 2026) ===
