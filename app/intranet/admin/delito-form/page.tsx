@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Save, Trash2, X, Bookmark, Lock, DollarSign, Ribbon, FileText, ChevronDown, ChevronUp } from 'lucide-react';
-import type { Delito, Clasificacion } from '../types';
+import type { Delito, Clasificacion } from '@/lib/types';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Field, Input, Textarea } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -205,7 +205,7 @@ function DelitoForm() {
     <div className="flex flex-col flex-1 bg-background">
       {/* Header */}
       <div className="flex items-center bg-primary px-3 py-2 no-print">
-        <Link href="/delitos" aria-label="Volver al catálogo" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center mr-2 hover:bg-white/25">
+        <Link href="/intranet/admin/delitos" aria-label="Volver al catálogo" className="w-9 h-9 rounded-md bg-white/15 flex items-center justify-center mr-2 hover:bg-white/25">
           <X size={18} className="text-text-inverse" />
         </Link>
         <h1 className="flex-1 text-center text-text-inverse font-bold text-sm">{isEdit ? 'Editar delito' : 'Nuevo delito'}</h1>

@@ -8,7 +8,7 @@ import { useConfirm } from '@/components/ui/confirm';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
 import { formatHondurasDate } from '@/lib/datetime';
-import type { Delito, DelitoConfig, Step } from '../types';
+import type { Delito, DelitoConfig, Step } from '@/lib/types';
 import type { ResultadoCalculo } from '@/lib/calculo';
 
 export interface Escenario {

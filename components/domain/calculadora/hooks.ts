@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { Delito } from '@/app/types';
+import type { Delito } from '@/lib/types';
 import { useDebounce } from '@/hooks/use-debounce';
 import { cacheGet, cacheSet } from '@/lib/cache';
 

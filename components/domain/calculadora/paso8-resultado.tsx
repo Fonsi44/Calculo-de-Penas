@@ -3,7 +3,7 @@
 import { Printer, Save, Copy, GitCompare } from 'lucide-react';
 import Link from 'next/link';
 import type { ResultadoCalculo } from '@/lib/calculo';
-import { ErrorBoundary } from '../error-boundary';
+import { ErrorBoundary } from '@/app/error-boundary';
 import { PenaltyResultPanel } from '@/components/domain/penalty-result-panel';
 import { Button } from '@/components/ui/button';
 

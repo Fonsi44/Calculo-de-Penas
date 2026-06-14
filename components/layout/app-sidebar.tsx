@@ -18,11 +18,11 @@ interface NavItem {
 
 const NAV: NavItem[] = [
   { label: 'Inicio', href: '/intranet/admin', icon: Home, match: (p) => p.startsWith('/intranet/admin') || p === '/intranet/dashboard' },
-  { label: 'Calculadora', href: '/intranet/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/calculadora') || p === '/calculadora' || p.startsWith('/calculadora/') },
-  { label: 'Mis casos', href: '/intranet/casos', icon: Briefcase, match: (p) => p.startsWith('/intranet/casos') || p === '/casos' || p.startsWith('/casos/') },
-  { label: 'Biblioteca CP', href: '/intranet/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/cp') || p === '/cp' || p.startsWith('/cp/') },
-  { label: 'Catálogo de delitos', href: '/intranet/delitos', icon: FileText, match: (p) => p.startsWith('/intranet/delitos') || p === '/delitos' || p.startsWith('/delitos/') },
-  { label: 'Registrar delito', href: '/delito-form', icon: PlusCircle, match: (p) => p === '/delito-form' || p.startsWith('/delito-form/') },
+  { label: 'Calculadora', href: '/intranet/admin/calculadora', icon: Calculator, match: (p) => p.startsWith('/intranet/admin/calculadora') },
+  { label: 'Mis casos', href: '/intranet/admin/casos', icon: Briefcase, match: (p) => p.startsWith('/intranet/admin/casos') },
+  { label: 'Biblioteca CP', href: '/intranet/admin/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/admin/cp') },
+  { label: 'Catálogo de delitos', href: '/intranet/admin/delitos', icon: FileText, match: (p) => p.startsWith('/intranet/admin/delitos') },
+  { label: 'Registrar delito', href: '/intranet/admin/delito-form', icon: PlusCircle, match: (p) => p.startsWith('/intranet/admin/delito-form') },
   { label: 'Web Admin', href: '/intranet/admin', icon: Shield, match: (p) => p.startsWith('/intranet/admin') },
 ];
 

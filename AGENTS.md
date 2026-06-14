@@ -50,7 +50,6 @@ El proyecto de GCP asociado es **`pineda-asociados-forms-nuevo`** (no `justicia-
 ```
 app/
   (public)/                → Sitio web público (marketing + blog + FAQ) — sin auth
-  calculadora/             → Calculadora de penas (8 pasos, wizard)
   intranet/
     dashboard/             → Dashboard principal (autenticado)
     admin/                 → Panel admin (solo rol admin)
@@ -59,6 +58,11 @@ app/
       config/              → Configuración del sitio
       usuarios/            → Gestión de usuarios
       perfil/              → Perfil y cambio de contraseña
+      calculadora/         → Calculadora de penas (8 pasos, wizard admin)
+      casos/               → Gestión de casos
+      cp/                  → Biblioteca del Código Penal
+      delitos/             → Catálogo de delitos
+      delito-form/         → Editor de delitos (crear/editar)
     login/                 → Login de intranet
   api/
     admin/
@@ -105,6 +109,7 @@ lib/
   utils.ts                 → Motor: aumentar/reducir grado, mitades
   catalogos.ts             → Catálogos legales (agravantes, atenuantes, eximentes)
   pdf-document.tsx         → Generación de PDF (@react-pdf)
+  types.ts                 → Tipos compartidos (Delito, DelitoConfig, Step, etc.)
 data/
   delitos.json             → 483 delitos del CP hondureño
   ramas_juridicas.json     → 119 registros
@@ -123,7 +128,9 @@ data/
 components/
   marketing/               → 25+ componentes de UI pública
   ui/                      → 13 componentes reutilizables (Button, Input, Card, Badge, etc.)
-  domain/                  → Componentes de dominio legal
+  domain/
+    calculadora/           → 13 componentes del motor de cálculo (state, hooks, pasos 1-8)
+    circunstancia-picker/  → Selector de circunstancias penales
   layout/                  → AppShell, AppSidebar, RootShell, etc.
   blog/                    → BlogCard, BlogSidebar, etc.
 tests/                     → 13 suites (~185 tests)
@@ -391,7 +398,7 @@ Ver sección 7 (Calculadora).
 - **Pública**: `/calculadora` — 8 pasos (flujo wizard, **pero requiere autenticación** — es ruta legacy de intranet)
 - **Intranet**: `/intranet/calculadora` → rewrite → `/calculadora`
 - **Admin**: `/intranet/admin/calculadora` — versión admin con layout propio
-- **Código**: `app/calculadora/` (page.tsx + 14 componentes y hooks)
+- **Código**: `components/domain/calculadora/` (13 archivos: state, hooks, pasos 1-8)
 - **Estado**: vía `configs` (array de `DelitoConfig`). Preservar inmutabilidad.
 
 > **⚠️ PRIVACIDAD ABSOLUTA**: La calculadora de penas es una herramienta interna del bufete. Ninguna de sus rutas (`/calculadora`, `/intranet/calculadora`, `/intranet/admin/calculadora`, `/api/calcular`, `/api/calcular/pdf`) debe ser indexada por buscadores, enlazada desde páginas públicas, ni mencionada en contenido indexable. Ver regla 17 en sección 8.

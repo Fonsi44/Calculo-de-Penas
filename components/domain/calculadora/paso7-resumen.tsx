@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AGRAVANTES, ATENUANTES, EXIMENTES, GRADOS_AUTORIA, GRADOS_EJECUCION, TIPOS_CONCURSO } from '@/lib/catalogos';
 import { cn } from '@/lib/ui';
-import type { DelitoConfig } from '../types';
+import type { DelitoConfig } from '@/lib/types';
 
 interface Props {
   configs: DelitoConfig[];

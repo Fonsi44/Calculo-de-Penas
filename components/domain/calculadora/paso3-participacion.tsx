@@ -3,7 +3,7 @@
 import { Card, CardHeader } from '@/components/ui/card';
 import { GRADOS_AUTORIA, GRADOS_EJECUCION } from '@/lib/catalogos';
 import { cn } from '@/lib/ui';
-import type { DelitoConfig } from '../types';
+import type { DelitoConfig } from '@/lib/types';
 
 interface Props {
   current: DelitoConfig | undefined;

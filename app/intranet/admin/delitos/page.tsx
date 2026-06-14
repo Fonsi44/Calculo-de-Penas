@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { Search, X, Plus, Gavel, Edit3, Trash2, BookOpen, ChevronLeft, ChevronRight, CheckCircle2, FileCheck, ArrowRight } from 'lucide-react';
-import type { Delito } from '@/app/types';
+import type { Delito } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { EmptyState, ErrorState } from '@/components/ui/empty-state';

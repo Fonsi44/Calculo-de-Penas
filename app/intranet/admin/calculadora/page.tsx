@@ -2,16 +2,16 @@
 
 import { Suspense, useState } from 'react';
 import { ChevronLeft, Scale } from 'lucide-react';
-import { useCalculadoraState } from '@/app/calculadora/state';
-import { Paso1Delito } from '@/app/calculadora/paso1-delito';
-import { Paso2Variantes } from '@/app/calculadora/paso2-variantes';
-import { Paso3Participacion } from '@/app/calculadora/paso3-participacion';
-import { Paso5DelitosList } from '@/app/calculadora/paso5-delitos-list';
-import { Paso6Concurso } from '@/app/calculadora/paso6-concurso';
-import { Paso7Resumen } from '@/app/calculadora/paso7-resumen';
-import { Paso8Resultado } from '@/app/calculadora/paso8-resultado';
-import { SaveModal } from '@/app/calculadora/save-modal';
-import { ComparadorView } from '@/app/calculadora/comparador';
+import { useCalculadoraState } from '@/components/domain/calculadora/state';
+import { Paso1Delito } from '@/components/domain/calculadora/paso1-delito';
+import { Paso2Variantes } from '@/components/domain/calculadora/paso2-variantes';
+import { Paso3Participacion } from '@/components/domain/calculadora/paso3-participacion';
+import { Paso5DelitosList } from '@/components/domain/calculadora/paso5-delitos-list';
+import { Paso6Concurso } from '@/components/domain/calculadora/paso6-concurso';
+import { Paso7Resumen } from '@/components/domain/calculadora/paso7-resumen';
+import { Paso8Resultado } from '@/components/domain/calculadora/paso8-resultado';
+import { SaveModal } from '@/components/domain/calculadora/save-modal';
+import { ComparadorView } from '@/components/domain/calculadora/comparador';
 import { CircunstanciaPicker } from '@/components/domain/circunstancia-picker';
 import { ArticleModal } from '@/app/article-modal';
 import { CenteredSpinner } from '@/components/ui/spinner';

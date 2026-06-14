@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { BookOpen, ArrowRight, FileCheck, ExternalLink, AlertTriangle } from 'lucide-react';
-import type { Delito } from '@/app/types';
+import type { Delito } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

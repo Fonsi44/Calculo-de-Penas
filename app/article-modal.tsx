@@ -88,7 +88,7 @@ export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
                 {article.texto}
               </div>
               <Link
-                href={`/cp/${article.id}`}
+                href={`/intranet/admin/cp/${article.id}`}
                 className="inline-flex items-center gap-1 mt-4 text-xs font-semibold text-accent hover:text-accent-light transition-colors"
                 onClick={onClose}
               >

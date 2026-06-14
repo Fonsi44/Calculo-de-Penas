@@ -115,20 +115,9 @@ const nextConfig: NextConfig = {
       { source: '/blog/derecho-civil/contratos-civiles-honduras-errores-comunes', destination: '/blog/derecho-civil/errores-contratos-civiles-honduras', permanent: true },
     ];
   },
-  // Rewrites: exponen las paginas intranet bajo el namespace /intranet/*
-  // para que el sidebar y los enlaces canónicos apunten a /intranet/calculadora,
-  // /intranet/casos, etc., sin mover los archivos page.tsx existentes.
-  // El proxy ya permite /intranet/* a usuarios autenticados.
+  // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key
   async rewrites() {
     return [
-      { source: '/intranet/calculadora', destination: '/calculadora' },
-      { source: '/intranet/casos', destination: '/casos' },
-      { source: '/intranet/casos/:id', destination: '/casos/:id' },
-      { source: '/intranet/cp', destination: '/cp' },
-      { source: '/intranet/cp/:id', destination: '/cp/:id' },
-      { source: '/intranet/delitos', destination: '/delitos' },
-      { source: '/intranet/atajos', destination: '/atajos' },
-      // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key
       { source: '/:key.txt', destination: '/api/indexnow-key' },
     ];
   },
@@ -164,20 +153,6 @@ const nextConfig: NextConfig = {
         headers: [
           { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
           { key: 'X-Frame-Options', value: 'DENY' },
-        ],
-      },
-      // Rutas heredadas de intranet (no bajo /intranet/ pero protegidas por proxy):
-      // no deben ser indexadas por buscadores
-      {
-        source: '/(calculadora|casos|cp|delitos|atajos|delito-form)',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
-        ],
-      },
-      {
-        source: '/(casos|cp|delitos)/:path*',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
         ],
       },
       // Cache estático: imágenes, fuentes, JS/CSS build de Next.js

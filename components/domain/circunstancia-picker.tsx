@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Chip } from '@/components/ui/chip';
 import { Badge } from '@/components/ui/badge';
 import { AGRAVANTES, ATENUANTES, EXIMENTES } from '@/lib/catalogos';
-import type { DelitoConfig } from '@/app/types';
+import type { DelitoConfig } from '@/lib/types';
 import { cn } from '@/lib/ui';
 
 interface Props {

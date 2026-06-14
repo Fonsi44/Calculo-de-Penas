@@ -3,7 +3,7 @@
 import { Plus, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import type { DelitoConfig } from '../types';
+import type { DelitoConfig } from '@/lib/types';
 
 interface Props {
   configs: DelitoConfig[];

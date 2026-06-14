@@ -1,6 +1,6 @@
 'use client';
 
-import type { DelitoConfig } from '../types';
+import type { DelitoConfig } from '@/lib/types';
 import { cn } from '@/lib/ui';
 import { AlertTriangle, ShieldAlert } from 'lucide-react';
 

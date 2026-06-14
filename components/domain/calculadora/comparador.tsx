@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { meses_a_texto } from '@/lib/utils';
-import type { DelitoConfig } from '../types';
+import type { DelitoConfig } from '@/lib/types';
 import type { ResultadoCalculo } from '@/lib/calculo';
 
 interface Escenario {

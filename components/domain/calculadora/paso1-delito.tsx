@@ -1,7 +1,7 @@
 'use client';
 
 import { Search, X, Search as SearchIcon, CheckCircle2 } from 'lucide-react';
-import type { Delito, DelitoConfig } from '../types';
+import type { Delito, DelitoConfig } from '@/lib/types';
 import { BannerCalidadDatos } from './banner-calidad-datos';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
