@@ -16,7 +16,12 @@ export interface AreaFromDb {
   sortOrder: number;
 }
 
+const IS_DB_REACHABLE = Boolean(
+  process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
+);
+
 export const getAreasFromDb = cache(async (categoria?: string): Promise<AreaFromDb[]> => {
+  if (!IS_DB_REACHABLE) return [];
   const where = categoria ? eq(areasJuridicas.categoria, categoria) : undefined;
   const rows = await db.select().from(areasJuridicas).where(where).orderBy(asc(areasJuridicas.sortOrder));
   return rows.map(r => ({
@@ -34,6 +39,7 @@ export const getAreasFromDb = cache(async (categoria?: string): Promise<AreaFrom
 });
 
 export const getAreaBySlugFromDb = cache(async (slug: string): Promise<AreaFromDb | undefined> => {
+  if (!IS_DB_REACHABLE) return undefined;
   const [row] = await db.select().from(areasJuridicas).where(eq(areasJuridicas.slug, slug)).limit(1);
   if (!row) return undefined;
   return {
