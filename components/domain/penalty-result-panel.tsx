@@ -126,6 +126,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
                 {d.confianza === 'rechazado' && <Badge tone="danger" title="Artículo no verificado contra el CP">No verificado</Badge>}
                 {d.confianza === 'pendiente_revision' && <Badge tone="warning" title="Pendiente de revisión manual">Pendiente</Badge>}
                 {d.confianza === 'verificado' && <Badge tone="mitigation" title="Artículo validado contra el CP">Verificado</Badge>}
+                {d.pena_por_remision_normativa && <Badge tone="warning" title="Pena obtenida por remisión a otros artículos">Remisión</Badge>}
                 {d.exento && <Badge tone="exemption">EXENTO</Badge>}
               </div>
             ))}

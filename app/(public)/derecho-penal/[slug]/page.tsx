@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
-import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';

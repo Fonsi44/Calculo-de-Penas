@@ -18,20 +18,22 @@ Este repositorio requiere precisión, trazabilidad, verificación real y honesti
 
 ### Módulos principales
 
-| Módulo | Rutas | Estado |
-|--------|-------|--------|
-| Web pública (marketing) | `/(public)/*` | ✅ Producción |
-| Blog | `/blog`, `/blog/[categoria]/[slug]` | ✅ DB nativa + ISR |
-| FAQ | `/preguntas-frecuentes` | ✅ DB nativa + ISR |
-| Calculadora de penas | `/calculadora` (8 pasos) | ✅ Motor v1 |
-| Intranet dashboard | `/intranet/dashboard` | ✅ Autenticado |
-| Intranet admin | `/intranet/admin/*` | ✅ CMS completo |
-| API REST | `/api/*` (25+ endpoints) | ✅ |
-| WordPress (legacy) | `wordpress/` | ⏳ Migración en curso |
+| Módulo | Rutas | Estado | Acceso |
+|--------|-------|--------|--------|
+| Web pública (marketing) | `/(public)/*` | ✅ Producción | Público |
+| Blog | `/blog`, `/blog/[categoria]/[slug]` | ✅ DB nativa + ISR | Público |
+| FAQ | `/preguntas-frecuentes` | ✅ DB nativa + ISR | Público |
+| Intranet (dashboard + admin) | `/intranet/*`, `/intranet/admin/*` | ✅ CMS completo | 🔒 Solo personal del bufete |
+| Calculadora de penas | `/calculadora`, `/intranet/calculadora` (8 pasos, rewrite) | ✅ Motor v1 | 🔒 Solo personal del bufete |
+| API REST | `/api/*` (25+ endpoints) | ✅ | Mixto (público / auth según endpoint) |
+| WordPress (legacy) | `wordpress/` | ⏳ Migración en curso | — |
+
+> **⚠️ Toda la intranet (`/intranet/*`, `/calculadora`, `/casos`, `/cp`, `/delitos`, `/atajos`, `/admin/*`) es PRIVADA y de uso exclusivo del personal del bufete.** Ninguna de estas rutas debe ser mencionada, enlazada, indexada ni referenciada desde la web pública o desde buscadores. Ver reglas 17-19 en sección 8.
 
 ### Público objetivo
 
-Profesionales del derecho que necesitan determinar penas con precisión técnica según el **Código Penal de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024).
+**Web pública:** Potenciales clientes que buscan asesoría jurídica en Honduras.  
+**Intranet:** Exclusivamente personal del bufete Pineda y Asociados para gestión de casos, cálculo de penas y administración de contenido.
 
 ---
 
@@ -386,10 +388,13 @@ Ver sección 7 (Calculadora).
 ## 7. Calculadora de penas
 
 ### Rutas
-- **Pública**: `/calculadora` — 8 pasos (flujo wizard)
+- **Pública**: `/calculadora` — 8 pasos (flujo wizard, **pero requiere autenticación** — es ruta legacy de intranet)
 - **Intranet**: `/intranet/calculadora` → rewrite → `/calculadora`
+- **Admin**: `/intranet/admin/calculadora` — versión admin con layout propio
 - **Código**: `app/calculadora/` (page.tsx + 14 componentes y hooks)
 - **Estado**: vía `configs` (array de `DelitoConfig`). Preservar inmutabilidad.
+
+> **⚠️ PRIVACIDAD ABSOLUTA**: La calculadora de penas es una herramienta interna del bufete. Ninguna de sus rutas (`/calculadora`, `/intranet/calculadora`, `/intranet/admin/calculadora`, `/api/calcular`, `/api/calcular/pdf`) debe ser indexada por buscadores, enlazada desde páginas públicas, ni mencionada en contenido indexable. Ver regla 17 en sección 8.
 
 ### Motor de cálculo
 - `lib/rules/v1/` — 9 archivos: `pena-base.ts`, `circunstancias.ts`, `tentativa.ts`, `grado-autoria.ts`, `concurso.ts`, `eximentes.ts`, `analisis.ts`, `types.ts`, `index.ts`
@@ -446,6 +451,9 @@ Ver sección 7 (Calculadora).
 14. **No crear rutas nuevas si ya existen rutas oficiales** del proyecto.
 15. **No permitir categorías inválidas** en formularios de blog o FAQ.
 16. **No guardar en fuentes incorrectas** (blog debe ir a `blog_posts`, FAQ a `faq_entries`).
+17. **La calculadora de penas es uso interno exclusivo del personal del bufete**. No crear rutas públicas, no exponer fuera de `/intranet/`, no enlazar desde páginas públicas indexables. No solicitar indexación de ninguna URL relacionada con la calculadora en buscadores. Bing, Google y demás motores no deben descubrir ni indexar ninguna URL bajo `/intranet/`, `/calculadora`, `/casos`, `/cp`, `/delitos` ni `/admin/`.
+18. **No exponer la intranet ni sus herramientas al público**. La intranet (`/intranet/*`) y todas sus rutas hijas son privadas. No redirigir desde URLs administrativas a la home sin considerar las señales SEO que ello genera. Si una URL administrativa es descubierta, debe devolver 401/403/login, no 301/302 genérica.
+19. **La intranet es PRIVADA y jamás se menciona en la web pública**. No se hace referencia a ninguna funcionalidad, ruta, herramienta, contenido ni sección de la intranet (`/intranet/*`, `/calculadora`, `/casos`, `/cp`, `/delitos`, `/atajos`, `/admin/*`) desde páginas públicas, artículos del blog, FAQ, sitemaps, metadatos, breadcrumbs, schemas JSON-LD, enlaces internos ni externos. Para los buscadores y el público general, la intranet no existe.
 
 ### Lo que SIEMPRE debe hacer la IA
 
@@ -520,6 +528,7 @@ vercel inspect <url-del-nuevo-deploy>
 | API routes | `npm run build` + verificar endpoint con `Invoke-RestMethod` |
 | UI / componentes públicos | `npm run build` + `npm run test` |
 | Imágenes / assets | `npm run build` + verificar rutas públicas |
+| SEO / robots / sitemap | `npm run build` + `npm run lint` + verificar `sitemap.xml` y `robots.txt` en build output |
 
 ---
 
@@ -608,6 +617,13 @@ Está prohibido usar "hecho", "listo", "completado" o "validado" si no correspon
 - Si se añaden rutas públicas, agregar a `PUBLIC_PAGE_EXACT` o `PUBLIC_PAGE_PREFIXES` en `proxy.ts`.
 - Si se añaden rutas intranet legacy, agregar a `INTRANET_LEGACY_EXACT` o `INTRANET_LEGACY_PREFIXES`.
 - Si se añaden páginas admin, asegurar que están protegidas por `requireAdmin()`.
+- **Verificar que ninguna ruta nueva de intranet/admin se filtre al sitemap, robots.txt ni enlaces públicos**.
+
+### Siempre verificar antes de finalizar
+- Confirmar que ninguna URL de `/intranet/`, `/calculadora`, `/casos`, `/cp`, `/delitos`, `/atajos` ni `/admin/*` aparece en `sitemap.xml`.
+- Confirmar que `robots.txt` bloquea todas las rutas privadas.
+- Confirmar que `X-Robots-Tag: noindex, nofollow` se aplica a todas las rutas privadas.
+- Confirmar que ningún enlace público (header, footer, contenido, breadcrumbs, schema) referencia la intranet. El único enlace a intranet es el de "Acceso Intranet" con `rel="nofollow"` en el header.
 
 ---
 

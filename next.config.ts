@@ -166,6 +166,20 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
+      // Rutas heredadas de intranet (no bajo /intranet/ pero protegidas por proxy):
+      // no deben ser indexadas por buscadores
+      {
+        source: '/(calculadora|casos|cp|delitos|atajos|delito-form)',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
+      },
+      {
+        source: '/(casos|cp|delitos)/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
+      },
       // Cache estático: imágenes, fuentes, JS/CSS build de Next.js
       {
         source: '/:path(.+\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2?|ttf|js|css))',

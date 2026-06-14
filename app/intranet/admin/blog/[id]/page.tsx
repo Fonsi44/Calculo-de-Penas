@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Sparkles, Image, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle, Upload, X, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Save, Sparkles, Image as ImageIcon, Clock, Tag, Wand2, Loader2, CheckCircle2, Code2, Eye, AlertTriangle, Upload, X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -87,7 +87,7 @@ export default function AdminBlogEditorPage() {
       })
       .catch(() => toast.danger('Error al cargar'))
       .finally(() => setLoading(false));
-  }, [isNew, params.id]);
+  }, [isNew, params.id, toast]);
 
   useEffect(() => {
     if (!loading) {
@@ -405,7 +405,7 @@ export default function AdminBlogEditorPage() {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <label className="text-xs font-semibold text-text-secondary">Imagen portada</label>
-                <button type="button" onClick={handleAutoCover} className="text-xxs text-accent hover:text-accent-dark flex items-center gap-1 transition-colors"><Image size={11} /> Auto</button>
+                <button type="button" onClick={handleAutoCover} className="text-xxs text-accent hover:text-accent-dark flex items-center gap-1 transition-colors"><ImageIcon size={11} /> Auto</button>
               </div>
               <Input value={form.coverImage} onChange={e => update('coverImage', e.target.value)} placeholder="/images/blog/..." />
               <div className="mt-2">
@@ -419,6 +419,7 @@ export default function AdminBlogEditorPage() {
               </div>
               {(form.coverImage || uploadPreview) && (
                 <div className="mt-2 relative aspect-video rounded-md overflow-hidden border border-border bg-surface-alt">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={form.coverImage} alt="Vista previa" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                 </div>
               )}

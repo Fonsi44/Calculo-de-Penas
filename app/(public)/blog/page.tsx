@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { site } from '@/lib/site';
-import { Section, Container } from '@/components/marketing/section';
+import { Section } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogCard } from '@/components/blog/blog-card';
 import { CategoryFilter } from '@/components/blog/category-filter';

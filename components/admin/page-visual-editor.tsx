@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import {
-  Eye, EyeOff, Save, Undo2, Redo2, PanelRightOpen, PanelRightClose,
+  Eye, EyeOff, Save, PanelRightOpen, PanelRightClose,
   RefreshCw, FileText, CheckCircle2, AlertTriangle, ArrowLeft,
-  Globe, List, LayoutPanelLeft, Download, Upload,
-  PenLine, BookOpen, Bug, ChevronUp, ChevronDown,
+  Globe, List, LayoutPanelLeft, Download,
+  PenLine, BookOpen, Bug,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -80,7 +80,6 @@ export function PageVisualEditor({ page, pageLabel, publicRoute, onBack, initial
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [debugOpen, setDebugOpen] = useState(false);
   const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
-  const [savingCount, setSavingCount] = useState(0);
 
   const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const saveLockRef = useRef(false);

@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Search, X, FileText, ArrowRight, ChevronLeft, ChevronRight, BookOpen, BookMarked } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';

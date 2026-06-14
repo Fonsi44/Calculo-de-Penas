@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
-import { upsertPageContent, duplicateSection, setPageStatus, getEditablePagesMeta, getPageMeta, getPagesList, pageHasContent } from '@/lib/page-content-db';
+import { upsertPageContent, duplicateSection, setPageStatus, getEditablePagesMeta, getPageMeta, getPagesList } from '@/lib/page-content-db';
 
 const upsertSchema = z.object({
   page: z.string().min(1).max(200),

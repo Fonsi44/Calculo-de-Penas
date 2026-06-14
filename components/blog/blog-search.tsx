@@ -78,6 +78,7 @@ export function BlogSearch({ posts, scope }: Props) {
               >
                 {p.coverImage && (
                   <div className="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 bg-primary/5 border border-border/20">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={p.coverImage} alt="" className="w-full h-full object-cover" />
                   </div>
                 )}

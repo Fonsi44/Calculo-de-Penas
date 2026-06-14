@@ -111,6 +111,7 @@ export default function AdminMediosPage() {
             <Card key={medio.id} padding="none" className="overflow-hidden">
               <div className="aspect-square bg-surface-alt relative group">
                 {isImage(medio.tipoMime) ? (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img src={medio.url} alt={medio.altText || ''} className="w-full h-full object-cover"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                 ) : (

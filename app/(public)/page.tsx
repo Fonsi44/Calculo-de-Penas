@@ -9,8 +9,6 @@ import {
   CheckCircle2,
   ArrowRight,
   Phone,
-  MessageCircle,
-  Calendar,
   Briefcase,
   Clock,
   Gavel,
@@ -20,7 +18,7 @@ import {
   Users,
   Landmark,
 } from 'lucide-react';
-import { site, telHref, whatsappHref } from '@/lib/site';
+import { site, telHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';

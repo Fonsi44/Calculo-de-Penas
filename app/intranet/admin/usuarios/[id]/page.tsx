@@ -25,7 +25,7 @@ export default function AdminEditarUsuarioPage() {
       .then(data => { const u = (data.usuarios ?? []).find((x: { id: string }) => x.id === params.id); if (u) setForm({ nombre: u.nombre, email: u.email, rol: u.rol, password: '' }); })
       .catch(() => toast.danger('Error al cargar usuario'))
       .finally(() => setLoading(false));
-  }, [params.id]);
+  }, [params.id, toast]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();

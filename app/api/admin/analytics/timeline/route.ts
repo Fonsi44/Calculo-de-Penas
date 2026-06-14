@@ -41,7 +41,6 @@ export async function GET(request: Request) {
       const current = getDateRange(days);
       const previous = getDateRange(days * 2);
       const prevStart = previous.startStr;
-      const prevEnd = previous.endStr;
       const currStart = current.startStr;
       const currEnd = current.endStr;
 
