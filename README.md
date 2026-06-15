@@ -853,7 +853,7 @@ generatepress-child/
 ### Estructura SEO implementada
 
 - **Sitemap dinámico:** `/sitemap.xml` — incluye páginas estáticas, categorías de blog y posts individuales con prioridades y lastmod diferenciados.
-- **Robots.txt dinámico:** `/robots.txt` — bloquea `/intranet/`, `/api/`, `/_next/`, bots de IA permanentemente.
+- **Robots.txt dinámico:** `/robots.txt` — permite recursos críticos (`/_next/static/`, `/_next/image`, `/images/`), bloquea `/intranet/`, `/api/`, bots de IA.
 - **Breadcrumbs:** Componente `<Breadcrumbs>` reutilizable con schema `BreadcrumbList` integrado. Presente en todas las páginas públicas.
 - **JSON-LD:** `LegalService`, `WebSite`, `Organization`, `FAQPage`, `BlogPosting`, `BreadcrumbList`, `CollectionPage`.
 - **Blog con paginación:** 12 posts por página, navegación prev/next, canonicals correctos.
@@ -1023,7 +1023,7 @@ El script:
 ### robots.txt dinámico
 
 - `app/robots.ts` genera `/robots.txt`:
-  - Producción: permite rastreo público, bloquea `/intranet/`, `/api/`, `/_next/`, `/404`, `/500`.
+  - Producción: permite rastreo público con recursos críticos explícitamente accesibles, bloquea `/intranet/`, `/api/`, `/404`, `/500`.
   - Bloquea permanentemente bots de IA (GPTBot, ClaudeBot, PerplexityBot, etc.).
   - Declara `sitemap.xml`.
   - Desarrollo: bloquea todo.

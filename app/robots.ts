@@ -47,13 +47,14 @@ export default function robots(): MetadataRoute.Robots {
     };
   }
 
-  // Modo producción: rastreo permitido, intranet y APIs bloqueadas
+  // Modo producción: rastreo permitido, recursos críticos explícitamente accesibles,
+  // solo se bloquean rutas privadas (intranet, API, errores).
   return {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found'],
+        allow: ['/', '/_next/static/', '/_next/image', '/images/'],
+        disallow: ['/intranet/', '/api/', '/404', '/500', '/_not-found'],
       },
       // Bots de IA/scrapers bloqueados
       { userAgent: 'GPTBot', disallow: '/' },
