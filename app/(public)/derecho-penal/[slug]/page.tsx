@@ -24,10 +24,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const grupo = hubPenal.grupos.find((g) => g.slug === slug);
   if (!grupo) return {};
+  const canonical = `/derecho-penal/${slug}`;
   return {
     title: `${grupo.titulo} | Derecho Penal`,
-    description: `${grupo.descripcion.substring(0, 160)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
-    alternates: { canonical: `/derecho-penal/${slug}` },
+    description: `${grupo.descripcion.substring(0, 155)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
+    alternates: { canonical },
+    keywords: grupo.keywords,
+    twitter: {
+      card: 'summary_large_image',
+      title: `${grupo.titulo} | Derecho Penal | ${site.name}`,
+      description: grupo.resumen.substring(0, 155),
+      images: [`${site.url}/og/penal.webp`],
+    },
+    openGraph: {
+      title: `${grupo.titulo} | Derecho Penal | ${site.name}`,
+      description: grupo.resumen.substring(0, 155),
+      url: `${site.url}${canonical}`,
+      siteName: site.name,
+      locale: 'es_HN',
+      type: 'website',
+      images: [{ url: `${site.url}/og/penal.webp`, width: 1200, height: 630, alt: grupo.titulo }],
+    },
   };
 }
 

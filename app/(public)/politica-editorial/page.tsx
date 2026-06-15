@@ -5,9 +5,24 @@ import { site } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Política Editorial',
   description:
-    'Política editorial de Pineda y Asociados: criterios de creación, revisión y actualización de los contenidos jurídicos publicados en nuestro sitio web.',
+    'Política editorial del bufete Pineda y Asociados en Nacaome, Valle: criterios de creación, revisión y actualización de contenidos jurídicos publicados en nuestro sitio web.',
   alternates: { canonical: '/politica-editorial' },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Política Editorial | Pineda y Asociados',
+    description: 'Criterios editoriales del bufete Pineda y Asociados en Nacaome, Valle, Honduras para la creación y revisión de contenidos jurídicos.',
+    images: [`${site.url}/og-image.png`],
+  },
+  openGraph: {
+    title: 'Política Editorial | Pineda y Asociados',
+    description: 'Política editorial del bufete jurídico Pineda y Asociados: criterios de creación, revisión y actualización de contenidos.',
+    url: `${site.url}/politica-editorial`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Política Editorial` }],
+  },
 };
 
 export default function PoliticaEditorialPage() {

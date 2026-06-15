@@ -24,10 +24,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const subarea = hubMigrantes.subareas.find((s) => s.slug === slug);
   if (!subarea) return {};
+  const canonical = `/hondurenos-en-espana/${slug}`;
   return {
     title: `${subarea.titulo} | Hondureños en España`,
-    description: `${subarea.descripcion.substring(0, 160)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
-    alternates: { canonical: `/hondurenos-en-espana/${slug}` },
+    description: `${subarea.descripcion.substring(0, 155)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
+    alternates: { canonical },
+    keywords: subarea.keywords,
+    twitter: {
+      card: 'summary_large_image',
+      title: `${subarea.titulo} | Hondureños en España | ${site.name}`,
+      description: subarea.descripcion.substring(0, 155),
+      images: [`${site.url}/og-image.png`],
+    },
+    openGraph: {
+      title: `${subarea.titulo} | Hondureños en España | ${site.name}`,
+      description: subarea.descripcion.substring(0, 155),
+      url: `${site.url}${canonical}`,
+      siteName: site.name,
+      locale: 'es_HN',
+      type: 'website',
+      images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: subarea.titulo }],
+    },
   };
 }
 

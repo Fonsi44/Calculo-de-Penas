@@ -6,9 +6,24 @@ import { getLegalPageContent } from '@/lib/legal-content';
 export const metadata: Metadata = {
   title: 'Disclaimer · Exención de responsabilidad',
   description:
-    'Exención de responsabilidad de LEX Honduras sobre la calculadora de penas, los contenidos publicados y los servicios jurídicos contratados.',
+    'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, Honduras, sobre la calculadora de penas, contenidos publicados y servicios jurídicos.',
   alternates: { canonical: '/disclaimer' },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Disclaimer | Pineda y Asociados',
+    description: 'Exención de responsabilidad sobre la información publicada en el sitio web del bufete Pineda y Asociados en Nacaome, Valle, Honduras.',
+    images: [`${site.url}/og-image.png`],
+  },
+  openGraph: {
+    title: 'Disclaimer | Pineda y Asociados',
+    description: 'Exención de responsabilidad del bufete jurídico Pineda y Asociados sobre la calculadora de penas y contenidos publicados.',
+    url: `${site.url}/disclaimer`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Disclaimer` }],
+  },
 };
 
 export default async function DisclaimerPage() {

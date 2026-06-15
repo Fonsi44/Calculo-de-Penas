@@ -6,9 +6,24 @@ import { getLegalPageContent } from '@/lib/legal-content';
 export const metadata: Metadata = {
   title: 'Política de Cookies',
   description:
-    'Información detallada sobre las cookies utilizadas por LEX Honduras, su finalidad y cómo administrarlas.',
+    'Política de cookies del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle. Información sobre cookies técnicas y de análisis utilizadas.',
   alternates: { canonical: '/politica-cookies' },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Política de Cookies | Pineda y Asociados',
+    description: 'Gestión y control de cookies en el sitio web del bufete Pineda y Asociados en Nacaome, Valle, Honduras.',
+    images: [`${site.url}/og-image.png`],
+  },
+  openGraph: {
+    title: 'Política de Cookies | Pineda y Asociados',
+    description: 'Política de cookies del bufete jurídico Pineda y Asociados en Nacaome, Valle. Información sobre cookies técnicas y de análisis.',
+    url: `${site.url}/politica-cookies`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Política de Cookies` }],
+  },
 };
 
 export default async function PoliticaCookiesPage() {

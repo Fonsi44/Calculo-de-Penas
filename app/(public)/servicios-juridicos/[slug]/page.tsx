@@ -50,19 +50,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
   const ogImage = OG_IMAGES[slug];
 
+  const canonical = `/servicios-juridicos/${slug}`;
   return {
     title: area.titulo,
     description: `${area.descripcion.substring(0, 155)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
-    alternates: { canonical: `/servicios-juridicos/${slug}` },
-    ...(ogImage ? {
-      openGraph: {
-        images: [{ url: `${site.url}${ogImage}`, width: 1200, height: 630, alt: area.titulo }],
-      },
-      twitter: {
-        card: 'summary_large_image',
-        images: [`${site.url}${ogImage}`],
-      },
-    } : {}),
+    alternates: { canonical },
+    keywords: area.keywords,
+    twitter: {
+      card: 'summary_large_image',
+      title: `${area.titulo} | ${site.name}`,
+      description: area.descripcion.substring(0, 155),
+      images: [`${site.url}${ogImage || '/og-image.png'}`],
+    },
+    openGraph: {
+      title: `${area.titulo} | ${site.name}`,
+      description: area.descripcion.substring(0, 155),
+      url: `${site.url}${canonical}`,
+      siteName: site.name,
+      locale: 'es_HN',
+      type: 'website',
+      images: [{ url: `${site.url}${ogImage || '/og-image.png'}`, width: 1200, height: 630, alt: area.titulo }],
+    },
   };
 }
 

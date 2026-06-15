@@ -12,9 +12,24 @@ import { getLegalPageContent } from '@/lib/legal-content';
 export const metadata: Metadata = {
   title: 'Política de Privacidad',
   description:
-    'Cómo LEX Honduras trata los datos personales de los usuarios del sitio web y de la calculadora de penas, conforme a la Constitución de la República y al ordenamiento hondureño.',
+    'Política de privacidad de Pineda y Asociados, bufete jurídico en Nacaome, Valle, Honduras. Compromiso con la protección de datos personales conforme al ordenamiento hondureño.',
   alternates: { canonical: '/politica-privacidad' },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Política de Privacidad | Pineda y Asociados',
+    description: 'Cómo protegemos sus datos personales en el sitio web del bufete Pineda y Asociados en Nacaome, Valle, Honduras.',
+    images: [`${site.url}/og-image.png`],
+  },
+  openGraph: {
+    title: 'Política de Privacidad | Pineda y Asociados',
+    description: 'Política de privacidad del bufete jurídico Pineda y Asociados en Nacaome, Valle. Compromiso con la protección de datos personales.',
+    url: `${site.url}/politica-privacidad`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Política de Privacidad` }],
+  },
 };
 
 export default async function PoliticaPrivacidadPage() {

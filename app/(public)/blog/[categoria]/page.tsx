@@ -41,6 +41,15 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       description: cat.descripcion,
       images: [`${site.url}/og-image.png`],
     },
+    openGraph: {
+      title: `${cat.nombre} — Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,
+      description: cat.descripcion,
+      url: `${site.url}${canonicalPath}`,
+      siteName: site.name,
+      locale: 'es_HN',
+      type: 'website',
+      images: [{ url: `${site.url}/og/blog.webp`, width: 1200, height: 630, alt: `${cat.nombre} — Blog Jurídico` }],
+    },
   };
 }
 

@@ -6,9 +6,24 @@ import { getLegalPageContent } from '@/lib/legal-content';
 export const metadata: Metadata = {
   title: 'Aviso Legal',
   description:
-    'Aviso legal e identificación del titular de la web de LEX Honduras conforme a la legislación de la República de Honduras.',
+    'Aviso legal e identificación del titular del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle, Honduras.',
   alternates: { canonical: '/aviso-legal' },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aviso Legal | Pineda y Asociados',
+    description: 'Identificación del titular y responsabilidad del sitio web del bufete Pineda y Asociados en Nacaome, Valle, Honduras.',
+    images: [`${site.url}/og-image.png`],
+  },
+  openGraph: {
+    title: 'Aviso Legal | Pineda y Asociados',
+    description: 'Aviso legal e identificación del titular del sitio web del bufete jurídico Pineda y Asociados en Nacaome, Valle, Honduras.',
+    url: `${site.url}/aviso-legal`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Aviso Legal` }],
+  },
 };
 
 export default async function AvisoLegalPage() {

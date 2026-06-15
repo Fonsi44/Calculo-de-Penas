@@ -6,9 +6,24 @@ import { getLegalPageContent } from '@/lib/legal-content';
 export const metadata: Metadata = {
   title: 'Términos y Condiciones',
   description:
-    'Términos y condiciones de uso de LEX Honduras, calculadora de penas del Código Penal hondureño (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024).',
+    'Términos y condiciones de uso del sitio web de Pineda y Asociados en Nacaome, Valle, Honduras. Reglas de acceso y utilización de los servicios jurídicos publicados.',
   alternates: { canonical: '/terminos' },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Términos y Condiciones | Pineda y Asociados',
+    description: 'Términos y condiciones de uso del sitio web del bufete Pineda y Asociados en Nacaome, Valle, Honduras.',
+    images: [`${site.url}/og-image.png`],
+  },
+  openGraph: {
+    title: 'Términos y Condiciones | Pineda y Asociados',
+    description: 'Términos y condiciones de uso del sitio web del bufete jurídico Pineda y Asociados en Nacaome, Valle, Honduras.',
+    url: `${site.url}/terminos`,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Términos y Condiciones` }],
+  },
 };
 
 export default async function TerminosPage() {
