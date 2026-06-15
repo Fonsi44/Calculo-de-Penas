@@ -1,5 +1,9 @@
 # Changelog
 
+## Release 58 — Fase 0: Parches críticos de la Calculadora de Penas (auditoría técnico-jurídica) (2026-06-15)
+
+Ver detalle de los 6 parches (C1, A1, A5, A6, C4) en el mensaje del commit y en las notas de auditoría. Validación: tsc 0 errores; tests motor 62/62; catálogo+validador 160/160; API calcular 6/6. Build NO VALIDADO por EPERM OneDrive (error OS 389).
+
 ## Release 57 — Infraestructura SEO, autoría, workflow editorial y validaciones (2026-06-14)
 
 ### 🟢 Nuevas columnas en blog_posts (migración DB)

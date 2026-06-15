@@ -14,7 +14,26 @@ import { formatHondurasDateTime } from '@/lib/datetime';
 export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase): ResultadoIndividual {
   const base = seleccionarPenaBase(config, delito);
   let { pena_min, pena_max } = base;
-  const { tipo_pena, unidad, pena_base_min, pena_base_max } = base;
+  const { tipo_pena, unidad, pena_base_min, pena_base_max, es_perpetuidad } = base;
+
+  // PERPETUIDAD: es una pena cualitativa (Art. 37 CP). No se le aplican
+  // fracciones, mitades ni circunstancias numéricas. Se devuelve como tope
+  // absoluto (480 meses = 40 años efectivos) marcada como perpetuidad.
+  if (es_perpetuidad) {
+    return {
+      delito: { id: delito.id, nombre: delito.nombre, articulo: delito.articulo, clasificacion: delito.clasificacion, penas_accesorias: delito.penas_accesorias },
+      pena_min,
+      pena_max,
+      pena_recomendada: pena_max,
+      gravedad: 'Muy grave',
+      tipo_pena: 'perpetuidad',
+      unidad,
+      exento: false,
+      pena_base_min,
+      pena_base_max,
+      modificaciones: ['Prisión a perpetuidad (Art. 37 CP): pena cualitativa, no se le aplican reducciones ni fracciones'],
+    };
+  }
 
   if (pena_base_min === 0 && pena_base_max === 0 && config.pena_seleccionada === 'prision') {
     return {

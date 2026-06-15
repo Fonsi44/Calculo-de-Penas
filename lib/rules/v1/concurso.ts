@@ -2,6 +2,13 @@ import { LIMITES } from '../../constants';
 import { meses_a_texto, aumentar_en_fraccion, aplicar_mitad_superior } from '../../utils';
 import type { ResultadoIndividual, ResultadoConcurso } from './types';
 
+// PERPETUIDAD (Art. 37 CP): pena cualitativa, no numérica. En cualquier modalidad
+// de concurso actúa como TOPE ABSOLUTO (40 años efectivos). No se acumula ni se
+// aumenta por fracción.
+function toparPerpetuidad(penas: ResultadoIndividual[]): boolean {
+  return penas.some((p) => p.tipo_pena === 'perpetuidad');
+}
+
 function aplicar_concurso_real(penas: ResultadoIndividual[]): ResultadoConcurso {
   const total_min = penas.reduce((s, p) => s + p.pena_min, 0);
   let total_max = penas.reduce((s, p) => s + p.pena_max, 0);
@@ -65,14 +72,32 @@ export function aplicarConcurso(penas: ResultadoIndividual[], tipo_concurso: str
     };
   }
 
+  let resultado: ResultadoConcurso;
   switch (tipo_concurso) {
     case 'real':
-      return aplicar_concurso_real(penas_activas);
+      resultado = aplicar_concurso_real(penas_activas);
+      break;
     case 'ideal':
-      return aplicar_concurso_ideal(penas_activas);
+      resultado = aplicar_concurso_ideal(penas_activas);
+      break;
     case 'continuado':
-      return aplicar_delito_continuado(penas_activas);
+      resultado = aplicar_delito_continuado(penas_activas);
+      break;
     default:
       return { pena_min: 0, pena_max: 0, descripcion: 'Tipo de concurso no reconocido', articulo: '' };
   }
+
+  // PERPETUIDAD como tope absoluto: si algún delito del concurso lleva
+  // prisión a perpetuidad, ningún mecanismo de concurso puede rebasar los
+  // 40 años efectivos (Art. 37/66 CP). La perpetuidad no se acumula ni se
+  // incrementa por fracción.
+  if (toparPerpetuidad(penas_activas) && resultado.pena_max > LIMITES.PENA_MAXIMA_EXCEPCIONAL_MESES) {
+    resultado = {
+      ...resultado,
+      pena_max: LIMITES.PENA_MAXIMA_EXCEPCIONAL_MESES,
+      descripcion: `${resultado.descripcion} Topado a perpetuidad (40 años efectivos, Art. 37 CP) por concurrir un delito con pena a perpetuidad.`,
+    };
+  }
+
+  return resultado;
 }

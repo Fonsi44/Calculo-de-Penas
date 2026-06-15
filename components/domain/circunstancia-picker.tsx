@@ -52,11 +52,13 @@ export function CircunstanciaPicker({ current, onChange, onOpenArticle }: Props)
               {' '}
               <span className="font-semibold text-aggravation">Agravantes</span> la aumentan (mitad superior).
               {' '}
-              {agravantesCount === atenuantesCount
-                ? 'Si el número es igual, se compensan y la pena se mantiene en el término medio.'
-                : agravantesCount > atenuantesCount
-                  ? `Hay ${agravantesCount - atenuantesCount} agravante(s) sin compensar.`
-                  : `Hay ${atenuantesCount - agravantesCount} atenuante(s) sin compensar.`}
+              {agravantesCount > 0 && atenuantesCount > 0
+                ? 'Concurren agravantes y atenuantes: se compensan cualitativamente y la pena se fija dentro del marco legal, sin imponer el máximo ni el mínimo (Art. 70.f CP).'
+                : agravantesCount === 0 && atenuantesCount === 0
+                  ? 'Sin circunstancias: pena dentro del marco legal (Art. 70.a CP).'
+                  : agravantesCount > atenuantesCount
+                    ? `Hay ${agravantesCount - atenuantesCount} agravante(s) sin compensar.`
+                    : `Hay ${atenuantesCount - agravantesCount} atenuante(s) sin compensar.`}
             </p>
           </div>
         </div>

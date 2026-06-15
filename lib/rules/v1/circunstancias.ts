@@ -54,7 +54,19 @@ export function aplicarCircunstancias(
       modificaciones.push(`${total_atenuantes} atenuantes: pena en límite mínimo (Art. 70.d CP)`);
     }
   } else {
-    modificaciones.push(`Agravantes (${total_agravantes}) y atenuantes (${total_atenuantes}) compensados: ni máximo ni mínimo (Art. 70.f CP)`);
+    // Art. 70.f CP: "compensadas... ni máximo ni mínimo".
+    //
+    // INTERPRETACIÓN: el Art. 70.f es una DIRECTRIZ JUDICIAL (el juez no puede
+    // imponer en su sentencia ni el máximo ni el mínimo legales del tipo), no
+    // una fórmula aritmética. Para una calculadora que devuelve un RANGO, el
+    // marco legal se mantiene íntegro porque cualquier pena interior es
+    // procedente; el usuario (abogado) debe entender que el resultado concreto
+    // a imponer no podrá coincidir con los extremos.
+    //
+    // NOTA: un recorte fino del rango (p.ej. excluir extremos por fracción)
+    // requiere modelado más preciso y revisión jurídica — planificado para
+    // Fase 3 del plan de corrección. No modificar en Fase 0.
+    modificaciones.push(`Agravantes (${total_agravantes}) y atenuantes (${total_atenuantes}) compensados: pena dentro del marco legal, sin imponer máximo ni mínimo (Art. 70.f CP)`);
   }
 
   return { pena_min: min, pena_max: max, total_agravantes, total_atenuantes, modificaciones };

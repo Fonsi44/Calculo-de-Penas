@@ -164,13 +164,17 @@ describe('calcular_pena_individual — Art. 62 Tentativa', () => {
     expect(r.modificaciones[0]).toContain('1/3');
   });
 
-  it('tentativa acabada + reduccion_tentativa=2: -1/4 y luego mitad inferior', () => {
+  it('tentativa acabada + reduccion_tentativa=2: NO aplica segundo grado (CP hondureño no lo contempla)', () => {
     const r = calcular_pena_individual(
       makeConfig({ grado_ejecucion: 'tentativa_acabada', reduccion_tentativa: 2 }),
       delitoBase,
     );
-    expect(r.pena_max).toBeLessThanOrEqual(6);
-    expect(r.modificaciones.some(m => m.includes('2 grados'))).toBe(true);
+    // La reducción por tentativa acabada es ÚNICA: -1/4 sobre [6,24] => [4,6].
+    // El parámetro reduccion_tentativa=2 debe ignorarse (regresión C1, auditoría).
+    expect(r.pena_min).toBe(4);
+    expect(r.pena_max).toBe(6);
+    expect(r.modificaciones.some(m => m.includes('2 grados'))).toBe(false);
+    expect(r.modificaciones.some(m => m.includes('1/4'))).toBe(true);
   });
 
   it('reduccion_tentativa=2 sin tentativa: no aplica', () => {
@@ -181,6 +185,69 @@ describe('calcular_pena_individual — Art. 62 Tentativa', () => {
     expect(r.modificaciones.some(m => m.includes('2 grados'))).toBe(false);
     expect(r.pena_min).toBe(6);
     expect(r.pena_max).toBe(24);
+  });
+});
+
+describe('calcular_pena_individual — Perpetuidad cualitativa (Art. 37 CP)', () => {
+  const delitoPerpetuidad: DelitoBase = {
+    id: 'test-perp',
+    nombre: 'Secuestro agravado (modalidad 3)',
+    articulo: 'Art. 240 CP',
+    clasificacion: 'Libertad',
+    penas_accesorias: ['Prohibición de residencia/aproximación'],
+    pena_minima_meses: 480,
+    pena_maxima_meses: 9999,
+    tiene_pena_alternativa: false,
+    pena_alternativa_min: 0,
+    pena_alternativa_max: 0,
+    reglas_especiales_pena: 'Prisión a perpetuidad.',
+  };
+
+  it('detecta perpetuidad por centinela 9999 y la marca como cualitativa', () => {
+    const r = calcular_pena_individual(makeConfig({ delito_id: 'test-perp' }), delitoPerpetuidad);
+    expect(r.tipo_pena).toBe('perpetuidad');
+    expect(r.pena_max).toBe(480); // topado a 40 años efectivos
+    expect(r.modificaciones.some(m => m.includes('perpetuidad'))).toBe(true);
+  });
+
+  it('perpetuidad no se reduce por cómplice ni tentativa', () => {
+    const r = calcular_pena_individual(
+      makeConfig({ delito_id: 'test-perp', grado_autoria: 'complice', grado_ejecucion: 'tentativa_acabada' }),
+      delitoPerpetuidad,
+    );
+    expect(r.tipo_pena).toBe('perpetuidad');
+    expect(r.pena_max).toBe(480); // ni reducciones ni fracciones
+  });
+
+  it('perpetuidad actúa como tope absoluto en concurso continuado', () => {
+    const r1 = calcular_pena_individual(makeConfig({ delito_id: 'test-perp' }), delitoPerpetuidad);
+    const r2 = calcular_pena_individual(makeConfig(), delitoBase);
+    const r = aplicar_concurso([r1, r2], 'continuado');
+    // 480 * (1 + 1/3) = 640, pero la perpetuidad topea a 480.
+    expect(r.pena_max).toBe(480);
+  });
+});
+
+describe('calcular_pena_individual — Validación de rangos (A6)', () => {
+  it('rango invertido min>max se normaliza internamente', () => {
+    // Simula un registro con dato corrupto (pena_min=72 > pena_max=12).
+    const delitoInvertido: DelitoBase = {
+      id: 'test-inv',
+      nombre: 'Invertido',
+      articulo: 'Art. 999 CP',
+      clasificacion: '',
+      penas_accesorias: [],
+      pena_minima_meses: 72,
+      pena_maxima_meses: 12,
+      tiene_pena_alternativa: false,
+      pena_alternativa_min: 0,
+      pena_alternativa_max: 0,
+    };
+    const r = calcular_pena_individual(makeConfig({ delito_id: 'test-inv' }), delitoInvertido);
+    // Tras normalización: [12, 72]. Mitad inferior sobre [12,72] => [12, 42].
+    expect(r.pena_min).toBeLessThanOrEqual(r.pena_max);
+    expect(r.pena_min).toBe(12);
+    expect(r.pena_max).toBe(72);
   });
 });
 

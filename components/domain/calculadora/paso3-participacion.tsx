@@ -55,23 +55,15 @@ export function Paso3Participacion({ current, onChange }: Props) {
 
       {(current?.grado_ejecucion === 'tentativa_acabada' || current?.grado_ejecucion === 'tentativa_inacabada') && (
         <Card padding="md">
-          <CardHeader title="Reducción por tentativa" />
-          <div className="flex gap-2">
-            {[1, 2].map(n => (
-              <button
-                key={n}
-                type="button"
-                onClick={() => onChange({ reduccion_tentativa: n })}
-                className={cn(
-                  'flex-1 h-10 rounded-md border font-semibold text-sm transition-all focus-visible:outline-none',
-                  current?.reduccion_tentativa === n
-                    ? 'border-accent bg-accent/10 text-accent-dark'
-                    : 'border-border bg-surface text-text hover:border-accent/50',
-                )}
-              >
-                {n} grado{n > 1 ? 's' : ''}
-              </button>
-            ))}
+          <CardHeader title="Reducción por tentativa (Art. 62 CP)" />
+          <div className="flex gap-2 items-center p-2.5 rounded-md border border-info/30 bg-info-bg">
+            <p className="text-xs text-text-secondary leading-5">
+              La reducción es <span className="font-semibold text-text">única y automática</span> según el tipo de tentativa:
+              {current?.grado_ejecucion === 'tentativa_acabada'
+                ? ' acabada → pena inferior en 1/4.'
+                : ' inacabada → pena inferior en 1/3.'}
+              El CP hondureño no contempla un segundo grado de reducción.
+            </p>
           </div>
         </Card>
       )}

@@ -1,5 +1,5 @@
 import { LIMITES } from '../../constants';
-import { aplicar_mitad_inferior, disminuir_en_fraccion } from '../../utils';
+import { disminuir_en_fraccion } from '../../utils';
 
 export interface ResultadoTentativa {
   pena_min: number;
@@ -7,11 +7,23 @@ export interface ResultadoTentativa {
   modificaciones: string[];
 }
 
+/**
+ * Aplica la reducción por tentativa conforme al Art. 62 CP.
+ *
+ * El Código Penal hondureño prevé UNA SOLA reducción por tentativa:
+ *   - Tentativa acabada: pena del consumado rebajada en 1/4.
+ *   - Tentativa inacabada: pena del consumado rebajada en 1/3.
+ *
+ * NOTA: El parámetro `reduccion_tentativa` se conserva por compatibilidad de la
+ * API (Deprecado Fase 0, auditoría técnico-jurídica), pero NO produce ningún
+ * efecto. El CP hondureño NO contempla "dos grados de tentativa" — esa figura
+ * es propia del CP español. Cualquier segunda reducción sería ilegal.
+ */
 export function aplicarTentativa(
   pena_min: number,
   pena_max: number,
   grado_ejecucion: string,
-  reduccion_tentativa: number,
+  _reduccion_tentativa: number,
   modificaciones: string[],
 ): ResultadoTentativa {
   let min = pena_min;
@@ -23,14 +35,6 @@ export function aplicarTentativa(
   } else if (grado_ejecucion === 'tentativa_inacabada') {
     [min, max] = disminuir_en_fraccion(min, max, LIMITES.FRACCION_TENTATIVA_INACABADA);
     modificaciones.push('Tentativa inacabada: pena inferior en 1/3 (Art. 62 CP)');
-  }
-
-  const esTentativa = grado_ejecucion === 'tentativa_acabada' || grado_ejecucion === 'tentativa_inacabada';
-  if (esTentativa && reduccion_tentativa === 2) {
-    const [nuevoMin, nuevoMax] = aplicar_mitad_inferior(min, max);
-    modificaciones.push('2 grados de reducción (Art. 69 CP): mitad inferior aplicada sobre la pena ya reducida por tentativa');
-    min = nuevoMin;
-    max = nuevoMax;
   }
 
   return { pena_min: min, pena_max: max, modificaciones };
