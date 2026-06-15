@@ -1,5 +1,63 @@
 # Changelog
 
+## Release 58 — Corrección crítica: desbloqueo de recursos bloqueados por robots.txt para Googlebot (2026-06-15)
+
+### 🔴 CRÍTICO: Google no podía cargar 20/20 recursos de renderizado
+
+**Causa raíz**: `app/robots.ts` incluía `'/_next/'` en la regla `Disallow` del `user-agent: *`, bloqueando todos los recursos bajo `/_next/`:
+- `/_next/static/css/*.css` — hojas de estilo
+- `/_next/static/chunks/*.js` — JavaScript de Next.js
+- `/_next/static/media/*.woff2` — fuentes tipográficas
+- `/_next/image?url=...` — imágenes optimizadas
+
+Esto impedía que Googlebot renderizara correctamente la página, resultando en el informe "20/20 recursos bloqueados por robots.txt".
+
+### 🔴 Corrección aplicada
+
+| Antes | Después |
+|-------|---------|
+| `disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found']`<br>`allow: '/'` | `disallow: ['/intranet/', '/api/', '/404', '/500', '/_not-found']`<br>`allow: ['/', '/_next/static/', '/_next/image', '/images/']` |
+
+- **Eliminado** `'/_next/'` de `disallow`
+- **Añadidos** `allow` explícitos para `/_next/static/`, `/_next/image` y `/images/`
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/robots.ts` | Eliminado `/_next/` de disallow, añadidos allow explícitos para recursos críticos |
+| `README.md` | Actualizadas referencias a la política de robots.txt |
+
+### Recursos desbloqueados para Googlebot
+
+- ✅ `/_next/static/css/` — CSS de renderizado
+- ✅ `/_next/static/chunks/` — JavaScript de renderizado
+- ✅ `/_next/static/media/` — Fuentes WOFF2
+- ✅ `/_next/image` — Imágenes optimizadas
+- ✅ `/images/` — Imágenes públicas
+
+### No requiere cambios
+
+- **Sitemap**: correcto, excluye rutas privadas y posts noindex
+- **Proxy/middleware**: `proxy.ts` ya excluye `_next/static`, `_next/image` e `images/` del matcher
+- **Imágenes**: las 3 imágenes del informe existen en `/public/images/services/`
+- **OpenStreetMap**: iframe externo (no controlable desde este repositorio). El CSP ya lo permite. Googlebot no renderiza iframes externos. El componente tiene fallback textual.
+- **next.config.ts**: headers `X-Robots-Tag` no afectan a recursos estáticos
+- **Base de datos**: sin cambios
+
+### Validación
+
+- `npm run lint`: 0 errores, 1 warning preexistente ✅
+- `npm run build`: Compiled successfully + TypeScript OK (296 páginas) ✅
+- `npm run test`: 361 tests passed (17 files) ✅
+
+### Pasos recomendados en Google Search Console
+
+1. Ir a **Inspección de URLs** → pegar cualquier URL pública (`/`, `/servicios-juridicos`, etc.)
+2. **Probar URL publicada** → verificar que ahora los recursos se cargan
+3. **Solicitar indexación** para las URLs principales
+4. Opcional: solicitar recrawleo del sitemap completo
+
 ## Release 57 — Infraestructura SEO, autoría, workflow editorial y validaciones (2026-06-14)
 
 ### 🟢 Nuevas columnas en blog_posts (migración DB)
