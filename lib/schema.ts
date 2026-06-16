@@ -579,3 +579,68 @@ export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
 
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
 export type NewsletterSubscriptionInsert = typeof newsletterSubscriptions.$inferInsert;
+
+// ============================================================
+// Fase 2 — Supuesto Penal Calculable
+// ============================================================
+
+export const tipoPenaEnum = pgEnum('tipo_pena', ['prision', 'multa', 'perpetuidad']);
+
+export const supuestosPenales = pgTable('supuestos_penales', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  delitoId: uuid('delito_id').notNull(),
+  numeral: varchar('numeral', { length: 50 }),
+  literal: varchar('literal', { length: 50 }),
+  inciso: varchar('inciso', { length: 50 }),
+  textoModalidad: text('texto_modalidad'),
+  penaMinMeses: integer('pena_min_meses').notNull(),
+  penaMaxMeses: integer('pena_max_meses').notNull(),
+  tipoPena: tipoPenaEnum('tipo_pena').notNull().default('prision'),
+  tieneAgravantesEspecificas: boolean('tiene_agravantes_especificas').default(false),
+  observaciones: text('observaciones'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  delitoRef: foreignKey({ columns: [table.delitoId], foreignColumns: [delitos.id] }),
+  delitoIdx: index('supuestos_penales_delito_idx').on(table.delitoId),
+  numeralLiteralIncisoIdx: index('supuestos_penales_numeral_literal_inciso_idx').on(table.numeral, table.literal, table.inciso),
+}));
+
+export type SupuestoPenal = typeof supuestosPenales.$inferSelect;
+export type SupuestoPenalInsert = typeof supuestosPenales.$inferInsert;
+
+export const agravantesEspecificas = pgTable('agravantes_especificas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  supuestoPenalId: uuid('supuesto_penal_id').notNull(),
+  articuloCp: varchar('articulo_cp', { length: 100 }).notNull(),
+  numeral: varchar('numeral', { length: 50 }),
+  literal: varchar('literal', { length: 50 }),
+  textoAgravante: text('texto_agravante').notNull(),
+  fraccionAumento: varchar('fraccion_aumento', { length: 20 }).notNull(),
+  obligatoria: boolean('obligatoria').default(false),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  supuestoRef: foreignKey({ columns: [table.supuestoPenalId], foreignColumns: [supuestosPenales.id] }),
+  supuestoIdx: index('agravantes_especificas_supuesto_idx').on(table.supuestoPenalId),
+  articuloIdx: index('agravantes_especificas_articulo_idx').on(table.articuloCp),
+}));
+
+export type AgravanteEspecifica = typeof agravantesEspecificas.$inferSelect;
+export type AgravanteEspecificaInsert = typeof agravantesEspecificas.$inferInsert;
+
+export const remisionesNormativas = pgTable('remisiones_normativas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  articuloOrigen: varchar('articulo_origen', { length: 100 }).notNull(),
+  numeralOrigen: varchar('numeral_origen', { length: 50 }),
+  articuloDestino: varchar('articulo_destino', { length: 100 }).notNull(),
+  numeralDestino: varchar('numeral_destino', { length: 50 }),
+  textoRemision: text('texto_remision').notNull(),
+  condicionAplicacion: text('condicion_aplicacion'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  articuloOrigenIdx: index('remisiones_articulo_origen_idx').on(table.articuloOrigen),
+  articuloDestinoIdx: index('remisiones_articulo_destino_idx').on(table.articuloDestino),
+}));
+
+export type RemisionNormativa = typeof remisionesNormativas.$inferSelect;
+export type RemisionNormativaInsert = typeof remisionesNormativas.$inferInsert;

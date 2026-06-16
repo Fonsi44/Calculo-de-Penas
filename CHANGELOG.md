@@ -1,5 +1,51 @@
 # Changelog
 
+## Release 59 — Fase 2: Supuesto Penal Calculable - Diseño de schema (2026-06-16)
+
+### ⚠️ ESTADO: DISEÑADO, PENDIENTE EJECUCIÓN EN PRODUCCIÓN
+
+Limitación local: No se puede ejecutar `drizzle-kit push` ni scripts de migración/seed en el entorno local debido a bloqueos de OneDrive (error OS 389). Los archivos están preparados para ejecutarse en Vercel CI o entorno sin OneDrive.
+
+### 🟢 Nuevas tablas diseñadas (lib/schema.ts)
+| Tabla | Propósito | Campos clave |
+|-------|-----------|--------------|
+| `supuestos_penales` | Unidad atómica de cálculo (artículo + modalidad) | `delito_id`, `numeral`, `literal`, `inciso`, `pena_min_meses`, `pena_max_meses`, `tipo_pena` (enum), `tiene_agravantes_especificas` |
+| `agravantes_especificas` | Agravantes específicas del CP (Arts. 312, 363, 366, 240, 200) | `supuesto_penal_id`, `articulo_cp`, `numeral`, `texto_agravante`, `fraccion_aumento` (ej: 1/3, 2/3), `obligatoria` |
+| `remisiones_normativas` | Remisiones de penas (Arts. 370→365/366, 371→365/366) | `articulo_origen`, `numeral_origen`, `articulo_destino`, `numeral_destino`, `texto_remision`, `condicion_aplicacion` |
+
+### 🟢 Migración SQL creada
+- `drizzle/migrations/0016_fase2_supuesto_penal.sql` (lista para ejecutar)
+- Crea enum `tipo_pena` con valores: `prision`, `multa`, `perpetuidad`
+- Crea las 3 tablas con FKs e índices
+- Incluye manejo de errores para objetos duplicados
+
+### 🟢 Seed preparado
+- `drizzle/seed-fase2.ts` (lista para ejecutar)
+- Inserta 3 remisiones normativas (Arts. 370, 371)
+- Prepara 15 agravantes específicas (requieren supuestos_penales creados previamente)
+- Agravantes por artículo:
+  - Art. 312 (femicidio): 3 agravantes (+1/3 c/u)
+  - Art. 363 (violación): 3 agravantes (+1/3 c/u)
+  - Art. 366 (abuso sexual): 2 agravantes (+1/3 c/u)
+  - Art. 240 (secuestro): 2 agravantes (+1/3 c/u)
+  - Art. 200 (robo): 3 agravantes (+1/3 c/u)
+
+### 🟢 Script de vinculación
+- `scripts/vincular-supuestos-penales.ts` (lista para ejecutar)
+- Analiza `data/delitos.json` para detectar artículos con múltiples modalidades
+- Ejemplo: Art. 240 tiene 3 modalidades (144-180m, 180-240m, 480-9999m perpetuidad)
+- Crea un `supuesto_penal` por cada modalidad
+- Para delitos sin modalidades, crea un único supuesto penal
+- Detecta automáticamente artículos con agravantes específicas
+
+### ⚠️ Pasos pendientes (requieren entorno sin OneDrive)
+1. Ejecutar migración: `npx drizzle-kit push` o `node scripts/load-env.cjs psql ... < drizzle/migrations/0016_fase2_supuesto_penal.sql`
+2. Ejecutar seed: `npx tsx drizzle/seed-fase2.ts`
+3. Ejecutar vinculación: `npx tsx scripts/vincular-supuestos-penales.ts`
+4. Validar: Verificar que las 3 tablas tengan datos en Neon Console
+
+# Changelog
+
 ## Release 58 — Fase 0: Parches críticos de la Calculadora de Penas (auditoría técnico-jurídica) (2026-06-15)
 
 Ver detalle de los 6 parches (C1, A1, A5, A6, C4) en el mensaje del commit y en las notas de auditoría. Validación: tsc 0 errores; tests motor 62/62; catálogo+validador 160/160; API calcular 6/6. Build NO VALIDADO por EPERM OneDrive (error OS 389).
