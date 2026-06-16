@@ -4,15 +4,29 @@ import { getEstadoDelito } from '../../estados-delitos';
 import { seleccionarPenaBase } from './pena-base';
 import { aplicarGradoAutoria } from './grado-autoria';
 import { aplicarTentativa } from './tentativa';
-import { aplicarCircunstancias } from './circunstancias';
+import { aplicarCircunstancias, aplicarAgravantesEspecificas } from './circunstancias';
 import { evaluarEximenteCompleta } from './eximentes';
 import { aplicarConcurso } from './concurso';
 import { generarAnalisisJuridico } from './analisis';
-import type { CalculoRequest, DelitoAnalizado, DelitoBase, DelitoConfig, ResultadoCalculo, ResultadoIndividual } from './types';
+import type { AgravanteEspecificaMotor, CalculoRequest, DelitoAnalizado, DelitoBase, DelitoConfig, ResultadoCalculo, ResultadoIndividual, SupuestoPenalMotor } from './types';
 import { formatHondurasDateTime } from '@/lib/datetime';
 
-export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase): ResultadoIndividual {
-  const base = seleccionarPenaBase(config, delito);
+/**
+ * Contexto opcional para enriquecer el cálculo con datos Fase 2/3/5:
+ * - supuestos_penales: modalidades específicas de delitos (refina la pena base)
+ * - agravantes_especificas: agravantes del tipo penal (amplían el marco legal)
+ */
+export interface ContextoCalculo {
+  supuestos_penales?: Map<string, SupuestoPenalMotor>;
+  agravantes_especificas?: Map<string, AgravanteEspecificaMotor>;
+}
+
+export function calcularPenaIndividual(
+  config: DelitoConfig,
+  delito: DelitoBase,
+  contexto?: ContextoCalculo,
+): ResultadoIndividual {
+  const base = seleccionarPenaBase(config, delito, contexto?.supuestos_penales);
   let { pena_min, pena_max } = base;
   const { tipo_pena, unidad, pena_base_min, pena_base_max, es_perpetuidad } = base;
 
@@ -54,6 +68,11 @@ export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase)
 
   const modificaciones: string[] = [];
 
+  // Si la pena se resolvió desde un supuesto penal, dejar constancia en el análisis.
+  if (base.resuelta_desde_supuesto_penal) {
+    modificaciones.push('Pena base resuelta desde supuesto penal específico (modalidad/calificación del tipo)');
+  }
+
   const autoria = aplicarGradoAutoria(pena_min, pena_max, config.grado_autoria, modificaciones);
   pena_min = autoria.pena_min;
   pena_max = autoria.pena_max;
@@ -65,6 +84,14 @@ export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase)
   const circ = aplicarCircunstancias(pena_min, pena_max, config, modificaciones);
   pena_min = circ.pena_min;
   pena_max = circ.pena_max;
+
+  // Fase 3/5: agravantes específicas del tipo (amplían el marco legal, Art. 312/363/200 CP).
+  // Se aplican DESPUÉS de las circunstancias genéricas Art. 70 CP.
+  if (contexto?.agravantes_especificas && (config.agravantes_especificas_ids?.length ?? 0) > 0) {
+    const resAgravEsp = aplicarAgravantesEspecificas(pena_min, pena_max, config, contexto.agravantes_especificas, modificaciones);
+    pena_min = resAgravEsp.pena_min;
+    pena_max = resAgravEsp.pena_max;
+  }
 
   const p_min = (pena_base_min === 0 && pena_min === 0) ? 0 : Math.max(1, Math.floor(pena_min));
   const p_max = (pena_base_max === 0 && pena_max === 0) ? 0 : Math.max(1, Math.floor(pena_max));
@@ -80,6 +107,7 @@ export function calcularPenaIndividual(config: DelitoConfig, delito: DelitoBase)
 
 export { aplicarConcurso } from './concurso';
 export { generarAnalisisJuridico } from './analisis';
+export { aplicarAgravantesEspecificas, parsearFraccion } from './circunstancias';
 
 export function generarAnalisisJuridicoPublic(
   delitos: DelitoAnalizado[],
@@ -89,7 +117,11 @@ export function generarAnalisisJuridicoPublic(
   return generarAnalisisJuridico(delitos, tipo_concurso, resultado_concurso);
 }
 
-export function calcularPena(request: CalculoRequest, delitosMap: Map<string, DelitoBase>): ResultadoCalculo {
+export function calcularPena(
+  request: CalculoRequest,
+  delitosMap: Map<string, DelitoBase>,
+  contexto?: ContextoCalculo,
+): ResultadoCalculo {
   const resultados_individuales: DelitoAnalizado[] = [];
   const penas_para_concurso: ResultadoIndividual[] = [];
   const todas_penas_accesorias: string[] = [];
@@ -105,7 +137,7 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
     const delito = delitosMap.get(config.delito_id);
     if (!delito) throw new Error(`Delito ${config.delito_id} no encontrado`);
 
-    const resultado = calcularPenaIndividual(config, delito);
+    const resultado = calcularPenaIndividual(config, delito, contexto);
     penas_para_concurso.push(resultado);
 
     if (!resultado.exento) {
@@ -114,6 +146,15 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
 
     const agravantes_nombres = config.agravantes.map((aid) => AGRAVANTES.find((a) => a.id === aid)?.nombre || aid);
     const atenuantes_nombres = config.atenuantes.map((aid) => ATENUANTES.find((a) => a.id === aid)?.nombre || aid);
+
+    // Fase 3/5: resolver nombres de agravantes específicas aplicadas.
+    const agravantes_especificas_nombres: string[] = [];
+    if (contexto?.agravantes_especificas && config.agravantes_especificas_ids) {
+      for (const id of config.agravantes_especificas_ids) {
+        const agr = contexto.agravantes_especificas.get(id);
+        if (agr) agravantes_especificas_nombres.push(agr.texto_agravante);
+      }
+    }
 
     const pena_texto = resultado.exento
       ? 'EXENTO (eximente completa)'
@@ -126,6 +167,9 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
     const estado = getEstadoDelito(delito.nombre, delito.articulo);
 
     const tipo_pena = delito.tipo_pena_principal || (resultado.unidad === 'dias' ? 'Multa' : 'Prisión');
+
+    // Combinar agravantes genéricas + específicas para el análisis.
+    const todas_agravantes = [...agravantes_nombres, ...agravantes_especificas_nombres];
 
     resultados_individuales.push({
       delito_id: delito.id,
@@ -154,7 +198,7 @@ export function calcularPena(request: CalculoRequest, delitosMap: Map<string, De
       gravedad: resultado.gravedad,
       grado_autoria: grado_autoria_nombre,
       grado_ejecucion: grado_ejecucion_nombre,
-      agravantes_aplicadas: agravantes_nombres,
+      agravantes_aplicadas: todas_agravantes,
       atenuantes_aplicadas: atenuantes_nombres,
       penas_accesorias: delito.penas_accesorias,
       inhabilitacion_min_valor: delito.inhabilitacion_min_valor ?? null,

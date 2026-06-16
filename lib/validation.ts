@@ -31,6 +31,10 @@ export const calcularSchema = z.object({
     atenuantes: z.array(z.enum(ID_ATENUANTES)),
     eximentes: z.array(z.enum(ID_EXIMENTES)),
     eximente_completa: z.enum(ID_EXIMENTES).nullable(),
+    // Fase 2/3/5 — campos opcionales para enriquecer el cálculo.
+    // Si no se envían, el motor usa la pena base genérica del delito.
+    supuesto_penal_id: z.string().uuid().nullable().optional(),
+    agravantes_especificas_ids: z.array(z.string().uuid()).optional(),
   })).min(1),
   tipo_concurso: z.enum(ID_TIPOS_CONCURSO),
 });

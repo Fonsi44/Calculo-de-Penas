@@ -46,6 +46,10 @@ export interface DelitoConfig {
   atenuantes: string[];
   eximentes: string[];
   eximente_completa: string | null;
+  /** Fase 5 — Supuesto penal (modalidad específica) seleccionado. */
+  supuesto_penal_id?: string | null;
+  /** Fase 3/5 — Agravantes específicas del tipo marcadas. */
+  agravantes_especificas_ids?: string[];
 }
 
 export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;

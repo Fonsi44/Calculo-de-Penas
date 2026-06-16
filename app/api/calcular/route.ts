@@ -1,8 +1,8 @@
 import { db } from '@/lib/db';
-import { delitos } from '@/lib/schema';
+import { delitos, supuestosPenales, agravantesEspecificas } from '@/lib/schema';
 import { inArray } from 'drizzle-orm';
 import { calcular_pena } from '@/lib/calculo';
-import type { DelitoBase } from '@/lib/calculo';
+import type { DelitoBase, AgravanteEspecificaMotor, SupuestoPenalMotor } from '@/lib/calculo';
 import { calcularSchema, validate } from '@/lib/validation';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
@@ -67,8 +67,52 @@ export async function POST(request: Request) {
       }
     }
 
+    // Fase 2/3/5 — cargar supuestos penales y agravantes específicas vinculadas.
+    const supuestosPenalesMap = new Map<string, SupuestoPenalMotor>();
+    const agravantesEspecificasMap = new Map<string, AgravanteEspecificaMotor>();
+
+    const supuestoIds = parsed.data.delitos
+      .map(d => d.supuesto_penal_id)
+      .filter((id): id is string => Boolean(id));
+    const agravanteIds = parsed.data.delitos
+      .flatMap(d => d.agravantes_especificas_ids ?? [])
+      .filter(Boolean);
+
+    if (supuestoIds.length > 0) {
+      const supuestosRows = await db.select().from(supuestosPenales).where(inArray(supuestosPenales.id, supuestoIds));
+      for (const s of supuestosRows) {
+        supuestosPenalesMap.set(s.id, {
+          id: s.id,
+          delito_id: s.delitoId,
+          numeral: s.numeral,
+          texto_modalidad: s.textoModalidad,
+          pena_min_meses: s.penaMinMeses,
+          pena_max_meses: s.penaMaxMeses,
+          tipo_pena: s.tipoPena,
+          tiene_agravantes_especificas: s.tieneAgravantesEspecificas ?? false,
+        });
+      }
+    }
+
+    if (agravanteIds.length > 0) {
+      const agravantesRows = await db.select().from(agravantesEspecificas).where(inArray(agravantesEspecificas.id, agravanteIds));
+      for (const a of agravantesRows) {
+        agravantesEspecificasMap.set(a.id, {
+          id: a.id,
+          articulo_cp: a.articuloCp,
+          numeral: a.numeral,
+          texto_agravante: a.textoAgravante,
+          fraccion_aumento: a.fraccionAumento,
+          obligatoria: a.obligatoria ?? false,
+        });
+      }
+    }
+
     try {
-      const result = calcular_pena(parsed.data, delitosMap);
+      const result = calcular_pena(parsed.data, delitosMap, 'v1', {
+        supuestos_penales: supuestosPenalesMap,
+        agravantes_especificas: agravantesEspecificasMap,
+      });
       return Response.json(result);
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : 'Error interno';

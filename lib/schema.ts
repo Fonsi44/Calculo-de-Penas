@@ -171,6 +171,10 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'rol_updated',
   'rol_deleted',
   'permiso_updated',
+  // Fase 3/5 — agravantes específicas del tipo penal.
+  'agravante_especifica_created',
+  'agravante_especifica_updated',
+  'agravante_especifica_deleted',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {

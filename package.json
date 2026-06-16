@@ -15,7 +15,9 @@
     "indexnow": "node scripts/submit-indexnow.mjs",
     "indexnow:dry": "node scripts/submit-indexnow.mjs --dry-run",
     "content:audit": "npx tsx scripts/content-audit.ts",
-    "validate:dates": "npx tsx scripts/validar-fechas-blog.ts"
+    "validate:dates": "npx tsx scripts/validar-fechas-blog.ts",
+    "seed:fase2": "npx tsx drizzle/seed-fase2.ts",
+    "db:check": "npx tsx scripts/check-db-state.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

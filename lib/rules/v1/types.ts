@@ -49,6 +49,49 @@ export interface DelitoConfig {
   atenuantes: string[];
   eximentes: string[];
   eximente_completa: string | null;
+  /**
+   * Fase 2/3/5 — Supuesto penal concreto seleccionado (modalidad/calificación).
+   * Permite que el motor use la pena específica de la modalidad en lugar de la
+   * pena base genérica del delito. Opcional: si es null se usa la pena del delito.
+   */
+  supuesto_penal_id?: string | null;
+  /**
+   * Fase 3/5 — Agravantes específicas del tipo penal (no genéricas Art. 32).
+   * Son los UUIDs de registros `agravantes_especificas` vinculados al supuesto.
+   * Aumentan la pena en la fracción definida en el catálogo (p.ej. 1/3).
+   */
+  agravantes_especificas_ids?: string[];
+}
+
+/**
+ * Fase 3/5 — Agravante específica del tipo penal (no genérica Art. 32 CP).
+ * Proviene de la tabla `agravantes_especificas` y se vincula a un supuesto penal.
+ * Aumenta la pena en la fracción definida (típicamente 1/3, Art. 312, 363, etc.).
+ */
+export interface AgravanteEspecificaMotor {
+  id: string;
+  articulo_cp: string;
+  numeral: string | null;
+  texto_agravante: string;
+  /** Fracción de aumento sobre la pena, p.ej. "1/3". */
+  fraccion_aumento: string;
+  obligatoria: boolean;
+}
+
+/**
+ * Fase 5 — Supuesto penal con su pena específica y agravantes vinculadas.
+ * El motor lo usa opcionalmente para refinar la pena base y aplicar agravantes
+ * específicas del tipo (no genéricas).
+ */
+export interface SupuestoPenalMotor {
+  id: string;
+  delito_id: string;
+  numeral: string | null;
+  texto_modalidad: string | null;
+  pena_min_meses: number;
+  pena_max_meses: number;
+  tipo_pena: 'prision' | 'multa' | 'perpetuidad';
+  tiene_agravantes_especificas: boolean;
 }
 
 export interface CalculoRequest {

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Shield, PlusCircle } from 'lucide-react';
+import { Scale, Home, Calculator, Briefcase, BookOpen, FileText, Menu, X, ChevronRight, Shield, PlusCircle, AlertTriangle } from 'lucide-react';
 import { IconButton } from '@/components/ui/icon-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
@@ -22,6 +22,7 @@ const NAV: NavItem[] = [
   { label: 'Mis casos', href: '/intranet/admin/casos', icon: Briefcase, match: (p) => p.startsWith('/intranet/admin/casos') },
   { label: 'Biblioteca CP', href: '/intranet/admin/cp', icon: BookOpen, match: (p) => p.startsWith('/intranet/admin/cp') },
   { label: 'Catálogo de delitos', href: '/intranet/admin/delitos', icon: FileText, match: (p) => p.startsWith('/intranet/admin/delitos') },
+  { label: 'Agravantes específicas', href: '/intranet/admin/agravantes', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/admin/agravantes') },
   { label: 'Registrar delito', href: '/intranet/admin/delito-form', icon: PlusCircle, match: (p) => p.startsWith('/intranet/admin/delito-form') },
   { label: 'Web Admin', href: '/intranet/admin', icon: Shield, match: (p) => p.startsWith('/intranet/admin') },
 ];

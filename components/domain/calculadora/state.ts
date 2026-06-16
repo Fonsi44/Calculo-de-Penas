@@ -93,6 +93,8 @@ export function useCalculadoraState() {
             atenuantes: c.atenuantes ?? [],
             eximentes: c.eximentes ?? [],
             eximente_completa: c.eximente_completa ?? null,
+            supuesto_penal_id: (c as { supuesto_penal_id?: string | null }).supuesto_penal_id ?? null,
+            agravantes_especificas_ids: (c as { agravantes_especificas_ids?: string[] }).agravantes_especificas_ids ?? [],
           }));
         if (enriched.length === 0) throw new Error('Cálculo sin delitos válidos');
         setConfigs(enriched);
@@ -125,6 +127,8 @@ export function useCalculadoraState() {
       atenuantes: [],
       eximentes: [],
       eximente_completa: null,
+      supuesto_penal_id: null,
+      agravantes_especificas_ids: [],
     };
     setConfigs(prev => {
       const next = [...prev];
@@ -218,6 +222,8 @@ export function useCalculadoraState() {
           atenuantes: c.atenuantes,
           eximentes: c.eximentes,
           eximente_completa: c.eximente_completa,
+          supuesto_penal_id: c.supuesto_penal_id ?? null,
+          agravantes_especificas_ids: c.agravantes_especificas_ids ?? [],
         })),
         tipo_concurso: configs.length > 1 ? tipoConcurso : 'ninguno',
       };
@@ -343,6 +349,8 @@ export function useCalculadoraState() {
         atenuantes: c.atenuantes,
         eximentes: c.eximentes,
         eximente_completa: c.eximente_completa,
+        supuesto_penal_id: c.supuesto_penal_id ?? null,
+        agravantes_especificas_ids: c.agravantes_especificas_ids ?? [],
       }));
       await fetch('/api/calculos', {
         method: 'POST',

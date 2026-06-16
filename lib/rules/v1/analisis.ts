@@ -44,7 +44,10 @@ export function generarAnalisisJuridico(
     }
 
     if (d.agravantes_aplicadas?.length) {
-      lineas.push(`\nAgravantes (Art. 32 CP): ${d.agravantes_aplicadas.join(', ')}`);
+      // Las agravantes_aplicadas pueden incluir genéricas (Art. 32 CP) y
+      // específicas del tipo (Art. 312, 363, 200, etc.). Mostramos el listado
+      // combinado; las específicas ya quedan detalladas en `modificaciones`.
+      lineas.push(`\nAgravantes aplicadas: ${d.agravantes_aplicadas.join(', ')}`);
     }
     if (d.atenuantes_aplicadas?.length) {
       lineas.push(`Atenuantes (Art. 31 CP): ${d.atenuantes_aplicadas.join(', ')}`);

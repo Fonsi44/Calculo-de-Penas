@@ -4,6 +4,7 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { GRADOS_AUTORIA, GRADOS_EJECUCION } from '@/lib/catalogos';
 import { cn } from '@/lib/ui';
 import type { DelitoConfig } from '@/lib/types';
+import { SelectorSupuestoPenal } from './selector-supuesto-penal';
 
 interface Props {
   current: DelitoConfig | undefined;
@@ -13,6 +14,19 @@ interface Props {
 export function Paso3Participacion({ current, onChange }: Props) {
   return (
     <div>
+      {/* Fase 5 — Selector de modalidad (supuesto penal) + agravantes específicas.
+          Solo se renderiza si el delito tiene modalidades cargadas. */}
+      {current?.delito?.id && (
+        <Card padding="md" className="mb-3">
+          <SelectorSupuestoPenal
+            delitoId={current.delito.id}
+            supuestoPenalId={current.supuesto_penal_id}
+            agravantesEspecificasIds={current.agravantes_especificas_ids}
+            onChange={onChange}
+          />
+        </Card>
+      )}
+
       <Card padding="md" className="mb-3">
         <CardHeader title="Grado de autoría" />
         <div className="space-y-1.5">
