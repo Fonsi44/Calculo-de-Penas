@@ -2,7 +2,7 @@
 // Identifica delitos con múltiples modalidades y crea los supuestos penales correspondientes
 
 import { db } from '../lib/db';
-import { delitos, supuestosPenales } from '../lib/schema';
+import { delitos, supuestosPenales as supuestosPenalesTable } from '../lib/schema';
 import { eq, and } from 'drizzle-orm';
 import delitosJson from '../data/delitos.json';
 
@@ -102,7 +102,7 @@ async function vincularSupuestosPenales() {
       };
 
       try {
-        await db.insert(supuestosPenales).values(nuevoSupuesto);
+        await db.insert(supuestosPenalesTable).values(nuevoSupuesto);
         console.log(`  ✅ Supuesto penal creado: ${numeral || 'única'} (${tipoPena}, ${modalidad.pena_minima_meses}-${modalidad.pena_maxima_meses}m)`);
         totalCreados++;
       } catch (error) {
@@ -153,7 +153,7 @@ async function vincularSupuestosPenales() {
     };
 
     try {
-      await db.insert(supuestosPenales).values(nuevoSupuesto);
+      await db.insert(supuestosPenalesTable).values(nuevoSupuesto);
       console.log(`  ✅ Supuesto penal creado: ${delitoJson.articulo} (${tipoPena}, ${delitoJson.pena_minima_meses}-${delitoJson.pena_maxima_meses}m)`);
       totalCreados++;
     } catch (error) {

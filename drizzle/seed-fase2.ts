@@ -2,7 +2,7 @@
 // Basado en Código Penal Decreto 130-2017 y reformas
 
 import { db } from '../lib/db';
-import { agravantesEspecificas, remisionesNormativas } from '../lib/schema';
+import { agravantesEspecificas, remisionesNormativas as remisionesNormativasTable } from '../lib/schema';
 
 async function seedFase2() {
   console.log('🌱 Sembrando datos Fase 2...');
@@ -157,7 +157,7 @@ async function seedFase2() {
 
   try {
     console.log(`📝 Insertando ${remisionesNormativas.length} remisiones normativas...`);
-    await db.insert(remisionesNormativas).values(remisionesNormativas);
+    await db.insert(remisionesNormativasTable).values(remisionesNormativas);
     console.log('✅ Remisiones normativas insertadas');
 
     console.log(`📝 Preparados ${allAgravantes.length} agravantes específicas (requieren supuestos_penales para vincular)`);
