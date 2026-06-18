@@ -19,7 +19,7 @@ export function ConsultationCTA() {
           de cualquier actuación.
         </p>
         <Link
-          href="https://www.pinedayasociadoshn.com/solicitar-consulta#formulario"
+          href="/solicitar-consulta#formulario"
           className="btn-shimmer inline-flex items-center gap-2 h-12 px-6 rounded-lg bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors"
         >
           Solicitar consulta confidencial <ArrowRight size={18} />

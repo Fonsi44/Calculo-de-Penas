@@ -38,13 +38,40 @@ import { SocialShare } from '@/components/marketing/social-share';
 
 export const metadata: Metadata = {
   title: { absolute: `${site.name} — ${site.tagline}` },
-  description: 'Bufete de abogados en Nacaome, Valle. Defensa penal, asesoría jurídica y atención legal directa con presupuesto por escrito.',
+  description: site.description,
   alternates: { canonical: '/' },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  openGraph: {
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
+    locale: 'es_HN',
+    type: 'website',
+    images: [
+      {
+        url: `${site.url}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — Bufete jurídico en ${site.address.city}, ${site.address.department}`,
+      },
+    ],
+  },
   twitter: {
     card: 'summary_large_image',
     title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
-    description: 'Bufete de abogados en Nacaome, Valle. Defensa penal, asesoría jurídica y atención legal directa con presupuesto por escrito.',
+    description: site.description,
     images: [`${site.url}/og-image.png`],
   },
 };

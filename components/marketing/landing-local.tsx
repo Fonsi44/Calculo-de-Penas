@@ -1,0 +1,267 @@
+import Link from 'next/link';
+import { ArrowRight, MapPin, Clock, Phone, MessageCircle, Scale } from 'lucide-react';
+import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { Card } from '@/components/ui/card';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { landingsLocales, type LandingLocal } from '@/data/landings-locales';
+
+/**
+ * Renderiza una landing local de SEO ("/abogados-en-{ciudad}").
+ * Es un Server Component reutilizable: cada página estática
+ * (`app/(public)/abogados-en-{slug}/page.tsx`) lo invoca con su landing.
+ */
+export function LandingLocalView({ landing }: { landing: LandingLocal }) {
+  const canonical = `/abogados-en-${landing.slug}`;
+  const url = absoluteUrl(canonical);
+  const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
+
+  // Schema: LegalService con areaServed específica de la ciudad + FAQPage + BreadcrumbList.
+  // Reusamos la entidad principal del sitio vía @id para consolidar autoridad.
+  const ldSchemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'LegalService',
+      '@id': `${site.url}/#legal-service`,
+      name: site.name,
+      url: site.url,
+      telephone: site.phone,
+      image: `${site.url}/og-image.png`,
+      logo: `${site.url}/og-image.png`,
+      priceRange: '$$',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: `${site.address.line1}, ${site.address.line2}`,
+        addressLocality: site.address.city,
+        addressRegion: site.address.department,
+        addressCountry: site.address.countryCode,
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: landing.geo?.lat ?? site.geo.latitude,
+        longitude: landing.geo?.lng ?? site.geo.longitude,
+      },
+      areaServed: [
+        { '@type': 'City', name: landing.ciudad },
+        { '@type': 'State', name: landing.departamento },
+        { '@type': 'Country', name: 'Honduras' },
+      ],
+      openingHoursSpecification: site.hoursStructured.map((h) => ({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: h.dayOfWeek,
+        opens: h.opens,
+        closes: h.closes,
+      })),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': `${url}#faqpage`,
+      url,
+      mainEntity: landing.faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.pregunta,
+        acceptedAnswer: { '@type': 'Answer', text: f.respuesta },
+      })),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: absoluteUrl('/') },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: `Abogados en ${landing.ciudad}`,
+          item: url,
+        },
+      ],
+    },
+  ];
+
+  const otrasCiudades = landingsLocales.filter((l) => l.slug !== landing.slug);
+
+  return (
+    <>
+      {/* Hero */}
+      <section className="relative bg-primary text-text-inverse overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
+        </div>
+        <Container size="lg" className="relative py-10 md:py-14">
+          <div className="max-w-3xl">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
+              {landing.heroEyebrow}
+            </p>
+            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
+              {landing.heroTitle}
+            </h1>
+            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
+              {landing.heroSubtitle}
+            </p>
+
+            {/* NAP rápido para SEO local */}
+            <dl className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div className="flex items-start gap-2">
+                <MapPin size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <span>
+                  {landing.sedeFisica
+                    ? `${landing.ciudad}, ${landing.departamento}`
+                    : `Atendemos ${landing.ciudad}`}
+                </span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Clock size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <span>{site.hoursShort}</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Phone size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <a href={telHref()} className="hover:underline">
+                  {site.phoneDisplay}
+                </a>
+              </div>
+            </dl>
+
+            <div className="mt-7">
+              <CTAGroup variant="inverse" message={whatsappMsg} />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Intro + contexto local */}
+      <Section background="default" spacing="md">
+        <div className="max-w-3xl">
+          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight">
+            {`Bufete de abogados con cobertura en ${landing.ciudad}`}
+          </h2>
+          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
+            {landing.intro}
+          </p>
+          {!landing.sedeFisica && (
+            <p className="mt-3 text-sm text-text-tertiary leading-relaxed">
+              {`Nuestra sede principal está en Nacaome, Valle, a ${landing.distanciaKm} km de ${landing.ciudad}. Coordinamos atención presencial y seguimiento de diligencias según su caso.`}
+            </p>
+          )}
+        </div>
+      </Section>
+
+      {/* Servicios */}
+      <Section background="muted" spacing="md">
+        <SectionHeader
+          eyebrow="Servicios jurídicos"
+          title={`Áreas de práctica en ${landing.ciudad}`}
+          subtitle="Atención legal multidisciplinaria con respaldo del Código Penal y la legislación hondureña vigente."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {landing.servicios.map((s, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-4 hover:border-accent/40 transition-colors"
+            >
+              <span className="w-10 h-10 rounded-full border-2 border-accent flex items-center justify-center bg-white flex-shrink-0 mt-0.5">
+                <Scale size={16} className="text-accent-dark" aria-hidden="true" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-sm md:text-base text-primary leading-snug">{s.titulo}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed mt-1">{s.descripcion}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* FAQ local */}
+      <Section spacing="md" id="preguntas-frecuentes">
+        <SectionHeader
+          eyebrow="Preguntas frecuentes"
+          title={`Dudas comunes sobre abogados en ${landing.ciudad}`}
+          align="center"
+        />
+        <div className="max-w-3xl mx-auto space-y-3">
+          {landing.faqs.map((faq, i) => (
+            <Card key={i} padding="md" className="border-l-4 border-l-accent">
+              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">{faq.pregunta}</h3>
+              <p className="text-sm text-text-secondary leading-relaxed">{faq.respuesta}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* CTA WhatsApp destacado */}
+      <Section background="muted" spacing="sm">
+        <Card padding="lg" className="max-w-3xl mx-auto text-center border-accent/30">
+          <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight">
+            {`¿Necesita un abogado en ${landing.ciudad}?`}
+          </h2>
+          <p className="mt-2 text-sm text-text-secondary leading-relaxed">
+            Escríbanos por WhatsApp y cuéntenos su caso. Le orientamos y, si procede, le entregamos un
+            presupuesto por escrito.
+          </p>
+          <div className="mt-5 flex flex-col sm:flex-row gap-2 justify-center">
+            <a
+              href={whatsappHref(whatsappMsg)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-success text-white text-sm font-bold hover:opacity-95 transition-opacity focus-visible:outline-none"
+            >
+              <MessageCircle size={18} aria-hidden="true" />
+              WhatsApp: {site.whatsappDisplay}
+            </a>
+            <a
+              href={telHref()}
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors focus-visible:outline-none"
+            >
+              <Phone size={18} aria-hidden="true" />
+              Llamar ahora
+            </a>
+          </div>
+        </Card>
+      </Section>
+
+      {/* Enlazado interno a otras ciudades */}
+      <Section spacing="md">
+        <SectionHeader
+          eyebrow="Cobertura regional"
+          title="También atendemos en otras ciudades"
+          subtitle="Bufete con cobertura en la zona sur de Honduras."
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {otrasCiudades.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/abogados-en-${c.slug}`}
+              className="group block focus-visible:outline-none"
+            >
+              <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                  <MapPin size={20} aria-hidden="true" />
+                </div>
+                <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
+                  {`Abogados en ${c.ciudad}`}
+                </h3>
+                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
+                  {c.departamento}, Honduras
+                </p>
+                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                  Ver cobertura <ArrowRight size={12} />
+                </span>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {ldSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      <ConsultationCTA />
+    </>
+  );
+}

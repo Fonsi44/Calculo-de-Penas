@@ -74,6 +74,7 @@ const PUBLIC_PAGE_PREFIXES = [
   '/derecho-penal',
   '/hondurenos-en-espana',
   '/blog/',
+  '/abogados-en-', // Landings locales de SEO (/abogados-en-nacaome, etc.)
   '/_next/',
 ];
 

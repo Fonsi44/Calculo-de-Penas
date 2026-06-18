@@ -53,7 +53,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found'],
+        disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found', '/login'],
       },
       // Bots de IA/scrapers bloqueados
       { userAgent: 'GPTBot', disallow: '/' },

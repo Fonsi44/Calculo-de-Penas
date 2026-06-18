@@ -29,6 +29,14 @@ const DESPACHO = [
   { label: 'Cómo llegar', title: 'Indicaciones para llegar al bufete en Nacaome, Valle', href: '/como-llegar' },
 ];
 
+// Landings de SEO local — enlazadas desde todas las páginas (footer) para
+// transferir autoridad interna y facilitar el descubrimiento por Google.
+const COBERTURA = [
+  { label: 'Abogados en Nacaome', title: 'Abogados en Nacaome, Valle — sede principal del bufete', href: '/abogados-en-nacaome' },
+  { label: 'Abogados en Choluteca', title: 'Abogados en Choluteca, Honduras — defensa y asesoría legal', href: '/abogados-en-choluteca' },
+  { label: 'Abogados en San Lorenzo', title: 'Abogados en San Lorenzo, Valle — zona portuaria del sur', href: '/abogados-en-san-lorenzo' },
+];
+
 const LEGALES = [
   { label: 'Aviso Legal', href: '/aviso-legal' },
   { label: 'Política Editorial', href: '/politica-editorial' },
@@ -53,7 +61,7 @@ export function PublicFooter() {
         }}
       />
       <div className="relative max-w-7xl mx-auto px-4 py-14 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Identidad */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
@@ -108,6 +116,24 @@ export function PublicFooter() {
                 <li key={d.href}>
                   <Link href={d.href} title={d.title} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
                     {d.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Cobertura (SEO local) */}
+          <div>
+            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
+              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
+                Cobertura
+              </h3>
+            </div>
+            <ul className="space-y-1.5">
+              {COBERTURA.map((c) => (
+                <li key={c.href}>
+                  <Link href={c.href} title={c.title} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
+                    {c.label}
                   </Link>
                 </li>
               ))}

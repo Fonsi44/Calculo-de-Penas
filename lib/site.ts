@@ -46,10 +46,10 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Bufete en Nacaome, Valle',
+    'Abogados en Nacaome, Valle — Honduras',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete de abogados en Nacaome, Valle. Defensa penal, asesoría jurídica y atención legal directa con presupuesto por escrito.',
+    'Bufete de abogados en Nacaome, Valle (Honduras). Defensa penal, derecho de familia, laboral, civil y mercantil. Atención legal directa con presupuesto por escrito. WhatsApp: +504 9536-3724.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete multidisciplinario sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
@@ -128,6 +128,29 @@ export function mailtoHref(subject?: string): string {
 }
 
 /**
+ * Áreas de conocimiento del bufete para los schemas Organization y LegalService.
+ * Fuente única (DRY): se reutiliza en ambos schemas. Refuerza E-E-A-T y la
+ * autoridad temática del despacho ante Google.
+ */
+export const KNOWS_ABOUT = [
+  'Derecho Penal',
+  'Derecho de Familia',
+  'Derecho Laboral',
+  'Derecho Civil y Notarial',
+  'Derecho Mercantil y Empresarial',
+  'Derecho Tributario y Fiscal',
+  'Derecho Bancario y Financiero',
+  'Derecho Administrativo y Servicio Civil',
+  'Derecho Aduanero',
+  'Regulación Sanitaria',
+  'Extranjería y Migración',
+  'Propiedad Intelectual',
+  'Derecho Ambiental Regulatorio',
+  'Conciliación y Arbitraje',
+  'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
+];
+
+/**
  * Schema.org LegalService listo para inyectar en JSON-LD.
  * Incluye LocalBusiness con geo y areaServed para SEO local.
  */
@@ -143,12 +166,21 @@ export function legalServiceSchema() {
     email: site.email,
     description: site.description,
     image: `${site.url}/og-image.png`,
-    logo: `${site.url}/logo.png`,
+    // logo: se referencia og-image.png (1200x630, ya existe) porque NO hay
+    // /logo.png en /public. Google Rich Results exige PNG/JPG/GIF/WebP ≥112px.
+    logo: `${site.url}/og-image.png`,
     priceRange: '$$',
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     currenciesAccepted: 'HNL, USD',
     areaServed: [
-      { '@type': 'City', name: site.address.city },
+      // Cobertura ampliada para SEO local: sede (Nacaome) + ciudades del sur
+      // de Honduras donde el bufete atiende, + capitales económicas nacionales
+      // para competir por "abogados en Tegucigalpa / San Pedro Sula".
+      { '@type': 'City', name: 'Nacaome' },
+      { '@type': 'City', name: 'San Lorenzo' },
+      { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'City', name: 'Tegucigalpa' },
+      { '@type': 'City', name: 'San Pedro Sula' },
       { '@type': 'State', name: site.address.department },
       { '@type': 'Country', name: site.address.country },
     ],
@@ -168,23 +200,7 @@ export function legalServiceSchema() {
     knowsLanguage: ['es-HN', 'es-ES'],
     serviceType:
       'Bufete multidisciplinar — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
-    knowsAbout: [
-      'Derecho Penal',
-      'Derecho de Familia',
-      'Derecho Laboral',
-      'Derecho Civil y Notarial',
-      'Derecho Mercantil y Empresarial',
-      'Derecho Tributario y Fiscal',
-      'Derecho Bancario y Financiero',
-      'Derecho Administrativo y Servicio Civil',
-      'Derecho Aduanero',
-      'Regulación Sanitaria',
-      'Extranjería y Migración',
-      'Propiedad Intelectual',
-      'Derecho Ambiental Regulatorio',
-      'Conciliación y Arbitraje',
-      'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
-    ],
+    knowsAbout: KNOWS_ABOUT,
     ...(site.social.facebook || site.social.instagram || site.social.tiktok
       ? {
           sameAs: [
@@ -232,7 +248,17 @@ export function organizationSchema() {
     name: site.name,
     legalName: site.name,
     url: site.url,
-    logo: `${site.url}/logo.png`,
+    // logo: og-image.png (no existe /logo.png en /public — ver nota en legalServiceSchema).
+    logo: `${site.url}/og-image.png`,
+    // foundingDate: "~2010" refleja "más de 15 años de ejercicio profesional"
+    // declarado en la home (auditoría 2026). Reemplazar por año exacto si se conoce.
+    foundingDate: '2010',
+    slogan: site.tagline,
+    knowsAbout: KNOWS_ABOUT,
+    // sameAs: solo el sitio propio (URL real y verificable). No inventar redes
+    // sociales: cuando existan cuentas verificadas (Facebook, LinkedIn, GBP),
+    // añadirlas aquí para reforzar E-E-A-T y vincular entidades.
+    sameAs: [site.url],
     contactPoint: [
       {
         '@type': 'ContactPoint',

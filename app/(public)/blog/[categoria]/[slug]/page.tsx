@@ -198,6 +198,25 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
               </div>
             )}
 
+            {/* Disclaimer legal + fecha de revisión (señal E-E-A-T) */}
+            <div className="mt-10 p-5 rounded-xl border border-border/30 bg-surface-alt">
+              <p className="text-xs text-text-muted leading-relaxed">
+                <strong className="text-text-secondary">Aviso legal:</strong> este artículo tiene
+                carácter orientativo y educativo, y se basa en la legislación hondureña vigente al
+                momento de su publicación{' '}
+                {post.updatedAt
+                  ? `(última revisión: ${formatDate(post.updatedAt)}).`
+                  : `(publicado: ${formatDate(post.publishedAt)}).`}{' '}
+                No constituye asesoría legal personalizada ni crea relación abogado–cliente. Cada
+                caso requiere análisis individual por un abogado habilitado en Honduras. Para
+                asistencia sobre su situación particular,{' '}
+                <a href="/solicitar-consulta#formulario" className="text-accent-dark underline font-medium">
+                  solicite una consulta
+                </a>{' '}
+                con nuestro despacho.
+              </p>
+            </div>
+
             <RelatedService category={post.category} />
 
             {/* Author Box */}

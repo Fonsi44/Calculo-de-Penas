@@ -20,6 +20,10 @@ const PUBLIC_ROUTES: Array<{
   { path: '/', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
   { path: '/servicios-juridicos', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
   { path: '/derecho-penal', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
+  // Landings locales (SEO local): máxima intención comercial ("abogados en {ciudad}").
+  { path: '/abogados-en-nacaome', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
+  { path: '/abogados-en-choluteca', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
+  { path: '/abogados-en-san-lorenzo', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
   { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
   { path: '/preguntas-frecuentes', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
   { path: '/blog', priority: 0.6, changeFrequency: 'weekly', daysAgo: 1 },
@@ -75,13 +79,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: r.priority,
   }));
 
-  const categoryRoutes = blogCategories.map((c) => ({
-    url: absoluteUrl(`/blog/${c.slug}`),
-    lastModified: now,
-    changeFrequency: 'weekly' as const,
-    priority: 0.5,
-  }));
-
   const dbPosts = IS_DB_REACHABLE ? await db
     .select({
       slug: blogPosts.slug,
@@ -93,6 +90,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .from(blogPosts)
     .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))
     .orderBy(desc(blogPosts.publishedAt)) : [];
+
+  // Mapa categoría → fecha del post más reciente (dbPosts ya viene ordenado
+  // DESC por publishedAt). Si no hay posts en la categoría o la DB no está
+  // disponible, usamos `now` como fallback.
+  const latestPostByCategory = new Map<string, Date>();
+  for (const p of dbPosts) {
+    if (!latestPostByCategory.has(p.category)) {
+      latestPostByCategory.set(
+        p.category,
+        p.updatedAt ? new Date(p.updatedAt) : new Date(p.publishedAt),
+      );
+    }
+  }
+
+  const categoryRoutes = blogCategories.map((c) => ({
+    url: absoluteUrl(`/blog/${c.slug}`),
+    lastModified: latestPostByCategory.get(c.slug) ?? now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.5,
+  }));
 
   const blogPostRoutes = dbPosts.map((p) => ({
     url: absoluteUrl(`/blog/${p.category}/${p.slug}`),
