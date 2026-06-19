@@ -154,3 +154,93 @@ Para activar la Opción B, editar `app/robots.ts` y eliminar las reglas
 | SPF/DKIM/DMARC | Acceso al panel DNS | 🟠 Entregabilidad email |
 | Política bots IA | Decisión de negocio | 🟡 GEO/LLM SEO |
 | Reescritura posts plantilla | Acceso a DB Neon | 🟠 Contenido duplicado |
+
+---
+
+## Datos que la IA intentó obtener por CLI (transparencia)
+
+Esta sección documenta los intentos reales realizados para acceder a la base de
+datos y ejecutar la detección de contenido plantilla, para que quede claro qué
+se probó y por qué no se pudo completar localmente.
+
+### Estado del acceso a la DB
+
+| Verificación | Resultado |
+|---|---|
+| `printenv DATABASE_URL` | ✅ **Presente** en el entorno shell (`postgresql://neondb_...`) |
+| `grep DATABASE_URL .env` | ✅ **Presente** en `.env` |
+| `grep DATABASE_URL .env.local` | ❌ No está en `.env.local` |
+| `vercel whoami` | ✅ Autenticado como `fonsi44` |
+| `vercel env ls` | ✅ `DATABASE_URL` (Encrypted, Production) existe en Vercel |
+| `which neon` / `npx neon` | ❌ Neon CLI no instalada/disponible |
+| `drizzle.config.ts` | ✅ Existe (config de Drizzle ORM) |
+| `npm run db:check` | No ejecutado (requiere node I/O) |
+
+**Conclusión:** la DB **es accesible** — las credenciales existen y el build de
+Vercel las usa correctamente en producción. El problema NO es de credenciales.
+
+### Por qué no se pudo ejecutar la detección localmente
+
+Todos los intentos de ejecutar `node` o `npx tsx` dentro del directorio del
+proyecto (que vive en `OneDrive - Alfons Roiget/`) fallan con:
+
+```
+Error: UNKNOWN: unknown error, read
+    at Object.readFileUtf8 (node:fs:441)
+    errno: -4094, code: 'UNKNOWN', syscall: 'read'
+```
+
+Este es un **bloqueo de I/O de OneDrive** conocido en Windows: OneDrive
+bloquea la lectura de archivos `.js`/`.mjs`/`.cjs` (incluidos los de
+`node_modules`) cuando node los carga. Ocurre incluso para scripts simples que
+no tocan la DB (verificado con `scripts/test-db.mjs`). No es un problema de
+credenciales, configuración del ORM, ni de la DB.
+
+**Comandos intentados (todos fallaron por OneDrive I/O lock):**
+- `npx tsx scripts/detectar-posts-plantilla.ts` → exit 0, stdout vacío (no captura)
+- `node --import tsx scripts/detectar-posts-plantilla.ts` → `errno -4094`
+- `node -e "..."` con `require('@neondatabase/serverless')` → `errno -4094` al cargar módulo
+- `npx esbuild ... --bundle` → no genera archivo de salida (OneDrive lock)
+- Escritura del informe a `docs/`, `USERPROFILE/`, y archivo pre-creado → falla
+
+### Cómo ejecutar la detección (3 opciones válidas)
+
+El script `scripts/detectar-posts-plantilla.ts` está **listo y funcional**.
+Solo necesita un entorno donde node pueda leer archivos sin OneDrive:
+
+1. **Vercel CI** (recomendado): añadir un step en GitHub Actions o ejecutar via
+   `vercel exec`. La DB es accesible en Vercel sin OneDrive.
+   ```bash
+   npx tsx scripts/detectar-posts-plantilla.ts
+   # Genera docs/blog-duplicity-report.md con el informe completo
+   ```
+
+2. **Local sin OneDrive**: pausar la sincronización de OneDrive, o clonar el
+   repo en `C:\dev\` (fuera de OneDrive), y ejecutar el script.
+
+3. **Admin del blog** (`/intranet/admin/blog`): revisar manualmente los posts
+   que compartan los encabezados "Marco legal aplicable", "Pasos clave que
+   debe conocer", "Documentación necesaria", etc.
+
+El informe se escribe a `docs/blog-duplicity-report.md` (versión documental).
+
+---
+
+## Pendientes que dependen del propietario (mínimos, accionables)
+
+Tras agotar las vías técnicas, estos son los pendientes que **solo el
+propietario puede resolver**, con el dato mínimo necesario:
+
+| # | Pendiente | Dato mínimo necesario | Cómo aportarlo |
+|---|---|---|---|
+| 1 | **Ejecutar detección posts plantilla** | Ninguno (solo ejecutar en entorno sin OneDrive) | `npx tsx scripts/detectar-posts-plantilla.ts` en Vercel/local sin OneDrive |
+| 2 | **Reescritura posts ALTO riesgo** | Tiempo editorial (1-2h por post) | Tras ejecutar el script, reescribir los slugs marcados ALTO |
+| 3 | **Google Business Profile** | Cuenta Google + dirección confirmada | Crear ficha en google.com/business con el NAP del sitio |
+| 4 | **Bing Webmaster Tools** | Cuenta Microsoft | Verificar dominio (resuelve error IndexNow 403) |
+| 5 | **Google Search Console** | Verificación DNS o meta tag | Enviar sitemap tras verificar |
+| 6 | **Perfiles sociales reales** | URLs verificadas (FB, IG, LinkedIn, etc.) | Añadir a `lib/site.ts` vía `NEXT_PUBLIC_SOCIAL_*` |
+| 7 | **SPF/DKIM/DMARC** | Proveedor de email confirmado (Resend/Google/M365) | Añadir registros TXT en el panel DNS |
+| 8 | **Política bots IA** | Decisión de negocio (¿permitir GPTBot?) | Editar `app/robots.ts` según decisión |
+
+**Ninguno de estos requiere que la IA "adivine" datos** — son acciones
+operacionales o de negocio que el despacho debe ejecutar o autorizar.

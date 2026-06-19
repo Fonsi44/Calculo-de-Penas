@@ -5,19 +5,38 @@
 // plantilla (boilerplate duplicado entre artículos) y thin content.
 // Reporta slugs agrupados por categoría para priorizar reescrituras.
 //
+// Salida dual: console.log (stdout) + archivo docs/blog-duplicidad-report.md
+// (escritura a archivo para entornos donde stdout no se captura).
+//
 // Criterios de puntuación (sobre el body en HTML, sin tags):
 //   - Marcadores de plantilla (10 strings conocidos): +1 c/u
 //   - Palabras < 300 (thin content): +2
 //   - Palabras < 600 (contenido corto): +1
 //   - Marcadores >= 3: clasifica ALTO automáticamente
-//
-// Salida: lista agrupada por severidad + por categoría.
 
 import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { blogPosts } from '../lib/schema';
 import { eq } from 'drizzle-orm';
+import { writeFileSync, mkdirSync } from 'fs';
+import { dirname, resolve } from 'path';
+
+const REPORT_PATH = resolve(process.cwd(), 'docs/blog-duplicity-report.md');
+const lines: string[] = [];
+function out(s: string) {
+  out(s);
+  lines.push(s);
+}
+function flushReport() {
+  try {
+    mkdirSync(dirname(REPORT_PATH), { recursive: true });
+    writeFileSync(REPORT_PATH, lines.join('\n') + '\n', 'utf8');
+    out(`\n📄 Informe guardado en: ${REPORT_PATH}`);
+  } catch (e) {
+    out(`\n⚠️  No se pudo escribir el informe a archivo: ${String(e).substring(0, 100)}`);
+  }
+}
 
 if (!process.env.DATABASE_URL) {
   console.error('ERROR: DATABASE_URL no configurada. Este script requiere acceso a la DB Neon.');
@@ -71,7 +90,7 @@ function clasificar(marcadores: number, palabras: number, ctaDuplicados: number)
 }
 
 async function main() {
-  console.log('\n🔍 Auditoría de contenido plantilla y thin content\n');
+  out('\n🔍 Auditoría de contenido plantilla y thin content\n');
 
   const allPosts = await db
     .select({
@@ -83,13 +102,13 @@ async function main() {
     .from(blogPosts)
     .where(eq(blogPosts.published, true));
 
-  console.log(`Total posts publicados analizados: ${allPosts.length}\n`);
+  out(`Total posts publicados analizados: ${allPosts.length}\n`);
 
   const audits: PostAudit[] = [];
 
   for (const post of allPosts) {
     if (!post.body) {
-      console.log(`  ⊘ SIN CUERPO: ${post.slug}`);
+      out(`  ⊘ SIN CUERPO: ${post.slug}`);
       continue;
     }
 
@@ -131,44 +150,44 @@ async function main() {
     BAJO: audits.filter((a) => a.severidad === 'BAJO'),
   };
 
-  console.log('═══════════════════════════════════════════════');
-  console.log('RESUMEN POR SEVERIDAD');
-  console.log('═══════════════════════════════════════════════');
-  console.log(`  🔴 ALTO  (${porSeveridad.ALTO.length}): reescribir urgente`);
-  console.log(`  🟠 MEDIO (${porSeveridad.MEDIO.length}): reescribir o eliminar secciones plantilla`);
-  console.log(`  🟢 BAJO  (${porSeveridad.BAJO.length}): revisión opcional`);
-  console.log('');
+  out('═══════════════════════════════════════════════');
+  out('RESUMEN POR SEVERIDAD');
+  out('═══════════════════════════════════════════════');
+  out(`  🔴 ALTO  (${porSeveridad.ALTO.length}): reescribir urgente`);
+  out(`  🟠 MEDIO (${porSeveridad.MEDIO.length}): reescribir o eliminar secciones plantilla`);
+  out(`  🟢 BAJO  (${porSeveridad.BAJO.length}): revisión opcional`);
+  out('');
 
   // Detalle ALTO
   if (porSeveridad.ALTO.length > 0) {
-    console.log('═══════════════════════════════════════════════');
-    console.log('🔴 ALTO RIESGO (reescribir primero)');
-    console.log('═══════════════════════════════════════════════');
+    out('═══════════════════════════════════════════════');
+    out('🔴 ALTO RIESGO (reescribir primero)');
+    out('═══════════════════════════════════════════════');
     for (const a of porSeveridad.ALTO) {
-      console.log(`  ${a.category}/${a.slug}`);
-      console.log(`    Marcadores: ${a.marcadores}/10 · Palabras: ${a.palabras} · CTAs duplicados: ${a.ctaDuplicados}`);
+      out(`  ${a.category}/${a.slug}`);
+      out(`    Marcadores: ${a.marcadores}/10 · Palabras: ${a.palabras} · CTAs duplicados: ${a.ctaDuplicados}`);
       if (a.marcadoresEncontrados.length > 0) {
-        console.log(`    Encontrados: ${a.marcadoresEncontrados.join(' | ')}`);
+        out(`    Encontrados: ${a.marcadoresEncontrados.join(' | ')}`);
       }
     }
-    console.log('');
+    out('');
   }
 
   // Detalle MEDIO
   if (porSeveridad.MEDIO.length > 0) {
-    console.log('═══════════════════════════════════════════════');
-    console.log('🟠 MEDIO RIESGO');
-    console.log('═══════════════════════════════════════════════');
+    out('═══════════════════════════════════════════════');
+    out('🟠 MEDIO RIESGO');
+    out('═══════════════════════════════════════════════');
     for (const a of porSeveridad.MEDIO) {
-      console.log(`  ${a.category}/${a.slug} (${a.marcadores}/10 marcadores, ${a.palabras} palabras)`);
+      out(`  ${a.category}/${a.slug} (${a.marcadores}/10 marcadores, ${a.palabras} palabras)`);
     }
-    console.log('');
+    out('');
   }
 
   // Por categoría
-  console.log('═══════════════════════════════════════════════');
-  console.log('DISTRIBUCIÓN POR CATEGORÍA (ALTO + MEDIO)');
-  console.log('═══════════════════════════════════════════════');
+  out('═══════════════════════════════════════════════');
+  out('DISTRIBUCIÓN POR CATEGORÍA (ALTO + MEDIO)');
+  out('═══════════════════════════════════════════════');
   const porCategoria: Record<string, { alto: number; medio: number; bajo: number }> = {};
   for (const a of audits) {
     if (!porCategoria[a.category]) porCategoria[a.category] = { alto: 0, medio: 0, bajo: 0 };
@@ -177,32 +196,34 @@ async function main() {
   for (const [cat, counts] of Object.entries(porCategoria).sort()) {
     const totalRiesgo = counts.alto + counts.medio;
     if (totalRiesgo > 0) {
-      console.log(`  ${cat}: ${counts.alto} alto, ${counts.medio} medio, ${counts.bajo} bajo`);
+      out(`  ${cat}: ${counts.alto} alto, ${counts.medio} medio, ${counts.bajo} bajo`);
     }
   }
-  console.log('');
+  out('');
 
   // Slugs para reescritura (ALTO primero, para copiar/pegar)
   if (porSeveridad.ALTO.length > 0) {
-    console.log('═══════════════════════════════════════════════');
-    console.log('SLUGS DE ALTO RIESGO (para reescritura prioritaria)');
-    console.log('═══════════════════════════════════════════════');
+    out('═══════════════════════════════════════════════');
+    out('SLUGS DE ALTO RIESGO (para reescritura prioritaria)');
+    out('═══════════════════════════════════════════════');
     for (const a of porSeveridad.ALTO) {
-      console.log(`  ${a.slug}`);
+      out(`  ${a.slug}`);
     }
-    console.log('');
+    out('');
   }
 
-  console.log('═══════════════════════════════════════════════');
-  console.log('ACCIÓN RECOMENDADA');
-  console.log('═══════════════════════════════════════════════');
-  console.log('  1. Reescribir los ALTO sustituyendo secciones plantilla por contenido');
-  console.log('     específico de cada materia (penal, familia, laboral, etc.).');
-  console.log('  2. En los MEDIO, eliminar las secciones genéricas que no puedan');
-  console.log('     hacerse específicas, o ampliar el contenido.');
-  console.log('  3. Los posts con CTAs duplicados en el body deben limpiarse: el');
-  console.log('     componente <LegalDisclaimer> ya añade el aviso legal.');
-  console.log('');
+  out('═══════════════════════════════════════════════');
+  out('ACCIÓN RECOMENDADA');
+  out('═══════════════════════════════════════════════');
+  out('  1. Reescribir los ALTO sustituyendo secciones plantilla por contenido');
+  out('     específico de cada materia (penal, familia, laboral, etc.).');
+  out('  2. En los MEDIO, eliminar las secciones genéricas que no puedan');
+  out('     hacerse específicas, o ampliar el contenido.');
+  out('  3. Los posts con CTAs duplicados en el body deben limpiarse: el');
+  out('     componente <LegalDisclaimer> ya añade el aviso legal.');
+  out('');
+
+  flushReport();
 }
 
-main().catch(console.error);
+main().catch((e) => { console.error(e); process.exit(1); });
