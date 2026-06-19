@@ -1,5 +1,35 @@
 # Changelog
 
+## Release 76 — Auditoría externa: title extendido, keyword consistency, falsos positivos documentados (2026-06-19)
+
+### Correcciones aplicadas
+| Cambio | Antes | Después |
+|---|---|---|
+| **Title home** | "Abogados en Nacaome, Valle \| Pineda y Asociados" (46c) | "Abogados en Nacaome, Valle, Honduras \| Pineda y Asociados" (54c) |
+| **Keyword consistency H2** | "Cuatro canales, una sola atención" (genérico) | "Contáctenos en Nacaome y la zona sur de Honduras" (keywords geo) |
+
+### Falsos positivos confirmados (no requieren acción)
+- **HTTP/2+ obsoleto**: Vercel sirve HTTP/2+ por defecto (curl Windows no lo muestra).
+- **Dirección no identificada**: aparece 12× en la home + schema PostalAddress.
+- **iFrames**: 1 iframe (mapa OSM) con lazy/sandbox/title/noscript. Correcto.
+- **Inline styles**: solo 3 en la home (dinámicos justificados).
+- **SPF ausente**: SPF/DKIM/DMARC ya configurados y verificados.
+- **LocalBusiness no detectado**: `@type` array válido; 4/4 JSON-LD válidos.
+
+### Pendientes externos (documentados en docs/seo-off-page.md)
+- Backlinks (0): requiere GBP, directorios, prensa — no creables desde código.
+- Perfiles sociales: sin URLs reales; `sameAs` omitido.
+- Facebook Pixel: sin ID real.
+- Google Business Profile: requiere cuenta Google.
+- Datos CrUX: requieren tráfico acumulado.
+- Doble redirect http apex: gestionado por Vercel Domains.
+
+### Validación
+- lint: 0 errores · build: OK · test: 382/382 · e2e: 37/37
+- curl: 4/4 JSON-LD válidos, dirección visible, title 54c
+
+---
+
 ## Release 75 — Rendimiento: elimina searchIndex serializado de home + script auditoría (2026-06-19)
 
 ### Optimización de payload (Prioridad 1)

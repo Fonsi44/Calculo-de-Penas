@@ -284,3 +284,31 @@ propietario puede resolver**, con el dato mínimo necesario:
 
 **Ninguno de estos requiere que la IA "adivine" datos** — son acciones
 operacionales o de negocio que el despacho debe ejecutar o autorizar.
+
+---
+
+## Auditoría externa 19 jun 2026 3PM UTC — falsos positivos y estado
+
+### Falsos positivos confirmados (no requieren acción)
+
+| Hallazgo auditor | Realidad | Evidencia |
+|---|---|---|
+| **HTTP/2+ obsoleto** | Vercel sirve HTTP/2+ por defecto. La auditoría lo marca obsoleto porque el parser usado no negoció HTTP/2. | curl desde Windows no siempre muestra `HTTP/2`; Vercel documentation confirma HTTP/2 global. |
+| **Dirección no identificada** | La dirección SÍ aparece visible en la home (12× "GGJ7+239", 8× "Hondutel", 110× "Nacaome") y en el schema `PostalAddress`. | `curl https://www.pinedayasociadoshn.com/ \| grep GGJ7` → 12 ocurrencias. |
+| **iFrames detectados** | 1 iframe público: el mapa OpenStreetMap en `/como-llegar` y home. Ya tiene `loading="lazy"`, `sandbox="allow-scripts"`, `title` y `<noscript>`. | `components/marketing/map-embed.tsx`. |
+| **Inline styles detectados** | Solo 3 `style=` en toda la home (justificados: valores dinámicos en `placeholder-photo.tsx`). | `curl ... \| grep -c 'style='` → 3. |
+| **SPF ausente** | SPF configurado y verificado: `v=spf1 include:amazonses.com ~all` (vía Vercel CLI). DKIM Resend + DMARC `p=none` también. | Vercel env pull + verificación MX Toolbox. |
+| **LocalBusiness Schema no identificado** | El JSON-LD emite `"@type":["LegalService","LocalBusiness"]` (válido Schema.org). Algunos auditores no parsean arrays de `@type`. Google Sí lo detecta. | 4/4 bloques JSON-LD válidos (validado con node JSON.parse). |
+| **Core Web Vitals sin datos** | El sitio tiene bajo tráfico; Google no genera datos CrUX suficientes. Se necesita más tráfico + tiempo. | No accionable desde código. |
+
+### Pendientes externos reales (no accionables desde el repo)
+
+| Pendiente | Por qué es externo | Impacto |
+|---|---|---|
+| **Backlinks (0)** | No se pueden crear desde código. Requiere GBP, directorios, prensa, colaboraciones. | 🟠 Autoridad de dominio |
+| **Perfiles sociales reales** | No existen URLs verificadas. `sameAs` omitido hasta que el despacho las aporte. | 🟠 E-E-A-T |
+| **Facebook Pixel** | Sin ID real + consentimiento. No se instala. | 🟡 Tracking conversión |
+| **Google Business Profile** | Requiere cuenta Google + verificación del despacho. | 🔴 SEO local |
+| **Datos CrUX reales** | Requiere tráfico real acumulado (semanas/meses). | 🟡 Field CWV |
+| **Doble redirect http apex** | `http://apex → https://apex → https://www` lo gestiona Vercel Domains. No configurable desde el repo. | 🟡 0.6s ahorrable |
+

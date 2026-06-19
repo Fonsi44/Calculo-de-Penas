@@ -446,8 +446,8 @@ export default async function HomePage() {
       <Section spacing="md" ariaLabel="Canales de contacto">
         <SectionHeader
           eyebrow="Contáctenos"
-          title="Cuatro canales, una sola atención"
-          subtitle="Elija el que prefiera. Le respondemos en horario hábil y con la confidencialidad que su caso requiere."
+          title="Contáctenos en Nacaome y la zona sur de Honduras"
+          subtitle="Elija el canal que prefiera. Le respondemos en horario hábil y con la confidencialidad que su caso requiere."
         />
         <ContactStrip />
       </Section>
