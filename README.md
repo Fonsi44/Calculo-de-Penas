@@ -218,14 +218,38 @@ curl -s https://www.pinedayasociadoshn.com/servicios-juridicos | findstr -i "rob
 
 ### IndexNow
 
-El script `scripts/submit-indexnow.mjs` envía todas las URLs a los buscadores compatibles con IndexNow (Bing, Yandex). El host se deriva de `NEXT_PUBLIC_SITE_URL`.
+Notificación conservadora de URLs a los buscadores compatibles con IndexNow
+(Bing, Yandex, Seznam). El host canónico se deriva de `NEXT_PUBLIC_SITE_URL`.
 
-**Automatización:** IndexNow se ejecuta automáticamente tras cada build exitoso en Vercel (`postbuild` en `package.json`).
+**Política (Jun 2026 — corrección urgente):** el `postbuild` ya NO envía miles
+de URLs automáticamente en cada build. El envío masivo anterior (9.450 URLs en
+5 días, 0 rastreadas/0 indexadas en Bing) se ha sustituido por una política
+**dry-run por defecto**: el `postbuild` solo simula salvo que la variable
+`ENABLE_INDEXNOW_SUBMIT=true` esté presente. El envío real se hace con los
+comandos explícitos (modo incremental/sample), nunca en cada build ciego.
 
 ```bash
-npm run indexnow:dry      # Simular
-npm run indexnow          # Enviar URLs reales
+npm run indexnow:dry         # Simular lote mínimo (core, 11 URLs) — comportamiento por defecto del postbuild
+npm run indexnow:audit       # Simular catálogo completo (auditar qué entraría en --full)
+npm run indexnow:sample      # Enviar lote de prueba de 5 URLs (home + 4 landings)
+npm run indexnow:core        # Enviar el lote mínimo real (11 URLs prioritarias)
+npm run indexnow:incremental # Enviar solo URLs no enviadas en últimas 24h (recomendado en CI)
+npm run indexnow:full        # Enviar catálogo completo (máx. 500 URLs) — uso puntual
 ```
+
+**Exclusiones obligatorias** (nunca se envían): `/intranet`, `/admin`, `/api`,
+`/calculadora`, `/casos`, `/cp`, `/delitos`, `/atajos`, `/preview`, `/login`,
+`/_next`, `/404`, `/500`, rutas con query, rutas noindex. Deduplicación con
+`Set` y normalización de host + trailing slash. Techo de seguridad: 500 URLs.
+
+**Validación de key:** el script aborta si `INDEXNOW_KEY` no coincide
+exactamente con el contenido de `public/<KEY>.txt` (Bing exige coincidencia
+byte a byte entre la key enviada y la del archivo público). Nunca imprime la
+key completa en logs (solo primeros 6 + últimos 2 caracteres).
+
+**Cache incremental:** `.indexnow-cache.json` (en `.gitignore`) registra las
+URLs enviadas y su timestamp, para no reenviar la misma URL en <24h. No
+contiene secretos.
 
 ### Estado actual de servicios SEO
 
@@ -233,7 +257,7 @@ npm run indexnow          # Enviar URLs reales
 |----------|--------|
 | Google Search Console | ✅ Verificado + sitemap enviado |
 | Google Analytics 4 | ✅ Activo (`G-L2PGBN3SWK`) |
-| IndexNow (Bing) | ✅ Automatizado post-build |
+| IndexNow (Bing) | ⚠️ Script conservador (dry-run por defecto); **pendiente verificación de dominio en Bing WMT** |
 | Indexación | ✅ Activada (`NEXT_PUBLIC_NOINDEX=false`) |
 | CSP | ✅ Compatible con GA4 |
 
@@ -815,22 +839,43 @@ Ambos scripts pueden añadirse a GitHub Actions:
 
 ## IndexNow
 
-### Estado actual
+### Estado actual (Jun 2026 — revisión conservadora)
 - **Variable de entorno**: `INDEXNOW_KEY=6faddf836cbd448fad29083c8f31d573` en `.env` y en Vercel.
-- **Archivo de verificación**: `public/6faddf836cbd448fad29083c8f31d573.txt` (contiene la clave).
+- **Archivo de verificación**: `public/6faddf836cbd448fad29083c8f31d573.txt` (contiene exactamente la clave).
 - **Endpoint**: `https://api.indexnow.org/indexnow`.
-- **Script**: `node scripts/submit-indexnow.mjs` (se ejecuta automáticamente en `postbuild`).
+- **Script**: `scripts/submit-indexnow.mjs` — modo **dry-run por defecto**; el `postbuild` no envía nada salvo `ENABLE_INDEXNOW_SUBMIT=true`.
+- **Causa raíz de los 0 rastreos/0 indexaciones en Bing (CSV 7-11/6/2026)**:
+  1. La `INDEXNOW_KEY` del entorno (`a38a1fce…`) **no coincidía** con el archivo público commitado (`6faddf83…`). Corregido: ahora coinciden.
+  2. El dominio **no está verificado en Bing Webmaster Tools** (Bing responde `403 UserForbiddedToAccessSite`). Ver `docs/seo-off-page.md` §2.
+  3. El script enviaba 20 URLs inexistentes (`/blog/categoria/...`) que devuelven 404. Corregido: solo rutas reales.
+  4. El `postbuild` reenviaba las 57 URLs en cada build. Corregido: dry-run por defecto + modo incremental con cache.
 
-### Error 403 — Solución
-Si el `postbuild` muestra `Error 403: UserForbiddedToAccessSite`, la causa es que el archivo de clave pública no está accesible en el dominio de producción. Para resolverlo:
+### Modos de uso
+| Comando | URLs | Envío real | Cuándo |
+|---|---|---|---|
+| `npm run indexnow:dry` | 11 (core) | No | Auditar / postbuild por defecto |
+| `npm run indexnow:audit` | ~55 (full) | No | Auditar catálogo completo |
+| `npm run indexnow:sample` | 5 | Sí (`ENABLE_INDEXNOW_SUBMIT=true`) | Prueba tras verificar key |
+| `npm run indexnow:core` | 11 | Sí | Notificación puntual del núcleo |
+| `npm run indexnow:incremental` | solo nuevas <24h | Sí | **Recomendado en CI/producción** |
+| `npm run indexnow:full` | hasta 500 | Sí | Reindexación completa puntual |
 
-1. Verificar que `public/<KEY>.txt` existe y contiene exactamente el valor de `INDEXNOW_KEY`.
-2. Verificar que el archivo es accesible públicamente en `https://www.pinedayasociadoshn.com/<KEY>.txt`.
-3. Hacer deploy a Vercel para que el archivo se publique.
-4. Ejecutar `node scripts/submit-indexnow.mjs --dry-run` para simular.
-5. Ejecutar `node scripts/submit-indexnow.mjs` para enviar.
+### Error 403 `UserForbiddedToAccessSite` — Solución
+La causa **no** es el archivo de clave (ese error es de autorización del
+sitio, no de la key). La causa es que el dominio **no está verificado** en
+Bing Webmaster Tools. Para resolverlo:
 
-> **Nota**: El error 403 desaparecerá tras el primer deploy que incluya el archivo de clave correcto.
+1. Añadir el sitio en https://www.bing.com/webmasters.
+2. Verificar la propiedad (meta tag o archivo XML de Bing — distinto del de IndexNow).
+3. Enviar el sitemap: `https://www.pinedayasociadoshn.com/sitemap.xml`.
+4. Una vez verificado, ejecutar `npm run indexnow:incremental` (o `:sample`
+   para una primera prueba de 5 URLs).
+5. Confirmar en el panel de IndexNow de Bing que las URLs pasan a
+   "Discovered" → "Crawled" → "Indexed".
+
+> **Pre-validación local:** `curl -s https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt`
+> debe devolver exactamente `6faddf836cbd448fad29083c8f31d573`. Si no responde
+> o el contenido difiere, Bing rechazará todos los envíos.
 
 ---
 
@@ -1046,11 +1091,12 @@ El script:
 
 ### IndexNow
 
-- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`).
-- Script postbuild: `scripts/submit-indexnow.mjs` — envía URLs públicas a Bing, Yandex, Seznam.
-- Solo envía URLs públicas (no intranet, no API, no borradores).
-- Si `INDEXNOW_KEY` no está definida, el postbuild salta con aviso (no falla el build).
+- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`) y también como archivo estático `public/6faddf836cbd448fad29083c8f31d573.txt` (ambos deben coincidir — validado por el script).
+- Script: `scripts/submit-indexnow.mjs` — **dry-run por defecto**; el `postbuild` NO envía salvo `ENABLE_INDEXNOW_SUBMIT=true`. Modos: core (11), sample (5), incremental (cache 24h), full (máx. 500).
+- Solo envía URLs públicas reales y canónicas (excluye intranet, api, admin, calculadora, casos, cp, delitos, atajos, preview, login, 404, query strings).
+- Si `INDEXNOW_KEY` no coincide con `public/<KEY>.txt`, el script aborta (Bing exige coincidencia exacta).
 - Generar clave en: https://www.bing.com/indexnow/getstarted
+- **Pendiente externo crítico**: verificar el dominio en Bing Webmaster Tools (causa del histórico 0% indexación — error 403). Ver `docs/seo-off-page.md` §2.
 
 ---
 

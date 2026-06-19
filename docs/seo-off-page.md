@@ -26,15 +26,53 @@ La señal local más fuerte para "abogados en Nacaome", "abogados en Valle",
 - [ ] Verificar que el NAP de la ficha coincida **byte a byte** con el del
       sitio (footer + schema `LegalService`)
 
-## 2. Bing Webmaster Tools (resuelve error IndexNow 403)
+## 2. Bing Webmaster Tools (resuelve IndexNow 403)
 
-El sitio envía IndexNow en cada build pero Bing responde `403
-UserForbiddedToAccessSite` porque el dominio no está verificado.
+**Estado técnico (Jun 2026 — tras Release 70):** la integración IndexNow está
+corregida a nivel de código y despliegue, pero el **dominio sigue SIN
+verificar en Bing Webmaster Tools**, que es la causa raíz del histórico
+`403 UserForbiddedToAccessSite` y del **0% de indexación** (CSV Bing:
+9.450 URLs enviadas 7-11/6/2026, 0 rastreadas, 0 indexadas).
 
-- [ ] Añadir sitio en https://www.bing.com/webmasters
-- [ ] Verificar propiedad (meta tag o archivo XML)
-- [ ] Enviar sitemap: https://www.pinedayasociadoshn.com/sitemap.xml
-- [ ] Tras verificar, el script `scripts/submit-indexnow.mjs` funcionará
+### Causas raíz ya resueltas en código (Release 70)
+
+| Causa | Estado |
+|---|---|
+| `INDEXNOW_KEY` del entorno != archivo público commitado | ✅ Corregida (env local + Vercel = `6faddf83…`, coincide con `public/6faddf83…txt`) |
+| 20 URLs inexistentes `/blog/categoria/...` (404) | ✅ Corregidas (script solo envía rutas reales `/blog/{category}`) |
+| `postbuild` reenviaba 57 URLs en cada build | ✅ Dry-run por defecto; envío real solo con `ENABLE_INDEXNOW_SUBMIT=true` |
+| Sin throttle / cache de reenvío | ✅ `.indexnow-cache.json` con throttle 24h |
+| Landings locales no se enviaban | ✅ Incluidas (nacaome, choluteca, san-lorenzo) |
+
+### Bloque pendiente (externo, requiere cuenta Microsoft)
+
+- [ ] **Añadir sitio** en https://www.bing.com/webmasters
+- [ ] **Verificar propiedad** (meta tag HTML o archivo XML de Bing — distinto del archivo IndexNow)
+- [ ] **Enviar sitemap**: https://www.pinedayasociadoshn.com/sitemap.xml
+- [ ] Tras verificar, ejecutar el primer envío real conservador:
+  ```bash
+  npm run indexnow:sample      # 5 URLs de prueba (home + 4 landings)
+  npm run indexnow:incremental # núcleo incremental (11 URLs, cache 24h)
+  ```
+- [ ] Confirmar en el panel IndexNow de Bing que las URLs pasan
+      Discovered → Crawled → Indexed.
+
+### Validación técnica previa (ya OK en producción)
+
+```bash
+# Key pública accesible y correcta:
+curl -s https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt
+# → 6faddf836cbd448fad29083c8f31d573 (HTTP 200, text/plain)
+
+# Auditar qué enviaría el script sin tocar Bing:
+npm run indexnow:audit    # catálogo completo en dry-run
+npm run indexnow:dry      # lote mínimo en dry-run
+```
+
+> **Importante:** aunque la key y las URLs sean correctas, Bing **no
+> rastreará ni indexará** mientras el dominio no esté verificado en su
+> Webmaster Tools. Esta es la única acción que falta para destrabar la
+> indexación en Bing.
 
 ## 3. Google Search Console
 
@@ -226,11 +264,11 @@ Tras agotar las vías técnicas, estos son los pendientes que **solo el
 propietario puede resolver**, con el dato mínimo necesario:
 
 | # | Pendiente | Dato mínimo necesario | Cómo aportarlo |
-|---|---|---|---|---|
+|---|---|---|---|
 | 1 | ~~Ejecutar detección posts plantilla~~ | ✅ Completado (159 posts, 3 ALTO, 156 MEDIO) | Informe en `docs/blog-duplicity-report.md` |
 | 2 | **Reescritura posts ALTO riesgo** | Tiempo editorial (1-2h por post) | Reescribir 3 slugs ALTO: `abogados-en-pespire-choluteca`, `abogados-en-san-marcos-de-colon-choluteca`, `abogados-en-marcovia-choluteca` |
 | 3 | **Google Business Profile** | Cuenta Google + dirección confirmada | Crear ficha en google.com/business con el NAP del sitio |
-| 4 | **Bing Webmaster Tools** | Cuenta Microsoft | Verificar dominio (resuelve error IndexNow 403) |
+| 4 | **Bing Webmaster Tools** | Cuenta Microsoft | **Verificar dominio** (única causa restante del 0% indexación tras Release 70 — ver §2 arriba). La key IndexNow ya está corregida y verificada en producción |
 | 5 | ~~Google Search Console~~ | ✅ **Verificación DNS encontrada** (TXT `google-site-verification`) | Añadir sitio en GSC → el meta tag y DNS ya están listos |
 | 6 | **Perfiles sociales reales** | URLs verificadas (FB, IG, LinkedIn, etc.) | Investigado 2026-06-19: sin perfiles verificables. Añadir a `NEXT_PUBLIC_SOCIAL_*` cuando existan |
 | 7 | ~~SPF/DKIM/DMARC~~ | ✅ **Configurado y verificado** vía Vercel CLI | SPF incluye `amazonses.com`, DKIM Resend, DMARC `p=none`, MX AWS SES |

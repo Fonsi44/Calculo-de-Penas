@@ -1,5 +1,73 @@
 # Changelog
 
+## Release 70 — IndexNow conservador: corrección key, dry-run por defecto, modo incremental, validación producción (2026-06-19)
+
+### 🔴 Problema detectado
+El CSV de Bing Webmaster Tools mostraba **9.450 URLs enviadas entre el 7 y el 11/6/2026 con 0 rastreadas y 0 indexadas**. Auditoría del `postbuild` reveló cuatro causas raíz:
+
+1. **Key inconsistente**: `INDEXNOW_KEY` del entorno (`a38a1fce…`) **no coincidía** con el archivo público commitado (`public/6faddf83…txt`). Bing exige coincidencia byte a byte.
+2. **Dominio no verificado en Bing Webmaster Tools** (error histórico `403 UserForbiddedToAccessSite`, ya documentado en `docs/seo-off-page.md` §2).
+3. **20 URLs inexistentes** (`/blog/categoria/...`) → 404. La ruta real del blog es `/blog/{category}` (sin `categoria/`).
+4. **`postbuild` reenviaba 57 URLs en cada build**, incluyendo previews/staging.
+
+### 🟢 Correcciones aplicadas
+
+**`scripts/submit-indexnow.mjs` — reescritura conservadora:**
+- Dos modos explícitos: **completo controlado** (`--full`, catálogo público real, máx. 500 URLs) e **incremental recomendado** (`--incremental`, diff contra cache, throttle 24h).
+- Modo `--sample`/`--limit 5` para lote de prueba (home + solicitar-consulta + abogados-en-nacaome + abogados-en-choluteca + como-llegar).
+- Exclusiones obligatorias: `/intranet`, `/admin`, `/api`, `/calculadora`, `/casos`, `/cp`, `/delitos`, `/atajos`, `/preview`, `/login`, `/_next`, `/404`, `/500`, query strings, rutas noindex.
+- Deduplicación con `Set`, normalización de host + trailing slash.
+- Validación de key: aborta si `INDEXNOW_KEY` no coincide con `public/<KEY>.txt`.
+- Aborta si `NEXT_PUBLIC_NOINDEX=true`.
+- **Dry-run forzado** salvo `ENABLE_INDEXNOW_SUBMIT=true`.
+- No imprime la key completa (solo `6faddf…73`).
+- Cache `.indexnow-cache.json` (en `.gitignore`) con URLs enviadas + timestamps; sin secretos.
+- Logs claros: URLs candidatas, excluidas por razón, duplicados, total final, endpoint, host, resultado HTTP.
+
+**`package.json`:**
+- `postbuild` ahora es dry-run por defecto (no envía nada salvo `ENABLE_INDEXNOW_SUBMIT=true`).
+- Nuevos scripts: `indexnow:audit`, `indexnow:sample`, `indexnow:core`, `indexnow:full`, `indexnow:incremental`.
+
+**Key IndexNow:**
+- `INDEXNOW_KEY` corregida en `.env` local → `6faddf836cbd448fad29083c8f31d573` (alineada al archivo público).
+- `INDEXNOW_KEY` corregida en Vercel Production (antes contenía la key errónea `a38a1fce…`).
+- Eliminado archivo huérfano `public/bbbbda6cdb1e4e2cbe8f6f81c1886f58.txt` (resto de key antigua).
+
+### 🟢 Validación producción (post-deploy)
+| Prueba | Resultado |
+|---|---|
+| `GET /6faddf83…txt` | 200, `text/plain`, contenido `6faddf836cbd448fad29083c8f31d573` ✅ |
+| `GET /api/indexnow-key` | `6faddf836cbd448fad29083c8f31d573` (coincide con archivo) ✅ |
+| Deploy `vercel --prod` | Ready in 2m, aliased a `www.pinedayasociadoshn.com` ✅ |
+
+### ⚠️ Pendiente externo (bloqueante para indexación real)
+**Verificar el dominio en Bing Webmaster Tools.** Es la causa del histórico 0% indexación (error 403). Pasos en `docs/seo-off-page.md` §2. Mientras no se verifique, IndexNow seguirá sin efecto aunque la key sea correcta.
+
+### 🔢 Cambios cuantitativos
+| Métrica | Antes (v2 script) | Después (v3 script) |
+|---|---|---|
+| URLs por envío (postbuild) | 57 (automático, real) | 11 (core, dry-run) |
+| URLs inexistentes (/blog/categoria/) | 20 | 0 |
+| Landings locales incluidas | 0 | 3 (nacaome, choluteca, san-lorenzo) |
+| Reenvío por build | sí (cada build) | no (dry-run por defecto) |
+| Throttle reenvío | ninguno | 24h (cache incremental) |
+| Validación key vs archivo | no | sí (aborta si mismatch) |
+
+### 📄 Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `scripts/submit-indexnow.mjs` | Reescritura conservadora con 2 modos + sample + cache + validación key |
+| `package.json` | `postbuild` dry-run por defecto; 5 nuevos scripts indexnow:* |
+| `.gitignore` | Añadido `.indexnow-cache.json` |
+| `.env` (local, no commitado) | `INDEXNOW_KEY` alineada a `6faddf83…` |
+| `public/bbbbda6cdb1e4e2cbe8f6f81c1886f58.txt` | Eliminado (key huérfana) |
+| `README.md` | §IndexNow reescrita (política conservadora, modos, error 403) |
+| `docs/seo-off-page.md` | §2 Bing WMT actualizada con causa raíz y solución |
+| `CHANGELOG.md` | Release 70 añadida |
+| Vercel env (Production) | `INDEXNOW_KEY` corregida |
+
+---
+
 ## Release 69 — UX móvil: padding FloatingContactRail, GA4 tracking formularios, validación producción (2026-06-19)
 
 ### 🟢 UX móvil

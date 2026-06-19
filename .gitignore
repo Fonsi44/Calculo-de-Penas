@@ -45,6 +45,10 @@ frontend/.env.*.local
 # vercel
 .vercel
 
+# IndexNow cache local (URLs enviadas + timestamps; sin secretos pero
+# es estado local de cada entorno, no debe versionarse)
+.indexnow-cache.json
+
 # debug logs
 open-debug/
 
