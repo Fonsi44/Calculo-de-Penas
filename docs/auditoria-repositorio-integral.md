@@ -1,4 +1,4 @@
-# Auditoría Integral del Repositorio — LEX HONDURAS / Pineda y Asociados
+# Auditoría Integral del Repositorio — Pineda y Asociados
 
 > **Fecha:** 2026-06-19
 > **Autor:** Arquitecto senior (auditoría automatizada)

@@ -262,7 +262,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Scale size={18} className="text-accent" />
             </div>
             <div>
-              <p className="font-extrabold text-xs text-primary tracking-widest leading-none">LEX HONDURAS</p>
+              <p className="font-extrabold text-xs text-primary tracking-widest leading-none">Pineda y Asociados</p>
               <p className="text-xxs text-text-muted leading-none mt-0.5">Panel de administración</p>
             </div>
           </Link>
@@ -331,7 +331,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center">
               <Scale size={14} className="text-accent" />
             </div>
-            <p className="font-bold text-xs text-primary tracking-widest">LEX HONDURAS</p>
+            <p className="font-bold text-xs text-primary tracking-widest">Pineda y Asociados</p>
           </div>
         </div>
 

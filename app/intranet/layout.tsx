@@ -24,8 +24,8 @@ export default function IntranetLayout({ children }: { children: React.ReactNode
             <span className="text-accent font-extrabold text-sm">L</span>
           </div>
           <div>
-            <p className="font-extrabold text-xs text-primary tracking-widest leading-none">LEX HONDURAS</p>
-            <p className="text-xxs text-text-muted leading-none mt-0.5">Cálculo de penas</p>
+            <p className="font-extrabold text-xs text-primary tracking-widest leading-none">Pineda y Asociados</p>
+            <p className="text-xxs text-text-muted leading-none mt-0.5">Herramientas internas</p>
           </div>
         </Link>
         <AppSidebar />

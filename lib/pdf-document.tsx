@@ -492,16 +492,16 @@ export function CasoPDFDocument({ caso }: { caso: Caso }) {
   return (
     <Document
       title={`Informe pericial — ${caso.titulo}`}
-      author="LEX HONDURAS"
+      author="Pineda y Asociados"
       subject="Cálculo de pena — Código Penal de Honduras (Decreto 130-2017) y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)"
-      creator="LEX HONDURAS — Motor de Cálculo de Penas"
+      creator="Pineda y Asociados — Informe pericial de cálculo de pena"
     >
       <Page size="A4" style={styles.page}>
         <View style={styles.header} fixed>
           <View style={styles.brand}>
             <Text style={styles.brandMark}>L</Text>
             <View>
-              <Text style={styles.brandName}>LEX HONDURAS</Text>
+              <Text style={styles.brandName}>Pineda y Asociados</Text>
               <Text style={styles.brandSub}>Informe pericial de cálculo de pena</Text>
             </View>
           </View>
@@ -541,7 +541,7 @@ export function CasoPDFDocument({ caso }: { caso: Caso }) {
 
         <View style={styles.footerLine} fixed />
         <View style={styles.footer} fixed>
-          <Text>LEX HONDURAS · info@lexhn.app</Text>
+          <Text>Pineda y Asociados · contacto@pinedayasocioshn.com</Text>
           <Text>Generado el {formatFechaHora(new Date().toISOString())}</Text>
         </View>
 

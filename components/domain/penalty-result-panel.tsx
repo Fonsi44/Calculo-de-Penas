@@ -82,7 +82,7 @@ export function PenaltyResultPanel({ resultado, casoTitulo, calculoNumero, onOpe
         <p className="text-xxs text-text-secondary uppercase tracking-widest mb-1">
           Informe de cálculo de pena
         </p>
-        <p className="text-sm font-bold text-primary">LEX HONDURAS</p>
+        <p className="text-sm font-bold text-primary">Pineda y Asociados</p>
         <p className="text-xxs text-text-muted mt-1">Código Penal · Decreto 130-2017 y reformas vigentes</p>
         <div className="mt-3 pt-3 border-t border-border-light text-xxs text-text-secondary tabular-nums">
           <p>{fecha}</p>

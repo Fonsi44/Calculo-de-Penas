@@ -1,7 +1,26 @@
-# Changelog
+# CHANGELOG — Pineda y Asociados
 
 > **Versión del changelog:** Jun 2026 — reestructurado. Histórico completo en
 > [`docs/legacy/CHANGELOG_ARCHIVE.md`](./docs/legacy/CHANGELOG_ARCHIVE.md).
+
+---
+
+## Release 83 — Normalización de marca como Pineda y Asociados (2026-06-19)
+
+Unificación del nombre del proyecto bajo la marca "Pineda y Asociados" en
+documentación, texto visible de la interfaz, metadatos y prompts de agentes.
+
+**Cambios:**
+- README, AGENTS, CHANGELOG, docs/: título normalizado.
+- Intranet (sidebar, admin panel): "LEX HONDURAS" → "Pineda y Asociados".
+- PDF (informes periciales): marca + email actualizados.
+- `.kilo/agent/SEOSenior.md`: prompt actualizado.
+- `docs/normalizacion-marca.md`: documento de decisión y reglas.
+
+**No se modificaron:** rutas locales, nombres de proyecto Vercel, URLs
+técnicas, valores de test, archivos legacy/backup.
+
+**Validación:** lint 0 errores, build OK, test 397/397.
 
 ---
 

@@ -1,4 +1,4 @@
-# Protocolo obligatorio para agentes IA — LEX HONDURAS
+# Pineda y Asociados — Protocolo obligatorio para agentes IA
 
 Este repositorio requiere **precisión, trazabilidad, verificación real y honestidad operativa**.
 Ningún agente puede afirmar que algo está implementado, corregido, validado o completado

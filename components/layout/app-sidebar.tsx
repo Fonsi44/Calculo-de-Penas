@@ -73,7 +73,7 @@ export function MobileNavDrawer({ open, onClose }: { open: boolean; onClose: () 
             <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center">
               <Scale size={16} className="text-accent" />
             </div>
-            <span className="font-extrabold text-sm text-primary tracking-widest">LEX HONDURAS</span>
+            <span className="font-extrabold text-sm text-primary tracking-widest">Pineda y Asociados</span>
           </div>
           <IconButton label="Cerrar menú" onClick={onClose}>
             <X size={18} />

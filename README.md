@@ -1,8 +1,9 @@
-# LEX HONDURAS — Motor de Cálculo de Penas + Web Corporativa
+# Pineda y Asociados
 
-Aplicación web para el cálculo de penas según el **Código Penal de Honduras
-(Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024),
-con web corporativa, blog jurídico, FAQ, intranet administrativa y CMS visual.
+Web corporativa, blog jurídico, CMS interno y herramientas privadas del despacho
+Pineda y Asociados. Incluye un motor de cálculo de penas según el **Código Penal
+de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021,
+59-2024), disponible exclusivamente para el personal del bufete.
 
 **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)  
 **Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM  

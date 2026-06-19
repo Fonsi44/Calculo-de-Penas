@@ -2,7 +2,7 @@
 
 ## Visión general
 
-LEX HONDURAS es una aplicación Next.js 16 (App Router, Turbopack) que combina un sitio web jurídico público con un motor determinista de dosificación penológica basado en el Código Penal de Honduras (Decreto 130-2017 y reformas vigentes).
+Pineda y Asociados es una aplicación Next.js 16 (App Router, Turbopack) que combina un sitio web jurídico público con un motor determinista de dosificación penológica basado en el Código Penal de Honduras (Decreto 130-2017 y reformas vigentes).
 
 ## Capas
 
