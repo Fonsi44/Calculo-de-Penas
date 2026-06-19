@@ -6,19 +6,37 @@
  *   2. Inicia servidor HTTP en localhost:3000 para recibir el callback
  *   3. Intercambia el código por refresh token y lo muestra
  *
- * Requisito previo: el OAuth Client ID debe tener http://localhost:3000
- * como redirect URI autorizada en GCP Console (suele estar por defecto).
+ * Requisito previo:
+ *   - El OAuth Client ID debe tener http://localhost:3000 como redirect URI
+ *     autorizada en GCP Console (suele estar por defecto).
+ *   - Las credenciales se leen de variables de entorno (OAUTH_CLIENT_ID,
+ *     OAUTH_CLIENT_SECRET en .env.local). NUNCA hardcodear el client_secret
+ *     en este archivo: es un secreto y su commit lo filtra al historial de git.
  *
  * Uso:
  *   node scripts/oauth-get-refresh-token.mjs
  */
 
+import { config } from 'dotenv';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { google } from 'googleapis';
 import http from 'http';
 import { exec } from 'child_process';
 
-const CLIENT_ID = '476986553167-uq4s6m9d8mk30jg5esgj27bft0ab3d19';
-const CLIENT_SECRET = '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';
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+config({ path: resolve(root, '.env.local') });
+config({ path: resolve(root, '.env') });
+
+const CLIENT_ID = process.env.OAUTH_CLIENT_ID;
+const CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET;
+
+if (!CLIENT_ID || !CLIENT_SECRET) {
+  console.error('❌ Faltan OAUTH_CLIENT_ID y/o OAUTH_CLIENT_SECRET en .env.local.');
+  console.error('   Configúralas en GCP Console → APIs y servicios → Credenciales → OAuth 2.0 Client ID.');
+  process.exit(1);
+}
+
 const REDIRECT_URI = 'http://localhost:3000';
 const SCOPES = [
   'https://www.googleapis.com/auth/webmasters',
@@ -61,7 +79,7 @@ const server = http.createServer(async (req, res) => {
 
   try {
     const { tokens } = await oauth2.getToken(code);
-    
+
     console.log('\n✅ Token obtenido!\n');
     console.log('Copia esta línea en .env.local:');
     console.log(`GOOGLE_REFRESH_TOKEN=${tokens.refresh_token}\n`);
@@ -73,9 +91,8 @@ const server = http.createServer(async (req, res) => {
       <html>
       <body style="font-family:sans-serif;max-width:600px;margin:40px auto;text-align:center">
         <h1 style="color:green">✅ Autorización completada</h1>
-        <p>El refresh token se ha generado correctamente.</p>
+        <p>El refresh token se ha generado correctamente en la consola.</p>
         <p>Ya puedes cerrar esta ventana.</p>
-        <p style="color:#666;font-size:14px">Refresh token: <code>${tokens.refresh_token}</code></p>
       </body>
       </html>
     `);

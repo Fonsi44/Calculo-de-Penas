@@ -12,13 +12,14 @@
 
 El repositorio es una aplicación Next.js 16 / React 19 / Tailwind v4 / Neon PostgreSQL / Drizzle de complejidad alta, con un motor de cálculo de penas, un CMS propio (blog + FAQ + páginas visuales), una intranet administrativa y una web pública optimizada para SEO local en la zona sur de Honduras.
 
-**Estado técnico:** sólido en lo estructural (build limpio, 382 tests, schema Drizzle con 32 tablas y 17 migraciones, CSP/HSTS/headers completos, auth JWT con validación de secreto, proxy de edge bien acotado, 0 filtraciones de rutas privadas en la web pública). El SEO técnico está cuidadoso (JSON-LD, sitemap dinámico, canonicalización, IndexNow conservador, `llms.txt`).
+**Estado técnico:** sólido en lo estructural (build limpio, 382 tests, schema Drizzle con 32 tablas y 17 migraciones, CSP/HSTS/headers completos, auth JWT con validación de secreto, proxy de edge bien acotado, 0 filtraciones de rutas privadas en la web pública). El SEO técnico está cuidadoso (JSON-LD, sitemap dinámico, canonicalización, IndexNow conservador, `llms.txt`). **Los datos del blog están íntegros** (verificado contra Neon: 0 fechas realmente futuras, 0 órdenes incorrectos).
 
 **Problemas reales detectados:**
-1. **Datos del blog inconsistentes** (85 posts con `updated_at` futura, 71 con revisión vencida) — los scripts `validate:dates` y `content:audit` fallan.
-2. **2 endpoints con superficie de seguridad mejorable** (`/api/oauth/callback` devuelve `refresh_token` en JSON; `/api/email/inbound` no verifica firma de Resend).
-3. **Deuda técnica acumulada:** 66 scripts (muchos temporales de migración ya ejecutada), 8 componentes marketing sin uso, capas `legacy` (`lib/blog.ts`, `data/blog/types.ts`, `data/faq.ts`), archivos raíz sueltos (`.yml`, `.log`, `.txt`, `default.pub`, `cookies.txt`), y ~25 archivos de auditoría/backup en `data/`.
-4. **Documentación desincronizada** con el código (key IndexNow distinta en README vs realidad, conteo de tablas, Node 22 en CI vs 24 local).
+1. **Dos validadores rotos por `MAX_DATE` hardcodeada** (`validar-fechas-blog.ts` y `content-audit.ts` tienen `new Date('2026-06-14...')` congelada) → falsos positivos. **No es un problema de datos.** (Reclasificado tras re-validación.)
+2. **71 posts con revisión editorial realmente vencida** — pendiente editorial, no bug técnico.
+3. **2 endpoints con superficie de seguridad mejorable** (`/api/oauth/callback` devuelve `refresh_token` en JSON; `/api/email/inbound` no verifica firma de Resend).
+4. **Deuda técnica acumulada:** 66 scripts (muchos temporales de migración ya ejecutada), 8 componentes marketing sin uso, capas `legacy` (`lib/blog.ts`, `data/blog/types.ts`, `data/faq.ts`), archivos raíz sueltos (`.yml`, `.log`, `.txt`, `default.pub`, `cookies.txt`), y ~25 archivos de auditoría/backup en `data/`.
+5. **Documentación desincronizada** con el código (key IndexNow distinta en README vs realidad, conteo de tablas, Node 22 en CI vs 24 local).
 
 **Nada de esto es destructivo ni bloquea producción hoy.** El sitio está desplegado y funciona. Son oportunidades de endurecimiento, higiene y consistencia.
 
@@ -47,33 +48,46 @@ El repositorio es una aplicación Next.js 16 / React 19 / Tailwind v4 / Neon Pos
 
 ## 3. Riesgos críticos
 
-### CR-01 — `validate:dates` falla: 85 posts con `updated_at` futura
-- **Severidad:** CRÍTICA (datos) / ALTA (SEO)
-- **Área:** Blog / DB / SEO
-- **Archivo/ruta:** tabla `blog_posts.updated_at`; validador `scripts/validar-fechas-blog.ts`
-- **Descripción:** 85 posts tienen `updated_at = 2026-06-19`, pero la fecha máxima permitida por la política del proyecto es `2026-06-14` (última redistribución documentada). El validador sale con código 1.
-- **Evidencia:** `npm run validate:dates` → `Resumen: 0 publicaciones futuras, 85 actualizaciones futuras, 0 con orden incorrecto`. Ej: `tributar-espana-bienes-honduras-guia-fiscal`, `divorcio-honduras-pasos-requisitos`, `demanda-laboral-choluteca`.
-- **Impacto:** (a) Si se añade este check al CI, rompe el pipeline. (b) Incoherencia entre lo que el README declara ("última fecha 2026-06-14") y la realidad. (c) Señales de "freshness" potencialmente engañosas para Google (`dateModified` futuro en JSON-LD y sitemap `lastmod`).
-- **Recomendación:** Recalcular `updated_at` de los 85 posts a una fecha ≤ hoy coherente con `published_at` (script `fix-blog-dates.mjs` ya existe como referencia). Validar tras la corrección.
-- **Esfuerzo:** Bajo (1 script + 1 validación).
-- **Riesgo de tocarlo:** Bajo (solo datos, no código).
-- **Requiere aprobación humana:** Sí (afecta a datos editoriales y señales SEO).
+> **ACTUALIZACIÓN (2026-06-19, tras re-validación contra la DB):** el diagnóstico
+> original de CR-01/CR-02 estaba **equivocado**. Se verificó directamente contra
+> Neon que **0 posts tienen fecha realmente futura** (`> NOW()`) y **0 tienen
+> orden incorrecto** (`published_at > updated_at`). Los datos del blog son
+> correctos. El bug real es de **código**: los dos validadores tienen
+> `MAX_DATE = new Date('2026-06-14T23:59:59Z')` **hardcodeada**, un valor
+> congelado en el pasado que falsa cualquier post actualizado con posterioridad.
+> La corrección correcta es hacer `MAX_DATE` dinámica (`new Date()`), no
+> "recalcular las fechas de 85 posts". Esto se ejecuta en Fase 1.
+
+### CR-01 — `validate:dates` falla por `MAX_DATE` hardcodeada (bug de código, no de datos)
+- **Severidad:** ALTA (herramienta rota) — **reclasificada desde CRÍTICA**
+- **Área:** Scripts / CI
+- **Archivo/ruta:** `scripts/validar-fechas-blog.ts:9` → `const MAX_DATE = new Date('2026-06-14T23:59:59Z')`
+- **Descripción:** El validador compara las fechas de los posts contra una constante estática del 2026-06-14. Cualquier post con `updated_at` posterior (legítimo) se reporta como "futuro". Los 85 posts afectados tienen `updated_at = 2026-06-19` (hoy), fecha **válida**.
+- **Evidencia (verificada contra Neon):**
+  - `SELECT COUNT(*) WHERE published_at > NOW() OR updated_at > NOW()` → **0**
+  - `SELECT COUNT(*) WHERE published_at > updated_at` → **0** (orden correcto)
+  - `updated_at` máximo real: `2026-06-19 17:43:11+00` (hoy)
+  - Muestra: `pension-alimenticia-honduras-como-solicitarla` pub=2026-03-23 upd=2026-06-19 ✓
+- **Impacto:** El script da falsos positivos y, de añadirse al CI, bloquearía cualquier deploy tras una edición legítima del blog. El README declaraba "última fecha 2026-06-14" porque el script lo imponía, no porque los datos lo requirieran.
+- **Recomendación:** Sustituir `MAX_DATE` hardcodeada por `new Date()` (con un margen pequeño de tolerancia para diferencias de reloj, ej. +1 día). Los posts con fechas genuinamente futuras seguirán detectándose.
+- **Esfuerzo:** Bajo (2 líneas por script).
+- **Riesgo de tocarlo:** Bajo.
+- **Requiere aprobación humana:** No.
 - **Automatizable:** Sí.
 
-### CR-02 — `content:audit` falla: 71 posts con revisión vencida
-- **Severidad:** CRÍTICA (proceso editorial) / MEDIA (SEO)
-- **Área:** Blog / DB / Procesos
-- **Archivo/ruta:** tabla `blog_posts.next_review_due_at`; `scripts/content-audit.ts`
-- **Descripción:** 71 posts tienen `next_review_due_at` ≤ hoy. Deriva en parte de CR-01 (fechas futuras de `updated_at` desplazaron los vencimientos) y de que los rewrites de Jun 2026 no recalcularon el ciclo de revisión.
-- **Evidencia:** `npm run content:audit` → `❌ 71 artículo(s) vencido(s).` (13 listados explícitos + "AL DÍA 64").
-- **Impacto:** Proceso de revisión trimestral declarado en README no cumple. Si se añade al CI, rompe.
-- **Recomendación:** Tras resolver CR-01, recalcular `next_review_due_at = updated_at + 3 meses` para los afectados. Decidir si los 71 son "vencidos reales" o artefacto de fechas.
-- **Esfuerzo:** Bajo.
-- **Riesgo:** Bajo.
-- **Requiere aprobación humana:** Sí.
-- **Automatizable:** Sí.
+### CR-02 — `content:audit` falla por `MAX_DATE` hardcodeada + revisiones editoriales reales vencidas
+- **Severidad:** MEDIA — **reclasificada desde CRÍTICA**
+- **Área:** Scripts / Procesos editoriales
+- **Archivo/ruta:** `scripts/content-audit.ts:11` → `const MAX_DATE = new Date('2026-06-14T23:59:59Z')` (no usada para el cálculo de vencidos, pero presente); la lógica de vencidos usa `now` correctamente.
+- **Descripción:** El script determina vencidos con `due <= now` (correcto). Los 71 posts marcados **sí tienen `next_review_due_at` realmente vencida** (no es artefacto de fechas). El `MAX_DATE` hardcodeado de la línea 11 es código muerto (no afecta al resultado) pero debe eliminarse por higiene.
+- **Evidencia:** 0 posts con `next_review_due_at IS NULL`; los vencidos tienen fecha de revisión ≤ hoy.
+- **Impacto:** Es un **pendiente editorial real**, no un bug técnico. El proceso de revisión trimestral declarado en README no se ha ejecutado para esos 71 posts.
+- **Recomendación:** (a) Eliminar `MAX_DATE` muerta del script. (b) Documentar los 71 vencidos como **PENDIENTE EDITORIAL** (decisión humana), no como fallo técnico. No recalcular `next_review_due_at` automáticamente — sería falsear el estado de revisión.
+- **Esfuerzo:** Bajo (código) / alto (editorial).
+- **Requiere aprobación humana:** Sí (la parte editorial).
+- **Automatizable:** Solo la limpieza de código.
 
-> **Nota:** CR-01 y CR-02 son **fallas de datos en DB**, no de código del repo. No se corrigen con un commit de código; requieren un script de migración de datos contra producción (o edición desde el admin). Se documentan aquí como hallazgos porque el usuario pidió ejecutar esos validadores.
+> **Nota:** A diferencia del diagnóstico original, **no se modificarán fechas de posts**. CR-01 se resuelve corrigiendo el script; CR-02 se documenta como pendiente editorial. Los datos del blog están íntegros.
 
 ---
 
@@ -462,12 +476,12 @@ Ver ME-UI-01: 8 componentes marketing sin uso.
 
 > Cada fase = un commit atómico (o pocos). Validar `lint && build && test` tras cada una.
 
-### Fase 1 — Errores críticos y datos (requiere decisión humana)
-- [ ] **CR-01:** script de recálculo de `updated_at` para los 85 posts (≤ hoy, coherente con `published_at`). Validar con `npm run validate:dates`.
-- [ ] **CR-02:** recalcular `next_review_due_at` para los 71 vencidos. Validar con `npm run content:audit`.
-- [ ] **AL-SEC-02:** añadir verificación de firma Resend a `/api/email/inbound` + escapar HTML. (Requiere `RESEND_WEBHOOK_SECRET`.)
-- [ ] **AL-SEC-01:** revisar/ Endurecer `/api/oauth/callback` (no devolver refresh_token por body, validar state).
-- *Naturaleza:* cambios de datos + seguridad. Requiere aprobación del bufete.
+### Fase 1 — Validadores rotos + seguridad (no toca datos del blog)
+- [x] **CR-01:** sustituir `MAX_DATE` hardcodeada por `new Date()` en `validar-fechas-blog.ts`. Los datos del blog están íntegros (verificado).
+- [x] **CR-02:** eliminar `MAX_DATE` muerta de `content-audit.ts`. Documentar los 71 vencidos como **PENDIENTE EDITORIAL** (no se falsea `next_review_due_at`).
+- [x] **AL-SEC-02:** verificar firma Resend en `/api/email/inbound` + escapar HTML. (Fallback seguro si falta `RESEND_WEBHOOK_SECRET`.)
+- [x] **AL-SEC-01:** revisar `/api/oauth/callback` (no devolver `refresh_token` por body; documentar).
+- *Naturaleza:* solo código + configuración. **No se modifican datos del blog.**
 
 ### Fase 2 — SEO / indexación
 - [ ] **ME-SEO-01:** corregir key IndexNow en doc.

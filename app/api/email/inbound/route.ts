@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendAutoReplyEmail, getNotificationEmail, getClient } from '@/lib/email';
+import { verifyResendWebhook } from '@/lib/webhook-verify';
 
 interface ResendEmailReceived {
   type: 'email.received';
@@ -35,10 +36,72 @@ function extractNameFromHeader(header: string): string {
   return match ? match[1].trim().replace(/"/g, '') : '';
 }
 
+/**
+ * Escapa caracteres HTML para evitar inyección (XSS) en el cliente de correo
+ * que visualiza el reenvío. Los datos de `from`/`subject`/`to` provienen del
+ * exterior y NO son de confianza.
+ */
+function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export async function POST(request: NextRequest) {
+  // --- Verificación de firma del webhook de Resend (Svix) ---
+  // El webhook recibe correos reales y dispara auto-respuestas + reenvíos al
+  // buzón interno. Sin verificación de firma, cualquiera podría forjar POSTs y
+  // generar spam o inyectar contenido en el correo reenviado.
+  const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
+
+  if (webhookSecret) {
+    // Necesitamos el cuerpo crudo para verificar la firma (el body ya parseado
+    // no sirve porque la firma cubre los bytes exactos).
+    const rawBody = await request.text();
+    const result = verifyResendWebhook(rawBody, Object.fromEntries(request.headers), webhookSecret);
+    if (!result.ok) {
+      console.warn('[email/inbound] Webhook rechazado:', result.reason);
+      // 401, no 200: indicamos claramente que la verificación falló. No damos
+      // pistas extra al atacante más allá del hecho de que fue rechazado.
+      return NextResponse.json({ error: 'Webhook no verificado' }, { status: 401 });
+    }
+    // Reparsear el body ya verificado.
+    let event: ResendEmailReceived;
+    try {
+      event = JSON.parse(rawBody) as ResendEmailReceived;
+    } catch {
+      console.warn('[email/inbound] Body no es JSON válido tras verificación');
+      return NextResponse.json({ error: 'JSON inválido' }, { status: 400 });
+    }
+    return processEvent(event);
+  }
+
+  // Si NO hay RESEND_WEBHOOK_SECRET configurado:
+  // - En producción, rechazar por seguridad (no procesar webhooks sin firma).
+  // - En desarrollo/test, permitir (para pruebas locales) con un aviso claro.
+  if (process.env.NODE_ENV === 'production') {
+    console.error('[email/inbound] RESEND_WEBHOOK_SECRET no configurado en producción. Webhook rechazado por seguridad.');
+    return NextResponse.json(
+      { error: 'Webhook no configurado: falta RESEND_WEBHOOK_SECRET' },
+      { status: 503 },
+    );
+  }
+
+  console.warn('[email/inbound] RESEND_WEBHOOK_SECRET no configurado (modo dev). Procesando sin verificar firma.');
   try {
     const event: ResendEmailReceived = await request.json();
+    return processEvent(event);
+  } catch (e) {
+    console.error('[email/inbound] Error procesando webhook:', e instanceof Error ? e.message : 'Error');
+    return NextResponse.json({ ok: false }, { status: 500 });
+  }
+}
 
+async function processEvent(event: ResendEmailReceived): Promise<Response> {
+  try {
     if (event.type !== 'email.received') {
       return NextResponse.json({ ok: true });
     }
@@ -63,7 +126,9 @@ export async function POST(request: NextRequest) {
       console.warn('[email/inbound] Auto-respuesta falló:', autoResult.error);
     }
 
-    // Reenviar el correo original al destinatario de notificaciones
+    // Reenviar el correo original al destinatario de notificaciones.
+    // IMPORTANTE: todos los campos externos se escapan antes de interpolarlos
+    // en el HTML del reenvío para evitar XSS en el cliente de correo.
     const client = getClient();
     if (client && fromEmail) {
       const notificationTo = getNotificationEmail();
@@ -75,15 +140,20 @@ export async function POST(request: NextRequest) {
           to: [notificationTo],
           replyTo: fromEmail,
           subject: `[Reenviado] ${data.subject || 'Sin asunto'} — ${fromEmail}`,
+          // El cuerpo HTML original (`data.html`) se inserta tal cual en un
+          // contenedor, pero los metadatos (from/to/subject) se interpolan
+          // escapados. El HTML del remitente es responsabilidad del cliente
+          // de correo (lo renderiza en sandbox); los metadatos sí son nuestra
+          // superficie de inyección y por eso se escapan.
           html: `
-            <h2>Correo reenviado desde ${fromEmail}</h2>
+            <h2>Correo reenviado desde ${escapeHtml(fromEmail)}</h2>
             <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif;font-size:14px;">
-              <tr><td><strong>De</strong></td><td>${data.from}</td></tr>
-              <tr><td><strong>Para</strong></td><td>${data.to.join(', ')}</td></tr>
-              <tr><td><strong>Asunto</strong></td><td>${data.subject || 'Sin asunto'}</td></tr>
+              <tr><td><strong>De</strong></td><td>${escapeHtml(data.from)}</td></tr>
+              <tr><td><strong>Para</strong></td><td>${escapeHtml(data.to.join(', '))}</td></tr>
+              <tr><td><strong>Asunto</strong></td><td>${escapeHtml(data.subject || 'Sin asunto')}</td></tr>
             </table>
             <hr/>
-            <div style="font-family:sans-serif;font-size:14px;white-space:pre-wrap;">${data.html || textBody}</div>
+            <div style="font-family:sans-serif;font-size:14px;white-space:pre-wrap;">${data.html || escapeHtml(textBody)}</div>
           `,
           text: [
             `Correo reenviado desde ${fromEmail}`,

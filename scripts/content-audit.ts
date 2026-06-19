@@ -2,13 +2,18 @@
  * Auditoría de contenido del blog.
  * Ejecutar: npm run content:audit
  * Lista artículos próximos a vencerse para revisión trimestral.
+ *
+ * El cálculo de "vencido" usa la fecha actual del sistema (now). Los posts con
+ * `next_review_due_at <= now` se consideran pendientes de revisión editorial:
+ * NO es un bug técnico, es un recordatorio del ciclo trimestral declarado en
+ * el README. El script sale con código 1 si hay vencidos para que CI lo
+ * detecte, pero la resolución es editorial (revisar el post y actualizar
+ * `last_reviewed_at` / `next_review_due_at` desde el admin), no automática.
  */
 import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
 import * as fs from 'fs';
 import * as path from 'path';
-
-const MAX_DATE = new Date('2026-06-14T23:59:59Z');
 
 async function main() {
   if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder')) {

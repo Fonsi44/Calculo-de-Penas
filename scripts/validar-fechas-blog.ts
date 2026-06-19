@@ -2,11 +2,18 @@
  * Valida que ningún artículo del blog tenga fechas futuras.
  * Ejecutar: npx tsx scripts/validar-fechas-blog.ts
  * Usar en CI para evitar que fechas futuras lleguen a producción.
+ *
+ * La fecha máxima se calcula dinámicamente (fecha actual del sistema + 1 día
+ * de tolerancia por desfases de reloj/zona horaria). Antes era una constante
+ * hardcodeada (2026-06-14) que quedaba obsoleta tras cada edición legítima
+ * del blog y producía falsos positivos.
  */
 import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
 
-const MAX_DATE = new Date('2026-06-14T23:59:59Z');
+// Tolerancia de 1 día sobre la fecha actual: un post actualizado "hoy" desde
+// una zona horaria adelantada no debe reportarse como futuro.
+const MAX_DATE = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
 function checkDate(label: string, date: Date | null, slug: string): string[] {
   const errors: string[] = [];
@@ -57,10 +64,12 @@ async function main() {
     console.log(`\n❌ ${errors.length} error(es) de fecha encontrados:\n`);
     errors.forEach(e => console.log(e));
     console.log(`\nResumen: ${futurePub} publicaciones futuras, ${futureUpd} actualizaciones futuras, ${badOrder} con orden incorrecto`);
+    console.log(`Fecha de referencia (hoy + 1d): ${MAX_DATE.toISOString()}`);
     process.exit(1);
   }
 
   console.log(`✅ Todas las fechas correctas: ${posts.length} posts, ninguna futura, ninguna con orden incorrecto.`);
+  console.log(`Fecha de referencia (hoy + 1d): ${MAX_DATE.toISOString()}`);
   process.exit(0);
 }
 

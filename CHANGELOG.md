@@ -1,5 +1,58 @@
 # Changelog
 
+## Release 81 — Endurecimiento de validadores y seguridad de endpoints críticos (2026-06-19)
+
+Corrección de los hallazgos CR-01/CR-02/AL-SEC-01/AL-SEC-02 de la auditoría
+integral (`docs/auditoria-repositorio-integral.md`), más un secreto OAuth
+filtrado detectado durante la implementación. **No se modifican datos del blog.**
+
+### Punto 1 — Validadores de blog: `MAX_DATE` dinámica (CR-01/CR-02)
+- **Diagnóstico corregido:** la auditoría original atribuía los fallos a datos
+  del blog. Verificación directa contra Neon demostró que **0 posts tienen
+  fecha realmente futura** (`> NOW()`) y **0 orden incorrecto**. El bug era
+  `MAX_DATE = new Date('2026-06-14...')` hardcodeada en los dos scripts, que
+  falsaba cualquier post actualizado con posterioridad.
+- `scripts/validar-fechas-blog.ts`: `MAX_DATE` ahora es `new Date() + 1 día`
+  (tolerancia de reloj). `npm run validate:dates` → ✅ 159 posts, 0 futuras.
+- `scripts/content-audit.ts`: eliminada la `MAX_DATE` muerta (no afectaba al
+  cálculo de vencidos, que usa `now` correctamente). Los 71 posts vencidos son
+  **pendiente editorial real** (no bug técnico): se documentan como tal y no se
+  falsea `next_review_due_at`.
+
+### Punto 2 — Webhook de Resend con verificación de firma (AL-SEC-02)
+- Nuevo `lib/webhook-verify.ts`: verificación de firma Ed25519 de Svix sin
+  dependencias externas (usa `node:crypto`).
+- `app/api/email/inbound/route.ts`:
+  - Verifica la firma (`svix-id`/`svix-timestamp`/`svix-signature`) cuando
+    `RESEND_WEBHOOK_SECRET` está configurado; rechaza con 401 si falla.
+  - En producción sin secreto → 503 seguro (no procesa webhooks sin firma).
+  - En desarrollo sin secreto → procesa con aviso (para pruebas locales).
+  - Escapa HTML de `from`/`subject`/`to` al interpolar en el reenvío (anti-XSS).
+- `.env.example`: añadidas `RESEND_WEBHOOK_SECRET` y `OAUTH_CLIENT_ID`/`OAUTH_CLIENT_SECRET`.
+
+### Punto 3 — Endpoint OAuth endurecido (AL-SEC-01)
+- `app/api/oauth/callback/route.ts`: ya NO devuelve `refresh_token` ni
+  `access_token` en el body JSON (solo metadatos no sensibles + `hasRefreshToken`).
+  El flujo real de obtención de token usa un servidor localhost propio, no este
+  endpoint. Riesgo documentado en la cabecera del archivo.
+- Confirmado: el proxy de edge exige cookie JWT para `/api/oauth/callback`
+  (no está en `PUBLIC_API_*`).
+
+### Punto 4 — Secreto OAuth filtrado eliminado (CRÍTICO, nuevo)
+- `scripts/oauth-get-refresh-token.mjs` tenía `CLIENT_SECRET` (`GOCSPX-...`)
+  hardcodeado y git-tracked → secreto en el historial. Reescrito para leer
+  `OAUTH_CLIENT_ID`/`OAUTH_CLIENT_SECRET` de `.env.local` (como ya hacía
+  `oauth-url.mjs`).
+- **ACCIÓN HUMANA PENDIENTE:** rotar el OAuth Client Secret en GCP Console
+  (el secreto viejo está en el historial de git y debe considerarse comprometido).
+
+### Validación
+- `npm run lint`: 0 errores.
+- `npm run build`: ✓ Compiled successfully, ✓ Finished TypeScript.
+- `npm test`: 382/382 (18 suites).
+- `npm run validate:dates`: ✅ 159 posts correctos.
+- `npm run content:audit`: 71 vencidos editoriales (pendiente humano, no bug).
+
 ## Release 80 — Fase 1 + Fase 3 del plan de indexación: canonicalización + enlazado (2026-06-19)
 
 Ejecución de las dos acciones técnicas de mayor impacto y menor riesgo del plan
