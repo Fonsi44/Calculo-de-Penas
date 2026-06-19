@@ -582,4 +582,77 @@ Estos son los únicos ítems con impacto real en producción hoy. El resto (higi
 
 ---
 
-*Fin del informe. Este documento es diagnóstico; ningún cambio de código ni de datos se ha aplicado en esta fase.*
+## 19. Estado post-implementación (2026-06-19, tras Fases 1-7)
+
+Las 7 fases del plan de ejecución se han implementado en commits atómicos
+(`57db930`, `e97aa63`, `a1cf6a7`, `36e49a0`, `f4a0b53` + este commit). Resumen:
+
+### Resueltos
+
+| ID | Hallazgo | Resolución | Commit |
+|---|---|---|---|
+| CR-01 | `validate:dates` fallaba | `MAX_DATE` dinámica (no datos). Verificado: 0 posts futuros reales. | `57db930` |
+| CR-02 | `content:audit` fallaba | `MAX_DATE` muerta eliminada. 71 vencidos = pendiente editorial, no bug. | `57db930` |
+| AL-SEC-01 | `/api/oauth/callback` devolvía `refresh_token` | Ya no lo devuelve; proxy exige JWT (confirmado). | `57db930` |
+| AL-SEC-02 | `/api/email/inbound` sin firma | Verificación Svix (`lib/webhook-verify.ts`) + escape HTML + 503 seguro en prod. | `57db930` |
+| **(nuevo)** | `oauth-get-refresh-token.mjs` con `CLIENT_SECRET` hardcodeado | Reescrito para leer de env. **REQUIERE ROTAR el secret en GCP.** | `57db930` |
+| ME-SEO-01 | Doc IndexNow con key obsoleta | Keys literales eliminadas de README/seo-off-page.md. | `e97aa63` |
+| ME-SEC-03 | Bing verification hardcodeado | `NEXT_PUBLIC_BING_VERIFICATION` con fallback histórico. | `e97aa63` |
+| AL-DB-01 | Doc decía 15-16 tablas | AGENTS.md/README actualizados a 35 tablas. | `e97aa63` |
+| BA-SEO-02 | Ruido en raíz (logs, .yml, cookies) | `git rm --cached` (8 archivos) + `.gitignore`. | `a1cf6a7` |
+| AL-SCR-01 | 66 scripts, muchos one-shots | 38 movidos a `scripts/legacy/` + README de criterio. | `a1cf6a7` |
+| ME-UI-01 | 8 componentes marketing sin uso | Movidos a `components/marketing/_unused/`. | `a1cf6a7` |
+| ME-TEST-01 | Sin tests SEO/proxy/sitemap | `tests/seo-protection.test.ts` (15 tests). | `f4a0b53` |
+| ME-DB-03 | CI sin validate:dates | Añadido al CI (`content:audit` queda fuera hasta resolver lo editorial). | `f4a0b53` |
+
+### Movidos a legacy (no borrados)
+
+- `data/legacy/` — 35 archivos (fragmentos `.txt`, `.BACKUP_*`, auditorías históricas).
+- `scripts/legacy/` — 38 scripts one-shot + `README.md` de criterio.
+- `docs/legacy/` — `informe-auditoria-cp.md`.
+- `components/marketing/_unused/` — 8 componentes.
+- `docs/analisisdedatos.md` (movido desde la raíz).
+
+### Pendiente editorial / decisión humana (NO resuelto por código)
+
+| ID | Pendiente | Acción necesaria |
+|---|---|---|
+| CR-02 (parte editorial) | 71 posts con revisión trimestral vencida | Revisión editorial humana; al acabar, `content:audit` pasará y podrá ir al CI. |
+| AL-BLOG-01 | 49 posts thin (0/10 marcadores), 109 MEDIO | Reescribir por lotes (ver `docs/plan-reescritura-blog.md`). |
+| AL-SEC-01 (rotación) | OAuth Client Secret en historial de git | **Rotar el secret en GCP Console** (el viejo está comprometido en git history). |
+| AL-SEC-02 (config) | `RESEND_WEBHOOK_SECRET` sin configurar | Obtener del panel de Resend y configurar en Vercel; sin él, `/api/email/inbound` responde 503 en prod. |
+| ME-DOC-02 | Sección WordPress legacy en README | Decidir: ¿migración terminada? Eliminar `wordpress/` local + sección. |
+| BA-DOC-03 | Doble tooling Kilo/OpenCode | Decidir canal oficial de agentes. |
+| H-DB-02 | CI Node 22 vs local 24 | Validar runner antes de cambiar; mantenido con justificación. |
+
+### Pendientes técnicos (deuda, no urgente)
+
+| ID | Deuda | Estado |
+|---|---|---|
+| ME-ARQ-01 | Doble metadata root/public layout | DECISIÓN: no refactorizar (funciona, riesgo SEO > beneficio). |
+| ME-ARQ-02 | Capa `lib/blog.ts` + `data/blog/types.ts` (legacy) | NO movida: en uso por `blog-card.tsx` + `lib/schemas/blog.ts`. Requiere migración de tipos aparte. |
+| ME-BLOG-02 (corregido) | La auditoría decía `data/faq.ts` sin refs | FALSO: `faq-db.ts:6,47` la usa (`categoriasFaq`). En uso, no se toca. |
+| BA-UI-02 | `default.pub` suelta | No tracked (`.gitignore` ya la cubre). Sin acción. |
+| BA-TEST-02 | E2E no ejecutados | NO VALIDADO en esta sesión. |
+
+### Validación final post-implementación
+
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errores ✅ |
+| `npm run build` | Compiled + TypeScript OK ✅ |
+| `npm test` | 397/397 (19 suites, +15 SEO) ✅ |
+| `npm run validate:dates` | ✅ 159 posts correctos (era FAIL) |
+| `npm run content:audit` | 71 vencidos editoriales (pendiente humano, no bug) |
+| `npm run test:e2e` | NO VALIDADO (no ejecutado en esta sesión) |
+
+### Riesgos residuales
+
+1. **OAuth Client Secret comprometido en git history** — la corrección de código evita nuevas filtraciones, pero el valor viejo sigue en el historial. Solo la rotación en GCP lo resuelve definitivamente.
+2. **`/api/email/inbound` en 503 en producción** hasta que se configure `RESEND_WEBHOOK_SECRET`. Si el webhook de Resend estaba activo, dejará de procesar correos hasta configurarlo.
+3. **Borrado recurrente de `*/legacy/` y `_unused/` del disco local** observado durante la sesión (restaurado cada vez desde git). No afecta al repositorio, pero indica un proceso externo (watcher/antivirus/sincronización) que limpia esos directorios localmente. Verificar el entorno.
+
+---
+
+*Fin del informe. Actualizado tras la implementación de las Fases 1-7.*
+

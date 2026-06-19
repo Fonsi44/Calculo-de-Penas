@@ -1,5 +1,45 @@
 # Changelog
 
+## Release 82 — Implementación de las 7 fases de la auditoría integral (2026-06-19)
+
+Ejecución completa del plan de fases de `docs/auditoria-repositorio-integral.md`.
+7 commits atómicos, validación global final verde. Detalle por fase en el propio
+informe (§19 "Estado post-implementación").
+
+### Resumen por commit
+- `57db930` **Fase 1** — Validadores (`MAX_DATE` dinámica) + seguridad (webhook
+  Resend con firma Svix, oauth/callback sin refresh_token en body, secreto OAuth
+  filtrado eliminado del script). No modifica datos del blog.
+- `e97aa63` **Fase 2** — Doc IndexNow sin keys literales, Bing verification a env,
+  AGENTS.md/README sincronizados (35 tablas, 382→397 tests tras Fase 6).
+- `a1cf6a7` **Fase 3** — Higiene: 8 archivos de ruido untracked, 35 archivos a
+  `data/legacy/`, 38 scripts one-shot a `scripts/legacy/`, 8 componentes a
+  `components/marketing/_unused/`, `tsconfig.json` exclude.
+- `36e49a0` **Fase 5** — `docs/plan-reescritura-blog.md` (49 posts ALTO riesgo,
+  estrategia, criterios). Sin reescritura de contenido (decisión editorial).
+- `f4a0b53` **Fase 6** — `tests/seo-protection.test.ts` (15 tests: proxy, sitemap,
+  robots, JSON-LD) + `validate:dates` al CI.
+
+### Fases 4 y 7
+- **Fase 4** (frontend/metadata): sin cambios de código. La doble metadata
+  root/public funciona y el riesgo SEO de refactorizar supera el beneficio;
+  depcheck NO VALIDADO (no instalado), verificación manual OK.
+- **Fase 7** (este commit): auditoría actualizada con estado post-implementación.
+
+### Validación global final
+- `npm run lint`: 0 errores ✅
+- `npm run build`: Compiled + TypeScript OK ✅
+- `npm test`: 397/397 (19 suites) ✅
+- `npm run test:e2e`: 37/37 ✅
+- `npm run validate:dates`: ✅ 159 posts correctos
+- `npm run content:audit`: 71 vencidos editoriales (PENDIENTE HUMANO, no bug)
+
+### Pendiente humano (no resolvible por código)
+1. **Rotar OAuth Client Secret** en GCP (el viejo está en git history).
+2. **Configurar `RESEND_WEBHOOK_SECRET`** en Vercel (sin él, `/api/email/inbound` = 503 en prod).
+3. **Revisar los 71 posts** con revisión trimestral vencida (editorial).
+4. **Reescribir los 49 posts thin** ALTO riesgo (ver `docs/plan-reescritura-blog.md`).
+
 ## Release 81 — Endurecimiento de validadores y seguridad de endpoints críticos (2026-06-19)
 
 Corrección de los hallazgos CR-01/CR-02/AL-SEC-01/AL-SEC-02 de la auditoría
