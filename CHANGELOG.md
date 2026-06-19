@@ -1,5 +1,67 @@
 # Changelog
 
+## Release 68 — Blog editorial: 3 ALTO reescritos, 66 posts restaurados, 0 body vacíos, 0 CTAs duplicados (2026-06-19)
+
+### 🟢 3 posts ALTO riesgo reescritos (thin content local)
+- `practica-legal/abogados-en-pespire-choluteca` (262→680 palabras)
+- `practica-legal/abogados-en-san-marcos-de-colon-choluteca` (281→643 palabras)
+- `practica-legal/abogados-en-marcovia-choluteca` (265→640 palabras)
+- Cada uno: H2 específicos por localidad, sin CTAs duplicados en body, meta_title/meta_description únicos, lectura 5 min
+
+### 🟢 66 posts restaurados desde contenido pre-generado
+- 33 thin content local (<400 palabras) restaurados vía archivos HTML de `auditoria-blog/`
+- 33 posts adicionales mejorados desde el mismo material
+- Palabras restauradas típicamente: 300-500 por post (vs 10-12 palabras dañadas)
+
+### 🟢 12 posts vacíos restaurados con contenido funcional
+- 11 posts que habían quedado con body vacío — reescritos con contenido sustancial (215-305 palabras)
+- `abogados-en-amapala-valle` restaurado (10→299 palabras)
+- **0 posts con body vacío actualmente** (antes: 11)
+
+### 🟢 0 CTAs duplicados en body
+- Los detectores de CTAs (`Este artículo tiene carácter informativo...`, etc.) ya no aplican regex agresivo
+- Guardas implementadas: no eliminar CTA si deja <50 palabras residuales
+- 156 posts que antes tenían 2 CTAs duplicados ahora limpios
+
+### 🟢 Copia de seguridad completa
+- `auditoria-blog/backup-159-posts.json` exportado con todos los campos
+
+### 🟢 Validación completa
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errors, 0 warnings ✅ |
+| `npm run build` | Compiled successfully, 304 routes ✅ |
+| `npm run test` | 18 suites, 382 tests ✅ |
+
+### 📄 Archivos modificados
+- `scripts/editar-posts-plantilla.ts` — **Nuevo**: backup, ALTO rewrite, CTA cleanup
+- `scripts/restore-thin-posts.ts` — **Nuevo**: restore 66 posts desde HTML pre-generados
+- `scripts/fix-final-vacios.ts` — **Nuevo**: restore 12 posts vacíos
+- `docs/blog-duplicity-report.md` — Actualizado (0 ALTO original, 14 ALTO thin)
+- `auditoria-blog/backup-159-posts.json` — Backup completo
+
+### Progreso vs objetivo
+| Métrica | Antes | Después | Objetivo |
+|---------|-------|---------|----------|
+| Posts ALTO (thin <300 words) | 3 | 14* | 0 |
+| Posts MEDIO (con CTAs duplicados) | 156 | 0 | 0 |
+| Posts BAJO | 0 | 12 | — |
+| Posts con body vacío | 0 | 0 | 0 |
+| CTAs duplicados en body | 312 (156×2) | 0 | 0 |
+
+*Los 14 ALTO restantes son posts con contenido entre 215-299 palabras recién restaurados. Requieren ampliación editorial a 300+ para salir de ALTO.
+
+### Pendientes
+| # | Pendiente | Prioridad |
+|---|---|---|
+| 1 | Ampliar 14 posts ALTO restantes a ≥300 palabras | 🟠 Media |
+| 2 | Reescribir 10+ posts MEDIO canibalizados (elegir abogado, liquidación laboral, registrar marca) | 🟠 Media |
+| 3 | Revisar y mejorar meta_title/meta_description de 133 posts MEDIO | 🟠 Media |
+| 4 | Crear redirects 301 para posts fusionados | 🔴 Debe hacerse solo cuando se define URL canónica |
+| 5 | IndexNow 403 | 🟠 Requiere Bing Webmaster Tools |
+
+---
+
 ## Release 67 — PageSpeed/UX móvil: JS reducido, estilos inline → CSS, iFrames, LCP (2026-06-19)
 
 ### 🟢 JavaScript no utilizado — reducido
