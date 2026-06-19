@@ -80,6 +80,14 @@ opencode.jsonc
 scripts/validate-opencode-config.cjs
 .env*
 
+# tooling IA legacy (Release 84: AGENTS.md es el protocolo canónico)
+# kilo.json, CLAUDE.md y .kilo/ quedan fuera del repo. Pueden existir en
+# disco local pero no se commitean. Evita conflictos de modelo/config con
+# el entorno de ejecución dinámico (ZCode/OpenCode).
+kilo.json
+CLAUDE.md
+.kilo/
+
 # security: no commitear claves públicas ni archivos de infraestructura
 *.pub
 

@@ -5,6 +5,29 @@
 
 ---
 
+## Release 87 — Eliminación de tooling IA legacy del repositorio (2026-06-19)
+
+`kilo.json`, `CLAUDE.md` y el directorio completo `.kilo/` (14 archivos:
+agente SEOSenior, 5 comandos, 1 regla, 5 skills y configs) estaban commiteados
+en git a pesar de que Release 84 los declaró "legacy / no operativos". Esta
+contradicción podía confundir a los agentes y crear conflictos de modelo.
+
+**Cambios:**
+- `git rm` de `kilo.json`, `CLAUDE.md` y `.kilo/` (14 archivos eliminados del
+  tracking; permanecen en disco local si existen).
+- `.gitignore`: entradas para `kilo.json`, `CLAUDE.md`, `.kilo/`.
+- `AGENTS.md` §6 y §9: redacción actualizada — los archivos ya no son "legacy
+  que puede existir", sino "eliminados del repo, no recrear".
+- `README.md`: fila de `.kilo/` eliminada de la tabla de docs; sección
+  "Tooling IA" actualizada.
+
+**No se modificó:** código funcional, rutas, SEO, schemas, auth, proxy, motor
+de cálculo, ni ningún archivo de configuración operativa.
+
+**Validación:** lint 0 errores.
+
+---
+
 ## Release 86 — Auditoría GSC, Bing Webmaster Tools y GA4 (2026-06-20)
 
 Auditoría integral de las tres plataformas de medición/indexación, con

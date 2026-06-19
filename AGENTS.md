@@ -194,13 +194,13 @@ Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 - Todas las reglas de este documento aplican **independientemente del modelo**
   que procese cada instrucción.
 - Configuraciones de tooling anteriores (`.kilo/`, `kilo.json`, `CLAUDE.md`,
-  skills, etc.) son **legacy / no operativas** salvo que el usuario indique lo
-  contrario.
-- Si existe `CLAUDE.md`, puede conservarse como compatibilidad mínima si solo
-  apunta a `AGENTS.md`, pero no es el protocolo principal.
-- Si se requiere replicar a un modelo específico en un entorno con router de
-  modelos, el archivo `kilo.json` o la configuración del entorno (no del repo)
-  es el lugar para declararlo.
+  skills de Kilo, etc.) fueron **eliminadas del repositorio** (Release 85) y
+  están en `.gitignore`. Pueden existir en disco local pero **no operativas**.
+  No crear nuevas versiones de estos archivos en el repo.
+- El protocolo canónico es **exclusivamente** `AGENTS.md`. Cualquier agente
+  (ZCode, OpenCode, u otro) debe leer este archivo como única fuente de reglas.
+- Si se requiere fijar un modelo concreto en un entorno con router de modelos,
+  usar la configuración del **entorno** (no del repo).
 
 ---
 
@@ -251,7 +251,8 @@ Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 - **Datos de delitos** (`data/delitos.json`, `data/delitos-estados.json`).
 - **Redirects 301** de `next.config.ts` (canibalizaciones activas).
 - **`THIN_POST_SLUGS`** en `app/sitemap.ts` (mitigación activa hasta reescritura).
-- **Config legacy de agentes** (`.kilo/`, si existe — no operativo).
+- **Config legacy de agentes** (`.kilo/`, `kilo.json`, `CLAUDE.md` — eliminados
+  del repo en Release 85; solo pueden existir en disco local, no operativos).
 
 ---
 

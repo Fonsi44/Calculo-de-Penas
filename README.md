@@ -333,7 +333,6 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 | `docs/lighthouse-baseline.md` | Línea base Lighthouse CI |
 | `docs/01-arquitectura.md` — `docs/26-roadmap-implementacion.md` | Docs históricos (ver `docs/`) |
 | `docs/legacy/CHANGELOG_ARCHIVE.md` | Changelog histórico completo |
-| `.kilo/` (archivos locales) | Legacy — configuraciones de tooling anterior. No operativo. Ver `AGENTS.md` §6 |
 
 ---
 
@@ -350,4 +349,7 @@ estados y lo que la IA nunca debe hacer.
 > ningún modelo específico; las reglas de `AGENTS.md` aplican
 > independientemente del modelo que procese cada instrucción.
 
-Configuraciones anteriores (`.kilo/`, `CLAUDE.md`) son **legacy / no operativas**.
+Configuraciones anteriores (`.kilo/`, `kilo.json`, `CLAUDE.md`) fueron
+**eliminadas del repositorio** (Release 85). Pueden existir en disco local
+pero están en `.gitignore` y no afectan al funcionamiento de los agentes. El
+protocolo canónico es [`AGENTS.md`](./AGENTS.md).
