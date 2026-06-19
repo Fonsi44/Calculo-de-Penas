@@ -316,7 +316,6 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 ### No urgente (deuda técnica)
 - Migrar `lib/blog.ts` + `data/blog/types.ts` a tipo `BlogPost` puro.
 - Migrar `wordpress/` (local, no tracked). Decidir si eliminar o commitear.
-- Decidir tooling oficial de agentes (Kilo vs OpenCode).
 
 ---
 
@@ -334,15 +333,27 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 | `docs/lighthouse-baseline.md` | Línea base Lighthouse CI |
 | `docs/01-arquitectura.md` — `docs/26-roadmap-implementacion.md` | Docs históricos (ver `docs/`) |
 | `docs/legacy/CHANGELOG_ARCHIVE.md` | Changelog histórico completo |
-| `.kilo/agent/SEOSenior.md` | Agente SEO especializado |
-| `.kilo/rules/seo.md` | 12 reglas SEO vinculantes |
-| `.kilo/skills/` | Skills SEO (auditoría, brief, enlazado, local, on-page) |
+| `.kilo/` (archivos locales) | Legacy — configuraciones de tooling anterior. No operativo. Ver `AGENTS.md` §6 |
 
 ---
 
-## Para agentes IA
+## Tooling IA
 
+### Entornos
+| Herramienta | Estado |
+|-------------|--------|
+| **OpenCode** | Activo — entorno principal para agentes IA |
+| **Zcode** | Activo — entorno secundario |
+
+### Modelos autorizados
+- **GLM 5.2** (Z.ai vía HuggingFace) — modelo principal
+- **DeepSeek v4 Pro** — tareas complejas
+- **DeepSeek v4 Flash** — tareas rápidas
+
+### Protocolo obligatorio
 Este repositorio tiene un protocolo obligatorio en [`AGENTS.md`](./AGENTS.md).
 Léelo antes de cualquier modificación. Contiene reglas críticas sobre fuentes
 de verdad, privacidad de intranet, validación obligatoria, clasificación de
 estados y lo que la IA nunca debe hacer.
+
+Configuraciones anteriores (`.kilo/`, `CLAUDE.md`) son **legacy / no operativas**.

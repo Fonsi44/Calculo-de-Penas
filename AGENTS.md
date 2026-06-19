@@ -11,11 +11,10 @@ cuando correspondan. Las reglas son permanentes, no una tarea puntual.
 
 En orden:
 1. `README.md`, `package.json`
-2. Este archivo (`AGENTS.md`)
-3. `.kilo/rules/seo.md` (reglas SEO vinculantes)
-4. Archivos afectados por el cambio (leer, no asumir)
-5. `CHANGELOG.md` (últimas releases para contexto)
-6. `docs/auditoria-repositorio-integral.md` §19 (estado post-implementación)
+2. `AGENTS.md` (este archivo — protocolo canónico)
+3. Archivos afectados por el cambio (leer, no asumir)
+4. `CHANGELOG.md` (últimas releases para contexto)
+5. `docs/auditoria-repositorio-integral.md` §19 (estado post-implementación)
 
 ---
 
@@ -157,30 +156,62 @@ npm run content:audit   # Auditoría editorial (71 pendientes hoy)
 
 ## 5. SEO y gobernanza
 
-Las reglas de `.kilo/rules/seo.md` son **vinculantes** para cualquier
-modificación con impacto SEO. Resumen:
+Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 
 - **Una URL = una intención de búsqueda.** No crear URLs que compitan.
-- **Revisar canibalización** antes de crear contenido nuevo (R2).
-- **Alinear title, H1, primer párrafo** con la intención (R3).
-- **Sin keyword stuffing** (R4).
-- **No inventar datos** (métricas, rankings, ubicaciones) (R5).
-- **Priorizar cambios por impacto SEO**: crítico > importante > recomendable (R6).
+- **Revisar canibalización** antes de crear contenido nuevo.
+- **Alinear title, H1, primer párrafo** con la intención de búsqueda.
+- **Sin keyword stuffing** — densidad natural, sin repetición forzada.
+- **No inventar datos** (métricas, rankings, ubicaciones, clientes, premios).
+- **Priorizar cambios por impacto SEO**: crítico > importante > recomendable.
 - **JSON-LD obligatorio** por tipo de página: `LegalService+LocalBusiness`
   (home), `Service` (servicios), `BlogPosting` (blog), `FAQPage` (FAQ),
   `BreadcrumbList`, `Organization`, `WebSite`.
-- **No degradar SEO existente**: CWV, schemas, canonical, redirects (R9).
-- **SEO local**: NAP consistente, `geo` en LocalBusiness, keywords geográficas (R11).
-- **IndexNow + sitemap automático**: sitemap dinámico en `app/sitemap.ts`;
-  IndexNow vía `scripts/submit-indexnow.mjs` (dry-run por defecto, R12).
-
-El agente SEO (`SEOSenior` en `.kilo/agent/SEOSenior.md`) tiene autoridad para
-optimizar metadatos, schemas, headings, enlazado interno y contenido editorial
-sin aprobación adicional (salvo cambios estructurales de URLs).
+- **No degradar SEO existente**: CWV, schemas, canonical, redirects, sitemap,
+  robots.txt, llms.txt.
+- **SEO local**: NAP consistente en todo el sitio, `geo` en LocalBusiness,
+  keywords geográficas en title/H1/contenido, Google Business Profile vinculado.
+- **IndexNow + sitemap automático**: sitemap dinámico en `app/sitemap.ts`
+  (excluye rutas privadas y posts canonicalizados); IndexNow vía
+  `scripts/submit-indexnow.mjs` (dry-run por defecto).
+- **Enlazado interno**: anchors descriptivos, sin páginas huérfanas,
+  breadcrumbs consistentes.
+- **Datos estructurados**: renderizados server-side (no client-side),
+  válidos según Schema.org.
+- **No exponer intranet**: ninguna URL privada en sitemap, robots.txt,
+  enlaces públicos, metadatos ni schemas.
+- **Validación SEO**: tras cambios, verificar `sitemap.xml`, `robots.txt`,
+  schemas con validador, y `npm run build` sin errores.
 
 ---
 
-## 6. Datos del blog — estado real (Jun 2026)
+## 6. Tooling IA y modelos permitidos
+
+### Entornos activos
+| Herramienta | Estado | Propósito |
+|-------------|--------|-----------|
+| **OpenCode** | ✅ Activo | Entorno principal para agentes IA |
+| **Zcode** | ✅ Activo | Entorno secundario para agentes IA |
+
+### Modelos permitidos
+| Modelo | Proveedor | Uso |
+|--------|-----------|-----|
+| **GLM 5.2** | Z.ai vía HuggingFace (router) | Modelo principal para coding y tareas generales |
+| **DeepSeek v4 Pro** | deepseek1 | Modelo alternativo para tareas complejas |
+| **DeepSeek v4 Flash** | deepseek1 | Modelo rápido para tareas ligeras |
+
+### Protocolo
+- El protocolo canónico para cualquier agente es `AGENTS.md` (este archivo).
+- Ningún agente debe usar modelos, proveedores o configuraciones distintas
+  sin instrucción explícita del usuario.
+- Configuraciones anteriores (`.kilo/`, `kilo.json`, `CLAUDE.md`, skills)
+  son **legacy / no operativas** salvo que el usuario indique lo contrario.
+- Si existe `CLAUDE.md`, puede conservarse como compatibilidad mínima si
+  solo apunta a `AGENTS.md`, pero no es el protocolo principal.
+
+---
+
+## 7. Datos del blog — estado real (Jun 2026)
 
 | Métrica | Valor |
 |---------|-------|
@@ -199,7 +230,7 @@ sin aprobación adicional (salvo cambios estructurales de URLs).
 
 ---
 
-## 7. Fuentes de datos canónicas
+## 8. Fuentes de datos canónicas
 
 | Dato | Archivo | Registros |
 |------|---------|-----------|
@@ -217,7 +248,7 @@ sin aprobación adicional (salvo cambios estructurales de URLs).
 
 ---
 
-## 8. Archivos que NO debe tocar la IA
+## 9. Archivos que NO debe tocar la IA
 
 - **Web pública visual** (`app/(public)/**/*.tsx`) — salvo SEO.
 - **Motor de cálculo** (`lib/rules/v1/`, `lib/utils.ts`, `lib/catalogos.ts`).
@@ -227,11 +258,11 @@ sin aprobación adicional (salvo cambios estructurales de URLs).
 - **Datos de delitos** (`data/delitos.json`, `data/delitos-estados.json`).
 - **Redirects 301** de `next.config.ts` (canibalizaciones activas).
 - **`THIN_POST_SLUGS`** en `app/sitemap.ts` (mitigación activa hasta reescritura).
-- **Config de agentes** (`.kilo/`, `kilo.json`).
+- **Config legacy de agentes** (`.kilo/`, si existe — no operativo).
 
 ---
 
-## 9. Formato de respuesta final
+## 10. Formato de respuesta final
 
 ```
 Porcentaje completado:

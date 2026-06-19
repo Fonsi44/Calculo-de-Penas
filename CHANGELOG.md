@@ -5,6 +5,25 @@
 
 ---
 
+## Release 84 — Actualización de tooling IA a OpenCode y Zcode (2026-06-19)
+
+Normalización del protocolo de agentes IA. OpenCode y Zcode pasan a ser el
+tooling activo. Kilo, SEOSenior y configuraciones `.kilo/` quedan como legacy.
+
+**Cambios:**
+- `AGENTS.md`: nueva sección §6 (Tooling IA y modelos permitidos). Reglas SEO
+  ahora autosuficientes (sin dependencia de `.kilo/rules/seo.md`).
+- `README.md`: nueva sección "Tooling IA". Referencias a Kilo/SEOSenior
+  eliminadas o marcadas como legacy. Pendiente "tooling oficial" resuelto.
+- `CHANGELOG.md`: entrada actual (Release 84).
+- Modelos autorizados documentados: GLM 5.2, DeepSeek v4 Pro, DeepSeek v4 Flash.
+- No se modificó código funcional, rutas, SEO, schemas, auth, proxy ni motor
+  de cálculo.
+
+**Validación:** lint 0 errores, build OK, test 397/397.
+
+---
+
 ## Release 83 — Normalización de marca como Pineda y Asociados (2026-06-19)
 
 Unificación del nombre del proyecto bajo la marca "Pineda y Asociados" en
@@ -28,7 +47,7 @@ técnicas, valores de test, archivos legacy/backup.
 
 | Aspecto | Valor |
 |---------|-------|
-| **Última release** | Release 82 — Implementación Fases 1–7 de la auditoría integral |
+| **Última release** | Release 84 — Tooling IA: OpenCode y Zcode |
 | **Commit** | `81a02e7` |
 | **Fecha** | 2026-06-19 |
 | **Build** | ✅ Compiled + TypeScript OK |
