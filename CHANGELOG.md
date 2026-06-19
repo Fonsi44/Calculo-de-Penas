@@ -1,5 +1,46 @@
 # Changelog
 
+## Release 75 — Rendimiento: elimina searchIndex serializado de home + script auditoría (2026-06-19)
+
+### Optimización de payload (Prioridad 1)
+- **Eliminado `LazyBlogSearch` de la home**: recibía 74 posts serializados como
+  props en el RSC stream aunque el usuario nunca buscara. Reemplazado por un
+  CTA ligero al `/blog` (donde el buscador tiene sentido contextual).
+- Reducción estimada del RSC payload de la home: ~25 KB de metadatos de posts.
+- Imports muertos eliminados (`LazyBlogSearch`, `getAllPosts`).
+
+### Componentes cliente (revisión, sin cambios)
+Revisados los 15 componentes `'use client'` de la web pública. Todos están
+**justificados** (usan `useState`, `useEffect`, `window`, `onClick`, eventos):
+PublicHeader, FloatingContactRail, BlogSearch, SolicitarConsultaForm, BlogCtaBar,
+CopyableAddress, ShareButtons, etc. No se convirtieron a server (romperían
+interactividad/tracking).
+
+### Scripts de terceros (sin cambios — ya optimizado)
+GA4 y Microsoft Clarity ya usan `strategy="lazyOnload"` (no bloqueantes) y solo
+cargan si sus variables de entorno existen. Sin duplicados.
+
+### iframe mapa (sin cambios — ya optimizado)
+`MapEmbed` ya tiene `loading="lazy"`, `sandbox`, `title`, y `<noscript>`.
+
+### Script de auditoría creado
+`scripts/auditar-performance-publico.ts`: comprueba 14 URLs públicas contra
+producción (tamaño HTML, GA4/Clarity duplicados, iframes sin title/lazy,
+emails en texto plano, rutas privadas filtradas, em-dash en OG).
+
+### Validación
+- lint: 0 errores
+- build: Compiled successfully + Finished TypeScript
+- test: 382/382 OK
+- test:e2e: 37/37 OK
+
+### NO VALIDADO (externo)
+- Lighthouse real: requiere navegador headless (validar en pagespeed.web.dev)
+- Core Web Vitals field: requiere tráfico real + CrUX
+- Doble redirect http apex: gestionado por Vercel Domains
+
+---
+
 ## Release 74 — Calidad JSON-LD/OG: sin mojibake, sameAs responsable, areaServed real (2026-06-19)
 
 ### Correcciones de calidad detectadas por Bing URL Inspection

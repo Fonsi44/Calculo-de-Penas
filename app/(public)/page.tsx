@@ -33,8 +33,6 @@ import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { LazyBlogSearch } from '@/components/blog/lazy-blog-search';
-import { getAllPosts } from '@/lib/blog';
 import { SocialShare } from '@/components/marketing/social-share';
 
 export const metadata: Metadata = {
@@ -61,7 +59,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     // OG/Twitter con guion simple (-) para evitar mojibake del em-dash en parsers.
-    title: `${site.name} - ${site.tagline}`,
+    title: site.tagline,
     description: site.description,
     url: `${site.url}/`,
     siteName: site.name,
@@ -78,7 +76,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} - Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
+    title: site.tagline,
     description: site.description,
     images: [`${site.url}/og-image.png`],
   },
@@ -89,20 +87,9 @@ export const revalidate = 3600;
 const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
 
 export default async function HomePage() {
-  let searchIndex: { slug: string; title: string; description: string; category: string; tags: string[]; publishedAt: string; readingTime: string; coverImage?: string }[] = [];
-  try {
-    const allPosts = await getAllPosts();
-    searchIndex = allPosts.map(p => ({
-      slug: p.slug,
-      title: p.title,
-      description: p.description,
-      category: p.category,
-      tags: p.tags,
-      publishedAt: p.publishedAt,
-      readingTime: p.readingTime,
-      coverImage: p.coverImage,
-    }));
-  } catch {}
+  // NOTA: el índice de búsqueda (searchIndex) se eliminó de la home para
+  // reducir el RSC payload (~74 posts serializados). El buscador completo
+  // vive en /blog. La home ahora ofrece un CTA ligero al blog.
   let contentMap: Record<string, string> = {};
   let homeMeta: { page: string; label: string; sections: { key: string; label: string; fields: { key: string; label: string; type: string; default?: string }[] }[] } | undefined;
   try {
@@ -220,14 +207,31 @@ export default async function HomePage() {
       {/* TRUST BAR — sellos de autoridad */}
       <TrustBar background="light" />
 
-      {/* BUSCADOR GLOBAL */}
-      {searchIndex.length > 0 && (
-        <div className="bg-background py-6 md:py-8">
-          <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-            <LazyBlogSearch posts={searchIndex} scope="toda la web" />
-          </div>
+      {/* CTA BLOG — ligero (sin serializar índice de búsqueda).
+          El buscador completo vive en /blog, donde tiene sentido contextual.
+          Quitarlo de la home ahorra ~74 posts en el RSC stream. */}
+      <div className="bg-background py-6 md:py-8">
+        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
+          <Link
+            href="/blog"
+            className="group block rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-5 shadow-md shadow-accent/5 hover:border-accent/50 transition-colors"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-text leading-snug">
+                  ¿Busca información legal específica?
+                </p>
+                <p className="text-xs text-text-muted mt-1">
+                  Explore nuestro blog jurídico con guías sobre derecho penal, familia, laboral y más.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors flex-shrink-0">
+                Ver blog <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
         </div>
-      )}
+      </div>
 
       {/* REAL QUESTIONS */}
       <Section spacing="md" ariaLabel="Preguntas reales">

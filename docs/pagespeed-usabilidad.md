@@ -1,5 +1,54 @@
 # Diagnóstico de PageSpeed / UX Móvil
 
+## Optimización aplicada — Release 75 (2026-06-19)
+
+### Cambios aplicados
+| Área | Antes | Después | Impacto |
+|---|---|---|---|
+| **RSC payload home** | `LazyBlogSearch` recibía 74 posts serializados como props (RSC stream) | BlogSearch eliminado de la home; reemplazado por CTA ligero al `/blog` | Reduce payload de hidratación de la home |
+| **Scripts GA4/Clarity** | Ya usaban `lazyOnload` (no bloqueante) | Sin cambios (ya optimizado) | ✅ |
+| **iframe mapa** | Ya tenía `loading="lazy"`, `sandbox`, `title`, `<noscript>` | Sin cambios (ya optimizado) | ✅ |
+| **Componentes cliente** | 15 en web pública | Revisados: todos justificados (interacción real) | ✅ |
+| **Estilos inline** | Solo 3 en `placeholder-photo.tsx` (dinámicos) | Sin cambios (justificados) | ✅ |
+
+### Componentes cliente analizados (justificados, NO convertidos a server)
+- `PublicHeader`: menú móvil, scroll listener, navegación → requiere client
+- `FloatingContactRail`: botones clicables + tracking → requiere client
+- `BlogSearch`: filtrado client-side con `useState`/`useMemo` → requiere client
+- `SolicitarConsultaForm`: formulario POST → requiere client
+- `BlogCtaBar`: tracking `onClick` analytics → requiere client
+- `CopyableAddress`: `navigator.clipboard` → requiere client
+- `ShareButtons`: `window.open` para compartir → requiere client
+
+### Script de auditoría creado
+`scripts/auditar-performance-publico.ts`: comprueba 14 URLs públicas contra
+producción y reporta tamaño HTML, scripts GA4/Clarity duplicados, iframes sin
+`title`/`lazy`, emails en texto plano, rutas privadas filtradas, y em-dash en
+OG. Uso: `npx tsx scripts/auditar-performance-publico.ts`.
+
+### Redirecciones (curl, sin cambios — correctas)
+| URL | Cadena | Resultado |
+|---|---|---|
+| `https://www.pinedayasociadoshn.com/` | 200 directo | ✅ |
+| `https://pinedayasociadoshn.com/` | 308 → www → 200 | ✅ |
+| `http://www.pinedayasociadoshn.com/` | 308 → https www → 200 | ✅ |
+| `http://pinedayasociadoshn.com/` | 308 → https apex → 308 → www → 200 | ⚠️ 2 saltos (Vercel Domains, externo) |
+
+### NO VALIDADO (requiere herramientas externas)
+- **Lighthouse local real**: no ejecutable desde CLI (requiere navegador headless).
+  Validar manualmente en https://pagespeed.web.dev/.
+- **Core Web Vitals field data**: requiere tráfico real + CrUX/GSC.
+- **Doble redirect http apex**: gestionado por Vercel Domains, no accionable
+  desde el repo.
+
+### Móvil (verificación de principios)
+- FloatingContactRail: `bottom-4 right-4` + `paddingBottom: env(safe-area-inset-bottom)` → no tapa contenido
+- Footer: padding `py-14 md:py-16` → suficiente
+- Botones: altura mínima `h-11`/`h-12` (44-48px táctil) → correcto
+- Texto base: `text-sm`/`text-base` (14-16px) → correcto, no baja de 14
+
+---
+
 ## Diagnóstico inicial (Jun 2026)
 
 ### LCP estimado: ~3.7s
