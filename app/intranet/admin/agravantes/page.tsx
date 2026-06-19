@@ -85,7 +85,7 @@ export default function AdminAgravantesPage() {
       .finally(() => setLoading(false));
   }, [toast]);
 
-  useEffect(() => { fetchAgravantes(); }, [fetchAgravantes]); // eslint-disable-line react-hooks/set-state-in-effect
+  useEffect(() => { fetchAgravantes(); }, [fetchAgravantes]);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();

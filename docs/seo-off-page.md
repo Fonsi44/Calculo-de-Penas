@@ -62,6 +62,41 @@ NAP es la causa nº1 de pérdida de ranking local.
 verificadas, añadirlas a `lib/site.ts` vía `NEXT_PUBLIC_SOCIAL_*` para que
 alimenten el campo `sameAs` de los schemas Organization/LegalService.
 
+### Investigación automatizada (2026-06-19)
+
+Se realizó una búsqueda exhaustiva desde CLI y web para descubrir perfiles
+sociales verificables del bufete sin intervención humana:
+
+| Plataforma | URL intentada | Resultado |
+|---|---|---|
+| Facebook | `facebook.com/pinedayasociadoshn` | Error 400 (bloqueo anti-bot, no confirma existencia) |
+| Facebook | `facebook.com/pinedayasociados` | Error 400 (bloqueo anti-bot) |
+| Instagram | `instagram.com/pinedayasociadoshn/` | Página genérica (JS requerido, no verificable) |
+| Instagram | `instagram.com/pinedayasociados/` | Página genérica (JS requerido, no verificable) |
+| TikTok | `tiktok.com/@pinedayasociadoshn` | Página genérica (no verificable) |
+| LinkedIn | `linkedin.com/company/pinedayasociadoshn` | **404 confirmado** |
+| Google Maps | Búsqueda "Pineda y Asociados Nacaome" | Sin ficha GBP verificada encontrada |
+| Google Search | `"Pineda y Asociados" Honduras facebook instagram` | Sin resultados de perfiles sociales |
+
+**Conclusión**: ningún perfil social pudo verificarse de forma fiable. Los
+schemas `Organization` y `LegalService` omiten `sameAs` para redes sociales
+(Organization incluye solo `[site.url]`). Esta omisión es intencional para
+evitar datos falsos que penalizarían el E-E-A-T.
+
+### Cómo añadir perfiles cuando existan
+
+1. Configurar en `.env.local` (local) y Vercel Environment Variables (prod):
+   ```
+   NEXT_PUBLIC_SOCIAL_FACEBOOK=https://www.facebook.com/...
+   NEXT_PUBLIC_SOCIAL_INSTAGRAM=https://www.instagram.com/...
+   NEXT_PUBLIC_SOCIAL_TIKTOK=https://www.tiktok.com/@...
+   ```
+2. **Sin tocar código**: `lib/site.ts` ya lee estas variables y las inyecta
+   automáticamente en `sameAs` de los schemas `LegalService` y `Organization`.
+3. Para añadir plataformas adicionales (LinkedIn, YouTube, X), editar
+   `lib/site.ts` → objeto `social` y las funciones `legalServiceSchema()` /
+   `organizationSchema()`.
+
 - [ ] Facebook (página empresarial verificada)
 - [ ] LinkedIn (página de empresa)
 - [ ] Instagram (cuenta profesional)
@@ -150,7 +185,7 @@ Para activar la Opción B, editar `app/robots.ts` y eliminar las reglas
 | Google Business Profile | Acceso a cuenta Google | 🔴 Crítico SEO local |
 | Bing Webmaster Tools | Acceso a cuenta Microsoft | 🟠 IndexNow 403 |
 | Google Search Console | Verificación DNS/meta | 🔴 Indexación Google |
-| Perfiles sociales (sameAs) | URLs reales del despacho | 🟠 E-E-A-T |
+| Perfiles sociales (sameAs) | URLs reales del despacho (investigado 2026-06-19: sin perfiles verificables) | 🟠 E-E-A-T |
 | SPF/DKIM/DMARC | Acceso al panel DNS | 🟠 Entregabilidad email |
 | Política bots IA | Decisión de negocio | 🟡 GEO/LLM SEO |
 | Reescritura posts plantilla | Acceso a DB Neon | 🟠 Contenido duplicado |
@@ -179,50 +214,20 @@ se probó y por qué no se pudo completar localmente.
 **Conclusión:** la DB **es accesible** — las credenciales existen y el build de
 Vercel las usa correctamente en producción. El problema NO es de credenciales.
 
-### Por qué no se pudo ejecutar la detección localmente
+### Detección ejecutada con éxito (2026-06-19)
 
-Todos los intentos de ejecutar `node` o `npx tsx` dentro del directorio del
-proyecto (que vive en `OneDrive - Alfons Roiget/`) fallan con:
+El repositorio se migró de OneDrive a `C:\Proyectos\Justicia Verdadera`
+(Release 62). Desde el nuevo directorio local, el script se ejecuta
+correctamente:
 
 ```
-Error: UNKNOWN: unknown error, read
-    at Object.readFileUtf8 (node:fs:441)
-    errno: -4094, code: 'UNKNOWN', syscall: 'read'
+npx tsx scripts/detectar-posts-plantilla.ts
+→ 159 posts analizados → 3 ALTO, 156 MEDIO, 0 BAJO
+→ Informe: docs/blog-duplicity-report.md
 ```
 
-Este es un **bloqueo de I/O de OneDrive** conocido en Windows: OneDrive
-bloquea la lectura de archivos `.js`/`.mjs`/`.cjs` (incluidos los de
-`node_modules`) cuando node los carga. Ocurre incluso para scripts simples que
-no tocan la DB (verificado con `scripts/test-db.mjs`). No es un problema de
-credenciales, configuración del ORM, ni de la DB.
-
-**Comandos intentados (todos fallaron por OneDrive I/O lock):**
-- `npx tsx scripts/detectar-posts-plantilla.ts` → exit 0, stdout vacío (no captura)
-- `node --import tsx scripts/detectar-posts-plantilla.ts` → `errno -4094`
-- `node -e "..."` con `require('@neondatabase/serverless')` → `errno -4094` al cargar módulo
-- `npx esbuild ... --bundle` → no genera archivo de salida (OneDrive lock)
-- Escritura del informe a `docs/`, `USERPROFILE/`, y archivo pre-creado → falla
-
-### Cómo ejecutar la detección (3 opciones válidas)
-
-El script `scripts/detectar-posts-plantilla.ts` está **listo y funcional**.
-Solo necesita un entorno donde node pueda leer archivos sin OneDrive:
-
-1. **Vercel CI** (recomendado): añadir un step en GitHub Actions o ejecutar via
-   `vercel exec`. La DB es accesible en Vercel sin OneDrive.
-   ```bash
-   npx tsx scripts/detectar-posts-plantilla.ts
-   # Genera docs/blog-duplicity-report.md con el informe completo
-   ```
-
-2. **Local sin OneDrive**: pausar la sincronización de OneDrive, o clonar el
-   repo en `C:\dev\` (fuera de OneDrive), y ejecutar el script.
-
-3. **Admin del blog** (`/intranet/admin/blog`): revisar manualmente los posts
-   que compartan los encabezados "Marco legal aplicable", "Pasos clave que
-   debe conocer", "Documentación necesaria", etc.
-
-El informe se escribe a `docs/blog-duplicity-report.md` (versión documental).
+El bloqueo de I/O de OneDrive (errno -4094) que impedía ejecutar node/NPM
+scripts queda resuelto con la migración al disco local.
 
 ---
 
@@ -232,13 +237,13 @@ Tras agotar las vías técnicas, estos son los pendientes que **solo el
 propietario puede resolver**, con el dato mínimo necesario:
 
 | # | Pendiente | Dato mínimo necesario | Cómo aportarlo |
-|---|---|---|---|
-| 1 | **Ejecutar detección posts plantilla** | Ninguno (solo ejecutar en entorno sin OneDrive) | `npx tsx scripts/detectar-posts-plantilla.ts` en Vercel/local sin OneDrive |
-| 2 | **Reescritura posts ALTO riesgo** | Tiempo editorial (1-2h por post) | Tras ejecutar el script, reescribir los slugs marcados ALTO |
+|---|---|---|---|---|
+| 1 | ~~Ejecutar detección posts plantilla~~ | ✅ Completado (159 posts, 3 ALTO, 156 MEDIO) | Informe en `docs/blog-duplicity-report.md` |
+| 2 | **Reescritura posts ALTO riesgo** | Tiempo editorial (1-2h por post) | Reescribir 3 slugs ALTO: `abogados-en-pespire-choluteca`, `abogados-en-san-marcos-de-colon-choluteca`, `abogados-en-marcovia-choluteca` |
 | 3 | **Google Business Profile** | Cuenta Google + dirección confirmada | Crear ficha en google.com/business con el NAP del sitio |
 | 4 | **Bing Webmaster Tools** | Cuenta Microsoft | Verificar dominio (resuelve error IndexNow 403) |
 | 5 | **Google Search Console** | Verificación DNS o meta tag | Enviar sitemap tras verificar |
-| 6 | **Perfiles sociales reales** | URLs verificadas (FB, IG, LinkedIn, etc.) | Añadir a `lib/site.ts` vía `NEXT_PUBLIC_SOCIAL_*` |
+| 6 | **Perfiles sociales reales** | URLs verificadas (FB, IG, LinkedIn, etc.) | Investigado 2026-06-19: sin perfiles verificables. Añadir a `NEXT_PUBLIC_SOCIAL_*` cuando existan |
 | 7 | **SPF/DKIM/DMARC** | Proveedor de email confirmado (Resend/Google/M365) | Añadir registros TXT en el panel DNS |
 | 8 | **Política bots IA** | Decisión de negocio (¿permitir GPTBot?) | Editar `app/robots.ts` según decisión |
 

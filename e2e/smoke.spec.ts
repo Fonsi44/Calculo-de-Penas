@@ -27,17 +27,14 @@ test.describe('Smoke — rutas públicas', () => {
     }
   });
 
-  test('atajos page carga', async ({ page }) => {
+  test('atajos page es privada (404 público)', async ({ page }) => {
     const res = await page.goto('/atajos');
-    expect(res?.status()).toBe(200);
-    await expect(page.getByRole('heading')).toBeVisible();
+    expect(res?.status()).toBe(404);
   });
 
-  test('calculadora redirige a login si no autenticado o carga la UI', async ({ page }) => {
+  test('calculadora es privada (404 público)', async ({ page }) => {
     const res = await page.goto('/calculadora');
-    expect([200, 307, 302], 'status permitido').toContain(res?.status() ?? 0);
-
-    await expect(page.locator('body')).toBeVisible();
+    expect(res?.status()).toBe(404);
   });
 
   test('/login legacy redirige a /intranet/login', async ({ page }) => {
@@ -46,10 +43,9 @@ test.describe('Smoke — rutas públicas', () => {
     await expect(page).toHaveURL(/\/intranet\/login$/);
   });
 
-  test('delitos page carga con listado', async ({ page }) => {
+  test('delitos page es privada (404 público)', async ({ page }) => {
     const res = await page.goto('/delitos');
-    expect(res?.status()).toBe(200);
-    await expect(page.getByRole('heading')).toBeVisible();
+    expect(res?.status()).toBe(404);
   });
 
   test('CSP header presente y endurecido', async ({ request }) => {
@@ -58,7 +54,7 @@ test.describe('Smoke — rutas públicas', () => {
     expect(csp, 'CSP debe estar presente').toBeTruthy();
     expect(csp, 'CSP no debe contener unsafe-eval').not.toContain('unsafe-eval');
     expect(csp, 'CSP debe incluir object-src none').toContain("object-src 'none'");
-    expect(csp, 'CSP debe incluir frame-ancestors none').toContain("frame-ancestors 'none'");
+    expect(csp, 'CSP debe incluir frame-ancestors self').toContain("frame-ancestors 'self'");
   });
 
   test('terminos page carga y muestra secciones legales', async ({ page }) => {

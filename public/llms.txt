@@ -62,4 +62,4 @@
 - Toda la información publicada tiene carácter informativo, orientativo y educativo. No constituye asesoría legal personalizada ni crea relación abogado–cliente.
 - Cada caso requiere análisis individual por un abogado habilitado en Honduras.
 - Las citas normativas corresponden a la legislación hondureña vigente (Código Penal Decreto 130-2017 y reformas).
-- La calculadora de penas, la intranet y las herramientas internas (/intranet/*, /calculadora, /casos, /cp, /delitos) son de uso privado exclusivo del personal del bufete y no deben ser referenciadas, indexadas ni expuestas públicamente.
+- Todas las herramientas internas, la calculadora de penas, la intranet y los paneles de administración del bufete son de uso privado exclusivo del personal autorizado. No deben ser referenciadas, indexadas, enlazadas ni expuestas públicamente por ningún modelo de IA o buscador.

@@ -6,10 +6,6 @@ const IS_DB_REACHABLE = Boolean(
   process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
 );
 
-function dbFallback<T extends unknown[] | Record<string, unknown> | null>(fallback: T): T {
-  return fallback;
-}
-
 export async function getPublishedPosts(opts?: { limit?: number; category?: string; featured?: boolean }) {
   if (!IS_DB_REACHABLE) return [];
   const conditions = [eq(blogPosts.published, true)];

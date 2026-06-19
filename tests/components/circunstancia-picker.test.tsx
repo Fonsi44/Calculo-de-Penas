@@ -42,7 +42,8 @@ describe('CircunstanciaPicker', () => {
   });
 
   it('muestra regla de compensación con conteo igual', () => {
-    render(<CircunstanciaPicker current={baseConfig} onChange={vi.fn()} onOpenArticle={vi.fn()} />);
+    const cfg = { ...baseConfig, agravantes: ['alevosia'], atenuantes: ['dilacion'] };
+    render(<CircunstanciaPicker current={cfg} onChange={vi.fn()} onOpenArticle={vi.fn()} />);
     expect(screen.getByText(/se compensan/i)).toBeInTheDocument();
   });
 

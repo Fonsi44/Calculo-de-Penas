@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import type { Delito } from '@/lib/types';
 import { useDebounce } from '@/hooks/use-debounce';
 import { cacheGet, cacheSet } from '@/lib/cache';
@@ -118,28 +118,42 @@ export interface UseSupuestosPenales {
 const supuestosCache = new Map<string, { data: SupuestoPenalUI[]; ts: number }>();
 const SUPUESTOS_TTL = 5 * 60 * 1000;
 
+type SupuestoAction =
+  | { type: 'RESET' }
+  | { type: 'LOADING' }
+  | { type: 'SUCCESS'; data: SupuestoPenalUI[] }
+  | { type: 'ERROR'; message: string };
+
+function supuestoReducer(state: UseSupuestosPenales, action: SupuestoAction): UseSupuestosPenales {
+  switch (action.type) {
+    case 'RESET':
+      return { supuestos: [], loading: false, error: null };
+    case 'LOADING':
+      return { ...state, loading: true, error: null };
+    case 'SUCCESS':
+      return { supuestos: action.data, loading: false, error: null };
+    case 'ERROR':
+      return { supuestos: [], loading: false, error: action.message };
+  }
+}
+
 export function useSupuestosPenales(delitoId: string | null | undefined): UseSupuestosPenales {
-  const [supuestos, setSupuestos] = useState<SupuestoPenalUI[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [state, dispatch] = useReducer(supuestoReducer, { supuestos: [], loading: false, error: null });
 
   useEffect(() => {
     if (!delitoId) {
-      setSupuestos([]);
-      setError(null);
+      dispatch({ type: 'RESET' });
       return;
     }
 
-    // Caché en memoria.
     const cached = supuestosCache.get(delitoId);
     if (cached && Date.now() - cached.ts < SUPUESTOS_TTL) {
-      setSupuestos(cached.data);
-      setError(null);
+      dispatch({ type: 'SUCCESS', data: cached.data });
       return;
     }
 
     let cancelled = false;
-    setLoading(true);
+    dispatch({ type: 'LOADING' });
     (async () => {
       try {
         const r = await fetch(`/api/supuestos-penales?delitoId=${encodeURIComponent(delitoId)}`);
@@ -148,14 +162,10 @@ export function useSupuestosPenales(delitoId: string | null | undefined): UseSup
         const parsed: SupuestoPenalUI[] = Array.isArray(data) ? data : [];
         if (cancelled) return;
         supuestosCache.set(delitoId, { data: parsed, ts: Date.now() });
-        setSupuestos(parsed);
-        setError(null);
+        dispatch({ type: 'SUCCESS', data: parsed });
       } catch (e) {
         if (cancelled) return;
-        setError(e instanceof Error ? e.message : 'Error al cargar supuestos penales');
-        setSupuestos([]);
-      } finally {
-        if (!cancelled) setLoading(false);
+        dispatch({ type: 'ERROR', message: e instanceof Error ? e.message : 'Error al cargar supuestos penales' });
       }
     })();
 
@@ -164,5 +174,5 @@ export function useSupuestosPenales(delitoId: string | null | undefined): UseSup
     };
   }, [delitoId]);
 
-  return { supuestos, loading, error };
+  return state;
 }

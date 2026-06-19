@@ -2,6 +2,8 @@
 
 Aplicación web para el cálculo de penas según el **Código Penal de Honduras (Decreto 130-2017)** y reformas vigentes.
 
+> **📍 Migración OneDrive → Local (2026-06-19)**: El repositorio se migró de `C:\Users\Admin\OneDrive - Alfons Roiget\Calculo de penas` a `C:\Proyectos\Justicia Verdadera` para evitar errores OS 389/EPERM por bloqueos de sincronización. Origen conservado intacto.
+
 > **🧠 Para agentes IA**: Este repositorio tiene un protocolo obligatorio en [`AGENTS.md`](./AGENTS.md). Léelo antes de cualquier modificación. Contiene la arquitectura actual, fuentes de datos, reglas del Blog CMS, FAQ CMS, calculadora y restricciones críticas que debes respetar.
 
 Público objetivo: profesionales del derecho que necesitan determinar penas con precisión técnica.

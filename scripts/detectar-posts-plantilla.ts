@@ -25,7 +25,7 @@ import { dirname, resolve } from 'path';
 const REPORT_PATH = resolve(process.cwd(), 'docs/blog-duplicity-report.md');
 const lines: string[] = [];
 function out(s: string) {
-  out(s);
+  console.log(s);
   lines.push(s);
 }
 function flushReport() {

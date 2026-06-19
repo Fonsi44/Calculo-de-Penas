@@ -1,5 +1,5 @@
 # Programa de revisión de contenido
-**Generado:** 2026-06-14
+**Generado:** 2026-06-19
 **Total artículos:** 159
 ## Vencidos
 - [ ] `mediacion-vs-juicio-que-conviene-mas-honduras` — vence: 2026-03-01
@@ -91,10 +91,10 @@
 - [ ] `nacionalidad-espanola-para-hondurenos-residencia-plazos` — vence: 2026-06-11
 - [ ] `como-obtener-rtn-personas-empresas-honduras` — vence: 2026-06-12
 - [ ] `habeas-corpus-cuando-interponer-honduras` — vence: 2026-06-13
-## Próximos 30 días
 - [ ] `registrar-marca-paso-a-paso-honduras` — vence: 2026-06-17
 - [ ] `isv-impuesto-venta-tasas-obligaciones-honduras` — vence: 2026-06-18
 - [ ] `importaciones-san-lorenzo` — vence: 2026-06-19
+## Próximos 30 días
 - [ ] `central-riesgos-honduras-consultar-impugnar` — vence: 2026-06-20
 - [ ] `pension-alimenticia-honduras-como-solicitarla` — vence: 2026-06-23
 - [ ] `clausulas-abusivas-contratos-como-detectar-honduras` — vence: 2026-06-23
@@ -119,5 +119,9 @@
 - [ ] `jornada-laboral-horas-extra-descansos-honduras` — vence: 2026-07-13
 - [ ] `tipos-sociedad-mercantil-honduras` — vence: 2026-07-13
 - [ ] `defensa-penal-menores-edad-honduras` — vence: 2026-07-14
+- [ ] `hondurenos-espana-documentos-legales-extranjero` — vence: 2026-07-15
+- [ ] `elegir-bufete-multidisciplinario-ventajas-honduras` — vence: 2026-07-16
+- [ ] `defensa-sar-choluteca` — vence: 2026-07-17
+- [ ] `usucapion-prescripcion-adquisitiva-honduras` — vence: 2026-07-19
 ## Al día
-- 43 artículos con revisión vigente.
+- 39 artículos con revisión vigente.

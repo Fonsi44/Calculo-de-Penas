@@ -86,7 +86,6 @@ export function seleccionarPenaBase(
   // a un rango válido intercambiando los extremos para no producir salidas
   // absurdas (p.ej. aplicar_mitad_superior sobre [72,12] → [42,12]).
   if (pena_min > pena_max && pena_max > 0) {
-    // eslint-disable-next-line no-console
     console.warn(`[calculadora] Rango invertido en delito "${delito.nombre}" (${delito.articulo}): min=${pena_min} > max=${pena_max}. Normalizando.`);
     [pena_min, pena_max] = [pena_max, pena_min];
   }
