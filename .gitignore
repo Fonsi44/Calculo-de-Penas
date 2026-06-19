@@ -111,6 +111,7 @@ dev-log.txt
 dev-server-err.log
 dev-server.log
 cookies.txt
+.vercel-env-check.txt
 
 # auditorias exportadas
 auditoria-blog/
