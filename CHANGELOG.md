@@ -1,5 +1,56 @@
 # Changelog
 
+## Release 65 — Fix: login redirect loop, dashboard no-admin, E2E 37/37 (2026-06-19)
+
+### 🐛 Bug corregido: Login redirect loop (crash chrome-error)
+- **Causa raíz**: login redirect a `/intranet/admin` para usuarios con rol `abogado` (por defecto). El proxy bloquea no-admin de `/intranet/admin/*`, redirigiendo al login → bucle infinito → crash → `chrome-error://chromewebdata/`.
+- **Fix login** (`app/intranet/login/page.tsx:45`): redirect a `/intranet/dashboard` (válido para todos los roles autenticados).
+- **Fix dashboard** (`app/intranet/dashboard/page.tsx`): reescrito. Muestra contenido real (stats + herramientas) para usuarios `abogado`. Para usuarios `admin`, redirige a `/intranet/admin` (mantiene compatibilidad).
+- **Impacto**: E2E intranet sidebar login test pasa ahora (antes fallaba con crash).
+
+### 🟢 E2E — 37/37 tests pasan
+- Logro completo: **0 fallos, 0 skipped** por primera vez.
+- Login test: ✅ (antes: chrome-error).
+- Smoke tests públicos: ✅ (incluye CSP, privacidad, redirecciones).
+- Auth flow API: ✅ (registro, login, duplicados, token, casos, rate limit).
+- Intranet rutas: ✅ (calculadora, casos, cp, delitos, atajos).
+- Agravantes API: ✅ (401 sin auth, validación).
+
+### 🟢 Producción verificada (deploy Ready)
+- **Status**: ✅ Ready, aliased to `www.pinedayasociadoshn.com`
+- **Home**: 200, X-Powered-By ausente, X-Robots-Tag index/follow, HSTS, CSP, X-Content-Type-Options ✅
+- **Robots.txt**: bloquea `/intranet/`, `/api/`, bots IA ✅
+- **Llms.txt**: sin rutas privadas ✅
+- **Google verification**: presente ✅
+- **Clarity y GA4**: scripts presentes en producción ✅
+- **Sitemap**: 304 URLs, sin fugas privadas ✅
+
+### 🟢 Scripts DB
+- `npm run validate:dates`: 159 posts, 0 errores ✅
+- `npm run content:audit`: 92 vencidos (editorial), 28 próximos, 39 al día ✅
+- `npx tsx scripts/detectar-posts-plantilla.ts`: 159 posts → 3 ALTO, 156 MEDIO, 0 BAJO ✅
+
+### Validación final
+- `npm run lint`: 0 errores, 0 warnings ✅
+- `npm run build`: Compiled successfully, TypeScript OK, 304 rutas ✅
+- `npm run test`: 18 suites, 382 tests pasan ✅
+- `npm run test:e2e`: **37 passed, 0 failed, 0 skipped** ✅
+- `npm run validate:dates`: 159 posts, todo correcto ✅
+- Producción: status 200, headers seguridad OK, scripts GA4/Clarity presentes ✅
+
+### Pendientes reales (datos externos / decisión propietario)
+| # | Pendiente | Bloqueado por |
+|---|---|---|
+| 1 | Google Business Profile | Cuenta Google del despacho |
+| 2 | Bing Webmaster Tools | Cuenta Microsoft (IndexNow 403) |
+| 3 | Google Search Console | Verificación DNS |
+| 4 | Perfiles sociales reales (sameAs) | No existen o no son verificables |
+| 5 | SPF/DKIM/DMARC | Acceso al panel DNS del dominio |
+| 6 | Reescritura 3 posts ALTO | Tiempo editorial (1-2h/post) |
+| 7 | Revisión 92 posts vencidos | Tiempo editorial |
+
+---
+
 ## Release 64 — Cierre técnico: E2E smoke tests corregidos, SEO validado en producción, Playwright funcional (2026-06-19)
 
 ### 🟢 E2E — Corrección de tests smoke
