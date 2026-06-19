@@ -96,6 +96,9 @@ docs/imagenes/*.jpg
 *-desktop.png
 *-after.png
 /docs/screenshots/
+# visual regression: outputs temporales (baselines SÍ se commitean en e2e/visual-baselines/)
+/docs/screenshots-current/
+/docs/screenshots-diff/
 
 # artifactos de test/benchmark
 servicios-juridicos-accessibility.yml

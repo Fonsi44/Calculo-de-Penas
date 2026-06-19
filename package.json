@@ -24,7 +24,10 @@
     "seed:fase2": "npx tsx drizzle/seed-fase2.ts",
     "db:check": "npx tsx scripts/check-db-state.ts",
     "seo:health": "node scripts/seo-health-check.mjs",
-    "seo:health:json": "node scripts/seo-health-check.mjs --json"
+    "seo:health:json": "node scripts/seo-health-check.mjs --json",
+    "visual:baseline": "node scripts/visual-regression.cjs baseline",
+    "visual:check": "node scripts/visual-regression.cjs check",
+    "visual:update": "node scripts/visual-regression.cjs update"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -71,6 +74,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "jsdom": "^29.1.1",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
     "sharp": "^0.35.1",
     "tailwindcss": "^4",
     "typescript": "^5",
