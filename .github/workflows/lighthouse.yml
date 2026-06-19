@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload Lighthouse artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse-report
           # .lighthouseci/ contiene los JSON de cada run + assertion results.
