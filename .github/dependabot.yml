@@ -1,0 +1,53 @@
+# Dependabot — renovación automática de dependencias.
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# Estrategia: 2 ecosistemas (npm + GitHub Actions), cadencia mensual,
+# agrupando actualizaciones menores/patch en un único PR por ecosistema para
+# reducir el ruido. Las actualizaciones mayores (major) van en PR separados
+# porque pueden requerir cambios de código.
+
+version: 2
+
+updates:
+  # Dependencias npm (package.json)
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+      time: '06:00'
+      timezone: America/Tegucigalpa
+    open-pull-requests-limit: 5
+    # Agrupar minor + patch en un solo PR; major van aparte.
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: 'chore(deps)'
+      include: scope
+    labels:
+      - dependencies
+      - npm
+
+  # Versiones de actions usadas en los workflows
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+      time: '06:00'
+      timezone: America/Tegucigalpa
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: 'chore(ci)'
+      include: scope
+    labels:
+      - dependencies
+      - github-actions
