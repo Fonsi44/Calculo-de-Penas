@@ -132,7 +132,7 @@ corresponde exactamente.
 | Motor de cálculo (`lib/rules/v1/`) | `build` + probar `POST /api/calcular` |
 | Schema DB (`lib/schema.ts`) | `npx drizzle-kit generate` |
 | Blog público | `build` + `test:e2e` |
-| API routes | `build` + test endpoint con `Invoke-RestMethod` |
+| API routes | `build` + test endpoint con `Invoke-RestMethod` (PowerShell) o `curl` |
 | SEO / sitemap / robots | `build` + `lint` + verificar `sitemap.xml`/`robots.txt` |
 | UI pública | `build` + `test` |
 | Fechas del blog | `npm run validate:dates` |

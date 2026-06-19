@@ -112,6 +112,79 @@ npm run content:audit     # Auditoría editorial (71 pendientes hoy)
 
 ---
 
+## Troubleshooting
+
+### `npm ci` falla con error de `optionalDependencies` / `@esbuild/*`
+El `package-lock.json` se generó con **npm 11**. Los runners con npm 10 rechazan
+la validación estricta de optionalDependencies de esbuild.
+```bash
+npm install -g npm@11   # luego reintenta npm ci
+```
+El CI ya alinea npm 11 (`ci.yml` → step "Install npm 11").
+
+### Tests E2E fallan (`Executable doesn't exist`)
+Falta instalar el navegador de Playwright:
+```bash
+npm run test:e2e:install   # chromium
+```
+
+### `validate:dates` o `content:audit` fallan sin `DATABASE_URL`
+Los scripts de validación del blog requieren acceso a Neon. Sin `DATABASE_URL`
+real, salen limpio (exit 0) por diseño para no bloquear PRs. Para validar local:
+```bash
+# .env.local con DATABASE_URL=postgresql://... de Neon
+npm run validate:dates
+npm run content:audit
+```
+
+### Build falla por TypeScript tras tocar `scripts/`
+Desde la Fase HQC, `scripts/` (excepto `scripts/legacy/`) está incluido en el
+typecheck. Si añades un script nuevo, asegúrate de que pasa `npx tsc --noEmit`.
+
+### `lint` exige 0 errores
+ESLint está configurado en modo estricto. Cualquier error bloquea el CI. Los
+warnings son permisivos. Corrige siempre los errores antes de commitear.
+
+### Cobertura de tests
+```bash
+npm run test:coverage   # genera coverage/ con reporte text + lcov
+```
+Umbral actual (conservador, se subirá gradualmente): 35% líneas. Línea base
+medida en la Fase HQC: **66% líneas, 64% branches, 56% funciones**.
+
+---
+
+## Contribuir
+
+Este repositorio usa **commits atómicos** con prefijos semánticos en español.
+Ver [`AGENTS.md`](./AGENTS.md) §R7 para el protocolo completo.
+
+### Prefijos de commit
+| Prefijo | Uso |
+|---------|-----|
+| `feat:` | Nueva funcionalidad |
+| `fix:` | Corrección de bug |
+| `docs:` | Solo documentación |
+| `chore:` | Mantenimiento, tooling, dependencias |
+| `seo:` | Cambios con impacto SEO |
+| `refactor:` | Reestructuración sin cambio de comportamiento |
+| `test:` | Tests o configuración de testing |
+| `ci:` | CI/CD |
+
+### Reglas mínimas
+1. **Lee antes de escribir** (AGENTS.md R1): usa `Read` antes de editar.
+2. **Un cambio lógico por commit** (R7): no mezcles refactor con fix.
+3. **Valida tras el cambio** (R8): `npm run lint && npm run build && npm test`.
+4. **No uses verbos complacientes** (R12): "hecho/listo" solo si está verificado.
+5. **Clasifica estados con honestidad** (R11): `IMPLEMENTADO`/`VALIDADO`/`NO VALIDADO`/`PENDIENTE`/`RIESGO`.
+
+### Archivos que NO debe tocar la IA sin autorización explícita
+Motor de cálculo (`lib/rules/v1/`), schema DB (`lib/schema.ts`), auth (`lib/auth.ts`),
+proxy (`proxy.ts`), datos de delitos (`data/delitos.json`), redirects 301 de
+`next.config.ts`, web pública visual (`app/(public)/**/*.tsx`). Ver AGENTS.md §9.
+
+---
+
 ## Módulos principales
 
 ### Web pública (`/(public)/*`)
