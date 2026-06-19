@@ -21,7 +21,7 @@ async function main() {
 
   // Normalizar slug a "intención": quitar sufijos "-honduras", "-choluteca",
   // "-san-lorenzo", "-nacaome", "-guia-completa", "-paso-a-paso", etc.
-  function intent(slug) {
+  function intent(slug: string) {
     return slug
       .replace(/-honduras$/, '')
       .replace(/-choluteca$/, '')
@@ -60,8 +60,8 @@ async function main() {
     console.log(`▸ ${intentKey} (${posts.length} URLs):`);
     // Ordenar por palabras (desc) = el más completo es el candidato a canonical
     const sorted = posts
-      .map((p) => ({ ...p, words: Math.round((p.body_len || 0) / 6) }))
-      .sort((a, b) => b.words - a.words);
+      .map((p: { body_len?: number; [k: string]: unknown }) => ({ ...p, words: Math.round((p.body_len || 0) / 6) }))
+      .sort((a: { words: number }, b: { words: number }) => b.words - a.words);
     for (const p of sorted) {
       const canon = p.canonical_url || '(propio)';
       console.log(`    ${String(p.words).padStart(5)} pal  ${p.category}/${p.slug}`.padEnd(70) + `  canonical: ${canon}`);

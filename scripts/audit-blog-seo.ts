@@ -247,7 +247,11 @@ async function main() {
   fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
   console.log(`\nReporte completo: ${reportFile}`);
 
-  await db.$client?.end?.();
+  // Cierre defensivo de la conexión Neon (el tipo del cliente no expone
+  // `end()` en la superficie pública de drizzle-orm; el cast evita el error
+  // de tipos sin perder la limpieza del pool en tiempo de ejecución).
+  const client = (db as unknown as { $client?: { end?: () => unknown } }).$client;
+  await client?.end?.();
 }
 
 main().catch(console.error);

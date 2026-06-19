@@ -125,6 +125,10 @@ cookies.txt
 auditoria-blog/
 docs/backups/
 
+# coverage de vitest (regenerable con npm run test:coverage)
+coverage/
+*.tsbuildinfo
+
 # output del script de auditoría SEO (scripts/seo-audit-gsc-ga4.mjs)
 # Contiene métricas temporales, no secretos, pero es estado local por sesión.
 scripts/.seo-audit.json
