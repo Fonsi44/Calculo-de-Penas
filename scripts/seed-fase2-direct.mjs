@@ -1,5 +1,5 @@
 // Script de seed directo usando @neondatabase/serverless (sin depender de dotenv/drizzle).
-// Lee .env manualmente para evitar el lock de OneDrive sobre node_modules.
+// Lee .env manualmente para evitar locks de sincronización sobre node_modules.
 import { readFileSync } from 'node:fs';
 import { neon } from '@neondatabase/serverless';
 

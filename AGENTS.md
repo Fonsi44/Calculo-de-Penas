@@ -488,7 +488,7 @@ npm run build
 ```
 - `lint`: 0 errores. (Puede haber warnings preexistentes.)
 - `build`: `Compiled successfully` + `Finished TypeScript` sin errores.
-- Si `build` falla por `EPERM` en `.next` (OneDrive lock en Windows): `Remove-Item -LiteralPath .next -Recurse -Force -ErrorAction SilentlyContinue` y reintentar.
+- Si `build` falla por `EPERM` en `.next`: `Remove-Item -LiteralPath .next -Recurse -Force -ErrorAction SilentlyContinue` y reintentar.
 
 ### 2. Tests unit + E2E
 ```bash
