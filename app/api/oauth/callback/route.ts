@@ -28,10 +28,11 @@ export async function GET(request: Request) {
       scope: tokens.scope,
       expires_in: tokens.expiry_date,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Error desconocido';
     return NextResponse.json({
       success: false,
-      error: err?.message?.slice(0, 500),
+      error: message.slice(0, 500),
     }, { status: 400 });
   }
 }
