@@ -41,6 +41,7 @@ export default async function PoliticaPrivacidadPage() {
       subtitle={c.subtitle}
       version={c.version}
       lastUpdated={c.lastUpdated}
+      validated
     >
       <LegalSection number="1" title="Responsable del tratamiento">
         <p>

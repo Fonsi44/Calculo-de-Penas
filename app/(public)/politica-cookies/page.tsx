@@ -35,6 +35,7 @@ export default async function PoliticaCookiesPage() {
       subtitle={c.subtitle}
       version={c.version}
       lastUpdated={c.lastUpdated}
+      validated
     >
       <LegalSection number="1" title="¿Qué son las cookies?">
         <p>

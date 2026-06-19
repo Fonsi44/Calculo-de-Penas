@@ -35,6 +35,7 @@ export default async function TerminosPage() {
       subtitle={c.subtitle}
       version={c.version}
       lastUpdated={c.lastUpdated}
+      validated
     >
       <LegalCallout variant="warning">
         <strong className="font-semibold text-primary">Aviso importante.</strong>{' '}

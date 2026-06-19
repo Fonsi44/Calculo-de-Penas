@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, ShieldCheck } from 'lucide-react';
 import { PageHero } from '@/components/marketing/page-hero';
 import { Section, Container } from '@/components/marketing/section';
 import { cn } from '@/lib/ui';
@@ -11,6 +11,7 @@ interface LegalDocumentProps {
   badge?: string;
   version: string;
   lastUpdated: string;
+  validated?: boolean;
   children: ReactNode;
 }
 
@@ -36,6 +37,7 @@ export function LegalDocument({
   badge = 'Documento legal',
   version,
   lastUpdated,
+  validated = false,
   children,
 }: LegalDocumentProps) {
   return (
@@ -48,29 +50,52 @@ export function LegalDocument({
       />
       <Section background="muted" spacing="md">
         <Container size="md">
-          <div
-            role="note"
-            className="rounded-lg border border-warning/30 bg-warning/[0.06] p-4 md:p-5 mb-10 flex gap-3 items-start"
-          >
-            <AlertTriangle
-              size={20}
-              className="text-warning flex-shrink-0 mt-0.5"
-              aria-hidden="true"
-            />
-            <div className="text-sm leading-relaxed text-text">
-              <p className="font-bold text-primary mb-1">
-                Plantilla de referencia — pendiente de revisión por abogado colegiado
-              </p>
-              <p className="text-text-secondary">
-                Este texto es una guía base adaptada a la legislación hondureña
-                (Constitución Arts. 76-80, Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024),
-                Código Civil, Código de Comercio y normativa del Colegio de
-                Abogados de Honduras). La versión definitiva debe ser revisada
-                y aprobada por un abogado colegiado antes de su publicación
-                oficial.
-              </p>
+          {validated ? (
+            <div
+              role="note"
+              className="rounded-lg border border-success/30 bg-success/[0.07] p-4 md:p-5 mb-10 flex gap-3 items-start"
+            >
+              <ShieldCheck
+                size={20}
+                className="text-success flex-shrink-0 mt-0.5"
+                aria-hidden="true"
+              />
+              <div className="text-sm leading-relaxed text-text">
+                <p className="font-bold text-success mb-1">
+                  Validado por abogado colegiado
+                </p>
+                <p className="text-text-secondary">
+                  Este documento ha sido revisado y aprobado por un abogado
+                  colegiado en Honduras, conforme a la normativa del Colegio de
+                  Abogados de Honduras y la legislación vigente.
+                </p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div
+              role="note"
+              className="rounded-lg border border-warning/30 bg-warning/[0.06] p-4 md:p-5 mb-10 flex gap-3 items-start"
+            >
+              <AlertTriangle
+                size={20}
+                className="text-warning flex-shrink-0 mt-0.5"
+                aria-hidden="true"
+              />
+              <div className="text-sm leading-relaxed text-text">
+                <p className="font-bold text-primary mb-1">
+                  Plantilla de referencia — pendiente de revisión por abogado colegiado
+                </p>
+                <p className="text-text-secondary">
+                  Este texto es una guía base adaptada a la legislación hondureña
+                  (Constitución Arts. 76-80, Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024),
+                  Código Civil, Código de Comercio y normativa del Colegio de
+                  Abogados de Honduras). La versión definitiva debe ser revisada
+                  y aprobada por un abogado colegiado antes de su publicación
+                  oficial.
+                </p>
+              </div>
+            </div>
+          )}
 
           <article className="text-text">{children}</article>
 

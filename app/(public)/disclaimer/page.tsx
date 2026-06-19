@@ -35,6 +35,7 @@ export default async function DisclaimerPage() {
       subtitle={c.subtitle}
       version={c.version}
       lastUpdated={c.lastUpdated}
+      validated
     >
       <LegalCallout variant="danger">
         <strong className="font-semibold text-primary">Mensaje principal.</strong>{' '}

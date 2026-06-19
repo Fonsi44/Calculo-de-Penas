@@ -33,6 +33,7 @@ export default function PoliticaEditorialPage() {
       subtitle="Cómo creamos, revisamos y actualizamos los contenidos jurídicos de este sitio"
       version="1.0"
       lastUpdated="Junio 2026"
+      validated
     >
       <LegalSection number="1" title="Compromiso editorial">
         <p>

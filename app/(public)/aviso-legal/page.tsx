@@ -30,11 +30,12 @@ export default async function AvisoLegalPage() {
   const c = await getLegalPageContent('aviso-legal');
   return (
     <LegalDocument
-      eyebrow="Identificación del titular"
+      eyebrow="Aviso Legal"
       title={c.title}
       subtitle={c.subtitle}
       version={c.version}
       lastUpdated={c.lastUpdated}
+      validated
     >
       <LegalSection number="1" title="Datos identificativos del titular">
         <p>
