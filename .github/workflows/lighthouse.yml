@@ -38,7 +38,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # Mismo alineamiento que ci.yml (npm 11 para validar el lock).
+          node-version: '22'
+          npm-version: '11'
           cache: 'npm'
 
       - name: Install dependencies

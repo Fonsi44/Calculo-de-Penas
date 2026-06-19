@@ -23,7 +23,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # Node 22 + npm 11 alineado con el entorno que genera package-lock.json.
+          # npm 10.x (default en Node 20) rechaza el lock por la validación
+          # estricta de optionalDependencies de esbuild (tsx -> @esbuild/*).
+          node-version: '22'
+          npm-version: '11'
           cache: 'npm'
 
       - name: Install dependencies
