@@ -22,7 +22,9 @@
     "content:audit": "npx tsx scripts/content-audit.ts",
     "validate:dates": "npx tsx scripts/validar-fechas-blog.ts",
     "seed:fase2": "npx tsx drizzle/seed-fase2.ts",
-    "db:check": "npx tsx scripts/check-db-state.ts"
+    "db:check": "npx tsx scripts/check-db-state.ts",
+    "seo:health": "node scripts/seo-health-check.mjs",
+    "seo:health:json": "node scripts/seo-health-check.mjs --json"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
