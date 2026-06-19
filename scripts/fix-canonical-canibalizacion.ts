@@ -1,33 +1,17 @@
 /**
- * Resuelve la canibalización entre landings locales y posts de practica-legal.
+ * Resuelve canibalización entre posts que compiten por la misma intención de
+ * búsqueda en Google. Detectada exhaustivamente en scripts/audit-canibalizacion.ts.
  *
- * PROBLEMA (docs/indexacion-plan-decision.md §7):
- *   Hay 3 pares de URLs que compiten por la MISMA intención de búsqueda
- *   "abogados en {ciudad}":
- *     - Landing /abogados-en-nacaome      vs /blog/practica-legal/abogados-en-nacaome
- *     - Landing /abogados-en-choluteca    vs /blog/practica-legal/abogados-en-choluteca
- *     - Landing /abogados-en-san-lorenzo  vs /blog/practica-legal/abogados-en-san-lorenzo
- *
- *   Google ve dos URLs con intención idéntica y, sin canonical, elige una
- *   arbitrariamente (o no indexa ninguna). La landing es la versión canónica
- *   correcta: tiene schema LegalService, NAP completo, mejor diseño y es la
- *   URL promocionada en header/footer.
- *
- * SOLUCIÓN:
- *   Setear canonical_url en los 3 posts apuntando a la landing. El page
- *   /blog/[categoria]/[slug]/page.tsx ya respeta post.canonicalUrl (línea 37).
- *
- *   Los posts de ciudades SATÉLITE (amapala, pespire, marcovia, san-marcos)
- *   NO se tocan: no tienen landing dedicada, son posts legítimos.
+ * Solo se intervienen pares de URLs validados manualmente: el post "débil"
+ * (menos contenido, menos autoridad) canonicaliza hacia el post "fuerte"
+ * (más completo, canonical natural) o hacia la landing dedicada.
+ * Los posts no se eliminan ni noindexan: solo consolidan autoridad.
  *
  * USO:
  *   npx tsx scripts/fix-canonical-canibalizacion.ts            # dry-run
- *   npx tsx scripts/fix-canonical-canibilizacion.ts --apply     # aplicar
+ *   npx tsx scripts/fix-canonical-canibalizacion.ts --apply     # aplicar
  *
- * TRAZABILIDAD:
- *   Este script es idempotente y reversible (setear canonical_url = NULL
- *   revierte). El cambio NO elimina los posts ni los marca noindex: siguen
- *   accesibles, solo consolidan autoridad en la landing.
+ * REVERSIBLE: setear canonical_url = NULL en cada post lo revierte.
  */
 import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
@@ -36,32 +20,36 @@ const sql = neon(process.env.DATABASE_URL!);
 
 const apply = process.argv.includes('--apply');
 
-// (slug del post, canonical destino)
-const CANONICAL_MAP: Array<[string, string]> = [
-  ['abogados-en-nacaome', '/abogados-en-nacaome'],
-  ['abogados-en-choluteca', '/abogados-en-choluteca'],
-  ['abogados-en-san-lorenzo', '/abogados-en-san-lorenzo'],
+// (slug del post débil, categoría, canonical destino)
+const CANONICAL_MAP: Array<[string, string, string]> = [
+  // Fase 3c: landings locales (la landing es canónica: tiene schema LegalService + NAP)
+  ['abogados-en-nacaome', 'practica-legal', '/abogados-en-nacaome'],
+  ['abogados-en-choluteca', 'practica-legal', '/abogados-en-choluteca'],
+  ['abogados-en-san-lorenzo', 'practica-legal', '/abogados-en-san-lorenzo'],
+  // Fase 3d: divorcio-honduras (guía-completa es la más completa: 1200 vs 1125 palabras)
+  ['divorcio-honduras-pasos-requisitos', 'derecho-de-familia', '/blog/derecho-de-familia/divorcio-honduras-guia-completa'],
+  // Fase 3d: pensión-alimenticia-honduras (guía-completa es la más completa: 1154 vs 699 palabras)
+  ['pension-alimenticia-honduras-como-solicitarla', 'derecho-de-familia', '/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa'],
 ];
 
 async function main() {
   console.log('═══════════════════════════════════════════════════════');
-  console.log(` Fix canibalización landings vs posts practica-legal`);
+  console.log(` Fix canibalización (5 pares de URLs)`);
   console.log(` Modo: ${apply ? 'APLICAR' : 'DRY-RUN (no escribe)'}`);
   console.log('═══════════════════════════════════════════════════════\n');
 
   let changed = 0;
   let skipped = 0;
 
-  for (const [slug, canonical] of CANONICAL_MAP) {
-    // Verificar estado actual
+  for (const [slug, category, canonical] of CANONICAL_MAP) {
     const rows = await sql`
       SELECT id, slug, category, canonical_url, published
       FROM blog_posts
-      WHERE slug = ${slug} AND category = 'practica-legal'
+      WHERE slug = ${slug} AND category = ${category}
     `;
 
     if (rows.length === 0) {
-      console.log(`  ⚠ ${slug}: NO ENCONTRADO en DB (categoría practica-legal)`);
+      console.log(`  ⚠ ${category}/${slug}: NO ENCONTRADO en DB`);
       skipped++;
       continue;
     }
@@ -81,10 +69,8 @@ async function main() {
         SET canonical_url = ${canonical}, updated_at = NOW()
         WHERE id = ${post.id}
       `;
-      changed++;
-    } else {
-      changed++;
     }
+    changed++;
   }
 
   console.log(`\n═══════════════════════════════════════════════════════`);
@@ -93,8 +79,7 @@ async function main() {
     console.log(`\nPara aplicar: npx tsx scripts/fix-canonical-canibalizacion.ts --apply`);
   }
   if (apply && changed > 0) {
-    console.log(`\n✓ Canonicals seteados. Las landings ahora consolidan la autoridad.`);
-    console.log(`  Verificar con: curl -s https://www.pinedayasociadoshn.com/blog/practica-legal/abogados-en-nacaome | grep canonical`);
+    console.log(`\n✓ Canonicals seteados. Verificar en sitemap/blog tras próximo deploy.`);
   }
   console.log('═══════════════════════════════════════════════════════');
 }
