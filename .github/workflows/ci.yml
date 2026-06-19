@@ -23,12 +23,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          # Node 22 + npm 11 alineado con el entorno que genera package-lock.json.
-          # npm 10.x (default en Node 20) rechaza el lock por la validación
-          # estricta de optionalDependencies de esbuild (tsx -> @esbuild/*).
+          # Node 22 alineado con el entorno local. setup-node@v4 no soporta
+          # `npm-version`, se instala npm 11 en el step siguiente.
           node-version: '22'
-          npm-version: '11'
           cache: 'npm'
+
+      - name: Install npm 11 (alineado con el generador del lock)
+        # npm 10.x (default del runner) rechaza el package-lock.json generado
+        # por npm 11 por la validación estricta de optionalDependencies de
+        # esbuild (tsx -> @esbuild/* 0.28.1 con 26 platform binaries).
+        # Alinear a npm 11 resuelve el `npm ci`.
+        run: npm install -g npm@11
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
