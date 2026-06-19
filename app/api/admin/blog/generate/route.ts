@@ -123,6 +123,12 @@ export async function POST(request: Request) {
     const slug = generateSlug(parsed.topic);
     const title = parsed.topic;
     const description = `Guía legal sobre ${parsed.topic.toLowerCase()} en Honduras. Aspectos clave, requisitos y recomendaciones prácticas del equipo de Pineda y Asociados.`;
+
+    // SEO metadata — el admin debe revisarlos antes de publicar
+    const metaTitle = title.length <= 60 ? title : title.substring(0, 57).trim() + '...';
+    const metaDescription = description.length <= 160
+      ? description
+      : description.substring(0, 157).replace(/\s+\S*$/, '') + '.';
     const intro = getIntro(parsed.category, parsed.topic);
     const structure = getStructure(parsed.category);
     // El disclaimer legal ya NO se concatena al body del post: el componente
@@ -151,6 +157,8 @@ export async function POST(request: Request) {
       slug,
       title,
       description,
+      metaTitle,
+      metaDescription,
       body: content,
       readingTime: estimateReadingTime,
       tags: tagSuggestions,
