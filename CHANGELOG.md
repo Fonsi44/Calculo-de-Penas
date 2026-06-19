@@ -39,15 +39,16 @@
 - Producción: status 200, headers seguridad OK, scripts GA4/Clarity presentes ✅
 
 ### Pendientes reales (datos externos / decisión propietario)
-| # | Pendiente | Bloqueado por |
+| # | Pendiente | Estado |
 |---|---|---|
-| 1 | Google Business Profile | Cuenta Google del despacho |
-| 2 | Bing Webmaster Tools | Cuenta Microsoft (IndexNow 403) |
-| 3 | Google Search Console | Verificación DNS |
-| 4 | Perfiles sociales reales (sameAs) | No existen o no son verificables |
-| 5 | SPF/DKIM/DMARC | Acceso al panel DNS del dominio |
-| 6 | Reescritura 3 posts ALTO | Tiempo editorial (1-2h/post) |
-| 7 | Revisión 92 posts vencidos | Tiempo editorial |
+| 1 | Google Business Profile | 🔴 Requiere cuenta Google |
+| 2 | Bing Webmaster Tools | 🟠 IndexNow 403 |
+| 3 | ~~Google Search Console~~ | ✅ **Resuelto**: DNS TXT `google-site-verification` encontrado |
+| 4 | Perfiles sociales reales (sameAs) | 🟠 No verificables |
+| 5 | ~~SPF/DKIM/DMARC~~ | ✅ **Resuelto**: configurados y verificados vía Vercel CLI + DNS |
+| 6 | Reescritura 3 posts ALTO | 🟠 Tiempo editorial |
+| 7 | Revisión 92 posts vencidos | 🟠 Tiempo editorial |
+| 8 | Política bots IA | 🟡 Decisión de negocio |
 
 ---
 

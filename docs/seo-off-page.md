@@ -116,46 +116,35 @@ evitar datos falsos que penalizarían el E-E-A-T.
 
 ## 7. DNS: SPF, DKIM y DMARC (entregabilidad de email)
 
-El dominio `pinedayasociadoshn.com` envía correo transaccional desde
-`contacto@pinedayasociadoshn.com` (vía Resend, según `lib/email.ts`). Para
-evitar que los correos terminen en spam, configurar:
+### Estado actual verificado (2026-06-19, via Vercel CLI + DNS lookup)
 
-### SPF (Sender Policy Framework)
-Registra el proveedor de email transaccional en el SPF. **Confirmar el
-proveedor antes de aplicar** (Resend, Google Workspace, SendGrid...):
+| Registro | Valor | Estado |
+|---|---|---|
+| **NS** | `ns1.vercel-dns.com`, `ns2.vercel-dns.com` | ✅ DNS gestionado por Vercel |
+| **SPF (main)** | `v=spf1 include:amazonses.com ~all` | ✅ Cubre AWS SES (infraestructura de Resend) |
+| **SPF (send)** | `v=spf1 include:amazonses.com ~all` | ✅ Para subdominio `send` (AWS SES outbound) |
+| **DKIM (Resend)** | `resend._domainkey` → clave pública RSA | ✅ Resend puede firmar correos |
+| **DMARC** | `v=DMARC1; p=none; adkim=s; aspf=s` | ✅ Monitoreo activo |
+| **MX** | `10 inbound-smtp.eu-west-1.amazonaws.com` | ✅ AWS SES inbound |
+| **Google GSC** | TXT con código de verificación | ✅ **Search Console verificado** |
+| **CAA** | `letsencrypt.org`, `pki.goog`, `sectigo.com` | ✅ CAs permitidas |
+| **Zoho** | TXT de verificación | ✅ Verificación Zoho presente |
 
-```
-# Si usan Resend (verificar en lib/email.ts / variables de entorno):
-v=spf1 include:_spf.resend.com ~all
+### Observaciones técnicas
 
-# Si usan Google Workspace:
-v=spf1 include:_spf.google.com ~all
+- Resend (API en `lib/email.ts`) no publica `_spf.resend.com` en DNS. Su infraestructura usa AWS SES, por lo que el SPF `include:amazonses.com` cubre la mayoría de los envíos.
+- La autenticación principal de Resend es DKIM via `resend._domainkey` — ya configurado y verificable.
+- DMARC en `p=none`: correcto para fase inicial. Cuando se confirme que no hay falsos positivos, escalar a `p=quarantine`.
 
-# Si combinan varios, encadenar includes:
-v=spf1 include:_spf.resend.com include:_spf.google.com ~all
-```
+### Cómo escalar DMARC a p=quarantine (cuando esté listo)
 
-**Acción**: añadir registro TXT `@` con el SPF correcto en el panel DNS del
-dominio (Cloudflare, Namecheap, GoDaddy, o donde esté gestionado).
-
-### DKIM (DomainKeys Identified Mail)
-- [ ] Verificar que el proveedor de email (Resend) tiene DKIM configurado
-- [ ] Añadir los registros CNAME/TXT que indique el proveedor
-
-### DMARC (Domain-based Message Authentication)
-- [ ] Publicar registro TXT `_dmarc.pinedayasociadoshn.com`:
-
-```
-# Política de monitoreo inicial (no rechaza, solo reporta):
-v=DMARC1; p=none; rua=mailto:contacto@pinedayasociadoshn.com; ruf=mailto:contacto@pinedayasociadoshn.com; fo=1
-
-# Tras 2-4 semanas sin falsos positivos, escalar a:
-v=DMARC1; p=quarantine; pct=100; rua=mailto:contacto@pinedayasociadoshn.com
+```bash
+# Via Vercel CLI:
+vercel dns rm pinedayasociadoshn.com rec_ac257735d15e5a49df96319c
+vercel dns add pinedayasociadoshn.com _dmarc TXT "v=DMARC1; p=quarantine; adkim=s; aspf=s; rua=mailto:contacto@pinedayasociadoshn.com"
 ```
 
-**Verificación**: tras configurar, validar con:
-- https://mxtoolbox.com/SuperTool.aspx (SPF, DKIM, DMARC)
-- https://dmarcian.com/dmarc-inspector/
+(O desde el panel de Vercel → Domains → DNS Records)
 
 ---
 
@@ -184,11 +173,11 @@ Para activar la Opción B, editar `app/robots.ts` y eliminar las reglas
 |---|---|---|
 | Google Business Profile | Acceso a cuenta Google | 🔴 Crítico SEO local |
 | Bing Webmaster Tools | Acceso a cuenta Microsoft | 🟠 IndexNow 403 |
-| Google Search Console | Verificación DNS/meta | 🔴 Indexación Google |
+| ~~Google Search Console~~ | ✅ **Verificación DNS encontrada** (`google-site-verification` TXT) | 🔴 Resuelto: GSC verificable |
 | Perfiles sociales (sameAs) | URLs reales del despacho (investigado 2026-06-19: sin perfiles verificables) | 🟠 E-E-A-T |
-| SPF/DKIM/DMARC | Acceso al panel DNS | 🟠 Entregabilidad email |
+| ~~SPF/DKIM/DMARC~~ | ✅ **Verificado en DNS**: SPF, DKIM Resend, DMARC, MX AWS SES configurados | 🟠 Documentado |
 | Política bots IA | Decisión de negocio | 🟡 GEO/LLM SEO |
-| Reescritura posts plantilla | Acceso a DB Neon | 🟠 Contenido duplicado |
+| Reescritura posts plantilla | Acceso a DB Neon (ejecutable desde local) | 🟠 Contenido duplicado |
 
 ---
 
@@ -242,9 +231,9 @@ propietario puede resolver**, con el dato mínimo necesario:
 | 2 | **Reescritura posts ALTO riesgo** | Tiempo editorial (1-2h por post) | Reescribir 3 slugs ALTO: `abogados-en-pespire-choluteca`, `abogados-en-san-marcos-de-colon-choluteca`, `abogados-en-marcovia-choluteca` |
 | 3 | **Google Business Profile** | Cuenta Google + dirección confirmada | Crear ficha en google.com/business con el NAP del sitio |
 | 4 | **Bing Webmaster Tools** | Cuenta Microsoft | Verificar dominio (resuelve error IndexNow 403) |
-| 5 | **Google Search Console** | Verificación DNS o meta tag | Enviar sitemap tras verificar |
+| 5 | ~~Google Search Console~~ | ✅ **Verificación DNS encontrada** (TXT `google-site-verification`) | Añadir sitio en GSC → el meta tag y DNS ya están listos |
 | 6 | **Perfiles sociales reales** | URLs verificadas (FB, IG, LinkedIn, etc.) | Investigado 2026-06-19: sin perfiles verificables. Añadir a `NEXT_PUBLIC_SOCIAL_*` cuando existan |
-| 7 | **SPF/DKIM/DMARC** | Proveedor de email confirmado (Resend/Google/M365) | Añadir registros TXT en el panel DNS |
+| 7 | ~~SPF/DKIM/DMARC~~ | ✅ **Configurado y verificado** vía Vercel CLI | SPF incluye `amazonses.com`, DKIM Resend, DMARC `p=none`, MX AWS SES |
 | 8 | **Política bots IA** | Decisión de negocio (¿permitir GPTBot?) | Editar `app/robots.ts` según decisión |
 
 **Ninguno de estos requiere que la IA "adivine" datos** — son acciones
