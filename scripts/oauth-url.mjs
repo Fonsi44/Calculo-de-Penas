@@ -19,6 +19,7 @@ const redirectUris = [
   'http://localhost:3000/',
   'https://www.pinedayasocioshn.com',
   'https://www.pinedayasocioshn.com/api/auth/callback',
+  'https://www.pinedayasocioshn.com/api/oauth/callback',
 ];
 
 for (const redirectUri of redirectUris) {

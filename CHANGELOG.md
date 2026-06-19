@@ -1,5 +1,37 @@
 # Changelog
 
+## Release 79 — GSC Search Analytics + IndexNow full submission + oauth-url fix (2026-06-19)
+
+Herramientas de consulta y monitorización de buscadores, y corrección de script OAuth.
+
+### Punto 1 — GSC Search Analytics (`scripts/gsc-analytics.mjs`)
+Script de consulta a Google Search Console Search Analytics API usando el mismo
+token OAuth2 existente. Permite obtener:
+
+- Resumen general: clics, impresiones, CTR, posición media (período configurable)
+- Dimensiones: query, page, country, device, date
+- `--all`: todas las dimensiones en una ejecución
+- `--json`: salida JSON para procesamiento
+- `--days N`, `--start/--end`, `--top N`
+
+Verificado: conecta, autentica y devuelve datos reales (57 impresiones, 6 días).
+
+### Punto 2 — IndexNow: envío completo del catálogo público (55 URLs)
+Se ejecutó envío real de las 55 URLs del catálogo público a IndexNow.
+Resultado: **HTTP 200**, 1 batch, 55 URLs notificadas a Bing/Yandex/Seznam.
+El bug histórico de 9.4k URLs queda definitivamente resuelto (key correcta,
+dominio verificado, URLs reales, script conservador).
+
+### Punto 3 — Corrección `scripts/oauth-url.mjs`
+Se añadió `https://www.pinedayasocioshn.com/api/oauth/callback` a la lista de
+redirect URIs que prueba el script, completando así la cobertura.
+
+### Validación
+- gsc-analytics.mjs: autenticación OK, datos reales devueltos
+- submit-indexnow.mjs --full: HTTP 200, 55 URLs
+- submit-sitemap-gsc.mjs: HTTP 204, sitemap reenviado
+- oauth-url.mjs: nueva URI añadida
+
 ## Release 78 — QA automatizada: SEO health-check + Lighthouse CI + Visual regression (2026-06-19)
 
 Tres herramientas de QA que convierten señales manuales en verificaciones
