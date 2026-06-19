@@ -136,23 +136,39 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: r.priority,
   }));
 
-  const dbPosts = IS_DB_REACHABLE ? await db
+  const dbPostsRaw = IS_DB_REACHABLE ? await db
     .select({
       slug: blogPosts.slug,
       category: blogPosts.category,
       publishedAt: blogPosts.publishedAt,
       updatedAt: blogPosts.updatedAt,
       noindex: blogPosts.noindex,
+      canonicalUrl: blogPosts.canonicalUrl,
     })
     .from(blogPosts)
     .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))
     .orderBy(desc(blogPosts.publishedAt)) : [];
 
-  // Mapa categoría → fecha del post más reciente (dbPosts ya viene ordenado
-  // DESC por publishedAt). Si no hay posts en la categoría o la DB no está
-  // disponible, usamos `now` como fallback.
+  // Posts con canonical apuntando a otra URL del propio dominio (p. ej. posts
+  // `abogados-en-{ciudad}` canonicalizados hacia las landings locales).
+  // No se incluyen como URLs independientes en el sitemap: su URL canónica ya
+  // está declarada (la landing). Así evitamos enviar a Google URLs que él
+  // consolidaría igualmente y reducimos ruido/duplicidad en el sitemap.
+  // Ver docs/indexacion-plan-decision.md §7 (Fase 1).
+  const dbPosts = dbPostsRaw.filter((p) => {
+    const c = p.canonicalUrl;
+    if (!c) return true; // sin override → queda
+    // Si el canonical apunta a otra URL del propio sitio (path absoluto o
+    // URL completa del mismo host) y NO es la propia ruta del post, se excluye.
+    const isSelfPost = c === `/blog/${p.category}/${p.slug}`;
+    return isSelfPost;
+  });
+
+  // Mapa categoría → fecha del post más reciente. Se usa dbPostsRaw (TODOS los
+  // posts publicados/no-noindex, incluyendo los canonicalizados) para que el
+  // lastmod de la categoría refleje la actividad real del hub.
   const latestPostByCategory = new Map<string, Date>();
-  for (const p of dbPosts) {
+  for (const p of dbPostsRaw) {
     if (!latestPostByCategory.has(p.category)) {
       latestPostByCategory.set(
         p.category,

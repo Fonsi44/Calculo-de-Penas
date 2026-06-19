@@ -1,5 +1,46 @@
 # Changelog
 
+## Release 80 — Fase 1 + Fase 3 del plan de indexación: canonicalización + enlazado (2026-06-19)
+
+Ejecución de las dos acciones técnicas de mayor impacto y menor riesgo del plan
+de indexación (`docs/indexacion-plan-decision.md`) para destrabar la incidencia
+"Descubierta: actualmente sin indexar" en GSC.
+
+### Punto 1 — Fase 1: sitemap excluye posts canonicalizados (`app/sitemap.ts`)
+Los posts con `canonicalUrl` apuntando a otra URL del propio dominio (p. ej. los
+posts `abogados-en-{ciudad}` ya canonicalizados hacia las landings locales) ya
+no aparecen como URLs independientes en `sitemap.xml`. Su URL canónica (la
+landing) ya está declarada. Reduce duplicidad y ruido en el sitemap sin perder
+indexabilidad de la URL principal.
+- Se selecciona `canonicalUrl` en la query y se filtra antes de generar las
+  rutas de posts. El lastmod de categorías sigue usando todos los posts.
+
+### Punto 2 — Fase 3: enlazado interno reforzado en `/hondurenos-en-espana`
+Añadido componente `BlogHighlights` con 6 posts estratégicos verificados
+(poderes, nacionalidad, herencias, reagrupación, asuntos familiares, fiscalidad).
+Hoy la página solo enlazaba 3 posts dinámicos recientes; ahora refuerza el crawl
+path hacia guías de alto valor comercial.
+- `/servicios-juridicos` y `/derecho-penal` ya tenían enlazado suficiente
+  (BlogHighlights con 6 slugs y sección dinámica de 3 posts respectivamente).
+
+### Punto 3 — Script de auditoría (`scripts/auditar-indexacion-prioritaria.mjs`)
+Health-check post-Fase 1/3 que verifica en producción:
+- 15 URLs prioritarias devuelven 200.
+- Pares canibalizados emiten canonical → landing.
+- Posts canonicalizados NO aparecen en sitemap.
+- Páginas pilar enlazan posts estratégicos.
+- No hay rutas privadas en sitemap.
+- X-Robots-Tag indexable en muestra.
+
+Uso: `node scripts/auditar-indexacion-prioritaria.mjs [--json]`. Exit 1 si hay
+regresión.
+
+### Validación
+- lint: 0 errores · build: OK · test: **382/382** · e2e: **37/37**
+- Auditoría producción: 15/15 URLs OK, canonicals OK, sitemap sin privadas,
+  pilares enlazan posts. Los 3 probes de exclusión de sitemap fallan hasta que
+  el deploy aplique el cambio de `app/sitemap.ts`.
+
 ## Release 79 — GSC Search Analytics + IndexNow full submission + oauth-url fix (2026-06-19)
 
 Herramientas de consulta y monitorización de buscadores, y corrección de script OAuth.

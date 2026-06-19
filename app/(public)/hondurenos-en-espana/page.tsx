@@ -17,6 +17,7 @@ import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
+import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
 export const metadata: Metadata = {
   // Absolute para evitar que el template añada la marca dos veces
@@ -161,6 +162,27 @@ export default async function MigrantesPage() {
           </div>
         </Section>
       )}
+
+      {/* GUIAS DESTACADAS — enlazado interno reforzado hacia posts estratégicos
+          de hondurenos-en-espana. Refuerza el crawl path de Google hacia guías
+          de alto valor (poderes, nacionalidad, herencias, reagrupación).
+          Ver docs/indexacion-plan-decision.md §5 (Fase 3). */}
+      <BlogHighlights
+        slugs={[
+          'poder-desde-espana-para-tramites-honduras',
+          'nacionalidad-espanola-para-hondurenos-residencia-plazos',
+          'herencias-transfronterizas-bienes-honduras-espana',
+          'reagrupacion-familiar-hondurenos-espana',
+          'asuntos-familiares-honduras-viviendo-espana',
+          'tributar-espana-bienes-honduras-guia-fiscal',
+        ]}
+        eyebrow="Guías para hondureños en España"
+        title="Recursos prácticos para trámites entre Honduras y España"
+        subtitle="Poderes notariales, nacionalidad, herencias transfronterizas, reagrupación familiar y fiscalidad internacional explicados por nuestro equipo."
+        ctaLabel="Explorar todas las guías para hondureños en España"
+        ctaHref="/blog/hondurenos-en-espana"
+        spacing="sm"
+      />
 
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

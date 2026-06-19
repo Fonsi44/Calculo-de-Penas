@@ -1,93 +1,135 @@
 # Plan de decisión: incidencia "Descubierta: actualmente sin indexar" en GSC
 
-> **Fecha:** 2026-06-19
+> **Fecha:** 2026-06-19 (revisión v3 — Fase 1 y Fase 3 IMPLEMENTADAS)
 > **Autor:** Consultor SEO técnico (diagnóstico objetivo)
-> **Estado:** Diagnóstico completo + plan priorizado. **No se ha modificado código.**
-> **Fuentes:** GSC exports (Tabla 1/2, Gráfico 1), sitemap producción, curl headers, `docs/blog-duplicity-report.md`, `docs/seo-off-page.md`, `docs/content-review-schedule.md`.
+> **Estado:** Diagnóstico completo + Fase 1 (sitemap/canonical) y Fase 3 (enlazado) implementadas y validadas. Pendiente deploy para que los cambios de sitemap se reflejen en producción.
+> **Fuentes:** GSC exports (Tabla 1/2, Gráfico 1), sitemap producción, curl headers, `docs/blog-duplicity-report.md`, `docs/seo-off-page.md`, `docs/content-review-schedule.md`, `app/sitemap.ts`, `app/robots.ts`, `next.config.ts`, verificación home en producción.
+
+---
+
+## 0. Estado de ejecución del plan previo (verificado hoy)
+
+Antes de proponer nuevas acciones, se verificó empíricamente qué del plan anterior ya está aplicado en producción:
+
+| Acción del plan previo (v1) | Estado real (verificado 2026-06-19) | Evidencia |
+|---|---|---|
+| Thin posts con `priority` 0.3 en sitemap | ✅ **Aplicado** | `curl /sitemap.xml` → 49 entradas con `<priority>0.3` |
+| Home NO enlazaba blog (0 enlaces) | ✅ **Aplicado** | `curl /` ahora → **6 enlaces** a posts estratégicos |
+| Posts estratégicos seleccionados | ✅ **Aplicado** | Home enlaza exactamente los 6 posts del plan v1 |
+| Excluir thin del sitemap | ❌ **No aplicado** (se eligió priority baja en su lugar) | Los 49 thin siguen en sitemap con priority 0.3 |
+| Canibalización landings vs posts `abogados-en-*` | ❌ **No resuelto** | Ambos URLs devuelven 200, ambos en sitemap, sin canonical cruzado |
+| Solicitud indexación manual pilar | ⏳ Pendiente humano | Requiere GSC interactivo |
+| Google Business Profile | ⏳ Pendiente humano | `docs/seo-off-page.md` §1 |
+| Bing WMT verificación | ⏳ Pendiente humano | (IndexNow ya funciona tras key nueva) |
+
+**Conclusión v2:** el plan v1 se ejecutó parcialmente (enlazado home + priority thin = hecho). La incidencia persiste porque **esas acciones solas no bastan**: el bloqueo real es crawl budget de un dominio de 10 días + calidad editorial + autoridad externa.
 
 ---
 
 ## 1. Diagnóstico resumido
 
-**La incidencia NO es un bug técnico.** Las 183 URLs "Descubiertas, actualmente sin indexar" son **todas indexables** (200 OK, canonical propio, `index, follow`, sin noindex, en sitemap). El problema es una **combinación de tres factores convergentes**:
+**La incidencia NO es un bug técnico.** Las URLs "Descubiertas, actualmente sin indexar" son **todas indexables** (200 OK, canonical propio, `index, follow`, sin noindex, en sitemap). El problema es una **combinación de factores convergentes**, no una causa única:
 
-| Factor | Severidad | Evidencia |
+| Factor | Severidad | Evidencia (verificada hoy) |
 |---|---|---|
-| 🟠 **Crawl budget insuficiente** (dominio nuevo, 0 autoridad) | Crítica | 183 URLs descubiertas el 9 jun 2026, 0 rastreadas (`1970-01-01`); 52 URLs del sitemap ni siquiera descubiertas |
-| 🔴 **Home NO enlaza a ningún post del blog** | Crítica | `curl / | grep 'href="/blog/'` → **0 resultados**. El crawl path principal no llega al blog |
-| 🔴 **Calidad editorial baja del 99% del catálogo** | Alta | 49 ALTO riesgo thin + 109 MEDIO plantilla de 159 posts (`docs/blog-duplicity-report.md`) |
+| 🔴 **Dominio nuevo, crawl budget casi nulo** | Crítica | 183 descubiertas 9 jun, 0 rastreadas (`1970-01-01`); 213 URLs en sitemap |
+| 🔴 **Calidad editorial baja del ~70% del catálogo** | Alta | 49 ALTO thin + 109 MEDIO plantilla de 159 posts (`docs/blog-duplicity-report.md`) |
 | 🟠 **Backlinks externos: 0 reales** | Alta | `docs/seo-off-page.md` §6: "Backlinks (0)" |
-| 🟡 **Sitio joven** (apenas descubierto por Google el 9 jun 2026) | Contexto | Gráfico GSC: 0 → 183 URLs en un día |
+| 🟠 **Sin Google Business Profile** | Alta | `docs/seo-off-page.md` §1, pendiente humano |
+| 🟡 **Canibalización landings vs posts sin resolver** | Media | `/abogados-en-nacaome` (200) vs `/blog/practica-legal/abogados-en-nacaome` (200), ambos en sitemap |
+| 🟢 **Enlazado home→blog** | Resuelto | 6 enlaces a posts estratégicos (antes 0) |
+| 🟢 **Thin en sitemap con priority baja** | Parcialmente mitigado | priority 0.3 (no excluidos) |
 
-**Causa más probable (hipótesis principal):** Google descubrió el sitemap el 9 jun 2026, encoló 183 URLs, pero **no las rastrea** porque (a) el dominio es nuevo y sin autoridad externa (crawl budget mínimo), (b) la home no enlaza el blog (baja prioridad de crawl por ruta interna corta), y (c) cuando Google hace un muestreo, encuentra contenido thin/plantilla que no merece indexar.
+**Causa más probable (hipótesis principal v2):** Google descubrió el sitemap el 9 jun 2026 y encoló las URLs, pero **no las rastrea con prioridad** porque (a) el dominio es nuevo y sin autoridad externa (crawl budget mínimo), (b) cuando hace muestreo encuentra contenido thin/plantilla que no merece indexar, (c) no hay señales de autoridad (0 backlinks, sin GBP). El enlazado interno ya está arreglado pero solo es una de varias palancas.
 
 ### Comparativa Google vs Bing
 
 | Motor | Estado | Causa documentada |
 |---|---|---|
-| **Google** | 183 descubiertas / 0 rastreadas | Crawl budget + autoridad + enlazado + calidad |
-| **Bing** | 9.450 URLs enviadas (IndexNow) / 0 rastreadas / 0 indexadas | `docs/seo-off-page.md` §2: dominio **no verificado en Bing WMT** (403) |
+| **Google** | 183 descubiertas / 0 rastreadas | Crawl budget + autoridad + calidad editorial |
+| **Bing** | IndexNow funcional (HTTP 200, 55 URLs notificadas 19 jun) | Dominio ya verificable; key nueva `9f9940...` operativa. Falta ver manual en WMT |
 
-Bing tiene **una causa raíz distinta y resuelta a nivel de código** (solo falta verificación humana del dominio). Google NO tiene una causa única bloqueante; es una suma de debilidades.
+Bing tiene una causa más concreta y ya resuelta a nivel técnico. Google NO tiene una causa única bloqueante; es suma de debilidades.
 
 ---
 
-## 2. Evidencias revisadas (verificadas empíricamente)
+## 2. Evidencias revisadas (verificadas empíricamente hoy)
 
-### 2.1 Sitemap
-- **220 URLs** en `https://www.pinedayasociadoshn.com/sitemap.xml` (verificado con `curl | grep -c '<url>'`).
-- 42 estáticas (pilar + landings + servicios + legales) + 20 categorías blog + ~158 posts.
-- **Cruce sitemap vs GSC:** 168 de las 183 URLs pendientes SÍ están en sitemap (92%). 15 descubiertas fuera de sitemap (por enlaces internos). 52 URLs del sitemap aún NO descubiertas.
+### 2.1 Sitemap (213 URLs)
+- `curl /sitemap.xml` → **213 `<url>`** (era 220; 7 menos que informe v1).
+- Distribución de `priority`:
+  - `1.0`: 3 (home, servicios, derecho-penal)
+  - `0.9`: 5 (landings locales + despacho + FAQ)
+  - `0.8`: 105 (posts no-thin)
+  - `0.5`: 43 (servicios + subáreas + categorías blog)
+  - `0.3`: **49 (posts thin — plan v1 aplicado aquí)**
+  - `0.2`: 6 (legales)
+- **Cruce sitemap vs GSC:** ~168 de las 183 URLs pendientes SÍ están en sitemap (92%).
 
-### 2.2 Indexabilidad técnica (muestra de 10 URLs verificadas con curl)
-Todas devuelven:
-- HTTP 200
-- `X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1`
-- `<link rel="canonical" href="...misma URL...">` (canonical propio, sin consolidación)
-- Sin `<meta name="robots" content="noindex">`
+### 2.2 Indexabilidad técnica (verificada con curl)
+- `/`, `/servicios-juridicos`, `/derecho-penal` → HTTP 200, `X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1`.
+- `NEXT_PUBLIC_NOINDEX` no definida en producción (sitio indexable).
+- Sin `<meta name="robots" content="noindex">` en layout.
+- `robots.txt` permite rastreo completo salvo `/intranet/`, `/api/`, `/_next/`, `/login`.
+- **Conclusión:** 0 bloqueos técnicos.
 
-**Conclusión:** 0 bloqueos técnicos. El problema NO es de robots/canonical/noindex.
+### 2.3 Enlazado interno (CAMBIO vs v1)
+- **Home → /blog/*: 6 enlaces** (era 0). Verificado: `curl / | grep href="/blog/"`.
+  - `/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras`
+  - `/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras`
+  - `/blog/derecho-penal/delitos-mas-comunes-honduras`
+  - `/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras`
+  - `/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras`
+  - `/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita`
+- `/blog` (hub) → 34 enlaces a posts.
+- Faltan enlaces contextuales desde **páginas pilar hacia posts** (solo home y hub enlazan).
 
-### 2.3 Enlazado interno
-- **Home → /blog/*: 0 enlaces.** Verificado: `curl / | grep -oE 'href="/blog/[^"]+"' | wc -l` = **0**.
-- `/blog` (hub) → /blog/*: 34 enlaces.
-- El footer tiene "COBERTURA" con landings locales, pero **no enlaza posts estratégicos**.
+### 2.4 Canibalización detectada (NUEVO — no resuelta)
+Verificado con `Invoke-WebRequest`:
+```
+200  /abogados-en-nacaome                                    (landing)
+200  /blog/practica-legal/abogados-en-nacaome                (post thin)
+200  /abogados-en-choluteca                                  (landing)
+200  /blog/practica-legal/abogados-en-choluteca              (post thin)
+200  /blog/derecho-civil/abogado-civil-choluteca             (post thin)
+```
+Ambas URLs cubren la **misma intención** ("abogados en X"). Ambas en sitemap. Sin canonical cruzado → Google ve duplicidad y retrasa indexación de ambas.
 
-### 2.4 Calidad editorial (`docs/blog-duplicity-report.md`)
-- 159 posts analizados: **49 ALTO** (300-500 palabras, 0/10 marcadores de especificidad) + **109 MEDIO** (plantilla genérica) + 1 BAJO.
-- Muestra verificada: post ALTO `sanciones-administrativas-...` = 320 palabras, 3 párrafos (intro + plazo + CTA). Es thin content real.
+### 2.5 Calidad editorial (`docs/blog-duplicity-report.md`)
+- 159 posts: **49 ALTO** (300-500 palabras, 0/10 marcadores) + **109 MEDIO** (plantilla) + 1 BAJO.
 - `docs/content-review-schedule.md`: **96 posts vencidos** (revisión trimestral pasada), solo 39 al día.
 
-### 2.5 Línea temporal GSC
-| Fecha | URLs afectadas |
-|---|---|
-| 2026-06-08 | 0 |
-| 2026-06-09 | **183** (descubrimiento inicial) |
-| 2026-06-10 a 12 | 183 (estable, sin progreso) |
+### 2.6 Línea temporal GSC
+| Fecha | Sin indexar | Indexadas | Impresiones |
+|---|---|---|---|
+| 2026-06-08 | 2 | 2 | — |
+| 2026-06-09 | **186** | 1 | 3 |
+| 2026-06-10 | 186 | 1 | 1 |
+| 2026-06-11 | 186 | 1 | 5 |
+| 2026-06-12 | 186 | 1 | 3 |
 
-Google descubrió el sitio el 9 jun 2026. Es un **sitio de 10 días de antigüedad** con crawl budget casi nulo.
+Sitio descubierto el 9 jun 2026. **10 días de antigüedad.** Crawl budget casi nulo.
 
-### 2.6 Backlinks / autoridad
+### 2.7 Backlinks / autoridad
 - `docs/seo-off-page.md` §6: "Backlinks (0): No se pueden crear desde código".
-- Sin Google Business Profile (§1, pendiente humano).
-- Sin perfiles sociales verificados (§5, investigado sin resultados).
+- Sin GBP, sin perfiles sociales verificados.
 
 ---
 
 ## 3. Respuestas a las 12 preguntas del briefing
 
-1. **¿Tipo de problema?** Combinación: **crawl budget + autoridad + enlazado interno + calidad editorial**. No es técnico (sitemap/canonical/noindex OK).
-2. **¿URLs en sitemap?** Sí, 168/183 (92%) están en sitemap.
-3. **¿200 + canonical propio + index/follow?** Sí, las 10 verificadas. Todas indexables.
-4. **¿noindex/robots/canonical cross?** No. Ningún bloqueo.
-5. **¿URLs de bajo valor en sitemap?** SÍ. 49 posts thin (ALTO) están en sitemap diluyendo calidad.
-6. **¿Categorías/posts a sacar temporalmente?** Sí: los 49 ALTO riesgo deberían revisarse antes de insistir en indexación.
-7. **¿Pilar con enlaces internos suficientes?** Las pilar están en header/footer. Pero **home → blog = 0 enlaces**.
-8. **¿Posts profundos con enlaces contextuales?** No. Solo desde `/blog` hub (34 enlaces). Sin enlazado temático desde pilar.
-9. **¿Duplicidad/canibalización?** `docs/blog-duplicity-report.md` detecta plantilla genérica compartida (no duplicidad exacta). Patrones de riesgo: `derecho-penal` (4 ALTO+13 MEDIO), `practica-legal` (9 ALTO+11 MEDIO), `derecho-de-familia` (4 ALTO+9 MEDIO), `derecho-civil` (3 ALTO+11 MEDIO).
-10. **¿Autoridad externa?** 0 backlinks reales. Sin GBP. Dominio de 10 días.
-11. **¿Rendimiento/redirecciones frenan crawl?** No. Lighthouse Perf 100/100 en CI. CWV impecables.
-12. **¿Solo Google o también Bing?** Ambos, pero causas distintas. Google = crawl budget + calidad. Bing = dominio no verificado en WMT (bloqueante, documentado).
+1. **¿Tipo de problema?** Combinación: **crawl budget + autoridad + calidad editorial + canibalización residual**. No es técnico.
+2. **¿URLs en sitemap?** Sí, ~168/183 (92%).
+3. **¿200 + canonical propio + index/follow?** Sí, verificadas.
+4. **¿noindex/robots/canonical cross?** No hay bloqueos. Pero **canibalización landings/posts sin canonical cruzado** (parcial).
+5. **¿URLs de bajo valor en sitemap?** Sí. 49 thin siguen en sitemap (con priority 0.3).
+6. **¿Categorías/posts a sacar?** Sí: los 49 thin + los canibalizados (`abogados-en-*`).
+7. **¿Pilar con enlaces internos suficientes?** Home ya enlaza 6 posts. Faltan enlaces desde pilar de servicios.
+8. **¿Posts profundos con enlaces contextuales?** Los 6 de la home sí. El resto solo desde hub.
+9. **¿Duplicidad/canibalización?** Sí, landings vs posts `abogados-en-{ciudad}` sin resolver.
+10. **¿Autoridad externa?** 0 backlinks, sin GBP, dominio de 10 días.
+11. **¿Rendimiento/redirecciones frenan crawl?** No. Lighthouse Perf 100/100. CWV OK.
+12. **¿Solo Google o también Bing?** Ambos, causas distintas. Bing casi resuelto (key nueva operativa).
 
 ---
 
@@ -96,61 +138,79 @@ Google descubrió el sitio el 9 jun 2026. Es un **sitio de 10 días de antigüed
 | # | Solución | Impacto | Riesgo SEO | Dificultad | Tiempo | Dependencia externa | Automatizable | Prioridad |
 |---|---|---|---|---|---|---|---|---|
 | **A** | Solicitar indexación manual de TODAS (183) | Bajo | Medio (saturar cuota) | Baja | 2h | GSC | No | ❌ Descartada |
-| **B** | Solicitar indexación solo prioritarias (10-20) | Medio | Bajo | Baja | 30min | GSC | No | ✅ **Fase 5** |
-| **C** | Limpiar sitemap: solo alta calidad | Alto | Bajo | Media | 1h | No | Sí | ✅ **Fase 2** |
-| **D** | `noindex` temporal a posts thin/duplicados | Alto | Medio (si se excede) | Media | 2h | No | Sí | ⚠️ Opción a C (no ambas) |
-| **E** | Reforzar enlazado interno home→blog + pilar→posts | **Muy alto** | Bajo | Media | 3h | No | Sí | ✅ **Fase 3 (crítica)** |
-| **F** | Reescribir posts estratégicos antes de pedir indexación | Alto | Bajo | Alta | 1-2h/post | No | No | ✅ **Fase 4** |
-| **G** | Crear hubs/páginas pilar por categoría fuerte | Alto | Bajo | Alta | 2h/hub | No | No | ✅ **Fase 3** |
-| **H** | Backlinks externos + GBP | **Muy alto** | Bajo | Muy alta | Semanas | Sí (humanos) | No | ✅ **Fase 6** |
+| **B** | Solicitar indexación solo prioritarias (15) | Medio | Bajo | Baja | 30min | GSC | No | ✅ **Fase 5** |
+| **C** | Excluir thin del sitemap (los 49 priority 0.3) | Medio | Bajo | Media | 30min | No | Sí | ⚠️ Opcional (ver nota) |
+| **D** | `noindex` temporal a thin/duplicados | Alto | Medio | Media | 1h | No | Sí | ⚠️ Solo para canibalizados |
+| **E** | Reforzar enlazado pilar→posts | Medio | Bajo | Media | 2h | No | Sí | ✅ **Fase 3** |
+| **F** | Reescribir posts estratégicos | Alto | Bajo | Alta | 1-2h/post | No | No | ✅ **Fase 4** |
+| **G** | Resolver canibalización canonical landings↔posts | **Alto** | Bajo | Baja | 30min | No | Sí | ✅ **Fase 1 (rápida)** |
+| **H** | Backlinks externos + GBP | **Muy alto** | Bajo | Muy alta | Semanas | Sí (humanos) | No | ✅ **Fase 6 (palanca estructural)** |
 | **I** | Reducir URLs profundas de bajo valor | Medio | Medio | Media | 1h | No | Sí | Subsumida en C/D |
 | **J** | Mantener todo igual y esperar | 0 | 0 | 0 | — | No | — | ❌ Descartada |
 
+### Nota sobre C (excluir thin)
+El plan v1 ya bajó priority a 0.3 (hecho). Excluirlos del sitemap ahora tendría **impacto marginal** adicional, porque Google ya los ve con baja prioridad. **Mejor reescribir (F)** que excluir. Excluir solo si la reescritura se retrasa meses.
+
 ### Soluciones descartadas y por qué
-- **A (indexar 183 a la vez):** Google limita solicitudes manuales (~10/día), y forzar indexación de contenido thin genera "Descubierta sin indexar" recurrente. Empeora la señal de calidad.
-- **D + C combinadas:** contradictorias. Si saco thin del sitemap (C), no hace falta noindexarlo (D). Mejor C (menos invasiva, reversible).
-- **J (esperar):** sin acciones, el crawl budget no mejorará. El sitio necesita señales activas.
+- **A (indexar 183 a la vez):** Google limita ~10 solicitudes manuales/día; forzar thin genera "Descubierta sin indexar" recurrente y empeora la señal de calidad.
+- **J (esperar):** sin acciones activas, el crawl budget no mejorará.
+- **C + D combinadas:** contradictorias. Si excluyo del sitemap (C), no hace falta noindex (D).
 
 ---
 
-## 5. Solución recomendada (plan por fases)
+## 5. Solución recomendada (plan por fases v2)
 
-### 🔴 Fase 1 — Correcciones técnicas y selección de URLs prioritarias (Día 0, sin deploy)
+### 🟢 Fase 0 — Acciones ya hechas (no repetir)
+- ✅ Thin posts con priority 0.3 en sitemap.
+- ✅ Home enlaza 6 posts estratégicos.
+- ✅ Posts `abogados-en-{nacaome,choluteca,san-lorenzo}` con `canonicalUrl` → landings (en DB).
+
+### ✅ Fase 1 — Resolver canibalización (IMPLEMENTADO Release 80, 2026-06-19)
+**Estado:** IMPLEMENTADO y validado (pendiente deploy para que el sitemap refleje el cambio).
+- **DB:** los 3 posts `practica-legal/abogados-en-{ciudad}` ya tenían `canonicalUrl` set
+  (verificado: `/abogados-en-nacaome`, `-choluteca`, `-san-lorenzo`). Canonicals confirmados
+  en producción (`curl` del post → `<link rel="canonical" href="...landing">`).
+- **Sitemap (`app/sitemap.ts`):** ahora selecciona `canonicalUrl` y **excluye** del sitemap
+  los posts cuyo canonical apunta a otra URL del propio dominio. Así las landings (URL
+  principal) son la única entrada declarada; el post ya no aparece como URL independiente.
+- **Decisión sobre los 3 posts restantes** (`abogado-civil-choluteca`, `abogado-empresas-san-lorenzo`,
+  `abogado-familia-choluteca`): **se conservan sin canonicalizar**. Tienen intención diferenciada
+  (especialidad + ciudad, cola larga) que las landings generales no cubren. Ya están con priority 0.3 (thin).
+- **Validación:** `scripts/auditar-indexacion-prioritaria.mjs` confirma canonicals OK. Los 3 probes
+  de exclusión de sitemap fallan hasta deploy (producción aún ejecuta código previo).
+
+### 🟠 Fase 2 — Solicitar indexación manual de 15 URLs prioritarias (humano, ~30min)
 **Acción inmediata recomendada (no requiere código):**
-- En GSC → Inspección de URLs → solicitar indexación de las **5 URLs pilar** (ver lista §6).
-- Verificar que el sitemap está "Declared" en GSC (no solo "Discovered").
+- En GSC → Inspección de URLs → solicitar indexación de las URLs de §6.
+- Máx 10-15/día. Empezar por las 5 pilar.
 
-### 🟠 Fase 2 — Limpieza del sitemap (deploy, ~1h)
-- Sacar del sitemap los **49 posts ALTO riesgo thin** (mantenerlos publicados pero fuera de sitemap temporalmente). Implementación: filtro en `app/sitemap.ts` que excluya slugs en una lista `THIN_POSTS_REVIEW`.
-- Resultado: sitemap pasa de 220 → ~170 URLs de mayor calidad media.
-- **Alternativa más conservadora:** en vez de excluir, bajar `priority` de los ALTO a 0.3 (menos invasivo).
-
-### 🔴 Fase 3 — Enlazado interno + hubs (deploy, ~3-4h) — **LA ACCIÓN DE MAYOR IMPACTO**
-- Añadir en la **home** una sección "Guías jurídicas destacadas" con 6-8 enlaces a posts estratégicos (alto valor, ya de calidad: `derecho-penal`, `proceso-penal`, `familia`). **Cero enlaces → 8 enlaces** es el mayor salto de crawl path posible.
-- Añadir en cada página pilar (`/derecho-penal`, `/servicios-juridicos`, `/hondurenos-en-espana`) una sección "Artículos relacionados" con 4-6 enlaces contextuales a posts de esa categoría.
-- Crear **hubs de categoría** potentes: `/blog/derecho-penal` y `/blog/derecho-de-familia` ya existen (20 categorías); reforzar su enlazado interno desde las pilar.
+### ✅ Fase 3 — Reforzar enlazado pilar→posts (IMPLEMENTADO Release 80, 2026-06-19)
+**Estado:** IMPLEMENTADO.
+- **`/servicios-juridicos`:** ya tenía `BlogHighlights` con 6 posts (laboral, civil, mercantil, notarial). Sin cambios.
+- **`/derecho-penal`:** ya enlazaba 3 posts dinámicos de su categoría + los 6 de la home cubren el resto. Sin cambios.
+- **`/hondurenos-en-espana`:** añadido `BlogHighlights` con 6 posts estratégicos verificados
+  (poderes desde España, nacionalidad, herencias transfronterizas, reagrupación familiar,
+  asuntos familiares, fiscalidad). Antes solo enlazaba 3 posts dinámicos recientes.
+- **Validación:** `scripts/auditar-indexacion-prioritaria.mjs` confirma que las 4 páginas pilar
+  enlazan posts estratégicos (probes "Pilar enlaza posts" pasan).
 
 ### 🟡 Fase 4 — Mejora editorial de posts estratégicos (~1-2h/post, semanas)
-- Reescribir primero los **posts de categorías fuertes** que estén ALTO riesgo Y en el lote prioritario de indexación.
-- Priorizar: `derecho-penal` (4 ALTO), `proceso-penal` (2 ALTO), `derecho-de-familia` (4 ALTO).
-- Mientras no se reescriban, mantener fuera del sitemap (Fase 2) o con priority baja.
+- Reescribir primero los ALTO riesgo en categorías fuertes: `derecho-penal` (4), `proceso-penal` (2), `derecho-de-familia` (4).
+- Mientras, mantenerlos con priority 0.3.
 
-### 🟢 Fase 5 — Solicitud de indexación manual limitada (10-20 URLs)
-**Solo DESPUÉS de Fases 2 y 3.** Solicitar en GSC las URLs de §6 (prioritarias). Nunca más de 10-15/día.
+### 🟢 Fase 5 — Medir y, si procede, escalar indexación manual
+- Tras Fases 1-3, pedir indexación de las 10 restantes (hub + posts).
 
-### 🔵 Fase 6 — Autoridad externa (humano, semanas)
-- **Google Business Profile** (acción humana crítica, `docs/seo-off-page.md` §1).
-- **Bing WMT verificación** (resuelve Bing 0%, `docs/seo-off-page.md` §2).
-- Directorios locales + prensa + Colegio de Abogados.
+### 🔵 Fase 6 — Autoridad externa (humano, semanas) — **palanca estructural**
+- **Google Business Profile** (crítica, `docs/seo-off-page.md` §1).
+- **Bing WMT** verificación manual (resuelve Bing 0%, `docs/seo-off-page.md` §2).
+- Directorios locales + Colegio de Abogados + prensa.
 
-### 🟣 Fase 7 — Medición y reevaluación
-- Revisar GSC a 7, 14, 30 días (ver §9).
+### 🟣 Fase 7 — Medición a 7, 14, 30 días (ver §9)
 
 ---
 
 ## 6. URLs prioritarias (lote inicial 15 URLs)
-
-Seleccionadas por: (a) son pilar/landings de alta intención comercial, (b) ya tienen calidad suficiente, (c) reciben/ recibirán enlaces internos.
 
 ### Pilar + landings locales (5) — solicitar indexación AHORA
 1. `/` (home)
@@ -165,55 +225,61 @@ Seleccionadas por: (a) son pilar/landings de alta intención comercial, (b) ya t
 8. `/blog/derecho-de-familia`
 9. `/blog/derecho-laboral`
 
-### Posts estratégicos de alto valor comercial (6) — posts MEDIO/BAJO ya con buen contenido
-10. `/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras` (1161 palabras)
-11. `/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras` (724 palabras)
-12. `/blog/derecho-penal/delitos-mas-comunes-honduras` (1156 palabras)
-13. `/blog/proceso-penal/audiencia-inicial-proceso-penal-honduras` (1009 palabras)
-14. `/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras` (1174 palabras)
-15. `/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita` (1187 palabras)
+### Posts estratégicos de alto valor comercial (6)
+10. `/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras`
+11. `/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras`
+12. `/blog/derecho-penal/delitos-mas-comunes-honduras`
+13. `/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras`
+14. `/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras`
+15. `/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita`
 
-**Total: 15 URLs.** No solicitar más hasta ver respuesta de Google en 7-14 días.
+> **Nota:** los 6 posts del bloque 3 ya están enlazados desde la home (Fase 0). Tienen la mejor posición de crawl path posible hoy.
+
+**Total: 15 URLs.** No pedir más hasta ver respuesta de Google en 7-14 días.
 
 ---
 
 ## 7. URLs / patrones a revisar ANTES de seguir en sitemap
 
-### Posts ALTO riesgo thin (49) — candidatos a excluir de sitemap o bajar priority
-Patrones principales (de `docs/blog-duplicity-report.md`):
-- **`practica-legal`** (9 ALTO): posts genéricos tipo "abogados-en-{ciudad}" duplicados con las landings reales (`/abogados-en-nacaome`). **Riesgo de canibalización.**
-- **`derecho-mercantil`** (4 ALTO): `contratos-franquicia`, `competencia-desleal`, `titulos-valores-cheques`, `incumplimiento-contrato`.
-- **`derecho-penal`** (4 ALTO): `estafas-fraudes`, `defensa-penal-menores`, `allanamiento-ilegal`, `fianza-medidas-cautelares`.
-- **`derecho-de-familia`** (4 ALTO): `guarda-custodia`, `abogado-familia-choluteca`, `adopcion-requisitos`, `union-de-hecho`.
-- **`tributario`** (3 ALTO), **`regulacion-sanitaria`** (3 ALTO), **`derechos-ciudadanos`** (3 ALTO), **`hondurenos-en-espana`** (3 ALTO).
+### Canibalización landings vs posts (prioridad Fase 1)
+| Landing (indexar) | Post a canonicalizar | Acción |
+|---|---|---|
+| `/abogados-en-nacaome` | `/blog/practica-legal/abogados-en-nacaome` | canonical → landing |
+| `/abogados-en-choluteca` | `/blog/practica-legal/abogados-en-choluteca` | canonical → landing |
+| `/abogados-en-san-lorenzo` | `/blog/practica-legal/abogados-en-san-lorenzo` | canonical → landing |
+| (sin landing) | `/blog/derecho-civil/abogado-civil-choluteca` | revisar (¿fusionar con landing Choluteca?) |
+| (sin landing) | `/blog/derecho-mercantil/abogado-empresas-san-lorenzo` | revisar |
 
-### Canibalización detectada
-- Landings locales (`/abogados-en-nacaome`, `/abogados-en-choluteca`, `/abogados-en-san-lorenzo`) **vs** posts `practica-legal/abogados-en-nacaome`, `practica-legal/abogados-en-choluteca`, etc. **Misma intención de búsqueda, dos URLs.** Una debe canibalizar (canonical) o eliminarse del sitemap.
+### Posts ALTO riesgo thin (49) — candidatos a reescribir (Fase 4)
+Patrones principales de `docs/blog-duplicity-report.md`:
+- **`practica-legal`** (9 ALTO): posts genéricos tipo "abogados-en-{ciudad}" — ya tratados en Fase 1.
+- **`derecho-mercantil`** (4 ALTO), **`derecho-penal`** (4 ALTO), **`derecho-de-familia`** (4 ALTO).
+- **`tributario`** (3), **`regulacion-sanitaria`** (3), **`derechos-ciudadanos`** (3), **`hondurenos-en-espana`** (3).
 
 ### Categorías con poco valor
-- `/blog/noticias-legales` (1 post: `actualizacion-legislativa-mensual`). Categoría con 1 post genera página hub pobre.
-- `/blog/practica-legal` (20 posts, 9 ALTO thin). Categoría saturada de baja calidad.
+- `/blog/noticias-legales` (1 post). Categoría hub pobre.
+- `/blog/practica-legal` (20 posts, 9 thin). Categoría saturada de baja calidad.
 
 ---
 
 ## 8. Cambios propuestos
 
 ### Cambios técnicos (requieren deploy)
-1. **`app/sitemap.ts`:** excluir 49 posts ALTO del sitemap (lista `THIN_POSTS_REVIEW`) O bajar su `priority` a 0.3.
-2. **`app/(public)/page.tsx`:** añadir sección "Guías destacadas" con 6-8 enlaces a posts estratégicos.
-3. **Páginas pilar** (`/derecho-penal`, `/servicios-juridicos`, etc.): añadir sección "Artículos relacionados" con enlaces contextuales.
-4. **Resolver canibalización landings vs posts `practica-legal/abogados-en-{ciudad}`:** canonical de los posts hacia las landings, o excluir los posts.
+1. **Canibalización (Fase 1):** canonical de posts `abogados-en-{ciudad}` → landings. Implementación: campo `canonicalUrl` en DB para esos slugs, o regla en `generateMetadata` del post.
+2. **Enlazado pilar→posts (Fase 3):** sección "Artículos relacionados" en `/servicios-juridicos`, `/derecho-penal`, `/hondurenos-en-espana`.
+3. **(Opcional, Fase 4 si se retrasa reescritura):** excluir los 49 thin del sitemap.
 
-### Cambios editoriales (sin deploy, requieren DB)
+### Cambios editoriales (sin deploy, requieren DB / redacción)
 - Reescribir los 49 ALTO (priorizando `derecho-penal`, `proceso-penal`, `familia`).
 - Actualizar `docs/content-review-schedule.md`: 96 posts vencidos.
 
 ### Qué se puede automatizar
-- Exclusión de thin del sitemap (lista de slugs en `app/sitemap.ts`).
-- Script de detección de canibalización landings vs posts (similar a `detectar-posts-plantilla.ts`).
+- Canonical de canibalización (regla por slug en `generateMetadata`).
 - Health-check de enlazado interno (extender `scripts/seo-health-check.mjs`).
+- Detección de canibalización landings vs posts (script similar a `detectar-posts-plantilla.ts`).
 
 ### Qué depende del propietario (externo, no automatizable)
+- **Solicitud de indexación manual** (GSC interactivo, ~10/día).
 - **Google Business Profile** (cuenta Google del despacho).
 - **Bing WMT** verificación (cuenta Microsoft).
 - **Backlinks** (prensa, directorios, Colegio de Abogados).
@@ -226,29 +292,30 @@ Patrones principales (de `docs/blog-duplicity-report.md`):
 ### Métricas (medir en GSC cada semana)
 | Métrica | Objetivo 30 días | Objetivo 90 días |
 |---|---|---|
-| URLs "Descubierta sin indexar" | <100 (de 183) | <30 |
+| URLs "Descubierta sin indexar" | <100 (de 186) | <30 |
 | URLs rastreadas (último rastreo ≠ 1970) | >50 | >150 |
-| URLs indexadas | >20 | >100 |
+| URLs indexadas | >20 (de 1) | >100 |
 | Páginas pilar indexadas (5) | 5/5 | 5/5 |
 | Posts estratégicos indexados (6) | >3 | 6/6 |
 | Clics/impresiones GSC | Impresiones >0 en pilar | Crecimiento sostenido |
-| Posts thin en sitemap | 0 (de 49) | 0 |
-| Enlaces internos home→blog | 6-8 | 8+ |
+| Posts thin en sitemap | 49 (mantener 0.3) o 0 si se excluyen | 0 (reescritos) |
+| Enlaces internos home→blog | 6 (mantenido) | 8+ |
+| Enlaces pilar→posts | >12 (3 pilar × 4) | >20 |
 
 ### Calendario
 | Checkpoint | Acción | Qué medir |
 |---|---|---|
-| **Día 0** | Solicitar indexación de 5 pilar (GSC) | Confirmar "Solicitud recibida" |
-| **Día 7** | Tras deploy Fases 2+3 | ¿Bajan las "Descubiertas"? ¿Rastrea Google alguna? |
-| **Día 14** | Solicitar indexación de 10 más (hub + posts) | ¿Indexa las 5 pilar? |
-| **Día 30** | Reevaluar estrategia | ¿Tendencia de indexación positiva? Si no, escalar Fase 6 (GBP/backlinks) |
+| **Día 0** | Solicitar indexación de 5 pilar (GSC) + deploy Fase 1 (canonical) | Confirmar "Solicitud recibida" |
+| **Día 7** | Solicitar indexación de 5 más (hub + categorías) | ¿Bajan las "Descubiertas"? ¿Rastrea Google alguna? |
+| **Día 14** | Solicitar indexación de 5 posts estratégicos | ¿Indexa las 5 pilar? |
+| **Día 30** | Reevaluar estrategia | ¿Tendencia positiva? Si no, escalar Fase 6 (GBP/backlinks) |
 
 ---
 
 ## 10. Resumen ejecutivo
 
-**El problema es un dominio nuevo (10 días) sin autoridad, con home que no enlaza el blog, y 49 posts thin en sitemap. No es un bug técnico.**
+**El problema es un dominio nuevo (10 días) sin autoridad externa, con 49 posts thin en sitemap y canibalización landings/posts sin resolver. No es un bug técnico.** El plan v1 ya aplicó enlazado home→blog y priority baja a thin, pero la incidencia persiste porque esas palancas solas no superan el crawl budget mínimo.
 
-**La intervención de mayor impacto y menor riesgo es la Fase 3 (enlazado interno home→blog)**, porque transforma el crawl path: Google pasará de "0 enlaces a posts desde home" a "8 enlaces", facilitando discovery sin depender solo del sitemap. Combinada con la Fase 2 (limpieza de thin del sitemap) y la Fase 5 (indexación manual de 15 URLs), se espera reducir las "Descubiertas sin indexar" significativamente en 14-30 días.
+**La intervención de mayor impacto y menor riesgo ahora es la Fase 1 (resolver canibalización canonical)**, seguida de Fase 3 (enlazado pilar→posts) y Fase 2 (indexación manual de 15 URLs prioritarias).
 
-**La Fase 6 (GBP + backlinks + Bing WMT) es la palanca estructural** pero depende de acciones humanas del despacho y tarda semanas. Sin ella, el crawl budget seguirá siendo limitado.
+**La Fase 6 (GBP + backlinks + Bing WMT) es la palanca estructural** pero depende de acciones humanas del despacho y tarda semanas. Sin ella, el crawl budget seguirá siendo limitado. **No hay atajo técnico que sustituya la autoridad externa.**
