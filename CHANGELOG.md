@@ -5,6 +5,108 @@
 
 ---
 
+## Release 88 — Fase HQC: Higiene + Calidad + Coherencia (2026-06-20)
+
+Ejecución completa del plan HQC en **5 commits atómicos** (uno por etapa).
+Objetivo: estabilizar la base del repositorio (higiene, coherencia documental,
+suelo de calidad) **sin tocar lógica funcional ni rediseñar**.
+
+### Etapa 1 — Higiene y alineación documental (P0) — `chore:`
+- `auditoria-blog/` (96 archivos HTML, 1.5MB) fuera del tracking (`git rm -r
+  --cached`). Estaba en `.gitignore` pero ya estaba commiteado; no se usa en
+  runtime. Preservado en disco local.
+- `CHANGELOG.md` §"Estado actual": sincronizado con HEAD real (estaba
+  congelado en Release 84).
+- `README.md` §"Tooling IA": numeración corregida (Release 87, no 85).
+
+### Etapa 2 — Calidad: coverage + scripts en tsc (P1) — `test:`
+- `vitest.config.ts`: configuración de coverage (provider v8, reporteros
+  text/lcov, umbral conservador 35%). Script `test:coverage` en `package.json`.
+  DevDep `@vitest/coverage-v8` 4.1.9.
+- `tsconfig.json`: `scripts/` incluido en el typecheck (`scripts/legacy/`
+  sigue excluido). Fix de 5 errores de tipo en `audit-blog-seo.ts` y
+  `audit-canibilizacion.ts`.
+- **Línea base de coverage medida: 66.21% líneas, 64.73% branches, 56.14%
+  funciones.** Motor de cálculo (`lib/rules/v1/`): 93-94%.
+
+### Etapa 3 — CI: E2E en GitHub Actions + Dependabot (P1) — `ci:`
+- `.github/workflows/ci.yml`: nuevo job `e2e` (Playwright) que depende del
+  job `quality`. Sube report y traces como artifacts.
+- `.github/dependabot.yml` (nuevo): renovación mensual de npm + GitHub
+  Actions, agrupando minor+patch en un PR por ecosistema.
+
+### Etapa 4 — DX (P2) — `docs:`
+- `package.json`: `engines` (node>=22, npm>=11).
+- `README.md`: secciones "Troubleshooting" y "Contribuir".
+- `AGENTS.md` §4: `Invoke-RestMethod` → `Invoke-RestMethod (PowerShell) o curl`.
+
+### Etapa 5 — Cierre y validación
+Pipeline completo validado en verde (ver abajo).
+
+### Validación final (6/6 pasos en verde)
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errores (1 warning preexistente no relacionado) |
+| `npx tsc --noEmit` | 0 errores (incluye `scripts/` raíz) |
+| `npm test` | 397/397 (19 suites) |
+| `npm run test:coverage` | 66.21% líneas (umbral 35% superado) |
+| `npm run validate:dates` | 159 posts OK, ninguna fecha futura |
+| `npm run build` | Compiled + TypeScript OK + IndexNow dry-run OK |
+
+### Definición de Done cumplida
+- ✅ `git ls-files auditoria-blog/` devuelve 0 archivos.
+- ✅ CHANGELOG §"Estado actual" coincide con HEAD.
+- ✅ Coverage medible y umbral respetado.
+- ✅ Scripts validados por tsc en CI.
+- ✅ Job E2E presente en CI (se ejecutará en el próximo push/PR).
+- ✅ Dependabot configurado.
+- ✅ Sin deuda crítica nueva.
+
+### Nota de honestidad (AGENTS.md R11)
+El job E2E del CI **no se ha validado con ejecución real en GitHub Actions**
+desde esta sesión (requiere push al remoto). La config YAML es sintácticamente
+válida (verificada con js-yaml) y `playwright.config.ts` ya estaba preparado
+para CI desde releases anteriores.
+
+---
+
+## Estado actual resumido
+
+| Aspecto | Valor |
+|---------|-------|
+| **Última release** | Release 88 — Fase HQC (Higiene + Calidad + Coherencia) |
+| **Commit** | _(ver `git log -1`)_ |
+| **Fecha** | 2026-06-20 |
+| **Build** | ✅ Compiled + TypeScript OK |
+| **Tests** | 397/397 (19 suites) + 37 E2E (job CI añadido) |
+| **Coverage** | ✅ 66.21% líneas (umbral 35%) |
+| **validate:dates** | ✅ 159 posts sin fechas futuras |
+| **content:audit** | ❌ 71 posts vencidos editoriales (pendiente humano, no bug) |
+| **Pendiente externo crítico** | Rotar OAuth Client Secret en GCP + configurar `RESEND_WEBHOOK_SECRET` en Vercel |
+
+---
+
+`kilo.json`, `CLAUDE.md` y el directorio completo `.kilo/` (14 archivos:
+agente SEOSenior, 5 comandos, 1 regla, 5 skills y configs) estaban commiteados
+en git a pesar de que Release 84 los declaró "legacy / no operativos". Esta
+contradicción podía confundir a los agentes y crear conflictos de modelo.
+
+**Cambios:**
+- `git rm` de `kilo.json`, `CLAUDE.md` y `.kilo/` (14 archivos eliminados del
+  tracking; permanecen en disco local si existen).
+- `.gitignore`: entradas para `kilo.json`, `CLAUDE.md`, `.kilo/`.
+- `AGENTS.md` §6 y §9: redacción actualizada — los archivos ya no son "legacy
+  que puede existir", sino "eliminados del repo, no recrear".
+- `README.md`: fila de `.kilo/` eliminada de la tabla de docs; sección
+  "Tooling IA" actualizada.
+
+**No se modificó:** código funcional, rutas, SEO, schemas, auth, proxy, motor
+de cálculo, ni ningún archivo de configuración operativa.
+
+**Validación:** lint 0 errores.
+
+---
+
 ## Release 87 — Eliminación de tooling IA legacy del repositorio (2026-06-19)
 
 `kilo.json`, `CLAUDE.md` y el directorio completo `.kilo/` (14 archivos:
@@ -124,21 +226,6 @@ documentación, texto visible de la interfaz, metadatos y prompts de agentes.
 técnicas, valores de test, archivos legacy/backup.
 
 **Validación:** lint 0 errores, build OK, test 397/397.
-
----
-
-## Estado actual resumido
-
-| Aspecto | Valor |
-|---------|-------|
-| **Última release** | Release 87 — Eliminación de tooling IA legacy |
-| **Commit** | `ac4635d` |
-| **Fecha** | 2026-06-19 |
-| **Build** | ✅ Compiled + TypeScript OK |
-| **Tests** | 397/397 (19 suites) + 37 E2E |
-| **validate:dates** | ✅ 159 posts sin fechas futuras |
-| **content:audit** | ❌ 71 posts vencidos editoriales (pendiente humano, no bug) |
-| **Pendiente externo crítico** | Rotar OAuth Client Secret en GCP + configurar `RESEND_WEBHOOK_SECRET` en Vercel |
 
 ---
 
