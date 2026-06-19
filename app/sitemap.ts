@@ -32,7 +32,11 @@ export const PUBLIC_ROUTES: Array<{
   { path: '/blog', priority: 0.6, changeFrequency: 'weekly', daysAgo: 1 },
   { path: '/solicitar-consulta', priority: 0.7, changeFrequency: 'monthly', daysAgo: 2 },
   { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
-  { path: '/como-llegar', priority: 0.3, changeFrequency: 'monthly', daysAgo: 7 },
+  // /como-llegar: página comercial de alto valor (dirección física, cómo llegar).
+  // Subida de 0.3 → 0.6 tras detectar en auditoría SEO (2026-06-20) que estaba
+  // "Descubierta: actualmente sin indexar" en GSC. Refuerza la señal de
+  // prioridad para que Google la rastree e indexe. No es un thin post.
+  { path: '/como-llegar', priority: 0.6, changeFrequency: 'weekly', daysAgo: 0 },
   { path: '/aviso-legal', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/politica-editorial', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
   { path: '/politica-privacidad', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
