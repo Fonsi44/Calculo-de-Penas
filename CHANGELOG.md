@@ -5,18 +5,38 @@
 
 ---
 
+## Release 85 — CTA fusionado en landings locales + modelos IA no fijados en doc (2026-06-19)
+
+**Punto 1 — CTA duplicado en landings locales (abogados-en-*):**
+Las 3 landings de SEO local tenían dos bloques CTA consecutivos (uno dinámico
+por ciudad y otro hardcoded "Nacaome, Valle"). Se fusionaron en un único bloque
+con eyebrow, título, subtítulo y 3 botones (WhatsApp, solicitar consulta, llamar),
+todos coherentes con la ciudad de la URL. Verificado en producción.
+
+**Punto 2 — Modelos de IA no fijados en documentación:**
+Los modelos de IA cambian dinámicamente según el entorno. README.md y AGENTS.md
+ya no listan modelos concretos (GLM, DeepSeek, etc.) que queden obsoletos al
+cambiar de modelo en ejecución. Las reglas aplican independientemente del modelo.
+
+**Archivos modificados:** `components/marketing/landing-local.tsx`, `README.md`,
+`AGENTS.md`.
+
+**Validación:** lint 0 errores, build OK, test 397/397, deploy verificado en
+producción (las 3 landings con CTA corregido).
+
+---
+
 ## Release 84 — Actualización de tooling IA a OpenCode y Zcode (2026-06-19)
 
 Normalización del protocolo de agentes IA. OpenCode y Zcode pasan a ser el
 tooling activo. Kilo, SEOSenior y configuraciones `.kilo/` quedan como legacy.
 
 **Cambios:**
-- `AGENTS.md`: nueva sección §6 (Tooling IA y modelos permitidos). Reglas SEO
-  ahora autosuficientes (sin dependencia de `.kilo/rules/seo.md`).
+- `AGENTS.md`: nueva sección §6 (herramientas y modelos de IA — sin fijar
+  modelos concretos; reglas SEO autosuficientes).
 - `README.md`: nueva sección "Tooling IA". Referencias a Kilo/SEOSenior
-  eliminadas o marcadas como legacy. Pendiente "tooling oficial" resuelto.
+  eliminadas o marcadas como legacy.
 - `CHANGELOG.md`: entrada actual (Release 84).
-- Modelos autorizados documentados: GLM 5.2, DeepSeek v4 Pro, DeepSeek v4 Flash.
 - No se modificó código funcional, rutas, SEO, schemas, auth, proxy ni motor
   de cálculo.
 

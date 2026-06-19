@@ -339,21 +339,15 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 
 ## Tooling IA
 
-### Entornos
-| Herramienta | Estado |
-|-------------|--------|
-| **OpenCode** | Activo — entorno principal para agentes IA |
-| **Zcode** | Activo — entorno secundario |
-
-### Modelos autorizados
-- **GLM 5.2** (Z.ai vía HuggingFace) — modelo principal
-- **DeepSeek v4 Pro** — tareas complejas
-- **DeepSeek v4 Flash** — tareas rápidas
-
 ### Protocolo obligatorio
 Este repositorio tiene un protocolo obligatorio en [`AGENTS.md`](./AGENTS.md).
 Léelo antes de cualquier modificación. Contiene reglas críticas sobre fuentes
 de verdad, privacidad de intranet, validación obligatoria, clasificación de
 estados y lo que la IA nunca debe hacer.
+
+> **Nota:** este repositorio no documenta modelos o proveedores de IA concretos
+> porque cambian dinámicamente según el entorno de ejecución. Tampoco asume
+> ningún modelo específico; las reglas de `AGENTS.md` aplican
+> independientemente del modelo que procese cada instrucción.
 
 Configuraciones anteriores (`.kilo/`, `CLAUDE.md`) son **legacy / no operativas**.

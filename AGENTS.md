@@ -185,29 +185,22 @@ Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 
 ---
 
-## 6. Tooling IA y modelos permitidos
+## 6. Regla sobre tooling y modelos de IA
 
-### Entornos activos
-| Herramienta | Estado | Propósito |
-|-------------|--------|-----------|
-| **OpenCode** | ✅ Activo | Entorno principal para agentes IA |
-| **Zcode** | ✅ Activo | Entorno secundario para agentes IA |
-
-### Modelos permitidos
-| Modelo | Proveedor | Uso |
-|--------|-----------|-----|
-| **GLM 5.2** | Z.ai vía HuggingFace (router) | Modelo principal para coding y tareas generales |
-| **DeepSeek v4 Pro** | deepseek1 | Modelo alternativo para tareas complejas |
-| **DeepSeek v4 Flash** | deepseek1 | Modelo rápido para tareas ligeras |
-
-### Protocolo
 - El protocolo canónico para cualquier agente es `AGENTS.md` (este archivo).
-- Ningún agente debe usar modelos, proveedores o configuraciones distintas
-  sin instrucción explícita del usuario.
-- Configuraciones anteriores (`.kilo/`, `kilo.json`, `CLAUDE.md`, skills)
-  son **legacy / no operativas** salvo que el usuario indique lo contrario.
-- Si existe `CLAUDE.md`, puede conservarse como compatibilidad mínima si
-  solo apunta a `AGENTS.md`, pero no es el protocolo principal.
+- Este repositorio **no fija un modelo o proveedor de IA específico** como
+  requisito. Los modelos se asignan dinámicamente según el entorno de ejecución
+  en cada sesión (pueden cambiar sin previo aviso).
+- Todas las reglas de este documento aplican **independientemente del modelo**
+  que procese cada instrucción.
+- Configuraciones de tooling anteriores (`.kilo/`, `kilo.json`, `CLAUDE.md`,
+  skills, etc.) son **legacy / no operativas** salvo que el usuario indique lo
+  contrario.
+- Si existe `CLAUDE.md`, puede conservarse como compatibilidad mínima si solo
+  apunta a `AGENTS.md`, pero no es el protocolo principal.
+- Si se requiere replicar a un modelo específico en un entorno con router de
+  modelos, el archivo `kilo.json` o la configuración del entorno (no del repo)
+  es el lugar para declararlo.
 
 ---
 
