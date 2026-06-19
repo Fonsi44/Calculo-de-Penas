@@ -63,13 +63,8 @@ export function PageHero({
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 pointer-events-none"
+        className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
         aria-hidden="true"
-        style={{
-          background: isPrimary
-            ? 'radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.18) 0%, transparent 60%), radial-gradient(50% 60% at 0% 100%, rgba(168,136,64,0.14) 0%, transparent 60%)'
-            : 'radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.10) 0%, transparent 60%)',
-        }}
       />
       <Container size="lg" className="relative py-10 md:py-14 lg:py-16">
         <div className={alignCls}>

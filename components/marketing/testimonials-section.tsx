@@ -38,11 +38,7 @@ export function TestimonialsSection({
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 opacity-25 pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 15% 20%, rgba(201,165,92,0.18) 0%, transparent 45%), radial-gradient(circle at 85% 80%, rgba(45,64,112,0.45) 0%, transparent 60%)',
-        }}
+        className="absolute inset-0 opacity-25 pointer-events-none bg-radial-testimonials"
         aria-hidden="true"
       />
       <div

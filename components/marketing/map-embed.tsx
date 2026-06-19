@@ -38,6 +38,7 @@ export function MapEmbed({
         src={src}
         className="w-full h-full border-0"
         loading="lazy"
+        sandbox="allow-scripts"
       />
       <div className="absolute bottom-0 left-0 right-0 bg-white/90 text-[10px] text-center text-text-tertiary py-0.5 px-2 leading-tight">
         <a

@@ -629,6 +629,32 @@ input[type="checkbox"] {
   box-shadow: var(--shadow-gold-ring);
 }
 
+/* Radial gradient overlay utility (replaces inline style in page-hero, footer, testimonials) */
+.bg-radial-accent {
+  background:
+    radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.18) 0%, transparent 60%),
+    radial-gradient(50% 60% at 0% 100%, rgba(168,136,64,0.14) 0%, transparent 60%);
+}
+.bg-radial-accent-light {
+  background:
+    radial-gradient(60% 70% at 85% 0%, rgba(201,165,92,0.10) 0%, transparent 60%);
+}
+.bg-radial-accent-footer {
+  background:
+    radial-gradient(60% 70% at 80% 0%, rgba(201,165,92,0.10) 0%, transparent 60%),
+    radial-gradient(50% 50% at 10% 100%, rgba(168,136,64,0.08) 0%, transparent 60%);
+}
+.bg-radial-testimonials {
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(201,165,92,0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(45,64,112,0.45) 0%, transparent 60%);
+}
+
+/* Safe area inset bottom utility for floating elements */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 /* Glow dorado superior para footer y separadores hero. */
 .glow-accent-top {
   position: relative;

@@ -33,7 +33,7 @@ import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { BlogSearch } from '@/components/blog/blog-search';
+import { LazyBlogSearch } from '@/components/blog/lazy-blog-search';
 import { getAllPosts } from '@/lib/blog';
 import { SocialShare } from '@/components/marketing/social-share';
 
@@ -174,10 +174,10 @@ export default async function HomePage() {
       <section className="relative bg-hero-gradient text-text-inverse overflow-hidden">
         {/* Capas de fondo no fotográficas: grid sutil + halos dorados radiales. */}
         <div className="absolute inset-0 pointer-events-none bg-grid opacity-50" aria-hidden="true" />
-        <div className="absolute inset-0 opacity-95 pointer-events-none" aria-hidden="true">
-          <div className="absolute -top-24 -right-24 w-[36rem] h-[36rem] rounded-full bg-accent/20 blur-[140px]" />
-          <div className="absolute -bottom-32 -left-24 w-[32rem] h-[32rem] rounded-full bg-accent-dark/15 blur-[120px]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full bg-primary-light/20 blur-[160px]" />
+        <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true">
+          <div className="absolute -top-24 -right-24 w-[24rem] h-[24rem] rounded-full bg-accent/20 blur-[100px]" />
+          <div className="absolute -bottom-32 -left-24 w-[20rem] h-[20rem] rounded-full bg-accent-dark/15 blur-[80px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] rounded-full bg-primary-light/20 blur-[100px]" />
         </div>
         <div
           className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-accent/20 to-transparent pointer-events-none"
@@ -219,7 +219,7 @@ export default async function HomePage() {
       {searchIndex.length > 0 && (
         <div className="bg-background py-6 md:py-8">
           <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-            <BlogSearch posts={searchIndex} scope="toda la web" />
+            <LazyBlogSearch posts={searchIndex} scope="toda la web" />
           </div>
         </div>
       )}

@@ -54,12 +54,8 @@ export function PublicFooter() {
       {/* Capas de fondo: gradiente sutil + grid */}
       <div className="absolute inset-0 pointer-events-none bg-grid opacity-50" aria-hidden="true" />
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none bg-radial-accent-footer"
         aria-hidden="true"
-        style={{
-          background:
-            'radial-gradient(60% 70% at 80% 0%, rgba(201,165,92,0.10) 0%, transparent 60%), radial-gradient(50% 50% at 10% 100%, rgba(168,136,64,0.08) 0%, transparent 60%)',
-        }}
       />
       <div className="relative max-w-7xl mx-auto px-4 py-14 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">

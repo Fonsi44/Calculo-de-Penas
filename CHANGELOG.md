@@ -1,5 +1,114 @@
 # Changelog
 
+## Release 67 — PageSpeed/UX móvil: JS reducido, estilos inline → CSS, iFrames, LCP (2026-06-19)
+
+### 🟢 JavaScript no utilizado — reducido
+- **Home page**: `BlogSearch` ahora se carga con `dynamic()` + `ssr: false` vía `LazyBlogSearch` wrapper. El bundle JS del buscador ya no se descarga hasta que el usuario interactúa con la búsqueda. Ahorro estimado: ~25 KB gzip en carga inicial.
+- **GA4 y Clarity**: ambos scripts cambian de `strategy="afterInteractive"` a `strategy="lazyOnload"`. El init script de GA4 (`gtag('config')`) ya no bloquea el renderizado temprano. El script src de GA4 ya era `lazyOnload`.
+- **SpeedInsights**: envuelto en `{process.env.NODE_ENV === 'production' && <SpeedInsights />}` para evitar cargarlo en desarrollo.
+
+### 🟢 Estilos inline eliminados (4 componentes → CSS utilities)
+- `page-hero.tsx`: migrado a clase `.bg-radial-accent` / `.bg-radial-accent-light`
+- `public-footer.tsx`: migrado a clase `.bg-radial-accent-footer`
+- `testimonials-section.tsx`: migrado a clase `.bg-radial-testimonials`
+- `live-widgets.tsx` (FloatingContactRail): migrado a clase `.safe-bottom` con `env(safe-area-inset-bottom)`
+- Nuevas utilities añadidas en `app/globals.css`
+
+### 🟢 iFrame seguro
+- `map-embed.tsx`: añadido `sandbox="allow-scripts"` al iframe de OpenStreetMap. Previo solo tenía `loading="lazy"` y `title` accesible.
+- E2E test `home responde 200 y muestra hero` corregido: fallaba por `'allow-navigation'` inválido en sandbox.
+
+### 🟢 LCP móvil optimizado
+- Hero de home: halos radiales (`blur-[140px]` → `blur-[100px]`, áreas reducidas 30%). Menos trabajo de pintura sin pérdida visual apreciable.
+- Opacidad de capa decorativa: `opacity-95` → `opacity-80`.
+
+### 🟢 UX móvil mejorada
+- `app/(public)/layout.tsx`: `<main>` recibe `pb-20 sm:pb-24` para evitar que el `FloatingContactRail` solape contenido al final de página en viewports móviles.
+
+### 🟢 Validación completa
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errors, 0 warnings ✅ |
+| `npm run build` | Compiled successfully, 304 routes, TypeScript OK ✅ |
+| `npm run test` | 18 suites, 382 tests passed ✅ |
+| `npm run test:e2e` | **37 passed, 0 failed** ✅ |
+
+### 📄 Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `app/globals.css` | +26 líneas: 5 nuevas utilities CSS radiales + safe-bottom |
+| `app/layout.tsx` | GA4/Clarity `lazyOnload`, SpeedInsights gated a prod |
+| `app/(public)/page.tsx` | LazyBlogSearch, hero blur reducido |
+| `app/(public)/layout.tsx` | main padding inferior (`pb-20`) para FloatingContactRail |
+| `components/blog/lazy-blog-search.tsx` | **Nuevo**: wrapper client con dynamic import |
+| `components/marketing/page-hero.tsx` | Inline style → CSS class |
+| `components/marketing/public-footer.tsx` | Inline style → CSS class |
+| `components/marketing/testimonials-section.tsx` | Inline style → CSS class |
+| `components/marketing/live-widgets.tsx` | Inline style → safe-bottom class |
+| `components/marketing/map-embed.tsx` | Sandbox attribute en iframe |
+
+### Pendientes (no resueltos en esta release)
+| # | Pendiente | Estado |
+|---|---|---|
+| 1 | IndexNow 403 | 🟠 Requiere verificación de key en Bing Webmaster Tools |
+| 2 | Google Business Profile | 🔴 Requiere cuenta Google del despacho |
+| 3 | Perfiles sociales (FB/IG/TikTok) | 🔴 No existen aún |
+| 4 | Reescritura 3 posts ALTO | 🟠 Tiempo editorial |
+| 5 | Redirección www→apex (Vercel Domains) | 🟢 No requiere cambio en código (Vercel Settings) |
+
+---
+
+## Release 66 — Variables frontend GA4/GSC/Clarity + sameAs auditado (2026-06-19)
+
+### 🟢 Variables de entorno frontend — completadas
+- `NEXT_PUBLIC_GOOGLE_VERIFICATION=DzWyeKuME1pSzwjCuV4vkfZH80UMwULmyiQhg2qhhUE` (local + Vercel ✅)
+- `NEXT_PUBLIC_GA_ID=G-L2PGBN3SWK` — extraído via Google Analytics Admin API desde las credenciales OAuth existentes. URL: `analytics.google.com/?p=541022095`. Measurement ID verificado: `webStreamData.measurementId` → `G-L2PGBN3SWK`. (local + Vercel ✅)
+- `NEXT_PUBLIC_CLARITY_ID=x9ghgy2un2` — Clarity ID proporcionado por el propietario vía código de tracking. Añadido a `.env.local` y a Vercel Production (`vercel env add`). (local + Vercel ✅)
+
+### 🔍 Misma persona verificada en producción
+- **Método**: `webfetch` directo a `https://www.pinedayasociadoshn.com` + Google Analytics Admin API (OAuth) + `vercel env ls`.
+- **Resultados**:
+  - GSC meta tag presente en producción: `content="DzWyeKuME1pSzwjCuV4vkfZH80UMwULmyiQhg2qhhUE"`
+  - GA4 Measurement ID confirmado: `G-L2PGBN3SWK` (propiedad `541022095`, data stream `Web principal`)
+  - Clarity ID confirmado: `x9ghgy2un2`
+  - GA4 y Clarity usan `next/script` con `strategy="lazyOnload"`/`"afterInteractive"` — no bloquean renderizado
+  - CSP en `next.config.ts` permite `googletagmanager.com`, `clarity.ms`, `*.google-analytics.com`, `*.analytics.google.com`, `*.clarity.ms`
+
+### 🔴 sameAs — resuelto por omisión intencionada
+- **Investigación**: búsqueda exhaustiva de perfiles sociales del bufete en Facebook (`facebook.com/pinedayasociadoshn`), Instagram (`instagram.com/pinedayasociadoshn`), y TikTok (`tiktok.com/@pinedayasociadoshn`).
+- **Conclusión**: las redes sociales del bufete **no han sido creadas aún** (confirmado por el propietario). No existen perfiles verificables.
+- **Decisión técnica**: `sameAs` se omite del JSON-LD cuando no hay URLs reales. El código en `lib/site.ts:210-218` (LegalService) y `lib/site.ts:267` (Organization) ya maneja correctamente esta casuística.
+- **Documentado**: `lib/site.ts:83-88` contiene comentario TODO con las variables de entorno necesarias (`NEXT_PUBLIC_SOCIAL_FACEBOOK`, `NEXT_PUBLIC_SOCIAL_INSTAGRAM`, `NEXT_PUBLIC_SOCIAL_TIKTOK`). Cuando se creen los perfiles, basta con definir estas variables en Vercel — sin tocar código.
+- **Footer**: `components/marketing/public-footer.tsx` no tiene bloque de redes sociales. Añadir cuando existan.
+
+### 🟢 Validación completa (sin nuevos errores)
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errors, 0 warnings ✅ |
+| `npm run build` | Compiled successfully, 304 routes, TypeScript OK ✅ |
+| `npm run test` | 18 suites, 382 tests passed ✅ |
+| `npm run test:e2e` | 37 passed, 0 failed ✅ |
+| `npm run validate:dates` | 159 posts, 0 future dates, 0 incorrect order ✅ |
+| `npm run content:audit` | 92 vencidos, 28 próximos, 39 al día ✅ |
+| `npx tsx scripts/detectar-posts-plantilla.ts` | 3 ALTO, 156 MEDIO, 0 BAJO ✅ |
+
+### 📄 Archivos modificados
+- `.env.local` — añadidas `NEXT_PUBLIC_GOOGLE_VERIFICATION`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID`
+- Vercel Production — añadido `NEXT_PUBLIC_CLARITY_ID` (los otros dos ya existían encriptados)
+- `lib/site.ts` — sin cambios (ya maneja correctamente la ausencia de redes sociales)
+
+### Pendientes reales (datos externos / decisión propietario)
+| # | Pendiente | Estado |
+|---|---|---|
+| 1 | Google Business Profile | 🔴 Requiere cuenta Google |
+| 2 | Bing Webmaster Tools / IndexNow | 🟠 IndexNow 403 (key file verification pendiente) |
+| 3 | Crear perfiles sociales (FB, Instagram, TikTok) | 🔴 No existen aún — cuando se creen, añadir `NEXT_PUBLIC_SOCIAL_*` en Vercel |
+| 4 | Reescritura 3 posts ALTO (thin content <300 palabras) | 🟠 Tiempo editorial |
+| 5 | Revisión 92 posts vencidos | 🟠 Tiempo editorial |
+| 6 | Configurar GA4 frontend en Vercel Preview (dev) | 🟡 El tag ya está en producción; preview depende de vars de entorno por entorno |
+
+---
+
 ## Release 65 — Fix: login redirect loop, dashboard no-admin, E2E 37/37 (2026-06-19)
 
 ### 🐛 Bug corregido: Login redirect loop (crash chrome-error)
