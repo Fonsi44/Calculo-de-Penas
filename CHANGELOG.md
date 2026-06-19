@@ -1,5 +1,78 @@
 # Changelog
 
+## Release 78 — QA automatizada: SEO health-check + Lighthouse CI + Visual regression (2026-06-19)
+
+Tres herramientas de QA que convierten señales manuales en verificaciones
+automatizadas. Cada una cubre un frente: señales externas (off-page),
+rendimiento (CWV) y estabilidad visual.
+
+### Punto 1 — SEO health-check (`scripts/seo-health-check.mjs`)
+Health-check de **15 señales SEO off-page verificables** desde Node (sin DB).
+Detecta regresiones como el mismatch histórico `INDEXNOW_KEY` vs `public/<key>.txt`
+que causó el 0% de indexación en Bing durante semanas.
+
+- **HTTP (8):** IndexNow key file, sitemap.xml (220 URLs), robots.txt, JSON-LD
+  home + derecho-penal (schemas + lógica condicional `sameAs`), BingSiteAuth.xml,
+  llms.txt, redirect http→https
+- **DNS (6) en el apex:** SPF (`v=spf1 include:amazonses.com`), DKIM Resend,
+  DMARC, MX (AWS SES), NS (Vercel), google-site-verification TXT
+- **LOCAL (1):** consistencia `.env` INDEXNOW_KEY vs `public/<key>.txt`
+- Pendientes externos (GBP, Bing WMT, backlinks, social, bots IA) listados como
+  `MANUAL` con referencia al doc `docs/seo-off-page.md`
+
+Resultado producción: **15/15 OK**.
+npm scripts: `seo:health`, `seo:health:json`.
+
+> **Honestidad:** los backlinks reales NO son creables desde código (acciones
+> humanas: GBP, directorios, prensa). Lo accionable desde código era convertir
+> la parte verificable del doc en este script.
+
+### Punto 2 — Lighthouse CI (`.github/workflows/lighthouse.yml`)
+Workflow que audita CWV y scores de Lighthouse en **4 páginas públicas**
+estratégicas: `/`, `/servicios-juridicos`, `/derecho-penal`, `/abogados-en-nacaome`.
+
+- **Triggers:** diario 06:00 UTC + manual + PRs que tocan frontend público
+- **Flujo:** build → `next start` puerto 3100 → `npx @lhci/cli autorun` (preset desktop, 3 runs/URL)
+- **Thresholds conservadores** (level `warn`, no `error`): a11y/BP/SEO minScore 0.9;
+  FCP ≤1800ms, LCP ≤4000ms, CLS ≤0.25, TBT ≤600ms
+- **Artefacto** `lighthouse-report` (HTML + server.log, retención 14 días)
+- **Privacidad:** no audita rutas intranet/calculadora (reglas 17-19 AGENTS.md)
+
+Config: `lighthouserc.json`. Baseline y roadmap escalado warn→error en
+`docs/lighthouse-baseline.md`.
+
+### Punto 3 — Visual regression (`scripts/visual-regression.cjs`)
+Comparación pixel-a-pixel contra baseline vía `pixelmatch` + `pngjs` (JS puro).
+
+- **3 modos:** `visual:baseline` (generar), `visual:check` (comparar, exit 1 si
+  >threshold), `visual:update` (regenerar tras cambio intencional)
+- **Threshold:** 0.1% default (configurable vía `VISUAL_THRESHOLD`)
+- **16 baselines committed** en `e2e/visual-baselines/` (8 páginas × 2 viewports,
+  mobile 375 + desktop 1440, ~14MB)
+- Naming con punto (`home.mobile.png`) para evitar globs del `.gitignore`
+- Diffs PNG en `docs/screenshots-diff/` para inspección
+
+Resultado: `visual:check` da **0% diff** contra baseline recién generado.
+npm scripts: `visual:baseline`, `visual:check`, `visual:update`.
+
+### Bugs detectados y corregidos durante validación
+Cada herramienta se auto-verificó durante su desarrollo y detectó bugs en sí
+misma, lo que valida su valor como red de seguridad:
+
+| Herramienta | Bug detectado | Causa |
+|---|---|---|
+| seo-health-check | 6 probes DNS fallaban | Lookup en `www.` en vez del apex |
+| seo-health-check | `sameAs=presente` falso positivo | `null !== undefined` es `true` |
+| visual-regression | `pixelmatch is not a function` | v7 exporta vía ESM interop (`{default}`) |
+
+### Validación
+- lint: 0 errores · build: OK (304 páginas) · test: **382/382** · e2e: intactos
+- seo-health-check: 15/15 OK en producción
+- visual-regression: 16/16 imágenes, 0% diff
+- lighthouserc.json: JSON válido · lighthouse.yml: YAML válido (`npx yaml` exit 0)
+
+---
+
 ## Release 77 — Auditoría visual frontend: cero hallazgos accionables (2026-06-19)
 
 ### Resumen
