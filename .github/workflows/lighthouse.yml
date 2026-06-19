@@ -1,0 +1,74 @@
+name: Lighthouse CI
+
+on:
+  # Run diario a las 06:00 UTC (00:00 CST Honduras) para vigilar CWV en producción
+  schedule:
+    - cron: '0 6 * * *'
+  # Trigger manual
+  workflow_dispatch:
+  # En PRs que tocan el frontend público, para detectar regresiones de perf
+  pull_request:
+    paths:
+      - 'app/(public)/**'
+      - 'components/marketing/**'
+      - 'components/ui/**'
+      - 'app/globals.css'
+      - 'app/layout.tsx'
+      - 'lib/site.ts'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lighthouse:
+    name: Lighthouse audit (4 páginas públicas)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
+      JWT_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef
+      NEXT_TELEMETRY_DISABLED: '1'
+      PORT: '3100'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build
+        run: npm run build
+
+      - name: Start production server
+        run: |
+          (npx next start -p 3100 > server.log 2>&1 &)
+          # Esperar a que el server responda
+          for i in {1..30}; do
+            if curl -sf http://localhost:3100/ > /dev/null 2>&1; then
+              echo "Server ready after ${i}s"
+              break
+            fi
+            sleep 1
+          done
+          curl -sf http://localhost:3100/ > /dev/null || (echo "Server no arrancó"; cat server.log; exit 1)
+
+      - name: Run Lighthouse CI
+        run: npx @lhci/cli@0.14.x autorun --config=./lighthouserc.json
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: |
+            .lighthouseci/
+            server.log
+          retention-days: 14
