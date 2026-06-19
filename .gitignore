@@ -116,3 +116,13 @@ cookies.txt
 # auditorias exportadas
 auditoria-blog/
 docs/backups/
+
+# output del script de auditoría SEO (scripts/seo-audit-gsc-ga4.mjs)
+# Contiene métricas temporales, no secretos, pero es estado local por sesión.
+scripts/.seo-audit.json
+
+# archivo espurio de Windows (redirección mal escapada en cmd)
+# `nul` y `public/nul` son dispositivos reservados de Windows (NULL device).
+# Aparecen como archivos fantasma tras redirecciones mal escapadas en cmd.
+/nul
+/public/nul

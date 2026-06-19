@@ -10,7 +10,7 @@ import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
 import { site } from "@/lib/site";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Script from "next/script";
+import { AnalyticsScripts } from "@/components/analytics-scripts";
 
 /* Tipografía "Premium Corporate Luxury" — Cormorant Garamond (headings)
    + Manrope (body). Patrón del repo fuente. */
@@ -122,19 +122,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ThemeProvider>
         </GlobalErrorBoundary>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} strategy="lazyOnload" />
-            <Script id="ga4" strategy="lazyOnload">
-              {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');`}
-            </Script>
-          </>
-        )}
-        {process.env.NEXT_PUBLIC_CLARITY_ID && (
-          <Script id="clarity" strategy="lazyOnload">
-            {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, 'clarity', 'script', '${process.env.NEXT_PUBLIC_CLARITY_ID}');`}
-          </Script>
-        )}
+        {/* GA4 + Clarity: solo en rutas públicas (excluye /intranet y /preview
+            para que el tráfico interno del personal no contamine las métricas
+            de marketing). Ver components/analytics-scripts.tsx. */}
+        <AnalyticsScripts
+          gaId={site.gaId}
+          clarityId={site.clarityId}
+        />
       </body>
     </html>
   );

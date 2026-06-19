@@ -29,6 +29,7 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/subscribe',
   '/api/descargar',
   '/api/og',
+  '/api/oauth/callback',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>([

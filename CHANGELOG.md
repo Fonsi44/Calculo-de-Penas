@@ -5,6 +5,47 @@
 
 ---
 
+## Release 86 — Auditoría GSC, Bing Webmaster Tools y GA4 (2026-06-20)
+
+Auditoría integral de las tres plataformas de medición/indexación, con
+corrección del único problema real detectado desde el repositorio.
+
+**Diagnóstico (datos reales, 28 días):**
+- GSC: propiedad `sc-domain` verificada; 8/9 URLs prioritarias indexadas
+  (`/como-llegar` "Descubierta sin indexar"); 0 clics / 3 impresiones.
+- Bing WMT: verificado vía `BingSiteAuth.xml` (200); IndexNow key pública
+  consistente; dry-run OK (11 URLs, 0 privadas).
+- GA4: conectado (165 usuarios/28d); GA4 frontend sin duplicar.
+
+**Problema corregido (GA4 contaminado por intranet):**
+GA4 y Clarity se cargaban en TODAS las rutas (incluida `/intranet/admin/*`),
+haciendo que las páginas internas aparecieran entre las top pages de
+marketing. Causa: `app/layout.tsx` montaba los `<Script>` sin filtro de
+pathname. Corrección: nuevo componente `components/analytics-scripts.tsx`
+(client, usa `usePathname()`) que excluye `/intranet`, `/preview`, `/api`.
+
+**Informe completo:** `docs/seo-search-console-bing-ga-audit.md` (14 secciones:
+resumen, GSC, Bing, IndexNow, GA4, eventos, cruce GSC+GA4, URLs prioritarias,
+problemas técnicos/editoriales/autoridad, acciones aplicadas, acciones externas,
+plan 7/14/30 días).
+
+**Script reproducible:** `scripts/seo-audit-gsc-ga4.mjs` (consulta GSC + GA4 en
+vivo, salida `scripts/.seo-audit.json`).
+
+**Acciones externas documentadas (NO de código):** eliminar propiedad GSC con
+typo "asocioshn", solicitar indexación de `/como-llegar`, añadir
+`NEXT_PUBLIC_CLARITY_ID` en Vercel, marcar eventos como conversión en GA4 Admin,
+excluir bots en GA4, redeploy.
+
+**Archivos modificados:** `components/analytics-scripts.tsx` (nuevo),
+`app/layout.tsx`, `scripts/seo-audit-gsc-ga4.mjs` (nuevo),
+`docs/seo-search-console-bing-ga-audit.md` (nuevo), `.gitignore`.
+
+**Validación:** lint 0 errores, build OK, test 397/397, validate:dates OK,
+indexnow:dry OK, `seo-audit-gsc-ga4.mjs` GSC+GA4 conectados.
+
+---
+
 ## Release 85 — CTA fusionado en landings locales + modelos IA no fijados en doc (2026-06-19)
 
 **Punto 1 — CTA duplicado en landings locales (abogados-en-*):**
