@@ -839,16 +839,17 @@ Ambos scripts pueden añadirse a GitHub Actions:
 
 ## IndexNow
 
-### Estado actual (Jun 2026 — revisión conservadora)
-- **Variable de entorno**: `INDEXNOW_KEY=6faddf836cbd448fad29083c8f31d573` en `.env` y en Vercel.
+### Estado actual (Jun 2026 — Release 71: key validada en producción)
+- **Variable de entorno**: `INDEXNOW_KEY=6faddf836cbd448fad29083c8f31d573` en `.env` y en Vercel Production (verificada: valor coincide con archivo público).
 - **Archivo de verificación**: `public/6faddf836cbd448fad29083c8f31d573.txt` (contiene exactamente la clave).
 - **Endpoint**: `https://api.indexnow.org/indexnow`.
 - **Script**: `scripts/submit-indexnow.mjs` — modo **dry-run por defecto**; el `postbuild` no envía nada salvo `ENABLE_INDEXNOW_SUBMIT=true`.
-- **Causa raíz de los 0 rastreos/0 indexaciones en Bing (CSV 7-11/6/2026)**:
-  1. La `INDEXNOW_KEY` del entorno (`a38a1fce…`) **no coincidía** con el archivo público commitado (`6faddf83…`). Corregido: ahora coinciden.
-  2. El dominio **no está verificado en Bing Webmaster Tools** (Bing responde `403 UserForbiddedToAccessSite`). Ver `docs/seo-off-page.md` §2.
-  3. El script enviaba 20 URLs inexistentes (`/blog/categoria/...`) que devuelven 404. Corregido: solo rutas reales.
-  4. El `postbuild` reenviaba las 57 URLs en cada build. Corregido: dry-run por defecto + modo incremental con cache.
+- **Validación en producción (2026-06-19)**: `GET https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt` → **HTTP 200**, `text/plain`, body `6faddf836cbd448fad29083c8f31d573` ✅
+- **Causas raíz resueltas**:
+  1. ✅ `INDEXNOW_KEY` corregida: ahora coincide byte a byte con `public/6faddf83…txt` (verificado en Vercel Production + local).
+  2. ❌ El dominio **sigue sin verificar en Bing Webmaster Tools** — causa del `403 UserForbiddedToAccessSite`. Ver `docs/seo-off-page.md` §2.
+  3. ✅ URLs inexistentes `/blog/categoria/...` eliminadas: solo rutas reales.
+  4. ✅ Envío masivo eliminado: dry-run por defecto + modo incremental con cache 24h.
 
 ### Modos de uso
 | Comando | URLs | Envío real | Cuándo |
@@ -861,9 +862,9 @@ Ambos scripts pueden añadirse a GitHub Actions:
 | `npm run indexnow:full` | hasta 500 | Sí | Reindexación completa puntual |
 
 ### Error 403 `UserForbiddedToAccessSite` — Solución
-La causa **no** es el archivo de clave (ese error es de autorización del
-sitio, no de la key). La causa es que el dominio **no está verificado** en
-Bing Webmaster Tools. Para resolverlo:
+La causa **no** es el archivo de clave (validado: responde HTTP 200 con el
+contenido correcto en producción). La causa es que el dominio **no está
+verificado** en Bing Webmaster Tools. Para resolverlo:
 
 1. Añadir el sitio en https://www.bing.com/webmasters.
 2. Verificar la propiedad (meta tag o archivo XML de Bing — distinto del de IndexNow).
@@ -872,10 +873,12 @@ Bing Webmaster Tools. Para resolverlo:
    para una primera prueba de 5 URLs).
 5. Confirmar en el panel de IndexNow de Bing que las URLs pasan a
    "Discovered" → "Crawled" → "Indexed".
+6. Revisar periódicamente el reporte IndexNow en Bing WMT para verificar
+   que las URLs enviadas aparecen como "Submitted URLs" y pasan a procesadas.
 
-> **Pre-validación local:** `curl -s https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt`
-> debe devolver exactamente `6faddf836cbd448fad29083c8f31d573`. Si no responde
-> o el contenido difiere, Bing rechazará todos los envíos.
+> **Validación confirmada (2026-06-19):** `https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt`
+> → HTTP 200, `text/plain`, contenido `6faddf836cbd448fad29083c8f31d573`. La key es correcta.
+> El único bloqueo pendiente es la verificación del dominio en Bing Webmaster Tools.
 
 ---
 
@@ -1091,10 +1094,11 @@ El script:
 
 ### IndexNow
 
-- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`) y también como archivo estático `public/6faddf836cbd448fad29083c8f31d573.txt` (ambos deben coincidir — validado por el script).
+- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`) y también como archivo estático `public/6faddf836cbd448fad29083c8f31d573.txt` (ambos deben coincidir — validado por el script y verificado en producción).
 - Script: `scripts/submit-indexnow.mjs` — **dry-run por defecto**; el `postbuild` NO envía salvo `ENABLE_INDEXNOW_SUBMIT=true`. Modos: core (11), sample (5), incremental (cache 24h), full (máx. 500).
 - Solo envía URLs públicas reales y canónicas (excluye intranet, api, admin, calculadora, casos, cp, delitos, atajos, preview, login, 404, query strings).
 - Si `INDEXNOW_KEY` no coincide con `public/<KEY>.txt`, el script aborta (Bing exige coincidencia exacta).
+- Validado en producción: `https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt` → HTTP 200, contenido coincide ✅
 - Generar clave en: https://www.bing.com/indexnow/getstarted
 - **Pendiente externo crítico**: verificar el dominio en Bing Webmaster Tools (causa del histórico 0% indexación — error 403). Ver `docs/seo-off-page.md` §2.
 

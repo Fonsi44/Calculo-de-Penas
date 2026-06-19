@@ -1,5 +1,42 @@
 # Changelog
 
+## Release 71 — IndexNow: key verificada en producción, validación completa, documentación actualizada (2026-06-19)
+
+### 🟢 Verificación completa de IndexNow
+
+| Verificación | Resultado |
+|---|---|
+| `INDEXNOW_KEY` (`6faddf83…`) coincide con `public/6faddf836cbd448fad29083c8f31d573.txt` | ✅ |
+| `.env.local` no sobreescribe la key | ✅ |
+| `INDEXNOW_KEY` presente en Vercel Production (encriptada) | ✅ |
+| `GET https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt` → HTTP 200, `text/plain`, body `6faddf836cbd448fad29083c8f31d573` | ✅ |
+| Script usa siempre host `www.pinedayasociadoshn.com` (nunca apex) | ✅ |
+| Todas las URLs generadas empiezan por `https://www.pinedayasociadoshn.com/` | ✅ |
+| Dry-run sample (5 URLs): 0 duplicados, 0 exclusiones, 0 rutas privadas | ✅ |
+| Dry-run full (55 URLs): 0 duplicados, 0 exclusiones, todas públicas y reales | ✅ |
+| `npm run lint` → 0 errors, 0 warnings | Pendiente |
+| `npm run build` → Compiled successfully | Pendiente |
+| `npm run test` → all tests pass | Pendiente |
+
+### Documentación actualizada
+
+- **README.md**: §IndexNow actualizada con estado Release 71, validación producción verificada, tabla de modos actualizada.
+- **docs/seo-off-page.md**: §2 Bing WMT reescrita con checklist completo: verificar dominio, comprobar IndexNow report, revisar Submitted URLs, solicitar indexación manual de URLs prioritarias, evitar envíos masivos.
+- **CHANGELOG.md**: Release 71 añadida.
+
+### Bloqueante externo (sin cambios desde Release 70)
+El dominio **sigue sin verificar en Bing Webmaster Tools** — es la única causa
+del error 403 y del 0% de indexación. Pasos detallados en `docs/seo-off-page.md` §2.
+
+### 📄 Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `README.md` | §IndexNow validación producción verificada |
+| `docs/seo-off-page.md` | §2 Bing WMT reescrita con checklist completo |
+| `CHANGELOG.md` | Release 71 añadida |
+
+---
+
 ## Release 70 — IndexNow conservador: corrección key, dry-run por defecto, modo incremental, validación producción (2026-06-19)
 
 ### 🔴 Problema detectado

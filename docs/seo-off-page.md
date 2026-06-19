@@ -28,51 +28,53 @@ La señal local más fuerte para "abogados en Nacaome", "abogados en Valle",
 
 ## 2. Bing Webmaster Tools (resuelve IndexNow 403)
 
-**Estado técnico (Jun 2026 — tras Release 70):** la integración IndexNow está
-corregida a nivel de código y despliegue, pero el **dominio sigue SIN
-verificar en Bing Webmaster Tools**, que es la causa raíz del histórico
-`403 UserForbiddedToAccessSite` y del **0% de indexación** (CSV Bing:
-9.450 URLs enviadas 7-11/6/2026, 0 rastreadas, 0 indexadas).
+**Estado técnico (Jun 2026 — Release 71):** la integración IndexNow está
+completamente verificada a nivel de código, despliegue y producción. La key
+responde HTTP 200 con el contenido correcto en
+`https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt`.
+El **dominio sigue SIN verificar en Bing Webmaster Tools**, que es la causa
+raíz del histórico `403 UserForbiddedToAccessSite` y del **0% de indexación**
+(CSV Bing: 9.450 URLs enviadas 7-11/6/2026, 0 rastreadas, 0 indexadas).
 
-### Causas raíz ya resueltas en código (Release 70)
+### Causas raíz resueltas (Releases 70 + 71)
 
 | Causa | Estado |
 |---|---|
-| `INDEXNOW_KEY` del entorno != archivo público commitado | ✅ Corregida (env local + Vercel = `6faddf83…`, coincide con `public/6faddf83…txt`) |
+| `INDEXNOW_KEY` del entorno != archivo público commitado | ✅ Corregida + **verificada en producción** (env local + Vercel = `6faddf83…`, coincide con `public/6faddf83…txt`, HTTP 200) |
 | 20 URLs inexistentes `/blog/categoria/...` (404) | ✅ Corregidas (script solo envía rutas reales `/blog/{category}`) |
 | `postbuild` reenviaba 57 URLs en cada build | ✅ Dry-run por defecto; envío real solo con `ENABLE_INDEXNOW_SUBMIT=true` |
 | Sin throttle / cache de reenvío | ✅ `.indexnow-cache.json` con throttle 24h |
 | Landings locales no se enviaban | ✅ Incluidas (nacaome, choluteca, san-lorenzo) |
+| `INDEXNOW_KEY` faltante en Vercel Production | ✅ Añadida como variable encriptada (verificada via `vercel env ls`) |
+
+### Validación en producción (2026-06-19)
+
+```bash
+# Key pública accesible y correcta (VERIFICADO):
+curl -s https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt
+# → HTTP 200, Content-Type: text/plain; charset=utf-8
+# → 6faddf836cbd448fad29083c8f31d573 (coincide exactamente con la clave)
+
+# Auditar qué enviaría el script sin tocar Bing:
+npm run indexnow:audit    # catálogo completo en dry-run (55 URLs, 0 excluidas)
+npm run indexnow:dry      # lote mínimo en dry-run (11 URLs)
+npm run indexnow:sample   # lote de prueba (5 URLs)
+```
 
 ### Bloque pendiente (externo, requiere cuenta Microsoft)
 
 - [ ] **Añadir sitio** en https://www.bing.com/webmasters
-- [ ] **Verificar propiedad** (meta tag HTML o archivo XML de Bing — distinto del archivo IndexNow)
-- [ ] **Enviar sitemap**: https://www.pinedayasociadoshn.com/sitemap.xml
-- [ ] Tras verificar, ejecutar el primer envío real conservador:
-  ```bash
-  npm run indexnow:sample      # 5 URLs de prueba (home + 4 landings)
-  npm run indexnow:incremental # núcleo incremental (11 URLs, cache 24h)
-  ```
-- [ ] Confirmar en el panel IndexNow de Bing que las URLs pasan
-      Discovered → Crawled → Indexed.
+- [ ] **Verificar propiedad** (añadir sitio como `https://www.pinedayasociadoshn.com`; elegir verificación por DNS, meta tag HTML o archivo XML de Bing — distinto del archivo IndexNow)
+- [ ] **Enviar sitemap**: `https://www.pinedayasociadoshn.com/sitemap.xml`
+- [ ] **Verificar IndexNow report**: en Bing WMT → IndexNow → Reports, comprobar que las URLs enviadas aparecen en "Submitted URLs" y no hay errores de verificación.
+- [ ] **Solicitar indexación manual** de URLs prioritarias desde Bing WMT → URL Inspection → pegar URLs clave (`/`, `/servicios-juridicos`, `/abogados-en-nacaome`) → Request Crawl.
+- [ ] **Revisar Submitted URLs** periódicamente para asegurar que el lote IndexNow se refleja.
+- [ ] **Evitar envíos masivos**: usar solo `npm run indexnow:incremental` (no `:full`) salvo casos excepcionales. Bing limita a ~10.000 URLs/día.
 
-### Validación técnica previa (ya OK en producción)
-
-```bash
-# Key pública accesible y correcta:
-curl -s https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt
-# → 6faddf836cbd448fad29083c8f31d573 (HTTP 200, text/plain)
-
-# Auditar qué enviaría el script sin tocar Bing:
-npm run indexnow:audit    # catálogo completo en dry-run
-npm run indexnow:dry      # lote mínimo en dry-run
-```
-
-> **Importante:** aunque la key y las URLs sean correctas, Bing **no
-> rastreará ni indexará** mientras el dominio no esté verificado en su
-> Webmaster Tools. Esta es la única acción que falta para destrabar la
-> indexación en Bing.
+> **Importante:** la key y las URLs son correctas y están verificadas
+> (HTTP 200 en producción, contenido coincide). Bing **no rastreará ni
+> indexará** mientras el dominio no esté verificado en su Webmaster Tools.
+> Esta es la única acción que falta para destrabar la indexación en Bing.
 
 ## 3. Google Search Console
 
