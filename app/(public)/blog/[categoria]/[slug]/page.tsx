@@ -14,7 +14,7 @@ import { BlogTOC } from '@/components/blog/blog-toc';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
-import { LocalConsultForm } from '@/components/blog/local-consult-form';
+import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 
 export const revalidate = 3600;
@@ -95,7 +95,6 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
-  const isLocalService = /-(choluteca|nacaome|san-lorenzo)$/.test(post.slug);
   const faqItems = extractFAQSchema(post.body);
   const faqLd = faqPageSchema(faqItems);
 
@@ -198,24 +197,9 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
               </div>
             )}
 
-            {/* Disclaimer legal + fecha de revisión (señal E-E-A-T) */}
-            <div className="mt-10 p-5 rounded-xl border border-border/30 bg-surface-alt">
-              <p className="text-xs text-text-muted leading-relaxed">
-                <strong className="text-text-secondary">Aviso legal:</strong> este artículo tiene
-                carácter orientativo y educativo, y se basa en la legislación hondureña vigente al
-                momento de su publicación{' '}
-                {post.updatedAt
-                  ? `(última revisión: ${formatDate(post.updatedAt)}).`
-                  : `(publicado: ${formatDate(post.publishedAt)}).`}{' '}
-                No constituye asesoría legal personalizada ni crea relación abogado–cliente. Cada
-                caso requiere análisis individual por un abogado habilitado en Honduras. Para
-                asistencia sobre su situación particular,{' '}
-                <a href="/solicitar-consulta#formulario" className="text-accent-dark underline font-medium">
-                  solicite una consulta
-                </a>{' '}
-                con nuestro despacho.
-              </p>
-            </div>
+            {/* Disclaimer legal único con fecha de revisión real del post (E-E-A-T).
+                El footer global NO repite este concepto (ver public-footer.tsx). */}
+            <LegalDisclaimer lastReviewedIso={post.updatedAt ?? post.publishedAt} />
 
             <RelatedService category={post.category} />
 
@@ -316,16 +300,10 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         </Section>
       )}
 
-      {/* ── FORMULARIO RÁPIDO (solo páginas locales) ── */}
-      {isLocalService && (
-        <Section spacing="sm">
-          <Container size="sm">
-            <LocalConsultForm location={post.slug.replace(/-(choluteca|nacaome|san-lorenzo).*$/, ' $1').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())} />
-          </Container>
-        </Section>
-      )}
-
       {/* ── FINAL CTA ── */}
+      {/* Un único CTA de cierre por post. LocalConsultForm eliminado: era
+          redundante con BlogCtaBar (ambos al mismo endpoint /api/consulta).
+          BlogCtaBar ya ofrece teléfono + WhatsApp + enlace al formulario. */}
       <Section spacing="md">
         <Container size="md">
           <BlogCtaBar />

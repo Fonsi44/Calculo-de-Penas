@@ -38,7 +38,9 @@ import { getAllPosts } from '@/lib/blog';
 import { SocialShare } from '@/components/marketing/social-share';
 
 export const metadata: Metadata = {
-  title: { absolute: `${site.name} — ${site.tagline}` },
+  // Title absoluto para evitar "Pineda y Asociados — Abogados... Pineda y Asociados".
+  // El tagline ya contiene el nombre del bufete (45 chars, óptimo para SERP).
+  title: { absolute: site.tagline },
   description: site.description,
   alternates: { canonical: '/' },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],

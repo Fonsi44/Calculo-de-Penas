@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Scale, Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
+import { LEGAL_DISCLAIMER_SHORT, LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
 
 const AREAS = [
   { label: 'Derecho Penal', title: 'Abogados penalistas en Nacaome, Valle — defensa penal técnica', href: '/derecho-penal' },
@@ -79,7 +80,7 @@ export function PublicFooter() {
               pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
             </p>
             <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
-              Aplicación rigurosa del Código Penal · Decreto 130-2017 y sus reformas vigentes.
+              Aplicación rigurosa del {LEGAL_FRAME_BADGE}.
             </p>
             <p className="text-xs text-accent/80 leading-relaxed mt-2 text-pretty">
               Abogado colegiado en Honduras · Registro profesional vigente.
@@ -194,11 +195,8 @@ export function PublicFooter() {
         </div>
         <div className="mt-4 pt-4 border-t border-accent/10 text-xs text-text-inverse/50">
           <p className="text-pretty">
-            Contenido elaborado por el <strong className="text-text-inverse/70">Equipo legal de Pineda y Asociados</strong> — abogados en Nacaome, Valle, Honduras.
-            La información publicada tiene carácter orientativo y no sustituye la asesoría legal personalizada.
-          </p>
-          <p className="mt-1 text-pretty">
-            Cada caso requiere análisis individual por un abogado habilitado. Consulte directamente con nuestro despacho antes de tomar decisiones legales basadas en el contenido de este sitio. Última actualización: junio 2026.
+            Contenido elaborado por el <strong className="text-text-inverse/70">Equipo legal de Pineda y Asociados</strong> — abogados en Nacaome, Valle, Honduras.{' '}
+            {LEGAL_DISCLAIMER_SHORT}
           </p>
         </div>
       </div>

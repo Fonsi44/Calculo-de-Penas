@@ -1,5 +1,47 @@
 # Changelog
 
+## Release 60 — Refactor SEO: arquitectura de contenido centralizada (2026-06-19)
+
+### Arquitectura de contenido reutilizable
+Eliminación de duplicidades de disclaimer legal, CTAs y texto boilerplate en toda la web pública. Creación de una **fuente única de verdad** para contenido legal reutilizable.
+
+### 🟢 Nueva arquitectura centralizada
+| Componente/Archivo | Propósito |
+|---|---|
+| `lib/legal-disclaimer.ts` | Fuente única: `LEGAL_DISCLAIMER`, `LEGAL_DISCLAIMER_SHORT`, `FIRM_BIO_SHORT`, `AUTHOR_BIO`, `LEGAL_FRAME_BADGE`, helpers `formatLegalDate`/`buildDisclaimerText` |
+| `components/marketing/legal-disclaimer.tsx` | Componente `<LegalDisclaimer>` reutilizable (variantes `box`/`inline`, inyecta fecha de revisión real) |
+
+### 🟢 Duplicidades eliminadas
+| Duplicidad | Antes | Después |
+|---|---|---|
+| Disclaimer legal en posts | Texto hardcodeado en JSX (16 líneas) + disclaimer del footer global | Un solo `<LegalDisclaimer>` con fecha real del post; footer usa versión corta |
+| Disclaimer del footer | 2 párrafos repitiendo "carácter orientativo / no sustituye asesoría" | 1 párrafo con `LEGAL_DISCLAIMER_SHORT` |
+| `SEO_FOOTER` del generador de blog | Disclaimer concatenado al body de cada post generado (duplicaba con el del JSX) | Eliminado de la concatenación; el `<LegalDisclaimer>` del JSX lo cubre |
+| CTAs en `/servicios-juridicos/[slug]` | 4 bloques CTA apilados (`CTAGroup` + `LeadMagnetCTA` + `ContactStrip` + `ConsultationCTA`) | 2 bloques (`LeadMagnetCTA` cuando existe + `ConsultationCTA`) |
+| Formularios en posts locales | `LocalConsultForm` + `BlogCtaBar` consecutivos (mismo endpoint `/api/consulta`) | Solo `BlogCtaBar` |
+| Marco legal del footer | "Código Penal · Decreto 130-2017..." hardcodeado | Constante `LEGAL_FRAME_BADGE` |
+
+### 🟢 Mejoras SEO on-page
+- **Title home**: "Pineda y Asociados — Abogados en Nacaome, Valle — Honduras" → **"Abogados en Nacaome, Valle | Pineda y Asociados"** (45 chars, óptimo SERP)
+- **Meta description home**: acortada a 149 chars con intención local clara (WhatsApp +504 9536-3724)
+- **Title absoluto** en home para evitar redundancia "Pineda y Asociados — ... Pineda y Asociados"
+
+### 🟢 Verificación técnica (curl)
+- HTTP→HTTPS: `308 Permanent Redirect` ✅
+- `pinedayasociadoshn.com` → `www.`: `308` ✅ (canonical www)
+- Hora servidor correcta ✅
+- Sitemap: 220 URLs, 0 fugas intranet ✅
+
+### Regla editorial establecida
+**Un aviso legal visible por página.** El `<LegalDisclaimer>` es el único disclaimer que debe mostrarse. El footer usa `LEGAL_DISCLAIMER_SHORT` (no duplica). Los posts generados vía API ya no concatenan disclaimer al body.
+
+### Validación
+- lint: 0 errores nuevos (1 preexistente en calculadora/hooks.ts)
+- build: Compiled successfully + Finished TypeScript
+- test: 381/382 OK (1 fallo preexistente circunstancia-picker)
+
+---
+
 ## Release 59 — Fase 2: Supuesto Penal Calculable - Diseño de schema (2026-06-16)
 
 ### ⚠️ ESTADO: DISEÑADO, PENDIENTE EJECUCIÓN EN PRODUCCIÓN

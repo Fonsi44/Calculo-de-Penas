@@ -100,9 +100,9 @@ const BLOG_STRUCTURE_CONCLUSION = `\n
 <h2>Conclusión</h2>
 <p>Conocer sus derechos y los procedimientos legales aplicables le permite tomar decisiones informadas. En <strong>Pineda y Asociados</strong> contamos con un equipo de abogados especializados con presencia en Nacaome, Choluteca y San Lorenzo, atendiendo casos en toda la zona sur de Honduras.</p>
 <p>Si necesita orientación legal personalizada, puede <strong>solicitar una consulta inicial</strong> para recibir asesoría adaptada a su caso concreto.</p>`;
-
-const SEO_FOOTER = `\n
-<p><em>Este artículo tiene carácter informativo y no sustituye la asesoría legal personalizada. Para obtener orientación específica sobre su caso, contacte con un abogado colegiado en Honduras.</em></p>`;
+// El disclaimer legal (antes SEO_FOOTER) ya NO se concatena al body: el
+// componente <LegalDisclaimer> del JSX lo muestra de forma centralizada.
+// Ver lib/legal-disclaimer.ts y components/marketing/legal-disclaimer.tsx.
 
 function generateSlug(topic: string): string {
   return topic
@@ -135,7 +135,10 @@ export async function POST(request: Request) {
     const description = `Guía legal sobre ${parsed.topic.toLowerCase()} en Honduras. Aspectos clave, requisitos y recomendaciones prácticas del equipo de Pineda y Asociados.`;
     const intro = getIntro(parsed.category, parsed.topic);
     const structure = getStructure(parsed.category);
-    const content = `${intro}${structure}${BLOG_STRUCTURE_CONCLUSION}${SEO_FOOTER}`;
+    // El disclaimer legal ya NO se concatena al body del post: el componente
+    // <LegalDisclaimer> lo renderiza de forma centralizada en el JSX de la
+    // página del post, evitando doble disclaimer (body + JSX).
+    const content = `${intro}${structure}${BLOG_STRUCTURE_CONCLUSION}`;
 
     const estimateReadingTime = Math.max(2, Math.round(content.replace(/<[^>]*>/g, '').split(/\s+/).length / 200)) + ' min';
 

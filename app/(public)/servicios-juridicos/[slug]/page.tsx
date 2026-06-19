@@ -5,7 +5,7 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { areasGenerales, getAreaBySlug, type AreaStandalone } from '@/data/areas-juridicas';
 import { areaHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
@@ -274,24 +274,24 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
         </div>
       </Section>
 
-      <Section spacing="md">
-        {(() => {
-          const magnet = getLeadMagnetByArea(slug);
-          if (magnet) {
-            return (
+      {/* CTA de captación (lead magnet cuando existe el área) + cierre.
+          Reducido de 4 a 2 bloques CTA: eliminado ContactStrip (redundante con
+          ConsultationCTA y con el header global) para evitar saturación visual. */}
+      {(() => {
+        const magnet = getLeadMagnetByArea(slug);
+        if (magnet) {
+          return (
+            <Section spacing="md">
               <LeadMagnetCTA
                 area={magnet.area}
                 titulo={magnet.titulo}
                 descripcion={magnet.descripcion}
               />
-            );
-          }
-          return null;
-        })()}
-        <div className="mt-2">
-          <ContactStrip />
-        </div>
-      </Section>
+            </Section>
+          );
+        }
+        return null;
+      })()}
 
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
