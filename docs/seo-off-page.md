@@ -28,32 +28,34 @@ La señal local más fuerte para "abogados en Nacaome", "abogados en Valle",
 
 ## 2. Bing Webmaster Tools (resuelve IndexNow 403)
 
-**Estado técnico (Jun 2026 — Release 71):** la integración IndexNow está
-completamente verificada a nivel de código, despliegue y producción. La key
-responde HTTP 200 con el contenido correcto en
-`https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt`.
-El **dominio sigue SIN verificar en Bing Webmaster Tools**, que es la causa
-raíz del histórico `403 UserForbiddedToAccessSite` y del **0% de indexación**
-(CSV Bing: 9.450 URLs enviadas 7-11/6/2026, 0 rastreadas, 0 indexadas).
+**Estado técnico:** la integración IndexNow está completamente verificada a
+nivel de código, despliegue y producción. La key responde HTTP 200 con el
+contenido correcto en `https://www.pinedayasociadoshn.com/<KEY>.txt` (el nombre
+del archivo es la propia clave; no se fija literal en la doc para evitar
+versiones obsoletas — verifícala con `npm run indexnow:dry`, que aborta si
+`INDEXNOW_KEY` no coincide con `public/<KEY>.txt`). El **dominio sigue SIN
+verificar en Bing Webmaster Tools**, que es la causa raíz del histórico
+`403 UserForbiddedToAccessSite` y del **0% de indexación** (CSV Bing: 9.450 URLs
+enviadas 7-11/6/2026, 0 rastreadas, 0 indexadas).
 
 ### Causas raíz resueltas (Releases 70 + 71)
 
 | Causa | Estado |
 |---|---|
-| `INDEXNOW_KEY` del entorno != archivo público commitado | ✅ Corregida + **verificada en producción** (env local + Vercel = `6faddf83…`, coincide con `public/6faddf83…txt`, HTTP 200) |
+| `INDEXNOW_KEY` del entorno != archivo público commitado | ✅ Corregida + **verificada en producción** (env local + Vercel coincide con `public/<KEY>.txt`, HTTP 200) |
 | 20 URLs inexistentes `/blog/categoria/...` (404) | ✅ Corregidas (script solo envía rutas reales `/blog/{category}`) |
 | `postbuild` reenviaba 57 URLs en cada build | ✅ Dry-run por defecto; envío real solo con `ENABLE_INDEXNOW_SUBMIT=true` |
 | Sin throttle / cache de reenvío | ✅ `.indexnow-cache.json` con throttle 24h |
 | Landings locales no se enviaban | ✅ Incluidas (nacaome, choluteca, san-lorenzo) |
 | `INDEXNOW_KEY` faltante en Vercel Production | ✅ Añadida como variable encriptada (verificada via `vercel env ls`) |
 
-### Validación en producción (2026-06-19)
+### Validación en producción
 
 ```bash
-# Key pública accesible y correcta (VERIFICADO):
-curl -s https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt
+# Key pública accesible y correcta (VERIFICADO): el script aborta si no coincide
+curl -s https://www.pinedayasociadoshn.com/$(grep -oP 'INDEXNOW_KEY=\K.*' .env).txt
 # → HTTP 200, Content-Type: text/plain; charset=utf-8
-# → 6faddf836cbd448fad29083c8f31d573 (coincide exactamente con la clave)
+# → <clave> (coincide exactamente con INDEXNOW_KEY)
 
 # Auditar qué enviaría el script sin tocar Bing:
 npm run indexnow:audit    # catálogo completo en dry-run (55 URLs, 0 excluidas)

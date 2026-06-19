@@ -70,7 +70,10 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? undefined,
     other: {
-      'msvalidate.01': '0D7F7E114D9C22D0332B7769EBE015D4',
+      // Verificación de Bing Webmaster Tools. Antes estaba hardcodeada; ahora
+      // se lee de NEXT_PUBLIC_BING_VERIFICATION con el valor histórico como
+      // fallback para no romper la verificación existente mientras se migra a env.
+      'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION ?? '0D7F7E114D9C22D0332B7769EBE015D4',
     },
   },
 };

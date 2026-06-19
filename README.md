@@ -86,7 +86,7 @@ app/
   api/                     → API routes (18+ endpoints)
 lib/
   rules/v1/                → Motor de cálculo modular (9 archivos)
-   schema.ts                → Esquema Drizzle ORM (14 tablas)
+   schema.ts                → Esquema Drizzle ORM (35 tablas)
   auth.ts                  → JWT + bcrypt
   rate-limit.ts            → Rate limiting via Neon DB
   audit.ts                 → Auditoría no bloqueante
@@ -102,7 +102,7 @@ components/
   ui/                      → 13 componentes reutilizables
   domain/                  → Componentes de dominio legal
   layout/                  → Layout app-sidebar, app-shell
-tests/                     → 13 suites (185 tests)
+tests/                     → 18 suites (382 tests)
 e2e/                       → Tests E2E (Playwright, 29 tests)
 docs/                      → Documentación técnica (15 archivos)
 ```
@@ -130,7 +130,7 @@ docs/                      → Documentación técnica (15 archivos)
 ```bash
 npm install
 npm run dev            # Servidor de desarrollo
-npm test               # 185 tests unitarios (Vitest, 13 suites)
+npm test               # 382 tests unitarios (Vitest, 18 suites)
 npm run test:e2e       # 29 tests E2E (Playwright)
 npm run lint           # ESLint (0 errores, 0 warnings)
 npm run build          # Turbopack build + TypeScript check
@@ -718,7 +718,7 @@ Los artículos se identifican por su formato canónico (`Art. NNN CP`). Para bú
 #### Tests de delitos
 
 - `tests/catalogo-delitos.test.ts` — 129 tests: integridad del catálogo, estados de validación, normalización de artículos, penas del Art. 342 CP, alerta de datos no verificados y cálculo de muestra representativa.
-- `npm test` — 314 tests totales (14 archivos).
+- `npm test` — 382 tests totales (18 archivos).
 
 ---
 
@@ -839,15 +839,22 @@ Ambos scripts pueden añadirse a GitHub Actions:
 
 ## IndexNow
 
-### Estado actual (Jun 2026 — Release 71: key validada en producción)
-- **Variable de entorno**: `INDEXNOW_KEY=6faddf836cbd448fad29083c8f31d573` en `.env` y en Vercel Production (verificada: valor coincide con archivo público).
-- **Archivo de verificación**: `public/6faddf836cbd448fad29083c8f31d573.txt` (contiene exactamente la clave).
+### Estado actual
+- **Variable de entorno**: `INDEXNOW_KEY` en `.env` / Vercel Production. La clave
+  **no se documenta literalmente aquí**: se sirve públicamente por diseño desde
+  `public/<KEY>.txt` y el endpoint `/api/indexnow-key`, pero mantenerla fuera
+  de la doc evita que versiones obsoletas confundan a operadores.
+- **Archivo de verificación**: `public/<KEY>.txt` (su nombre es la propia clave
+  y su contenido debe coincidir byte a byte con `INDEXNOW_KEY`). Genera una nueva
+  en https://www.bing.com/indexnow/getstarted.
 - **Endpoint**: `https://api.indexnow.org/indexnow`.
 - **Script**: `scripts/submit-indexnow.mjs` — modo **dry-run por defecto**; el `postbuild` no envía nada salvo `ENABLE_INDEXNOW_SUBMIT=true`.
-- **Validación en producción (2026-06-19)**: `GET https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt` → **HTTP 200**, `text/plain`, body `6faddf836cbd448fad29083c8f31d573` ✅
-- **Causas raíz resueltas**:
-  1. ✅ `INDEXNOW_KEY` corregida: ahora coincide byte a byte con `public/6faddf83…txt` (verificado en Vercel Production + local).
-  2. ❌ El dominio **sigue sin verificar en Bing Webmaster Tools** — causa del `403 UserForbiddedToAccessSite`. Ver `docs/seo-off-page.md` §2.
+- **Validación de coherencia**: el script `submit-indexnow.mjs` aborta si
+  `INDEXNOW_KEY` no coincide exactamente con el contenido de `public/<KEY>.txt`
+  (Bing exige coincidencia byte a byte). Verifícalo con `npm run indexnow:dry`.
+- **Causas raíz de errores históricos resueltas**:
+  1. ✅ `INDEXNOW_KEY` coincide con `public/<KEY>.txt`.
+  2. ❌ El dominio **sigue sin verificar en Bing Webmaster Tools** — causa del histórico `403 UserForbiddedToAccessSite`. Ver `docs/seo-off-party.md` §2.
   3. ✅ URLs inexistentes `/blog/categoria/...` eliminadas: solo rutas reales.
   4. ✅ Envío masivo eliminado: dry-run por defecto + modo incremental con cache 24h.
 
@@ -875,10 +882,6 @@ verificado** en Bing Webmaster Tools. Para resolverlo:
    "Discovered" → "Crawled" → "Indexed".
 6. Revisar periódicamente el reporte IndexNow en Bing WMT para verificar
    que las URLs enviadas aparecen como "Submitted URLs" y pasan a procesadas.
-
-> **Validación confirmada (2026-06-19):** `https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt`
-> → HTTP 200, `text/plain`, contenido `6faddf836cbd448fad29083c8f31d573`. La key es correcta.
-> El único bloqueo pendiente es la verificación del dominio en Bing Webmaster Tools.
 
 ---
 
@@ -1094,11 +1097,11 @@ El script:
 
 ### IndexNow
 
-- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`) y también como archivo estático `public/6faddf836cbd448fad29083c8f31d573.txt` (ambos deben coincidir — validado por el script y verificado en producción).
+- Clave servida vía `GET /api/indexnow-key` (usa `INDEXNOW_KEY` de `.env.local`) y también como archivo estático `public/<KEY>.txt` (ambos deben coincidir byte a byte — validado por el script y verificado en producción). No se fija la key literal en la doc para evitar versiones obsoletas.
 - Script: `scripts/submit-indexnow.mjs` — **dry-run por defecto**; el `postbuild` NO envía salvo `ENABLE_INDEXNOW_SUBMIT=true`. Modos: core (11), sample (5), incremental (cache 24h), full (máx. 500).
 - Solo envía URLs públicas reales y canónicas (excluye intranet, api, admin, calculadora, casos, cp, delitos, atajos, preview, login, 404, query strings).
 - Si `INDEXNOW_KEY` no coincide con `public/<KEY>.txt`, el script aborta (Bing exige coincidencia exacta).
-- Validado en producción: `https://www.pinedayasociadoshn.com/6faddf836cbd448fad29083c8f31d573.txt` → HTTP 200, contenido coincide ✅
+- Validado en producción: el archivo `public/<KEY>.txt` responde HTTP 200 con contenido coincidente con `INDEXNOW_KEY` (verifícalo con `npm run indexnow:dry`, que aborta si no coinciden). ✅
 - Generar clave en: https://www.bing.com/indexnow/getstarted
 - **Pendiente externo crítico**: verificar el dominio en Bing Webmaster Tools (causa del histórico 0% indexación — error 403). Ver `docs/seo-off-page.md` §2.
 

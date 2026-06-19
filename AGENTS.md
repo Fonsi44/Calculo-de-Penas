@@ -88,7 +88,7 @@ app/
     [transport]/           → Transport handler genérico
 lib/
   rules/v1/                → Motor de cálculo (9 archivos)
-  schema.ts                → Esquema Drizzle ORM (15 tablas)
+  schema.ts                → Esquema Drizzle ORM (35 tablas)
   auth.ts                  → JWT + bcrypt
   audit.ts                 → Auditoría no bloqueante
   blog-db.ts               → Blog: helper de lectura (DB)
@@ -150,7 +150,16 @@ proxy.ts                   → Edge proxy (reemplaza middleware.ts)
 - **ISR**: Páginas públicas con `revalidate = 3600` (1 hora). On-demand via `revalidatePath()`
 - **Layout**: `app/layout.tsx` usa `RootShell` que oculta sidebar en rutas públicas y admin
 
-### Base de datos (15 tablas)
+### Base de datos (35 tablas)
+
+> **Fuente de verdad:** `lib/schema.ts`. La lista completa y actualizada de
+> tablas vive ahí; esta tabla enumera solo las principales para contexto. Las
+> fases CMS y Fase 2 (supuestos penales) añadieron el resto (`categorias_blog`,
+> `categorias_faq`, `tags`, `posts_tags`, `autores`, `paginas_cms`,
+> `areas_juridicas`, `medios`, `versiones_contenido`, `redirects`, `menus`,
+> `roles`, `permisos`, `roles_permisos`, `usuarios_roles`,
+> `newsletter_subscriptions`, `supuestos_penales`, `agravantes_especificas`,
+> `remisiones_normativas`).
 
 | Tabla | Propósito |
 |-------|-----------|
@@ -162,11 +171,11 @@ proxy.ts                   → Edge proxy (reemplaza middleware.ts)
 | `usuarios` | Usuarios del sistema (con `active`, `must_change_password`) |
 | `casos` | Casos legales |
 | `calculos` | Cálculos de penas (JSONB) |
-| `auditoria_eventos` | Auditoría de acciones (con enum de 25+ acciones) |
+| `auditoria_eventos` | Auditoría de acciones (con enum de 50+ acciones) |
 | `rate_limits` | Rate limiting |
 | `aceptaciones_legales` | Aceptaciones de términos |
 | `solicitudes_consulta` | Solicitudes de consulta pública |
-| `blog_posts` | Posts del blog |
+| `blog_posts` | Posts del blog (con SEO meta, noindex, canonical, review workflow) |
 | `faq_entries` | Entradas de FAQ |
 | `configuracion_sitio` | Configuración clave-valor |
 | `page_content` | Contenido de páginas públicas editable por secciones |
