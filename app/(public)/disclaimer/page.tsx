@@ -4,9 +4,9 @@ import { site } from '@/lib/site';
 import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
-  title: 'Disclaimer · Exención de responsabilidad',
+  title: 'Exención de Responsabilidad',
   description:
-    'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, Honduras, sobre la calculadora de penas, contenidos publicados y servicios jurídicos.',
+    'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre la calculadora de penas, contenidos publicados y servicios legales.',
   alternates: { canonical: '/disclaimer' },
   robots: { index: true, follow: true },
   twitter: {

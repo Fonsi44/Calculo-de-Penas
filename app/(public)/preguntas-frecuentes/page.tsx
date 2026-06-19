@@ -122,19 +122,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const categoriasFaq = await getFaqsForPublicPage();
   const total = categoriasFaq.reduce((acc, c) => acc + c.preguntas.length, 0);
   return {
-    title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department}`,
-    description: `${total} respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
+    title: `Preguntas Frecuentes en Honduras`,
+    description: `${total} respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con ${site.name}.`,
     alternates: { canonical: '/preguntas-frecuentes' },
     keywords: ['preguntas frecuentes legales Honduras', 'dudas derecho penal', 'FAQ abogados Honduras', 'consultas legales frecuentes', 'derecho familia preguntas', 'proceso penal dudas', 'honorarios abogados Honduras'],
     twitter: {
       card: 'summary_large_image',
-      title: `${total} Preguntas Frecuentes de Derecho en Honduras — Respuestas Claras`,
-      description: `${total} respuestas sobre defensa penal, familia, laboral, civil, mercantil y más. Resuelva sus dudas legales con ${site.name}.`,
+      title: `Preguntas Frecuentes en Honduras`,
+      description: `${total} respuestas sobre defensa penal, familia, laboral, civil, mercantil y más. Resuelva sus dudas con ${site.name}.`,
       images: [`${site.url}/og-image.png`],
     },
     openGraph: {
-      title: `Preguntas Frecuentes — Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
-      description: `${total} respuestas a las preguntas más frecuentes sobre defensa penal, derecho de familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas legales con ${site.name}.`,
+      title: `Preguntas Frecuentes en Honduras`,
+      description: `${total} respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con ${site.name}.`,
       url: `${site.url}/preguntas-frecuentes`,
       siteName: site.name,
       locale: 'es_HN',

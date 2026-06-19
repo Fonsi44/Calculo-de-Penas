@@ -18,24 +18,24 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
-  title: `El Despacho — Bufete multidisciplinar en ${site.address.city}`,
-  description: `Conozca ${site.name}, bufete multidisciplinario en Nacaome, Valle, Honduras. Más de 15 años de ejercicio profesional, defensa penal técnica y soluciones legales estratégicas en derecho empresarial, de familia, laboral y civil. Atención directa del abogado responsable.`,
+  title: `El Despacho — Bufete en ${site.address.city}, ${site.address.department}`,
+  description: `Conozca Pineda y Asociados, bufete en Nacaome, Valle. Más de 15 años de defensa penal y soluciones legales en derecho empresarial, de familia, laboral y civil.`,
   alternates: { canonical: '/despacho' },
   keywords: ['bufete Nacaome', 'despacho jurídico Valle Honduras', 'abogados Nacaome Valle', 'equipo legal sur Honduras', 'misión bufete jurídico', 'valores despacho abogados', 'trayectoria legal Nacaome', 'consulta confidencial Valle'],
   twitter: {
     card: 'summary_large_image',
-    title: `El Despacho — Bufete multidisciplinar en ${site.address.city}, ${site.address.department}`,
-    description: `Conoce ${site.name}: bufete multidisciplinario con más de 15 años de ejercicio profesional. Rigor técnico y soluciones legales estratégicas.`,
+    title: `El Despacho — Bufete en ${site.address.city}, ${site.address.department}`,
+    description: `Conoce Pineda y Asociados: bufete con más de 15 años de ejercicio profesional. Rigor técnico y soluciones legales estratégicas.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `El Despacho — Bufete multidisciplinar en ${site.address.city} | ${site.name}`,
-    description: `Conoce ${site.name}: bufete multidisciplinario con sede en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
+    title: `El Despacho — Bufete en ${site.address.city}, ${site.address.department}`,
+    description: `Conoce Pineda y Asociados: bufete en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
     url: `${site.url}/despacho`,
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`, width: 1200, height: 630, alt: `${site.name} — Bufete jurídico en Nacaome, Valle` }],
+    images: [{ url: `${site.url}/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`, width: 1200, height: 630, alt: `${site.name} — Bufete jurídico en Nacaome, Valle` }],
   },
 };
 

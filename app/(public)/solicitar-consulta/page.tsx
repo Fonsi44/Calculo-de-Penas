@@ -24,19 +24,19 @@ import { getPageContent } from '@/lib/page-content-db';
 import { webpageSchema } from '@/lib/seo-schema';
 
 export const metadata: Metadata = {
-  title: 'Solicitar Consulta Legal Gratuita | Abogados en Nacaome, Valle',
-  description: 'Solicite una consulta legal confidencial y sin costo con un abogado en Nacaome, Valle. Evaluación inicial de su caso penal, de familia, laboral o civil. Le respondemos en horario hábil con presupuesto por escrito.',
+  title: 'Consulte a un Abogado en Nacaome, Valle',
+  description: 'Solicite una consulta confidencial sin costo en Nacaome, Valle. Evaluación inicial de su caso penal, familiar, laboral o civil con presupuesto por escrito.',
   alternates: { canonical: '/solicitar-consulta' },
   keywords: ['consulta legal gratuita Nacaome', 'abogado consulta Valle', 'asesoría legal sin costo sur Honduras', 'consulta penal confidencial Nacaome', 'contactar abogado San Lorenzo', 'cita legal Choluteca'],
   twitter: {
     card: 'summary_large_image',
-    title: 'Consulta Legal Gratuita — Abogados en Nacaome, Valle',
-    description: 'Solicite una consulta confidencial sin costo. Abogados penalistas en Nacaome, Valle. Le respondemos en horario hábil.',
+    title: 'Consulte a un Abogado en Nacaome, Valle',
+    description: 'Solicite una consulta confidencial sin costo. Abogados en Nacaome, Valle. Le respondemos en horario hábil.',
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: 'Solicitar Consulta Legal Gratuita | Abogados en Nacaome, Valle | Pineda y Asociados',
-    description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
+    title: 'Consulte a un Abogado en Nacaome, Valle',
+    description: 'Solicite una consulta confidencial con un abogado en Nacaome, Valle. Le respondemos en horario hábil.',
     url: `${site.url}/solicitar-consulta`,
     siteName: site.name,
     locale: 'es_HN',

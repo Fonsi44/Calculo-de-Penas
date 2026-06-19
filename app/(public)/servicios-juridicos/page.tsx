@@ -15,18 +15,18 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | Ramas principales del derecho`,
-  description: `Cobertura legal integral en la zona sur de Honduras: Nacaome, Valle, San Lorenzo y Choluteca. Derecho penal, de familia, laboral, civil, mercantil, tributario, bancario, administrativo y más. ${site.name}, bufete multidisciplinar.`,
+  title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department}`,
+  description: `Cobertura legal integral: Nacaome, Valle, San Lorenzo y Choluteca. Penal, familia, laboral, civil, mercantil y tributario. Bufete multidisciplinar.`,
   alternates: { canonical: '/servicios-juridicos' },
   keywords: ['servicios jurídicos Nacaome', 'áreas legales Valle', 'ramas del derecho Honduras', 'derecho familia sur Honduras', 'derecho laboral Valle', 'derecho mercantil Nacaome', 'derecho civil Choluteca', 'cobertura legal integral'],
   twitter: {
     card: 'summary_large_image',
-    title: `Servicios Jurídicos en ${site.address.city}, Valle — Ramas principales del derecho`,
-    description: `Cobertura legal integral en Nacaome, Valle: penal, familia, laboral, civil, mercantil, tributario, bancario y más. ${site.name}.`,
+    title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department}`,
+    description: `Cobertura legal integral en Nacaome, Valle: penal, familia, laboral, civil, mercantil, tributario y más.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Servicios Jurídicos en ${site.address.city}, Valle — Ramas principales del derecho | ${site.name}`,
+    title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department}`,
     description: `Cobertura legal integral en Nacaome, Valle, Honduras: las ramas principales del derecho bajo un mismo bufete.`,
     url: `${site.url}/servicios-juridicos`,
     siteName: site.name,
