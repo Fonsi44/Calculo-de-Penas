@@ -325,9 +325,17 @@ registrarán pageviews en GA4.
 
 > Un bufete de Nacaome (Valle, Honduras) no debería tener España y EE. UU. como
 > top países, ni Hong Kong/China en el top 5. Esto indica **tráfico de bots,
-> VPN o proxies**, no visitantes reales. **Acción recomendada (externa):**
-> activar en GA4 Admin → Flujo de datos → Configuración → "Excluir tráfico de
-> bots conocidos" y revisar filtros de IP.
+> VPN o proxies**, no visitantes reales.
+>
+> **Nota sobre filtrado de bots:** a diferencia de Universal Analytics, GA4
+> **excluye automáticamente el tráfico de bots y spiders conocidos** (lista
+> IAB/ABC) a nivel de propiedad — **no hay toggle para activar/desactivar**.
+> El tráfico sospechoso que se observa NO son "bots conocidos" del listado
+> IAB/ABC, sino bots sofisticados/VPN no catalogados que el filtro automático
+> no puede captar. La mitigación real es la que ya se aplicó en este cambio
+> (filtrar `/intranet/*` del script de GA4). Para descartar tráfico del
+> personal del bufete, conviene añadir un filtro de IP interna cuando se
+> disponga de las IPs de la oficina.
 
 ### Dispositivos
 - Desktop: 141 usuarios (85 %)
@@ -452,7 +460,7 @@ rastrear.
 | 4 | Propiedad GSC con typo "asocioshn" | 🟡 Importante | GSC UI | Acción externa |
 | 5 | Clarity no carga en prod | 🟡 Importante | Vercel env | Acción externa |
 | 6 | Meta `msvalidate.01` ausente en HTML | 🟢 Menor | Código | Documentado |
-| 7 | Tráfico bots/VPN sospechoso | 🟡 Importante | GA4 Admin | Acción externa |
+| 7 | Tráfico bots/VPN sospechoso | 🟡 Importante | GA4 Admin | Mitigado (filtro `/intranet`) |
 | 8 | Eventos no marcados conversión | 🟡 Importante | GA4 Admin | Acción externa |
 | 9 | `/como-llegar` no indexada | 🟡 Importante | GSC + enlaces | Acción externa |
 
@@ -524,8 +532,13 @@ rastrear.
    - `phone_click`
    - `form_click`
    - `lead_generated`
-8. **Excluir tráfico de bots conocidos:** GA4 → Admin → Flujo de datos →
-   (web) → Configuración → activar "Excluir el tráfico de bots".
+8. ~~**Excluir tráfico de bots conocidos**~~ **✅ No aplica en GA4.** A
+   diferencia de Universal Analytics, GA4 excluye automáticamente el tráfico
+   de bots/spiders conocidos (lista IAB/ABC) a nivel de propiedad. No existe
+   toggle para activar/desactivar. El tráfico sospechoso observado (España,
+   EE. UU., Hong Kong, China como top países) son bots/VPN **no catalogados**
+   que el filtro automático no captura; la mitigación real ya se aplicó en
+   este cambio (filtrar `/intranet/*` del script de GA4).
 9. **Revisar filtros de IP internos** para excluir el tráfico del personal
    del bufete (IPs de la oficina).
 
