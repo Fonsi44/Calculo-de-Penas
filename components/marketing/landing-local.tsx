@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, MapPin, Clock, Phone, MessageCircle, Scale } from 'lucide-react';
+import { ArrowRight, MapPin, Clock, Phone, MessageCircle, Scale, BookOpen } from 'lucide-react';
 import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
@@ -17,43 +17,11 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const url = absoluteUrl(canonical);
   const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
 
-  // Schema: LegalService con areaServed específica de la ciudad + FAQPage + BreadcrumbList.
-  // Reusamos la entidad principal del sitio vía @id para consolidar autoridad.
+  // Schema: FAQPage + BreadcrumbList específicos de la landing.
+  // NOTA: LegalService/Organization/WebSite ya los inyecta el layout público
+  // (con areaServed de 5 ciudades). Aquí solo añadimos lo específico de la
+  // página para no duplicar entidades con el mismo @id.
   const ldSchemas = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'LegalService',
-      '@id': `${site.url}/#legal-service`,
-      name: site.name,
-      url: site.url,
-      telephone: site.phone,
-      image: `${site.url}/og-image.png`,
-      logo: `${site.url}/og-image.png`,
-      priceRange: '$$',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: `${site.address.line1}, ${site.address.line2}`,
-        addressLocality: site.address.city,
-        addressRegion: site.address.department,
-        addressCountry: site.address.countryCode,
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: landing.geo?.lat ?? site.geo.latitude,
-        longitude: landing.geo?.lng ?? site.geo.longitude,
-      },
-      areaServed: [
-        { '@type': 'City', name: landing.ciudad },
-        { '@type': 'State', name: landing.departamento },
-        { '@type': 'Country', name: 'Honduras' },
-      ],
-      openingHoursSpecification: site.hoursStructured.map((h) => ({
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: h.dayOfWeek,
-        opens: h.opens,
-        closes: h.closes,
-      })),
-    },
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
@@ -189,6 +157,38 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           ))}
         </div>
       </Section>
+
+      {/* Artículos relacionados (enlazado interno landing ↔ blog) */}
+      {landing.postsRelacionados && landing.postsRelacionados.length > 0 && (
+        <Section background="default" spacing="md">
+          <SectionHeader
+            eyebrow="Artículos relacionados"
+            title={`Más información para ${landing.ciudad}`}
+            subtitle="Guías prácticas escritas por nuestro equipo sobre trámites y asuntos legales en la región."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {landing.postsRelacionados.map((p) => (
+              <Link
+                key={`${p.categoria}/${p.slug}`}
+                href={`/blog/${p.categoria}/${p.slug}`}
+                className="group block focus-visible:outline-none"
+              >
+                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
+                    <BookOpen size={20} aria-hidden="true" />
+                  </div>
+                  <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                    {p.titulo}
+                  </h3>
+                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                    Leer artículo <ArrowRight size={12} />
+                  </span>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* CTA WhatsApp destacado */}
       <Section background="muted" spacing="sm">

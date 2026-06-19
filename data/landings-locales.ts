@@ -43,6 +43,9 @@ export type LandingLocal = {
   faqs: { pregunta: string; respuesta: string }[];
   /** Datos estructurados geográficos */
   geo?: { lat: number; lng: number };
+  /** Slugs de posts del blog relacionados con la ciudad (categoría/slug)
+   *  para enlazado interno bidireccional landing ↔ blog. */
+  postsRelacionados?: { categoria: string; slug: string; titulo: string }[];
 };
 
 export const landingsLocales: LandingLocal[] = [
@@ -106,6 +109,10 @@ export const landingsLocales: LandingLocal[] = [
       },
     ],
     geo: { lat: 13.53, lng: -87.48 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-nacaome', titulo: 'Abogados en Nacaome: cómo elegir el despacho adecuado' },
+      { categoria: 'practica-legal', slug: 'tramites-legales-nacaome', titulo: 'Trámites legales en Nacaome, Valle' },
+    ],
   },
   {
     slug: 'choluteca',
@@ -167,6 +174,9 @@ export const landingsLocales: LandingLocal[] = [
       },
     ],
     geo: { lat: 13.3, lng: -87.17 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-choluteca', titulo: 'Abogados en Choluteca: guía para elegir despacho' },
+    ],
   },
   {
     slug: 'san-lorenzo',
@@ -228,6 +238,9 @@ export const landingsLocales: LandingLocal[] = [
       },
     ],
     geo: { lat: 13.42, lng: -87.45 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-san-lorenzo', titulo: 'Abogados en San Lorenzo: asesoría legal en el puerto' },
+    ],
   },
 ];
 

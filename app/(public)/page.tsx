@@ -26,6 +26,7 @@ import { Card } from '@/components/ui/card';
 import { TestimonialsSection } from '@/components/marketing/testimonials-section';
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
+import { landingsLocales } from '@/data/landings-locales';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
@@ -494,6 +495,40 @@ export default async function HomePage() {
               cómo llegar a Nacaome <ArrowRight size={12} />
             </Link>
           </div>
+        </div>
+      </Section>
+
+      {/* Cobertura regional — enlazado interno a landings locales (SEO local) */}
+      <Section background="muted" spacing="md" ariaLabel="Cobertura regional">
+        <SectionHeader
+          eyebrow="Cobertura"
+          title="Abogados en el sur de Honduras"
+          subtitle="Atendemos en Nacaome, San Lorenzo, Choluteca y la zona sur. Conozca nuestra cobertura por ciudad."
+          align="center"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+          {landingsLocales.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/abogados-en-${c.slug}`}
+              className="group block focus-visible:outline-none"
+            >
+              <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                  <MapPin size={20} aria-hidden="true" />
+                </div>
+                <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
+                  {`Abogados en ${c.ciudad}`}
+                </h3>
+                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
+                  {c.departamento}, Honduras
+                </p>
+                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                  Ver cobertura <ArrowRight size={12} />
+                </span>
+              </Card>
+            </Link>
+          ))}
         </div>
       </Section>
 
