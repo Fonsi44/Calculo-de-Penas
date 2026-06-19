@@ -40,16 +40,44 @@ Detecta regresiones de performance/accesibilidad/SEO antes de merge.
 > tiene tráfico bajo y sin datos CrUX reales aún. Escalaremos a 2500ms tras
 > confirmar que el baseline lo permite.
 
-## Baseline real (se rellena tras primer run)
+## Baseline real
+
+Medido en GitHub Actions (run [#27838400980](https://github.com/Fonsi44/Calculo-de-Penas/actions/runs/27838400980), 2026-06-19) contra `localhost:3100` (build de producción local en el runner, sin latencia de red ni TLS).
 
 | Página | Perf | A11y | BP | SEO | FCP | LCP | CLS | TBT |
 |---|---|---|---|---|---|---|---|---|
-| `/` | _pendiente_ | | | | | | | |
-| `/servicios-juridicos` | _pendiente_ | | | | | | | |
-| `/derecho-penal` | _pendiente_ | | | | | | | |
-| `/abogados-en-nacaome` | _pendiente_ | | | | | | | |
+| `/` | 100 | 96 | 96 | 100 | 336ms | 740ms | 0.000 | 0ms |
+| `/servicios-juridicos` | 100 | 96 | 96 | 100 | 331ms | 705ms | 0.000 | 0ms |
+| `/derecho-penal` | 100 | 96 | 96 | 100 | 331ms | 703ms | 0.000 | 0ms |
+| `/abogados-en-nacaome` | 100 | 91 | 96 | 100 | 331ms | 660ms | 0.000 | 0ms |
 
-_Última actualización: pendiente de primer run de GitHub Actions._
+_Última actualización: 2026-06-19 (run #27838400980)._
+
+### Observaciones del baseline
+
+- **Performance 100/100 en las 4 páginas** — el código del sitio es óptimo en local.
+- **FCP ~330ms, LCP ~700ms, CLS 0.000, TBT 0ms** — todos muy por debajo de los
+  thresholds conservadores definidos. En producción los valores serán ligeramente
+  peores por latencia de red, TLS y cold starts de Vercel, pero el margen es amplio.
+- **Accessibility 91-96** — hay margen de mejora (el umbral `warn` es 90).
+- **Best Practices 96/100** — estable.
+- **SEO 100/100** — confirmando que la optimización SEO del sitio es correcta.
+
+### Recomendación de escalado
+
+Dado el baseline tan holgado, **se puede escalar `performance`, `seo` y los CWV
+críticos a `error`** en el próximo commit sin riesgo de bloquear PRs:
+
+```json
+"categories:performance": ["error", { "minScore": 0.9 }],
+"categories:seo": ["error", { "minScore": 0.95 }],
+"largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
+"first-contentful-paint": ["error", { "maxNumericValue": 1800 }],
+"cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }]
+```
+
+Mantener `accessibility` y `best-practices` en `warn` (más sensibles a cambios de
+audit entre versiones de Lighthouse).
 
 ## Cómo escalar thresholds a `error`
 

@@ -65,14 +65,20 @@ jobs:
           curl -sf http://localhost:3100/ > /dev/null || (echo "Server no arrancó"; cat server.log; exit 1)
 
       - name: Run Lighthouse CI
+        # LHCI sube los reports HTML a temporary-public-storage (GCS) e imprime
+        # las URLs públicas en el log. También genera JSON en .lighthouseci/.
         run: npx @lhci/cli@0.14.x autorun --config=./lighthouserc.json
 
-      - name: Upload Lighthouse report
+      - name: Upload Lighthouse artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
+          # .lighthouseci/ contiene los JSON de cada run + assertion results.
+          # server.log para diagnóstico si el server no arranca.
+          # Los reports HTML van a GCS (URLs en el log del step anterior).
           path: |
-            .lighthouseci/
+            .lighthouseci
             server.log
+          if-no-files-found: warn
           retention-days: 14
