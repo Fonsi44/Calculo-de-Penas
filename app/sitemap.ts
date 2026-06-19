@@ -65,6 +65,63 @@ const IS_DB_REACHABLE = Boolean(
   process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
 );
 
+// Posts con contenido thin/plantilla (ALTO riesgo en docs/blog-duplicity-report.md).
+// No se excluyen del sitemap (siguen accesibles), pero bajan su `priority` a 0.3
+// para que Google priorice el rastreo de URLs de mayor calidad editorial.
+// Cuando se reescriban (Fase 4), quitar el slug de esta lista.
+// Fuente: docs/indexacion-plan-decision.md §2 (Fase 2).
+const THIN_POST_SLUGS = new Set([
+  'sanciones-administrativas-como-defenderse-honduras',
+  'contratos-franquicia-aspectos-legales-honduras',
+  'importar-mercancias-guia-legal-aduanera-honduras',
+  'pineda-asociados-bufete-multidisciplinario-honduras',
+  'expropiacion-forzosa-derechos-propietario-honduras',
+  'abogado-civil-choluteca',
+  'impuestos-pequenas-empresas-guia-basica-honduras',
+  'guarda-custodia-menores-tipos-honduras',
+  'abogados-en-choluteca',
+  'abogados-en-san-lorenzo',
+  'visas-inversion-inversionista-rentista-pensionado-honduras',
+  'usucapion-prescripcion-adquisitiva-honduras',
+  'abogado-empresas-san-lorenzo',
+  'abogado-familia-choluteca',
+  'adopcion-requisitos-proceso-honduras',
+  'facturacion-electronica-obligaciones-requisitos-sar-honduras',
+  'registro-sanitario-alimentos-arsa-paso-a-paso-honduras',
+  'delitos-ambientales-como-denunciarlos-honduras',
+  'estafas-fraudes-tipos-penales-honduras',
+  'costos-honorarios-abogados-como-funcionan-honduras',
+  'defensa-penal-menores-edad-honduras',
+  'etapa-investigacion-proceso-penal-honduras',
+  'centro-conciliacion-arbitraje-ccic-guia-honduras',
+  'sobreseimiento-definitivo-provisional-diferencias-honduras',
+  'abogados-en-nacaome',
+  'presentar-denuncia-conadeh-honduras',
+  'abogado-aduanero-san-lorenzo',
+  'habilitacion-clinicas-hospitales-privados-honduras',
+  'tarjetas-credito-intereses-cargos-defensa-honduras',
+  'union-de-hecho-requisitos-derechos-honduras',
+  'abogados-en-amapala-valle',
+  'derecho-de-peticion-instituciones-honduras',
+  'sar-notifica-fiscalizacion-que-hacer-honduras',
+  'arraigo-social-laboral-hondurenos-espana',
+  'contratacion-publica-licitaciones-empresas-honduras',
+  'responsabilidad-medica-mala-praxis-honduras',
+  'contratos-confidencialidad-nda-secreto-comercial-honduras',
+  'tributar-espana-bienes-honduras-guia-fiscal',
+  'competencia-desleal-como-denunciar-honduras',
+  'allanamiento-ilegal-violacion-domicilio-honduras',
+  'lavado-activos-obligaciones-cumplimiento-empresas-honduras',
+  'titulos-valores-cheques-sin-fondo-honduras',
+  'refugio-asilo-quien-puede-solicitarlo-honduras',
+  'herencias-transfronterizas-bienes-honduras-espana',
+  'fianza-medidas-cautelares-proceso-penal-honduras',
+  'como-obtener-rtn-personas-empresas-honduras',
+  'libertad-expresion-redes-sociales-honduras',
+  'constituir-empresa-guia-paso-a-paso-honduras',
+  'prescripcion-deudas-plazos-honduras',
+]);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (site.noindex) {
     return [];
@@ -117,7 +174,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ? new Date(p.updatedAt)
       : new Date(p.publishedAt),
     changeFrequency: 'monthly' as const,
-    priority: 0.8,
+    // Posts thin/plantilla (THIN_POST_SLUGS) bajan a 0.3 para que Google
+    // priorice el rastreo de URLs de mayor calidad. Cuando se reescriban,
+    // quitar el slug de la lista y volverá a 0.8 automáticamente.
+    priority: THIN_POST_SLUGS.has(p.slug) ? 0.3 : 0.8,
   }));
 
   return [...staticRoutes, ...categoryRoutes, ...blogPostRoutes];

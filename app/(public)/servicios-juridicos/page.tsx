@@ -8,6 +8,7 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -107,6 +108,25 @@ export default async function AreasJuridicasPage() {
           </div>
         </Container>
       </Section>
+
+      {/* GUIAS DESTACADAS — enlazado interno servicios→blog.
+          Cubre categorías no penales (laboral, civil, mercantil, familiar) para
+          reforzar el crawl path hacia posts que no reciben enlaces desde /derecho-penal. */}
+      <BlogHighlights
+        slugs={[
+          'jornada-laboral-horas-extra-descansos-honduras',
+          'calcular-prestaciones-laborales-honduras',
+          'testamentos-sucesiones-herencia-honduras',
+          'compraventa-inmuebles-aspectos-legales-honduras',
+          'contratos-mercantiles-esenciales-empresas-honduras',
+          'poder-legal-honduras-cuando-se-necesita',
+        ]}
+        eyebrow="Artículos relacionados"
+        title="Guías de nuestras áreas de práctica"
+        subtitle="Recursos prácticos sobre derecho laboral, civil, mercantil y notarial escritos por nuestro equipo."
+        ctaLabel="Explorar todas las guías del blog"
+        ctaHref="/blog"
+      />
 
       <ConsultationCTA />
 

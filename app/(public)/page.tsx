@@ -28,6 +28,7 @@ import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { landingsLocales } from '@/data/landings-locales';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
@@ -206,6 +207,18 @@ export default async function HomePage() {
 
       {/* TRUST BAR — sellos de autoridad */}
       <TrustBar background="light" />
+
+      {/* GUIAS DESTACADAS — enlazado interno home→blog.
+          Antes había 0 enlaces a posts desde la home (diagnóstico de
+          indexación docs/indexacion-plan-decision.md). Esta sección
+          resuelve el gap de crawl path: 6 posts estratégicos. */}
+      <BlogHighlights
+        eyebrow="Guías jurídicas destacadas"
+        title="Recursos legales para entender su caso"
+        subtitle="Guías prácticas sobre las consultas más frecuentes de nuestros clientes en derecho penal, laboral, familiar y notarial."
+        ctaLabel="Ver todas las guías del blog"
+        ctaHref="/blog"
+      />
 
       {/* CTA BLOG — ligero (sin serializar índice de búsqueda).
           El buscador completo vive en /blog, donde tiene sentido contextual.
