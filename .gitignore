@@ -93,7 +93,9 @@ docs/imagenes/*.jpg
 # screenshots y capturas de pantalla
 *-fullpage.png
 *-mobile.png
+*-desktop.png
 *-after.png
+/docs/screenshots/
 
 # artifactos de test/benchmark
 servicios-juridicos-accessibility.yml

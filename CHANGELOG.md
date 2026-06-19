@@ -1,5 +1,33 @@
 # Changelog
 
+## Release 77 — Auditoría visual frontend: cero hallazgos accionables (2026-06-19)
+
+### Resumen
+Auditoría visual de proporcionalidad, jerarquía tipográfica, espaciado, responsividad y accesibilidad de la web pública. **Resultado: ningún cambio de código de producto requerido.** Cuatro hipótesis iniciales se verificaron y descartaron con evidencia.
+
+### Hipótesis descartadas (con evidencia)
+| Hipótesis | Verificación | Resultado |
+|---|---|---|
+| H1 móvil (30px) demasiado grande | Captura `home-mobile.png` | ❌ Falso — 30px es estándar H1 móvil |
+| CTAs con alturas inconsistentes | Lectura `cta-buttons.tsx` | ❌ Falso — hero CTAs todos `h-12` |
+| Header móvil pesado | Captura `home-mobile.png` | ❌ Falso — peso adecuado |
+| Foco invisible (WCAG 2.4.7 roto) | Probe Playwright producción (8 tabs) | ❌ Falso — **8/8 con anillo visible** |
+
+### Artefactos
+- `scripts/screenshot-audit.cjs` — herramienta QA reutilizable (8 páginas × 2 viewports). Commited.
+- `docs/frontend-visual-audit.md` — documentación completa de la auditoría. Commited.
+- 16 capturas (14MB) — excluidas vía `.gitignore` (no inflar repo).
+- `scripts/probe-focus.cjs` — desechable, eliminado (hipótesis descartada).
+
+### Cambios a `.gitignore`
+- Añadido `*-desktop.png` y `/docs/screenshots/` a exclusiones de capturas.
+
+### Validación
+- Sin cambios de código de producto → no requiere `build`/`test`/`e2e`.
+- Evidencia: 16 capturas Playwright (0px overflow en todas) + probe de foco empírico (8/8 visibles).
+
+---
+
 ## Release 76 — Auditoría externa: title extendido, keyword consistency, falsos positivos documentados (2026-06-19)
 
 ### Correcciones aplicadas
