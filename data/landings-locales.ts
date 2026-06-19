@@ -57,8 +57,9 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 0,
     // Title distinto al de la home para evitar duplicidad en SERP.
     // La home usa "Abogados en Nacaome, Valle | Pineda y Asociados";
-    // esta landing enfatiza la sede física y los servicios concretos.
-    title: 'Bufete de Abogados en Nacaome (Sede) | Pineda y Asociados',
+    // esta landing enfatiza la sede física. NO incluye el nombre del bufete
+    // porque el layout lo añade automáticamente (%s | Pineda y Asociados).
+    title: 'Bufete de Abogados en Nacaome (Sede)',
     description:
       'Sede principal de Pineda y Asociados en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Dirección, horario y WhatsApp: +504 9536-3724.',
     heroEyebrow: 'Sede principal · Valle, Honduras',
@@ -123,7 +124,8 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 52,
-    title: 'Abogados en Choluteca | Pineda y Asociados Honduras',
+    // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
+    title: 'Abogados en Choluteca, Honduras',
     description:
       'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral, mercantil y aduanero. Atención a clientes de Choluteca desde nuestra sede en la zona sur. WhatsApp: +504 9536-3724.',
     heroEyebrow: 'Zona sur · Choluteca, Honduras',
@@ -187,7 +189,8 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Valle',
     sedeFisica: false,
     distanciaKm: 17,
-    title: 'Abogados en San Lorenzo, Valle | Pineda y Asociados',
+    // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
+    title: 'Abogados en San Lorenzo, Valle (Puerto)',
     description:
       'Abogados en San Lorenzo, Valle (Honduras). Puerto y zona comercial del sur. Defensa penal, mercantil, laboral, civil y aduanero. WhatsApp: +504 9536-3724.',
     heroEyebrow: 'Puerto y zona comercial · Valle, Honduras',
