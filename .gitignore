@@ -121,6 +121,9 @@ docs/backups/
 # Contiene métricas temporales, no secretos, pero es estado local por sesión.
 scripts/.seo-audit.json
 
+# output del script de auditoría Bing WMT (scripts/bing-wmt-audit.mjs)
+scripts/.bing-audit.json
+
 # archivo espurio de Windows (redirección mal escapada en cmd)
 # `nul` y `public/nul` son dispositivos reservados de Windows (NULL device).
 # Aparecen como archivos fantasma tras redirecciones mal escapadas en cmd.

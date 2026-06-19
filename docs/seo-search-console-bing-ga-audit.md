@@ -1,12 +1,17 @@
 # Auditoría SEO: Google Search Console, Bing Webmaster Tools y Google Analytics 4
 
-> **Fecha de la auditoría:** 2026-06-20
+> **Fecha de la auditoría:** 2026-06-20 (actualizada 2026-06-19 con datos de
+> la API de Bing Webmaster Tools)
 > **Dominio:** `https://www.pinedayasociadoshn.com`
 > **Property GA4:** `541022095` (Measurement ID `G-L2PGBN3SWK`)
 > **Property GSC:** `sc-domain:pinedayasociadoshn.com`
+> **Bing WMT:** verificado (`IsVerified: true`), API key
+> `9f9940d5665c41d98705255d3704be71` (endpoint
+> `ssl.bing.com/webmaster/api.svc/json/`)
 > **Método:** Consultas reales a las APIs de Google (OAuth refresh token con
-> scopes `webmasters` + `analytics.readonly`), verificación HTTP de producción,
-> y cruce de datos contra el sitemap y el código del repositorio.
+> scopes `webmasters` + `analytics.readonly`) y de Bing Webmaster Tools (API
+> key), verificación HTTP de producción, y cruce de datos contra el sitemap y
+> el código del repositorio.
 > **Script reproducible:** `scripts/seo-audit-gsc-ga4.mjs` (salida en
 > `scripts/.seo-audit.json`).
 
@@ -40,7 +45,9 @@ detalladas en la sección 13.
 | Clicks GSC | 0 |
 | Impresiones GSC | 3 |
 | CTR GSC | 0,00 % |
-| URLs prioritarias indexadas | 8 / 9 |
+| URLs prioritarias indexadas (GSC) | 8 / 9 |
+| URLs en índice Bing | ~30 (de 375 rastreadas en 9 días) |
+| Backlinks Bing | 0 |
 | Usuarios GA4 | 165 |
 | Sesiones GA4 | 228 |
 | Páginas vistas GA4 | 2.944 |
@@ -123,12 +130,19 @@ enlaces internos hacia `/como-llegar` desde la home y `/despacho`.
 
 ## 3. Estado de Bing Webmaster Tools
 
-> **Aclaración de alcance:** no se dispone de credenciales de API para Bing
-> Webmaster Tools (su API requiere autenticación por API key que no está en el
-> proyecto). La verificación se hizo por **inspección HTTP de producción** de
-> las señales que Bing utiliza para la verificación y el rastreo.
+> **Conexión API establecida.** La API key de Bing WMT
+> (`9f9940d5665c41d98705255d3704be71`, idéntica a `INDEXNOW_KEY`) funciona contra
+> el endpoint **`https://ssl.bing.com/webmaster/api.svc/json/`** (path con
+> `/json/`). Los endpoints legacy `/2.0/` y `/v2/` devuelven 404
+> (`EndpointNotFoundException` de WCF) y NO son operativos. Esta sección se
+> obtuvo con llamadas reales a la API el 2026-06-19.
 
-### Verificación del sitio
+### Verificación del sitio — ✅ Confirmado vía API
+- **`GetUserSites`:** HTTP 200. Un sitio verificado:
+  - **URL:** `https://www.pinedayasociadoshn.com/`
+  - **`IsVerified`:** `true` ✅
+  - **`AuthenticationCode`:** `0D7F7E114D9C22D0332B7769EBE015D4`
+  - **`DnsVerificationCode`:** `960747871abae0b0bde7271b499496ea.pinedayasociadoshn.com`
 - **`BingSiteAuth.xml`:** ✅ responde HTTP 200 en
   `https://www.pinedayasociadoshn.com/BingSiteAuth.xml` con contenido válido:
   ```xml
@@ -138,19 +152,81 @@ enlaces internos hacia `/como-llegar` desde la home y `/despacho`.
   </users>
   ```
 - **Meta `msvalidate.01`:** ⚠️ **no presente** en el HTML de la home. No es
-  bloqueante (la verificación vía `BingSiteAuth.xml` es suficiente), pero
-  conviene añadirla para robustez. El valor histórico
+  bloqueante (la verificación vía `BingSiteAuth.xml` + API confirma `IsVerified:
+  true`), pero conviene añadirla para robustez. El valor histórico
   `0D7F7E114D9C22D0332B7769EBE015D4` está como fallback en
   `app/layout.tsx:76` y se publica si `NEXT_PUBLIC_BING_VERIFICATION` no está
   definido — pero **no se renderiza como meta tag** porque el ROOT layout solo
   lo añade al objeto `metadata.verification.other`, y la home usa el layout
-  `(public)` cuyo `verification` no incluye `msvalidate.01`. **Acción
-  recomendada (externa):** añadir la meta tag explícitamente o confirmar en
-  Bing WMT que el sitio está verificado.
+  `(public)` cuyo `verification` no incluye `msvalidate.01`.
+
+### Estadísticas de rastreo — `GetCrawlStats` (9 días, 10–18/06/2026)
+
+| Fecha | Rastreadas | 2xx | 4xx | 5xx | En índice | Errores |
+|-------|-----------|-----|-----|-----|-----------|---------|
+| 2026-06-10 | 4 | 0 | 0 | 0 | 0 | 0 |
+| 2026-06-11 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 2026-06-12 | 33 | 28 | 1 | 0 | 28 | 1 |
+| 2026-06-13 | 35 | 29 | 1 | 0 | 29 | 1 |
+| 2026-06-14 | 134 | 29 | 0 | 0 | 29 | 0 |
+| 2026-06-15 | 19 | 29 | 0 | 0 | 29 | 0 |
+| 2026-06-16 | 29 | 29 | 0 | 0 | 29 | 0 |
+| 2026-06-17 | 43 | 29 | 0 | 0 | 29 | 0 |
+| 2026-06-18 | 77 | 30 | 0 | 0 | 30 | 0 |
+| **TOTAL** | **375** | **203** | **2** | **0** | — | **2** |
+
+**Hallazgos clave:**
+- ✅ **Sin errores 5xx** en todo el periodo. Sin bloqueos por `robots.txt`.
+- ⚠️ **2 errores 4xx** (días 12 y 13/06) — ya resueltos (0 desde el 14/06).
+  Probablemente una URL transitoria durante el despliegue.
+- 📈 **Tendencia ascendente:** el rastreo pasó de 4 páginas/día (10/06) a
+  77/día (18/06). Bing está escalando el descubrimiento del sitio.
+- ⏳ **Páginas en índice estancadas en ~30:** Bing aún no ha indexado la mayor
+  parte del sitio. Solo la home y ~29 URLs más están en índice tras 11 días
+  desde la verificación (07/06/2026).
+
+### URL Inspection — `GetUrlInfo` (14 URLs prioritarias)
+
+| URL | En BD Bing | Rastreada alguna vez |
+|-----|-----------|---------------------|
+| `/` (home) | ✅ Sí | ✅ Sí (07/06/2026) |
+| `/servicios` | ✅ Sí | ❌ No |
+| `/derecho-penal` | ✅ Sí | ❌ No |
+| `/blog` | ✅ Sí | ❌ No |
+| `/faq` | ✅ Sí | ❌ No |
+| `/contacto` | ✅ Sí | ❌ No |
+| `/sobre-nosotros` | ✅ Sí | ❌ No |
+| `/como-llegar` | ✅ Sí | ❌ No |
+| `/abogados-en-tegucigalpa` | ✅ Sí | ❌ No |
+| `/abogados-en-san-pedro-sula` | ✅ Sí | ❌ No |
+| `/derecho-familia` | ✅ Sí | ❌ No |
+| `/derecho-civil` | ✅ Sí | ❌ No |
+| `/derecho-mercantil` | ✅ Sí | ❌ No |
+| `/derecho-laboral` | ✅ Sí | ❌ No |
+
+> Las 13 URLs no rastreadas figuran en la BD de Bing (`IsPage: true`) pero con
+> `LastCrawledDate` = `DateTime.MinValue` (`/Date(-62135568000000)/` = 0001-01-01),
+> lo que confirma que Bing las conoce (probablemente vía sitemap/IndexNow) pero
+> aún no las ha procesado.
+
+### Acción aplicada — `SubmitUrlBatch`
+- **Endpoint:** `POST /SubmitUrlBatch?apikey=KEY` → **HTTP 200** (`{"d":null}` =
+  éxito).
+- **URLs enviadas:** las 14 de la tabla anterior.
+- **Resultado:** lote aceptado por Bing para rastreo prioritario.
+
+### Backlinks — `GetLinkCounts`
+- **Total páginas con enlaces:** 0
+- **Enlaces entrantes:** 0
+- **Estado:** esperando descubrimiento orgánico / link building externo.
 
 ### Sitemap
 - Bing descubre el sitemap vía `robots.txt` (declarado en `app/robots.ts:81`).
 - `robots.txt` responde 200 y referencia el sitemap correctamente.
+- **`GetSitemaps`:** endpoint no operativo (404 "Endpoint not found"). No se
+  pudo confirmar vía API si Bing ha procesado `sitemap.xml`. El envío vía API
+  (`SubmitSitemap`) tampoco está disponible (404). Verificación visual
+  recomendada en el panel de Bing WMT.
 
 ### Diferencias www vs apex
 - `https://www.pinedayasociadoshn.com/` → HTTP 200 ✅
@@ -161,8 +237,10 @@ enlaces internos hacia `/como-llegar` desde la home y `/despacho`.
   pero idealmente el apex http debería redirigir directo a www https.
 
 ### Errores de marcado / SEO / GEO
-- **No verificado vía API Bing.** Recomendación: revisar el panel de Bing WMT
-  manualmente para confirmar ausencia de errores de marcado y GEO.
+- **No detectados vía API.** Los endpoints de detalles de marcado (p. ej.
+  `GetKeywordStats`) devuelven 400 (`Object reference not set`) — probablemente
+  porque no hay datos de tráfico de Bing todavía. Revisión manual del panel
+  recomendada para confirmar ausencia de errores GEO cuando haya impresiones.
 
 ---
 
@@ -452,9 +530,16 @@ rastrear.
    del bufete (IPs de la oficina).
 
 ### 🟢 Bing WMT
-10. Confirmar manualmente en el panel de Bing WMT que el sitio está verificado
-    y sin errores de marcado/GEO.
-11. Considerar enviar `sitemap.xml` manualmente en Bing WMT si no aparece.
+10. ~~Confirmar manualmente en el panel de Bing WMT que el sitio está verificado~~
+    **✅ Hecho vía API** (`GetUserSites` → `IsVerified: true`, ver §3).
+11. ~~Enviar `sitemap.xml` manualmente en Bing WMT si no aparece.~~ **✅ No
+    posible vía API** (endpoint `SubmitSitemap` no operativo, 404). Acción
+    recomendada en el panel manualmente.
+12. **Monitorear indexación:** Bing solo tiene ~30 URLs en índice tras 11 días.
+    Las 14 URLs prioritarias fueron enviadas vía `SubmitUrlBatch` (HTTP 200).
+    Revisar `GetUrlInfo` en 7–14 días para confirmar rastreo.
+13. **Revisar impresiones/queries cuando haya datos:** `GetQueryStats` devuelve
+    `{"d":[]}` (sin impresiones todavía). Re-ejecutar en 30 días.
 
 ### 🟢 Redes sociales
 12. Cuando el despacho aporte URLs reales de Facebook/Instagram/TikTok,
@@ -468,18 +553,25 @@ rastrear.
 - Confirmar tras redeploy que `/intranet/*` desaparece de las top pages de GA4.
 - Verificar que Clarity carga en producción (si se añadió la variable en Vercel).
 - Solicitar indexación de `/como-llegar` en GSC.
+- **Re-ejecutar `GetUrlInfo` en Bing WMT** para las 14 URLs enviadas vía
+  `SubmitUrlBatch` y comprobar que `LastCrawledDate` deja de ser `0001-01-01`.
 
 ### A 14 días
 - Revisar si `/como-llegar` pasa a "Enviada e indexada".
 - Comprobar que los eventos de conversión empiezan a registrar disparos (si
   hay tráfico público real).
 - Re-ejecutar `node scripts/seo-audit-gsc-ga4.mjs` y comparar métricas.
+- **`GetCrawlStats` en Bing:** confirmar que `InIndex` crece de 30 hacia las
+  ~180 URLs del sitemap.
 
 ### A 30 días
 - Auditar crecimiento de impresiones/clics en GSC.
+- **`GetQueryStats` en Bing:** por ahora devuelve `[]` (sin impresiones). En
+  30 días debería empezar a mostrar queries reales si Bing indexa el sitio.
 - Revisar el plan de reescritura de los 49 posts thin.
 - Revisar los 71 posts con revisión trimestral vencida.
 - Confirmar consistencia NAP en Google Business Profile.
+- **`GetLinkCounts` en Bing:** revisar si aparecen los primeros backlinks.
 
 ---
 
