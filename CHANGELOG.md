@@ -1,5 +1,57 @@
 # Changelog
 
+## Release 69 — UX móvil: padding FloatingContactRail, GA4 tracking formularios, validación producción (2026-06-19)
+
+### 🟢 UX móvil
+- `app/(public)/layout.tsx`: `<main>` recibe `pb-20 sm:pb-24` para evitar que el `FloatingContactRail` solape contenido al final de página en móvil.
+
+### 🟢 GA4 eventos de conversión
+- `solicitar-consulta-form.tsx`: `trackLeadGenerated('consulta_form')` en submit exitoso.
+- `lead-magnet-cta.tsx`: `trackLeadGenerated('lead_magnet_' + area)` en descarga exitosa.
+
+### 🟢 Diagnóstico documentado
+- `docs/pagespeed-usabilidad.md`: diagnóstico inicial con prioridades, cambios aplicados y pendientes externos.
+
+### 🟢 Validación local
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errors, 0 warnings ✅ |
+| `npm run build` | Compiled successfully, 304 routes ✅ |
+| `npm run test` | 18 suites, 382 tests passed ✅ |
+| `npm run test:e2e` | 37 passed ✅ |
+
+### 🟢 Validación producción
+| Prueba | Resultado |
+|---|---|
+| Home `https://www.pinedayasociadoshn.com` | 200 ✅ |
+| `/solicitar-consulta` | 200 ✅ |
+| `/como-llegar` | 200 ✅ |
+| `/abogados-en-nacaome` | 200 ✅ |
+| `/abogados-en-choluteca` | 200 ✅ |
+| `/robots.txt` | 200 ✅ |
+| `/sitemap.xml` | 200 ✅ |
+| HSTS presente | `max-age=63072000; includeSubDomains; preload` ✅ |
+| `X-Content-Type-Options: nosniff` | ✅ |
+| `Referrer-Policy: strict-origin-when-cross-origin` | ✅ |
+| `Permissions-Policy` restrictiva | ✅ |
+| `X-Powered-By` ausente | ✅ |
+| GA4 carga única (1 gtag config) | ✅ |
+| Clarity carga única | ✅ |
+| iFrame mapa con `loading="lazy"`, `title`, `sandbox` | ✅ |
+| `pb-20` y `sm:pb-24` presentes en HTML | ✅ |
+| Redirección `http://naked → https://www` | 2 hops (inherente Vercel) |
+
+### 📄 Archivos modificados
+| Archivo | Cambio |
+|---------|--------|
+| `app/(public)/layout.tsx` | `+pb-20 sm:pb-24` en `<main>` |
+| `components/marketing/solicitar-consulta-form.tsx` | `+trackLeadGenerated` |
+| `components/marketing/lead-magnet-cta.tsx` | `+trackLeadGenerated` |
+| `docs/pagespeed-usabilidad.md` | Nuevo: diagnóstico + validación |
+| `CHANGELOG.md` | Release 69 añadida |
+
+---
+
 ## Release 68 — Blog editorial: 3 ALTO reescritos, 66 posts restaurados, 0 body vacíos, 0 CTAs duplicados (2026-06-19)
 
 ### 🟢 3 posts ALTO riesgo reescritos (thin content local)
