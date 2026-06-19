@@ -168,7 +168,11 @@ export function PublicFooter() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={14} className="text-accent flex-shrink-0" aria-hidden="true" />
-                <a href={mailtoHref()} className="text-text-inverse/80 hover:text-accent break-all">{site.email}</a>
+                {/* Email no expuesto en texto plano para reducir scraping de bots simples.
+                    El mailto: abre el cliente de correo al hacer clic (UX preservada). */}
+                <a href={mailtoHref()} className="text-text-inverse/80 hover:text-accent" aria-label={`Enviar correo a ${site.name}`}>
+                  Enviar correo
+                </a>
               </li>
               <li className="flex items-start gap-2">
                 <Clock size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />

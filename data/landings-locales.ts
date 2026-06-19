@@ -55,9 +55,12 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Valle',
     sedeFisica: true,
     distanciaKm: 0,
-    title: 'Abogados en Nacaome, Valle | Pineda y Asociados',
+    // Title distinto al de la home para evitar duplicidad en SERP.
+    // La home usa "Abogados en Nacaome, Valle | Pineda y Asociados";
+    // esta landing enfatiza la sede física y los servicios concretos.
+    title: 'Bufete de Abogados en Nacaome (Sede) | Pineda y Asociados',
     description:
-      'Bufete de abogados en Nacaome, Valle (Honduras). Defensa penal, familia, laboral, civil y mercantil. Atención directa con presupuesto por escrito. WhatsApp: +504 9536-3724.',
+      'Sede principal de Pineda y Asociados en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Dirección, horario y WhatsApp: +504 9536-3724.',
     heroEyebrow: 'Sede principal · Valle, Honduras',
     heroTitle: 'Abogados en Nacaome, Valle',
     heroSubtitle:

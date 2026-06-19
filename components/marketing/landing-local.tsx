@@ -181,7 +181,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
                     {p.titulo}
                   </h3>
                   <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                    Leer artículo <ArrowRight size={12} />
+                    {`Ver guía de ${landing.ciudad}`} <ArrowRight size={12} />
                   </span>
                 </Card>
               </Link>

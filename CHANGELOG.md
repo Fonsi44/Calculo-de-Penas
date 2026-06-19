@@ -1,5 +1,36 @@
 # Changelog
 
+## Release 61 — Fase 2 SEO/GEO: llms.txt, detección plantilla, SEO off-page (2026-06-19)
+
+### Correcciones SEO on-page
+| Cambio | Antes | Después |
+|---|---|---|
+| Title `/abogados-en-nacaome` | Duplicado con la home ("Abogados en Nacaome, Valle \| Pineda y Asociados") | "Bufete de Abogados en Nacaome (Sede) \| Pineda y Asociados" (único) |
+| Anchor genérico en landings | "Leer artículo" ×7 | "Ver guía de {ciudad}" (contextual) |
+| Email en footer | Texto plano scrapeable (`contacto@...`) | "Enviar correo" con `mailto:` (UX preservada, scraping reducido) |
+
+### GEO/LLM SEO
+- **`llms.txt` reescrito** con estructura optimizada para modelos de IA: entidad, servicios (14 áreas), zonas atendidas, URLs de landings locales, contacto, marco legal y restricciones explícitas sobre rutas privadas.
+- **Política bots IA documentada** en `robots.ts`: trade-off GEO explicado, decisión de negocio pendiente (permitir GPTBot/PerplexityBot para visibilidad generativa vs. proteger contenido).
+
+### Detección de contenido plantilla
+- **`scripts/detectar-posts-plantilla.ts` mejorado**: clasificación ALTO/MEDIO/BAJO, detección de thin content (<300/<600 palabras), detección de CTAs duplicados en body, reporte agrupado por severidad y categoría.
+
+### Documentación off-page y DNS
+- **`docs/seo-off-page.md` (NUEVO)**: plan accionable de SEO off-page (GBP, Bing WT, GSC, directorios, redes sociales), DNS/SPF/DKIM/DMARC con registros exactos, y checklist de pendientes bloqueados por datos externos.
+
+### TODO documentados (requieren datos externos)
+- `sameAs` en schemas: perfiles sociales reales pendientes (NO inventar)
+- Facebook Pixel: solo activar con ID real + consentimiento
+- Reescritura posts plantilla: requiere acceso a DB Neon (script listo)
+
+### Validación
+- lint: 0 errores nuevos (1 preexistente calculadora/hooks.ts)
+- build: Compiled successfully + Finished TypeScript
+- test: 381/382 OK (1 fallo preexistente circunstancia-picker)
+
+---
+
 ## Release 60 — Refactor SEO: arquitectura de contenido centralizada (2026-06-19)
 
 ### Arquitectura de contenido reutilizable

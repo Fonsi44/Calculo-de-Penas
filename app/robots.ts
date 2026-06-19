@@ -20,7 +20,15 @@ import { site } from '@/lib/site';
  *
  * Decisión documentada: permite IA selectiva para visibilidad en ecosistemas
  * emergentes (Google SGE, Apple Intelligence, Meta AI) sin exponer
- * contenido jurídico原创 a scrapers no regulados.
+ * contenido jurídico a scrapers no regulados.
+ *
+ * ⚠️ DECISIÓN DE NEGOCIO PENDIENTE (GEO/LLM SEO): si el objetivo es máxima
+ * visibilidad en buscadores generativos (ChatGPT, Perplexity, Claude), se
+ * puede desbloquear GPTBot y PerplexityBot eliminando sus reglas `disallow`.
+ * Trade-off: el contenido quedará disponible para entrenamiento de modelos.
+ * Esto debe aprobarlo el despacho (decisión outward-facing). Mientras tanto,
+ * la política actual protege el contenido y prioriza indexación clásica.
+ * Ver docs/seo-off-page.md para el contexto estratégico completo.
  */
 export default function robots(): MetadataRoute.Robots {
   if (site.noindex) {

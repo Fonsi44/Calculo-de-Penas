@@ -80,6 +80,12 @@ export const site = {
     latitude: process.env.NEXT_PUBLIC_GEO_LAT ? Number(process.env.NEXT_PUBLIC_GEO_LAT) : 13.5300375,
     longitude: process.env.NEXT_PUBLIC_GEO_LNG ? Number(process.env.NEXT_PUBLIC_GEO_LNG) : -87.487265625,
   },
+  // TODO (datos externos): cuando el despacho aporte URLs reales y verificadas
+  // de Facebook, Instagram, LinkedIn, YouTube o X (Twitter), añadirlas aquí vía
+  // variables de entorno NEXT_PUBLIC_SOCIAL_*. Estas URLs alimentan el campo
+  // `sameAs` de los schemas Organization/LegalService (refuerzo E-E-A-T) y el
+  // bloque de redes del footer. NO inventar perfiles: `null` por defecto.
+  // Facebook Pixel: solo activar si existe ID real + consentimiento de cookies.
   social: {
     facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK ?? null,
     instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM ?? null,
