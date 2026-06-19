@@ -131,8 +131,8 @@ técnicas, valores de test, archivos legacy/backup.
 
 | Aspecto | Valor |
 |---------|-------|
-| **Última release** | Release 84 — Tooling IA: OpenCode y Zcode |
-| **Commit** | `81a02e7` |
+| **Última release** | Release 87 — Eliminación de tooling IA legacy |
+| **Commit** | `ac4635d` |
 | **Fecha** | 2026-06-19 |
 | **Build** | ✅ Compiled + TypeScript OK |
 | **Tests** | 397/397 (19 suites) + 37 E2E |

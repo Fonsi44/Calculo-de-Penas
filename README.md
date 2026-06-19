@@ -300,7 +300,9 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 ## Pendientes reales
 
 ### Urgentes (requieren acción humana, no código)
-1. **Rotar OAuth Client Secret en GCP Console** (comprometido en git history).
+1. **Rotar OAuth Client Secret en GCP Console** (el código se limpió en
+   Release 81 `57db930`, pero el valor antiguo sigue comprometido en git
+   history y debe rotarse en GCP).
 2. **Configurar `RESEND_WEBHOOK_SECRET`** en Vercel (sin él, `/api/email/inbound`
    responde 503 en producción).
 3. **Revisar los 71 posts** con revisión trimestral vencida.
@@ -350,6 +352,6 @@ estados y lo que la IA nunca debe hacer.
 > independientemente del modelo que procese cada instrucción.
 
 Configuraciones anteriores (`.kilo/`, `kilo.json`, `CLAUDE.md`) fueron
-**eliminadas del repositorio** (Release 85). Pueden existir en disco local
+**eliminadas del repositorio** (Release 87). Pueden existir en disco local
 pero están en `.gitignore` y no afectan al funcionamiento de los agentes. El
 protocolo canónico es [`AGENTS.md`](./AGENTS.md).
