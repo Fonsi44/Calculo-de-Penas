@@ -78,13 +78,14 @@ const PUBLIC_PAGE_PREFIXES = [
   '/_next/',
 ];
 
-function isPublicPagePath(pathname: string): boolean {
+// Exportadas para poder testear la clasificación de rutas (tests/seo-protection.test.ts).
+export function isPublicPagePath(pathname: string): boolean {
   if (PUBLIC_PAGE_EXACT.has(pathname)) return true;
   if (PUBLIC_PAGE_PREFIXES.some(p => pathname.startsWith(p))) return true;
   return false;
 }
 
-function isPublicApiPath(pathname: string): boolean {
+export function isPublicApiPath(pathname: string): boolean {
   if (PUBLIC_API_EXACT.has(pathname)) return true;
   return PUBLIC_API_PREFIXES.some(p => pathname === p || pathname.startsWith(p + '/'));
 }

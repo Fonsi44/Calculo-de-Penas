@@ -1,0 +1,179 @@
+/**
+ * Tests de protección SEO y de rutas privadas.
+ *
+ * Cubre los hallazgos ME-TEST-01 de la auditoría: verificar que ninguna ruta
+ * privada (/intranet, /calculadora, /casos, /cp, /delitos, /atajos, /admin, /api)
+ * se filtra como pública en el proxy, en robots.txt o en el JSON-LD base.
+ *
+ * Estos tests NO requieren DB: trabajan sobre las constantes y funciones puras
+ * de proxy.ts, app/robots.ts (vía site.noindex=false), app/sitemap.ts
+ * (constantes estáticas) y lib/site.ts (schemas).
+ */
+import { describe, it, expect } from 'vitest';
+import { isPublicApiPath, isPublicPagePath } from '@/proxy';
+import { legalServiceSchema, organizationSchema, websiteSchema, site } from '@/lib/site';
+import robotsFn from '@/app/robots';
+import { PUBLIC_ROUTES, THIN_POST_SLUGS } from '@/app/sitemap';
+
+// Rutas que NUNCA deben ser públicas, indexables ni enlazadas (AGENTS.md reglas 17-19).
+const PRIVATE_PREFIXES = ['/intranet/', '/admin/', '/calculadora', '/casos/', '/cp/', '/delitos/', '/atajos'];
+
+const PRIVATE_PAGE_PATHS = [
+  '/intranet',
+  '/intranet/admin',
+  '/intranet/dashboard',
+  '/intranet/calculadora',
+  '/calculadora',
+  '/casos',
+  '/casos/123',
+  '/cp',
+  '/cp/1',
+  '/delitos',
+  '/delitos/abc',
+  '/atajos',
+  '/admin',
+];
+
+interface RobotsRule {
+  userAgent: string;
+  allow?: string | string[];
+  disallow?: string | string[];
+}
+
+describe('proxy.ts — clasificación de rutas', () => {
+  it('las rutas privadas de páginas NO se clasifican como públicas', () => {
+    for (const p of PRIVATE_PAGE_PATHS) {
+      expect(isPublicPagePath(p), `${p} no debería ser página pública`).toBe(false);
+    }
+  });
+
+  it('las rutas /api privadas NO se clasifican como API pública', () => {
+    const privateApis = ['/api/calcular', '/api/admin/blog', '/api/seed', '/api/casos', '/api/calculos'];
+    for (const p of privateApis) {
+      expect(isPublicApiPath(p), `${p} no debería ser API pública`).toBe(false);
+    }
+  });
+
+  it('las rutas /api públicas SÍ se clasifican como tal', () => {
+    const publicApis = ['/api/health', '/api/whatsapp', '/api/delitos/count', '/api/indexnow-key', '/api/contacto'];
+    for (const p of publicApis) {
+      expect(isPublicApiPath(p), `${p} debería ser API pública`).toBe(true);
+    }
+  });
+
+  it('las páginas públicas conocidas SÍ se clasifican como tal', () => {
+    const publicPages = ['/', '/blog', '/despacho', '/servicios-juridicos', '/derecho-penal', '/preguntas-frecuentes'];
+    for (const p of publicPages) {
+      expect(isPublicPagePath(p), `${p} debería ser página pública`).toBe(true);
+    }
+  });
+});
+
+describe('app/sitemap.ts — sin rutas privadas en PUBLIC_ROUTES', () => {
+  it('PUBLIC_ROUTES no contiene ninguna ruta privada', () => {
+    for (const route of PUBLIC_ROUTES) {
+      for (const prefix of PRIVATE_PREFIXES) {
+        expect(
+          route.path.startsWith(prefix),
+          `PUBLIC_ROUTES contiene ruta privada: ${route.path}`,
+        ).toBe(false);
+      }
+    }
+  });
+
+  it('THIN_POST_SLUGS es un Set no vacío (mitigación activa)', () => {
+    expect(THIN_POST_SLUGS).toBeInstanceOf(Set);
+    expect(THIN_POST_SLUGS.size).toBeGreaterThan(0);
+  });
+
+  it('PUBLIC_ROUTES tiene prioridades válidas (0-1)', () => {
+    for (const route of PUBLIC_ROUTES) {
+      expect(route.priority).toBeGreaterThanOrEqual(0);
+      expect(route.priority).toBeLessThanOrEqual(1);
+    }
+  });
+});
+
+describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
+  // site.noindex es false en test (no hay NEXT_PUBLIC_NOINDEX=true), así que
+  // robots() devuelve la regla de producción.
+  const robots = robotsFn();
+  const rules: RobotsRule[] = Array.isArray(robots.rules) ? (robots.rules as RobotsRule[]) : [robots.rules as RobotsRule];
+  const wildcardRule = rules.find((r) => r.userAgent === '*');
+
+  const asArray = (v: string | string[] | undefined): string[] =>
+    Array.isArray(v) ? v : v ? [v] : [];
+
+  it('la regla * bloquea /intranet/, /api/, /_next/, /login', () => {
+    expect(wildcardRule).toBeDefined();
+    const disallow = asArray(wildcardRule?.disallow);
+    for (const blocked of ['/intranet/', '/api/', '/_next/', '/login']) {
+      expect(disallow, `debería bloquear ${blocked}`).toContain(blocked);
+    }
+  });
+
+  it('la regla * NO bloquea rutas públicas (allow: /)', () => {
+    expect(wildcardRule?.allow).toEqual('/');
+  });
+
+  it('bloquea bots de IA (GPTBot, ClaudeBot, PerplexityBot, CCBot)', () => {
+    const blockedBots = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'CCBot', 'anthropic-ai'];
+    for (const bot of blockedBots) {
+      const rule = rules.find((r) => r.userAgent === bot);
+      expect(rule, `debería tener regla para ${bot}`).toBeDefined();
+      expect(asArray(rule?.disallow)).toEqual(['/']);
+    }
+  });
+
+  it('declara el sitemap', () => {
+    expect(robots.sitemap).toBe(`${site.url}/sitemap.xml`);
+  });
+});
+
+describe('lib/site.ts — JSON-LD principal válido', () => {
+  it('legalServiceSchema tiene campos obligatorios', () => {
+    const s = legalServiceSchema();
+    expect(s['@context']).toBe('https://schema.org');
+    expect(s['@type']).toContain('LegalService');
+    expect(s['@type']).toContain('LocalBusiness');
+    expect(s.name).toBe(site.name);
+    expect(s.telephone).toBe(site.phone);
+    expect(s.url).toBe(site.url);
+    const address = s.address as Record<string, unknown>;
+    expect(address.addressCountry).toBe('HN');
+    const geo = s.geo as Record<string, unknown>;
+    expect(geo['@type']).toBe('GeoCoordinates');
+    expect(Array.isArray(s.knowsAbout)).toBe(true);
+    expect((s.knowsAbout as unknown[]).length).toBeGreaterThan(0);
+  });
+
+  it('organizationSchema tiene contactPoint y address', () => {
+    const s = organizationSchema();
+    expect(s['@type']).toBe('Organization');
+    expect(s.name).toBe(site.name);
+    expect(Array.isArray(s.contactPoint)).toBe(true);
+    expect((s.contactPoint as unknown[]).length).toBeGreaterThan(0);
+    const address = s.address as Record<string, unknown>;
+    expect(address.addressLocality).toBe(site.address.city);
+  });
+
+  it('websiteSchema referencia al publisher (LegalService)', () => {
+    const s = websiteSchema();
+    expect(s['@type']).toBe('WebSite');
+    expect(s.url).toBe(site.url);
+    const publisher = s.publisher as Record<string, unknown>;
+    expect(publisher['@id']).toBe(`${site.url}/#legal-service`);
+  });
+
+  it('sameAs solo se incluye si hay redes sociales configuradas (no se inventan)', () => {
+    const s = legalServiceSchema();
+    // Si site.social.* son null (caso por defecto sin env), sameAs no debe existir.
+    const hasSocial = site.social.facebook || site.social.instagram || site.social.tiktok;
+    if (!hasSocial) {
+      expect(s.sameAs).toBeUndefined();
+    } else {
+      expect(Array.isArray(s.sameAs)).toBe(true);
+      expect((s.sameAs as unknown[]).length).toBeGreaterThan(0);
+    }
+  });
+});

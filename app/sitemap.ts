@@ -11,7 +11,10 @@ function daysAgo(days: number): Date {
   return d;
 }
 
-const PUBLIC_ROUTES: Array<{
+// Exportadas para tests (tests/seo-protection.test.ts). No se usan fuera del
+// módulo en runtime; la exportación es únicamente para verificar que ninguna
+// ruta privada se filtra en el sitemap estático.
+export const PUBLIC_ROUTES: Array<{
   path: string;
   priority: number;
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
@@ -70,7 +73,7 @@ const IS_DB_REACHABLE = Boolean(
 // para que Google priorice el rastreo de URLs de mayor calidad editorial.
 // Cuando se reescriban (Fase 4), quitar el slug de esta lista.
 // Fuente: docs/indexacion-plan-decision.md §2 (Fase 2).
-const THIN_POST_SLUGS = new Set([
+export const THIN_POST_SLUGS = new Set([
   'sanciones-administrativas-como-defenderse-honduras',
   'contratos-franquicia-aspectos-legales-honduras',
   'importar-mercancias-guia-legal-aduanera-honduras',

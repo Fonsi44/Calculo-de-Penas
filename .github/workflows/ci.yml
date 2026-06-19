@@ -55,3 +55,20 @@ jobs:
           node -e "const d=require('./data/delitos.json'); console.log('delitos:', d.length)"
           node -e "const d=require('./data/delitos.json'); const s=new Set(d.map(x=>x.nombre+'|'+x.articulo)); console.log('duplicados:', d.length - s.size)"
           node -e "const d=require('./data/delitos-estados.json'); console.log('estados:', d.total_registros, '(', d.verificados, 'OK,', d.pendientes_revision, 'revisar,', d.rechazados, 'rechazados)')"
+
+      # Validación de fechas del blog: ningún post con fecha futura ni orden
+      # incorrecto. El script sale limpio (exit 0) si DATABASE_URL no está
+      # configurada o es placeholder, así que no bloquea PRs sin acceso a DB.
+      - name: Validate blog dates
+        run: npm run validate:dates
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      # NOTA: content:audit (npm run content:audit) NO se añade al CI todavía.
+      # Actualmente hay 71 posts con revisión editorial vencida (pendiente
+      # humano, no bug técnico — ver docs/plan-reescritura-blog.md). Añadirlo
+      # cuando el ciclo de revisión trimestral esté al día.
+      # - name: Content audit
+      #   run: npm run content:audit
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
