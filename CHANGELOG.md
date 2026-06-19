@@ -1,5 +1,53 @@
 # Changelog
 
+## Release 72 — Fix canonical/og:url home: Bing "not indexed as redirect" (2026-06-19)
+
+### Causa raíz
+Bing Webmaster Tools marcaba la home como "Not indexed as this page is a redirect"
+a pesar de que `https://www.pinedayasociadoshn.com/` devuelve HTTP 200 directo
+(sin redirects). La causa NO era un redirect HTTP sino un **canonical mismatch**:
+
+- El canonical de la home se generaba como `https://www.pinedayasociadoshn.com`
+  **sin slash final**, porque `alternates: { canonical: '/' }` se resolvía contra
+  `metadataBase: new URL(site.url)` y `site.url` no lleva slash final.
+- Bing interpretaba que `...com/` (con slash, la URL real) "redirige" canónicamente
+  a `...com` (sin slash, el canonical declarado), y por eso no indexaba.
+
+### Diagnóstico HTTP (curl)
+| URL inicial | Cadena | Resultado |
+|---|---|---|
+| `https://www.pinedayasociadoshn.com/` | **200 directo** (0 saltos) | ✅ Correcto |
+| `https://pinedayasociadoshn.com/` | 308 → www → 200 | ✅ 1 salto |
+| `http://www.pinedayasociadoshn.com/` | 308 → https www → 200 | ✅ 1 salto |
+| `http://pinedayasociadoshn.com/` | 308 → https apex → 308 → www → 200 | ⚠️ 2 saltos |
+
+**No hay redirect auto-referente de la home.** Los redirects HTTP son correctos
+(Vercel Domains gestiona apex→www y http→https).
+
+### Corrección aplicada
+| Archivo | Cambio |
+|---|---|
+| `app/(public)/page.tsx` | canonical: `'/'` (relativo) → `\`${site.url}/\`` (absoluto con slash) |
+| `app/(public)/page.tsx` | og:url: `site.url` → `\`${site.url}/\`` (slash final) |
+| `app/(public)/layout.tsx` | og:url: `site.url` → `\`${site.url}/\`` (slash final) |
+| `app/layout.tsx` | og:url: `siteUrl` → `\`${siteUrl}/\`` (slash final) |
+
+Resultado: la home ahora declara canonical `https://www.pinedayasociadoshn.com/`
+**con slash final**, coincidente con la URL real que sirve Vercel.
+
+### Próximo paso (operacional)
+Volver a inspeccionar la URL `https://www.pinedayasociadoshn.com/` en Bing
+Webmaster Tools y pulsar **"Solicitar indexación"**. Bing debería indexarla
+en 24-72h tras re-crawlear y leer el canonical corregido.
+
+### Validación
+- lint: 0 errores
+- build: Compiled successfully + Finished TypeScript
+- test: 382/382 OK
+- test:e2e: sin fallos
+
+---
+
 ## Release 71 — IndexNow: key verificada en producción, validación completa, documentación actualizada (2026-06-19)
 
 ### 🟢 Verificación completa de IndexNow

@@ -42,7 +42,11 @@ export const metadata: Metadata = {
   // El tagline ya contiene el nombre del bufete (45 chars, óptimo para SERP).
   title: { absolute: site.tagline },
   description: site.description,
-  alternates: { canonical: '/' },
+  // Canonical absoluto CON slash final. Si se usa '/' (relativo), Next lo
+  // resuelve contra metadataBase y en la home genera '...com' sin slash,
+  // lo que Bing interpreta como canonical mismatch ("this page is a redirect").
+  // El absoluto garantiza 'https://www.pinedayasociadoshn.com/' exacto.
+  alternates: { canonical: `${site.url}/` },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
   robots: {
     index: true,
@@ -58,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
-    url: site.url,
+    url: `${site.url}/`,
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',

@@ -33,7 +33,9 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: 'es_HN',
-      url: site.url,
+      // og:url con slash final para coincidir con el canonical de la home
+      // y evitar que Bing marque "this page is a redirect".
+      url: `${site.url}/`,
       siteName: site.name,
       title,
       description,
