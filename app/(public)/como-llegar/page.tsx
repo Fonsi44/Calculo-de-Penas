@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   keywords: ['cómo llegar Nacaome', 'mapa bufete Valle', 'dirección abogados Nacaome', 'llegar a Nacaome Valle', 'oficina abogados Nacaome', 'ubicación Pineda y Asociados'],
   twitter: {
     card: 'summary_large_image',
-    title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department} — Indicaciones y Mapa`,
+    title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department}`,
     description: `Indicaciones para llegar a ${site.name} en Nacaome, Valle. Dirección exacta, mapa, rutas y referencias para encontrarnos.`,
     images: [`${site.url}/og-image.png`],
   },

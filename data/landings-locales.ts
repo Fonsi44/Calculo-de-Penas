@@ -127,7 +127,7 @@ export const landingsLocales: LandingLocal[] = [
     // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
     title: 'Abogados en Choluteca, Honduras',
     description:
-      'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral, mercantil y aduanero. Atención a clientes de Choluteca desde nuestra sede en la zona sur. WhatsApp: +504 9536-3724.',
+      'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral, mercantil y aduanero. Atención desde nuestra sede en Nacaome. WhatsApp: +504 9536-3724.',
     heroEyebrow: 'Zona sur · Choluteca, Honduras',
     heroTitle: 'Abogados en Choluteca',
     heroSubtitle:

@@ -10,8 +10,9 @@
 //
 // Criterios de puntuación (sobre el body en HTML, sin tags):
 //   - Marcadores de plantilla (10 strings conocidos): +1 c/u
-//   - Palabras < 300 (thin content): +2
-//   - Palabras < 600 (contenido corto): +1
+//   - Palabras < 500 (thin content extremo): +3
+//   - Palabras < 800 (contenido insuficiente): +2
+//   - Palabras < 1000 (contenido bajo): +1
 //   - Marcadores >= 3: clasifica ALTO automáticamente
 
 import 'dotenv/config';
@@ -82,10 +83,11 @@ interface PostAudit {
 }
 
 function clasificar(marcadores: number, palabras: number, ctaDuplicados: number): Severidad {
-  // ALTO: muchos marcadores plantilla o thin content extremo
-  if (marcadores >= 3 || palabras < 300) return 'ALTO';
-  // MEDIO: algunos marcadores o contenido corto + CTA duplicado en body
-  if (marcadores >= 2 || palabras < 600 || ctaDuplicados > 0) return 'MEDIO';
+  // ALTO: marcadores plantilla abundantes O thin content extremo (<500 palabras)
+  if (marcadores >= 3 || palabras < 500) return 'ALTO';
+  // MEDIO: algunos marcadores O contenido bajo (<800) O CTAs duplicados en body
+  if (marcadores >= 1 || palabras < 800 || ctaDuplicados > 0) return 'MEDIO';
+  // BAJO: >=800 palabras, sin marcadores, sin CTAs duplicados
   return 'BAJO';
 }
 

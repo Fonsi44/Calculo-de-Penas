@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const canonical = `/hondurenos-en-espana/${slug}`;
   return {
     title: `${subarea.titulo} | Hondureños en España`,
-    description: `${subarea.descripcion.substring(0, 155)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
+    description: `${subarea.descripcion.substring(0, 85)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
     alternates: { canonical },
     keywords: subarea.keywords,
     twitter: {

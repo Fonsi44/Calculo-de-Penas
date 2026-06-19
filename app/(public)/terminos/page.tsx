@@ -5,8 +5,8 @@ import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones',
-  description:
-    'Términos y condiciones de uso del sitio web de Pineda y Asociados en Nacaome, Valle, Honduras. Reglas de acceso y utilización de los servicios jurídicos publicados.',
+    description:
+      'Términos y condiciones de uso del sitio web de Pineda y Asociados en Nacaome, Valle. Reglas de acceso y uso de servicios jurídicos publicados.',
   alternates: { canonical: '/terminos' },
   robots: { index: true, follow: true },
   twitter: {

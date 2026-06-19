@@ -79,30 +79,20 @@ function getStructure(category: string): string {
 <h2>5. Recomendaciones prácticas</h2>
 <p>Conserve toda la documentación laboral: contrato de trabajo, recibos de salario, constancias de cargo y cualquier comunicación con su empleador. Ante un despido o conflicto laboral, busque asesoría legal lo antes posible.</p>`,
   };
+  // Para categorías sin estructura específica, devolvemos solo contenido base sin secciones plantilla.
+  // El editor debe completar manualmente el contenido sustancial antes de publicar.
   return sectionSets[category] ?? `\n
-<h2>1. Marco legal aplicable</h2>
-<p>La legislación hondureña establece un marco jurídico específico para esta materia. Conocer las disposiciones legales aplicables es el primer paso para entender los derechos y obligaciones de las partes involucradas.</p>
+<h2>Aspectos clave sobre este tema en Honduras</h2>
+<p>La legislación hondureña contiene disposiciones relevantes en esta materia cuyo conocimiento práctico ayuda a entender los derechos y las obligaciones de las partes involucradas. Cada situación debe analizarse individualmente, ya que las circunstancias concretas pueden modificar la aplicación de las reglas generales.</p>
 
-<h2>2. Requisitos y procedimiento</h2>
-<p>Para iniciar cualquier trámite o gestión en este ámbito, es necesario cumplir con los requisitos establecidos por la ley. El procedimiento puede variar según la complejidad del caso y la autoridad competente.</p>
-
-<h2>3. Plazos a considerar</h2>
-<p>La normativa establece plazos específicos que deben respetarse. El incumplimiento de estos términos puede tener consecuencias como la pérdida de derechos o la caducidad de la acción. Es importante actuar dentro de los plazos legales.</p>
-
-<h2>4. Documentación necesaria</h2>
-<p>Contar con la documentación completa y en regla es esencial para cualquier gestión legal. Los documentos deben estar debidamente autenticados cuando la normativa así lo requiera.</p>
-
-<h2>5. Recomendaciones prácticas</h2>
-<p>La asesoría legal especializada es la mejor garantía para proteger sus derechos. Un abogado experto puede orientarle sobre la estrategia más adecuada para su caso concreto y evitar errores que puedan costarle tiempo y dinero.</p>`;
+<h2>Consideraciones prácticas</h2>
+<p>Antes de tomar cualquier decisión con implicaciones legales, conviene reunir la documentación disponible, verificar los plazos aplicables según la normativa vigente y consultar con un profesional que pueda evaluar el caso concreto. Los procedimientos legales requieren el cumplimiento de formalidades cuya omisión puede afectar la validez de las actuaciones.</p>`;
 }
 
+// Conclusión sin CTA ni referencia comercial — el JSX añade BlogCtaBar + LegalDisclaimer.
 const BLOG_STRUCTURE_CONCLUSION = `\n
 <h2>Conclusión</h2>
-<p>Conocer sus derechos y los procedimientos legales aplicables le permite tomar decisiones informadas. En <strong>Pineda y Asociados</strong> contamos con un equipo de abogados especializados con presencia en Nacaome, Choluteca y San Lorenzo, atendiendo casos en toda la zona sur de Honduras.</p>
-<p>Si necesita orientación legal personalizada, puede <strong>solicitar una consulta inicial</strong> para recibir asesoría adaptada a su caso concreto.</p>`;
-// El disclaimer legal (antes SEO_FOOTER) ya NO se concatena al body: el
-// componente <LegalDisclaimer> del JSX lo muestra de forma centralizada.
-// Ver lib/legal-disclaimer.ts y components/marketing/legal-disclaimer.tsx.
+<p>Conocer el marco legal aplicable y los procedimientos vigentes permite tomar decisiones informadas y proteger los derechos propios. La normativa hondureña ofrece herramientas que, bien utilizadas con la orientación adecuada, pueden resolver o prevenir conflictos jurídicos. Ante cualquier duda sobre un caso concreto, conviene buscar información actualizada y verificar los requisitos ante la autoridad competente, ya que las disposiciones legales pueden variar con reformas posteriores a la fecha de este artículo.</p>`;
 
 function generateSlug(topic: string): string {
   return topic

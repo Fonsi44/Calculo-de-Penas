@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const canonical = `/derecho-penal/${slug}`;
   return {
     title: `${grupo.titulo} | Derecho Penal`,
-    description: `${grupo.descripcion.substring(0, 155)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
+    description: `${grupo.descripcion.substring(0, 90)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
     alternates: { canonical },
     keywords: grupo.keywords,
     twitter: {

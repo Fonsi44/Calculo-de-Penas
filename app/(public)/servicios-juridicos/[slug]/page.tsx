@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const canonical = `/servicios-juridicos/${slug}`;
   return {
     title: area.titulo,
-    description: `${area.descripcion.substring(0, 155)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
+    description: `${area.descripcion.substring(0, 100)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
     alternates: { canonical },
     keywords: area.keywords,
     twitter: {
