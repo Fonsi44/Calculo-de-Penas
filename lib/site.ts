@@ -169,7 +169,9 @@ export function legalServiceSchema() {
     alternateName: site.shortName,
     url: site.url,
     telephone: site.phone,
-    email: site.email,
+    // email: se omite del JSON-LD por política anti-scraping. El contacto se
+    // ofrece vía ContactPoint (teléfono/WhatsApp) y el formulario /solicitar-consulta.
+    // Si en el futuro se quiere exponer, descomentar: email: site.email,
     description: site.description,
     image: `${site.url}/og-image.png`,
     // logo: se referencia og-image.png (1200x630, ya existe) porque NO hay
@@ -179,14 +181,13 @@ export function legalServiceSchema() {
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     currenciesAccepted: 'HNL, USD',
     areaServed: [
-      // Cobertura ampliada para SEO local: sede (Nacaome) + ciudades del sur
-      // de Honduras donde el bufete atiende, + capitales económicas nacionales
-      // para competir por "abogados en Tegucigalpa / San Pedro Sula".
+      // Cobertura REAL y verificable del bufete: sede (Nacaome) + ciudades del
+      // sur de Honduras donde atiende activamente. NO se incluyen Tegucigalpa
+      // ni San Pedro Sula porque no hay presencia física ni operativa allí
+      // (claims de presencia local falsa penalizan SEO y confianza).
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
       { '@type': 'City', name: 'Choluteca' },
-      { '@type': 'City', name: 'Tegucigalpa' },
-      { '@type': 'City', name: 'San Pedro Sula' },
       { '@type': 'State', name: site.address.department },
       { '@type': 'Country', name: site.address.country },
     ],
@@ -259,12 +260,13 @@ export function organizationSchema() {
     // foundingDate: "~2010" refleja "más de 15 años de ejercicio profesional"
     // declarado en la home (auditoría 2026). Reemplazar por año exacto si se conoce.
     foundingDate: '2010',
-    slogan: site.tagline,
+    // slogan: frase corta sin duplicar la marca (name ya la incluye).
+    slogan: 'Abogados en Nacaome, Valle',
     knowsAbout: KNOWS_ABOUT,
-    // sameAs: solo el sitio propio (URL real y verificable). No inventar redes
-    // sociales: cuando existan cuentas verificadas (Facebook, LinkedIn, GBP),
-    // añadirlas aquí para reforzar E-E-A-T y vincular entidades.
-    sameAs: [site.url],
+    // sameAs: OMITIDO. Solo debe contener perfiles externos oficiales y
+    // verificados (Facebook, LinkedIn, GBP, etc.). El propio dominio NO es un
+    // perfil externo. Cuando el despacho aporte URLs reales, añadirlas aquí
+    // vía site.social.* (que alimenta también LegalService.sameAs).
     contactPoint: [
       {
         '@type': 'ContactPoint',

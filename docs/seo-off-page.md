@@ -102,6 +102,12 @@ NAP es la causa nº1 de pérdida de ranking local.
 verificadas, añadirlas a `lib/site.ts` vía `NEXT_PUBLIC_SOCIAL_*` para que
 alimenten el campo `sameAs` de los schemas Organization/LegalService.
 
+**Regla `sameAs` (Release 74):** `sameAs` SOLO debe contener perfiles externos
+oficiales y verificados (Facebook, LinkedIn, Google Business Profile, etc.).
+El propio dominio del sitio **NO** es un perfil externo y no debe aparecer en
+`sameAs` (era un error que Bing marcaba como calidad baja). Mientras no haya
+perfiles reales, `sameAs` se OMITE completamente del JSON-LD.
+
 ### Investigación automatizada (2026-06-19)
 
 Se realizó una búsqueda exhaustiva desde CLI y web para descubrir perfiles

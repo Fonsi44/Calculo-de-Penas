@@ -1,5 +1,45 @@
 # Changelog
 
+## Release 74 — Calidad JSON-LD/OG: sin mojibake, sameAs responsable, areaServed real (2026-06-19)
+
+### Correcciones de calidad detectadas por Bing URL Inspection
+La inspección de Bing mostraba problemas de calidad en OpenGraph y JSON-LD que
+se corrigen aquí sin inventar datos:
+
+| Problema | Antes | Después |
+|---|---|---|
+| **OG mojibake** | `og:title` con em-dash `—` que Bing renderizaba como `â&#128;&#148;` | Em-dash reemplazado por guion simple `-` (ASCII limpio) en todos los OG/alt |
+| **`sameAs` self-referencing** | `Organization.sameAs = ["https://www.pinedayasociadoshn.com"]` (el propio dominio, no es perfil externo) | `sameAs` OMITIDO (no hay perfiles reales verificados; regla documentada) |
+| **`areaServed` con ciudades sin presencia** | Tegucigalpa + San Pedro Sula (sin oficina ni operación real) | Eliminadas; queda Nacaome, San Lorenzo, Choluteca, Valle, Honduras |
+| **`slogan` con doble marca** | "Abogados en Nacaome, Valle \| Pineda y Asociados" (duplica `name`) | "Abogados en Nacaome, Valle" (sin repetir marca) |
+| **`email` en JSON-LD** | `LegalService.email` exponía `contacto@...` a scrapers | Eliminado; el contacto se ofrece vía ContactPoint + formulario |
+| **Claim Tegucigalpa en descripción familia** | "en Nacaome, San Lorenzo, Choluteca y Tegucigalpa" | "...y la zona sur de Honduras" (verificable, sin afirmar ciudad sin oficina) |
+
+### Regla editorial `sameAs` (documentada)
+`sameAs` SOLO debe contener **perfiles externos oficiales y verificados**
+(Facebook, LinkedIn, Google Business Profile, etc.). El propio dominio NO es
+un perfil externo. Cuando el despacho aporte URLs reales, añadirlas vía
+`NEXT_PUBLIC_SOCIAL_FACEBOOK`/`INSTAGRAM`/`TIKTOK` en `lib/site.ts`, que
+alimentan tanto `Organization.sameAs` como `LegalService.sameAs`. No se
+inventan redes sociales.
+
+### Archivos modificados (6)
+- `lib/site.ts` — LegalService (sin email, areaServed sin TGU/SPS) + Organization (sin sameAs, slogan corregido)
+- `lib/schemas/legal-page.ts` — serviceSchema areaServed default sin TGU/SPS
+- `app/layout.tsx` — og:title/alt con guion simple
+- `app/(public)/page.tsx` — og:title/alt/twitter:title con guion simple
+- `app/(public)/layout.tsx` — og:title/alt con guion simple
+- `data/areas-juridicas.ts` — descripción familia sin "Tegucigalpa"
+
+### Validación
+- lint: 0 errores
+- build: Compiled successfully + Finished TypeScript
+- test: 382/382 OK
+- test:e2e: 37/37 OK
+- curl: JSON-LD y OG validados en producción (ver docs/seo-off-page.md)
+
+---
+
 ## Release 73 — Corrección editorial masiva: 0 ALTO, 28 posts reescritos, generador sin plantilla (2026-06-19)
 
 ### 🟢 14 posts ALTO reescritos (thin content → contenido sustancial)

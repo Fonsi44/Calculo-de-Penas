@@ -49,13 +49,15 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   openGraph: {
-    title: `${site.name} — ${site.tagline}`,
+    // OG title con guion simple (-) en vez de em-dash (—): algunos parsers OG
+    // (Bing, Facebook) renderizan mal el em-dash como mojibake. ASCII limpio.
+    title: `${site.name} - ${site.tagline}`,
     description: site.description,
     url: `${siteUrl}/`,
     siteName: site.name,
     locale: "es_HN",
     type: "website",
-    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Bufete jurídico en Nacaome, Valle` }],
+    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: `${site.name} - Bufete jurídico en Nacaome, Valle` }],
   },
   robots: site.noindex
     ? { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } }

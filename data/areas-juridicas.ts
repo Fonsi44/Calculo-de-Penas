@@ -89,7 +89,7 @@ export const areasGenerales: AreaStandalone[] = [
     titulo: 'Derecho de Familia',
     resumen: 'Abogado de familia en Nacaome y Honduras: divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores con atención personalizada.',
     descripcion:
-      `Defendemos sus <strong>derechos familiares</strong> en divorcios, custodia, pensión de alimentos, sucesiones y violencia intrafamiliar en Nacaome, San Lorenzo, Choluteca y Tegucigalpa. Actuamos ante los <strong>Juzgados de Familia</strong> y en el <strong>Centro de Mediación del Poder Judicial</strong> cuando conviene una solución pactada. Le acompañamos desde la primera consulta confidencial hasta la ejecución de la sentencia, con comunicación directa del abogado responsable, plazos claros y un presupuesto por escrito.`,
+      `Defendemos sus <strong>derechos familiares</strong> en divorcios, custodia, pensión de alimentos, sucesiones y violencia intrafamiliar en Nacaome, San Lorenzo, Choluteca y la zona sur de Honduras. Actuamos ante los <strong>Juzgados de Familia</strong> y en el <strong>Centro de Mediación del Poder Judicial</strong> cuando conviene una solución pactada. Le acompañamos desde la primera consulta confidencial hasta la ejecución de la sentencia, con comunicación directa del abogado responsable, plazos claros y un presupuesto por escrito.`,
     icono: 'users',
     color: 'primary',
     heroEyebrow: 'Área legal',

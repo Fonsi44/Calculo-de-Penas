@@ -10,7 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoOverrides();
   const isIndexable = seo.noindex !== undefined ? !seo.noindex : !site.noindex;
 
-  const title = seo.title ?? `${site.name} — ${site.tagline}`;
+  // OG title con guion simple (-) para evitar mojibake del em-dash en parsers OG.
+  const title = seo.title ?? `${site.name} - ${site.tagline}`;
   const description = seo.description && seo.description.length <= 160
     ? seo.description
     : site.description;
@@ -44,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${site.name} — ${site.tagline}`,
+          alt: `${site.name} - ${site.tagline}`,
         },
       ],
     },

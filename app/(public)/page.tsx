@@ -60,7 +60,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: `${site.name} — ${site.tagline}`,
+    // OG/Twitter con guion simple (-) para evitar mojibake del em-dash en parsers.
+    title: `${site.name} - ${site.tagline}`,
     description: site.description,
     url: `${site.url}/`,
     siteName: site.name,
@@ -71,13 +72,13 @@ export const metadata: Metadata = {
         url: `${site.url}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: `${site.name} — Bufete jurídico en ${site.address.city}, ${site.address.department}`,
+        alt: `${site.name} - Bufete jurídico en ${site.address.city}, ${site.address.department}`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} — Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
+    title: `${site.name} - Bufete multidisciplinario en ${site.address.city}, ${site.address.department}`,
     description: site.description,
     images: [`${site.url}/og-image.png`],
   },
