@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import { FileDown, Loader2, CheckCircle2, Mail } from 'lucide-react';
+import { trackLeadGenerated } from '@/lib/analytics';
 
 interface LeadMagnetCTAProps {
   area: string;
@@ -32,6 +33,7 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
       URL.revokeObjectURL(downloadUrl);
       setStatus('success');
       setEmail('');
+      trackLeadGenerated('lead_magnet_' + area);
     } catch {
       setStatus('error');
     }

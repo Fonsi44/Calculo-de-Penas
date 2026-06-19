@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail } from 'lucide-react';
+import { trackLeadGenerated } from '@/lib/analytics';
 
 const MOTIVOS = [
   'Familiar detenido',
@@ -55,6 +56,7 @@ export function SolicitarConsultaForm() {
         throw new Error(data.error ?? 'No se pudo enviar la solicitud.');
       }
       setStatus('success');
+      trackLeadGenerated('consulta_form');
     } catch (e) {
       setStatus('error');
       setErr(e instanceof Error ? e.message : 'Error desconocido.');

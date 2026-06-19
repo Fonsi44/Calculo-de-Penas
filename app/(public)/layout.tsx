@@ -96,7 +96,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <PublicHeader />
-      <main id="main" className="flex-1">
+      <main id="main" className="flex-1 pb-20 sm:pb-24">
         {children}
       </main>
       <PublicFooter />
