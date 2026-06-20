@@ -20,6 +20,7 @@
 export type ImageCategory = 'corporate' | 'services' | 'penal';
 
 const SERVICES: Record<string, string> = {
+  'derecho-penal': '/images/penal/litigio-complejo.webp',
   'derecho-de-familia': '/images/services/defensa-familia-nacaome.webp',
   'derecho-laboral': '/images/services/derecho-laboral-honduras.webp',
   'derecho-civil-y-notarial': '/images/services/derecho-civil-notarial-valle.webp',
