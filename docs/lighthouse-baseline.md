@@ -18,27 +18,24 @@ Detecta regresiones de performance/accesibilidad/SEO antes de merge.
   por separado vía los screenshots de `scripts/screenshot-audit.cjs`)
 - **Runs por URL**: 3 (estabiliza LCP/CLS)
 
-## Thresholds actuales (assertion level: `warn`)
+## Thresholds actuales (escalado de warn → error, 2026-06-20)
 
-> **Política:** los thresholds empiezan en `warn` para no bloquear PRs mientras
-> recogemos datos reales. Tras 2-3 runs estables en producción, se escalará
-> `performance` y los CWV críticos a `error`.
+> **Política:** tras confirmar el baseline holgado (Performance 100/100, CWV en
+> verde), se han escalado `performance`, `seo`, `first-contentful-paint` y
+> `cumulative-layout-shift` a `error` para bloquear regresiones reales.
+> `largest-contentful-paint` y `total-blocking-time` quedan en `warn` por
+> sensibilidad a latencia de red en runners de CI.
 
 | Métrica | Threshold | Nivel | Origen del valor |
 |---|---|---|---|
-| `categories:performance` | score | warn | Recolección de baseline |
+| `categories:performance` | minScore 0.9 | **error** | Baseline 100/100 |
 | `categories:accessibility` | minScore 0.9 | warn | Estándar a11y |
 | `categories:best-practices` | minScore 0.9 | warn | Estándar |
-| `categories:seo` | minScore 0.9 | warn | El sitio está optimizado SEO |
-| `first-contentful-paint` | ≤ 1800ms | warn | CWV "bueno" Lighthouse |
-| `largest-contentful-paint` | ≤ 4000ms | warn | CWV "necesita mejora" (conservador) |
-| `cumulative-layout-shift` | ≤ 0.25 | warn | CWV "necesita mejora" |
+| `categories:seo` | minScore 0.95 | **error** | Baseline 100/100 |
+| `first-contentful-paint` | ≤ 1800ms | **error** | CWV "bueno" Lighthouse |
+| `largest-contentful-paint` | ≤ 2500ms | warn | CWV "bueno" Google (era 4000ms) |
+| `cumulative-layout-shift` | ≤ 0.1 | **error** | CWV "bueno" Google (era 0.25) |
 | `total-blocking-time` | ≤ 600ms | warn | CWV "necesita mejora" |
-
-> **Nota sobre LCP ≤ 4000ms:** el umbral oficial "bueno" de Google es ≤ 2500ms.
-> Empezamos conservadores (≤ 4000ms = "necesita mejora") porque el sitio
-> tiene tráfico bajo y sin datos CrUX reales aún. Escalaremos a 2500ms tras
-> confirmar que el baseline lo permite.
 
 ## Baseline real
 
