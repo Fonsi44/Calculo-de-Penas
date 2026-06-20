@@ -25,6 +25,20 @@ const updateSchema = z.object({
   published: z.boolean().optional(),
 });
 
+/**
+ * Umbral mínimo de palabras para publicar (refuerza R13: peso editorial
+ * objetivo 800-1000 palabras). Posts por debajo no se publican hasta que un
+ * humano los amplíe con información verificable (R17: prohibido rellenar con
+ * texto genérico autogenerado).
+ */
+const MIN_WORDS_TO_PUBLISH = 800;
+
+/** Cuenta palabras reales de un HTML, eliminando tags. */
+function countWords(html: string): number {
+  const text = html.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/gi, ' ');
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireAdmin(request);
@@ -51,9 +65,23 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       if (dup && dup.id !== id) return Response.json({ error: 'Ya existe un post con ese slug' }, { status: 409 });
     }
 
-    const [existing] = await db.select({ slug: blogPosts.slug, category: blogPosts.category }).from(blogPosts).where(eq(blogPosts.id, id));
+    const [existing] = await db.select({ slug: blogPosts.slug, category: blogPosts.category, body: blogPosts.body }).from(blogPosts).where(eq(blogPosts.id, id));
     if (!existing) return Response.json({ error: 'Post no encontrado' }, { status: 404 });
     const oldCategory = existing.category;
+
+    // R13/R17 — bloquear publicación de posts sin peso editorial suficiente.
+    // Si se intenta publicar (published: true), el body resultante (nuevo o
+    // existente) debe alcanzar el mínimo de palabras. Esto evita publicar
+    // plantillas generadas por IA sin editar (H16) y refuerza R13.
+    if (parsed.published === true) {
+      const effectiveBody = parsed.body !== undefined ? parsed.body : existing.body;
+      const words = countWords(effectiveBody);
+      if (words < MIN_WORDS_TO_PUBLISH) {
+        return Response.json({
+          error: `No se puede publicar: el post tiene ${words} palabras (mínimo ${MIN_WORDS_TO_PUBLISH}). Amplía el contenido con información verificable antes de publicar (R13/R17).`,
+        }, { status: 422 });
+      }
+    }
 
     const values: Record<string, unknown> = {};
     if (parsed.slug !== undefined) values.slug = parsed.slug;

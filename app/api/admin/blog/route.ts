@@ -25,6 +25,18 @@ const createSchema = z.object({
   published: z.boolean().default(true),
 });
 
+/**
+ * Umbral mínimo de palabras para publicar (refuerza R13). Posts por debajo
+ * se crean como borrador aunque se solicite published=true, y la respuesta
+ * avisa al humano. No se impide CREAR, solo PUBLICAR sin peso suficiente.
+ */
+const MIN_WORDS_TO_PUBLISH = 800;
+
+function countWords(html: string): number {
+  const text = html.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/gi, ' ');
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
 const querySchema = z.object({
   q: z.string().optional(),
   category: z.string().optional(),
@@ -79,6 +91,18 @@ export async function POST(request: Request) {
     const [existing] = await db.select({ id: blogPosts.id }).from(blogPosts).where(eq(blogPosts.slug, slug));
     if (existing) return Response.json({ error: 'Ya existe un post con ese slug' }, { status: 409 });
 
+    // R13/R17 — no publicar posts sin peso editorial suficiente.
+    // Si se solicitó published=true pero el body no alcanza el mínimo de
+    // palabras, se degrada a borrador y se avisa en la respuesta. Así se
+    // permite crear el post (p.ej. una plantilla generada) pero no publicarlo
+    // sin editar antes (H16).
+    let effectivePublished = parsed.published;
+    let editorialWarning: string | undefined;
+    if (parsed.published && countWords(parsed.body) < MIN_WORDS_TO_PUBLISH) {
+      effectivePublished = false;
+      editorialWarning = `Post creado como BORRADOR: el body tiene ${countWords(parsed.body)} palabras (mínimo ${MIN_WORDS_TO_PUBLISH} para publicar, R13). Edítalo antes de publicar.`;
+    }
+
     const now = new Date();
     const [post] = await db.insert(blogPosts).values({
       slug, title: parsed.title, description: parsed.description,
@@ -87,11 +111,11 @@ export async function POST(request: Request) {
       updatedAt: parsed.updatedAt ? new Date(parsed.updatedAt) : null,
       category: parsed.category, tags: parsed.tags, author: parsed.author,
       readingTime: parsed.readingTime, coverImage: parsed.coverImage ?? null,
-      featured: parsed.featured, published: parsed.published,
+      featured: parsed.featured, published: effectivePublished,
     }).returning();
 
-    await logAudit({ usuarioId: auth.userId, accion: 'blog_created', recurso: 'blog', recursoId: post.id, metadata: { slug: post.slug, title: post.title }, request });
-    if (parsed.published) {
+    await logAudit({ usuarioId: auth.userId, accion: 'blog_created', recurso: 'blog', recursoId: post.id, metadata: { slug: post.slug, title: post.title, published: effectivePublished }, request });
+    if (effectivePublished) {
       try {
         revalidatePath('/blog');
         revalidatePath(`/blog/${slug}`);
@@ -99,7 +123,7 @@ export async function POST(request: Request) {
       } catch {}
     }
 
-    return Response.json({ post, slug }, { status: 201 });
+    return Response.json({ post, slug, ...(editorialWarning ? { editorialWarning } : {}) }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
     return authFailureResponse(err);
