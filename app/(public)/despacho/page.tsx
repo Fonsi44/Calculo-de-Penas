@@ -18,19 +18,19 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
-  title: `El Despacho — Bufete en ${site.address.city}, ${site.address.department}`,
-  description: `Conozca Pineda y Asociados, bufete en Nacaome, Valle. Más de 15 años de defensa penal y soluciones legales en derecho empresarial, de familia, laboral y civil.`,
+  title: `Bufete de Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
+  description: `Abogados en Nacaome, Valle con más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/despacho' },
-  keywords: ['bufete Nacaome', 'despacho jurídico Valle Honduras', 'abogados Nacaome Valle', 'equipo legal sur Honduras', 'misión bufete jurídico', 'valores despacho abogados', 'trayectoria legal Nacaome', 'consulta confidencial Valle'],
+  keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete multidisciplinario Nacaome'],
   twitter: {
     card: 'summary_large_image',
-    title: `El Despacho — Bufete en ${site.address.city}, ${site.address.department}`,
-    description: `Conoce Pineda y Asociados: bufete con más de 15 años de ejercicio profesional. Rigor técnico y soluciones legales estratégicas.`,
+    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
+    description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en penal, familia, laboral, civil y mercantil. Consulta confidencial.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `El Despacho — Bufete en ${site.address.city}, ${site.address.department}`,
-    description: `Conoce Pineda y Asociados: bufete en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.`,
+    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
+    description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
     url: `${site.url}/despacho`,
     siteName: site.name,
     locale: 'es_HN',

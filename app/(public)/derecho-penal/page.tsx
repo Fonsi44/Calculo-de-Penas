@@ -20,19 +20,19 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  title: `Abogados Penalistas en ${site.address.city}, ${site.address.department}`,
-  description: `Defensa penal técnica y confidencial en Nacaome, Valle, San Lorenzo y Choluteca. Abogados penalistas con sede en Nacaome y cobertura en la zona sur de Honduras.`,
+  title: `Abogado Penalista en ${site.address.city}, ${site.address.department} — Defensa Penal`,
+  description: `¿Necesita un abogado penalista en Nacaome, Valle? Defensa penal técnica y confidencial. Atendemos detenciones, audiencias iniciales y recursos en Nacaome, San Lorenzo y Choluteca. Consulta urgente por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/derecho-penal' },
-  keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penal San Lorenzo', 'abogado penalista Choluteca', 'asistencia detenidos sur Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'recursos penales casación'],
+  keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penalista San Lorenzo', 'abogado penalista Choluteca', 'abogado detención Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'abogado urgente penalista Valle'],
   twitter: {
     card: 'summary_large_image',
-    title: `Abogados Penalistas en ${site.address.city}, ${site.address.department}`,
-    description: `Defensa penal técnica y confidencial en la zona sur de Honduras. Sede en Nacaome, cobertura en San Lorenzo y Choluteca.`,
+    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} — Defensa Penal`,
+    description: `Defensa penal técnica y confidencial en Nacaome, San Lorenzo y Choluteca. Atendemos detenciones y audiencias. Consulta urgente.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Abogados Penalistas en ${site.address.city}, ${site.address.department}`,
-    description: `Defensa penal técnica y confidencial en Nacaome, Valle. Presencia activa en la zona sur de Honduras: San Lorenzo y Choluteca.`,
+    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} — Defensa Penal`,
+    description: `¿Necesita un abogado penalista en Nacaome, Valle? Defensa técnica y confidencial. Atendemos detenciones, audiencias y recursos en la zona sur de Honduras.`,
     url: `${site.url}/derecho-penal`,
     siteName: site.name,
     locale: 'es_HN',

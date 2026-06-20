@@ -16,19 +16,19 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department}`,
-  description: `Cobertura legal integral: Nacaome, Valle, San Lorenzo y Choluteca. Penal, familia, laboral, civil, mercantil y tributario. Bufete multidisciplinar.`,
+  title: `Abogados en ${site.address.city}, ${site.address.department} — Todas las Áreas del Derecho`,
+  description: `Abogados en Nacaome, Valle para derecho penal, familia, laboral, civil, mercantil y tributario. Cobertura en San Lorenzo y Choluteca. Primera consulta por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/servicios-juridicos' },
-  keywords: ['servicios jurídicos Nacaome', 'áreas legales Valle', 'ramas del derecho Honduras', 'derecho familia sur Honduras', 'derecho laboral Valle', 'derecho mercantil Nacaome', 'derecho civil Choluteca', 'cobertura legal integral'],
+  keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete multidisciplinario Nacaome'],
   twitter: {
     card: 'summary_large_image',
-    title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department}`,
-    description: `Cobertura legal integral en Nacaome, Valle: penal, familia, laboral, civil, mercantil, tributario y más.`,
+    title: `Abogados en ${site.address.city}, ${site.address.department} — Todas las Áreas del Derecho`,
+    description: `Abogados en Nacaome, Valle: penal, familia, laboral, civil, mercantil y tributario. Cobertura San Lorenzo y Choluteca.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Servicios Jurídicos en ${site.address.city}, ${site.address.department}`,
-    description: `Cobertura legal integral en Nacaome, Valle, Honduras: las ramas principales del derecho bajo un mismo bufete.`,
+    title: `Abogados en ${site.address.city}, ${site.address.department} — Todas las Áreas del Derecho`,
+    description: `Abogados en Nacaome, Valle, Honduras. Penal, familia, laboral, civil, mercantil y tributario bajo un mismo bufete. Cobertura en la zona sur.`,
     url: `${site.url}/servicios-juridicos`,
     siteName: site.name,
     locale: 'es_HN',
