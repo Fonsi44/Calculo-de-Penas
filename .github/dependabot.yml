@@ -18,12 +18,19 @@ updates:
       time: '06:00'
       timezone: America/Tegucigalpa
     open-pull-requests-limit: 5
-    # Agrupar minor + patch en un solo PR; major van aparte.
+    # Agrupar minor + patch en un solo PR; IGNORAR major (rompen build).
+    # Las actualizaciones major (eslint 10, @types/node 26, googleapis 173,
+    # etc.) requieren validación manual: breaking changes, migración de API,
+    # ajustes de tipos. Se evalúan caso por caso, no automáticamente.
     groups:
       minor-and-patch:
         update-types:
           - minor
           - patch
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - version-update:semver-major
     commit-message:
       prefix: 'chore(deps)'
       include: scope
@@ -45,6 +52,10 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - version-update:semver-major
     commit-message:
       prefix: 'chore(ci)'
       include: scope
