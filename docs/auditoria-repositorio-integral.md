@@ -621,8 +621,8 @@ Las 7 fases del plan de ejecución se han implementado en commits atómicos
 | AL-BLOG-01 | 49 posts thin (0/10 marcadores), 109 MEDIO | Reescribir por lotes (ver `docs/plan-reescritura-blog.md`). |
 | AL-SEC-01 (rotación) | OAuth Client Secret en historial de git | **Rotar el secret en GCP Console** (el viejo está comprometido en git history). |
 | AL-SEC-02 (config) | `RESEND_WEBHOOK_SECRET` sin configurar | Obtener del panel de Resend y configurar en Vercel; sin él, `/api/email/inbound` responde 503 en prod. |
-| ME-DOC-02 | Sección WordPress legacy en README | Decidir: ¿migración terminada? Eliminar `wordpress/` local + sección. |
-| BA-DOC-03 | Doble tooling Kilo/OpenCode | Decidir canal oficial de agentes. |
+| ME-DOC-02 | Sección WordPress legacy en README | ✅ RESUELTO: `wordpress/` no existe en disco ni en git. Sección eliminada del README. Migración blog→DB completada. |
+| BA-DOC-03 | Doble tooling Kilo/OpenCode | ✅ RESUELTO (Releases 84, 87): Kilo eliminado del repo; AGENTS.md es el protocolo canónico exclusivo. |
 | H-DB-02 | CI Node 22 vs local 24 | Validar runner antes de cambiar; mantenido con justificación. |
 
 ### Pendientes técnicos (deuda, no urgente)
@@ -633,7 +633,7 @@ Las 7 fases del plan de ejecución se han implementado en commits atómicos
 | ME-ARQ-02 | Capa `lib/blog.ts` + `data/blog/types.ts` (legacy) | NO movida: en uso por `blog-card.tsx` + `lib/schemas/blog.ts`. Requiere migración de tipos aparte. |
 | ME-BLOG-02 (corregido) | La auditoría decía `data/faq.ts` sin refs | FALSO: `faq-db.ts:6,47` la usa (`categoriasFaq`). En uso, no se toca. |
 | BA-UI-02 | `default.pub` suelta | No tracked (`.gitignore` ya la cubre). Sin acción. |
-| BA-TEST-02 | E2E no ejecutados | NO VALIDADO en esta sesión. |
+| BA-TEST-02 | E2E no ejecutados | ✅ RESUELTO (Release 88, Fase HQC): job E2E añadido a CI, ejecutado y pasado en GitHub Actions. |
 
 ### Validación final post-implementación
 

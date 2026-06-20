@@ -390,7 +390,9 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 
 ### No urgente (deuda técnica)
 - Migrar `lib/blog.ts` + `data/blog/types.ts` a tipo `BlogPost` puro.
-- Migrar `wordpress/` (local, no tracked). Decidir si eliminar o commitear.
+- ~~Migrar `wordpress/` (local, no tracked).~~ **Resuelto:** `wordpress/` no
+  existe ni en disco ni en git. La migración del blog a DB (Drizzle) está
+  completada; la referencia era obsoleta.
 
 ---
 
