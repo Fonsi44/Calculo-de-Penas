@@ -56,7 +56,7 @@ const FROM_CITIES = [
 export default function ComoLlegarPage() {
   const { latitude, longitude } = site.geo;
   const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-  const wazeLink = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
+  const osmLink = `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`;
 
   const shortAddress = site.address.full;
 
@@ -129,12 +129,13 @@ export default function ComoLlegarPage() {
                     <ExternalLink size={11} className="opacity-70" />
                   </a>
                   <a
-                    href={wazeLink}
+                    href={osmLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-info text-white text-xs font-bold hover:opacity-90 transition-opacity"
+                    title="Ver en OpenStreetMap — mapa libre y gratuito"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-surface-alt text-text text-xs font-bold border border-border-light hover:border-accent/40 hover:text-accent-dark transition-colors"
                   >
-                    <Car size={14} /> Waze
+                    <MapPin size={14} /> OpenStreetMap
                     <ExternalLink size={11} className="opacity-70" />
                   </a>
                   <Link
