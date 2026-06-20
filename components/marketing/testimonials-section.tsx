@@ -72,7 +72,7 @@ export function TestimonialsSection({
             return (
               <article
                 key={`${t.name}-${idx}`}
-                className="group relative flex h-full flex-col rounded-xl bg-white text-text shadow-[0_18px_40px_-22px_rgba(0,0,0,0.55)] border border-black/5"
+                className="group relative flex h-full flex-col rounded-lg bg-white text-text shadow-[0_18px_40px_-22px_rgba(0,0,0,0.55)] border border-black/5"
               >
                 <div
                   className="absolute -top-3 left-6 w-9 h-9 rounded-md bg-accent text-primary-dark flex items-center justify-center shadow-[0_8px_18px_-8px_rgba(201,165,92,0.7)]"

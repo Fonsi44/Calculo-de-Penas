@@ -5,6 +5,122 @@
 
 ---
 
+## Unreleased — Mejora visual progresiva de la interfaz (Premium equilibrado)
+
+Pulido UI sobre el diseño existente **sin rediseño, sin cambios de contenido,
+sin nuevas dependencias ni alteración de la identidad visual**. El objetivo:
+resolver incoherencias del sistema de design tokens de `globals.css` y elevar
+la percepción de calidad, densidad y jerarquía.
+
+### Dirección visual
+Carácter **"Premium equilibrado"**: radius canónico de card = 16px
+(`rounded-lg` / `--radius-lg`), densidad editorial (`p-5`), sombra multicapa
+con halo dorado en hover, dorado como acento (no decoración).
+
+### Consolidación del sistema de design tokens (`app/globals.css`)
+- **Radius unificado**: `.card-premium` alineado a `var(--radius-lg)` (16px)
+  en vez de `14px` hardcoded — resuelve el conflicto con `Card` (`rounded-md`
+  → `rounded-lg`), que entraba en valor indeterminado.
+- **Sombras de botón como fuente única de verdad**: eliminadas las 9 sombras
+  inline (`shadow-[0_1px_0_0_rgba...]`) de `cta-buttons.tsx` y
+  `public-header.tsx`, que duplicaban y **divergían** de los tokens
+  `--shadow-btn-primary/-secondary/-accent`. Ahora se exponen como utilities
+  `.btn-shadow-*` / `*-hover` y se aplican de forma consistente.
+- **Nuevo token `--shadow-btn-success` / `-hover`** (verde WhatsApp, light +
+  dark): antes cada CTA de WhatsApp repetía la sombra inline por todo el sitio.
+- **Eliminados tokens duplicados** legacy `--shadow-button-primary` /
+  `-hover` (idénticos a `--shadow-btn-primary*`).
+
+### Componentes afectados (radius 16px + densidad + legibilidad)
+| Archivo | Cambio |
+|---|---|
+| `components/ui/card.tsx` | `rounded-md` → `rounded-lg` (canónico) |
+| `components/marketing/service-card.tsx` | `rounded-xl` → `rounded-lg` |
+| `components/marketing/testimonials-section.tsx` | `rounded-xl` → `rounded-lg` |
+| `components/marketing/cta-buttons.tsx` | 8 sombras inline → tokens; botones a `rounded-lg` |
+| `components/marketing/public-header.tsx` | sombras inline (WhatsApp + CTA) → tokens; `rounded-lg` |
+| `components/marketing/trust-bar.tsx` | icono-contenedor `rounded-full` → `rounded-lg`; microcopy `text-xxs` → `text-xs` |
+| `components/marketing/blog-highlights.tsx` | descripción de post `text-xs` → `text-sm` |
+| `components/marketing/process-stepper.tsx` | eliminado `border` redundante (doble con `.card-premium`); `rounded-md` → `rounded-lg` |
+| `components/marketing/landing-local.tsx` | icono-contenedor unificado (`rounded-full border-2` → `rounded-lg border`); botones CTA a tokens |
+| `app/(public)/page.tsx` (home) | **Por qué elegirnos / combos multidisciplinar / ciudades**: icono-contenedor a `w-11 h-11 rounded-lg` con borde; descripciones `text-xs` → `text-sm` (menos altura vacía). **Hero**: añadido bloque visual complementario en `lg:col-span-5` (panel translúcido de sellos/cobertura/horario) que equilibra la composición antes asimétrica. Sin inventar métricas (R4). |
+
+### Lo que NO se toca
+Paleta de colores, identidad visual, contenido editorial, arquitectura, rutas,
+SEO, schemas JSON-LD, intranet/admin, motor de cálculo, `page-hero.tsx`,
+`public-footer.tsx`, `floating-contact-rail` (ya correctos).
+
+### Convención nueva (AGENTS.md R16)
+- Radius canónico de card pública = `rounded-lg` (16px).
+- CTAs de la web pública deben usar `.btn-shadow-*` / `*-hover` (nunca
+  `shadow-[...]` inline).
+- Icono-contenedor estándar: `w-11 h-11 rounded-lg` con `border` + `bg-tint`.
+- Dorado solo como acento (hover, eyebrow), no como fondo plano.
+
+### Validación (4/4 en verde)
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errores (baseline) |
+| `npm run build` | ✓ Compiled successfully — 305/305 páginas |
+| `npm test` | 397/397 (19 suites) |
+| `npm run visual:check` | **NO VALIDADO**: el pipeline compara contra producción remota, donde los cambios aún no están desplegados. El baseline existe (`e2e/visual-baselines/`, 18 jun). Verificación visual real requiere deploy previo. |
+
+### Estado
+`IMPLEMENTADO` y `VALIDADO` (lint/build/test). `visual:check` `NO VALIDADO`
+por limitación del pipeline (requiere deploy). Pendiente de verificación
+visual tras despliegue.
+
+---
+
+## Release 89 — Normalización masiva del blog (2026-06-20)
+
+Corrección segura, reproducible e idempotente de los **159 posts publicados**
+mediante un nuevo script canónico de normalización (`scripts/normalizar-blog.ts`).
+El flujo prioriza la automatización sobre la edición manual y **no inventa
+contenido editorial** (R3/R4): solo corrige duplicados técnicos, jerarquía
+semántica y formato.
+
+### Nuevo script canónico — `scripts/normalizar-blog.ts`
+- **Dry-run por defecto**: nunca escribe sin `--aplicar`.
+- **Backup previo** obligatorio (`auditoria-blog/backup-pre-normalizacion-<ts>.json`).
+- **Idempotente**: re-ejecutar no produce cambios adicionales (verificado).
+- **Sanitización** del body antes de escribir (defensa: nunca HTML sucio).
+- Selectores: `--solo-ctas`, `--solo-h1`, `--solo-whitespace`, `--slug <slug>`.
+
+### Correcciones aplicadas (en DB `blog_posts`)
+| Tipo | Posts afectados | Descripción |
+|------|-----------------|-------------|
+| CTAs duplicados eliminados | 75 | Disclaimer legal redundante en el body. El componente `<LegalDisclaimer>` ya lo renderiza (regla editorial explícita en `lib/legal-disclaimer.ts`). Regex precisa: solo elimina el `<p>` que **empieza** con la frase ancla, evitando falsos positivos en párrafos editoriales. |
+| H1 → H2 | 14 | Posts de landings locales con `<h1>` en el body generaban doble H1 (la plantilla ya renderiza `post.title` como H1). Conversión conservando atributos y contenido. |
+| Whitespace normalizado | 141 | Colapsado de 3+ saltos de línea, espacios finales, `&nbsp;` repetidos. No toca contenido semántico. |
+
+### Auditoría integral (159 posts)
+- **Sin errores técnicos**: 0 slugs duplicados, 0 títulos duplicados, 0 fechas
+  inválidas/futuras, 0 categorías inválidas, 0 meta descriptions fuera de rango,
+  todos los campos obligatorios completos.
+- **Peso editorial**: 114 posts < 800 palabras (marcados como "requiere
+  ampliación editorial" — trabajo humano, no relleno automático), 32 entre
+  800–1000 (objetivo), 13 > 1000.
+
+### Validación (6/6 en verde)
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errores |
+| `npx tsc --noEmit` | 0 errores |
+| `npm test` | 397/397 (19 suites) |
+| `npm run validate:dates` | 159 posts OK |
+| `npm run audit-blog-seo` | 0 errores, 0 warnings |
+| `npm run build` | Compiled successfully (305 páginas) |
+
+### Pendientes editoriales (no resueltos por diseño)
+- **71 posts** con revisión trimestral vencida (`npm run content:audit`).
+- **114 posts** < 800 palabras requieren ampliación editorial humana.
+- **1 meta title duplicado** (`como-elegir-abogado-honduras` vs
+  `como-elegir-buen-abogado-guia-practica-honduras`): canibalización que
+  requiere decisión editorial (cuál canonicalizar/noindex).
+
+---
+
 ## Release 88 — Fase HQC: Higiene + Calidad + Coherencia (2026-06-20)
 
 Ejecución completa del plan HQC en **5 commits atómicos** (uno por etapa).

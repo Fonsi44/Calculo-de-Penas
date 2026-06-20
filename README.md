@@ -205,6 +205,12 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 - **Canonical override:** campo `canonical_url` en `blog_posts`.
 - **Noindex por artículo:** campo `noindex`.
 - **Generador AI:** `POST /api/admin/blog/generate` (rate limit 10/5min).
+- **Normalización masiva:** `npm run blog:normalizar` (dry-run por defecto).
+  Corrige CTAs duplicados, H1 en body y whitespace en todos los posts.
+  Idempotente, con backup previo. No inventa contenido.
+- **Peso editorial objetivo:** 800–1000 palabras reales por post. 114 posts
+  están por debajo y requieren ampliación editorial humana (no relleno
+  automático).
 
 ### FAQ (`/preguntas-frecuentes`)
 - **Fuente:** DB (tabla `faq_entries`). `data/faq.ts` = legacy en uso
@@ -320,14 +326,23 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 
 ## Mantenimiento
 
-### Scripts operativos (28 en `scripts/`)
+### Scripts operativos (29 en `scripts/`)
 
 **Validación de datos:**
 ```bash
 npm run validate:dates       # Fechas del blog (ninguna futura)
 npm run content:audit        # Revisión editorial vencida
 npm run validar-meta-seo     # Metadatos SEO de posts
+npm run blog:normalizar      # Normalización del blog (DRY-RUN por defecto)
+npm run blog:normalizar:aplicar  # Aplica CTAs/H1/whitespace en DB
 ```
+
+> **`blog:normalizar`** es el script canónico de corrección del blog
+> (`scripts/normalizar-blog.ts`). Dry-run por defecto, backup previo obligatorio
+> e idempotente. Elimina CTAs/disclaimer duplicados del body (ya los añade
+> `<LegalDisclaimer>`), convierte `<h1>` del body a `<h2>` (evita doble H1) y
+> normaliza whitespace. **No inventa contenido**: el peso editorial (<800
+> palabras) se reporta pero requiere ampliación humana. Ver CHANGELOG Release 89.
 
 **IndexNow:**
 ```bash

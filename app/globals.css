@@ -102,14 +102,21 @@
   --shadow-gold-ring: 0 0 0 1px rgba(212,175,55,0.45), 0 8px 24px -6px rgba(212,175,55,0.35);
   --shadow-card: 0 1px 0 0 rgba(255,255,255,0.60) inset, 0 1px 2px rgba(15,29,58,0.04), 0 4px 12px rgba(15,29,58,0.05), 0 12px 32px -8px rgba(15,29,58,0.10);
   --shadow-card-hover: 0 1px 0 0 rgba(255,255,255,0.70) inset, 0 2px 4px rgba(15,29,58,0.05), 0 8px 20px rgba(15,29,58,0.07), 0 24px 48px -12px rgba(15,29,58,0.18), 0 0 0 1px rgba(212,175,55,0.18);
-  --shadow-button-primary: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(15,29,58,0.20), 0 4px 12px -2px rgba(15,29,58,0.30);
-  --shadow-button-primary-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(15,29,58,0.20), 0 8px 20px -2px rgba(15,29,58,0.35), 0 0 0 1px rgba(212,175,55,0.20);
+
+  /* Sombras de botón — fuente única de verdad.
+     Antes había 9 ocurrencias inline que duplicaban y DIVERGÍAN de estos
+     tokens. Ahora toda CTA de la web pública usa estas utilities (ver
+     .btn-shadow-* más abajo). R16 (AGENTS.md): nunca sombras inline. */
   --shadow-btn-primary: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(15,29,58,0.20), 0 4px 12px -2px rgba(15,29,58,0.30);
   --shadow-btn-primary-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(15,29,58,0.20), 0 8px 20px -2px rgba(15,29,58,0.35), 0 0 0 1px rgba(212,175,55,0.20);
   --shadow-btn-secondary: 0 1px 0 0 rgba(255,255,255,0.60) inset, 0 1px 2px rgba(15,29,58,0.04), 0 2px 6px rgba(15,29,58,0.05);
   --shadow-btn-secondary-hover: 0 1px 0 0 rgba(255,255,255,0.70) inset, 0 2px 4px rgba(15,29,58,0.05), 0 6px 14px rgba(15,29,58,0.08);
   --shadow-btn-accent: 0 1px 0 0 rgba(255,255,255,0.30) inset, 0 1px 2px rgba(154,122,34,0.30), 0 4px 12px -2px rgba(212,175,55,0.40);
   --shadow-btn-accent-hover: 0 1px 0 0 rgba(255,255,255,0.40) inset, 0 2px 4px rgba(154,122,34,0.30), 0 8px 22px -2px rgba(212,175,55,0.55), 0 0 0 1px rgba(212,175,55,0.20);
+  /* Verde WhatsApp (success) — patrón btn-primary tintado. Sin token propio
+     antes: las CTAs de WhatsApp repetían la sombra inline por todo el sitio. */
+  --shadow-btn-success: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(14,122,79,0.20), 0 4px 12px -2px rgba(14,122,79,0.40);
+  --shadow-btn-success-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(14,122,79,0.20), 0 8px 20px -2px rgba(14,122,79,0.50);
 
   /* Radios — escala más amplia y consistente */
   --radius-xs: 6px;
@@ -229,6 +236,8 @@
   --shadow-btn-secondary-hover: 0 1px 0 0 rgba(255,255,255,0.06) inset, 0 2px 4px rgba(0,0,0,0.30), 0 6px 14px rgba(0,0,0,0.40);
   --shadow-btn-accent: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 1px 2px rgba(0,0,0,0.30), 0 4px 12px -2px rgba(212,175,55,0.20);
   --shadow-btn-accent-hover: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 2px 4px rgba(0,0,0,0.30), 0 8px 22px -2px rgba(212,175,55,0.30), 0 0 0 1px rgba(212,175,55,0.20);
+  --shadow-btn-success: 0 1px 0 0 rgba(255,255,255,0.06) inset, 0 1px 2px rgba(0,0,0,0.30), 0 4px 12px -2px rgba(14,122,79,0.30);
+  --shadow-btn-success-hover: 0 1px 0 0 rgba(255,255,255,0.08) inset, 0 2px 4px rgba(0,0,0,0.30), 0 8px 20px -2px rgba(14,122,79,0.40);
 }
 
 /* Scroll suave */
@@ -397,7 +406,8 @@ input[type="checkbox"] {
 .text-pretty  { text-wrap: pretty; }
 
 /* Card premium — superficie con gradiente interno + sombra multicapa + halo dorado al hover.
-   Refuerza profundidad y separa la card del fondo. */
+   Refuerza profundidad y separa la card del fondo.
+   Radius canónico de la web pública = --radius-lg (16px). R16 (AGENTS.md). */
 .card-premium {
   position: relative;
   background:
@@ -405,7 +415,7 @@ input[type="checkbox"] {
     var(--color-surface);
   background-blend-mode: normal;
   border: 1px solid var(--color-border-light);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   transition:
     transform 320ms var(--ease-spring),
@@ -628,6 +638,20 @@ input[type="checkbox"] {
 .halo-accent {
   box-shadow: var(--shadow-gold-ring);
 }
+
+/* Sombras de botón como utilities (fuente única de verdad).
+   Reemplazan a las 9+ sombras inline que había en cta-buttons.tsx y
+   public-header.tsx, que duplicaban y divergían de los tokens.
+   Uso: className="btn-shadow-primary hover:btn-shadow-primary-hover".
+   R16 (AGENTS.md): prohibido escribir shadow-[...] inline en CTAs. */
+.btn-shadow-primary { box-shadow: var(--shadow-btn-primary); }
+.btn-shadow-primary-hover:hover { box-shadow: var(--shadow-btn-primary-hover); }
+.btn-shadow-secondary { box-shadow: var(--shadow-btn-secondary); }
+.btn-shadow-secondary-hover:hover { box-shadow: var(--shadow-btn-secondary-hover); }
+.btn-shadow-accent { box-shadow: var(--shadow-btn-accent); }
+.btn-shadow-accent-hover:hover { box-shadow: var(--shadow-btn-accent-hover); }
+.btn-shadow-success { box-shadow: var(--shadow-btn-success); }
+.btn-shadow-success-hover:hover { box-shadow: var(--shadow-btn-success-hover); }
 
 /* Radial gradient overlay utility (replaces inline style in page-hero, footer, testimonials) */
 .bg-radial-accent {

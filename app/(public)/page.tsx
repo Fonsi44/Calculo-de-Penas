@@ -201,6 +201,45 @@ export default async function HomePage() {
               </div>
               <CTAGroup variant="inverse" className="mt-8" />
             </div>
+            {/* Bloque visual complementario (lg:col-span-5): equilibra la
+                composición del hero, antes asimétrica (5 columnas vacías).
+                Reutiliza datos verificados (site, áreas), sin inventar
+                métricas (R4). Panel translúcido con textura de la marca. */}
+            <div className="hidden lg:block lg:col-span-5">
+              <div className="relative rounded-2xl border border-accent/25 bg-primary-dark/40 backdrop-blur-md p-6 shadow-[0_24px_60px_-24px_rgba(6,14,32,0.6)]">
+                <div className="absolute inset-0 pointer-events-none rounded-2xl bg-grid opacity-40" aria-hidden="true" />
+                <div className="relative space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                      <Gavel size={20} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-text-inverse leading-tight">Defensa penal como pilar</p>
+                      <p className="text-xs text-text-inverse/75 leading-relaxed mt-1">
+                        Asistencia letrada en juzgados del sur de Honduras.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="h-px bg-text-inverse/10" />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-xxs font-bold uppercase tracking-wider text-accent">Cobertura</p>
+                      <p className="text-sm font-semibold text-text-inverse mt-1">{site.address.city}, {site.address.department}</p>
+                      <p className="text-xs text-text-inverse/70 mt-0.5">San Lorenzo · Choluteca</p>
+                    </div>
+                    <div>
+                      <p className="text-xxs font-bold uppercase tracking-wider text-accent">Horario</p>
+                      <p className="text-sm font-semibold text-text-inverse mt-1">Lun a Sáb</p>
+                      <p className="text-xs text-text-inverse/70 mt-0.5 tabular-nums">{site.hours}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <CheckCircle2 size={14} className="text-accent flex-shrink-0" />
+                    <p className="text-xs text-text-inverse/80">Consulta inicial sin costo · Presupuesto por escrito</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
@@ -368,15 +407,15 @@ export default async function HomePage() {
               key={w.title}
               className="card-dark p-5"
             >
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+              <div className="flex items-start gap-3.5">
+                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
                   <w.icon size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
                   <strong className="font-bold text-sm leading-tight text-text text-balance block">
                     {w.title}
                   </strong>
-                  <p className="text-xs leading-relaxed text-text-secondary mt-1 text-pretty">
+                  <p className="text-sm leading-relaxed text-text-secondary mt-1.5 text-pretty">
                     {w.desc}
                   </p>
                 </div>
@@ -438,13 +477,13 @@ export default async function HomePage() {
               },
             ].map((it) => (
               <Card key={it.title} padding="sm" className="h-full flex">
-                <div className="flex items-start gap-2.5 w-full">
-                  <div className="w-8 h-8 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
-                    <it.icon size={15} aria-hidden="true" />
+                <div className="flex items-start gap-3 w-full">
+                  <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+                    <it.icon size={20} aria-hidden="true" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <strong className="font-bold text-sm text-text leading-tight text-balance block">{it.title}</strong>
-                    <p className="text-xs text-text-secondary leading-relaxed mt-0.5 text-pretty">
+                    <p className="text-sm text-text-secondary leading-relaxed mt-1 text-pretty">
                       {it.desc}
                     </p>
                   </div>
@@ -538,10 +577,10 @@ export default async function HomePage() {
               className="group block focus-visible:outline-none"
             >
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                   <MapPin size={20} aria-hidden="true" />
                 </div>
-                <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
+                <h3 className="font-bold text-base text-text leading-tight group-hover:text-primary transition-colors">
                   {`Abogados en ${c.ciudad}`}
                 </h3>
                 <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">

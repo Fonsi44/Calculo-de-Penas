@@ -59,15 +59,19 @@ export function TrustBar({
   const cardCls = isDark
     ? 'flex flex-col items-center text-center h-full px-2'
     : 'flex flex-col items-center text-center h-full px-2';
+  // Icono-contenedor canónico de la web pública: w-11 h-11 rounded-lg con
+  // borde + tint (R16). Antes era rounded-full, único outlier de forma.
   const iconBoxCls = isDark
-    ? 'w-11 h-11 rounded-full bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
-    : 'w-11 h-11 rounded-full bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
+    ? 'w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
+    : 'w-11 h-11 rounded-lg bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
   const titleCls = isDark
     ? 'text-sm font-bold text-text-inverse leading-tight mt-3'
     : 'text-sm font-bold text-text leading-tight mt-3';
+  // Microcopy legible: text-xs (12px) en vez de text-xxs (11px). Sigue siendo
+  // caption, pero ahora se lee con comodidad en todos los tamaños.
   const descCls = isDark
-    ? 'text-xxs text-text-inverse/70 leading-snug mt-1 max-w-[18ch]'
-    : 'text-xxs text-text-secondary leading-snug mt-1 max-w-[20ch]';
+    ? 'text-xs text-text-inverse/70 leading-snug mt-1.5 max-w-[20ch]'
+    : 'text-xs text-text-secondary leading-snug mt-1.5 max-w-[22ch]';
 
   return (
     <div className={`${wrapperCls} ${className ?? ''}`}>

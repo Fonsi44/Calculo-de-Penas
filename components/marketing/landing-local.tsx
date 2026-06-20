@@ -126,10 +126,10 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           {landing.servicios.map((s, i) => (
             <div
               key={i}
-              className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-4 hover:border-accent/40 transition-colors"
+              className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5 hover:border-accent/40 transition-colors"
             >
-              <span className="w-10 h-10 rounded-full border-2 border-accent flex items-center justify-center bg-white flex-shrink-0 mt-0.5">
-                <Scale size={16} className="text-accent-dark" aria-hidden="true" />
+              <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Scale size={20} className="text-accent-dark" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
                 <h3 className="font-bold text-sm md:text-base text-primary leading-snug">{s.titulo}</h3>
@@ -173,7 +173,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
                 className="group block focus-visible:outline-none"
               >
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
+                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3 border border-accent/20">
                     <BookOpen size={20} aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
@@ -206,20 +206,20 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
               href={whatsappHref(whatsappMsg)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-success text-white text-sm font-bold hover:opacity-95 transition-opacity focus-visible:outline-none"
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover hover:opacity-95 transition-opacity focus-visible:outline-none"
             >
               <MessageCircle size={18} aria-hidden="true" />
               WhatsApp: {site.whatsappDisplay}
             </a>
             <Link
               href="/solicitar-consulta#formulario"
-              className="btn-shimmer inline-flex items-center gap-2 h-11 px-5 rounded-md bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+              className="btn-shimmer inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-primary text-white text-sm font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors"
             >
               Solicitar consulta <ArrowRight size={16} />
             </Link>
             <a
               href={telHref()}
-              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-surface border border-border-strong text-primary text-sm font-bold hover:border-accent transition-colors focus-visible:outline-none"
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-surface border border-border-strong text-primary text-sm font-bold btn-shadow-secondary btn-shadow-secondary-hover hover:border-accent transition-colors focus-visible:outline-none"
             >
               <Phone size={18} aria-hidden="true" />
               Llamar ahora
@@ -243,7 +243,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
               className="group block focus-visible:outline-none"
             >
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                   <MapPin size={20} aria-hidden="true" />
                 </div>
                 <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">

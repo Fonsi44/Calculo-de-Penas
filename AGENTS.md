@@ -137,6 +137,7 @@ corresponde exactamente.
 | UI pública | `build` + `test` |
 | Fechas del blog | `npm run validate:dates` |
 | Contenido editorial | `npm run content:audit` |
+| Normalización del blog | `npm run blog:normalizar` (dry-run) → `npm run blog:normalizar:aplicar` |
 | IndexNow | `npm run indexnow:dry` |
 | SEO off-page | `npm run seo:health` |
 | Regresión visual | `npm run visual:check` |
@@ -220,6 +221,56 @@ Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 | Canonical override | Campo `canonical_url` disponible |
 | Noindex por artículo | Campo `noindex` disponible |
 | Política editorial | README §"Estrategia editorial" |
+
+### Reglas editoriales vinculantes (R13–R15)
+
+**R13. Peso editorial objetivo: 800–1000 palabras reales.**
+- Al crear o reescribir un post, el cuerpo (HTML sin tags) debe tener entre
+  800 y 1000 palabras para peso SEO suficiente.
+- Posts por debajo de 800 palabras se marcan como "requiere ampliación
+  editorial". La ampliación es trabajo humano con información verificable;
+  **nunca** se rellena con texto genérico para alcanzar el conteo.
+- Posts muy por encima de 1000 palabras se revisan por claridad/estructura.
+- El conteo se verifica con `scripts/normalizar-blog.ts` (audit) o
+  `scripts/detectar-posts-plantilla.ts`.
+
+**R14. El disclaimer legal va en el componente, no en el body.**
+- El componente `<LegalDisclaimer>` (`components/marketing/legal-disclaimer.tsx`)
+  ya renderiza el aviso legal en todas las páginas de detalle. El body de un
+  post **NO debe contener** el disclaimer (`"Este artículo tiene carácter
+  informativo..."`): sería duplicado y rompe la regla de `lib/legal-disclaimer.ts`.
+- `npm run blog:normalizar:aplicar` elimina estos duplicados de forma segura.
+
+**R15. Un solo H1 por página de post.**
+- La plantilla `app/(public)/blog/[categoria]/[slug]/page.tsx` ya renderiza
+  `post.title` como `<h1>`. El body del post debe usar `<h2>`/`<h3>` para la
+  jerarquía interna, **nunca** `<h1>` (generaría doble H1, problema SEO).
+- `npm run blog:normalizar:aplicar` convierte `<h1>` del body a `<h2>`.
+
+**R16. Pulido visual coherente (design tokens).**
+Aplica a toda modificación visual de la web pública. Refuerza R5 (no rediseñar)
+con reglas operativas para mantener la coherencia del sistema de design tokens
+de `app/globals.css`:
+- **Radius canónico de card pública = `rounded-lg` (16px / `--radius-lg`)**.
+  No usar `rounded-md` (12px) ni `rounded-xl` (20px) en cards públicas.
+  `.card-premium` y `.card-dark` ya usan `var(--radius-lg)`.
+- **Sombras de botón siempre vía tokens**, nunca `shadow-[...]` inline.
+  Usar las utilities `.btn-shadow-primary`/`-secondary`/`-accent`/`-success`
+  y sus variantes `*-hover` (definidas en `globals.css`). Los tokens fuente
+  son `--shadow-btn-*`. Antes había 9 sombras inline que duplicaban y
+  divergían de los tokens.
+- **Icono-contenedor estándar**: `w-11 h-11 rounded-lg` con `border` +
+  `bg-tint` (p.ej. `bg-primary/10 border-primary/15` o
+  `bg-accent/15 border-accent/30`) e icono `size={20}`. Para numeración
+  (stepper, listas): `w-10 h-10 rounded-md`.
+- **Dorado solo como acento**: hover (border + halo), eyebrow, iconos
+  destacados. Nunca como fondo plano de superficies grandes.
+- **Legibilidad mínima**: descripciones/extractos de cards a `text-sm` (14px)
+  mínimo. `text-xs` (12px) reservado para labels/meta; `text-xxs` (11px) solo
+  para eyebrow/captions ultracortos.
+- **Validación**: tras cambios visuales, `npm run lint && npm run build`
+  obligatorio. `npm run visual:check` compara contra producción remota
+  (requiere deploy previo para validar cambios no desplegados).
 
 ---
 

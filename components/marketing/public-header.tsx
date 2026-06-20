@@ -118,7 +118,7 @@ export function PublicHeader() {
             href={whatsappHref('Hola, necesito una consulta jurídica.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-success text-white shadow-[0_4px_12px_-2px_rgba(14,122,79,0.45)] hover:-translate-y-0.5 hover:shadow-[0_6px_16px_-2px_rgba(14,122,79,0.55)] transition-all duration-200 focus-visible:outline-none"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none"
             aria-label="Contactar por WhatsApp"
             title="WhatsApp"
           >
@@ -126,7 +126,7 @@ export function PublicHeader() {
           </a>
           <Link
             href="/solicitar-consulta#formulario"
-            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-accent text-primary text-sm font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55)] transition-all duration-200 focus-visible:outline-none"
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none"
           >
             <Calendar size={14} aria-hidden="true" />
             Solicitar consulta
@@ -192,7 +192,7 @@ export function PublicHeader() {
             <Link
               href="/solicitar-consulta#formulario"
               onClick={() => setOpen(false)}
-              className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-md bg-accent text-primary text-sm font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)]"
+              className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent"
             >
               <Calendar size={16} />
               Solicitar consulta

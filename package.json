@@ -25,6 +25,8 @@
     "indexnow:full": "ENABLE_INDEXNOW_SUBMIT=true node scripts/submit-indexnow.mjs --full",
     "indexnow:incremental": "ENABLE_INDEXNOW_SUBMIT=true node scripts/submit-indexnow.mjs --incremental",
     "content:audit": "npx tsx scripts/content-audit.ts",
+    "blog:normalizar": "npx tsx scripts/normalizar-blog.ts",
+    "blog:normalizar:aplicar": "npx tsx scripts/normalizar-blog.ts --aplicar",
     "validate:dates": "npx tsx scripts/validar-fechas-blog.ts",
     "seed:fase2": "npx tsx drizzle/seed-fase2.ts",
     "db:check": "npx tsx scripts/check-db-state.ts",

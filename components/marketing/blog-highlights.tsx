@@ -112,7 +112,7 @@ export async function BlogHighlights({
                 {post.title}
               </h3>
               {post.description && (
-                <p className="text-xs text-text-secondary mt-1.5 leading-relaxed line-clamp-2">
+                <p className="text-sm text-text-secondary mt-2 leading-relaxed line-clamp-2">
                   {post.description}
                 </p>
               )}

@@ -17,7 +17,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-primary text-white text-sm font-bold border border-primary-light/40 shadow-[0_1px_0_0_rgba(255,255,255,0.10)_inset,0_4px_12px_-2px_rgba(15,29,58,0.30)] hover:-translate-y-0.5 hover:bg-primary-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.12)_inset,0_6px_18px_-2px_rgba(15,29,58,0.35),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={16} aria-hidden="true" />
           Llamar ahora
@@ -26,7 +26,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           href={whatsappHref(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md bg-success text-white text-sm font-bold border border-success/40 shadow-[0_1px_0_0_rgba(255,255,255,0.10)_inset,0_4px_12px_-2px_rgba(14,122,79,0.40)] hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-success text-white text-sm font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
         >
           <MessageCircle size={16} aria-hidden="true" />
           WhatsApp
@@ -39,14 +39,14 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-primary text-white text-base font-bold border border-primary-light/40 shadow-[0_1px_0_0_rgba(255,255,255,0.10)_inset,0_4px_12px_-2px_rgba(15,29,58,0.30)] hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-primary text-white text-base font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={18} aria-hidden="true" />
           {site.phoneDisplay}
         </a>
         <a
           href="/solicitar-consulta#formulario"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-accent text-primary text-base font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
@@ -59,14 +59,14 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <a
           href="/solicitar-consulta#formulario"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
+          className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-accent text-primary text-base font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
           Solicitar consulta
         </a>
         <a
           href={telHref()}
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none cursor-pointer"
         >
           <Phone size={18} aria-hidden="true" />
           Llamar {site.phoneDisplay}
@@ -78,14 +78,14 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
       <a
         href="/solicitar-consulta#formulario"
-        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md bg-accent text-primary text-base font-bold border border-accent-dark/40 shadow-[0_1px_0_0_rgba(255,255,255,0.30)_inset,0_4px_12px_-2px_rgba(212,175,55,0.45)] hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_1px_0_0_rgba(255,255,255,0.40)_inset,0_6px_18px_-2px_rgba(212,175,55,0.55),0_0_0_1px_rgba(212,175,55,0.20)] transition-all duration-200 focus-visible:outline-none cursor-pointer"
+        className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-accent text-primary text-base font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={18} aria-hidden="true" />
         Solicitar consulta
       </a>
       <a
         href={telHref()}
-        className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-md border-2 border-primary/25 text-primary bg-surface text-base font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_1px_2px_rgba(15,29,58,0.04),0_2px_6px_rgba(15,29,58,0.05)]"
+        className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg border-2 border-primary/25 text-primary bg-surface text-base font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none btn-shadow-secondary btn-shadow-secondary-hover"
       >
         <Phone size={18} aria-hidden="true" />
         Llamar {site.phoneDisplay}

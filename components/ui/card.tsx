@@ -47,7 +47,11 @@ export function Card({
   return (
     <div
       className={cn(
-        'rounded-md',
+        // Radius canónico de la web pública = rounded-lg (16px) — R16.
+        // Antes era rounded-md (12px), que entraba en conflicto con
+        // .card-premium (que forzaba 14px). Ahora Card y .card-premium
+        // coinciden en var(--radius-lg).
+        'rounded-lg',
         variantCls,
         toneCls,
         PAD[padding],

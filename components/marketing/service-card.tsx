@@ -124,7 +124,9 @@ export function ServiceCard({
   );
 
   const baseClasses = cn(
-    'group premium-bar card-premium relative flex flex-col overflow-hidden rounded-xl border border-border-light bg-surface hover:border-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40',
+    // rounded-lg (16px) — radius canónico de la web pública (R16).
+    // Antes era rounded-xl (20px), único outlier frente a Card (.card-premium).
+    'group premium-bar card-premium relative flex flex-col overflow-hidden rounded-lg border border-border-light bg-surface hover:border-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40',
     className,
   );
 

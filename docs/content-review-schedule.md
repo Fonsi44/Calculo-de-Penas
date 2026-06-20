@@ -1,5 +1,5 @@
 # Programa de revisión de contenido
-**Generado:** 2026-06-19
+**Generado:** 2026-06-20
 **Total artículos:** 159
 ## Vencidos
 - [ ] `delitos-ambientales-como-denunciarlos-honduras` — vence: 2026-03-04

@@ -28,7 +28,7 @@ export function ProcessStepper({ steps, withConnector = true, className }: Proce
       {steps.map((s) => (
         <div
           key={s.step}
-          className="relative rounded-md border border-border-light bg-surface p-5 card-premium group"
+          className="relative rounded-lg p-5 card-premium group"
         >
           <div className="flex items-center gap-3 mb-3 relative z-10">
             <div className="relative w-10 h-10 rounded-md bg-primary text-text-inverse flex items-center justify-center font-extrabold text-sm flex-shrink-0 shadow-sm group-hover:bg-primary-light transition-colors">
