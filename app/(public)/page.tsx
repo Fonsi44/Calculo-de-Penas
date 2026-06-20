@@ -216,7 +216,7 @@ export default async function HomePage() {
                     <div>
                       <p className="font-bold text-sm text-text-inverse leading-tight">Defensa penal como pilar</p>
                       <p className="text-xs text-text-inverse/75 leading-relaxed mt-1">
-                        Asistencia letrada en juzgados del sur de Honduras.
+                        Abogados de Pineda y Asociados con presencia activa en juzgados del sur de Honduras para defensa penal y asesoría jurídica.
                       </p>
                     </div>
                   </div>
@@ -266,6 +266,7 @@ export default async function HomePage() {
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <Link
             href="/blog"
+            title="Explorar el blog jurídico de Pineda y Asociados — guías de defensa penal y más"
             className="group block rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-5 shadow-md shadow-accent/5 hover:border-accent/50 transition-colors"
           >
             <div className="flex items-center justify-between gap-4">
@@ -297,6 +298,7 @@ export default async function HomePage() {
             <Link
               key={i}
               href="/preguntas-frecuentes"
+              title={`Consultar: ${item.q.replace(/<[^>]*>/g, '').substring(0, 60)} — Pineda y Asociados`}
               className="group block focus-visible:outline-none"
             >
               <Card padding="sm" className="h-full card-premium">
@@ -317,7 +319,7 @@ export default async function HomePage() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+          <Link href="/preguntas-frecuentes" title="Consultar preguntas frecuentes sobre defensa penal y asesoría jurídica en Nacaome" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
             consultar preguntas frecuentes <ArrowRight size={14} />
           </Link>
         </div>
@@ -449,8 +451,8 @@ export default async function HomePage() {
                 <Users size={12} /> Equipo coordinado
               </span>
             </div>
-            <Link href="/despacho" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-              sobre nuestro bufete <ArrowRight size={14} />
+            <Link href="/despacho" title="Conozca el bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+                sobre nuestro bufete <ArrowRight size={14} />
             </Link>
           </div>
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4 auto-rows-fr">
@@ -538,7 +540,7 @@ export default async function HomePage() {
                   </div>
                 </li>
               </ul>
-              <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark">
+              <Link href="/como-llegar" title="Indicaciones para llegar al bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark">
                 indicaciones para llegar al bufete <ArrowRight size={14} />
               </Link>
             </Card>
@@ -554,7 +556,7 @@ export default async function HomePage() {
                 className="w-full h-full"
               />
             </Card>
-            <Link href="/como-llegar" className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-primary hover:text-accent-dark">
+            <Link href="/como-llegar" title="Dirección y mapa del bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-primary hover:text-accent-dark">
               cómo llegar a Nacaome <ArrowRight size={12} />
             </Link>
           </div>
@@ -574,6 +576,7 @@ export default async function HomePage() {
             <Link
               key={c.slug}
               href={`/abogados-en-${c.slug}`}
+              title={`Abogados en ${c.ciudad}, ${c.departamento} — Pineda y Asociados`}
               className="group block focus-visible:outline-none"
             >
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
@@ -604,10 +607,10 @@ export default async function HomePage() {
               title={t('faq.title')}
               subtitle={t('faq.subtitle')}
             />
-            <Link href="/preguntas-frecuentes" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
+            <Link href="/preguntas-frecuentes" title="Explorar preguntas frecuentes sobre defensa penal y derecho en Honduras" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
               explorar preguntas frecuentes <ArrowRight size={14} />
             </Link>
-            <Link href="/blog" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+            <Link href="/blog" title="Leer el blog jurídico de Pineda y Asociados — guías y análisis legal" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
               leer el blog jurídico <ArrowRight size={14} />
             </Link>
           </div>

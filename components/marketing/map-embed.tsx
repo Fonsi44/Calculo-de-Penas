@@ -39,12 +39,14 @@ export function MapEmbed({
         className="w-full h-full border-0"
         loading="lazy"
         sandbox="allow-scripts"
+        referrerPolicy="no-referrer"
       />
       <div className="absolute bottom-0 left-0 right-0 bg-white/90 text-[10px] text-center text-text-tertiary py-0.5 px-2 leading-tight">
         <a
           href={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=${zoom}/${latitude}/${longitude}`}
           target="_blank"
           rel="noopener noreferrer"
+          title="Ver ubicación de Pineda y Asociados en OpenStreetMap — Nacaome, Valle"
           className="hover:text-accent-dark"
         >
           OpenStreetMap

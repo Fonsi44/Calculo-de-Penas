@@ -359,9 +359,9 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
             { key: 'badge', label: 'Badge', type: 'text', default: 'Asesoría integral' },
             { key: 'title_line1', label: 'Título línea 1', type: 'text', default: 'Defensa penal y asesoría jurídica en Nacaome y Honduras' },
             { key: 'title_line2', label: 'Título línea 2', type: 'text', default: '' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Defensa penal especializada y representación jurídica integral para personas y empresas. Presencia activa en los juzgados de Nacaome, Valle y todo Honduras, con comunicación clara y un equipo coordinado en cada área del derecho.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Defensa penal y asesoría jurídica integral de la mano de abogados con presencia activa en los juzgados de Nacaome, Valle y todo Honduras. En Pineda y Asociados recibirá comunicación clara y un equipo coordinado en cada rama del derecho.' },
             { key: 'check1', label: 'Check 1', type: 'text', default: 'Primera consulta sin compromiso' },
-            { key: 'check2', label: 'Check 2', type: 'text', default: 'Atención directa del abogado' },
+            { key: 'check2', label: 'Check 2', type: 'text', default: 'Atención directa de abogados en Nacaome' },
           ],
         },
         {

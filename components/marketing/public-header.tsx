@@ -8,13 +8,13 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
 
 const NAV = [
-  { label: 'El Despacho', href: '/despacho' },
-  { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
-  { label: 'Derecho Penal', href: '/derecho-penal' },
-  { label: 'Hondureños en España', href: '/hondurenos-en-espana' },
-  { label: 'FAQ', href: '/preguntas-frecuentes' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contacto', href: '/solicitar-consulta#formulario' },
+  { label: 'El Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
+  { label: 'Servicios Jurídicos', title: 'Servicios jurídicos en Nacaome — defensa penal, familia, laboral y más', href: '/servicios-juridicos' },
+  { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle y Honduras — abogados penalistas', href: '/derecho-penal' },
+  { label: 'Hondureños en España', title: 'Asistencia legal para hondureños en España desde Nacaome, Valle', href: '/hondurenos-en-espana' },
+  { label: 'FAQ', title: 'Preguntas frecuentes sobre defensa penal y asesoría jurídica en Honduras', href: '/preguntas-frecuentes' },
+  { label: 'Blog', title: 'Blog jurídico de Pineda y Asociados — guías legales para Honduras', href: '/blog' },
+  { label: 'Contacto', title: 'Solicitar consulta legal con Pineda y Asociados en Nacaome', href: '/solicitar-consulta#formulario' },
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {
@@ -49,6 +49,7 @@ export function PublicHeader() {
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
               href={telHref()}
+              title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
               className="flex items-center gap-1.5 hover:text-accent transition-colors focus-visible:outline-none"
             >
               <Phone size={12} aria-hidden="true" />
@@ -94,6 +95,7 @@ export function PublicHeader() {
               <Link
                 key={item.href}
                 href={item.href}
+                title={item.title}
                 aria-current={active ? 'page' : undefined}
                 className={`relative px-3 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
                   active
@@ -120,12 +122,13 @@ export function PublicHeader() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none"
             aria-label="Contactar por WhatsApp"
-            title="WhatsApp"
+            title="Escribir por WhatsApp a Pineda y Asociados — respuesta inmediata"
           >
             <MessageCircle size={16} aria-hidden="true" />
           </a>
           <Link
             href="/solicitar-consulta#formulario"
+            title="Solicitar consulta legal confidencial — Pineda y Asociados"
             className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none"
           >
             <Calendar size={14} aria-hidden="true" />
@@ -154,6 +157,7 @@ export function PublicHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  title={item.title}
                   onClick={() => setOpen(false)}
                   className={`relative px-3 h-11 inline-flex items-center justify-between text-sm font-semibold rounded-md ${
                     active
@@ -173,6 +177,7 @@ export function PublicHeader() {
             <div className="border-t border-primary-light/40 my-2" />
             <a
               href={telHref()}
+              title="Llamar a Pineda y Asociados — abogados en Nacaome"
               onClick={() => setOpen(false)}
               className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
             >
@@ -183,6 +188,7 @@ export function PublicHeader() {
             href={whatsappHref('Hola, necesito una consulta jurídica.')}
               target="_blank"
               rel="noopener noreferrer"
+              title="Escribir por WhatsApp a Pineda y Asociados"
               onClick={() => setOpen(false)}
               className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
             >
@@ -191,6 +197,7 @@ export function PublicHeader() {
             </a>
             <Link
               href="/solicitar-consulta#formulario"
+              title="Solicitar consulta legal con Pineda y Asociados"
               onClick={() => setOpen(false)}
               className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent"
             >

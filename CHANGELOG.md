@@ -127,10 +127,51 @@ diseño, rutas, formularios, tracking ni CMS. Validados con
   (`/_next/` ya no debe bloquearse) y WebSite publisher (`#organization`),
   y añadidos tests nuevos: BreadcrumbList no duplicado en `areaSchemas`,
   FAQPage sanitiza HTML, Organization incluye `image`. Suite: 397 → 401 tests.
+- Suite ampliada a **430 tests** (6 nuevos tests de protección para home page):
+  H1 contiene "defensa penal" + "asesoría jurídica", H1 menciona Nacaome +
+  Honduras, subtítulo incluye los 7 términos clave del title, check2 incluye
+  "abogados en Nacaome", tagline ≤65 caracteres, coherencia title↔H1↔subtitle.
 
 ### Documentación
 - `README.md`: nueva sección "SEO técnico y mantenimiento" con tabla de
   regeneración de sitemap/robots/llms.txt y convenciones SEO del código.
+
+### Home page (página raíz) — SEO on-page
+Corrección de coherencia semántica entre H1, title y contenido visible de la
+home. Sin rediseño, sin cambios de layout (cumple R5/R16).
+
+**Semántica y coherencia H1/title:**
+- Hero subtitle default actualizado en `lib/page-content-db.ts` para incluir
+  de forma natural: "defensa penal", "asesoría jurídica", "abogados", "Nacaome",
+  "Valle", "Honduras" y "Pineda y Asociados".
+- Hero check2 default cambiado a "Atención directa de abogados en Nacaome".
+- Texto del panel lateral del hero mejorado para incluir "abogados de Pineda y
+  Asociados" y "asesoría jurídica".
+- Title (`site.tagline`) ya era óptimo: 56 caracteres, incluye todos los
+  términos clave. No se modificó.
+
+**Atributos title en enlaces:**
+- Añadidos title descriptivos a todos los enlaces del contenido principal de
+  la home (CTA blog, tarjetas de preguntas, enlaces a FAQ/blog/despacho/
+  como-llegar, 9 tarjetas de cobertura local) en `app/(public)/page.tsx`.
+- Añadidos title a todos los botones CTA (Solicitar consulta, Llamar, WhatsApp)
+  en `components/marketing/cta-buttons.tsx` (4 variantes × 2 botones).
+- Añadidos title a los 4 enlaces de la ContactStrip.
+- Añadidos title a los 7 enlaces de navegación principal del header
+  (con mención a ubicación local) y botones de contacto del header
+  en `components/marketing/public-header.tsx`.
+
+**Iframe (mapa OpenStreetMap):**
+- `MapEmbed` ya tenía `title`, `loading="lazy"`, `sandbox="allow-scripts"`.
+  Se añadió `referrerPolicy="no-referrer"` y `title` descriptivo al enlace
+  de atribución OpenStreetMap.
+
+**Relación texto/HTML:**
+- La home usa markup estándar de Tailwind/Next.js con decoraciones
+  `aria-hidden`. No hay duplicación responsive (usa grid CSS), ni wrappers
+  innecesarios, ni SVG inline excesivo. El diseño visual es rico pero no
+  redundante. La relación texto/HTML reportada por la herramienta externa
+  es esperable para una SPA con renderizado SSR (Next.js App Router).
 
 ---
 

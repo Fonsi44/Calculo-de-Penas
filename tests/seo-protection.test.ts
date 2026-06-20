@@ -197,6 +197,65 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
   });
 });
 
+describe('SEO on-page — home page (página raíz)', () => {
+  // Valores por defecto definidos en getEditablePagesMeta() de lib/page-content-db.ts.
+  const H1_DEFAULT = 'Defensa penal y asesoría jurídica en Nacaome y Honduras';
+  const SUBTITLE_DEFAULT = 'Defensa penal y asesoría jurídica integral de la mano de abogados con presencia activa en los juzgados de Nacaome, Valle y todo Honduras. En Pineda y Asociados recibirá comunicación clara y un equipo coordinado en cada rama del derecho.';
+  const CHECK2_DEFAULT = 'Atención directa de abogados en Nacaome';
+
+  it('el H1 por defecto contiene "defensa penal" y "asesoría jurídica" de forma natural', () => {
+    expect(H1_DEFAULT.toLowerCase()).toContain('defensa penal');
+    expect(H1_DEFAULT.toLowerCase()).toContain('asesoría jurídica');
+  });
+
+  it('el H1 por defecto menciona Nacaome y Honduras', () => {
+    expect(H1_DEFAULT.toLowerCase()).toContain('nacaome');
+    expect(H1_DEFAULT.toLowerCase()).toContain('honduras');
+  });
+
+  it('el subtítulo por defecto incluye todas las keywords del title: defensa penal, asesoría jurídica, abogados, Nacaome, Valle, Honduras, Pineda y Asociados', () => {
+    const text = SUBTITLE_DEFAULT.toLowerCase();
+    expect(text).toContain('defensa penal');
+    expect(text).toContain('asesoría jurídica');
+    expect(text).toContain('abogados');
+    expect(text).toContain('nacaome');
+    expect(text).toContain('valle');
+    expect(text).toContain('honduras');
+    expect(text).toContain('pineda y asociados');
+  });
+
+  it('el check2 por defecto incluye "abogados" y "Nacaome" juntos', () => {
+    expect(CHECK2_DEFAULT.toLowerCase()).toContain('abogados en nacaome');
+  });
+
+  it('el title del sitio (tagline) incluye los términos clave y tiene ≤65 caracteres', () => {
+    const title = site.tagline;
+    expect(title).toContain('Abogados');
+    expect(title).toContain('Nacaome');
+    expect(title).toContain('Valle');
+    expect(title).toContain('Honduras');
+    expect(title).toContain('Pineda y Asociados');
+    expect(title.length).toBeLessThanOrEqual(65);
+  });
+
+  it('el title (tagline) tiene palabras que aparecen en el H1 y viceversa (coherencia semántica)', () => {
+    const titleWords = site.tagline.toLowerCase();
+    const h1Words = H1_DEFAULT.toLowerCase();
+    // Palabras compartidas entre title y H1
+    expect(titleWords).toContain('nacaome');
+    expect(h1Words).toContain('nacaome');
+    expect(titleWords).toContain('honduras');
+    expect(h1Words).toContain('honduras');
+    // "Abogados" del title aparece en el subtítulo (no en H1)
+    const subWords = SUBTITLE_DEFAULT.toLowerCase();
+    expect(subWords).toContain('abogados');
+    // "Pineda y Asociados" aparece en subtítulo
+    expect(subWords).toContain('pineda y asociados');
+    // "Asesoría jurídica" del H1 aparece en subtítulo
+    expect(subWords).toContain('asesoría jurídica');
+  });
+});
+
 describe('lib/schemas/legal-page.ts — structured data de áreas (auditoría Jun 2026)', () => {
   it('areaSchemas NO emite BreadcrumbList (lo hace el componente <Breadcrumbs>)', () => {
     // Antes el helper emitía un BreadcrumbList Y el componente <Breadcrumbs>

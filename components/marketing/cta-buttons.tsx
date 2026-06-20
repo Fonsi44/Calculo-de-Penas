@@ -17,6 +17,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         <a
           href={telHref()}
+          title="Llamar a Pineda y Asociados — consulta legal en Nacaome"
           className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={16} aria-hidden="true" />
@@ -26,6 +27,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           href={whatsappHref(message)}
           target="_blank"
           rel="noopener noreferrer"
+          title="Escribir por WhatsApp a Pineda y Asociados — respuesta inmediata"
           className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-success text-white text-sm font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
         >
           <MessageCircle size={16} aria-hidden="true" />
@@ -39,6 +41,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <a
           href={telHref()}
+          title="Llamar a Pineda y Asociados — abogados en Nacaome"
           className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-primary text-white text-base font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={18} aria-hidden="true" />
@@ -46,6 +49,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         </a>
         <a
           href="/solicitar-consulta#formulario"
+          title="Solicitar consulta legal confidencial con Pineda y Asociados en Nacaome"
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-accent text-primary text-base font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
@@ -59,6 +63,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
         <a
           href="/solicitar-consulta#formulario"
+          title="Solicitar consulta legal confidencial — Pineda y Asociados"
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-accent text-primary text-base font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={18} aria-hidden="true" />
@@ -66,6 +71,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         </a>
         <a
           href={telHref()}
+          title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
           className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg border-2 border-text-inverse/40 text-text-inverse text-base font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none cursor-pointer"
         >
           <Phone size={18} aria-hidden="true" />
@@ -78,6 +84,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     <div className={`flex flex-col sm:flex-row gap-3 ${className ?? ''}`}>
       <a
         href="/solicitar-consulta#formulario"
+        title="Solicitar consulta legal con Pineda y Asociados en Nacaome"
         className="btn-shimmer inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg bg-accent text-primary text-base font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={18} aria-hidden="true" />
@@ -85,6 +92,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       </a>
       <a
         href={telHref()}
+        title="Llamar a Pineda y Asociados — defensa penal y asesoría jurídica"
         className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-lg border-2 border-primary/25 text-primary bg-surface text-base font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none btn-shadow-secondary btn-shadow-secondary-hover"
       >
         <Phone size={18} aria-hidden="true" />
@@ -170,6 +178,7 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
               href={it.href}
               target={it.href.startsWith('http') ? '_blank' : undefined}
               rel={it.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              title={`${it.label} — ${it.value} · Pineda y Asociados`}
               className="focus-visible:outline-none rounded-md block"
             >
               {inner}
@@ -177,7 +186,7 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
           );
         }
         return (
-          <Link key={it.label} href={it.href} className="focus-visible:outline-none rounded-md block">
+          <Link key={it.label} href={it.href} title={`${it.label} — ${it.value} · Pineda y Asociados`} className="focus-visible:outline-none rounded-md block">
             {inner}
           </Link>
         );
