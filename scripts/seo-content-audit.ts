@@ -417,7 +417,17 @@ async function main() {
   process.exit(hasCriticals ? 1 : 0);
 }
 
-main().catch((e) => {
-  console.error('Error en auditoría:', e);
-  process.exit(1);
-});
+// Guard: solo ejecutar main() cuando el script se invoca directamente (CLI),
+// no cuando se importa como módulo (tests solo usan las funciones puras).
+// tsx resuelve el argv[1] como la ruta del script; tanto en Unix como Windows
+// el nombre del archivo termina en 'seo-content-audit.ts'.
+const isDirectRun =
+  process.argv[1]?.replace(/\\/g, '/').endsWith('seo-content-audit.ts') ||
+  process.argv[1]?.replace(/\\/g, '/').endsWith('seo-content-audit');
+
+if (isDirectRun) {
+  main().catch((e) => {
+    console.error('Error en auditoría:', e);
+    process.exit(1);
+  });
+}
