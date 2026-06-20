@@ -87,7 +87,7 @@ export const site = {
   // bloque de redes del footer. NO inventar perfiles: `null` por defecto.
   // Facebook Pixel: solo activar si existe ID real + consentimiento de cookies.
   social: {
-    facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK ?? null,
+    facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK ?? 'https://www.facebook.com/profile.php?id=61591020604332',
     instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM ?? null,
     tiktok: process.env.NEXT_PUBLIC_SOCIAL_TIKTOK ?? null,
   },

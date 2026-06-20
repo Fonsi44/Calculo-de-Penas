@@ -13,6 +13,46 @@ validarse sin acceso a la DB. Los scripts son seguros, idempotentes y con
 backup previo obligatorio. Validado con `npm run lint && npm run build && npm test`
 (**424 tests**, 0 errores).
 
+---
+
+## Unreleased — Limpieza editorial del blog (contenido duplicado y genérico)
+
+Auditoría cualitativa de los 159 posts publicados. Se identificaron y pasaron
+a borrador 12 posts que no cumplían los estándares editoriales del despacho:
+contenido duplicado (canibalización SEO) o contenido genérico sin valor
+específico de Honduras. Backup previo en `auditoria-blog/backup-2026-06-20-10-00.json`.
+
+### Posts enviados a borrador (12)
+
+**Duplicados por canibalización SEO (10):**
+- `registrar-marca-paso-a-paso-honduras` → duplica `registrar-marca-honduras-paso-a-paso`
+- `poder-legal-honduras-cuando-se-necesita` → duplica `poder-notarial-honduras-tipos-requisitos`
+- `constitucion-empresas-honduras-pasos-legales` → duplica `constituir-empresa-guia-paso-a-paso-honduras`
+- `impuesto-renta-guia-personas-fisicas-honduras` → duplica `impuesto-renta-personas-fisicas-honduras`
+- `divorcio-honduras-pasos-requisitos` → duplica `divorcio-honduras-guia-completa`
+- `divorcio-tipos-requisitos-tiempos-honduras` → duplica `divorcio-honduras-guia-completa`
+- `guarda-custodia-menores-tipos-honduras` → duplica `custodia-hijos-honduras-juez`
+- `pension-alimenticia-honduras-como-solicitarla` → duplica `pension-alimenticia-honduras-guia-completa`
+- `herencias-honduras-fallece-familiar` → duplica `testamentos-sucesiones-herencia-honduras`
+- `como-elegir-buen-abogado-guia-practica-honduras` → duplica `como-elegir-abogado-honduras`
+
+**Contenido genérico sin profundidad (2):**
+- `contratos-mercantiles-proteger-negocio` → texto aplicable a cualquier país
+- `problemas-legales-familiares-honduras` → listado superficial sin desarrollo
+
+### Posts mantenidos (147)
+Se conservan todos los artículos con valor específico, profundidad temática,
+información aplicable a Honduras y potencial de conversión. Ver informe
+completo en `docs/auditoria-editorial-2026-06-20.md`.
+
+### Seguridad del proceso
+- Backup previo generado (174 posts) antes de cualquier escritura.
+- Solo se modificó el campo `published` (false). No se tocaron slugs,
+  URLs, categorías, metadatos ni contenido del body.
+- Verificación posterior: 12/12 confirmados como borrador.
+
+---
+
 ### Hallazgos reales (diagnóstico)
 - **174 posts auditados** (159 publicados, 15 borradores).
 - **nofollow internos en contenido DB: 0** ✅ (los 92 residuales detectados en
