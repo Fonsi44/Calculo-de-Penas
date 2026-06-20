@@ -20,6 +20,8 @@ const eslintConfig = defineConfig([
     // Binarios auxiliares de OpenCode en CommonJS (no son código de la app).
     ".opencode/bin/**",
     "wordpress/**",
+    // Cobertura de vitest (regenerable con npm run test:coverage).
+    "coverage/**",
   ]),
 ]);
 

@@ -114,6 +114,13 @@ diseño, rutas, formularios, tracking ni CMS. Validados con
 - Verificados con `curl` los 9 dominios `.gob.hn` y los enlaces de soporte de
   navegadores / políticas de privacidad: todos responden 200 salvo el ya
   corregido.
+- **Contenido del blog (DB viva)**: placeholder `wa.me/504XXXXXXXX` corregido
+  → `wa.me/50495363724` (número real, verificado 200 OK) en **14 posts** de
+  landings locales (Choluteca/San Lorenzo/Nacaome). Era el único enlace
+  externo roto real del blog. Backup previo en
+  `auditoria-blog/wame-backup-2026-06-20T05-17-56-185Z.json`. Re-auditoría
+  con `npm run blog:seo-audit` post-fix: 0 ocurrencias del placeholder, 0
+  nofollow internos en bodies, 0 fechas inválidas, 0 links a redirects.
 
 ### Tests
 - `tests/seo-protection.test.ts`: actualizados los asserts de robots
