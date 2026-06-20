@@ -289,7 +289,7 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 | Componente | Estado |
 |------------|--------|
 | Sitemap | `/sitemap.xml` — dinámico, excluye rutas privadas y posts canonicalizados |
-| Robots.txt | `/robots.txt` — bloquea `/intranet/`, `/api/`, 12+ IA crawlers |
+| Robots.txt | `/robots.txt` — bloquea `/intranet/`, `/api/`, `/login`, 12+ IA crawlers; **permite `/_next/`** (assets de render necesarios para Googlebot) |
 | llms.txt | `/llms.txt` — descripción del sitio para asistentes IA |
 | JSON-LD | `LegalService+LocalBusiness`, `Organization`, `WebSite`, `BreadcrumbList`, `BlogPosting`, `FAQPage`, `Service` |
 | IndexNow | Postbuild dry-run; envío real con `ENABLE_INDEXNOW_SUBMIT=true` |
@@ -303,6 +303,27 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 | SEO Health Check | `npm run seo:health` (15 señales off-page) |
 | SEO Local | 3 landings (Nacaome, Choluteca, San Lorenzo) + 8 posts satélite |
 | Plan de indexación | `docs/indexacion-plan-decision.md` |
+
+### SEO técnico y mantenimiento
+
+Cómo regenerar y validar los archivos SEO tras cambios:
+
+| Tarea | Comando / Ubicación |
+|-------|---------------------|
+| **Sitemap** (`/sitemap.xml`) | Se regenera en build automáticamente. Fuente: `app/sitemap.ts` (rutas estáticas) + tabla `blog_posts` (DB). Excluye rutas privadas, posts `noindex` y posts canonicalizados. |
+| **Robots** (`/robots.txt`) | Fuente: `app/robots.ts`. Permite `/_next/` (CSS/JS de Next.js que Googlebot necesita para renderizar). Bloquea solo `/intranet/`, `/api/`, `/login` y 12 crawlers de IA. |
+| **llms.txt** (`/llms.txt`) | Archivo estático en `public/llms.txt`. Referenciado vía `<link rel="llms-txt">` en `app/layout.tsx`. |
+| **JSON-LD** | Helpers en `lib/site.ts` (LegalService, Organization, WebSite) + `lib/schemas/`. El BreadcrumbList lo emite exclusivamente el componente `<Breadcrumbs>` (una sola fuente de verdad). |
+| **Validar tras cambios SEO** | `npm run lint && npm run build && npm test` (obligatorio por AGENTS.md R8). El test `tests/seo-protection.test.ts` verifica: robots no bloquea `/_next/`, sitemap sin rutas privadas, schemas válidos, sin BreadcrumbList duplicado y FAQPage sanitiza HTML. |
+| **Health check off-page** | `npm run seo:health` (15 señales SEO externas). |
+| **Validar fechas del blog** | `npm run validate:dates`. |
+
+#### Convenciones SEO del código (resumen auditoría Jun 2026)
+- **Titles**: usar `title: { absolute: ... }` cuando el título base + marca supere 65 caracteres (evita marca doble/triple contextual). Enrutas dinámicas anidadas (`/derecho-penal/[slug]`, `/hondurenos-en-espana/[slug]`) la marca va una sola vez.
+- **Structured data**: `serviceType` en `Service` describe la categoría textual del servicio (ej. "Defensa Penal"), **nunca** `'LegalService'` (que es el `@type` del provider).
+- **FAQPage**: las respuestas se pasan por `toPlainText()` (strip HTML) — Google exige texto plano en `acceptedAnswer.text`.
+- **Enlaces externos a `.gob.hn`**: verificar con `curl` antes de cambiar; algunos dominios cambian (p. ej. `miambiente.gob.hn` → `serna.gob.hn`). El script `scripts/seo-health-check.mjs` cubre señales off-page.
+- **nofollow interno**: el único `rel="nofollow"` del código público es el enlace del header a `/intranet/admin` (obligatorio por AGENTS.md R6). Los `rel="noopener noreferrer"` son de seguridad para `target="_blank"`, no de SEO.
 
 ---
 
@@ -326,7 +347,7 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 
 ## Mantenimiento
 
-### Scripts operativos (29 en `scripts/`)
+### Scripts operativos (33 en `scripts/`)
 
 **Validación de datos:**
 ```bash
@@ -335,7 +356,35 @@ npm run content:audit        # Revisión editorial vencida
 npm run validar-meta-seo     # Metadatos SEO de posts
 npm run blog:normalizar      # Normalización del blog (DRY-RUN por defecto)
 npm run blog:normalizar:aplicar  # Aplica CTAs/H1/whitespace en DB
+npm run blog:review          # Revisión editorial + SEO con IA (solo sugiere)
+npm run blog:review:aplicar  # Igual, pero aplica cambios mecánicos seguros
+npm run blog:seo-audit       # Auditoría SEO de contenido (enlaces, nofollow, alt, fechas, HTML)
+npm run blog:fix-redirects   # Corrige enlaces internos que apuntan a redirects 301 (DRY-RUN)
+npm run blog:fix-redirects:aplicar  # Igual, pero aplica en DB (requiere backup previo)
+npm run blog:backup          # Backup completo de blog_posts (JSON restoreable + resumen MD)
 ```
+
+> **`blog:seo-audit`** (`scripts/seo-content-audit.ts`) es la auditoría SEO de
+> contenido dinámico del blog. Lee los 159 posts publicados de la DB y detecta:
+> enlaces internos con `rel="nofollow"` (deben eliminarse salvo justificación
+> documentada), enlaces internos que apuntan a rutas con redirect 301 declarado
+> en `next.config.ts`, URLs `http://` inseguras, imágenes `<img>` sin `alt`,
+> anchors pobres/no descriptivos ("aquí", "click", "ver más"), fechas no
+> ISO-8601 o futuras, y HTML desbalanceado (tags abiertos/cerrados). Es de solo
+> lectura: no modifica la DB. Sale con código 1 si hay hallazgos críticos (CI).
+
+> **`blog:fix-redirects`** (`scripts/fix-internal-redirects.ts`) corrige los
+> enlaces internos que apuntan a rutas con redirect 301. Para cada `<a href>`
+> cuyo path coincide con un redirect declarado en `next.config.ts`, reemplaza
+> el `href` por la URL canónica final. Dry-run por defecto; idempotente
+> (re-ejecutar no hace nada). Requiere backup previo (<2h) para aplicar.
+
+> **`blog:backup`** (`scripts/backup-blog.ts`) genera un dump completo de
+> `blog_posts` (todas las columnas editoriales y SEO) en
+> `auditoria-blog/backup-YYYY-MM-DD-HHMM.json` (restoreable) + un resumen `.md`
+> legible. Es de solo lectura. **Ejecutar SIEMPRE** antes de cualquier script
+> que escriba en `blog_posts` en masa (`blog:normalizar:aplicar`,
+> `blog:fix-redirects:aplicar`, `blog:review:aplicar`).
 
 > **`blog:normalizar`** es el script canónico de corrección del blog
 > (`scripts/normalizar-blog.ts`). Dry-run por defecto, backup previo obligatorio
@@ -343,6 +392,41 @@ npm run blog:normalizar:aplicar  # Aplica CTAs/H1/whitespace en DB
 > `<LegalDisclaimer>`), convierte `<h1>` del body a `<h2>` (evita doble H1) y
 > normaliza whitespace. **No inventa contenido**: el peso editorial (<800
 > palabras) se reporta pero requiere ampliación humana. Ver CHANGELOG Release 89.
+
+> **`blog:review`** (`scripts/blog-ai-review.ts`) es la herramienta de revisión
+> editorial + SEO del blog. Opera sobre la **DB** (tabla `blog_posts`, HTML — el
+> blog no vive en MD/MDX). Analiza cada post publicado: conteo de palabras reales
+> (objetivo 800–1000), jerarquía H1/H2/H3, metadatos SEO, tags, alt text de
+> imágenes, enlaces internos/externos, fechas futuras y disclaimer duplicado.
+> Opcionalmente consulta a **DeepSeek** para sugerencias (secciones a ampliar,
+> mejoras SEO) — **la IA solo sugiere, nunca escribe contenido en la DB**
+> (AGENTS.md R17). Sin `DEEPSEEK_API_KEY` corre en modo solo-heurísticas.
+>
+> **Seguridad:** dry-run por defecto. `--aplicar` solo ejecuta las mismas
+> transformaciones mecánicas idempotentes que `blog:normalizar` (H1→H2, CTAs,
+> whitespace); las sugerencias IA **nunca** se aplican y requiren revisión humana.
+> Los posts <800 palabras se marcan como "requiere ampliación editorial" y **no
+> se rellenan** con texto genérico (R13). Backup previo siempre.
+>
+> ```bash
+> # Variables de entorno (.env.local)
+> DATABASE_URL=postgresql://...        # obligatoria (Neon)
+> DEEPSEEK_API_KEY=sk-...              # opcional, habilita sugerencias IA
+> DEEPSEEK_MODEL=deepseek-chat         # opcional, modelo a usar
+>
+> # Ejemplos
+> npm run blog:review                          # dry-run con IA (todos los posts)
+> npm run blog:review -- --slug mi-slug        # un solo post
+> npm run blog:review -- --no-ai               # sin IA (solo heurísticas, 0 coste)
+> npm run blog:review -- --limit 20            # primeros 20 (control de coste API)
+> npm run blog:review:aplicar                  # aplica solo cambios mecánicos
+> ```
+>
+> Reporte Markdown: `auditoria-blog/blog-ai-review-<ts>.md`.
+>
+> ⚠️ **Si una `DEEPSEEK_API_KEY` se compromete (commiteada, filtrada en chat,
+> expuesta en logs), debe rotarse en el panel de DeepSeek.** El código no resuelve
+> una clave comprometida (AGENTS.md §3). NUNCA hardcodear la key.
 
 **IndexNow:**
 ```bash

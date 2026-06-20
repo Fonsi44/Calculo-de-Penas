@@ -5,6 +5,128 @@
 
 ---
 
+## Unreleased — Auditoría SEO de contenido dinámico del blog (DB Neon)
+
+Finalización de la auditoría SEO técnica sobre el contenido **dinámico** del
+blog (tabla `blog_posts` en Neon), cerrando los pendientes que no podían
+validarse sin acceso a la DB. Los scripts son seguros, idempotentes y con
+backup previo obligatorio. Validado con `npm run lint && npm run build && npm test`
+(**424 tests**, 0 errores).
+
+### Hallazgos reales (diagnóstico)
+- **174 posts auditados** (159 publicados, 15 borradores).
+- **nofollow internos en contenido DB: 0** ✅ (los 92 residuales detectados en
+  código estático ya estaban resueltos; en contenido DB hay cero).
+- **links a redirects 301: 26** (en 21 posts publicados + 1 borrador) → corregidos.
+- **http inseguros: 0** · **img sin alt: 0** · **anchors pobres: 0** ·
+  **HTML desbalanceado: 0** · **fechas inválidas/futuras: 0**.
+- **14 enlaces externos**, todos a `wa.me` (WhatsApp legítimo del despacho).
+
+### Correcciones aplicadas en DB (26 enlaces)
+- **`scripts/fix-internal-redirects.ts`** (nuevo): corrige enlaces internos
+  que apuntan a rutas con redirect 301 declarado en `next.config.ts`.
+  Reemplaza el `href` por la URL canónica final, conservando anchor y `rel`.
+  Idempotente (re-ejecutar no hace nada). Dry-run por defecto.
+- **24 enlaces corregidos en 20 posts publicados** + **2 enlaces en 1 borrador**.
+- Solo se actualiza `updated_at` en posts publicados (los borradores no
+  exponen fecha pública).
+
+### Scripts nuevos (`package.json`)
+- `blog:backup` → `scripts/backup-blog.ts`: dump completo de `blog_posts`
+  (JSON restoreable + resumen MD) en `auditoria-blog/`. Solo lectura.
+- `blog:seo-audit` → `scripts/seo-content-audit.ts`: auditoría SEO de
+  contenido (nofollow internos, links a redirects, http inseguros, img sin
+  alt, anchors pobres, fechas, HTML desbalanceado). Solo lectura; exit 1 si
+  hay críticos (para CI). Variante `--json` machine-readable.
+- `blog:fix-redirects` → `scripts/fix-internal-redirects.ts`: corrección
+  idempotente de enlaces a redirects. Dry-run por defecto; variante
+  `:aplicar` escribe en DB (requiere backup <2h).
+
+### Tests anti-regresión
+- **`tests/seo-content-audit.test.ts`** (nuevo, 23 tests): valida que las
+  funciones de detección (extractLinks, extractImages, isInternalUrl,
+  isExternalUrl, isPoorAnchor) identifican correctamente nofollow internos,
+  redirects, http inseguros, img sin alt y anchors pobres sobre HTML
+  sintético. CI impide que un refactor rompa la detección.
+
+### Seguridad del proceso
+- **Backup previo generado** (`auditoria-blog/backup-2026-06-20-05-04.json`,
+  174 posts) antes de cualquier escritura.
+- El script de corrección aborta si no hay backup reciente (<2h).
+- No se inventan URLs: los destinos provienen exclusivamente de
+  `next.config.ts`. No se tocan slugs, categorías ni contenido editorial
+  (solo atributos `href`).
+
+---
+
+## Unreleased — SEO técnico: indexabilidad, structured data, titles y enlaces
+
+Resolución de los hallazgos críticos de la auditoría SEO técnica de
+`www.pinedayasociadoshn.com` (Jun 2026). Cambios conservadores: no alteran
+diseño, rutas, formularios, tracking ni CMS. Validados con
+`npm run lint && npm run build && npm test` (401 tests, 0 errores).
+
+### Crawling / indexabilidad
+- **`app/robots.ts`**: desbloqueado `/_next/`. Antes se bloqueaba
+  `/intranet/, /api/, /_next/, /404, /500, /_not-found, /login`; el
+  `/_next/` contiene el CSS y JS de Next.js que Googlebot necesita para
+  renderizar la SPA/RSC. Bloquearlo producía "Disallowed internal resources"
+  (1482/1484 en auditoría) y degradaba el rendering service. Ahora solo se
+  bloquean rutas realmente privadas. Añadido `host` al robots.
+- **`/login` y páginas de error** siguen `noindex` por diseño (no aportan
+  valor SEO; `/login` es redirect público a `/intranet/login`). Documentado.
+
+### Structured data (JSON-LD)
+- **Eliminado BreadcrumbList duplicado** en 4 páginas
+  (`derecho-penal`, `derecho-penal/[slug]`, `hondurenos-en-espana`,
+  `hondurenos-en-espana/[slug]`). El helper `areaSchemas` emitía un
+  BreadcrumbList Y el componente `<Breadcrumbs>` otro. Ahora el BreadcrumbList
+  tiene una sola fuente de verdad: el componente `<Breadcrumbs>`.
+  `servicios-juridicos/[slug]` (que no lo usaba) ahora sí renderiza
+  `<Breadcrumbs>` para no perder el schema.
+- **`serviceType` corregido** en 5 páginas: antes era `'LegalService'`
+  (el `@type` del provider, no del servicio) o `'CriminalDefense'` (inglés).
+  Ahora describe la categoría textual del servicio en español.
+- **`faqPageSchema` sanitiza HTML**: `acceptedAnswer.text` ahora pasa por
+  `toPlainText()` (strip tags + decode entidades). Google exige texto plano;
+  antes las FAQs de áreas con HTML se rechazaban en rich results.
+- **`websiteSchema`**: `publisher` ahora apunta a `#organization`
+  (convención Schema.org para Knowledge Graph); antes apuntaba a
+  `#legal-service`.
+- **`organizationSchema`**: añadido `image` (necesaria junto a `logo`).
+- **`AboutPage` de `/despacho`**: añadido `@id`, `description`, `isPartOf`,
+  `about` y `mainEntity` (antes era un nodo aislado sin conexiones).
+
+### Titles (>65 caracteres)
+- 13 títulos corregidos mediante `title: { absolute: ... }` para evitar
+  marca doble/triple contextual: `/servicios-juridicos` (77→54),
+  `/derecho-penal` (73→53), `/despacho` (78 con marca duplicada → 42),
+  las 7 subpáginas de `/derecho-penal/[slug]` (66–94 → ≤56),
+  las 3 de `/hondurenos-en-espana/[slug]` (81–94 → ≤56),
+  `/blog` paginado y las 20 categorías de `/blog/[categoria]` (paginación
+  ya no dispara >65).
+
+### Enlaces externos
+- **`miambiente.gob.hn`** (dominio caído) → `serna.gob.hn` (portal vigente de
+  la Secretaría de Recursos Naturales y Ambiente) en `data/areas-juridicas.ts`.
+- **LinkedIn `shareArticle`** (deprecated) → `sharing/share-offsite/?url=`
+  en `components/blog/share-buttons.tsx`.
+- Verificados con `curl` los 9 dominios `.gob.hn` y los enlaces de soporte de
+  navegadores / políticas de privacidad: todos responden 200 salvo el ya
+  corregido.
+
+### Tests
+- `tests/seo-protection.test.ts`: actualizados los asserts de robots
+  (`/_next/` ya no debe bloquearse) y WebSite publisher (`#organization`),
+  y añadidos tests nuevos: BreadcrumbList no duplicado en `areaSchemas`,
+  FAQPage sanitiza HTML, Organization incluye `image`. Suite: 397 → 401 tests.
+
+### Documentación
+- `README.md`: nueva sección "SEO técnico y mantenimiento" con tabla de
+  regeneración de sitemap/robots/llms.txt y convenciones SEO del código.
+
+---
+
 ## Unreleased — Mejora visual progresiva de la interfaz (Premium equilibrado)
 
 Pulido UI sobre el diseño existente **sin rediseño, sin cambios de contenido,
@@ -102,6 +224,71 @@ con padding `p-4` → `p-5` (densidad editorial).
 `IMPLEMENTADO` y `VALIDADO` (lint/build/test), ambas fases (home+componentes y
 extensión a páginas internas). `visual:check` `NO VALIDADO` por limitación del
 pipeline (requiere deploy). Pendiente de verificación visual tras despliegue.
+
+---
+
+## Unreleased — Herramienta de revisión IA del blog (`blog:review`)
+
+Nueva herramienta interna (`scripts/blog-ai-review.ts`) para auditar y mejorar
+artículos del blog **con asistencia de IA en modo solo-sugerencias**. Sigue el
+mismo patrón seguro que `normalizar-blog.ts` (dry-run por defecto, backup,
+idempotente, no inventa contenido).
+
+### Corrección de premisa
+La petición original asumía que el blog vivía en archivos Markdown/MDX.
+**No es así**: `data/blog/posts/` está vacío; los 159 posts viven en PostgreSQL
+(tabla `blog_posts`) como HTML editado con TipTap (AGENTS.md §R3). La herramienta
+opera sobre la **DB**, no sobre el filesystem. Los únicos `.md`/`.mdx` del repo
+son documentación técnica, no artículos del blog.
+
+### Qué hace
+- **Análisis determinista por post** (sin IA): conteo de palabras reales (HTML
+  stripiado, sin tags/entidades), rango editorial 800–1000, jerarquía H1/H2/H3
+  (doble H1, H3 sin H2 previo), longitud title/metaDescription vs rangos SERP,
+  tags vacíos/duplicados, `<img>` sin `alt`, enlaces a rutas privadas (R6),
+  externos sin `rel`, fechas futuras, disclaimer duplicado (R14).
+- **DeepSeek opcional (solo sugerencias):** para posts con hallazgos, una llamada
+  devuelve JSON `{secciones_a_ampliar, mejoras_seo, problemas_estructura}`.
+  Prompt con restricciones duras: no inventar ley/jurisprudencia/métricas/claims,
+  tono jurídico, no proponer cambio de slug sin justificación. Timeout 30s,
+  fail-soft (si falla, reporta sin IA).
+- **`--aplicar` SOLO cambios mecánicos idempotentes:** H1→H2, CTAs duplicados,
+  whitespace — reutiliza la MISMA lógica canónica de `normalizar-blog.ts`.
+  Las sugerencias de IA **nunca** se aplican a la DB (R17).
+
+### Seguridad
+- API key siempre de `process.env.DEEPSEEK_API_KEY`, **nunca** hardcodeada.
+  Sin ella, modo solo-heurísticas (no falla).
+- Dry-run por defecto. Backup previo en `auditoria-blog/backup-pre-review-<ts>.json`.
+- Guardia: body resultante <50 palabras tras aplicar → revertir.
+- Sanitización HTML antes de cualquier escritura.
+- Reporte Markdown: `auditoria-blog/blog-ai-review-<ts>.md`.
+
+### Comandos nuevos (`package.json`)
+```bash
+npm run blog:review            # dry-run (con IA si hay DEEPSEEK_API_KEY)
+npm run blog:review:aplicar    # aplica solo cambios mecánicos
+# flags: --slug <s>, --no-ai, --limit <n>, --help
+```
+
+### Regla nueva (AGENTS.md R17)
+"Uso seguro de herramientas IA en contenido": la IA solo sugiere; nunca escribe
+contenido final en DB; prohibido rellenar para alcanzar conteo (refuerza R13);
+toda sugerencia que afirme ley/métricas debe verificarse contra CP Honduras.
+
+### Validación (4/5 en verde)
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | 0 errores |
+| `npx tsc --noEmit` | 0 errores (`scripts/` incluido en typecheck) |
+| `npm run build` | ✓ Compiled successfully — 305/305 |
+| `npm test` | 397/397 (19 suites) |
+| `npm run blog:review` (end-to-end) | **NO VALIDADO**: requiere `DATABASE_URL` real (Neon) y `DEEPSEEK_API_KEY`. El arranque, parseo CLI, guardia de env y `--help` sí verificados. |
+
+### ⚠️ Acción crítica (no resuelta por código)
+Una `DEEPSEEK_API_KEY` se compartió comprometida en una conversación. Según
+AGENTS.md §3, un secreto comprometido **requiere rotación** — el código no lo
+resuelve. Debe rotarse en el panel de DeepSeek antes de cualquier uso.
 
 ---
 

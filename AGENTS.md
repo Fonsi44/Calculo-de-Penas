@@ -272,6 +272,41 @@ de `app/globals.css`:
   obligatorio. `npm run visual:check` compara contra producción remota
   (requiere deploy previo para validar cambios no desplegados).
 
+**R17. Uso seguro de herramientas IA en contenido (blog:review).**
+Aplica a cualquier herramienta que use IA para analizar o "mejorar" contenido
+del blog o editorial. Diseñada tras `scripts/blog-ai-review.ts` (ver
+CHANGELOG Unreleased):
+- **La IA solo sugiere, nunca escribe contenido final en la DB**, salvo que
+  se use explícitamente `--aplicar-ia` bajo **supervisión humana aprobada**
+  (diferencias revisadas, sugerencias validadas). El flag `--aplicar-ia`
+  ejecuta reescritura del body vía DeepSeek con prompt restrictivo (prohíbe
+  inventar datos legales) y validación automática (body no vacío, no idéntico
+  al original). El modo `--aplicar` ejecuta ÚNICAMENTE transformaciones
+  mecánicas idempotentes (H1→H2, CTAs duplicados, whitespace, truncado de
+  títulos >60 chars), nunca reescrituras IA.
+- **Prohibido rellenar contenido genérico para alcanzar conteo de palabras**
+  (refuerza R13). Los posts <800 palabras se marcan como "requiere ampliación
+  editorial" y deben ampliarse con información verificable humana, no con
+  texto autogenerado. El flag `--aplicar-ia` puede expandir contenido usando
+  SOLO la información presente en el artículo original; no inventa datos
+  externos.
+- **API keys siempre de variables de entorno** (`DEEPSEEK_API_KEY`), nunca
+  hardcodeadas. Si una clave se compromete (commiteada, filtrada en chat,
+  logs), **requiere rotación** en el panel del proveedor (refuerza §3): el
+  código no resuelve una clave comprometida.
+- **Toda sugerencia de IA que afirme ley, jurisprudencia, métricas, fechas,
+  rankings o claims** debe verificarse contra el CP Honduras / fuentes
+  canónicas (`data/delitos.json`, `data/articulos_cp.json`) antes de aplicar.
+  La IA puede alucinar citas legales. Incluso en modo `--aplicar-ia`, el
+  prompt prohíbe explícitamente inventar datos.
+- **No cambiar slugs, URLs, fechas ni categorías automáticamente.** Esos son
+  cambios editoriales que requieren decisión humana y revisión de
+  canibalización (§5).
+- **Dry-run por defecto.** `blog:review` sin `--aplicar` ni `--aplicar-ia` es
+  de solo lectura. Backup previo obligatorio antes de cualquier modo de
+  escritura (generado automáticamente en `auditoria-blog/`).
+- **Sin `DATABASE_URL` real, el script sale limpio** (no degrada el blog).
+
 ---
 
 ## 8. Fuentes de datos canónicas
