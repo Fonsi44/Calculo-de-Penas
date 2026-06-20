@@ -18,18 +18,21 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
-  title: `Bufete de Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
+  // Absolute para evitar la duplicación de marca "| Pineda y Asociados |
+  // Pineda y Asociados" (el title string ya incluía la marca y el template
+  // del layout la añadía de nuevo → 78 caracteres con marca duplicada).
+  title: { absolute: `Bufete de Abogados en ${site.address.city}, ${site.address.department}` },
   description: `Abogados en Nacaome, Valle con más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/despacho' },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete multidisciplinario Nacaome'],
   twitter: {
     card: 'summary_large_image',
-    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
+    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,
     description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en penal, familia, laboral, civil y mercantil. Consulta confidencial.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department} | ${site.name}`,
+    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,
     description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
     url: `${site.url}/despacho`,
     siteName: site.name,
@@ -84,9 +87,14 @@ export default async function DespachoPage() {
   const orgLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
+    '@id': `${site.url}/despacho#aboutpage`,
     name: `${site.name} — El Despacho`,
     url: `${site.url}/despacho`,
+    description: `Bufete de abogados en ${site.address.city}, ${site.address.department}, Honduras. Más de 15 años de ejercicio profesional en defensa penal, familia, laboral, civil y mercantil.`,
     inLanguage: 'es-HN',
+    isPartOf: { '@id': `${site.url}/#website` },
+    about: { '@id': `${site.url}/#organization` },
+    mainEntity: { '@id': `${site.url}/#organization` },
   };
 
   return (

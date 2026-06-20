@@ -16,13 +16,16 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  title: `Abogados en ${site.address.city}, ${site.address.department} — Todas las Áreas del Derecho`,
+  // Absolute para controlar la longitud total y evitar que el template del
+  // layout añada "| Pineda y Asociados" (la marca ya va incluida). Antes el
+  // title resuelto medía 77 caracteres (>65): se truncaba en SERP.
+  title: { absolute: `Abogados en ${site.address.city} — Todas las Áreas del Derecho` },
   description: `Abogados en Nacaome, Valle para derecho penal, familia, laboral, civil, mercantil y tributario. Cobertura en San Lorenzo y Choluteca. Primera consulta por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/servicios-juridicos' },
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete multidisciplinario Nacaome'],
   twitter: {
     card: 'summary_large_image',
-    title: `Abogados en ${site.address.city}, ${site.address.department} — Todas las Áreas del Derecho`,
+    title: `Abogados en ${site.address.city} — Todas las Áreas del Derecho`,
     description: `Abogados en Nacaome, Valle: penal, familia, laboral, civil, mercantil y tributario. Cobertura San Lorenzo y Choluteca.`,
     images: [`${site.url}/og-image.png`],
   },

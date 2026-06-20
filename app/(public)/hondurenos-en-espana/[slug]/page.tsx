@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!subarea) return {};
   const canonical = `/hondurenos-en-espana/${slug}`;
   return {
-    title: `${subarea.titulo} | Hondureños en España`,
+    // Absolute para evitar marca triple ("titulo | Hondureños en España |
+    // Pineda y Asociados") que disparaba titles de 81-94 caracteres.
+    title: { absolute: `${subarea.titulo} — Abogados Honduras-España` },
     description: `${subarea.descripcion.substring(0, 85)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
     alternates: { canonical },
     keywords: subarea.keywords,
@@ -66,7 +68,9 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
       slug,
       name: `${subarea.titulo} — ${site.name}`,
       description: subarea.descripcion,
-      serviceType: 'LegalService',
+      // serviceType = categoría textual del servicio (antes 'LegalService',
+      // que es el @type del provider, no del servicio).
+      serviceType: `Hondureños en España — ${subarea.titulo}`,
       keywords: subarea.keywords,
       url: subareaUrl,
     },

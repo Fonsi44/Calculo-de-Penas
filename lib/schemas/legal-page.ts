@@ -54,6 +54,25 @@ export function serviceSchema(input: ServiceSchemaInput) {
 /* FAQPage — Schema.org FAQPage con pregunta/respuesta                          */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Convierte texto con HTML a texto plano, apto para `acceptedAnswer.text`
+ * en FAQPage. Google exige texto plano (sin tags) en ese campo; si se pasa
+ * HTML crudo, el rich result de FAQ se rechaza. Decodifica las entidades
+ * HTML más comunes (&amp; &lt; &gt; &quot; &#39; &nbsp;) y colapsa espacios.
+ */
+function toPlainText(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export function faqPageSchema(faqs: FaqItem[], url: string) {
   return {
     '@context': 'https://schema.org',
@@ -62,10 +81,10 @@ export function faqPageSchema(faqs: FaqItem[], url: string) {
     url,
     mainEntity: faqs.map((f) => ({
       '@type': 'Question',
-      name: f.pregunta,
+      name: toPlainText(f.pregunta),
       acceptedAnswer: {
         '@type': 'Answer',
-        text: f.respuesta,
+        text: toPlainText(f.respuesta),
       },
     })),
   };
@@ -112,20 +131,31 @@ export function itemListSchema(name: string, items: { name: string; url: string 
 }
 
 /* -------------------------------------------------------------------------- */
-/* Combined helper — emite Service + FAQPage + BreadcrumbList en un array       */
+/* Combined helper — emite Service + FAQPage en un array                       */
 /* -------------------------------------------------------------------------- */
-
+//
+// NOTA SEO (Jun 2026): el BreadcrumbList ya NO se emite desde este helper.
+// Antes se duplicaba: el componente <Breadcrumbs> (components/marketing/
+// breadcrumbs.tsx) inyecta su propio BreadcrumbList en todas las páginas que
+// lo usan (derecho-penal, derecho-penal/[slug], hondurenos-en-espana y su
+// [slug]), y este helper añadía OTRO idéntico → "Duplicate structured data"
+// en auditorías SEO. Ahora el BreadcrumbList tiene una sola fuente de verdad:
+// el componente <Breadcrumbs>. Las páginas que antes no lo renderizaban
+// (servicios-juridicos/[slug]) ahora también lo hacen. El parámetro
+// `breadcrumbs` se conserva en la firma solo para no romper callers existentes,
+// pero se ignora deliberadamente.
+//
 export function areaSchemas(args: {
   service: ServiceSchemaInput;
   faqs?: FaqItem[];
-  breadcrumbs: BreadcrumbItem[];
+  /** @deprecated El BreadcrumbList lo emite ahora el componente <Breadcrumbs>. */
+  breadcrumbs?: BreadcrumbItem[];
   url: string;
 }) {
   const schemas: Record<string, unknown>[] = [serviceSchema(args.service)];
   if (args.faqs && args.faqs.length > 0) {
     schemas.push(faqPageSchema(args.faqs, args.url));
   }
-  schemas.push(breadcrumbsSchema(args.breadcrumbs));
   return schemas;
 }
 

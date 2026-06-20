@@ -12,6 +12,7 @@
 import { describe, it, expect } from 'vitest';
 import { isPublicApiPath, isPublicPagePath } from '@/proxy';
 import { legalServiceSchema, organizationSchema, websiteSchema, site } from '@/lib/site';
+import { areaSchemas, faqPageSchema } from '@/lib/schemas/legal-page';
 import robotsFn from '@/app/robots';
 import { PUBLIC_ROUTES, THIN_POST_SLUGS } from '@/app/sitemap';
 
@@ -104,12 +105,21 @@ describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
   const asArray = (v: string | string[] | undefined): string[] =>
     Array.isArray(v) ? v : v ? [v] : [];
 
-  it('la regla * bloquea /intranet/, /api/, /_next/, /login', () => {
+  it('la regla * bloquea /intranet/, /api/, /login (rutas privadas)', () => {
     expect(wildcardRule).toBeDefined();
     const disallow = asArray(wildcardRule?.disallow);
-    for (const blocked of ['/intranet/', '/api/', '/_next/', '/login']) {
+    for (const blocked of ['/intranet/', '/api/', '/login']) {
       expect(disallow, `debería bloquear ${blocked}`).toContain(blocked);
     }
+  });
+
+  it('la regla * NO bloquea /_next/ (assets de render necesarios para Googlebot)', () => {
+    // SEO técnico (Jun 2026): /_next/ contiene el CSS y JS de Next.js que
+    // Googlebot necesita para renderizar la SPA/RSC. Bloquearlo produce
+    // "Disallowed internal resources" y degrada el rendering service.
+    expect(wildcardRule).toBeDefined();
+    const disallow = asArray(wildcardRule?.disallow);
+    expect(disallow, '/_next/ NO debe bloquearse').not.toContain('/_next/');
   });
 
   it('la regla * NO bloquea rutas públicas (allow: /)', () => {
@@ -157,12 +167,21 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
     expect(address.addressLocality).toBe(site.address.city);
   });
 
-  it('websiteSchema referencia al publisher (LegalService)', () => {
+  it('websiteSchema referencia al publisher (Organization)', () => {
+    // Convención Schema.org: el publisher de un WebSite es la Organization.
+    // Antes apuntaba a LegalService (válido pero inusual y dificultaba la
+    // vinculación entidad→sitio en el Knowledge Graph).
     const s = websiteSchema();
     expect(s['@type']).toBe('WebSite');
     expect(s.url).toBe(site.url);
     const publisher = s.publisher as Record<string, unknown>;
-    expect(publisher['@id']).toBe(`${site.url}/#legal-service`);
+    expect(publisher['@id']).toBe(`${site.url}/#organization`);
+  });
+
+  it('organizationSchema incluye image (necesaria para Knowledge Graph)', () => {
+    const s = organizationSchema();
+    expect(s.image).toBeDefined();
+    expect(String(s.image)).toMatch(/^https:\/\//);
   });
 
   it('sameAs solo se incluye si hay redes sociales configuradas (no se inventan)', () => {
@@ -175,5 +194,45 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
       expect(Array.isArray(s.sameAs)).toBe(true);
       expect((s.sameAs as unknown[]).length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('lib/schemas/legal-page.ts — structured data de áreas (auditoría Jun 2026)', () => {
+  it('areaSchemas NO emite BreadcrumbList (lo hace el componente <Breadcrumbs>)', () => {
+    // Antes el helper emitía un BreadcrumbList Y el componente <Breadcrumbs>
+    // otro → duplicado en derecho-penal, derecho-penal/[slug], hondurenos-en-
+    // espana y su [slug]. Ahora el helper solo emite Service + FAQPage.
+    const schemas = areaSchemas({
+      service: {
+        slug: 'test',
+        name: 'Test',
+        description: 'desc',
+        serviceType: 'Defensa Penal',
+        url: `${site.url}/test`,
+      },
+      faqs: [{ pregunta: '¿P?', respuesta: 'R.' }],
+      breadcrumbs: [
+        { name: 'Inicio', url: `${site.url}/` },
+        { name: 'Test', url: `${site.url}/test` },
+      ],
+      url: `${site.url}/test`,
+    });
+    const types = schemas.map((s: Record<string, unknown>) => s['@type']);
+    expect(types).toContain('Service');
+    expect(types).toContain('FAQPage');
+    expect(types, 'BreadcrumbList debe emitirlo solo el componente <Breadcrumbs>').not.toContain('BreadcrumbList');
+  });
+
+  it('faqPageSchema sanitiza HTML en acceptedAnswer.text (Google exige texto plano)', () => {
+    const s = faqPageSchema(
+      [{ pregunta: '¿<b>Pregunta</b>?', respuesta: 'Respuesta <a href="x">con link</a> & ampersand' }],
+      `${site.url}/test`,
+    );
+    const question = (s.mainEntity as Array<Record<string, unknown>>)[0];
+    const answer = question.acceptedAnswer as Record<string, unknown>;
+    expect(String(question.name)).not.toMatch(/<[^>]*>/);
+    expect(String(answer.text)).not.toMatch(/<[^>]*>/);
+    expect(String(answer.text)).toContain('&');
+    expect(String(answer.text)).not.toContain('&amp;');
   });
 });

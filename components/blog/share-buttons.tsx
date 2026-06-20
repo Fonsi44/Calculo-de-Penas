@@ -26,7 +26,11 @@ export function ShareButtons({ title, url, variant = 'vertical' }: Props) {
     },
     {
       label: 'LinkedIn',
-      href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
+      // Endpoint actual y soportado de LinkedIn: `sharing/share-offsite/?url=`.
+      // El anterior `shareArticle?mini=true&title=` está deprecado y los
+      // parámetros title/summary ya no se respetan (LinkedIn extrae los datos
+      // vía Open Graph del target). Ver docs oficiales de Microsoft Learn.
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
       svg: <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />,
     },
     {

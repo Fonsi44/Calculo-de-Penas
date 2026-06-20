@@ -20,7 +20,9 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  title: `Abogado Penalista en ${site.address.city}, ${site.address.department} — Defensa Penal`,
+  // Absolute para controlar la longitud total. Antes el title resuelto medía
+  // 73 caracteres (>65) y se truncaba en SERP.
+  title: { absolute: `Abogado Penalista en ${site.address.city} — Defensa Penal` },
   description: `¿Necesita un abogado penalista en Nacaome, Valle? Defensa penal técnica y confidencial. Atendemos detenciones, audiencias iniciales y recursos en Nacaome, San Lorenzo y Choluteca. Consulta urgente por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/derecho-penal' },
   keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penalista San Lorenzo', 'abogado penalista Choluteca', 'abogado detención Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'abogado urgente penalista Valle'],
@@ -50,7 +52,10 @@ export default async function DerechoPenalPage() {
       slug: 'derecho-penal',
       name: 'Derecho Penal — Pineda y Asociados',
       description: hubPenal.descripcion,
-      serviceType: 'CriminalDefense',
+      // serviceType = categoría textual del servicio. Antes 'CriminalDefense'
+      // (inglés, inconsistente con un sitio es-HN); ahora en español y alineado
+      // con los títulos reales de las páginas.
+      serviceType: 'Defensa Penal',
       keywords: hubPenal.keywords,
       url,
     },

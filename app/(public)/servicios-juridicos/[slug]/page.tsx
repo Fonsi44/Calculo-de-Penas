@@ -14,6 +14,7 @@ import { sanitizeHtml } from '@/lib/sanitize';
 import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 /** Mapa de slug de servicio a slug de categoría de blog */
 const SERVICE_TO_BLOG_CATEGORY: Record<string, string> = {
@@ -91,7 +92,10 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       slug,
       name: `${area.titulo} — ${site.name}`,
       description: area.descripcion,
-      serviceType: 'LegalService',
+      // serviceType describe la categoría textual del servicio (no el @type
+      // de la organización). Antes era 'LegalService', que es el tipo de
+      // entidad del provider, no del servicio en sí → error de structured data.
+      serviceType: area.titulo,
       keywords: area.keywords,
       url,
     },
@@ -109,6 +113,13 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
 
   return (
     <>
+      <Container>
+        <Breadcrumbs items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Servicios Jurídicos', href: '/servicios-juridicos' },
+          { label: area.titulo },
+        ]} />
+      </Container>
       <section className="relative bg-primary text-text-inverse overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />

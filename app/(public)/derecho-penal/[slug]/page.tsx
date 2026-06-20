@@ -26,7 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!grupo) return {};
   const canonical = `/derecho-penal/${slug}`;
   return {
-    title: `${grupo.titulo} | Derecho Penal`,
+    // Absolute para evitar marca triple ("titulo | Derecho Penal | Pineda y
+    // Asociados") que disparaba titles de 75-93 caracteres. Ahora la intención
+    // de búsqueda queda clara con el título del grupo + marca única.
+    title: { absolute: `${grupo.titulo} — Abogados Penalistas` },
     description: `${grupo.descripcion.substring(0, 90)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
     alternates: { canonical },
     keywords: grupo.keywords,
@@ -66,7 +69,9 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
       slug,
       name: `${grupo.titulo} — ${site.name}`,
       description: grupo.descripcion,
-      serviceType: 'LegalService',
+      // serviceType = categoría textual del servicio (antes 'LegalService',
+      // que es el @type del provider, no del servicio).
+      serviceType: `Derecho Penal — ${grupo.titulo}`,
       keywords: grupo.keywords,
       url: grupoUrl,
     },

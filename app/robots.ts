@@ -29,6 +29,16 @@ import { site } from '@/lib/site';
  * Esto debe aprobarlo el despacho (decisión outward-facing). Mientras tanto,
  * la política actual protege el contenido y prioriza indexación clásica.
  * Ver docs/seo-off-page.md para el contexto estratégico completo.
+ *
+ * SEO técnico (Jun 2026): NO se bloquea `/_next/`. Los assets de Next.js
+ * (CSS y JS de renderizado) viven bajo `/_next/static/` y Googlebot los
+ * necesita para ejecutar el JavaScript del framework y renderizar el contenido
+ * client-side. Bloquear `/_next/` produce "Disallowed internal resources" en
+ * auditorías SEO (Googlebot recibe 403/Disallowed al intentar descargar el JS
+ * crítico) y degrada el rendering service. Las guías oficiales de Google
+ * Search Central y de Next.js recomiendan expresamente permitir `/_next/`.
+ * Tampoco se bloquea `/icon-*.svg`, `/og-image.png` ni fuentes: son recursos
+ * públicos necesarios para el render fiel de la página.
  */
 export default function robots(): MetadataRoute.Robots {
   if (site.noindex) {
@@ -55,13 +65,16 @@ export default function robots(): MetadataRoute.Robots {
     };
   }
 
-  // Modo producción: rastreo permitido, intranet y APIs bloqueadas
+  // Modo producción: rastreo permitido. Solo se bloquean rutas PRIVADAS.
+  // `/_next/` y `/icon-*`, `/og-image.png`, `/fonts`, `/manifest.json` se
+  // permiten: Googlebot necesita los assets para renderizar la SPA/RSC y
+  // mostrar el contenido real (no el esqueleto SSR sin estilos).
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/intranet/', '/api/', '/_next/', '/404', '/500', '/_not-found', '/login'],
+        disallow: ['/intranet/', '/api/', '/404', '/500', '/_not-found', '/login'],
       },
       // Bots de IA/scrapers bloqueados
       { userAgent: 'GPTBot', disallow: '/' },
@@ -79,5 +92,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'Omgilibot', disallow: '/' },
     ],
     sitemap: `${site.url}/sitemap.xml`,
+    host: site.url,
   };
 }

@@ -29,7 +29,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     ? `/blog${page > 1 ? `?page=${page}` : ''}${tagFilter ? `${page > 1 ? '&' : '?'}tag=${encodeURIComponent(tagFilter)}` : ''}`
     : '/blog';
   return {
-    title: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` — Página ${page}` : ''}`,
+    // Absolute para controlar la longitud total. Antes, con la paginación el
+    // title llegaba a 69 caracteres (>65) por el sufijo del template.
+    title: { absolute: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}` },
     description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
     keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],

@@ -31,7 +31,11 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!cat) return {};
   const canonicalPath = page > 1 ? `/blog/${categoria}?page=${page}` : `/blog/${categoria}`;
   return {
-    title: `${cat.nombre} — Blog Jurídico${page > 1 ? ` — Página ${page}` : ''}`,
+    // Absolute para controlar la longitud total. Antes, el template del layout
+    // añadía "| Pineda y Asociados" y, sumado a "{cat.nombre} — Blog Jurídico",
+    // varias categorías superaban 65 caracteres (p. ej. Derecho Mercantil y
+    // Empresarial = 69) y empeoraba con " — Página N" en la paginación.
+    title: { absolute: `${cat.nombre} — Blog Jurídico${page > 1 ? ` (Página ${page})` : ''}` },
     description: page > 1 ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
     alternates: { canonical: canonicalPath },
     keywords: [cat.nombre.toLowerCase(), 'artículos legales Honduras', 'blog jurídico Honduras', `${cat.nombre.toLowerCase()} Honduras`],

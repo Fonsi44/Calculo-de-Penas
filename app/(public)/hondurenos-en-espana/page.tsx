@@ -51,7 +51,9 @@ export default async function MigrantesPage() {
       slug: 'hondurenos-en-espana',
       name: 'Hondureños en España — Pineda y Asociados',
       description: hubMigrantes.descripcion,
-      serviceType: 'LegalService',
+      // serviceType = categoría textual del servicio (antes 'LegalService',
+      // que es el @type del provider, no del servicio).
+      serviceType: 'Asistencia Legal a Hondureños en España',
       keywords: hubMigrantes.keywords,
       url,
     },
