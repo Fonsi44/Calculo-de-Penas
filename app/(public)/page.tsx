@@ -478,8 +478,8 @@ export default async function HomePage() {
                 desc: t('multidisciplinary.combo4_desc'),
               },
             ].map((it) => (
-              <Card key={it.title} padding="sm" className="h-full flex">
-                <div className="flex items-start gap-3 w-full">
+              <Card key={it.title} padding="sm" className="h-full flex items-center">
+                <div className="flex items-center gap-3 w-full">
                   <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
                     <it.icon size={20} aria-hidden="true" />
                   </div>
