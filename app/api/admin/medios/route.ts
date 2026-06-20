@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
+import { uploadFile, deleteFile, StorageError } from '@/lib/storage';
 
 export async function GET(request: Request) {
   try {
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
     const rl = await rateLimit(`medios:upload:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
 
@@ -32,33 +34,29 @@ export async function POST(request: Request) {
       const file = formData.get('file') as File;
       if (!file) return Response.json({ error: 'Archivo requerido' }, { status: 400 });
 
-      const buffer = Buffer.from(await file.arrayBuffer());
-      const ext = file.name.split('.').pop() || 'bin';
-      const slug = (formData.get('slug') as string) || file.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      const filename = `${slug}-${Date.now()}.${ext}`;
+      // Subida persistente: Vercel Blob en prod, filesystem local en dev.
+      const slug = (formData.get('slug') as string) || undefined;
+      const uploaded = await uploadFile(file, { slug });
 
-      const publicDir = process.cwd() + '/public';
-      const uploadDir = `${publicDir}/images/uploads`;
-      await import('fs').then(fs => fs.promises.mkdir(uploadDir, { recursive: true }));
-      await import('fs').then(fs => fs.promises.writeFile(`${uploadDir}/${filename}`, buffer));
-
-      const url = `/images/uploads/${filename}`;
       const [medio] = await db.insert(medios).values({
-        nombreArchivo: filename,
+        nombreArchivo: uploaded.filename,
         altText: (formData.get('altText') as string) || '',
         titulo: (formData.get('titulo') as string) || '',
-        tipoMime: file.type,
-        tamaño: file.size,
-        url,
+        tipoMime: uploaded.mimeType,
+        tamaño: uploaded.size,
+        url: uploaded.url,
         createdBy: auth.userId,
       }).returning();
 
-      await logAudit({ usuarioId: auth.userId, accion: 'medio_created' as AuditoriaAccion, recurso: 'medio', recursoId: medio.id, metadata: { url, filename }, request });
+      await logAudit({ usuarioId: auth.userId, accion: 'medio_created' as AuditoriaAccion, recurso: 'medio', recursoId: medio.id, metadata: { url: uploaded.url, filename: uploaded.filename, backend: uploaded.backend }, request });
       return Response.json({ medio }, { status: 201 });
     }
 
     return Response.json({ error: 'Usa multipart/form-data' }, { status: 400 });
   } catch (err) {
+    if (err instanceof StorageError) {
+      return Response.json({ error: `Error de almacenamiento: ${err.message}` }, { status: 502 });
+    }
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
     return authFailureResponse(err);
   }
@@ -75,11 +73,8 @@ export async function DELETE(request: Request) {
     const [medio] = await db.delete(medios).where(eq(medios.id, id)).returning();
     if (!medio) return Response.json({ error: 'Medio no encontrado' }, { status: 404 });
 
-    try {
-      const fs = await import('fs');
-      const filePath = process.cwd() + '/public' + medio.url;
-      if (fs.existsSync(filePath)) await fs.promises.unlink(filePath);
-    } catch { /* file may not exist */ }
+    // Borrado best-effort del almacenamiento (Vercel Blob o local).
+    await deleteFile(medio.url);
 
     await logAudit({ usuarioId: auth.userId, accion: 'medio_deleted' as AuditoriaAccion, recurso: 'medio', recursoId: id, request });
     return Response.json({ deleted: true });
