@@ -20,41 +20,41 @@
 export type ImageCategory = 'corporate' | 'services' | 'penal';
 
 const SERVICES: Record<string, string> = {
-  'derecho-de-familia': '/images/services/defensa-familia-nacaome.jpg',
-  'derecho-laboral': '/images/services/derecho-laboral-honduras.jpg',
-  'derecho-civil-y-notarial': '/images/services/derecho-civil-notarial-valle.jpg',
-  'derecho-mercantil-empresarial': '/images/services/mercantil.jpg',
-  'derecho-bancario-y-financiero': '/images/services/bancario.jpg',
-  'derecho-administrativo-y-servicio-civil': '/images/services/administrativo.jpg',
-  'derecho-aduanero-y-comercio-exterior': '/images/services/aduanero.jpg',
-  'regulacion-sanitaria': '/images/services/sanitario.jpg',
-  'extranjeria-en-honduras': '/images/services/extranjeria.jpg',
-  'propiedad-intelectual': '/images/services/propiedad-intelectual.jpg',
-  'tributario-fiscal': '/images/services/tributario.jpg',
-  'ambiental-regulatorio': '/images/services/ambiental.jpg',
-  'conciliacion-y-arbitraje': '/images/services/arbitraje.jpg',
+  'derecho-de-familia': '/images/services/defensa-familia-nacaome.webp',
+  'derecho-laboral': '/images/services/derecho-laboral-honduras.webp',
+  'derecho-civil-y-notarial': '/images/services/derecho-civil-notarial-valle.webp',
+  'derecho-mercantil-empresarial': '/images/services/mercantil.webp',
+  'derecho-bancario-y-financiero': '/images/services/bancario.webp',
+  'derecho-administrativo-y-servicio-civil': '/images/services/administrativo.webp',
+  'derecho-aduanero-y-comercio-exterior': '/images/services/aduanero.webp',
+  'regulacion-sanitaria': '/images/services/sanitario.webp',
+  'extranjeria-en-honduras': '/images/services/extranjeria.webp',
+  'propiedad-intelectual': '/images/services/propiedad-intelectual.webp',
+  'tributario-fiscal': '/images/services/tributario.webp',
+  'ambiental-regulatorio': '/images/services/ambiental.webp',
+  'conciliacion-y-arbitraje': '/images/services/arbitraje.webp',
   'gestion-documental-y-legalizacion': '/images/services/gestion-documental-y-legalizacion.webp',
   'actos-notariales-internacionales': '/images/services/actos-notariales-internacionales.webp',
   'asuntos-civiles-y-familiares-desde-el-extranjero': '/images/services/asuntos-civiles-y-familiares-desde-el-extranjero.webp',
 };
 
 const PENAL: Record<string, string> = {
-  'atencion-casos-penales-litigiosos': '/images/penal/litigio-complejo.jpg',
-  'mediacion-conflictos-penales-y-multas': '/images/penal/resolucion-alternativa.jpg',
-  'menores-justicia-juvenil': '/images/penal/penal-juvenil.jpg',
-  'proceso-penal-completo': '/images/penal/representacion-integral.jpg',
-  'recursos-y-defensa-avanzada': '/images/penal/recursos-impugnaciones.jpg',
-  'estrategia-penal-y-litigio': '/images/penal/consultoria-preventiva.jpg',
-  'ejecucion-penal-y-beneficios': '/images/penal/penitenciario.jpg',
+  'atencion-casos-penales-litigiosos': '/images/penal/litigio-complejo.webp',
+  'mediacion-conflictos-penales-y-multas': '/images/penal/resolucion-alternativa.webp',
+  'menores-justicia-juvenil': '/images/penal/penal-juvenil.webp',
+  'proceso-penal-completo': '/images/penal/representacion-integral.webp',
+  'recursos-y-defensa-avanzada': '/images/penal/recursos-impugnaciones.webp',
+  'estrategia-penal-y-litigio': '/images/penal/consultoria-preventiva.webp',
+  'ejecucion-penal-y-beneficios': '/images/penal/penitenciario.webp',
 };
 
 const CORPORATE: Record<string, string> = {
-  hero_home: '/images/corporate/hero_home.jpg',
-  hero_despacho: '/images/corporate/hero_despacho.jpg',
-  services_general: '/images/corporate/services_general.jpg',
-  services_penal: '/images/corporate/services_penal.jpg',
-  courthouse: '/images/corporate/courthouse.jpg',
-  corporate_meeting: '/images/corporate/corporate_meeting.jpg',
+  hero_home: '/images/corporate/hero_home.webp',
+  hero_despacho: '/images/corporate/hero_despacho.webp',
+  services_general: '/images/corporate/services_general.webp',
+  services_penal: '/images/corporate/services_penal.webp',
+  courthouse: '/images/corporate/courthouse.webp',
+  corporate_meeting: '/images/corporate/corporate_meeting.webp',
 };
 
 export function getServiceImage(slug: string): string | undefined {

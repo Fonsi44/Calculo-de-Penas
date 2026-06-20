@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = seo.description && seo.description.length <= 160
     ? seo.description
     : site.description;
-  const ogImage = seo.ogImage ?? `${site.url}/og-image.png`;
+  const ogImage = seo.ogImage ?? `${site.url}/og-image.webp`;
   const verification: Record<string, string> = {};
   if (seo.googleVerification || site.googleVerification) {
     verification.google = seo.googleVerification ?? site.googleVerification ?? '';

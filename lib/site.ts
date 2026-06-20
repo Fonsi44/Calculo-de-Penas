@@ -186,10 +186,10 @@ export function legalServiceSchema() {
     // ofrece vía ContactPoint (teléfono/WhatsApp) y el formulario /solicitar-consulta.
     // Si en el futuro se quiere exponer, descomentar: email: site.email,
     description: site.description,
-    image: `${site.url}/og-image.png`,
-    // logo: se referencia og-image.png (1200x630, ya existe) porque NO hay
+    image: `${site.url}/og-image.webp`,
+    // logo: se referencia og-image.webp (1200x630, ya existe) porque NO hay
     // /logo.png en /public. Google Rich Results exige PNG/JPG/GIF/WebP ≥112px.
-    logo: `${site.url}/og-image.png`,
+    logo: `${site.url}/og-image.webp`,
     priceRange: '$$',
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     currenciesAccepted: 'HNL, USD',
@@ -272,12 +272,12 @@ export function organizationSchema() {
     name: site.name,
     legalName: site.name,
     url: site.url,
-    // logo: og-image.png (no existe /logo.png en /public — ver nota en legalServiceSchema).
-    logo: `${site.url}/og-image.png`,
+    // logo: og-image.webp (no existe /logo.png en /public — ver nota en legalServiceSchema).
+    logo: `${site.url}/og-image.webp`,
     // image: necesaria para el Knowledge Graph de Google junto a `logo`.
-    // Reutilizamos og-image.png (1200x630) por no existir un logotipo cuadrado
+    // Reutilizamos og-image.webp (1200x630) por no existir un logotipo cuadrado
     // dedicado en /public. Si se añade /logo.png (≥112px), referenciarlo aquí.
-    image: `${site.url}/og-image.png`,
+    image: `${site.url}/og-image.webp`,
     // foundingDate: "~2010" refleja "más de 15 años de ejercicio profesional"
     // declarado en la home (auditoría 2026). Reemplazar por año exacto si se conoce.
     foundingDate: '2010',

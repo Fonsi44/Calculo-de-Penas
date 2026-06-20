@@ -37,7 +37,7 @@ import { site } from '@/lib/site';
  * auditorías SEO (Googlebot recibe 403/Disallowed al intentar descargar el JS
  * crítico) y degrada el rendering service. Las guías oficiales de Google
  * Search Central y de Next.js recomiendan expresamente permitir `/_next/`.
- * Tampoco se bloquea `/icon-*.svg`, `/og-image.png` ni fuentes: son recursos
+ * Tampoco se bloquea `/icon-*.svg`, `/og-image.webp` ni fuentes: son recursos
  * públicos necesarios para el render fiel de la página.
  */
 export default function robots(): MetadataRoute.Robots {
@@ -66,7 +66,7 @@ export default function robots(): MetadataRoute.Robots {
   }
 
   // Modo producción: rastreo permitido. Solo se bloquean rutas PRIVADAS.
-  // `/_next/` y `/icon-*`, `/og-image.png`, `/fonts`, `/manifest.json` se
+  // `/_next/` y `/icon-*`, `/og-image.webp`, `/fonts`, `/manifest.json` se
   // permiten: Googlebot necesita los assets para renderizar la SPA/RSC y
   // mostrar el contenido real (no el esqueleto SSR sin estilos).
   return {

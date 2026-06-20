@@ -281,7 +281,7 @@ export function landingMetadata(landing: LandingLocal) {
       type: 'website' as const,
       images: [
         {
-          url: '/og-image.png',
+          url: '/og-image.webp',
           width: 1200,
           height: 630,
           alt: landing.title,
@@ -292,7 +292,7 @@ export function landingMetadata(landing: LandingLocal) {
       card: 'summary_large_image' as const,
       title: landing.title,
       description: landing.description,
-      images: ['/og-image.png'],
+      images: ['/og-image.webp'],
     },
   };
 }

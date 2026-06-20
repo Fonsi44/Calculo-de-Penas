@@ -33,7 +33,7 @@ export function blogPostSchema(post: Post) {
       name: site.name,
       logo: {
         '@type': 'ImageObject',
-        url: `${site.url}/og-image.png`,
+        url: `${site.url}/og-image.webp`,
       },
     },
     mainEntityOfPage: {
@@ -42,7 +42,7 @@ export function blogPostSchema(post: Post) {
     },
     image: post.coverImage
       ? `${site.url}${post.coverImage}`
-      : `${site.url}/og-image.png`,
+      : `${site.url}/og-image.webp`,
     articleBody: post.body
       ? post.body.replace(/<[^>]*>/g, '').substring(0, 5000)
       : undefined,
