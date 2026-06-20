@@ -180,6 +180,16 @@ export function PublicFooter() {
                   </a>
                 </li>
               )}
+              {site.social.x && (
+                <li className="flex items-center gap-2">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" className="text-accent flex-shrink-0" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                  <a href={site.social.x} target="_blank" rel="noopener noreferrer" className="text-text-inverse/80 hover:text-accent" aria-label={`Perfil de X de ${site.name}`}>
+                    X (Twitter)
+                  </a>
+                </li>
+              )}
               <li className="flex items-start gap-2">
                 <Clock size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="text-text-inverse/80 leading-relaxed">{site.hours}</span>

@@ -90,7 +90,10 @@ export const site = {
     facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK ?? 'https://www.facebook.com/profile.php?id=61590934058125',
     instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM ?? null,
     tiktok: process.env.NEXT_PUBLIC_SOCIAL_TIKTOK ?? null,
+    x: process.env.NEXT_PUBLIC_SOCIAL_X ?? 'https://x.com/Danilo_Pineda_M',
   },
+  /** Google Business Profile — perfil oficial del bufete en Google Maps. */
+  googleBusiness: 'https://maps.app.goo.gl/giJcUrJ7yaVHpnkCA',
   legal: {
     jurisdiction: 'República de Honduras',
     code: 'Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
@@ -221,12 +224,14 @@ export function legalServiceSchema() {
     serviceType:
       'Bufete multidisciplinar — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
     knowsAbout: KNOWS_ABOUT,
-    ...(site.social.facebook || site.social.instagram || site.social.tiktok
+    ...(site.social.facebook || site.social.instagram || site.social.tiktok || site.social.x || site.googleBusiness
       ? {
           sameAs: [
             site.social.facebook,
             site.social.instagram,
             site.social.tiktok,
+            site.social.x,
+            site.googleBusiness,
           ].filter(Boolean),
         }
       : {}),

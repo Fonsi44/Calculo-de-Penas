@@ -23,7 +23,7 @@ import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
-import { TestimonialsSection } from '@/components/marketing/testimonials-section';
+import { GoogleReviews } from '@/components/marketing/google-reviews';
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { landingsLocales } from '@/data/landings-locales';
@@ -354,35 +354,8 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* TESTIMONIOS */}
-      <TestimonialsSection
-        title={t('testimonials.title')}
-        subtitle={t('testimonials.subtitle')}
-        columns={3}
-        items={[
-          {
-            name: t('testimonials.testimonial1_name'),
-            rating: 5,
-            body: t('testimonials.testimonial1_body'),
-            date: '2025',
-            source: 'CASO ANONIMIZADO',
-          },
-          {
-            name: t('testimonials.testimonial2_name'),
-            rating: 5,
-            body: t('testimonials.testimonial2_body'),
-            date: '2025',
-            source: 'CASO ANONIMIZADO',
-          },
-          {
-            name: t('testimonials.testimonial3_name'),
-            rating: 5,
-            body: t('testimonials.testimonial3_body'),
-            date: '2024',
-            source: 'CASO ANONIMIZADO',
-          },
-        ]}
-      />
+      {/* GOOGLE REVIEWS — reseñas reales verificadas del perfil de Google Business */}
+      <GoogleReviews />
 
       {/* PROCESS */}
       <Section spacing="md" ariaLabel="Proceso de atención">
@@ -547,14 +520,7 @@ export default async function HomePage() {
           </div>
           <div>
             <Card padding="none" className="overflow-hidden aspect-[4/3] bg-surface-alt">
-              <MapEmbed
-                latitude={site.geo.latitude}
-                longitude={site.geo.longitude}
-                label={site.name}
-                fullAddress={site.address.full}
-                zoom={15}
-                className="w-full h-full"
-              />
+              <MapEmbed />
             </Card>
             <Link href="/como-llegar" title="Dirección y mapa del bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-primary hover:text-accent-dark">
               cómo llegar a Nacaome <ArrowRight size={12} />

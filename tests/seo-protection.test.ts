@@ -184,16 +184,13 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
     expect(String(s.image)).toMatch(/^https:\/\//);
   });
 
-  it('sameAs solo se incluye si hay redes sociales configuradas (no se inventan)', () => {
+  it('sameAs incluye redes sociales y Google Business Profile configurados', () => {
     const s = legalServiceSchema();
-    // Si site.social.* son null (caso por defecto sin env), sameAs no debe existir.
-    const hasSocial = site.social.facebook || site.social.instagram || site.social.tiktok;
-    if (!hasSocial) {
-      expect(s.sameAs).toBeUndefined();
-    } else {
-      expect(Array.isArray(s.sameAs)).toBe(true);
-      expect((s.sameAs as unknown[]).length).toBeGreaterThan(0);
-    }
+    // googleBusiness siempre tiene valor por defecto, así que sameAs debe existir.
+    expect(Array.isArray(s.sameAs)).toBe(true);
+    expect((s.sameAs as unknown[]).length).toBeGreaterThan(0);
+    // Verifica que Google Business Profile esté incluido
+    expect(s.sameAs).toContain(site.googleBusiness);
   });
 });
 

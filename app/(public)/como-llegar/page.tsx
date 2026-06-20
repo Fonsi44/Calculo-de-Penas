@@ -56,7 +56,6 @@ const FROM_CITIES = [
 export default function ComoLlegarPage() {
   const { latitude, longitude } = site.geo;
   const gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-  const osmLink = `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`;
 
   const shortAddress = site.address.full;
 
@@ -100,14 +99,7 @@ export default function ComoLlegarPage() {
           <div className="lg:col-span-2">
             <Card padding="none" className="overflow-hidden">
               <div className="aspect-[16/10] w-full bg-surface-alt relative">
-                <MapEmbed
-                  latitude={latitude}
-                  longitude={longitude}
-                  label={site.name}
-                  fullAddress={`${site.address.line1} — ${site.address.line2}, ${site.address.city}`}
-                  zoom={16}
-                  className="w-full h-full"
-                />
+                <MapEmbed />
               </div>
               <div className="p-4 border-t border-border-light flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -126,16 +118,6 @@ export default function ComoLlegarPage() {
                     className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-white text-xs font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors"
                   >
                     <Navigation size={14} /> Google Maps
-                    <ExternalLink size={11} className="opacity-70" />
-                  </a>
-                  <a
-                    href={osmLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Ver en OpenStreetMap — mapa libre y gratuito"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-surface-alt text-text text-xs font-bold border border-border-light hover:border-accent/40 hover:text-accent-dark transition-colors"
-                  >
-                    <MapPin size={14} /> OpenStreetMap
                     <ExternalLink size={11} className="opacity-70" />
                   </a>
                   <Link
