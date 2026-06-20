@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Edit3, Trash2, Key, Shield, User } from 'lucide-react';
+import { Plus, Search, Edit3, Trash2, Key, Shield, User, Copy, Check } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Modal } from '@/components/ui/modal';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { Spinner } from '@/components/ui/spinner';
@@ -25,6 +26,9 @@ export default function AdminUsuariosPage() {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '', nombre: '', rol: 'abogado' });
   const [saving, setSaving] = useState(false);
+  const [resetting, setResetting] = useState<string | null>(null);
+  const [tempCreds, setTempCreds] = useState<{ nombre: string; tempPassword: string } | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const fetchUsuarios = () => {
     setLoading(true);
@@ -66,13 +70,38 @@ export default function AdminUsuariosPage() {
   };
 
   const handlePasswordReset = async (id: string, nombre: string) => {
-    const pwd = prompt(`Nueva contraseña para ${nombre} (mínimo 6 caracteres):`);
-    if (!pwd || pwd.length < 6) { if (pwd) toast.danger('La contraseña debe tener al menos 6 caracteres'); return; }
+    const ok = await confirm({
+      title: `Restablecer contraseña de ${nombre}`,
+      description: 'Se generará una contraseña temporal aleatoria. El usuario deberá cambiarla en su próximo inicio de sesión. La verás a continuación una sola vez.',
+      confirmLabel: 'Generar contraseña',
+      tone: 'warning',
+    });
+    if (!ok) return;
+    setResetting(id);
     try {
-      const res = await fetch(`/api/admin/usuarios/${id}/reset-password`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pwd }) });
-      if (!res.ok) throw new Error('Error');
-      toast.success('Contraseña actualizada');
-    } catch { toast.danger('Error al cambiar contraseña'); }
+      const res = await fetch(`/api/admin/usuarios/${id}/reset-password`, { method: 'POST' });
+      if (!res.ok) { const err = await res.json(); throw new Error(err.error || 'Error'); }
+      const data = await res.json();
+      setTempCreds({ nombre, tempPassword: data.tempPassword });
+      setCopied(false);
+      toast.success('Contraseña temporal generada');
+    } catch (e) {
+      toast.danger(e instanceof Error ? e.message : 'Error al restablecer contraseña');
+    } finally {
+      setResetting(null);
+    }
+  };
+
+  const copyTempPassword = async () => {
+    if (!tempCreds) return;
+    try {
+      await navigator.clipboard.writeText(tempCreds.tempPassword);
+      setCopied(true);
+      toast.success('Contraseña copiada al portapapeles');
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.danger('No se pudo copiar automáticamente. Selecciona el texto manualmente.');
+    }
   };
 
   const formatDate = (d: string) => {
@@ -162,7 +191,7 @@ export default function AdminUsuariosPage() {
                         <Link href={`/intranet/admin/usuarios/${u.id}`}>
                           <Button variant="ghost" size="sm" aria-label="Editar"><Edit3 size={14} /></Button>
                         </Link>
-                        <Button variant="ghost" size="sm" onClick={() => handlePasswordReset(u.id, u.nombre)} aria-label="Cambiar contraseña"><Key size={14} /></Button>
+                        <Button variant="ghost" size="sm" loading={resetting === u.id} onClick={() => handlePasswordReset(u.id, u.nombre)} aria-label="Restablecer contraseña"><Key size={14} /></Button>
                         <Button variant="ghost" size="sm" onClick={() => handleDelete(u.id, u.nombre)} aria-label="Eliminar"><Trash2 size={14} className="text-danger" /></Button>
                       </div>
                     </td>
@@ -173,6 +202,48 @@ export default function AdminUsuariosPage() {
           </div>
         </Card>
       )}
+
+      <Modal
+        open={Boolean(tempCreds)}
+        onClose={() => setTempCreds(null)}
+        title="Contraseña temporal generada"
+        size="md"
+        footer={
+          <>
+            <Button variant="ghost" size="sm" onClick={() => setTempCreds(null)}>Cerrar</Button>
+            <Button variant="primary" size="sm" onClick={copyTempPassword}>
+              {copied ? <><Check size={14} /> Copiada</> : <><Copy size={14} /> Copiar contraseña</>}
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <div className="flex items-start gap-2 p-3 rounded-md bg-warning-bg border border-warning/30">
+            <Shield className="text-warning flex-shrink-0 mt-0.5" size={18} />
+            <p className="text-sm text-text">
+              Esta contraseña de <strong>{tempCreds?.nombre}</strong> se muestra <strong>una sola vez</strong>.
+              El usuario deberá cambiarla al iniciar sesión.
+            </p>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-text-secondary mb-1">Contraseña temporal</label>
+            <div className="flex gap-2">
+              <input
+                readOnly
+                value={tempCreds?.tempPassword ?? ''}
+                onFocus={(e) => e.currentTarget.select()}
+                className="flex-1 h-9 rounded-md border border-border bg-surface-alt px-3 text-sm font-mono text-text outline-none"
+              />
+              <Button variant="secondary" size="sm" onClick={copyTempPassword} aria-label="Copiar">
+                {copied ? <Check size={14} /> : <Copy size={14} />}
+              </Button>
+            </div>
+          </div>
+          <p className="text-xxs text-text-muted">
+            Comunica esta contraseña al usuario por un canal seguro (en persona o teléfono). No la envíes por email sin cifrar.
+          </p>
+        </div>
+      </Modal>
     </div>
   );
 }

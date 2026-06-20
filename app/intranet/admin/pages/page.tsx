@@ -15,6 +15,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { PageHeader } from '@/components/ui/page-header';
 import { cn } from '@/lib/ui';
 import { useToast } from '@/components/ui/toast';
+import { useConfirm } from '@/components/ui/confirm';
 
 type PageStatus = 'published' | 'draft' | 'inactive';
 
@@ -57,6 +58,7 @@ function formatDate(dateStr: string | null): string {
 
 export default function AdminPagesPage() {
   const toast = useToast();
+  const confirm = useConfirm();
   const [items, setItems] = useState<PageItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -116,7 +118,13 @@ export default function AdminPagesPage() {
 
   const handleDelete = async (page: string) => {
     setOpenMenu(null);
-    if (!window.confirm(`¿Eliminar todo el contenido de "${page}"? Esta acción no se puede deshacer.`)) return;
+    const ok = await confirm({
+      title: `¿Eliminar "${page}"?`,
+      description: 'Se eliminará todo el contenido de esta página. Esta acción no se puede deshacer.',
+      confirmLabel: 'Eliminar',
+      tone: 'danger',
+    });
+    if (!ok) return;
     try {
       const res = await fetch(`/api/admin/pages?page=${page}`, { method: 'DELETE' });
       if (res.ok) {

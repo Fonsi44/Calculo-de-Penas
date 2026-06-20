@@ -16,6 +16,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { StatCards } from '@/components/ui/stat-cards';
 import { ArticuloAutocomplete } from '@/components/domain/articulo-autocomplete';
 import { site } from '@/lib/site';
+import { apiFetch } from '@/lib/api-fetch';
 import { formatHondurasDate, getHondurasClock } from '@/lib/datetime';
 
 const RULES = [
@@ -41,14 +42,16 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 30000);
+    // apiFetch centraliza el manejo de sesión expirada (401 → redirect login),
+    // evitando que el dashboard quede en spinner silencioso si el token caduca.
     Promise.all([
-      fetch('/api/delitos/count').then((r) => r.json()),
-      fetch('/api/clasificaciones').then((r) => r.json()),
-      fetch('/api/admin/usuarios?limit=1').then((r) => r.json()),
-      fetch('/api/admin/blog?limit=5').then((r) => r.json()),
-      fetch('/api/admin/blog?published=true&limit=1').then((r) => r.json()),
-      fetch('/api/admin/blog?published=false&limit=1').then((r) => r.json()),
-      fetch('/api/admin/faq').then((r) => r.json()),
+      apiFetch<{ total?: number }>('/api/delitos/count'),
+      apiFetch<unknown[]>('/api/clasificaciones'),
+      apiFetch<{ total?: number }>('/api/admin/usuarios?limit=1'),
+      apiFetch<{ total?: number; posts?: { id: string; title: string; slug: string; category: string; published: boolean; publishedAt: string }[] }>('/api/admin/blog?limit=5'),
+      apiFetch<{ total?: number }>('/api/admin/blog?published=true&limit=1'),
+      apiFetch<{ total?: number }>('/api/admin/blog?published=false&limit=1'),
+      apiFetch<{ faqs?: { published: boolean }[] }>('/api/admin/faq'),
     ])
       .then(([delitosCount, clas, usersData, postsData, pubPosts, draftPosts, faqsData]) => {
         const faqs = faqsData.faqs ?? [];
@@ -57,10 +60,14 @@ export default function AdminDashboardPage() {
           clasificaciones: Array.isArray(clas) ? clas.length : 0,
           usuarios: usersData.total ?? 0,
           posts: { total: postsData.total ?? 0, published: pubPosts.total ?? 0, drafts: draftPosts.total ?? 0, recent: (postsData.posts ?? []).slice(0, 5) },
-          faqs: { total: faqs.length, published: faqs.filter((f: { published: boolean }) => f.published).length, drafts: faqs.filter((f: { published: boolean }) => !f.published).length },
+          faqs: { total: faqs.length, published: faqs.filter((f) => f.published).length, drafts: faqs.filter((f) => !f.published).length },
         });
       })
-      .catch((e) => console.warn('Stats error', e))
+      .catch((e) => {
+        // apiFetch lanza ApiError; los 401 ya redirigen. El resto (red/500)
+        // se loguea y el dashboard muestra los stats en 0 (estado loading ya false).
+        console.warn('Stats error', e instanceof Error ? e.message : e);
+      })
       .finally(() => setLoading(false));
     return () => clearInterval(t);
   }, []);
@@ -106,9 +113,9 @@ export default function AdminDashboardPage() {
         columns={4}
         items={[
           { value: stats?.delitos ?? 0, label: 'Delitos', tone: 'default' },
-          { value: 635, label: 'Arts. CP', tone: 'info' },
+          { value: site.corpus.articulosCp, label: 'Arts. CP', tone: 'info' },
           { value: stats?.clasificaciones ?? 0, label: 'Ramas', tone: 'accent' },
-          { value: 8, label: 'Pasos', tone: 'default' },
+          { value: site.corpus.pasosWizard, label: 'Pasos', tone: 'default' },
           { value: stats?.posts.total ?? 0, label: 'Posts', tone: 'success' },
           { value: stats?.posts.published ?? 0, label: 'Publicados', tone: 'success' },
           { value: stats?.posts.drafts ?? 0, label: 'Borradores', tone: 'warning' },

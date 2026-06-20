@@ -128,11 +128,15 @@ function SidebarNav({ pathname, isAdmin, onNavigate }: { pathname: string; isAdm
         if (visibleItems.length === 0) return null;
         const isExpanded = expandedGroups.has(group.label);
         const groupActive = visibleItems.some((item) => item.match(pathname));
+        // ID estable para vincular el botón (aria-controls) con su panel.
+        const panelId = `nav-group-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
         return (
           <div key={group.label}>
             <button
               onClick={() => toggleGroup(group.label)}
+              aria-expanded={isExpanded}
+              aria-controls={panelId}
               className={cn(
                 'w-full flex items-center gap-2 px-2.5 py-2 rounded-md text-xs font-semibold transition-colors',
                 groupActive
@@ -151,6 +155,7 @@ function SidebarNav({ pathname, isAdmin, onNavigate }: { pathname: string; isAdm
               />
             </button>
             <div
+              id={panelId}
               className={cn(
                 'grid transition-all duration-200',
                 isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',

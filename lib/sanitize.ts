@@ -2,7 +2,11 @@ import sanitizeHtmlLib from 'sanitize-html';
 
 const ALLOWED_TAGS = [
   'p', 'br', 'strong', 'em', 'u', 's', 'del',
-  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  // NOTA: no se permite 'h1' en bodies de blog/FAQ/CMS. El título del post se
+  // renderiza como <h1> en la plantilla app/(public)/blog/[categoria]/[slug]/page.tsx.
+  // Permitir h1 aquí generaría doble H1 (problema SEO, regla R15 del AGENTS.md).
+  // El comando `npm run blog:normalizar:aplicar` convierte h1 existente a h2.
+  'h2', 'h3', 'h4', 'h5', 'h6',
   'ul', 'ol', 'li',
   'a', 'blockquote', 'pre', 'code', 'hr',
   'span', 'div', 'img',

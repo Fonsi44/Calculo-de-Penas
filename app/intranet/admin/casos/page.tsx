@@ -10,33 +10,43 @@ import { Input } from '@/components/ui/input';
 import { EmptyState } from '@/components/ui/empty-state';
 import { CenteredSpinner } from '@/components/ui/spinner';
 import { PageHeader } from '@/components/ui/page-header';
+import { useToast } from '@/components/ui/toast';
 import { formatFechaCorta, pluralizar } from '@/lib/ui';
 
 interface Caso { id: string; titulo: string; cliente: string | null; estado: string; creadoEn: string; totalCalculos: number; }
 
 export default function AdminCasosPage() {
+  const toast = useToast();
   const [casos, setCasos] = useState<Caso[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newTitulo, setNewTitulo] = useState('');
   const [newCliente, setNewCliente] = useState('');
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     fetch('/api/casos')
       .then(r => r.json())
       .then(data => setCasos(Array.isArray(data) ? data : []))
-      .catch(() => {})
+      .catch(() => toast.danger('Error al cargar los casos'))
       .finally(() => setLoading(false));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const createCaso = async () => {
     if (!newTitulo.trim()) return;
+    setCreating(true);
     try {
       const res = await fetch('/api/casos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ titulo: newTitulo, cliente: newCliente }) });
+      if (!res.ok) { const err = await res.json(); throw new Error(err.error || 'Error al crear el caso'); }
       const data = await res.json();
       setCasos(prev => [data, ...prev]);
       setShowNewForm(false); setNewTitulo(''); setNewCliente('');
-    } catch {}
+      toast.success('Caso creado correctamente');
+    } catch (e) {
+      toast.danger(e instanceof Error ? e.message : 'Error al crear el caso');
+    } finally {
+      setCreating(false);
+    }
   };
 
   if (loading) return <CenteredSpinner label="Cargando casos..." />;
@@ -56,8 +66,8 @@ export default function AdminCasosPage() {
           <Input placeholder="Título del caso *" value={newTitulo} onChange={e => setNewTitulo(e.target.value)} autoFocus className="mb-2" />
           <Input placeholder="Nombre del cliente (opcional)" value={newCliente} onChange={e => setNewCliente(e.target.value)} className="mb-3" />
           <div className="flex gap-2">
-            <Button variant="secondary" onClick={() => setShowNewForm(false)}>Cancelar</Button>
-            <Button variant="primary" disabled={!newTitulo.trim()} onClick={createCaso}>Crear caso</Button>
+            <Button variant="secondary" onClick={() => setShowNewForm(false)} disabled={creating}>Cancelar</Button>
+            <Button variant="primary" loading={creating} disabled={!newTitulo.trim()} onClick={createCaso}>Crear caso</Button>
           </div>
         </Card>
       )}

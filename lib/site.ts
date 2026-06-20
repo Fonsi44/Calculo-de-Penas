@@ -96,6 +96,19 @@ export const site = {
     code: 'Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
     isProd: process.env.NODE_ENV === 'production',
   },
+  /**
+   * Métricas verificables del corpus legal del sitio (fuente: data/*.json).
+   * Centralizadas aquí para evitar literales mágicos (635, 8) hardcodeados
+   * en componentes. Si los datos canónicos cambian, se actualiza aquí.
+   *   - articulosCp: data/articulos_cp.json (635 verificados)
+   *   - delitosCp: data/delitos.json (483 verificados, ver §8 AGENTS.md)
+   *   - pasosWizard: pasos del flujo /calculadora (constante de producto)
+   */
+  corpus: {
+    articulosCp: 635,
+    delitosCp: 483,
+    pasosWizard: 8,
+  },
   /** Si true, todo el sitio emite noindex,nofollow y bloquea rastreadores. */
   noindex: noindexActive,
   /** ID GA4 (opcional) — tracking frontend. */
@@ -230,6 +243,10 @@ export function legalServiceSchema() {
 
 /**
  * Schema.org WebSite para búsqueda y navegación.
+ *
+ * `publisher` apunta a Organization (convención estándar de Schema.org y la
+ * que usa Google para el Knowledge Graph). Antes apuntaba a LegalService, lo
+ * cual es válido pero inusual y dificultaba la vinculación entidad→sitio.
  */
 export function websiteSchema() {
   return {
@@ -240,7 +257,7 @@ export function websiteSchema() {
     name: site.name,
     description: site.description,
     inLanguage: 'es-HN',
-    publisher: { '@id': `${site.url}/#legal-service` },
+    publisher: { '@id': `${site.url}/#organization` },
   };
 }
 
@@ -257,6 +274,10 @@ export function organizationSchema() {
     url: site.url,
     // logo: og-image.png (no existe /logo.png en /public — ver nota en legalServiceSchema).
     logo: `${site.url}/og-image.png`,
+    // image: necesaria para el Knowledge Graph de Google junto a `logo`.
+    // Reutilizamos og-image.png (1200x630) por no existir un logotipo cuadrado
+    // dedicado en /public. Si se añade /logo.png (≥112px), referenciarlo aquí.
+    image: `${site.url}/og-image.png`,
     // foundingDate: "~2010" refleja "más de 15 años de ejercicio profesional"
     // declarado en la home (auditoría 2026). Reemplazar por año exacto si se conoce.
     foundingDate: '2010',
