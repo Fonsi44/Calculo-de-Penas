@@ -164,8 +164,8 @@ export default async function DespachoPage() {
           <div className="space-y-3">
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
-                  <Scale size={18} />
+                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
+                  <Scale size={20} />
                 </div>
                 <div>
                   <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
@@ -178,8 +178,8 @@ export default async function DespachoPage() {
             </Card>
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
-                  <HeartHandshake size={18} />
+                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
+                  <HeartHandshake size={20} />
                 </div>
                 <div>
                   <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
@@ -194,8 +194,8 @@ export default async function DespachoPage() {
             </Card>
             <Card padding="md" className="border-l-4 border-l-primary card-premium">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
-                  <Award size={18} />
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/15">
+                  <Award size={20} />
                 </div>
                 <div>
                   <p className="text-xxs font-bold uppercase tracking-widest text-primary mb-1">
@@ -211,8 +211,8 @@ export default async function DespachoPage() {
             </Card>
             <Card padding="md" className="border-l-4 border-l-primary card-premium">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
-                  <Gavel size={18} />
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/15">
+                  <Gavel size={20} />
                 </div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
                   Especialidad destacada
@@ -245,7 +245,7 @@ export default async function DespachoPage() {
           {c.values.items.map((v) => (
             <Card key={v.title} padding="md" className="h-full card-premium">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
                   <v.icon size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
@@ -268,7 +268,7 @@ export default async function DespachoPage() {
         {(() => {
           const meetingImg = getCorporateImage('corporate_meeting');
           return meetingImg ? (
-            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-md mb-6 border border-border-light">
+            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-lg mb-6 border border-border-light">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={meetingImg} alt="Reunión profesional del bufete" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" aria-hidden="true" />
@@ -288,7 +288,7 @@ export default async function DespachoPage() {
           ].map((p) => (
             <Card key={p.rol} padding="md" className="card-premium">
               <div className="flex items-center gap-3">
-                <div className="w-14 h-14 rounded-full bg-primary text-text-inverse flex items-center justify-center font-bold text-lg flex-shrink-0">
+                <div className="w-14 h-14 rounded-lg bg-primary text-text-inverse flex items-center justify-center font-bold text-lg flex-shrink-0">
                   <GraduationCap size={22} />
                 </div>
                 <div>
@@ -347,14 +347,14 @@ export default async function DespachoPage() {
             { icon: Scale, title: 'Civil + tributario + bancario', desc: 'Embargos, cobros, contratos y obligaciones tributarias.' },
             { icon: BookOpen, title: 'Notarial + registral', desc: 'Compraventas, donaciones, sociedades y traspasos.' },
           ].map((it) => (
-            <div key={it.title} className="rounded-md border border-white/15 bg-white/10 p-4">
+            <div key={it.title} className="rounded-lg border border-white/15 bg-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-md bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
-                  <it.icon size={18} aria-hidden="true" />
+                <div className="w-11 h-11 rounded-lg bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                  <it.icon size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
                   <h3 className="font-bold text-sm text-white leading-tight text-balance">{it.title}</h3>
-                  <p className="text-xs text-white/85 leading-relaxed mt-1 text-pretty">{it.desc}</p>
+                  <p className="text-sm text-white/85 leading-relaxed mt-1 text-pretty">{it.desc}</p>
                 </div>
               </div>
             </div>

@@ -301,7 +301,7 @@ export default async function HomePage() {
             >
               <Card padding="sm" className="h-full card-premium">
                 <div className="flex items-start gap-2.5">
-                  <div className="w-8 h-8 rounded-md bg-primary text-text-inverse flex items-center justify-center text-xs font-extrabold flex-shrink-0 group-hover:bg-accent-dark group-hover:text-primary transition-colors">
+                  <div className="w-10 h-10 rounded-md bg-primary text-text-inverse flex items-center justify-center text-xs font-extrabold flex-shrink-0 group-hover:bg-accent-dark group-hover:text-primary transition-colors">
                     {i + 1}
                   </div>
                   <div className="min-w-0">

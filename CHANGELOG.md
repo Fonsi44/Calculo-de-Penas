@@ -50,6 +50,39 @@ Paleta de colores, identidad visual, contenido editorial, arquitectura, rutas,
 SEO, schemas JSON-LD, intranet/admin, motor de cálculo, `page-hero.tsx`,
 `public-footer.tsx`, `floating-contact-rail` (ya correctos).
 
+### Extensión R16 a páginas públicas internas (2ª pasada)
+Aplicación mecánica y coherente de la regla R16 al resto de páginas públicas
+internas que conservaban estilos heredados inconsistentes con la home ya
+consolidada. **Sin rediseño, sin cambios de contenido, sin nuevas dependencias.**
+
+Patrón recurrente corregido en varias páginas `[slug]` (servicios, derecho-penal,
+hondurenos-en-espana): el icono-contenedor de subservicios era
+`w-10 h-10 rounded-full border-2 border-accent bg-white` → unificado a
+`w-11 h-11 rounded-lg border-accent/30 bg-accent/10` (patrón canónico de R16),
+con padding `p-4` → `p-5` (densidad editorial).
+
+| Página | Cambios aplicados |
+|---|---|
+| `despacho/page.tsx` | 5 icono-contenedores `w-10 rounded-md` → `w-11 rounded-lg` (misión/visión/valores/credenciales/especialidad); avatar equipo `rounded-full` → `rounded-lg`; imagen `rounded-md` → `rounded-lg`; bloque multidisciplinar: card `rounded-md` → `rounded-lg`, icono canónico, desc `text-xs` → `text-sm` |
+| `servicios-juridicos/[slug]` | subservicios a icono-contenedor canónico + `p-5`; cards de área relacionada y blog: border en icono; desc de blog `text-xs` → `text-sm` |
+| `derecho-penal/[slug]` | subservicios a icono-contenedor canónico; 3 cards relacionadas (área, "+", blog) con border en icono; desc blog `text-xs` → `text-sm` |
+| `hondurenos-en-espana/[slug]` | idéntico patrón que derecho-penal/[slug] (subservicios + 3 cards + blog) |
+| `preguntas-frecuentes/page.tsx` | FAQ `<details>` `rounded-xl` → `rounded-lg` (unifica con resto de cards) |
+| `solicitar-consulta/page.tsx` | 3 cards "visítenos" `rounded-xl` → `rounded-lg`; bloque emergencia `rounded-xl` → `rounded-lg`; items motivos `rounded-md` → `rounded-lg`; CTA "Indicaciones" con `btn-shadow-primary` |
+| `como-llegar/page.tsx` | 3 botones de mapas `rounded-md` → `rounded-lg` con `btn-shadow-primary/-secondary`; 3 icono-contenedores `w-9/w-10 rounded-md` → `w-11 rounded-lg` (Dirección, puntos referencia, rutas) |
+| `blog/[categoria]/[slug]/page.tsx` | card de artículo relacionado `rounded-xl` → `rounded-lg`; avatar de autor `rounded-full` → `rounded-lg` (avatar contenedor, no chip) |
+| `page.tsx` (home, retoque) | numeración de preguntas reales `w-8` → `w-10 rounded-md` (alinea con stepper canónico) |
+
+**Criterio aplicado con criterio (no mecánico a ciegas):**
+- Los icono-contenedores pequeños inline en **listas laterales compactas**
+  (garantías `w-7`, horario `w-8` en solicitar-consulta) se **mantienen**:
+  son micro-iconos secundarios, no cards principales; agrandarlos rompería
+  la densidad de esas columnas.
+- Los **chips/pills de filtro** (`rounded-full` en FAQ, tags de blog) se
+  **mantienen**: las pills circulares son un patrón legítimo de UI, no cards.
+- Los **blobs decorativos** del hero (`rounded-full blur-3xl`) se mantienen:
+  son fondo, no superficies funcionales.
+
 ### Convención nueva (AGENTS.md R16)
 - Radius canónico de card pública = `rounded-lg` (16px).
 - CTAs de la web pública deben usar `.btn-shadow-*` / `*-hover` (nunca
@@ -60,15 +93,15 @@ SEO, schemas JSON-LD, intranet/admin, motor de cálculo, `page-hero.tsx`,
 ### Validación (4/4 en verde)
 | Comando | Resultado |
 |---|---|
-| `npm run lint` | 0 errores (baseline) |
-| `npm run build` | ✓ Compiled successfully — 305/305 páginas |
-| `npm test` | 397/397 (19 suites) |
+| `npm run lint` | 0 errores (baseline) — revalidado tras extensión a páginas internas |
+| `npm run build` | ✓ Compiled successfully — 305/305 páginas — revalidado tras extensión |
+| `npm test` | 397/397 (19 suites) — revalidado tras extensión |
 | `npm run visual:check` | **NO VALIDADO**: el pipeline compara contra producción remota, donde los cambios aún no están desplegados. El baseline existe (`e2e/visual-baselines/`, 18 jun). Verificación visual real requiere deploy previo. |
 
 ### Estado
-`IMPLEMENTADO` y `VALIDADO` (lint/build/test). `visual:check` `NO VALIDADO`
-por limitación del pipeline (requiere deploy). Pendiente de verificación
-visual tras despliegue.
+`IMPLEMENTADO` y `VALIDADO` (lint/build/test), ambas fases (home+componentes y
+extensión a páginas internas). `visual:check` `NO VALIDADO` por limitación del
+pipeline (requiere deploy). Pendiente de verificación visual tras despliegue.
 
 ---
 

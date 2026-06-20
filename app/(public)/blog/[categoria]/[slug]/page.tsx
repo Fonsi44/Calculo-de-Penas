@@ -206,8 +206,8 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
             {/* Author Box */}
             <div className="mt-10 pt-6 border-t border-border/30">
               <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-4">Sobre el autor</p>
-              <div className="flex flex-col sm:flex-row gap-4 p-5 rounded-xl border border-border/30 bg-surface-alt">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
+              <div className="flex flex-col sm:flex-row gap-4 p-5 rounded-lg border border-border/30 bg-surface-alt">
+                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
                 <div className="min-w-0">
                   <p className="font-semibold text-text">{post.author}</p>
                   <p className="text-xs text-text-muted">Abogados en Nacaome, Valle, zona sur de Honduras</p>
@@ -277,7 +277,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <Link
                   key={rp.slug}
                   href={`/blog/${rp.category}/${rp.slug}`}
-                  className="group block rounded-xl border border-border/30 bg-surface overflow-hidden hover:border-accent/30 hover:shadow-md transition-all"
+                  className="group block rounded-lg border border-border/30 bg-surface overflow-hidden hover:border-accent/30 hover:shadow-md transition-all"
                 >
                   <div className="relative h-40 overflow-hidden">
                     {rp.coverImage ? (

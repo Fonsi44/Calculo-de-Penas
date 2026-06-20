@@ -135,7 +135,7 @@ export default async function SolicitarConsultaPage() {
             </Card>
 
             {/* Emergencia */}
-            <div className="p-4 rounded-xl bg-gradient-to-br from-aggravation/10 to-aggravation/5 border border-aggravation/20">
+            <div className="p-4 rounded-lg bg-gradient-to-br from-aggravation/10 to-aggravation/5 border border-aggravation/20">
               <div className="flex items-start gap-3 mb-3">
                 <div className="w-9 h-9 rounded-lg bg-aggravation flex items-center justify-center flex-shrink-0">
                   <AlertTriangle size={18} className="text-white" />
@@ -173,7 +173,7 @@ export default async function SolicitarConsultaPage() {
               </h3>
               <div className="grid grid-cols-2 gap-1.5">
                 {REASONS.map((r) => (
-                  <div key={r} className="flex items-center gap-2 px-2.5 py-2 rounded-md bg-primary/5 text-xs text-text-secondary">
+                  <div key={r} className="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-primary/5 text-xs text-text-secondary">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-dark flex-shrink-0" />
                     {r}
                   </div>
@@ -229,7 +229,7 @@ export default async function SolicitarConsultaPage() {
             </p>
           </div>
           <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            <div className="flex flex-col items-center text-center p-5 rounded-xl bg-surface border border-border/30">
+            <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
               <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
                 <MapPin size={18} />
               </div>
@@ -237,7 +237,7 @@ export default async function SolicitarConsultaPage() {
               <p className="text-sm font-semibold text-text leading-snug">{site.address.line1}</p>
               <p className="text-xs text-text-secondary mt-0.5">{site.address.line2}</p>
             </div>
-            <div className="flex flex-col items-center text-center p-5 rounded-xl bg-surface border border-border/30">
+            <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
               <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center mb-3">
                 <Clock size={18} />
               </div>
@@ -245,7 +245,7 @@ export default async function SolicitarConsultaPage() {
               <p className="text-sm font-semibold text-text leading-snug">Lun–sáb 7:00–20:00</p>
               <p className="text-xs text-text-secondary mt-0.5">Con cita previa</p>
             </div>
-            <div className="flex flex-col items-center text-center p-5 rounded-xl bg-surface border border-border/30">
+            <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
               <div className="w-10 h-10 rounded-lg bg-success/15 text-success flex items-center justify-center mb-3">
                 <Building size={18} />
               </div>
@@ -262,7 +262,7 @@ export default async function SolicitarConsultaPage() {
           <div className="text-center mt-6">
             <Link
               href="/como-llegar"
-              className="btn-shimmer inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+              className="btn-shimmer inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-white text-sm font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors"
             >
               <MapPin size={16} /> Indicaciones para llegar
             </Link>

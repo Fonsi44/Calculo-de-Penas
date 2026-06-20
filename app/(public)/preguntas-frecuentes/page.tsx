@@ -226,7 +226,7 @@ export default async function FaqPage() {
               {cat.preguntas.map((p, i) => (
                 <details
                   key={i}
-                  className={`faq-anim group bg-background rounded-xl border border-border/70 hover:border-accent/40 hover:shadow-md transition-all open:shadow-md open:border-accent/30 card-premium ${borderCls} border-l-[3px]`}
+                  className={`faq-anim group bg-background rounded-lg border border-border/70 hover:border-accent/40 hover:shadow-md transition-all open:shadow-md open:border-accent/30 card-premium ${borderCls} border-l-[3px]`}
                 >
                   <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-sm font-semibold text-text leading-snug hover:text-primary transition-colors">
                     <span className="flex-1 flex items-start gap-3">

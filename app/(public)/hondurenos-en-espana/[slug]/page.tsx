@@ -109,9 +109,9 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {subarea.subservicios.map((s, i) => (
-            <div key={i} className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-4 hover:border-accent/40 transition-colors">
-              <span className="w-10 h-10 rounded-full border-2 border-accent flex items-center justify-center bg-white flex-shrink-0 mt-0.5">
-                <Icon size={16} className="text-accent-dark" />
+            <div key={i} className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5 hover:border-accent/40 transition-colors">
+              <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Icon size={20} className="text-accent-dark" />
               </span>
               <div className="min-w-0 flex-1">
                 <h3 className="font-bold text-sm md:text-base text-primary leading-snug">
@@ -159,7 +159,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
               return (
                 <Link key={r.slug} href={`/hondurenos-en-espana/${r.slug}`} className="group block focus-visible:outline-none">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                    <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                    <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                       <RIcon size={20} aria-hidden="true" />
                     </div>
                     <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
@@ -177,7 +177,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
             })}
             <Link href="/hondurenos-en-espana" className="group block focus-visible:outline-none">
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                   <span className="font-extrabold text-lg">+</span>
                 </div>
                 <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
@@ -225,7 +225,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
             {blogPosts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
+                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3 border border-accent/20">
                     <BookOpen size={20} aria-hidden="true" />
                   </div>
                   <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
@@ -234,7 +234,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                   <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-text-secondary mt-1.5 leading-relaxed line-clamp-2">
+                  <p className="text-sm text-text-secondary mt-2 leading-relaxed line-clamp-2">
                     {post.description}
                   </p>
                   <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">

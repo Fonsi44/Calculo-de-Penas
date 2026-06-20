@@ -123,7 +123,7 @@ export default function ComoLlegarPage() {
                     href={gmapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-primary text-white text-xs font-bold hover:bg-primary-light transition-colors"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-white text-xs font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors"
                   >
                     <Navigation size={14} /> Google Maps
                     <ExternalLink size={11} className="opacity-70" />
@@ -132,14 +132,14 @@ export default function ComoLlegarPage() {
                     href={wazeLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-info text-white text-xs font-bold hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-info text-white text-xs font-bold hover:opacity-90 transition-opacity"
                   >
                     <Car size={14} /> Waze
                     <ExternalLink size={11} className="opacity-70" />
                   </a>
                   <Link
                     href="/solicitar-consulta#formulario"
-                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border-light text-text text-xs font-bold hover:bg-surface-alt"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border-light text-text text-xs font-bold btn-shadow-secondary btn-shadow-secondary-hover hover:bg-surface-alt"
                   >
                     <Phone size={14} /> Pedir indicaciones
                   </Link>
@@ -150,8 +150,8 @@ export default function ComoLlegarPage() {
 
           <Card padding="md" className="h-full bg-surface border-border-light">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0">
-                <MapPin size={18} />
+              <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+                <MapPin size={20} />
               </div>
               <h2 className="font-bold text-base text-text">Dirección</h2>
             </div>
@@ -219,8 +219,8 @@ export default function ComoLlegarPage() {
           {REF_POINTS.map((p) => (
             <Card key={p.name} padding="md" className="h-full">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-md bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0">
-                  <MapPin size={18} />
+                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+                  <MapPin size={20} />
                 </div>
                 <div>
                   <p className="font-bold text-sm text-text leading-tight">{p.name}</p>
@@ -244,8 +244,8 @@ export default function ComoLlegarPage() {
           {FROM_CITIES.map((c) => (
             <Card key={c.from} padding="md" className="h-full">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-md bg-primary text-text-inverse flex items-center justify-center flex-shrink-0">
-                  <Car size={18} />
+                <div className="w-11 h-11 rounded-lg bg-primary text-text-inverse flex items-center justify-center flex-shrink-0">
+                  <Car size={20} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
