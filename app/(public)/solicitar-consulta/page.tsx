@@ -230,24 +230,24 @@ export default async function SolicitarConsultaPage() {
           </div>
           <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
-                <MapPin size={18} />
+              <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3 flex-shrink-0">
+                <MapPin size={20} />
               </div>
               <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Dirección</p>
               <p className="text-sm font-semibold text-text leading-snug">{site.address.line1}</p>
               <p className="text-xs text-text-secondary mt-0.5">{site.address.line2}</p>
             </div>
             <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
-              <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center mb-3">
-                <Clock size={18} />
+              <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3 flex-shrink-0">
+                <Clock size={20} />
               </div>
               <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Horario</p>
               <p className="text-sm font-semibold text-text leading-snug">Lun–sáb 7:00–20:00</p>
               <p className="text-xs text-text-secondary mt-0.5">Con cita previa</p>
             </div>
             <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
-              <div className="w-10 h-10 rounded-lg bg-success/15 text-success flex items-center justify-center mb-3">
-                <Building size={18} />
+              <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3 flex-shrink-0">
+                <Building size={20} />
               </div>
               <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Despacho</p>
               <p className="text-sm font-semibold text-text leading-snug">Pineda y Asociados</p>

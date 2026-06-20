@@ -5,6 +5,81 @@
 
 ---
 
+## Unreleased — Rediseño UI/UX de la home: jerarquía, iconografía unificada y sección de visita premium
+
+Revisión profesional de la maquetación de la página principal para corregir
+problemas de jerarquía visual, imágenes desproporcionadas, iconografía
+inconsistente y secciones redundantes. La home pasa de ~16 a ~11 secciones.
+Validado con `npm run lint && npm run build && npm test` (430 tests, 0 errores).
+
+### Reestructuración de la home (`app/(public)/page.tsx`)
+- **Eliminadas secciones redundantes:**
+  - **REAL QUESTIONS** (6 tarjetas con solo preguntas → enlace a
+    `/preguntas-frecuentes`) duplicaba el bloque FAQ (6 preguntas + respuestas +
+    JSON-LD `FAQPage` apuntando a la misma ruta). Se elimina la versión débil
+    (sin respuestas) y se conserva el FAQ con respuestas + schema.
+  - **CTA BLOG** (bloque independiente bajo `BlogHighlights`) era redundante:
+    `BlogHighlights` ya expone `ctaLabel`/`ctaHref`. Se elimina el bloque suelto.
+  - **Contact Strip** (4 tarjetas de métodos de contacto) + **Ubicación**
+    (tarjeta de dirección + mapa suelto) se fusionan en una sola sección premium
+    "Prefiere vernos en persona" (ver abajo).
+- **WHY US + multidisciplinar fusionados** en una sola `<Section
+  background="warm">`: antes eran dos secciones `warm` consecutivas redundantes.
+  Ahora una sección con un `divider-accent` como separador entre la rejilla de
+  razones (5 tarjetas) y el split 5/7 del equipo multidisciplinar.
+- **Áreas destacadas**: la rejilla pasa de `md:grid-cols-2` con imágenes
+  `aspect-3/2` (imágenes dominantes) a `md:grid-cols-2 lg:grid-cols-4` con
+  `aspect-4/3` (imágenes equilibradas, no abruman el contenido).
+- **BlogHighlights** se mueve bajo las reseñas de Google y recibe
+  `background="muted"` para diferenciarla visualmente.
+
+### Nueva sección premium "Prefiere vernos en persona"
+- Sustituye al antiguo Contact Strip + Ubicación. Layout de dos columnas
+  (`grid lg:grid-cols-2 gap-8 lg:gap-10`):
+  - **Izquierda:** eyebrow "Visítenos" + título serif "Prefiere vernos en
+    persona" + párrafo + lista de 3 datos (Dirección con enlace a
+    `/como-llegar`, Teléfono `tel:`, Horario). Cada ítem con contenedor de icono
+    canon `w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary`.
+    CTAs vía `CTAGroup variant="inline"` (Solicitar consulta dorado + teléfono) +
+    enlace "indicaciones para llegar".
+  - **Derecha:** `Card padding="none"` con `aspect-[4/3]` (móvil) /
+    `lg:aspect-auto lg:flex-1` (desktop) conteniendo `<MapEmbed />`. El mapa
+    deja de estar suelto y queda integrado en una superficie coherente.
+- No se duplica el WhatsApp: `FloatingContactRail` ya lo renderiza globalmente
+  vía `app/(public)/layout.tsx`.
+
+### Iconografía unificada en toda la home (AGENTS.md R16)
+- Contenedor canon aplicado a todos los iconos de las secciones afectadas:
+  `w-11 h-11 rounded-lg` con `border` + `bg-tint` (p.ej.
+  `bg-primary/10 border-primary/15` o `bg-accent/15 border-accent/30`) e icono
+  `size={20}`.
+- **`components/marketing/cta-buttons.tsx` (ContactStrip):** contenedor
+  `w-10 h-10 rounded-md` sin border → `w-11 h-11 rounded-lg bg-primary/10 border
+  border-primary/15 flex-shrink-0`; iconos 18 → 20.
+- **`components/marketing/blog-highlights.tsx`:** contenedor
+  `bg-accent/10 text-accent-dark` → `bg-accent/15 border border-accent/30
+  text-accent-dark flex-shrink-0`. Añadida prop opcional `background`
+  (`'default' | 'muted' | 'primary' | 'accent' | 'warm'`, por defecto
+  `'default'`) pasada a `<Section>` para alinear el fondo con el contexto.
+- **`app/(public)/solicitar-consulta/page.tsx`:** bloque "Prefiere vernos en
+  persona" (3 tarjetas Dirección/Horario/Despacho) con tints mezclados
+  (`bg-primary/10`, `bg-accent/15`, `bg-success/15`), tamaño `w-10 h-10` y sin
+  borders consistentes → unificado a `w-11 h-11 rounded-lg bg-primary/10 border
+  border-primary/15 text-primary`, icono `size={20}`. Coherente con la home.
+
+### CTA final premium (`components/marketing/consultation-cta.tsx`)
+- Reescrito como bloque premium: `card-premium` + `ring-gradient-accent`,
+  eyebrow, título serif `text-balance`, párrafo `text-pretty` con `max-w-xl`, y
+  CTAs duales (Solicitar consulta dorado + teléfono) vía `CTAGroup
+  variant="inline"`. Eliminados los imports `Link`/`ArrowRight` (ahora usa el
+  componente compartido). Coherente con la sección de visita y con
+  `/solicitar-consulta`.
+
+### Validación
+- `npm run lint` → 0 errores.
+- `npm run build` → Compiled successfully, 293/293 páginas estáticas generadas.
+- `npm test` → 430 passed (20 suites).
+
 ## Unreleased — Identidad visual, mapa interactivo y reseñas de Google
 
 Corrección completa de la identidad visual del sitio, el mapa de ubicación y la

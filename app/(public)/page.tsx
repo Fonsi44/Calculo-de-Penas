@@ -21,7 +21,7 @@ import {
 import { site, telHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { GoogleReviews } from '@/components/marketing/google-reviews';
 import { MapEmbed } from '@/components/marketing/map-embed';
@@ -118,15 +118,6 @@ export default async function HomePage() {
   const merged: Record<string, string> = { ...defaults, ...contentMap };
   const t = (k: string): string => merged[k] ?? '';
 
-  const REAL_QUESTIONS = [
-    { q: t('questions.q1'), badge: t('questions.q1_badge') },
-    { q: t('questions.q2'), badge: t('questions.q2_badge') },
-    { q: t('questions.q3'), badge: t('questions.q3_badge') },
-    { q: t('questions.q4'), badge: t('questions.q4_badge') },
-    { q: t('questions.q5'), badge: t('questions.q5_badge') },
-    { q: t('questions.q6'), badge: t('questions.q6_badge') },
-  ];
-
   const PROCESS = [
     { step: 1, title: t('process.step1_title'), desc: t('process.step1_desc') },
     { step: 2, title: t('process.step2_title'), desc: t('process.step2_desc') },
@@ -163,7 +154,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* HERO */}
+      {/* HERO — potente pero equilibrado: texto (7 col) + panel informativo (5 col).
+          Sin imágenes dominantes; capas de fondo no fotográficas (grid + halos). */}
       <section className="relative bg-hero-gradient text-text-inverse overflow-hidden">
         {/* Capas de fondo no fotográficas: grid sutil + halos dorados radiales. */}
         <div className="absolute inset-0 pointer-events-none bg-grid opacity-50" aria-hidden="true" />
@@ -188,7 +180,7 @@ export default async function HomePage() {
               <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-text-inverse text-balance">
                 Defensa penal y asesoría jurídica en Nacaome y Honduras
               </h1>
-              <p className="mt-5 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty">
+              <p className="mt-5 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7">
@@ -201,10 +193,9 @@ export default async function HomePage() {
               </div>
               <CTAGroup variant="inverse" className="mt-8" />
             </div>
-            {/* Bloque visual complementario (lg:col-span-5): equilibra la
-                composición del hero, antes asimétrica (5 columnas vacías).
-                Reutiliza datos verificados (site, áreas), sin inventar
-                métricas (R4). Panel translúcido con textura de la marca. */}
+            {/* Panel visual complementario (lg:col-span-5): equilibra la
+                composición del hero con datos verificados (site, áreas), sin
+                inventar métricas (R4). Panel translúcido con textura de marca. */}
             <div className="hidden lg:block lg:col-span-5">
               <div className="relative rounded-2xl border border-accent/25 bg-primary-dark/40 backdrop-blur-md p-6 shadow-[0_24px_60px_-24px_rgba(6,14,32,0.6)]">
                 <div className="absolute inset-0 pointer-events-none rounded-2xl bg-grid opacity-40" aria-hidden="true" />
@@ -244,95 +235,20 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* TRUST BAR — sellos de autoridad */}
+      {/* TRUST BAR — sellos de autoridad (strip compacto) */}
       <TrustBar background="light" />
 
-      {/* GUIAS DESTACADAS — enlazado interno home→blog.
-          Antes había 0 enlaces a posts desde la home (diagnóstico de
-          indexación docs/indexacion-plan-decision.md). Esta sección
-          resuelve el gap de crawl path: 6 posts estratégicos. */}
-      <BlogHighlights
-        eyebrow="Guías jurídicas destacadas"
-        title="Recursos legales para entender su caso"
-        subtitle="Guías prácticas sobre las consultas más frecuentes de nuestros clientes en derecho penal, laboral, familiar y notarial."
-        ctaLabel="Ver todas las guías del blog"
-        ctaHref="/blog"
-      />
-
-      {/* CTA BLOG — ligero (sin serializar índice de búsqueda).
-          El buscador completo vive en /blog, donde tiene sentido contextual.
-          Quitarlo de la home ahorra ~74 posts en el RSC stream. */}
-      <div className="bg-background py-6 md:py-8">
-        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-          <Link
-            href="/blog"
-            title="Explorar el blog jurídico de Pineda y Asociados — guías de defensa penal y más"
-            className="group block rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-5 shadow-md shadow-accent/5 hover:border-accent/50 transition-colors"
-          >
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="text-sm font-bold text-text leading-snug">
-                  ¿Busca información legal específica?
-                </p>
-                <p className="text-xs text-text-muted mt-1">
-                  Explore nuestro blog jurídico con guías sobre derecho penal, familia, laboral y más.
-                </p>
-              </div>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors flex-shrink-0">
-                Ver blog <ArrowRight size={14} />
-              </span>
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      {/* REAL QUESTIONS */}
-      <Section spacing="md" ariaLabel="Preguntas reales">
-        <SectionHeader
-          eyebrow={t('questions.eyebrow')}
-          title={t('questions.title')}
-          subtitle={t('questions.subtitle')}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {REAL_QUESTIONS.map((item, i) => (
-            <Link
-              key={i}
-              href="/preguntas-frecuentes"
-              title={`Consultar: ${item.q.replace(/<[^>]*>/g, '').substring(0, 60)} — Pineda y Asociados`}
-              className="group block focus-visible:outline-none"
-            >
-              <Card padding="sm" className="h-full card-premium">
-                <div className="flex items-start gap-2.5">
-                  <div className="w-10 h-10 rounded-md bg-primary text-text-inverse flex items-center justify-center text-xs font-extrabold flex-shrink-0 group-hover:bg-accent-dark group-hover:text-primary transition-colors">
-                    {i + 1}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-text leading-snug text-balance">{item.q}</p>
-                    <span className="inline-flex items-center gap-1 mt-1.5 text-xxs font-bold uppercase tracking-wider text-accent-dark">
-                      <span className="w-1 h-1 rounded-full bg-accent" aria-hidden="true" />
-                      {item.badge}
-                    </span>
-                  </div>
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link href="/preguntas-frecuentes" title="Consultar preguntas frecuentes sobre defensa penal y asesoría jurídica en Nacaome" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-            consultar preguntas frecuentes <ArrowRight size={14} />
-          </Link>
-        </div>
-      </Section>
-
-      {/* ÁREAS DESTACADAS */}
+      {/* ÁREAS DESTACADAS — 4 especialidades principales.
+          Grid de 4 columnas en desktop con tarjetas estrechas e imágenes
+          contenidas (aspect 4/3), equilibradas y no dominantes. Antes eran
+          2 columnas con aspect 3/2 = imágenes excesivamente grandes. */}
       <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
         <SectionHeader
           eyebrow="Especialidades principales"
           title={t('specialties.title')}
           subtitle={t('specialties.subtitle')}
         />
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {areasGenerales
             .filter((a) => HIGHLIGHTED_AREAS.includes(a.slug))
             .map((area) => {
@@ -346,7 +262,7 @@ export default async function HomePage() {
                   description={area.resumen}
                   category="services"
                   tone={area.color as PlaceholderTone}
-                  aspect="3/2"
+                  aspect="4/3"
                   priority={area.slug === 'derecho-penal'}
                 />
               );
@@ -354,36 +270,21 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* GOOGLE REVIEWS — reseñas reales verificadas del perfil de Google Business */}
-      <GoogleReviews />
-
-      {/* PROCESS */}
-      <Section spacing="md" ariaLabel="Proceso de atención">
-        <SectionHeader
-          eyebrow="Cómo trabajamos"
-          title={t('process.title')}
-          subtitle={t('process.subtitle')}
-        />
-        <ProcessStepper steps={PROCESS} withConnector />
-      </Section>
-
-      {/* WHY US */}
+      {/* POR QUÉ ELEGIRNOS + VISIÓN MULTIDISCIPLINAR (sección fusionada).
+          Antes eran dos secciones "Por qué..." consecutivas con el mismo
+          fondo warm y tarjetas — se sentían repetitivas. Ahora es una sola
+          sección: 5 razones (grid) + sub-bloque multidisciplinar (split). */}
       <Section background="warm" spacing="md" ariaLabel="Por qué elegirnos" className="relative overflow-hidden">
-        <div className="relative">
-          <SectionHeader
-            eyebrow="Por qué elegirnos"
-            title={t('why_us.title')}
-            subtitle={t('why_us.subtitle')}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 relative">
+        <SectionHeader
+          eyebrow="Por qué elegirnos"
+          title={t('why_us.title')}
+          subtitle={t('why_us.subtitle')}
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {WHY.map((w) => (
-            <div
-              key={w.title}
-              className="card-dark p-5"
-            >
+            <div key={w.title} className="card-dark p-5">
               <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
                   <w.icon size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
@@ -398,138 +299,165 @@ export default async function HomePage() {
             </div>
           ))}
         </div>
-      </Section>
 
-      {/* POR QUÉ MULTIDISCIPLINAR */}
-      <Section background="warm" spacing="md" ariaLabel="Por qué un bufete multidisciplinar">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            <p className="eyebrow-rule text-accent-dark mb-4">
-              {t('multidisciplinary.title')}
-            </p>
-            <p className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
-              {t('multidisciplinary.subtitle')}
-            </p>
-            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
-              {t('multidisciplinary.description')}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
-                <Handshake size={12} /> Estrategia unificada
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
-                <BriefcaseBusiness size={12} /> Un solo expediente
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
-                <Users size={12} /> Equipo coordinado
-              </span>
-            </div>
-            <Link href="/despacho" title="Conozca el bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+        {/* Sub-bloque: visión multidisciplinar dentro de la misma sección */}
+        <div className="mt-10 md:mt-12">
+          <div className="divider-accent mb-8" aria-hidden="true" />
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            <div className="lg:col-span-5">
+              <p className="eyebrow-rule text-accent-dark mb-3">
+                {t('multidisciplinary.title')}
+              </p>
+              <p className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight text-balance">
+                {t('multidisciplinary.subtitle')}
+              </p>
+              <p className="mt-3 text-sm text-text-secondary leading-relaxed text-pretty">
+                {t('multidisciplinary.description')}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
+                  <Handshake size={12} /> Estrategia unificada
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
+                  <BriefcaseBusiness size={12} /> Un solo expediente
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
+                  <Users size={12} /> Equipo coordinado
+                </span>
+              </div>
+              <Link href="/despacho" title="Conozca el bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
                 sobre nuestro bufete <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4 auto-rows-fr">
-            {[
-              {
-                icon: Gavel,
-                title: t('multidisciplinary.combo1_title'),
-                desc: t('multidisciplinary.combo1_desc'),
-              },
-              {
-                icon: Briefcase,
-                title: t('multidisciplinary.combo2_title'),
-                desc: t('multidisciplinary.combo2_desc'),
-              },
-              {
-                icon: Building,
-                title: t('multidisciplinary.combo3_title'),
-                desc: t('multidisciplinary.combo3_desc'),
-              },
-              {
-                icon: Landmark,
-                title: t('multidisciplinary.combo4_title'),
-                desc: t('multidisciplinary.combo4_desc'),
-              },
-            ].map((it) => (
-              <Card key={it.title} padding="sm" className="h-full flex items-center">
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
-                    <it.icon size={20} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+              {[
+                { icon: Gavel, title: t('multidisciplinary.combo1_title'), desc: t('multidisciplinary.combo1_desc') },
+                { icon: Briefcase, title: t('multidisciplinary.combo2_title'), desc: t('multidisciplinary.combo2_desc') },
+                { icon: Building, title: t('multidisciplinary.combo3_title'), desc: t('multidisciplinary.combo3_desc') },
+                { icon: Landmark, title: t('multidisciplinary.combo4_title'), desc: t('multidisciplinary.combo4_desc') },
+              ].map((it) => (
+                <Card key={it.title} padding="sm" className="h-full flex items-center">
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
+                      <it.icon size={20} aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <strong className="font-bold text-sm text-text leading-tight text-balance block">{it.title}</strong>
+                      <p className="text-sm text-text-secondary leading-relaxed mt-1 text-pretty">
+                        {it.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <strong className="font-bold text-sm text-text leading-tight text-balance block">{it.title}</strong>
-                    <p className="text-sm text-text-secondary leading-relaxed mt-1 text-pretty">
-                      {it.desc}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* CONTACT STRIP */}
-      <Section spacing="md" ariaLabel="Canales de contacto">
+      {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}
+      <Section spacing="md" ariaLabel="Proceso de atención">
         <SectionHeader
-          eyebrow="Contáctenos"
-          title="Contáctenos en Nacaome y la zona sur de Honduras"
-          subtitle="Elija el canal que prefiera. Le respondemos en horario hábil y con la confidencialidad que su caso requiere."
+          eyebrow="Cómo trabajamos"
+          title={t('process.title')}
+          subtitle={t('process.subtitle')}
         />
-        <ContactStrip />
+        <ProcessStepper steps={PROCESS} withConnector />
       </Section>
 
-      {/* UBICACIÓN */}
-      <Section background="muted" spacing="md" ariaLabel="Ubicación">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <SectionHeader
-              eyebrow="Dónde estamos"
-              title="Nacaome, Valle — Honduras"
-              subtitle="Visítenos con cita previa. Estaremos encantados de recibirle."
-            />
-            <Card padding="md">
-              <ul className="space-y-3 text-sm">
-                <li className="flex items-start gap-3">
-                  <MapPin size={18} className="text-accent-dark flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold text-text">{site.address.line1}</p>
-                    <p className="text-text-secondary">{site.address.line2}</p>
-                    <p className="text-text-secondary">{site.address.city}, {site.address.department}, {site.address.country}</p>
+      {/* GOOGLE REVIEWS — reseñas reales verificadas del perfil de Google Business */}
+      <GoogleReviews />
+
+      {/* GUÍAS DESTACADAS — enlazado interno home→blog (crawl path).
+          CTA integrado al blog dentro del propio componente; antes existía
+          un bloque CTA BLOG redundante justo debajo, ya eliminado. */}
+      <BlogHighlights
+        background="muted"
+        eyebrow="Guías jurídicas destacadas"
+        title="Recursos legales para entender su caso"
+        subtitle="Guías prácticas sobre las consultas más frecuentes de nuestros clientes en derecho penal, laboral, familiar y notarial."
+        ctaLabel="Ver todas las guías del blog"
+        ctaHref="/blog"
+      />
+
+      {/* PREFIERE VERNOS EN PERSONA — sección de cercanía premium.
+          Sustituye a las antiguas secciones "Contact Strip" + "Ubicación",
+          que estaban separadas y se sentían repetitivas. Ahora es un único
+          bloque humano: mensaje + datos de contacto (iconografía unificada)
+          + CTAs claros + mapa contenido. El rail flotante ya ofrece
+          WhatsApp/teléfono en toda la web, por lo que no se duplica aquí. */}
+      <Section spacing="md" ariaLabel="Visítenos">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+          <div className="flex flex-col">
+            <p className="eyebrow-rule text-accent-dark mb-4">Visítenos</p>
+            <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
+              Prefiere vernos en persona
+            </h2>
+            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed max-w-xl text-pretty">
+              Con cita previa, le recibimos en nuestro despacho de Nacaome con la confidencialidad
+              y el tiempo que su caso merece. Si prefiere no desplazarse, también le atendemos por
+              teléfono o WhatsApp en horario hábil.
+            </p>
+            <ul className="mt-6 space-y-2.5">
+              <li>
+                <Link
+                  href="/como-llegar"
+                  title="Dirección y mapa del bufete Pineda y Asociados en Nacaome, Valle"
+                  className="group flex items-start gap-3.5 rounded-lg p-2 -mx-2 hover:bg-surface transition-colors focus-visible:outline-none"
+                >
+                  <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+                    <MapPin size={20} aria-hidden="true" />
                   </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Phone size={18} className="text-accent-dark flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold text-text">Teléfono</p>
-                    <a href={telHref()} className="text-primary hover:underline tabular-nums">{site.phoneDisplay}</a>
+                  <div className="min-w-0">
+                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Dirección</p>
+                    <p className="text-sm font-semibold text-text leading-snug mt-0.5">{site.address.line1}</p>
+                    <p className="text-xs text-text-secondary mt-0.5">{site.address.line2}</p>
+                    <p className="text-xs text-text-secondary">{site.address.city}, {site.address.department}, {site.address.country}</p>
                   </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Clock size={18} className="text-accent-dark flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold text-text">Horario</p>
-                    <p className="text-text-secondary">{site.hours}</p>
+                </Link>
+              </li>
+              <li>
+                <a
+                  href={telHref()}
+                  title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
+                  className="group flex items-start gap-3.5 rounded-lg p-2 -mx-2 hover:bg-surface transition-colors focus-visible:outline-none"
+                >
+                  <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+                    <Phone size={20} aria-hidden="true" />
                   </div>
-                </li>
-              </ul>
-              <Link href="/como-llegar" title="Indicaciones para llegar al bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark">
-                indicaciones para llegar al bufete <ArrowRight size={14} />
-              </Link>
-            </Card>
+                  <div className="min-w-0">
+                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Teléfono</p>
+                    <p className="text-sm font-semibold text-primary leading-snug mt-0.5 tabular-nums group-hover:text-accent-dark transition-colors">{site.phoneDisplay}</p>
+                  </div>
+                </a>
+              </li>
+              <li className="flex items-start gap-3.5 rounded-lg p-2 -mx-2">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+                  <Clock size={20} aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Horario</p>
+                  <p className="text-sm font-semibold text-text leading-snug mt-0.5">{site.hours}</p>
+                  <p className="text-xs text-text-secondary mt-0.5">Con cita previa</p>
+                </div>
+              </li>
+            </ul>
+            <div className="mt-7">
+              <CTAGroup variant="inline" />
+            </div>
+            <Link href="/como-llegar" title="Indicaciones para llegar al bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+              indicaciones para llegar al bufete <ArrowRight size={14} />
+            </Link>
           </div>
-          <div>
-            <Card padding="none" className="overflow-hidden aspect-[4/3] bg-surface-alt">
+          <div className="flex flex-col">
+            <Card padding="none" className="overflow-hidden aspect-[4/3] lg:aspect-auto lg:flex-1 bg-surface-alt">
               <MapEmbed />
             </Card>
-            <Link href="/como-llegar" title="Dirección y mapa del bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-primary hover:text-accent-dark">
-              cómo llegar a Nacaome <ArrowRight size={12} />
-            </Link>
           </div>
         </div>
       </Section>
 
-      {/* Cobertura regional — enlazado interno a landings locales (SEO local) */}
+      {/* COBERTURA REGIONAL — enlazado interno a landings locales (SEO local) */}
       <Section background="muted" spacing="md" ariaLabel="Cobertura regional">
         <SectionHeader
           eyebrow="Cobertura"
@@ -537,7 +465,7 @@ export default async function HomePage() {
           subtitle="Atendemos en Nacaome, San Lorenzo, Choluteca y la zona sur. Conozca nuestra cobertura por ciudad."
           align="center"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {landingsLocales.map((c) => (
             <Link
               key={c.slug}
@@ -546,7 +474,7 @@ export default async function HomePage() {
               className="group block focus-visible:outline-none"
             >
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
+                <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3">
                   <MapPin size={20} aria-hidden="true" />
                 </div>
                 <h3 className="font-bold text-base text-text leading-tight group-hover:text-primary transition-colors">
@@ -564,7 +492,11 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* FAQ */}
+      {/* PREGUNTAS FRECUENTES — FAQ con schema FAQPage.
+          Se eliminó la sección "Preguntas reales" (grid de 6 preguntas sin
+          respuesta) que duplicaba conceptualmente este bloque y enlazaba a
+          la misma ruta /preguntas-frecuentes. Se conserva el FAQ con
+          respuestas + JSON-LD, que es más útil para el usuario y para SEO. */}
       <Section spacing="md" ariaLabel="Preguntas frecuentes">
         <div className="grid lg:grid-cols-3 gap-8">
           <div>
@@ -599,18 +531,18 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* SOCIAL SHARE */}
+      {/* CTA FINAL — llamada a la acción premium (componente compartido) */}
+      <ConsultationCTA />
+
+      {/* COMPARTIR — strip social compacto */}
       <Section spacing="sm" ariaLabel="Compartir sitio">
         <div className="flex flex-wrap items-center justify-center gap-4">
           <SocialShare />
         </div>
       </Section>
 
-      <ConsultationCTA />
-
       {/* Schema.org JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
     </>
   );
 }
-

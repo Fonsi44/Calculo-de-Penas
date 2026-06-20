@@ -41,6 +41,8 @@ interface BlogHighlightsProps {
   className?: string;
   /** Espaciado del Section. */
   spacing?: 'sm' | 'md' | 'lg';
+  /** Fondo del Section. */
+  background?: 'default' | 'muted' | 'primary' | 'accent' | 'warm';
 }
 
 const DEFAULT_SLUGS = [
@@ -64,6 +66,7 @@ export async function BlogHighlights({
   ctaHref,
   className,
   spacing = 'md',
+  background = 'default',
 }: BlogHighlightsProps) {
   const wantedSlugs = slugs && slugs.length > 0 ? slugs : DEFAULT_SLUGS;
 
@@ -89,7 +92,7 @@ export async function BlogHighlights({
   }
 
   return (
-    <Section spacing={spacing} ariaLabel="Guías destacadas" className={className}>
+    <Section spacing={spacing} background={background} ariaLabel="Guías destacadas" className={className}>
       <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {selected.map((post) => (
@@ -102,7 +105,7 @@ export async function BlogHighlights({
               padding="md"
               className="h-full group-hover:border-accent group-hover:shadow-md transition-all"
             >
-              <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
+              <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center mb-3 flex-shrink-0">
                 <BookOpen size={20} aria-hidden="true" />
               </div>
               <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">

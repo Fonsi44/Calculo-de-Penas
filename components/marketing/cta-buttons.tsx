@@ -140,16 +140,16 @@ interface ContactStripProps {
 
 export function ContactStrip({ variant = 'horizontal', className }: ContactStripProps) {
   const items: { icon: ReactNode; label: string; value: string; href?: string; external?: boolean }[] = [
-    { icon: <Phone size={18} aria-hidden="true" />, label: 'Teléfono', value: site.phoneDisplay, href: telHref() },
+    { icon: <Phone size={20} aria-hidden="true" />, label: 'Teléfono', value: site.phoneDisplay, href: telHref() },
     {
-      icon: <MessageCircle size={18} aria-hidden="true" />,
+      icon: <MessageCircle size={20} aria-hidden="true" />,
       label: 'WhatsApp',
       value: 'Respuesta inmediata',
       href: whatsappHref(DEFAULT_MSG),
       external: true,
     },
-    { icon: <Calendar size={18} aria-hidden="true" />, label: 'Solicitar consulta', value: 'Formulario confidencial', href: '/solicitar-consulta#formulario' },
-    { icon: <MapPin size={18} aria-hidden="true" />, label: 'Visita', value: `${site.address.city}, ${site.address.department}`, href: '/como-llegar' },
+    { icon: <Calendar size={20} aria-hidden="true" />, label: 'Solicitar consulta', value: 'Formulario confidencial', href: '/solicitar-consulta#formulario' },
+    { icon: <MapPin size={20} aria-hidden="true" />, label: 'Visita', value: `${site.address.city}, ${site.address.department}`, href: '/como-llegar' },
   ];
   const gridCls =
     variant === 'stacked'
@@ -160,7 +160,7 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
       {items.map((it) => {
         const inner = (
           <div className="card-premium flex items-start gap-3 p-4 h-full">
-            <div className="w-10 h-10 rounded-md bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15">
+            <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
               {it.icon}
             </div>
             <div className="min-w-0 flex-1">

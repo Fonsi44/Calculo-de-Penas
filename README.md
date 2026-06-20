@@ -229,6 +229,21 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
   pequeñas), sin script de Maps ni JS de cliente. JSON-LD `AggregateRating`
   solo con datos reales de Google. Sin errores de consola ni mensajes técnicos
   al usuario.
+- **Home — maquetación:** arquitectura de ~11 secciones con jerarquía clara
+  (hero → beneficios → servicios → confianza/cercanía → CTA final). Eliminadas
+  redundancias (REAL QUESTIONS duplicaba FAQ; CTA BLOG duplicaba el CTA de
+  `BlogHighlights`; Contact Strip + Ubicación fusionados). WHY US y
+  multidisciplinar fusionados en una sola sección con `divider-accent`. Áreas
+  destacadas en rejilla de 4 columnas con imágenes `aspect-4/3` equilibradas.
+- **Home — sección "Prefiere vernos en persona":** sección premium de dos
+  columnas (datos de contacto con iconos unificados a la izquierda + mapa
+  contenido en `Card` a la derecha) con CTAs claros. Sustituye al Contact Strip
+  + Ubicación sueltos. No duplica WhatsApp (`FloatingContactRail` es global).
+- **Iconografía unificada (AGENTS.md R16):** todos los contenedores de icono de
+  la web pública siguen el canon `w-11 h-11 rounded-lg` con `border` + `bg-tint`
+  e icono `size={20}`. Alineados `ContactStrip`, `BlogHighlights` y el bloque
+  "Prefiere vernos en persona" de `/solicitar-consulta` (antes mezclaban
+  `w-10 h-10 rounded-md`, tints dispares y borders inconsistentes).
 
 ### Blog (`/blog/**`)
 - **Fuente:** DB (tabla `blog_posts`). `data/blog/posts/` está vacío (migrado).
