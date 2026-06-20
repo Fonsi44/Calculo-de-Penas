@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { calculos, casos, delitos } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { getEstadoDelito } from '@/lib/estados-delitos';
 import type { DelitoConfig } from '@/lib/rules/v1/types';
@@ -92,6 +93,7 @@ export async function DELETE(
 ) {
   try {
     const user = requireAuth(request);
+    validateCsrf(request);
     const { id } = await params;
 
     const [calculo] = await db.select({ id: calculos.id, casoId: calculos.casoId })

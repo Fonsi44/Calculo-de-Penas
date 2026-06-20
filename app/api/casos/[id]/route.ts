@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { casos, calculos } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function GET(
@@ -34,6 +35,7 @@ export async function PUT(
 ) {
   try {
     const user = requireAuth(request);
+    validateCsrf(request);
     const { id } = await params;
     const body = await request.json();
 
@@ -75,6 +77,7 @@ export async function DELETE(
 ) {
   try {
     const user = requireAuth(request);
+    validateCsrf(request);
     const { id } = await params;
 
     const [existing] = await db.select({ id: casos.id, usuarioId: casos.usuarioId })

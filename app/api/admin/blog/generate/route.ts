@@ -1,4 +1,5 @@
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit } from '@/lib/rate-limit';
@@ -112,6 +113,7 @@ function getIntro(category: string, topic: string): string {
 export async function POST(request: Request) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
     const body = await request.json();
     const parsed = generateSchema.parse(body);
 

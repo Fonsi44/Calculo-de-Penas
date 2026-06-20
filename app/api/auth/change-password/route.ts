@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { requireAuth, authFailureResponse, verifyPassword, hashPassword } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
@@ -13,6 +14,7 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const auth = requireAuth(request);
+    validateCsrf(request);
     const body = await request.json();
     const { currentPassword, newPassword } = schema.parse(body);
 

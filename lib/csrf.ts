@@ -18,7 +18,14 @@ export function validateCsrf(request: Request): void {
   const origin = request.headers.get('origin');
   const referer = request.headers.get('referer');
 
-  if (!origin && !referer) return;
+  // Endurecimiento (OWASP): toda mutación (POST/PATCH/PUT/DELETE) debe llevar
+  // Origin o Referer. Los navegadores modernos SIEMPRE envían Origin en estas
+  // peticiones. La ausencia de ambas cabeceras en una mutación es sospechosa
+  // y debe rechazarse, no permitirse (fail-closed). Antes este caso se omite
+  // con `return`, lo que abría un bypass CSRF potencial.
+  if (!origin && !referer) {
+    throw new Error('CSRF: petición de mutación sin cabeceras Origin/Referer');
+  }
 
   const source = origin ?? referer!;
   try {

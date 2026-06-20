@@ -2,11 +2,13 @@ import { db } from '@/lib/db';
 import { calculos, casos } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function POST(request: Request) {
   try {
     const user = requireAuth(request);
+    validateCsrf(request);
     let body: unknown;
     try { body = await request.json(); } catch {
       return Response.json({ error: 'JSON inválido' }, { status: 400 });

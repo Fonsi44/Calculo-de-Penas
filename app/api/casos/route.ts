@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { casos, calculos } from '@/lib/schema';
 import { eq, desc, count } from 'drizzle-orm';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function GET(request: Request) {
@@ -30,6 +31,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const user = requireAuth(request);
+    validateCsrf(request);
 
     const body = await request.json();
     const [row] = await db.insert(casos).values({

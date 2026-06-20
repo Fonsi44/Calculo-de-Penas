@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { requireAdmin, authFailureResponse, hashPassword } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { eq, and } from 'drizzle-orm';
 import { logAudit } from '@/lib/audit';
 
@@ -11,6 +12,7 @@ export async function POST(
 ) {
   try {
     const auth = requireAdmin(request);
+    validateCsrf(request);
     const { id } = await params;
 
     if (id === auth.userId) {
