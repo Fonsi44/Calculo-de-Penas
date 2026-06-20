@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Scale, Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
+import Image from 'next/image';
+import { Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 import { LEGAL_DISCLAIMER_SHORT, LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
 
@@ -62,13 +63,18 @@ export function PublicFooter() {
           {/* Identidad */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
-              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center shadow-[0_0_0_1px_rgba(154,122,34,0.45),0_4px_10px_-2px_rgba(212,175,55,0.45)]">
-                <Scale size={20} className="text-primary" strokeWidth={2.4} />
-              </div>
-              <div>
-                <p className="font-extrabold text-sm leading-none">{site.shortName}</p>
-                <p className="text-xxs text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
-              </div>
+              {/* Logo oficial — PNG transparente (741×728, ~cuadrado). Algo mayor
+                  que en el header, sin dominar la columna de identidad. */}
+              <Image
+                src="/images/logo.png"
+                alt={`${site.name} — Logo oficial`}
+                width={741}
+                height={728}
+                className="h-14 sm:h-16 w-auto"
+                style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.4)) drop-shadow(0 0 6px rgba(212,175,55,0.16))', objectFit: 'contain' }}
+                loading="lazy"
+                decoding="async"
+              />
             </Link>
             <p className="text-sm text-text-inverse/80 leading-relaxed text-pretty">
               <strong className="font-semibold text-text-inverse">Bufete jurídico</strong> en {site.address.city}, {site.address.department},
@@ -145,14 +151,22 @@ export function PublicFooter() {
               </h3>
             </div>
             <ul className="space-y-2.5 text-sm">
-              <li className="flex items-start gap-2">
-                <MapPin size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
-                <span className="text-text-inverse/80 leading-relaxed">
-                  {site.address.line1}<br />
-                  {site.address.line2}<br />
-                  {site.address.city}, {site.address.department}<br />
-                  {site.address.country}
-                </span>
+              <li>
+                <a
+                  href={site.googleBusiness}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Abrir ${site.name} en Google Maps`}
+                  className="flex items-start gap-2 group"
+                >
+                  <MapPin size={14} className="text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
+                  <span className="text-text-inverse/80 leading-relaxed transition-colors group-hover:text-accent">
+                    {site.address.line1}<br />
+                    {site.address.line2}<br />
+                    {site.address.city}, {site.address.department}<br />
+                    {site.address.country}
+                  </span>
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={14} className="text-accent flex-shrink-0" aria-hidden="true" />

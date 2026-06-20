@@ -28,7 +28,7 @@ export const LEGAL_DISCLAIMER_SHORT =
  * Única fuente para footer, "Sobre el autor" de posts y /despacho.
  */
 export const FIRM_BIO_SHORT =
-  'Bufete multidisciplinario con sede en Nacaome, Valle, y más de 15 años de ejercicio profesional en la zona sur de Honduras. Defensa penal técnica y asesoría jurídica integral.';
+  'Bufete jurídico con sede en Nacaome, Valle, y más de 15 años de ejercicio profesional en la zona sur de Honduras. Defensa penal técnica y asesoría jurídica integral.';
 
 /**
  * Bio de autoría para el bloque "Sobre el autor" de los posts.

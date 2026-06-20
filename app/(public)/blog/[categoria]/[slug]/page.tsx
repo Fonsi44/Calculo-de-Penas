@@ -212,7 +212,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                   <p className="font-semibold text-text">{post.author}</p>
                   <p className="text-xs text-text-muted">Abogados en Nacaome, Valle, zona sur de Honduras</p>
                   <p className="text-sm text-text-secondary leading-relaxed mt-2">
-                    Bufete multidisciplinario con sede en Nacaome y más de 15 años de experiencia. Abogados
+                    Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
                     colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                   </p>
                   <Link

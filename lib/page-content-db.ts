@@ -488,7 +488,7 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
             { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'El Despacho' },
             { key: 'badge', label: 'Badge', type: 'text', default: 'Multidisciplinar' },
             { key: 'title', label: 'Título', type: 'text', default: 'Compromiso Legal, Rigor Técnico y Visión de Vanguardia' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica. Combinamos solvencia técnica con digitalización de procesos.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Bufete jurídico fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica. Combinamos solvencia técnica con digitalización de procesos.' },
           ],
         },
         {

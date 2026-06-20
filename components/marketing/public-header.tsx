@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Scale, Menu, X, Phone, MessageCircle, Lock, Calendar, ChevronDown } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, Lock, Calendar, ChevronDown } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
 
@@ -73,22 +74,46 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-3.5 flex items-center gap-3">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 py-2.5 md:py-3 flex items-center gap-3">
         <Link
           href="/"
-          className="flex items-center gap-2.5 focus-visible:outline-none"
+          className="group flex items-center gap-2.5 focus-visible:outline-none flex-shrink-0 cursor-pointer"
           aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
-          <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center flex-shrink-0 shadow-[0_0_0_1px_rgba(154,122,34,0.45),0_4px_10px_-2px_rgba(212,175,55,0.45)]">
-            <Scale size={20} className="text-primary" strokeWidth={2.4} />
-          </div>
-          <div className="min-w-0">
-            <p className="font-extrabold text-sm leading-none tracking-wide">{site.shortName}</p>
-            <p className="text-xxs text-accent/90 leading-none mt-1 tracking-wider uppercase">Bufete multidisciplinario</p>
-          </div>
+          {/* Logo oficial — PNG transparente (741×728, ~cuadrado).
+              Altura equilibrada con la barra de navegación (items h-9 = 36px),
+              proporción preservada vía width/height intrínsecos + h-* w-auto.
+              Drop-shadow sutil para contraste sobre fondo navy; sin halo ni
+              escala que provoquen saltos visuales o lo hagan dominar. */}
+          <Image
+            src="/images/logo.png"
+            alt={`${site.name} — Logo oficial`}
+            width={741}
+            height={728}
+            className="relative flex-shrink-0 h-9 sm:h-10 md:h-11 lg:h-12 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
+            style={{
+              filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(212,175,55,0.18))',
+              objectFit: 'contain',
+            }}
+            priority
+            decoding="async"
+          />
+
+          {/* Wordmark — lockup logo + nombre del bufete. Dos líneas para
+              reforzar la marca sin dominar la barra: nombre (serif, blanco)
+              sobre subtítulo (eyebrow dorado). Compacto y responsive; queda
+              junto al logo en móvil y escritorio. */}
+          <span className="flex flex-col leading-tight transition-transform duration-300 ease-out group-hover:scale-105 origin-left">
+            <span className="font-serif font-bold text-text-inverse text-sm sm:text-base whitespace-nowrap">
+              {site.name}
+            </span>
+            <span className="text-xxs sm:text-xs font-semibold tracking-eyebrow text-accent whitespace-nowrap">
+              Bufete Jurídico
+            </span>
+          </span>
         </Link>
 
-        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 ml-6 flex-1">
+        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 ml-2 flex-1">
           {NAV.map((item) => {
             const active = isActive(pathname, item.href);
             return (

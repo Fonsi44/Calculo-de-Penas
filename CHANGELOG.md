@@ -5,7 +5,157 @@
 
 ---
 
-## Unreleased — Auditoría SEO de contenido dinámico del blog (DB Neon)
+## Unreleased — Identidad visual, mapa interactivo y reseñas de Google
+
+Corrección completa de la identidad visual del sitio, el mapa de ubicación y la
+sección de reseñas de Google. Validado con `npm run lint && npm run build && npm test`
+(430 tests, 0 errores).
+
+### Identidad visual — logo oficial (redimensionado)
+- **Reemplazado** `public/images/logo.png` por la versión redimensionada de
+  `docs/imagenes/logo.png` (PNG transparente, **741×728 ~cuadrado**, 294 KB).
+  Antes se servía un asset retrato 1024×1536 (2 MB) que se veía enorme,
+  deformado y desproporcionado. La nueva proporción ~cuadrada permite escalado
+  limpio en cualquier contexto. Se respeta la transparencia con
+  `filter: drop-shadow(...)` para contraste sobre fondos oscuros del
+  header/footer, sin cajas opacas.
+- **Header** (`components/marketing/public-header.tsx`): logo con altura
+  equilibrada con la barra de navegación (`h-9` → `h-12` responsive), proporción
+  preservada vía `width`/`height` intrínsecos (741×728) + `w-auto`, y
+  `object-fit: contain`. Eliminados el halo radial, el `scale-110` y el
+  `translate-y` al hover que provocaban saltos visuales y lo hacían dominar.
+  `priority` para LCP; enlace de marca a la home con `aria-label`.
+- **Footer** (`components/marketing/public-footer.tsx`): mismo logo, algo mayor
+  (`h-14` → `h-16`) sin dominar la columna de identidad; `loading="lazy"`.
+- **Email** (`lib/email.ts`): sustituido "Bufete multidisciplinario" por
+  "Abogados en Nacaome, Valle" en el header del email HTML y el texto plano
+  del auto-respondedor.
+- **JSON-LD** (`lib/site.ts`): actualizadas las referencias `logo` en los
+  schemas `LegalService` y `Organization` para apuntar a
+  `/images/logo.png` (PNG ≥112px, cumple requisitos de Google Rich Results).
+
+### Textos actualizados (marca textual → descripción jurídica)
+- `lib/legal-disclaimer.ts`: `FIRM_BIO_SHORT` cambia "Bufete multidisciplinario" →
+  "Bufete jurídico".
+- `lib/page-content-db.ts`: default del campo `hero.subtitle` actualizado.
+- `data/landings-locales.ts`: descripciones de Nacaome y Choluteca actualizadas.
+- `app/(public)/despacho/page.tsx`: keywords y subtitle default.
+- `app/(public)/servicios-juridicos/page.tsx`: keywords.
+- `app/(public)/aviso-legal/page.tsx`: descripción de actividad.
+- `app/(public)/blog/[categoria]/[slug]/page.tsx`: bio de autor.
+- `lib/site.ts`: keywords por defecto y `serviceType` del schema LegalService.
+
+### Mapa de Google — corrección y fallback
+- **CSP** (`next.config.ts`): añadido `https://www.google.com` a `frame-src`.
+  Antes solo permitía `https://www.openstreetmap.org`, lo que bloqueaba el
+  iframe de Google Maps con el error "Este contenido está bloqueado".
+- **MapEmbed** (`components/marketing/map-embed.tsx`): reescrito como client
+  component con detección de error del iframe. Si el iframe no carga en 8
+  segundos o falla, se muestra un fallback estático con:
+  - Dirección completa del bufete (`<address>` semántico)
+  - Botón "Ver en Google Maps" (`target="_blank" rel="noopener noreferrer"`)
+  - Coordenadas geográficas visibles
+  - Estilo visual coherente con el diseño del sitio
+
+### Reseñas de Google — rediseño sutil + integración server-side
+- **Rediseño completo** (`components/marketing/google-reviews.tsx`): la sección
+  pasa de ser una banda oscura `bg-primary-dark` client-side, visualmente
+  invasiva, a una sección clara y sobria (`bg-page-warm` + `.card-premium`),
+  coherente con las secciones adyacentes. Cabecera discreta ("Opiniones de
+  clientes"), rating medio pequeño, estrellas contenidas (12–13 px) y **3
+  reseñas** visibles en desktop (grid `lg:grid-cols-3`), apiladas en móvil/tablet.
+  Tarjetas compactas: avatar pequeño (iniciales o foto `w-9`), fecha discreta y
+  texto con `line-clamp-4`. Sin carrusel aparatoso, sin tarjetas enormes.
+- **Server component** (sin `'use client'`): las reseñas se obtienen y renderizan
+  en el servidor — sin script de Maps JS API, sin hidratación, sin JS de cliente.
+  Mejora CWV (menos JS, sin script externo pesado) y SEO (reseñas rastreables
+  server-side).
+- **Nueva capa de datos** (`lib/google-reviews.ts`): `getGoogleReviews()`
+  consulta Google Places API (New) v1 (`places.googleapis.com/v1/places/{id}`)
+  con `X-Goog-Api-Key` + `X-Goog-FieldMask`, cache en memoria 1 h e ISR
+  `revalidate=3600`. Si falta la API key o la llamada falla, devuelve un
+  fallback local de 6 reseñas verificadas. Nunca lanza: la sección nunca
+  aparece rota, vacía ni con mensajes técnicos al usuario.
+- **JSON-LD `AggregateRating`**: se emite **solo** cuando los datos provienen
+  de la API real de Google (`source === 'google'`). En fallback local no se
+  emite structured data de reseñas, para evitar penalización por reseñas
+  fabricadas (política de Google sobre self-serving reviews).
+
+### ⚠️ Seguridad — API key de Google Places comprometida (requiere rotación)
+- **Eliminada** del código una **API key de Google Maps/Places hardcodeada**
+  (`AIzaSyB…`) que estaba en `google-reviews.tsx` (client-side, expuesta en el
+  bundle del navegador). Violación de AGENTS.md §3. El código ahora la lee de
+  `GOOGLE_PLACES_API_KEY` (variable de entorno servidor, nunca en el cliente).
+- **Acción humana requerida:** la clave antigua sigue comprometida en el
+  **git history** y debe **rotarse en Google Cloud Console** (APIs y servicios →
+  Credenciales → regenerar/restringir la key). El código no resuelve una clave
+  filtrada en el historial. Reforzar restricciones: limitar a los dominios del
+  despacho y a la API de Places únicamente.
+
+### Seguridad y accesibilidad
+- El logo usa `alt` descriptivo, `width`/`height` para evitar CLS, y
+  `decoding="async"` donde no es crítico.
+- El mapa externo usa `rel="noopener noreferrer"` y `target="_blank"`.
+- Sin dependencias nuevas.
+
+### Wordmark de marca en el header
+- **Header** (`components/marketing/public-header.tsx`): añadido lockup
+  logo + wordmark dentro del `<Link>` de la home. Junto al logo aparece el
+  nombre del despacho en dos líneas: **"Pineda y Asociados"** (serif,
+  `text-text-inverse`) sobre **"Bufete Jurídico"** (eyebrow dorado,
+  `tracking-eyebrow`). Compacto y responsive (`text-sm`/`text-xs` →
+  `text-base` en `sm`); `whitespace-nowrap` para evitar saltos. Refuerza la
+  marca sin dominar la barra de navegación (respeta R5: adición de marca
+  explícita solicitada, no rediseño).
+
+### Dirección del footer enlazada a Google Maps
+- **Footer** (`components/marketing/public-footer.tsx`): la dirección de
+  Contacto (GGJ7+239 / Cuadra y media al este de Hondutel… / Nacaome, Valle /
+  Honduras) ahora es un `<a>` que abre el perfil oficial del despacho en
+  Google Maps (`site.googleBusiness`) en pestaña nueva con
+  `rel="noopener noreferrer"`. Conserva el icono `MapPin` y añade hover sutil
+  (halo `bg-white/5` + escala del icono). `aria-label` descriptivo.
+
+### Favicon e iconos PWA reales (fin del placeholder "LEX")
+- **Nuevos assets generados desde el logo oficial** (`public/images/logo.png`)
+  vía `scripts/gen-favicon.mjs` (dependencia `sharp`, transitive de Next.js):
+  - `app/favicon.ico` — ICO multi-size (16/32/48) con entradas PNG, 4 208 B.
+    Sustituye al `favicon.ico` de 635 B que servía un placeholder genérico.
+  - `public/icon-192.png` / `public/icon-512.png` — iconos PWA (any + maskable).
+  - `public/apple-touch-icon.png` — 180×180, fondo navy opaco (iOS requiere
+    opacidad). Sustituye `icon-192.svg` que mostraba "LEX" sobre balanza.
+  - El logo se monta centrado al 80 % sobre fondo navy `#0B1B3D`
+    (`theme_color` del manifest).
+- **Wiring actualizado**: `app/layout.tsx` (links `apple-touch-icon`,
+  `icon` 192/512 PNG), `public/manifest.json` (iconos 192 + 512 any +
+  512 maskable), `proxy.ts` (lista de públicas + matcher de exclusión),
+  `app/(public)/blog/feed.xml/route.ts` (imagen RSS → `icon-192.png`).
+- **Eliminados** assets fake heredados: `public/favicon.ico` (635 B,
+  duplicado del placeholder) y `public/icon-192.svg` (placeholder "LEX").
+- **Reproducible**: `node scripts/gen-favicon.mjs` regenera todo desde el
+  logo. Sin dependencias nuevas (usa `sharp` ya presente).
+
+### Blog público — error "DATABASE_URL environment variable is required"
+- **Causa raíz**: `lib/blog-db.ts` evaluaba `IS_DB_REACHABLE` como constante
+  de módulo, fijándolo durante el build/prerender. En runtime serverless
+  (Neon) el `Proxy` de `lib/db.ts` lanzaba
+  `"DATABASE_URL environment variable is required at runtime"` al primer
+  acceso, sin `try/catch` que lo capturase → el error burbujeaba al
+  `error.tsx` del blog ("Error inesperado / Algo salió mal").
+- **Fix** (`lib/blog-db.ts`): el guard pasa a función `isDbReachable()`
+  evaluada en **cada llamada** (refleja el entorno real de ejecución, no el
+  del build). Todas las funciones (`getPublishedPosts`, `getPostBySlug`,
+  `getBlogCategories`, `getRelatedPosts`) ahora envuelven la consulta en
+  `try/catch` y degradan a `[]`/`null` con `console.error` en servidor.
+  El blog público renderiza su estado vacío ("Próximamente publicaremos…")
+  o un 404 limpio, **nunca** el error 500 técnico al usuario.
+- **Nota**: si la DB sí está configurada en el despliegue (Vercel env
+  `DATABASE_URL`), el blog funciona con normalidad. Este fix cubre el caso
+  de entornos sin DB (preview, local sin `.env`) para que no rompan la web
+  pública. `lib/faq-db.ts` y `lib/areas-db.ts` conservan su propio guard
+  (no tocados).
+
+---
 
 Finalización de la auditoría SEO técnica sobre el contenido **dinámico** del
 blog (tabla `blog_posts` en Neon), cerrando los pendientes que no podían

@@ -1,136 +1,177 @@
-import { Suspense } from 'react';
 import { Star, ExternalLink } from 'lucide-react';
-import { getPlaceReviews, type GoogleReview } from '@/lib/places';
 import { site } from '@/lib/site';
-import { Card } from '@/components/ui/card';
+import { getGoogleReviews, formatReviewDate, type Review } from '@/lib/google-reviews';
+import { Section } from '@/components/marketing/section';
 
-/* ------------------------------------------------------------------ */
-/*  Skeleton de carga                                                  */
-/* ------------------------------------------------------------------ */
-function ReviewSkeleton() {
+/**
+ * Reseñas de Google Business Profile — sección sutil y compacta.
+ *
+ * Rediseño (Jun 2026): sustituye la implementación anterior, una banda oscura
+ * `bg-primary-dark` client-side que cargaba el script de Maps JS API con una
+ * API key hardcodeada (violación AGENTS.md §3) y resultaba visualmente invasiva.
+ *
+ * Ahora es un **server component**:
+ *  - Obtiene las reseñas en el servidor vía `lib/google-reviews.ts` (Places
+ *    API New v1 con `GOOGLE_PLACES_API_KEY` de entorno, o fallback local).
+ *  - Sin script externo, sin hidratación, sin JS de cliente → mejor rendimiento
+ *    y CWV; las reseñas se renderizan server-side (Google las rastrea).
+ *  - Diseño claro y sobrio (`.card-premium`, fondo cálido `bg-page-warm`),
+ *    coherente con las secciones adyacentes en lugar de un bloque oscuro pegado.
+ *  - JSON-LD `AggregateRating` solo cuando los datos son reales de Google
+ *    (`source === 'google'`): evita penalización por reseñas fabricadas en
+ *    structured data (política de Google sobre self-serving reviews).
+ */
+export async function GoogleReviews() {
+  const data = await getGoogleReviews();
+  // 3 reseñas visibles: fila de 3 en desktop, apiladas en móvil/tablet.
+  const visible = data.reviews.slice(0, 3);
+
   return (
-    <section className="relative py-12 md:py-16 bg-primary-dark text-text-inverse overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none bg-grid opacity-30" aria-hidden="true" />
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="animate-pulse space-y-6">
-          <div className="h-6 w-48 bg-white/10 rounded-lg" />
-          <div className="h-4 w-96 bg-white/10 rounded-lg" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-48 bg-white/5 rounded-lg" />
-            ))}
+    <Section background="warm" spacing="md" ariaLabel="Opiniones de clientes">
+      {/* ── Cabecera discreta ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 md:mb-8">
+        <p className="eyebrow-rule text-accent-dark">Opiniones de clientes</p>
+
+        {/* Rating medio compacto + sello Google */}
+        <div className="flex items-center gap-3">
+          <span className="font-serif font-extrabold text-xl text-primary tabular-nums leading-none">
+            {data.rating.toFixed(1)}
+          </span>
+          <div className="flex flex-col gap-0.5">
+            <div
+              className="flex items-center gap-0.5"
+              role="img"
+              aria-label={`${data.rating.toFixed(1)} de 5 estrellas`}
+            >
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                  key={i}
+                  size={13}
+                  className={
+                    i <= Math.round(data.rating)
+                      ? 'fill-accent text-accent'
+                      : 'fill-border text-border'
+                  }
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <p className="text-xxs text-text-muted tabular-nums">
+              {data.userRatingCount} {data.userRatingCount === 1 ? 'reseña' : 'reseñas'}
+            </p>
           </div>
+
+          <a
+            href={site.googleBusiness}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-border-light bg-surface text-text-secondary text-xxs font-semibold hover:text-primary hover:border-accent/40 transition-colors"
+          >
+            <GoogleIcon className="w-3.5 h-3.5" />
+            Ver en Google
+            <ExternalLink size={11} className="opacity-60" />
+          </a>
         </div>
       </div>
-    </section>
+
+      {/* ── Grid compacto de reseñas ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {visible.map((review, idx) => (
+          <ReviewCard key={`${review.authorName}-${idx}`} review={review} />
+        ))}
+      </div>
+
+      {/* ── JSON-LD de reseñas: solo con datos reales de Google ── */}
+      {data.source === 'google' && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'AggregateRating',
+              itemReviewed: { '@type': 'LegalService', name: site.name },
+              ratingValue: data.rating,
+              reviewCount: data.userRatingCount,
+              bestRating: 5,
+              worstRating: 1,
+            }),
+          }}
+        />
+      )}
+    </Section>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Estrella individual                                                */
-/* ------------------------------------------------------------------ */
-function StarIcon({ filled }: { filled: boolean }) {
-  return (
-    <Star
-      size={14}
-      className={
-        filled
-          ? 'fill-accent text-accent'
-          : 'fill-white/15 text-white/15'
-      }
-      aria-hidden="true"
-    />
-  );
-}
+/* ================================================================== */
+/*  Tarjeta de reseña individual — compacta y sobria                   */
+/* ================================================================== */
+function ReviewCard({ review }: { review: Review }) {
+  const displayDate = formatReviewDate(review.publishTime) || review.relativeTime;
+  const initials = review.authorName
+    .split(' ')
+    .map((n) => n.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join('');
 
-/* ------------------------------------------------------------------ */
-/*  Estrellas de puntuación                                            */
-/* ------------------------------------------------------------------ */
-function StarRating({ rating }: { rating: number }) {
-  const clamped = Math.max(0, Math.min(5, rating));
-  const full = Math.floor(clamped);
-  const fraction = clamped - full;
   return (
-    <div className="flex items-center gap-0.5" role="img" aria-label={`${rating.toFixed(1)} de 5 estrellas`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <StarIcon key={i} filled={i < full || (i === full && fraction >= 0.5)} />
-      ))}
+    <div className="card-premium p-4 sm:p-5 flex flex-col h-full">
+      {/* Estrellas pequeñas */}
+      <div
+        className="flex items-center gap-0.5 mb-2.5"
+        role="img"
+        aria-label={`${review.rating} de 5 estrellas`}
+      >
+        {[1, 2, 3, 4, 5].map((i) => (
+          <Star
+            key={i}
+            size={12}
+            className={
+              i <= review.rating ? 'fill-accent text-accent' : 'fill-border text-border'
+            }
+            aria-hidden="true"
+          />
+        ))}
+      </div>
+
+      {/* Texto de la reseña — extracto elegante */}
+      {review.text && (
+        <p className="text-sm text-text-secondary leading-relaxed text-pretty flex-1 line-clamp-4">
+          &ldquo;{review.text}&rdquo;
+        </p>
+      )}
+
+      {/* Autor — avatar pequeño + nombre + fecha discreta */}
+      <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-border-light">
+        {review.profilePhoto ? (
+          <div className="w-9 h-9 rounded-full overflow-hidden border border-border-light flex-shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={review.profilePhoto}
+              alt={review.authorName}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        ) : (
+          <div className="w-9 h-9 rounded-full bg-primary/8 text-primary border border-primary/15 flex items-center justify-center flex-shrink-0 text-xs font-extrabold">
+            {initials}
+          </div>
+        )}
+        <div className="min-w-0">
+          <p className="font-bold text-sm text-text leading-tight truncate">
+            {review.authorName}
+          </p>
+          <p className="text-xxs text-text-muted mt-0.5">{displayDate}</p>
+        </div>
+      </div>
     </div>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Tarjeta de review individual                                       */
-/* ------------------------------------------------------------------ */
-function formatReviewDate(publishTime: string): string {
-  try {
-    const date = new Date(publishTime);
-    return date.toLocaleDateString('es-HN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  } catch {
-    return '';
-  }
-}
-
-function ReviewCard({ review }: { review: GoogleReview }) {
-  const displayDate = formatReviewDate(review.publishTime);
-  return (
-    <Card padding="md" className="h-full flex flex-col">
-      {/* Header: avatar + nombre + fecha */}
-      <div className="flex items-center gap-3 mb-3">
-        {/* Avatar circular con inicial o foto */}
-        <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center flex-shrink-0 overflow-hidden">
-          {review.profilePhoto ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={review.profilePhoto}
-              alt={`Foto de ${review.authorName}`}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          ) : (
-            <span className="text-xs font-bold text-accent-dark">
-              {review.authorName.charAt(0).toUpperCase()}
-            </span>
-          )}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="font-bold text-sm text-text leading-tight truncate">
-            {review.authorName}
-          </p>
-          <p className="text-xxs font-bold uppercase tracking-wider text-text-muted mt-0.5">
-            {displayDate || review.relativeTime || 'Google Review'}
-          </p>
-        </div>
-      </div>
-
-      {/* Estrellas */}
-      <StarRating rating={review.rating} />
-
-      {/* Texto de la reseña */}
-      {review.text && (
-        <p className="text-sm text-text-secondary leading-relaxed text-pretty mt-3 flex-1 line-clamp-4">
-          {review.text}
-        </p>
-      )}
-
-      {/* Footer: sello Google */}
-      <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-border-light">
-        <GoogleIcon className="w-3.5 h-3.5 flex-shrink-0" />
-        <span className="text-xxs font-bold uppercase tracking-wider text-text-muted">
-          Google
-        </span>
-      </div>
-    </Card>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Icono de Google (SVG)                                              */
-/* ------------------------------------------------------------------ */
+/* ================================================================== */
+/*  Icono de Google (SVG inline, sin dependencias)                     */
+/* ================================================================== */
 function GoogleIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
@@ -151,99 +192,5 @@ function GoogleIcon({ className }: { className?: string }) {
         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
       />
     </svg>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Contenido principal (carga asíncrona)                              */
-/* ------------------------------------------------------------------ */
-async function GoogleReviewsContent() {
-  const data = await getPlaceReviews();
-
-  // Si no hay API Key o falló, no renderizamos nada (fallo silencioso en prod)
-  if (!data) return null;
-
-  // Mostrar hasta 5 reseñas
-  const displayed = data.reviews.slice(0, 5);
-
-  return (
-    <section className="relative py-12 md:py-16 bg-primary-dark text-text-inverse overflow-hidden">
-      {/* Capas decorativas (como testimonials-section) */}
-      <div className="absolute inset-0 pointer-events-none bg-grid opacity-30" aria-hidden="true" />
-      <div className="absolute inset-0 opacity-25 pointer-events-none bg-radial-testimonials" aria-hidden="true" />
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true" />
-      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true" />
-
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <header className="max-w-3xl mb-8 md:mb-10">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <span className="w-8 h-px bg-accent" aria-hidden="true" />
-            <p className="text-xxs font-bold uppercase tracking-[0.18em] text-accent">
-              Reseñas verificadas
-            </p>
-          </div>
-
-          {/* Bloque de calificación general */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-2">
-            <div className="flex items-center gap-3">
-              <span className="font-serif font-extrabold text-5xl leading-none text-accent tabular-nums">
-                {data.rating.toFixed(1)}
-              </span>
-              <div className="flex flex-col gap-0.5">
-                <StarRating rating={data.rating} />
-                <p className="text-xs text-text-inverse/75">
-                  <span className="font-bold tabular-nums">{data.userRatingCount}</span>{' '}
-                  {data.userRatingCount === 1 ? 'reseña' : 'reseñas'} en Google
-                </p>
-              </div>
-            </div>
-
-            <a
-              href={site.googleBusiness}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 transition-colors"
-            >
-              <GoogleIcon className="w-4 h-4" />
-              Ver en Google
-              <ExternalLink size={11} className="opacity-70" />
-            </a>
-          </div>
-        </header>
-
-        {/* Grid de reseñas */}
-        {displayed.length > 0 ? (
-          <div
-            className={
-              displayed.length === 1
-                ? 'max-w-md'
-                : displayed.length === 2
-                  ? 'grid sm:grid-cols-2 gap-5 md:gap-6'
-                  : 'grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6'
-            }
-          >
-            {displayed.map((review, idx) => (
-              <ReviewCard key={`${review.authorName}-${idx}`} review={review} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm text-text-inverse/60 italic">
-            Aún no hay reseñas en Google. ¡Sé el primero en dejar una!
-          </p>
-        )}
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Componente público con Suspense                                    */
-/* ------------------------------------------------------------------ */
-export function GoogleReviews() {
-  return (
-    <Suspense fallback={<ReviewSkeleton />}>
-      <GoogleReviewsContent />
-    </Suspense>
   );
 }

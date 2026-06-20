@@ -52,7 +52,7 @@ export const site = {
     'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete multidisciplinario sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
+      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   phoneDisplay: '+504 9536-3724',
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
@@ -190,9 +190,8 @@ export function legalServiceSchema() {
     // Si en el futuro se quiere exponer, descomentar: email: site.email,
     description: site.description,
     image: `${site.url}/og-image.webp`,
-    // logo: se referencia og-image.webp (1200x630, ya existe) porque NO hay
-    // /logo.png en /public. Google Rich Results exige PNG/JPG/GIF/WebP ≥112px.
-    logo: `${site.url}/og-image.webp`,
+    // Logo oficial del bufete (PNG transparente, 741×728 ~cuadrado, sin fondo)
+    logo: `${site.url}/images/logo.png`,
     priceRange: '$$',
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     currenciesAccepted: 'HNL, USD',
@@ -222,7 +221,7 @@ export function legalServiceSchema() {
     })),
     knowsLanguage: ['es-HN', 'es-ES'],
     serviceType:
-      'Bufete multidisciplinar — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
+      'Bufete jurídico — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
     knowsAbout: KNOWS_ABOUT,
     ...(site.social.facebook || site.social.instagram || site.social.tiktok || site.social.x || site.googleBusiness
       ? {
@@ -277,11 +276,10 @@ export function organizationSchema() {
     name: site.name,
     legalName: site.name,
     url: site.url,
-    // logo: og-image.webp (no existe /logo.png en /public — ver nota en legalServiceSchema).
-    logo: `${site.url}/og-image.webp`,
-    // image: necesaria para el Knowledge Graph de Google junto a `logo`.
-    // Reutilizamos og-image.webp (1200x630) por no existir un logotipo cuadrado
-    // dedicado en /public. Si se añade /logo.png (≥112px), referenciarlo aquí.
+    // Logo oficial (PNG transparente, ≥112px para Google Rich Results)
+    logo: `${site.url}/images/logo.png`,
+    // Imagen para Knowledge Graph de Google. Reutilizamos og-image.webp (1200x630)
+    // como imagen representativa del sitio.
     image: `${site.url}/og-image.webp`,
     // foundingDate: "~2010" refleja "más de 15 años de ejercicio profesional"
     // declarado en la home (auditoría 2026). Reemplazar por año exacto si se conoce.

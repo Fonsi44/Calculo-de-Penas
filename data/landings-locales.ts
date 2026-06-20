@@ -65,7 +65,7 @@ export const landingsLocales: LandingLocal[] = [
     heroEyebrow: 'Sede principal · Valle, Honduras',
     heroTitle: 'Abogados en Nacaome, Valle',
     heroSubtitle:
-      'Bufete multidisciplinario con sede en Nacaome. Más de 15 años de ejercicio profesional en la zona sur de Honduras, con defensa penal técnica y asesoría jurídica integral.',
+      'Bufete jurídico con sede en Nacaome. Más de 15 años de ejercicio profesional en la zona sur de Honduras, con defensa penal técnica y asesoría jurídica integral.',
     intro:
       'Nacaome, cabecera del departamento de Valle, concentra gran parte de la actividad judicial y comercial del sur de Honduras. Nuestra sede está ubicada en el centro de la ciudad, cuadra y media al este de Hondutel, contiguo a la Clínica Dental Dra. Andara. Atendemos particulares, familias y empresas de Nacaome, San Lorenzo, Amapala y toda la zona sur.',
     servicios: [
@@ -131,7 +131,7 @@ export const landingsLocales: LandingLocal[] = [
     heroEyebrow: 'Zona sur · Choluteca, Honduras',
     heroTitle: 'Abogados en Choluteca',
     heroSubtitle:
-      'Atendemos a clientes de Choluteca y el sur de Honduras en defensa penal, derecho de familia, laboral, mercantil y aduanero, con el respaldo de un bufete multidisciplinario de la región.',
+      'Atendemos a clientes de Choluteca y el sur de Honduras en defensa penal, derecho de familia, laboral, mercantil y aduanero, con el respaldo de un bufete jurídico de la región.',
     intro:
       'Choluteca es la ciudad más poblada del sur de Honduras y un centro comercial y aduanero clave por su cercanía con la frontera de Nicaragua. Atendemos casos de clientes de Choluteca, Marcovia, San Marcos de Colón y el corredor de la Carretera Panamericana, coordinando audiencias y diligencias ante los juzgados de la región.',
     servicios: [

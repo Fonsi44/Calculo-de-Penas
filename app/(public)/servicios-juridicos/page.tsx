@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: { absolute: `Abogados en ${site.address.city} — Todas las Áreas del Derecho` },
   description: `Abogados en Nacaome, Valle para derecho penal, familia, laboral, civil, mercantil y tributario. Cobertura en San Lorenzo y Choluteca. Primera consulta por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/servicios-juridicos' },
-  keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete multidisciplinario Nacaome'],
+  keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
   twitter: {
     card: 'summary_large_image',
     title: `Abogados en ${site.address.city} — Todas las Áreas del Derecho`,

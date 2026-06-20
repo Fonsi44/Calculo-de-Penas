@@ -50,7 +50,7 @@ export async function GET() {
     <lastBuildDate>${rfc822(now.toISOString())}</lastBuildDate>
     <atom:link href="${esc(siteUrl)}/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
-      <url>${esc(siteUrl)}/icon-192.svg</url>
+      <url>${esc(siteUrl)}/icon-192.png</url>
       <title>${esc(site.name)} — Blog Jurídico</title>
       <link>${esc(siteUrl)}/blog</link>
     </image>

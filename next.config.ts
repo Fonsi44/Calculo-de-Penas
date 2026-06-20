@@ -12,7 +12,7 @@ const csp = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://*.tile.openstreetmap.org https://*.openstreetmap.org",
-  "frame-src 'self' https://www.openstreetmap.org",
+  "frame-src 'self' https://www.openstreetmap.org https://www.google.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",

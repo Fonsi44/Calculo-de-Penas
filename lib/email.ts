@@ -279,7 +279,7 @@ function buildAutoReplyHtml(payload: AutoReplyPayload): string {
                 <td style="padding-left:14px;text-align:left;">
                   <span style="font-size:18px;font-weight:800;color:#FFFFFF;letter-spacing:-0.3px;font-family:Cormorant Garamond,Georgia,'Times New Roman',serif;">Pineda y Asociados</span>
                   <br>
-                  <span style="font-size:10px;font-weight:600;color:#D4AF37;letter-spacing:4px;text-transform:uppercase;">Bufete multidisciplinario</span>
+                  <span style="font-size:10px;font-weight:600;color:#D4AF37;letter-spacing:4px;text-transform:uppercase;">Abogados en Nacaome, Valle</span>
                 </td>
               </tr>
             </table>
@@ -378,7 +378,7 @@ function buildAutoReplyHtml(payload: AutoReplyPayload): string {
 function buildAutoReplyText(payload: AutoReplyPayload): string {
   const tipoTexto = payload.tipo === 'consulta' ? 'solicitud de consulta' : 'mensaje';
   const lines = [
-    `PINEDA Y ASOCIADOS — Bufete multidisciplinario`,
+    `PINEDA Y ASOCIADOS — Abogados en Nacaome, Valle`,
     ``,
     `Hemos recibido su ${tipoTexto}`,
     ``,

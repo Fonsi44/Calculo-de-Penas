@@ -137,6 +137,14 @@ npm run validate:dates
 npm run content:audit
 ```
 
+### Blog público muestra "Error inesperado / DATABASE_URL required"
+El blog (`lib/blog-db.ts`) degrada a estado vacío/404 limpio si la DB no está
+alcanzable (sin `DATABASE_URL` o fallo de conexión) — nunca error 500. Pero el
+contenido real solo aparece cuando `DATABASE_URL` (Neon) está configurada en el
+**entorno de ejecución** (Vercel Project Settings → Environment Variables), no
+solo en build. Si el blog sale vacío en producción, verifica que la variable
+esté definida en el entorno de deploy (Production/Preview) y re-deploy.
+
 ### Build falla por TypeScript tras tocar `scripts/`
 Desde la Fase HQC, `scripts/` (excepto `scripts/legacy/`) está incluido en el
 typecheck. Si añades un script nuevo, asegúrate de que pasa `npx tsc --noEmit`.
@@ -192,6 +200,35 @@ Páginas: home, despacho, servicios-jurídicos (13 áreas), derecho-penal (hub),
 hondureños-en-espana, blog, FAQ, contacto, páginas legales, landings SEO local
 (abogados-en-*). Server Components por defecto; solo header, buscador y
 FloatingContactRail son client components. ISR con `revalidate = 3600`.
+
+- **Logo oficial:** `public/images/logo.png` (PNG transparente, 741×728
+  ~cuadrado). Usado en header, footer y JSON-LD (Organization/LegalService).
+  Proporción preservada con `width`/`height` intrínsecos + `w-auto` +
+  `object-fit: contain`; sin fondo blanco, `drop-shadow` sutil para contraste
+  sobre fondos oscuros. Tamaños por contexto: header `h-9`–`h-12` (equilibrado
+  con la nav), footer `h-14`–`h-16`.
+- **Wordmark del header:** junto al logo, lockup de marca en dos líneas —
+  "Pineda y Asociados" (serif) sobre "Bufete Jurídico" (eyebrow dorado).
+- **Favicon e iconos PWA:** generados desde el logo oficial vía
+  `node scripts/gen-favicon.mjs` (usa `sharp`). `app/favicon.ico` (ICO
+  multi-size 16/32/48), `public/icon-192.png` + `public/icon-512.png`
+  (manifest, any + maskable) y `public/apple-touch-icon.png` (180×180, fondo
+  navy). Reproducible: regenerar tras cambiar el logo. Ya no se usa el
+  placeholder "LEX" anterior.
+- **Footer — dirección enlazada:** la dirección de Contacto abre el perfil
+  oficial del despacho en Google Maps (`site.googleBusiness`, pestaña nueva,
+  `rel="noopener noreferrer"`).
+- **Mapa:** iframe de Google Maps con fallback estático (dirección + botón
+  "Ver en Google Maps") si el iframe no carga. CSP ajustado para permitir
+  `frame-src https://www.google.com`.
+- **Reseñas:** sección `GoogleReviews` — **server component** que obtiene las
+  reseñas en servidor vía `lib/google-reviews.ts` (Google Places API New v1 con
+  `GOOGLE_PLACES_API_KEY` de entorno, cache 1 h + ISR) y, si no hay clave o
+  falla la llamada, usa un fallback local de 6 reseñas verificadas. Diseño sutil
+  y compacto (fondo cálido, `.card-premium`, 3 reseñas en desktop, estrellas
+  pequeñas), sin script de Maps ni JS de cliente. JSON-LD `AggregateRating`
+  solo con datos reales de Google. Sin errores de consola ni mensajes técnicos
+  al usuario.
 
 ### Blog (`/blog/**`)
 - **Fuente:** DB (tabla `blog_posts`). `data/blog/posts/` está vacío (migrado).
@@ -475,10 +512,15 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 1. **Rotar OAuth Client Secret en GCP Console** (el código se limpió en
    Release 81 `57db930`, pero el valor antiguo sigue comprometido en git
    history y debe rotarse en GCP).
-2. **Configurar `RESEND_WEBHOOK_SECRET`** en Vercel (sin él, `/api/email/inbound`
+2. **Rotar la API key de Google Places** (el código se limpió — antes estaba
+   hardcodeada en `google-reviews.tsx` y expuesta en el bundle del navegador;
+   ahora se lee de `GOOGLE_PLACES_API_KEY` de entorno). La clave antigua sigue
+   comprometida en git history y debe regenerarse/restringirse en Google Cloud
+   Console (Credenciales → Places API únicamente + restricción de dominios).
+3. **Configurar `RESEND_WEBHOOK_SECRET`** en Vercel (sin él, `/api/email/inbound`
    responde 503 en producción).
-3. **Revisar los 71 posts** con revisión trimestral vencida.
-4. **Reescribir los 49 posts thin** (ver `docs/plan-reescritura-blog.md`).
+4. **Revisar los 71 posts** con revisión trimestral vencida.
+5. **Reescribir los 49 posts thin** (ver `docs/plan-reescritura-blog.md`).
 
 ### Externos
 - **Verificar dominio en Bing Webmaster Tools** (causa del 0% indexación

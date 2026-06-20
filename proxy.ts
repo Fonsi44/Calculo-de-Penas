@@ -38,7 +38,9 @@ const PUBLIC_PAGE_EXACT = new Set<string>([
   '/robots.txt',
   '/sitemap.xml',
   '/manifest.json',
-  '/icon-192.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
   '/favicon.ico',
   '/terminos',
   '/aviso-legal',
@@ -183,6 +185,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|manifest.json|icon-192.svg|images/|BingSiteAuth\\.xml|.*\\.txt).*)',
+    '/((?!_next/static|_next/image|favicon.ico|manifest.json|icon-192\\.png|icon-512\\.png|apple-touch-icon\\.png|images/|BingSiteAuth\\.xml|.*\\.txt).*)',
   ],
 };

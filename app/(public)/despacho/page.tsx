@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   title: { absolute: `Bufete de Abogados en ${site.address.city}, ${site.address.department}` },
   description: `Abogados en Nacaome, Valle con más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/despacho' },
-  keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete multidisciplinario Nacaome'],
+  keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome'],
   twitter: {
     card: 'summary_large_image',
     title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,
@@ -48,7 +48,7 @@ function despachoContent(content: Record<string, string>) {
       eyebrow: content['hero.eyebrow'] || 'El Despacho',
       badge: content['hero.badge'] || 'Multidisciplinar',
       title: content['hero.title'] || 'Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visión de Vanguardia',
-      subtitle: content['hero.subtitle'] || `${site.name} es un bufete multidisciplinario fundado sobre los pilares del rigor metodológico, la confidencialidad absoluta y la excelencia jurídica. Nos especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito penal como en las distintas ramas del derecho empresarial y privado. Nuestro enfoque combina una sólida solvencia técnica con la digitalización de procesos, garantizando a cada cliente un respaldo legal robusto, transparente y de alto nivel en un entorno global.`,
+      subtitle: content['hero.subtitle'] || `${site.name} es un bufete jurídico fundado sobre los pilares del rigor metodológico, la confidencialidad absoluta y la excelencia jurídica. Nos especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito penal como en las distintas ramas del derecho empresarial y privado. Nuestro enfoque combina una sólida solvencia técnica con la digitalización de procesos, garantizando a cada cliente un respaldo legal robusto, transparente y de alto nivel en un entorno global.`,
     },
     mision: {
       title: content['mision_vision.mision_title'] || 'Defender con técnica, servir con humanidad',
