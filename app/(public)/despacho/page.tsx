@@ -252,11 +252,11 @@ export default async function DespachoPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {c.values.items.map((v) => (
             <Card key={v.title} padding="md" className="h-full card-premium">
-              <div className="flex items-start gap-3">
+              <div className="flex flex-col items-center justify-center text-center h-full gap-3">
                 <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
                   <v.icon size={20} aria-hidden="true" />
                 </div>
-                <div className="min-w-0">
+                <div>
                   <h3 className="font-bold text-sm text-text leading-tight text-balance">{v.title}</h3>
                   <p className="text-sm text-text-secondary mt-1.5 leading-relaxed text-pretty">{v.desc}</p>
                 </div>
