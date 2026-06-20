@@ -120,10 +120,32 @@ describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
     expect(wildcardRule).toBeDefined();
     const disallow = asArray(wildcardRule?.disallow);
     expect(disallow, '/_next/ NO debe bloquearse').not.toContain('/_next/');
+    expect(disallow, '/_next/static/ NO debe bloquearse').not.toContain('/_next/static/');
+    expect(disallow, '/_next/image NO debe bloquearse').not.toContain('/_next/image');
   });
 
-  it('la regla * NO bloquea rutas públicas (allow: /)', () => {
-    expect(wildcardRule?.allow).toEqual('/');
+  it('la regla * PERMITE explícitamente /_next/, /_next/image, /images/, /fonts/ y assets por tipo', () => {
+    // Corrección GSC (Jun 2026): el tester de robots.txt de Google Search
+    // Console reportaba "recurso bloqueado por robots.txt" para 29/29 assets
+    // de la home (JS/CSS en /_next/static/chunks, fuentes .woff2 en
+    // /_next/static/media, imágenes en /_next/image). Se añaden `Allow`
+    // explícitos para que cada recurso individual quede marcado como
+    // permitido y Google re-fetchee robots.txt + re-renderice la página.
+    expect(wildcardRule).toBeDefined();
+    const allow = asArray(wildcardRule?.allow);
+    // Rastreo general
+    expect(allow, 'debe permitir la raíz').toContain('/');
+    // Assets críticos de Next.js (JS, CSS, chunks, _next/image, fuentes next/font)
+    expect(allow, 'debe permitir /_next/').toContain('/_next/');
+    expect(allow, 'debe permitir /_next/static/').toContain('/_next/static/');
+    expect(allow, 'debe permitir /_next/image').toContain('/_next/image');
+    // Imágenes y fuentes públicas
+    expect(allow, 'debe permitir /images/').toContain('/images/');
+    expect(allow, 'debe permitir /fonts/').toContain('/fonts/');
+    // Permisos por tipo de archivo (marcan cada recurso individual como permitido)
+    for (const pattern of ['/*.js$', '/*.css$', '/*.woff2$', '/*.png$', '/*.webp$', '/*.svg$']) {
+      expect(allow, `debe permitir ${pattern}`).toContain(pattern);
+    }
   });
 
   it('bloquea bots de IA (GPTBot, ClaudeBot, PerplexityBot, CCBot)', () => {

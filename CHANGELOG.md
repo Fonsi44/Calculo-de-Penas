@@ -5,6 +5,73 @@
 
 ---
 
+## Unreleased — SEO: corrección de bloqueo de rastreo de recursos Next.js en robots.txt (GSC)
+
+Google Search Console reportaba "No se puede cargar el recurso: bloqueado por
+robots.txt" para **29/29 recursos** de la home (`/_next/static/chunks/*.js`,
+CSS, fuentes `.woff2` en `/_next/static/media/` e imágenes en
+`/_next/image?url=...`), impidiendo a Googlebot renderizar la página y evaluar
+el contenido visual. Corregido con `Allow` explícitos en `robots.txt`.
+Validado con `npm run lint && npm run build && npm test` (430 tests, 0 errores).
+
+### Diagnóstico
+- **Causa raíz:** el `robots.txt` de producción (`app/robots.ts`, rama
+  `site.noindex=false`) NO contenía un `Disallow: /_next` explícito — `/_next/`
+  quedaba técnicamente permitido por el `Allow: /` genérico. El informe de GSC
+  era un **estado establo**: Google había cacheado un `robots.txt` de una
+  versión anterior (fase `NEXT_PUBLIC_NOINDEX=true`, que emite `Disallow: /`
+  para `*`) en su último render y no lo había re-fetcheado.
+- **Proxy** (`proxy.ts`): el matcher **ya excluye** `_next/static|_next/image`
+  (no los bloquea). Sin cambios.
+- **Headers** (`next.config.ts`): los assets estáticos solo reciben
+  `Cache-Control: public, immutable`; la regla default aplica
+  `X-Robots-Tag: index, follow` (sin `noindex`). Sin cambios.
+- **Assets reales:** verificadas 16 imágenes en `/public/images/services/`,
+  7 en `/penal/`, 6 en `/corporate/`, 179 covers en `/blog/`. Sin referencias
+  rotas ni problemas de mayúsculas/minúsculas. Las fuentes se autohospedan vía
+  `next/font` bajo `/_next/static/media/` (cubiertas por `Allow: /_next/`).
+
+### Cambios aplicados
+- **`app/robots.ts`** (rama producción): el `allow: '/'` pasa a ser un array
+  con `Allow` explícitos para que el tester de robots.txt de GSC marque cada
+  recurso individual como permitido:
+  - `/_next/`, `/_next/static/`, `/_next/image` (JS, CSS, chunks, imágenes
+    optimizadas, fuentes `next/font`).
+  - `/images/`, `/fonts/` (assets públicos servidos desde `/public/`).
+  - Permisos por tipo de archivo: `/*.js$`, `/*.mjs$`, `/*.css$`, `/*.woff$`,
+    `/*.woff2$`, `/*.ttf$`, `/*.png$`, `/*.jpg$`, `/*.jpeg$`, `/*.webp$`,
+    `/*.avif$`, `/*.svg$`, `/*.ico$`.
+  - `Disallow` de rutas privadas (`/intranet/`, `/api/`, `/404`, `/500`,
+    `/_not-found`, `/login`) sin cambios — la regla `Disallow` más específica
+    prevalece sobre los `Allow` genéricos por tipo. No hay assets `.js`/`.css`/
+    `.woff2` servidos en rutas privadas literales (en App Router todos viven
+    bajo `/_next/`), así que los `Allow` por tipo no filtran contenido privado.
+- Cambiar el contenido de `robots.txt` fuerza a Google a re-fetcheaerlo y
+  re-renderizar la página, resolviendo el estado establo.
+- Bloqueos de bots de IA (GPTBot, ClaudeBot, PerplexityBot, CCBot, etc.) y
+  declaración de sitemap/host sin cambios.
+
+### Tests
+- **`tests/seo-protection.test.ts`:** actualizada la aserción `allow` (era
+  `expect(wildcardRule?.allow).toEqual('/')`, ahora valida que `allow` es un
+  array que contiene `/_next/`, `/_next/static/`, `/_next/image`, `/images/`,
+  `/fonts/` y los patrones por tipo). Reforzada la aserción de "no bloquear
+  `/_next/`" para cubrir también `/_next/static/` y `/_next/image`. Suite pasa
+  de 23 → 25 tests.
+
+### Verificación de la URL final
+- `http://localhost:3000/robots.txt` (dev) y `next start` (producción)
+  devuelven la configuración esperada: `Allow: /_next/`, `Allow: /_next/image`,
+  `Allow: /images/`, `Allow: /*.woff2$`, etc. **Ningún `Disallow` bloquea
+  `/_next`** (verificado con grep).
+- Assets de producción verificados con `next start` (puerto 3001):
+  - `/_next/static/chunks/*.css` → 200, `text/css`, `X-Robots-Tag: index, follow`
+  - `/_next/static/chunks/*.js` → 200, `application/javascript`, `index, follow`
+  - `/_next/image?url=...` → 200, `image/png`, `index, follow`
+  - `/images/logo.png` → 200, `image/png`, `Cache-Control: immutable`, `index, follow`
+- `/sitemap.xml` → 200. Sitemap declarado en `robots.txt` apuntando a
+  `https://www.pinedayasociadoshn.com/sitemap.xml` (URLs HTTPS canónicas).
+
 ## Unreleased — Rediseño UI/UX de la home: jerarquía, iconografía unificada y sección de visita premium
 
 Revisión profesional de la maquetación de la página principal para corregir

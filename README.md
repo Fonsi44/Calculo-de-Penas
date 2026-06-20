@@ -341,7 +341,7 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 | Componente | Estado |
 |------------|--------|
 | Sitemap | `/sitemap.xml` — dinámico, excluye rutas privadas y posts canonicalizados |
-| Robots.txt | `/robots.txt` — bloquea `/intranet/`, `/api/`, `/login`, 12+ IA crawlers; **permite `/_next/`** (assets de render necesarios para Googlebot) |
+| Robots.txt | `/robots.txt` — bloquea `/intranet/`, `/api/`, `/login`, 12+ IA crawlers; **permite `/_next/`, `/_next/image`, `/images/`, `/fonts/` y assets por tipo** (`*.js`, `*.css`, `*.woff2`, `*.png`, …) con `Allow` explícitos para que Googlebot pueda renderizar la SPA/RSC sin bloqueo |
 | llms.txt | `/llms.txt` — descripción del sitio para asistentes IA |
 | JSON-LD | `LegalService+LocalBusiness`, `Organization`, `WebSite`, `BreadcrumbList`, `BlogPosting`, `FAQPage`, `Service` |
 | IndexNow | Postbuild dry-run; envío real con `ENABLE_INDEXNOW_SUBMIT=true` |
@@ -363,7 +363,7 @@ Cómo regenerar y validar los archivos SEO tras cambios:
 | Tarea | Comando / Ubicación |
 |-------|---------------------|
 | **Sitemap** (`/sitemap.xml`) | Se regenera en build automáticamente. Fuente: `app/sitemap.ts` (rutas estáticas) + tabla `blog_posts` (DB). Excluye rutas privadas, posts `noindex` y posts canonicalizados. |
-| **Robots** (`/robots.txt`) | Fuente: `app/robots.ts`. Permite `/_next/` (CSS/JS de Next.js que Googlebot necesita para renderizar). Bloquea solo `/intranet/`, `/api/`, `/login` y 12 crawlers de IA. |
+| **Robots** (`/robots.txt`) | Fuente: `app/robots.ts` (única fuente — no hay `public/robots.txt` ni `next-sitemap.config.js`). Permite explícitamente `/_next/`, `/_next/static/`, `/_next/image`, `/images/`, `/fonts/` y assets por tipo (`*.js`, `*.css`, `*.woff2`, `*.png`, …) para que Googlebot renderice la SPA/RSC sin bloqueo. Bloquea solo `/intranet/`, `/api/`, `/login` y 12 crawlers de IA. |
 | **llms.txt** (`/llms.txt`) | Archivo estático en `public/llms.txt`. Referenciado vía `<link rel="llms-txt">` en `app/layout.tsx`. |
 | **JSON-LD** | Helpers en `lib/site.ts` (LegalService, Organization, WebSite) + `lib/schemas/`. El BreadcrumbList lo emite exclusivamente el componente `<Breadcrumbs>` (una sola fuente de verdad). |
 | **Validar tras cambios SEO** | `npm run lint && npm run build && npm test` (obligatorio por AGENTS.md R8). El test `tests/seo-protection.test.ts` verifica: robots no bloquea `/_next/`, sitemap sin rutas privadas, schemas válidos, sin BreadcrumbList duplicado y FAQPage sanitiza HTML. |
@@ -376,6 +376,7 @@ Cómo regenerar y validar los archivos SEO tras cambios:
 - **FAQPage**: las respuestas se pasan por `toPlainText()` (strip HTML) — Google exige texto plano en `acceptedAnswer.text`.
 - **Enlaces externos a `.gob.hn`**: verificar con `curl` antes de cambiar; algunos dominios cambian (p. ej. `miambiente.gob.hn` → `serna.gob.hn`). El script `scripts/seo-health-check.mjs` cubre señales off-page.
 - **nofollow interno**: el único `rel="nofollow"` del código público es el enlace del header a `/intranet/admin` (obligatorio por AGENTS.md R6). Los `rel="noopener noreferrer"` son de seguridad para `target="_blank"`, no de SEO.
+- **robots.txt — recursos de Next.js (corrección GSC Jun 2026):** Google Search Console reportaba "No se puede cargar el recurso: bloqueado por robots.txt" para 29/29 assets de la home (`/_next/static/chunks/*.js`, CSS, `.woff2` en `/_next/static/media/`, `/_next/image?url=...`). El `robots.txt` de producción no tenía un `Disallow: /_next` explícito, pero el informe era un estado establo de una versión anterior (`NEXT_PUBLIC_NOINDEX=true` → `Disallow: /` para `*`) que Google había cacheado. La corrección añade `Allow` explícitos por recurso y tipo (`/_next/`, `/_next/image`, `/images/`, `/*.js$`, `/*.css$`, `/*.woff2$`, …) en `app/robots.ts`: (1) elimina ambigüedad para el tester de robots.txt de GSC, (2) al cambiar `robots.txt`, fuerza a Google a re-fetcheaerlo y re-renderizar. **Validación en GSC tras deploy:** Inspección de URL → "Probar URL publicada" → confirmar que los 29 recursos cargan sin "blocked by robots.txt" → "Solicitar indexación". El test `tests/seo-protection.test.ts` verifica que `allow` contiene los allows explícitos y que ningún `Disallow` bloquea `/_next/`, `/_next/static/` ni `/_next/image`.
 
 ---
 
