@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
 import { FloatingContactRail } from '@/components/marketing/live-widgets';
+import { PWARegistration } from '@/components/pwa/pwa-registration';
 import { site, legalServiceSchema, organizationSchema, websiteSchema } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
 
@@ -104,6 +105,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       </main>
       <PublicFooter />
       <FloatingContactRail />
+      <PWARegistration />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalLd) }}

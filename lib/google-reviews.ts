@@ -174,6 +174,14 @@ async function fetchFromGoogle(): Promise<PlaceReviews | null> {
     const reviews: Review[] = (data.reviews ?? [])
       .map(mapApiReview)
       .filter((r): r is Review => r !== null)
+      // Priorizar reseñas con texto sobre las que solo tienen estrellas: las
+      // reseñas sin cita dejan tarjetas "vacías" en la home. Orden estable
+      // (con texto no vacío primero); se mantienen las 5 que devuelve Google.
+      .sort((a, b) => {
+        const aHasText = a.text && a.text.trim().length > 0 ? 1 : 0;
+        const bHasText = b.text && b.text.trim().length > 0 ? 1 : 0;
+        return bHasText - aHasText;
+      })
       .slice(0, 5);
 
     if (reviews.length === 0) return null;

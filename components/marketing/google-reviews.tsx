@@ -23,8 +23,12 @@ import { Section } from '@/components/marketing/section';
  */
 export async function GoogleReviews() {
   const data = await getGoogleReviews();
-  // 3 reseñas visibles: fila de 3 en desktop, apiladas en móvil/tablet.
-  const visible = data.reviews.slice(0, 3);
+  // Mostrar solo reseñas con cita (texto no vacío) para evitar tarjetas
+  // "vacías": Google a veces devuelve reseñas con estrellas pero sin texto.
+  // Si ninguna tuviera texto, se muestran las 3 primeras como respaldo (mejor
+  // grid con estrellas que grid vacío). La lib ya ordena con-texto-primero.
+  const withText = data.reviews.filter((r) => r.text && r.text.trim().length > 0);
+  const visible = (withText.length > 0 ? withText : data.reviews).slice(0, 3);
 
   return (
     <Section background="warm" spacing="md" ariaLabel="Opiniones de clientes">

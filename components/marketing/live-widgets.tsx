@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Activity, Phone, MessageCircle } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { Activity, Download, MessageCircle, Phone, Share, X } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
+import { useInstallPrompt } from '@/hooks/use-install-prompt';
 
 /**
  * Indicador "vivo": pulso animado, número de visitantes simulados,
@@ -137,6 +138,34 @@ export function LiveOfficeStatus() {
 }
 
 export function FloatingContactRail() {
+  const { showButton, isIOS, promptInstall, dismiss } = useInstallPrompt();
+  const [iosPanelOpen, setIosPanelOpen] = useState(false);
+
+  // Cierra el panel de instrucciones iOS con Escape (accesibilidad teclado).
+  useEffect(() => {
+    if (!iosPanelOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIosPanelOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [iosPanelOpen]);
+
+  const handleInstallClick = useCallback(() => {
+    if (isIOS) {
+      setIosPanelOpen((v) => !v);
+    } else {
+      void promptInstall();
+    }
+  }, [isIOS, promptInstall]);
+
+  const closeIosPanel = useCallback(() => setIosPanelOpen(false), []);
+
+  const handleIosGotIt = useCallback(() => {
+    dismiss();
+    setIosPanelOpen(false);
+  }, [dismiss]);
+
   return (
     <div
       aria-label="Acceso rápido de contacto"
@@ -168,6 +197,79 @@ export function FloatingContactRail() {
           {site.phoneDisplay}
         </span>
       </a>
+
+      {/* Botón "Instalar app" (PWA): visible cuando el navegador permite
+          instalar (beforeinstallprompt) o en iOS (instrucciones manuales).
+          Oculto si ya está instalada o si el usuario lo descartó (<30 días). */}
+      {showButton && (
+        <button
+          type="button"
+          onClick={handleInstallClick}
+          className="group w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center shadow-lg shadow-accent/40 hover:scale-105 transition-transform focus-visible:outline-none"
+          aria-label="Instalar como aplicación"
+          title="Instalar esta web como aplicación"
+        >
+          <Download size={20} aria-hidden="true" />
+          <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            Instalar app
+          </span>
+        </button>
+      )}
+
+      {/* Panel de instrucciones para iOS: Safari no dispara
+          beforeinstallprompt, la instalación es manual vía Compartir. */}
+      {iosPanelOpen && (
+        <>
+          {/* Overlay clic-fuera para cerrar. aria-hidden: el cierre por
+              teclado se cubre con Escape y los botones del panel. */}
+          <div aria-hidden="true" onClick={closeIosPanel} className="fixed inset-0 z-40" />
+          <div
+            role="dialog"
+            aria-label="Cómo instalar en iPhone o iPad"
+            className="absolute bottom-full right-0 mb-2 z-50 w-64 rounded-lg border border-accent/30 bg-surface text-text shadow-xl p-4"
+          >
+            <div className="flex items-start justify-between gap-2 mb-3">
+              <p className="text-sm font-bold leading-tight">Instalar en iPhone o iPad</p>
+              <button
+                type="button"
+                onClick={closeIosPanel}
+                aria-label="Cerrar instrucciones"
+                className="-mr-1 -mt-1 p-1 rounded text-text-secondary hover:text-text focus-visible:outline-none"
+              >
+                <X size={14} aria-hidden="true" />
+              </button>
+            </div>
+            <ol className="space-y-2 text-xs text-text-secondary leading-relaxed">
+              <li className="flex items-start gap-2">
+                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/10 text-primary text-xxs font-bold flex items-center justify-center mt-0.5">1</span>
+                <span>
+                  Toca <strong className="text-text">Compartir</strong>{' '}
+                  <Share size={11} className="inline -mt-0.5 text-accent-dark" aria-hidden="true" /> en Safari.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/10 text-primary text-xxs font-bold flex items-center justify-center mt-0.5">2</span>
+                <span>
+                  Selecciona <strong className="text-text">«Añadir a pantalla de inicio»</strong>.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/10 text-primary text-xxs font-bold flex items-center justify-center mt-0.5">3</span>
+                <span>
+                  Pulsa <strong className="text-text">«Añadir»</strong>.
+                </span>
+              </li>
+            </ol>
+            <button
+              type="button"
+              onClick={handleIosGotIt}
+              className="mt-3 w-full h-9 rounded-md bg-accent text-primary text-xs font-bold hover:bg-accent-light transition-colors focus-visible:outline-none"
+            >
+              Entendido
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
