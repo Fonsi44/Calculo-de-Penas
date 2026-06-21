@@ -56,6 +56,7 @@ export default async function AreasJuridicasPage() {
         title={contentMap['hero.title'] || `Servicios Jurídicos en ${site.address.city}, ${site.address.department} — Ramas principales del derecho`}
         subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.'}
         cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/servicios/servicios-bg.webp"
       />
 
       <div className="bg-background py-6 md:py-8">

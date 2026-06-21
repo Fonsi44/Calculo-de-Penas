@@ -79,6 +79,7 @@ export default async function MigrantesPage() {
         title={contentMap['hero.title'] || hubMigrantes.heroTitle}
         subtitle={contentMap['hero.subtitle'] || hubMigrantes.heroSubtitle}
         cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/hondurenos-en-espana/jorono-international-2693200.webp"
       />
 
       <TrustBar background="light" />

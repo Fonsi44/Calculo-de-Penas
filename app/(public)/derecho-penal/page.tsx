@@ -81,6 +81,7 @@ export default async function DerechoPenalPage() {
         title={contentMap['hero.title'] || hubPenal.heroTitle}
         subtitle={contentMap['hero.subtitle'] || hubPenal.heroSubtitle}
         cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/derecho-penal/pexels-ekaterina-bolovtsova-6077861.webp"
       />
 
       <div className="bg-background py-6 md:py-8">
