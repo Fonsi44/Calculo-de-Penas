@@ -110,6 +110,7 @@ export default async function DespachoPage() {
         title={c.hero.title}
         subtitle={c.hero.subtitle}
         cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/despacho/diosa-justicia.webp"
       />
 
       {/* TRUST BAR */}

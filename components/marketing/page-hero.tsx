@@ -16,6 +16,13 @@ interface PageHeroProps {
   variant?: 'primary' | 'muted' | 'split';
   /** Etiqueta pequeña destacada a la derecha del eyebrow (p.ej. "Especialidad destacada"). */
   badge?: string;
+  /**
+   * Foto de fondo translúcida (solo variante "primary"): se renderiza sobre
+   * el gradiente azul del hero con opacidad baja y una veladura que preserva
+   * el contraste del texto inverso. Replica el tratamiento del hero de la
+   * home. undefined = sin foto (comportamiento previo).
+   */
+  bgImage?: string;
 }
 
 /**
@@ -34,6 +41,7 @@ export function PageHero({
   align = 'left',
   variant = 'primary',
   badge,
+  bgImage,
 }: PageHeroProps) {
   const isPrimary = variant !== 'muted';
   const containerCls = isPrimary
@@ -56,10 +64,30 @@ export function PageHero({
 
   return (
     <section className={containerCls}>
+      {/* Foto de fondo translúcida (variante primary con bgImage): aporta
+          profundidad y textura sin competir con el texto. Opacidad baja para
+          mantener la legibilidad. Mismo tratamiento que el hero de la home. */}
+      {isPrimary && bgImage && (
+        <>
+          <div
+            className="absolute inset-0 pointer-events-none bg-no-repeat bg-cover bg-center"
+            style={{ backgroundImage: `url('${bgImage}')`, opacity: 0.22 }}
+            aria-hidden="true"
+          />
+          {/* Veladura azul que preserva el contraste del texto inverso sobre
+              la foto: más densa a la izquierda (donde va el copy) y algo más
+              abierta en el centro para que se aprecie la textura. */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: 'linear-gradient(100deg, rgba(13,27,62,0.80) 0%, rgba(13,27,62,0.42) 55%, rgba(13,27,62,0.66) 100%)' }}
+            aria-hidden="true"
+          />
+        </>
+      )}
       {/* Texturas no fotográficas: grid sutil + acentos radiales.
           Mantiene el "sello visual" sin imágenes. */}
       <div
-        className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-grid opacity-60' : 'bg-grid-soft opacity-70'}`}
+        className={`absolute inset-0 pointer-events-none ${isPrimary ? (bgImage ? 'bg-grid opacity-40' : 'bg-grid opacity-60') : 'bg-grid-soft opacity-70'}`}
         aria-hidden="true"
       />
       <div
