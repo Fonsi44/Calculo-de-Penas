@@ -2,11 +2,14 @@ import { site, absoluteUrl } from '../site';
 import type { Post } from '@/data/blog/types';
 
 export function blogPostSchema(post: Post) {
-  // E-E-A-T: cuando el autor coincide con el nombre del bufete, no declaramos
-  // un `Person` con nombre de empresa (anti-señal para Google en temas YMYL
-  // como el derecho). En su lugar, autor = Organization (el propio despacho).
-  // Si en el futuro se añaden autores reales con página /equipo, se podrá
-  // distinguir por `post.author !== site.name` para usar `Person` con `sameAs`.
+  // E-E-A-T (YMYL jurídico): cuando el autor del post coincide con el nombre
+  // del bufete, atribuimos la autoría al fundador y socio director (Danilo
+  // Pineda Maradiaga, @id #founder) en lugar de a la Organization. Google
+  // prioriza autores Person identificados en temas sensibles (derecho, salud,
+  // finanzas). El nodo Person #founder se define en el layout global y se
+  // vincula vía @id para alimentar el Knowledge Graph.
+  // Si un post tuviera un autor real distinto (post.author !== site.name),
+  // se mantiene ese Person con su nombre.
   const isOrgAuthor = !post.author || post.author === site.name;
   return {
     '@context': 'https://schema.org',
@@ -17,12 +20,7 @@ export function blogPostSchema(post: Post) {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     author: isOrgAuthor
-      ? {
-          '@type': 'Organization',
-          '@id': `${site.url}/#organization`,
-          name: site.name,
-          url: site.url,
-        }
+      ? { '@id': `${site.url}/#founder` }
       : {
           '@type': 'Person',
           name: post.author,

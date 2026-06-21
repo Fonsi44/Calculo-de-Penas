@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import {
   Scale,
   ShieldCheck,
@@ -369,6 +370,58 @@ export default async function HomePage() {
                   </div>
                 </Card>
               ))}
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* CONOZCA A SU ABOGADO —Danilo Pineda Maradiaga. Cara humana del bufete
+          en la home; refuerza E-E-A-T y alimenta el Knowledge Graph de Google
+          para la entidad «abogado penalista Nacaome». Retrato Foto1. */}
+      <Section spacing="md" ariaLabel="Conozca a su abogado">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="lg:col-span-5">
+            <div className="relative mx-auto lg:mx-0 max-w-[18rem]">
+              <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
+              <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
+                <Image
+                  src="/images/equipo/danilo-pineda-maradiaga.webp"
+                  alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
+                  width={800}
+                  height={1067}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 1024px) 70vw, 280px"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <p className="eyebrow-rule text-accent-dark mb-3">Su abogado</p>
+            <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
+              Conozca a su abogado
+            </h2>
+            <p className="mt-2 text-sm font-bold uppercase tracking-eyebrow text-text-muted">
+              Danilo Pineda Maradiaga · Abogado penalista en el sur de Honduras
+            </p>
+            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty max-w-xl">
+              Más de 15 años de ejercicio profesional. Colegiado en Honduras. Atención
+              directa del abogado responsable en cada caso, con la defensa penal como
+              pilar histórico del bufete y respaldo multidisciplinar para asuntos que
+              cruzan varias ramas del derecho.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/despacho"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+              >
+                Conozca el despacho <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/derecho-penal"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
+              >
+                Defensa penal <ArrowRight size={14} />
+              </Link>
             </div>
           </div>
         </div>

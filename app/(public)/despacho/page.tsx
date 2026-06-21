@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Scale, ShieldCheck, Briefcase, GraduationCap, BookOpen,
   HeartHandshake, ArrowRight, CheckCircle2, Gavel, Award,
@@ -285,35 +286,70 @@ export default async function DespachoPage() {
           ) : null;
         })()}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[
-            {
-              rol: 'Dirección y defensa penal',
-              desc: 'Abogado responsable del bufete. Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio oral en el departamento de Valle y zonas circunvecinas.',
-            },
-            {
-              rol: 'Apoyo técnico y multidisciplinar',
-              desc: 'Asistencia en la preparación de escritos, recursos, cálculo técnico de penas y coordinación con las distintas áreas del bufete que su caso pueda requerir.',
-            },
-          ].map((p) => (
-            <Card key={p.rol} padding="md" className="card-premium">
-              <div className="flex items-center gap-3">
-                <div className="w-14 h-14 rounded-lg bg-primary text-text-inverse flex items-center justify-center font-bold text-lg flex-shrink-0">
-                  <GraduationCap size={22} />
-                </div>
-                <div>
-                  <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
-                    {p.rol}
-                  </p>
-                  <p className="text-sm font-semibold text-text leading-tight">
-                    Identidad reservada
-                  </p>
+          {/* Danilo Pineda Maradiaga — socio director (identidad pública).
+              Su foto y nombre se exponen con su consentimiento expreso; el
+              resto del equipo sigue como «Identidad reservada». Retrato Foto1. */}
+          <Card padding="md" className="card-premium border-accent/30">
+            <div className="flex items-center gap-4">
+              <div className="relative flex-shrink-0">
+                <div className="absolute -inset-1.5 rounded-lg bg-accent/15 blur-xl" aria-hidden="true" />
+                <div className="relative w-20 h-20 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
+                  <Image
+                    src="/images/equipo/danilo-pineda-maradiaga.webp"
+                    alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
+                    width={160}
+                    height={160}
+                    className="w-full h-full object-cover"
+                    sizes="80px"
+                  />
                 </div>
               </div>
-              <p className="text-sm text-text-secondary mt-3 leading-relaxed text-pretty">
-                {p.desc}
-              </p>
-            </Card>
-          ))}
+              <div>
+                <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
+                  Dirección y defensa penal
+                </p>
+                <p className="font-serif font-bold text-base text-text leading-tight">
+                  Danilo Pineda Maradiaga
+                </p>
+                <p className="text-sm text-text-secondary leading-snug mt-0.5">
+                  Abogado · Socio director · Colegiado en Honduras
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty">
+              Abogado responsable del bufete. Más de 15 años de ejercicio profesional.
+              Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio
+              oral en el departamento de Valle y zonas circunvecinas. La defensa penal es
+              el pilar histórico del despacho.
+            </p>
+            <Link
+              href="/derecho-penal"
+              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+            >
+              Ver especialidad en defensa penal <ArrowRight size={14} />
+            </Link>
+          </Card>
+
+          {/* Apoyo técnico — identidad reservada */}
+          <Card padding="md" className="card-premium">
+            <div className="flex items-center gap-3">
+              <div className="w-14 h-14 rounded-lg bg-primary text-text-inverse flex items-center justify-center font-bold text-lg flex-shrink-0">
+                <GraduationCap size={22} />
+              </div>
+              <div>
+                <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
+                  Apoyo técnico y multidisciplinar
+                </p>
+                <p className="text-sm font-semibold text-text leading-tight">
+                  Identidad reservada
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-text-secondary mt-3 leading-relaxed text-pretty">
+              Asistencia en la preparación de escritos, recursos, cálculo técnico de penas
+              y coordinación con las distintas áreas del bufete que su caso pueda requerir.
+            </p>
+          </Card>
         </div>
         <p className="text-xs text-text-muted text-center mt-6 italic max-w-2xl mx-auto">
           Por seguridad y ética profesional, la identidad completa de los profesionales

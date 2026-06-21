@@ -223,6 +223,7 @@ export function legalServiceSchema() {
     serviceType:
       'Bufete jurídico — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
     knowsAbout: KNOWS_ABOUT,
+    employee: [{ '@id': `${site.url}/#founder` }],
     ...(site.social.facebook || site.social.instagram || site.social.tiktok || site.social.x || site.googleBusiness
       ? {
           sameAs: [
@@ -313,5 +314,83 @@ export function organizationSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
+    founder: { '@id': `${site.url}/#founder` },
+  };
+}
+
+/**
+ * Datos del fundador y socio director del bufete.
+ *
+ * Identidad pública verificable: el handle de X (Danilo_Pineda_M) y la firma
+ * «Pineda y Asociados» confirman a Danilo Pineda Maradiaga como socio director.
+ * Claims verificables ya presentes en el sitio (R4 — no inventar):
+ *   - «más de 15 años de ejercicio profesional» (/despacho)
+ *   - «Abogado colegiado en Honduras» (/despacho)
+ *   - «defensa penal como pilar histórico» (/despacho)
+ *   - «asistencia a detenidos, audiencias iniciales, preliminares, de
+ *      sobreseimiento, juicio oral y recursos de casación» (/despacho)
+ *   - «departamento de Valle y zonas circunvecinas» (/despacho)
+ */
+export const FOUNDER_PROFILE = {
+  name: 'Danilo Pineda Maradiaga',
+  jobTitle: 'Abogado penalista · Socio director',
+  /** Retrato principal (Foto1) — home + /despacho + schema Person.image. */
+  image: '/images/equipo/danilo-pineda-maradiaga.webp',
+  /** Retrato alternativo (Foto2) — /derecho-penal + sidebar /solicitar-consulta. */
+  imageAlt: '/images/equipo/danilo-pineda-maradiaga-alt.webp',
+  imageAltText: 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
+  description:
+    'Abogado penalista en el sur de Honduras con más de 15 años de ejercicio profesional. Colegiado en Honduras. Defensa penal como pilar histórico del bufete: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
+  city: 'Nacaome',
+  department: 'Valle',
+} as const;
+
+/**
+ * Schema.org Person para el fundador (Danilo Pineda Maradiaga).
+ *
+ * Refuerza E-E-A-T (Experience, Expertise, Authoritativeness,
+ * Trustworthiness) para temas YMYL jurídicos: Google exige autor
+ * identificable en derecho. Se vincula desde Organization.founder,
+ * LegalService.employee y BlogPosting.author (vía @id) para alimentar el
+ * Knowledge Graph y posibilitar el panel de conocimiento de la entidad.
+ */
+export function founderSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${site.url}/#founder`,
+    name: FOUNDER_PROFILE.name,
+    image: `${site.url}${FOUNDER_PROFILE.image}`,
+    jobTitle: FOUNDER_PROFILE.jobTitle,
+    description: FOUNDER_PROFILE.description,
+    worksFor: { '@id': `${site.url}/#organization` },
+    knowsAbout: [
+      'Derecho Penal',
+      'Derecho Procesal Penal',
+      'Derecho de Familia',
+      'Derecho Laboral',
+      'Derecho Civil y Notarial',
+      'Derecho Mercantil y Empresarial',
+      'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${site.address.line1}, ${site.address.line2}`,
+      addressLocality: site.address.city,
+      addressRegion: site.address.department,
+      addressCountry: site.address.countryCode,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Nacaome' },
+      { '@type': 'City', name: 'San Lorenzo' },
+      { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'State', name: site.address.department },
+    ],
+    // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
+    // es claramente personal (Danilo_Pineda_M). Se añade googleBusiness
+    // (perfil del bufete en Google Maps que lo representa como abogado).
+    // NO se inventan perfiles (R4). Cuando se verifique Facebook/LinkedIn
+    // personal, añadirlos aquí vía site.social.*.
+    sameAs: [site.social.x, site.googleBusiness].filter(Boolean),
   };
 }

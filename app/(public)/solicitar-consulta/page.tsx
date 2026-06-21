@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Phone,
   MessageCircle,
@@ -93,6 +94,37 @@ export default async function SolicitarConsultaPage() {
           </div>
 
           <div className="lg:col-span-2 space-y-4">
+            {/* SU ABOGADO —Danilo Pineda Maradiaga. Presencia humana en el
+                momento de mayor intención de conversión. Retrato Foto2. */}
+            <Card padding="md" className="border-l-4 border-l-accent">
+              <div className="flex items-center gap-3">
+                <div className="relative flex-shrink-0">
+                  <div className="absolute -inset-1 rounded-lg bg-accent/15 blur-md" aria-hidden="true" />
+                  <div className="relative w-16 h-16 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
+                    <Image
+                      src="/images/equipo/danilo-pineda-maradiaga-alt.webp"
+                      alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
+                      width={128}
+                      height={128}
+                      className="w-full h-full object-cover"
+                      sizes="64px"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-0.5">
+                    Le atiende personalmente
+                  </p>
+                  <p className="font-serif font-bold text-sm text-text leading-tight">
+                    Danilo Pineda Maradiaga
+                  </p>
+                  <p className="text-xs text-text-secondary leading-snug mt-0.5">
+                    Abogado penalista · Socio director
+                  </p>
+                </div>
+              </div>
+            </Card>
+
             {/* Contacto directo */}
             <Card padding="md">
               <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">

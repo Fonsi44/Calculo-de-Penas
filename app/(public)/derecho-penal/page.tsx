@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, BookOpen } from 'lucide-react';
-import { site, absoluteUrl } from '@/lib/site';
+import Image from 'next/image';
+import { ArrowRight, BookOpen, MessageCircle } from 'lucide-react';
+import { site, absoluteUrl, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
@@ -99,6 +100,60 @@ export default async function DerechoPenalPage() {
       </div>
 
       <TrustBar background="light" />
+
+      {/* SU ABOGADO PENALISTA —Danilo Pineda Maradiaga. La página de mayor
+          intención comercial penal promete «Abogado Penalista en Nacaome» en
+          el title; este bloque hace visible la entidad y cierra title↔H1↔autor
+          (E-E-A-T). Retrato Foto2 (alternativo). */}
+      <Section spacing="md">
+        <div className="grid lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-5">
+            <div className="relative mx-auto lg:mx-0 max-w-[20rem]">
+              <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
+              <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
+                <Image
+                  src="/images/equipo/danilo-pineda-maradiaga-alt.webp"
+                  alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
+                  width={600}
+                  height={877}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 1024px) 80vw, 320px"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <p className="eyebrow-rule text-accent-dark mb-3">Su abogado penalista</p>
+            <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
+              Danilo Pineda Maradiaga
+            </h2>
+            <p className="mt-2 text-sm font-bold uppercase tracking-eyebrow text-text-muted">
+              Abogado penalista · Sur de Honduras
+            </p>
+            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty max-w-xl">
+              Más de 15 años de ejercicio profesional. Colegiado en Honduras. Le atiendo
+              personalmente en audiencias iniciales, preliminares, de sobreseimiento,
+              juicio oral y recursos de casación en el departamento de Valle y la zona sur.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={whatsappHref('Hola, necesito consultar con el abogado penalista sobre mi caso.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
+              >
+                <MessageCircle size={16} /> Hablar con él por WhatsApp
+              </a>
+              <Link
+                href="/despacho"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
+              >
+                Conozca el despacho <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Section>
 
       <Section background="muted" spacing="md">
         <SectionHeader

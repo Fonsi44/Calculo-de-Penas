@@ -58,6 +58,17 @@ const CORPORATE: Record<string, string> = {
   corporate_meeting: '/images/corporate/corporate_meeting.webp',
 };
 
+/**
+ * Retratos del fundador y socio director (Danilo Pineda Maradiaga).
+ *   - founder_portrait      → Foto1 (retrato principal: home + /despacho)
+ *   - founder_portrait_alt  → Foto2 (retrato alternativo: /derecho-penal + sidebar)
+ * Fuente: docs/imagenes/DaniloPineda{1,2}.jpeg → .webp vía sharp (800x1067 / 600x877).
+ */
+const FOUNDER: Record<string, string> = {
+  founder_portrait: '/images/equipo/danilo-pineda-maradiaga.webp',
+  founder_portrait_alt: '/images/equipo/danilo-pineda-maradiaga-alt.webp',
+};
+
 export function getServiceImage(slug: string): string | undefined {
   return SERVICES[slug];
 }
@@ -68,6 +79,10 @@ export function getPenalImage(slug: string): string | undefined {
 
 export function getCorporateImage(key: string): string | undefined {
   return CORPORATE[key];
+}
+
+export function getFounderImage(key: string): string | undefined {
+  return FOUNDER[key];
 }
 
 export function hasServiceImage(slug: string): boolean {
@@ -81,3 +96,4 @@ export function hasPenalImage(slug: string): boolean {
 export const SERVICE_IMAGE_KEYS = Object.keys(SERVICES);
 export const PENAL_IMAGE_KEYS = Object.keys(PENAL);
 export const CORPORATE_IMAGE_KEYS = Object.keys(CORPORATE);
+export const FOUNDER_IMAGE_KEYS = Object.keys(FOUNDER);
