@@ -104,20 +104,21 @@ export default async function DerechoPenalPage() {
       {/* SU ABOGADO PENALISTA —Danilo Pineda Maradiaga. La página de mayor
           intención comercial penal promete «Abogado Penalista en Nacaome» en
           el title; este bloque hace visible la entidad y cierra title↔H1↔autor
-          (E-E-A-T). Retrato Foto2 (alternativo). */}
+          (E-E-A-T). Retrato Foto2 (alternativo), tamaño contenido para no
+          dominar visualmente la página. */}
       <Section spacing="md">
         <div className="grid lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-5">
-            <div className="relative mx-auto lg:mx-0 max-w-[20rem]">
+            <div className="relative mx-auto lg:mx-0 max-w-[12rem]">
               <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
               <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
                 <Image
                   src="/images/equipo/danilo-pineda-maradiaga-alt.webp"
                   alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
-                  width={600}
-                  height={877}
+                  width={400}
+                  height={500}
                   className="w-full h-full object-cover"
-                  sizes="(max-width: 1024px) 80vw, 320px"
+                  sizes="(max-width: 1024px) 70vw, 192px"
                 />
               </div>
             </div>

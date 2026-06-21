@@ -120,6 +120,10 @@ let cache: { data: PlaceReviews; ts: number } | null = null;
 interface PlacesApiReview {
   rating?: number;
   text?: { text?: string } | null;
+  // Texto original del autor (sin traducir). Places API (New) devuelve `text`
+  // localizado al `languageCode` solicitado y `originalText` en el idioma real
+  // en que el autor escribió la reseña (el que se muestra en Google Maps).
+  originalText?: { text?: string } | null;
   authorAttribution?: { displayName?: string; photoUri?: string } | null;
   publishTime?: string;
   relativePublishTimeDescription?: string;
@@ -131,14 +135,24 @@ interface PlacesApiResponse {
   reviews?: PlacesApiReview[] | null;
 }
 
-/** Normaliza una reseña de la API v1 al tipo interno `Review`. */
+/**
+ * Normaliza una reseña de la API v1 al tipo interno `Review`.
+ *
+ * Prefiere `originalText` sobre `text`: `originalText` es el texto que el autor
+ * escribió realmente (el que se ve en el perfil público de Google Business),
+ * mientras que `text` puede ser una traducción al `languageCode` solicitado.
+ * Así la reseña mostrada coincide con lo que el usuario ve en Google Maps,
+ * incluso si Google localiza `text` por defecto a inglés. Si `originalText`
+ * no viniera (campo opcional), se usa `text` como respaldo.
+ */
 function mapApiReview(r: PlacesApiReview): Review | null {
   const authorName = r.authorAttribution?.displayName?.trim();
   if (!authorName) return null;
+  const text = r.originalText?.text?.trim() || r.text?.text?.trim() || null;
   return {
     authorName,
     rating: typeof r.rating === 'number' ? r.rating : 5,
-    text: r.text?.text?.trim() || null,
+    text,
     relativeTime: r.relativePublishTimeDescription ?? '',
     publishTime: r.publishTime ?? new Date().toISOString(),
     profilePhoto: r.authorAttribution?.photoUri ?? null,
@@ -155,15 +169,24 @@ async function fetchFromGoogle(): Promise<PlaceReviews | null> {
 
   try {
     const res = await fetch(
-      `https://places.googleapis.com/v1/places/${encodeURIComponent(PLACE_ID)}`,
+      `https://places.googleapis.com/v1/places/${encodeURIComponent(PLACE_ID)}?languageCode=es`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': apiKey,
+          // Máscara `reviews` (plana): devuelve el objeto Review completo, incluido
+          // `originalText` (texto real del autor, sin traducir). Preferimos
+          // `originalText` sobre `text` en mapApiReview para que la reseña coincida
+          // con lo que se ve en Google Maps. Se mantiene la máscara plana en lugar
+          // de listar sub-campos para no arriesgar un path inválido que rompería la
+          // llamada en producción (la máscara `reviews` es la probada en prod).
           'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
         },
         // server-to-server: sin CORS. Cache a nivel runtime vía ISR + caché local.
+        // languageCode=es: localiza los campos de la respuesta al español. Para el
+        // texto de la reseña usamos `originalText` (ver mapApiReview), que es el
+        // idioma real del autor y coincide con lo que se ve en Google Maps.
         next: { revalidate: 3600 },
       },
     );

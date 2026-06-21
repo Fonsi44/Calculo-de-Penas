@@ -223,7 +223,11 @@ export function legalServiceSchema() {
     serviceType:
       'Bufete jurídico — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
     knowsAbout: KNOWS_ABOUT,
-    employee: [{ '@id': `${site.url}/#founder` }],
+    employee: [
+      { '@id': `${site.url}/#founder` },
+      { '@id': `${site.url}/#thania` },
+      { '@id': `${site.url}/#emil` },
+    ],
     ...(site.social.facebook || site.social.instagram || site.social.tiktok || site.social.x || site.googleBusiness
       ? {
           sameAs: [
@@ -314,7 +318,13 @@ export function organizationSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    founder: { '@id': `${site.url}/#founder` },
+    // founder: array de @id — Danilo y Thania son socios fundadores.
+    // `founder` acepta Person o Person[] según Schema.org; usamos array para
+    // reflejar la codirección fundacional del bufete.
+    founder: [
+      { '@id': `${site.url}/#founder` },
+      { '@id': `${site.url}/#thania` },
+    ],
   };
 }
 
@@ -392,5 +402,124 @@ export function founderSchema() {
     // NO se inventan perfiles (R4). Cuando se verifique Facebook/LinkedIn
     // personal, añadirlos aquí vía site.social.*.
     sameAs: [site.social.x, site.googleBusiness].filter(Boolean),
+  };
+}
+
+/**
+ * Datos de Thania Marlene Paz — socia fundadora del bufete.
+ *
+ * Especialidades verificables (aportadas por el despacho, R4 — no inventar):
+ *   - Derecho Administrativo y Servicio Civil
+ *   - Derecho de Familia
+ *   - Derecho Civil y Notarial
+ *   - Derecho Mercantil y Empresarial
+ * Condición: socia fundadora (codirección fundacional junto a Danilo).
+ */
+export const THANIA_PROFILE = {
+  name: 'Thania Marlene Paz',
+  jobTitle: 'Abogada · Socia fundadora',
+  image: '/images/equipo/thania-marlene-paz.webp',
+  imageAltText: 'Thania Marlene Paz, abogada socia fundadora de Pineda y Asociados en Nacaome, Valle (Honduras)',
+  description:
+    'Abogada socia fundadora de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+  specialties: [
+    'Derecho Administrativo y Servicio Civil',
+    'Derecho de Familia',
+    'Derecho Civil y Notarial',
+    'Derecho Mercantil y Empresarial',
+  ],
+  city: 'Nacaome',
+  department: 'Valle',
+} as const;
+
+/**
+ * Schema.org Person para Thania Marlene Paz (socia fundadora).
+ *
+ * Se vincula desde Organization.founder (array junto a #founder),
+ * LegalService.employee y BlogPosting.author (categorías de familia, civil,
+ * mercantil, administrativo, propiedad intelectual) vía @id.
+ */
+export function thaniaSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${site.url}/#thania`,
+    name: THANIA_PROFILE.name,
+    image: `${site.url}${THANIA_PROFILE.image}`,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    description: THANIA_PROFILE.description,
+    worksFor: { '@id': `${site.url}/#organization` },
+    knowsAbout: THANIA_PROFILE.specialties,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${site.address.line1}, ${site.address.line2}`,
+      addressLocality: site.address.city,
+      addressRegion: site.address.department,
+      addressCountry: site.address.countryCode,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Nacaome' },
+      { '@type': 'City', name: 'San Lorenzo' },
+      { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'State', name: site.address.department },
+    ],
+  };
+}
+
+/**
+ * Datos de Emil Barahona — socio del bufete.
+ *
+ * Especialidades verificables (aportadas por el despacho, R4 — no inventar):
+ *   - Derecho Laboral
+ *   - Derecho Penal
+ *   - Derecho Civil y Notarial
+ * Condición: socio del bufete (no fundador).
+ */
+export const EMIL_PROFILE = {
+  name: 'Emil Barahona',
+  jobTitle: 'Abogado · Socio del bufete',
+  image: '/images/equipo/emil-barahona.webp',
+  imageAltText: 'Emil Barahona, abogado socio de Pineda y Asociados en Nacaome, Valle (Honduras)',
+  description:
+    'Abogado socio de Pineda y Asociados. Especializado en derecho laboral, penal, y civil y notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+  specialties: [
+    'Derecho Laboral',
+    'Derecho Penal',
+    'Derecho Civil y Notarial',
+  ],
+  city: 'Nacaome',
+  department: 'Valle',
+} as const;
+
+/**
+ * Schema.org Person para Emil Barahona (socio del bufete).
+ *
+ * Se vincula desde LegalService.employee y BlogPosting.author (categorías
+ * laboral) vía @id. No aparece en Organization.founder (no es fundador).
+ */
+export function emilSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${site.url}/#emil`,
+    name: EMIL_PROFILE.name,
+    image: `${site.url}${EMIL_PROFILE.image}`,
+    jobTitle: EMIL_PROFILE.jobTitle,
+    description: EMIL_PROFILE.description,
+    worksFor: { '@id': `${site.url}/#organization` },
+    knowsAbout: EMIL_PROFILE.specialties,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${site.address.line1}, ${site.address.line2}`,
+      addressLocality: site.address.city,
+      addressRegion: site.address.department,
+      addressCountry: site.address.countryCode,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Nacaome' },
+      { '@type': 'City', name: 'San Lorenzo' },
+      { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'State', name: site.address.department },
+    ],
   };
 }

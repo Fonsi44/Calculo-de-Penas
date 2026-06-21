@@ -1,16 +1,36 @@
 import { site, absoluteUrl } from '../site';
 import type { Post } from '@/data/blog/types';
 
+/**
+ * Mapa de categoría de blog → @id del autor (Person) que firma los posts de
+ * esa categoría. Refuerza E-E-A-T (YMYL jurídico): Google prioriza autores
+ * Person identificados en temas sensibles, y asociar cada categoría al
+ * especialista correcto incrementa la autoridad temática percibida.
+ *
+ * Categorías no listadas → #founder (Danilo Pineda Maradiaga, socio director
+ * y firma por defecto del bufete). Los @id deben coincidir con los nodos
+ * Person inyectados en app/(public)/layout.tsx.
+ */
+const CATEGORY_TO_AUTHOR_ID: Record<string, string> = {
+  'derecho-de-familia': `${site.url}/#thania`,
+  'derecho-civil': `${site.url}/#thania`,
+  'derecho-mercantil': `${site.url}/#thania`,
+  'derecho-administrativo': `${site.url}/#thania`,
+  'propiedad-intelectual': `${site.url}/#thania`,
+  'derecho-laboral': `${site.url}/#emil`,
+};
+
 export function blogPostSchema(post: Post) {
   // E-E-A-T (YMYL jurídico): cuando el autor del post coincide con el nombre
-  // del bufete, atribuimos la autoría al fundador y socio director (Danilo
-  // Pineda Maradiaga, @id #founder) en lugar de a la Organization. Google
+  // del bufete, atribuimos la autoría al especialista de la categoría (vía
+  // el mapa CATEGORY_TO_AUTHOR_ID) en lugar de a la Organization. Google
   // prioriza autores Person identificados en temas sensibles (derecho, salud,
-  // finanzas). El nodo Person #founder se define en el layout global y se
-  // vincula vía @id para alimentar el Knowledge Graph.
+  // finanzas). El nodo Person referenciado se define en el layout global y
+  // se vincula vía @id para alimentar el Knowledge Graph.
   // Si un post tuviera un autor real distinto (post.author !== site.name),
   // se mantiene ese Person con su nombre.
   const isOrgAuthor = !post.author || post.author === site.name;
+  const authorId = CATEGORY_TO_AUTHOR_ID[post.category] ?? `${site.url}/#founder`;
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -20,7 +40,7 @@ export function blogPostSchema(post: Post) {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     author: isOrgAuthor
-      ? { '@id': `${site.url}/#founder` }
+      ? { '@id': authorId }
       : {
           '@type': 'Person',
           name: post.author,

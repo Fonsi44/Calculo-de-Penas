@@ -19,7 +19,7 @@ import {
   Users,
   Landmark,
 } from 'lucide-react';
-import { site, telHref } from '@/lib/site';
+import { site, telHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -375,55 +375,91 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* CONOZCA A SU ABOGADO —Danilo Pineda Maradiaga. Cara humana del bufete
-          en la home; refuerza E-E-A-T y alimenta el Knowledge Graph de Google
-          para la entidad «abogado penalista Nacaome». Retrato Foto1. */}
-      <Section spacing="md" ariaLabel="Conozca a su abogado">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          <div className="lg:col-span-5">
-            <div className="relative mx-auto lg:mx-0 max-w-[18rem]">
-              <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
-              <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
-                <Image
-                  src="/images/equipo/danilo-pineda-maradiaga.webp"
-                  alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
-                  width={800}
-                  height={1067}
-                  className="w-full h-full object-cover"
-                  sizes="(max-width: 1024px) 70vw, 280px"
-                />
+      {/* CONOZCA A SU EQUIPO —3 socios del bufete con su retrato y
+          especialidades. Refuerza E-E-A-T (múltiples autores Person
+          identificados) y alimenta el Knowledge Graph de Google para las
+          entidades «abogado penalista/familia/laboral Nacaome». */}
+      <Section spacing="md" ariaLabel="Conozca a su equipo">
+        <SectionHeader
+          eyebrow="Su equipo"
+          title="Conozca a los abogados que llevarán su caso"
+          subtitle="Tres socios con especialidades complementarias. Atención directa del abogado responsable en cada área, con respaldo multidisciplinar para asuntos que cruzan varias ramas del derecho."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {[
+            {
+              name: FOUNDER_PROFILE.name,
+              jobTitle: FOUNDER_PROFILE.jobTitle,
+              image: FOUNDER_PROFILE.image,
+              imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
+              tagline: 'Penal · Pilar histórico del bufete',
+              description: 'Más de 15 años de ejercicio profesional. Colegiado en Honduras. Defensa penal, audiencias y recursos en Valle y la zona sur.',
+              href: '/derecho-penal',
+              cta: 'Defensa penal',
+            },
+            {
+              name: THANIA_PROFILE.name,
+              jobTitle: THANIA_PROFILE.jobTitle,
+              image: THANIA_PROFILE.image,
+              imageAltText: THANIA_PROFILE.imageAltText,
+              tagline: 'Familia · Mercantil · Civil · Administrativo',
+              description: 'Socia fundadora del bufete. Atención directa en derecho de familia, civil y notarial, mercantil y empresarial, y administrativo.',
+              href: '/servicios-juridicos/derecho-de-familia',
+              cta: 'Derecho de familia',
+            },
+            {
+              name: EMIL_PROFILE.name,
+              jobTitle: EMIL_PROFILE.jobTitle,
+              image: EMIL_PROFILE.image,
+              imageAltText: EMIL_PROFILE.imageAltText,
+              tagline: 'Laboral · Civil y Notarial',
+              description: 'Socio del bufete. Despidos, prestaciones, accidentes de trabajo, juicio oral laboral y recursos de casación laboral.',
+              href: '/servicios-juridicos/derecho-laboral',
+              cta: 'Derecho laboral',
+            },
+          ].map((p) => (
+            <Card key={p.name} padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+              <div className="relative mx-auto mb-4">
+                <div className="absolute -inset-2 rounded-lg bg-accent/15 blur-xl" aria-hidden="true" />
+                <div className="relative w-28 h-28 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
+                  <Image
+                    src={p.image}
+                    alt={p.imageAltText}
+                    width={224}
+                    height={224}
+                    className="w-full h-full object-cover"
+                    sizes="(max-width: 768px) 70vw, 112px"
+                  />
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="lg:col-span-7">
-            <p className="eyebrow-rule text-accent-dark mb-3">Su abogado</p>
-            <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
-              Conozca a su abogado
-            </h2>
-            <p className="mt-2 text-sm font-bold uppercase tracking-eyebrow text-text-muted">
-              Danilo Pineda Maradiaga · Abogado penalista en el sur de Honduras
-            </p>
-            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty max-w-xl">
-              Más de 15 años de ejercicio profesional. Colegiado en Honduras. Atención
-              directa del abogado responsable en cada caso, con la defensa penal como
-              pilar histórico del bufete y respaldo multidisciplinar para asuntos que
-              cruzan varias ramas del derecho.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark text-center mb-1">
+                {p.tagline}
+              </p>
+              <h3 className="font-serif font-bold text-base text-text leading-tight text-center text-balance">
+                {p.name}
+              </h3>
+              <p className="text-sm text-text-secondary leading-snug mt-0.5 text-center">
+                {p.jobTitle}
+              </p>
+              <p className="text-sm text-text-secondary leading-relaxed text-pretty mt-3 flex-1">
+                {p.description}
+              </p>
               <Link
-                href="/despacho"
-                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+                href={p.href}
+                className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors self-center"
               >
-                Conozca el despacho <ArrowRight size={14} />
+                {p.cta} <ArrowRight size={14} />
               </Link>
-              <Link
-                href="/derecho-penal"
-                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
-              >
-                Defensa penal <ArrowRight size={14} />
-              </Link>
-            </div>
-          </div>
+            </Card>
+          ))}
+        </div>
+        <div className="text-center mt-6">
+          <Link
+            href="/despacho"
+            className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
+          >
+            Conozca el despacho <ArrowRight size={14} />
+          </Link>
         </div>
       </Section>
 

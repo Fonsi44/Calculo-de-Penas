@@ -23,12 +23,11 @@ import { Section } from '@/components/marketing/section';
  */
 export async function GoogleReviews() {
   const data = await getGoogleReviews();
-  // Mostrar solo reseñas con cita (texto no vacío) para evitar tarjetas
-  // "vacías": Google a veces devuelve reseñas con estrellas pero sin texto.
-  // Si ninguna tuviera texto, se muestran las 3 primeras como respaldo (mejor
-  // grid con estrellas que grid vacío). La lib ya ordena con-texto-primero.
-  const withText = data.reviews.filter((r) => r.text && r.text.trim().length > 0);
-  const visible = (withText.length > 0 ? withText : data.reviews).slice(0, 3);
+  // 3 reseñas visibles: fila de 3 en desktop, apiladas en móvil/tablet.
+  // La lib ordena con-texto-primero, así que las reseñas con cita salen antes
+  // y solo si hay menos de 3 con texto se rellena con las de solo estrellas
+  // (mejor 3 tarjetas que un grid con huecos).
+  const visible = data.reviews.slice(0, 3);
 
   return (
     <Section background="warm" spacing="md" ariaLabel="Opiniones de clientes">
@@ -138,9 +137,17 @@ function ReviewCard({ review }: { review: Review }) {
       </div>
 
       {/* Texto de la reseña — extracto elegante */}
-      {review.text && (
+      {review.text ? (
         <p className="text-sm text-text-secondary leading-relaxed text-pretty flex-1 line-clamp-4">
           &ldquo;{review.text}&rdquo;
+        </p>
+      ) : (
+        // Reseña solo con valoración (sin comentario escrito): placeholder sutil
+        // para que la tarjeta mantenga el mismo peso visual que las demás y no
+        // parezca un hueco roto. Google devuelve reseñas con estrellas pero sin
+        // texto; las mostramos igual para completar la fila de 3 en desktop.
+        <p className="text-sm text-text-muted italic flex-1">
+          Valoración solo con estrellas, sin comentario escrito.
         </p>
       )}
 

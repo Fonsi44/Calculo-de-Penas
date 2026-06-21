@@ -14,7 +14,7 @@ import {
   MapPin,
   Building,
 } from 'lucide-react';
-import { telHref, whatsappHref, site } from '@/lib/site';
+import { telHref, whatsappHref, site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -94,36 +94,65 @@ export default async function SolicitarConsultaPage() {
           </div>
 
           <div className="lg:col-span-2 space-y-4">
-            {/* SU ABOGADO —Danilo Pineda Maradiaga. Presencia humana en el
-                momento de mayor intención de conversión. Retrato Foto2. */}
-            <Card padding="md" className="border-l-4 border-l-accent">
-              <div className="flex items-center gap-3">
-                <div className="relative flex-shrink-0">
-                  <div className="absolute -inset-1 rounded-lg bg-accent/15 blur-md" aria-hidden="true" />
-                  <div className="relative w-16 h-16 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
-                    <Image
-                      src="/images/equipo/danilo-pineda-maradiaga-alt.webp"
-                      alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
-                      width={128}
-                      height={128}
-                      className="w-full h-full object-cover"
-                      sizes="64px"
-                    />
+            {/* SU EQUIPO —3 socios del bufete en tarjetas individuales.
+                Presencia humana en el momento de mayor intención de conversión.
+                Estructura individual para facilitar añadir teléfono directo de
+                cada abogado en el futuro. */}
+            {[
+              {
+                name: FOUNDER_PROFILE.name,
+                jobTitle: FOUNDER_PROFILE.jobTitle,
+                image: FOUNDER_PROFILE.image,
+                imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
+                tagline: 'Defensa penal',
+                href: '/derecho-penal',
+              },
+              {
+                name: THANIA_PROFILE.name,
+                jobTitle: THANIA_PROFILE.jobTitle,
+                image: THANIA_PROFILE.image,
+                imageAltText: THANIA_PROFILE.imageAltText,
+                tagline: 'Familia · Mercantil · Civil',
+                href: '/servicios-juridicos/derecho-de-familia',
+              },
+              {
+                name: EMIL_PROFILE.name,
+                jobTitle: EMIL_PROFILE.jobTitle,
+                image: EMIL_PROFILE.image,
+                imageAltText: EMIL_PROFILE.imageAltText,
+                tagline: 'Laboral · Civil y Notarial',
+                href: '/servicios-juridicos/derecho-laboral',
+              },
+            ].map((p) => (
+              <Card key={p.name} padding="md" className="border-l-4 border-l-accent">
+                <div className="flex items-center gap-3">
+                  <div className="relative flex-shrink-0">
+                    <div className="absolute -inset-1 rounded-lg bg-accent/15 blur-md" aria-hidden="true" />
+                    <div className="relative w-14 h-14 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
+                      <Image
+                        src={p.image}
+                        alt={p.imageAltText}
+                        width={112}
+                        height={112}
+                        className="w-full h-full object-cover"
+                        sizes="56px"
+                      />
+                    </div>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xxs font-medium uppercase tracking-wider text-accent-dark mb-0.5">
+                      {p.tagline}
+                    </p>
+                    <p className="font-serif font-bold text-base text-text leading-tight">
+                      {p.name}
+                    </p>
+                    <p className="text-xs text-text-secondary leading-snug mt-0.5">
+                      {p.jobTitle}
+                    </p>
                   </div>
                 </div>
-                <div>
-                  <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-0.5">
-                    Le atiende personalmente
-                  </p>
-                  <p className="font-serif font-bold text-sm text-text leading-tight">
-                    Danilo Pineda Maradiaga
-                  </p>
-                  <p className="text-xs text-text-secondary leading-snug mt-0.5">
-                    Abogado penalista · Socio director
-                  </p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            ))}
 
             {/* Contacto directo */}
             <Card padding="md">

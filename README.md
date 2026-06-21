@@ -406,7 +406,7 @@ Cómo regenerar y validar los archivos SEO tras cambios:
 ```bash
 npm run validate:dates       # Fechas del blog (ninguna futura)
 npm run content:audit        # Revisión editorial vencida
-npm run validar-meta-seo     # Metadatos SEO de posts
+npm run validar:meta-seo    # Metadatos SEO de posts (estático, sin DB)
 npm run blog:normalizar      # Normalización del blog (DRY-RUN por defecto)
 npm run blog:normalizar:aplicar  # Aplica CTAs/H1/whitespace en DB
 npm run blog:review          # Revisión editorial + SEO con IA (solo sugiere)
@@ -492,7 +492,7 @@ npm run indexnow:full       # Catálogo completo (máx 500 URLs)
 ```bash
 npm run seo:health          # 15 señales SEO off-page
 npm run seo:health:json     # Igual, salida JSON
-npm run auditar-indexacion-prioritaria  # URLs prioritarias en prod
+npm run audit:indexacion   # URLs prioritarias en prod (regresión indexación)
 ```
 
 **Regresión visual:**

@@ -41,7 +41,21 @@
     "seo:health:json": "node scripts/seo-health-check.mjs --json",
     "visual:baseline": "node scripts/visual-regression.cjs baseline",
     "visual:check": "node scripts/visual-regression.cjs check",
-    "visual:update": "node scripts/visual-regression.cjs update"
+    "visual:update": "node scripts/visual-regression.cjs update",
+    "validar:meta-seo": "npx tsx scripts/validar-meta-seo.ts",
+    "audit:indexacion": "node scripts/auditar-indexacion-prioritaria.mjs",
+    "audit:performance": "npx tsx scripts/auditar-performance-publico.ts",
+    "audit:canibalizacion": "npx tsx scripts/audit-canibalizacion.ts",
+    "audit:internal-links": "npx tsx scripts/audit-internal-links.ts",
+    "audit:blog-seo": "npx tsx scripts/audit-blog-seo.ts",
+    "blog:detectar-plantilla": "npx tsx scripts/detectar-posts-plantilla.ts",
+    "audit:delitos": "node scripts/auditar-delitos.js",
+    "audit:cp": "node scripts/auditar-cp.js --report",
+    "audit:cp:fix": "node scripts/auditar-cp.js --fix",
+    "seo:gsc": "node scripts/gsc-analytics.mjs",
+    "seo:audit:gsc-ga4": "node scripts/seo-audit-gsc-ga4.mjs",
+    "seo:bing": "node scripts/bing-wmt-audit.mjs",
+    "seo:submit-sitemap": "node scripts/submit-sitemap-gsc.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

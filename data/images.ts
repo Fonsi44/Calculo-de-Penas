@@ -69,6 +69,18 @@ const FOUNDER: Record<string, string> = {
   founder_portrait_alt: '/images/equipo/danilo-pineda-maradiaga-alt.webp',
 };
 
+/**
+ * Retratos del equipo del bufete (socios fundadores y socios).
+ *   - thania  → Thania Marlene Paz (socia fundadora — administrativo, familia,
+ *               civil y notarial, mercantil y empresarial)
+ *   - emil    → Emil Barahona (socio del bufete — laboral, penal, civil y notarial)
+ * Fuente: docs/imagenes/{Thania Marlene Paz,Emil Barahona}.jpeg → .webp vía sharp.
+ */
+const TEAM: Record<string, string> = {
+  thania: '/images/equipo/thania-marlene-paz.webp',
+  emil: '/images/equipo/emil-barahona.webp',
+};
+
 export function getServiceImage(slug: string): string | undefined {
   return SERVICES[slug];
 }
@@ -85,6 +97,10 @@ export function getFounderImage(key: string): string | undefined {
   return FOUNDER[key];
 }
 
+export function getTeamImage(key: string): string | undefined {
+  return TEAM[key];
+}
+
 export function hasServiceImage(slug: string): boolean {
   return slug in SERVICES;
 }
@@ -97,3 +113,4 @@ export const SERVICE_IMAGE_KEYS = Object.keys(SERVICES);
 export const PENAL_IMAGE_KEYS = Object.keys(PENAL);
 export const CORPORATE_IMAGE_KEYS = Object.keys(CORPORATE);
 export const FOUNDER_IMAGE_KEYS = Object.keys(FOUNDER);
+export const TEAM_IMAGE_KEYS = Object.keys(TEAM);

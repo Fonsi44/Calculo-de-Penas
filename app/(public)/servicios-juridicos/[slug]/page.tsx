@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { ArrowRight, BookOpen } from 'lucide-react';
-import { site, absoluteUrl } from '@/lib/site';
+import { ArrowRight, BookOpen, MessageCircle } from 'lucide-react';
+import { site, absoluteUrl, whatsappHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -15,6 +16,86 @@ import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+
+/**
+ * Mapa de slug de área → abogado/a especialista que la dirige.
+ * Drive el bloque «Su abogado/a» y refuerza E-E-A-T alineando title↔H1↔autor.
+ * Los perfiles (Person @id) se definen en lib/site.ts y se inyectan vía
+ * JSON-LD global en app/(public)/layout.tsx.
+ */
+type LawyerProfile = {
+  name: string;
+  jobTitle: string;
+  image: string;
+  imageAltText: string;
+  tagline: string;
+  description: string;
+  ctaHref: string;
+  ctaLabel: string;
+};
+
+const AREA_LAWYER: Record<string, LawyerProfile> = {
+  'derecho-penal': {
+    name: FOUNDER_PROFILE.name,
+    jobTitle: FOUNDER_PROFILE.jobTitle,
+    image: FOUNDER_PROFILE.imageAlt,
+    imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
+    tagline: 'Defensa penal como pilar histórico del bufete',
+    description: 'Más de 15 años de ejercicio profesional. Audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y la zona sur.',
+    ctaHref: '/derecho-penal',
+    ctaLabel: 'Ver defensa penal',
+  },
+  'derecho-de-familia': {
+    name: THANIA_PROFILE.name,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    image: THANIA_PROFILE.image,
+    imageAltText: THANIA_PROFILE.imageAltText,
+    tagline: 'Derecho de Familia · Civil y Notarial · Mercantil · Administrativo',
+    description: 'Socia fundadora del bufete. Atiende divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y mediación familiar en Nacaome, Valle y la zona sur.',
+    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho de familia.'),
+    ctaLabel: 'Hablar con ella por WhatsApp',
+  },
+  'derecho-laboral': {
+    name: EMIL_PROFILE.name,
+    jobTitle: EMIL_PROFILE.jobTitle,
+    image: EMIL_PROFILE.image,
+    imageAltText: EMIL_PROFILE.imageAltText,
+    tagline: 'Derecho Laboral · Penal · Civil y Notarial',
+    description: 'Socio del bufete. Despidos injustificados, prestaciones, accidentes de trabajo, acoso laboral, juicio oral laboral y recursos de casación laboral en Valle y la zona sur.',
+    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho laboral.'),
+    ctaLabel: 'Hablar con él por WhatsApp',
+  },
+  'derecho-civil-y-notarial': {
+    name: THANIA_PROFILE.name,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    image: THANIA_PROFILE.image,
+    imageAltText: THANIA_PROFILE.imageAltText,
+    tagline: 'Civil y Notarial · Mercantil · Familia · Administrativo',
+    description: 'Socia fundadora del bufete. Compraventas, donaciones, hipotecas, poderes notariales, sociedades civiles, fideicomisos, prescripción adquisitiva y daños y perjuicios.',
+    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho civil o notarial.'),
+    ctaLabel: 'Hablar con ella por WhatsApp',
+  },
+  'derecho-mercantil-empresarial': {
+    name: THANIA_PROFILE.name,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    image: THANIA_PROFILE.image,
+    imageAltText: THANIA_PROFILE.imageAltText,
+    tagline: 'Mercantil y Empresarial · Civil · Administrativo · Familia',
+    description: 'Socia fundadora del bufete. Constitución de sociedades, contratos mercantiles, gobierno corporativo, compliance, protección al consumidor, propiedad industrial y quiebras.',
+    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho mercantil o empresarial.'),
+    ctaLabel: 'Hablar con ella por WhatsApp',
+  },
+  'derecho-administrativo-y-servicio-civil': {
+    name: THANIA_PROFILE.name,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    image: THANIA_PROFILE.image,
+    imageAltText: THANIA_PROFILE.imageAltText,
+    tagline: 'Administrativo y Servicio Civil · Mercantil · Civil · Familia',
+    description: 'Socia fundadora del bufete. Recursos administrativos, nulidad de actos, servicio civil, contratación del Estado, sanciones y litigio administrativo en Honduras.',
+    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho administrativo.'),
+    ctaLabel: 'Hablar con ella por WhatsApp',
+  },
+};
 
 /** Mapa de slug de servicio a slug de categoría de blog */
 const SERVICE_TO_BLOG_CATEGORY: Record<string, string> = {
@@ -142,6 +223,77 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           </div>
         </Container>
       </section>
+
+      {/* SU ABOGADO/A —bloque condicional por slug. Refuerza E-E-A-T
+          alineando title↔H1↔entidad visible. Solo se renderiza si el área
+          tiene abogado/a asignado en AREA_LAWYER. Retrato tamaño contenido
+          para no dominar visualmente la página. */}
+      {(() => {
+        const lawyer = AREA_LAWYER[slug];
+        if (!lawyer) return null;
+        const isWhatsapp = lawyer.ctaHref.startsWith('https://wa.me/');
+        return (
+          <Section spacing="md">
+            <div className="grid lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-5">
+                <div className="relative mx-auto lg:mx-0 max-w-[12rem]">
+                  <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
+                  <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
+                    <Image
+                      src={lawyer.image}
+                      alt={lawyer.imageAltText}
+                      width={400}
+                      height={500}
+                      className="w-full h-full object-cover"
+                      sizes="(max-width: 1024px) 70vw, 192px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="lg:col-span-7">
+                <p className="eyebrow-rule text-accent-dark mb-3">Su abogado/a</p>
+                <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
+                  {lawyer.name}
+                </h2>
+                <p className="mt-2 text-sm font-bold uppercase tracking-eyebrow text-text-muted">
+                  {lawyer.jobTitle}
+                </p>
+                <p className="mt-1 text-sm text-text-secondary leading-snug">
+                  {lawyer.tagline}
+                </p>
+                <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty max-w-xl">
+                  {lawyer.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {isWhatsapp ? (
+                    <a
+                      href={lawyer.ctaHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
+                    >
+                      <MessageCircle size={16} /> {lawyer.ctaLabel}
+                    </a>
+                  ) : (
+                    <Link
+                      href={lawyer.ctaHref}
+                      className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
+                    >
+                      {lawyer.ctaLabel} <ArrowRight size={14} />
+                    </Link>
+                  )}
+                  <Link
+                    href="/despacho"
+                    className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
+                  >
+                    Conozca el equipo <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Section>
+        );
+      })()}
 
       <Section background="default" spacing="md">
         <div className="max-w-3xl">

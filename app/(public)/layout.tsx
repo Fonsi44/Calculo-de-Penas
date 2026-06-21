@@ -4,7 +4,7 @@ import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
 import { FloatingContactRail } from '@/components/marketing/live-widgets';
 import { PWARegistration } from '@/components/pwa/pwa-registration';
-import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema } from '@/lib/site';
+import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -97,6 +97,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
   const orgLd = organizationSchema();
   const webLd = websiteSchema();
   const founderLd = founderSchema();
+  const thaniaLd = thaniaSchema();
+  const emilLd = emilSchema();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -122,6 +124,14 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(founderLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(thaniaLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(emilLd) }}
       />
     </div>
   );

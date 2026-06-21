@@ -34,13 +34,6 @@ export const LEAD_MAGNETS: LeadMagnet[] = [
     source: 'descarga-derecho-familia',
   },
   {
-    area: 'derecho-laboral',
-    titulo: 'Guía legal: Derecho Laboral en Honduras',
-    descripcion: 'Despidos, prestaciones, horas extra y acoso laboral: conozca sus derechos como trabajador.',
-    archivo: '/descargas/guia-derecho-laboral.pdf',
-    source: 'descarga-derecho-laboral',
-  },
-  {
     area: 'derecho-civil-y-notarial',
     titulo: 'Guía legal: Derecho Civil y Notarial',
     descripcion: 'Contratos, compraventas, sucesiones y actos notariales: guía práctica para sus trámites.',

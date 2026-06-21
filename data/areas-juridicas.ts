@@ -121,7 +121,7 @@ export const areasGenerales: AreaStandalone[] = [
       { pregunta: '¿Puedo pedir custodia compartida?', respuesta: 'Sí, el Código de Familia la contempla. El juez evalúa la capacidad de ambos progenitores, la opinión del menor y la cercanía de los domicilios.' },
       { pregunta: '¿Qué pasa si el padre no paga la pensión de alimentos?', respuesta: 'Se ejecuta forzosamente con embargo de salario, cuentas bancarias o bienes. Puede configurarse el delito de incumplimiento de deberes familiares.' },
     ],
-    areasRelacionadas: ['mediacion-conflictos-penales-y-multas', 'asuntos-civiles-y-familiares-desde-el-extranjero'],
+    areasRelacionadas: ['derecho-civil-y-notarial', 'conciliacion-y-arbitraje', 'derecho-laboral'],
     keywords: [
       'abogado de familia Nacaome',
       'divorcio Honduras',
@@ -168,7 +168,7 @@ export const areasGenerales: AreaStandalone[] = [
       { pregunta: '¿Cuándo se paga el aguinaldo en Honduras?', respuesta: 'El aguinaldo se paga en dos cuotas: 50% antes del 30 de junio y 50% antes del 30 de noviembre, o en un solo pago antes del 20 de diciembre.' },
       { pregunta: '¿Qué hago si sufro un accidente laboral?', respuesta: 'Notificar al empleador de inmediato, recibir atención del IHSS y, si hay negligencia, demandar la indemnización complementaria ante el Juzgado del Trabajo.' },
     ],
-    areasRelacionadas: ['asesoria-preventiva', 'conciliacion-y-arbitraje'],
+    areasRelacionadas: ['conciliacion-y-arbitraje', 'derecho-mercantil-empresarial', 'derecho-civil-y-notarial'],
     keywords: [
       'abogado laboral Honduras',
       'despido injustificado Nacaome',
@@ -213,7 +213,7 @@ export const areasGenerales: AreaStandalone[] = [
       { pregunta: '¿Se puede desahuciar al inquilino que no paga en Honduras?', respuesta: 'Sí, mediante juicio verbal de desahucio por falta de pago con plazo de 2 meses, y en casos urgentes juicio ejecutivo.' },
       { pregunta: '¿Qué diferencia hay entre prescripción y usucapión?', respuesta: 'La prescripción adquisitiva es la figura general; la usucapión suele aplicarse a bienes inmuebles con posesión pacífica e ininterrumpida por el plazo legal (5, 10 o 20 años según el caso).' },
     ],
-    areasRelacionadas: ['derecho-de-familia', 'asuntos-civiles-y-familiares-desde-el-extranjero'],
+    areasRelacionadas: ['derecho-de-familia', 'derecho-mercantil-empresarial', 'conciliacion-y-arbitraje'],
     keywords: [
       'abogado civil Nacaome',
       'compraventa inmuebles Honduras',
@@ -459,7 +459,7 @@ export const areasGenerales: AreaStandalone[] = [
       { pregunta: '¿Cuánto tarda la residencia temporal en Honduras?', respuesta: 'Entre 6 y 18 meses dependiendo del tipo y la carga del INM. Con patrocinador abogado, se reduce significativamente.' },
       { pregunta: '¿Puedo naturalizarme sin renunciar a mi nacionalidad?', respuesta: 'Sí, Honduras reconoce la doble nacionalidad por nacimiento. Si la adquirió por naturalización, deberá revisar los tratados bilaterales.' },
     ],
-    areasRelacionadas: ['hondurenos-en-espana', 'derecho-de-familia'],
+    areasRelacionadas: ['derecho-de-familia', 'derecho-administrativo-y-servicio-civil'],
     keywords: [
       'INM Honduras',
       'residencia Honduras',
