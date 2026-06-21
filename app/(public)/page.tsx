@@ -157,8 +157,27 @@ export default async function HomePage() {
       {/* HERO — potente pero equilibrado: texto (7 col) + panel informativo (5 col).
           Sin imágenes dominantes; capas de fondo no fotográficas (grid + halos). */}
       <section className="relative bg-hero-gradient text-text-inverse overflow-hidden">
+        {/* Foto de fondo translúcida (litigio / tribunal) sobre el gradiente
+            azul del hero: aporta profundidad y textura sin competir con el
+            texto. Opacidad baja para mantener la legibilidad del contenido. */}
+        <div
+          className="absolute inset-0 pointer-events-none bg-no-repeat bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/images/penal/litigio-complejo.webp')",
+            opacity: 0.22,
+          }}
+          aria-hidden="true"
+        />
+        {/* Veladura azul que preserva el contraste del texto inverso sobre la
+            foto: más densa a la izquierda (donde va el copy, col-span-7) y
+            algo más abierta en el centro para que se aprecie la textura. */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'linear-gradient(100deg, rgba(13,27,62,0.80) 0%, rgba(13,27,62,0.42) 55%, rgba(13,27,62,0.66) 100%)' }}
+          aria-hidden="true"
+        />
         {/* Capas de fondo no fotográficas: grid sutil + halos dorados radiales. */}
-        <div className="absolute inset-0 pointer-events-none bg-grid opacity-50" aria-hidden="true" />
+        <div className="absolute inset-0 pointer-events-none bg-grid opacity-40" aria-hidden="true" />
         <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true">
           <div className="absolute -top-24 -right-24 w-[24rem] h-[24rem] rounded-full bg-accent/20 blur-[100px]" />
           <div className="absolute -bottom-32 -left-24 w-[20rem] h-[20rem] rounded-full bg-accent-dark/15 blur-[80px]" />
