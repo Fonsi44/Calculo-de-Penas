@@ -52,6 +52,7 @@ lib/
   auth.ts             → JWT + bcrypt
   site.ts             → Config centralizada + JSON-LD
   blog-db.ts          → Blog: helper de lectura DB
+  blog-hub.ts         → Blog: lógica del content hub (/blog) — derivaciones, búsqueda, orden
   faq-db.ts           → FAQ: helper de lectura DB
   page-content-db.ts  → CMS: helper de páginas editables
   email.ts            → Resend (transaccional + webhook)
@@ -272,6 +273,27 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
   `data/codigo_civil.json`, `data/codigo_comercio.json`,
   `data/articulos_constitucion.json`), neutralizando cualquier afirmación no
   verificable. Detalle en `CHANGELOG.md`.
+- **Hub del blog (`/blog`) — content hub magazine (Jun 2026):** rediseño del
+  índice del blog como portal editorial escalable (preparado para 300+
+  artículos). Arquitectura por capas:
+  - **Datos:** `lib/blog-hub.ts` — derivaciones puras (destacados con fallback
+    resiliente, categorías con conteo, "lecturas recomendadas" vía heurístico
+    determinista, archivo por meses, búsqueda/orden) a partir de una sola
+    consulta DB (`getAllPosts`). Sin datos mock ni métricas inventadas (R4).
+  - **Componentes (`components/blog/`):** `BlogHero` (H1 + stats), `FeaturedPosts`
+    (magazine 1+3), `CategoryNavigation` (chips por volumen + "Más categorías"),
+    `BlogFilters` (orden Recientes/Relevantes + chips de filtros activos),
+    `BlogCard` (variantes default/featured/compact), `BlogCardGrid`,
+    `BlogSidebar` (categorías indexables + recomendadas + recientes + archivo +
+    etiquetas), `EmptyState`, `BlogPagination`, `BlogExplorer` (orquestador
+    cliente).
+  - **UX:** buscador instantáneo + filtro rápido por categoría (cliente, sin
+    URLs indexables → sin canibalización) + "cargar más" en vista filtrada;
+    paginación server-side con `rel prev/next` en la vista por defecto (SEO).
+  - **SEO preservado:** un solo `<h1>`, canonical/robots/prev-next intactos,
+    `?tag=` sigue noindex, categorías indexables vía `/blog/[categoria]`
+    (enlaces del sidebar), `CollectionPage` JSON-LD, breadcrumbs. Responsive
+    (1 col móvil con filtros colapsables / 2 cols tablet / 2+sidebar desktop).
 
 ### FAQ (`/preguntas-frecuentes`)
 - **Fuente:** DB (tabla `faq_entries`). `data/faq.ts` = legacy en uso

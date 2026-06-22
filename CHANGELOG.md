@@ -5,6 +5,72 @@
 
 ---
 
+## Unreleased — Rediseño del hub del blog (`/blog`) como content hub magazine
+
+Transformación del índice del blog en un portal editorial escalable (preparado
+para 300+ artículos y 20 categorías), manteniendo identidad visual, rutas, SEO
+y arquitectura editorial. Sin nuevas dependencias.
+
+### Cambios
+
+**Nuevo: capa de datos del hub (`lib/blog-hub.ts`)**
+- Derivaciones puras a partir de una sola consulta DB (`getAllPosts`):
+  destacados con fallback resiliente (featured + recientes con diversidad de
+  categoría), categorías con conteo ordenadas por volumen, "lecturas
+  recomendadas" (heurístico determinista: featured + nº de etiquetas + recencia
+  — etiquetado honesto, sin métricas de vistas inventadas), archivo por meses
+  (es-HN), etiquetas, búsqueda insensible a acentos y orden Recientes/Relevantes.
+- `BlogCardData` (payload ligero sin `body`) en `data/blog/types.ts` para no
+  inflar el bundle cliente.
+
+**Nuevo: componentes del hub (`components/blog/`)**
+- `BlogHero` (server, H1 + estadísticas), `FeaturedPosts` (server, magazine
+  1 tarjeta grande + 3 secundarias), `CategoryNavigation` (cliente, chips por
+  volumen + desplegable "Más categorías" con panel flotante y cierre por
+  backdrop), `BlogFilters` (cliente, orden segmentado + chips de filtros
+  activos con quitar + "Limpiar filtros"), `BlogCardGrid` (presentacional),
+  `EmptyState` (server, estado vacío con salidas útiles), `BlogPagination`
+  (server, accesible, preserva `?tag=`), `BlogExplorer` (cliente, orquestador
+  de búsqueda + filtros + orden + cuadrícula + "cargar más").
+- **`BlogCard` refactorizado:** variantes `default` / `featured` / `compact`,
+  client-safe (imports puros de `lib/datetime` + `data/blog/categories` para
+  poder usarse en server y cliente). API compatible con la página de categoría.
+
+**Refactor: `BlogSidebar`**
+- Ahora recibe datos derivados en servidor (sin llamadas DB propias): categorías
+  indexables con conteo, lecturas recomendadas, recientes, archivo por meses y
+  etiquetas. Sticky en desktop.
+
+**Reescrito: `app/(public)/blog/page.tsx`**
+- Layout dos columnas (cuadrícula + sidebar), hero dedicado, sección
+  destacados solo en página 1 sin tag, destacados excluidos del grid (sin
+  duplicar). Dual mode: vista servidor paginada (con `rel prev/next`) cuando
+  no hay filtros cliente; vista cliente con "cargar más" al buscar/filtrar/ordenar.
+
+### SEO (preservado / sin regresión)
+- Un solo `<h1>` por página (verificado en `/blog`, `/blog?page=2`,
+  `/blog?tag=*`, `/blog/[categoria]`).
+- Canonical, `robots` (noindex para `?tag=`), `rel prev/next`, `CollectionPage`
+  JSON-LD y breadcrumbs intactos.
+- Categorías siguen indexables vía `/blog/[categoria]` (enlaces del sidebar);
+  el filtro rápido de categoría es cliente y no crea URLs indexables (evita
+  canibalización, §5 AGENTS.md).
+- Sitemap y `PUBLIC_ROUTES` sin cambios (`/blog` sigue prioridad 0.6).
+
+### Validación
+- `npm run lint` → 0 errores.
+- `npm run build` → 293 páginas, TypeScript OK, 148 posts SSG prerrenderizados.
+- `npm test` → 600/601 OK (1 fallo preexistente ajeno: `site.tagline` no
+  contiene "Pineda y Asociados" — test sobre la home, no sobre el blog).
+- Servidor de producción + `Invoke-WebRequest`:
+  - `/blog` → 200, 1 H1, sección destacados, sidebar, paginación, schema.
+  - `/blog?page=2` y `?page=3` → 200, 1 H1, paginación, `rel prev/next`.
+  - `/blog?tag=Choluteca` → 200, 6 tarjetas (coincide con DB).
+  - `/blog?tag=zzz` → 200, `EmptyState` renderizado.
+  - `/blog/derecho-penal` → 200 (página de categoría sin cambios).
+
+---
+
 ## Unreleased — llms.txt: deploy a producción + verificación completa SEO/GEO/AEO
 
 Deploy a Vercel Production de todos los cambios de llms.txt, robots.txt,

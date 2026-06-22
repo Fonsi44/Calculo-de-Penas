@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
-import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -65,8 +62,6 @@ export default async function MigrantesPage() {
     url,
   });
 
-  const blogPosts = (await getPostsByCategory('hondurenos-en-espana')).slice(0, 3);
-
   return (
     <>
       <Breadcrumbs items={[
@@ -125,63 +120,22 @@ export default async function MigrantesPage() {
         </div>
       </Section>
 
-      {blogPosts.length > 0 && (
-        <Section spacing="md">
-          <SectionHeader
-            eyebrow="Artículos relacionados"
-            title="Aprenda más sobre trámites para hondureños en España"
-            subtitle="Guías, consejos y análisis legales escritos por nuestro equipo."
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {blogPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
-                <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
-                    <BookOpen size={20} aria-hidden="true" />
-                  </div>
-                  <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
-                    {formatDate(post.publishedAt)}
-                  </p>
-                  <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-xs text-text-secondary mt-1.5 leading-relaxed line-clamp-2">
-                    {post.description}
-                  </p>
-                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                    Leer artículo <ArrowRight size={12} />
-                  </span>
-                </Card>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center mt-6">
-            <Link
-              href="/blog/hondurenos-en-espana"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver todos los artículos de hondureños en España <ArrowRight size={16} />
-            </Link>
-          </div>
-        </Section>
-      )}
-
-      {/* GUIAS DESTACADAS — enlazado interno reforzado hacia posts estratégicos
-          de hondurenos-en-espana. Refuerza el crawl path de Google hacia guías
-          de alto valor (poderes, nacionalidad, herencias, reagrupación).
-          Ver docs/indexacion-plan-decision.md §5 (Fase 3). */}
+      {/* GUÍAS PARA HONDUREÑOS EN ESPAÑA — sección editorial única.
+          Hub de guías del blog de la categoría hondurenos-en-espana.
+          Unifica los antiguos bloques "Artículos relacionados" y "Guías
+          destacadas" que duplicaban función. Slugs verificados contra DB. */}
       <BlogHighlights
         slugs={[
           'poder-desde-espana-para-tramites-honduras',
           'nacionalidad-espanola-para-hondurenos-residencia-plazos',
-          'herencias-transfronterizas-bienes-honduras-espana',
           'reagrupacion-familiar-hondurenos-espana',
-          'asuntos-familiares-honduras-viviendo-espana',
-          'tributar-espana-bienes-honduras-guia-fiscal',
+          'arraigo-social-laboral-hondurenos-espana',
+          'herencias-transfronterizas-bienes',
+          'tributar-espana-bienes-guia',
         ]}
         eyebrow="Guías para hondureños en España"
-        title="Recursos prácticos para trámites entre Honduras y España"
-        subtitle="Poderes notariales, nacionalidad, herencias transfronterizas, reagrupación familiar y fiscalidad internacional explicados por nuestro equipo."
+        title="Guías para hondureños en España"
+        subtitle="Recursos prácticos para hondureños que viven en España y necesitan resolver trámites migratorios, familiares, notariales o legales vinculados con Honduras."
         ctaLabel="Explorar todas las guías para hondureños en España"
         ctaHref="/blog/hondurenos-en-espana"
         spacing="sm"

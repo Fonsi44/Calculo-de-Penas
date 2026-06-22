@@ -1,19 +1,29 @@
 import type { Metadata } from 'next';
-import { site } from '@/lib/site';
-import { Section } from '@/components/marketing/section';
-import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { BlogCard } from '@/components/blog/blog-card';
-import { CategoryFilter } from '@/components/blog/category-filter';
-import { BlogSearch } from '@/components/blog/blog-search';
-import { NewsletterSection } from '@/components/blog/newsletter-section';
-import { getAllPosts, getFeaturedPosts, getPostsByTag, getPostsByPage, getTotalPages } from '@/lib/blog';
-import { blogCollectionSchema } from '@/lib/schemas/blog';
-import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
-import { PageHero } from '@/components/marketing/page-hero';
-import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
+import { site } from '@/lib/site';
+import { Container } from '@/components/marketing/section';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { RssButton } from '@/components/marketing/rss-button';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { NewsletterSection } from '@/components/blog/newsletter-section';
+import { BlogHero } from '@/components/blog/blog-hero';
+import { FeaturedPosts } from '@/components/blog/featured-posts';
+import { BlogExplorer } from '@/components/blog/blog-explorer';
+import { BlogSidebar } from '@/components/blog/blog-sidebar';
+import { blogCollectionSchema } from '@/lib/schemas/blog';
+import {
+  getAllPosts,
+  getPostsByPage,
+  getTotalPages,
+} from '@/lib/blog';
+import {
+  toCardData,
+  deriveFeaturedPosts,
+  deriveCategoryCounts,
+  derivePopularPosts,
+  deriveRecentPosts,
+  deriveArchiveMonths,
+  deriveAllTags,
+} from '@/lib/blog-hub';
 
 export const revalidate = 3600;
 
@@ -29,13 +39,15 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     ? `/blog${page > 1 ? `?page=${page}` : ''}${tagFilter ? `${page > 1 ? '&' : '?'}tag=${encodeURIComponent(tagFilter)}` : ''}`
     : '/blog';
   return {
-    // Absolute para controlar la longitud total. Antes, con la paginación el
-    // title llegaba a 69 caracteres (>65) por el sufijo del template.
+    // Absolute para controlar la longitud total del title (SEO).
     title: { absolute: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}` },
     description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
     keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],
-    robots: tagFilter ? { index: false, follow: true, googleBot: { index: false, follow: true } } : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+    // ?tag= no indexable (filtra por etiqueta, no es URL canónica de categoría).
+    robots: tagFilter
+      ? { index: false, follow: true, googleBot: { index: false, follow: true } }
+      : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
       title: `Blog Jurídico — Artículos de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}`,
@@ -59,11 +71,37 @@ export default async function BlogHubPage(props: Props) {
   const tagFilter = searchParams?.tag;
   const page = parseInt(searchParams?.page ?? '1', 10) || 1;
 
+  // Una sola consulta DB (getAllPosts). El resto se deriva en memoria.
   const allPosts = await getAllPosts();
-  const filteredPosts = tagFilter ? await getPostsByTag(tagFilter) : allPosts;
-  const totalPages = getTotalPages(filteredPosts, ITEMS_PER_PAGE);
-  const posts = getPostsByPage(filteredPosts, page, ITEMS_PER_PAGE);
-  const featured = tagFilter || page > 1 ? [] : await getFeaturedPosts();
+
+  // Filtro por etiqueta (?tag=, server-side, noindex) — deriva en memoria.
+  const tagFiltered = tagFilter
+    ? allPosts.filter((p) => (p.tags ?? []).includes(tagFilter))
+    : allPosts;
+
+  // Destacados: solo en página 1 sin filtro de etiqueta.
+  const showFeatured = !tagFilter && page === 1;
+  const featured = showFeatured ? deriveFeaturedPosts(allPosts, 4) : [];
+  const featuredSlugs = new Set(featured.map((f) => f.slug));
+
+  // Listado paginado (vista servidor). En página 1 sin tag, se excluyen los
+  // destacados del grid para no duplicarlos con la sección magazine.
+  const gridSource = showFeatured
+    ? tagFiltered.filter((p) => !featuredSlugs.has(p.slug))
+    : tagFiltered;
+  const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);
+  const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
+
+  // Derivaciones para el sidebar y la navegación (una sola pasada).
+  const categoryCounts = deriveCategoryCounts(allPosts);
+  const popular = derivePopularPosts(allPosts, 5).map(toCardData);
+  const recent = deriveRecentPosts(allPosts, 5).map(toCardData);
+  const archive = deriveArchiveMonths(allPosts, 8);
+  const tags = deriveAllTags(allPosts);
+
+  // Payload ligero (sin body) para el explorador cliente.
+  const explorerPosts = tagFiltered.map(toCardData);
+  const explorerPagePosts = pagePosts.map(toCardData);
 
   const buildPageUrl = (p: number) => {
     const base = '/blog';
@@ -76,122 +114,74 @@ export default async function BlogHubPage(props: Props) {
 
   return (
     <>
+      {/* rel prev/next solo en vista paginada sin tag (indexable). */}
       {!tagFilter && page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
       {!tagFilter && page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
+
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
         { label: 'Blog Jurídico' },
       ]} />
 
-      <PageHero
-        eyebrow="Blog Jurídico"
-        badge="Artículos y guías"
+      <BlogHero
         title="Blog Jurídico de Abogados en Honduras"
         subtitle="Artículos, análisis y guías escritos por nuestro equipo. Información clara y práctica sobre el sistema legal hondureño."
-        cta={<CTAGroup variant="inverse" />}
+        postCount={allPosts.length}
+        categoryCount={categoryCounts.length}
       />
 
-      <TrustBar background="light" />
+      {showFeatured && featured.length > 0 && (
+        <FeaturedPosts posts={featured.map(toCardData)} />
+      )}
 
-      <Section spacing="md">
-        <div className="space-y-6">
-          <div className="mb-6">
-            <CategoryFilter />
-          </div>
-          <BlogSearch posts={allPosts} />
-
-          {featured.length > 0 && (
-            <div className="mb-8">
-              <h2 className="font-bold text-lg text-text mb-4">Artículo destacado</h2>
-              {featured.map((p) => (
-                <BlogCard key={p.slug} post={p} featured />
-              ))}
-            </div>
-          )}
-
-          {tagFilter && (
-            <div className="mb-6 flex items-center gap-2">
-              <span className="text-sm text-text-secondary">
-                Filtrando por etiqueta:
-              </span>
-              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
-                {tagFilter}
-              </span>
-              <Link
-                href="/blog"
-                className="text-xs text-text-muted hover:text-primary ml-2 transition-colors"
-              >
-                Limpiar filtro
-              </Link>
-            </div>
-          )}
-          {posts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-text-secondary">
-                {tagFilter ? `No hay artículos con la etiqueta "${tagFilter}".` : 'Próximamente publicaremos nuestros primeros artículos.'}
-              </p>
-            </div>
-          ) : (
-            <div>
-              <h2 className="font-bold text-lg text-text mb-4">
-                {featured.length > 0 ? 'Todos los artículos' : tagFilter ? `Artículos etiquetados: ${tagFilter}` : 'Artículos'}
-                {totalPages > 1 && <span className="text-text-muted font-normal text-sm ml-2">— Página {page} de {totalPages}</span>}
-              </h2>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {posts.map((p) => (
-                  <BlogCard key={p.slug} post={p} />
-                ))}
-              </div>
-
-              {totalPages > 1 && (
-                <nav className="flex justify-center items-center gap-3 mt-8" aria-label="Paginación del blog">
-                  {page > 1 ? (
-                    <Link
-                      href={buildPageUrl(page - 1)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
-                    >
-                      <ArrowLeft size={14} /> Anterior
-                    </Link>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
-                      <ArrowLeft size={14} /> Anterior
-                    </span>
+      {/* ── Contenido principal: cuadrícula + sidebar ── */}
+      <section id="articulos" className="py-10 md:py-14">
+        <Container size="lg">
+          <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
+            {/* Columna principal */}
+            <div className="min-w-0 space-y-6">
+              <div className="flex items-center justify-between gap-4">
+                <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
+                  {tagFilter ? 'Artículos etiquetados' : page > 1 ? `Todos los artículos` : 'Todos los artículos'}
+                  {totalPages > 1 && !tagFilter && (
+                    <span className="text-text-muted font-normal text-sm ml-2">— Página {page} de {totalPages}</span>
                   )}
-                  <span className="text-sm text-text-secondary px-2">
-                    Página {page} de {totalPages}
-                  </span>
-                  {page < totalPages ? (
-                    <Link
-                      href={buildPageUrl(page + 1)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
-                    >
-                      Siguiente <ArrowRight size={14} />
-                    </Link>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/20 text-sm text-text-muted opacity-50 cursor-not-allowed">
-                      Siguiente <ArrowRight size={14} />
-                    </span>
-                  )}
-                </nav>
-              )}
-
-              <div className="mt-8">
+                </h2>
                 <RssButton />
               </div>
 
-              <p className="mt-4 text-center">
+              <BlogExplorer
+                posts={explorerPosts}
+                categories={categoryCounts}
+                pagePosts={explorerPagePosts}
+                page={page}
+                totalPages={totalPages}
+                activeTag={tagFilter ?? null}
+                itemsPerPage={ITEMS_PER_PAGE}
+              />
+
+              <p className="text-sm text-text-muted pt-2 border-t border-border/30">
                 ¿Tiene dudas legales?{' '}
                 <Link
                   href="/preguntas-frecuentes"
-                  className="text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                  className="font-semibold text-accent-dark hover:text-primary transition-colors"
                 >
                   Consulte nuestras preguntas frecuentes →
                 </Link>
               </p>
             </div>
-          )}
-        </div>
-      </Section>
+
+            {/* Sidebar */}
+            <BlogSidebar
+              categories={categoryCounts}
+              popular={popular}
+              recent={recent}
+              archive={archive}
+              tags={tags}
+            />
+          </div>
+        </Container>
+      </section>
 
       <NewsletterSection />
 
