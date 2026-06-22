@@ -16,7 +16,8 @@ import type { BlogCardData } from '@/data/blog/types';
  *
  * Variantes:
  *  - `default`  → tarjeta vertical de la cuadrícula (imagen arriba).
- *  - `featured` → destacado principal del magazine (imagen grande lateral).
+ *  - `featured` → destacado principal del magazine (imagen grande con overlay).
+ *  - `secondary`→ destacado secundario horizontal (imagen izq + texto der).
  *  - `compact`  → fila compacta para el sidebar (thumbnail + texto).
  *
  * Acepta `Post` (servidor) o `BlogCardData` (cliente): BlogCardData es un
@@ -47,12 +48,13 @@ function shortDate(iso: string): string {
 
 type Props = {
   post: BlogCardData;
-  variant?: 'default' | 'featured' | 'compact';
+  variant?: 'default' | 'featured' | 'secondary' | 'compact';
   priority?: boolean;
   ctaLabel?: string;
+  className?: string;
 };
 
-export function BlogCard({ post, variant = 'default', priority, ctaLabel }: Props) {
+export function BlogCard({ post, variant = 'default', priority, ctaLabel, className }: Props) {
   const { nombre: catNombre, color: catColor } = catMeta(post.category);
   const href = `/blog/${post.category}/${post.slug}`;
   const badgeCls = CAT_COLORS[catColor] ?? CAT_COLORS.muted;
@@ -133,6 +135,46 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel }: Prop
               <span className="flex items-center gap-1"><Clock size={12} /> {post.readingTime}</span>
             </div>
           </div>
+        </div>
+      </Link>
+    );
+  }
+
+  if (variant === 'secondary') {
+    return (
+      <Link
+        href={href}
+        title={post.title}
+        className={cn(
+          'group flex rounded-lg border border-border/40 bg-background overflow-hidden hover:border-accent/40 hover:shadow-md transition-all min-h-0',
+          className,
+        )}
+      >
+        <div className="relative w-28 sm:w-32 flex-shrink-0 overflow-hidden bg-primary/5 aspect-square lg:aspect-auto">
+          {post.coverImage ? (
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              priority={priority}
+              sizes="128px"
+              className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
+          )}
+        </div>
+        <div className="flex flex-col flex-1 p-3.5 min-w-0 justify-center">
+          <span className={cn('self-start inline-block text-xxs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1.5', badgeCls)}>
+            {catNombre}
+          </span>
+          <h3 className="font-serif font-bold text-sm leading-snug text-text group-hover:text-primary transition-colors line-clamp-2">
+            {post.title}
+          </h3>
+          <p className="mt-2 text-xxs text-text-muted flex items-center gap-3">
+            <span className="flex items-center gap-1"><Calendar size={11} /> {shortDate(post.publishedAt)}</span>
+            <span className="flex items-center gap-1"><Clock size={11} /> {post.readingTime}</span>
+          </p>
         </div>
       </Link>
     );

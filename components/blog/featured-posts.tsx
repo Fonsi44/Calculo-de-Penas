@@ -42,9 +42,9 @@ export function FeaturedPosts({ posts }: { posts: BlogCardData[] }) {
             <BlogCard post={hero} variant="featured" priority />
           </div>
           {secondary.length > 0 && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-5">
+            <div className="flex flex-col gap-5 lg:h-full">
               {secondary.slice(0, 3).map((p) => (
-                <BlogCard key={p.slug} post={p} />
+                <BlogCard key={p.slug} post={p} variant="secondary" className="lg:flex-1" />
               ))}
             </div>
           )}
