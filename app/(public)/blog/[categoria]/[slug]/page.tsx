@@ -31,9 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(slug);
   if (!post || post.category !== categoria) return {};
 
-  const metaTitle = post.metaTitle || post.title;
+  const metaTitle = (post.metaTitle || post.title).replace(/\s*\.\.\.$/g, '').trim();
   const metaDesc = post.metaDescription || post.description;
-  const ogImg = post.ogImage || post.coverImage || '/og-image.png';
+  const ogImg = post.ogImage || post.coverImage || '/og-image.webp';
   const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
   const noindex = post.noindex === true;
 

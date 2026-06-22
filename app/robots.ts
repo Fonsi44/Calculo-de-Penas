@@ -23,7 +23,7 @@ const allowAll = [
   '/*.ico$',
 ];
 
-const blockPrivate = ['/intranet/', '/api/', '/404', '/500', '/_not-found', '/login'];
+const blockPrivate = ['/intranet/', '/api/', '/404', '/500', '/_not-found'];
 
 export default function robots(): MetadataRoute.Robots {
   if (site.noindex) {

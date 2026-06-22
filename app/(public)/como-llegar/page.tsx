@@ -10,7 +10,7 @@ import {
   Clock,
   ExternalLink,
 } from 'lucide-react';
-import { site, telHref, whatsappHref } from '@/lib/site';
+import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CopyableAddress } from '@/components/marketing/copyable-address';
@@ -254,6 +254,19 @@ export default function ComoLlegarPage() {
       </Section>
 
       <ConsultationCTA />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/como-llegar')}#webpage`,
+          url: absoluteUrl('/como-llegar'),
+          name: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department}`,
+          description: `Indicaciones para llegar a ${site.name} en Nacaome, Valle. Dirección exacta, mapa, rutas, cómo llegar desde Tegucigalpa, Choluteca y San Lorenzo.`,
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
     </>
   );
 }

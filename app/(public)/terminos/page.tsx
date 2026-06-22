@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 export default async function TerminosPage() {
   const c = await getLegalPageContent('terminos');
   return (
+    <>
     <LegalDocument
       eyebrow="Condiciones de uso del servicio"
       title={c.title}
@@ -174,5 +175,19 @@ export default async function TerminosPage() {
         </p>
       </LegalSection>
     </LegalDocument>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/terminos')}#webpage`,
+          url: absoluteUrl('/terminos'),
+          name: 'Términos y Condiciones | Pineda y Asociados',
+          description: 'Términos y condiciones de uso del sitio web de Pineda y Asociados en Nacaome, Valle. Reglas de acceso y uso de servicios jurídicos publicados.',
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
+    </>
   );
 }

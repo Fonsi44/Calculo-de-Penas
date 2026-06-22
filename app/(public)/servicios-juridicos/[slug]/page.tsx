@@ -4,6 +4,10 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ArrowRight, BookOpen, MessageCircle } from 'lucide-react';
 import { site, absoluteUrl, whatsappHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+}
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -124,6 +128,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const area = getAreaBySlug(slug);
   if (!area) return {};
 
+  const descPlain = stripHtml(area.descripcion);
+
   const OG_IMAGES: Record<string, string> = {
     'derecho-de-familia': '/og/familia.webp',
     'derecho-laboral': '/og/laboral.webp',
@@ -135,18 +141,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const canonical = `/servicios-juridicos/${slug}`;
   return {
     title: area.titulo,
-    description: `${area.descripcion.substring(0, 100)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
+    description: `${descPlain.substring(0, 100)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
     alternates: { canonical },
     keywords: area.keywords,
     twitter: {
       card: 'summary_large_image',
       title: `${area.titulo} | ${site.name}`,
-      description: area.descripcion.substring(0, 155),
-      images: [`${site.url}${ogImage || '/og-image.png'}`],
+      description: descPlain.substring(0, 155),
+      images: [`${site.url}${ogImage || '/og-image.webp'}`],
     },
     openGraph: {
       title: `${area.titulo} | ${site.name}`,
-      description: area.descripcion.substring(0, 155),
+      description: descPlain.substring(0, 155),
       url: `${site.url}${canonical}`,
       siteName: site.name,
       locale: 'es_HN',

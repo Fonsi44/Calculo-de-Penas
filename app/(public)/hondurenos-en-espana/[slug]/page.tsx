@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title: `${subarea.titulo} | Hondureños en España | ${site.name}`,
       description: subarea.descripcion.substring(0, 155),
-      images: [`${site.url}/og-image.png`],
+      images: [`${site.url}/og/migracion.webp`],
     },
     openGraph: {
       title: `${subarea.titulo} | Hondureños en España | ${site.name}`,
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
-      images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: subarea.titulo }],
+      images: [{ url: `${site.url}/og/migracion.webp`, width: 1200, height: 630, alt: subarea.titulo }],
     },
   };
 }

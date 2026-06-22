@@ -55,6 +55,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description: 'Abogados en Nacaome, Valle. Defensa penal, familia, laboral y asesoría jurídica integral con presupuesto por escrito.',
       images: [ogImage],
+      creator: '@Danilo_Pineda_M',
+      site: '@Danilo_Pineda_M',
     },
     robots: isIndexable
       ? {

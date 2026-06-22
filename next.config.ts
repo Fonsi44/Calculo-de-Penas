@@ -196,14 +196,6 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
-      // /login es un redirect público a /intranet/login: bloquear indexación
-      // (no aporta valor SEO y compite por crawl budget con contenido útil).
-      {
-        source: '/login',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
-        ],
-      },
       // Cache estático: imágenes, fuentes, JS/CSS build de Next.js
       {
         source: '/:path(.+\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2?|ttf|js|css))',

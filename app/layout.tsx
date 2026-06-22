@@ -33,10 +33,7 @@ const siteUrl = site.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s | ${site.name}`,
-  },
+  title: `${site.name} — ${site.tagline}`,
   description: site.description,
   applicationName: site.name,
   authors: [{ name: site.name }],
@@ -57,7 +54,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: "es_HN",
     type: "website",
-    images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: `${site.name} - Bufete jurídico en Nacaome, Valle` }],
+    images: [{ url: `${siteUrl}/og-image.webp`, width: 1200, height: 630, alt: `${site.name} - Bufete jurídico en Nacaome, Valle` }],
   },
   robots: site.noindex
     ? { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } }

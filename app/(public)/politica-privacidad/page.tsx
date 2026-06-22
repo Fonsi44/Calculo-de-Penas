@@ -6,7 +6,7 @@ import {
   LegalList,
   LegalCallout,
 } from '@/components/marketing/legal-document';
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 export default async function PoliticaPrivacidadPage() {
   const c = await getLegalPageContent('politica-privacidad');
   return (
+    <>
     <LegalDocument
       eyebrow="Tratamiento de datos personales"
       title={c.title}
@@ -208,5 +209,19 @@ export default async function PoliticaPrivacidadPage() {
         </LegalCallout>
       </LegalSection>
     </LegalDocument>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/politica-privacidad')}#webpage`,
+          url: absoluteUrl('/politica-privacidad'),
+          name: 'Política de Privacidad | Pineda y Asociados',
+          description: 'Política de privacidad de Pineda y Asociados, bufete en Nacaome, Valle, Honduras. Protección de datos personales conforme al ordenamiento hondureño.',
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
+    </>
   );
 }

@@ -103,10 +103,10 @@ describe('app/robots.ts — bloquea rutas privadas con reglas granulares por bot
   const asArray = (v: string | string[] | undefined): string[] =>
     Array.isArray(v) ? v : v ? [v] : [];
 
-  it('la regla * bloquea /intranet/, /api/, /login (rutas privadas)', () => {
+  it('la regla * bloquea /intranet/, /api/ (rutas privadas)', () => {
     expect(wildcardRule).toBeDefined();
     const disallow = asArray(wildcardRule?.disallow);
-    for (const blocked of ['/intranet/', '/api/', '/login']) {
+    for (const blocked of ['/intranet/', '/api/']) {
       expect(disallow, `debería bloquear ${blocked}`).toContain(blocked);
     }
   });

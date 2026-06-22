@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -142,6 +142,20 @@ export default async function AreasJuridicasPage() {
             '/servicios-juridicos'
           ),
         ),
+      }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Áreas del derecho en Nacaome, Valle',
+          url: absoluteUrl('/servicios-juridicos'),
+          itemListElement: areas.map((area, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: area.titulo,
+            url: absoluteUrl(`/servicios-juridicos/${area.slug}`),
+          })),
+        }),
       }} />
     </>
   );

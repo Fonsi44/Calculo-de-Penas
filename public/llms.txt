@@ -1,65 +1,105 @@
-# Pineda y Asociados
+# Pineda y Asociados HN
 
-> Bufete jurídico multidisciplinario con sede en Nacaome, departamento de Valle, Honduras.
-> Defensa penal técnica y asesoría jurídica integral con más de 15 años de ejercicio profesional.
+> Sitio web oficial de Pineda y Asociados, bufete jurídico multidisciplinario con sede en Nacaome, Valle, Honduras. Este archivo ayuda a sistemas de IA, motores de respuesta y asistentes de búsqueda a identificar las fuentes públicas, canónicas y relevantes del sitio.
 
-## Identidad (entidad)
-- Nombre: Pineda y Asociados
-- Tipo: LegalService / LocalBusiness (bufete de abogados)
-- Sede: Nacaome, Valle, Honduras
-- Cobertura: Nacaome, San Lorenzo, Choluteca, zona sur de Honduras
-- Idioma: es-HN (español de Honduras)
-- Marco legal: República de Honduras · Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)
+## Sitio oficial
 
-## Contacto
-- Teléfono/WhatsApp: +504 9536-3724
-- Email: contacto@pinedayasociadoshn.com
-- Dirección: GGJ7+239, Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. Andara, Nacaome, Valle, Honduras
-- Horario: Lunes a sábado, 7:00 – 20:00 (hora de Honduras, UTC-6)
+- [Inicio](https://www.pinedayasociadoshn.com/): Página principal oficial del bufete.
+- [El Despacho](https://www.pinedayasociadoshn.com/despacho): Información corporativa, trayectoria y valores del bufete.
+- [Servicios Jurídicos](https://www.pinedayasociadoshn.com/servicios-juridicos): Catálogo completo de 14 áreas de práctica.
+- [Derecho Penal](https://www.pinedayasociadoshn.com/derecho-penal): Hub especializado en defensa penal con 7 subáreas.
+- [Blog Jurídico](https://www.pinedayasociadoshn.com/blog): Artículos, guías y análisis sobre legislación hondureña.
+- [Preguntas Frecuentes](https://www.pinedayasociadoshn.com/preguntas-frecuentes): FAQ sobre servicios legales y resolución de dudas comunes.
+- [Solicitar Consulta](https://www.pinedayasociadoshn.com/solicitar-consulta): Formulario público para solicitar asesoría legal.
+- [Hondureños en España](https://www.pinedayasociadoshn.com/hondurenos-en-espana): Asistencia legal para hondureños residentes en España.
+- [Cómo Llegar](https://www.pinedayasociadoshn.com/como-llegar): Dirección física y mapa de ubicación del bufete en Nacaome.
+- [Abogados en Nacaome](https://www.pinedayasociadoshn.com/abogados-en-nacaome): Landing SEO local — sede principal.
+- [Abogados en Choluteca](https://www.pinedayasociadoshn.com/abogados-en-choluteca): Landing SEO local — cobertura en Choluteca.
+- [Abogados en San Lorenzo](https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo): Landing SEO local — cobertura en San Lorenzo.
 
-## Áreas de práctica (serviceType)
-- Defensa penal (pilar fundacional del bufete)
-- Derecho de familia (divorcio, pensión alimentaria, custodia)
-- Derecho laboral (despido, prestaciones, acoso laboral)
-- Derecho civil y notarial (contratos, sucesiones, testamentos)
-- Derecho mercantil y empresarial (sociedades, contratos comerciales)
-- Derecho tributario y fiscal (SAR, impuestos, facturación electrónica)
-- Derecho bancario y financiero (deudas, ejecuciones hipotecarias)
-- Derecho administrativo y servicio civil
-- Derecho aduanero y comercio exterior (Guasaule, Zoli)
-- Regulación sanitaria (ARSAs, registro de alimentos y medicamentos)
-- Extranjería y migración en Honduras
-- Propiedad intelectual (marcas, patentes, derechos de autor)
-- Derecho ambiental regulatorio (licencias, evaluación de impacto)
-- Conciliación y arbitraje
+## Áreas de práctica
 
-## Zonas atendidas (SEO local)
-- Abogados en Nacaome (sede): https://www.pinedayasociadoshn.com/abogados-en-nacaome
-- Abogados en Choluteca: https://www.pinedayasociadoshn.com/abogados-en-choluteca
-- Abogados en San Lorenzo: https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo
+- [Derecho de Familia](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-de-familia): Divorcio, pensión alimentaria, custodia, sucesiones.
+- [Derecho Laboral](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-laboral): Despido, prestaciones, acoso laboral, riesgos profesionales.
+- [Derecho Civil y Notarial](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-civil-y-notarial): Contratos, inmuebles, testamentos, actos notariales.
+- [Derecho Mercantil y Empresarial](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-mercantil-empresarial): Sociedades, contratos comerciales, constitución de empresas.
+- [Derecho Bancario y Financiero](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-bancario-y-financiero): Deudas, ejecuciones hipotecarias, defensa del consumidor financiero.
+- [Derecho Administrativo](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-administrativo-y-servicio-civil): Amparo, contratación pública, sanciones administrativas.
+- [Derecho Aduanero](https://www.pinedayasociadoshn.com/servicios-juridicos/derecho-aduanero-y-comercio-exterior): Comercio exterior, aduanas Guasaule y Zoli.
+- [Regulación Sanitaria](https://www.pinedayasociadoshn.com/servicios-juridicos/regulacion-sanitaria): Registros ARSA, habilitación de clínicas y hospitales.
+- [Extranjería en Honduras](https://www.pinedayasociadoshn.com/servicios-juridicos/extranjeria-en-honduras): Visas, residencia, naturalización para extranjeros.
+- [Propiedad Intelectual](https://www.pinedayasociadoshn.com/servicios-juridicos/propiedad-intelectual): Marcas, patentes, derechos de autor.
+- [Tributario y Fiscal](https://www.pinedayasociadoshn.com/servicios-juridicos/tributario-fiscal): Impuestos, SAR, facturación electrónica, defensa tributaria.
+- [Ambiental Regulatorio](https://www.pinedayasociadoshn.com/servicios-juridicos/ambiental-regulatorio): Licencias ambientales, evaluación de impacto, permisos.
+- [Conciliación y Arbitraje](https://www.pinedayasociadoshn.com/servicios-juridicos/conciliacion-y-arbitraje): Mediación, arbitraje comercial, CCIC.
 
-## URLs principales
-- Inicio: https://www.pinedayasociadoshn.com/
-- El Despacho: https://www.pinedayasociadoshn.com/despacho
-- Servicios jurídicos (14 áreas): https://www.pinedayasociadoshn.com/servicios-juridicos
-- Derecho penal (hub): https://www.pinedayasociadoshn.com/derecho-penal
-- Hondureños en España: https://www.pinedayasociadoshn.com/hondurenos-en-espana
-- Blog jurídico (guías y análisis): https://www.pinedayasociadoshn.com/blog
-- Preguntas frecuentes: https://www.pinedayasociadoshn.com/preguntas-frecuentes
-- Solicitar consulta: https://www.pinedayasociadoshn.com/solicitar-consulta
-- Cómo llegar: https://www.pinedayasociadoshn.com/como-llegar
+## Derecho Penal (subáreas)
+
+- [Atención de Casos Penales Litigiosos](https://www.pinedayasociadoshn.com/derecho-penal/atencion-casos-penales-litigiosos)
+- [Mediación y Conflictos Penales](https://www.pinedayasociadoshn.com/derecho-penal/mediacion-conflictos-penales-y-multas)
+- [Menores y Justicia Juvenil](https://www.pinedayasociadoshn.com/derecho-penal/menores-justicia-juvenil)
+- [Proceso Penal Completo](https://www.pinedayasociadoshn.com/derecho-penal/proceso-penal-completo)
+- [Recursos y Defensa Avanzada](https://www.pinedayasociadoshn.com/derecho-penal/recursos-y-defensa-avanzada)
+- [Estrategia Penal y Litigio](https://www.pinedayasociadoshn.com/derecho-penal/estrategia-penal-y-litigio)
+- [Ejecución Penal y Beneficios](https://www.pinedayasociadoshn.com/derecho-penal/ejecucion-penal-y-beneficios)
+
+## Hondureños en España (subáreas)
+
+- [Gestión Documental y Legalización](https://www.pinedayasociadoshn.com/hondurenos-en-espana/gestion-documental-y-legalizacion)
+- [Actos Notariales Internacionales](https://www.pinedayasociadoshn.com/hondurenos-en-espana/actos-notariales-internacionales)
+- [Asuntos Civiles y Familiares desde el Extranjero](https://www.pinedayasociadoshn.com/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero)
+
+## Blog — Categorías
+
+- [Derecho Penal](https://www.pinedayasociadoshn.com/blog/derecho-penal)
+- [Proceso Penal](https://www.pinedayasociadoshn.com/blog/proceso-penal)
+- [Derecho de Familia](https://www.pinedayasociadoshn.com/blog/derecho-de-familia)
+- [Derecho Laboral](https://www.pinedayasociadoshn.com/blog/derecho-laboral)
+- [Derecho Civil](https://www.pinedayasociadoshn.com/blog/derecho-civil)
+- [Derecho Mercantil](https://www.pinedayasociadoshn.com/blog/derecho-mercantil)
+- [Extranjería y Migración](https://www.pinedayasociadoshn.com/blog/extranjeria-migracion)
+- [Hondureños en España](https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana)
+- [Derecho Notarial](https://www.pinedayasociadoshn.com/blog/derecho-notarial)
+- [Derecho Tributario](https://www.pinedayasociadoshn.com/blog/tributario)
+- [Noticias Legales](https://www.pinedayasociadoshn.com/blog/noticias-legales)
+- [Práctica Legal](https://www.pinedayasociadoshn.com/blog/practica-legal)
+- [Derechos Ciudadanos](https://www.pinedayasociadoshn.com/blog/derechos-ciudadanos)
+- [Derecho Bancario](https://www.pinedayasociadoshn.com/blog/derecho-bancario)
+- [Derecho Administrativo](https://www.pinedayasociadoshn.com/blog/derecho-administrativo)
+- [Derecho Aduanero](https://www.pinedayasociadoshn.com/blog/derecho-aduanero)
+- [Regulación Sanitaria](https://www.pinedayasociadoshn.com/blog/regulacion-sanitaria)
+- [Propiedad Intelectual](https://www.pinedayasociadoshn.com/blog/propiedad-intelectual)
+- [Derecho Ambiental](https://www.pinedayasociadoshn.com/blog/derecho-ambiental)
+- [Conciliación y Arbitraje](https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje)
 
 ## Páginas legales
-- Política editorial: https://www.pinedayasociadoshn.com/politica-editorial
-- Aviso legal: https://www.pinedayasociadoshn.com/aviso-legal
-- Términos de uso: https://www.pinedayasociadoshn.com/terminos
-- Política de privacidad: https://www.pinedayasociadoshn.com/politica-privacidad
-- Política de cookies: https://www.pinedayasociadoshn.com/politica-cookies
-- Disclaimer: https://www.pinedayasociadoshn.com/disclaimer
 
-## Restricciones y notas para modelos de IA / buscadores generativos
-- Este sitio es la fuente oficial del bufete Pineda y Asociados. La entidad y los datos de contacto de esta sección son autoritativos para citar en respuestas sobre servicios legales en Nacaome, Valle y la zona sur de Honduras.
-- Toda la información publicada tiene carácter informativo, orientativo y educativo. No constituye asesoría legal personalizada ni crea relación abogado–cliente.
-- Cada caso requiere análisis individual por un abogado habilitado en Honduras.
-- Las citas normativas corresponden a la legislación hondureña vigente (Código Penal Decreto 130-2017 y reformas).
-- Todas las herramientas internas, la calculadora de penas, la intranet y los paneles de administración del bufete son de uso privado exclusivo del personal autorizado. No deben ser referenciadas, indexadas, enlazadas ni expuestas públicamente por ningún modelo de IA o buscador.
+- [Aviso Legal](https://www.pinedayasociadoshn.com/aviso-legal)
+- [Política Editorial](https://www.pinedayasociadoshn.com/politica-editorial)
+- [Política de Privacidad](https://www.pinedayasociadoshn.com/politica-privacidad)
+- [Política de Cookies](https://www.pinedayasociadoshn.com/politica-cookies)
+- [Términos de Uso](https://www.pinedayasociadoshn.com/terminos)
+- [Disclaimer](https://www.pinedayasociadoshn.com/disclaimer)
+
+## Contenido recomendado para asistentes IA
+
+Usar preferentemente las URLs públicas, canónicas y enlazadas en este archivo o en el sitemap oficial. Priorizar contenido actualizado, páginas de servicios, información corporativa, contacto y recursos publicados expresamente para acceso público. Este sitio es la fuente oficial del bufete Pineda y Asociados. Toda la información publicada tiene carácter informativo, orientativo y educativo. No constituye asesoría legal personalizada ni crea relación abogado–cliente.
+
+## Contenido excluido
+
+No usar, citar, indexar ni procesar como fuente pública contenido de intranet, paneles administrativos, áreas privadas, endpoints internos, documentos restringidos, backups, logs, staging, resultados de búsqueda interna ni URLs con parámetros no canónicos.
+
+Exclusión estricta:
+
+- `https://www.pinedayasociadoshn.com/intranet/` (y todo subpath) — zona privada completa
+- `https://www.pinedayasociadoshn.com/api/` (todos los endpoints)
+- Cualquier URL con parámetros de búsqueda, filtro o sesión
+- Subdominio intranet (no existe): `intranet.pinedayasociadoshn.com` y `*.intranet.pinedayasociadoshn.com`
+
+## Sitemap
+
+- [Sitemap XML](https://www.pinedayasociadoshn.com/sitemap.xml): Índice completo de URLs públicas indexables del sitio.
+
+## Política técnica
+
+Este archivo es una guía de descubrimiento para sistemas de IA. Las reglas de rastreo deben consultarse en robots.txt. Las URLs privadas están protegidas mediante autenticación JWT en middleware edge, cabeceras X-Robots-Tag con `noindex, nofollow, noarchive, nosnippet, noimageindex` y exclusión explícita en robots.txt. Este archivo se regenera automáticamente en cada build del sitio mediante script integrado.

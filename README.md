@@ -519,6 +519,18 @@ npm run blog:backup          # Backup completo de blog_posts (JSON restoreable +
 >
 > Reportes: `auditoria-blog/verify-fix-reporte-<ts>.json` + `.md`.
 
+**llms.txt (guiado de asistentes IA):**
+```bash
+npm run llms:generate       # Regenerar public/llms.txt desde fuentes canónicas
+npm run llms:dry            # Previsualizar cambios sin escribir
+```
+El archivo `public/llms.txt` se regenera automáticamente en cada build via
+`postbuild`. Contiene 56 URLs públicas organizadas por sección: sitio oficial,
+14 áreas de práctica, 7 subáreas penales, 3 subáreas para hondureños en España,
+20 categorías del blog, 3 landings SEO local y 6 páginas legales. Excluye
+estrictamente `/intranet/`, `/api/`, `/admin/`, `/calculadora/` y demás zonas
+privadas. Ver `scripts/generate-llms-txt.mjs`.
+
 **IndexNow:**
 ```bash
 npm run indexnow:dry        # Simular (postbuild por defecto)

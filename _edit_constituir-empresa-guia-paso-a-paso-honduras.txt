@@ -1,0 +1,58 @@
+TITLE: Constituir una empresa en Honduras: pasos y requisitos
+META_TITLE: 
+META_DESC: Cómo constituir una sociedad mercantil en Honduras paso a paso: escritura notarial, Registro Mercantil, RTN, permiso municipal y Cámara de Comercio. Costos y plazos.
+DESCRIPTION: Guía paso a paso para constituir una sociedad mercantil en Honduras: tipos de empresa, escritura, Registro Mercantil, RTN, permisos y costos orientativos.
+=== BODY ===
+<p>Constituir una empresa en Honduras no es un trámite que se complete en un solo día; sin embargo, con la documentación adecuada, el proceso puede finalizarse en un plazo estimado de varias semanas. Este procedimiento involucra la intervención de diversas instituciones: un notario, el Registro Mercantil, el Servicio de Administración de Rentas (SAR), la municipalidad correspondiente y la Cámara de Comercio. La presente guía detalla cada paso en el orden requerido.</p>
+
+<h2>Marco legal</h2>
+<p>Las sociedades mercantiles en Honduras se rigen por el <strong>Código de Comercio</strong>, cuyo artículo 13 enumera los tipos societarios admitidos: sociedad en nombre colectivo, sociedad en comandita simple, sociedad de responsabilidad limitada, sociedad anónima y sociedad en comandita por acciones, entre otras figuras. En la práctica, las más utilizadas son la <strong>Sociedad de Responsabilidad Limitada (S. de R.L.)</strong>, la <strong>Sociedad Anónima (S.A.)</strong> y la <strong>Empresa Individual de Responsabilidad Limitada (E.I.R.L.)</strong>. La elección del tipo societario condiciona la responsabilidad de los socios, el gobierno corporativo y los costos de funcionamiento.</p>
+
+<h2>Pasos para constituir una sociedad mercantil</h2>
+<ol>
+<li><strong>Escritura de constitución ante notario:</strong> el notario redacta la escritura pública, que debe contener la denominación o razón social de la sociedad, el tipo societario elegido, los datos de los socios, el capital social (monto, número de acciones o participaciones y aportes de cada socio), el objeto social (actividad económica a la que se dedicará), el domicilio fiscal y la estructura de administración (gerente, junta directiva). La escritura debe reflejar el depósito del capital en una entidad bancaria. Los honorarios notariales varían en función del capital social.</li>
+<li><strong>Registro en el Registro Mercantil:</strong> la escritura se presenta ante el Registro Mercantil del departamento correspondiente. El Registro revisa la documentación y, de cumplir con los requisitos legales, procede a su inscripción. Como resultado, se obtiene un número de registro y una constancia de inscripción.</li>
+<li><strong>Obtención del RTN de la empresa ante el SAR:</strong> una vez inscrita la escritura, se solicita el Registro Tributario Nacional (RTN) de la sociedad en el SAR. Entre los requisitos habituales figuran copia de la escritura inscrita, RTN del representante legal y el formulario correspondiente del SAR.</li>
+<li><strong>Permiso de operación municipal:</strong> debe solicitarse en la municipalidad del domicilio fiscal de la empresa. Los requisitos comunes incluyen RTN de la empresa, escritura de constitución y contrato de arrendamiento o escritura de propiedad del local. Las tasas aplicables varían según el municipio.</li>
+<li><strong>Registro en la Cámara de Comercio:</strong> este registro es necesario para el ejercicio del comercio. Para ello se debe presentar la escritura inscrita y el RTN de la empresa.</li>
+</ol>
+
+<h2>Explicación en lenguaje llano</h2>
+<p>En términos sencillos: constituir una empresa significa crear una persona jurídica distinta de usted, con su propio patrimonio y su propio RTN. Lo hace mediante una escritura ante notario, la inscribe en el Registro Mercantil para que sea oponible a terceros, obtiene su RTN para poder facturar y cumplir impuestos, y saca los permisos que la habilitan a operar en su municipio. Cada paso tiene su institución y sus requisitos.</p>
+
+<h2>Ejemplo práctico</h2>
+<p>Dos socios quieren abrir una distribuidora de insumos agropecuarios en Nacaome. Deciden constituir una S. de R.L. por la simplicidad de su gobierno corporativo y la responsabilidad limitada. Acuden a un notario con el capital acordado, firman la escritura, la inscriben en el Registro Mercantil de Valle, tramitan el RTN ante el SAR, solicitan el permiso de operación en la municipalidad de Nacaome y se inscriben en la Cámara de Comercio. Una vez completados todos los pasos, la sociedad queda habilitada para facturar, contratar y operar.</p>
+
+<h2>Costos aproximados</h2>
+<p>Los costos orientativos más relevantes son:</p>
+<ul>
+<li><strong>Honorarios notariales:</strong> varían en función del capital social y la complejidad de la escritura; conviene solicitar presupuesto por escrito antes de iniciar.</li>
+<li><strong>Registro Mercantil:</strong> las tarifas se calculan con base en el capital social; el porcentaje aplicable conviene confirmarlo en la tabla vigente del Registro.</li>
+<li><strong>RTN:</strong> la inscripción inicial de la sociedad no suele tener costo, aunque conviene verificarlo al momento del trámite.</li>
+<li><strong>Permiso de operación municipal:</strong> varía según el municipio y la actividad económica declarada.</li>
+</ul>
+<p>Los importes concretos cambian con el tiempo, por lo que se recomienda consultar las tarifas vigentes al planificar la constitución.</p>
+
+<h2>Errores frecuentes</h2>
+<ul>
+<li><strong>Elegir un tipo societario sin analizar la responsabilidad y los costos:</strong> la S.A. y la S. de R.L. tienen diferencias relevantes en gobierno corporativo y obligaciones.</li>
+<li><strong>Definir un objeto social demasiado estrecho:</strong> limita la actividad de la empresa y obliga a reformar la escritura si se quiere diversificar.</li>
+<li><strong>No inscribir la escritura en el Registro Mercantil:</strong> sin inscripción, la sociedad no es oponible a terceros.</li>
+<li><strong>Olvidar los permisos sectoriales:</strong> según la actividad (alimentos, transporte, salud, etc.) pueden exigirse autorizaciones adicionales además del permiso municipal.</li>
+</ul>
+
+<h2>Cuándo conviene consultar a un abogado mercantil</h2>
+<p>Antes de constituir, conviene asesorarse sobre qué tipo societario conviene a su actividad, cómo redactar el objeto social y el pacto de socios, y qué obligaciones periódicas (asambleas, estados financieros) generará. La asesoría al inicio evita reformas costosas después.</p>
+
+<h2>Preguntas frecuentes</h2>
+<h3>¿Cuánto tarda constituir una empresa en Honduras?</h3>
+<p>Depende de la celeridad de cada institución y de la completitud de la documentación. Con todo en orden suele tardar algunas semanas; los defectos en la escritura o en los requisitos pueden duplicar el plazo.</p>
+<h3>¿Puedo constituir la empresa yo mismo sin abogado?</h3>
+<p>La escritura pública requiere notario obligatoriamente. La asesoría de un abogado mercantil es recomendable para elegir el tipo societario y redactar correctamente los pactos sociales.</p>
+<h3>¿Qué obligaciones nacen al constituir la empresa?</h3>
+<p>Desde su inscripción, la sociedad debe cumplir obligaciones tributarias (declaración del ISR, ISV si aplica), contables, laborales y, según el tipo societario, obligaciones de gobierno corporativo como asambleas ordinarias.</p>
+
+<h2>Temas relacionados</h2>
+<p>Si va a constituir una empresa, también pueden interesarle: <a href="/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras">tipos de sociedad mercantil en Honduras</a>, <a href="/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras">contratos mercantiles esenciales</a> y <a href="/blog/tributario/facturacion-electronica-requisitos-sar">facturación electrónica y obligaciones del SAR</a>.</p>
+
+<p>Si quiere constituir su empresa en Honduras con la documentación correcta desde el inicio, <a href="/solicitar-consulta">solicite una consulta</a>. Le asesoramos sobre el tipo societario más conveniente, redactamos la escritura y gestionamos los trámites de inscripción, RTN y permisos para que pueda operar cuanto antes.</p>

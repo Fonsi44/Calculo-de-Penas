@@ -130,7 +130,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: `Preguntas Frecuentes en Honduras`,
       description: `${total} respuestas sobre defensa penal, familia, laboral, civil, mercantil y más. Resuelva sus dudas con ${site.name}.`,
-      images: [`${site.url}/og-image.png`],
+      images: [`${site.url}/og/faq.webp`],
     },
     openGraph: {
       title: `Preguntas Frecuentes en Honduras`,
@@ -139,7 +139,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
-      images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Preguntas Frecuentes` }],
+      images: [{ url: `${site.url}/og/faq.webp`, width: 1200, height: 630, alt: `${site.name} — Preguntas Frecuentes` }],
     },
   };
 }

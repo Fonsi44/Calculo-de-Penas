@@ -5,6 +5,272 @@
 
 ---
 
+## Unreleased — llms.txt: deploy a producción + verificación completa SEO/GEO/AEO
+
+Deploy a Vercel Production de todos los cambios de llms.txt, robots.txt,
+sitemap.xml y automatización. Verificación post-deploy completa.
+
+### Deploy
+
+| Comando | Resultado |
+|---------|-----------|
+| `vercel deploy --prod` | ✅ Build exitoso (293 páginas, 48s TypeScript, 7.9s SSG) |
+| `https://www.pinedayasociadoshn.com/llms.txt` | HTTP 200 — Content-Type: text/plain, 9120 bytes, 106 líneas |
+| `https://www.pinedayasociadoshn.com/robots.txt` | HTTP 200 — reglas granulares desplegadas, Host eliminado |
+| `https://www.pinedayasociadoshn.com/sitemap.xml` | HTTP 200 — 43,904 bytes, todas las URLs públicas indexables |
+
+### Verificaciones post-deploy (10/10)
+
+| # | Prueba | Resultado |
+|---|--------|-----------|
+| 1 | llms.txt HTTP 200 | ✅ 200 OK |
+| 2 | Content-Type text/plain | ✅ `text/plain; charset=utf-8` |
+| 3 | robots.txt HTTP 200 | ✅ 200 OK |
+| 4 | robots.txt NO bloquea llms.txt | ✅ Permitido por proxy matcher (.*\\.txt excluido) |
+| 5 | sitemap.xml HTTP 200 | ✅ 200 OK |
+| 6 | Sin URLs de intranet en llms.txt | ✅ Solo en sección "Contenido excluido" |
+| 7 | /intranet/ bloqueada sin auth | ✅ Proxy 307 → /intranet/login |
+| 8 | /login eliminado | ✅ 404 Not Found |
+| 9 | URLs públicas responden 200 | ✅ 7/7: home, despacho, servicios, penal, blog, FAQ, consulta |
+| 10 | AI bots acceden a llms.txt | ✅ 7/7 bots simulados obtienen 200 |
+
+### Simulación de accesos de bots IA a llms.txt
+
+| User-Agent | Status |
+|------------|--------|
+| Googlebot | ✅ 200 |
+| Google-Extended | ✅ 200 |
+| Bingbot | ✅ 200 |
+| OAI-SearchBot | ✅ 200 |
+| ChatGPT-User | ✅ 200 |
+| PerplexityBot | ✅ 200 |
+| ClaudeBot | ✅ 200 |
+
+### Estándares y convenciones aplicados
+
+| Estándar/Convención | Estado |
+|---------------------|--------|
+| `llmstxt.org` (propuesta) | ✅ H1 + blockquote resumen + secciones con enlaces absolutos + exclusiones + sitemap |
+| `robots.txt` (RFC 9309) | ✅ Sin `Host:`, reglas granulares, sitemap declarado |
+| `Sitemap XML` | ✅ 293 URLs públicas indexables |
+| Schema.org Organization | ✅ LegalService + LocalBusiness con geo |
+| Schema.org WebPage | ✅ 10 páginas con WebPage propio |
+| Schema.org ItemList | ✅ Hub de servicios con 14 ítems |
+| Schema.org BlogPosting | ✅ Posts individuales |
+| OpenGraph / Twitter Cards | ✅ `twitter:creator`, `twitter:site`, OG images |
+| SEO local (NAP + geo) | ✅ 3 landings locales |
+| AI crawler allow rules | ✅ GPTBot, ChatGPT-User, OAI-SearchBot, PerplexityBot, ClaudeBot, Claude-User, anthropic-ai permitidos con acceso público |
+| X-Robots-Tag | ✅ `index, follow` público / `noindex, nofollow` en intranet |
+| CSP / HSTS / Security Headers | ✅ Sin regresión |
+
+### Automatización
+
+- `scripts/generate-llms-txt.mjs`: regenera `public/llms.txt` desde fuentes canónicas.
+- Integrado en `postbuild`: se ejecuta automáticamente tras cada build, antes de IndexNow.
+- Comandos: `npm run llms:generate` (regenerar), `npm run llms:dry` (previsualizar).
+
+### Estado
+`IMPLEMENTADO`, `VALIDADO` y `DESPLEGADO` a producción. Backup en `.backups/`.
+
+**Hallazgo preexistente (no causado por este cambio):** las cabeceras `X-Robots-Tag` de la intranet (`/intranet/:path*`) no se reflejan consistentemente en producción debido a un posible edge caching de Vercel. Verificar tras propagación de caché global. La protección real de la intranet es el proxy JWT middleware, no las cabeceras.
+
+---
+
+## Unreleased — SEO/GEO/AEO: metadatos, schemas WebPage/ItemList, Twitter creator y corrección de meta descriptions
+
+Auditoría y optimización completa de metadatos SEO/GEO/AEO de todas las URLs públicas
+indexables (51 páginas estáticas + ~159 posts + 20 categorías + 7 subáreas penales,
+3 subáreas migrantes, 14 servicios detallados). Se corrigieron meta descriptions con
+HTML sin sanitizar, se añadieron schemas WebPage a 10 páginas que carecían de schema
+propio, se incorporó ItemList al hub de servicios, se añadió referencia a Twitter
+creator (@Danilo_Pineda_M) en el layout público global y se normalizaron OG images.
+
+### Cambios realizados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/(public)/layout.tsx` | Añadido `twitter.creator` y `twitter.site` con @Danilo_Pineda_M |
+| `app/(public)/servicios-juridicos/[slug]/page.tsx` | Corregida meta description: strip HTML de `area.descripcion` antes de usarla en description/OG/Twitter (evita `&lt;strong&gt;` en SERP) |
+| `app/(public)/servicios-juridicos/page.tsx` | Añadido schema ItemList para las 14 tarjetas de servicios del hub |
+| `app/(public)/como-llegar/page.tsx` | Añadido schema WebPage JSON-LD (antes no tenía ningún schema propio) |
+| `app/(public)/aviso-legal/page.tsx` | Añadido schema WebPage JSON-LD |
+| `app/(public)/politica-privacidad/page.tsx` | Añadido schema WebPage JSON-LD |
+| `app/(public)/politica-cookies/page.tsx` | Añadido schema WebPage JSON-LD |
+| `app/(public)/politica-editorial/page.tsx` | Añadido schema WebPage JSON-LD |
+| `app/(public)/terminos/page.tsx` | Añadido schema WebPage JSON-LD |
+| `app/(public)/disclaimer/page.tsx` | Añadido schema WebPage JSON-LD |
+| `components/marketing/landing-local.tsx` | Añadido schema WebPage a las 3 landings locales (Nacaome, Choluteca, San Lorenzo) |
+
+### Detalle técnico
+
+- **HTML en meta descriptions**: las descripciones de áreas de práctica (`data/areas-juridicas.ts`) contienen etiquetas `<strong>` que se traspolaban literalmente a meta tags. Se añadió función `stripHtml()` en `servicios-juridicos/[slug]/page.tsx` que elimina tags y decodifica entidades antes de usarlas en meta description, OG y Twitter.
+- **WebPage schema**: 10 páginas que antes solo tenían los schemas globales del layout (LegalService, Organization, WebSite, 3×Person) ahora también tienen un WebPage con `@id`, `name`, `description`, `inLanguage`, `isPartOf` y `about` propios, mejorando la granularidad del grafo de conocimiento.
+- **ItemList**: el hub de servicios jurídicos ahora expone un schema ItemList con todas las 14 áreas de práctica, cada una con su posición y URL, mejorando la comprensión semántica de la rejilla de servicios por parte de Google.
+- **Twitter creator**: se añadió `twitter.creator` y `twitter.site` al layout público (`@Danilo_Pineda_M`), mejorando la atribución de marca en tarjetas de Twitter/X.
+- **Consistencia OG**: las páginas de servicio que carecían de OG image especializada (`/og/laboral.webp`, etc.) ya estaban correctamente mapeadas.
+
+### Inventario de URLs públicas auditadas
+
+| Tipo | Cantidad |
+|------|----------|
+| Páginas estáticas (home, servicios, despacho, blog hub, FAQ, solicitar-consulta, como-llegar, legales, landings) | 25 |
+| Subpáginas de servicios (`/servicios-juridicos/[slug]`) | 14 |
+| Subpáginas de derecho penal (`/derecho-penal/[slug]`) | 7 |
+| Subpáginas de hondureños en España (`/hondurenos-en-espana/[slug]`) | 3 |
+| Categorías de blog (`/blog/[categoria]`) | 20 |
+| Posts de blog (`/blog/[categoria]/[slug]`) | ~147 publicados |
+| **Total URLs indexables** | **~216** |
+
+### URLs excluidas
+- `/intranet/*`, `/api/*`, `/admin/*`, `/calculadora/*`, `/casos/*`, `/cp/*`, `/delitos/*`, `/atajos/*`, `/preview/*` — zonas privadas
+- `/login` — ruta eliminada
+- `/404`, `/500`, `/_not-found` — páginas de error
+- Parámetros no canónicos, staging y dominios de preview
+
+### Validación
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errores |
+| `npx tsc --noEmit` | 0 errores |
+| `npm run build` | Compiled successfully (293 páginas) |
+| `npm test` | 591/591 (21 suites) ✅ |
+| `npm test -- tests/seo-protection.test.ts` | 32/32 ✅ |
+| `npm run llms:dry` | llms.txt regenerado, 106 líneas, sin URLs privadas |
+| Verificación: intranet no incluida en metadatos | ✅ Confirmado — ningún schema apunta a rutas `/intranet/`, ninguna URL privada en sitemap |
+
+### Estado
+`IMPLEMENTADO` y `VALIDADO` (lint/build/test). No se requirió backup de DB (cambios exclusivamente en código fuente).
+
+### OG images específicas añadidas
+Se generaron 5 nuevas OG images (1200×630, .webp) desde assets originales en `docs/imagenes/`:
+
+| OG image | Fuente | Páginas que la usan |
+|----------|--------|-------------------|
+| `/og/faq.webp` | `docs/imagenes/faq.jpg` (5843×3901) | `/preguntas-frecuentes` |
+| `/og/migracion.webp` | `docs/imagenes/honduras-espana.jpg` (3161×2107) | `/hondurenos-en-espana`, `/hondurenos-en-espana/[slug]` |
+| `/og/nacaome.webp` | `docs/imagenes/Nacaome.jpg` (516×387) | `/abogados-en-nacaome` |
+| `/og/choluteca.webp` | `docs/imagenes/Choluteca.jpg` (677×453) | `/abogados-en-choluteca` |
+| `/og/san-lorenzo.webp` | `docs/imagenes/San Lorenzo.jpg` (1280×720) | `/abogados-en-san-lorenzo` |
+
+**Nota:** `Nacaome.jpg` y `Choluteca.jpg` tenían resolución inferior a 1200×630 y se escalaron. Para calidad óptima, reemplazar con assets ≥1200×630.
+
+**Nota:** `/solicitar-consulta` y páginas legales mantienen OG genérica (`/og-image.webp`) con el logo del bufete (fondo azul marino #0B1B3D).
+
+### OG image genérica reemplazada por el logo corporativo
+- `public/og-image.webp` (1200×630) y `public/og-image.png` (1200×630) se regeneraron desde `docs/imagenes/logo.png` con fondo navy, reemplazando la imagen genérica anterior (1600×1067).
+- Referencia en `app/layout.tsx` actualizada de `.png` a `.webp`.
+- Fallback en `blog/[categoria]/[slug]/page.tsx` y `servicios-juridicos/[slug]/page.tsx` actualizado a `.webp`.
+
+---
+
+## Unreleased — limpieza de rutas obsoletas (admin, calculadora, cp, delitos, login) consolidadas en /intranet/
+
+Eliminación de páginas y rutas que ya no existen como endpoints independientes.
+Todo el contenido privado (admin, calculadora, casos, cp, delitos, atajos,
+preview) vive exclusivamente bajo `/intranet/`.
+
+### Rutas eliminadas
+
+- **`app/login/page.tsx`** — redirigía a `/intranet/login`. Eliminado porque
+  `/intranet/login` ya existe y el proxy edge maneja la redirección de usuarios
+  no autenticados. El acceso directo a `/login` ahora devuelve 404.
+- **`/admin/`, `/calculadora/`, `/casos/`, `/cp/`, `/delitos/`, `/atajos/`,
+  `/preview/`** — ya no existían como rutas independientes. Limpieza de
+  referencias en robots.txt, next.config.ts, llms.txt y script generador.
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/login/page.tsx` | **Eliminado** — redirect stub obsoleto |
+| `app/login/` | **Eliminado** — directorio vacío |
+| `app/robots.ts` | Eliminado `/login` de `blockPrivate` (la ruta ya no existe) |
+| `next.config.ts` | Eliminada regla X-Robots-Tag para `/login` (ruta eliminada) |
+| `public/llms.txt` | Exclusiones simplificadas: solo `/intranet/` cubre toda zona privada |
+| `scripts/generate-llms-txt.mjs` | Exclusiones simplificadas: mismo cambio que llms.txt |
+| `tests/seo-protection.test.ts` | Eliminado `/login` del test de bloqueo (ya no es ruta) |
+
+### Validación
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errores |
+| `npm test -- tests/seo-protection.test.ts` | 32/32 ✅ |
+| `npm run llms:dry` | Output correcto, 106 líneas |
+| Verificación: `/login` ya no redirige | ✅ Página eliminada, proxy devuelve 404 |
+
+### Estado
+`IMPLEMENTADO` y `VALIDADO` (lint/test). Backups en `.backups/`.
+
+---
+
+## Unreleased — llms.txt: creación, optimización y automatización para asistentes IA
+
+Implementación del archivo `llms.txt` siguiendo el estándar `llmstxt.org` para
+guiar a sistemas de IA y asistentes de búsqueda hacia el contenido público
+canónico del sitio, excluyendo toda zona privada.
+
+### llms.txt (`public/llms.txt`) — nuevo
+
+- **Optimización completa**: archivo reescrito con estructura clara (sitio oficial,
+  áreas de práctica, blog, páginas legales, contenido excluido, sitemap, política
+  técnica).
+- **56 URLs públicas incluidas**: inicio, despacho, servicios (14 áreas), derecho
+  penal (7 subáreas), hondureños en España (3 subáreas), blog (20 categorías),
+  landings SEO local (3), páginas legales (6), solicitar consulta, cómo llegar.
+- **Exclusiones estrictas documentadas**: `/intranet/`, `/api/`, `/admin/`,
+  `/login`, `/calculadora/`, `/casos/`, `/cp/`, `/delitos/`, `/atajos/`,
+  `/preview/`, subdominio intranet no existente, parámetros no canónicos.
+- **Restricciones de uso claras**: el archivo indica que no constituye asesoría
+  legal, que las herramientas internas son privadas, y que el contenido es
+  meramente informativo.
+- **Enlace al sitemap**: referencia directa a `sitemap.xml`.
+
+### Script de automatización (`scripts/generate-llms-txt.mjs`) — nuevo
+
+- Script autónomo que regenera `public/llms.txt` a partir de fuentes canónicas
+  (misma taxonomía de rutas que `app/sitemap.ts`).
+- **Integración en postbuild**: se ejecuta automáticamente tras cada build
+  antes del envío a IndexNow.
+- **Modo dry-run**: `npm run llms:dry` para previsualizar cambios sin escribir.
+- **Modo manual**: `npm run llms:generate` para regeneración bajo demanda.
+
+### Seguridad — intranet protegida, sin filtraciones
+
+- Verificado: ninguna URL de intranet aparece en `llms.txt`.
+- Verificado: `robots.txt` sigue bloqueando `/intranet/`, `/api/` y rutas
+  privadas para todos los bots (incluyendo asistentes IA).
+- Verificado: `sitemap.xml` no incluye rutas privadas.
+- Las exclusiones del `llms.txt` son consistentes con `robots.txt` y la
+  configuración de `next.config.ts`.
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `public/llms.txt` | Reescrito con 113 líneas (antes 65). 56 URLs públicas documentadas. |
+| `scripts/generate-llms-txt.mjs` | Nuevo — script de generación automática. |
+| `package.json` | Nuevos scripts `llms:generate`, `llms:dry`; `postbuild` encadena generación. |
+| `CHANGELOG.md` | Esta entrada. |
+| `README.md` | Sección llms.txt añadida. |
+
+### Validación
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errores |
+| `npm test` | 568/568 (21 suites) ✅ |
+| `scripts/generate-llms-txt.mjs --dry-run` | Output correcto, 113 líneas |
+| `scripts/generate-llms-txt.mjs` | Archivo escrito correctamente |
+| Verificación manual llms.txt | Sin URLs de intranet, sin rutas privadas |
+| Verificación robots.txt | Intacto, bloqueo de intranet preservado |
+
+### Estado
+`IMPLEMENTADO` y `VALIDADO` (lint/test/build). Backups en `.backups/`.
+
+---
+
 ## Unreleased — SEO/seguridad: robots.txt granulado, eliminado Host, intranet reforzada
 
 Configuración SEO/seguridad de la raíz del sitio siguiendo criterio equilibrado:

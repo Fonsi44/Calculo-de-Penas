@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       card: 'summary_large_image',
       title: 'Hondureños en España — Asistencia Legal Internacional',
       description: 'Gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España. Asistencia legal para hondureños en el extranjero.',
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og/migracion.webp`],
   },
     openGraph: {
       title: 'Hondureños en España — Asistencia Legal Internacional',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Hondureños en España` }],
+    images: [{ url: `${site.url}/og/migracion.webp`, width: 1200, height: 630, alt: `${site.name} — Hondureños en España` }],
   },
 };
 

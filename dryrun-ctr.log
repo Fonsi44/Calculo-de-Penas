@@ -1,0 +1,70 @@
+◇ injected env (18) from .env.local // tip: ⌘ enable debugging { debug: true }
+
+════════════════════════════════════════════════════════════════════════
+  VERIFICACIÓN + CORRECCIÓN DEL BLOG — MODO DRY-RUN
+════════════════════════════════════════════════════════════════════════
+
+Cargando datos canónicos...
+✓ Cargados 483 delitos (407 índices por artículo, 416 por nombre)
+✓ Cargados 635 artículos del CP (635 claves únicas)
+✓ Cargados 378 artículos de la Constitución (378 claves únicas)
+✓ Cargados 18 artículos del Código de Trabajo (verificados, 18 claves)
+✓ Cargados 840 artículos adicionales del CT desde el PDF (858 claves totales)
+✓ Cargados 2359 artículos del Código Civil (2359 claves únicas)
+✓ Cargados 1693 artículos del Código de Comercio (1693 claves únicas)
+✓ Cargados 218 artículos del Código Tributario (218 claves únicas)
+
+🤖 Corrección IA activa: DeepSeek (modelo "deepseek-v4-flash"). Solo corrige datos falsos verificados.
+⚠️  DRY-RUN: no se escribirá nada en la DB.
+
+Posts publicados cargados. A procesar: 10
+
+✓ Backup previo: C:\Proyectos\Justicia Verdadera\auditoria-blog\backup-verify-fix-2026-06-22T14-32-39-714Z.json
+
+[1/10] 🟡 abogado-penalista-sur-honduras — 855 palabras (ok) — 🟡 2 SEO importante, IA err: La IA no devolvió JSON válido
+[2/10] ✓ registro-medicamentos-productos-farmaceuticos-honduras — 1050 palabras (ok) — IA mejorado, ✅ OK
+[3/10] 🟡 calcular-prestaciones-laborales-honduras — 1066 palabras (ok) — 🟡 1 SEO importante
+[4/10] 🟡 juicio-oral-etapas-que-esperar-honduras — 1492 palabras (verbose) — 🟡 1 SEO importante
+[5/10] 🟡 derechos-detenido-honduras-guia-constitucional — 824 palabras (ok) — 🟡 1 SEO importante, IA mejorado
+[6/10] ✓ reformas-legales-recientes-honduras — 866 palabras (ok) — IA mejorado, ✅ OK
+[7/10] ✓ sanciones-administrativas-como-defenderse-honduras — 1075 palabras (ok) — IA mejorado, ✅ OK
+[8/10] ✓ pension-alimenticia-honduras-guia-completa — 1223 palabras (verbose) — IA mejorado, ✅ OK
+[9/10] 🟡 📝 proceso-consulta-legal-pineda — 528 palabras (thin) — 🟡 4 SEO importante, 2 mec., IA: 528→1089 palabras ✓
+[10/10] 🟡 cuando-necesito-abogado-penalista-honduras — 1223 palabras (verbose) — 🟡 1 SEO importante, 1 mec., IA mejorado
+
+────────────────────────────────────────────────────────────────────────
+  ⚠️  REPETICIÓN ENTRE ARTÍCULOS (anti-plantilla)
+────────────────────────────────────────────────────────────────────────
+  1 bloque(s) de texto compartido(s) por ≥3 artículos:
+  · [3 artículos] "...lo que muchos creen y no es cierto"
+    Artículos: derechos-detenido-honduras-guia-constitucional, reformas-legales-recientes-honduras, sanciones-administrativas-como-defenderse-honduras
+  3 post(s) marcados como plantilla (ok=false).
+────────────────────────────────────────────────────────────────────────
+
+
+────────────────────────────────────────────────────────────────────────
+  RESUMEN DRY-RUN
+────────────────────────────────────────────────────────────────────────
+  Posts analizados:              10
+  Posts OK (validadores pasan):   2
+  Con discrepancias fácticas:     0
+  Sin claims legales detectables: 1
+  Con hallazgos SEO/GEO:          10
+  Corregidos por IA:              7
+  Reintentos de IA exitosos:      0
+  Errores de IA:                  1
+  Alucinaciones IA detectadas:    0 (bodies rechazados)
+  Regresiones SEO detectadas:     0 (bodies rechazados)
+  Titles optimizados (CTR):       0
+  Metas optimizadas (CTR):        0
+  Con cambios mecánicos:          2
+  Rechazos por similitud ≥98%:    0 (escrituras omitidas)
+  Repetición entre artículos:     1 bloque(s) plantilla detectado(s)
+────────────────────────────────────────────────────────────────────────
+
+📄 Reporte JSON: C:\Proyectos\Justicia Verdadera\auditoria-blog\verify-fix-reporte-2026-06-22T14-32-39-714Z.json
+📄 Reporte Markdown: C:\Proyectos\Justicia Verdadera\auditoria-blog\verify-fix-reporte-2026-06-22T14-32-39-714Z.md
+📊 10 post(s) con hallazgos SEO/GEO. Revisa el reporte.
+
+ℹ️  Dry-run completado. Usa --aplicar para escribir cambios.
+

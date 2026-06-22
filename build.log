@@ -1,0 +1,213 @@
+
+> nextjs@0.1.0 build
+> next build
+
+▲ Next.js 16.2.7 (Turbopack)
+- Environments: .env.local, .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 22.8s
+  Running TypeScript ...
+  Finished TypeScript in 22.8s ...
+  Collecting page data using 7 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 7 workers (0/293) ...
+  Generating static pages using 7 workers (73/293) 
+  Generating static pages using 7 workers (146/293) 
+  Generating static pages using 7 workers (219/293) 
+✓ Generating static pages using 7 workers (293/293) in 7.2s
+  Finalizing page optimization ...
+
+Route (app)                                                                 Revalidate  Expire
+┌ ○ /                                                                               1h      1y
+├ ○ /_not-found
+├ ○ /abogados-en-choluteca
+├ ○ /abogados-en-nacaome
+├ ○ /abogados-en-san-lorenzo
+├ ƒ /api/[transport]
+├ ƒ /api/admin/agravantes
+├ ƒ /api/admin/agravantes/[id]
+├ ƒ /api/admin/analytics
+├ ƒ /api/admin/analytics/timeline
+├ ƒ /api/admin/areas-juridicas
+├ ƒ /api/admin/auditoria
+├ ƒ /api/admin/blog
+├ ƒ /api/admin/blog/[id]
+├ ƒ /api/admin/blog/generate
+├ ƒ /api/admin/blog/helpers
+├ ƒ /api/admin/blog/publish-all
+├ ƒ /api/admin/cache-revalidate
+├ ƒ /api/admin/categorias-blog
+├ ƒ /api/admin/categorias-blog/[id]
+├ ƒ /api/admin/categorias-faq
+├ ƒ /api/admin/faq
+├ ƒ /api/admin/faq/[id]
+├ ƒ /api/admin/medios
+├ ƒ /api/admin/menus
+├ ƒ /api/admin/pages
+├ ƒ /api/admin/pages/batch
+├ ƒ /api/admin/preview
+├ ƒ /api/admin/redirects
+├ ƒ /api/admin/search-console
+├ ƒ /api/admin/search-console/timeline
+├ ƒ /api/admin/seo/health
+├ ƒ /api/admin/seo/indexnow-submit
+├ ƒ /api/admin/seo/inspect
+├ ƒ /api/admin/seo/sitemap
+├ ƒ /api/admin/seo/summary
+├ ƒ /api/admin/site-config
+├ ƒ /api/admin/supuestos-penales
+├ ƒ /api/admin/tags
+├ ƒ /api/admin/upload
+├ ƒ /api/admin/usuarios
+├ ƒ /api/admin/usuarios/[id]
+├ ƒ /api/admin/usuarios/[id]/reset-password
+├ ƒ /api/admin/visual-editor/proxy
+├ ƒ /api/auth/change-password
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/auth/register
+├ ƒ /api/auth/terminos
+├ ƒ /api/calcular
+├ ƒ /api/calcular/pdf
+├ ƒ /api/calculos
+├ ƒ /api/calculos/[id]
+├ ƒ /api/casos
+├ ƒ /api/casos/[id]
+├ ƒ /api/casos/[id]/pdf
+├ ƒ /api/clasificaciones
+├ ƒ /api/consulta
+├ ƒ /api/contacto
+├ ƒ /api/cp
+├ ƒ /api/cp/[id]
+├ ƒ /api/delitos
+├ ƒ /api/delitos/[id]
+├ ƒ /api/delitos/calidad
+├ ƒ /api/delitos/count
+├ ƒ /api/descargar
+├ ƒ /api/email/inbound
+├ ƒ /api/health
+├ ƒ /api/indexnow-key
+├ ƒ /api/oauth/callback
+├ ƒ /api/og
+├ ƒ /api/remisiones-normativas
+├ ƒ /api/seed
+├ ƒ /api/subscribe
+├ ƒ /api/supuestos-penales
+├ ƒ /api/whatsapp
+├ ○ /aviso-legal
+├ ƒ /blog
+├ ƒ /blog/[categoria]
+├ ● /blog/[categoria]/[slug]                                                        1h      1y
+│ ├ /blog/practica-legal/abogados-en-amapala-valle                                  1h      1y
+│ ├ /blog/practica-legal/abogados-en-pespire-choluteca                              1h      1y
+│ ├ /blog/practica-legal/abogados-en-marcovia-choluteca                             1h      1y
+│ └ [+145 more paths]
+├ ƒ /blog/feed.xml
+├ ○ /como-llegar
+├ ○ /derecho-penal
+├ ● /derecho-penal/[slug]
+│ ├ /derecho-penal/atencion-casos-penales-litigiosos
+│ ├ /derecho-penal/mediacion-conflictos-penales-y-multas
+│ ├ /derecho-penal/menores-justicia-juvenil
+│ └ [+4 more paths]
+├ ○ /despacho
+├ ○ /disclaimer
+├ ○ /hondurenos-en-espana
+├ ● /hondurenos-en-espana/[slug]
+│ ├ /hondurenos-en-espana/gestion-documental-y-legalizacion
+│ ├ /hondurenos-en-espana/actos-notariales-internacionales
+│ └ /hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero
+├ ○ /intranet/admin
+├ ○ /intranet/admin/agravantes
+├ ○ /intranet/admin/auditoria
+├ ○ /intranet/admin/blog
+├ ƒ /intranet/admin/blog/[id]
+├ ○ /intranet/admin/calculadora
+├ ○ /intranet/admin/casos
+├ ƒ /intranet/admin/casos/[id]
+├ ○ /intranet/admin/config
+├ ○ /intranet/admin/cp
+├ ƒ /intranet/admin/cp/[id]
+├ ○ /intranet/admin/delito-form
+├ ○ /intranet/admin/delitos
+├ ƒ /intranet/admin/delitos/[id]
+├ ○ /intranet/admin/faq
+├ ○ /intranet/admin/medios
+├ ○ /intranet/admin/menus
+├ ○ /intranet/admin/pages
+├ ƒ /intranet/admin/pages/[page]
+├ ○ /intranet/admin/perfil
+├ ○ /intranet/admin/seo
+├ ○ /intranet/admin/servicios
+├ ○ /intranet/admin/usuarios
+├ ƒ /intranet/admin/usuarios/[id]
+├ ○ /intranet/dashboard
+├ ○ /intranet/login
+├ ○ /politica-cookies
+├ ○ /politica-editorial
+├ ○ /politica-privacidad
+├ ○ /preguntas-frecuentes                                                           1h      1y
+├ ƒ /preview/[token]
+├ ○ /robots.txt
+├ ○ /servicios-juridicos
+├ ● /servicios-juridicos/[slug]
+│ ├ /servicios-juridicos/derecho-de-familia
+│ ├ /servicios-juridicos/derecho-laboral
+│ ├ /servicios-juridicos/derecho-civil-y-notarial
+│ └ [+10 more paths]
+├ ○ /sitemap.xml
+├ ○ /solicitar-consulta
+└ ○ /terminos
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> nextjs@0.1.0 postbuild
+> node scripts/generate-llms-txt.mjs && node scripts/submit-indexnow.mjs
+
+◇ injected env (17) from .env.local // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ llms.txt regenerated successfully → C:\Proyectos\Justicia Verdadera\public\llms.txt
+   106 lines
+◇ injected env (17) from .env.local // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+═══════════════════════════════════════════════════════════
+ IndexNow — envío conservador
+═══════════════════════════════════════════════════════════
+Host:            www.pinedayasociadoshn.com
+Key (mask):      9f9940…71
+Modo:            MÍNIMO (core)
+Ejecución:       DRY-RUN (simulación)
+Endpoint:        https://api.indexnow.org/indexnow
+noindex sitio:   no
+
+Key location:    https://www.pinedayasociadoshn.com/9f9940d5665c41d98705255d3704be71.txt
+Validación key:  ✓ coincide con public/9f9940d5665c41d98705255d3704be71.txt
+
+── Resumen de preparación ──────────────────────────────
+URLs candidatas (antes de filtro): 11
+URLs únicas válidas:              11
+───────────────────────────────────────────────────────
+Total final a enviar: 11
+
+── URLs (dry-run) ─────────────────────────────────────
+  https://www.pinedayasociadoshn.com/
+  https://www.pinedayasociadoshn.com/servicios-juridicos
+  https://www.pinedayasociadoshn.com/derecho-penal
+  https://www.pinedayasociadoshn.com/abogados-en-nacaome
+  https://www.pinedayasociadoshn.com/abogados-en-choluteca
+  https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo
+  https://www.pinedayasociadoshn.com/despacho
+  https://www.pinedayasociadoshn.com/hondurenos-en-espana
+  https://www.pinedayasociadoshn.com/preguntas-frecuentes
+  https://www.pinedayasociadoshn.com/solicitar-consulta
+  https://www.pinedayasociadoshn.com/como-llegar
+
+✅ Dry-run completo. Para envío real: ENABLE_INDEXNOW_SUBMIT=true sin --dry-run.

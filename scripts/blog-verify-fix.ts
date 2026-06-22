@@ -37,7 +37,7 @@
  *   DATABASE_URL       (obligatoria) — acceso a Neon.
  *   DEEPSEEK_API_KEY   (opcional)    — habilita corrección IA. Sin ella,
  *                                      el script solo verifica y normaliza.
- *   DEEPSEEK_MODEL     (opcional)    — modelo a usar (default: deepseek-chat).
+ *   DEEPSEEK_MODEL     (opcional)    — modelo a usar (default: deepseek-v4-flash).
  *   DEEPSEEK_API_BASE  (opcional)    — endpoint alternativo.
  *
  * SEGURIDAD:
@@ -66,6 +66,10 @@ import { LEGAL_DISCLAIMER, LEGAL_DISCLAIMER_SHORT } from '../lib/legal-disclaime
 import { blogCategories } from '../data/blog/categories';
 import {
   extractImages,
+  extractLinks,
+  isInternalUrl,
+  isExternalUrl,
+  isPoorAnchor,
 } from './seo-content-audit';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -98,6 +102,14 @@ const OFFSET = (() => {
   return Number.isFinite(n) && n > 0 ? n : 0;
 })();
 const RESET_CHECKPOINT = args.includes('--reset-checkpoint');
+// --ctr-only: forza modo CTR-only en TODOS los posts (optimización title/meta
+// sin reescribir body). Útil para lotes grandes: envía solo title+meta+primer
+// párrafo (max_tokens=500), ~5-15s/post en vez de 60-90s. NO corrige posts
+// thin ni con discrepancias fácticas — solo SEO/CTR de title/meta. Las guardias
+// validarTitleOptimizado / validarMetaOptimizada siguen activas.
+// En uso normal (sin flag), el script activa CTR-only automáticamente para
+// posts OK que solo tienen hallazgos de categoría 'ctr'.
+const FORCE_CTR_ONLY = args.includes('--ctr-only');
 const MAX_REINTENTOS_IA = (() => {
   const i = args.indexOf('--max-reintentos');
   const n = i >= 0 && args[i + 1] ? parseInt(args[i + 1], 10) : 2;
@@ -118,13 +130,15 @@ Opciones:
   --limit <n>        Procesar solo los primeros <n> posts (control de coste API).
   --offset <n>       Saltar los primeros <n> posts (para reanudar lotes).
   --reset-checkpoint  Ignorar checkpoint previo (empezar desde el principio).
+  --ctr-only         Optimización CTR forzada: solo title+meta, no reescribe body.
+                     Payload ligero (~5-15s/post). No corrige thin/discrepancias.
   --max-reintentos <n> Reintentos de IA si un post thin no llega a 800 (1-5, default 2).
   --help, -h         Esta ayuda.
 
 Variables de entorno:
   DATABASE_URL        (obligatoria) Acceso a Neon PostgreSQL.
   DEEPSEEK_API_KEY    (opcional)    Habilita corrección IA.
-  DEEPSEEK_MODEL      (opcional)    Modelo a usar (default: deepseek-chat).
+  DEEPSEEK_MODEL      (opcional)    Modelo a usar (default: deepseek-v4-flash).
   DEEPSEEK_API_BASE   (opcional)    Endpoint alternativo de API.
 
 Sin --aplicar, el script es de solo lectura (dry-run). La verificación de datos
@@ -157,6 +171,13 @@ const IA_ENABLED = !NO_AI && !SOLO_VERIFICAR && Boolean(DEEPSEEK_API_KEY);
 // ═══════════════════════════════════════════════════════════════════════════
 const MIN_PALABRAS = 600;
 const MAX_PALABRAS = 1200;
+/**
+ * Umbral de ampliación para la GUARDIA 3 (R17): un post thin corregido por IA
+ * debe alcanzar ≥800 palabras para aceptarse. Diferente de MIN_PALABRAS (600),
+ * que es el umbral de detección de thin. R17 fija el umbral de aceptación IA
+ * en 800; MIN_PALABRAS sigue siendo 600 para alinearse con R13 (guía general).
+ */
+export const MIN_PALABRAS_AMPLIACION_IA = 800;
 const TITLE_MAX = 60;
 const TITLE_MIN = 30;
 const META_MAX = 155;
@@ -199,6 +220,47 @@ const DISCLAIMER_MARCADORES = [
 ];
 
 // Rutas privadas que NO deben aparecer en enlaces internos del blog (R6 AGENTS.md).
+// Matching por segmento de path: "/cp" matchea "/cp" y "/cp/..." pero NO
+// "/cputados". Lista alineada con AGENTS.md §6 (rutas PRIVADAS de intranet).
+const RUTAS_PRIVADAS = [
+  '/intranet',
+  '/calculadora',
+  '/casos',
+  '/cp',
+  '/delitos',
+  '/atajos',
+  '/admin',
+];
+
+/**
+ * Comprueba si una URL interna apunta a una ruta privada (R6).
+ * Solo aplica a URLs internas (relativas o del dominio del bufete); las
+ * externas no se validan aquí (se validan aparte por isExternalUrl).
+ *
+ * @param href URL del atributo href (relativa o absoluta).
+ * @returns true si la ruta es privada, false si no.
+ */
+export function esRutaPrivada(href: string): boolean {
+  if (!href) return false;
+  // Solo validar URLs internas. Las externas se gestionan aparte.
+  if (!isInternalUrl(href)) return false;
+  // Extraer el path: descarta query/hash y normaliza a lowercase.
+  let pathPart = href;
+  try {
+    if (/^https?:\/\//i.test(href)) {
+      const u = new URL(href);
+      pathPart = u.pathname;
+    } else {
+      // URL relativa: separar query/hash
+      pathPart = href.split(/[?#]/)[0];
+    }
+  } catch {
+    return false;
+  }
+  const p = pathPart.toLowerCase().replace(/\/+$/, ''); // sin trailing slash
+  if (p === '') return false;
+  return RUTAS_PRIVADAS.some((r) => p === r || p.startsWith(r + '/'));
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Fuentes canónicas (R2 — una sola fuente de verdad)
@@ -337,6 +399,19 @@ export interface SugerenciaIA {
    * body corregido y comparando hallazgos críticos con los originales.
    */
   regresionesSEO: HallazgoSEO[];
+  /**
+   * Title optimizado por la IA con criterios CTR orgánico (keyword al frente,
+   * power word, brand al final). null si la IA no lo cambió o lo rechazaron
+   * las guardias (tema cambiado, sin keyword, ruta privada, etc.).
+   * El slug NO cambia → URL intacta (R17 respetada).
+   */
+  titleOptimizado: string | null;
+  /**
+   * metaDescription optimizada por la IA (persuasiva, no copia del title,
+   * 70-155 chars, keyword presente). null si la IA no la cambió o la rechazaron
+   * las guardias.
+   */
+  metaDescriptionOptimizada: string | null;
 }
 
 export interface ResultadoPost {
@@ -351,6 +426,12 @@ export interface ResultadoPost {
   cambiosAplicados: boolean;
   /** true si el post pasa TODOS los validadores (0 hallazgos críticos/importantes). */
   ok: boolean;
+  /**
+   * Bloques de texto compartidos con otros artículos (anti-plantilla
+   * cross-article). Se rellena tras el check global del lote. Si hay
+   * bloques, el post se considera plantilla y ok=false.
+   */
+  repeticionCrossArticle: BloqueRepetido[];
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -365,6 +446,7 @@ const articulosCpSet = new Set<string>();                 // claves: "art. 1 cp"
 const articulosCpMap = new Map<string, ArticuloCpRow>();
 const articulosConstData: ArticuloConstRow[] = [];
 const articulosConstSet = new Set<string>();              // claves: "art. 1 constitucion"
+const articulosConstMap = new Map<string, ArticuloConstRow>(); // clave → artículo (para verificar texto atribuido)
 const articulosCtData: ArticuloCpRow[] = [];              // Código de Trabajo
 const articulosCtSet = new Set<string>();                 // claves: "art. 80 ct"
 const articulosCtMap = new Map<string, ArticuloCpRow>();  // clave → artículo CT
@@ -425,7 +507,10 @@ export function cargarDatosCanonicos(): void {
     articulosConstData.push(...parsed);
     for (const a of articulosConstData) {
       const key = canonicalArticuloKey(a.articulo);
-      if (key) articulosConstSet.add(key);
+      if (key) {
+        articulosConstSet.add(key);
+        if (!articulosConstMap.has(key)) articulosConstMap.set(key, a);
+      }
     }
     console.log(`✓ Cargados ${articulosConstData.length} artículos de la Constitución (${articulosConstSet.size} claves únicas)`);
   } else {
@@ -616,12 +701,14 @@ export function extraerClaims(body: string): ClaimExtraido[] {
   // 1. Referencias a artículos del CP/códigos — el código es OBLIGATORIO para
   //    considerar la referencia un claim verificable (un "Art. 123" suelto es
   //    ambiguo entre códigos y no se auto-verifica como CP).
+  //    La ventana posterior es amplia (250 chars) para capturar citas
+  //    entrecomilladas atribuidas al artículo (guardia anti-alucinación).
   const reArtCp = /(Art(?:ículo)?\.?\s*\d+(?:-\w+)?\s*(?:del?(?:\s+la)?\s+)?(?:Código\s+Penal|CP|Código\s+Procesal\s+Penal|CPP|Código\s+Civil|CC|Código\s+de\s+Familia|CF|Código\s+de\s+Trabajo|CT|Código\s+de\s+Comercio|CM|Código\s+de\s+la\s+Niñez|CN|Código\s+Tributario|CTrib|Código\s+Aduanero|CA))/gi;
   let m: RegExpExecArray | null;
   while ((m = reArtCp.exec(textoPlano)) !== null) {
     const txt = m[0].trim();
     const start = Math.max(0, m.index - 50);
-    const end = Math.min(textoPlano.length, m.index + txt.length + 50);
+    const end = Math.min(textoPlano.length, m.index + txt.length + 250);
     claims.push({
       tipo: 'articulo_cp',
       textoOriginal: txt,
@@ -629,12 +716,13 @@ export function extraerClaims(body: string): ClaimExtraido[] {
     });
   }
 
-  // 2. Referencias a artículos de la Constitución
+  // 2. Referencias a artículos de la Constitución.
+  //    Misma ventana posterior amplia (250 chars) para capturar citas.
   const reArtConst = /(Art(?:ículo)?\.?\s*\d+(?:-\w+)?\s*(?:de\s+la\s+)?Constitución)/gi;
   while ((m = reArtConst.exec(textoPlano)) !== null) {
     const txt = m[0].trim();
     const start = Math.max(0, m.index - 50);
-    const end = Math.min(textoPlano.length, m.index + txt.length + 50);
+    const end = Math.min(textoPlano.length, m.index + txt.length + 250);
     claims.push({
       tipo: 'articulo_const',
       textoOriginal: txt,
@@ -704,6 +792,64 @@ export function extraerClaims(body: string): ClaimExtraido[] {
 //  FASE 1 — Verificación de claims contra fuentes canónicas
 // ═══════════════════════════════════════════════════════════════════════════
 
+/**
+ * Extrae una cita entrecomillada atribuida a un artículo del contexto del claim.
+ * Detecta patrones como: `establece: "..."`, `dispone: "..."`, `que dice: "..."`,
+ * `"..."` inmediatamente después de la referencia al artículo. Solo captura
+ * citas explícitamente atribuidas (entre comillas), no paráfrasis.
+ *
+ * Esto permite detectar alucinaciones donde la IA fabrica un texto y se lo
+ * atribuye a un artículo REAL (el número existe, pero el contenido es inventado).
+ * Sin esta verificación, la guardia de existencia deja pasar citas fabricadas
+ * sobre artículos reales — el caso del Art. 183 (amparo) al que la IA atribuyó
+ * "derecho a la defensa".
+ *
+ * @returns la cita sin comillas, o null si no hay cita atribuida explícita.
+ */
+export function extraerCitaAtribuida(contexto: string): string | null {
+  // Buscar texto entre comillas (", ", «, ») de ≥15 palabras que sea sustantivo.
+  // El umbral de 15 palabras evita falsos positivos con comillas cortas
+  // (nombres propios, términos técnicos entrecomillados).
+  const reCita = /["“«]([^"”»]{60,}?)["”»]/g;
+  let m: RegExpExecArray | null;
+  let citaLarga: string | null = null;
+  while ((m = reCita.exec(contexto)) !== null) {
+    const cita = m[1].trim();
+    const palabras = cita.split(/\s+/).filter((w) => w.length > 0).length;
+    if (palabras >= 12) {
+      // Si hay varias citas largas, devolver la más larga (más probablemente
+      // la atribuida al artículo).
+      if (!citaLarga || cita.length > citaLarga.length) citaLarga = cita;
+    }
+  }
+  return citaLarga;
+}
+
+/**
+ * Compara una cita atribuida contra el texto canónico del artículo.
+ * Usa similitud Jaccard sobre palabras ≥3 chars. Un umbral bajo (0.15) es
+ * deliberadamente permisivo: solo marca discrepancia crítica cuando la cita
+ * es claramente incompatible con el artículo real (palabras clave distintas).
+ * Esto evita falsos positivos por paráfrasis legítimas o recortes editoriales.
+ *
+ * @param cita texto atribuido al artículo (sin comillas).
+ * @param textoCanonico texto real del artículo en la fuente canónica.
+ * @returns similitud [0,1].
+ */
+export function similitudCitaCanonica(cita: string, textoCanonico: string): number {
+  return similitudCuerpo(cita, textoCanonico);
+}
+
+/** Umbral por debajo del cual una cita atribuida se considera fabricada.
+ *  0.20 es deliberadamente estricto: la similitud Jaccard sobre palabras ≥3 chars
+ *  entre una cita veraz y su texto canónico suele ser ≥0.30 (palabras clave
+ *  compartidas). Una cita incompatible con el artículo real cae típicamente
+ *  en 0.05-0.19 (palabras comunes como "persona", "Constitución", "derechos"
+ *  inflan la similitud, pero las palabras clave del artículo no aparecen).
+ *  El umbral 0.20 separa ambos regímenes sin falsos positivos en citas veraces.
+ */
+export const UMBRAL_SIMILITUD_CITA = 0.20;
+
 export function verificarClaims(claims: ClaimExtraido[]): Discrepancia[] {
   const discrepancias: Discrepancia[] = [];
 
@@ -729,6 +875,26 @@ export function verificarClaims(claims: ClaimExtraido[]): Discrepancia[] {
             valorCorrecto: '(no encontrado en fuentes canónicas)',
             fuente: 'data/articulos_cp.json + data/delitos.json + data/codigo_trabajo.json + data/codigo_civil.json + data/codigo_comercio.json + data/codigo_tributario.json',
           });
+          break;
+        }
+        // Verificación de cita atribuida (mismo patrón que articulo_const):
+        // si el contexto incluye un texto entrecomillado atribuido al artículo,
+        // comprobar que coincide con el texto canónico del CP. La IA puede
+        // fabricar citas sobre artículos reales.
+        const articuloCp = articulosCpMap.get(key);
+        const cita = extraerCitaAtribuida(claim.contexto);
+        if (articuloCp && cita) {
+          const sim = similitudCitaCanonica(cita, articuloCp.texto);
+          if (sim < UMBRAL_SIMILITUD_CITA) {
+            discrepancias.push({
+              claim,
+              severidad: 'critico',
+              mensaje: `Cita atribuida al "${claim.textoOriginal}" no coincide con el texto real del artículo. Posible alucinación: la IA fabricó un texto y se lo atribuyó a un artículo existente cuyo contenido es distinto.`,
+              valorEncontrado: `"${cita.slice(0, 120)}${cita.length > 120 ? '…' : ''}"`,
+              valorCorrecto: `${articuloCp.articulo}: "${articuloCp.texto.slice(0, 120)}${articuloCp.texto.length > 120 ? '…' : ''}"`,
+              fuente: 'data/articulos_cp.json',
+            });
+          }
         }
         break;
       }
@@ -745,6 +911,28 @@ export function verificarClaims(claims: ClaimExtraido[]): Discrepancia[] {
             valorCorrecto: '(no encontrado)',
             fuente: 'data/articulos_constitucion.json',
           });
+          break;
+        }
+        // Verificación de cita atribuida: si el contexto incluye un texto
+        // entrecomillado atribuido al artículo, comprobar que coincide con el
+        // texto canónico. La IA puede fabricar citas sobre artículos reales
+        // (ej: atribuir "derecho a la defensa" al Art. 183, que en realidad
+        // trata sobre amparo). Sin esta verificación, la guardia de existencia
+        // deja pasar la alucinación.
+        const articuloConst = articulosConstMap.get(key);
+        const cita = extraerCitaAtribuida(claim.contexto);
+        if (articuloConst && cita) {
+          const sim = similitudCitaCanonica(cita, articuloConst.texto);
+          if (sim < UMBRAL_SIMILITUD_CITA) {
+            discrepancias.push({
+              claim,
+              severidad: 'critico',
+              mensaje: `Cita atribuida al "${claim.textoOriginal}" no coincide con el texto real del artículo. Posible alucinación: la IA fabricó un texto y se lo atribuyó a un artículo existente cuyo contenido es distinto.`,
+              valorEncontrado: `"${cita.slice(0, 120)}${cita.length > 120 ? '…' : ''}"`,
+              valorCorrecto: `${articuloConst.articulo}: "${articuloConst.texto.slice(0, 120)}${articuloConst.texto.length > 120 ? '…' : ''}"`,
+              fuente: 'data/articulos_constitucion.json',
+            });
+          }
         }
         break;
       }
@@ -925,7 +1113,7 @@ export function detectarAlucinacionesNuevas(
 
 export interface HallazgoSEO {
   severidad: Severidad;
-  categoria: 'longitud' | 'headings' | 'seo' | 'tags' | 'imagenes' | 'enlaces' | 'fecha' | 'contenido' | 'keyword_stuffing' | 'eeat' | 'seo_local' | 'geo' | 'html' | 'slug' | 'canonical' | 'autor' | 'estructura';
+  categoria: 'longitud' | 'headings' | 'seo' | 'tags' | 'imagenes' | 'enlaces' | 'fecha' | 'contenido' | 'keyword_stuffing' | 'eeat' | 'seo_local' | 'geo' | 'html' | 'slug' | 'canonical' | 'autor' | 'estructura' | 'ctr';
   mensaje: string;
 }
 
@@ -1333,6 +1521,21 @@ export function analizarSEO(
       mensaje: 'Salto de jerarquía: <h3> aparece antes que el primer <h2>. Estructura de headings no jerárquica.',
     });
   }
+  // Salto de 2 niveles: H2 seguido de H4 sin H3 intermedio (o H1→H3, pero H1
+  // ya se marca aparte). Recorre headings en orden y detecta cuando un
+  // heading de nivel N va seguido de uno de nivel N+2 o mayor.
+  for (let i = 0; i < headings.length - 1; i++) {
+    const cur = headings[i].nivel;
+    const next = headings[i + 1].nivel;
+    if (next > cur + 1) {
+      hallazgos.push({
+        severidad: 'recomendable',
+        categoria: 'headings',
+        mensaje: `Salto de jerarquía: <h${cur}> seguido de <h${next}> (sin h${cur + 1} intermedio). Los headings deben subir de nivel de uno en uno (H2→H3→H4).`,
+      });
+      break; // reportar solo el primer salto para no inundar
+    }
+  }
   // Sin headings en body largo → mala escaneabilidad
   const h2h3 = headings.filter((h) => h.nivel === 2 || h.nivel === 3);
   if (palabras > 600 && h2h3.length === 0) {
@@ -1410,7 +1613,7 @@ export function analizarSEO(
     });
   } else if (!tieneGeoTitle && tieneGeoMeta) {
     hallazgos.push({
-      severidad: 'recomendable',
+      severidad: 'importante',
       categoria: 'geo',
       mensaje: `El title no incluye señal geográfica (Honduras/${NAP.ciudad}/${NAP.departamento}); solo la metaDescription la trae. Mover la keyword geográfica al title refuerza más la intención local en SERP.`,
     });
@@ -1489,6 +1692,123 @@ export function analizarSEO(
         severidad: 'importante',
         categoria: 'seo',
         mensaje: `La meta description describe temas no presentes en el body ("${ausentesMeta.slice(0, 4).join('", "')}"). La meta debe resumir el contenido real del artículo.`,
+      });
+    }
+  }
+
+  // ── CTR (SEM orgánico en SERP): oportunidades de optimización de title/meta ──
+  // AGENTS.md §5: "Alinear title, H1, primer párrafo con la intención de
+  // búsqueda". Estos checks detectan oportunidades CTR para que el trigger de
+  // IA (necesitaOptimizacionCTR) las alcance y la IA optimice title/meta.
+
+  // CTR-1: keyword foco del title ausente del primer párrafo (alineación §5).
+  // La keyword principal del title debe aparecer en el primer <p> del body.
+  // Se usa la misma noción de keyword foco que CTR-4: la primera palabra
+  // significativa del title que NO sea una power word CTR (el tema, no el
+  // modificador de intención).
+  const POWER_WORDS_CTR_CTR1 = new Set([
+    'guía', 'cómo', 'como', 'ejemplos', 'ejemplo', 'errores', 'error',
+    'todo', 'paso', 'mejores', 'mejor', 'consejos', 'consejo', 'análisis',
+    'explicación', 'explicacion', 'revision', 'revisión',
+  ]);
+  const keywordFocoCTR1 = titleWords.find((w) => !POWER_WORDS_CTR_CTR1.has(w));
+  if (keywordFocoCTR1) {
+    const primerP = post.body.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+    if (primerP) {
+      const primerPLower = stripHtml(primerP[1]).toLowerCase();
+      if (!primerPLower.includes(keywordFocoCTR1)) {
+        hallazgos.push({
+          severidad: 'importante',
+          categoria: 'ctr',
+          mensaje: `La keyword foco del title ("${keywordFocoCTR1}") no aparece en el primer párrafo. Alinear title + H1 + primer párrafo refuerza la intención de búsqueda (§5).`,
+        });
+      }
+    }
+  }
+
+  // CTR-2: señales CTR ausentes del title (número, power word, pregunta, año,
+  // brand). Un title sin ninguna señal es plano para CTR. Solo se marca si el
+  // title tiene longitud suficiente (≥30) para no ruido en titles cortos.
+  if (post.title.length >= TITLE_MIN) {
+    const ctrSignals = [
+      /\d/,                                          // número
+      /\?/,                                          // pregunta
+      /\b(20\d{2})\b/,                              // año
+      /\bguía\b|\bpaso a paso\b|\bcómo\b|\btodo lo que debes\b|\bejemplos?\b|\berrores?\b/i, // power words
+      /pineda y asociados/i,                         // brand
+    ];
+    const tieneSignal = ctrSignals.some((re) => re.test(post.title));
+    if (!tieneSignal) {
+      hallazgos.push({
+        severidad: 'recomendable',
+        categoria: 'ctr',
+        mensaje: 'El title no tiene señales CTR (número, pregunta, power word, año o brand). Añadir una señal natural puede aumentar clics orgánicos sin clickbait.',
+      });
+    }
+  }
+
+  // CTR-3: meta puramente descriptiva (débil para CTR). Aperturas genéricas
+  // que no incitan clic.
+  if (meta && meta.trim().length > 0) {
+    const metaLower = meta.toLowerCase().trim();
+    const aperturasDebiles = [
+      'este artículo',
+      'en este artículo',
+      'información sobre',
+      'artículo sobre',
+      'descubre sobre',
+    ];
+    if (aperturasDebiles.some((ap) => metaLower.startsWith(ap))) {
+      hallazgos.push({
+        severidad: 'recomendable',
+        categoria: 'ctr',
+        mensaje: `La meta description empieza con "${metaLower.slice(0, 20)}..." (apertura débil para CTR). Una meta persuasiva que incite clic sin clickbait mejora el CTR orgánico.`,
+      });
+    }
+  }
+
+  // CTR-4: keyword principal no está al frente del title (primeras 3 palabras).
+  // Google da más peso a las palabras iniciales; el usuario las escanea primero.
+  // La keyword foco es la primera palabra significativa del title que NO sea
+  // una power word CTR (guía, cómo, ejemplos, errores...): esas son modificadores
+  // de intención, no el tema del artículo. El tema (sustantivo jurídico) debe
+  // ir al frente.
+  const POWER_WORDS_CTR = new Set([
+    'guía', 'guía', 'cómo', 'como', 'ejemplos', 'ejemplo', 'errores', 'error',
+    'todo', 'paso', 'mejores', 'mejor', 'consejos', 'consejo', 'análisis',
+    'análisis', 'explicación', 'explicacion', 'revision', 'revisión',
+  ]);
+  const keywordFocoTitle = titleWords.find((w) => !POWER_WORDS_CTR.has(w));
+  if (keywordFocoTitle) {
+    const primeras3 = post.title.toLowerCase().split(/\s+/).slice(0, 3);
+    const alFrente = primeras3.some(
+      (w) => w.includes(keywordFocoTitle) || keywordFocoTitle.includes(w),
+    );
+    if (!alFrente) {
+      hallazgos.push({
+        severidad: 'recomendable',
+        categoria: 'ctr',
+        mensaje: `La keyword foco ("${keywordFocoTitle}") no está en las primeras 3 palabras del title. Moverla al frente mejora CTR y relevancia en SERP.`,
+      });
+    }
+  }
+
+  // CTR-5: metaTitle redundante (idéntico a title) o divergente (≠ title).
+  // AGENTS.md §5: alinear title + H1. Un metaTitle idéntico al title es
+  // redundante (mejor dejarlo vacío para que H1 = SERP title vía fallback).
+  // Un metaTitle divergente del H1 desalinea la intención de búsqueda.
+  if (post.metaTitle && post.metaTitle.trim().length > 0) {
+    if (post.metaTitle.trim().toLowerCase() === post.title.trim().toLowerCase()) {
+      hallazgos.push({
+        severidad: 'recomendable',
+        categoria: 'ctr',
+        mensaje: 'metaTitle idéntico al title (redundante). Mejor dejarlo vacío: la plantilla usa el title como H1 + SERP title (alineación §5).',
+      });
+    } else {
+      hallazgos.push({
+        severidad: 'recomendable',
+        categoria: 'ctr',
+        mensaje: 'metaTitle diverge del title (H1). La divergencia entre metaTitle y H1 desalinea la intención de búsqueda (§5).',
       });
     }
   }
@@ -1640,6 +1960,85 @@ export function analizarSEO(
       severidad: sinAlt.length > 2 ? 'importante' : 'recomendable',
       categoria: 'imagenes',
       mensaje: `${sinAlt.length} imagen(es) sin alt text. El alt es crítico para accesibilidad (WCAG) y SEO de imágenes. Ej: "${sinAlt[0].src.slice(0, 60)}".`,
+    });
+  }
+
+  // ── Enlaces internos (R6 — no exponer intranet + calidad SEO) ──
+  // Verifica que el body no contiene enlaces a rutas privadas (/intranet,
+  // /admin, /cp, /calculadora, /casos, /delitos, /atajos), que los internos
+  // no llevan rel="nofollow" (solo el header público lo usa), que los
+  // externos llevan rel, que no hay http:// (debe ser https) y que los
+  // anchors son descriptivos (no "aquí", "click", "ver más").
+  const enlaces = extractLinks(post.body);
+  if (enlaces.length > 0) {
+    // Rutas privadas — CRÍTICO (exposición de intranet, R6)
+    const enlacesPrivados = enlaces.filter((e) => esRutaPrivada(e.href));
+    if (enlacesPrivados.length > 0) {
+      const ejemplos = [...new Set(enlacesPrivados.map((e) => e.href))].slice(0, 3);
+      hallazgos.push({
+        severidad: 'critico',
+        categoria: 'enlaces',
+        mensaje: `${enlacesPrivados.length} enlace(s) interno(s) a ruta privada (R6): ${ejemplos.join(', ')}. Las rutas /intranet, /admin, /cp, /calculadora, /casos, /delitos, /atajos son PRIVADAS y no deben aparecer en el blog público.`,
+      });
+    }
+    // nofollow en internos — IMPORTANTE (transfiere autoridad mal)
+    const internosNofollow = enlaces.filter(
+      (e) => isInternalUrl(e.href) && /nofollow/i.test(e.rel),
+    );
+    if (internosNofollow.length > 0) {
+      const ejemplos = [...new Set(internosNofollow.map((e) => e.href))].slice(0, 3);
+      hallazgos.push({
+        severidad: 'importante',
+        categoria: 'enlaces',
+        mensaje: `${internosNofollow.length} enlace(s) interno(s) con rel="nofollow": ${ejemplos.join(', ')}. Los enlaces internos del blog deben transmitir autoridad (sin nofollow). El único nofollow público es el del header a intranet.`,
+      });
+    }
+    // Externos sin rel — IMPORTANTE (seguridad/SEO)
+    const externosSinRel = enlaces.filter(
+      (e) => isExternalUrl(e.href) && !e.rel?.trim(),
+    );
+    if (externosSinRel.length > 0) {
+      const ejemplos = [...new Set(externosSinRel.map((e) => e.href))].slice(0, 3);
+      hallazgos.push({
+        severidad: 'importante',
+        categoria: 'enlaces',
+        mensaje: `${externosSinRel.length} enlace(s) externo(s) sin atributo rel: ${ejemplos.join(', ')}. Los enlaces externos deben llevar rel="noopener noreferrer" (o rel="nofollow sponsored" si son de afiliación).`,
+      });
+    }
+    // http:// (debe ser https) — IMPORTANTE
+    const httpInseguros = enlaces.filter((e) => /^http:\/\//i.test(e.href));
+    if (httpInseguros.length > 0) {
+      const ejemplos = [...new Set(httpInseguros.map((e) => e.href))].slice(0, 3);
+      hallazgos.push({
+        severidad: 'importante',
+        categoria: 'enlaces',
+        mensaje: `${httpInseguros.length} enlace(s) con http:// (debe ser https://): ${ejemplos.join(', ')}. El sitio sirve todo por HTTPS; los enlaces http:// son inseguros y degradan SEO.`,
+      });
+    }
+    // Anchors pobres — RECOMENDABLE
+    const poorAnchors = enlaces.filter((e) => isPoorAnchor(e.anchor));
+    if (poorAnchors.length > 0) {
+      const ejemplos = [...new Set(poorAnchors.map((e) => `"${e.anchor}"`))].slice(0, 3);
+      hallazgos.push({
+        severidad: poorAnchors.length > 2 ? 'importante' : 'recomendable',
+        categoria: 'enlaces',
+        mensaje: `${poorAnchors.length} anchor(s) poco descriptivo(s): ${ejemplos.join(', ')}. Usar anchors que describan el destino ("guía de derecho penal") en vez de genéricos ("aquí", "ver más").`,
+      });
+    }
+  }
+
+  // ── metaTitle idéntico a title (redundante) ──
+  // Si metaTitle === title, la metaTitle no aporta valor extra para SERP;
+  // conviene derivar una meta diferenciada que expanda el title.
+  if (
+    post.metaTitle &&
+    post.metaTitle.trim().length > 0 &&
+    post.metaTitle.trim().toLowerCase() === post.title.trim().toLowerCase()
+  ) {
+    hallazgos.push({
+      severidad: 'recomendable',
+      categoria: 'seo',
+      mensaje: 'metaTitle idéntico a title. La metaTitle debería diferenciarse del title para aprovechar mejor el espacio SERP (o dejarse vacía para que el framework use el title).',
     });
   }
 
@@ -2076,11 +2475,13 @@ function normalizarWhitespace(body: string): { nuevo: string; cambios: number } 
 
 function truncarTituloSiExcede(title: string): { nuevo: string; cambiado: boolean } {
   if (title.length <= TITLE_MAX) return { nuevo: title, cambiado: false };
-  const max = TITLE_MAX - 3;
-  const cortado = title.slice(0, max);
+  // Truncar en palabra completa a TITLE_MAX chars, sin añadir "...".
+  // Los puntos suspensivos desperdician 3 chars valiosos en SERP y no aportan
+  // valor SEO; el truncado en palabra completa ya indica que continúa.
+  const cortado = title.slice(0, TITLE_MAX);
   const ultEspacio = cortado.lastIndexOf(' ');
-  const limpio = ultEspacio > max / 2 ? cortado.slice(0, ultEspacio) : cortado;
-  return { nuevo: limpio.trim() + '...', cambiado: true };
+  const limpio = ultEspacio > TITLE_MAX / 2 ? cortado.slice(0, ultEspacio) : cortado;
+  return { nuevo: limpio.trim(), cambiado: true };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -2183,6 +2584,24 @@ export function autoFixCoverImage(post: PostRow): { nuevo: string; cambiado: boo
 }
 
 /**
+ * Limpia el metaTitle si es idéntico al title (redundante). Un metaTitle
+ * idéntico al title desperdicia el campo: la plantilla usa `post.title` como
+ * H1 y como SERP title vía fallback cuando `metaTitle` está vacío. Si son
+ * iguales, setear metaTitle a '' alinea H1 = SERP title (AGENTS.md §5).
+ *
+ * No toca metaTitle si está vacío (fallback correcto) ni si diverge del title
+ * (eso es decisión editorial, no auto-fix).
+ */
+export function autoFixMetaTitle(post: PostRow): { nuevo: string; cambiado: boolean } | null {
+  const actual = post.metaTitle ?? '';
+  if (actual.trim().length === 0) return null; // vacío = fallback correcto
+  if (actual.trim().toLowerCase() === post.title.trim().toLowerCase()) {
+    return { nuevo: '', cambiado: true }; // redundante → limpiar
+  }
+  return null; // divergente: no tocar (decisión editorial)
+}
+
+/**
  * Si el post tiene <3 tags, añade tags deterministas derivados de la categoría
  * y el título. NO elimina ni modifica tags existentes (respeta curaduría
  * editorial). Genera slugs ASCII lowercase consistentes con el resto del blog.
@@ -2240,6 +2659,7 @@ function truncarEnPalabra(texto: string, maxLen: number): string {
  */
 export interface AutoFixMetadatos {
   title: { nuevo: string; cambiado: boolean } | null;
+  metaTitle: { nuevo: string; cambiado: boolean } | null;
   metaDescription: { nuevo: string; cambiado: boolean } | null;
   description: { nuevo: string; cambiado: boolean } | null;
   author: { nuevo: string; cambiado: boolean } | null;
@@ -2259,6 +2679,8 @@ export function aplicarAutoFixesMetadatos(post: PostRow): AutoFixMetadatos {
   const cambios: string[] = [];
   const rTitle = truncarTituloSiExcede(post.title);
   if (rTitle.cambiado) cambios.push(`title truncado a ${rTitle.nuevo.length} chars`);
+  const rMetaTitle = autoFixMetaTitle(post);
+  if (rMetaTitle) cambios.push('metaTitle redundante limpiado (alinea H1 = SERP title)');
   const rMeta = autoFixMetaDescription(post);
   if (rMeta) cambios.push(`metaDescription generada/truncada (${rMeta.nuevo.length} chars)`);
   const rDesc = autoFixDescription(post);
@@ -2271,6 +2693,7 @@ export function aplicarAutoFixesMetadatos(post: PostRow): AutoFixMetadatos {
   if (rTags) cambios.push(`tags: ${post.tags?.length ?? 0} → ${rTags.nuevo.length}`);
   return {
     title: rTitle.cambiado ? rTitle : null,
+    metaTitle: rMetaTitle,
     metaDescription: rMeta,
     description: rDesc,
     author: rAuthor,
@@ -2396,21 +2819,24 @@ const PROMPT_SISTEMA_CORRECCION = `Eres un editor jurídico senior de Pineda y A
 Corriges errores fácticos y mejoras la profesionalidad y SEO/GEO de artículos del blog legal.
 
 REGLAS ABSOLUTAS:
-1. Corriges los errores fácticos listados en el reporte de verificación.
-   PUEDES reescribir el artículo completo si es necesario para cumplir la
-   ESTRUCTURA DE CALIDAD EDITORIAL (ver abajo). Lo ÚNICO que debes conservar
-   es el TEMA y OBJETIVO original del artículo — si habla de salarios en
-   Honduras, el artículo corregido debe seguir hablando de salarios en
-   Honduras, pero con la estructura correcta. Elimina sin problema contenido
-   obsoleto, genérico, plantilla o redundante.
-2. Si el artículo tiene <600 palabras, lo expandes a 600-1200 palabras usando SOLO
-   información del propio artículo o de su categoría. Si el artículo ya tiene ≥600
-   palabras, NUNCA lo acortes ni elimines contenido — solo optimiza SEO/GEO/meta.
-   NUNCA inventas datos no presentes en el artículo original o en las fuentes
-   canónicas cargadas.
-   PRIORIDAD: la calidad del contenido y su optimización SEO/GEO es MÁS importante
-   que el conteo de palabras. Un artículo de 650 palabras bien optimizado vale más
-   que uno de 1000 con relleno.
+1. NUNCA reescribes el artículo por completo. Tu trabajo es OPTIMIZAR, no
+   reescribir. Conservas la estructura, el estilo y la voz del autor original.
+   Corriges los errores fácticos listados en el reporte de verificación y
+   optimizas SEO/GEO/meta, pero el texto existente correcto se mantiene.
+   Solo eliminas contenido si está objetivamente mal (cita legal falsa,
+   disclaimer duplicado, H1 en body). NO elimines contenido correcto por
+   "mejorarlo" — si está bien, se queda.
+   Lo ÚNICO que debes conservar siempre es el TEMA y OBJETIVO original del
+   artículo: si habla de salarios en Honduras, el resultado sigue hablando de
+   salarios en Honduras.
+2. Si el artículo tiene <600 palabras, lo expandes a 800-1000 palabras usando
+   SOLO información del propio artículo o de su categoría. Si el artículo ya
+   tiene ≥600 palabras, NUNCA lo acortes ni elimines contenido — solo optimiza
+   SEO/GEO/meta. NUNCA inventas datos no presentes en el artículo original o
+   en las fuentes canónicas cargadas.
+   PRIORIDAD: la calidad del contenido y su optimización SEO/GEO es MÁS
+   importante que el conteo de palabras. Un artículo de 650 palabras bien
+   optimizado vale más que uno de 1000 con relleno.
 
 3. REVISIÓN DE PROFESIONALIDAD (todos los artículos, incluso los >800 palabras):
    - Eliminas lenguaje sensacionalista, clickbait o amarillista.
@@ -2422,9 +2848,11 @@ REGLAS ABSOLUTAS:
    - Referencias a "Pineda y Asociados" solo donde sea natural, nunca cada 2 párrafos.
    - NUNCA uses frases como "somos los mejores", "líderes en", "los únicos",
      "número 1", "mejor bufete", "premiados", "galardonados" (claims no verificables).
-4. Si el artículo ya tiene la estructura de calidad completa (las 7 secciones),
-   es profesional y tiene ≥600 palabras, devuelves el HTML original EXACTO.
-   Si le falta alguna sección, la añades reescribiendo lo necesario.
+4. Si el artículo YA es correcto (≥600 palabras, sin errores fácticos, estructura
+   adecuada, profesional), devuelves el HTML original EXACTO sin cambios.
+   Si le falta SOLO alguna sección de la estructura editorial, la AÑADES sin
+   reescribir el resto. Si le faltan errores fácticos puntuales, los CORRIGES
+   sin tocar el resto. Cambios mínimos y quirúrgicos, no reescrituras.
 5. OPTIMIZACIÓN SEO/GEO (siguiendo mejores prácticas de Google y Bing):
    - Headings jerárquicos: H2→H3, NUNCA <h1> en el body (la plantilla ya renderiza
      el H1 con el título). Si hay <h1>, conviértelo a <h2>.
@@ -2455,6 +2883,47 @@ REGLAS ABSOLUTAS:
      locales) — solo añade una mención geográfica natural que refuerce el SEO
       local. Si el artículo ya menciona Honduras o una ciudad, NO añadas más.
 7. Mantienes HTML válido y bien formado.
+
+8. OPTIMIZACIÓN CTR (title + metaDescription) — SEM orgánico en SERP:
+   Tu trabajo NO es solo corregir el body: también optimizas el title y la
+   metaDescription para MAXIMIZAR clics orgánicos en SERP (CTR), sin clickbait
+   y sin inventar datos. Esto es lo que verá el usuario antes de entrar.
+
+   TITLE (≤60 chars, es el H1 y el title de SERP):
+   - Keyword principal al FRENTE (primeras 3 palabras). Google da más peso a
+     las palabras iniciales y el usuario las escanea primero.
+   - 1 power word o número o pregunta si encaja de forma natural con el tema.
+     Power words en español: "guía", "paso a paso", "todo lo que debes saber",
+     "ejemplos", "errores frecuentes", "cómo", "¿...?", "año actual si aplica".
+   - Brand " | Pineda y Asociados" al final SOLO si cabe COMPLETO dentro de
+     los 60 chars. El brand son 23 chars (" | Pineda y Asociados"); si el
+     title sin brand ya tiene ≥38 chars, OMITE el brand — un title que
+     termine en "Pineda y" o "y Asoc" por truncado es PEOR para CTR que no
+     llevar brand. Nunca fuerces el brand si no cabe entero.
+   - El title NUNCA debe terminar en una conjunción o preposición colgante
+     ("y", "o", "de", "en", "ante", "la", "el") por truncado de longitud.
+     Si al llegar a 60 chars quedas en medio de una frase, reescribe el
+     title más corto en vez de cortarlo a medias.
+   - NUNCA cambies el TEMA ni la intención de búsqueda: si el artículo habla
+     de "salarios mínimos en Honduras", el title optimizado sigue sobre eso.
+   - NUNCA añadas métricas, números, años, rankings o claims que no estén en
+     el artículo (R4). Un número en el title solo si sale del propio artículo.
+   - NUNCA incluyas rutas privadas (/intranet, /admin, /calculadora, /cp, etc.).
+
+   META DESCRIPTION (70-155 chars):
+   - PERSUASIVA, no solo informativa: incita clic sin clickbait. Explica el
+     valor del artículo y termina con un gancho de acción natural.
+   - Contiene la keyword principal + señal geográfica (Honduras / ciudad) si
+     el artículo la toca.
+   - NUNCA copies el title: la meta debe EXPANDIR, no repetir.
+   - NUNCA empieces con "Este artículo...", "En este artículo...",
+     "Información sobre..." (metas débiles para CTR).
+   - NUNCA inventes datos, métricas, garantías de resultado ni premios.
+
+   Si el title y la meta actuales YA son óptimos (cumplen todo lo anterior),
+   NO los cambies: omite los campos "title" y "metaDescription" del JSON o
+   devuélvelos como null. Cambios quirúrgicos también aquí: si el title solo
+   necesita mover la keyword al frente, haz solo eso.
 
 ESTRUCTURA DE CALIDAD EDITORIAL — OBLIGATORIA para TODO artículo:
    El artículo DEBE cubrir estos 7 TEMAS (no tienen que usar títulos literales;
@@ -2488,10 +2957,16 @@ ESTRUCTURA DE CALIDAD EDITORIAL — OBLIGATORIA para TODO artículo:
    - NO añadas disclaimer legal al body (el componente ya lo renderiza).
    - Cada sección debe contener información SUSTANCIAL, no frases genéricas.
    - Prioriza la VERDAD sobre la completitud.
+   - CAMBIOS QUIRÚRGICOS: si el artículo ya tiene una sección correcta, NO la
+     reescribas. Solo añade las que faltan. Si tienes que corregir un dato,
+     cambia solo ese dato, no el párrafo entero. El body resultante debe
+     parecerse al original salvo en los puntos corregidos/añadidos.
 
 Devuelve EXCLUSIVAMENTE un JSON con esta forma, sin texto adicional:
 {
   "body": "<HTML del body corregido>",
+  "title": "<title optimizado ≤60 chars con CTR, o null si no se cambia>",
+  "metaDescription": "<meta optimizada 70-155 chars persuasiva, o null si no se cambia>",
   "cambios_realizados": ["descripción breve de cada cambio"],
   "advertencias": ["cualquier cosa que necesite revisión humana adicional"]
 }`;
@@ -2531,6 +3006,392 @@ async function fetchConRetry(
   }
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+//  Guardias de title/meta optimizados por IA (CTR)
+// ═══════════════════════════════════════════════════════════════════════════
+// Stopwords para extraer palabras significativas de titles/metas cortos.
+// Mismo set que usa analizarSEO internamente; replicado aquí para que las
+// guardias de IA sean funciones puras testables sin tocar analizarSEO.
+const STOPWORDS_SEO = new Set([
+  'para', 'como', 'con', 'por', 'del', 'las', 'los', 'que', 'una', 'este',
+  'esta', 'tiene', 'debe', 'puede', 'más', 'entre', 'todo', 'cada', 'solo',
+  'una', 'unos', 'unas', 'sin', 'sobre', 'tras', 'desde', 'hasta', 'ante',
+]);
+
+/** Tokeniza un texto en palabras significativas (≥4 chars, sin stopwords). */
+function palabrasSignificativas(texto: string): string[] {
+  return texto
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .split(/\s+/)
+    .filter((w) => w.length >= 4 && !STOPWORDS_SEO.has(w));
+}
+
+/** Similitud Jaccard sobre palabras significativas (0..1). */
+function jaccardSignificativas(a: string, b: string): number {
+  const sa = new Set(palabrasSignificativas(a));
+  const sb = new Set(palabrasSignificativas(b));
+  if (sa.size === 0 || sb.size === 0) return 0;
+  let inter = 0;
+  for (const w of sa) if (sb.has(w)) inter++;
+  const union = sa.size + sb.size - inter;
+  return union === 0 ? 0 : inter / union;
+}
+
+/**
+ * Palabras que SIEMPRE son "colgantes" al final de un title: conjunciones,
+ * preposiciones y artículos. Un title que termine en una de estas por
+ * truncado de longitud se ve incompleto en SERP y degrada CTR.
+ * Ejemplo malo: "Derechos del Detenido en Honduras: Abogado, Silencio y"
+ */
+const PALABRAS_COLGANTES = new Set([
+  'y', 'o', 'e', 'u', 'ni', 'de', 'del', 'a', 'al', 'en', 'ante', 'la', 'el',
+  'las', 'los', 'un', 'una', 'unos', 'unas', 'con', 'sin', 'por', 'para',
+  'sobre', 'tras', 'desde', 'hasta', 'como', 'que', 'se', 'su', 'sus',
+]);
+
+/**
+ * Trunca un title a maxLen chars respetando límites de palabra Y evitando
+ * que termine en una palabra colgante (conjunción/preposición/artículo).
+ * Si tras truncar la última palabra es colgante, retrocede al espacio
+ * anterior. Esto previene titles como "...Silencio y" o "| Pineda y" que
+ * degradan CTR en SERP.
+ *
+ * Si retroceder deja el title < TITLE_MIN chars, devuelve lo que haya
+ * (la guardia de longitud mínima en validarTitleOptimizado lo rechazará).
+ */
+export function truncarTitleSeguro(texto: string, maxLen: number): string {
+  let resultado = truncarEnPalabra(texto, maxLen);
+  // Retroceder mientras la última palabra sea colgante y quede contenido.
+  for (let i = 0; i < 3; i++) {
+    const palabras = resultado.split(/\s+/).filter(Boolean);
+    if (palabras.length <= 1) break;
+    const ultima = palabras[palabras.length - 1].toLowerCase();
+    if (!PALABRAS_COLGANTES.has(ultima)) break;
+    const ultEspacio = resultado.lastIndexOf(' ');
+    if (ultEspacio <= 0) break;
+    resultado = resultado.slice(0, ultEspacio).trim();
+  }
+  // Detección de brand parcial al final: el brand completo es
+  // "Pineda y Asociados" (23 chars con " | "). Si el truncado dejó un
+  // fragmento del brand al final ("| Pineda", "Pineda y", "| Pineda y"),
+  // retroceder hasta eliminar el brand entero — un brand cortado a medias
+  // se ve incompleto en SERP y degrada CTR tanto como una conjunción colgante.
+  const BRAND_PARTIAL = /\s*\|\s*pineda(\s+y(\s+asociados?)?)?$/i;
+  const BRAND_NO_SEP = /\s+pineda\s+y(\s+asociados?)?$/i;
+  for (let i = 0; i < 2; i++) {
+    if (BRAND_PARTIAL.test(resultado)) {
+      resultado = resultado.replace(BRAND_PARTIAL, '').trim();
+      continue;
+    }
+    if (BRAND_NO_SEP.test(resultado)) {
+      resultado = resultado.replace(BRAND_NO_SEP, '').trim();
+      continue;
+    }
+    break;
+  }
+  return resultado;
+}
+
+/**
+ * Tipo de retorno de las guardias de title/meta:
+ *  - `{ nuevo }` → validado y listo para persistir.
+ *  - `{ rechazado }` → una guardia falló; `rechazado` es el motivo.
+ *  - `null` → no hay nada que validar (input vacío o idéntico al original).
+ */
+export type GuardiaTitleMeta = { nuevo: string } | { rechazado: string } | null;
+
+/**
+ * Guardia del title optimizado por la IA (R4/R6/R17 + §5 SEO):
+ *  - ≤60 chars (trunca en palabra si excede) y ≥30 chars.
+ *  - Preserva el tema: ≥40% de palabras significativas del original presentes
+ *    en el optimizado, O Jaccard ≥0.3 (la IA reordenó/sinónimos pero mismo tema).
+ *  - Contiene ≥1 keyword significativa del original (no puede cambiar de tema).
+ *  - Sin rutas privadas (R6): /intranet, /admin, /calculadora, /cp, etc.
+ *  - Sin claims legales nuevos: si la IA inventó "Art. 999" en el title y no
+ *    existe en fuentes canónicas, se rechaza.
+ *
+ * Devuelve `null` si `optimizado` es vacío o idéntico al original (sin cambio).
+ */
+export function validarTitleOptimizado(original: string, optimizado: string): GuardiaTitleMeta {
+  const opt = optimizado?.trim() ?? '';
+  if (!opt) return null;
+  if (opt === original.trim()) return null;
+
+  // 1. Longitud: truncar a 60 si excede, rechazar si queda <30. Se usa
+  //    truncarTitleSeguro (no truncarEnPalabra) para que el title no termine
+  //    en una conjunción/preposición colgante ("...Silencio y", "| Pineda y")
+  //    por truncado de longitud — eso degrada CTR en SERP.
+  let nuevo = opt;
+  if (nuevo.length > TITLE_MAX) {
+    nuevo = truncarTitleSeguro(nuevo, TITLE_MAX);
+  }
+  if (nuevo.length < TITLE_MIN) {
+    return { rechazado: `title de ${nuevo.length} chars (<${TITLE_MIN} mínimo). Se conserva el original.` };
+  }
+
+  // 1b. Sin puntos suspensivos al final: la IA a veces devuelve titles
+  //     incompletos con "..." cuando no sabe cómo encajar el contenido en 60
+  //     chars ("Cómo Funciona una Consulta Legal en Honduras: Qué...").
+  //     Un title con "..." en SERP se ve cortado e irresoluto → degrada CTR.
+  if (/\.\.\.?$/.test(nuevo)) {
+    return { rechazado: 'title optimizado termina en puntos suspensivos ("..."). La IA dejó el title incompleto. Se conserva el original.' };
+  }
+
+  // 2. Sin rutas privadas (R6) — se verifica ANTES que el tema porque R6 es
+  //    crítico de seguridad y un title con /intranet debe rechazarse siempre,
+  //    sin que la guardia de tema lo enmascare.
+  if (esRutaPrivada(nuevo)) {
+    return { rechazado: 'title optimizado contiene una ruta privada (R6). Se conserva el original.' };
+  }
+
+  // 3. Preservar tema: overlap de palabras significativas o Jaccard.
+  const origWords = palabrasSignificativas(original);
+  const optWords = new Set(palabrasSignificativas(nuevo));
+  if (origWords.length > 0) {
+    const overlap = origWords.filter((w) => optWords.has(w)).length / origWords.length;
+    const jac = jaccardSignificativas(original, nuevo);
+    if (overlap < 0.4 && jac < 0.3) {
+      return { rechazado: `title optimizado cambia el tema (overlap ${Math.round(overlap * 100)}%, Jaccard ${jac.toFixed(2)}). Se conserva el original.` };
+    }
+    // 4. ≥1 keyword significativa del original presente.
+    if (!origWords.some((w) => optWords.has(w))) {
+      return { rechazado: 'title optimizado no contiene ninguna keyword significativa del original. Se conserva el original.' };
+    }
+  }
+
+  // 5. Sin claims legales nuevos (la IA podría inventar "Art. 999" en el title).
+  const claimsTitle = extraerClaims(nuevo);
+  if (claimsTitle.some((c) => c.tipo === 'articulo_cp' || c.tipo === 'articulo_const')) {
+    const disc = verificarClaims(claimsTitle).filter(
+      (d) => d.severidad === 'critico' || d.severidad === 'importante',
+    );
+    if (disc.length > 0) {
+      return { rechazado: `title optimizado introduce cita legal no verificada: ${disc[0].mensaje}. Se conserva el original.` };
+    }
+  }
+
+  if (nuevo === original.trim()) return null; // tras truncar quedó igual
+  return { nuevo };
+}
+
+/**
+ * Guardia de la metaDescription optimizada por la IA (R4/R6 + §5 SEO):
+ *  - 70-155 chars (trunca a 155 si excede; rechaza si <70).
+ *  - No idéntica al title (la SERP desperdiciaría espacio).
+ *  - Contiene ≥1 keyword significativa del title (alineación title↔meta, §5).
+ *  - Sin rutas privadas (R6).
+ *
+ * Devuelve `null` si `optimizada` es vacía o idéntica a la meta original.
+ */
+export function validarMetaOptimizada(
+  title: string,
+  originalMeta: string,
+  optimizada: string,
+): GuardiaTitleMeta {
+  const opt = optimizada?.trim() ?? '';
+  if (!opt) return null;
+  if (opt === (originalMeta ?? '').trim()) return null;
+
+  // 1. No idéntica al title (la meta debe expandir, no repetir) — se verifica
+  //    ANTES que la longitud porque un title corto copiado como meta dispararía
+  //    la guardia de longitud (<70) y enmascararía la causa real (redundancia).
+  if (opt.toLowerCase() === title.trim().toLowerCase()) {
+    return { rechazado: 'meta optimizada es idéntica al title. La meta debe expandir el title, no repetirlo.' };
+  }
+
+  // 2. Longitud: truncar a 155 si excede, rechazar si <70.
+  let nuevo = opt;
+  if (nuevo.length > META_MAX) {
+    nuevo = truncarEnPalabra(nuevo, META_MAX);
+  }
+  if (nuevo.length < META_MIN) {
+    return { rechazado: `meta de ${nuevo.length} chars (<${META_MIN} mínimo). Se conserva la original.` };
+  }
+
+  // 3. ≥1 keyword significativa del title presente en la meta.
+  const titleWords = palabrasSignificativas(title);
+  if (titleWords.length > 0) {
+    const metaLower = nuevo.toLowerCase();
+    if (!titleWords.some((w) => metaLower.includes(w))) {
+      return { rechazado: 'meta optimizada no contiene ninguna keyword significativa del title (desalineada).' };
+    }
+  }
+
+  // 4. Sin rutas privadas (R6).
+  if (esRutaPrivada(nuevo)) {
+    return { rechazado: 'meta optimizada contiene una ruta privada (R6). Se conserva la original.' };
+  }
+
+  if (nuevo === (originalMeta ?? '').trim()) return null;
+  return { nuevo };
+}
+
+/**
+ * Modo CTR-only: optimización ligera de title + metaDescription sin reescribir
+ * body. Pensada para posts OK que solo tienen oportunidades CTR. Envía solo:
+ *   - title + metaDescription actuales
+ *   - primer párrafo (máx 600 chars) como contexto de intención de búsqueda
+ *   - categoría
+ * max_tokens = 500 en vez de 8000, body ~500 chars vs ~25k → ~5-15s/post.
+ *
+ * La IA SOLO devuelve {title, metaDescription}. El body NO se toca. Las
+ * guardias validarTitleOptimizado / validarMetaOptimizada aplican igual
+ * (tema, longitud, keyword, rutas privadas R6, brand anti-truncado, anti-"...").
+ * No applican guardias de body (alucinaciones, regresiones, similitud,
+ * post-escritura) porque no hay body nuevo.
+ *
+ * Discrepancias fácticas y posts thin se ignoran en este modo por diseño
+ * (deben ir por el camino completo). Si se fuerza --ctr-only en un post con
+ * discrepancias, el script principal skipea el modo CTR para no perder el
+ * fact-checking (ver orquestación).
+ */
+async function corregirConIACtroOnly(
+  post: PostRow,
+  _discrepancias: Discrepancia[],
+  hallazgosSEO: HallazgoSEO[],
+): Promise<{ ok: true; data: SugerenciaIA } | { ok: false; error: string }> {
+  // Extraer primer <p> como contexto (máx 600 chars) — sin body completo.
+  const primerP = post.body.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  const primerPLano = primerP
+    ? stripHtml(primerP[1]).slice(0, 600)
+    : stripHtml(post.body).slice(0, 600);
+
+  // Solo pasar al prompt los hallazgos CTR/SEO/geo (no estructurales del body,
+  // que en modo CTR-only no se corregirán).
+  const ctrIssues = hallazgosSEO.filter(
+    (h) => h.categoria === 'ctr' || h.categoria === 'geo' || h.categoria === 'seo',
+  );
+  let issuesTxt = 'No se detectaron oportunidades de optimización.';
+  if (ctrIssues.length > 0) {
+    issuesTxt = 'OPORTUNIDADES CTR/SEO/GEO detectadas (corregir title+meta):\n';
+    for (const h of ctrIssues) {
+      issuesTxt += `- [${h.severidad}] (${h.categoria}) ${h.mensaje}\n`;
+    }
+  }
+
+  const promptSistemaCTR = `Eres un editor SEO senior de Pineda y Asociados (bufete jurídico en Honduras).
+
+TAREA: Optimizar el TITLE y la META DESCRIPTION de un artículo del blog para
+maximizar CTR orgánico en SERP de Google Honduras. NO tocas el body.
+
+REGLAS (sección 8 del sistema de corrección):
+1. Preserva el TEMA exacto (intención de búsqueda). Title nuevo debe tener ≥60%
+   de overlap de palabras significativas con el original.
+2. Title: 30-60 chars. Keyword al frente (lo importante primero).
+3. Power words legales: "Guía", "Cómo", "Ejemplos", "Paso a paso", "Errores".
+4. Número o pregunta si encaja naturalmente (mejora CTR).
+5. Señal geográfica (Honduras/ciudad) si faltaba en el title.
+6. Brand " | Pineda y Asociados" SOLO si cabe COMPLETO dentro de 60 chars.
+   Si el title sin brand ya tiene ≥38 chars, OMITE el brand.
+7. NUNCA termines en conjunción colgante (y, o, de, en, ante, la, el, los...).
+8. NUNCA termines en "..." (puntos suspensivos).
+9. Meta: 70-155 chars. Persuasiva, no descriptiva. Verbo de acción (Descubra,
+   Conozca, Sepa) + beneficio + keyword. Dentro del límite siemp re.
+10. NO inventes datos legales, métricas, premios o rankings en title/meta.
+11. NO menciones rutas internas: /intranet, /calculadora, /casos, /cp, /delitos,
+    /atajos, /admin (son privadas).
+
+DEVUELVE JSON estricto:
+{
+  "title": "title optimizado (30-60 chars, sin brand parcial)",
+  "metaDescription": "meta optimizada (70-155 chars)",
+  "cambios_realizados": ["explicación corta del cambio de title", "explicación corta del cambio de meta"]
+}
+
+Si ya son óptimos, devuelve title/meta sin cambios. NO incluyas el body en la
+respuesta — no lo reescribas.`;
+
+  const payload = {
+    model: DEEPSEEK_MODEL,
+    messages: [
+      { role: 'system', content: promptSistemaCTR },
+      {
+        role: 'user',
+        content:
+          `TITLE ACTUAL (${post.title.length} chars): ${post.title}\n` +
+          `META ACTUAL (${(post.metaDescription ?? '').length} chars): ${post.metaDescription ?? '(vacía)'}\n` +
+          `CATEGORÍA: ${post.category}\n` +
+          `PRIMER PÁRRAFO (contexto de intención de búsqueda): ${primerPLano}\n\n` +
+          `${issuesTxt}\n\n` +
+          `Devuelve el JSON con title y metaDescription optimizados según las reglas.`,
+      },
+    ],
+    temperature: 0.15,
+    max_tokens: 500, // payload ligero: solo title+meta (vs 8000 en body mode)
+    response_format: { type: 'json_object' },
+  };
+
+  try {
+    const res = await fetchConRetry(
+      DEEPSEEK_ENDPOINT,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+        },
+        body: JSON.stringify(payload),
+      },
+      45_000, // menos timeout: payload pequeño procesa más rápido
+    );
+    if (!res.ok) {
+      return { ok: false, error: `HTTP ${res.status} ${res.statusText}` };
+    }
+    const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+    const content = (data.choices?.[0]?.message?.content ?? '').trim();
+    if (!content) {
+      return { ok: false, error: 'Respuesta vacía de la IA (CTR-only)' };
+    }
+
+    let parsed: { title?: string; metaDescription?: string; cambios_realizados?: string[] };
+    try {
+      parsed = JSON.parse(content);
+    } catch {
+      return { ok: false, error: 'La IA no devolvió JSON válido (CTR-only)' };
+    }
+
+    // Aplicar guardias de title/meta (mismas que body mode).
+    let titleOptimizado: string | null = null;
+    let metaDescriptionOptimizada: string | null = null;
+    const advertenciasTitleMeta: string[] = [];
+    if (typeof parsed.title === 'string' && parsed.title.trim()) {
+      const r = validarTitleOptimizado(post.title, parsed.title);
+      if (r && 'nuevo' in r) {
+        titleOptimizado = r.nuevo;
+      } else if (r && 'rechazado' in r) {
+        advertenciasTitleMeta.push(`⚠️ Title optimizado rechazado: ${r.rechazado}`);
+      }
+    }
+    if (typeof parsed.metaDescription === 'string' && parsed.metaDescription.trim()) {
+      const r = validarMetaOptimizada(post.title, post.metaDescription ?? '', parsed.metaDescription);
+      if (r && 'nuevo' in r) {
+        metaDescriptionOptimizada = r.nuevo;
+      } else if (r && 'rechazado' in r) {
+        advertenciasTitleMeta.push(`⚠️ Meta optimizada rechazada: ${r.rechazado}`);
+      }
+    }
+
+    return {
+      ok: true,
+      data: {
+        cambiosRealizados: Array.isArray(parsed.cambios_realizados)
+          ? parsed.cambios_realizados
+          : [],
+        advertencias: advertenciasTitleMeta,
+        bodyCorregido: null, // CTR-only: nunca toca el body
+        ampliadoConExito: false,
+        alucinacionesNuevas: [],
+        regresionesSEO: [],
+        titleOptimizado,
+        metaDescriptionOptimizada,
+      },
+    };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
 async function corregirConIA(
   post: PostRow,
   discrepancias: Discrepancia[],
@@ -2539,7 +3400,23 @@ async function corregirConIA(
   necesitaCorreccion: boolean,
   intento = 1,
   bodyPrevioIntento: string | null = null,
+  modoCTR = false,
 ): Promise<{ ok: true; data: SugerenciaIA } | { ok: false; error: string }> {
+  // ── MODO CTR-ONLY (payload ligero) ──
+  // Cuando el post es OK y solo necesita optimización CTR de title/meta (o
+  // cuando se fuerza con --ctr-only), no enviamos el body completo. La IA solo
+  // ve title + meta actuales + primer párrafo (para contexto de intención de
+  // búsqueda) + categoría, y devuelve solo `{title, metaDescription}`. Esto
+  // baja max_tokens de 8000 a 500 y el cuerpo del cuerpo se queda en ~500 chars
+  // vs ~25k. Tiempo: ~5-15s/post en vez de 60-90s.
+  //
+  // NO se toca el body → las guardias de alucinaciones/regresiones/similitud
+  // no aplican (no hay body nuevo). Las guardias `validarTitleOptimizado` y
+  // `validarMetaOptimizada` SÍ se aplican (validan tema, longitud, keyword,
+  // rutas privadas R6, brand anti-truncado, anti-"...").
+  if (modoCTR) {
+    return corregirConIACtroOnly(post, discrepancias, hallazgosSEO);
+  }
   // En reintentos, usar el body previo de la IA como punto de partida (la IA
   // ya expandió desde el original; retomar desde ahí es más eficiente que
   // empezar de nuevo). El body original se conserva para guardias/validación.
@@ -2572,9 +3449,9 @@ async function corregirConIA(
   }
 
   const necesitaExpandir = palabrasBase < MIN_PALABRAS;
-  const palabrasFaltan = MIN_PALABRAS - palabrasBase;
+  const palabrasFaltan = MIN_PALABRAS_AMPLIACION_IA - palabrasBase;
   const instruccionExpandir = necesitaExpandir
-    ? `\n\n⚠️ EXPANSIÓN OBLIGATORIA: El artículo tiene ${palabrasBase} palabras (mínimo requerido: ${MIN_PALABRAS}). Debes expandirlo a 800-1000 palabras usando SOLO información ya presente en el artículo o en su categoría "${post.category}". NO inventes datos legales nuevos. Si no puedes expandir sin inventar, indícalo en advertencias.${intento > 1 ? `\n\n🔄 REINTENTO #${intento}: En el intento anterior generaste ${palabrasBase} palabras. Te faltan ${palabrasFaltan} palabras para alcanzar el mínimo de ${MIN_PALABRAS}. Expande el contenido existente con más detalle, ejemplos, explicaciones o análisis — SIEMPRE usando solo información ya presente. NO repitas contenido ya escrito; añade profundidad nueva.` : ''}`
+    ? `\n\n⚠️ EXPANSIÓN OBLIGATORIA: El artículo tiene ${palabrasBase} palabras (mínimo para aceptar: ${MIN_PALABRAS_AMPLIACION_IA}). Debes expandirlo a 800-1000 palabras usando SOLO información ya presente en el artículo o en su categoría "${post.category}". NO inventes datos legales nuevos. Si no puedes expandir sin inventar, indícalo en advertencias.${intento > 1 ? `\n\n🔄 REINTENTO #${intento}: En el intento anterior generaste ${palabrasBase} palabras. Te faltan ${palabrasFaltan} palabras para alcanzar el mínimo de ${MIN_PALABRAS_AMPLIACION_IA}. Expande el contenido existente con más detalle, ejemplos, explicaciones o análisis — SIEMPRE usando solo información ya presente. NO repitas contenido ya escrito; añade profundidad nueva.` : ''}`
     : '';
 
   // Instrucción de profesionalidad para artículos ya OK (>800 palabras, sin discrepancias)
@@ -2640,7 +3517,7 @@ async function corregirConIA(
       { role: 'system', content: PROMPT_SISTEMA_CORRECCION },
       {
         role: 'user',
-        content: `${accion} este artículo del blog jurídico:\n\nTÍTULO: ${post.title}\nCATEGORÍA: ${post.category}\nDESCRIPCIÓN: ${post.description}\nPALABRAS ACTUALES: ${palabrasBase}\n\n${reporteTxt}${reporteSEOTxt}${instruccionExpandir}${instruccionProfesionalidad}${refsTxt}\n\nCUERPO HTML ACTUAL:\n${bodyParaIA}\n\nDevuelve el JSON con el body ${necesitaCorreccion ? 'corregido' : 'revisado'}.`,
+        content: `${accion} este artículo del blog jurídico:\n\nTÍTULO: ${post.title}\nCATEGORÍA: ${post.category}\nDESCRIPCIÓN: ${post.description}\nMETA DESCRIPTION ACTUAL: ${post.metaDescription ?? '(vacía)'}\nPALABRAS ACTUALES: ${palabrasBase}\n\n${reporteTxt}${reporteSEOTxt}${instruccionExpandir}${instruccionProfesionalidad}${refsTxt}\n\nCUERPO HTML ACTUAL:\n${bodyParaIA}\n\nDevuelve el JSON con el body ${necesitaCorreccion ? 'corregido' : 'revisado'}. Optimiza también el title y la metaDescription según la sección 8 (CTR) del sistema, o devuelve null en esos campos si ya son óptimos.`,
       },
     ],
     temperature: 0.15,
@@ -2671,7 +3548,13 @@ async function corregirConIA(
       return { ok: false, error: 'Respuesta vacía de la IA' };
     }
 
-    let parsed: { body?: string; cambios_realizados?: string[]; advertencias?: string[] };
+    let parsed: {
+      body?: string;
+      title?: string;
+      metaDescription?: string;
+      cambios_realizados?: string[];
+      advertencias?: string[];
+    };
     try {
       parsed = JSON.parse(content);
     } catch {
@@ -2683,17 +3566,50 @@ async function corregirConIA(
       return { ok: false, error: 'Body corregido vacío o demasiado corto (<20 palabras)' };
     }
 
+    // ── GUARDIAS DE TITLE/META OPTIMIZADOS (CTR, sección 8 del prompt) ──
+    // La IA puede optimizar title y metaDescription con criterios CTR. Se
+    // validan de forma INDEPENDIENTE al body: un post con body correcto pero
+    // title con oportunidad CTR debe poder optimizar el title sin tocar el
+    // body. Las guardias (validarTitleOptimizado / validarMetaOptimizada)
+    // verifican tema preservado, longitud, keyword presente, rutas privadas
+    // (R6) y claims legales nuevos. Si el body se rechaza por alucinaciones,
+    // el title/meta optimizados SÍ pueden aplicarse si pasan sus guardias.
+    let titleOptimizado: string | null = null;
+    let metaDescriptionOptimizada: string | null = null;
+    const advertenciasTitleMeta: string[] = [];
+    if (typeof parsed.title === 'string' && parsed.title.trim()) {
+      const r = validarTitleOptimizado(post.title, parsed.title);
+      if (r && 'nuevo' in r) {
+        titleOptimizado = r.nuevo;
+      } else if (r && 'rechazado' in r) {
+        advertenciasTitleMeta.push(`⚠️ Title optimizado rechazado: ${r.rechazado}`);
+      }
+    }
+    if (typeof parsed.metaDescription === 'string' && parsed.metaDescription.trim()) {
+      const r = validarMetaOptimizada(post.title, post.metaDescription ?? '', parsed.metaDescription);
+      if (r && 'nuevo' in r) {
+        metaDescriptionOptimizada = r.nuevo;
+      } else if (r && 'rechazado' in r) {
+        advertenciasTitleMeta.push(`⚠️ Meta optimizada rechazada: ${r.rechazado}`);
+      }
+    }
+
     // Verificar que no sea idéntico al original
     if (bodyCorregido === post.body.trim()) {
       return {
         ok: true,
         data: {
-          cambiosRealizados: ['Sin cambios — el artículo ya es correcto'],
-          advertencias: parsed.advertencias ?? [],
+          cambiosRealizados:
+            titleOptimizado || metaDescriptionOptimizada
+              ? ['Title/meta optimizados (CTR) — body sin cambios']
+              : ['Sin cambios — el artículo ya es correcto'],
+          advertencias: [...(parsed.advertencias ?? []), ...advertenciasTitleMeta],
           bodyCorregido: null, // null = sin cambios necesarios
           ampliadoConExito: false,
           alucinacionesNuevas: [],
           regresionesSEO: [],
+          titleOptimizado,
+          metaDescriptionOptimizada,
         },
       };
     }
@@ -2726,11 +3642,14 @@ async function corregirConIA(
             ...advertenciasAluc,
             '⚠️ Body corregido RECHAZADO: la IA introdujo datos falsos nuevos. Se conserva el original. Requiere corrección humana.',
             ...(Array.isArray(parsed.advertencias) ? parsed.advertencias : []),
+            ...advertenciasTitleMeta,
           ],
           bodyCorregido: null, // RECHAZADO por alucinaciones
           ampliadoConExito: false,
           alucinacionesNuevas,
           regresionesSEO: [],
+          titleOptimizado,
+          metaDescriptionOptimizada,
         },
       };
     }
@@ -2751,33 +3670,43 @@ async function corregirConIA(
             ...advertenciasReg,
             '⚠️ Body corregido RECHAZADO: la IA introdujo regresiones SEO/privacidad. Se conserva el original.',
             ...(Array.isArray(parsed.advertencias) ? parsed.advertencias : []),
+            ...advertenciasTitleMeta,
           ],
           bodyCorregido: null, // RECHAZADO por regresiones
           ampliadoConExito: false,
           alucinacionesNuevas: [],
           regresionesSEO,
+          titleOptimizado,
+          metaDescriptionOptimizada,
         },
       };
     }
 
     // ── GUARDIA 3: si el post era thin, el resultado debe alcanzar ≥800 ──
+    // R17 fija el umbral de aceptación IA en 800 (no 600, que es el umbral de
+    // detección thin de R13). Un post de 550 palabras que la IA expande a 620
+    // NO se acepta: sigue thin para estándar IA.
     const palabrasCorregidas = wordCount(bodyCorregido);
-    const ampliadoConExito = necesitaExpandir && palabrasCorregidas >= MIN_PALABRAS;
+    const ampliadoConExito =
+      necesitaExpandir && palabrasCorregidas >= MIN_PALABRAS_AMPLIACION_IA;
     if (necesitaExpandir && !ampliadoConExito) {
       return {
         ok: true,
         data: {
           cambiosRealizados: Array.isArray(parsed.cambios_realizados) ? parsed.cambios_realizados : [],
           advertencias: [
-            `⚠️ IA expandió a ${palabrasCorregidas} palabras (objetivo ≥${MIN_PALABRAS}). Body rechazado: sigue thin. Requiere nuevo intento de IA o revisión humana puntual (fallback).`,
+            `⚠️ IA expandió a ${palabrasCorregidas} palabras (objetivo ≥${MIN_PALABRAS_AMPLIACION_IA}). Body rechazado: sigue thin. Requiere nuevo intento de IA o revisión humana puntual (fallback).`,
             ...(Array.isArray(parsed.advertencias) ? parsed.advertencias : []),
+            ...advertenciasTitleMeta,
           ],
-          bodyCorregido: null, // RECHAZADO: sigue thin (R13)
+          bodyCorregido: null, // RECHAZADO: sigue thin (R17)
           bodyPrevio: bodyCorregido, // Guardar para posible reintento
           palabrasPrevias: palabrasCorregidas,
           ampliadoConExito: false,
           alucinacionesNuevas: [],
           regresionesSEO: [],
+          titleOptimizado,
+          metaDescriptionOptimizada,
         },
       };
     }
@@ -2798,11 +3727,14 @@ async function corregirConIA(
             advertencias: [
               `ℹ️ Body corregido rechazado por similitud ≥${(UMBRAL_SIMILITUD * 100).toFixed(0)}% (similitud real ${(sim * 100).toFixed(1)}%). Cambio irrelevante; se conserva el original.`,
               ...(Array.isArray(parsed.advertencias) ? parsed.advertencias : []),
+              ...advertenciasTitleMeta,
             ],
             bodyCorregido: null,
             ampliadoConExito: false,
             alucinacionesNuevas: [],
             regresionesSEO: [],
+            titleOptimizado,
+            metaDescriptionOptimizada,
           },
         };
       }
@@ -2814,11 +3746,13 @@ async function corregirConIA(
       ok: true,
       data: {
         cambiosRealizados: Array.isArray(parsed.cambios_realizados) ? parsed.cambios_realizados : ['Corrección aplicada'],
-        advertencias: Array.isArray(parsed.advertencias) ? parsed.advertencias : [],
+        advertencias: Array.isArray(parsed.advertencias) ? [...parsed.advertencias, ...advertenciasTitleMeta] : advertenciasTitleMeta,
         bodyCorregido,
         ampliadoConExito,
         alucinacionesNuevas: [],
         regresionesSEO: [],
+        titleOptimizado,
+        metaDescriptionOptimizada,
       },
     };
   } catch (e) {
@@ -2830,7 +3764,7 @@ async function corregirConIA(
 //  Reporte
 // ═══════════════════════════════════════════════════════════════════════════
 
-function generarReporteMD(resultados: ResultadoPost[], modo: string, iaActiva: boolean): string {
+function generarReporteMD(resultados: ResultadoPost[], modo: string, iaActiva: boolean, posts: PostRow[]): string {
   const L: Record<Severidad, string> = { critico: '🔴', importante: '🟡', recomendable: '🔵' };
   const lines: string[] = [];
   lines.push(`# Verificación + corrección del blog — ${new Date().toISOString().slice(0, 19).replace('T', ' ')}`);
@@ -2854,6 +3788,8 @@ function generarReporteMD(resultados: ResultadoPost[], modo: string, iaActiva: b
   lines.push(`| Posts OK (validadores pasan) | ${resultados.filter((r) => r.ok).length} |`);
   lines.push(`| Posts con discrepancias fácticas | ${conDiscrepancias.length} |`);
   lines.push(`| Posts corregidos por IA | ${conCorreccionIA.length} |`);
+  lines.push(`| Posts con title optimizado (CTR) | ${resultados.filter((r) => r.sugerenciaIA?.titleOptimizado).length} |`);
+  lines.push(`| Posts con meta optimizada (CTR) | ${resultados.filter((r) => r.sugerenciaIA?.metaDescriptionOptimizada).length} |`);
   lines.push(`| Posts thin (<${MIN_PALABRAS} palabras) | ${thin.length} |`);
   lines.push(`| Posts sin claims legales detectables | ${sinClaims.length} |`);
   lines.push(`| Posts con cambios mecánicos | ${resultados.filter((r) => r.cambiosMecanicos.length > 0).length} |`);
@@ -2890,6 +3826,35 @@ function generarReporteMD(resultados: ResultadoPost[], modo: string, iaActiva: b
       lines.push(`- \`${r.post.slug}\` — ${r.palabras} palabras — ${ampliado}`);
     }
     lines.push('');
+  }
+
+  // Posts con title/meta optimizados por IA (CTR orgánico)
+  const conTitleOpt = resultados.filter((r) => r.sugerenciaIA?.titleOptimizado);
+  const conMetaOpt = resultados.filter((r) => r.sugerenciaIA?.metaDescriptionOptimizada);
+  if (conTitleOpt.length > 0 || conMetaOpt.length > 0) {
+    lines.push('## ✏️ Posts con title/meta optimizados por IA (CTR orgánico)');
+    lines.push('');
+    for (const r of resultados) {
+      const t = r.sugerenciaIA?.titleOptimizado;
+      const m = r.sugerenciaIA?.metaDescriptionOptimizada;
+      if (!t && !m) continue;
+      lines.push(`### \`${r.post.slug}\``);
+      if (t) {
+        lines.push(`- **Title** (${t.length} chars):`);
+        lines.push(`  - Antes: \`${r.post.title}\``);
+        lines.push(`  - Después: \`${t}\``);
+      }
+      if (m) {
+        const postOriginal = posts.find((p) => p.slug === r.post.slug);
+        const metaAntes = postOriginal?.metaDescription ?? postOriginal?.description ?? '(vacía)';
+        lines.push(`- **Meta** (${m.length} chars):`);
+        lines.push(`  - Antes: \`${metaAntes}\``);
+        lines.push(`  - Después: \`${m}\``);
+      }
+      lines.push('');
+      lines.push('---');
+      lines.push('');
+    }
   }
 
   lines.push('## Detalle por post');
@@ -3005,6 +3970,9 @@ async function main() {
   } else {
     console.log('📐 IA inactiva (sin DEEPSEEK_API_KEY). Solo verificación + cambios mecánicos.');
   }
+  if (FORCE_CTR_ONLY) {
+    console.log('⚡ --ctr-only activo: posts OK van por payload ligero (title+meta). Posts con discrepancies/thin bajan a body mode automáticamente.');
+  }
   if (!APLICAR && !SOLO_VERIFICAR) {
     console.log('⚠️  DRY-RUN: no se escribirá nada en la DB.');
   }
@@ -3037,6 +4005,12 @@ async function main() {
 
   if (FILTRO_SLUG) posts = posts.filter((p) => p.slug === FILTRO_SLUG);
 
+  // Total de posts publicados ANTES de cualquier slice (offset/limit). El
+  // checkpoint guarda este total para que la reanudación funcione aunque se
+  // ejecute con --limit: si guardáramos posts.length (tras slice), el total
+  // cambiaría entre ejecuciones con distintos --limit y el checkpoint nunca
+  // sería reanudable (cp.total=40 vs posts.length=159 → ignorado).
+  const totalPublicados = posts.length;
 
   // ── Checkpoint reanudable ──
   // Solo aplica cuando NO hay --slug (lote completo) y NO hay --offset manual.
@@ -3044,7 +4018,7 @@ async function main() {
   let startIdx = 0;
   if (!RESET_CHECKPOINT && !FILTRO_SLUG && OFFSET === 0) {
     const cp = leerCheckpoint();
-    if (checkpointEsReanudable(cp, modo, IA_ENABLED, posts.length)) {
+    if (checkpointEsReanudable(cp, modo, IA_ENABLED, totalPublicados)) {
       startIdx = cp.lastCompletedIndex + 1;
       if (startIdx > 0 && startIdx < posts.length) {
         console.log(`↻ Checkpoint reanudable encontrado: reanudando desde el post ${startIdx + 1}/${posts.length} (último completado: ${cp.lastCompletedIndex}).\n`);
@@ -3081,13 +4055,15 @@ async function main() {
   // ── Procesar ──
   const resultados: ResultadoPost[] = [];
   const resumen = {
-    total: posts.length,
+    total: posts.length, // posts a procesar en esta ejecución (tras slice)
     ok: 0,
     conDiscrepancias: 0,
     corrigioIA: 0,
     erroresIA: 0,
     cambiosMecanicos: 0,
     titulosTruncados: 0,
+    titlesOptimizados: 0,
+    metasOptimizadas: 0,
     sinClaims: 0,
     hallazgosSEO: 0,
     alucinacionesIA: 0,
@@ -3145,12 +4121,30 @@ async function main() {
     let iaError: string | null = null;
     const necesitaCorreccion = discrepancias.length > 0 || estadoLongitud === 'thin' ||
       hallazgosSEO.some((h) => h.severidad === 'critico' || h.severidad === 'importante');
-    // Forzar IA cuando hay citas legales presentes Y el post no está 100% OK
-    // (tiene cualquier hallazgo, aunque sea recomendable). Así la IA recibe los
-    // textos canónicos y puede verificar/fijar la precisión de las citas.
+    // Forzar IA cuando hay citas legales presentes Y el post tiene hallazgos
+    // críticos/importantes (no solo recomendables). Así la IA recibe los textos
+    // canónicos y puede verificar/fijar la precisión de las citas, sin consumir
+    // API en posts que solo tienen hallazgos menores (slug corto, 1 filler, etc.).
     const tieneCitasLegales = claims.some((c) => c.tipo === 'articulo_cp' || c.tipo === 'articulo_const');
-    const forzarIA = tieneCitasLegales && hallazgosSEO.length > 0 && IA_ENABLED && !necesitaCorreccion;
-    if (IA_ENABLED && (necesitaCorreccion || forzarIA)) {
+    const tieneHallazgosBlocking = hallazgosSEO.some(
+      (h) => h.severidad === 'critico' || h.severidad === 'importante',
+    );
+    const forzarIA =
+      tieneCitasLegales && tieneHallazgosBlocking && IA_ENABLED && !necesitaCorreccion;
+    // Optimización CTR: si hay oportunidades CTR en title/meta (keyword foco
+    // ausente del primer párrafo, meta débil, title sin señales CTR, etc.),
+    // se dispara la IA para optimizar title + metaDescription aunque el body
+    // esté OK. El body queda protegido: si la IA no produce bodyCorregido, no
+    // se toca. --limit N controla coste por lote; --no-ai desactiva todo.
+    const necesitaOptimizacionCTR =
+      IA_ENABLED && hallazgosSEO.some((h) => h.categoria === 'ctr');
+    // Modo CTR-only: payload ligero (title+meta, no reescribe body). Solo para
+    // posts que NO necesitan corrección de body (sin discrepancies / no thin /
+    // no hallazgos críticos-blocking). Si --ctr-only se fuerza pero el post
+    // necesita fact-check, baja a body mode para no perder la verificación.
+    const modoCTR = !necesitaCorreccion && !forzarIA &&
+      (necesitaOptimizacionCTR || FORCE_CTR_ONLY);
+    if (IA_ENABLED && (necesitaCorreccion || forzarIA || necesitaOptimizacionCTR || FORCE_CTR_ONLY)) {
       // Loop de reintentos: si la IA expande pero no llega a 800, y su body
       // previo tiene ≥700 palabras (cerca del umbral), se reintenta desde ese
       // body con un prompt que le indica exactamente cuántas palabras faltan.
@@ -3167,6 +4161,7 @@ async function main() {
           necesitaCorreccion,
           intento,
           bodyPrevioRetry,
+          modoCTR,
         );
         if (!r.ok) {
           iaError = r.error;
@@ -3174,6 +4169,14 @@ async function main() {
           break;
         }
         sugerenciaIA = r.data;
+        // Modo CTR-only: la IA no devuelve body, no hay reintentos. Aceptar
+        // y salir del loop. Los contadores de title/meta se incrementan en
+        // la FASE 3 (postYaOk / post con issues) basándose en sugerenciaIA.
+        if (modoCTR) {
+          if (r.data.titleOptimizado) resumen.titlesOptimizados++;
+          if (r.data.metaDescriptionOptimizada) resumen.metasOptimizadas++;
+          break;
+        }
         if (r.data.bodyCorregido) {
           resumen.corrigioIA++;
           if (intento > 1) {
@@ -3216,13 +4219,30 @@ async function main() {
       const postYaOk = ok && !sugerenciaIA?.bodyCorregido;
 
       if (postYaOk) {
-        // Solo meta-fixes, no tocar body
+        // Solo meta-fixes + optimización CTR (title/meta por IA), no tocar body.
         const autoFixesMeta = aplicarAutoFixesMetadatos(post);
-        if (autoFixesMeta.cambiosAplicados.length > 0 && APLICAR) {
+        // title/metaDescription: IA (CTR) tiene prioridad sobre auto-fix mecánico.
+        const titleFinal = sugerenciaIA?.titleOptimizado ?? autoFixesMeta.title?.nuevo ?? null;
+        const metaFinal =
+          sugerenciaIA?.metaDescriptionOptimizada ?? autoFixesMeta.metaDescription?.nuevo ?? null;
+        const hayCambiosIA = Boolean(sugerenciaIA?.titleOptimizado || sugerenciaIA?.metaDescriptionOptimizada);
+        // Contadores CTR: reflejan lo que la IA produjo, independientes de APLICAR
+        // (en dry-run también se reporta la optimización planificada). Así el
+        // resumen por consola coincide con la tabla del reporte MD/JSON.
+        if (sugerenciaIA?.titleOptimizado) {
+          resumen.titlesOptimizados++;
+          cambiosMecanicos.push(`title optimizado por IA (CTR): "${post.title}" → "${sugerenciaIA.titleOptimizado}"`);
+        }
+        if (sugerenciaIA?.metaDescriptionOptimizada) {
+          resumen.metasOptimizadas++;
+          cambiosMecanicos.push(`metaDescription optimizada por IA (CTR): ${sugerenciaIA.metaDescriptionOptimizada.length} chars`);
+        }
+        if ((autoFixesMeta.cambiosAplicados.length > 0 || hayCambiosIA) && APLICAR) {
           const setObj: Record<string, unknown> = { updatedAt: new Date() };
           let hayCambiosMeta = false;
-          if (autoFixesMeta.title) { setObj.title = autoFixesMeta.title.nuevo; hayCambiosMeta = true; }
-          if (autoFixesMeta.metaDescription) { setObj.metaDescription = autoFixesMeta.metaDescription.nuevo; hayCambiosMeta = true; }
+          if (titleFinal) { setObj.title = titleFinal; hayCambiosMeta = true; }
+          if (autoFixesMeta.metaTitle) { setObj.metaTitle = autoFixesMeta.metaTitle.nuevo; hayCambiosMeta = true; }
+          if (metaFinal) { setObj.metaDescription = metaFinal; hayCambiosMeta = true; }
           if (autoFixesMeta.description) { setObj.description = autoFixesMeta.description.nuevo; hayCambiosMeta = true; }
           if (autoFixesMeta.author) { setObj.author = autoFixesMeta.author.nuevo; hayCambiosMeta = true; }
           if (autoFixesMeta.coverImage) { setObj.coverImage = autoFixesMeta.coverImage.nuevo; hayCambiosMeta = true; }
@@ -3241,6 +4261,15 @@ async function main() {
           await db.update(blogPosts).set({ body: bodySanitizado, updatedAt: new Date() }).where(eq(blogPosts.id, post.id));
           cambiosMecanicos.push(`citas no verificadas eliminadas: ${rSan.eliminados}`);
         }
+        // Log de progreso (post OK: meta-fixes + sanitización, sin tocar body)
+        const flagsOk: string[] = [];
+        const hallazgosCriticosSEO = hallazgosSEO.filter((h) => h.severidad === 'critico').length;
+        const hallazgosImportSEO = hallazgosSEO.filter((h) => h.severidad === 'importante').length;
+        if (hallazgosCriticosSEO > 0) flagsOk.push(`🔴 ${hallazgosCriticosSEO} SEO crítico`);
+        if (hallazgosImportSEO > 0) flagsOk.push(`🟡 ${hallazgosImportSEO} SEO importante`);
+        if (cambiosMecanicos.length > 0) flagsOk.push(`meta-fixes: ${cambiosMecanicos.length}`);
+        if (ok) flagsOk.push('✅ OK');
+        console.log(`${progreso} ${icono}${iconoThin} ${post.slug} — ${palabras} palabras (${estadoLongitud})${flagsOk.length > 0 ? ' — ' + flagsOk.join(', ') : ''}`);
       } else {
         // Post con issues: aplicar corrección completa (IA + mecánicos + body)
 
@@ -3298,6 +4327,10 @@ async function main() {
       // Se escriben TODOS los campos auto-fixeables + el body, en una sola
       // query update. Esto garantiza que tras --aplicar el post pasa TODOS los
       // validadores (no solo el body).
+      // Contadores CTR: reflejan lo que la IA produjo, independientes de APLICAR
+      // (en dry-run también se reporta la optimización planificada).
+      if (sugerenciaIA?.titleOptimizado) resumen.titlesOptimizados++;
+      if (sugerenciaIA?.metaDescriptionOptimizada) resumen.metasOptimizadas++;
       if (APLICAR) {
         const setObj: Record<string, unknown> = { updatedAt: new Date() };
         let hayCambiosBody = false;
@@ -3327,13 +4360,25 @@ async function main() {
           resumen.reversionesPostEscritura++;
         }
 
-        // Metadatos auto-fixeables
-        if (autoFixesMeta.title) {
+        // Metadatos: IA (CTR) tiene prioridad sobre auto-fix mecánico para
+        // title y metaDescription. metaTitle/description/author/coverImage/tags
+        // van por auto-fix (no los redacta la IA).
+        if (sugerenciaIA?.titleOptimizado) {
+          setObj.title = sugerenciaIA.titleOptimizado;
+          hayCambiosMeta = true;
+        } else if (autoFixesMeta.title) {
           setObj.title = autoFixesMeta.title.nuevo;
           hayCambiosMeta = true;
           resumen.titulosTruncados++;
         }
-        if (autoFixesMeta.metaDescription) {
+        if (autoFixesMeta.metaTitle) {
+          setObj.metaTitle = autoFixesMeta.metaTitle.nuevo;
+          hayCambiosMeta = true;
+        }
+        if (sugerenciaIA?.metaDescriptionOptimizada) {
+          setObj.metaDescription = sugerenciaIA.metaDescriptionOptimizada;
+          hayCambiosMeta = true;
+        } else if (autoFixesMeta.metaDescription) {
           setObj.metaDescription = autoFixesMeta.metaDescription.nuevo;
           hayCambiosMeta = true;
         }
@@ -3424,6 +4469,8 @@ async function main() {
         flags.push(`🚨 ${sugerenciaIA.regresionesSEO.length} regresión(es) SEO — body rechazado`);
       } else if (IA_ENABLED && !necesitaCorreccion) {
         if (forzarIA) flags.push('IA: verificando precisión de citas');
+        else if (modoCTR) flags.push('IA: CTR-only (title/meta ligero)');
+        else if (necesitaOptimizacionCTR) flags.push('IA: optimizando CTR (title/meta)');
         else flags.push('IA: no necesaria (post OK)');
       }
       if (ok) flags.push('✅ OK');
@@ -3449,14 +4496,18 @@ async function main() {
       cambiosMecanicos,
       cambiosAplicados,
       ok,
+      repeticionCrossArticle: [], // se rellena tras el check global del lote
     });
 
     // ── Checkpoint: registrar progreso tras cada post (solo lote completo) ──
+    // total = totalPublicados (antes de slice) para que la reanudación
+    // funcione con --limit: cp.total coincide con posts.length de la próxima
+    // ejecución (159 en ambas), aunque el slice --limit cambie.
     if (!FILTRO_SLUG && OFFSET === 0 && startIdx >= 0) {
       escribirCheckpoint({
         modo,
         iaActiva: IA_ENABLED,
-        total: resumen.total,
+        total: totalPublicados,
         lastCompletedIndex: startIdx + i,
         updatedAt: new Date().toISOString(),
       });
@@ -3477,6 +4528,31 @@ async function main() {
     })).filter((b) => b.body.length > 0);
     const repeticiones = detectarRepeticionCrossArticle(bodiesParaCheck);
     if (repeticiones.length > 0) {
+      // Indexar bloques por slug para marcar los resultados afectados.
+      // Un post puede compartir varios bloques con otros.
+      const bloquesPorSlug = new Map<string, BloqueRepetido[]>();
+      for (const bloque of repeticiones) {
+        for (const slug of bloque.slugs) {
+          if (!bloquesPorSlug.has(slug)) bloquesPorSlug.set(slug, []);
+          bloquesPorSlug.get(slug)!.push(bloque);
+        }
+      }
+      // Rellenar repeticionCrossArticle en cada resultado afectado y marcar
+      // ok=false (un post plantilla NO pasa todos los validadores).
+      for (const r of resultados) {
+        const bloques = bloquesPorSlug.get(r.post.slug);
+        if (bloques && bloques.length > 0) {
+          r.repeticionCrossArticle = bloques;
+          r.ok = false;
+          r.hallazgosSEO.push({
+            severidad: 'importante',
+            categoria: 'contenido',
+            mensaje: `Repetición entre artículos (anti-plantilla): ${bloques.length} bloque(s) de texto compartido(s) con ≥3 artículos. Diversificar el contenido para que no parezca plantilla.`,
+          });
+        }
+      }
+      // Recalcular resumen.ok tras marcar posts plantilla
+      resumen.ok = resultados.filter((r) => r.ok).length;
       console.log(`\n${'─'.repeat(72)}`);
       console.log(`  ⚠️  REPETICIÓN ENTRE ARTÍCULOS (anti-plantilla)`);
       console.log(`${'─'.repeat(72)}`);
@@ -3485,6 +4561,8 @@ async function main() {
         console.log(`  · [${r.count} artículos] "...${r.secuencia.slice(0, 60)}${r.secuencia.length > 60 ? '...' : ''}"`);
         console.log(`    Artículos: ${r.slugs.slice(0, 5).join(', ')}${r.slugs.length > 5 ? `, +${r.slugs.length - 5} más` : ''}`);
       }
+      const postsAfectados = [...bloquesPorSlug.keys()];
+      console.log(`  ${postsAfectados.length} post(s) marcados como plantilla (ok=false).`);
       console.log(`${'─'.repeat(72)}\n`);
       resumen.repeticionCrossArticle = repeticiones.length;
     }
@@ -3504,6 +4582,8 @@ async function main() {
   if (IA_ENABLED) console.log(`  Errores de IA:                  ${resumen.erroresIA}`);
   if (IA_ENABLED) console.log(`  Alucinaciones IA detectadas:    ${resumen.alucinacionesIA} (bodies rechazados)`);
   if (IA_ENABLED) console.log(`  Regresiones SEO detectadas:     ${resumen.regresionesSEO} (bodies rechazados)`);
+  if (IA_ENABLED) console.log(`  Titles optimizados (CTR):       ${resumen.titlesOptimizados}`);
+  if (IA_ENABLED) console.log(`  Metas optimizadas (CTR):        ${resumen.metasOptimizadas}`);
   if (!SOLO_VERIFICAR) console.log(`  Con cambios mecánicos:          ${resumen.cambiosMecanicos}`);
   if (APLICAR) console.log(`  Títulos truncados:              ${resumen.titulosTruncados}`);
   if (APLICAR) console.log(`  Posts con meta-fixes:            ${resumen.metaFixes} (metadatos auto-corregidos)`);
@@ -3541,16 +4621,40 @@ async function main() {
       })),
       cambiosMecanicos: r.cambiosMecanicos,
       correccionIA: r.sugerenciaIA?.bodyCorregido ? 'aplicada' : null,
+      // Campos de auditoría: body corregido + métricas para verificar que los
+      // cambios son quirúrgicos (no reescritura). similitudOriginal alto = body
+      // conservado; bajo = reescritura (sospechoso). palabrasCorregidas permite
+      // ver la amplificación de posts thin.
+      bodyCorregido: r.sugerenciaIA?.bodyCorregido ?? null,
+      palabrasCorregidas: r.sugerenciaIA?.bodyCorregido
+        ? wordCount(r.sugerenciaIA.bodyCorregido)
+        : null,
+      similitudOriginal: r.sugerenciaIA?.bodyCorregido
+        ? similitudCuerpo(
+            posts.find((p) => p.slug === r.post.slug)?.body ?? '',
+            r.sugerenciaIA.bodyCorregido,
+          )
+        : null,
+      // Title/meta optimizados por IA (CTR orgánico). Auditoría before/after.
+      titleOriginal: r.post.title,
+      titleOptimizado: r.sugerenciaIA?.titleOptimizado ?? null,
+      metaOriginal: posts.find((p) => p.slug === r.post.slug)?.metaDescription ?? posts.find((p) => p.slug === r.post.slug)?.description ?? null,
+      metaDescriptionOptimizada: r.sugerenciaIA?.metaDescriptionOptimizada ?? null,
       iaError: r.iaError,
       alucinacionesIA: r.sugerenciaIA?.alucinacionesNuevas?.map((d) => d.mensaje) ?? [],
       regresionesSEO: r.sugerenciaIA?.regresionesSEO?.map((h) => h.mensaje) ?? [],
       advertenciasIA: r.sugerenciaIA?.advertencias ?? [],
+      repeticionCrossArticle: r.repeticionCrossArticle.map((b) => ({
+        count: b.count,
+        secuencia: b.secuencia.slice(0, 120),
+        slugs: b.slugs,
+      })),
     })),
   }, null, 2), 'utf8');
   console.log(`📄 Reporte JSON: ${reporteJSON}`);
 
   // ── Guardar reporte Markdown ──
-  const md = generarReporteMD(resultados, modo, IA_ENABLED);
+  const md = generarReporteMD(resultados, modo, IA_ENABLED, posts);
   const reporteMD = path.join(backupDir, `verify-fix-reporte-${ts}.md`);
   fs.writeFileSync(reporteMD, md, 'utf8');
   console.log(`📄 Reporte Markdown: ${reporteMD}`);

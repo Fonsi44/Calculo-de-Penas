@@ -17,7 +17,7 @@ import { formatDate } from '@/lib/blog';
  * silenciosamente (graceful degradation).
  *
  * Uso:
- *   <BlogHighlights />                              // default: 6 posts destacados
+ *   <BlogHighlights />                              // default: 9 posts destacados
  *   <BlogHighlights slugs={['slug-1', 'slug-2']} /> // selección manual
  *   <BlogHighlights
  *     eyebrow="Artículos de derecho penal"
@@ -28,7 +28,7 @@ import { formatDate } from '@/lib/blog';
 interface BlogHighlightsProps {
   /** Slugs priorizados a mostrar (sin ruta, solo el slug). Si vacío, usa featured/recent. */
   slugs?: string[];
-  /** Número de posts a mostrar si no hay slugs. Default: 6. */
+  /** Número de posts a mostrar si no hay slugs. Default: 9. */
   count?: number;
   eyebrow?: string;
   title?: string;
@@ -54,11 +54,15 @@ const DEFAULT_SLUGS = [
   'audiencia-inicial-proceso-penal-honduras',
   'jornada-laboral-horas-extra-descansos-honduras',
   'poder-legal-honduras-cuando-se-necesita',
+  // Añadidos para reducir page depth de depth-3 a depth-1 (Jun 2026)
+  'facturacion-electronica-requisitos-sar',
+  'incumplimiento-contrato-comercial-honduras',
+  'contratacion-publica-licitaciones',
 ];
 
 export async function BlogHighlights({
   slugs,
-  count = 6,
+  count = 9,
   eyebrow = 'Guías jurídicas destacadas',
   title = 'Recursos legales para tomar decisiones',
   subtitle = 'Guías prácticas y análisis escritos por nuestro equipo sobre las consultas más frecuentes de nuestros clientes.',

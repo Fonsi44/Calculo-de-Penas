@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "node scripts/submit-indexnow.mjs",
+    "postbuild": "node scripts/generate-llms-txt.mjs && node scripts/submit-indexnow.mjs",
+    "llms:generate": "node scripts/generate-llms-txt.mjs",
+    "llms:dry": "node scripts/generate-llms-txt.mjs --dry-run",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",

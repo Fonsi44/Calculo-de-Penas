@@ -23,6 +23,17 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const ldSchemas = [
     {
       '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: landing.title,
+      description: landing.description,
+      inLanguage: 'es-HN',
+      isPartOf: { '@id': `${site.url}/#website` },
+      about: { '@id': `${site.url}/#legal-service` },
+    },
+    {
+      '@context': 'https://schema.org',
       '@type': 'FAQPage',
       '@id': `${url}#faqpage`,
       url,

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Política Editorial',
@@ -27,6 +27,7 @@ export const metadata: Metadata = {
 
 export default function PoliticaEditorialPage() {
   return (
+    <>
     <LegalDocument
       eyebrow="Criterios editoriales"
       title="Política Editorial"
@@ -144,5 +145,19 @@ export default function PoliticaEditorialPage() {
         </p>
       </LegalSection>
     </LegalDocument>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/politica-editorial')}#webpage`,
+          url: absoluteUrl('/politica-editorial'),
+          name: 'Política Editorial | Pineda y Asociados',
+          description: 'Política editorial del bufete Pineda y Asociados en Nacaome, Valle: criterios de creación, revisión y actualización de contenidos jurídicos del sitio web.',
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
+    </>
   );
 }

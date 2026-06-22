@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 export default async function DisclaimerPage() {
   const c = await getLegalPageContent('disclaimer');
   return (
+    <>
     <LegalDocument
       eyebrow="Exención de responsabilidad"
       title={c.title}
@@ -175,5 +176,19 @@ export default async function DisclaimerPage() {
         </p>
       </LegalSection>
     </LegalDocument>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/disclaimer')}#webpage`,
+          url: absoluteUrl('/disclaimer'),
+          name: 'Exención de Responsabilidad | Pineda y Asociados',
+          description: 'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre la calculadora de penas, contenidos publicados y servicios legales.',
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
+    </>
   );
 }

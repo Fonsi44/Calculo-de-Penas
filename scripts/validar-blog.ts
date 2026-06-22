@@ -121,9 +121,6 @@ async function main() {
     .from(blogPosts)
     .where(eq(blogPosts.published, true));
 
-  // Set de URLs válidas para detección de enlaces rotos. Se construye ANTES
-  // de cualquier filtro (--slug, --limit) para incluir TODOS los posts publicados.
-  const urlsBlogValidas = new Set(posts.map((p) => `/blog/${p.category}/${p.slug}`));
 
   if (FILTRO_SLUG) posts = posts.filter((p) => p.slug === FILTRO_SLUG);
   if (LIMIT > 0) posts = posts.slice(0, LIMIT);
@@ -173,7 +170,7 @@ async function main() {
     const palabras = wordCount(post.body);
     const claims = extraerClaims(post.body);
     const discrepancias = verificarClaims(claims);
-    const hallazgos = analizarSEO(post, palabras, urlsBlogValidas);
+    const hallazgos = analizarSEO(post, palabras);
 
     const criticos = hallazgos.filter((h) => h.severidad === 'critico').length + discrepancias.filter((d) => d.severidad === 'critico').length;
     const importantes = hallazgos.filter((h) => h.severidad === 'importante').length + discrepancias.filter((d) => d.severidad === 'importante').length;

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 export default async function AvisoLegalPage() {
   const c = await getLegalPageContent('aviso-legal');
   return (
+    <>
     <LegalDocument
       eyebrow="Aviso Legal"
       title={c.title}
@@ -170,5 +171,19 @@ export default async function AvisoLegalPage() {
         </p>
       </LegalSection>
     </LegalDocument>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/aviso-legal')}#webpage`,
+          url: absoluteUrl('/aviso-legal'),
+          name: 'Aviso Legal | Pineda y Asociados',
+          description: 'Aviso legal e identificación del titular del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle, Honduras.',
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
+    </>
   );
 }

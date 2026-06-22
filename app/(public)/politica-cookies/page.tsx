@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalDocument, LegalSection, LegalList, LegalCallout } from '@/components/marketing/legal-document';
-import { site } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { getLegalPageContent } from '@/lib/legal-content';
 
 export const metadata: Metadata = {
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 export default async function PoliticaCookiesPage() {
   const c = await getLegalPageContent('politica-cookies');
   return (
+    <>
     <LegalDocument
       eyebrow="Almacenamiento local del navegador"
       title={c.title}
@@ -167,5 +168,19 @@ export default async function PoliticaCookiesPage() {
         </p>
       </LegalSection>
     </LegalDocument>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${absoluteUrl('/politica-cookies')}#webpage`,
+          url: absoluteUrl('/politica-cookies'),
+          name: 'Política de Cookies | Pineda y Asociados',
+          description: 'Política de cookies del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle. Información sobre cookies técnicas y de análisis utilizadas.',
+          inLanguage: 'es-HN',
+          isPartOf: { '@id': `${site.url}/#website` },
+          about: { '@id': `${site.url}/#legal-service` },
+        }),
+      }} />
+    </>
   );
 }

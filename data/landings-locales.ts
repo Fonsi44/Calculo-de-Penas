@@ -55,11 +55,11 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Valle',
     sedeFisica: true,
     distanciaKm: 0,
-    // Title distinto al de la home para evitar duplicidad en SERP.
-    // La home usa "Abogados en Nacaome, Valle | Pineda y Asociados";
-    // esta landing enfatiza la sede física. NO incluye el nombre del bufete
-    // porque el layout lo añade automáticamente (%s | Pineda y Asociados).
-    title: 'Bufete de Abogados en Nacaome (Sede)',
+    // Title enfocado en intención de búsqueda local primaria.
+    // La home usa "${site.name} — ${site.tagline}" (ej: "Pineda y Asociados — Abogados en Nacaome, Valle, Honduras").
+    // Esta landing prioriza la keyword exacta "Abogados en Nacaome, Valle".
+    // NO incluye el nombre del bufete: el layout lo añade (%s | Pineda y Asociados).
+    title: 'Abogados en Nacaome, Valle',
     description:
       'Sede principal de Pineda y Asociados en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Dirección, horario y WhatsApp: +504 9536-3724.',
     heroEyebrow: 'Sede principal · Valle, Honduras',
@@ -259,8 +259,15 @@ export function getLandingBySlug(slug: string): LandingLocal | undefined {
  * Genera los metadatos SEO para una landing local (title, description, OG,
  * Twitter, canonical, keywords). Reutilizable por cada wrapper de página.
  */
+export const LANDING_OG_IMAGES: Record<string, string> = {
+  nacaome: '/og/nacaome.webp',
+  choluteca: '/og/choluteca.webp',
+  'san-lorenzo': '/og/san-lorenzo.webp',
+};
+
 export function landingMetadata(landing: LandingLocal) {
   const canonical = `/abogados-en-${landing.slug}`;
+  const ogImage = LANDING_OG_IMAGES[landing.slug] ?? '/og-image.webp';
   return {
     title: landing.title,
     description: landing.description,
@@ -281,7 +288,7 @@ export function landingMetadata(landing: LandingLocal) {
       type: 'website' as const,
       images: [
         {
-          url: '/og-image.webp',
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: landing.title,
@@ -292,7 +299,7 @@ export function landingMetadata(landing: LandingLocal) {
       card: 'summary_large_image' as const,
       title: landing.title,
       description: landing.description,
-      images: ['/og-image.webp'],
+      images: [ogImage],
     },
   };
 }
