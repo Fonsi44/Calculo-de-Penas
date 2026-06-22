@@ -113,6 +113,40 @@ const nextConfig: NextConfig = {
       // === FASE 4: Redirects posts canibalizados restantes (Jun 2026) ===
       { source: '/blog/derecho-bancario/central-riesgos-consultar-impugnar-honduras', destination: '/blog/derecho-bancario/central-riesgos-honduras-consultar-impugnar', permanent: true },
       { source: '/blog/derecho-civil/contratos-civiles-honduras-errores-comunes', destination: '/blog/derecho-civil/errores-contratos-civiles-honduras', permanent: true },
+      // === FIX 404: Páginas huérfanas que devolvían 404 (Jun 2026) ===
+      // Posts "abogado-{area}-choluteca" existen como blog posts con /blog/ prefijo
+      { source: '/abogado-laboral-choluteca', destination: '/blog/derecho-laboral/abogado-laboral-choluteca', permanent: true },
+      { source: '/abogado-civil-choluteca', destination: '/blog/derecho-civil/abogado-civil-choluteca', permanent: true },
+      { source: '/abogado-familia-choluteca', destination: '/blog/derecho-de-familia/abogado-familia-choluteca', permanent: true },
+      // Post de derecho-penal servido bajo subruta estática (sin /blog/)
+      { source: '/proceso-penal-completo', destination: '/derecho-penal/proceso-penal-completo', permanent: true },
+      // Error de categoría: post en derecho-civil pero URL apuntaba a derecho-mercantil
+      { source: '/blog/derecho-mercantil/errores-contratos-civiles-honduras', destination: '/blog/derecho-civil/errores-contratos-civiles-honduras', permanent: true },
+      // === SLUG SHORTENING: URLs largas acortadas (Jun 2026) ===
+      // Elimina "honduras"/"guia"/"legal"/"obligaciones"/"requisitos"/"aspectos" redundantes
+      // Reduce URL path de 86→61 chars máximo
+      { source: '/blog/extranjeria-migracion/visas-inversion-inversionista-rentista-pensionado-honduras', destination: '/blog/extranjeria-migracion/visas-inversion-rentista-pensionado', permanent: true },
+      { source: '/blog/derecho-administrativo/contratacion-publica-licitaciones-empresas-honduras', destination: '/blog/derecho-administrativo/contratacion-publica-licitaciones', permanent: true },
+      { source: '/blog/practica-legal/lavado-activos-obligaciones-cumplimiento-empresas-honduras', destination: '/blog/practica-legal/lavado-activos-obligaciones', permanent: true },
+      { source: '/blog/proceso-penal/sobreseimiento-definitivo-provisional-diferencias-honduras', destination: '/blog/proceso-penal/sobreseimiento-definitivo-provisional', permanent: true },
+      { source: '/blog/conciliacion-arbitraje/centro-conciliacion-arbitraje-ccic-guia-honduras', destination: '/blog/conciliacion-arbitraje/centro-conciliacion-arbitraje-ccic', permanent: true },
+      { source: '/blog/tributario/facturacion-electronica-obligaciones-requisitos-sar-honduras', destination: '/blog/tributario/facturacion-electronica-requisitos-sar', permanent: true },
+      { source: '/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales-privados-honduras', destination: '/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales', permanent: true },
+      { source: '/blog/hondurenos-en-espana/herencias-transfronterizas-bienes-honduras-espana', destination: '/blog/hondurenos-en-espana/herencias-transfronterizas-bienes', permanent: true },
+      { source: '/blog/hondurenos-en-espana/hondurenos-espana-documentos-legales-extranjero', destination: '/blog/hondurenos-en-espana/hondurenos-espana-documentos', permanent: true },
+      { source: '/blog/derecho-bancario/creditos-reestructuracion-deudas-bancarias-honduras', destination: '/blog/derecho-bancario/creditos-reestructuracion-deudas', permanent: true },
+      { source: '/blog/extranjeria-migracion/refugio-asilo-quien-puede-solicitarlo-honduras', destination: '/blog/extranjeria-migracion/refugio-asilo-solicitarlo', permanent: true },
+      { source: '/blog/conciliacion-arbitraje/mediacion-vs-juicio-que-conviene-mas-honduras', destination: '/blog/conciliacion-arbitraje/mediacion-vs-juicio-cual-elegir', permanent: true },
+      { source: '/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal-honduras', destination: '/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal', permanent: true },
+      { source: '/blog/derecho-laboral/riesgos-profesionales-accidentes-laborales-honduras', destination: '/blog/derecho-laboral/riesgos-profesionales-accidentes', permanent: true },
+      { source: '/blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena', destination: '/blog/extranjeria-migracion/naturalizacion-nacionalidad-hondurena', permanent: true },
+      { source: '/blog/derecho-aduanero/importar-desde-china-guia-legal-aduanera-honduras', destination: '/blog/derecho-aduanero/importar-china-guia-aduanera', permanent: true },
+      { source: '/blog/derecho-aduanero/importar-mercancias-guia-legal-aduanera-honduras', destination: '/blog/derecho-aduanero/importar-mercancias-guia-aduanera', permanent: true },
+      { source: '/blog/derecho-mercantil/contratos-franquicia-aspectos-legales-honduras', destination: '/blog/derecho-mercantil/contratos-franquicia-aspectos', permanent: true },
+      { source: '/blog/derecho-aduanero/codigo-aduanero-centroamericano-basico-honduras', destination: '/blog/derecho-aduanero/codigo-aduanero-centroamericano', permanent: true },
+      { source: '/blog/hondurenos-en-espana/tributar-espana-bienes-honduras-guia-fiscal', destination: '/blog/hondurenos-en-espana/tributar-espana-bienes-guia', permanent: true },
+      { source: '/blog/hondurenos-en-espana/asuntos-familiares-honduras-viviendo-espana', destination: '/blog/hondurenos-en-espana/asuntos-familiares-honduras-espana', permanent: true },
+      { source: '/blog/practica-legal/proceso-consulta-legal-pineda-asociados-honduras', destination: '/blog/practica-legal/proceso-consulta-legal-pineda', permanent: true },
     ];
   },
   // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key
@@ -147,11 +181,18 @@ const nextConfig: NextConfig = {
           { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
         ],
       },
-      // Intranet: política más restrictiva (clickjacking DENY)
+      // Intranet: política más restrictiva (clickjacking DENY, noindex estricto)
       {
         source: '/intranet/:path*',
         headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet, noimageindex' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+        ],
+      },
+      {
+        source: '/intranet',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet, noimageindex' },
           { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },

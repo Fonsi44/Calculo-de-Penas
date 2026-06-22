@@ -95,9 +95,7 @@ describe('app/sitemap.ts — sin rutas privadas en PUBLIC_ROUTES', () => {
   });
 });
 
-describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
-  // site.noindex es false en test (no hay NEXT_PUBLIC_NOINDEX=true), así que
-  // robots() devuelve la regla de producción.
+describe('app/robots.ts — bloquea rutas privadas con reglas granulares por bot', () => {
   const robots = robotsFn();
   const rules: RobotsRule[] = Array.isArray(robots.rules) ? (robots.rules as RobotsRule[]) : [robots.rules as RobotsRule];
   const wildcardRule = rules.find((r) => r.userAgent === '*');
@@ -114,9 +112,6 @@ describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
   });
 
   it('la regla * NO bloquea /_next/ (assets de render necesarios para Googlebot)', () => {
-    // SEO técnico (Jun 2026): /_next/ contiene el CSS y JS de Next.js que
-    // Googlebot necesita para renderizar la SPA/RSC. Bloquearlo produce
-    // "Disallowed internal resources" y degrada el rendering service.
     expect(wildcardRule).toBeDefined();
     const disallow = asArray(wildcardRule?.disallow);
     expect(disallow, '/_next/ NO debe bloquearse').not.toContain('/_next/');
@@ -125,35 +120,68 @@ describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
   });
 
   it('la regla * PERMITE explícitamente /_next/, /_next/image, /images/, /fonts/ y assets por tipo', () => {
-    // Corrección GSC (Jun 2026): el tester de robots.txt de Google Search
-    // Console reportaba "recurso bloqueado por robots.txt" para 29/29 assets
-    // de la home (JS/CSS en /_next/static/chunks, fuentes .woff2 en
-    // /_next/static/media, imágenes en /_next/image). Se añaden `Allow`
-    // explícitos para que cada recurso individual quede marcado como
-    // permitido y Google re-fetchee robots.txt + re-renderice la página.
     expect(wildcardRule).toBeDefined();
     const allow = asArray(wildcardRule?.allow);
-    // Rastreo general
     expect(allow, 'debe permitir la raíz').toContain('/');
-    // Assets críticos de Next.js (JS, CSS, chunks, _next/image, fuentes next/font)
     expect(allow, 'debe permitir /_next/').toContain('/_next/');
     expect(allow, 'debe permitir /_next/static/').toContain('/_next/static/');
     expect(allow, 'debe permitir /_next/image').toContain('/_next/image');
-    // Imágenes y fuentes públicas
     expect(allow, 'debe permitir /images/').toContain('/images/');
     expect(allow, 'debe permitir /fonts/').toContain('/fonts/');
-    // Permisos por tipo de archivo (marcan cada recurso individual como permitido)
     for (const pattern of ['/*.js$', '/*.css$', '/*.woff2$', '/*.png$', '/*.webp$', '/*.svg$']) {
       expect(allow, `debe permitir ${pattern}`).toContain(pattern);
     }
   });
 
-  it('NO bloquea bots de IA — política GEO/LLM (todos permitidos)', () => {
-    const aiBots = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'CCBot', 'anthropic-ai'];
-    for (const bot of aiBots) {
-      const rule = rules.find((r) => r.userAgent === bot);
-      expect(rule, `no debería tener regla específica para ${bot} (todos permitidos)`).toBeUndefined();
-    }
+  it('NO contiene la directiva Host (Bing la marca como no válida)', () => {
+    expect((robots as Record<string, unknown>).host).toBeUndefined();
+  });
+
+  it('Googlebot tiene regla con Allow: / y Disallow: /intranet/', () => {
+    const rule = rules.find((r) => r.userAgent === 'Googlebot');
+    expect(rule).toBeDefined();
+    expect(rule!.allow).toBe('/');
+    expect(asArray(rule!.disallow)).toContain('/intranet/');
+  });
+
+  it('Bingbot tiene regla con Allow: / y Disallow: /intranet/', () => {
+    const rule = rules.find((r) => r.userAgent === 'Bingbot');
+    expect(rule).toBeDefined();
+    expect(rule!.allow).toBe('/');
+    expect(asArray(rule!.disallow)).toContain('/intranet/');
+  });
+
+  it('GPTBot tiene regla con Allow: / y Disallow: /intranet/', () => {
+    const rule = rules.find((r) => r.userAgent === 'GPTBot');
+    expect(rule).toBeDefined();
+    expect(rule!.allow).toBe('/');
+    expect(asArray(rule!.disallow)).toContain('/intranet/');
+  });
+
+  it('ClaudeBot tiene regla con Allow: / y Disallow: /intranet/', () => {
+    const rule = rules.find((r) => r.userAgent === 'ClaudeBot');
+    expect(rule).toBeDefined();
+    expect(rule!.allow).toBe('/');
+    expect(asArray(rule!.disallow)).toContain('/intranet/');
+  });
+
+  it('PerplexityBot tiene regla con Allow: / y Disallow: /intranet/', () => {
+    const rule = rules.find((r) => r.userAgent === 'PerplexityBot');
+    expect(rule).toBeDefined();
+    expect(rule!.allow).toBe('/');
+    expect(asArray(rule!.disallow)).toContain('/intranet/');
+  });
+
+  it('CCBot está bloqueado con Disallow: /', () => {
+    const rule = rules.find((r) => r.userAgent === 'CCBot');
+    expect(rule).toBeDefined();
+    expect(asArray(rule!.disallow)).toContain('/');
+  });
+
+  it('Bytespider está bloqueado con Disallow: /', () => {
+    const rule = rules.find((r) => r.userAgent === 'Bytespider');
+    expect(rule).toBeDefined();
+    expect(asArray(rule!.disallow)).toContain('/');
   });
 
   it('declara el sitemap', () => {

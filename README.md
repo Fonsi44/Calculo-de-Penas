@@ -341,7 +341,7 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 | Componente | Estado |
 |------------|--------|
 | Sitemap | `/sitemap.xml` — dinámico, excluye rutas privadas y posts canonicalizados |
-| Robots.txt | `/robots.txt` — bloquea `/intranet/`, `/api/`, `/login`, 12+ IA crawlers; **permite `/_next/`, `/_next/image`, `/images/`, `/fonts/` y assets por tipo** (`*.js`, `*.css`, `*.woff2`, `*.png`, …) con `Allow` explícitos para que Googlebot pueda renderizar la SPA/RSC sin bloqueo |
+| Robots.txt | `/robots.txt` — 21 reglas granulares: 5 buscadores principales (Googlebot, Bingbot, DuckDuckBot, Applebot) + 7 bots IA útiles (GPTBot, PerplexityBot, ClaudeBot, etc.) con `Allow: /` y `Disallow: /intranet/`; 8 scrapers/bots agresivos bloqueados (Bytespider, CCBot, Amazonbot, etc.). Sin directiva `Host`. Permite `/_next/`, `/_next/image`, `/images/`, `/fonts/` y assets por tipo (`*.js`, `*.css`, `*.woff2`, `*.png`, …) |
 | llms.txt | `/llms.txt` — descripción del sitio para asistentes IA |
 | JSON-LD | `LegalService+LocalBusiness`, `Organization`, `WebSite`, `BreadcrumbList`, `BlogPosting`, `FAQPage`, `Service` |
 | IndexNow | Postbuild dry-run; envío real con `ENABLE_INDEXNOW_SUBMIT=true` |
@@ -363,10 +363,10 @@ Cómo regenerar y validar los archivos SEO tras cambios:
 | Tarea | Comando / Ubicación |
 |-------|---------------------|
 | **Sitemap** (`/sitemap.xml`) | Se regenera en build automáticamente. Fuente: `app/sitemap.ts` (rutas estáticas) + tabla `blog_posts` (DB). Excluye rutas privadas, posts `noindex` y posts canonicalizados. |
-| **Robots** (`/robots.txt`) | Fuente: `app/robots.ts` (única fuente — no hay `public/robots.txt` ni `next-sitemap.config.js`). Permite explícitamente `/_next/`, `/_next/static/`, `/_next/image`, `/images/`, `/fonts/` y assets por tipo (`*.js`, `*.css`, `*.woff2`, `*.png`, …) para que Googlebot renderice la SPA/RSC sin bloqueo. Bloquea solo `/intranet/`, `/api/`, `/login` y 12 crawlers de IA. |
+| **Robots** (`/robots.txt`) | Fuente: `app/robots.ts` (única fuente — no hay `public/robots.txt` ni `next-sitemap.config.js`). 21 reglas granulares: buscadores principales (Googlebot, Bingbot, DuckDuckBot, Applebot) + bots IA útiles (GPTBot, PerplexityBot, ClaudeBot, etc.) con `Allow: /` y `Disallow: /intranet/`. Scrapers bloqueados: Bytespider, CCBot, Meta-ExternalAgent/ Fetcher, Amazonbot, ImagesiftBot, omgili/ omgilibot. **Sin directiva `Host`** (Bing la rechaza). Permite explícitamente `/_next/`, `/_next/static/`, `/_next/image`, `/images/`, `/fonts/` y assets por tipo (`*.js`, `*.css`, `*.woff2`, `*.png`, …). |
 | **llms.txt** (`/llms.txt`) | Archivo estático en `public/llms.txt`. Referenciado vía `<link rel="llms-txt">` en `app/layout.tsx`. |
 | **JSON-LD** | Helpers en `lib/site.ts` (LegalService, Organization, WebSite) + `lib/schemas/`. El BreadcrumbList lo emite exclusivamente el componente `<Breadcrumbs>` (una sola fuente de verdad). |
-| **Validar tras cambios SEO** | `npm run lint && npm run build && npm test` (obligatorio por AGENTS.md R8). El test `tests/seo-protection.test.ts` verifica: robots no bloquea `/_next/`, sitemap sin rutas privadas, schemas válidos, sin BreadcrumbList duplicado y FAQPage sanitiza HTML. |
+| **Validar tras cambios SEO** | `npm run lint && npm run build && npm test` (obligatorio por AGENTS.md R8). El test `tests/seo-protection.test.ts` (32 tests) verifica: robots granulares por bot, sin directiva Host, `/_next/` no bloqueado, sitemap sin rutas privadas, schemas válidos, sin BreadcrumbList duplicado, FAQPage sanitiza HTML. |
 | **Health check off-page** | `npm run seo:health` (15 señales SEO externas). |
 | **Validar fechas del blog** | `npm run validate:dates`. |
 

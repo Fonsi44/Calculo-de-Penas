@@ -5,6 +5,79 @@
 
 ---
 
+## Unreleased — SEO/seguridad: robots.txt granulado, eliminado Host, intranet reforzada
+
+Configuración SEO/seguridad de la raíz del sitio siguiendo criterio equilibrado:
+permitir buscadores legítimos y asistentes IA útiles, bloquear scrapers/bots
+agresivos y proteger intranet a nivel servidor.
+
+### robots.txt (app/robots.ts) — cambios estructurales
+
+- **Eliminada directiva `Host`** (`host: site.url`). Bing la marca como no
+  válida/no recomendada. La directiva Host no forma parte del estándar moderno
+  de robots.txt (RFC 9309). La canonicalización se gestiona vía redirecciones
+  301, canonical tags y configuración de Vercel/dominio.
+- **Reglas granulares por user-agent** (antes: una sola regla `*`). Ahora 21
+  reglas:
+  - **5 buscadores principales**: Googlebot, Googlebot-Image, Bingbot,
+    DuckDuckBot, Applebot → `Allow: /`, `Disallow: /intranet/`.
+  - **7 bots IA con valor GEO**: GPTBot, ChatGPT-User, OAI-SearchBot,
+    PerplexityBot, ClaudeBot, Claude-User, anthropic-ai → `Allow: /`,
+    `Disallow: /intranet/`.
+  - **8 scrapers/bots bloqueados**: Bytespider, CCBot, Meta-ExternalAgent,
+    Meta-ExternalFetcher, Amazonbot, ImagesiftBot, omgili, omgilibot →
+    `Disallow: /`.
+  - **Regla `*` comodín**: conserva todos los `Allow` explícitos previos
+    (`/_next/`, `/_next/static/`, `/_next/image`, `/images/`, `/fonts/`,
+    `/*.js$`, `/*.css$`, `/*.woff2$`, `/*.png$`, etc.) y bloquea
+    `/intranet/`, `/api/`, `/login` y páginas de error.
+
+### Protección de intranet
+
+- **Cabeceras X-Robots-Tag reforzadas** en `next.config.ts`: `/intranet/` y
+  `/intranet` ahora emiten `noindex, nofollow, noarchive, nosnippet, noimageindex`
+  (antes solo `noindex, nofollow, noarchive`). Añadida regla explícita para
+  `/intranet` (sin trailing slash).
+- **Protección servidor**: `proxy.ts` (middleware edge) ya redirecta usuarios
+  no autenticados a `/intranet/login` con 307. No hay Apache/Nginx — todo el
+  tráfico pasa por Vercel Edge Network + Next.js middleware.
+- **Sin subdominio intranet separado**: la intranet vive bajo `/intranet/` en
+  el mismo dominio. No existe `intranet.pinedayasociadoshn.com` ni registros
+  DNS asociados. No requiere configuración adicional.
+- **Enlace público único**: header → `rel="nofollow"` a `/intranet/admin`.
+  Verificado: no hay otros enlaces públicos a intranet.
+- **Sitemap**: verificado — ninguna URL de intranet aparece en `PUBLIC_ROUTES`.
+
+### Tests actualizados (seo-protection.test.ts)
+
+- De 25 → 32 tests. Nuevas aserciones:
+  - `host` debe ser `undefined` (eliminado).
+  - Reglas específicas para Googlebot, Bingbot, GPTBot, ClaudeBot,
+    PerplexityBot, CCBot, Bytespider con allow/disallow correctos.
+  - Test anterior "NO bloquea bots de IA" reemplazado por verificaciones
+    específicas de cada bot.
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/robots.ts` | Reglas granulares, eliminado `host`, 21 user-agents |
+| `tests/seo-protection.test.ts` | 7 tests nuevos, actualizados asserts |
+| `next.config.ts` | X-Robots-Tag más restrictivo en `/intranet/` |
+
+### Validación
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errores |
+| `npm run build` | Compiled successfully (294 páginas) |
+| `npm test` | 556/556 (21 suites) — **32 tests SEO protection** |
+
+### Estado
+`IMPLEMENTADO` y `VALIDADO` (lint/build/test). Backups en `.backups/`.
+
+---
+
 ## Unreleased — SEO: corrección de bloqueo de rastreo de recursos Next.js en robots.txt (GSC)
 
 Google Search Console reportaba "No se puede cargar el recurso: bloqueado por
