@@ -10,7 +10,222 @@
 Deploy a Vercel Production de todos los cambios de llms.txt, robots.txt,
 sitemap.xml y automatización. Verificación post-deploy completa.
 
+### Fase 2 — Revisión editorial post-auditoría sobre posts pendientes (2026-06-22)
+
+Segunda fase manual de revisión editorial sobre los posts pendientes detectados
+en los reportes `verify-fix-reporte-2026-06-22T*.md`/`.json` (14 reportes, 136
+slugs únicos). Continúa la fase 1 (11 posts críticos) atacando los posts que
+seguían con problemas verificables tras las correcciones automáticas previas.
+
+**Inventario y clasificación (136 slugs en reportes):**
+- Fase 1 (ya corregidos): 11.
+- Pendientes: 125 (Prioridad 1: 44, Prioridad 2: 78, Prioridad 3: 3).
+- **Verificación de estado actual:** de los 44 prio1, **16 ya estaban limpios**
+  (corregidos por `blog:verify-fix --aplicar` y fases anteriores) y **28
+  seguían con problemas verificables** (anti-plantilla + titles truncados).
+
+**Hallazgo clave:** las fases automáticas previas resolvieron los problemas
+graves (0 decretos inventados residuales, 0 Art. sospechosos, 0 thin <600 —
+todos expandidos a 754–2147 palabras). El problema restante era **repetición
+anti-plantilla estructural**: las secciones que `blog:verify-fix` añadió
+sistemáticamente ("Explicación en lenguaje llano", "en términos sencillos",
+etc.) se repetían idénticas en 58–138 posts.
+
+**Correcciones aplicadas:**
+| Lote | Posts | Acción |
+|------|-------|--------|
+| Prio1 anti-plantilla H2 | 21 | Diversificación de H2 "Explicación en lenguaje llano" con 6 variantes temáticas rotadas |
+| Prio1 titles truncados | 3 | Titles completados (`ejecucion-hipotecaria`, `contratos-confidencialidad`, `despido-empleados-publicos`) |
+| Frases introductorias blog-wide | 88 | Diversificación de 4 frases repetidas ("en lenguaje llano/sencillo/simple/palabras sencillas") con variantes rotadas |
+
+**Reducción del patrón anti-plantilla (frases introductorias):**
+- "en lenguaje llano": 58 → 8 posts
+- "Explicación en lenguaje llano": 54 → 5 posts
+- "en términos sencillos": 52 → 0 posts
+- "en términos simples": 19 → 0 posts
+- "En palabras sencillas": 9 → 1 post
+
+**Pendiente documentado (no resuelto por alcance):** los nombres de sección
+estándar ("Temas relacionados" 143x, "Preguntas frecuentes" 127x, "Marco legal"
+115x, "Ejemplo práctico" 106x, "Base legal" 90x, "Errores frecuentes" 77x)
+siguen repetidos por ser convenciones útiles para el lector. Su diversificación
+total requeriría reescritura editorial humana de ~1000 encabezados y escapa al
+alcance de esta fase. Se documenta como riesgo pendiente.
+
+**Anti-alucinaciones:** verificación de 6 decretos inventados conocidos
+(12-99-E, 26-94, 82-2004, 104-93, 35-2014, 29-2010) → 0 residuales. Sin
+nuevas afirmaciones legales introducidas (solo sustitución de encabezados y
+frases introductorias).
+
+**Validación:**
+- Bug markers residuales: 0
+- Posts con H1 en body: 0
+- Desbalance HTML: 0
+- Enlaces rotos internos: 0
+- `npm run lint`: ✅ 0 errores
+- `npm run build`: ✅ 293/293 páginas
+
+### Arquitectura integral de enlaces internos blog↔servicios↔locales (2026-06-22)
+
+Cierre de la arquitectura completa de enlaces internos a nivel web, más allá
+del saneamiento de enlaces rotos. El objetivo: cada post conecta con su
+servicio pilar, un post complementario del mismo clúster y (cuando aplica)
+una página local; cada servicio recibe inbound desde su clúster de posts.
+
+**Estado antes (post-saneamiento) → después (post-arquitectura):**
+
+| Métrica | Antes | Después |
+|---------|-------|---------|
+| Posts con ≥1 enlace interno | 132 (89%) | **148 (100%)** |
+| Posts con enlace a servicio pilar | 22 (15%) | **119 (80%)** |
+| Posts con enlace a página local | 18 (12%) | **99 (67%)** |
+| Posts huérfanos (0 enlaces internos) | 16 | **0** |
+| Enlaces rotos internos | 0 | **0** |
+| Servicios pilares sin inbound | 7 | **0** (los 13 principales reciben inbound) |
+
+**Trabajo aplicado:**
+- **127 posts** procesados: 45 secciones "Temas relacionados" creadas + 82
+  enriquecidas con enlace al servicio pilar de su categoría.
+- Cada post ahora enlaza a: (a) servicio pilar de su área, (b) 1 post
+  complementario del mismo clúster, (c) página local cuando la intención es
+  contratar abogado en Nacaome/Choluteca/San Lorenzo (no en hondurenos-en-espana).
+- **Anchors naturales y variados** (3 variantes por categoría, rotación por
+  índice de post): "defensa penal en Honduras", "asesoría mercantil para
+  empresas", "abogados en San Lorenzo", etc. Sin anchors genéricos.
+- **5 frases introductorias rotadas** para evitar bloques anti-plantilla.
+
+**Clústeres temáticos conectados (14):** Penal, Laboral, Familia, Civil y
+notarial, Mercantil/empresarial, Bancario/financiero, Administrativo,
+Aduanero/comercio exterior, Tributario, Ambiental, Extranjería,
+Propiedad intelectual, Regulación sanitaria, Conciliación y arbitraje.
+Migración/hondureños-en-espana como clúster propio (no mezclado con locales HN).
+
+**Servicios que ahora reciben inbound desde el blog (antes 0):**
+`/servicios-juridicos/derecho-civil-y-notarial` (16x),
+`/servicios-juridicos/derecho-mercantil-empresarial` (7x),
+`/servicios-juridicos/derecho-bancario-y-financiero` (6x),
+`/servicios-juridicos/derecho-administrativo-y-servicio-civil` (5x),
+`/servicios-juridicos/derecho-aduanero-y-comercio-exterior` (7x),
+`/servicios-juridicos/regulacion-sanitaria` (4x),
+`/servicios-juridicos/ambiental-regulatorio` (5x).
+
+**Páginas de servicio y locales (no modificadas, ya estaban bien diseñadas):**
+- `/servicios-juridicos/[slug]`: ya renderiza automáticamente 3 posts
+  relacionados de su categoría vía `getPostsByCategory` + "Áreas relacionadas"
+  + CTA a despacho. Mapeo `SERVICE_TO_BLOG_CATEGORY` cubre los 14 servicios.
+- `/abogados-en-nacaome|choluteca|san-lorenzo`: ya muestran `<BlogHighlights>`
+  con 6 posts locales relevantes + CTA a `/blog`.
+- `/hondurenos-en-espana`: ya muestra `<BlogHighlights>` con 6 posts del clúster.
+- `/solicitar-consulta`: página de conversión pura (sin blog, correcto).
+
+**Bug detectado y corregido:** la v1 del script insertó literalmente
+`${intro} ${links.join(` (template literal no evaluado) en 78 posts.
+Detectado por validación, revertido desde backups `backup-arch-*` y
+regenerado correctamente en v2. Validación post-fix: 0 bug markers.
+
+**Seguridad y trazabilidad:**
+- Backups previos por post en `auditoria-blog/backup-arch-*-<ts>.json`
+  (127 archivos) y `backup-arch2-*` (78 archivos de la corrección v2).
+- Sin alteración de slugs, URLs, categorías ni fechas. Solo `body` e
+  `updated_at` modificados.
+- Sin cambios en código `.tsx`, `next.config.ts`, schema ni rutas.
+- Validación: `npm run lint` ✅ 0 errores; `npm run build` ✅ 293/293 páginas;
+  re-audit HTML ✅ 0 rotos / 0 bug markers / 0 desbalances.
+
+### Auditoría y mejora de enlaces internos SEO/GEO (2026-06-22)
+
+Auditoría completa de la arquitectura de enlaces internos del blog y refuerzo
+del interlinking blog ↔ servicios ↔ páginas locales, sin automatizaciones
+masivas. Trabajo selectivo, verificable, con backup previo por post.
+
+**Diagnóstico inicial:**
+- 195 URLs internas referenciadas en 148 posts publicados.
+- **43 enlaces a posts inexistentes** (404 reales o anchors inventados por IA
+  en bodies) detectados en 47 posts.
+- **16 enlaces a slugs con redirect 301 activo** (subóptimos: desperdician
+  autoridad en la redirección).
+- **1 enlace con categoría incorrecta** en la URL (`/derecho-mercantil/...`
+  cuyo post real está en `derecho-civil`).
+- 0 anchors vacíos.
+- 27 posts huérfanos (sin enlaces internos salientes hacia servicios/posts).
+
+**Correcciones aplicadas:**
+
+| Categoría | Posts | Enlaces |
+|-----------|-------|---------|
+| Enlaces rotos sustituidos por equivalente real verificado | 49 | 77 |
+| Enlaces rotos sin equivalente → eliminados (texto plano) | 1 | 1 |
+| Enlaces con redirect 301 → actualizados a destino final | (incluidos arriba) | (incluidos) |
+| Interlinking nuevo en posts huérfanos (sección "Temas relacionados") | 11 | 33 |
+
+**Clústeres temáticos reforzados (12):** Penal, Laboral, Familia, Civil y
+notarial, Mercantil/empresarial, Tributario, Aduanero/comercio exterior,
+Migración y hondureños en España, Ambiental, Bancario/consumidor financiero,
+Conciliación y arbitraje, Cobertura local (Nacaome, Choluteca, San Lorenzo).
+
+Cada clúster ahora conecta: página pilar de servicio → posts de apoyo →
+página local cuando la intención es transaccional. Los posts huérfanos
+reforzados enlazan a su servicio pilar + 2 posts complementarios del mismo
+clúster con anchors naturales y variados.
+
+**Validación de URLs destino:** los 46 slugs destino (servicios, locales y
+posts relacionados) se verificaron contra DB antes de aplicar; los 16 destinos
+de redirect se confirmaron contra `next.config.ts`. Resultado post-aplicación:
+**0 enlaces a posts inexistentes** restantes (re-audit confirmado).
+
+**Seguridad y trazabilidad:**
+- Backups previos por post en `auditoria-blog/backup-links-<slug>-<ts>.json`
+  (49 archivos) y `backup-interlink-<slug>-<ts>.json` (11 archivos).
+- Sin alteración de slugs, URLs, categorías ni fechas. Solo se modificaron
+  `body` e `updated_at` de los posts afectados.
+- Sin cambios en `next.config.ts`, redirects, schema ni rutas públicas.
+- Validación: `npm run lint` ✅ 0 errores; `npm run build` ✅ 293/293 páginas.
+
+### Revisión editorial-jurídica manual post-auditoría (2026-06-22)
+
+Corrección selectiva y quirúrgica de 11 posts del blog marcados por los
+reportes de auditoría (`auditoria-blog/verify-fix-reporte-2026-06-22T*.md`)
+con problemas verificables: alucinaciones legales, thin content, discrepancias
+fácticas, repetición anti-plantilla, metadatos deficientes y estructura
+editorial incompleta. Trabajo manual post-ejecución de `blog:verify-fix`,
+sin procesos masivos.
+
+**Categorías de mejora aplicadas:**
+
+| Categoría | Posts afectados |
+|-----------|-----------------|
+| Reducción de alucinaciones legales | `clausulas-abusivas-contratos-como-detectar-honduras` (atribución incorrecta al Art. 90 Constitución neutralizada), `despido-laboral-honduras-derechos` (cita del Art. 118 CT corregida a Art. 110 CT verificado), `derechos-laborales-basicos-honduras` (edad mínima laboral corregida de 16 a 14 años según Art. 32 CT) |
+| Corrección factual con fuente canónica | Verificación contra `data/codigo_trabajo.json`, `data/codigo_civil.json`, `data/codigo_comercio.json`, `data/articulos_constitucion.json` |
+| Expansión de thin content (<600 → 800–1150 palabras) | `costos-honorarios-abogados-como-funcionan-honduras`, `nacionalidad-espanola-para-hondurenos-residencia-plazos`, `reagrupacion-familiar-hondurenos-espana`, `arraigo-social-laboral-hondurenos-espana`, `tributar-espana-bienes-guia`, `constituir-empresa-guia-paso-a-paso-honduras` |
+| Mejora anti-plantilla (eliminación de bloques repetidos) | `clausulas-abusivas-contratos-como-detectar-honduras`, `isv-impuesto-venta-tasas-obligaciones-honduras` (frases "¿Necesita ayuda legal en la zona sur de Honduras?", "solicite una evaluación inicial de su caso") |
+| Optimización SEO/GEO (title/meta no truncados, H1 único) | Todos los 11 posts: titles completados, meta descriptions ≤155 chars, eliminación de H2 duplicado al inicio (la plantilla ya renderiza el title como H1) |
+| Revisión de metadatos | Title y meta_description reescritos en los 11 posts para evitar truncamiento en SERP y eliminar meta_title redundante |
+
+**Listado completo de posts revisados y modificados:**
+
+1. `clausulas-abusivas-contratos-como-detectar-honduras` (derecho-civil)
+2. `costos-honorarios-abogados-como-funcionan-honduras` (práctica-legal)
+3. `nacionalidad-espanola-para-hondurenos-residencia-plazos` (hondurenos-en-espana)
+4. `reagrupacion-familiar-hondurenos-espana` (hondurenos-en-espana)
+5. `arraigo-social-laboral-hondurenos-espana` (hondurenos-en-espana)
+6. `tributar-espana-bienes-guia` (hondurenos-en-espana)
+7. `isv-impuesto-venta-tasas-obligaciones-honduras` (tributario)
+8. `constituir-empresa-guia-paso-a-paso-honduras` (práctica-legal)
+9. `despido-laboral-honduras-derechos` (derecho-laboral)
+10. `servicios-legales-empresas-sur-honduras` (derecho-civil)
+11. `derechos-laborales-basicos-honduras` (derecho-laboral)
+
+**Seguridad y trazabilidad:**
+
+- Backups previos en `auditoria-blog/backup-manual-<slug>-<timestamp>.json`
+  para cada uno de los 11 posts modificados.
+- Sin alteración de slugs, URLs, categorías, fechas ni tags (R7).
+- Sin introducción de nuevas dependencias ni cambios en API/schema/rutas.
+- Validación: `npm run lint` ✅ 0 errores; `npm run build` ✅ 293/293 páginas;
+  verificación de balance HTML y conteo de palabras por post ✅.
+
 ### Deploy
+
 
 | Comando | Resultado |
 |---------|-----------|

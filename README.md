@@ -263,6 +263,15 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 - **Peso editorial objetivo:** 800–1000 palabras reales por post. 114 posts
   están por debajo y requieren ampliación editorial humana (no relleno
   automático).
+- **Revisión editorial-jurídica manual (Jun 2026):** tras la ejecución por
+  lotes de `blog:verify-fix`, se aplicó una corrección selectiva y quirúrgica
+  sobre 11 posts marcados por los reportes de auditoría con problemas
+  verificables (alucinaciones legales, thin content, discrepancias fácticas,
+  repetición anti-plantilla, metadatos deficientes). Cada corrección verificó
+  datos contra fuentes canónicas (`data/codigo_trabajo.json`,
+  `data/codigo_civil.json`, `data/codigo_comercio.json`,
+  `data/articulos_constitucion.json`), neutralizando cualquier afirmación no
+  verificable. Detalle en `CHANGELOG.md`.
 
 ### FAQ (`/preguntas-frecuentes`)
 - **Fuente:** DB (tabla `faq_entries`). `data/faq.ts` = legacy en uso
@@ -369,6 +378,7 @@ Cómo regenerar y validar los archivos SEO tras cambios:
 | **Validar tras cambios SEO** | `npm run lint && npm run build && npm test` (obligatorio por AGENTS.md R8). El test `tests/seo-protection.test.ts` (32 tests) verifica: robots granulares por bot, sin directiva Host, `/_next/` no bloqueado, sitemap sin rutas privadas, schemas válidos, sin BreadcrumbList duplicado, FAQPage sanitiza HTML. |
 | **Health check off-page** | `npm run seo:health` (15 señales SEO externas). |
 | **Validar fechas del blog** | `npm run validate:dates`. |
+| **Enlaces internos** | Arquitectura integral Jun 2026: 148/148 posts con enlaces internos, 119 (80%) enlazan a su servicio pilar, 99 (67%) a página local, 0 huérfanos, 0 rotos. Clústeres temáticos conectados (14): cada post enlaza a servicio pilar + post complementario + local cuando aplica. Páginas de servicio renderizan automáticamente 3 posts relacionados (`getPostsByCategory`); landings locales muestran `<BlogHighlights>`. Matriz categoría→servicio en `SERVICE_TO_BLOG_CATEGORY` (`app/(public)/servicios-juridicos/[slug]/page.tsx`). |
 
 #### Convenciones SEO del código (resumen auditoría Jun 2026)
 - **Titles**: usar `title: { absolute: ... }` cuando el título base + marca supere 65 caracteres (evita marca doble/triple contextual). Enrutas dinámicas anidadas (`/derecho-penal/[slug]`, `/hondurenos-en-espana/[slug]`) la marca va una sola vez.
