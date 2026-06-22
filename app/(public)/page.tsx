@@ -432,18 +432,20 @@ export default async function HomePage() {
                   />
                 </div>
               </div>
-              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark text-center mb-1">
-                {p.tagline}
-              </p>
-              <h3 className="font-serif font-bold text-base text-text leading-tight text-center text-balance">
-                {p.name}
-              </h3>
-              <p className="text-sm text-text-secondary leading-snug mt-0.5 text-center">
-                {p.jobTitle}
-              </p>
-              <p className="text-sm text-text-secondary leading-relaxed text-pretty mt-3 flex-1">
-                {p.description}
-              </p>
+              <div className="flex-1 flex flex-col justify-center">
+                <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark text-center mb-1">
+                  {p.tagline}
+                </p>
+                <h3 className="font-serif font-bold text-base text-text leading-tight text-center text-balance">
+                  {p.name}
+                </h3>
+                <p className="text-sm text-text-secondary leading-snug mt-0.5 text-center">
+                  {p.jobTitle}
+                </p>
+                <p className="text-sm text-text-secondary leading-relaxed text-pretty mt-3 text-center">
+                  {p.description}
+                </p>
+              </div>
               <Link
                 href={p.href}
                 className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors self-center"

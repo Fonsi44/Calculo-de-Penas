@@ -14,6 +14,34 @@ CSS, fuentes `.woff2` en `/_next/static/media/` e imágenes en
 el contenido visual. Corregido con `Allow` explícitos en `robots.txt`.
 Validado con `npm run lint && npm run build && npm test` (430 tests, 0 errores).
 
+### feat: Script de verificación de datos legales + corrección IA del blog (`blog:verify-fix`)
+
+Nuevo script `scripts/blog-verify-fix.ts` que aborda el problema de artículos
+del blog generados por IA con información legal potencialmente falsa.
+
+**3 fases por artículo:**
+1. **Extracción y verificación de claims legales** (determinista): escanea el
+   body HTML en busca de referencias a artículos del CP/Constitución, penas,
+   nombres de delitos y decretos. Cruza contra `data/delitos.json` (483 delitos,
+   100% verificados), `data/articulos_cp.json` (635+ artículos) y
+   `data/articulos_constitucion.json` (378 artículos). Genera reporte de
+   discrepancias fácticas.
+2. **Corrección con DeepSeek**: envía el artículo + reporte de discrepancias
+   al modelo. El prompt obliga a SOLO corregir datos objetivamente falsos,
+   mantener estructura e intención original, expandir a 800-1000 palabras
+   usando solo información del propio artículo, y PROHIBE inventar datos legales.
+3. **Normalización mecánica**: mismas correcciones idempotentes de
+   `normalizar-blog.ts` (H1→H2, CTAs duplicados, whitespace, títulos largos).
+
+**CLI:**
+- `npm run blog:verify-fix` — dry-run (fact-check + IA + mecánico)
+- `npm run blog:verify-fix:aplicar` — aplica cambios en DB
+- `--slug`, `--limit`, `--offset`, `--no-ai`, `--solo-verificar`
+
+**Seguridad:** dry-run por defecto, backup previo, sanitización HTML, guardia
+body <50 palabras, API key de `process.env`, modelo configurable vía
+`DEEPSEEK_MODEL`.
+
 ### Diagnóstico
 - **Causa raíz:** el `robots.txt` de producción (`app/robots.ts`, rama
   `site.noindex=false`) NO contenía un `Disallow: /_next` explícito — `/_next/`

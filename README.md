@@ -411,6 +411,8 @@ npm run blog:normalizar      # Normalización del blog (DRY-RUN por defecto)
 npm run blog:normalizar:aplicar  # Aplica CTAs/H1/whitespace en DB
 npm run blog:review          # Revisión editorial + SEO con IA (solo sugiere)
 npm run blog:review:aplicar  # Igual, pero aplica cambios mecánicos seguros
+npm run blog:verify-fix      # Verificación de datos legales + corrección IA + normalización
+npm run blog:verify-fix:aplicar  # Igual, pero aplica cambios en DB
 npm run blog:seo-audit       # Auditoría SEO de contenido (enlaces, nofollow, alt, fechas, HTML)
 npm run blog:fix-redirects   # Corrige enlaces internos que apuntan a redirects 301 (DRY-RUN)
 npm run blog:fix-redirects:aplicar  # Igual, pero aplica en DB (requiere backup previo)
@@ -480,6 +482,42 @@ npm run blog:backup          # Backup completo de blog_posts (JSON restoreable +
 > ⚠️ **Si una `DEEPSEEK_API_KEY` se compromete (commiteada, filtrada en chat,
 > expuesta en logs), debe rotarse en el panel de DeepSeek.** El código no resuelve
 > una clave comprometida (AGENTS.md §3). NUNCA hardcodear la key.
+
+> **`blog:verify-fix`** (`scripts/blog-verify-fix.ts`) es la herramienta de
+> **verificación de datos legales + corrección con IA** del blog. A diferencia de
+> `blog:review` (que solo sugiere), este script:
+> 1. **Extrae claims legales** del body de cada artículo (referencias a artículos
+>    del CP, Constitución, penas, nombres de delitos, decretos).
+> 2. **Verifica contra fuentes canónicas**: `data/delitos.json` (483 delitos,
+>    100% verificados), `data/articulos_cp.json` (635+ artículos CP),
+>    `data/articulos_constitucion.json` (378 artículos Constitución).
+> 3. **Corrige con DeepSeek** SOLO los datos objetivamente falsos detectados,
+>    manteniendo la estructura e intención original del artículo. NUNCA inventa
+>    datos legales.
+> 4. **Normaliza mecánicamente** (H1→H2, CTAs duplicados, whitespace, títulos
+>    largos) igual que `blog:normalizar`.
+>
+> **Seguridad:** dry-run por defecto. `--aplicar` escribe en DB solo tras
+> verificación determinista + corrección IA + sanitización HTML. Backup previo
+> obligatorio. Guardia: body <50 palabras → revertido.
+>
+> ```bash
+> # Variables de entorno (.env.local)
+> DATABASE_URL=postgresql://...        # obligatoria (Neon)
+> DEEPSEEK_API_KEY=sk-...              # opcional, habilita corrección IA
+> DEEPSEEK_MODEL=deepseek-chat         # opcional, modelo a usar
+>
+> # Ejemplos
+> npm run blog:verify-fix                     # dry-run (fact-check + IA + mecánico)
+> npm run blog:verify-fix -- --slug mi-slug   # un solo artículo
+> npm run blog:verify-fix -- --limit 10       # primeros 10 (control de coste API)
+> npm run blog:verify-fix -- --limit 10 --offset 10  # lote reanudable
+> npm run blog:verify-fix -- --no-ai          # sin IA (solo verificación + mecánico)
+> npm run blog:verify-fix -- --solo-verificar # solo fact-check, sin modificar nada
+> npm run blog:verify-fix:aplicar             # aplica cambios (mecánicos + IA)
+> ```
+>
+> Reportes: `auditoria-blog/verify-fix-reporte-<ts>.json` + `.md`.
 
 **IndexNow:**
 ```bash

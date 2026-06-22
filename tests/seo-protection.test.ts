@@ -148,12 +148,11 @@ describe('app/robots.ts — bloquea rutas privadas y bots de IA', () => {
     }
   });
 
-  it('bloquea bots de IA (GPTBot, ClaudeBot, PerplexityBot, CCBot)', () => {
-    const blockedBots = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'CCBot', 'anthropic-ai'];
-    for (const bot of blockedBots) {
+  it('NO bloquea bots de IA — política GEO/LLM (todos permitidos)', () => {
+    const aiBots = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'CCBot', 'anthropic-ai'];
+    for (const bot of aiBots) {
       const rule = rules.find((r) => r.userAgent === bot);
-      expect(rule, `debería tener regla para ${bot}`).toBeDefined();
-      expect(asArray(rule?.disallow)).toEqual(['/']);
+      expect(rule, `no debería tener regla específica para ${bot} (todos permitidos)`).toBeUndefined();
     }
   });
 

@@ -29,6 +29,11 @@
     "blog:normalizar:aplicar": "npx tsx scripts/normalizar-blog.ts --aplicar",
     "blog:review": "npx tsx scripts/blog-ai-review.ts",
     "blog:review:aplicar": "npx tsx scripts/blog-ai-review.ts --aplicar",
+    "blog:verify-fix": "npx tsx scripts/blog-verify-fix.ts",
+    "blog:verify-fix:aplicar": "npx tsx scripts/blog-verify-fix.ts --aplicar",
+    "validar:blog": "npx tsx scripts/validar-blog.ts",
+    "validar:blog:json": "npx tsx scripts/validar-blog.ts --json",
+    "validar:blog:blocking": "npx tsx scripts/validar-blog.ts --solo-blocking",
     "blog:backup": "npx tsx scripts/backup-blog.ts",
     "blog:seo-audit": "npx tsx scripts/seo-content-audit.ts",
     "blog:seo-audit:json": "npx tsx scripts/seo-content-audit.ts --json",
@@ -58,6 +63,9 @@
     "seo:submit-sitemap": "node scripts/submit-sitemap-gsc.mjs"
   },
   "dependencies": {
+    "@modelcontextprotocol/server-filesystem": "^2026.1.14",
+    "@modelcontextprotocol/server-github": "^2025.4.8",
+    "@modelcontextprotocol/server-postgres": "^0.6.2",
     "@neondatabase/serverless": "^1.1.0",
     "@react-pdf/renderer": "^4.5.1",
     "@tiptap/extension-color": "^3.26.0",

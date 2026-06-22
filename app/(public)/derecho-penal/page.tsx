@@ -107,9 +107,9 @@ export default async function DerechoPenalPage() {
           (E-E-A-T). Retrato Foto2 (alternativo), tamaño contenido para no
           dominar visualmente la página. */}
       <Section spacing="md">
-        <div className="grid lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-5">
-            <div className="relative mx-auto lg:mx-0 max-w-[12rem]">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
+          <div className="flex-shrink-0 w-40 sm:w-44 lg:w-48">
+            <div className="relative mx-auto max-w-[12rem]">
               <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
               <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
                 <Image
@@ -123,7 +123,7 @@ export default async function DerechoPenalPage() {
               </div>
             </div>
           </div>
-          <div className="lg:col-span-7">
+          <div className="flex-1 text-center lg:text-left">
             <p className="eyebrow-rule text-accent-dark mb-3">Su abogado penalista</p>
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
               Danilo Pineda Maradiaga
@@ -136,7 +136,7 @@ export default async function DerechoPenalPage() {
               personalmente en audiencias iniciales, preliminares, de sobreseimiento,
               juicio oral y recursos de casación en el departamento de Valle y la zona sur.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3 justify-center lg:justify-start">
               <a
                 href={whatsappHref('Hola, necesito consultar con el abogado penalista sobre mi caso.')}
                 target="_blank"

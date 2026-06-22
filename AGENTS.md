@@ -224,13 +224,26 @@ Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 
 ### Reglas editoriales vinculantes (R13–R15)
 
-**R13. Peso editorial objetivo: 800–1000 palabras reales.**
+**R13. Peso editorial: 600–1200 palabras, con prioridad en SEO/GEO/calidad.**
 - Al crear o reescribir un post, el cuerpo (HTML sin tags) debe tener entre
-  800 y 1000 palabras para peso SEO suficiente.
-- Posts por debajo de 800 palabras se marcan como "requiere ampliación
-  editorial". La ampliación es trabajo humano con información verificable;
-  **nunca** se rellena con texto genérico para alcanzar el conteo.
-- Posts muy por encima de 1000 palabras se revisan por claridad/estructura.
+  600 y 1200 palabras como guía general. La optimización SEO, GEO y de metadatos
+  es MÁS importante que el conteo de palabras. Un artículo de 650 palabras bien
+  optimizado vale más que uno de 1000 con relleno.
+- Posts por debajo de 600 palabras se marcan como "requiere ampliación". La
+  ampliación la realiza la IA (`scripts/blog-verify-fix.ts` con `DEEPSEEK_API_KEY`)
+  usando **exclusivamente** información ya presente en el artículo o en su
+  categoría, con prompt restrictivo que prohíbe inventar datos legales. La IA
+  **nunca** rellena con texto genérico para alcanzar el conteo.
+- **Guardias automáticas** (no requieren intervención humana): el body corregido
+  se rechaza si (a) sigue <600 palabras en posts que requerían ampliación,
+  (b) introduce alucinaciones legales nuevas (artículos/penas inexistentes),
+  (c) introduce regresiones SEO/privacidad (rutas privadas, H1, disclaimer duplicado),
+  o (d) es ≥98% similar al original (cambio irrelevante). Solo si la IA no puede
+  ampliar sin inventar, el post se marca como "pendiente" para revisión humana
+  puntual.
+- **Validación post-escritura**: tras escribir en DB, el script relee el post y
+  re-analiza; si no pasa los validadores, revierte al original automáticamente.
+- Posts muy por encima de 1200 palabras se revisan por claridad/estructura.
 - El conteo se verifica con `scripts/normalizar-blog.ts` (audit) o
   `scripts/detectar-posts-plantilla.ts`.
 
@@ -272,24 +285,34 @@ de `app/globals.css`:
   obligatorio. `npm run visual:check` compara contra producción remota
   (requiere deploy previo para validar cambios no desplegados).
 
-**R17. Uso seguro de herramientas IA en contenido (blog:review).**
+**R17. Uso seguro de herramientas IA en contenido (blog:review / blog:verify-fix).**
 Aplica a cualquier herramienta que use IA para analizar o "mejorar" contenido
-del blog o editorial. Diseñada tras `scripts/blog-ai-review.ts` (ver
-CHANGELOG Unreleased):
-- **La IA solo sugiere, nunca escribe contenido final en la DB**, salvo que
-  se use explícitamente `--aplicar-ia` bajo **supervisión humana aprobada**
-  (diferencias revisadas, sugerencias validadas). El flag `--aplicar-ia`
-  ejecuta reescritura del body vía DeepSeek con prompt restrictivo (prohíbe
-  inventar datos legales) y validación automática (body no vacío, no idéntico
-  al original). El modo `--aplicar` ejecuta ÚNICAMENTE transformaciones
-  mecánicas idempotentes (H1→H2, CTAs duplicados, whitespace, truncado de
-  títulos >60 chars), nunca reescrituras IA.
+del blog o editorial. Cubre `scripts/blog-ai-review.ts` (`blog:review`) y
+`scripts/blog-verify-fix.ts` (`blog:verify-fix`):
+- **`blog:verify-fix` es la herramienta canónica de verificación + corrección
+  + ampliación del blog.** Verifica datos legales contra fuentes canónicas
+  (`data/delitos.json`, `data/articulos_cp.json`, `data/articulos_constitucion.json`),
+  corrige errores fácticos con IA, amplía posts thin a 800-1000 palabras usando
+  SOLO información del artículo, y normaliza mecánicamente (H1→H2, CTAs
+  duplicados, whitespace, truncado de títulos >60 chars). La ampliación IA es el
+  camino por defecto (R13); no existe "ampliación editorial humana" como paso
+  obligatorio — solo como fallback puntual cuando la IA no puede ampliar sin
+  inventar datos.
+- **`blog:review` con `--aplicar-ia`** ejecuta reescritura del body vía DeepSeek
+  con prompt restrictivo (prohíbe inventar datos legales) y validación
+  automática. El modo `--aplicar` (sin `-ia`) ejecuta ÚNICAMENTE
+  transformaciones mecánicas idempotentes, nunca reescrituras IA.
+- **Guardias automáticas comunes** (ambos scripts): el body corregido se
+  rechaza si (a) sigue <800 palabras cuando se requería ampliación, (b)
+  introduce alucinaciones legales nuevas (artículos/penas inexistentes
+  detectados por re-verificación de claims), (c) introduce regresiones
+  SEO/privacidad (rutas privadas, H1, disclaimer duplicado), o (d) es ≥98%
+  similar al original (cambio irrelevante, no se escribe). **Validación
+  post-escritura**: tras escribir en DB, el script relee el post y re-analiza;
+  si no pasa los validadores, revierte al original automáticamente.
 - **Prohibido rellenar contenido genérico para alcanzar conteo de palabras**
-  (refuerza R13). Los posts <800 palabras se marcan como "requiere ampliación
-  editorial" y deben ampliarse con información verificable humana, no con
-  texto autogenerado. El flag `--aplicar-ia` puede expandir contenido usando
-  SOLO la información presente en el artículo original; no inventa datos
-  externos.
+  (refuerza R13). La IA expande usando SOLO la información presente en el
+  artículo original o su categoría; no inventa datos externos.
 - **API keys siempre de variables de entorno** (`DEEPSEEK_API_KEY`), nunca
   hardcodeadas. Si una clave se compromete (commiteada, filtrada en chat,
   logs), **requiere rotación** en el panel del proveedor (refuerza §3): el
@@ -298,13 +321,16 @@ CHANGELOG Unreleased):
   rankings o claims** debe verificarse contra el CP Honduras / fuentes
   canónicas (`data/delitos.json`, `data/articulos_cp.json`) antes de aplicar.
   La IA puede alucinar citas legales. Incluso en modo `--aplicar-ia`, el
-  prompt prohíbe explícitamente inventar datos.
+  prompt prohíbe explícitamente inventar datos. `blog:verify-fix` realiza esta
+  verificación automáticamente (re-verificación de claims sobre el body
+  corregido).
 - **No cambiar slugs, URLs, fechas ni categorías automáticamente.** Esos son
   cambios editoriales que requieren decisión humana y revisión de
   canibalización (§5).
-- **Dry-run por defecto.** `blog:review` sin `--aplicar` ni `--aplicar-ia` es
-  de solo lectura. Backup previo obligatorio antes de cualquier modo de
-  escritura (generado automáticamente en `auditoria-blog/`).
+- **Dry-run por defecto.** Sin `--aplicar`, ambos scripts son de solo lectura.
+  Backup previo obligatorio antes de cualquier modo de escritura (generado
+  automáticamente en `auditoria-blog/`). `blog:verify-fix` guarda además un
+  checkpoint reanudable (`auditoria-blog/checkpoint.json`) para lotes grandes.
 - **Sin `DATABASE_URL` real, el script sale limpio** (no degrada el blog).
 
 ---
@@ -317,6 +343,10 @@ CHANGELOG Unreleased):
 | Estados de verificación | `data/delitos-estados.json` | 483 verificados |
 | Artículos CP | `data/articulos_cp.json` | 635+ |
 | Artículos Constitución | `data/articulos_constitucion.json` | 378 |
+| Código de Trabajo | `data/codigo_trabajo.json` | 856 (extraído de PDF oficial) |
+| Código Civil | `data/codigo_civil.json` | 2359 (extraído de PDF oficial) |
+| Código de Comercio | `data/codigo_comercio.json` | 1693 (extraído de PDF oficial) |
+| Código Tributario | `data/codigo_tributario.json` | 218 (extraído de PDF oficial) |
 | Ramas jurídicas | `data/ramas_juridicas.json` | 119 |
 | Áreas jurídicas | `data/areas-juridicas.ts` | 13 áreas |
 | Categorías blog | `data/blog/categories.ts` | 20 |

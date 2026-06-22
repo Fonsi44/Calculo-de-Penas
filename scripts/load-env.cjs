@@ -36,6 +36,16 @@ function loadDotenv(envPath) {
   return loaded;
 }
 
+// Mapeo de nombres de variable alternativos para compatibilidad con MCP servers
+const VAR_MAP = {
+  GITHUB_PERSONAL_ACCESS_TOKEN: 'GITHUB_TOKEN',
+};
+for (const [src, dst] of Object.entries(VAR_MAP)) {
+  if (process.env[src] !== undefined && process.env[dst] === undefined) {
+    process.env[dst] = process.env[src];
+  }
+}
+
 function expandVars(arg) {
   return arg.replace(/\$\{([A-Z_][A-Z0-9_]*)\}/g, (_, name) => {
     const v = process.env[name];

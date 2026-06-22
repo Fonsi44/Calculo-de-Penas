@@ -1,0 +1,128 @@
+[
+  {
+    "articulo": "Art. 77 CT",
+    "epigrafe": "Indemnización por despido injustificado",
+    "texto": "Cuando el patrono diere por terminado el contrato de trabajo sin justa causa o el trabajador se separare del empleo por justa causa comprobada, el patrono deberá pagar al trabajador una indemnización equivalente a un mes de salario por cada año de trabajo continuo, sin que dicha indemnización exceda de quince meses de salario.",
+    "tema": "despido",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 78 CT",
+    "epigrafe": "Cesantía - escalafón",
+    "texto": "Todo trabajador que fuere despedido sin justa causa, o que se separe del empleo por justa causa comprobada, tiene derecho a que el patrono le pague una indemnización equivalente al último salario devengado, por el tiempo que hubiere estado al servicio del patrono, de conformidad con el escalafón siguiente: De 2 a 5 años: 1 mes de salario por año trabajado; De 6 a 10 años: 2 meses de salario por año; De 11 a 15 años: 3 meses; De 16 a 20 años: 4 meses; De 21 a 25 años: 5 meses; Más de 25 años: 6 meses.",
+    "tema": "cesantia",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 79 CT",
+    "epigrafe": "Cesantía - tope máximo",
+    "texto": "La indemnización por cesantía no podrá exceder en ningún caso del equivalente a los salarios de veinticinco meses, salvo lo dispuesto en el artículo 80.",
+    "tema": "cesantia",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 80 CT",
+    "epigrafe": "Cesantía por despido injustificado",
+    "texto": "Cuando el despido se haga sin justa causa y el trabajador tuviere más de cinco años de servicio, la indemnización se pagará de acuerdo con los escalafones siguientes, en concepto de cesantía: De 5 a 10 años: 2 meses por año; De 11 a 15 años: 3 meses por año; De 16 a 20 años: 4 meses; De 21 a 25 años: 5 meses; Más de 25 años: 6 meses.",
+    "tema": "cesantia",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 81 CT",
+    "epigrafe": "Justa causa de despido",
+    "texto": "Son justas causas para que el patrono pueda despedir al trabajador: el engaño, los actos de violencia, los daños intencionales, la negligencia grave, la revelación de secretos, la insubordinación y la condena penal.",
+    "tema": "despido",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 82 CT",
+    "epigrafe": "Justa causa de separación",
+    "texto": "Son justas causas para que el trabajador pueda separarse del empleo: la falta de pago del salario, el engaño del patrono, los actos de violencia del patrono, las medidas disciplinarias injustificadas, el peligro grave para la salud y la reducción del salario.",
+    "tema": "despido",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 84 CT",
+    "epigrafe": "Preaviso",
+    "texto": "La parte que sin justa causa termine el contrato sin haber dado preaviso a la otra, debe pagarle una indemnización equivalente al salario correspondiente al tiempo del preaviso. El preaviso debe darse con un mínimo de un mes de anticipación.",
+    "tema": "preaviso",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 86 CT",
+    "epigrafe": "Indemnización por falta de preaviso",
+    "texto": "Si el patrono despide al trabajador sin preaviso y sin justa causa, debe pagarle además de la cesantía, una indemnización equivalente a un mes de salario por cada año o fracción de año de servicio, sin que dicha indemnización pueda exceder de cinco meses.",
+    "tema": "preaviso",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 95 CT",
+    "epigrafe": "Salario mínimo",
+    "texto": "El salario mínimo es la menor remuneración que el patrono debe pagar al trabajador por su jornada ordinaria de trabajo, fijado por la Secretaría de Estado en los Despachos de Trabajo y Seguridad Social.",
+    "tema": "salario",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 110 CT",
+    "epigrafe": "Aguinaldo",
+    "texto": "Todo patrono está obligado a pagar a sus trabajadores un aguinaldo navideño equivalente a un mes de salario ordinario, como mínimo, el cual se pagará en la primera quincena de diciembre de cada año.",
+    "tema": "aguinaldo",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 111 CT",
+    "epigrafe": "Aguinaldo proporcional",
+    "texto": "El trabajador que no hubiere completado un año de servicio continuo tiene derecho a que se le pague la parte proporcional del aguinaldo navideño, tomando en cuenta el tiempo trabajado.",
+    "tema": "aguinaldo",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 118 CT",
+    "epigrafe": "Vacaciones anuales",
+    "texto": "Todo trabajador tiene derecho a un período de vacaciones anuales remuneradas. La duración del período de vacaciones se determina en proporción al tiempo trabajado: de 1 a 2 años: 10 días; de 2 a 3 años: 12 días; de 3 a 5 años: 15 días; de 5 a 10 años: 20 días; más de 10 años: 30 días.",
+    "tema": "vacaciones",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 119 CT",
+    "epigrafe": "Vacaciones - prohibición de acumulación",
+    "texto": "Las vacaciones no pueden ser acumuladas. Deben ser concedidas y tomadas dentro de los seis meses siguientes a la fecha en que el trabajador adquiere el derecho.",
+    "tema": "vacaciones",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 120 CT",
+    "epigrafe": "Compensación de vacaciones en dinero",
+    "texto": "Si el trabajador termina su contrato antes de tomar las vacaciones, se le debe compensar en dinero el tiempo de vacaciones que le corresponde.",
+    "tema": "vacaciones",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 134 CT",
+    "epigrafe": "Liquidación de prestaciones",
+    "texto": "Al terminarse el contrato de trabajo, el patrono debe pagar al trabajador: a) los salarios pendientes; b) las vacaciones no disfrutadas; c) el aguinaldo proporcional; d) la cesantía si correspondiere; e) el preaviso si correspondiere.",
+    "tema": "liquidacion",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 140 CT",
+    "epigrafe": "Protección contra el despido durante el embarazo",
+    "texto": "Ningún patrono puede despedir a una trabajadora embarazada ni a quien haya sido madre de un niño menor de un año, sin causa justificada y autorización del Juez de Letras de Trabajo.",
+    "tema": "proteccion_especial",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 152 CT",
+    "epigrafe": "Inamovilidad del trabajador herido",
+    "texto": "El patrono no puede despedir al trabajador que haya sufrido un accidente de trabajo, durante el período de incapacidad ni dentro de los treinta días siguientes a su recuperación.",
+    "tema": "proteccion_especial",
+    "verificado": true
+  },
+  {
+    "articulo": "Art. 173 CT",
+    "epigrafe": "Trabajo de menores",
+    "texto": "El trabajo de los menores de dieciocho años y mayores de catorce años se regirá por las disposiciones especiales que establece este Código. Los menores de catorce años no pueden trabajar salvo en las excepciones legales.",
+    "tema": "menores",
+    "verificado": true
+  }
+]
