@@ -563,11 +563,30 @@ El archivo `public/llms.txt` se regenera automáticamente en cada build via
 estrictamente `/intranet/`, `/api/`, `/admin/`, `/calculadora/` y demás zonas
 privadas. Ver `scripts/generate-llms-txt.mjs`.
 
-**IndexNow:**
+**IndexNow** (fuente única: `data/seo/canonical-paths.json`):
 ```bash
-npm run indexnow:dry        # Simular (postbuild por defecto)
-npm run indexnow:incremental # Envío real de URLs nuevas (<24h)
-npm run indexnow:full       # Catálogo completo (máx 500 URLs)
+npm run indexnow:dry         # Simular catálogo completo (postbuild por defecto)
+npm run indexnow:audit       # Dry-run + catálogo completo (verbose)
+npm run indexnow             # Envío mínimo (núcleo: 11 URLs prioritarias)
+npm run indexnow:incremental # Envío real de URLs nuevas (<24h) + cache
+npm run indexnow:sample      # Lote de prueba de 5 URLs (home + landings)
+npm run indexnow:full        # Catálogo completo (≤ INDEXNOW_SAFETY_CAP = 212)
+```
+
+> **Techo de seguridad (auditoría SEO 2026-06-23).** El script aborta con
+> código 1 si el lote final supera `INDEXNOW_SAFETY_CAP` (default 212 =
+> sitemap observado 202 + 10 de margen), configurable vía
+> `INDEXNOW_SAFETY_CAP` env. Esto impide la recurrencia del bug histórico
+> de Jun 2026 (9.466 URLs enviadas en 5 días, 0 crawled / 0 indexed en Bing).
+> Dry-run por defecto salvo `ENABLE_INDEXNOW_SUBMIT=true`. Las URLs se
+> derivan del mismo JSON que `app/sitemap.ts` (`PUBLIC_ROUTES`), no hay
+> catálogo duplicado. Los posts del blog (DB) se descubren vía `sitemap.xml`,
+> nunca se envían por IndexNow (no se cachea sufre DB).
+
+**Auditoría SEO estática (sin red ni DB):**
+```bash
+npm run audit:seo           # Escribe auditoria-seo/audit-<fecha>.md
+npm run audit:seo:stdout    # Salida Markdown a stdout (no escribe archivo)
 ```
 
 **Health checks:**
@@ -651,6 +670,40 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 | `docs/legacy/CHANGELOG_ARCHIVE.md` | Changelog histórico completo |
 
 ---
+
+## MCPs gratuitos para SEO/GEO/metadatos
+
+El proyecto integra múltiples servidores MCP gratuitos para auditoría SEO, validación
+en navegador, operaciones git, acceso a sistema de archivos y consultas a base de datos.
+
+### MCPs instalados y configurados
+
+| MCP | Función | Instalación |
+|-----|---------|-------------|
+| `mcp-seo` | Auditoría SEO: metadatos, schemas, sitemap, robots, performance, Lighthouse | `pipx install mcp-seo` (v0.3.0) |
+| `playwright` | Validación en navegador/renderizado real | `npx @executeautomation/playwright-mcp-server` |
+| `filesystem` | Acceso controlado al repositorio | `@modelcontextprotocol/server-filesystem` (Node) |
+| `git` | Operaciones git: diff, log, status | `pipx install mcp-server-git` (2026.6.16) |
+| `postgres` | Consultas a base de datos PostgreSQL | `@modelcontextprotocol/server-postgres` (Node, vía `scripts/mcp-postgres.cjs`) |
+| `fetch` | Recuperación de contenido web HTTP | Python `mcp-server-fetch` |
+| `duckduckgo` | Búsqueda web | `duckduckgo-mcp-server` (npm) |
+| `diag` | Diagnóstico del sistema | Script custom `scripts/mcp-diag.cjs` |
+
+### Configuración
+
+Los MCPs se declaran en `opencode.jsonc` (cliente OpenCode). Ver archivo para
+detalles de comandos, rutas y timeouts.
+
+### MCPs excluidos (coste o API key de pago)
+
+Firecrawl (requiere suscripción), Ahrefs, Semrush, DataForSEO, Nightwatch,
+Keywords Everywhere, Browser Use (requiere API keys de pago).
+
+### Validación ejecutada (2026-06-23)
+
+- `npm run lint` ✅ | `npm run build` ✅ (294 páginas) | `npm test` ✅ (601 tests)
+- Auditoría mcp-seo: Score 89/100, 8 JSON-LD válidos, 206 URLs en sitemap
+- Documento completo: `auditoria-seo/mcp-validation-2026-06-23.md`
 
 ## Tooling IA
 

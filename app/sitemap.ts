@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
+import canonicalPathsData from '@/data/seo/canonical-paths.json';
 
 function daysAgo(days: number): Date {
   const d = new Date();
@@ -11,62 +12,44 @@ function daysAgo(days: number): Date {
   return d;
 }
 
-// Exportadas para tests (tests/seo-protection.test.ts). No se usan fuera del
-// módulo en runtime; la exportación es únicamente para verificar que ninguna
-// ruta privada se filtra en el sitemap estático.
+/**
+ * Fuente única de verdad para las rutas públicas ESTÁTICAS del sitio.
+ *
+ * El catálogo vive en `data/seo/canonical-paths.json` desde Jun 2026
+ * (auditoría SEO 2026-06-23). Antes estaba duplicado en este archivo y en
+ * `scripts/submit-indexnow.mjs`, lo que permitía desincronías que fueron la
+ * causa raíz del bug histórico de IndexNow (~9.466 URLs enviadas a Bing
+ * el 7-11/06/2026 con 0 crawled / 0 indexed). Ahora ambos consumen el mismo
+ * JSON y existe un techo `indexnow_safety_cap` que aborta envíos masivos.
+ *
+ * Exportadas para tests (tests/seo-protection.test.ts). No se usan fuera del
+ * módulo en runtime; la exportación es únicamente para verificar que ninguna
+ * ruta privada se filtra en el sitemap estático.
+ */
 export const PUBLIC_ROUTES: Array<{
   path: string;
   priority: number;
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
   daysAgo: number;
-}> = [
-  { path: '/', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
-  { path: '/servicios-juridicos', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
-  { path: '/derecho-penal', priority: 1.0, changeFrequency: 'weekly', daysAgo: 0 },
-  // Landings locales (SEO local): máxima intención comercial ("abogados en {ciudad}").
-  { path: '/abogados-en-nacaome', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
-  { path: '/abogados-en-choluteca', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
-  { path: '/abogados-en-san-lorenzo', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
-  { path: '/despacho', priority: 0.9, changeFrequency: 'monthly', daysAgo: 0 },
-  { path: '/preguntas-frecuentes', priority: 0.9, changeFrequency: 'weekly', daysAgo: 1 },
-  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', daysAgo: 1 },
-  { path: '/solicitar-consulta', priority: 0.7, changeFrequency: 'monthly', daysAgo: 2 },
-  { path: '/hondurenos-en-espana', priority: 0.8, changeFrequency: 'monthly', daysAgo: 3 },
-  // /como-llegar: página comercial de alto valor (dirección física, cómo llegar).
-  // Subida de 0.3 → 0.6 tras detectar en auditoría SEO (2026-06-20) que estaba
-  // "Descubierta: actualmente sin indexar" en GSC. Refuerza la señal de
-  // prioridad para que Google la rastree e indexe. No es un thin post.
-  { path: '/como-llegar', priority: 0.6, changeFrequency: 'weekly', daysAgo: 0 },
-  { path: '/aviso-legal', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/politica-editorial', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/politica-privacidad', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/politica-cookies', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/terminos', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/disclaimer', priority: 0.2, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-de-familia', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-laboral', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-civil-y-notarial', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-mercantil-empresarial', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-bancario-y-financiero', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-administrativo-y-servicio-civil', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/derecho-aduanero-y-comercio-exterior', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/regulacion-sanitaria', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/extranjeria-en-honduras', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/propiedad-intelectual', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/tributario-fiscal', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/ambiental-regulatorio', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/servicios-juridicos/conciliacion-y-arbitraje', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/atencion-casos-penales-litigiosos', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/mediacion-conflictos-penales-y-multas', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/menores-justicia-juvenil', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/proceso-penal-completo', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/recursos-y-defensa-avanzada', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/estrategia-penal-y-litigio', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/derecho-penal/ejecucion-penal-y-beneficios', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/hondurenos-en-espana/gestion-documental-y-legalizacion', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/hondurenos-en-espana/actos-notariales-internacionales', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-  { path: '/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero', priority: 0.5, changeFrequency: 'monthly', daysAgo: 30 },
-];
+}> = (canonicalPathsData.static_routes as Array<{
+  path: string;
+  priority: number;
+  change_frequency: string;
+  days_ago: number;
+}>).map((r) => ({
+  path: r.path,
+  priority: r.priority,
+  changeFrequency: r.change_frequency as MetadataRoute.Sitemap[number]['changeFrequency'],
+  daysAgo: r.days_ago,
+}));
+
+/**
+ * Techo de seguridad para IndexNow: el script de envío aborta si el número
+ * final de URLs a enviar supera `canonicalPathsData.indexnow_safety_cap`
+ * (212 por defecto = 202 sitemap observado + 10 de margen). Configurable en
+ * `data/seo/canonical-paths.json`. Véase §R8 AGENTS.md.
+ */
+export const INDEXNOW_SAFETY_CAP: number = canonicalPathsData.indexnow_safety_cap;
 
 const IS_DB_REACHABLE = Boolean(
   process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),

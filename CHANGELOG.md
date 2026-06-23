@@ -5,6 +5,142 @@
 
 ---
 
+## Unreleased — Configuración MCP gratuita SEO
+
+Instalación y configuración de servidores MCP gratuitos/open-source para auditoría
+SEO, validación en navegador, operaciones git y trazabilidad.
+
+### Cambios
+
+**Nuevo — MCPs gratuitos en `opencode.jsonc`**
+- `mcp-seo` (v0.3.0): auditoría SEO (meta, headings, schemas, sitemap, robots,
+  performance, Lighthouse). Instalado vía `pipx`.
+- `playwright`: validación en navegador real. Instalado vía
+  `npx @executeautomation/playwright-mcp-server`.
+- `git`: operaciones git de lectura, diff, status y trazabilidad. Instalado vía
+  `pipx mcp-server-git` (2026.6.16, oficial PyPI).
+- Filesystem, Postgres, Fetch, DuckDuckGo y Diag ya estaban configurados.
+
+**Seguridad**
+- Detectado y eliminado `mcp-server-git` npm v0.0.2 (paquete canario de seguridad,
+  npx-confusion). Reemplazado por el oficial de PyPI.
+
+**Documentación**
+- README.md: nueva sección "MCPs gratuitos para SEO/GEO/metadatos".
+- `auditoria-seo/mcp-validation-2026-06-23.md`: documento de validación completo.
+
+**Validación**
+- `npm run lint` ✅ | `npm run build` ✅ (294 páginas) | `npm test` ✅ (601 tests)
+- Auditoría SEO real contra localhost:3000 con mcp-seo:
+  - Score Lighthouse 89/100, 8 JSON-LD válidos, 206 URLs en sitemap
+  - Home: TTFB 1592ms, LCP 1964ms, CLS 0
+  - /despacho: TTFB 948ms, LCP 1368ms, CLS 0
+  - /blog, /preguntas-frecuentes: reportes completos generados
+
+## Unreleased — Auditoría SEO de indexabilidad (corrección urgente 2026-06-23)
+
+Corrección de los hallazgos del informe SEO Bing Webmaster Tools + GSC del
+2026-06-23: 183 URLs "Descubiertas: actualmente sin indexar", 1 URL indexada,
+202 URLs en sitemap, 9.466 URLs enviadas por IndexNow con 0 crawled / 0 indexed,
+CTR Honduras 3,06 %, 0 backlinks de calidad. Implementa fuente única de URLs
+estáticas, techo de seguridad IndexNow y utilidad de auditoría SEO estática.
+
+### Cambios
+
+**Nuevo — `data/seo/canonical-paths.json` (fuente única de rutas estáticas)**
+- Catálogo canónico de 41 rutas públicas estáticas (title, prioridad,
+  change_frequency, days_ago) + metadatos (`sitemap_observed_count=202`,
+  `indexnow_safety_cap=212`).
+- Consumido tanto por `app/sitemap.ts` (PUBLIC_ROUTES) como por
+  `scripts/submit-indexnow.mjs`. Elimina la duplicación que permitió el bug
+  histórico de 9.466 URLs enviadas a Bing (7-11/06/2026, 0 crawled).
+
+**Refactor — `app/sitemap.ts`**
+- `PUBLIC_ROUTES` se deriva ahora del JSON compartido (antes era una lista
+  hardcoded duplicada). Sin cambio de comportamiento del sitemap.xml
+  generado (mismas URLs, prioridades y frecuencias).
+- Exporta `INDEXNOW_SAFETY_CAP` para uso desde el script IndexNow.
+- `THIN_POST_SLUGS` (Set con 49 slugs, mitigación rutas thin) sin cambios.
+
+**Refactor — `scripts/submit-indexnow.mjs` (techo de seguridad)**
+- Lee el catálogo del JSON compartido (no más `FULL_CATALOG` hardcoded).
+- Validación **dura**: aborta con código 1 si el lote final supera
+  `INDEXNOW_SAFETY_CAP` (default 212). Override vía env
+  `INDEXNOW_SAFETY_CAP` para staging (no usar en prod).
+- Logs ampliados: catálogo estático (nº rutas), sitemap observado, techo
+  configurado, candidatas antes/después de filtro, excluidas por motivo,
+  total final vs techo. Aviso preventivo si candidatas > sitemap observado.
+- Eliminada la rama `readdirSync(postsDir)` (los posts viven en DB, no en
+  `data/blog/posts/` desde la migración a Drizzle).
+- Dry-run sigue siendo el comportamiento por defecto salvo
+  `ENABLE_INDEXNOW_SUBMIT=true`.
+
+**Nuevo — `scripts/seo-indexability-audit.mjs` (auditoría SEO estática)**
+- 11 probes estáticos sobre el repositorio (no usa red ni DB):
+  1. DRY `canonical-paths.json` ↔ `sitemap.ts` ↔ `submit-indexnow.mjs`.
+  2. Existencia de `page.tsx` para cada ruta del catálogo (con fallback
+     `[slug]` para rutas dinámicas).
+  3. `THIN_POST_SLUGS` presente en sitemap (mitigación activa).
+  4. Trailing slash consistente (solo `/` lo tiene).
+  5. Sin rutas privadas en el catálogo IndexNow.
+  6. Techo `INDEXNOW_SAFETY_CAP` > sitemap observado.
+  7. robots.ts bloquea rutas privadas esperadas.
+  8. Sin duplicados en el catálogo.
+  9. Prioridades (0–1) y `change_frequency` válidas.
+  10. Landings locales coordinadas con `app/(public)/abogados-en-{slug}`.
+  11. IndexNow define techo y mensaje ABORTADO.
+- Salida Markdown a stdout o `auditoria-seo/audit-<fecha>.md` con `--write`.
+
+**Nuevo — `auditoria-seo/audit-2026-06-23.md`**
+- Documento de trazabilidad con: diagnóstico aplicado, cambios técnicos,
+  estado de los schemas server-side (ya completo, sin acción), riesgos
+  pendientes y próximos pasos manuales externos (GBP, re-rastreo GSC,
+  link building).
+
+**Docs — README/CHANGELOG**
+- README ampliado: nueva sección "IndexNow (fuente única)" con todos los
+  modos, advertencia del techo de seguridad y bloque de "Auditoría SEO
+  estática" con los nuevos comandos `npm run audit:seo` / `audit:seo:stdout`.
+-Entry en CHANGELOG (esta).
+
+### SEO (preservado / sin regresión)
+- `LegalService` + `LocalBusiness` + `Organization` + `WebSite` + 3 `Person`
+  ya se inyectaban server-side en `app/(public)/layout.tsx` (sin cambios).
+- `BlogPosting` + `FAQPage` se emiten en el template de post (sin cambios).
+- `BreadcrumbList` único vía `<Breadcrumbs>`, sin duplicados (sin cambios).
+- Canonical, robots, sitemap.xml y `THIN_POST_SLUGS` sin cambios.
+- Tests `tests/seo-protection.test.ts` (32 tests) siguen cubriendo: robots
+  granulares por bot, sin directiva Host, `/_next/` no bloqueado, sitemap
+  sin rutas privadas, schemas válidos, sin BreadcrumbList duplicado, FAQPage
+  sanitiza HTML. `PUBLIC_ROUTES` sigue exportado desde `sitemap.ts` y
+  derivado del JSON compartido — los tests no requieren cambios.
+
+### Validación
+- `node scripts/submit-indexnow.mjs --dry-run --full` → 61 URLs finales,
+  aborta correctamente si se fuerza `INDEXNOW_SAFETY_CAP=5` (test manual OK).
+- `node scripts/seo-indexability-audit.mjs --write` → 0 errores bloqueantes,
+  0 avisos, 7 informativos. Informe en `auditoria-seo/audit-2026-06-23.md`.
+- `npm run lint && npm run build && npm test` (se ejecuta tras este cambio).
+
+### Riesgos pendientes (trabajo externo, no automatizable desde el código)
+1. Verificar dominio en Bing Webmaster Tools (HTTP 403 histórico → 0 crawled).
+2. Solicitar re-rastreo selectivo en GSC de las 30 URLs top con más
+   impresiones (no las 183 masivas).
+3. Crear/verificar Google Business Profile (NAP consistente con
+   `lib/site.ts`).
+4. Link building nivel 1+2 (Google Business Profile + directorios jurídicos
+   + PR en medios hondureños).
+5. Reescribir titles/meta de los 7-10 DB-driven blog posts con CTR bajo vía
+   `npm run blog:review --aplicar-ia` (guardias R17 activas, requiere
+   `DEEPSEEK_API_KEY`).
+6. Ampliar los 49 posts thin vía `npm run blog:verify-fix:aplicar`
+   (800-1000 palabras, sin inventar datos legales).
+7. Crear el post `pension-alimenticia-porcentaje-honduras-2026` (cluster de
+   14 impresiones ya descubiertas en GSC) vía admin blog API con verificación
+   contra `data/codigo_trabajo.json` y el Código de Familia de Honduras.
+
+---
+
 ## Unreleased — Rediseño del hub del blog (`/blog`) como content hub magazine
 
 Transformación del índice del blog en un portal editorial escalable (preparado

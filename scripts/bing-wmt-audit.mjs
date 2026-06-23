@@ -32,9 +32,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { config } from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
+config({ path: path.resolve(ROOT, '.env.local') });
+config({ path: path.resolve(ROOT, '.env') });
 
 const API_KEY = process.env.INDEXNOW_KEY;
 if (!API_KEY) {
@@ -47,22 +50,20 @@ const BASE = 'https://ssl.bing.com/webmaster/api.svc/json';
 const SITE_URL_RAW = 'https://www.pinedayasociadoshn.com/';
 const SITE_URL_ENC = encodeURIComponent(SITE_URL_RAW);
 
-// URLs prioritarias a inspeccionar y enviar
+// URLs prioritarias a inspeccionar y enviar (rutas REALES del sitio).
 const PRIORITY_URLS = [
   'https://www.pinedayasociadoshn.com/',
-  'https://www.pinedayasociadoshn.com/servicios',
+  'https://www.pinedayasociadoshn.com/servicios-juridicos',
   'https://www.pinedayasociadoshn.com/derecho-penal',
   'https://www.pinedayasociadoshn.com/blog',
-  'https://www.pinedayasociadoshn.com/faq',
-  'https://www.pinedayasociadoshn.com/contacto',
-  'https://www.pinedayasociadoshn.com/sobre-nosotros',
+  'https://www.pinedayasociadoshn.com/preguntas-frecuentes',
+  'https://www.pinedayasociadoshn.com/solicitar-consulta',
+  'https://www.pinedayasociadoshn.com/despacho',
   'https://www.pinedayasociadoshn.com/como-llegar',
-  'https://www.pinedayasociadoshn.com/abogados-en-tegucigalpa',
-  'https://www.pinedayasociadoshn.com/abogados-en-san-pedro-sula',
-  'https://www.pinedayasociadoshn.com/derecho-familia',
-  'https://www.pinedayasociadoshn.com/derecho-civil',
-  'https://www.pinedayasociadoshn.com/derecho-mercantil',
-  'https://www.pinedayasociadoshn.com/derecho-laboral',
+  'https://www.pinedayasociadoshn.com/abogados-en-nacaome',
+  'https://www.pinedayasociadoshn.com/abogados-en-choluteca',
+  'https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo',
+  'https://www.pinedayasociadoshn.com/hondurenos-en-espana',
 ];
 
 async function getJson(method, params = {}) {

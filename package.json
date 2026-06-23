@@ -51,6 +51,8 @@
     "visual:update": "node scripts/visual-regression.cjs update",
     "validar:meta-seo": "npx tsx scripts/validar-meta-seo.ts",
     "audit:indexacion": "node scripts/auditar-indexacion-prioritaria.mjs",
+    "audit:seo": "node scripts/seo-indexability-audit.mjs --write",
+    "audit:seo:stdout": "node scripts/seo-indexability-audit.mjs",
     "audit:performance": "npx tsx scripts/auditar-performance-publico.ts",
     "audit:canibalizacion": "npx tsx scripts/audit-canibalizacion.ts",
     "audit:internal-links": "npx tsx scripts/audit-internal-links.ts",

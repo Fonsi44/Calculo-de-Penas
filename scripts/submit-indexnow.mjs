@@ -1,20 +1,27 @@
 /**
  * Envío conservador y controlado de URLs a IndexNow (Bing/Yandex/Seznam).
  *
- * POLÍTICA (Jun 2026 — corrección urgente):
- *   El envío masivo anterior generaba ~57 URLs por build, incluyendo rutas
- *   inexistentes (/blog/categoria/...) y NOTIFICABA en cada `postbuild`, lo
- *   que produjo 9.450 envíos entre el 7-11/6/2026 con 0 rastreos/0
- *   indexaciones en Bing. Causas raíz: (1) key de envío != key del archivo
- *   público, (2) dominio no verificado en Bing Webmaster Tools (403),
- *   (3) URLs 404, (4) reenvío masivo en cada build.
+ * FUENTE ÚNICA DE VERDAD (Jun 2026 — auditoría SEO 2026-06-23):
+ *   El catálogo estático de URLs se lee de `data/seo/canonical-paths.json`,
+ *   el mismo archivo que consume `app/sitemap.ts` (PUBLIC_ROUTES). Esto
+ *   elimina la duplicación que permitió el bug histórico de Jun 2026, cuando
+ *   se enviaron 9.466 URLs a Bing en 5 días (7-11/06/2026) con 0 crawled /
+ *   0 indexed. Las URLs candidatas NUNCA deben superar el techo de seguridad
+ *   `indexnow_safety_cap` (default 212 = 202 sitemap + 10 margen). Si lo
+ *   superan, el script ABORTA con código 1 y no envía nada.
+ *
+ *   Causas raíz documentadas del bug histórico:
+ *     (1) key de envío != key del archivo public/<key>.txt,
+ *     (2) dominio no verificado en Bing Webmaster Tools (403),
+ *     (3) URLs 404 (/blog/categoria/{x} que no existe),
+ *     (4) reenvío masivo en cada build (varias veces al día).
  *
  *   Este script es CONSERVADOR: solo envía URLs públicas, canónicas,
  *   indexables y de alto valor. Excluye rutas privadas/noindex, deduplica
  *   con Set, normaliza host y trailing slash, y nunca reenvía miles de URLs.
  *
  * MODOS:
- *   1. Completo controlado:  --full        -> URLs del catálogo público real
+ *   1. Completo controlado:  --full        -> catálogo estático + categorías
  *                                            (limitable con --limit N)
  *   2. Incremental (recomendado para postbuild/CI):
  *      (sin flag)           -> solo URLs prioritarias (núcleo)
@@ -24,28 +31,29 @@
  * FLAGS:
  *   --dry-run       Simula (no llama a la API). Por defecto en CI si no hay
  *                   ENABLE_INDEXNOW_SUBMIT=true.
- *   --full          Usa el catálogo público completo (no el lote mínimo).
+ *   --full           Usa el catálogo público completo (no el lote mínimo).
  *   --incremental   Compara con .indexnow-cache.json y envía solo novedades.
- *   --limit N       Limita a N URLs (tras dedup/filtro).
- *   --sample        Alias de --limit 5 con la lista de prueba definida.
- *   --key <key>     Override de INDEXNOW_KEY (poco habitual).
- *   --host <host>   Override de host (para staging; usar con cuidado).
+ *   --limit N        Limita a N URLs (tras dedup/filtro).
+ *   --sample         Alias de --limit 5 con la lista de prueba definida.
+ *   --key <key>      Override de INDEXNOW_KEY (poco habitual).
+ *   --host <host>    Override de host (para staging; usar con cuidado).
  *
  * CACHÉ:
  *   .indexnow-cache.json  -> { urls: { "<url>": "<iso-ts>" }, lastRun }
- *   No contiene secretos. Está en .gitignore (lo añade este cambio).
+ *   No contiene secretos. Está en .gitignore.
  *
  * SEGURIDAD:
  *   - No imprime la key completa (solo primeros 6 chars).
  *   - Aborta si la key no coincide con el archivo public/<key>.txt.
  *   - Aborta si NEXT_PUBLIC_NOINDEX=true (sitio no indexable).
+ *   - Aborta (código 1) si candidatas > INDEXNOW_SAFETY_CAP (envío masivo).
  *   - En CI sin ENABLE_INDEXNOW_SUBMIT=true => dry-run forzado.
  *
  * USO:
  *   node scripts/submit-indexnow.mjs --dry-run --full     # auditar catálogo
  *   node scripts/submit-indexnow.mjs --dry-run             # ver lote mínimo
- *   node scripts/submit-indexnow.mjs --sample              # prueba de 5
- *   node scripts/submit-indexnow.mjs --incremental         # CI recomendado
+ *   node scripts/submit-indexnow.mjs --sample               # prueba de 5
+ *   node scripts/submit-indexnow.mjs --incremental          # CI recomendado
  *   node scripts/submit-indexnow.mjs --full --limit 200    # completo tope
  */
 import { config } from 'dotenv';
@@ -55,8 +63,14 @@ import {
   existsSync,
   readFileSync,
   writeFileSync,
-  readdirSync,
 } from 'fs';
+
+/**
+ * Catálogo canónico de paths estáticos. Misma fuente de verdad que
+ * app/sitemap.ts (PUBLIC_ROUTES), evitando desincronías. Desde Jun 2026
+ * (auditoría SEO 2026-06-23) este JSON es la única fuente de rutas estáticas.
+ */
+import canonicalPathsData from '../data/seo/canonical-paths.json' with { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -71,7 +85,13 @@ const DEFAULT_HOST = 'www.pinedayasociadoshn.com';
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 const INDEXNOW_ENDPOINT_BING = 'https://www.bing.com/indexnow';
 const BATCH_SIZE = 100; // límite de IndexNow por petición
-const MAX_URLS_FULL = 500; // techo duro del modo completo
+// Techo de seguridad derivado de data/seo/canonical-paths.json (202 + 10 margen).
+// Aborta cualquier envío masivo (bug histórico Jun 2026: 9.466 URLs enviadas).
+// Override vía env INDEXNOW_SAFETY_CAP para staging/migraciones (no usar en prod).
+const SITEMAP_OBSERVED = canonicalPathsData.sitemap_observed_count;
+const INDEXNOW_SAFETY_CAP = Number(process.env.INDEXNOW_SAFETY_CAP) || canonicalPathsData.indexnow_safety_cap;
+// `MAX_URLS_FULL` (techo propio del script) debe ser SIEMPRE ≤ INDEXNOW_SAFETY_CAP.
+const MAX_URLS_FULL = INDEXNOW_SAFETY_CAP;
 
 const args = process.argv.slice(2);
 const isDryRun =
@@ -116,18 +136,22 @@ const KEY = overrideKey || process.env.INDEXNOW_KEY;
 const SITE_NOINDEX = process.env.NEXT_PUBLIC_NOINDEX === 'true';
 
 // ---------------------------------------------------------------------------
-// Catálogo de URLs públicas (fuente de verdad alineada con app/sitemap.ts)
+// Catálogo de URLs públicas (FUENTE ÚNICA: data/seo/canonical-paths.json)
 // ---------------------------------------------------------------------------
+// Desde Jun 2026, el catálogo estático se derivan del mismo JSON que consume
+// `app/sitemap.ts` (PUBLIC_ROUTES). Esto elimina la duplicación que provocó el
+// bug histórico de 9.466 envíos a IndexNow en 7-11/06/2026.
+
+/** Lista de paths estáticos canónicos (ordenados por prioridad en el JSON). */
+const STATIC_PATHS = canonicalPathsData.static_routes.map((r) => r.path);
 
 // Landings locales: máxima intención comercial ("abogados en {ciudad}").
-const LOCAL_LANDINGS = [
-  '/abogados-en-nacaome',
-  '/abogados-en-choluteca',
-  '/abogados-en-san-lorenzo',
-];
+const LOCAL_LANDINGS = STATIC_PATHS.filter((p) => p.startsWith('/abogados-en-'));
 
 // Núcleo del sitio: páginas prioritarias de alto valor y/o alta intención.
-const CORE_URLS = [
+// Subconjunto DRY derivado del catálogo estático (no se necesitan literales
+// adicionales: cualquier nueva página prioritaria se añade en el JSON).
+const CORE_PATHS = [
   '/',
   '/servicios-juridicos',
   '/derecho-penal',
@@ -137,43 +161,24 @@ const CORE_URLS = [
   '/preguntas-frecuentes',
   '/solicitar-consulta',
   '/como-llegar',
-];
+].filter((p) => STATIC_PATHS.includes(p));
 
-// Catálogo público amplio (modo --full). Debe reflejar rutas REALES del
-// sitemap. NO incluir /blog/categoria/... (no existe) ni páginas 404.
-const FULL_CATALOG = [
-  ...CORE_URLS,
-  // Servicios jurídicos (ramas)
-  '/servicios-juridicos/derecho-de-familia',
-  '/servicios-juridicos/derecho-laboral',
-  '/servicios-juridicos/derecho-civil-y-notarial',
-  '/servicios-juridicos/derecho-mercantil-empresarial',
-  '/servicios-juridicos/derecho-bancario-y-financiero',
-  '/servicios-juridicos/derecho-administrativo-y-servicio-civil',
-  '/servicios-juridicos/derecho-aduanero-y-comercio-exterior',
-  '/servicios-juridicos/regulacion-sanitaria',
-  '/servicios-juridicos/extranjeria-en-honduras',
-  '/servicios-juridicos/propiedad-intelectual',
-  '/servicios-juridicos/tributario-fiscal',
-  '/servicios-juridicos/ambiental-regulatorio',
-  '/servicios-juridicos/conciliacion-y-arbitraje',
-  // Derecho penal (subáreas)
-  '/derecho-penal/atencion-casos-penales-litigiosos',
-  '/derecho-penal/mediacion-conflictos-penales-y-multas',
-  '/derecho-penal/menores-justicia-juvenil',
-  '/derecho-penal/proceso-penal-completo',
-  '/derecho-penal/recursos-y-defensa-avanzada',
-  '/derecho-penal/estrategia-penal-y-litigio',
-  '/derecho-penal/ejecucion-penal-y-beneficios',
-  // Hondureños en España (subáreas)
-  '/hondurenos-en-espana/gestion-documental-y-legalizacion',
-  '/hondurenos-en-espana/actos-notariales-internacionales',
-  '/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero',
-  // Blog: índice + categorías (slug real = /blog/{category}, sin "categoria/")
-  '/blog',
-];
+/** Catálogo completo del modo --full: el catálogo estático + el índice /blog. */
+function buildCatalogPaths() {
+  return [...STATIC_PATHS, '/blog'];
+}
 
-// Slugs de categoría del blog (deben coincidir con data/blog/categories.ts).
+// Slugs de categoría del blog. Leídos dinámicamente desde
+// `data/blog/categories.ts` no es trivial desde un .mjs (TS file) por lo que se
+// mantiene aquí como lista sincronizada manualmente. CUALQUIER cambio en
+// `data/blog/categories.ts` debe reflejarse aquí y viceversa. En el sitemap
+// (app/sitemap.ts) las categorías se derivan del propio import, por lo que el
+// sitemap es la fuente de verdad de facto para categorías; aquí solo las
+// añadimos al catálogo IndexNow --full si el modo --full lo requiere.
+// NOTA: Por defecto NO se envían las URLs de categoría vía IndexNow (Bing las
+// descubre vía el sitemap.xml). Solo se incluyen cuando se pasa --full
+// explícitamente. Si se desincroniza vs data/blog/categories.ts el script
+// envía paths 404 y Bing los descarta (no penaliza al sitio).
 const BLOG_CATEGORY_SLUGS = [
   'derecho-penal',
   'proceso-penal',
@@ -243,33 +248,28 @@ const EXCLUSION_REASONS = {
 // ---------------------------------------------------------------------------
 
 function buildFullUrlList() {
-  const paths = [...FULL_CATALOG];
-  // Categorías del blog con la ruta REAL (/blog/{category}).
+  const paths = buildCatalogPaths();
+  // Categorías del blog con la ruta REAL (/blog/{category}). Solo se añaden
+  // en modo --full; Bing las descubre vía sitemap.xml y la mayoría son thin
+  // por su naturaleza de índice de categoría, así que su envío es opcional
+  // pero útil para que Bing las rastree cuando hay cambios en posts jóvenes.
   for (const slug of BLOG_CATEGORY_SLUGS) {
     paths.push(`/blog/${slug}`);
   }
-  // Posts del blog desde el sistema de archivos (si existen).
-  // NOTA: actualmente los posts viven en DB; el sitemap los sirve. Aquí no
-  // los inventamos. Si en el futuro hay posts en data/blog/posts/*.ts, se
-  // añadirían como /blog/{category}/{slug}.
-  const postsDir = join(ROOT, 'data/blog/posts');
-  if (existsSync(postsDir)) {
-    for (const f of readdirSync(postsDir)) {
-      if (f.endsWith('.ts') && f !== 'index.ts') {
-        // No sabemos la categoría desde el nombre; omisión segura.
-        // El sitemap ya los incluye y Bing los descubrirá vía sitemap.xml.
-      }
-    }
-  }
+  // Los posts del blog viven en DB y los sirve dinámicamente app/sitemap.ts.
+  // Aquí NO los inventamos: Bing los descubre vía sitemap.xml. En el postbuild
+  // el script no tiene acceso a DB (no se carga `lib/db.ts`), así que nunca
+  // los incluimos. Cualquier intento de inyectar paths manuales generaría
+  // URLs 404 (causa del bug histórico de Jun 2026).
   return paths;
 }
 
 function buildCoreUrlList() {
-  return [...CORE_URLS];
+  return [...CORE_PATHS];
 }
 
 function buildSampleList() {
-  // Lote de prueba de 5 URLs de alto valor.
+  // Lote de prueba de 5 URLs de alto valor (subconjunto de CORE_PATHS).
   return [
     '/',
     '/solicitar-consulta',
@@ -432,18 +432,21 @@ function maskKey(k) {
 
 async function main() {
   console.log('═══════════════════════════════════════════════════════════');
-  console.log(' IndexNow — envío conservador');
+  console.log(' IndexNow — envío conservador (fuente única: canonical-paths.json)');
   console.log('═══════════════════════════════════════════════════════════');
-  console.log(`Host:            ${HOST}`);
-  console.log(`Key (mask):      ${maskKey(KEY)}`);
+  console.log(`Host:                    ${HOST}`);
+  console.log(`Key (mask):              ${maskKey(KEY)}`);
+  console.log(`Catálogo estático (JSON): ${STATIC_PATHS.length} rutas`);
+  console.log(`Sitemap observado (cap): ${SITEMAP_OBSERVED} URLs`);
+  console.log(`Techo de seguridad:      ${INDEXNOW_SAFETY_CAP} URLs (abortar si se supera)`);
   console.log(
-    `Modo:            ${
-      isSample ? 'SAMPLE (5)' : isFull ? 'FULL (catálogo)' : isIncremental ? 'INCREMENTAL' : 'MÍNIMO (core)'
+    `Modo:                    ${
+      isSample ? 'SAMPLE (5)' : isFull ? 'FULL (catálogo + categorías)' : isIncremental ? 'INCREMENTAL' : 'MÍNIMO (core)'
     }`,
   );
-  console.log(`Ejecución:       ${isDryRun ? 'DRY-RUN (simulación)' : 'REAL'}`);
-  console.log(`Endpoint:        ${INDEXNOW_ENDPOINT}`);
-  console.log(`noindex sitio:   ${SITE_NOINDEX ? 'SÍ (abortar)' : 'no'}`);
+  console.log(`Ejecución:               ${isDryRun ? 'DRY-RUN (simulación)' : 'REAL'}`);
+  console.log(`Endpoint:                ${INDEXNOW_ENDPOINT}`);
+  console.log(`noindex sitio:           ${SITE_NOINDEX ? 'SÍ (abortar)' : 'no'}`);
   console.log('');
 
   // Bloqueos de seguridad --------------------------------------------------
@@ -459,8 +462,8 @@ async function main() {
     process.exit(0);
   }
   const { keyLocation } = keyCheck;
-  console.log(`Key location:    ${keyLocation}`);
-  console.log(`Validación key:  ✓ coincide con public/${KEY}.txt`);
+  console.log(`Key location:            ${keyLocation}`);
+  console.log(`Validación key:          ✓ coincide con public/${KEY}.txt`);
   console.log('');
 
   // Construcción de la lista base -----------------------------------------
@@ -477,6 +480,26 @@ async function main() {
     if (count > 0) console.log(`  ✗ excluidas (${reason}): ${count}`);
   }
   console.log(`URLs únicas válidas:              ${urls.length}`);
+
+  // ── Validación DURA vs sitemap (techo de seguridad) ────────────────────
+  // Aborta si el número final de URLs candidatas supera el techo de seguridad
+  // (sitemap observado + margen). Esto impide la recurrencia del bug histórico
+  // de Jun 2026 (9.466 URLs enviadas, 0 crawled / 0 indexed).
+  if (urls.length > INDEXNOW_SAFETY_CAP) {
+    console.log('');
+    console.log(`⛔ ABORTADO: ${urls.length} URLs candidatas superan el techo de seguridad (${INDEXNOW_SAFETY_CAP}).`);
+    console.log('   Posibles causas:');
+    console.log('     1. El catálogo data/seo/canonical-paths.json se ha ampliado sin actualizar indexnow_safety_cap.');
+    console.log('     2. Se están inyectando URLs duplicadas o parámetros no normalizados.');
+    console.log('     3. Alguien está intentando reenviar el blog completo vía IndexNow (no se debe).');
+    console.log('   Acción: revisa data/seo/canonical-paths.json y los logs de preparación arriba.');
+    process.exit(1);
+  }
+  // Aviso preventivo (no aborta) si nos acercamos al cap.
+  if (urls.length > SITEMAP_OBSERVED) {
+    console.log(`  ⚠ aviso: candidatas (${urls.length}) > sitemap observado (${SITEMAP_OBSERVED}).`);
+    console.log('    Revisa que no se estén duplicando URLs o incluyendo rutas canonicalizadas.');
+  }
 
   // Modo incremental: diff contra cache -----------------------------------
   let toSend = urls;
@@ -500,7 +523,7 @@ async function main() {
   }
 
   console.log('───────────────────────────────────────────────────────');
-  console.log(`Total final a enviar: ${toSend.length}`);
+  console.log(`Total final a enviar: ${toSend.length} / ${INDEXNOW_SAFETY_CAP} (techo)`);
   console.log('');
 
   if (toSend.length === 0) {

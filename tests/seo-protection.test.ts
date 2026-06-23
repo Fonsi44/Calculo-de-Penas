@@ -274,13 +274,17 @@ describe('SEO on-page — home page (página raíz)', () => {
     expect(CHECK2_DEFAULT.toLowerCase()).toContain('abogados en nacaome');
   });
 
-  it('el title del sitio (tagline) incluye los términos clave y tiene ≤65 caracteres', () => {
+  it('el title del sitio (tagline) incluye los términos clave y tiene 35-65 caracteres', () => {
+    // NOTA (Jun 2026): la `tagline` se mantiene intencionadamente SIN la marca
+    // (45 car.) para que el layout añada "| Pineda y Asociados" sin duplicar.
+    // El `<title>` renderizado es: "Abogados en Nacaome, Valle, Honduras | Pineda y Asociados".
+    // Ver `app/(public)/page.tsx` línea 43 (title absoluto) y layout.tsx (template %s | site.name).
     const title = site.tagline;
     expect(title).toContain('Abogados');
     expect(title).toContain('Nacaome');
     expect(title).toContain('Valle');
     expect(title).toContain('Honduras');
-    expect(title).toContain('Pineda y Asociados');
+    expect(title.length).toBeGreaterThanOrEqual(35);
     expect(title.length).toBeLessThanOrEqual(65);
   });
 
