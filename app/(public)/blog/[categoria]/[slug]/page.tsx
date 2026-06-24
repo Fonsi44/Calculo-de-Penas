@@ -16,6 +16,15 @@ import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
+import { BlogSidebar } from '@/components/blog/blog-sidebar';
+import {
+  toCardData,
+  deriveCategoryCounts,
+  derivePopularPosts,
+  deriveRecentPosts,
+  deriveArchiveMonths,
+  deriveAllTags,
+} from '@/lib/blog-hub';
 
 export const revalidate = 3600;
 
@@ -67,7 +76,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function getRelatedPosts(slug: string, category: string, tags: string[], limit = 3) {
+async function getRelatedPosts(slug: string, category: string, tags: string[], limit = 6) {
   const all = await getAllPosts();
   return all
     .filter((p) => p.slug !== slug)
@@ -97,6 +106,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const postUrl = `/blog/${post.category}/${post.slug}`;
   const faqItems = extractFAQSchema(post.body);
   const faqLd = faqPageSchema(faqItems);
+
+  const categoryCounts = deriveCategoryCounts(allPosts);
+  const popularSidebar = derivePopularPosts(allPosts, 5).map(toCardData);
+  const recentSidebar = deriveRecentPosts(allPosts, 5).map(toCardData);
+  const archive = deriveArchiveMonths(allPosts, 8);
+  const allTags = deriveAllTags(allPosts);
 
   return (
     <>
@@ -176,91 +191,107 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         </Container>
       )}
 
-      {/* ── CONTENIDO ── */}
+      {/* ── CONTENIDO + SIDEBAR ── */}
       <Section spacing="md">
         <Container size="lg">
-          <article>
-            <BlogTOC />
-            <div className="article-body" dangerouslySetInnerHTML={{ __html: post.body }} />
+          <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
+            <div className="min-w-0">
+              <article>
+                <BlogTOC />
+                <div className="article-body" dangerouslySetInnerHTML={{ __html: post.body }} />
 
-            {/* Tags */}
-            {post.tags.length > 0 && (
-              <div className="mt-10 pt-6 border-t border-border/50">
-                <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Etiquetas</p>
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <span key={tag} className="inline-block px-3 py-1.5 rounded-full bg-surface-alt text-xs text-text-secondary border border-border/30">
-                      {tag}
-                    </span>
-                  ))}
+                {/* Tags */}
+                {post.tags.length > 0 && (
+                  <div className="mt-10 pt-6 border-t border-border/50">
+                    <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Etiquetas</p>
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.map((tag) => (
+                        <Link
+                          key={tag}
+                          href={`/blog?tag=${encodeURIComponent(tag)}`}
+                          className="inline-block px-3 py-1.5 rounded-full bg-surface-alt text-xs text-text-secondary border border-border/30 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-colors"
+                        >
+                          {tag}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Disclaimer legal único con fecha de revisión real del post (E-E-A-T).
+                    El footer global NO repite este concepto (ver public-footer.tsx). */}
+                <LegalDisclaimer lastReviewedIso={post.updatedAt ?? post.publishedAt} />
+
+                <RelatedService category={post.category} />
+
+                {/* Author Box */}
+                <div className="mt-10 pt-6 border-t border-border/30">
+                  <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-4">Sobre el autor</p>
+                  <div className="flex flex-col sm:flex-row gap-4 p-5 rounded-lg border border-border/30 bg-surface-alt">
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
+                    <div className="min-w-0">
+                      <p className="font-semibold text-text">{post.author}</p>
+                      <p className="text-xs text-text-muted">Abogados en Nacaome, Valle, zona sur de Honduras</p>
+                      <p className="text-sm text-text-secondary leading-relaxed mt-2">
+                        Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
+                        colegiados en Honduras, con presencia activa en juzgados de la zona sur.
+                      </p>
+                      <Link
+                        href="/blog"
+                        className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+                      >
+                        Más artículos del equipo <ArrowRight size={14} />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
 
-            {/* Disclaimer legal único con fecha de revisión real del post (E-E-A-T).
-                El footer global NO repite este concepto (ver public-footer.tsx). */}
-            <LegalDisclaimer lastReviewedIso={post.updatedAt ?? post.publishedAt} />
-
-            <RelatedService category={post.category} />
-
-            {/* Author Box */}
-            <div className="mt-10 pt-6 border-t border-border/30">
-              <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-4">Sobre el autor</p>
-              <div className="flex flex-col sm:flex-row gap-4 p-5 rounded-lg border border-border/30 bg-surface-alt">
-                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
-                <div className="min-w-0">
-                  <p className="font-semibold text-text">{post.author}</p>
-                  <p className="text-xs text-text-muted">Abogados en Nacaome, Valle, zona sur de Honduras</p>
-                  <p className="text-sm text-text-secondary leading-relaxed mt-2">
-                    Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
-                    colegiados en Honduras, con presencia activa en juzgados de la zona sur.
-                  </p>
-                  <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
-                  >
-                    Más artículos del equipo <ArrowRight size={14} />
-                  </Link>
+                {/* Share at end */}
+                <div className="mt-8 pt-6 border-t border-border/30">
+                  <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Compartir</p>
+                  <ShareButtons title={post.title} url={postUrl} variant="horizontal" />
                 </div>
-              </div>
+              </article>
+
+              {/* Navegación entre posts */}
+              {(prevPost || nextPost) && (
+                <nav className="mt-10 pt-6 border-t border-border/30 grid sm:grid-cols-2 gap-4" aria-label="Navegación entre artículos">
+                  {prevPost ? (
+                    <Link
+                      href={`/blog/${prevPost.category}/${prevPost.slug}`}
+                      className="group flex items-start gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors"
+                    >
+                      <ArrowLeft size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
+                      <div className="min-w-0">
+                        <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Anterior</p>
+                        <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{prevPost.title}</p>
+                      </div>
+                    </Link>
+                  ) : <div />}
+                  {nextPost ? (
+                    <Link
+                      href={`/blog/${nextPost.category}/${nextPost.slug}`}
+                      className="group flex items-start justify-end gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors text-right"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Siguiente</p>
+                        <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{nextPost.title}</p>
+                      </div>
+                      <ArrowRight size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
+                    </Link>
+                  ) : <div />}
+                </nav>
+              )}
             </div>
 
-            {/* Share at end */}
-            <div className="mt-8 pt-6 border-t border-border/30">
-              <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">Compartir</p>
-              <ShareButtons title={post.title} url={postUrl} variant="horizontal" />
-            </div>
-          </article>
-
-          {/* Navegación entre posts */}
-          {(prevPost || nextPost) && (
-            <nav className="mt-10 pt-6 border-t border-border/30 grid sm:grid-cols-2 gap-4" aria-label="Navegación entre artículos">
-              {prevPost ? (
-                <Link
-                  href={`/blog/${prevPost.category}/${prevPost.slug}`}
-                  className="group flex items-start gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors"
-                >
-                  <ArrowLeft size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
-                  <div className="min-w-0">
-                    <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Anterior</p>
-                    <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{prevPost.title}</p>
-                  </div>
-                </Link>
-              ) : <div />}
-              {nextPost ? (
-                <Link
-                  href={`/blog/${nextPost.category}/${nextPost.slug}`}
-                  className="group flex items-start justify-end gap-3 p-4 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-surface-alt transition-colors text-right"
-                >
-                  <div className="min-w-0">
-                    <p className="text-xxs font-bold uppercase tracking-widest text-text-muted mb-1">Siguiente</p>
-                    <p className="text-sm text-text leading-snug line-clamp-2 group-hover:text-primary transition-colors">{nextPost.title}</p>
-                  </div>
-                  <ArrowRight size={16} className="flex-shrink-0 mt-0.5 text-text-muted group-hover:text-accent-dark transition-colors" />
-                </Link>
-              ) : <div />}
-            </nav>
-          )}
+            <BlogSidebar
+              categories={categoryCounts}
+              popular={popularSidebar}
+              recent={recentSidebar}
+              archive={archive}
+              tags={allTags}
+            />
+          </div>
         </Container>
       </Section>
 

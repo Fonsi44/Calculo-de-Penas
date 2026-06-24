@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./auth-context";
@@ -8,6 +9,7 @@ import { ConfirmProvider } from "@/components/ui/confirm";
 import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
+import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { site } from "@/lib/site";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AnalyticsScripts } from "@/components/analytics-scripts";
@@ -113,6 +115,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <ConfirmProvider>
                 <AuthProvider>
                   <GlobalShortcuts />
+                  <Suspense fallback={null}>
+                    <ScrollToTop />
+                  </Suspense>
                   <RootShell>{children}</RootShell>
                 </AuthProvider>
               </ConfirmProvider>

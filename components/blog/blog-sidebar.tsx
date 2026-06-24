@@ -16,7 +16,7 @@ import type { BlogCardData, BlogCategoryWithCount, BlogArchiveMonth } from '@/da
  *  2. Lecturas recomendadas — heurístico determinista (featured + etiquetas +
  *     recencia). Etiqueta honesta: no hay métricas de vistas (R4).
  *  3. Artículos recientes.
- *  4. Archivo por meses — cadencia editorial (informativo).
+ *  4. Archivo por meses — enlaces a `/blog?month=YYYY-MM` con filtrado server-side.
  *  5. Etiquetas — enlaces al filtro `?tag=` existente (noindex).
  */
 export function BlogSidebar({
@@ -76,9 +76,14 @@ export function BlogSidebar({
         <SidebarBlock title="Archivo" as="h2">
           <ul className="space-y-1">
             {archive.map((m) => (
-              <li key={m.value} className="flex items-center justify-between gap-2 px-3 py-1.5 text-sm text-text-secondary">
-                <span className="capitalize">{m.label}</span>
-                <span className="text-xxs text-text-muted tabular-nums">{m.count}</span>
+              <li key={m.value}>
+                <Link
+                  href={`/blog?month=${m.value}`}
+                  className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors group"
+                >
+                  <span className="capitalize group-hover:text-primary">{m.label}</span>
+                  <span className="text-xxs text-text-muted tabular-nums">{m.count}</span>
+                </Link>
               </li>
             ))}
           </ul>

@@ -23,20 +23,33 @@ import {
   deriveRecentPosts,
   deriveArchiveMonths,
   deriveAllTags,
+  filterByMonth,
 } from '@/lib/blog-hub';
 
 export const revalidate = 3600;
 
+const MESES = [
+  'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+  'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
+];
+
+function formatMonthLabel(value: string): string {
+  const [y, m] = value.split('-');
+  return `${MESES[parseInt(m, 10) - 1]} ${y}`;
+}
+
 const ITEMS_PER_PAGE = 12;
 
-type Props = { searchParams?: Promise<{ tag?: string; page?: string }> };
+type Props = { searchParams?: Promise<{ tag?: string; page?: string; month?: string }> };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
   const page = parseInt(params?.page ?? '1', 10) || 1;
   const tagFilter = params?.tag;
-  const canonicalPath = tagFilter || page > 1
-    ? `/blog${page > 1 ? `?page=${page}` : ''}${tagFilter ? `${page > 1 ? '&' : '?'}tag=${encodeURIComponent(tagFilter)}` : ''}`
+  const monthFilter = params?.month;
+  const hasFilter = !!(tagFilter || monthFilter);
+  const canonicalPath = hasFilter || page > 1
+    ? `/blog${page > 1 ? `?page=${page}` : ''}${tagFilter ? `${page > 1 || monthFilter ? '&' : '?'}tag=${encodeURIComponent(tagFilter)}` : ''}${monthFilter ? `${page > 1 || tagFilter ? '&' : '?'}month=${monthFilter}` : ''}`
     : '/blog';
   return {
     // Absolute para controlar la longitud total del title (SEO).
@@ -44,8 +57,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
     keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],
-    // ?tag= no indexable (filtra por etiqueta, no es URL canónica de categoría).
-    robots: tagFilter
+    // ?tag= y ?month= no indexables (filtros no canónicos).
+    robots: hasFilter
       ? { index: false, follow: true, googleBot: { index: false, follow: true } }
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
@@ -69,7 +82,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 export default async function BlogHubPage(props: Props) {
   const searchParams = await props.searchParams;
   const tagFilter = searchParams?.tag;
+  const monthFilter = searchParams?.month;
   const page = parseInt(searchParams?.page ?? '1', 10) || 1;
+  const hasFilter = !!(tagFilter || monthFilter);
 
   // Una sola consulta DB (getAllPosts). El resto se deriva en memoria.
   const allPosts = await getAllPosts();
@@ -79,16 +94,21 @@ export default async function BlogHubPage(props: Props) {
     ? allPosts.filter((p) => (p.tags ?? []).includes(tagFilter))
     : allPosts;
 
-  // Destacados: solo en página 1 sin filtro de etiqueta.
-  const showFeatured = !tagFilter && page === 1;
+  // Filtro por mes (?month=YYYY-MM, server-side, noindex).
+  const monthFiltered = monthFilter
+    ? filterByMonth(tagFiltered, monthFilter)
+    : tagFiltered;
+
+  // Destacados: solo en página 1 sin filtros.
+  const showFeatured = !hasFilter && page === 1;
   const featured = showFeatured ? deriveFeaturedPosts(allPosts, 4) : [];
   const featuredSlugs = new Set(featured.map((f) => f.slug));
 
-  // Listado paginado (vista servidor). En página 1 sin tag, se excluyen los
-  // destacados del grid para no duplicarlos con la sección magazine.
+  // Listado paginado (vista servidor). En página 1 sin filtros, se excluyen
+  // los destacados del grid para no duplicarlos con la sección magazine.
   const gridSource = showFeatured
-    ? tagFiltered.filter((p) => !featuredSlugs.has(p.slug))
-    : tagFiltered;
+    ? monthFiltered.filter((p) => !featuredSlugs.has(p.slug))
+    : monthFiltered;
   const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);
   const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
 
@@ -100,7 +120,7 @@ export default async function BlogHubPage(props: Props) {
   const tags = deriveAllTags(allPosts);
 
   // Payload ligero (sin body) para el explorador cliente.
-  const explorerPosts = tagFiltered.map(toCardData);
+  const explorerPosts = monthFiltered.map(toCardData);
   const explorerPagePosts = pagePosts.map(toCardData);
 
   const buildPageUrl = (p: number) => {
@@ -108,15 +128,16 @@ export default async function BlogHubPage(props: Props) {
     const params = new URLSearchParams();
     if (p > 1) params.set('page', String(p));
     if (tagFilter) params.set('tag', tagFilter);
+    if (monthFilter) params.set('month', monthFilter);
     const qs = params.toString();
     return qs ? `${base}?${qs}` : base;
   };
 
   return (
     <>
-      {/* rel prev/next solo en vista paginada sin tag (indexable). */}
-      {!tagFilter && page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
-      {!tagFilter && page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
+      {/* rel prev/next solo en vista paginada sin filtros (indexable). */}
+      {!hasFilter && page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
+      {!hasFilter && page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
 
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
@@ -142,8 +163,8 @@ export default async function BlogHubPage(props: Props) {
             <div className="min-w-0 space-y-6">
               <div className="flex items-center justify-between gap-4">
                 <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
-                  {tagFilter ? 'Artículos etiquetados' : page > 1 ? `Todos los artículos` : 'Todos los artículos'}
-                  {totalPages > 1 && !tagFilter && (
+                  {tagFilter ? 'Artículos etiquetados' : monthFilter ? `Archivo: ${formatMonthLabel(monthFilter)}` : page > 1 ? 'Todos los artículos' : 'Todos los artículos'}
+                  {totalPages > 1 && !hasFilter && (
                     <span className="text-text-muted font-normal text-sm ml-2">— Página {page} de {totalPages}</span>
                   )}
                 </h2>

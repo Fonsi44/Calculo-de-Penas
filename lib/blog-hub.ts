@@ -132,6 +132,16 @@ export function deriveAllTags(posts: Post[]): string[] {
   return Array.from(tags).sort((a, b) => a.localeCompare(b, 'es'));
 }
 
+/** Filtra posts de un mes específico (value YYYY-MM). */
+export function filterByMonth(posts: Post[], month: string): Post[] {
+  if (!month) return posts;
+  return posts.filter((p) => {
+    const d = new Date(p.publishedAt);
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    return value === month;
+  });
+}
+
 /**
  * Archivo por meses (YYYY-MM). Devuelve los últimos `limit` meses con posts,
  * del más reciente al más antiguo. `label` usa formato es-HN legible

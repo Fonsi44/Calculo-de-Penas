@@ -5,6 +5,85 @@
 
 ---
 
+## Unreleased — Corrección integral de enlaces internos, scroll de navegación y archivo mensual del blog
+
+Auditoría y corrección completa de la navegación interna: enlaces del archivo mensual
+del blog ahora funcionales, scroll-to-top centralizado en cambios de ruta, y revisión
+de todos los enlaces internos del proyecto para comportamiento consistente.
+
+### Causa raíz
+
+- **Archivo mensual del blog**: los meses se renderizaban como `<span>` (texto plano)
+  dentro de `BlogSidebar`. No existía ruta de archivo ni parámetro de filtro mensual.
+  Tampoco existía función de filtrado por mes en la capa de datos.
+- **Scroll en navegación**: sin protección explícita contra pérdida de scroll en
+  transiciones de ruta, especialmente al usar el botón "Atrás" del navegador.
+- **target="_blank"**: revisados 51 usos — los enlaces internos que abrían nueva
+  pestaña estaban en el panel de administración (intranet → vista previa pública),
+  caso explícitamente justificado para la UX del admin. Los enlaces externos
+  (WhatsApp, redes sociales, entidades gubernamentales) mantienen `target="_blank"`.
+- **Eventos bloqueadores**: ningún `preventDefault()` ni `stopPropagation()` afectaba
+  a la navegación por enlaces.
+
+### Cambios
+
+| Archivo | Cambio |
+|---------|--------|
+| `components/blog/blog-sidebar.tsx` | Widget "Archivo" convertido de `<span>` a `<Link href="/blog?month=YYYY-MM">`. Los meses ahora navegan al filtro mensual con el mismo patrón que `?tag=`. |
+| `lib/blog-hub.ts` | Nueva función `filterByMonth(posts, month)` que filtra posts por mes en formato `YYYY-MM`. |
+| `app/(public)/blog/page.tsx` | Nuevo parámetro `?month=YYYY-MM` en `searchParams`. Filtro server-side (no indexable, mismo tratamiento SEO que `?tag=`). El H2 cambia a "Archivo: mayo 2026" cuando hay filtro activo. `rel prev/next` desactivado cuando hay filtros. |
+| `components/layout/scroll-to-top.tsx` | Nuevo componente cliente que restaura scroll al inicio en cada cambio de ruta, respetando hashes (`#formulario`). |
+| `app/layout.tsx` | Importado `ScrollToTop` envuelto en `<Suspense>` para compatibilidad con páginas estáticas (404, _not-found). |
+
+### No modificado (justificado)
+
+- Admin preview links con `target="_blank"` (intranet → público): mantienen su
+  comportamiento porque son enlaces de previsualización con icono `ExternalLink`.
+- Enlaces externos (WhatsApp, redes sociales, SAR, IHSS, ARSA, etc.): mantienen
+  `target="_blank"` + `rel="noopener noreferrer"`.
+- `app/(public)/blog/[categoria]/[slug]/page.tsx`: no requiere cambios porque
+  ya usa `BlogSidebar` y `deriveArchiveMonths` que fueron actualizados.
+- `BlogCard`, `PublicHeader`, `PublicFooter`: no requieren cambios — ya usan
+  `next/link` correctamente sin `target="_blank"`.
+
+### Validación
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errores |
+| `npm run build` | Compiled + TypeScript OK (static pages en progreso) |
+| `npm test` | 601/601 (21 suites) ✅ — 0 regresiones |
+
+### Cómo probar
+
+1. **Archivo mensual**: navegar a `/blog`, hacer clic en cualquier mes del
+   sidebar → debe filtrar a `/blog?month=YYYY-MM` mostrando solo posts de ese mes.
+2. **Clic en mes sin posts**: debe mostrar EmptyState.
+3. **Navegación interna**: clic en menú principal, footer, CTAs, tarjetas →
+   deben abrir en la misma pestaña y posicionar arriba.
+4. **Hash navigation**: `/solicitar-consulta#formulario` → debe desplazar al
+   formulario.
+5. **Enlaces externos**: WhatsApp, Facebook, X → deben abrir en nueva pestaña.
+6. **Archivo en post**: `/blog/[categoria]/[slug]` → sidebar también muestra
+   meses clicables.
+7. **Botón "Atrás"**: navegar del filtro mensual al hub completo → scroll arriba.
+
+---
+
+### Cambios
+
+- AGENTS.md: eliminar cifra fija de tests por descripción estable (R4 validación).
+- AGENTS.md: aclarar regla editorial 600–1200 palabras guía vs 800–1000 ampliación IA (R13).
+- AGENTS.md: nueva sección 10 — MCPs autorizados, orden de uso y prohibiciones (gobernanza).
+- CHANGELOG.md: esta entrada.
+
+### Validación
+
+- `git diff -- AGENTS.md CHANGELOG.md README.md`
+- `npm run lint && npm run build && npm test`
+
+---
+
 ## Unreleased — Configuración MCP gratuita SEO
 
 Instalación y configuración de servidores MCP gratuitos/open-source para auditoría

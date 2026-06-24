@@ -147,7 +147,7 @@ corresponde exactamente.
 ```bash
 npm run lint          # ESLint — 0 errores requerido
 npm run build         # Next.js build — TypeScript + compilación
-npm test              # Vitest — 397 tests (19 suites)
+npm test              # Vitest — suite completa; 0 fallos nuevos requeridos
 npm run test:e2e      # Playwright — 37 tests E2E (4 specs)
 npm run validate:dates  # Validar fechas del blog
 npm run content:audit   # Auditoría editorial (71 pendientes hoy)
@@ -224,26 +224,28 @@ Reglas vinculantes para toda modificación con impacto SEO. Resumen:
 
 ### Reglas editoriales vinculantes (R13–R15)
 
-**R13. Peso editorial: 600–1200 palabras, con prioridad en SEO/GEO/calidad.**
-- Al crear o reescribir un post, el cuerpo (HTML sin tags) debe tener entre
-  600 y 1200 palabras como guía general. La optimización SEO, GEO y de metadatos
-  es MÁS importante que el conteo de palabras. Un artículo de 650 palabras bien
-  optimizado vale más que uno de 1000 con relleno.
-- Posts por debajo de 600 palabras se marcan como "requiere ampliación". La
-  ampliación la realiza la IA (`scripts/blog-verify-fix.ts` con `DEEPSEEK_API_KEY`)
-  usando **exclusivamente** información ya presente en el artículo o en su
-  categoría, con prompt restrictivo que prohíbe inventar datos legales. La IA
-  **nunca** rellena con texto genérico para alcanzar el conteo.
+**R13. Peso editorial: 600–1200 palabras guía; 800–1000 para ampliación IA.**
+- **Guía editorial general:** todo post debe tener entre 600 y 1200 palabras
+  como guía. La calidad SEO/GEO, la precisión legal y la ausencia de relleno
+  genérico tienen prioridad sobre el conteo. Un artículo de 650 palabras bien
+  optimizado vale más que uno de 1000 con relleno. Posts muy por encima de
+  1200 palabras se revisan por claridad/estructura.
+- **Ampliación automática IA:** cuando un post esté por debajo de 600 palabras
+  y la IA pueda ampliarlo sin inventar datos legales, el objetivo preferente es
+  800–1000 palabras. La ampliación la realiza `scripts/blog-verify-fix.ts` con
+  `DEEPSEEK_API_KEY` usando **exclusivamente** información ya presente en el
+  artículo o en su categoría, con prompt restrictivo que prohíbe inventar datos
+  legales. La IA **nunca** rellena con texto genérico para alcanzar el conteo.
+- **Fallback humano:** si la IA no puede ampliar sin inventar datos legales,
+  el post se marca como "pendiente" para revisión humana puntual. La ampliación
+  editorial humana no es un paso obligatorio, sino un recurso puntual.
 - **Guardias automáticas** (no requieren intervención humana): el body corregido
   se rechaza si (a) sigue <600 palabras en posts que requerían ampliación,
   (b) introduce alucinaciones legales nuevas (artículos/penas inexistentes),
   (c) introduce regresiones SEO/privacidad (rutas privadas, H1, disclaimer duplicado),
-  o (d) es ≥98% similar al original (cambio irrelevante). Solo si la IA no puede
-  ampliar sin inventar, el post se marca como "pendiente" para revisión humana
-  puntual.
+  o (d) es ≥98% similar al original (cambio irrelevante).
 - **Validación post-escritura**: tras escribir en DB, el script relee el post y
   re-analiza; si no pasa los validadores, revierte al original automáticamente.
-- Posts muy por encima de 1200 palabras se revisan por claridad/estructura.
 - El conteo se verifica con `scripts/normalizar-blog.ts` (audit) o
   `scripts/detectar-posts-plantilla.ts`.
 
@@ -372,7 +374,43 @@ del blog o editorial. Cubre `scripts/blog-ai-review.ts` (`blog:review`) y
 
 ---
 
-## 10. Formato de respuesta final
+## 10. MCPs autorizados y uso operativo
+
+### MCPs permitidos
+
+- **filesystem**: leer/escribir solo dentro del repositorio permitido.
+- **git**: status, diff, logs, ramas y commits atómicos.
+- **github**: issues, PRs y remoto cuando exista token configurado.
+- **postgres**: acceso DB solo mediante `DATABASE_URL` de entorno; nunca imprimir secretos.
+- **mcp-seo**: auditoría técnica SEO, metadatos, sitemap, robots, structured data y contenido.
+- **playwright**: validación renderizada real, navegación, screenshots y DOM.
+- **fetch**: comprobaciones HTTP puntuales y lectura simple de páginas.
+- **duckduckgo**: investigación externa no sensible, SERP/GEO básica y comparación pública.
+- **diag**: diagnóstico del entorno, herramientas y conectividad local.
+
+### Orden recomendado para auditorías SEO
+
+```
+filesystem → git → postgres → mcp-seo → playwright → fetch → duckduckgo → github
+```
+
+### Reglas de uso
+
+- Priorizar datos internos reales (DB, filesystem) antes de búsqueda externa.
+- Usar postgres antes de asumir contenido del blog — leer DB es más fiable que inferir del código.
+- Usar playwright cuando el HTML renderizado pueda diferir del código fuente (componentes cliente, hidratación).
+- Usar mcp-seo para evidencias repetibles de metadatos, sitemap, robots y schema.
+- Registrar en `auditoria-seo/` cualquier auditoría SEO relevante para trazabilidad.
+- Nunca imprimir secretos completos en logs, documentación ni outputs.
+- Nunca solicitar indexación de rutas privadas.
+- Nunca ejecutar crawling externo masivo sin instrucción explícita.
+- No usar MCPs premium, de pago o con créditos comerciales sin instrucción explícita del usuario.
+- No usar MCPs que dupliquen capacidades existentes si añaden riesgo o ruido.
+- No modificar configuración de modelos, proveedores o APIs externas desde el repositorio (refuerza R10).
+
+---
+
+## 11. Formato de respuesta final
 
 ```
 Porcentaje completado:
