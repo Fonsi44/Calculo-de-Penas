@@ -68,7 +68,21 @@ export default async function DerechoPenalPage() {
     url,
   });
 
-  const blogPosts = (await getPostsByCategory('derecho-penal')).slice(0, 3);
+  // Posts penales priorizados por tráfico real (GSC 28d, audit 2026-06-25):
+// estos 3 slugs generaron clicks reales en Google. Se muestran primero el
+// bloque "Artículos relacionados" más abajo. Si algún slug no existe o no
+// está publicado, queda fuera (graceful degradation). Si cambian los top,
+// reordenar/actualizar aquí.
+const PRIORITY_PENAL_SLUGS = [
+    'estafas-fraudes-tipos-penales-honduras',
+    'cuando-prescribe-delito-en-honduras',
+    'fianza-medidas-cautelares-proceso-penal-honduras',
+  ];
+  const allPenalPosts = await getPostsByCategory('derecho-penal');
+  const blogPosts = PRIORITY_PENAL_SLUGS
+    .map((s) => allPenalPosts.find((p) => p.slug === s))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+    .slice(0, 3);
 
   return (
     <>
