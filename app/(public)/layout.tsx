@@ -6,6 +6,7 @@ import { FloatingContactRail } from '@/components/marketing/live-widgets';
 import { PWARegistration } from '@/components/pwa/pwa-registration';
 import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
+import { AnalyticsScripts } from '@/components/analytics-scripts';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoOverrides();
@@ -134,6 +135,10 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(emilLd) }}
+      />
+      <AnalyticsScripts
+        gaId={site.gaId}
+        clarityId={site.clarityId}
       />
     </div>
   );

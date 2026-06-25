@@ -12,7 +12,6 @@ import { RootShell } from "@/components/layout/root-shell";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { site } from "@/lib/site";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { AnalyticsScripts } from "@/components/analytics-scripts";
 
 /* Tipografía "Premium Corporate Luxury" — Cormorant Garamond (headings)
    + Manrope (body). Patrón del repo fuente. */
@@ -125,13 +124,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ThemeProvider>
         </GlobalErrorBoundary>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
-        {/* GA4 + Clarity: solo en rutas públicas (excluye /intranet y /preview
-            para que el tráfico interno del personal no contamine las métricas
-            de marketing). Ver components/analytics-scripts.tsx. */}
-        <AnalyticsScripts
-          gaId={site.gaId}
-          clarityId={site.clarityId}
-        />
       </body>
     </html>
   );

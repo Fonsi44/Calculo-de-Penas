@@ -1989,7 +1989,40 @@ técnicas, valores de test, archivos legacy/backup.
 
 ## Últimas releases
 
-### Release 82 — Implementación de las 7 fases de la auditoría integral (2026-06-19)
+### Release 83 — Corrección GA4 Realtime: centralización, exclusión de intranet y limpieza de eventos (2026-06-25)
+
+**Diagnóstico:** El error `400 OK` en la API interna de GA4 Realtime
+(`/analytics/v2/realtime/venus/getData`) está causado por una combinación de:
+1. GA4 montado en el **root layout** — envolvía todas las rutas (públicas e intranet).
+2. Parámetros de eventos UA-style (`event_category`, `event_label`) y `non_interaction`
+   enviados a GA4 sin filtrar, potencialmente causando datos mal formados.
+3. Sin SPA route tracking — `gtag('config')` se llamaba sin `send_page_view: false`,
+   y no se enviaban `page_view` en navegación cliente.
+
+**Cambios aplicados:**
+
+- **`components/analytics-scripts.tsx`**: Reescrito para usar `send_page_view: false`
+  en la config de gtag. Añadido tracking SPA vía `usePathname` + `useRef` que envía
+  `page_view` con `page_path`, `page_location` y `page_title` limpios en cada cambio
+  de ruta. Ampliadas rutas excluidas (`/_next`, `/404`). Eliminados comentarios
+  redundantes.
+- **`app/layout.tsx`**: Eliminada importación y render de `<AnalyticsScripts>`.
+  Se mantiene solo el `<link rel="preconnect">` para `googletagmanager.com` (DNS
+  hint inofensivo en rutas privadas). Eliminados comentarios de GA4.
+- **`app/(public)/layout.tsx`**: Añadida importación y render de `<AnalyticsScripts>`
+  con `gaId` y `clarityId`. Ahora GA4/Clarity solo se cargan en rutas públicas.
+- **`lib/analytics.ts`**: Eliminados parámetros UA-style (`event_category`,
+  `event_label`, `non_interaction`). Añadido `cleanParams()` que filtra valores
+  `undefined`/`null` antes de enviar a gtag. Funciones simplificadas a `{ value: 1 }`.
+
+**Measurement ID usado:** `G-L2PGBN3SWK` (formato G-... correcto).
+**Property ID (server-side):** `541022095` (solo para Data API, no para frontend).
+
+**Validación:** lint OK, build OK, 601/601 tests OK.
+**Validación pendiente:** Verificar en GA4 Realtime que el error 400 desaparezca
+(típicamente minutos después de recibir datos limpios).
+
+---
 
 Ejecución completa del plan de `docs/auditoria-repositorio-integral.md`. 7 commits
 atómicos. Detalle en §19 del informe.
