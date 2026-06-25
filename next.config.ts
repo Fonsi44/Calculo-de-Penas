@@ -66,6 +66,16 @@ const nextConfig: NextConfig = {
       // encontrar la versión HTTP. Estos redirects refuerzan la canonicalización.
       { source: '/', has: [{ type: 'host', value: 'pinedayasociadoshn.com' }], destination: 'https://www.pinedayasociadoshn.com/', permanent: true },
       { source: '/:path*', has: [{ type: 'host', value: 'pinedayasociadoshn.com' }], destination: 'https://www.pinedayasociadoshn.com/:path*', permanent: true },
+      // === FIX 404: Backlinks externos sin prefijo /blog/ (Audit 25/06) ===
+      // GSC URL Inspection reportó referringUrls a estas URLs huérfanas.
+      // El post existe en /blog/hondurenos-en-espana/poder-desde-espana-...
+      // pero Google/Bing llegaron sin el prefijo /blog/. Consolidamos con
+      // 301 hacia el post canónico para conservar link equity.
+      { source: '/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras', destination: '/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras', permanent: true },
+      // /derecho-penal/proceso-penal-completo/paso-1 backlink externo huérfano:
+      // la landing legal /derecho-penal/proceso-penal-completo SÍ existe
+      // (canonical-paths.json). Redirigimos el subpath 404 hacia la landing.
+      { source: '/derecho-penal/proceso-penal-completo/paso-1', destination: '/derecho-penal/proceso-penal-completo', permanent: true },
       { source: '/inicio', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },
       { source: '/areas-de-practica', destination: '/servicios-juridicos', permanent: true },
