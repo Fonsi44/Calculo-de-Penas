@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   // Absolute para controlar la longitud total. Antes el title resuelto medía
   // 73 caracteres (>65) y se truncaba en SERP.
   title: { absolute: `Abogado Penalista en ${site.address.city} — Defensa Penal` },
-  description: `¿Necesita un abogado penalista en Nacaome, Valle? Defensa penal técnica y confidencial. Atendemos detenciones, audiencias iniciales y recursos en Nacaome, San Lorenzo y Choluteca. Consulta urgente por WhatsApp ${site.whatsappDisplay}.`,
+  description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial en detenciones, audiencias y recursos. Consulta urgente por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/derecho-penal' },
   keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penalista San Lorenzo', 'abogado penalista Choluteca', 'abogado detención Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'abogado urgente penalista Valle'],
   twitter: {

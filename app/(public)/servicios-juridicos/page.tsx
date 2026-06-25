@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   // layout añada "| Pineda y Asociados" (la marca ya va incluida). Antes el
   // title resuelto medía 77 caracteres (>65): se truncaba en SERP.
   title: { absolute: `Abogados en ${site.address.city} — Todas las Áreas del Derecho` },
-  description: `Abogados en Nacaome, Valle para derecho penal, familia, laboral, civil, mercantil y tributario. Cobertura en San Lorenzo y Choluteca. Primera consulta por WhatsApp ${site.whatsappDisplay}.`,
+  description: `Abogados en Nacaome, Valle: penal, familia, laboral, civil, mercantil y tributario. Cobertura San Lorenzo y Choluteca. Consulta por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/servicios-juridicos' },
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
   twitter: {
