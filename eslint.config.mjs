@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
     "drizzle/**",
     "docs/**",
     "_archived_unused/**",
+    // Archivo consolidado de limpieza (no participa del build/test/lint).
+    "basura/**",
     // Binarios auxiliares de OpenCode en CommonJS (no son código de la app).
     ".opencode/bin/**",
     "wordpress/**",

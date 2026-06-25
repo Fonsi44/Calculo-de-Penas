@@ -126,6 +126,21 @@ cookies.txt
 auditoria-blog/
 docs/backups/
 
+# reportes generados por scripts/auditar-cp.js y scripts/auditar-delitos.js
+# (regenerables con `npm run audit:cp` / `audit:delitos`; no deben versionarse)
+/data/auditoria-cp-report.json
+/data/auditoria-delitos-report.json
+# artefactos de auditoría puntuales (stale, no regenerados por flujo activo)
+/data/auditoria-completa-delitos.json
+/data/auditoria-correcciones.json
+/data/analisis-penas.json
+
+# backups de auditorías SEO locales (JSON por sesión, no versionables)
+auditoria-seo/backup-*.json
+
+# exportaciones puntuales de métricas (xlsx)
+docs/*.xlsx
+
 # coverage de vitest (regenerable con npm run test:coverage)
 coverage/
 *.tsbuildinfo

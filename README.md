@@ -616,10 +616,18 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 - **No modificar `THIN_POST_SLUGS`** en `app/sitemap.ts` hasta que los posts
   se reescriban realmente.
 
-### Archivos legacy (en repositorio pero no operativos)
-- `data/legacy/` — 35 archivos históricos (fragmentos `.txt`, backups).
-- `scripts/legacy/` — 38 one-shots de migración ya ejecutada.
-- `components/marketing/_unused/` — 8 componentes sin uso.
+### Archivos legacy (consolidados en `basura/`)
+Los siguientes elementos obsoletos fueron movidos a `basura/` (preservando la
+estructura relativa) para dejar el repositorio limpio sin borrar nada. Ver
+`basura/MANIFEST.md` para el detalle trazable y las instrucciones de reversión:
+- `data/legacy/` — 35 archivos históricos (fragmentos `.txt`, backups) → `basura/data/legacy/`.
+- `scripts/legacy/` — 38 one-shots de migración ya ejecutada → `basura/scripts/legacy/`.
+- `components/marketing/_unused/` — 8 componentes sin uso → `basura/components/marketing/_unused/`.
+- `.backups/` — 4 backups manuales con timestamp → `basura/.backups/`.
+- Logs commiteados (`build.log`, `dev-server2.log`, `dryrun-ctr.log`,
+  `lote1-output.log`, `lote1b-output.log`) → `basura/`.
+- 5 scripts one-shot ya ejecutados + 5 reportes JSON regenerables/stale →
+  `basura/scripts/` y `basura/data/`.
 
 ---
 

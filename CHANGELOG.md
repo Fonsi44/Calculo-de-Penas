@@ -5,6 +5,112 @@
 
 ---
 
+## Unreleased — Limpieza conservadora del repositorio (`basura/`)
+
+Reorganización sin borrado definitivo: 101 elementos obsoletos (backups
+manuales, logs commiteados, scripts one-shot ya ejecutados, reportes JSON
+regenerables, componentes muertos y carpetas `legacy`) movidos con `git mv`
+a `basura/` preservando la ruta relativa. Nada se elimina; el inventario
+trazable y las instrucciones de reversión viven en `basura/MANIFEST.md`.
+
+- **Movidos:** `.backups/` (4), logs de raíz (5), `scripts/_audit-temp.ts`,
+  `migrate-meta-titles.ts`, `migrate-slugs.ts`, `seo-apply-ctr-fixes.ts`,
+  `scripts/sql/fix-truncaa-meta-titles.sql`, reportes `data/auditoria-*-report.json`
+  + 3 stale, `components/marketing/_unused/` (8), `scripts/legacy/` (38),
+  `data/legacy/` (35).
+- **`.gitignore`**: añadidos reportes regenerables de `auditar-cp.js` /
+  `auditar-delitos.js`, backups JSON de auditoría SEO locales y export
+  `docs/*.xlsx`.
+- **Sin cambios de lógica funcional.** Cambios previos sin commitear
+  (CHANGELOG, `next.config.ts`, archivos en `auditoria-seo/` y `docs/`) se
+  respetaron.
+- **Validado**: `npm run lint` + `npm run build` + `npm test` (verificados).
+- Previamente a esta entrada: `IMPLEMENTADO`, `VALIDADO`, sin tocar web pública
+  ni archivos protegidos (`AGENTS.md §9`).
+
+---
+
+## 2026-06-24 — SEO GSC Performance: optimización integral de titles, metas, enlazado interno y redirects HTTPS
+
+Corrección completa de los hallazgos del informe Google Search Console Performance
+del 24 Jun 2026. Resumen: 29 clics, 916 impresiones, CTR 3.17%, posición media 6.73.
+El 93% del tráfico se concentró entre el 20-22 Jun tras IndexNow + robots.txt.
+79.3% de impresiones son móviles.
+
+### Causa raíz
+
+- **CTR bajo pese a buena posición**: varios posts en posición 2-4 con 0 clics
+  (prescripción deudas pos 3.78 con 0/9, custodia pos ~2 con 0/3, sobreseimiento
+  pos 6.4 con 0/15, querella pos 1 con 0/1). Titles y metas genéricas sin
+  intención de búsqueda específica ni llamada a la acción.
+- **HTTP no seguro en GSC**: `http://pinedayasociadoshn.com/` aparecía con 4
+  impresiones en el informe. Sin redirect explícito en next.config.ts.
+- **Enlazado interno insuficiente**: posts del cluster penal no se enlazaban
+  entre sí (sobreseimiento ↔ hábeas corpus ↔ querella). Cluster pensión
+  alimenticia sin enlace al nuevo post de porcentajes 2026.
+- **Canibalización pensión**: ya corregida en Fase 1 (redirects en next.config.ts),
+  pero el post `pension-alimenticia-guia-completa` y el nuevo
+  `pension-alimenticia-porcentaje-2026` necesitaban enlazado cruzado.
+
+### Cambios en código
+
+| Archivo | Cambio |
+|---------|--------|
+| `next.config.ts` | Nuevos redirects 301 para `http://pinedayasociadoshn.com/` → `https://www.pinedayasociadoshn.com/` vía `has: [{ type: 'host', value: ... }]`. Refuerza canonicalización HTTPS/www a nivel de Next.js. |
+
+### Cambios en DB (blog_posts)
+
+**Titles y metas optimizados (8 posts):**
+
+| Slug | Title anterior → Nuevo title | Meta anterior → Nueva meta |
+|------|------------------------------|---------------------------|
+| `prescripcion-deudas-plazos-honduras` | "Prescripción de Deudas en Honduras: Guía Completa de Plazos" → "Prescripción de Deudas en Honduras: Plazos y Cuándo Prescribe Cada Tipo" | Genérica → "¿A los cuantos años prescribe una deuda en Honduras? Plazos exactos..." |
+| `custodia-hijos-honduras-juez` | "Custodia de Hijos en Honduras: Guía de Tipos y Criterios" → "Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo lo Decide el Juez" | Genérica → "¿Cómo funciona la custodia de hijos en Honduras?" |
+| `sobreseimiento-definitivo-provisional` | "Sobreseimiento Definitivo y Provisional en Honduras: Guía" → "Sobreseimiento Definitivo y Provisional en Honduras: Diferencias y Efectos" | Mejorada con "cuándo procede" |
+| `diferencia-denuncia-querella-acusacion-honduras` | "Guía completa: denuncia, querella y acusación en Honduras" → "Denuncia vs Querella en Honduras: Diferencias y Cuándo Presentar Cada Una" | Enfocada en "querella" |
+| `competencia-desleal-como-denunciar-honduras` | "Competencia Desleal en Honduras: 6 Conductas Sancionables" → "Competencia Desleal en Honduras: Cómo Denunciar y 6 Conductas Sancionables" | "¿Cómo denunciar...?" |
+| `pension-alimenticia-honduras-guia-completa` | "Pensión Alimenticia en Honduras: Cómo Solicitarla" → "Pensión Alimenticia en Honduras: Cómo Solicitarla \| Porcentajes 2026" | Incluye "porcentaje 2026" |
+| `pension-alimenticia-porcentaje-honduras-2026` | "Porcentaje de Pensión Alimenticia en Honduras 2026" → "Porcentaje de Pensión Alimenticia en Honduras 2026: Cuánto se Paga por Hijo" | "¿Cuánto es la pensión...?" |
+| `habeas-corpus-cuando-interponer-honduras` | "Hábeas Corpus en Honduras: Guía Completa Paso a Paso" → "Hábeas Corpus en Honduras: Cuándo Interponerlo y Cómo Funciona" | Pregunta directa |
+| `pension-alimenticia-choluteca` | "Pensión Alimenticia en Choluteca, Honduras: Cómo Fijarla" → "Pensión Alimenticia en Choluteca: Cómo Fijarla y Reclamarla" | Meta más específica |
+
+**Enlazado interno mejorado (7 posts):** Añadidas/actualizadas secciones "Temas
+relacionados" con anchors descriptivos conectando clusters:
+- Penal: sobreseimiento ↔ hábeas corpus ↔ querella ↔ fianza
+- Familia: pensión guía ↔ porcentaje 2026 ↔ custodia ↔ divorcio
+- Mercantil: competencia desleal ↔ protección marcas
+- Civil: prescripción deudas ↔ querella ↔ pensión
+
+### No modificado (justificado o externo)
+
+- **Canibalización pensión alimenticia:** ya redirigida en Fase 1
+  (next.config.ts líneas 73, 90). El post de porcentajes 2026 es de intención
+  diferenciada (no se redirige).
+- **Dominio Vercel redirect www→non-www:** gestionado a nivel de plataforma.
+  El redirect en next.config.ts es refuerzo adicional.
+- **Mobile-first/CWV:** el layout ya usa next/image, Tailwind responsive,
+  `scroll-behavior: smooth` y estrategias `lazyOnload`. Sin cambios requeridos.
+- **IndexNow + sitemap:** ya regenerados automáticamente en postbuild.
+- **Tareas externas (no automatizables desde código):**
+  1. Verificar en GSC que `http://pinedayasociadoshn.com/` desaparezca tras los
+     nuevos redirects (7-14 días).
+  2. Monitorear CTR de los 8 posts optimizados en 14-21 días.
+  3. Solicitar re-rastreo selectivo en GSC de las URLs con posiciones 1-5 y 0 clics.
+  4. Si el cluster "sobreseimiento" sigue sin clics en 30 días, considerar
+     reescribir el body completo con enfoque en "diferencias" y más contenido.
+
+### Validación
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errores |
+| `npm run build` | Compiled + TypeScript OK |
+| `npm test` | 601/601 (21 suites) ✅ |
+
+Backups en `auditoria-seo/backup-titles-*.json` y `auditoria-seo/backup-internal-links-*.json`.
+
+---
+
 ## Unreleased — Corrección integral de enlaces internos, scroll de navegación y archivo mensual del blog
 
 Auditoría y corrección completa de la navegación interna: enlaces del archivo mensual
