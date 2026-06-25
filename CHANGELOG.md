@@ -5,6 +5,47 @@
 
 ---
 
+## 2026-06-25 — chore: modo de diagnóstico local de analítica (development)
+
+Añadida observabilidad local para auditorías futuras de GA4. **No es un fix
+del error `analytics.google.com/analytics/v2/realtime/venus/getData 400 OK`**:
+ese error pertenece a la interfaz web interna de Google Analytics (la SPA de
+`analytics.google.com` que consulta el servicio Realtime "venus"), no al sitio
+público. Ningún visitante del sitio dispara esa URL; el sitio solo envía hits
+a `google-analytics.com/g/collect`. La URL no existe hardcodeada en el repo.
+
+### Cambios
+
+- **chore:** `lib/analytics.ts` — añadidos helpers de diagnóstico reutilizables:
+  - `isAnalyticsExcludedPath(pathname)` + `ANALYTICS_EXCLUDED_PREFIXES`:
+    fuente única (DRY) de la lista de rutas privadas excluidas de tracking
+    (`/intranet`, `/cp`, `/calculadora`, `/casos`, `/delitos`, `/atajos`,
+    `/api`, `/admin`, `/_next`, `/preview`, `/404`, `/500`).
+  - `isAnalyticsDebugEnabled()`: true solo si `NODE_ENV !== 'production'` **Y**
+    `NEXT_PUBLIC_ANALYTICS_DEBUG === 'true'`. En producción siempre false.
+  - `debugAnalytics(message, context)`: emite `[analytics:debug] ...` al
+    `console.debug` del navegador, sin cookies/IPs/query strings/PII.
+  - `maskMeasurementId(gaId)`: enmascara el Measurement ID en logs
+    (`G-L2PG*****`) y detecta formato inválido sin imprimirlo.
+- **chore:** `components/analytics-scripts.tsx` — consume
+  `isAnalyticsExcludedPath` (elimina la lista duplicada que tenía embebida) y
+  emite logs `[analytics:debug] enabled/skipped/page_view` en development.
+  Comportamiento de producción sin cambios: misma carga única de GA4, mismo
+  Measurement ID `G-L2PGBN3SWK`, mismo `lazyOnload`, sin GTM.
+- **docs:** `.env.example` — documentada `NEXT_PUBLIC_ANALYTICS_DEBUG`.
+
+### Verificación local (con `NEXT_PUBLIC_ANALYTICS_DEBUG=true` en dev)
+
+- `/`, `/derecho-penal`, `/servicios-juridicos` → `[analytics:debug] enabled`.
+- `/cp`, `/intranet/login`, `/api/*` → `[analytics:debug] skipped` (o sin montar).
+
+### Validación
+
+`npm run lint` (0 errores), `npm run build` (✓ compiled, 294 páginas),
+`npm test` (601/601). Producción no afectada (logs solo en dev con flag).
+
+---
+
 ## 2026-06-25 — Auditoría SEO: implementación de hallazgos críticos
 
 Diagnóstico técnico de indexación/rastreo/visibilidad (GSC + GA4 + Bing

@@ -346,7 +346,9 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 `NEXT_PUBLIC_SOCIAL_TIKTOK`
 
 ### Analytics
-`NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID`
+`NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_ANALYTICS_DEBUG`
+(`=true` activa logs `[analytics:debug]` en consola del navegador **solo en
+development**; en producción no se emiten nunca). Ver `lib/analytics.ts`.
 
 ### Servidor (no NEXT_PUBLIC_)
 | Variable | Propósito |
