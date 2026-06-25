@@ -715,6 +715,31 @@ Keywords Everywhere, Browser Use (requiere API keys de pago).
 
 ## Tooling IA
 
+### Auditoría SEO 2026-06-25 — Implementación de hallazgos
+
+A raíz del diagnóstico técnico de indexación (GSC + GA4 + Bing Webmaster
+Tools + IndexNow + DB), se aplicaron 6 commits atómicos en `main`:
+
+- `chore:` excluir `/cp`, `/calculadora`, `/casos`, `/delitos`, `/atajos` de
+  GA4/Clarity (`components/analytics-scripts.tsx`) — refuerzo R6.
+- `seo:` forzar `lastmod` reciente para 6 páginas legales y alzar `/aviso-legal`
+  `priority 0.2 → 0.4` (`data/seo/canonical-paths.json`) — recuperar indexación.
+- `seo:` recortar `metadata.description` de `/derecho-penal` (225→152) y
+  `/servicios-juridicos` (179→156) — mejor CTR en SERP.
+- `fix:` 2 redirects 301 defensivos para backlinks externos 404 en
+  `next.config.ts` (`/hondurenos-en-espana/poder-desde-espana-...` y
+  `/derecho-penal/proceso-penal-completo/paso-1`).
+- `fix:` envío dual resiliente a IndexNow
+  (`api.indexnow.org` + `www.bing.com/indexnow`) en `scripts/submit-indexnow.mjs`.
+- `seo:` enlazado interno priorizado en `/derecho-penal` hacia 3 posts con
+  tráfico real (GSC 28d).
+
+**Validado localmente:** `npm run lint && npm run build && npm test`
+(0 errores lint, build OK, 601 tests · 21 suites). Detalle en
+[`auditoria-seo/seguimiento-2026-06-25-implementacion.md`](./auditoria-seo/seguimiento-2026-06-25-implementacion.md).
+Los redirects y el envío dual de IndexNow entrarán en vigor en Vercel
+tras el próximo deploy (R11 NO VALIDADO en producción).
+
 ### Protocolo obligatorio
 Este repositorio tiene un protocolo obligatorio en [`AGENTS.md`](./AGENTS.md).
 Léelo antes de cualquier modificación. Contiene reglas críticas sobre fuentes

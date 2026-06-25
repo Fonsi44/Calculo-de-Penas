@@ -5,6 +5,79 @@
 
 ---
 
+## 2026-06-25 — Auditoría SEO: implementación de hallazgos críticos
+
+Diagnóstico técnico de indexación/rastreo/visibilidad (GSC + GA4 + Bing
+Webmaster Tools API + IndexNow + DB) y corrección de hallazgos críticos
+y altos. 6 commits atómicos en `main`, prefijados `chore:` / `seo:` /
+`fix:` (R7). Sin tocar arquitectura, motor de cálculo ni auth (R9).
+
+### Cambios
+
+- **chore:** `components/analytics-scripts.tsx` — extender `EXCLUDED_PREFIXES`
+  con `/cp`, `/calculadora`, `/casos`, `/delitos`, `/atajos`. GA4 no trackeaba
+  intranet/preview/api, pero `/cp` sí recibió 1 sesión orgánica reportada en
+  GA4 (fuga). Cerrado y robustecido contra futuras rutas privadas. Refuerzo R6.
+- **seo:** `data/seo/canonical-paths.json` — para 6 páginas legales
+  (`/aviso-legal`, `/politica-editorial`, `/politica-privacidad`,
+  `/politica-cookies`, `/terminos`, `/disclaimer`) cambiado `days_ago 30 → 0`
+  para refrescar `lastmod` en el sitemap. `/aviso-legal` `priority 0.2 → 0.4`
+  (temporal). Objetivo: recuperar indexación de `/aviso-legal` reportada por
+  GSC URL Inspection como NEUTRAL ("Descubierta: actualmente sin indexar").
+- **seo:** `app/(public)/derecho-penal/page.tsx` y
+  `app/(public)/servicios-juridicos/page.tsx` — recortar
+  `metadata.description` a 152 y 156 chars respectivamente (antes 225/179).
+  Conservadas keywords comercial/CTA WhatsApp. Mejora CTR sin alterar títulos
+  ni UI visible (R5).
+- **fix:** `next.config.ts` — 2 redirects 301 defensivos para backlinks
+  externos 404 detectados en GSC URL Inspection `referringUrls`:
+  - `/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras` →
+    `/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras`
+    (post existe, DB confirmada; backlink externo llegaba sin prefijo `/blog/`).
+  - `/derecho-penal/proceso-penal-completo/paso-1` →
+    `/derecho-penal/proceso-penal-completo` (subpath 404 de landing existente).
+- **fix:** `scripts/submit-indexnow.mjs` — envío dual resiliente usando
+  `Promise.allSettled` a `https://api.indexnow.org/indexnow` (oficial) y
+  `https://www.bing.com/indexnow` (Bing directo, ya definido en el script).
+  Ningún fallo individual aborta el envío al otro endpoint. Status por
+  endpoint registrado en logs. `dry-run`, `incremental cache` y
+  `INDEXNOW_SAFETY_CAP` intactos. Sin `ENABLE_INDEXNOW_SUBMIT=true` sigue
+  en dry-run.
+- **seo:** `app/(public)/derecho-penal/page.tsx` — el bloque "Artículos
+  relacionados" ahora enlaza prioritariamente a 3 posts penales con tráfico
+  real (GSC 28d, clicks > 0): `estafas-fraudes-tipos-penales-honduras`,
+  `cuando-prescribe-delito-en-honduras`,
+  `fianza-medidas-cautelares-proceso-penal-honduras`. Slugs filtrados contra
+  DB (graceful). Ancla descriptiva, no "leer más".
+
+### Validación
+
+- `npm run lint` — 0 errores.
+- `npm run build` — exitoso. `postbuild` ejecutó `generate-llms-txt.mjs` y
+  `submit-indexnow.mjs` (dry-run; cabecera muestra nuevo endpoint dual).
+- `npm test` — **601 tests pasados · 21 suites** · 0 fallos nuevos.
+
+### Estado (R11)
+
+- `IMPLEMENTADO` y `VALIDADO` localmente (lint/build/test).
+- `NO VALIDADO` en producción: redirects 301, envío dual IndexNow real y
+  meta-descriptions actualizadas solo entrarán en vigor en Vercel tras el
+  próximo deploy. Confirmar con `curl -I` a las URLs afectadas y revisando
+  GSC URL Inspection en D+3 a D+7.
+- **No promete indexación garantizada**: las correcciones mejoran
+  consolidación, rastreo, descubrimiento y señales, pero la indexación real
+  por Google/Bing depende de quality, crawl budget y enlaces externos.
+
+### Próximos pasos (D+7)
+
+- Tras deploy: confirmar `InIndex` Bing > 31 y que las 8 URLs prioritarias
+  antes no crawleadas tengan `lastCrawled` (BWT `GetUrlInfo`).
+- En GSC UI: "Solicitar indexación" en `/aviso-legal`.
+- Re-auditar: `node scripts/bing-wmt-audit.mjs` + `npm run indexnow:dry`.
+- Reforzar backlinks externos legítimos (BWT `GetLinkCounts` reporta 1).
+
+---
+
 ## Unreleased — Limpieza conservadora del repositorio (`basura/`)
 
 Reorganización sin borrado definitivo: 101 elementos obsoletos (backups
