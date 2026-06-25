@@ -60,6 +60,12 @@ const nextConfig: NextConfig = {
   // IMPORTANTE: NO redirigir /login → /intranet/login (causaba bucles).
   async redirects() {
     return [
+      // === CORRECCIÓN HTTPS/www (24 Jun 2026) ===
+      // GSC reportaba impresiones para http://pinedayasociadoshn.com/ (HTTP no seguro).
+      // Vercel ya redirige a nivel de dominio, pero algunos rastreadores pueden
+      // encontrar la versión HTTP. Estos redirects refuerzan la canonicalización.
+      { source: '/', has: [{ type: 'host', value: 'pinedayasociadoshn.com' }], destination: 'https://www.pinedayasociadoshn.com/', permanent: true },
+      { source: '/:path*', has: [{ type: 'host', value: 'pinedayasociadoshn.com' }], destination: 'https://www.pinedayasociadoshn.com/:path*', permanent: true },
       { source: '/inicio', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },
       { source: '/areas-de-practica', destination: '/servicios-juridicos', permanent: true },
