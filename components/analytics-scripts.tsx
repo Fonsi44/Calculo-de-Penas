@@ -18,11 +18,30 @@ import clarity from '@microsoft/clarity';
  *   - `/intranet/*`      → panel interno privado (contaminación por personal)
  *   - `/preview/*`       → vistas previas de contenido (no son visitas reales)
  *   - `/api/*`           → endpoints (sin HTML real)
+ *   - `/cp`, `/calculadora`, `/casos`, `/delitos`, `/atajos`
+ *                       → rutas internas legacy (privadas, no comerciales).
+ *                         Refuerzo R6 (AGENTS.md): nunca trackear en intranet.
+ *                         Auditoría SEO 2026-06-25 detectó GA4 midiendo 1
+ *                         sesión orgánica en /cp (fuga de tracking pública
+ *                         en ruta interna). Cerrado aquí con robustez futura:
+ *                         cualquier nueva ruta privada añadida al proxy debe
+ *                         también añadirse aquí.
  *
  * GA4 usa `strategy="lazyOnload"` para no penalizar Core Web Vitals.
  * Clarity se init desde useEffect (lazy).
  */
-const EXCLUDED_PREFIXES = ['/intranet', '/preview', '/api'];
+const EXCLUDED_PREFIXES = [
+  '/intranet',
+  '/preview',
+  '/api',
+  // Rutas internas/privadas (proxy.ts exige auth o son legacy). NO trackear
+  // en GA4/Clarity: solo el tráfico público comercial debe alimentar métricas.
+  '/cp',
+  '/calculadora',
+  '/casos',
+  '/delitos',
+  '/atajos',
+];
 
 function isExcluded(pathname: string): boolean {
   return EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'));
