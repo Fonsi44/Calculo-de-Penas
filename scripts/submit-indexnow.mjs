@@ -399,26 +399,53 @@ async function submitBatch(urls, keyLocation) {
     return { status: 'dry-run', ok: true, count: urls.length };
   }
 
-  // Endpoint principal; IndexNow redistribuye a Bing/Yandex/Seznam.
-  try {
-    const res = await fetch(INDEXNOW_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(payload),
-    });
-    if (res.ok || res.status === 200 || res.status === 202) {
-      return { status: res.status, ok: true, count: urls.length };
-    }
-    const text = await res.text().catch(() => '');
-    return {
-      status: res.status,
-      ok: false,
-      count: urls.length,
-      body: text.slice(0, 200),
-    };
-  } catch (err) {
-    return { status: 'network-error', ok: false, count: urls.length, body: String(err).slice(0, 200) };
-  }
+  // Envío DUAL resiliente (auditoría SEO 2026-06-25):
+  //   - api.indexnow.org  → redistribuye a Bing/Yandex/Seznam (oficial).
+  //   - www.bing.com/indexnow → directo a Bing (red path oficial Bing).
+  //
+  // Ambos endpoints reciben el MISMO payload. Se usan Promise.allSettled:
+  //   - Ningún fallo individual aborta el envío al otro endpoint.
+  //   - Se registran los HTTP status de cada uno.
+  //   - El resultado global es OK si al menos uno responde 200/202 (mejor
+  //     cobertura de Bing; si api.indexnow.org está caído, Bing directo
+  //     sigue recibiendo la señal).
+  //
+  // Se respetan dry-run, incremental cache y safety cap existentes (este
+  // cambio no los altera).
+  const endpoints = [
+    { label: 'api.indexnow.org', url: INDEXNOW_ENDPOINT },
+    { label: 'www.bing.com', url: INDEXNOW_ENDPOINT_BING },
+  ];
+
+  const results = await Promise.allSettled(
+    endpoints.map(async (ep) => {
+      const res = await fetch(ep.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+      const ok = res.ok || res.status === 200 || res.status === 202;
+      let body = '';
+      if (!ok) body = (await res.text().catch(() => '')).slice(0, 200);
+      return { label: ep.label, status: res.status, ok, body };
+    }),
+  );
+
+  const settled = results.map((r) =>
+    r.status === 'fulfilled'
+      ? r.value
+      : { label: 'unknown', status: 'network-error', ok: false, body: String(r.reason).slice(0, 200) },
+  );
+
+  const anyOk = settled.some((r) => r.ok);
+
+  return {
+    status: anyOk ? 200 : 'all-failed',
+    ok: anyOk,
+    count: urls.length,
+    endpoints: settled.map((r) => `${r.label}=${r.status}${r.ok ? '✓' : '✗'}`),
+    failed: settled.filter((r) => !r.ok).map((r) => `${r.label}:${r.body || r.status}`),
+  };
 }
 
 function maskKey(k) {
@@ -445,7 +472,7 @@ async function main() {
     }`,
   );
   console.log(`Ejecución:               ${isDryRun ? 'DRY-RUN (simulación)' : 'REAL'}`);
-  console.log(`Endpoint:                ${INDEXNOW_ENDPOINT}`);
+  console.log(`Endpoint:                api.indexnow.org + www.bing.com/indexnow (dual)`);
   console.log(`noindex sitio:           ${SITE_NOINDEX ? 'SÍ (abortar)' : 'no'}`);
   console.log('');
 
@@ -551,10 +578,13 @@ async function main() {
     const r = await submitBatch(batch, keyLocation);
     if (r.ok) {
       okBatches++;
-      console.log(`✓ HTTP ${r.status}`);
+      // Envío dual: mostrar estado por endpoint (api.indexnow.org + www.bing.com).
+      const endpointsStr = (r.endpoints || []).join(' ');
+      console.log(`✓ HTTP ${r.status} [${endpointsStr}]`);
     } else {
       failBatches++;
-      console.log(`✗ HTTP ${r.status}${r.body ? ' :: ' + r.body : ''}`);
+      const reasons = (r.failed || []).join('; ') || '';
+      console.log(`✗ HTTP ${r.status}${reasons ? ' :: ' + reasons : ''}`);
     }
     if (i + BATCH_SIZE < toSend.length) await new Promise((r) => setTimeout(r, 400));
   }
