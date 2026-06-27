@@ -6,6 +6,7 @@
  *
  * Idempotente: si ya existe una plantilla con el mismo slug, no la sobrescribe.
  */
+import 'dotenv/config';
 import { db } from '../lib/db';
 import { plantillasCorreo } from '../lib/schema';
 import { eq } from 'drizzle-orm';

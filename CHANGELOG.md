@@ -5,6 +5,73 @@
 
 ---
 
+## 2026-06-27 — sgie: Fases 5, 6, 7, 8, 9, 10 + Demo Carlos Pineda
+
+### Fase 5 — Plantillas de correo Resend
+- `lib/sgie/correos-db.ts`: CRUD plantillas, interpolación `{{variables}}`,
+  envío idempotente vía Resend, reintentos, UNIQUE (expediente_id, slug, ventana).
+- `drizzle/seed-sgie-plantillas.ts`: 10 plantillas base (solicitud, acuse,
+  faltantes, recordatorio, expirado, rechazado, aprobado, revisión, cita, cierre).
+- `app/api/sgie/plantillas/*`: endpoints CRUD + preview.
+- `app/intranet/admin/sgie/plantillas/page.tsx`: panel admin con editor HTML,
+  vista previa iframe, activar/desactivar.
+- Script: `seed:sgie:plantillas`.
+
+### Fase 6 — Motor documental
+- `lib/sgie/motor-documental.ts`: extracción texto PDF con `pdfjs-dist`,
+  clasificación heurística (10 tipos), cache por hash SHA-256, orquestador de
+  jobs idempotentes, runner `procesarJobsPendientes()`.
+- `app/api/sgie/documentos/*`: endpoints GET (scope), GET [id], POST [id]/procesar
+  (encola job, no procesa en handler).
+- `app/api/cron/sgie/procesar/route.ts`: cron protegido por `CRON_SECRET`.
+- `app/intranet/sgie/documentos/page.tsx`: tabla con filtros, detalle modal,
+  texto extraído, botón "Procesar".
+
+### Fase 7 — IA/OCR configurable
+- `lib/sgie/ia-documental.ts`: capa intercambiable vía env vars
+  (`IA_DOCUMENTAL_PROVIDER`, `IA_DOCUMENTAL_MODEL`, `IA_DOCUMENTAL_BASE_URL`,
+  `IA_DOCUMENTAL_API_KEY`, `IA_DOCUMENTAL_MODE`, timeout, reintentos).
+  Modos: `disabled`, `heuristic`, `ai`. Zod output estricto anti-alucinación.
+  Prompt restrictivo: prohibido inventar datos legales.
+
+### Fase 8 — Motor de reglas y confianza
+- `lib/sgie/motor-reglas.ts`: 5 reglas deterministas (completitud, duplicados,
+  ilegibles, confianza baja, campos sin cita). Idempotencia por ventana.
+  Acciones automáticas: alertas + tareas.
+- `lib/sgie/motor-confianza.ts`: cálculo 0-100 por campo/documento/expediente.
+  Evidencias: formato válido, cita fuente, coincidencia con cliente/documentos,
+  contradicciones.
+
+### Fase 9 — Cockpit avanzado
+- `app/intranet/sgie/page.tsx`: cockpit con 8 métricas reales desde
+  `/api/sgie/cockpit`, bandeja de expedientes recientes.
+- `app/intranet/sgie/expedientes/[id]/page.tsx`: documentos con aprobar/rechazar,
+  alertas con resolver.
+- `app/api/sgie/cockpit/route.ts`: métricas agregadas con scope.
+- Páginas reales para alertas, tareas, agenda y correos con datos de la DB.
+
+### Fase 10 — Métricas, reglas, retención
+- `app/api/admin/sgie/metricas/route.ts`: KPIs admin (total exp, docs, IA,
+  correos, tareas, por estado, por abogado).
+- `app/api/admin/sgie/reglas/route.ts`: GET/POST reglas versionadas con auditoría.
+- `app/intranet/admin/sgie/metricas/page.tsx`: dashboard con gráficos.
+- `app/intranet/admin/sgie/reglas/page.tsx`: editor JSON con versionado.
+- `app/intranet/admin/sgie/retencion/page.tsx`: **NO VALIDADO** legalmente.
+
+### Demo Carlos Pineda
+- `drizzle/seed-sgie-demo-carlos.ts`: seed idempotente con datos mock para
+  validación visual/funcional del SGIE. Puebla: 10 clientes, 12 expedientes
+  en estados variados, 15 documentos, 8 campos extraídos, confianza, 6 alertas,
+  7 tareas, 5 eventos agenda, 8 correos (2 fallidos), extracciones IA,
+  correcciones IA. Script: `seed:sgie:demo:carlos`.
+- `e2e/sgie-demo.spec.ts`: tests e2e Playwright para SGIE (6 tests).
+
+### Schema
+- Migración `0019`: corrige 17 FK con `ON DELETE CASCADE`.
+- 59 tablas totales, 13 enums.
+
+---
+
 ## 2026-06-27 — sgie: Fase 1 + Fase 2 + base Fase 3 del SGIE Autopilot
 
 Implementación inicial del **SGIE Autopilot** (Sistema de Gestión Integral de

@@ -134,6 +134,13 @@
       "when": 1782551520638,
       "tag": "0018_sgie_fases_4_10",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1782563066062,
+      "tag": "0019_sticky_karen_page",
+      "breakpoints": true
     }
   ]
 }

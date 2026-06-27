@@ -101,7 +101,7 @@ test.describe('Auth flow E2E (API)', () => {
     const cookieValue = getPrimaryCookie(loginRes);
 
     const res = await request.post('/api/casos', {
-      headers: { Cookie: cookieValue },
+      headers: { Cookie: cookieValue, Origin: 'http://localhost:3000' },
       data: { titulo: 'Caso E2E de prueba' },
     });
     expect(res.status()).toBe(201);

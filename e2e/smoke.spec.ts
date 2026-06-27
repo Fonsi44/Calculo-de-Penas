@@ -37,10 +37,11 @@ test.describe('Smoke — rutas públicas', () => {
     expect(res?.status()).toBe(404);
   });
 
-  test('/login legacy redirige a /intranet/login', async ({ page }) => {
+  test('/login ya no es una ruta pública (404 correcto)', async ({ page }) => {
+    // `/login` fue eliminado como ruta pública; solo existe `/intranet/login`.
+    // Ver proxy.ts: PUBLIC_PAGE_EXACT no incluye '/login'.
     const res = await page.goto('/login');
-    expect(res?.status()).toBe(200);
-    await expect(page).toHaveURL(/\/intranet\/login$/);
+    expect(res?.status()).toBe(404);
   });
 
   test('delitos page es privada (404 público)', async ({ page }) => {

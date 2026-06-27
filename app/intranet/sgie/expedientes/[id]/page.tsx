@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ArrowLeft, Scale, FileCheck, CheckCircle2, Clock, History,
-  ListChecks, ShieldCheck, AlertTriangle, Loader2,
+  ListChecks, ShieldCheck, AlertTriangle, Loader2, FileText,
+  Eye, CheckCircle, XCircle, MessageSquare,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -46,6 +47,28 @@ interface Detalle {
   creadoEn: string | null;
   requisitos: Requisito[];
   historial: HistorialItem[];
+  documentos?: DocumentoItem[];
+  alertas?: AlertaItem[];
+}
+
+interface DocumentoItem {
+  id: string;
+  nombreOriginal: string;
+  tipoMime: string;
+  tamañoBytes: number;
+  estado: string;
+  tipoDocumento: string | null;
+  subidoEn: string;
+  hashSha256: string | null;
+}
+
+interface AlertaItem {
+  id: string;
+  tipo: string;
+  severidad: string;
+  titulo: string;
+  mensaje: string | null;
+  resuelta: boolean;
 }
 
 // Estados siguientes hacia los que el abogado puede avanzar (acciones críticas).
@@ -83,7 +106,56 @@ export default function SgieExpedienteDetallePage() {
     }
   }, [params.id, toast]);
 
-  useEffect(() => { fetchDetalle(); }, [fetchDetalle]); // eslint-disable-line react-hooks/set-state-in-effect -- carga inicial
+  const [documentos, setDocumentos] = useState<DocumentoItem[]>([]);
+  const [alertasList, setAlertasList] = useState<AlertaItem[]>([]);
+  const [accionDocId, setAccionDocId] = useState<string | null>(null);
+
+  const fetchDocumentosAlertas = useCallback(async () => {
+    try {
+      const [docRes, alertRes] = await Promise.all([
+        fetch(`/api/sgie/documentos?expedienteId=${params.id}&limit=50`),
+        fetch(`/api/sgie/expedientes/${params.id}/alertas`),
+      ]);
+      if (docRes.ok) { const d = await docRes.json(); setDocumentos(d.documentos ?? []); }
+      if (alertRes.ok) { const a = await alertRes.json(); setAlertasList(a.alertas ?? []); }
+    } catch { /* non-critical */ }
+  }, [params.id]);
+
+  useEffect(() => { const run = async () => { await fetchDetalle(); await fetchDocumentosAlertas(); }; run(); }, []); // eslint-disable-line react-hooks/set-state-in-effect -- carga inicial
+
+  const handleAprobarDoc = async (docId: string) => {
+    setAccionDocId(docId);
+    try {
+      const res = await fetch(`/api/sgie/documentos/${docId}/aprobar`, { method: 'POST' });
+      if (!res.ok) throw new Error((await res.json()).error);
+      toast.success('Documento aprobado');
+      fetchDocumentosAlertas();
+    } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+    finally { setAccionDocId(null); }
+  };
+
+  const handleRechazarDoc = async (docId: string) => {
+    const motivo = prompt('Motivo del rechazo:');
+    if (!motivo) return;
+    setAccionDocId(docId);
+    try {
+      const res = await fetch(`/api/sgie/documentos/${docId}/rechazar`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ motivo }),
+      });
+      if (!res.ok) throw new Error((await res.json()).error);
+      toast.success('Documento rechazado');
+      fetchDocumentosAlertas();
+    } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+    finally { setAccionDocId(null); }
+  };
+
+  const handleResolverAlerta = async (alertaId: string) => {
+    try {
+      const res = await fetch(`/api/sgie/alertas/${alertaId}/resolver`, { method: 'POST' });
+      if (!res.ok) throw new Error((await res.json()).error);
+      fetchDocumentosAlertas();
+    } catch { /* */ }
+  };
 
   const handleConfirmarChecklist = async () => {
     const ok = await confirm({
@@ -235,8 +307,8 @@ export default function SgieExpedienteDetallePage() {
             </ul>
           )}
           <div className="p-3 bg-surface-alt/50 text-xxs text-text-muted rounded-b-lg">
-            <Scale size={10} className="inline mr-1" />
-            La aprobación/rechazo individual de documentos se habilitará con el motor documental (fase posterior).
+            <FileCheck size={10} className="inline mr-1" />
+            {checklistConfirmado ? 'Checklist confirmado. Documentos listos para recibir.' : 'Confirme el checklist para habilitar la recepción de documentos.'}
           </div>
         </Card>
 
@@ -265,6 +337,71 @@ export default function SgieExpedienteDetallePage() {
                   )}
                   {h.mensaje && <p className="text-xxs text-text-muted mt-0.5">{h.mensaje}</p>}
                   <p className="text-xxs text-text-muted mt-0.5">{formatFechaHora(h.creadoEn)}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      </div>
+
+      {/* Documentos y Alertas */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <Card padding="none">
+          <div className="flex items-center justify-between p-3 border-b border-border-light">
+            <div className="flex items-center gap-2">
+              <FileText size={16} className="text-accent-dark" />
+              <h2 className="text-sm font-bold text-text">Documentos ({documentos.length})</h2>
+            </div>
+          </div>
+          {documentos.length === 0 ? (
+            <div className="p-4"><p className="text-sm text-text-secondary">Sin documentos cargados.</p></div>
+          ) : (
+            <ul className="divide-y divide-border-light max-h-80 overflow-y-auto">
+              {documentos.map((d) => (
+                <li key={d.id} className="flex items-center gap-3 p-3">
+                  <FileText size={16} className="text-text-muted flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm text-text truncate">{d.nombreOriginal}</p>
+                    <p className="text-xxs text-text-muted">{d.tipoDocumento || d.tipoMime} · {formatEstadoDoc(d.estado)}</p>
+                  </div>
+                  {d.estado === 'pendiente_abogado' && (
+                    <div className="flex items-center gap-1 flex-shrink-0">
+                      <button onClick={() => handleAprobarDoc(d.id)} disabled={accionDocId === d.id}
+                        className="p-1 rounded hover:bg-success/10 text-success" title="Aprobar">
+                        <CheckCircle size={14} />
+                      </button>
+                      <button onClick={() => handleRechazarDoc(d.id)} disabled={accionDocId === d.id}
+                        className="p-1 rounded hover:bg-danger/10 text-danger" title="Rechazar">
+                        <XCircle size={14} />
+                      </button>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+
+        <Card padding="none">
+          <div className="flex items-center justify-between p-3 border-b border-border-light">
+            <div className="flex items-center gap-2">
+              <AlertTriangle size={16} className="text-accent-dark" />
+              <h2 className="text-sm font-bold text-text">Alertas ({alertasList.filter(a => !a.resuelta).length})</h2>
+            </div>
+          </div>
+          {alertasList.length === 0 ? (
+            <div className="p-4"><p className="text-sm text-text-secondary">Sin alertas.</p></div>
+          ) : (
+            <ul className="divide-y divide-border-light max-h-80 overflow-y-auto">
+              {alertasList.map((a) => (
+                <li key={a.id} className={cn('p-3', a.resuelta && 'opacity-50')}>
+                  <div className="flex items-center justify-between">
+                    <span className={cn('text-xs font-semibold', severidadColor(a.severidad))}>{a.titulo}</span>
+                    {!a.resuelta && (
+                      <button onClick={() => handleResolverAlerta(a.id)} className="text-xxs text-accent hover:underline">Resolver</button>
+                    )}
+                  </div>
+                  {a.mensaje && <p className="text-xxs text-text-muted mt-0.5">{a.mensaje}</p>}
                 </li>
               ))}
             </ul>
@@ -337,4 +474,19 @@ function formatFechaHora(d: string | null): string {
 }
 function formatAccion(accion: string): string {
   return accion.replace(/_/g, ' ');
+}
+
+function formatEstadoDoc(estado: string): string {
+  const labels: Record<string, string> = {
+    subido: 'Subido', clasificando: 'Clasificando', clasificado: 'Clasificado',
+    texto_extraido: 'Texto extraído', ocr_pendiente: 'OCR pendiente', ilegible: 'Ilegible',
+    duplicado: 'Duplicado', pendiente_abogado: 'Pendiente revisión', aprobado: 'Aprobado',
+    rechazado: 'Rechazado', ia_procesada: 'IA procesada',
+  };
+  return labels[estado] || estado.replace(/_/g, ' ');
+}
+
+function severidadColor(s: string): string {
+  const map: Record<string, string> = { info: 'text-info', advertencia: 'text-warning', error: 'text-danger', critico: 'text-danger font-bold' };
+  return map[s] || 'text-text-secondary';
 }

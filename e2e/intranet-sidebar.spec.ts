@@ -49,6 +49,13 @@ const SIDEBAR_LINKS: SidebarLink[] = [
 test.describe('Intranet — rutas protegidas accesibles tras autenticación', () => {
   test.describe.configure({ mode: 'serial' });
 
+  // NOTA: Este test usa usuarios con rol 'abogado' (por defecto en el registro).
+  // En el SGIE Autopilot (Jun 2026), el abogado es redirigido a /intranet/sgie
+  // y NO ve el panel lateral de "Herramientas internas". Las rutas legacy de
+  // intranet (/intranet/calculadora, /intranet/casos, etc.) siguen siendo
+  // accesibles para abogados por compatibilidad, pero no son su flujo principal.
+  // El admin conserva acceso total a todas las rutas.
+
   test.beforeAll(async ({ request }) => {
     const res = await request.post('/api/auth/register', {
       data: { email: TEST_EMAIL, password: TEST_PASSWORD, nombre: TEST_NAME },
@@ -61,7 +68,7 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
     await page.getByLabel(/email/i).fill(TEST_EMAIL);
     await page.locator('#password').fill(TEST_PASSWORD);
     await page.getByRole('button', { name: /iniciar sesi[óo]n|entrar/i }).first().click();
-    await expect(page).toHaveURL(/\/intranet\/dashboard$/, { timeout: 10_000 });
+    await expect(page).toHaveURL(/\/intranet\/(sgie|admin)$/, { timeout: 10_000 });
   });
 
   for (const link of SIDEBAR_LINKS) {
@@ -74,7 +81,7 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
         await page.getByLabel(/email/i).fill(TEST_EMAIL);
         await page.locator('#password').fill(TEST_PASSWORD);
         await page.getByRole('button', { name: /iniciar sesi[óo]n|entrar/i }).first().click();
-        await expect(page).toHaveURL(/\/intranet\/dashboard$/, { timeout: 10_000 });
+    await expect(page).toHaveURL(/\/intranet\/(sgie|admin)$/, { timeout: 10_000 });
       }
 
       // Navegación directa al destino (independiente del rol del usuario):

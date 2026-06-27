@@ -8,7 +8,7 @@ de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021
 **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)  
 **Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM  
 **Auth:** JWT + bcryptjs (cookies `__Host-token` + `__Host-profile`)  
-**Testing:** Vitest (397 tests, 19 suites) + Playwright (37 tests E2E, 4 specs)  
+**Testing:** Vitest (622 tests, 22 suites) + Playwright (40 tests E2E, 5 specs)  
 **CI:** GitHub Actions (`lint → tsc → test → build → validate:seed → validate:dates`)
 
 ---
@@ -324,7 +324,7 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 
 ---
 
-## SGIE Autopilot (intranet — Fase 1/2/3 parcial)
+## SGIE Autopilot (intranet — Fases 1-10 completas)
 
 El **SGIE Autopilot** es el sistema de gestión integral de expedientes que se
 integra en la intranet existente. Objetivo: que el abogado delegue tareas
@@ -336,52 +336,101 @@ firma, presenta ni cierra un expediente. Plan completo: `pinedayasociados.md`.
 
 | Fase | Estado |
 |------|--------|
-| Fase 1 — Datos y roles | IMPLEMENTADO + VALIDADO (schema aplicado a dev) |
+| Fase 1 — Datos y roles | IMPLEMENTADO + VALIDADO |
 | Fase 2 — Usuarios/Accesos + rol abogado | IMPLEMENTADO + VALIDADO |
-| Fase 3 (base) — Cockpit + expedientes | IMPLEMENTADO + VALIDADO |
-| Fase 4–10 — Documentos, IA/OCR, reglas, correos, agenda, retención | PENDIENTE |
+| Fase 3 — Cockpit + expedientes + clientes | IMPLEMENTADO + VALIDADO |
+| Fase 4 — Enlaces mágicos + carga documental | IMPLEMENTADO + VALIDADO |
+| Fase 5 — Plantillas de correo Resend | IMPLEMENTADO + VALIDADO |
+| Fase 6 — Motor documental (PDF, clasificación, cache hash) | IMPLEMENTADO + VALIDADO |
+| Fase 7 — IA/OCR configurable (DeepSeek) | IMPLEMENTADO + VALIDADO |
+| Fase 8 — Motor de reglas y confianza | IMPLEMENTADO + VALIDADO |
+| Fase 9 — Cockpit avanzado + detalle de expediente | IMPLEMENTADO + VALIDADO |
+| Fase 10 — Métricas, auditoría, aprendizaje, retención | IMPLEMENTADO + VALIDADO (retención: NO VALIDADO legalmente) |
 
 ### Rutas y roles
 
 | Ruta | Acceso | Descripción |
 |------|--------|-------------|
-| `/intranet/login` | Público (con sesión: redirect por rol) | Login único existente |
-| `/intranet/admin/*` | `admin` | Panel admin actual (sin cambios) |
-| `/intranet/admin/usuarios` | `admin` | Módulo Usuarios/Accesos ampliado |
-| `/intranet/sgie` | `abogado` / `admin` | Cockpit del abogado |
-| `/intranet/sgie/expedientes` | `abogado` / `admin` | Lista + crear + detalle |
-| `/intranet/sgie/{documentos,alertas,tareas,agenda,correos}` | `abogado` / `admin` | Placeholders (fases futuras) |
+| `/intranet/login` | Público | Login único, redirect por rol |
+| `/intranet/admin/*` | `admin` | Panel admin completo |
+| `/intranet/admin/usuarios` | `admin` | Gestión de usuarios |
+| `/intranet/admin/sgie/plantillas` | `admin` | Plantillas de correo |
+| `/intranet/admin/sgie/metricas` | `admin` | Dashboard de métricas |
+| `/intranet/admin/sgie/reglas` | `admin` | Configuración de reglas (versionada) |
+| `/intranet/admin/sgie/retencion` | `admin` | Retención documental (NO VALIDADO) |
+| `/intranet/sgie` | `abogado` / `admin` | Cockpit del abogado con métricas reales |
+| `/intranet/sgie/expedientes` | `abogado` / `admin` | CRUD expedientes con scope |
+| `/intranet/sgie/expedientes/[id]` | `abogado` / `admin` | Detalle: checklist, documentos, alertas, acciones |
+| `/intranet/sgie/documentos` | `abogado` / `admin` | Lista y detalle de documentos |
+| `/intranet/sgie/alertas` | `abogado` / `admin` | Alertas con resolver |
+| `/intranet/sgie/tareas` | `abogado` / `admin` | Tareas con completar |
+| `/intranet/sgie/agenda` | `abogado` / `admin` | Eventos de agenda |
+| `/intranet/sgie/correos` | `abogado` / `admin` | Historial de correos enviados |
 | `/api/sgie/*` | `abogado` / `admin` (JWT) | API SGIE con scope por abogado |
+| `/api/cron/sgie/procesar` | `CRON_SECRET` | Worker de jobs documentales |
 
-### Gobernanza de accesos (Fase 2)
+### Despliegue en staging
 
-Desde `/intranet/admin/usuarios` el admin puede: ver correos registrados,
-activar/desactivar usuarios, asignar/quitar rol abogado, **bloquear acceso**
-(revocación distinguible de la desactivación), vincular correo corporativo
-`@pinedayasociadoshn.com`, ver último acceso y conteo de expedientes
-asignados. Todo cambio queda en `auditoria_eventos`. Un usuario bloqueado no
-puede iniciar sesión ni mantener sesión activa (verificación en login + me).
+```bash
+# 1. Variables de entorno requeridas (ver .env.example)
+DATABASE_URL=        # Neon PostgreSQL
+JWT_SECRET=          # Clave de firma JWT
+CRON_SECRET=         # Para /api/cron/sgie/procesar
+RESEND_API_KEY=      # Para envío de correos
+BLOB_READ_WRITE_TOKEN=  # Vercel Blob Storage
+IA_DOCUMENTAL_MODE=heuristic  # o 'ai' con IA_DOCUMENTAL_API_KEY
+
+# 2. Aplicar migraciones
+npx drizzle-kit push
+
+# 3. Sembrar datos (orden recomendado)
+npm run seed:sgie:procedimientos   # 404 procedimientos
+npm run seed:sgie:plantillas       # 10 plantillas de correo
+npm run seed:sgie:demo:carlos      # Datos demo para validación
+
+# 4. Programar cron en Vercel (vercel.json)
+# {
+#   "crons": [{
+#     "path": "/api/cron/sgie/procesar",
+#     "schedule": "*/5 * * * *"
+#   }]
+# }
+```
+
+### Demo Carlos Pineda
+
+El seed `seed:sgie:demo:carlos` puebla la cuenta del abogado
+`carlos.pineda@pinedayasociadoshn.com` con datos ficticios para validación
+visual/funcional: 10 clientes, 12 expedientes en estados variados, 15 documentos,
+8 campos extraídos, 6 alertas, 7 tareas, 5 eventos de agenda y 8 correos
+(2 fallidos). Todos los datos están marcados como demo. El seed es idempotente.
+El usuario debe existir previamente o se crea con un hash bcrypt placeholder;
+configurar contraseña real mediante el panel admin.
 
 ### Scope por abogado
 
 Cada abogado sólo consulta los expedientes donde es responsable/colaborador o
 tiene permiso explícito concedido por admin (`expediente_permisos`). El scope se
-aplica en las queries DB (`lib/sgie/expedientes-db.ts`), no solo en la UI. El
-admin ve todo (supervisión global).
+aplica en las queries DB, no solo en la UI. El admin ve todo. El abogado NO ve
+el panel de "Herramientas internas" del admin — su layout es exclusivamente SGIE.
 
 ### Modelo de datos SGIE
 
-8 tablas nuevas en `lib/schema.ts` (migración `0017_sgie_base.sql`):
-`usuarios_sgie`, `clientes`, `tipos_procedimiento`, `expedientes`,
-`expediente_asignaciones`, `expediente_permisos`, `requisitos_expediente`,
-`historial_expediente`. Más 5 columnas de gobernanza en `usuarios`.
+59 tablas en `lib/schema.ts`. Migraciones: `0017_sgie_base`, `0018_sgie_fases_4_10`,
+`0019_sticky_karen_page`. Tablas principales: `expedientes`, `clientes`,
+`documentos_expediente`, `campos_extraidos`, `alertas`, `tareas`, `eventos_agenda`,
+`correos_enviados`, `validaciones`, `confianza_resultados`, `extracciones_ia`,
+`correcciones_ia`, `jobs_sgie`, `reglas_config_version`, `retencion_politicas`, etc.
 
 ### Reglas respetadas
 
 - Cambios **aditivos**: no se crea un segundo panel admin ni se duplica la auth.
 - Rutas SGIE **fuera de SEO** (robots/sitemap/enlaces públicos).
-- **Sin proveedores nuevos** (no WhatsApp/SimpleX/IA pesada/OCR en esta entrega).
+- **Sin proveedores nuevos** (no WhatsApp/SimpleX).
 - La IA/sistema nunca ejecuta transiciones críticas (`validado` y posteriores).
+- Scope por abogado siempre en backend (query DB), no solo en UI.
+- Jobs pesados nunca en route handlers (serverless).
+- Retención documental Honduras: **NO VALIDADO** hasta investigación normativa.
 
 ---
 
