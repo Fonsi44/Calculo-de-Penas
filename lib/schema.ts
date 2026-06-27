@@ -84,9 +84,19 @@ export const usuarios = pgTable('usuarios', {
   active: boolean('active').default(true),
   mustChangePassword: boolean('must_change_password').default(false),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  // SGIE — gobernanza de accesos (Fase 2). Columnas aditivas, no rompen filas existentes.
+  // `active=false` es desactivación (soft-delete). `bloqueado=true` es revocación de acceso
+  // distinguible (usuario existe, no se elimina, no puede entrar). El documento SGIE §6.2
+  // pide ambos explícitamente.
+  ultimoAcceso: timestamp('ultimo_acceso', { withTimezone: true }),
+  bloqueado: boolean('bloqueado').default(false),
+  bloqueadoEn: timestamp('bloqueado_en', { withTimezone: true }),
+  bloqueadoMotivo: varchar('bloqueado_motivo', { length: 500 }),
+  correoCorporativoVinculado: boolean('correo_corporativo_vinculado').default(false),
 }, (table) => ({
   bufeteRef: foreignKey({ columns: [table.bufeteId], foreignColumns: [bufetes.id] }),
   activeIdx: index('usuarios_active_idx').on(table.active),
+  bloqueadoIdx: index('usuarios_bloqueado_idx').on(table.bloqueado),
 }));
 
 export const casos = pgTable('casos', {
@@ -683,3 +693,285 @@ export const remisionesNormativas = pgTable('remisiones_normativas', {
 
 export type RemisionNormativa = typeof remisionesNormativas.$inferSelect;
 export type RemisionNormativaInsert = typeof remisionesNormativas.$inferInsert;
+
+// ============================================================
+// SGIE Autopilot — Modelo base (Fase 1)
+//
+// Tablas aditivas para el Sistema de Gestión Integral de
+// Expedientes. No modifican tablas existentes (salvo columnas de
+// gobernanza en `usuarios`). Convención del repo: snake_case en DB,
+// uuid PK defaultRandom, FKs explícitas, índices en claves de acceso.
+// Referencia: pinedayasociados.md §20 (entidades) y §8.2 (estados).
+// ============================================================
+
+// --- Enums SGIE ---
+
+// Estados del expediente (§8.2). Las transiciones críticas
+// (`validado` y posteriores) sólo las realiza el abogado, nunca el sistema.
+export const expedienteEstadoEnum = pgEnum('expediente_estado', [
+  'creado',
+  'pendiente_de_checklist',
+  'pendiente_de_documentos',
+  'enlace_enviado',
+  'documentos_parcialmente_recibidos',
+  'documentos_completos',
+  'analisis_pendiente',
+  'analisis_completado',
+  'inconsistencias_detectadas',
+  'pendiente_validacion_abogado',
+  'validado', // Sólo abogado
+  'pendiente_de_firma', // Sólo abogado
+  'en_tramite', // Sólo abogado
+  'en_seguimiento',
+  'finalizado', // Sólo abogado
+  'archivado', // Sólo abogado o política aprobada
+]);
+
+// Estados que requieren acción humana explícita (transiciones críticas).
+// El sistema nunca ejecuta estas transiciones automáticamente.
+export const EXPEDIENTE_ESTADOS_CRITICOS = new Set<string>([
+  'validado',
+  'pendiente_de_firma',
+  'en_tramite',
+  'finalizado',
+  'archivado',
+]);
+
+// Tipo inferido del enum de estados de expediente (para firmas de funciones).
+export type ExpedienteEstado = (typeof expedienteEstadoEnum.enumValues)[number];
+
+export const expedientePrioridadEnum = pgEnum('expediente_prioridad', [
+  'baja',
+  'media',
+  'alta',
+  'urgente',
+]);
+
+export const procedimientoEstadoEnum = pgEnum('procedimiento_estado', [
+  'borrador',
+  'activo',
+  'desactivado',
+  'pendiente_validacion_legal',
+]);
+
+export const requisitoTipoEnum = pgEnum('requisito_tipo', [
+  'obligatorio',
+  'opcional',
+  'condicional',
+]);
+
+export const requisitoEstadoEnum = pgEnum('requisito_estado', [
+  'solicitado',
+  'subido',
+  'clasificando',
+  'clasificado',
+  'texto_extraido',
+  'ocr_pendiente',
+  'ilegible',
+  'duplicado',
+  'incorrecto',
+  'vencido',
+  'ia_procesada',
+  'pendiente_abogado',
+  'aprobado',
+  'rechazado',
+]);
+
+export const asignacionRolEnum = pgEnum('asignacion_rol', [
+  'responsable',
+  'colaborador',
+  'supervisor',
+]);
+
+export const actorTipoEnum = pgEnum('actor_tipo', [
+  'abogado',
+  'admin',
+  'sistema',
+]);
+
+// --- Tablas SGIE ---
+
+// Perfil SGIE 1:1 de un usuario con rol abogado. Vínculo de correo
+// corporativo y flag de activación SGIE (independiente de `usuarios.active`).
+export const usuariosSgie = pgTable('usuarios_sgie', {
+  usuarioId: uuid('usuario_id').primaryKey(),
+  correoCorporativo: varchar('correo_corporativo', { length: 255 }),
+  activoSgie: boolean('activo_sgie').default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+}));
+
+export type UsuarioSgie = typeof usuariosSgie.$inferSelect;
+export type UsuarioSgieInsert = typeof usuariosSgie.$inferInsert;
+
+// Maestro de clientes. `duplicadoHash` permite detección de duplicados
+// por identidad/RTN normalizado sin exponer PII en el índice.
+export const clientes = pgTable('clientes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  identidad: varchar('identidad', { length: 50 }),
+  rtn: varchar('rtn', { length: 50 }),
+  email: varchar('email', { length: 255 }),
+  telefono: varchar('telefono', { length: 50 }),
+  notas: text('notas'),
+  duplicadoHash: varchar('duplicado_hash', { length: 64 }),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  duplicadoHashIdx: index('clientes_duplicado_hash_idx').on(table.duplicadoHash),
+  identidadIdx: index('clientes_identidad_idx').on(table.identidad),
+  nombreIdx: index('clientes_nombre_idx').on(table.nombre),
+}));
+
+export type Cliente = typeof clientes.$inferSelect;
+export type ClienteInsert = typeof clientes.$inferInsert;
+
+// Catálogo versionado de procedimientos. Los seeds iniciales se marcan
+// `pendiente_validacion_legal` hasta aprobación humana (§11.3).
+// Un expediente se ancla a `procedimientoVersion` al crearse (§11.3).
+export const tiposProcedimiento = pgTable('tipos_procedimiento', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  areaJuridica: varchar('area_juridica', { length: 200 }),
+  descripcion: text('descripcion'),
+  version: integer('version').notNull().default(1),
+  estado: procedimientoEstadoEnum('estado').notNull().default('pendiente_validacion_legal'),
+  // Definición declarativa del procedimiento (documentos requeridos/opcionales/
+  // condicionales, campos esperados, reglas). JSON versionable; la validación
+  // legal queda pendiente hasta `estado=activo`.
+  definicion: jsonb('definicion'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  slugIdx: index('tipos_procedimiento_slug_idx').on(table.slug),
+  estadoIdx: index('tipos_procedimiento_estado_idx').on(table.estado),
+}));
+
+export type TipoProcedimiento = typeof tiposProcedimiento.$inferSelect;
+export type TipoProcedimientoInsert = typeof tiposProcedimiento.$inferInsert;
+
+// Unidad central de trabajo. `procedimientoVersion` ancla la versión vigente
+// al crear (§11.3). `responsableId` es el abogado principal.
+export const expedientes = pgTable('expedientes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  numeroInterno: varchar('numero_interno', { length: 100 }).notNull().unique(),
+  clienteId: uuid('cliente_id'),
+  tipoProcedimientoId: uuid('tipo_procedimiento_id'),
+  procedimientoVersion: integer('procedimiento_version'),
+  responsableId: uuid('responsable_id'),
+  estado: expedienteEstadoEnum('estado').notNull().default('creado'),
+  prioridad: expedientePrioridadEnum('prioridad').notNull().default('media'),
+  area: varchar('area', { length: 200 }),
+  resumen: text('resumen'),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+  cerradoEn: timestamp('cerrado_en', { withTimezone: true }),
+}, (table) => ({
+  clienteRef: foreignKey({ columns: [table.clienteId], foreignColumns: [clientes.id] }),
+  tipoProcedimientoRef: foreignKey({ columns: [table.tipoProcedimientoId], foreignColumns: [tiposProcedimiento.id] }),
+  responsableRef: foreignKey({ columns: [table.responsableId], foreignColumns: [usuarios.id] }),
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  numeroInternoIdx: index('expedientes_numero_interno_idx').on(table.numeroInterno),
+  estadoIdx: index('expedientes_estado_idx').on(table.estado),
+  responsableIdx: index('expedientes_responsable_idx').on(table.responsableId),
+  clienteIdx: index('expedientes_cliente_idx').on(table.clienteId),
+}));
+
+export type Expediente = typeof expedientes.$inferSelect;
+export type ExpedienteInsert = typeof expedientes.$inferInsert;
+
+// Asignación abogado ↔ expediente. Un expediente tiene un `responsable`
+// y puede tener colaboradores/supervisores. Base del scope por abogado.
+export const expedienteAsignaciones = pgTable('expediente_asignaciones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  abogadoId: uuid('abogado_id').notNull(),
+  rol: asignacionRolEnum('rol').notNull().default('responsable'),
+  asignadoPor: uuid('asignado_por'),
+  asignadoEn: timestamp('asignado_en', { withTimezone: true }).defaultNow(),
+  revocadaEn: timestamp('revocada_en', { withTimezone: true }),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }),
+  abogadoRef: foreignKey({ columns: [table.abogadoId], foreignColumns: [usuarios.id] }),
+  asignadoPorRef: foreignKey({ columns: [table.asignadoPor], foreignColumns: [usuarios.id] }),
+  expedienteIdx: index('expediente_asignaciones_expediente_idx').on(table.expedienteId),
+  abogadoIdx: index('expediente_asignaciones_abogado_idx').on(table.abogadoId),
+  // Una sola asignación activa (no revocada) por (expediente, abogado).
+  activaUnica: unique('expediente_asignaciones_activa_unica').on(table.expedienteId, table.abogadoId),
+}));
+
+export type ExpedienteAsignacion = typeof expedienteAsignaciones.$inferSelect;
+export type ExpedienteAsignacionInsert = typeof expedienteAsignaciones.$inferInsert;
+
+// Permisos extra: acceso a expediente sin ser responsable (revisión por
+// supervisión, sustitución o reasignación). Concedido por admin (§6.2).
+export const expedientePermisos = pgTable('expediente_permisos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  abogadoId: uuid('abogado_id').notNull(),
+  tipoPermiso: varchar('tipo_permiso', { length: 50 }).notNull(),
+  concedidoPor: uuid('concedido_por'),
+  concedidoEn: timestamp('concedido_en', { withTimezone: true }).defaultNow(),
+  revocadoEn: timestamp('revocado_en', { withTimezone: true }),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }),
+  abogadoRef: foreignKey({ columns: [table.abogadoId], foreignColumns: [usuarios.id] }),
+  concedidoPorRef: foreignKey({ columns: [table.concedidoPor], foreignColumns: [usuarios.id] }),
+  expedienteIdx: index('expediente_permisos_expediente_idx').on(table.expedienteId),
+  abogadoIdx: index('expediente_permisos_abogado_idx').on(table.abogadoId),
+}));
+
+export type ExpedientePermiso = typeof expedientePermisos.$inferSelect;
+export type ExpedientePermisoInsert = typeof expedientePermisos.$inferInsert;
+
+// Checklist instanciado por expediente. Anclado a la versión del
+// procedimiento al crear. Cada requisito tiene tipo y estado documental.
+export const requisitosExpediente = pgTable('requisitos_expediente', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  // Referencia opcional al requisito dentro de la definición del procedimiento
+  // (clave textual dentro de `tipos_procedimiento.definicion`).
+  procedimientoRequisitoKey: varchar('procedimiento_requisito_key', { length: 100 }),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  tipo: requisitoTipoEnum('tipo').notNull().default('obligatorio'),
+  estado: requisitoEstadoEnum('estado').notNull().default('solicitado'),
+  orden: integer('orden').default(0),
+  confirmado: boolean('confirmado').default(false),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }),
+  expedienteIdx: index('requisitos_expediente_expediente_idx').on(table.expedienteId),
+}));
+
+export type RequisitoExpediente = typeof requisitosExpediente.$inferSelect;
+export type RequisitoExpedienteInsert = typeof requisitosExpediente.$inferInsert;
+
+// Línea de tiempo del expediente (audit trail). Cada acción crítica
+// registra actor, estado anterior/nuevo y metadata (§20.3).
+export const historialExpediente = pgTable('historial_expediente', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  accion: varchar('accion', { length: 100 }).notNull(),
+  estadoAnterior: varchar('estado_anterior', { length: 50 }),
+  estadoNuevo: varchar('estado_nuevo', { length: 50 }),
+  actorId: uuid('actor_id'),
+  actorTipo: actorTipoEnum('actor_tipo').notNull().default('sistema'),
+  metadata: jsonb('metadata'),
+  mensaje: text('mensaje'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }),
+  actorRef: foreignKey({ columns: [table.actorId], foreignColumns: [usuarios.id] }),
+  expedienteIdx: index('historial_expediente_expediente_idx').on(table.expedienteId),
+  creadoEnIdx: index('historial_expediente_creado_en_idx').on(table.creadoEn),
+}));
+
+export type HistorialExpediente = typeof historialExpediente.$inferSelect;
+export type HistorialExpedienteInsert = typeof historialExpediente.$inferInsert;

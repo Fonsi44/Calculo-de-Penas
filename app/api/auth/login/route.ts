@@ -56,6 +56,35 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Credenciales inválidas' }, { status: 401 });
     }
 
+    // SGIE — acceso revocado: usuario desactivado (active=false) o bloqueado
+    // (bloqueado=true). Se verifica DESPUÉS de la contraseña para no filtrar
+    // información sobre qué cuentas existen. Referencia: pinedayasociados.md §6.2.
+    if (!user.active) {
+      await audit({
+        accion: 'login_failed',
+        usuarioId: user.id,
+        ip: ipFromRequest(request),
+        userAgent: uaFromRequest(request),
+        exito: false,
+        mensaje: 'Usuario desactivado',
+      });
+      return Response.json({ error: 'Credenciales inválidas' }, { status: 401 });
+    }
+    if (user.bloqueado) {
+      await audit({
+        accion: 'unauthorized_access',
+        usuarioId: user.id,
+        ip: ipFromRequest(request),
+        userAgent: uaFromRequest(request),
+        exito: false,
+        mensaje: 'Intento de login de usuario bloqueado',
+      });
+      return Response.json({ error: 'Su acceso ha sido bloqueado. Contacte con la administración.' }, { status: 403 });
+    }
+
+    // SGIE — registra último acceso (campo `ultimo_acceso`).
+    await db.update(usuarios).set({ ultimoAcceso: new Date() }).where(eq(usuarios.id, user.id));
+
     await audit({
       accion: 'login',
       usuarioId: user.id,

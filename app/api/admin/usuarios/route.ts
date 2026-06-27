@@ -1,11 +1,12 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { requireAdmin, authFailureResponse, hashPassword, isAllowedAuthEmail } from '@/lib/auth';
-import { eq, ilike, or, and, sql } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
+import { listarUsuariosGestion } from '@/lib/sgie/usuarios-db';
 
 const createSchema = z.object({
   email: z.string().email(),
@@ -18,6 +19,8 @@ const querySchema = z.object({
   q: z.string().optional(),
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(50),
+  // SGIE — filtro por estado de acceso (activos/bloqueados/inactivos/todos).
+  estado: z.enum(['activos', 'bloqueados', 'inactivos', 'todos']).optional(),
 });
 
 export async function GET(request: Request) {
@@ -26,34 +29,23 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));
 
-    const conditions: ReturnType<typeof eq>[] = [];
-    conditions.push(eq(usuarios.active, true));
-    if (query.q) {
-      const term = `%${query.q}%`;
-      conditions.push(or(ilike(usuarios.nombre, term), ilike(usuarios.email, term))!);
-    }
+    // SGIE — listado con datos de gobernanza (último acceso, bloqueo, vínculo
+    // corporativo) y conteo de expedientes asignados por abogado. A diferencia
+    // de la versión anterior, devuelve todos los usuarios con su estado para
+    // que el admin pueda gestionar bloqueados/inactivos (§6.2).
+    const estado = query.estado && query.estado !== 'todos' ? query.estado : undefined;
+    const { usuarios: rows, total } = await listarUsuariosGestion({
+      q: query.q,
+      estado,
+      limit: query.limit,
+      offset: (query.page - 1) * query.limit,
+    });
 
-    const where = and(...conditions);
-
-    const [rows, [countRow]] = await Promise.all([
-      db.select({
-        id: usuarios.id,
-        email: usuarios.email,
-        nombre: usuarios.nombre,
-        rol: usuarios.rol,
-        active: usuarios.active,
-        mustChangePassword: usuarios.mustChangePassword,
-        creadoEn: usuarios.creadoEn,
-      }).from(usuarios)
-        .where(where)
-        .orderBy(usuarios.creadoEn)
-        .limit(query.limit)
-        .offset((query.page - 1) * query.limit),
-      db.select({ count: sql<number>`count(*)::int` }).from(usuarios).where(where),
-    ]);
-
-    return Response.json({ usuarios: rows, total: countRow?.count ?? 0, page: query.page, limit: query.limit });
+    return Response.json({ usuarios: rows, total, page: query.page, limit: query.limit });
   } catch (err) {
+    if (err instanceof z.ZodError) {
+      return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
+    }
     return authFailureResponse(err);
   }
 }

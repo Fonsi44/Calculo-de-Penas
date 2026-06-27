@@ -1,14 +1,14 @@
 # Pineda y Asociados — Plan de Acción SGIE Autopilot
 
-> **Documento maestro de transformación operativa.**  
-> Versión 3.0 — Plan futurista, realista y ejecutable para convertir a Pineda y
-> Asociados en un bufete con gestión documental automatizada y asistida por IA.
+> **Documento maestro de transformación operativa.**
+> Versión 4.0 — Plan técnico-operativo preciso, ejecutable y alineado con una
+> herramienta real de trabajo para abogados.
 >
 > **Objetivo central:** que el abogado dedique su tiempo a **validar, decidir,
-> asesorar y firmar**. El sistema debe encargarse del resto: completar
-> expedientes, pedir documentos, recibir archivos, clasificarlos, extraer datos,
-> validar coherencia, detectar faltantes, generar tareas, enviar correos por fase,
-> proponer agenda, preparar el expediente y dejar trazabilidad completa.
+> asesorar y firmar**. El sistema debe encargarse del resto: pedir documentos,
+> recibir archivos, clasificarlos, hacer OCR cuando sea necesario, extraer datos,
+> detectar faltantes, validar coherencia, generar alertas, enviar correos, crear
+> tareas, proponer agenda y dejar trazabilidad completa.
 >
 > **Honestidad operativa:** este documento es un plan de acción y diseño. No es
 > código ni implica que el sistema ya esté implementado. Todo dato legal,
@@ -22,31 +22,36 @@
 
 1. Resultado esperado
 2. Principio rector: abogado valida y firma; sistema opera
-3. Visión futurista pero realista
+3. Visión refinada del producto — SGIE Autopilot
 4. Estado de partida y restricciones reales
 5. Objetivos medibles
-6. Modelo operativo objetivo
+6. Roles, accesos y panel admin de Usuarios / Accesos
 7. Niveles de automatización del bufete
 8. Flujo extremo a extremo del expediente
 9. Mapa de módulos del SGIE Autopilot
 10. Cockpit del abogado
 11. Base de procedimientos y checklists inteligentes
 12. Motor documental
-13. Motor de IA documental
-14. Motor de reglas y validación
-15. Automatizaciones por fase
-16. Comunicación automática con clientes
-17. Agenda, plazos y tareas
-18. Datos, almacenamiento y trazabilidad
-19. Seguridad, privacidad y gobierno
-20. Arquitectura técnica sobre la intranet actual
-21. Estrategia de implementación por fases
-22. Plan de 30 / 60 / 90 / 180 días
-23. Métricas de éxito
-24. Costes y control financiero
-25. Riesgos y mitigaciones
-26. Decisiones que debe tomar el despacho
-27. Criterios de aceptación globales
+13. IA / OCR con DeepSeek
+14. Motor de confianza inteligente
+15. Motor de reglas
+16. Aprendizaje controlado
+17. Automatizaciones por fase
+18. Correos y comunicación con clientes
+19. Agenda, plazos y tareas
+20. Datos, almacenamiento y trazabilidad
+21. Retención documental (Honduras)
+22. Seguridad, privacidad y gobierno
+23. Arquitectura técnica sobre la intranet actual
+24. Backlog técnico por fases (Fase 0–10)
+25. Plan de 30 / 60 / 90 / 180 días
+26. Métricas de éxito
+27. Costes y control financiero
+28. Riesgos y mitigaciones
+29. Decisiones que debe tomar el despacho
+30. Reglas de implementación
+31. Criterios de aceptación globales
+32. Formato de respuesta final por fase
 
 ---
 
@@ -54,7 +59,8 @@
 
 Pineda y Asociados debe evolucionar de una operación basada en correos,
 WhatsApp, carpetas, recordatorios manuales y revisión documento por documento a
-una **fábrica inteligente de expedientes jurídicos**.
+una **plataforma de gestión documental de expedientes con copiloto operativo
+para abogados**.
 
 El resultado buscado es claro:
 
@@ -76,23 +82,23 @@ documentos, copiar datos, buscar vencimientos y escribir correos repetitivos.
 
 ## 2. Principio rector: abogado valida y firma; sistema opera
 
-### 2.1 Lo que debe hacer el sistema
+### 2.1 Lo que hace el sistema
 
-El sistema debe asumir toda tarea repetible, verificable y trazable:
+El sistema asume toda tarea repetible, verificable y trazable:
 
 - Crear expediente desde una solicitud o registro manual.
-- Identificar si el cliente ya existe.
+- Detectar si el cliente ya existe.
 - Sugerir el procedimiento jurídico aplicable.
-- Crear checklist documental según procedimiento.
+- Instanciar checklist documental según procedimiento.
 - Generar enlaces seguros de carga documental.
 - Enviar correos automáticos al cliente.
 - Recibir documentos sin que el cliente tenga cuenta.
-- Validar tipo, tamaño, MIME, hash y duplicados.
+- Validar tipo, tamaño, MIME, magic bytes, hash SHA-256 y duplicados.
 - Extraer texto del documento.
 - Clasificar el documento.
 - Extraer campos con IA y/o heurísticas.
-- Guardar cada campo con confianza y cita fuente.
-- Validar reglas deterministas.
+- Guardar cada campo con confianza calculada y cita fuente.
+- Ejecutar reglas deterministas.
 - Detectar faltantes, vencimientos, contradicciones e ilegibles.
 - Crear tareas y alertas.
 - Proponer eventos de agenda.
@@ -100,7 +106,7 @@ El sistema debe asumir toda tarea repetible, verificable y trazable:
 - Medir completitud y riesgo.
 - Construir la bandeja de revisión del abogado.
 
-### 2.2 Lo que debe hacer el abogado
+### 2.2 Lo que hace el abogado
 
 El abogado conserva las decisiones críticas:
 
@@ -116,36 +122,56 @@ El abogado conserva las decisiones críticas:
 
 ### 2.3 Regla inviolable
 
-La IA y las automatizaciones **nunca** deben aprobar, firmar, presentar, cerrar
-un expediente ni tomar decisiones jurídicas finales. El sistema prepara; el
-abogado decide.
+La IA y las automatizaciones **nunca** aprueban, firman, presentan ni cierran un
+expediente, ni toman decisiones jurídicas finales. El sistema prepara; el
+abogado decide. Aun con confianza alta, las transiciones críticas requieren
+acción explícita del abogado.
 
 ---
 
-## 3. Visión futurista pero realista
+## 3. Visión refinada del producto — SGIE Autopilot
 
-La visión futurista no consiste en prometer un “abogado robot”. Consiste en
-construir un despacho donde cada expediente tenga un **copiloto operativo**:
+El SGIE Autopilot es una **plataforma de gestión documental de expedientes
+jurídicos con copiloto operativo para abogados**. No es una carpeta de
+archivos ni un simple visor de PDF; es una herramienta real de ayuda al
+abogado que trabaja con Pineda y Asociados.
 
-1. **Un orquestador de expediente** que sabe en qué fase está cada caso.
-2. **Un bibliotecario documental** que recibe, clasifica, nombra y ordena
-   documentos.
-3. **Un extractor de datos** que lee documentos y llena campos estructurados.
-4. **Un validador de reglas** que comprueba coherencia, completitud y vigencia.
-5. **Un mensajero automático** que envía correos y recordatorios por fase.
-6. **Un gestor de agenda** que propone plazos, audiencias y tareas.
-7. **Un auditor** que registra cada acción y permite reconstruir el expediente.
+El producto se articula en tres planos:
 
-Estos “copilotos” no son agentes autónomos sin control. Son módulos del sistema,
-con permisos limitados, reglas deterministas y supervisión humana.
+### 3.1 Plano operativo (lo hace el sistema)
+
+- Pedir documentación al cliente por enlaces seguros.
+- Recibir, validar, clasificar y almacenar archivos.
+- Hacer OCR sólo cuando sea necesario.
+- Extraer datos estructurados con IA.
+- Detectar faltantes, contradicciones, vencimientos e ilegibles.
+- Generar alertas, tareas y eventos de agenda.
+- Redactar y enviar correos transaccionales por fase.
+- Construir el resumen ejecutivo y la bandeja de revisión.
+
+### 3.2 Plano de decisión (lo hace el abogado)
+
+- Valida, corrige, aprueba, rechaza, firma y decide.
+- Resuelve inconsistencias y define estrategia jurídica.
+- Aprueba o ajusta checklists, campos y plazos críticos.
+- Confirma eventos de agenda y transiciones de estado.
+
+### 3.3 Plano de gobierno (lo hace el admin)
+
+- Gestiona usuarios, accesos, roles y vínculos de abogados.
+- Versiona procedimientos y aprueba su validación legal.
+- Reajusta umbrales de confianza y reglas desde panel.
+- Supervisa auditoría, métricas y costes.
+
+**La IA ayuda, pero no sustituye al abogado.** El abogado valida, corrige,
+aprueba, firma y decide. El sistema prepara, organiza, alerta, recomienda y
+automatiza tareas repetibles.
 
 ---
 
 ## 4. Estado de partida y restricciones reales
 
 ### 4.1 Stack actual aprovechable
-
-El repositorio actual ya ofrece una base adecuada:
 
 | Capa | Estado actual | Aprovechamiento para SGIE |
 |---|---|---|
@@ -156,18 +182,22 @@ El repositorio actual ya ofrece una base adecuada:
 | Email | Resend | Correos transaccionales por fase |
 | Auditoría | `auditoria_eventos` | Extender con acciones SGIE |
 | Seguridad | proxy, CSP, Zod, rate limit | Extender a `/api/sgie/*` y carga pública |
+| IA/OCR | (a integrar) | DeepSeek V4 Flash vía capa configurable |
 
 ### 4.2 Restricciones que no se deben ignorar
 
 - Vercel serverless no es adecuado para procesos largos de OCR/IA dentro de un
   request. El procesamiento pesado debe ir a cola, cron o worker.
-- Las rutas de intranet y datos de expedientes son privadas. No deben aparecer
-  en web pública, sitemap, robots, schemas ni enlaces públicos.
-- Toda persistencia final debe estar en DB y object storage, no en archivos mock.
-- No deben inventarse requisitos legales, plazos ni citas. Todo procedimiento se
+- Las rutas de intranet y datos de expedientes son privadas. No aparecen en web
+  pública, sitemap, robots, schemas ni enlaces públicos.
+- Toda persistencia final debe estar en DB y object storage, no en mocks.
+- No inventar requisitos legales, plazos ni citas. Todo procedimiento se
   versiona y queda pendiente de validación legal hasta aprobación humana.
-- Los proveedores de IA y sus precios cambian. El sistema debe usar una capa
-  abstracta configurable, no depender rígidamente de un modelo concreto.
+- Los proveedores de IA y sus precios cambian. El sistema usa una capa
+  abstracta configurable; no depende rígidamente de un modelo concreto.
+- **No añadir más proveedores ni complicar el stack.** Perfeccionamos lo que ya
+  tenemos. Cualquier proveedor adicional queda como fase futura opcional, nunca
+  como requisito del MVP.
 
 ---
 
@@ -186,13 +216,20 @@ El repositorio actual ya ofrece una base adecuada:
 
 ### 5.2 Objetivos de producto
 
-- Panel del abogado centrado en expedientes.
+- Panel admin con módulo **Usuarios / Accesos** completo.
+- Acceso por rol abogado: cuando un usuario con rol `abogado` entra en la
+  intranet, ve el módulo SGIE completo (cockpit, expedientes, checklist,
+  documentos, alertas, tareas, agenda, correos y acciones de validación).
+- Scope por abogado: cada abogado sólo accede a sus clientes y expedientes
+  asignados, salvo permiso adicional concedido por admin.
 - Portal de carga documental sin cuenta para clientes.
 - Checklists por procedimiento editables y versionados.
-- Motor de extracción IA con confianza y cita fuente.
-- Motor de reglas determinista.
-- Automatización de correos por fase.
-- Bandeja de validación y firma.
+- Motor de extracción IA con confianza calculada y cita fuente.
+- Motor de reglas determinista, reajustable desde panel admin.
+- Motor de confianza inteligente basado en evidencias verificables.
+- Aprendizaje controlado por correcciones del abogado.
+- Automatización de correos por fase, idempotente.
+- Bandeja de validación y firma consolidada.
 
 ### 5.3 Objetivos de control
 
@@ -200,27 +237,51 @@ El repositorio actual ya ofrece una base adecuada:
   `finalizado` o `archivado` sin acción explícita del abogado.
 - Ningún campo extraído por IA se considera definitivo sin confirmación o sin
   regla de confianza aprobada.
-- Ningún documento se re-procesa si su hash no cambió.
+- Ningún documento se re-procesa (IA/OCR) si su hash SHA-256 no cambió.
 - Ningún correo automático se envía dos veces por el mismo disparador.
+- Ningún cambio de rol, umbral o regla se aplica sin auditoría.
 
 ---
 
-## 6. Modelo operativo objetivo
+## 6. Roles, accesos y panel admin de Usuarios / Accesos
 
 ### 6.1 Roles
 
-| Rol | Responsabilidad |
-|---|---|
-| Admin | Configura procedimientos, plantillas, permisos, auditoría y reportes |
-| Abogado | Valida expedientes, documentos, campos, estrategia y firma |
-| Asistente legal | Puede cargar documentos, corregir datos y preparar expedientes si se habilita |
-| Cliente | Sube documentos por enlace mágico, sin cuenta |
-| Sistema | Orquesta estados, correos, tareas, alertas, IA y reglas |
+| Rol | Acceso | Responsabilidad |
+|---|---|---|
+| Admin | Todo `/intranet/*` y panel admin | Configura usuarios, accesos, procedimientos, plantillas, reglas, umbrales, auditoría y reportes |
+| Abogado | `/intranet/sgie/*` (módulo SGIE completo) | Valida expedientes, documentos, campos, estrategia y firma; sólo sus clientes/asignaciones |
+| Asistente legal | (futura fase opcional) | Carga documentos, corrige datos y prepara expedientes si se habilita con RBAC fino |
+| Cliente | `/cargar/{token}` (sin cuenta) | Sube documentos por enlace mágico |
+| Sistema | Interno | Orquesta estados, correos, tareas, alertas, IA y reglas |
 
-> En MVP pueden existir sólo `admin`, `abogado` y cliente por token. El rol
-> `asistente legal` se puede activar después con RBAC fino.
+### 6.2 Módulo admin: Usuarios / Accesos
 
-### 6.2 RACI operativo
+Función **nueva** del panel admin (`/intranet/admin/usuarios`). El admin debe
+poder:
+
+- Ver correos registrados en el sistema.
+- Activar o desactivar usuarios (toggle de acceso).
+- Asignar o quitar rol `abogado` a un usuario.
+- Vincular un usuario abogado a un correo corporativo `@pinedayasociadoshn.com`.
+- Bloquear acceso de un usuario (revocación temporal o definitiva).
+- Ver último acceso (fecha, IP si está registrada).
+- Ver expedientes asignados a cada abogado (conteo y listing acotado).
+- Auditar cambios de rol y de vínculos de correo (tabla `auditoria_eventos` con
+  campo extendido para acciones SGIE de gobernanza).
+
+**Regla de acceso por rol abogado:** cuando un usuario con rol `abogado` entra
+en la intranet, debe ver el módulo SGIE completo: cockpit del abogado,
+expedientes, checklist, documentos, alertas, tareas, agenda, correos y
+acciones de validación.
+
+**Regla de scope:** cada abogado sólo accede a sus clientes y expedientes
+asignados. El admin puede conceder permiso adicional (caso: revisión por
+supervisión, sustitución o reasignación) mediante una tabla
+`expediente_permisos` con `(expediente_id, abogado_id, tipo_permiso,
+concedido_por, concedido_en, revocado_en)`.
+
+### 6.3 RACI operativo
 
 | Actividad | Sistema | Abogado | Admin | Cliente |
 |---|:---:|:---:|:---:|:---:|
@@ -232,6 +293,8 @@ El repositorio actual ya ofrece una base adecuada:
 | Validar requisitos | R | A | C | - |
 | Firmar / presentar | - | R/A | - | - |
 | Auditar acciones | R | C | A | - |
+| Gestionar usuarios/roles | - | - | R/A | - |
+| Reajustar reglas/umbrales | R (sugiere) | C | A | - |
 
 R = realiza, A = responsable final, C = consultado.
 
@@ -239,20 +302,19 @@ R = realiza, A = responsable final, C = consultado.
 
 ## 7. Niveles de automatización del bufete
 
-El avance debe medirse por niveles, no por promesas abstractas.
-
-| Nivel | Nombre | Descripción | Estado objetivo |
+| Nivel | Nombre | Descripción | Fase objetivo |
 |---:|---|---|---|
 | 0 | Manual | Correos, carpetas y revisión manual | Estado anterior |
-| 1 | Digitalizado | Expedientes y documentos en sistema | Fase 2 |
+| 1 | Digitalizado | Expedientes y documentos en sistema | Fase 1 |
 | 2 | Guiado | Checklists, estados y tareas automáticas | Fase 3 |
-| 3 | Automatizado | Correos, recordatorios, alertas y agenda propuesta | Fase 4 |
-| 4 | Asistido por IA | Clasificación, extracción, resumen y validación preliminar | Fase 5–6 |
-| 5 | Autopilot jurídico supervisado | Sistema prepara todo; abogado revisa, valida y firma | Fase 7+ |
+| 3 | Automatizado | Correos, recordatorios, alertas y agenda propuesta | Fase 5 |
+| 4 | Asistido por IA | Clasificación, extracción, resumen y validación preliminar | Fase 7–8 |
+| 5 | Autopilot jurídico supervisado | Sistema prepara todo; abogado revisa, valida y firma; aprendizaje controlado activo | Fase 10+ |
 
 El objetivo realista para la primera versión productiva es alcanzar el **Nivel
-3** con bases sólidas, y luego subir a **Nivel 4** con IA controlada. El Nivel 5
-se alcanza cuando el flujo completo es estable, medido y auditado.
+3** con bases sólidas, subir a **Nivel 4** con IA controlada y alcanzar el
+**Nivel 5** cuando el flujo completo es estable, medido y auditado, con
+aprendizaje controlado aprobado por el admin.
 
 ---
 
@@ -260,68 +322,39 @@ se alcanza cuando el flujo completo es estable, medido y auditado.
 
 ### 8.1 Flujo canónico
 
-1. **Entrada de solicitud**  
-   Cliente contacta por web, teléfono, WhatsApp o presencial. El abogado o
-   asistente registra la solicitud.
+1. **Entrada de solicitud** — cliente contacta; abogado o asistente registra.
+2. **Alta o detección de cliente existente** — valida identidad/RTN/correo,
+   detecta duplicados y propone vincular o crear.
+3. **Selección de procedimiento** — abogado elige; sistema sugiere si hay texto
+   suficiente, pero la selección final es humana.
+4. **Creación de expediente** — número interno, responsable, área, prioridad,
+   estado inicial, historial y auditoría.
+5. **Checklist inteligente** — instancia requisitos del procedimiento vigente:
+   obligatorios, opcionales y condicionales.
+6. **Confirmación del checklist** — abogado aprueba o ajusta. Desde aquí el
+   sistema puede operar automáticamente.
+7. **Solicitud documental automática** — enlaces mágicos y correo al cliente
+   con instrucciones, vencimiento y lista clara de documentos.
+8. **Carga segura del cliente** — valida token, expiración, usos máximos,
+   tamaño, MIME, magic bytes, hash SHA-256; almacena en Blob.
+9. **Clasificación documental** — primero heurística, IA sólo si no basta.
+10. **Extracción de datos** — texto + campos estructurados con confianza y
+    cita fuente. Si no hay texto, OCR selectivo o marca ilegible.
+11. **Validación de reglas** — completitud, vigencia, formato, duplicados,
+    coherencia entre documentos y contra datos del cliente.
+12. **Cálculo de confianza inteligente** — por documento, campo y expediente.
+13. **Automatizaciones de seguimiento** — correos, tareas y notificaciones al
+    abogado según faltantes, vencimientos o inconsistencias.
+14. **Cockpit de revisión** — abogado ve resumen, checklist, documentos, campos,
+    alertas, plazos, tareas y evidencia fuente en una sola pantalla.
+15. **Validación y firma** — abogado corrige, aprueba/rechaza, valida y firma.
+    El sistema registra todo y cambia estado sólo por acción humana.
+16. **Trámite y seguimiento** — sistema mantiene tareas, agenda, recordatorios y
+    comunicaciones.
+17. **Cierre y archivo** — el abogado cierra; el sistema aplica política de
+    retención configurable y archivado.
 
-2. **Alta o detección de cliente existente**  
-   El sistema valida identidad/RTN/correo/teléfono, detecta posibles duplicados
-   y propone vincular o crear cliente.
-
-3. **Selección de procedimiento**  
-   El abogado elige un tipo de procedimiento. El sistema sugiere uno si el texto
-   de la solicitud es suficiente, pero la selección final es humana.
-
-4. **Creación de expediente**  
-   Se genera número interno, responsable, área, prioridad, estado inicial,
-   historial y auditoría.
-
-5. **Checklist inteligente**  
-   El sistema instancia los requisitos documentales del procedimiento vigente y
-   muestra documentos requeridos, opcionales y condicionales.
-
-6. **Confirmación del checklist**  
-   El abogado aprueba o ajusta el checklist. Desde este punto el sistema puede
-   operar automáticamente.
-
-7. **Solicitud documental automática**  
-   Se generan enlaces mágicos y se envía correo al cliente con instrucciones,
-   vencimiento y lista clara de documentos.
-
-8. **Carga segura del cliente**  
-   El cliente sube archivos sin cuenta. El sistema valida token, tamaño, MIME,
-   hash, magic bytes y almacena en Blob.
-
-9. **Clasificación documental**  
-   El sistema identifica tipo de documento por heurísticas y, si hace falta, IA.
-
-10. **Extracción de datos**  
-    Se extrae texto y se obtienen campos estructurados con confianza y cita
-    fuente. Si no hay texto, se usa OCR selectivo o se marca ilegible.
-
-11. **Validación de reglas**  
-    Se revisa completitud, vigencia, formato, duplicados y coherencia entre
-    documentos del mismo expediente.
-
-12. **Automatizaciones de seguimiento**  
-    Si faltan documentos, vencen enlaces o hay inconsistencias, el sistema envía
-    correos, crea tareas y notifica al abogado.
-
-13. **Cockpit de revisión**  
-    El abogado ve resumen, checklist, documentos, datos extraídos, alertas,
-    plazos, tareas y evidencia fuente en una sola pantalla.
-
-14. **Validación y firma**  
-    El abogado corrige, aprueba/rechaza, valida y firma. El sistema registra
-    todo y cambia estado sólo por acción humana.
-
-15. **Trámite y seguimiento**  
-    El sistema mantiene tareas, agenda, recordatorios y comunicaciones.
-
-16. **Cierre y archivo**  
-    El abogado cierra. El sistema aplica retención documental y archivado.
-
-### 8.2 Estados principales
+### 8.2 Estados principales del expediente
 
 | Estado | Responsable de transición |
 |---|---|
@@ -346,23 +379,27 @@ se alcanza cuando el flujo completo es estable, medido y auditado.
 
 ## 9. Mapa de módulos del SGIE Autopilot
 
-| Módulo | Propósito | Prioridad |
-|---|---|---|
-| Clientes | Maestro de personas, duplicados, contacto | P0 |
-| Expedientes | Unidad central de trabajo | P0 |
-| Procedimientos | Catálogo versionado de servicios y requisitos | P0 |
-| Checklist | Instancia documental por expediente | P0 |
-| Enlaces mágicos | Carga externa sin cuenta | P1 |
-| Documentos | Storage, metadatos, hash, estados | P1 |
-| Plantillas de correo | Comunicación automatizada | P1 |
-| Automatizaciones | Disparadores, jobs, idempotencia | P1 |
-| IA documental | Clasificación, extracción, resumen | P2 |
-| OCR | Sólo si documento no tiene texto | P2 |
-| Motor de reglas | Validación determinista | P2 |
-| Cockpit abogado | Revisión y validación consolidada | P2 |
-| Agenda / tareas | Plazos, audiencias, seguimiento | P2/P3 |
-| Reportes | Productividad, costes, cuellos de botella | P3 |
-| Auditoría avanzada | Exportación, filtros, cumplimiento | P3 |
+| Módulo | Propósito | Prioridad | Fase |
+|---|---|---|---|
+| Usuarios / Accesos (admin) | Gestionar usuarios, roles, vínculos y auditoría | P0 | Fase 2 |
+| Clientes | Maestro de personas, duplicados, contacto | P0 | Fase 1 |
+| Expedientes | Unidad central de trabajo | P0 | Fase 3 |
+| Procedimientos | Catálogo versionado de servicios y requisitos | P0 | Fase 1 |
+| Checklist | Instancia documental por expediente | P0 | Fase 3 |
+| Enlaces mágicos | Carga externa sin cuenta | P1 | Fase 4 |
+| Documentos | Storage, metadatos, hash, estados | P1 | Fase 6 |
+| Plantillas de correo | Comunicación automatizada | P1 | Fase 5 |
+| Automatizaciones | Disparadores, jobs, idempotencia | P1 | Fase 5+ |
+| IA documental (DeepSeek) | Clasificación, extracción, resumen | P2 | Fase 7 |
+| OCR | Sólo si documento no tiene texto | P2 | Fase 7 |
+| Motor de confianza | Confianza por evidencias verificables | P2 | Fase 8 |
+| Motor de reglas | Validación determinista reajustable | P2 | Fase 8 |
+| Aprendizaje controlado | Mejora por correcciones del abogado | P2 | Fase 10 |
+| Cockpit abogado | Revisión y validación consolidada | P2 | Fase 9 |
+| Agenda / tareas | Plazos, audiencias, seguimiento | P2/P3 | Fase 9 |
+| Retención documental | Política configurable de archivo/borrado | P2 | Fase 10 |
+| Reportes | Productividad, costes, cuellos de botella | P3 | Fase 10 |
+| Auditoría avanzada | Exportación, filtros, cumplimiento | P3 | Fase 10 |
 
 ---
 
@@ -371,42 +408,61 @@ se alcanza cuando el flujo completo es estable, medido y auditado.
 El cockpit es la pieza que hace real el objetivo de delegar todo lo operativo.
 Debe evitar que el abogado abra diez pantallas o revise archivo por archivo.
 
-### 10.1 Vista principal
+### 10.1 Vista principal (bandeja consolidada)
 
-- Bandeja “Listos para validar”.
-- Expedientes en rojo por vencimiento o inconsistencia.
-- Documentos pendientes de aprobación.
-- Correos fallidos o clientes sin respuesta.
-- Próximos plazos y audiencias.
-- Tareas asignadas.
+Tarjetas/señales que debe mostrar:
+
+- **Expedientes listos para revisar** (sin errores bloqueantes).
+- **Expedientes con documentos faltantes** (checklist incompleto).
+- **Documentos pendientes de aprobación** (subidos, no revisados).
+- **Alertas de baja confianza** (documentos/campos en rango 0–70).
+- **Inconsistencias detectadas** (coherencia entre documentos/cliente).
+- **Tareas de hoy** (auto y manuales).
+- **Próximos plazos** (7 / 30 días y vencidos).
+- **Clientes sin respuesta** (enlace enviado sin carga > N días).
+- **Correos fallidos** (Resend error en últimas 24 h).
+- **Expedientes listos para firma** (`validado` pendiente de firma).
+
+Filtros por abogado (scope), área, prioridad, estado, fecha. Sin acceso a
+expedientes de otros abogados, salvo permiso concedido por admin.
 
 ### 10.2 Pantalla de revisión de expediente
 
 Debe mostrar:
 
 1. **Resumen ejecutivo**: cliente, procedimiento, estado, riesgo, completitud y
-   próximos pasos.
-2. **Checklist documental**: requerido/opcional, recibido/faltante, aprobado,
-   rechazado o vencido.
-3. **Documentos**: visor, metadatos, hash, estado, tipo clasificado.
-4. **Campos extraídos**: valor, confianza, cita fuente, documento origen.
-5. **Alertas**: faltantes, baja confianza, contradicciones, vencimientos.
-6. **Plazos y agenda**: fechas detectadas y eventos propuestos.
+   próximos pasos sugeridos.
+2. **Checklist documental**: requerido/opcional/condicional, recibido/faltante,
+   aprobado, rechazado o vencido.
+3. **Documentos**: visor, metadatos, hash, estado, tipo clasificado, origen.
+4. **Campos extraídos**: valor, confianza calculada, cita fuente, documento
+   origen, observaciones.
+5. **Alertas**: faltantes, baja confianza, contradicciones, vencimientos, con
+   severidad `info`/`advertencia`/`error`/`critico`.
+6. **Plazos y agenda**: fechas detectadas y eventos propuestos (confirmar /
+   descartar).
 7. **Tareas**: automáticas y manuales.
-8. **Historial**: línea de tiempo del expediente.
-9. **Acciones finales**: validar, enviar a firma, marcar en trámite, finalizar.
+8. **Correos enviados**: registro por expediente.
+9. **Historial**: línea de tiempo del expediente (audit trail).
+10. **Acciones finales**: validar, enviar a firma, marcar en trámite,
+    finalizar.
 
 ### 10.3 Acciones rápidas
 
 - Aprobar documento.
 - Rechazar documento con motivo.
-- Solicitar reemplazo con un clic.
+- Solicitar reemplazo con un clic (genera nuevo enlace + correo).
 - Confirmar campo extraído.
-- Corregir campo extraído.
+- Corregir campo extraído (queda registrado como corrección del abogado).
 - Resolver alerta.
 - Crear tarea manual.
 - Confirmar evento de agenda.
 - Generar correo desde plantilla.
+- Mandar a firma.
+- Marcar en trámite.
+- Validar expediente.
+
+Cada acción rápida registra en `historial_expediente` y `auditoria_eventos`.
 
 ---
 
@@ -423,7 +479,8 @@ SGIE.
 Cada procedimiento debe tener:
 
 - Nombre, slug, área jurídica, descripción.
-- Versión y estado (`borrador`, `activo`, `desactivado`).
+- Versión y estado (`borrador`, `activo`, `desactivado`,
+  `pendiente_validacion_legal`).
 - Documentos requeridos.
 - Documentos opcionales.
 - Documentos condicionales.
@@ -440,17 +497,26 @@ Cada procedimiento debe tener:
 - Ningún procedimiento nuevo se activa sin revisión del abogado responsable.
 - Un expediente queda anclado a la versión del procedimiento vigente al crearse.
 - Cambiar un procedimiento no altera expedientes en curso.
-- Los seeds iniciales deben marcarse como `pendiente_validacion_legal` hasta que
-  un abogado los apruebe.
+- Los seeds iniciales se marcan como `pendiente_validacion_legal` hasta que un
+  abogado los apruebe.
 - El admin gestiona el catálogo; el abogado lo consume y puede ajustar el
   checklist sólo dentro de un expediente concreto.
 
-### 11.4 Ejemplo no normativo
+### 11.4 Generación inicial desde el catálogo del sitio
 
-Procedimiento: “Divorcio voluntario”.
+Como tarea de la **Fase 0/1**, se debe crear un procedimiento por cada servicio
+ofrecido en `https://www.pinedayasociadoshn.com/servicios-juridicos`, entrando
+en cada rama del derecho (familia, laboral, civil y notarial, etc.) y por cada
+servicio (divorcio por mutuo acuerdo, etc.) creando un procedimiento con sus
+documentos requeridos. Luego, el sistema permite modificarlos agregando o
+quitando documentos en cada expediente concreto.
 
-- Documentos requeridos: acta de matrimonio, identidades, propuesta de convenio,
-  actas de nacimiento de hijos si aplica.
+### 11.5 Ejemplo no normativo
+
+Procedimiento: "Divorcio voluntario".
+
+- Documentos requeridos: acta de matrimonio, identidades, propuesta de
+  convenio, actas de nacimiento de hijos si aplica.
 - Campos esperados: nombres, identidades, fecha de matrimonio, hijos, domicilio.
 - Reglas: coincidencia de identidades, presencia de documentos requeridos,
   legibilidad, vigencia si el despacho la exige.
@@ -462,18 +528,34 @@ Procedimiento: “Divorcio voluntario”.
 
 ### 12.1 Responsabilidades
 
-- Recibir archivos.
-- Validar seguridad básica.
-- Guardar originales en object storage.
-- Registrar metadatos en DB.
-- Calcular hash SHA-256.
-- Detectar duplicados.
-- Extraer texto si existe.
-- Enviar a OCR sólo si es necesario.
-- Clasificar documento.
-- Mantener estados.
+- Recibir archivos por enlace mágico.
+- Validar token, expiración, máximo de usos.
+- Validar tamaño, MIME permitido, magic bytes cuando sea posible.
+- Calcular hash SHA-256 del contenido.
+- Detectar duplicados por hash (en el expediente y de forma global configurable).
+- **No procesar con IA/OCR archivos duplicados si el hash ya existe.**
+- Guardar originales en Vercel Blob (rutas privadas).
+- Registrar metadatos en PostgreSQL.
+- Extraer texto si existe (capa de texto en PDF).
+- Enviar a OCR sólo si no hay texto y la regla lo autoriza.
+- Clasificar documento (heurística primero, IA si no basta).
+- Mantener estados y trazabilidad completa.
 
-### 12.2 Estados de documento
+### 12.2 Atributos obligatorios de todo documento
+
+Todo documento debe tener asociados:
+
+- `expediente_id`: a qué expediente pertenece.
+- `requisito_id`: a qué requisito del checklist satisface (si aplica).
+- `estado`: estado documental (ver §12.3).
+- `hash_sha256`: identificación de contenido.
+- `origen`: `cliente` / `abogado` / `admin` / `sistema`.
+- `metadatos`: tamaño, MIME, nombre original saneado, páginas (si aplica),
+  almacenamiento (Blob URL/path privado).
+- `trazabilidad`: fecha de carga, usuario o token, IP, user-agent, acciones
+  posteriores (auditadas).
+
+### 12.3 Estados de documento
 
 | Estado | Significado |
 |---|---|
@@ -492,56 +574,73 @@ Procedimiento: “Divorcio voluntario”.
 | `aprobado` | Abogado aprueba |
 | `rechazado` | Abogado rechaza |
 
-### 12.3 Reglas técnicas mínimas
+### 12.4 Reglas técnicas mínimas
 
-- Tamaño máximo configurable.
-- MIME permitido configurable.
+- Tamaño máximo configurable por admin.
+- MIME permitido configurable por admin.
 - Verificación por magic bytes cuando sea posible.
-- Nombres saneados.
-- Rutas privadas en Blob.
-- Descarga autorizada por expediente y rol.
-- Hash obligatorio antes de procesar IA.
+- Nombres saneados (`sanitize`).
+- Rutas privadas en Blob; acceso firmado o mediado por API autorizada.
+- Descarga autorizada por expediente y rol (scope por abogado).
+- Hash obligatorio **antes** de procesar IA/OCR.
 - Cache de texto y extracción por hash.
+- Auditoría de apertura, descarga, aprobación, rechazo y reemplazo.
+
+### 12.5 Detección de duplicados
+
+- Al recibir un archivo, calcular `hash_sha256` antes de cualquier proceso.
+- Si el hash existe para otro documento del mismo expediente o del mismo
+  requisito: marcar `duplicado`, no ejecutar IA/OCR, notificar al abogado y al
+  cliente (correo de "documento duplicado" configurable).
+- Politica de duplicados globales configurable por admin (permitir asociar a
+  otro expediente, sólo citar el hash, o bloquear).
 
 ---
 
-## 13. Motor de IA documental
+## 13. IA / OCR con DeepSeek
 
-### 13.1 Enfoque
+### 13.1 Capa IA configurable
 
-La IA debe ser una capa intercambiable. El sistema puede usar DeepSeek u otro
-proveedor, pero no debe quedar atado a un modelo fijo. La configuración debe
-venir de variables de entorno y una interfaz interna.
+La IA es una **capa intercambiable**, configurable vía variables de entorno y
+una interfaz interna. Proveedor inicial: **DeepSeek V4 Flash** (o un modelo
+inferior de DeepSeek si cumple la función). No hay dependencia rígida del
+modelo.
 
 Variables orientativas:
 
-- `IA_DOCUMENTAL_PROVIDER`
-- `IA_DOCUMENTAL_API_KEY`
-- `IA_DOCUMENTAL_MODEL`
-- `IA_DOCUMENTAL_BASE_URL`
-- `IA_DOCUMENTAL_MODE` (`heuristic`, `ai`, `disabled`)
+```env
+IA_DOCUMENTAL_PROVIDER=deepseek
+IA_DOCUMENTAL_MODEL=deepseek-v4-flash
+IA_DOCUMENTAL_BASE_URL=https://api.deepseek.com/v1
+IA_DOCUMENTAL_API_KEY=<env, nunca hardcodeada>
+IA_DOCUMENTAL_MODE=ai           # heuristic | ai | disabled
+IA_DOCUMENTAL_TIMEOUT_MS=60000
+IA_DOCUMENTAL_MAX_RETRIES=2
+```
+
+- `IA_DOCUMENTAL_MODE=heuristic`: sólo heurísticas locales, sin llamadas IA.
+- `IA_DOCUMENTAL_MODE=ai`: heurísticas + DeepSeek si la heurística no basta.
+- `IA_DOCUMENTAL_MODE=disabled`: sin IA externa; los documentos quedan en
+  `pendiente_abogado` para revisión manual.
 
 ### 13.2 Funciones permitidas
 
 - Clasificar documento cuando la heurística no baste.
-- Extraer datos estructurados.
-- Detectar señales de ilegibilidad, incompletitud o vencimiento textual.
-- Redactar resumen ejecutivo descriptivo.
+- Extraer datos estructurados (campos).
+- Generar resumen descriptivo del documento.
+- Detectar ilegibilidad, incompletitud o señales de vencimiento textual.
 - Sugerir próximos pasos operativos.
 
 ### 13.3 Funciones prohibidas
 
-- Aprobar documentos.
-- Rechazar definitivamente.
-- Firmar.
-- Presentar trámites.
-- Inventar citas legales, jurisprudencia, plazos o requisitos.
+- Aprobar o rechazar documentos definitivamente.
+- Firmar, presentar trámites, cerrar expedientes.
+- Inventar requisitos legales, plazos, jurisprudencia, conclusiones jurídicas o
+  datos no presentes en el documento.
 - Mezclar datos entre expedientes.
 - Tomar estrategia jurídica.
 
-### 13.4 Esquema de salida
-
-Cada extracción debe producir JSON validado por Zod:
+### 13.4 Esquema de salida (JSON estricto validado por Zod)
 
 ```json
 {
@@ -559,46 +658,108 @@ Cada extracción debe producir JSON validado por Zod:
     }
   ],
   "alertas_sugeridas": [],
-  "resumen_descriptivo": "..."
+  "resumen_descriptivo": "...",
+  "proximos_pasos_sugeridos": []
 }
 ```
+
+**Regla:** si un dato no está en el documento, la IA devuelve `null`. Prohibido
+inventar. La confianza por campo es una señal **inicial**; la confianza final
+la calcula el motor de confianza inteligente (§14) combinando evidencias.
 
 ### 13.5 Medidas anti-alucinación
 
 - Un documento por llamada.
 - Un expediente por contexto.
-- Sin memoria cruzada.
-- Prompt restrictivo: “si no está en el documento, devuelve null”.
-- JSON schema obligatorio.
-- Validación Zod.
+- Sin memoria cruzada entre llamadas.
+- Prompt restrictivo: "si no está en el documento, devuelve null".
+- JSON schema obligatorio y validación Zod en el backend antes de persistir.
 - Cita fuente obligatoria para campos críticos.
-- Confianza por campo.
-- Reintentos limitados.
+- Reintentos limitados (`IA_DOCUMENTAL_MAX_RETRIES`).
 - Fallback a `pendiente_abogado` si falla.
 - Logs de tokens, prompt hash, duración, proveedor, modelo y estado.
 - Reglas deterministas antes de que un dato alimente automatizaciones.
+- API key **siempre** de variables de entorno `IA_DOCUMENTAL_API_KEY`; nunca
+  hardcodeada ni commiteada. Si se compromete, requiere rotación en el panel
+  del proveedor (el código no resuelve una clave comprometida).
+
+### 13.6 OCR
+
+- OCR se ejecuta **sólo cuando el documento no tiene capa de texto**.
+- Se realiza de forma asíncrona (jobs/cron), nunca dentro de un route handler.
+- Si OCR falla o la calidad es insuficiente, el documento se marca `ilegible` y
+  se dispara el flujo de solicitud de reemplazo.
+- Proveedor/con motor de OCR queda como decisión de Fase 7; si no se decide,
+  MVP marca `ilegible` y pide reemplazo.
 
 ---
 
-## 14. Motor de reglas y validación
+## 14. Motor de confianza inteligente
 
-### 14.1 Responsabilidades
+La confianza **no depende sólo del modelo IA**. Se calcula en base a evidencias
+verificables, combinando señales:
 
-El motor de reglas es el corazón de la confiabilidad. Debe ser determinista,
-idempotente y testeable.
+### 14.1 Señales de evidencia
+
+| Señal | Peso orientativo |
+|---|---|
+| Coincidencia entre documento y datos del cliente | alta |
+| Coincidencia entre varios documentos del expediente | alta |
+| Formato válido (identidad, RTN, fecha, moneda, correo, teléfono) | media |
+| Presencia de cita fuente en campos críticos | alta |
+| Calidad OCR / texto legible | media |
+| Ausencia de contradicciones | alta |
+| Documento no duplicado (hash único) | media |
+| Vigencia válida si aplica | alta |
+| Tipo documental esperado coincide con el clasificado | media |
+
+### 14.2 Escala de confianza
+
+| Rango | Etiqueta | Comportamiento |
+|---|---|---|
+| 0–40 | Baja | Requiere revisión humana obligatoria |
+| 41–70 | Media | Genera alerta; revisión recomendada |
+| 71–89 | Alta | Revisable; auto-apto para bandeja del abogado |
+| 90–100 | Muy alta | Candidata a validación asistida |
+
+### 14.3 Regla inviolable
+
+Aun con confianza alta o muy alta, las **transiciones críticas** (validar,
+firmar, presentar, cerrar, archivar) requieren **acción explícita** del
+abogado. La confianza alta reduce fricción, no elimina responsabilidad humana.
+
+### 14.4 Implementación
+
+- Cálculo por campo (`confianza_campo`), por documento (`confianza_documento`)
+  y por expediente (`confianza_expediente`).
+- Algoritmo determinista, idempotente, configurable en pesos por admin (umbrales
+  y pesos se reajustan desde panel y quedan en `reglas_config` versionada).
+- Resultado persistido con evidencias: lista de señales activadas y su peso.
+- Re-cálculo automático al corregir campo, aprobar/rechazar documento o
+  actualizar expediente.
+
+---
+
+## 15. Motor de reglas
+
+### 15.1 Responsabilidades
+
+El motor de reglas es el corazón de la confiabilidad. Debe ser **determinista,
+idempotente y auditable**.
 
 Valida:
 
 - Formato de identidad, RTN, fechas, montos, correos y teléfonos.
-- Completitud documental.
-- Vigencia de documentos cuando aplique.
+- Completitud documental (obligatorios, condicionales, opcionales).
+- Vencimientos (documentos y enlaces).
 - Duplicados por hash.
-- Coherencia entre documentos.
-- Coherencia contra datos del cliente.
+- Incoherencias entre documentos y contra datos del cliente.
 - Confianza mínima de campos extraídos.
 - Existencia de cita fuente en campos críticos.
+- Documentos obligatorios vs condicionales según contexto del expediente.
+- Transiciones de estado permitidas.
 
-### 14.2 Severidades
+### 15.2 Severidades
 
 | Severidad | Efecto |
 |---|---|
@@ -607,14 +768,75 @@ Valida:
 | `error` | Bloquea paso a validación final |
 | `critico` | Bloquea y notifica de inmediato |
 
-### 14.3 Idempotencia
+### 15.3 Propiedades
 
-Cada validación debe poder repetirse sin duplicar alertas, correos ni tareas.
-Clave sugerida: `expediente_id + regla_id + documento_id + ventana_temporal`.
+- **Deterministas**: misma entrada → misma salida.
+- **Idempotentes**: repetir una validación no duplica alertas, correos ni
+  tareas. Clave sugerida: `expediente_id + regla_id + documento_id +
+  ventana_temporal`.
+- **Auditables**: cada ejecución registra regla, severidad, evidencias,
+  resultado, actor (sistema/abogado/admin) y fecha.
+
+### 15.4 Reajuste desde panel admin
+
+- Reglas y umbrales **deben poder reajustarse desde el panel admin**, con
+  historial de versiones (`reglas_config_version`) y auditoría de cambios.
+- cambios de reglas críticas (severidad `error`/`critico`) requieren
+  confirmación del admin y pueden marcarse como "requiere revalidación de
+  expedientes en curso".
+- Las reglas se aplican en orden de severidad descendente; una regla `critico`
+  detiene el flujo automático hasta resolución humana.
 
 ---
 
-## 15. Automatizaciones por fase
+## 16. Aprendizaje controlado
+
+Queremos **inteligencia real, pero segura**. La mejora continua se basa en
+correcciones del abogado **sin auto-modificar reglas críticas en producción**.
+
+### 16.1 Registro de correcciones
+
+Por cada corrección del abogado sobre un campo propuesto por IA, registrar:
+
+- Campo propuesto por IA (valor + confianza inicial).
+- Corrección del abogado (valor final).
+- Motivo de la corrección (seleccionable por catálogo + texto libre).
+- Documento origen (`documento_id`, hash, cita fuente).
+- Regla afectada (si aplica).
+- Resultado posterior (re-ejecución de reglas y confianza nueva).
+
+Tabla: `correcciones_ia` (`id`, `extraccion_id`, `campo`, `valor_propuesto`,
+`valor_corregido`, `motivo`, `documento_id`, `regla_id`, `abogado_id`,
+`confianza_anterior`, `confianza_posterior`, `created_at`).
+
+### 16.2 Detección de patrones
+
+El sistema, en jobs asíncronos (no en línea), analiza las correcciones para
+detectar patrones:
+
+- Campos sistemáticamente mal extraídos por tipo de documento.
+- Documentos con baja confianza recurrente.
+- Reglas que generan falsos positivos/negativos frecuentes.
+- Umbrales de confianza que conviene ajustar.
+
+### 16.3 Aprobación humana
+
+El sistema **puede sugerir** ajustes de umbrales o reglas al detectar
+patrones, pero el **admin o el abogado responsable debe aprobarlos antes de
+aplicarlos**. Nada de auto-modificación de reglas críticas en producción. Las
+sugerencias quedan en una cola `sugerencias_ajuste` con estado
+`pendiente`/`aprobada`/`rechazada` y auditoría de quién decidió.
+
+### 16.4 Backtesting
+
+Antes de aplicar un ajuste, el sistema puede ejecutar un backtest sobre
+expedientes ya cerrados para estimar el impacto (positivo o negativo) y
+mostrarlo al aprobador. El resultado del backtest es informativo; la decisión
+final es humana.
+
+---
+
+## 17. Automatizaciones por fase
 
 | Fase | Disparador | Automatización |
 |---|---|---|
@@ -626,7 +848,7 @@ Clave sugerida: `expediente_id + regla_id + documento_id + ventana_temporal`.
 | Documento ilegible | OCR fallido | Solicitar reemplazo o revisión manual |
 | Faltan documentos | Checklist incompleto | Correo de faltantes + tarea de seguimiento |
 | Documento rechazado | Abogado rechaza | Correo con motivo + nuevo enlace |
-| IA termina | Extracción ok | Ejecutar reglas y actualizar completitud |
+| IA termina | Extracción ok | Ejecutar reglas y actualizar completitud/confianza |
 | Regla detecta error | Validación error | Alerta + tarea + posible correo sugerido |
 | Expediente listo | Sin errores bloqueantes | Pasar a bandeja de validación del abogado |
 | Fecha detectada | Confianza alta + regla ok | Crear evento propuesto + tarea |
@@ -635,30 +857,30 @@ Clave sugerida: `expediente_id + regla_id + documento_id + ventana_temporal`.
 
 ---
 
-## 16. Comunicación automática con clientes
+## 18. Correos y comunicación con clientes
 
-### 16.1 Principio
+### 18.1 Principio
 
-El cliente debe recibir instrucciones claras y oportunas sin que el abogado tenga
-que redactar cada correo manualmente. Todo correo debe quedar registrado.
+El cliente recibe instrucciones claras y oportunas sin que el abogado redacte
+cada correo manualmente. Todo correo queda registrado, es idempotente y evita
+duplicados. Se usa **Resend** (proveedor actual).
 
-### 16.2 Plantillas mínimas
+### 18.2 Plantillas administrables
 
 | Plantilla | Cuándo se envía |
 |---|---|
-| Bienvenida de expediente | Al abrir expediente y confirmar checklist |
 | Solicitud documental | Al generar enlaces mágicos |
 | Acuse de recibo | Tras subir cada documento |
-| Documentos faltantes | Si el checklist sigue incompleto |
-| Recordatorio de enlace | Antes de expirar token |
+| Faltantes | Si el checklist sigue incompleto |
+| Recordatorio | Antes de expirar token |
 | Enlace expirado | Al vencer token sin carga |
 | Documento rechazado | Cuando abogado rechaza documento |
-| Solicitud de reemplazo | Documento ilegible/vencido/incorrecto |
+| Reemplazo | Documento ilegible/vencido/incorrecto |
 | Expediente en revisión | Cuando pasa a validación del abogado |
-| Próxima cita/audiencia | Cuando abogado confirma evento |
-| Cierre o archivo | Cuando abogado finaliza |
+| Cita / audiencia | Cuando abogado confirma evento |
+| Cierre | Cuando abogado finaliza |
 
-### 16.3 Variables permitidas
+### 18.3 Variables permitidas
 
 - `cliente_nombre`
 - `expediente_numero`
@@ -670,21 +892,24 @@ que redactar cada correo manualmente. Todo correo debe quedar registrado.
 - `telefono_despacho`
 - `email_despacho`
 
-Las plantillas deben usar HTML sanitizado y vista previa antes de activar.
+Plantillas con HTML sanitizado (sanitize-html) y vista previa antes de activar.
 
-### 16.4 Control anti-spam y anti-duplicado
+### 18.4 Control anti-spam y anti-duplicado
 
 - Rate limit por expediente y destinatario.
-- Idempotencia por plantilla + ventana temporal.
-- Registro en `correos_enviados`.
+- Idempotencia por `plantilla + expediente + ventana_temporal` (tabla
+  `correos_enviados` con UNIQUE idempotencia).
+- Registro completo en `correos_enviados`.
 - Reintentos con backoff si Resend falla.
 - Alerta interna si un correo crítico falla.
+- Recordatorios **configurables** (frecuencia, máximos por expediente, ventanas
+  horarias) para no ser invasivos pero mantener presión operativa suficiente.
 
 ---
 
-## 17. Agenda, plazos y tareas
+## 19. Agenda, plazos y tareas
 
-### 17.1 Tipos de fecha
+### 19.1 Tipos de fecha
 
 | Tipo | Origen | Estado inicial |
 |---|---|---|
@@ -694,104 +919,147 @@ Las plantillas deben usar HTML sanitizado y vista previa antes de activar.
 | Recordatorio | Regla automática | Confirmada |
 | Vencimiento de enlace | Sistema | Confirmada |
 
-### 17.2 Regla de seguridad
+### 19.2 Regla de seguridad
 
 Una fecha detectada por IA puede crear un evento **propuesto**, no definitivo,
 salvo que una regla aprobada lo permita y el abogado lo confirme.
 
-### 17.3 Bandejas operativas
+### 19.3 Bandejas operativas
 
-- “Hoy”.
-- “Próximos 7 días”.
-- “Vencidos”.
-- “Expedientes sin movimiento”.
-- “Pendiente de cliente”.
-- “Pendiente de abogado”.
-- “Listo para firma”.
+- Hoy.
+- Próximos 7 días.
+- Vencidos.
+- Expedientes sin movimiento.
+- Pendiente de cliente.
+- Pendiente de abogado.
+- Listo para firma.
 
 ---
 
-## 18. Datos, almacenamiento y trazabilidad
+## 20. Datos, almacenamiento y trazabilidad
 
-### 18.1 Entidades principales
+### 20.1 Entidades principales
 
 | Entidad | Propósito |
 |---|---|
+| `usuarios_sgie` | Usuarios con rol SGIE y vínculo de correo corporativo |
 | `clientes` | Maestro de clientes |
 | `tipos_procedimiento` | Catálogo versionado |
 | `expedientes` | Unidad de trabajo |
+| `expediente_asignaciones` | Asignación abogado ↔ expediente |
+| `expediente_permisos` | Permisos extra (revisión, sustitución) |
 | `requisitos_expediente` | Checklist instanciado |
 | `documentos_expediente` | Metadatos de documentos |
+| `enlaces_magicos` | Tokens de carga |
 | `extracciones_ia` | Resultado versionado de IA |
 | `campos_extraidos` | Datos por campo y cita fuente |
+| `confianza_resultados` | Confianza calculada por documento/campo/expediente |
 | `validaciones` | Resultados del motor de reglas |
 | `alertas` | Riesgos y faltantes |
 | `tareas` | Trabajo pendiente |
 | `eventos_agenda` | Plazos y audiencias |
-| `enlaces_magicos` | Tokens de carga |
 | `plantillas_correo` | Comunicación configurable |
-| `correos_enviados` | Registro de emails |
+| `correos_enviados` | Registro de emails con idempotencia |
 | `historial_expediente` | Línea de tiempo |
-| `auditoria_eventos` | Auditoría transversal |
+| `correcciones_ia` | Correcciones del abogado para aprendizaje |
+| `sugerencias_ajuste` | Sugerencias de ajuste de reglas/umbrales |
+| `reglas_config_version` | Versionado de reglas y umbrales |
+| `jobs_sgie` | Cola de jobs idempotentes |
+| `auditoria_eventos` | Auditoría transversal (extendida con acciones SGIE) |
+| `retencion_politicas` | Políticas configurables de retención/archivado |
 
-### 18.2 Qué se guarda dónde
+### 20.2 Qué se guarda dónde
 
 | Dato | Ubicación |
 |---|---|
-| Bytes originales | Vercel Blob u object storage equivalente |
-| Texto extraído | Blob `.txt` o columna controlada |
+| Bytes originales | Vercel Blob (rutas privadas) |
+| Texto extraído | Blob `.txt` referenciado desde DB |
 | Metadatos | PostgreSQL |
-| Hash | PostgreSQL |
+| Hash SHA-256 | PostgreSQL |
 | Campos extraídos | PostgreSQL |
 | Citas fuente | PostgreSQL, referenciando texto/documento |
+| Confianza y evidencias | PostgreSQL |
 | Auditoría | PostgreSQL |
-| Correos enviados | PostgreSQL + proveedor email |
+| Correos enviados | PostgreSQL + Resend |
+| Resultados IA | PostgreSQL + logs de tokens |
 
-### 18.3 Trazabilidad mínima por acción crítica
+### 20.3 Trazabilidad mínima por acción crítica
 
-Cada acción debe registrar:
-
-- usuario o sistema actor;
-- expediente;
-- documento si aplica;
-- acción;
-- estado anterior y nuevo;
-- fecha/hora;
-- IP/user-agent en acciones públicas;
-- metadatos relevantes;
-- hash del archivo si aplica.
+Cada acción registra: usuario o sistema actor; expediente; documento si aplica;
+acción; estado anterior y nuevo; fecha/hora; IP/user-agent en acciones
+públicas; metadatos relevantes; hash del archivo si aplica.
 
 ---
 
-## 19. Seguridad, privacidad y gobierno
+## 21. Retención documental (Honduras)
 
-### 19.1 Rutas privadas
+### 21.1 Tarea pendiente: investigación normativa
 
-- `/intranet/sgie/*`: sólo usuarios autenticados con rol autorizado.
-- `/api/sgie/*`: sólo sesión interna.
-- `/cargar/{token}`: pública por token, no indexable, sin revelar datos más allá
-  de lo estrictamente necesario.
+Como tarea explícita de la **Fase 10**, se debe **investigar la normativa
+aplicable en Honduras** sobre:
 
-### 19.2 Enlaces mágicos
+- Conservación de documentación sensible (expedientes legales, identidades,
+  Poderes, contratos).
+- Protección de datos personales (principios, derechos ARCO, base jurídica,
+  transferencias internacionales a proveedores IA).
+- Obligaciones del despacho en cuanto a archivo, conservación y eventual
+  destrucción segura.
+- Plazos mínimos/máximos de conservación según tipo documental.
+
+**No inventar conclusiones legales.** La investigación debe apoyarse en fuentes
+oficiales (Secretaría de Salud, Tribunal Supremo Electoral, Congreso Nacional,
+leyes vigentes en Honduras). El resultado es **una propuesta de política** que
+el despacho aprueba antes de activarse.
+
+### 21.2 Política configurable
+
+El sistema debe permitir una **política configurable** de retención, archivo y
+eliminación segura, con reglas aprobadas por el despacho:
+
+- Tiempo de conservación por tipo documental / estado del expediente.
+- Migración a almacenamiento más económico tras `finalizado` / `archivado`.
+- Eliminación segura (soft delete + purga tras ventana aprobada).
+- Exportación o entrega al cliente al cierre.
+- Logs de destrucción con hash previo y responsable.
+
+### 21.3 Estado
+
+**NO VALIDADO** hasta completar la investigación normativa y la aprobación del
+despacho.
+
+---
+
+## 22. Seguridad, privacidad y gobierno
+
+### 22.1 Rutas privadas
+
+- `/intranet/sgie/*`: sólo autenticados con rol autorizado y scope por abogado.
+- `/intranet/admin/usuarios`: sólo rol `admin`.
+- `/api/sgie/*`: sólo sesión interna; protegido por proxy + JWT.
+- `/cargar/{token}`: pública por token, no indexable, sin revelar datos más
+  allá de lo estrictamente necesario.
+
+### 22.2 Enlaces mágicos
 
 - Token aleatorio de 256 bits.
 - Expiración obligatoria.
-- Máximo de usos.
+- Máximo de usos configurable.
 - Revocación manual.
 - Scope a expediente/requisito.
 - Rate limit por IP y token.
 - Auditoría de apertura y carga.
 
-### 19.3 Documentos
+### 22.3 Documentos
 
 - No exponer URLs públicas permanentes.
 - Acceso firmado o mediado por API autorizada.
-- Validación MIME/tamaño.
+- Validación MIME/tamaño/magic bytes.
 - Rechazo de extensiones peligrosas.
 - Hash antes de procesar.
-- Política de retención definida por el despacho.
+- Política de retención definida por el despacho (§21).
+- Acceso por expediente y rol (scope).
 
-### 19.4 IA y confidencialidad
+### 22.4 IA y confidencialidad
 
 - No enviar documentos innecesarios al proveedor.
 - Un documento por llamada.
@@ -799,25 +1067,39 @@ Cada acción debe registrar:
 - Minimizar datos en prompts.
 - Registrar proveedor/modelo usado.
 - Permitir modo `heuristic` o `disabled` si no hay autorización para IA externa.
-- Evaluar contrato, región y política de tratamiento de datos del proveedor antes
-  de producción.
+- Evaluar contrato, región y política de tratamiento de datos del proveedor
+  antes de producción.
 
 ---
 
-## 20. Arquitectura técnica sobre la intranet actual
+## 23. Arquitectura técnica sobre la intranet actual
 
-### 20.1 Estructura propuesta
+### 23.1 Estructura propuesta
 
 ```txt
 app/
   intranet/
-    sgie/                    # panel del abogado
+    sgie/                    # panel del abogado (módulo SGIE)
+      page.tsx               # cockpit abogado
+      expedientes/
+      documentos/
+      alertas/
+      tareas/
+      agenda/
+      correos/
+    admin/
+      usuarios/              # módulo Usuarios / Accesos
+      procedimientos/
+      plantillas/
+      reglas/
+      retencion/
   api/
     sgie/                    # APIs internas SGIE
     public/
       cargar/                # endpoints por token
 lib/
   sgie/
+    usuarios-db.ts
     clientes-db.ts
     expedientes-db.ts
     procedimientos-db.ts
@@ -825,299 +1107,420 @@ lib/
     enlaces-magicos.ts
     motor-documental.ts
     motor-reglas.ts
-    ia-documental.ts
+    motor-confianza.ts
+    ia-documental.ts        # capa IA configurable (DeepSeek)
+    ocr.ts
+    aprendizaje.ts
     automatizaciones.ts
     email-sgie.ts
     agenda.ts
     auditoria-sgie.ts
+    retencion.ts
 components/
   sgie/
     cockpit-abogado.tsx
     expediente-review.tsx
     checklist-documental.tsx
     documento-viewer.tsx
+    campos-extraidos.tsx
+    alertas-panel.tsx
+    admin-usuarios.tsx
 ```
 
-### 20.2 Procesamiento asíncrono
+### 23.2 Procesamiento asíncrono
 
 Fase inicial:
 
 - Tabla `jobs_sgie` en DB.
 - Vercel Cron con `CRON_SECRET`.
-- Jobs idempotentes.
+- Jobs idempotentes (clave por `job_tipo + ref_id + ventana`).
 - Procesamiento por lotes pequeños.
 
-Fase escalada:
+Fase escalada (futura opcional):
 
 - Cola/worker externo para OCR e IA pesada.
 - Reintentos con backoff.
 - Dead-letter queue.
 - Dashboard de jobs fallidos.
 
-Regla técnica: no ejecutar OCR o análisis IA pesado dentro de route handlers que
-deban responder al usuario.
+**Regla técnica:** no ejecutar OCR o análisis IA pesado dentro de route
+handlers que deban responder al usuario.
 
-### 20.3 Endpoints iniciales
+### 23.3 Endpoints iniciales
 
 | Endpoint | Uso |
 |---|---|
-| `GET /api/sgie/expedientes` | Listado privado |
+| `GET /api/sgie/expedientes` | Listado privado (scope por abogado) |
 | `POST /api/sgie/expedientes` | Crear expediente |
-| `GET /api/sgie/expedientes/:id` | Detalle |
+| `GET /api/sgie/expedientes/:id` | Detalle (verifica scope) |
 | `PATCH /api/sgie/expedientes/:id` | Actualizar |
 | `POST /api/sgie/expedientes/:id/checklist/confirmar` | Activar checklist |
 | `POST /api/sgie/enlaces` | Crear enlace mágico |
+| `POST /api/sgie/enlaces/:id/revocar` | Revocar enlace |
 | `POST /api/public/cargar/:token` | Subir documento |
 | `POST /api/sgie/documentos/:id/procesar` | Encolar procesamiento |
 | `POST /api/sgie/documentos/:id/aprobar` | Aprobar documento |
 | `POST /api/sgie/documentos/:id/rechazar` | Rechazar documento |
 | `POST /api/sgie/expedientes/:id/validar` | Validación final abogado |
+| `POST /api/sgie/expedientes/:id/firma` | Mandar a firma |
+| `PATCH /api/admin/usuarios/:id/rol` | Cambiar rol (admin) |
+| `PATCH /api/admin/usuarios/:id/bloqueo` | Activar/desactivar (admin) |
+| `GET /api/admin/usuarios` | Lista y último acceso (admin) |
+| `PATCH /api/admin/reglas/config` | Reajustar reglas/umbrales (admin) |
 
-Todos los endpoints de escritura deben usar Zod, auditoría y control de rol.
+Todos los endpoints de escritura usan Zod, auditoría y control de rol.
 
 ---
 
-## 21. Estrategia de implementación por fases
+## 24. Backlog técnico por fases (Fase 0–10)
+
+Cada fase incluye: **entregables**, **criterios de aceptación**, **tablas
+nuevas o modificadas**, **endpoints**, **componentes UI**, **riesgos** y
+**tests**.
 
 ### Fase 0 — Decisiones y mapa operativo
 
-**Duración estimada:** 1–2 semanas.  
-**Objetivo:** no programar a ciegas.
+**Duración:** 1–2 semanas. **Objetivo:** no programar a ciegas.
 
-Entregables:
+**Entregables:**
 
-- Mapa real de procedimientos prioritarios.
+- Mapa real de procedimientos prioritarios, generado desde el catálogo del
+  sitio (`/servicios-juridicos`).
 - Lista de documentos por procedimiento.
-- Plantillas de correo iniciales.
-- Política de retención.
-- Umbrales de confianza IA.
-- Decisión de cola/worker.
-- Decisión de uso de IA externa y proveedor.
-- Definición de MVP.
+- Plantillas de correo iniciales (texto base).
+- Política de retención preliminar (sujeta a investigación legal posterior).
+- Umbrales de confianza IA preliminares.
+- Decisión de cola/worker (Vercel Cron + `jobs_sgie` en MVP).
+- Decisión de IA externa y proveedor (DeepSeek V4 Flash como inicial).
+- Definición de MVP por escrito.
 
-Criterios:
+**Criterios de aceptación:**
 
 - Documento de decisiones aprobado por el despacho.
-- Sin código de producción aún.
+- Sin código de producción.
 
-### Fase 1 — Fundaciones de datos SGIE
+**Tablas/Endpoints/UI:** ninguno. **Riesgos:** decisiones retrasan fases
+posteriores. **Tests:** N/A.
 
-**Duración estimada:** 2–3 semanas.
+### Fase 1 — Datos y roles SGIE
 
-Entregables:
+**Duración:** 2–3 semanas.
 
-- Nuevas tablas Drizzle aditivas.
+**Entregables:**
+
+- Nuevas tablas Drizzle aditivas (schema SGIE base).
 - CRUD básico de procedimientos.
-- Seeds iniciales marcados como pendientes de validación legal.
-- Auditoría extendida.
-- Tests de schema y permisos.
+- Seeds iniciales generados desde el catálogo, marcados como
+  `pendiente_validacion_legal`.
+- Auditoría extendida con acciones SGIE.
 
-Criterios:
+**Criterios de aceptación:**
 
-- Migración generada con Drizzle.
+- `npx drizzle-kit generate` pasa.
 - Sin tocar motor de cálculo ni web pública.
 - `npm run lint && npm run build && npm test` pasan.
 
-### Fase 2 — Expedientes, clientes y checklist
+**Tablas nuevas:** `tipos_procedimiento`, `clientes`, `expedientes` (esqueleto),
+`requisitos_expediente`, `historial_expediente`, extensión de
+`auditoria_eventos`. **Endpoints:** sin endpoints públicos aún. **UI:** sin UI.
+**Riesgos:** modelo de datos insuficiente → revisión de Fase 3. **Tests:**
+tests de schema y permisos.
 
-**Duración estimada:** 3–4 semanas.
+### Fase 2 — Panel admin de Usuarios / Accesos y rol abogado
 
-Entregables:
+**Duración:** 2–3 semanas.
 
-- Panel `/intranet/sgie`.
-- CRUD de clientes.
-- Crear expediente.
-- Instanciar checklist por procedimiento.
-- Scope por abogado.
+**Entregables:**
+
+- Módulo admin **Usuarios / Accesos** completo:
+  - Listado con correos registrados y último acceso.
+  - Activar/desactivar usuarios.
+  - Asignar/quitar rol `abogado`.
+  - Vincular abogado a correo `@pinedayasociadoshn.com`.
+  - Bloquear acceso.
+  - Ver expedientes asignados por abogado.
+  - Auditar cambios de rol.
+- Acceso por rol `abogado`: al entrar en la intranet, ve módulo SGIE completo
+  (inclusión de rutas/menús; fases posteriores llenan contenido).
+- Scope base por abogado (interfaz; aplicación real en Fase 3+).
+
+**Criterios de aceptación:**
+
+- Admin activa, desactiva, asigna rol y bloquea usuario; todo se audita.
+- Abogado entra y ve el menú SGIE; ve placeholders de módulos.
+- Usuario bloqueado no puede acceder; sesión se revoca.
+
+**Tablas nuevas/modificadas:** `usuarios_sgie` (o extensión), `expediente_permisos`.
+**Endpoints:** `GET /api/admin/usuarios`, `PATCH /api/admin/usuarios/:id/rol`,
+`PATCH /api/admin/usuarios/:id/bloqueo`. **Componentes UI:**
+`app/intranet/admin/usuarios/page.tsx`, `components/sgie/admin-usuarios.tsx`.
+**Riesgos:** sesión activa persiste tras bloqueo → invalidación centralizada.
+**Tests:** tests e2e de cambio de rol, bloqueo y auditoría.
+
+### Fase 3 — Expedientes, clientes y checklist
+
+**Duración:** 3–4 semanas.
+
+**Entregables:**
+
+- Panel `/intranet/sgie/`.
+- CRUD de clientes con detección de duplicados.
+- Crear expediente (número interno, área, prioridad, responsable).
+- Instanciar checklist por procedimiento (versión anclada).
+- Asignación abogado ↔ expediente (`expediente_asignaciones`).
+- Scope por abogado aplicado en queries y endpoints.
 - Historial básico.
 
-Criterios:
+**Criterios de aceptación:**
 
-- Abogado crea cliente + expediente + checklist.
+- Abogado crea cliente + expediente + checklist y queda anclado a la versión.
 - Admin no pierde acceso a panel existente.
-- No hay filtración entre abogados.
+- No hay filtración entre abogados (un abogado no lista expedientes ajenos).
 
-### Fase 3 — Enlaces mágicos y carga documental
+**Tablas:** `expedientes` (completa), `expediente_asignaciones`,
+`clientes` (completa). **Endpoints:** `GET/POST /api/sgie/expedientes`,
+`GET/PATCH /api/sgie/expedientes/:id`, `POST .../checklist/confirmar`.
+**Componentes UI:** `app/intranet/sgie/page.tsx`,
+`expedientes/[id]/page.tsx`, `checklist-documental.tsx`. **Riesgos:** datos de
+ejemplo inventados como requisitos legales → usar `pendiente_validacion_legal`.
+**Tests:** tests de scope, fixture de procedimientos, integración.
 
-**Duración estimada:** 3–4 semanas.
+### Fase 4 — Enlaces mágicos y carga documental
 
-Entregables:
+**Duración:** 3–4 semanas.
 
-- Generar/revocar enlaces.
-- Portal `/cargar/{token}`.
-- Upload a Blob.
-- Hash, MIME, tamaño y estados.
-- Notificación interna.
-- Rate limiting.
+**Entregables:**
 
-Criterios:
+- Generar/revocar enlaces mágicos (token 256 bits, expiración, usos máximos).
+- Portal `/cargar/{token}` (público por token, no indexable).
+- Upload a Vercel Blob (rutas privadas).
+- Validación de tamaño, MIME, magic bytes, hash SHA-256.
+- Detección de duplicados por hash (sin procesar IA/OCR).
+- Notificación interna al abogado.
+- Rate limiting por IP y token.
+
+**Criterios de aceptación:**
 
 - Cliente sube documentos sin cuenta.
-- Token vencido/revocado no funciona.
-- Documento queda asociado al expediente correcto.
+- Token vencido/revocado/agotado no funciona.
+- Documento queda asociado al expediente/requisito correcto con hash.
+- Si hash ya existe, se marca `duplicado` y no se lanza IA.
 
-### Fase 4 — Comunicación automática y seguimiento
+**Tablas:** `enlaces_magicos`, `documentos_expediente`. **Endpoints:**
+`POST /api/sgie/enlaces`, `POST /api/sgie/enlaces/:id/revocar`,
+`POST /api/public/cargar/:token`. **Componentes UI:** portal cliente
+`app/cargar/[token]/page.tsx`. **Riesgos:** tokens filtrados → expiración corta
++ usos máximos; MIME spoofing → magic bytes. **Tests:** e2e de carga, token
+vencido, duplicados, rate limit.
 
-**Duración estimada:** 2–3 semanas.
+### Fase 5 — Correos y comunicación automatizada
 
-Entregables:
+**Duración:** 2–3 semanas.
 
-- Plantillas de correo.
-- Envío por fase.
-- Recordatorios.
-- Correos de faltantes.
-- Correos de rechazo/reemplazo.
-- Registro de correos.
-- Cron básico con idempotencia.
+**Entregables:**
 
-Criterios:
+- Plantillas administrables (solicitud, acuse, faltantes, recordatorio, enlace
+  expirado, rechazado, reemplazo, en revisión, cita/audiencia, cierre).
+- Envío por fase vía Resend.
+- Recordatorios configurables (frecuencia, máximos, ventanas).
+- Registro de correos con idempotencia.
+- Cron básico idempotente.
+- Alerta interna si correo crítico falla.
+
+**Criterios de aceptación:**
 
 - Ningún correo duplicado por el mismo evento.
 - Fallos de email generan alerta interna.
+- Recordatorios respetan configuración de frecuencia.
 
-### Fase 5 — Motor documental + IA controlada
+**Tablas:** `plantillas_correo`, `correos_enviados` (con UNIQUE idempotencia).
+**Endpoints:** plantillas CRUD (admin),
+`POST /api/sgie/expedientes/:id/correoPreview`. **Componentes UI:**
+`app/intranet/admin/plantillas/page.tsx`, editor con preview. **Riesgos:**
+spam percepción → configuración anti-duplicado estricta. **Tests:** idempotencia
+de correos, rate limit por destinatario, fallback Resend.
 
-**Duración estimada:** 4–6 semanas.
+### Fase 6 — Motor documental (texto, clasificación, estados)
 
-Entregables:
+**Duración:** 3–4 semanas.
 
-- Extracción de texto.
-- Clasificación heurística.
-- Capa IA configurable.
-- JSON schema/Zod.
-- Campos extraídos con confianza y cita.
-- Cache por hash.
-- Jobs asíncronos.
-- OCR selectivo si se decide.
+**Entregables:**
 
-Criterios:
+- Extracción de texto (PDF con capa de texto).
+- Clasificación heurística (regex/formatos).
+- Estados documentales completos (§12.3).
+- Cache por hash (no re-procesar duplicados).
+- Jobs de procesamiento (`jobs_sgie`).
+- OCR selectivo: en esta fase se marca `ilegible` y se pide reemplazo; el
+  proveedor/motor de OCR se decide en Fase 7.
+
+**Criterios de aceptación:**
+
+- Documento con texto queda `texto_extraido` sin OCR.
+- Documento sin texto queda `ocr_pendiente`/`ilegible`.
+- Duplicados no se re-procesan.
+
+**Tablas:** `extracciones_ia` (esqueleto), `jobs_sgie`. **Endpoints:**
+`POST /api/sgie/documentos/:id/procesar`. **Componentes UI:**
+`documento-viewer.tsx`. **Riesgos:** OOM en serverless → jobs por lotes pequeños.
+**Tests:** clasificación heurística, cache por hash, estados.
+
+### Fase 7 — IA / OCR con DeepSeek
+
+**Duración:** 4–6 semanas.
+
+**Entregables:**
+
+- Capa IA configurable (`ia-documental.ts`) con DeepSeek V4 Flash.
+- Variables de entorno (`IA_DOCUMENTAL_*`).
+- Modos `heuristic`/`ai`/`disabled`.
+- JSON estricto validado por Zod.
+- Campos extraídos con confianza inicial y cita fuente.
+- OCR selectivo (si se decide proveedor); si no, mantener `ilegible`.
+- Jobs asíncronos; no en route handlers.
+- Logs de tokens, proveedor, modelo, duración, estado.
+- Anti-alucinación: prompt restrictivo, cita obligatoria, `null` si no está.
+
+**Criterios de aceptación:**
 
 - Un documento por llamada IA.
 - Sin auto-aprobación.
-- Fallo IA no rompe expediente.
-- Coste y tokens medidos.
+- Fallo IA no rompe expediente (fallback `pendiente_abogado`).
+- Coste y tokens medidos por expediente.
 
-### Fase 6 — Motor de reglas y cockpit del abogado
+**Tablas:** `campos_extraidos`, `extracciones_ia` (completa). **Endpoints:**
+`POST /api/sgie/documentos/:id/iaExtraer` (interno, job). **Componentes UI:**
+`campos-extraidos.tsx`. **Riesgos:** alucinación legal → prompt + Zod + reglas
+deterministas; coste → cache + no reprocesar duplicados. **Tests:** JSON
+schema, fallback, límite de reintentos.
 
-**Duración estimada:** 4–6 semanas.
+### Fase 8 — Reglas y confianza
 
-Entregables:
+**Duración:** 4–6 semanas.
 
-- Reglas deterministas.
-- Alertas.
-- Puntuación de completitud.
-- Semáforo de riesgo.
-- Pantalla consolidada de revisión.
-- Aprobar/rechazar/corregir.
+**Entregables:**
 
-Criterios:
+- Motor de reglas determinista, idempotente y auditable.
+- Severidades `info`/`advertencia`/`error`/`critico`.
+- Reglas de completitud, vencimientos, duplicados, incoherencias, formatos,
+  documentos obligatorios/condicionales, estados.
+- Motor de confianza inteligente (evidencias combinadas, escala §14).
+- Reajuste de reglas y umbrales desde panel admin con versionado y auditoría.
+- Alertas generadas por reglas.
+
+**Criterios de aceptación:**
+
+- El motor detecta completitud, duplicados, vigencia y contradicciones.
+- Repetir validación no duplica alertas.
+- Admin reajusta un umbral; queda versionado y auditado.
+- Confianza alta nunca ejecuta transición crítica sin abogado.
+
+**Tablas:** `validaciones`, `alertas`, `confianza_resultados`,
+`reglas_config_version`. **Endpoints:** `PATCH /api/admin/reglas/config`,
+`POST /api/sgie/expedientes/:id/reglas/ejecutar`. **Componentes UI:**
+`app/intranet/admin/reglas/page.tsx`, `alertas-panel.tsx`. **Riesgos:**
+falsos positivos → backtesting antes de activar umbrales críticos. **Tests:**
+idempotencia, suite de reglas por procedimiento, escala de confianza.
+
+### Fase 9 — Cockpit del abogado
+
+**Duración:** 3–4 semanas.
+
+**Entregables:**
+
+- Vista principal del cockpit (bandeja consolidada, §10.1).
+- Pantalla de revisión de expediente (§10.2).
+- Acciones rápidas (aprobar, rechazar, reemplazo, corregir, validar, mandar a
+  firma, marcar en trámite).
+- Agenda, plazos y bandejas operativas (§19).
+
+**Criterios de aceptación:**
 
 - El abogado valida desde una sola pantalla.
 - Las transiciones críticas son manuales.
-- Toda corrección re-ejecuta reglas afectadas.
+- Toda corrección re-ejecuta reglas y confianza afectadas.
+-ificaciones entran en `historial_expediente` y `auditoria_eventos`.
 
-### Fase 7 — Agenda, tareas y bandejas inteligentes
+**Tablas:** (uso de las ya creadas) `tareas`, `eventos_agenda`. **Endpoints:**
+`POST .../aprobar`, `.../rechazar`, `.../validar`, `.../firma`. **Componentes
+UI:** `cockpit-abogado.tsx`, `expediente-review.tsx`. **Riesgos:** baja
+adopción → UX simple y bandeja única. **Tests:** e2e del flujo completo de
+revisión a validación.
 
-**Duración estimada:** 3–4 semanas.
+### Fase 10 — Métricas, auditoría y mejora continua
 
-Entregables:
+**Duración:** 3–5 semanas.
 
-- Eventos propuestos.
-- Tareas automáticas.
-- Bandejas operativas.
-- Resumen diario.
-- Detección de casos atascados.
+**Entregables:**
 
-Criterios:
-
-- Toda fecha crítica genera acción.
-- El abogado puede confirmar/anular eventos.
-
-### Fase 8 — Métricas, auditoría avanzada y escalado
-
-**Duración estimada:** 3–5 semanas.
-
-Entregables:
-
-- Dashboard de productividad.
-- Dashboard de costes IA/storage.
-- Exportación de auditoría.
-- Políticas de retención.
+- Dashboard de productividad (expedientes por abogado, tiempos por fase).
+- Dashboard de costes IA/storage/email por expediente.
+- Exportación de auditoría con filtros.
+- Aprendizaje controlado (registro de correcciones, detección de patrones,
+  sugerencias de ajuste aprobadas por admin).
+- Retención documental (investigación normativa Honduras + política
+  configurable).
 - Optimización de queries e índices.
 
-Criterios:
+**Criterios de aceptación:**
 
 - El despacho ve cuellos de botella y ahorro real.
 - Costes medidos contra proyección.
+- Una sugerencia de ajuste requiere aprobación; al aprobarse, se aplica con
+  backtesting y auditoría.
+- Política de retención aprobada por el despacho y activa.
 
-### Fase 9 — Futuro avanzado
-
-Sólo después de estabilizar el flujo base:
-
-- Firma electrónica integrada si el marco legal y proveedor lo permiten.
-- Integración con calendarios externos.
-- Intake inteligente desde formularios públicos.
-- Voz a expediente: dictado de notas que alimentan tareas.
-- Búsqueda semántica interna por expedientes cerrados.
-- Knowledge graph privado del despacho.
-- Asistente de preparación de escritos como borrador, nunca como decisión final.
+**Tablas:** `correcciones_ia`, `sugerencias_ajuste`, `retencion_politicas`.
+**Endpoints:** dashboards (`GET /api/sgie/metricas/*`),
+`POST /api/admin/sugerencias/:id/aprobar`. **Componentes UI:**
+`app/intranet/admin/metricas/page.tsx`, `retencion/page.tsx`. **Riesgos:**
+aplicar ajustes automáticos sin control → siempre aprobación humana.
+**Tests:** backtest reproducible, exportación de auditoría, políticas de
+retención.
 
 ---
 
-## 22. Plan de 30 / 60 / 90 / 180 días
+## 25. Plan de 30 / 60 / 90 / 180 días
 
 ### Primeros 30 días — Base operativa
 
 - Aprobar decisiones de Fase 0.
-- Definir 5 procedimientos prioritarios.
-- Crear modelo de datos inicial.
-- Implementar clientes, expedientes y checklist.
+- Generar procedimientos desde el catálogo del sitio (Fase 0/1).
+- Implementar Fase 1 (datos) y Fase 2 (Usuarios / Accesos).
 - Activar auditoría SGIE básica.
 
-Resultado esperado: expedientes digitales con checklist y trazabilidad.
+Resultado: usuarios y accesos gestionados; modelo de datos listo.
 
-### Días 31–60 — Documentos y comunicación
+### Días 31–60 — Expedientes y documentación
 
-- Portal de carga por enlace mágico.
-- Upload seguro a Blob.
-- Correos de solicitud y acuse de recibo.
-- Recordatorios de faltantes.
-- Estados documentales.
+- Fase 3: expedientes, clientes y checklist.
+- Fase 4: enlaces mágicos y carga documental.
 
-Resultado esperado: el sistema empieza a pedir y recibir documentos sin trabajo
-manual constante.
+Resultado: el sistema empieza a pedir y recibir documentos sin trabajo manual
+constante.
 
-### Días 61–90 — IA y reglas
+### Días 61–90 — Comunicación y motor documental
 
-- Extracción de texto.
-- Clasificación documental.
-- IA configurable.
-- Campos extraídos con cita.
-- Reglas de completitud y coherencia.
-- Alertas y semáforo.
-- Cockpit de revisión inicial.
+- Fase 5: correos por fase.
+- Fase 6: motor documental.
 
-Resultado esperado: el abogado revisa un expediente preparado, no una carpeta
-desordenada.
+Resultado: correos automáticos, documentos clasificados y con texto extraído.
 
-### Días 91–180 — Autopilot supervisado
+### Días 91–180 — IA, reglas y cockpit
 
-- Agenda y tareas automáticas.
-- Resumen diario.
-- Métricas de productividad.
-- Cost dashboard.
-- Mejoras de IA/OCR.
-- Workflows por área jurídica.
-- Preparación de firma/trámite.
+- Fase 7: IA/OCR DeepSeek.
+- Fase 8: reglas y confianza.
+- Fase 9: cockpit abogado.
+- Fase 10 (parcial): métricas iniciales y registro de correcciones.
 
-Resultado esperado: el sistema opera el ciclo documental completo y el abogado
-interviene en validación, estrategia y firma.
+Resultado: el abogado revisa un expediente preparado; el sistema opera el ciclo
+documental completo y aprende de forma controlada.
 
 ---
 
-## 23. Métricas de éxito
+## 26. Métricas de éxito
 
-### 23.1 Operativas
+### 26.1 Operativas
 
 - Tiempo promedio desde apertura a checklist aprobado.
 - Tiempo promedio de recepción documental.
@@ -1127,7 +1530,7 @@ interviene en validación, estrategia y firma.
 - Número de recordatorios que evitaron atraso.
 - Expedientes atascados por fase.
 
-### 23.2 IA y calidad
+### 26.2 IA y calidad
 
 - Porcentaje de documentos clasificados automáticamente.
 - Porcentaje de campos extraídos con confianza alta.
@@ -1136,7 +1539,7 @@ interviene en validación, estrategia y firma.
 - Coste IA por expediente.
 - Tiempo de procesamiento por documento.
 
-### 23.3 Negocio
+### 26.3 Negocio
 
 - Expedientes activos por abogado.
 - Tiempo administrativo por expediente.
@@ -1146,14 +1549,14 @@ interviene en validación, estrategia y firma.
 
 ---
 
-## 24. Costes y control financiero
+## 27. Costes y control financiero
 
-### 24.1 Principio
+### 27.1 Principio
 
-El coste debe medirse, no asumirse. Las tarifas de IA, hosting, storage, email y
-OCR deben re-verificarse antes de implementar y luego monitorearse en producción.
+El coste se mide, no se asume. Las tarifas de IA, hosting, storage, email y OCR
+se re-verifican antes de implementar y se monitoreán en producción.
 
-### 24.2 Fórmulas de control
+### 27.2 Fórmulas de control
 
 - Documentos/mes = expedientes/mes × documentos promedio.
 - Storage mensual = documentos/mes × MB promedio.
@@ -1162,19 +1565,19 @@ OCR deben re-verificarse antes de implementar y luego monitorearse en producció
 - OCR = páginas escaneadas × coste por página.
 - Email = correos por expediente × expedientes/mes.
 
-### 24.3 Estrategias de ahorro
+### 27.3 Estrategias de ahorro
 
-- No procesar duplicados.
+- No procesar duplicados (hash).
 - Cache por hash.
 - Extraer texto sin IA cuando el PDF ya tiene capa de texto.
 - OCR sólo cuando sea necesario.
-- Prompt estable para aprovechar cache del proveedor si existe.
+- Prompt estable para aprovechar caching del proveedor si existe.
 - Limitar reintentos.
 - Procesar por lotes pequeños.
-- Archivar expedientes finalizados.
+- Archivar expedientes finalizados (retención configurable).
 - Medir coste por expediente en dashboard.
 
-### 24.4 Escenarios a calcular antes de producción
+### 27.4 Escenarios a calcular antes de producción
 
 | Escenario | Expedientes/mes | Documentos/expediente | Uso esperado |
 |---|---:|---:|---|
@@ -1187,14 +1590,14 @@ oficiales vigentes.
 
 ---
 
-## 25. Riesgos y mitigaciones
+## 28. Riesgos y mitigaciones
 
 | Riesgo | Impacto | Mitigación |
 |---|---|---|
-| IA inventa dato | Alto | Cita fuente, confianza, Zod, reglas, revisión humana |
+| IA inventa dato legal | Alto | Cita fuente, confianza, Zod, reglas deterministas, revisión humana |
 | Mezcla de expedientes | Crítico | Un documento/expediente por llamada, sin memoria cruzada |
 | Pérdida de plazo | Alto | Fechas → tareas/eventos, resumen diario, alertas |
-| Filtración de documentos | Crítico | Proxy, tokens, URLs privadas, auditoría, rate limit |
+| Filtración de documentos | Crítico | Proxy, tokens, URLs privadas, auditoría, rate limit, scope por abogado |
 | Correos duplicados | Medio | Idempotencia por evento/ventana |
 | OCR/IA causa timeout | Medio | Jobs, cron, worker, no procesar pesado en request |
 | Procedimiento mal definido | Alto | Versionado y validación legal antes de activar |
@@ -1202,108 +1605,165 @@ oficiales vigentes.
 | Abogado no adopta cockpit | Alto | UI simple, bandeja única, acciones rápidas |
 | Cliente no usa portal | Medio | Correos claros, enlaces simples, carga móvil |
 | Exposición SEO de rutas privadas | Crítico | Noindex, robots, sitemap excluyente, sin enlaces públicos |
+| Cambio de rol sin auditoría | Alto | Auditoría de gobernanza extendida en `auditoria_eventos` |
+| Ajuste automático de reglas | Crítico | Sin auto-modificación; aprobación humana obligatoria |
+| Retención no conforme a ley | Alto | Investigación normativa Honduras + política aprobada por despacho |
 
 ---
 
-## 26. Decisiones que debe tomar el despacho
+## 29. Decisiones que debe tomar el despacho
 
 Antes de programar fases avanzadas, Pineda y Asociados debe decidir:
 
-1. ¿Cuáles son los 5 procedimientos prioritarios para el MVP?
+1. **¿Cuáles son los procedimientos prioritarios para el MVP?**  
+   Respuesta previa del despacho: generar un procedimiento por cada servicio
+   del catálogo del sitio (`/servicios-juridicos`), por rama del derecho y por
+   servicio concreto. Son modificables después.
 
-Dentro de https://www.pinedayasociadoshn.com/servicios-juridicos estan las distintas ramas del derecho que tocamos, y dentro de cada rama estan los servicios que ofrecemos, por ejemplo derecho de familia y dentro Divorcio por mutuo acuerdo, pues debemos entrar en cada rama del derecho, laboral, derecho civil y notarial, etc... y por cada servicio que ofrecemos crear un procedimiento con los documentos que se necesitan, evidentemente luego tenemos que tener la opcion de modificarlos agregando o quitando documentos, pero de primeras debemos crearlos todos. 
+2. **¿Qué documentos requiere cada procedimiento y quién los valida legalmente?**  
+   Respuesta previa: de momento el despacho + IA; al estar creados como sistema
+   modificable, no será un problema.
 
-2. ¿Qué documentos requiere cada procedimiento y quién los valida legalmente?
+3. **¿Qué datos se consideran críticos y requieren confirmación humana siempre?**  
+   Respuesta previa: con reglas y métricas de confianza bien diseñadas, ningún
+   dato es crítico en sí; el motor debe diseñarse para no fallar mediante reglas
+   y escalas de confianza adecuadas.
 
-de momento nosotros, la IA tiene que validarlos, cuando esten creados como el sistema tiene que tener la opcion de poder modificarlos, no va ser un problema.
+4. **¿Qué umbrales de confianza se aceptan para cada tipo de dato?**  
+   Respuesta previa: la confianza se establece en función de la coherencia de
+   los datos extraídos con el expediente; múltiples coincidencias aumentan la
+   confianza (ver §14).
 
+5. **¿Se permite enviar documentos a un proveedor externo de IA?**  
+   Respuesta previa: se actualizarán las políticas y se usará OCR/IA.
 
-3. ¿Qué datos se consideran críticos y requieren confirmación humana siempre?
+6. **¿Qué proveedor/modelo se usará inicialmente y bajo qué contrato?**  
+   Respuesta previa: DeepSeek V4 Flash o un modelo inferior que cumpla la
+   función (ver §13).
 
-Con las reglas adecuadas y las metricas de confianza bien implementadas ningun dato puede ser critico, simplemente tenemos que diseñar bien el motor para evitar que falle, diseñando reglas y escalas de confianza adecuadas.
+7. **¿Se requiere OCR desde el MVP?**  
+   Resolución: en MVP (Fase 6) se marca `ilegible` y se pide reemplazo. El
+   proveedor/motor de OCR se decide en Fase 7; si se decide, se integra con
+   jobs asíncronos y anti-alucinación.
 
+8. **¿Cuántos días duran los enlaces mágicos?**  
+   Respuesta previa: varios días, para dar tiempo al cliente a subir la
+   documentación. Configurable por admin.
 
-4. ¿Qué umbrales de confianza se aceptan para cada tipo de dato?
+9. **¿Cada cuánto se envían recordatorios al cliente?**  
+   Respuesta previa: estudiar métricas para no ser demasiado insistentes pero
+   mostrar que el despacho está pendiente. Configurable por admin.
 
-la confianza se establece en funcion de la coherencia de los datos extraidos con el expediente, si vemos que hay mas de una coincidencia la confianza es mayor. 
+10. **¿Cuál es la política de retención documental?**  
+    Respuesta previa: investigar la ley de Honduras y adaptar el plan para
+    guardar documentación sensible (posiblemente en almacenamiento más
+    económico tras `finalizado`/`archivado`). Ver §21.
 
-5. ¿Se permite enviar documentos a un proveedor externo de IA?
+11. **¿Quién puede ver expedientes de otros abogados?**  
+    Respuesta previa: cada abogado tendrá correo `@pinedayasociadoshn.com` y
+    acceso sólo a sus clientes. El admin puede conceder permiso adicional
+    (ver §6.2).
 
-Actualizaremos nuestras politicas y usaremos OCR o IA 
+12. **¿Qué eventos de agenda deben confirmarse manualmente?**  
+    Respuesta previa: el reto está en el sistema de reglas y determinación de
+    confianza para que el sistema actúe o pida revisión humana.
 
-6. ¿Qué proveedor/modelo se usará inicialmente y bajo qué contrato?
+13. **¿Qué plantillas de correo aprueba el despacho?**  
+    Respuesta previa: el sistema diseñará un conjunto de plantillas
+    administrables (ver §18.2); el despacho las aprueba desde el panel.
 
-DeepSeek v4 Flash o algun modelo inferior que cumpla su funcion para lo que necesitamos
+14. **¿Qué métricas se revisarán semanalmente?**  
+    Respuesta previa: la clave es el sistema de reglas y determinación de
+    confianza por coincidencias; los valores se ajustan con el tiempo. Se desea
+    aprendizaje automático para mejorar la precisión (ver §16).
 
-7. ¿Se requiere OCR desde el MVP o se marca ilegible al inicio?
-
-No entiendo la pregunta
-
-8. ¿Cuántos días duran los enlaces mágicos?
-
-El enlace magico debe durar unos dias, para darle tiempo al cliente en subir la documentacion.
-
-9. ¿Cada cuánto se enviarán recordatorios al cliente?
-
-Podemos estudiar metricas para no ser demasiado insistentes, pero al mismo tiempo que el cliente vea que estamos pendientes de resolver su caso. 
-
-10. ¿Cuál es la política de retención documental?
-
-La IA tiene que revisar la ley de Honduras y adaptar el plan para guardar documentacion sensible tal vez en una base de datos mas economica una vez el expediente ya fue completado o archivado.
-
-11. ¿Quién puede ver expedientes de otros abogados?
-
-Cada abogado tendra su correo corporativo @pinedayasociadoshn.com y tendra acceso solo a sus clientes.
-
-12. ¿Qué eventos de agenda deben confirmarse manualmente?
-
-Lo mismo de siempre el reto esta en crear un sistema de reglas y determinacion de confianza para que el sistema actue o pida revision humana.
-
-13. ¿Qué plantillas de correo aprueba el despacho?
-
-La IA tiene que diseñar un sistema de plantillas que actuen de comunicacion con el cliente. 
-
-14. ¿Qué métricas se revisarán semanalmente?
-
-Pues esta es la clave el sistema de reglas y determinacion de confianza en funcion de cohinciendencias, estos valores se iran ajustando y seria bueno que el sistema aprendiera por si solo y las fuera ajustando con el tiempo para mejorar su precion, quiero inteligencia en estado puro. 
-
-
-15. ¿Cuándo se considera un expediente “listo para firma”?
-
-
+15. **¿Cuándo se considera un expediente "listo para firma"?**  
+    Resolución propuesta: cuando el expediente está en estado `validado`, sin
+    alertas con severidad `error` o `critico` abiertas, con checklist de
+    documentos obligatorios completo y aprobado, y la decisión de firma es
+    tomada explícitamente por el abogado desde el cockpit.
 
 ---
 
-## 27. Criterios de aceptación globales
+## 30. Reglas de implementación
+
+- **Cambios aditivos**: no romper lo existente.
+- **Mantener rutas privadas fuera de SEO**: `/intranet/sgie/*`, `/cargar/{token}`
+  no aparecen en sitemap, robots, schemas ni enlaces públicos.
+- **Proteger `/api/sgie/*` y `/api/admin/*` con proxy + JWT + control de rol**.
+- **Zod en todos los endpoints de escritura**.
+- **Auditar cambios críticos**: rol, permisos, reglas, umbrales, validación,
+  firma, rechazo, reemplazo, bloqueo.
+- **No ejecutar IA/OCR pesado dentro de route handlers**: usar jobs/cron
+  idempotentes.
+- **Jobs idempotentes**: clave por `job_tipo + ref_id + ventana`.
+- **Medir costes por expediente**: tokens IA, storage, email; visible en
+  dashboard.
+- **Mantener seguridad de documentos privados**: Blob con rutas privadas,
+  acceso mediado por API autorizada, hash antes de procesar, no reprocesar
+  duplicados.
+- **No auto-modificar reglas críticas en producción**: aprendizaje controlado
+  con aprobación humana.
+- **No añadir proveedores**: perfeccionamos el stack actual; proveedores extra
+  quedan como fase futura opcional.
+- **Actualizar `README.md` y `CHANGELOG.md` sólo cuando aplique por cambios
+  reales de implementación**.
+- **Commits atómicos**: un cambio lógico por commit, mensaje en español con
+  prefijo (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`,
+  `sgie:`).
+- **Validar tras el cambio**: `npm run lint && npm run build && npm test` por
+  defecto; `npx drizzle-kit generate` para schema; tests e2e para flujos.
+
+---
+
+## 31. Criterios de aceptación globales
 
 El SGIE Autopilot estará listo para considerarse operativo cuando:
 
 1. Un abogado pueda crear un expediente con checklist en menos de 3 minutos.
-2. El sistema pueda solicitar documentos al cliente sin redactar correos manuales.
+2. El sistema pueda solicitar documentos al cliente sin redactar correos
+   manuales.
 3. El cliente pueda subir documentos sin cuenta y sin intervención del despacho.
-4. Todo documento quede asociado a expediente, requisito, hash y estado.
+4. Todo documento quede asociado a expediente, requisito, hash, estado, origen y
+   trazabilidad.
 5. El sistema detecte faltantes y envíe recordatorios sin duplicados.
-6. La IA extraiga campos con confianza y cita fuente, sin auto-aprobar.
-7. El motor de reglas detecte completitud, duplicados, vigencia y contradicciones.
-8. El abogado vea una pantalla consolidada para validar.
-9. Toda acción crítica quede en historial y auditoría.
-10. Las rutas privadas no aparezcan en sitemap, robots públicos, schemas ni
+6. La IA extraiga campos con confianza y cita fuente, sin auto-aprobar y sin
+   inventar datos legales.
+7. El motor de reglas detecte completitud, duplicados, vigencia y
+   contradicciones; sus umbrales son reajustables desde el panel admin.
+8. El motor de confianza inteligente clasifique evidencias en la escala 0–100.
+9. El abogado vea una pantalla consolidada (cockpit) para validar.
+10. Toda acción crítica quede en historial y auditoría.
+11. Las rutas privadas no aparezcan en sitemap, robots públicos, schemas ni
     enlaces públicos.
-11. Los costes por expediente puedan medirse.
-12. Las transiciones críticas dependan siempre del abogado.
+12. Los costes por expediente puedan medirse.
+13. Las transiciones críticas dependan siempre del abogado.
+14. El admin pueda gestionar usuarios, roles, vínculos de correo y permisos con
+    auditoría.
+15. Cada abogado sólo acceda a sus clientes y expedientes asignados, salvo
+    permiso adicional concedido por admin.
+16. El aprendizaje controlado registre correcciones y proponga ajustes sujetos
+    a aprobación humana.
+17. La política de retención documental esté investigada, aprobada y activa.
 
 ---
 
-## Próximo paso recomendado
+## 32. Formato de respuesta final por fase
 
-Ejecutar **Fase 0** durante 1–2 semanas con el despacho:
+Cada fase, al cerrarse, debe reportar:
 
-1. elegir procedimientos prioritarios;
-2. aprobar documentos requeridos;
-3. definir plantillas de correo;
-4. decidir política de IA/OCR;
-5. fijar umbrales de confianza;
-6. aprobar el MVP;
-7. convertir este plan en backlog técnico por issues/commits atómicos.
+```
+Porcentaje completado:
+Porcentaje restante:
+Archivos modificados:
+Comandos ejecutados:
+Resultado de cada comando:
+Errores corregidos:
+Riesgos pendientes:
+NO VALIDADO:
+Próximo paso recomendado:
+```
 
-*Fin del plan de acción SGIE Autopilot.*
+---
+
+*Fin del plan de acción SGIE Autopilot — versión 4.0.*

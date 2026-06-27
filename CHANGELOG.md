@@ -5,6 +5,103 @@
 
 ---
 
+## 2026-06-27 — sgie: Fase 1 + Fase 2 + base Fase 3 del SGIE Autopilot
+
+Implementación inicial del **SGIE Autopilot** (Sistema de Gestión Integral de
+Expedientes) dentro de la intranet existente, conforme a `pinedayasociados.md`.
+El abogado delega tareas operativas al sistema y se concentra en validar,
+decidir, asesorar y firmar. La IA/automatización nunca aprueba, firma ni cierra.
+
+### Alcance (Fase 1 + Fase 2 + base Fase 3)
+
+- **Fase 1 — Datos y roles:** modelo SGIE base en Drizzle (8 tablas + 5 columnas
+  de gobernanza en `usuarios`). Migración `0017_sgie_base` generada y aplicada
+  a la DB de desarrollo.
+- **Fase 2 — Usuarios / Accesos:** módulo admin ampliado en
+  `/intranet/admin/usuarios` (no se crea un segundo panel). Rol abogado,
+  bloqueo de acceso, vínculo de correo corporativo y auditoría de gobernanza.
+- **Fase 3 (base visual):** cockpit del abogado en `/intranet/sgie` con tarjetas
+  reales (expedientes) y placeholders profesionales para módulos futuros.
+  Expedientes funcionales con scope por abogado.
+
+### Schema (Bloque A) — `lib/schema.ts`
+
+- **`usuarios` extendido** (aditivo): `ultimo_acceso`, `bloqueado`,
+  `bloqueado_en`, `bloqueado_motivo`, `correo_corporativo_vinculado`.
+  `bloqueado` es revocación de acceso distinguible de `active` (soft-delete).
+- **8 tablas SGIE nuevas:** `usuarios_sgie`, `clientes`, `tipos_procedimiento`,
+  `expedientes`, `expediente_asignaciones`, `expediente_permisos`,
+  `requisitos_expediente`, `historial_expediente`.
+- **7 enums nuevos** (estados de expediente §8.2, prioridad, estado de
+  procedimiento, tipo/estado de requisito, rol de asignación, tipo de actor).
+  `EXPEDIENTE_ESTADOS_CRITICOS` marca las transiciones que sólo el abogado ejecuta.
+- **Migración:** `drizzle/migrations/0017_sgie_base.sql`. Se reparó además la
+  desincronización del journal de Drizzle (Fase 2 no estaba registrada).
+- **VALIDADO:** `npx drizzle-kit push` aplicado a DB dev; 8/8 tablas y 5/5
+  columnas verificadas en `information_schema`.
+
+### Control de acceso (Bloque C)
+
+- `lib/auth.ts` — `requireAbogado(request)`: rol `abogado` o `admin` (el admin
+  conserva acceso total al SGIE para supervisión).
+- `/api/auth/login` — rechaza login de bloqueados (403) o desactivados; registra
+  `ultimo_acceso` en cada login correcto.
+- `/api/auth/me` — revoca sesión activa de bloqueados/desactivados tras la
+  emisión del JWT (cierra la ventana de 24h del token stateless).
+
+### Proxy (Bloque D) — `proxy.ts`
+
+- Redirect post-login por rol: admin → `/intranet/admin`, abogado →
+  `/intranet/sgie` (antes redirigía ciegamente a admin).
+- `/api/sgie/*` y `/intranet/sgie/*` requieren token JWT.
+
+### Endpoints admin Usuarios/Accesos (Bloque E)
+
+- `GET /api/admin/usuarios` ampliado: último acceso, bloqueo, vínculo
+  corporativo y conteo de expedientes asignados. Filtro por estado.
+- `PATCH /api/admin/usuarios/:id/rol`, `.../bloqueo`, `.../vinculo-correo`.
+- Todos con `requireAdmin` + `validateCsrf` + `rateLimit` + `logAudit`.
+
+### Endpoints SGIE expedientes (Bloque F)
+
+- `GET/POST /api/sgie/expedientes`, `GET/PATCH /api/sgie/expedientes/:id`,
+  `POST /api/sgie/expedientes/:id/checklist/confirmar`.
+- **Scope por abogado** aplicado en query (asignaciones/permisos activos);
+  transiciones críticas requieren actor abogado.
+
+### UI (Bloques G + H)
+
+- **Admin Usuarios/Accesos ampliado:** tabla con estado, último acceso y
+  expedientes; toggle rol, bloquear (modal con motivo), vincular correo.
+- **Layout + Cockpit SGIE** (`/intranet/sgie`): tarjetas reales + placeholders.
+- **Expedientes:** lista, crear y detalle con checklist, historial y acciones
+  críticas del abogado (validar, firmar…).
+- **Placeholders** (documentos, alertas, tareas, agenda, correos).
+
+### SEO / privacidad (Bloque I)
+
+- `robots.ts` bloquea `/intranet/` → `/intranet/sgie/*` cubierto.
+- `app/sitemap.ts` sin rutas intranet (verificado). Sin enlaces públicos a SGIE.
+
+### Validación
+
+- `npm run lint` — 0 errores (4 warnings preexistentes en `lib/analytics.ts`).
+- `npm run build` — ✓ Compiled successfully; 302/302 páginas; TypeScript OK.
+- `npm test` — 21 archivos, 601 tests, 0 fallos.
+- `npx drizzle-kit generate` — migración generada. `npx drizzle-kit push` — DB dev.
+
+### NO VALIDADO / pendiente
+
+- Aplicación de la migración a **producción**: pendiente de deploy.
+- **Seeds de procedimientos** desde el catálogo del sitio (Fase 0/1 editorial):
+  tabla creada; siembra como próximo paso.
+- **Tests e2e Playwright** de flujos SGIE: no añadidos (no romper los 37
+  existentes); trabajo posterior.
+- Módulos futuros (documentos, alertas, tareas, agenda, correos, IA/OCR, motor
+  de reglas y confianza, enlaces mágicos): fases 4–10 del plan.
+
+---
+
 ## 2026-06-25 — chore: modo de diagnóstico local de analítica (development)
 
 Añadida observabilidad local para auditorías futuras de GA4. **No es un fix

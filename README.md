@@ -320,7 +320,68 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 - **70+ endpoints** en `app/api/`.
 - Protegidas por proxy edge (`proxy.ts`): requiere JWT para `/api/*` salvo
   rutas públicas explícitas (`/api/health`, `/api/delitos/count`, etc.).
-- Rol admin requerido para `/api/admin/*`.
+- Rol admin requerido para `/api/admin/*`. Rol abogado/admin para `/api/sgie/*`.
+
+---
+
+## SGIE Autopilot (intranet — Fase 1/2/3 parcial)
+
+El **SGIE Autopilot** es el sistema de gestión integral de expedientes que se
+integra en la intranet existente. Objetivo: que el abogado delegue tareas
+operativas (pedir documentos, clasificar, alertar, recordar) y se concentre en
+**validar, decidir, asesorar y firmar**. La IA/automatización **nunca** aprueba,
+firma, presenta ni cierra un expediente. Plan completo: `pinedayasociados.md`.
+
+### Estado (Jun 2026)
+
+| Fase | Estado |
+|------|--------|
+| Fase 1 — Datos y roles | IMPLEMENTADO + VALIDADO (schema aplicado a dev) |
+| Fase 2 — Usuarios/Accesos + rol abogado | IMPLEMENTADO + VALIDADO |
+| Fase 3 (base) — Cockpit + expedientes | IMPLEMENTADO + VALIDADO |
+| Fase 4–10 — Documentos, IA/OCR, reglas, correos, agenda, retención | PENDIENTE |
+
+### Rutas y roles
+
+| Ruta | Acceso | Descripción |
+|------|--------|-------------|
+| `/intranet/login` | Público (con sesión: redirect por rol) | Login único existente |
+| `/intranet/admin/*` | `admin` | Panel admin actual (sin cambios) |
+| `/intranet/admin/usuarios` | `admin` | Módulo Usuarios/Accesos ampliado |
+| `/intranet/sgie` | `abogado` / `admin` | Cockpit del abogado |
+| `/intranet/sgie/expedientes` | `abogado` / `admin` | Lista + crear + detalle |
+| `/intranet/sgie/{documentos,alertas,tareas,agenda,correos}` | `abogado` / `admin` | Placeholders (fases futuras) |
+| `/api/sgie/*` | `abogado` / `admin` (JWT) | API SGIE con scope por abogado |
+
+### Gobernanza de accesos (Fase 2)
+
+Desde `/intranet/admin/usuarios` el admin puede: ver correos registrados,
+activar/desactivar usuarios, asignar/quitar rol abogado, **bloquear acceso**
+(revocación distinguible de la desactivación), vincular correo corporativo
+`@pinedayasociadoshn.com`, ver último acceso y conteo de expedientes
+asignados. Todo cambio queda en `auditoria_eventos`. Un usuario bloqueado no
+puede iniciar sesión ni mantener sesión activa (verificación en login + me).
+
+### Scope por abogado
+
+Cada abogado sólo consulta los expedientes donde es responsable/colaborador o
+tiene permiso explícito concedido por admin (`expediente_permisos`). El scope se
+aplica en las queries DB (`lib/sgie/expedientes-db.ts`), no solo en la UI. El
+admin ve todo (supervisión global).
+
+### Modelo de datos SGIE
+
+8 tablas nuevas en `lib/schema.ts` (migración `0017_sgie_base.sql`):
+`usuarios_sgie`, `clientes`, `tipos_procedimiento`, `expedientes`,
+`expediente_asignaciones`, `expediente_permisos`, `requisitos_expediente`,
+`historial_expediente`. Más 5 columnas de gobernanza en `usuarios`.
+
+### Reglas respetadas
+
+- Cambios **aditivos**: no se crea un segundo panel admin ni se duplica la auth.
+- Rutas SGIE **fuera de SEO** (robots/sitemap/enlaces públicos).
+- **Sin proveedores nuevos** (no WhatsApp/SimpleX/IA pesada/OCR en esta entrega).
+- La IA/sistema nunca ejecuta transiciones críticas (`validado` y posteriores).
 
 ---
 

@@ -121,11 +121,14 @@ export function proxy(request: NextRequest) {
   }
 
   // Páginas de la intranet: si no hay token, ir al login de intranet.
-  // Si hay token y está en el login, mandarlo al dashboard o admin según rol.
+  // Si hay token y está en el login, mandarlo a su zona según rol:
+  // admin → /intranet/admin; abogado → /intranet/sgie.
   if (pathname.startsWith('/intranet')) {
     if (INTRANET_PUBLIC_EXACT.has(pathname)) {
       if (pathname === INTRANET_LOGIN_PATH && token) {
-        return NextResponse.redirect(new URL('/intranet/admin', request.url));
+        const loginPayload = decodeJwtPayload(token);
+        const destino = loginPayload?.rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
+        return NextResponse.redirect(new URL(destino, request.url));
       }
       return NextResponse.next();
     }

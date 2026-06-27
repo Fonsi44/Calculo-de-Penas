@@ -195,6 +195,26 @@ export function requireAdmin(request: Request): AuthUser {
   return user;
 }
 
+/**
+ * SGIE — requiere sesión con rol `abogado` o `admin`.
+ *
+ * El admin conserva acceso total al módulo SGIE (supervisión global),
+ * por lo que ambos roles acceden. El scope fino por abogado (qué expedientes
+ * ve un abogado) lo aplican las queries de `lib/sgie/expedientes-db.ts`,
+ * no esta función. Referencia: pinedayasociados.md §6.1.
+ *
+ * NOTA: la verificación de bloqueo (revocación posterior al JWT) se hace en
+ * `/api/auth/me` y en el login, no aquí, porque requiere leer la DB. Esta
+ * función valida únicamente el JWT (stateless), coherente con `requireAdmin`.
+ */
+export function requireAbogado(request: Request): AuthUser {
+  const user = requireAuth(request);
+  if (user.rol !== 'abogado' && user.rol !== 'admin') {
+    throw new AuthError(403, 'Requiere rol de abogado o administrador');
+  }
+  return user;
+}
+
 export function authFailureResponse(err: unknown): Response {
   if (err instanceof AuthError) {
     return new Response(JSON.stringify({ error: err.message }), {
