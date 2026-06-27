@@ -43,6 +43,8 @@
     "blog:fix-redirects:aplicar": "npx tsx scripts/fix-internal-redirects.ts --aplicar",
     "validate:dates": "npx tsx scripts/validar-fechas-blog.ts",
     "seed:fase2": "npx tsx drizzle/seed-fase2.ts",
+    "seed:sgie:procedimientos": "npx tsx drizzle/seed-sgie-procedimientos.ts",
+    "seed:sgie:plantillas": "npx tsx drizzle/seed-sgie-plantillas.ts",
     "db:check": "npx tsx scripts/check-db-state.ts",
     "seo:health": "node scripts/seo-health-check.mjs",
     "seo:health:json": "node scripts/seo-health-check.mjs --json",

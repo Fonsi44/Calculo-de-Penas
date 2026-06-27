@@ -127,6 +127,13 @@
       "when": 1782548705454,
       "tag": "0017_sgie_base",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1782551520638,
+      "tag": "0018_sgie_fases_4_10",
+      "breakpoints": true
     }
   ]
 }

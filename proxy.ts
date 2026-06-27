@@ -17,6 +17,9 @@ const PUBLIC_API_PREFIXES = [
   '/api/auth/logout',
   '/api/auth/register',
   '/api/auth/me',
+  // SGIE — portal de carga por enlace mágico (público por token, no indexable).
+  // La validación real (token, expiración, usos, MIME, hash) la hace el handler.
+  '/api/public/cargar',
 ];
 
 const PUBLIC_API_EXACT = new Set<string>([
@@ -117,6 +120,14 @@ export function proxy(request: NextRequest) {
         return NextResponse.json({ error: 'Acceso denegado: se requiere rol admin' }, { status: 403 });
       }
     }
+    // SGIE API: requiere rol abogado o admin (defensa en profundidad; el handler
+    // vuelve a validar con requireAbogado + scope por abogado).
+    if (pathname.startsWith('/api/sgie')) {
+      const payload = decodeJwtPayload(token);
+      if (!payload || (payload.rol !== 'admin' && payload.rol !== 'abogado')) {
+        return NextResponse.json({ error: 'Acceso denegado: se requiere rol abogado o admin' }, { status: 403 });
+      }
+    }
     return NextResponse.next();
   }
 
@@ -167,6 +178,22 @@ export function proxy(request: NextRequest) {
       const payload = decodeJwtPayload(token);
       if (!payload || payload.rol !== 'admin') {
         return NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url));
+      }
+    }
+    // SGIE — aislamiento por rol. Un usuario NO admin que intente acceder a
+    // herramientas internas legacy (calculadora, casos, cp, delitos, agravantes,
+    // delito-form) o a cualquier ruta intranet no autorizada para abogados,
+    // se redirige a su cockpit SGIE. El admin conserva acceso a todo.
+    // Referencia: pinedayasociados.md §6.1, §22.1.
+    {
+      const payload = decodeJwtPayload(token);
+      const esAdmin = payload?.rol === 'admin';
+      if (!esAdmin) {
+        const RUTAS_SGIE_PERMITIDAS = pathname.startsWith('/intranet/sgie');
+        const RUTA_TRANSITO = pathname === '/intranet/dashboard';
+        if (!RUTAS_SGIE_PERMITIDAS && !RUTA_TRANSITO) {
+          return NextResponse.redirect(new URL('/intranet/sgie', request.url));
+        }
       }
     }
     return NextResponse.next();

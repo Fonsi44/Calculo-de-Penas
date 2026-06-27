@@ -8,8 +8,14 @@ export default function IntranetLayout({ children }: { children: React.ReactNode
   const pathname = usePathname();
   const { open, setOpen } = useMobileNav();
   const PUBLIC_INTRANET = ['/intranet/login', '/intranet/recuperar-clave', '/intranet/acceso-denegado'];
-  // Admin tiene su propio layout. Dashboard redirige a admin.
-  if (pathname.startsWith('/intranet/admin') || pathname === '/intranet/dashboard' || PUBLIC_INTRANET.includes(pathname)) {
+  // Admin y SGIE tienen sus propios layouts aislados. Dashboard es tránsito.
+  // SGIE no debe renderizar el sidebar de "Herramientas internas" (sólo admin lo ve).
+  if (
+    pathname.startsWith('/intranet/admin') ||
+    pathname.startsWith('/intranet/sgie') ||
+    pathname === '/intranet/dashboard' ||
+    PUBLIC_INTRANET.includes(pathname)
+  ) {
     return <>{children}</>;
   }
 
