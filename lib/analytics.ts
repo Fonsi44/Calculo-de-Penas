@@ -86,6 +86,14 @@ export function trackLeadGenerated(..._args: unknown[]) {
   trackEvent('lead_generated', { value: 1 });
 }
 
+export function trackEmailClick(..._args: unknown[]) {
+  trackEvent('email_click', { value: 1 });
+}
+
+export function trackDirectionsClick(..._args: unknown[]) {
+  trackEvent('directions_click', { value: 1 });
+}
+
 // ---------------------------------------------------------------------------
 // Diagnóstico local (development únicamente)
 // ---------------------------------------------------------------------------

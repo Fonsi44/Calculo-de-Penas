@@ -1,7 +1,7 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
 import {
-  expedientes, expedienteAsignaciones, documentosExpediente,
+  expedientes, documentosExpediente,
   extraccionesIa, correosEnviados, tareas, alertas, correccionesIa,
 } from '@/lib/schema';
 import { count, eq, and, sql, gte } from 'drizzle-orm';

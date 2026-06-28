@@ -3,9 +3,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import {
-  ArrowLeft, Scale, FileCheck, CheckCircle2, Clock, History,
+  ArrowLeft, FileCheck, CheckCircle2, Clock, History,
   ListChecks, ShieldCheck, AlertTriangle, Loader2, FileText,
-  Eye, CheckCircle, XCircle, MessageSquare,
+  CheckCircle, XCircle,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -126,7 +126,7 @@ export default function SgieExpedienteDetallePage() {
     } catch { /* non-critical */ }
   }, [params.id]);
 
-  useEffect(() => { const run = async () => { await fetchDetalle(); await fetchDocumentosAlertas(); }; run(); }, []); // eslint-disable-line react-hooks/set-state-in-effect -- carga inicial
+  useEffect(() => { const run = async () => { await fetchDetalle(); await fetchDocumentosAlertas(); }; run(); }, [fetchDetalle, fetchDocumentosAlertas]);
 
   const handleAprobarDoc = async (docId: string) => {
     setAccionDocId(docId);

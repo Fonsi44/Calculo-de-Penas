@@ -23,7 +23,7 @@ const createSchema = z.object({
   expedienteId: z.string().uuid().optional(),
 });
 
-function ctx(auth: { userId: string; rol: string }) {
+function _ctx(auth: { userId: string; rol: string }) {
   return { usuarioId: auth.userId, rol: auth.rol, esAdmin: auth.rol === 'admin' };
 }
 

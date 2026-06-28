@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import {
   FolderKanban, FileText, AlertTriangle, CheckSquare,
-  Mail, Ban, FileCheck, Clock, ClipboardList, FolderOpen, Scale,
+  Mail, FileCheck, ClipboardList, FolderOpen, Scale,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -39,9 +39,9 @@ interface CockpitData {
   };
 }
 
-const ESTADOS_LISTOS_REVISAR = new Set(['pendiente_validacion_abogado', 'analisis_completado']);
-const ESTADOS_CON_FALTANTES = new Set(['pendiente_de_documentos', 'enlace_enviado', 'documentos_parcialmente_recibidos', 'inconsistencias_detectadas']);
-const ESTADO_FIRMA = 'pendiente_de_firma';
+const _ESTADOS_LISTOS_REVISAR = new Set(['pendiente_validacion_abogado', 'analisis_completado']);
+const _ESTADOS_CON_FALTANTES = new Set(['pendiente_de_documentos', 'enlace_enviado', 'documentos_parcialmente_recibidos', 'inconsistencias_detectadas']);
+const _ESTADO_FIRMA = 'pendiente_de_firma';
 
 interface CockpitAvanzado {
   tendenciaPorEstado: { estado: string; n: number }[];

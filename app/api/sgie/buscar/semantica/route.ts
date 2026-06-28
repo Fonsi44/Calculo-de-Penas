@@ -16,7 +16,7 @@ import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import {
-  expedientes, clientes, documentosExpediente, tareas, camposExtraidos,
+  expedientes, clientes, documentosExpediente, tareas,
   expedienteAsignaciones, expedientePermisos,
 } from '@/lib/schema';
 import { and, eq, ilike, inArray, isNull, or } from 'drizzle-orm';
@@ -29,7 +29,7 @@ const querySchema = z.object({
   limite: z.coerce.number().int().min(1).max(30).default(15),
 });
 
-function ctx(auth: { userId: string; rol: string }) {
+function _ctx(auth: { userId: string; rol: string }) {
   return { usuarioId: auth.userId, rol: auth.rol, esAdmin: auth.rol === 'admin' };
 }
 

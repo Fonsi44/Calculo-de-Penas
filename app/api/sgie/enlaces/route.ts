@@ -7,7 +7,7 @@ import { verificarAccesoExpediente } from '@/lib/sgie/expedientes-db';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 import { db } from '@/lib/db';
 import { enlacesMagicos } from '@/lib/schema';
-import { and, desc, eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 const createSchema = z.object({
   expedienteId: z.string().uuid(),

@@ -18,11 +18,11 @@
 import { db } from '@/lib/db';
 import {
   validaciones, alertas, tareas, documentosExpediente,
-  requisitosExpediente, expedientes, camposExtraidos,
-  confianzaResultados, historialExpediente,
+  requisitosExpediente, camposExtraidos,
+  confianzaResultados,
   type ValidacionInsert,
 } from '@/lib/schema';
-import { eq, and, count, isNull } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 

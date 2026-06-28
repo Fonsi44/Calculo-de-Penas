@@ -68,7 +68,7 @@ export function GlobalSearch({ externalOpen, onExternalOpenChange }: {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [setOpen]);
 
   // Foco al input al abrir + reset del estado de búsqueda.
   useEffect(() => {
@@ -119,7 +119,7 @@ export function GlobalSearch({ externalOpen, onExternalOpenChange }: {
   // Resultados aplanados para navegación por teclado (orden estable).
   const planos = useMemo(() => resultados, [resultados]);
 
-  const cerrar = useCallback(() => setOpen(false), []);
+  const cerrar = useCallback(() => setOpen(false), [setOpen]);
 
   const abrirResultado = useCallback((r: ResultadoBusqueda) => {
     router.push(r.href);

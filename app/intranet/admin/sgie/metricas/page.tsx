@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useAuth } from '@/app/auth-context';
 import { Spinner } from '@/components/ui/spinner';
-import { BarChart3, CheckCircle, XCircle, FileText, Mail, AlertTriangle, Database, Cpu, Brain } from 'lucide-react';
+import { CheckCircle, FileText, Mail, AlertTriangle, Database, Cpu, Brain } from 'lucide-react';
 
 interface Metricas {
   totalExpedientes: number;

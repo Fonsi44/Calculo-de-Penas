@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/app/auth-context';
 import { Spinner } from '@/components/ui/spinner';
-import { HardDrive, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
 export default function RetencionAdminPage() {
   const { user, loading } = useAuth();

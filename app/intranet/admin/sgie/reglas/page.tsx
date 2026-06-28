@@ -3,11 +3,11 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useAuth } from '@/app/auth-context';
 import { Spinner } from '@/components/ui/spinner';
-import { Shield, Save } from 'lucide-react';
+import { Save } from 'lucide-react';
 
 export default function ReglasAdminPage() {
   const { user, loading: authLoading } = useAuth();
-  const [config, setConfig] = useState<Record<string, unknown> | null>(null);
+  const [_config, setConfig] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');

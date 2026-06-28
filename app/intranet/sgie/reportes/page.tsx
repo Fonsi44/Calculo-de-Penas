@@ -24,7 +24,7 @@ import { Button } from '@/components/ui/button';
 import { Input, Field } from '@/components/ui/input';
 import { PageHeader } from '@/components/ui/page-header';
 import { EmptyState, ErrorState } from '@/components/ui/empty-state';
-import { PageHeaderSkeleton, TableSkeleton } from '@/components/ui/skeletons';
+import { PageHeaderSkeleton } from '@/components/ui/skeletons';
 import { useToast } from '@/components/ui/toast';
 import { useAuth } from '@/app/auth-context';
 import { cn } from '@/lib/ui';

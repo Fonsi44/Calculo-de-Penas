@@ -9,7 +9,7 @@
  */
 import { db } from '@/lib/db';
 import { clientes, expedienteAsignaciones } from '@/lib/schema';
-import { and, count, eq, ilike, inArray, isNull, or, sql } from 'drizzle-orm';
+import { and, count, eq, ilike, isNull, or, sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import type { ContextoAbogado } from './expedientes-db';
 

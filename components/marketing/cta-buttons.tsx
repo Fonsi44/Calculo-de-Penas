@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
-import { trackWhatsAppClick, trackPhoneClick, trackFormClick } from '@/lib/analytics';
+import { trackWhatsAppClick, trackPhoneClick, trackFormClick, trackDirectionsClick } from '@/lib/analytics';
 
 interface CTAGroupProps {
   variant?: 'primary' | 'inline' | 'compact' | 'inverse';
@@ -201,7 +201,16 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
           );
         }
         return (
-          <Link key={it.label} href={it.href} title={`${it.label} — ${it.value} · Pineda y Asociados`} className="focus-visible:outline-none rounded-md block">
+          <Link
+            key={it.label}
+            href={it.href}
+            title={`${it.label} — ${it.value} · Pineda y Asociados`}
+            className="focus-visible:outline-none rounded-md block"
+            onClick={() => {
+              if (it.href?.includes('/solicitar-consulta')) trackFormClick('contact_strip');
+              else if (it.href?.includes('/como-llegar')) trackDirectionsClick('contact_strip');
+            }}
+          >
             {inner}
           </Link>
         );

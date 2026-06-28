@@ -131,7 +131,7 @@ export async function llamarIaDocumental(
 
   const systemPrompt = buildSystemPrompt();
   const userPrompt = buildUserPrompt({ ...documentInfo, textoExtraido });
-  const promptHash = calcularPromptHash(systemPrompt + userPrompt);
+  const _promptHash = calcularPromptHash(systemPrompt + userPrompt);
 
   let lastError = '';
 

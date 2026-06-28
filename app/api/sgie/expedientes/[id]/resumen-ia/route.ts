@@ -15,7 +15,6 @@
  * Sprint 4 — tarea 1.
  */
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
-import { z } from 'zod';
 import { db } from '@/lib/db';
 import {
   resumenesIaExpediente, expedientes, clientes, tiposProcedimiento,

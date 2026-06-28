@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 // Carlos Pineda credentials (must exist in DB via seed demo)
-const DEMO_EMAIL = 'carlos.pineda@pinedayasociadoshn.com';
-const DEMO_PASSWORD = 'demo-carlos-2026'; // placeholder — real password set by admin
+const _DEMO_EMAIL = 'carlos.pineda@pinedayasociadoshn.com';
+const _DEMO_PASSWORD = 'demo-carlos-2026'; // placeholder — real password set by admin
 
 test.describe('SGIE — Abogado Carlos Pineda (demo)', () => {
   test('Carlos accede a login y es redirigido a intranet login', async ({ page }) => {

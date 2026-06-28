@@ -25,7 +25,7 @@ import {
   expedientes, clientes, reglasConfigVersion,
   type ConfianzaResultadoInsert,
 } from '@/lib/schema';
-import { eq, and, ne, isNull } from 'drizzle-orm';
+import { eq, and, ne } from 'drizzle-orm';
 import { CONFIG_DEFAULT, type ReglasConfig } from '@/lib/sgie/motor-reglas';
 
 // ─── Utilidades de formato ───────────────────────────────────────────────────
@@ -54,7 +54,7 @@ export interface EvidenciasCampo {
 
 export async function calcularConfianzaCampo(
   campoId: string,
-  config: ReglasConfig = CONFIG_DEFAULT,
+  _config: ReglasConfig = CONFIG_DEFAULT,
 ): Promise<{ confianza: number; etiqueta: string; evidencias: EvidenciasCampo }> {
   const [campo] = await db
     .select()
@@ -75,7 +75,7 @@ export async function calcularConfianzaCampo(
   };
 
   let puntuacion = 0;
-  const maxPuntuacion = 100;
+  const _maxPuntuacion = 100;
 
   // 1. Cita fuente (peso: 30)
   if (evidencias.citaFuentePresente) puntuacion += 30;

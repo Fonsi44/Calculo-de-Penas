@@ -13,8 +13,8 @@ import { z } from 'zod';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { db } from '@/lib/db';
-import { alertas, tareas, documentosExpediente, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
-import { and, eq, inArray, isNull, lte } from 'drizzle-orm';
+import { alertas, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
+import { and, eq, inArray, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 import { enviarNotificacionEmailCritica, obtenerEmailResponsable } from '@/lib/sgie/notificaciones-email';
 

@@ -22,7 +22,7 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { documentosExpediente, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
-import { and, eq, isNull, inArray } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 

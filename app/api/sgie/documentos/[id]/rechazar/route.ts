@@ -1,7 +1,7 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { documentosExpediente, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
+import { documentosExpediente, expedienteAsignaciones } from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 

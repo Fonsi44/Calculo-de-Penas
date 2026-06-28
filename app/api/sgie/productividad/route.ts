@@ -15,10 +15,10 @@ import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import {
-  expedientes, tareas, documentosExpediente, alertas,
+  expedientes, tareas,
   expedienteAsignaciones, expedientePermisos, usuarios,
 } from '@/lib/schema';
-import { and, count, eq, gte, lte, inArray, isNull, or, sql, desc } from 'drizzle-orm';
+import { and, count, eq, gte, lte, inArray, isNull, sql, desc } from 'drizzle-orm';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 import { generarCsv, conBom, nombreArchivoExport, type ColumnaCsv } from '@/lib/sgie/csv';
@@ -30,7 +30,7 @@ const querySchema = z.object({
   abogadoId: z.string().uuid().optional(),
 });
 
-function ctx(auth: { userId: string; rol: string }) {
+function _ctx(auth: { userId: string; rol: string }) {
   return { usuarioId: auth.userId, rol: auth.rol, esAdmin: auth.rol === 'admin' };
 }
 

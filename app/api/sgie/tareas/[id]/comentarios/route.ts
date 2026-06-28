@@ -14,8 +14,8 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { tareaComentarios, tareas, usuarios, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
-import { and, asc, eq, isNull, inArray } from 'drizzle-orm';
+import { tareaComentarios, usuarios } from '@/lib/schema';
+import { and, asc, eq, isNull } from 'drizzle-orm';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';

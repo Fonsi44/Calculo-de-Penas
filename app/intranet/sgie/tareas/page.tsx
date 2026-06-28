@@ -83,7 +83,7 @@ function formatFechaCorta(iso: string | null): string {
 
 export default function SgieTareasPage() {
   const toast = useToast();
-  const confirm = useConfirm();
+  const _confirm = useConfirm();
   const { user, loading: authLoading } = useAuth();
   const [tareas, setTareas] = useState<TareaItem[]>([]);
   const [total, setTotal] = useState(0);

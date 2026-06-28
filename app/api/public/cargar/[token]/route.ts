@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { audit } from '@/lib/audit';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
@@ -9,7 +8,7 @@ import {
   saneaNombreDocumento,
   subirDocumentoBlob,
 } from '@/lib/sgie/util';
-import { registrarDocumento, existeHashEnExpediente } from '@/lib/sgie/documentos-db';
+import { registrarDocumento } from '@/lib/sgie/documentos-db';
 
 /**
  * POST /api/public/cargar/[token]

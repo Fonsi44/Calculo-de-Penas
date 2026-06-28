@@ -18,7 +18,6 @@ import {
   etiquetarConfianza, traducirEtiquetaConfianza, tonoConfianza,
   estadoCampoExtraido, valorEfectivoCampo,
 } from '@/lib/sgie/inteligencia';
-import { traducirEstadoDocumento } from '@/lib/sgie/estados';
 
 interface InteligenciaData {
   confianza: { valor: number; etiqueta: string };

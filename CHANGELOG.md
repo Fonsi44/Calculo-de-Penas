@@ -5,6 +5,68 @@
 
 ---
 
+## 2026-06-28 — seo: auditoría integral + mejoras basadas en datos (GSC/GA4/Bing)
+
+Auditoría SEO/GEO completa con datos reales de Google Search Console (7d/28d/90d),
+Google Analytics 4 (28d) y Bing Webmaster Tools. Se implementaron mejoras en código
+justificadas por evidencia técnica.
+
+### Fuentes conectadas
+- **GSC** (OAuth2): conectado (7d, 28d, 90d)
+- **GA4** (Service Account): conectado (28d)
+- **Bing WMT** (INDEXNOW_KEY): conectado (18d crawl stats, 44 queries)
+
+### Cambios implementados
+- `lib/analytics.ts`: añadidos `trackEmailClick()` y `trackDirectionsClick()`
+  (eventos declarados pero nunca implementados; GA4 mostraba 0 disparos).
+- `components/marketing/cta-buttons.tsx`: añadido tracking `directions_click` y
+  `form_click` en ContactStrip para MapPin y Solicitar consulta (antes links
+  internos sin tracking).
+- `blog_posts.prescripcion-deudas-plazos-honduras.description`: corregida
+  inconsistencia "10 años" → "1-5 años según tipo" para alinear con body y
+  meta_description (riesgo de confusión en SERP detectado vía GSC).
+- Bing WMT: enviadas 6 URLs prioritarias a SubmitUrlBatch (servicios-juridicos,
+  blog, preguntas-frecuentes, despacho, como-llegar, hondurenos-en-espana)
+  que no estaban indexadas en Bing.
+
+### Datos principales extraídos
+- GSC 7d: 70 clics, 3,682 impresiones, CTR 1.85%, pos. media 7.1
+- GSC 90d: páginas con más impresiones: custodia-hijos (338), poder-legal (274),
+  naturalizacion (242), prescripcion-deudas (201)
+- GA4 28d: 611 usuarios, 763 sesiones, 4,625 páginas vistas, 64.1% rebote
+- GA4 conversión: whatsapp_click=5, phone_click=2, lead_generated=2
+- GA4 contaminación: ~1,700 pageviews de rutas intranet detectadas en stream
+  público (protección ya existe en código vía isAnalyticsExcludedPath)
+- Bing WMT: 6/14 URLs prioritarias sin indexar, 0 backlinks, 44 queries (0 clics)
+- SEO técnico: 15/15 health probes pass, 18/18 meta SEO OK, 0 errores bloqueantes
+
+### Validación
+- `lint`: 0 errores, 69 warnings (pre-existentes)
+- `build`: OK (341 páginas, 22.1s compilación)
+- `test`: 730 tests pass (33 suites), 0 fallos
+- `validar:meta-seo`: 18/18 OK
+- `audit:internal-links`: 12/12 CTA efectivo
+- `audit:performance`: sin alertas críticas (FAQ: 627KB)
+- `audit:indexacion`: 28/30 pass (2 enlaces pilar ausentes en prod — depende de DB)
+- `audit:canibalizacion`: 1 grupo controlado con canonical
+- `audit:seo:stdout`: 0 errores bloqueantes
+- `seo:health:json`: 15/15 pass
+
+### Pendientes NO VALIDADOS
+- `tools/call-197`: GA4 invalid_grant (dependencia OAuth externa — rota desde
+  Release 85, requiere rotación de refresh token en Google Cloud Console)
+- `form_click` sigue en 0 disparos (el formulario de consulta usa `trackLeadGenerated`,
+  no `trackFormClick` — se necesita revisar la integración del formulario)
+- `email_click` y `directions_click` recién implementados; sin datos aún
+  (requieren deploy a producción y 7-14 días de recolección)
+- Enlaces pilar ausentes en prod (home→que-hacer-si-me-detienen, servicios→
+  jornada-laboral): el código ya incluye estos slugs en BlogHighlights, el fallo
+  es de disponibilidad DB en producción (no reproducible en build local)
+- FAQ page: 627KB HTML (payload excesivo que afecta CWV; requiere optimización
+  de renderizado o paginación)
+
+---
+
 ## 2026-06-28 — seo: cierre de sprint (92% -> 100% tecnico)
 
 Ajustes finales de validación y consistencia para dejar el repositorio listo

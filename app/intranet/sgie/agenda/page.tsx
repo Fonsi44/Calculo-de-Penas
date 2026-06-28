@@ -15,11 +15,11 @@
  */
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { Calendar, ChevronLeft, ChevronRight, ArrowLeft, Clock, Plus, Check, X as XIcon, CheckCheck, Pencil, Ban, CalendarClock } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, ArrowLeft, Plus, Check, X as XIcon, CheckCheck, Ban, CalendarClock } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input, Textarea, Field } from '@/components/ui/input';
-import { EmptyState, ErrorState } from '@/components/ui/empty-state';
+import { ErrorState } from '@/components/ui/empty-state';
 import { ListSkeleton } from '@/components/ui/skeletons';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
@@ -464,7 +464,7 @@ function EventoCardDetalle({
 function EventoCard({ evento, compacto }: { evento: EventoItem; compacto?: boolean }) {
   // Hooks se declaran aquí via props pasadas desde el padre para evitar
   // violación de reglas de hooks en condicionales del padre.
-  const acciones = !compacto && evento.estado !== 'completada' && evento.estado !== 'descartada';
+  const _acciones = !compacto && evento.estado !== 'completada' && evento.estado !== 'descartada';
   return (
     <li className={cn('rounded-md border p-2', ESTADO_TONE[evento.estado] || ESTADO_TONE.propuesta)}>
       <div className="flex items-start justify-between gap-2">

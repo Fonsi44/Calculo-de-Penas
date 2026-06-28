@@ -51,7 +51,7 @@ export interface ResultadoEmbedding {
  *
  * Sprint 5 — pendiente de infraestructura.
  */
-export async function generarEmbedding(_texto: string): Promise<number[]> { // eslint-disable-line @typescript-eslint/no-unused-vars -- stub para futura infraestructura de embeddings
+export async function generarEmbedding(_texto: string): Promise<number[]> {
   throw new Error('Embeddings no disponibles: configure EMBEDDINGS_PROVEEDOR/EMBEDDINGS_API_KEY/EMBEDDINGS_MODELO y active pgvector.');
 }
 
@@ -64,9 +64,9 @@ export async function generarEmbedding(_texto: string): Promise<number[]> { // e
  * Sprint 5 — pendiente de infraestructura.
  */
 export async function buscarPorSimilitud(
-  _vector: number[], // eslint-disable-line @typescript-eslint/no-unused-vars -- stub
-  _k: number, // eslint-disable-line @typescript-eslint/no-unused-vars -- stub
-  _scopeExpedienteIds: string[] | null, // eslint-disable-line @typescript-eslint/no-unused-vars -- stub
+  _vector: number[],
+  _k: number,
+  _scopeExpedienteIds: string[] | null,
 ): Promise<ResultadoEmbedding[]> {
   throw new Error('Búsqueda vectorial no disponible: requiere pgvector.');
 }

@@ -9,7 +9,7 @@ import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import { tareaComentarios } from '@/lib/schema';
-import { and, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
