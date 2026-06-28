@@ -23,6 +23,8 @@ export interface ClienteItem {
   notas: string | null;
   creadoEn: Date | null;
   expedientesCount: number;
+  // Sprint 5 — baja lógica.
+  activo: boolean | null;
 }
 
 export interface CrearClienteInput {
@@ -49,13 +51,16 @@ function hashDuplicado(identidad?: string, rtn?: string): string | null {
  */
 export async function listarClientes(
   ctx: ContextoAbogado,
-  opts: { q?: string; limit?: number; offset?: number } = {},
+  opts: { q?: string; limit?: number; offset?: number; incluirInactivos?: boolean } = {},
 ): Promise<{ clientes: ClienteItem[]; total: number }> {
   const limit = Math.min(opts.limit ?? 50, 100);
   const offset = Math.max(opts.offset ?? 0, 0);
 
-  // Scope: el filtrado por abogado se aplica vía subquery EXISTS más abajo.
+  // Sprint 5 — por defecto sólo activos.
   const conditions = [];
+  if (!opts.incluirInactivos) {
+    conditions.push(eq(clientes.activo, true));
+  }
   if (opts.q) {
     const term = `%${opts.q}%`;
     conditions.push(
@@ -90,6 +95,7 @@ export async function listarClientes(
         telefono: clientes.telefono,
         notas: clientes.notas,
         creadoEn: clientes.creadoEn,
+        activo: clientes.activo,
       })
       .from(clientes)
       .where(where)
@@ -148,4 +154,124 @@ export async function crearOReutilizarCliente(
 
   if (!cliente) throw new Error('No se pudo crear el cliente');
   return { id: cliente.id, creado: true };
+}
+
+/**
+ * Detalle de un cliente con el conteo de expedientes asociados accesibles por
+ * el abogado. El admin ve el conteo total; un abogado sólo ve los suyos.
+ *
+ * Sprint 1 — ficha de cliente.
+ */
+export async function obtenerCliente(
+  clienteId: string,
+  ctx: ContextoAbogado,
+): Promise<(ClienteItem & { creadoPor: string | null; desactivadoEn: Date | null; motivoDesactivacion: string | null }) | null> {
+  const [row] = await db
+    .select({
+      id: clientes.id,
+      nombre: clientes.nombre,
+      identidad: clientes.identidad,
+      rtn: clientes.rtn,
+      email: clientes.email,
+      telefono: clientes.telefono,
+      notas: clientes.notas,
+      creadoEn: clientes.creadoEn,
+      creadoPor: clientes.creadoPor,
+      // Sprint 5 — baja lógica.
+      activo: clientes.activo,
+      desactivadoEn: clientes.desactivadoEn,
+      desactivadoPor: clientes.desactivadoPor,
+      motivoDesactivacion: clientes.motivoDesactivacion,
+    })
+    .from(clientes)
+    .where(eq(clientes.id, clienteId));
+
+  if (!row) return null;
+
+  // Conteo de expedientes accesibles para este cliente.
+  const { expedientes } = await import('@/lib/schema');
+  let expedientesCount = 0;
+  if (ctx.esAdmin) {
+    const [r] = await db.select({ c: count() }).from(expedientes)
+      .where(eq(expedientes.clienteId, clienteId));
+    expedientesCount = r?.c ?? 0;
+  } else {
+    // Sólo expedientes del cliente que estén asignados al abogado.
+    const [r] = await db.select({ c: count() }).from(expedientes)
+      .innerJoin(
+        expedienteAsignaciones,
+        eq(expedienteAsignaciones.expedienteId, expedientes.id),
+      )
+      .where(and(
+        eq(expedientes.clienteId, clienteId),
+        eq(expedienteAsignaciones.abogadoId, ctx.usuarioId),
+        isNull(expedienteAsignaciones.revocadaEn),
+      ));
+    expedientesCount = r?.c ?? 0;
+  }
+
+  return { ...row, expedientesCount };
+}
+
+export interface ActualizarClienteInput {
+  nombre?: string;
+  identidad?: string;
+  rtn?: string;
+  email?: string;
+  telefono?: string;
+  notas?: string;
+  // Sprint 5 — baja lógica.
+  activo?: boolean;
+  motivoDesactivacion?: string;
+}
+
+/**
+ * Actualiza los datos editables de un cliente. Recalcula el `duplicadoHash`
+ * si cambian identidad/RTN.
+ *
+ * Sprint 1 — edición de cliente.
+ * Sprint 5 — soporta baja lógica (activo/desactivadoEn/desactivadoPor/
+ * motivoDesactivacion). No borra expedientes ni documentos asociados.
+ */
+export async function actualizarCliente(
+  clienteId: string,
+  input: ActualizarClienteInput,
+  ctx: ContextoAbogado,
+): Promise<void> {
+  const set: Record<string, unknown> = {};
+  if (input.nombre !== undefined) set.nombre = input.nombre.trim();
+  if (input.identidad !== undefined) set.identidad = input.identidad.trim() || null;
+  if (input.rtn !== undefined) set.rtn = input.rtn.trim() || null;
+  if (input.email !== undefined) set.email = input.email.trim() || null;
+  if (input.telefono !== undefined) set.telefono = input.telefono.trim() || null;
+  if (input.notas !== undefined) set.notas = input.notas || null;
+
+  // Recalcular hash de duplicado si cambian identidad/RTN.
+  if (input.identidad !== undefined || input.rtn !== undefined) {
+    set.duplicadoHash = hashDuplicado(
+      input.identidad ?? undefined,
+      input.rtn ?? undefined,
+    );
+  }
+
+  // Sprint 5 — baja lógica.
+  if (input.activo !== undefined) {
+    set.activo = input.activo;
+    if (input.activo) {
+      // Reactivar: limpiar marca de desactivación.
+      set.desactivadoEn = null;
+      set.desactivadoPor = null;
+      set.motivoDesactivacion = null;
+    } else {
+      // Desactivar: registrar quién/cuándo/motivo.
+      set.desactivadoEn = new Date();
+      set.desactivadoPor = ctx.usuarioId;
+      set.motivoDesactivacion = input.motivoDesactivacion ?? null;
+    }
+  }
+
+  if (Object.keys(set).length === 0) return;
+
+  set.actualizadoEn = new Date();
+  await db.update(clientes).set(set).where(eq(clientes.id, clienteId));
 }

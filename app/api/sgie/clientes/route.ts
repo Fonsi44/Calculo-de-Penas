@@ -9,6 +9,9 @@ const querySchema = z.object({
   q: z.string().optional(),
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(50),
+  // Sprint 5 — por defecto sólo activos. Admin puede pedir incluir inactivos.
+  incluirInactivos: z.union([z.string(), z.boolean()]).optional()
+    .transform((v) => v === true || v === 'true'),
 });
 
 const createSchema = z.object({
@@ -33,6 +36,8 @@ export async function GET(request: Request) {
       q: query.q,
       limit: query.limit,
       offset: (query.page - 1) * query.limit,
+      // Sprint 5 — excluir inactivos salvo que se pidan explícitamente.
+      incluirInactivos: query.incluirInactivos,
     });
     return Response.json({ clientes, total, page: query.page, limit: query.limit });
   } catch (err) {

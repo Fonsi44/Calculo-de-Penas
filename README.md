@@ -359,15 +359,53 @@ firma, presenta ni cierra un expediente. Plan completo: `pinedayasociados.md`.
 | `/intranet/admin/sgie/reglas` | `admin` | Configuración de reglas (versionada) |
 | `/intranet/admin/sgie/retencion` | `admin` | Retención documental (NO VALIDADO) |
 | `/intranet/sgie` | `abogado` / `admin` | Cockpit del abogado con métricas reales |
-| `/intranet/sgie/expedientes` | `abogado` / `admin` | CRUD expedientes con scope |
-| `/intranet/sgie/expedientes/[id]` | `abogado` / `admin` | Detalle: checklist, documentos, alertas, acciones |
+| `/intranet/sgie/clientes` | `abogado` / `admin` | Maestro de clientes: búsqueda, alta (con detección de duplicados), acceso a crear expediente y enlace a ficha |
+| `/intranet/sgie/clientes/[id]` | `abogado` / `admin` | Ficha de cliente: datos, expedientes asociados, edición (PATCH) y crear expediente |
+| `/intranet/sgie/expedientes` | `abogado` / `admin` | CRUD expedientes con scope. Alta asocia cliente + procedimiento; el checklist se instancia desde la definición del procedimiento |
+| `/intranet/sgie/expedientes/[id]` | `abogado` / `admin` | Detalle: checklist, documentos, alertas, **enlaces de carga documental (Sprint 1)** y acciones |
 | `/intranet/sgie/documentos` | `abogado` / `admin` | Lista y detalle de documentos |
 | `/intranet/sgie/alertas` | `abogado` / `admin` | Alertas con resolver |
-| `/intranet/sgie/tareas` | `abogado` / `admin` | Tareas con completar |
-| `/intranet/sgie/agenda` | `abogado` / `admin` | Eventos de agenda |
+| `/intranet/sgie/tareas` | `abogado` / `admin` | **CRUD de tareas (Sprint 1+2):** crear, editar, completar/reabrir, filtrar, **asignar responsable** (Sprint 2) |
+| `/intranet/sgie/agenda` | `abogado` / `admin` | **Vista calendario accionable (Sprint 2+3):** mensual/semanal + crear/confirmar/cancelar/completar eventos |
+| `/intranet/sgie/reportes` | `abogado` / `admin` | **Reportes (Sprint 2+3):** métricas filtrables + exportación **CSV y PDF server-side** + imprimir |
+| `/intranet/sgie/productividad` | `abogado` / `admin` | **Productividad (Sprint 4):** métricas por abogado/rango + actividad semanal + exportación CSV |
 | `/intranet/sgie/correos` | `abogado` / `admin` | Historial de correos enviados |
+| `/intranet/admin/sgie/usuarios` | `admin` | **Usuarios y Accesos SGIE (Sprint 2):** gobierno de accesos (estado, rol, expedientes, correo corp.) |
 | `/api/sgie/*` | `abogado` / `admin` (JWT) | API SGIE con scope por abogado |
+| `/api/sgie/tipos-procedimiento` | `abogado` / `admin` (JWT) | Catálogo de procedimientos activos (selector de alta de expediente) |
+| `/api/sgie/buscar` | `abogado` / `admin` (JWT) | **Búsqueda global (Sprint 1):** clientes, expedientes, documentos, tareas con scope |
+| `/api/sgie/reportes` | `abogado` / `admin` (JWT) | **Reportes (Sprint 2+3):** métricas JSON + exportación **CSV y PDF** con scope |
+| `/api/sgie/notificaciones` | `abogado` / `admin` (JWT) | **Notificaciones derivadas (Sprint 2):** tareas vencidas, alertas, docs pendientes |
+| `/api/sgie/documentos/[id]/preview` | `abogado` / `admin` (JWT) | **Previsualización segura (Sprint 2):** URL de blob o preview_not_available |
+| `/api/sgie/usuarios/asignables` | `abogado` / `admin` (JWT) | Abogados asignables como responsable (Sprint 2) |
+| `/api/sgie/expedientes/[id]/resumen-ia` | `abogado` / `admin` (JWT) | **Resumen IA (Sprint 4):** GET caché + POST generar (R17, scope) |
+| `/api/sgie/tareas/[id]/comentarios` | `abogado` / `admin` (JWT) | **Comentarios de tarea (Sprint 4):** GET + POST (colaboración) |
+| `/api/sgie/buscar/semantica` | `abogado` / `admin` (JWT) | **Búsqueda híbrida (Sprint 4):** ranking por relevancia con scope |
+| `/api/sgie/productividad` | `abogado` / `admin` (JWT) | **Productividad (Sprint 4):** métricas JSON + CSV con scope |
+| `/api/auth/reset-password` | público (rate limited) | **Recuperación de contraseña (Sprint 4):** solicitar + confirmar (token hasheado) |
 | `/api/cron/sgie/procesar` | `CRON_SECRET` | Worker de jobs documentales |
+
+#### Flujo canónico mínimo (Sprint 0 + 1 + 2 + 3 + 4)
+
+El SGIE cubre la operativa diaria, el gobierno/administración, la inteligencia
+documental y la colaboración:
+
+**Operativa diaria e inteligencia (abogado):**
+1. **Cockpit ejecutivo** + **notificaciones in-app** con persistencia de leídas.
+2. **Buscar globalmente (⌘K)** con modo **búsqueda inteligente** (ranking híbrido).
+3. Clientes y expedientes con **sección de inteligencia IA** + **resumen IA
+   automático** generado bajo demanda (R17: no inventa datos, requiere revisión).
+4. Tareas con **comentarios** (colaboración, texto plano).
+5. Agenda accionable: crear/confirmar/cancelar/completar/**reprogramar** eventos.
+
+**Gobierno, reporting y seguridad (admin/dirección):**
+6. **Reportes** (CSV/PDF) + **productividad** por abogado/rango.
+7. **Usuarios y Accesos SGIE**.
+8. **Recuperación de contraseña** (token hasheado, email vía Resend).
+
+**Pendiente de futuros sprints:** 2FA completo (feature flag documentada);
+baja lógica de cliente; reprogramar evento via UI (endpoint soportado);
+búsqueda semántica con embeddings; tiempo medio por estado con precisión.
 
 ### Despliegue en staging
 

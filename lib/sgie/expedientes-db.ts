@@ -24,6 +24,7 @@ import {
   type ExpedienteEstado,
 } from '@/lib/schema';
 import { and, asc, count, desc, eq, ilike, inArray, isNull, or, sql } from 'drizzle-orm';
+import { extraerRequisitosDeDefinicion } from './procedimientos-db';
 
 export interface ContextoAbogado {
   usuarioId: string;
@@ -363,9 +364,29 @@ export async function crearExpediente(
   });
 
   // Checklist inicial.
-  if (input.requisitosIniciales && input.requisitosIniciales.length > 0) {
+  //
+  // Prioridad de fuentes (Sprint 0 — instanciación desde procedimiento):
+  //   1. Si el caller pasa `requisitosIniciales` explícitos, se usan (compat
+  //      hacia atrás con tests y con cualquier caller que los fije).
+  //   2. Si no, y se pasó `tipoProcedimientoId`, se cargan los requisitos desde
+  //      la `definicion` del procedimiento vigente (documentosRequeridos/
+  //      Opcionales/Condicionales). No se inventan requisitos: si la definición
+  //      no los define, el expediente nace sin checklist y el abogado lo
+  //      completa después.
+  let requisitosFinales: Array<{ nombre: string; tipo?: 'obligatorio' | 'opcional' | 'condicional'; orden?: number }> =
+    input.requisitosIniciales ?? [];
+
+  if (requisitosFinales.length === 0 && input.tipoProcedimientoId) {
+    const [tp] = await db
+      .select({ definicion: tiposProcedimiento.definicion })
+      .from(tiposProcedimiento)
+      .where(eq(tiposProcedimiento.id, input.tipoProcedimientoId));
+    requisitosFinales = extraerRequisitosDeDefinicion(tp?.definicion);
+  }
+
+  if (requisitosFinales.length > 0) {
     await db.insert(requisitosExpediente).values(
-      input.requisitosIniciales.map((r, i) => ({
+      requisitosFinales.map((r, i) => ({
         expedienteId: exp.id,
         nombre: r.nombre,
         tipo: r.tipo ?? 'obligatorio',

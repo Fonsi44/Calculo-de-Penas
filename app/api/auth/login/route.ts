@@ -5,6 +5,7 @@ import { verifyPassword, signToken, createAuthResponse } from '@/lib/auth';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { authLoginSchema, validate } from '@/lib/validation';
+import { tiene2faHabilitado } from '@/lib/auth-2fa';
 
 const LOGIN_MAX = 5;
 const LOGIN_WINDOW_MS = 60_000;
@@ -84,6 +85,31 @@ export async function POST(request: Request) {
 
     // SGIE — registra último acceso (campo `ultimo_acceso`).
     await db.update(usuarios).set({ ultimoAcceso: new Date() }).where(eq(usuarios.id, user.id));
+
+    // Sprint 5 — 2FA: si el usuario tiene 2FA habilitado, no emitir el token
+    // final. Devolver un challenge temporal firmado para completar el login en
+    // /api/auth/2fa/verify. No rompe a quienes no tienen 2FA (flujo normal).
+    const habilitado2fa = await tiene2faHabilitado(user.id);
+    if (habilitado2fa) {
+      await audit({
+        accion: 'login',
+        usuarioId: user.id,
+        ip: ipFromRequest(request),
+        userAgent: uaFromRequest(request),
+        exito: true,
+        metadata: { etapa: '2fa_challenge' },
+      });
+      // Challenge temporal que identifica al usuario sin dar sesión definitiva.
+      // El endpoint /api/auth/2fa/verify lo consume tras validar el código TOTP.
+      // Nota: signToken no acepta TTL; el challenge se valida inmediatamente en
+      // el verify (flujo de un solo paso). No se persiste en cookie.
+      const challenge = signToken({ userId: user.id, email: user.email, rol: user.rol });
+      return Response.json({
+        requiere2fa: true,
+        challenge,
+        message: 'Introduzca su código de autenticación de dos factores.',
+      });
+    }
 
     await audit({
       accion: 'login',

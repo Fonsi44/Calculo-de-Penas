@@ -43,9 +43,19 @@ const ESTADOS_LISTOS_REVISAR = new Set(['pendiente_validacion_abogado', 'analisi
 const ESTADOS_CON_FALTANTES = new Set(['pendiente_de_documentos', 'enlace_enviado', 'documentos_parcialmente_recibidos', 'inconsistencias_detectadas']);
 const ESTADO_FIRMA = 'pendiente_de_firma';
 
+interface CockpitAvanzado {
+  tendenciaPorEstado: { estado: string; n: number }[];
+  tareasVencidasPorResponsable: { responsableId: string; nombre: string; n: number }[];
+  documentosPendientes: number;
+  alertasCriticas: number;
+  cuellosDeBotella: Array<{ id: string; numeroInterno: string; estado: string; actualizadoEn: string | null }>;
+  eventosProximos: Array<{ id: string; titulo: string; fecha: string; estado: string }>;
+}
+
 export default function SgieCockpitPage() {
   const { user } = useAuth();
   const [data, setData] = useState<CockpitData | null>(null);
+  const [avanzado, setAvanzado] = useState<CockpitAvanzado | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const mounted = useRef(false);
@@ -54,10 +64,13 @@ export default function SgieCockpitPage() {
     setLoading(true);
     setError(false);
     try {
-      const res = await fetch('/api/sgie/cockpit', { credentials: 'include' });
+      const [res, resAv] = await Promise.all([
+        fetch('/api/sgie/cockpit', { credentials: 'include' }),
+        fetch('/api/sgie/cockpit/avanzado', { credentials: 'include' }),
+      ]);
       if (!res.ok) throw new Error('Error al cargar');
-      const json = await res.json();
-      setData(json);
+      setData(await res.json());
+      if (resAv.ok) setAvanzado(await resAv.json());
     } catch {
       setError(true);
     } finally {
@@ -152,7 +165,105 @@ export default function SgieCockpitPage() {
           </div>
         )}
       </Card>
+
+      {/* Sprint 3: bloque ejecutivo (tendencias, cuellos de botella, accesos) */}
+      {avanzado && <CockpitEjecutivo data={avanzado} />}
     </div>
+  );
+}
+
+function CockpitEjecutivo({ data }: { data: CockpitAvanzado }) {
+  const maxTendencia = Math.max(1, ...data.tendenciaPorEstado.map((t) => t.n));
+  const maxTareas = Math.max(1, ...data.tareasVencidasPorResponsable.map((t) => t.n));
+  return (
+    <>
+      {/* Accesos rápidos */}
+      <div className="flex flex-wrap gap-2">
+        <Link href="/intranet/sgie/clientes"><Button variant="secondary" size="sm"><FolderOpen size={14} /> Nuevo cliente</Button></Link>
+        <Link href="/intranet/sgie/expedientes"><Button variant="secondary" size="sm"><FolderKanban size={14} /> Nuevo expediente</Button></Link>
+        <Link href="/intranet/sgie/tareas"><Button variant="secondary" size="sm"><CheckSquare size={14} /> Nueva tarea</Button></Link>
+        <Link href="/intranet/sgie/reportes"><Button variant="secondary" size="sm"><FileText size={14} /> Reportes</Button></Link>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Tendencia por estado */}
+        <Card padding="md">
+          <h2 className="text-sm font-bold text-text mb-3 pb-2 border-b border-border-light">Tendencia de expedientes por estado</h2>
+          {data.tendenciaPorEstado.length === 0 ? (
+            <p className="text-xs text-text-muted text-center py-4">Sin datos.</p>
+          ) : (
+            <ul className="space-y-2">
+              {data.tendenciaPorEstado.map((t) => (
+                <li key={t.estado} className="flex items-center gap-3">
+                  <span className="text-xs text-text flex-1 truncate">{t.estado.replace(/_/g, ' ')}</span>
+                  <div className="w-28 h-1.5 rounded-full bg-surface-alt overflow-hidden flex-shrink-0">
+                    <div className="h-full bg-primary/60 rounded-full" style={{ width: `${(t.n / maxTendencia) * 100}%` }} />
+                  </div>
+                  <span className="text-xs font-semibold text-text tabular-nums w-6 text-right flex-shrink-0">{t.n}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+
+        {/* Tareas vencidas por responsable */}
+        <Card padding="md">
+          <h2 className="text-sm font-bold text-text mb-3 pb-2 border-b border-border-light">Tareas vencidas por responsable</h2>
+          {data.tareasVencidasPorResponsable.length === 0 ? (
+            <p className="text-xs text-success text-center py-4">Sin tareas vencidas.</p>
+          ) : (
+            <ul className="space-y-2">
+              {data.tareasVencidasPorResponsable.map((t) => (
+                <li key={t.responsableId} className="flex items-center gap-3">
+                  <span className="text-xs text-text flex-1 truncate">{t.nombre}</span>
+                  <div className="w-28 h-1.5 rounded-full bg-surface-alt overflow-hidden flex-shrink-0">
+                    <div className="h-full bg-danger/60 rounded-full" style={{ width: `${(t.n / maxTareas) * 100}%` }} />
+                  </div>
+                  <span className="text-xs font-semibold text-danger tabular-nums w-6 text-right flex-shrink-0">{t.n}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+
+        {/* Cuellos de botella */}
+        <Card padding="md">
+          <h2 className="text-sm font-bold text-text mb-3 pb-2 border-b border-border-light">Cuellos de botella (sin movimiento 14+ días)</h2>
+          {data.cuellosDeBotella.length === 0 ? (
+            <p className="text-xs text-success text-center py-4">Sin expedientes estancados.</p>
+          ) : (
+            <ul className="space-y-1.5">
+              {data.cuellosDeBotella.map((c) => (
+                <li key={c.id}>
+                  <Link href={`/intranet/sgie/expedientes/${c.id}`} className="flex items-center gap-2 text-xs hover:bg-surface-alt rounded px-1.5 py-1">
+                    <span className="font-mono font-semibold text-text">{c.numeroInterno}</span>
+                    <span className="text-text-muted truncate flex-1">{c.estado.replace(/_/g, ' ')}</span>
+                    {c.actualizadoEn && <span className="text-xxs text-text-muted">{new Date(c.actualizadoEn).toLocaleDateString('es-HN')}</span>}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+
+        {/* Eventos próximos */}
+        <Card padding="md">
+          <h2 className="text-sm font-bold text-text mb-3 pb-2 border-b border-border-light">Eventos próximos (7 días)</h2>
+          {data.eventosProximos.length === 0 ? (
+            <p className="text-xs text-text-muted text-center py-4">Sin eventos próximos.</p>
+          ) : (
+            <ul className="space-y-1.5">
+              {data.eventosProximos.map((e) => (
+                <li key={e.id} className="flex items-center gap-2 text-xs">
+                  <span className="text-text flex-1 truncate">{e.titulo}</span>
+                  <span className="text-xxs text-text-muted flex-shrink-0">{new Date(e.fecha).toLocaleDateString('es-HN', { day: '2-digit', month: 'short' })}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      </div>
+    </>
   );
 }
 

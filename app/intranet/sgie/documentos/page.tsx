@@ -9,7 +9,9 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/app/auth-context';
 import { Spinner } from '@/components/ui/spinner';
+import { DocumentoPreview } from '@/components/sgie/documento-preview';
 import { cn } from '@/lib/ui';
+import { traducirEstadoDocumento } from '@/lib/sgie/estados';
 
 interface DocumentoItem {
   id: string;
@@ -57,21 +59,23 @@ interface DocumentoDetalle {
   metadata: Record<string, unknown> | null;
 }
 
+// Tonos semánticos alineados con el design system (tokens, no colores crudos).
+// `neutral` reemplaza a `bg-gray-100`; el resto mapea a tokens semánticos.
 const ESTADO_CONFIG: Record<string, { label: string; color: string; icon: React.ComponentType<{ size?: number; className?: string }> }> = {
-  solicitado: { label: 'Solicitado', color: 'bg-gray-100 text-gray-700 border-gray-300', icon: Clock },
-  subido: { label: 'Subido', color: 'bg-blue-100 text-blue-700 border-blue-300', icon: Upload },
-  clasificando: { label: 'Clasificando', color: 'bg-yellow-100 text-yellow-700 border-yellow-300', icon: RefreshCw },
-  clasificado: { label: 'Clasificado', color: 'bg-indigo-100 text-indigo-700 border-indigo-300', icon: FileCheck },
-  texto_extraido: { label: 'Texto extraído', color: 'bg-green-100 text-green-700 border-green-300', icon: FileText },
-  ocr_pendiente: { label: 'OCR pendiente', color: 'bg-orange-100 text-orange-700 border-orange-300', icon: FileWarning },
-  ilegible: { label: 'Ilegible', color: 'bg-red-100 text-red-700 border-red-300', icon: Ban },
-  duplicado: { label: 'Duplicado', color: 'bg-purple-100 text-purple-700 border-purple-300', icon: Hash },
-  incorrecto: { label: 'Incorrecto', color: 'bg-red-100 text-red-700 border-red-300', icon: X },
-  vencido: { label: 'Vencido', color: 'bg-red-100 text-red-700 border-red-300', icon: Clock },
-  ia_procesada: { label: 'IA Procesada', color: 'bg-cyan-100 text-cyan-700 border-cyan-300', icon: FileCheck },
-  pendiente_abogado: { label: 'Pendiente abogado', color: 'bg-amber-100 text-amber-700 border-amber-300', icon: AlertTriangle },
-  aprobado: { label: 'Aprobado', color: 'bg-emerald-100 text-emerald-700 border-emerald-300', icon: CheckCircle },
-  rechazado: { label: 'Rechazado', color: 'bg-red-100 text-red-700 border-red-300', icon: X },
+  solicitado: { label: traducirEstadoDocumento('solicitado'), color: 'bg-surface-alt text-text-secondary border-border', icon: Clock },
+  subido: { label: traducirEstadoDocumento('subido'), color: 'bg-info/10 text-info border-info/20', icon: Upload },
+  clasificando: { label: traducirEstadoDocumento('clasificando'), color: 'bg-warning/10 text-warning border-warning/20', icon: RefreshCw },
+  clasificado: { label: traducirEstadoDocumento('clasificado'), color: 'bg-info/10 text-info border-info/20', icon: FileCheck },
+  texto_extraido: { label: traducirEstadoDocumento('texto_extraido'), color: 'bg-success/10 text-success border-success/20', icon: FileText },
+  ocr_pendiente: { label: traducirEstadoDocumento('ocr_pendiente'), color: 'bg-warning/10 text-warning border-warning/20', icon: FileWarning },
+  ilegible: { label: traducirEstadoDocumento('ilegible'), color: 'bg-danger/10 text-danger border-danger/20', icon: Ban },
+  duplicado: { label: traducirEstadoDocumento('duplicado'), color: 'bg-accent/10 text-accent-dark border-accent/20', icon: Hash },
+  incorrecto: { label: traducirEstadoDocumento('incorrecto'), color: 'bg-danger/10 text-danger border-danger/20', icon: X },
+  vencido: { label: traducirEstadoDocumento('vencido'), color: 'bg-danger/10 text-danger border-danger/20', icon: Clock },
+  ia_procesada: { label: traducirEstadoDocumento('ia_procesada'), color: 'bg-info/10 text-info border-info/20', icon: FileCheck },
+  pendiente_abogado: { label: traducirEstadoDocumento('pendiente_abogado'), color: 'bg-warning/10 text-warning border-warning/20', icon: AlertTriangle },
+  aprobado: { label: traducirEstadoDocumento('aprobado'), color: 'bg-success/10 text-success border-success/20', icon: CheckCircle },
+  rechazado: { label: traducirEstadoDocumento('rechazado'), color: 'bg-danger/10 text-danger border-danger/20', icon: X },
 };
 
 function formatoBytes(bytes: number): string {
@@ -105,6 +109,7 @@ export default function SgieDocumentosPage() {
   const [detalleId, setDetalleId] = useState<string | null>(null);
   const [detalle, setDetalle] = useState<DocumentoDetalle | null>(null);
   const [detalleLoading, setDetalleLoading] = useState(false);
+  const [previewId, setPreviewId] = useState<string | null>(null);
   const [procesando, setProcesando] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null);
   const limit = 30;
@@ -189,17 +194,17 @@ export default function SgieDocumentosPage() {
       {mensaje && (
         <div className={cn(
           'p-3 rounded-md border text-sm flex items-center justify-between',
-          mensaje.tipo === 'ok' ? 'bg-green-50 border-green-300 text-green-700' : 'bg-danger-bg border-danger/20 text-danger',
+          mensaje.tipo === 'ok' ? 'bg-success/10 border-success/20 text-success' : 'bg-danger/10 border-danger/20 text-danger',
         )}>
           <span>{mensaje.texto}</span>
-          <button onClick={() => setMensaje(null)}><X size={14} /></button>
+          <button onClick={() => setMensaje(null)} className="hover:opacity-70"><X size={14} /></button>
         </div>
       )}
 
       {error && (
-        <div className="p-3 rounded-md bg-danger-bg border border-danger/20 text-danger text-sm flex items-center justify-between">
+        <div className="p-3 rounded-md bg-danger/10 border border-danger/20 text-danger text-sm flex items-center justify-between">
           <span>{error}</span>
-          <button onClick={() => setError(null)}><X size={14} /></button>
+          <button onClick={() => setError(null)} className="hover:opacity-70"><X size={14} /></button>
         </div>
       )}
 
@@ -359,9 +364,19 @@ export default function SgieDocumentosPage() {
           <div className="bg-surface border border-border-light rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between p-4 border-b border-border-light">
               <h2 className="font-bold text-primary">Detalle del documento</h2>
-              <button onClick={() => setDetalleId(null)} className="p-1 hover:bg-surface-alt rounded">
-                <X size={18} className="text-text-muted" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setPreviewId(detalleId)}
+                  disabled={!detalle}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-primary text-accent hover:opacity-90 transition-opacity disabled:opacity-50"
+                  title="Previsualizar documento"
+                >
+                  <Eye size={13} /> Previsualizar
+                </button>
+                <button onClick={() => setDetalleId(null)} className="p-1 hover:bg-surface-alt rounded">
+                  <X size={18} className="text-text-muted" />
+                </button>
+              </div>
             </div>
             {detalleLoading ? (
               <div className="p-8 flex justify-center"><Spinner size="lg" /></div>
@@ -433,7 +448,7 @@ export default function SgieDocumentosPage() {
                     <ul className="space-y-0.5">
                       {detalle.evidenciasClasificacion.map((e, i) => (
                         <li key={i} className="text-xs text-text-secondary flex items-start gap-1">
-                          <CheckCircle size={11} className="text-green-600 mt-0.5 flex-shrink-0" />
+                          <CheckCircle size={11} className="text-success mt-0.5 flex-shrink-0" />
                           {e}
                         </li>
                       ))}
@@ -460,6 +475,8 @@ export default function SgieDocumentosPage() {
           </div>
         </div>
       )}
+
+      <DocumentoPreview documentoId={previewId} onClose={() => setPreviewId(null)} />
     </div>
   );
 }

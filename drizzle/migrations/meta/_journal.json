@@ -141,6 +141,27 @@
       "when": 1782563066062,
       "tag": "0019_sticky_karen_page",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1782599451865,
+      "tag": "0020_magical_molten_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1782608722284,
+      "tag": "0021_slim_leo",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1782620804920,
+      "tag": "0022_wide_master_chief",
+      "breakpoints": true
     }
   ]
 }

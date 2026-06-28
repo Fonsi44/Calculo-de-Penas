@@ -6,11 +6,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard, FolderKanban, FileText, AlertTriangle,
   CheckSquare, Calendar, Mail, ChevronLeft, User, LogOut,
-  Scale, Briefcase, Menu,
+  Scale, Briefcase, Menu, Users, Search,
 } from 'lucide-react';
 import { useAuth } from '@/app/auth-context';
 import { cn } from '@/lib/ui';
 import { Spinner } from '@/components/ui/spinner';
+import { GlobalSearch } from '@/components/sgie/global-search';
+import { NotificationsPopover } from '@/components/sgie/notifications-popover';
 
 type NavItem = {
   label: string;
@@ -21,6 +23,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { label: 'Cockpit', href: '/intranet/sgie', icon: LayoutDashboard, match: (p) => p === '/intranet/sgie' },
+  { label: 'Clientes', href: '/intranet/sgie/clientes', icon: Users, match: (p) => p.startsWith('/intranet/sgie/clientes') },
   { label: 'Expedientes', href: '/intranet/sgie/expedientes', icon: FolderKanban, match: (p) => p.startsWith('/intranet/sgie/expedientes') },
   { label: 'Documentos', href: '/intranet/sgie/documentos', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/documentos') },
   { label: 'Alertas', href: '/intranet/sgie/alertas', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/sgie/alertas') },
@@ -35,6 +38,7 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     if (loading) {
@@ -175,20 +179,33 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <div className="lg:hidden flex items-center gap-3 p-3 border-b border-border-light bg-surface">
+        {/* Barra superior: buscador global (⌘K) + menú móvil */}
+        <div className="flex items-center gap-3 p-3 border-b border-border-light bg-surface">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-1.5 rounded-md hover:bg-surface-alt transition-colors"
+            className="p-1.5 rounded-md hover:bg-surface-alt transition-colors lg:hidden"
             aria-label="Abrir menú"
           >
             <Menu size={20} className="text-text-secondary" />
           </button>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 lg:hidden">
             <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center">
               <Scale size={14} className="text-accent" />
             </div>
             <p className="font-bold text-xs text-primary tracking-widest">SGIE</p>
           </div>
+          <div className="flex-1" />
+          <NotificationsPopover />
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="flex items-center gap-2 h-9 px-3 rounded-md border border-border-light bg-surface-alt/60 text-xs text-text-muted hover:bg-surface-alt hover:text-text-secondary transition-colors"
+            aria-label="Buscar (Ctrl+K)"
+          >
+            <Search size={14} />
+            <span className="hidden sm:inline">Buscar…</span>
+            <kbd className="hidden sm:inline-block font-mono text-xxs px-1 py-0.5 rounded border border-border-light bg-surface">⌘K</kbd>
+          </button>
         </div>
 
         <main className="flex-1 overflow-y-auto">
@@ -197,6 +214,8 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
           </div>
         </main>
       </div>
+
+      <GlobalSearch externalOpen={searchOpen} onExternalOpenChange={setSearchOpen} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { AuthProvider } from "./auth-context";
 import { ThemeProvider } from "./theme-context";
 import { ToastProvider } from "@/components/ui/toast";
 import { ConfirmProvider } from "@/components/ui/confirm";
+import { PromptDialogProvider } from "@/components/ui/prompt-dialog";
 import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
@@ -112,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider>
             <ToastProvider>
               <ConfirmProvider>
+                <PromptDialogProvider>
                 <AuthProvider>
                   <GlobalShortcuts />
                   <Suspense fallback={null}>
@@ -119,6 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   </Suspense>
                   <RootShell>{children}</RootShell>
                 </AuthProvider>
+                </PromptDialogProvider>
               </ConfirmProvider>
             </ToastProvider>
           </ThemeProvider>

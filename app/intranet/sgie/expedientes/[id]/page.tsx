@@ -14,7 +14,11 @@ import { PageHeader } from '@/components/ui/page-header';
 import { EmptyState } from '@/components/ui/empty-state';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
+import { usePromptDialog } from '@/components/ui/prompt-dialog';
+import { EnlacesExpediente } from '@/components/sgie/enlaces-expediente';
+import { InteligenciaExpediente } from '@/components/sgie/inteligencia-expediente';
 import { cn } from '@/lib/ui';
+import { traducirEstadoExpediente, traducirEstadoDocumento } from '@/lib/sgie/estados';
 
 interface Requisito {
   id: string;
@@ -84,6 +88,7 @@ export default function SgieExpedienteDetallePage() {
   const router = useRouter();
   const toast = useToast();
   const confirm = useConfirm();
+  const promptDialog = usePromptDialog();
   const [detalle, setDetalle] = useState<Detalle | null>(null);
   const [loading, setLoading] = useState(true);
   const [noEncontrado, setNoEncontrado] = useState(false);
@@ -135,15 +140,27 @@ export default function SgieExpedienteDetallePage() {
   };
 
   const handleRechazarDoc = async (docId: string) => {
-    const motivo = prompt('Motivo del rechazo:');
-    if (!motivo) return;
+    // Sustituye a prompt() nativo (Sprint 0, tarea 3). Modal accesible del
+    // design system con validación de longitud y estado de carga.
+    const motivo = await promptDialog({
+      title: 'Rechazar documento',
+      description: 'Indique el motivo del rechazo. El cliente recibirá esta justificación.',
+      placeholder: 'Ej.: Documento ilegible, no corresponde al requisito solicitado…',
+      confirmLabel: 'Rechazar documento',
+      cancelLabel: 'Cancelar',
+      tone: 'danger',
+      minLength: 1,
+      maxLength: 500,
+      multiline: true,
+    });
+    if (motivo === null) return; // cancelado
     setAccionDocId(docId);
     try {
       const res = await fetch(`/api/sgie/documentos/${docId}/rechazar`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ motivo }),
       });
       if (!res.ok) throw new Error((await res.json()).error);
-      toast.success('Documento rechazado');
+      toast.success('Documento rechazado', motivo.slice(0, 80) + (motivo.length > 80 ? '…' : ''));
       fetchDocumentosAlertas();
     } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
     finally { setAccionDocId(null); }
@@ -409,6 +426,12 @@ export default function SgieExpedienteDetallePage() {
         </Card>
       </div>
 
+      {/* Enlaces de carga documental (Sprint 1) */}
+      <EnlacesExpediente expedienteId={detalle.id} />
+
+      {/* Inteligencia del expediente (Sprint 3) */}
+      <InteligenciaExpediente expedienteId={detalle.id} />
+
       {/* Acciones críticas del abogado */}
       <Card padding="md">
         <div className="flex items-center gap-2 mb-3">
@@ -456,7 +479,7 @@ function EstadoBadge({ estado }: { estado: string }) {
   }[tono];
   return (
     <span className={cn('inline-flex items-center px-1.5 py-0.5 rounded text-xxs font-semibold border whitespace-nowrap', tonoClass)}>
-      {estado.replace(/_/g, ' ')}
+      {traducirEstadoExpediente(estado)}
     </span>
   );
 }
@@ -477,13 +500,7 @@ function formatAccion(accion: string): string {
 }
 
 function formatEstadoDoc(estado: string): string {
-  const labels: Record<string, string> = {
-    subido: 'Subido', clasificando: 'Clasificando', clasificado: 'Clasificado',
-    texto_extraido: 'Texto extraído', ocr_pendiente: 'OCR pendiente', ilegible: 'Ilegible',
-    duplicado: 'Duplicado', pendiente_abogado: 'Pendiente revisión', aprobado: 'Aprobado',
-    rechazado: 'Rechazado', ia_procesada: 'IA procesada',
-  };
-  return labels[estado] || estado.replace(/_/g, ' ');
+  return traducirEstadoDocumento(estado);
 }
 
 function severidadColor(s: string): string {

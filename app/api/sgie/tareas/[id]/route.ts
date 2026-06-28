@@ -1,28 +1,86 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
-import { db } from '@/lib/db';
-import { tareas, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
-import { and, eq, isNull } from 'drizzle-orm';
+import { z } from 'zod';
+import { validateCsrf } from '@/lib/csrf';
+import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { actualizarTarea } from '@/lib/sgie/tareas-db';
+import type { ContextoAbogado } from '@/lib/sgie/expedientes-db';
+import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
+const updateSchema = z.object({
+  titulo: z.string().min(1).max(300).optional(),
+  descripcion: z.string().max(2000).optional(),
+  prioridad: z.enum(['baja', 'media', 'alta', 'urgente']).optional(),
+  estado: z.enum(['pendiente', 'en_progreso', 'completada', 'cancelada']).optional(),
+  expedienteId: z.union([z.string().uuid(), z.null()]).optional(),
+  asignadaA: z.union([z.string().uuid(), z.null()]).optional(),
+  fechaVencimiento: z.union([z.string().datetime(), z.null()]).optional(),
+});
+
+function ctx(auth: { userId: string; rol: string }): ContextoAbogado {
+  return { usuarioId: auth.userId, rol: auth.rol, esAdmin: auth.rol === 'admin' };
+}
+
+/**
+ * PATCH /api/sgie/tareas/:id
+ *
+ * Actualiza una tarea (campos editables + estado). Requiere scope.
+ * Sprint 1: antes sólo cambiaba `estado`; ahora soporta edición completa.
+ * Compatibilidad: un body `{ estado }` sigue funcionando como antes.
+ */
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`sgie:tarea:update:${auth.userId}`, { max: 60, windowMs: 60_000, keyPrefix: 'sgie' });
+    if (!rl.ok) return rateLimitResponse(rl);
+
     const { id } = await params;
+    const parsed = updateSchema.parse(await request.json());
 
-    const [tarea] = await db.select().from(tareas).where(eq(tareas.id, id));
-    if (!tarea) return Response.json({ error: 'No encontrada' }, { status: 404 });
+    // Determinar acción de auditoría según el cambio.
+    const esCompletar = parsed.estado === 'completada';
+    const accion = esCompletar ? 'tarea_completed' : 'tarea_updated';
 
-    if (auth.rol !== 'admin') {
-      if (!tarea.expedienteId) return Response.json({ error: 'Sin acceso' }, { status: 403 });
-      const [asig] = await db.select({ id: expedienteAsignaciones.id }).from(expedienteAsignaciones)
-        .where(and(eq(expedienteAsignaciones.expedienteId, tarea.expedienteId), eq(expedienteAsignaciones.abogadoId, auth.userId), isNull(expedienteAsignaciones.revocadaEn)));
-      if (!asig) return Response.json({ error: 'Sin acceso' }, { status: 403 });
-    }
+    await actualizarTarea(
+      id,
+      {
+        titulo: parsed.titulo,
+        descripcion: parsed.descripcion,
+        prioridad: parsed.prioridad,
+        estado: parsed.estado,
+        expedienteId: parsed.expedienteId === undefined ? undefined : parsed.expedienteId,
+        asignadaA: parsed.asignadaA === undefined ? undefined : parsed.asignadaA,
+        fechaVencimiento:
+          parsed.fechaVencimiento === undefined
+            ? undefined
+            : parsed.fechaVencimiento === null
+              ? null
+              : new Date(parsed.fechaVencimiento),
+      },
+      ctx(auth),
+    );
 
-    const body = await request.json();
-    await db.update(tareas).set({ estado: body.estado || 'completada', completadaEn: new Date() }).where(eq(tareas.id, id));
+    await logSgie({
+      usuarioId: auth.userId,
+      accion,
+      recurso: 'tarea',
+      recursoId: id,
+      metadata: parsed as Record<string, unknown>,
+      request,
+    });
+
     return Response.json({ ok: true });
-  } catch (err) { return authFailureResponse(err); }
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
+    }
+    // Errores de scope (Sin acceso a la tarea / expediente) → 403.
+    if (err instanceof Error && err.message.startsWith('Sin acceso')) {
+      return Response.json({ error: 'Sin acceso' }, { status: 403 });
+    }
+    return authFailureResponse(err);
+  }
 }

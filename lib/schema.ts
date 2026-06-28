@@ -820,8 +820,15 @@ export const clientes = pgTable('clientes', {
   creadoPor: uuid('creado_por'),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
   actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+  // Sprint 5 — baja lógica. El cliente inactivo conserva todos sus datos y
+  // expedientes; sólo se bloquea la creación de expedientes nuevos.
+  activo: boolean('activo').notNull().default(true),
+  desactivadoEn: timestamp('desactivado_en', { withTimezone: true }),
+  desactivadoPor: uuid('desactivado_por'),
+  motivoDesactivacion: text('motivo_desactivacion'),
 }, (table) => ({
   creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  desactivadoPorRef: foreignKey({ columns: [table.desactivadoPor], foreignColumns: [usuarios.id] }),
   duplicadoHashIdx: index('clientes_duplicado_hash_idx').on(table.duplicadoHash),
   identidadIdx: index('clientes_identidad_idx').on(table.identidad),
   nombreIdx: index('clientes_nombre_idx').on(table.nombre),
@@ -1360,6 +1367,149 @@ export const eventosAgenda = pgTable('eventos_agenda', {
 
 export type EventoAgenda = typeof eventosAgenda.$inferSelect;
 export type EventoAgendaInsert = typeof eventosAgenda.$inferInsert;
+
+// ────────────────────────────────────────────────────────────────────────────
+// Sprint 3 — Notificaciones leídas (persistencia de lectura).
+//
+// Las notificaciones del SGIE son DERIVADAS (virtuales): se calculan del estado
+// actual (tareas vencidas, alertas, etc.) sin persistir el contenido. Esta
+// tabla persiste SÓLO el hecho de que el usuario marcó una notificación como
+// leída, identificada por una clave estable (`notificacionKey` = tipo:recursoId).
+// Así el badge cuenta sólo las no leídas, sin necesidad de persistir el payload.
+// ────────────────────────────────────────────────────────────────────────────
+export const notificacionesLeidas = pgTable('notificaciones_leidas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  // Clave estable de la notificación, ej. "tarea_vencida:<uuid>".
+  notificacionKey: varchar('notificacion_key', { length: 200 }).notNull(),
+  leidaEn: timestamp('leida_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  // Un usuario + clave → una fila (idempotente: marcar dos veces no duplica).
+  usuarioKeyUnique: unique('notificaciones_leidas_usuario_key_unique').on(table.usuarioId, table.notificacionKey),
+  usuarioIdx: index('notificaciones_leidas_usuario_idx').on(table.usuarioId),
+}));
+
+export type NotificacionLeida = typeof notificacionesLeidas.$inferSelect;
+export type NotificacionLeidaInsert = typeof notificacionesLeidas.$inferInsert;
+
+// ────────────────────────────────────────────────────────────────────────────
+// Sprint 4 — Resúmenes IA de expediente (caché validada).
+//
+// Persiste el resumen generado por IA para no recalcular en cada render. El
+// hash_entrada permite invalidar el caché si cambian los datos fuente del
+// expediente (documentos, campos, estados). Cumple R17: prompt restrictivo,
+// no inventa datos legales, IA nunca decide estados.
+// ────────────────────────────────────────────────────────────────────────────
+export const resumenesIaExpediente = pgTable('resumenes_ia_expediente', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  resumen: text('resumen').notNull(),
+  proveedor: varchar('proveedor', { length: 50 }).notNull(),
+  modelo: varchar('modelo', { length: 100 }).notNull(),
+  generadoPor: uuid('generado_por').notNull(),
+  generadoEn: timestamp('generado_en', { withTimezone: true }).defaultNow(),
+  hashEntrada: varchar('hash_entrada', { length: 64 }).notNull(),
+  confianza: integer('confianza').default(0),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  metadata: jsonb('metadata'),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  generadoPorRef: foreignKey({ columns: [table.generadoPor], foreignColumns: [usuarios.id] }).onDelete('set null'),
+  // Un resumen vigente por expediente (se reemplaza al regenerar).
+  expedienteUnique: unique('resumenes_ia_expediente_exp_unique').on(table.expedienteId),
+  expedienteIdx: index('resumenes_ia_expediente_exp_idx').on(table.expedienteId),
+}));
+
+export type ResumenIaExpediente = typeof resumenesIaExpediente.$inferSelect;
+export type ResumenIaExpedienteInsert = typeof resumenesIaExpediente.$inferInsert;
+
+// ────────────────────────────────────────────────────────────────────────────
+// Sprint 4 — Comentarios de tarea (colaboración).
+//
+// Borrado lógico vía eliminado_en (no DELETE físico). Texto plano (sin HTML
+// inseguro). Scope: el autor puede editar/eliminar los suyos; otros abogados
+// con acceso a la tarea pueden comentar (sólo lectura de los ajenos).
+// ────────────────────────────────────────────────────────────────────────────
+export const tareaComentarios = pgTable('tarea_comentarios', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tareaId: uuid('tarea_id').notNull(),
+  autorId: uuid('autor_id').notNull(),
+  comentario: text('comentario').notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  editadoEn: timestamp('editado_en', { withTimezone: true }),
+  eliminadoEn: timestamp('eliminado_en', { withTimezone: true }),
+}, (table) => ({
+  tareaRef: foreignKey({ columns: [table.tareaId], foreignColumns: [tareas.id] }).onDelete('cascade'),
+  autorRef: foreignKey({ columns: [table.autorId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  tareaIdx: index('tarea_comentarios_tarea_idx').on(table.tareaId),
+}));
+
+export type TareaComentario = typeof tareaComentarios.$inferSelect;
+export type TareaComentarioInsert = typeof tareaComentarios.$inferInsert;
+
+// ────────────────────────────────────────────────────────────────────────────
+// Sprint 4 — Tokens de reset de contraseña (un solo uso, expiración corta).
+//
+// Se almacena el HASH del token (no el token plano). Expiración 1h.
+// Consumo: al usarlo, se marca consumido_en (no se borra, para auditoría).
+// ────────────────────────────────────────────────────────────────────────────
+export const passwordResetTokens = pgTable('password_reset_tokens', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  tokenHash: varchar('token_hash', { length: 128 }).notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  expiraEn: timestamp('expira_en', { withTimezone: true }).notNull(),
+  consumidoEn: timestamp('consumido_en', { withTimezone: true }),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  tokenHashUnique: unique('password_reset_tokens_hash_unique').on(table.tokenHash),
+  usuarioIdx: index('password_reset_tokens_usuario_idx').on(table.usuarioId),
+}));
+
+export type PasswordResetToken = typeof passwordResetTokens.$inferSelect;
+export type PasswordResetTokenInsert = typeof passwordResetTokens.$inferInsert;
+
+// ────────────────────────────────────────────────────────────────────────────
+// Sprint 5 — 2FA TOTP.
+//
+// El secret se cifra en reposo (encryptionAvailable). El enrolamiento es
+// opt-in (admin/perfil), nunca automático. Los códigos de recuperación se
+// guardan hasheados (SHA-256) y se muestran una sola vez.
+// Si 2FA no está habilitado, el login actual sigue funcionando sin cambios.
+// ────────────────────────────────────────────────────────────────────────────
+export const twoFactorSecrets = pgTable('two_factor_secrets', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  // Secret TOTP cifrado (nunca en plano).
+  secretCifrado: text('secret_cifrado').notNull(),
+  habilitado: boolean('habilitado').notNull().default(false),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  usuarioUnique: unique('two_factor_secrets_usuario_unique').on(table.usuarioId),
+}));
+
+export type TwoFactorSecret = typeof twoFactorSecrets.$inferSelect;
+export type TwoFactorSecretInsert = typeof twoFactorSecrets.$inferInsert;
+
+export const twoFactorRecoveryCodes = pgTable('two_factor_recovery_codes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  // Hash del código (SHA-256). El código plano se muestra una sola vez al generar.
+  codeHash: varchar('code_hash', { length: 128 }).notNull(),
+  usadoEn: timestamp('usado_en', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  codeHashIdx: index('two_factor_recovery_codes_hash_idx').on(table.codeHash),
+  usuarioIdx: index('two_factor_recovery_codes_usuario_idx').on(table.usuarioId),
+}));
+
+export type TwoFactorRecoveryCode = typeof twoFactorRecoveryCodes.$inferSelect;
+export type TwoFactorRecoveryCodeInsert = typeof twoFactorRecoveryCodes.$inferInsert;
 
 // --- Fase 6/7: jobs SGIE (cola idempotente) ---
 

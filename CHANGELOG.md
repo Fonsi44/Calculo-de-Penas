@@ -5,6 +5,440 @@
 
 ---
 
+## 2026-06-28 — sgie: Sprint 4 (resumen IA, colaboración, auth y productividad)
+
+Cierra las brechas avanzadas de productividad, colaboración y seguridad: resumen
+IA validado, reprogramación de eventos, comentarios de tarea, recuperación de
+contraseña, búsqueda inteligente híbrida y dashboard de productividad.
+
+### Migración de base de datos
+- **`drizzle/migrations/0021_slim_leo.sql`** (nuevo): 3 tablas.
+  - `resumenes_ia_expediente` (caché de resumen IA con `hash_entrada` para
+    invalidación; R17).
+  - `tarea_comentarios` (colaboración; borrado lógico vía `eliminado_en`).
+  - `password_reset_tokens` (hash de token, expiración 1h, consumo único).
+  Sólo CREATE + FKs + indexes. No destructiva. Generada con `drizzle-kit generate`.
+
+### Resumen IA automático validado (tarea 1)
+- `lib/sgie/resumen-ia.ts` (nuevo): `serializarDatosParaResumen`,
+  `calcularHashEntrada`, `buildSystemPromptResumen` (R17: prohibe inventar datos
+  legales), `generarResumenIa` (reutiliza config de `ia-documental`).
+- `app/api/sgie/expedientes/[id]/resumen-ia/route.ts` (nuevo): `GET` (caché
+  vigente) + `POST` (generar/regenerar con IA, cachea en DB, CSRF, rate limit
+  5/5min, auditoría). Si el proveedor IA no está configurado → estado controlado.
+- `components/sgie/inteligencia-expediente.tsx`: bloque resumen con botón
+  Generar/Regenerar, disclaimer "requiere revisión del abogado".
+
+### Reprogramar evento desde UI (tarea 2)
+- `components/sgie/reprogramar-evento-dialog.tsx` (nuevo): modal accesible con
+  fecha/hora obligatorias, motivo opcional, validación.
+- `app/intranet/sgie/agenda/page.tsx`: botón "Reprogramar" en cada evento del
+  día seleccionado. Reutiliza el PATCH de agenda (auditoría `evento_updated`
+  con `reprogramado: true`).
+
+### Comentarios de tarea (tarea 3)
+- `app/api/sgie/tareas/[id]/comentarios/route.ts` (nuevo): `GET` + `POST`.
+- `app/api/sgie/tareas/[id]/comentarios/[comentarioId]/route.ts` (nuevo):
+  `PATCH` (editar, sólo autor) + `DELETE` (borrado lógico, autor/admin).
+- `components/sgie/comentarios-tarea.tsx` (nuevo): drawer lateral con lista,
+  añadir, editar y eliminar (texto plano, sin HTML inseguro).
+- Integrado en `app/intranet/sgie/tareas/page.tsx` (botón por tarea).
+- Auditoría `tarea_updated` con metadata explícita (no hay acción dedicada).
+
+### Recuperación de contraseña (tarea 4)
+- `lib/auth-reset.ts` (nuevo): `generarTokenReset` (32 bytes base64url),
+  `hashTokenReset` (SHA-256, nunca token plano), `crearTokenReset` (invalida
+  previos), `validarTokenReset`, `consumirTokenReset` (transacción).
+- `app/api/auth/reset-password/route.ts` + `confirm/route.ts` (nuevos):
+  solicitar (respuesta neutra anti-enumeración, rate limit 5/15min/IP,
+  envía email vía Resend si configurado) y confirmar (valida + consume +
+  audita `password_changed`).
+- **2FA: feature flag documentada (no implementada).** Reset password es
+  prioridad; 2FA completo requiere flujo de enrolamiento delicado que podría
+  bloquear usuarios. Pendiente de Sprint futuro.
+
+### Búsqueda semántica híbrida (tarea 5)
+- `lib/sgie/busqueda-hibrida.ts` (nuevo): ranking textual determinista
+  (`normalizarTexto`, `tokenizar`, `puntuarDocumento`, `rankear`). Sin
+  embeddings (no existen): es ranking transparente, no semántica real.
+- `app/api/sgie/buscar/semantica/route.ts` (nuevo): `GET` con scope, ranking
+  por relevancia sobre expedientes/documentos/tareas.
+- `components/sgie/global-search.tsx`: toggle "Búsqueda inteligente" que
+  cambia al endpoint híbrido; aviso "resultado asistido; verificar fuente".
+
+### Dashboard de productividad (tarea 6)
+- `app/api/sgie/productividad/route.ts` (nuevo): `GET` métricas por abogado
+  (tareas completadas/vencidas), actividad semanal, resumen. Soporta `csv`
+  (reutiliza `lib/sgie/csv.ts`). Scope.
+- `app/intranet/sgie/productividad/page.tsx` (nuevo): filtros fecha, tarjetas
+  resumen, barras por abogado, gráfico de barras semanal, exportación CSV.
+
+### Tests
+- `tests/sgie-resumen-ia.test.ts` (8 tests): serialización, hash determinista,
+  prompt restrictivo (R17).
+- `tests/sgie-busqueda-hibrida.test.ts` (10 tests): normalización,
+  tokenización, puntuación, ranking.
+
+### Validación
+- `npm run lint`: 0 errores (65 warnings preexistentes en archivos ajenos).
+- `npm test`: 717 tests OK (32 suites), incluidos los 18 nuevos.
+- `npm run build`: compilación + type-check OK, 335/335 páginas.
+- `npm run test:e2e`: **NO VALIDADO** (webserver de Playwright no arranca por
+  timeout del entorno; no es fallo de código).
+
+### Notas
+- Sin cambio del enum `auditoria_accion`: las nuevas acciones (comentario,
+  resumen IA) reutilizan `tarea_updated`/`documento_updated`/`expediente_updated`
+  con metadata explícita del evento.
+- La IA nunca aprueba/firma/cierra/cambia estados (R17 reforzada).
+- Reset password no requiere CSRF (ruta pública pre-auth, coherente con login).
+- 2FA queda como feature flag documentada; no se implementa para no arriesgar
+  bloqueo de usuarios sin flujo de enrolamiento.
+
+---
+
+## 2026-06-28 — sgie: Sprint 3 (agenda accionable, PDF, IA visible y cockpit ejecutivo)
+
+Cierra las principales brechas operativas pendientes: mutaciones de agenda,
+exportación PDF server-side, persistencia de notificaciones leídas, IA visible
+en el expediente y cockpit ejecutivo. Referencia: auditoría SGIE, Sprint 3.
+
+### Migración de base de datos
+- **`drizzle/migrations/0020_magical_molten_man.sql`** (nuevo): tabla
+  `notificaciones_leidas` (id, usuarioId, notificacionKey, leidaEn) con FK a
+  `usuarios` (cascade) + unique(usuarioId, notificacionKey) para idempotencia.
+  Generada con `npx drizzle-kit generate`. Sólo CREATE (no destructiva).
+
+### Mutaciones de Agenda (tarea 1)
+- `app/api/sgie/agenda/route.ts`: ampliado `GET` con filtros (expedienteId,
+  estado, desde, hasta) y añadido `POST` crear evento (CSRF, rate limit,
+  auditoría `evento_created`).
+- `app/api/sgie/agenda/[id]/route.ts` (nuevo): `PATCH` actualizar/confirmar/
+  cancelar/completar/reprogramar (scope, CSRF, auditoría `evento_updated`).
+- `lib/sgie/agenda-helpers.ts` (nuevo): `estadoTrasAccion`, `accionAuditoriaEvento`,
+  `accionRequiereConfirmacion`, `etiquetaAccion` (puras).
+- `app/intranet/sgie/agenda/page.tsx`: formulario crear evento + acciones
+  confirmar/cancelar/completar en el panel del día seleccionado.
+
+### Exportación PDF server-side (tarea 2)
+- **Dependencia añadida: `pdfkit` + `@types/pdfkit`** (ligera, sin Chromium,
+  pura Node). Justificada: generación de PDF profesional server-side sin
+  puppeteer/playwright (pesados). Es la opción más ligera disponible.
+- `lib/sgie/pdf.ts` (nuevo): `generarPdfReporte` con título, fecha, filtros,
+  métricas, tablas (estado/abogado/cliente) y pie "Pineda y Asociados".
+- `app/api/sgie/reportes/route.ts`: añadido formato `pdf`
+  (`Content-Type: application/pdf`, `Content-Disposition: attachment`, auditoría).
+- `app/intranet/sgie/reportes/page.tsx`: botón "PDF" + función `exportarPdf`.
+
+### Persistencia de notificaciones leídas (tarea 3)
+- `app/api/sgie/notificaciones/route.ts`: `GET` ahora devuelve `leida` por
+  notificación + `noLeidas` (consulta `notificaciones_leidas`); añadido `POST`
+  marcar una (por `key`) o todas (idempotente via unique).
+- `components/sgie/notifications-popover.tsx`: badge cuenta sólo no leídas,
+  acción "Marcar leída" por item y "Marcar todas"; críticas siguen visibles
+  aunque leídas (diferenciación visual).
+
+### IA visible en el expediente (tarea 4)
+- `app/api/sgie/expedientes/[id]/inteligencia/route.ts` (nuevo): `GET` presenta
+  confianza global (`calcularConfianzaExpediente`), documentos con confianza
+  individual, campos extraídos (valor/cita/estado) e inconsistencias detectadas.
+  No invoca IA costosa por render; usa datos ya calculados.
+- `components/sgie/inteligencia-expediente.tsx` (nuevo): sección "Inteligencia
+  del expediente" con confianza global, inconsistencias, documentos clasificados
+  y tabla de campos extraídos.
+- `lib/sgie/inteligencia.ts` (nuevo): helpers de presentación (`etiquetarConfianza`,
+  `traducirEtiquetaConfianza`, `tonoConfianza`, `estadoCampoExtraido`, etc.).
+- Integrado en `app/intranet/sgie/expedientes/[id]/page.tsx`.
+- **Resumen IA automático: no disponible.** Se informa al usuario; el motor IA
+  existe pero no hay endpoint de generación de resumen validado. No se inventa.
+
+### Cockpit ejecutivo (tarea 5)
+- `app/api/sgie/cockpit/avanzado/route.ts` (nuevo): `GET` tendencia por estado,
+  tareas vencidas por responsable, documentos pendientes, alertas críticas,
+  cuellos de botella (14+ días sin movimiento) y eventos próximos. Scope.
+- `app/intranet/sgie/page.tsx`: bloque ejecutivo con barras CSS, accesos rápidos
+  (Nuevo cliente/expediente/tarea/Reportes) y listas de cuellos/eventos.
+
+### Tests
+- `tests/sgie-inteligencia.test.ts` (8 tests): confianza, estado de campo,
+  valor efectivo, clasificación.
+- `tests/sgie-agenda-helpers.test.ts` (7 tests): estado tras acción, auditoría,
+  confirmación, etiquetas.
+
+### Validación
+- `npm run lint`: 0 errores (50 warnings preexistentes en archivos ajenos).
+- `npm test`: 699 tests OK (30 suites), incluidos los 15 nuevos.
+- `npm run build`: compilación + type-check OK, 330/330 páginas.
+- `npm run test:e2e`: **NO VALIDADO** (timeout del entorno: webserver de
+  Playwright; no es fallo de código).
+
+### Notas
+- `pdfkit` es la primera dependencia nueva añadida desde Sprint 0 (justificada
+  y documentada). No requiere Chromium ni runtime adicional en el servidor.
+- La IA nunca aprueba/firma/cierra: la sección de inteligencia es informativa.
+- Seguridad intacta: `requireAbogado`, CSRF, rate limit, auditoría y scope en
+  todos los endpoints nuevos/mutaciones.
+
+---
+
+## 2026-06-27 — sgie: Sprint 2 (gobierno, reporting y control operativo)
+
+Convierte el SGIE en una plataforma administrable y medible para dirección/admin,
+y mejora el control operativo diario. Sin cambio de schema. Referencia: auditoría
+SGIE, tareas 1–5 del Sprint 2.
+
+### Usuarios y Accesos SGIE (tarea 1)
+- `app/intranet/admin/sgie/usuarios/page.tsx` (nuevo): vista de gobierno de
+  accesos SGIE para admin (lista usuarios con rol, estado, último acceso,
+  expedientes asignados, correo corp. vinculado; búsqueda y filtro por estado;
+  enlaza al detalle `/intranet/admin/usuarios/[id]` para acciones completas).
+  Reutiliza el endpoint `GET /api/admin/usuarios` y la capa
+  `lib/sgie/usuarios-db.ts` (ya existentes, Fase 2).
+- `app/api/sgie/usuarios/asignables/route.ts` (nuevo): `GET` lista abogados/admin
+  activos asignables como responsable (payload mínimo id+nombre, sin emails).
+  `requireAbogado`.
+- `app/intranet/sgie/tareas/page.tsx`: añadido selector de responsable en el
+  formulario crear/editar (carga `/api/sgie/usuarios/asignables`).
+
+### Reportes con exportación (tarea 2)
+- `lib/sgie/reportes-db.ts` (nuevo): `generarReporte` con agregaciones
+  (expedientes por estado/cliente/abogado/procedimiento, tareas vencidas/
+  completadas/pendientes, documentos pendientes, alertas, enlaces) y scope por
+  abogado (admin ve todo).
+- `app/api/sgie/reportes/route.ts` (nuevo): `GET` con filtros (fechas, cliente,
+  estado, abogado, procedimiento) y dos formatos: `json` (agregados) y `csv`
+  (descarga del listado de expedientes, RFC 4180 + BOM UTF-8). Rate limit +
+  auditoría de exportación.
+- `app/intranet/sgie/reportes/page.tsx` (nuevo): filtros, tarjetas de métricas,
+  desgloses con barras, listado de expedientes, botones "Exportar CSV" e
+  "Imprimir" (vista print-friendly; PDF real pendiente de dependencia).
+- `lib/sgie/csv.ts` (nuevo): generación CSV nativa sin dependencias
+  (`escaparCelda`, `generarCsv`, `conBom`, `nombreArchivoExport`).
+
+### Vista calendario de Agenda (tarea 3)
+- `app/intranet/sgie/agenda/page.tsx` reescrito: vista mensual y semanal propia
+  (CSS/Tailwind, sin librerías de calendario), navegación, lista lateral de
+  próximos eventos y eventos del día seleccionado.
+- `lib/sgie/calendario.ts` (nuevo): utilidades puras de fecha
+  (`rejillaMes`, `rejillaSemana`, `esMismoDia`, `formatRangoSemana`, etc.).
+- Mutaciones de evento (crear/confirmar/reprogramar): PENDIENTES. El endpoint
+  actual es sólo lectura; no se inventa endpoint.
+
+### Previsualización segura de documentos (tarea 4)
+- `app/api/sgie/documentos/[id]/preview/route.ts` (nuevo): `GET` valida scope
+  del documento/expediente y devuelve la URL del blob o `preview_not_available`.
+  Rate limit + auditoría de acceso.
+- `components/sgie/documento-preview.tsx` (nuevo): modal accesible que muestra
+  PDF (iframe), imágenes (img) o mensaje profesional si no es previsualizable.
+- `app/intranet/sgie/documentos/page.tsx`: botón "Previsualizar" en el modal de
+  detalle.
+- Limitación: el storage actual (Vercel Blob) usa URLs públicas; no hay URL
+  firmada. Si se migra a storage privado, el endpoint generará la URL temporal.
+
+### Notificaciones in-app (tarea 5)
+- `app/api/sgie/notificaciones/route.ts` (nuevo): `GET` notificaciones DERIVADAS
+  (virtuales, sin tabla nueva): tareas vencidas, alertas críticas, documentos
+  pendientes, eventos próximos, enlaces por expirar. Scope por abogado.
+- `lib/sgie/notificaciones.ts` (nuevo): `normalizarNotificaciones` (pura) →
+  payload uniforme con severidad, href y orden por prioridad.
+- `components/sgie/notifications-popover.tsx` (nuevo): badge + popover con
+  refresco cada 60 s, agrupación visual por severidad.
+- Integrado en `app/intranet/sgie/layout.tsx` (campana en la barra superior).
+
+### Tests
+- `tests/sgie-calendario.test.ts` (11 tests): rejillas mes/semana, rangos,
+  formato de semana, constantes.
+- `tests/sgie-csv.test.ts` (16 tests): escape RFC 4180, paths anidados, BOM,
+  nombre de archivo.
+- `tests/sgie-notificaciones.test.ts` (7 tests): normalización, orden por
+  prioridad, dedupe, href por tipo.
+
+### Validación
+- `npm run lint`: 0 errores (45 warnings preexistentes en archivos ajenos).
+- `npm test`: 684 tests OK (28 suites), incluidos los 34 nuevos.
+- `npm run build`: compilación + type-check OK, 329/329 páginas.
+- `npm run test:e2e`: **NO VALIDADO** (timeout del entorno: el webserver de
+  Playwright relanza un build interno, código 143/SIGTERM; no es fallo de código).
+
+### Notas
+- Sin cambio de schema: los enums `auditoria_accion` ya incluían todas las
+  acciones usadas. No existe acción de exportación/preview dedicada; se
+  reutilizan `expediente_updated`/`documento_updated` con metadata explícita.
+- El módulo de gestión de usuarios (Fase 2) ya existía en `/intranet/admin/
+  usuarios` con endpoints completos; la vista SGIE es un wrapper de gobierno
+  que no duplica lógica.
+- Seguridad intacta: `requireAdmin`/`requireAbogado`, CSRF, rate limit y
+  auditoría en todos los endpoints. Scope por abogado sin relajar.
+
+---
+
+## 2026-06-27 — sgie: Sprint 1 (operativa diaria)
+
+Convierte el SGIE en una herramienta operativa diaria para el abogado, sobre el
+backend del Sprint 0. Sin cambio de arquitectura ni de schema. Referencia:
+auditoría SGIE, tareas 1–5 del Sprint 1.
+
+### CRUD de Tareas (tarea 1)
+- `lib/sgie/tareas-db.ts` (nuevo): `listarTareas` (filtros estado/prioridad/
+  expediente/asignadaA/q + scope), `crearTarea`, `actualizarTarea` (campos
+  editables + estado), `verificarAccesoTarea`.
+- `app/api/sgie/tareas/route.ts`: `POST` (crear, CSRF + rate limit + auditoría
+  `tarea_created`) y `GET` reescrito con filtros nuevos vía `tareas-db`.
+- `app/api/sgie/tareas/[id]/route.ts`: `PATCH` ampliado a edición completa
+  (antes sólo `estado`); auditoría `tarea_updated`/`tarea_completed`.
+- `app/intranet/sgie/tareas/page.tsx`: pantalla con crear/editar
+  (título, descripción, prioridad, vencimiento), completar/reabrir, filtros
+  (estado, prioridad, búsqueda), estados vacío/error/loading (skeleton),
+  vencimientos con aviso visual, acciones con label/title accesible.
+- **Comentarios de tarea: PENDIENTES.** La tabla `tareas` no tiene tabla de
+  comentarios asociada en el schema; no se inventa estructura.
+
+### Enlaces mágicos en el detalle de expediente (tarea 2)
+- `app/api/sgie/enlaces/route.ts`: añadido `GET ?expedienteId=` (lista enlaces
+  del expediente accesible; no devuelve token de revocados).
+- `components/sgie/enlaces-expediente.tsx` (nuevo): bloque con ver, generar
+  (expiración 1–90 días, usos 1–50, email opcional), copiar al portapapeles y
+  revocar (`ConfirmDialog`). Banner de token recién creado para copiar antes
+  de cerrar (seguridad: no se re-muestra el token completo).
+- Integrado en `app/intranet/sgie/expedientes/[id]/page.tsx`.
+
+### Ficha de cliente + edición (tarea 3)
+- `app/intranet/sgie/clientes/[id]/page.tsx` (nuevo): datos del cliente,
+  expedientes asociados, acción "Crear expediente", edición básica (PATCH),
+  estados loading (DetailSkeleton/TableSkeleton)/vacío/error.
+- `lib/sgie/clientes-db.ts`: `obtenerCliente` (detalle + conteo de expedientes
+  accesibles) y `actualizarCliente` (recalcula `duplicadoHash`).
+- `app/api/sgie/clientes/[id]/route.ts` (nuevo): `GET` (detalle) y `PATCH`
+  (edición con validación Zod, CSRF, rate limit, auditoría `cliente_updated`).
+- `app/intranet/sgie/clientes/page.tsx`: nombre clicable a la ficha + acción
+  "Ver"; skeleton de carga en vez de spinner.
+- **Baja lógica: PENDIENTE.** La tabla `clientes` no tiene campo `activo`;
+  requiere cambio de schema futuro.
+
+### Buscador global ⌘K (tarea 4)
+- `lib/sgie/buscar-db.ts` (nuevo): `buscar` (clientes, expedientes, documentos,
+  tareas) con scope por abogado; `normalizarTermino` (pura). Payload homogéneo
+  y pequeño por resultado.
+- `app/api/sgie/buscar/route.ts` (nuevo): `GET ?q=` con `requireAbogado`,
+  rate limit, scope aplicado en `buscar-db`.
+- `components/sgie/global-search.tsx` (nuevo): modal accesible ⌘K/ctrl+K,
+  navegación por teclado (↑↓/Enter/Esc), debounce 250 ms, agrupación por tipo,
+  estado vacío/loading.
+- Integrado en `app/intranet/sgie/layout.tsx` (botón "Buscar…" en barra
+  superior + atajo global).
+
+### Skeletons reutilizables (tarea 5)
+- `components/ui/skeletons.tsx` (nuevo): `TableSkeleton`, `ListSkeleton`,
+  `PageHeaderSkeleton`, `DetailSkeleton`. Aplicados en clientes (listado +
+  ficha), expedientes (detalle), tareas, enlaces mágicos y buscador.
+- `app/globals.css`: clase `.skeleton` con shimmer usando tokens
+  (`--color-surface-alt`, `--color-surface-2`) — compatible claro/oscuro.
+
+### Tests
+- `tests/sgie-buscar.test.ts` (nuevo, 6 tests): `normalizarTermino` (vacíos,
+  nulos, longitud mínima, trim, caracteres especiales).
+
+### Validación
+- `npm run lint`: 0 errores.
+- `npm test`: 650 tests OK (25 suites), incluido el nuevo de búsqueda.
+- `npm run build`: compilación + type-check OK, 324/324 páginas.
+- `npm run test:e2e`: **NO VALIDADO** (timeout del entorno: el webserver de
+  Playwright relanza un build interno; no es fallo de código).
+
+### Notas
+- Sin cambio de schema: el enum `auditoria_accion` ya incluía `tarea_created`,
+  `tarea_updated`, `tarea_completed`, `cliente_updated`, `enlace_created`,
+  `enlace_revoked`.
+- Seguridad intacta: `requireAbogado`, CSRF, rate limit y auditoría en todos
+  los endpoints nuevos/mutaciones. Scope por abogado sin relajar.
+- No se exponen tokens de enlaces revocados/expirados.
+
+---
+
+## 2026-06-27 — sgie: Sprint 0 (auditoría SGIE)
+
+Mejoras del frontend operativo para desbloquear el flujo canónico mínimo del
+SGIE (cliente → expediente con procedimiento real). Trabaja sobre el backend
+existente sin cambiar arquitectura ni relajar seguridad. Referencia: auditoría
+profesional del SGIE, tareas 1–5.
+
+### Módulo Clientes (tarea 1)
+- `app/intranet/sgie/clientes/page.tsx` (nuevo): listado con búsqueda
+  (`GET /api/sgie/clientes?q=`), alta (`POST`) con validación frontend
+  coherente con el endpoint, detección de duplicados (feedback informativo),
+  toasts de éxito/error, estados de carga/vacío/error accionables, y acción
+  por fila "Crear expediente" (`/intranet/sgie/expedientes?clienteId=...`).
+- `app/intranet/sgie/layout.tsx`: entrada "Clientes" (icono `Users`) en el
+  menú lateral, entre Cockpit y Expedientes.
+
+### Alta de expediente corregida (tarea 2)
+- `app/intranet/sgie/expedientes/page.tsx`: el formulario ahora asocia
+  **cliente** y **tipo de procedimiento** reales (selectores con búsqueda).
+  Soporta preselección vía query param `?clienteId=&clienteNombre=` (desde
+  Clientes). Elimina los `requisitosIniciales` hardcodeados: el checklist se
+  instancia desde el procedimiento elegido (ver backend). Tras crear, redirige
+  al detalle del expediente.
+- `app/api/sgie/tipos-procedimiento/route.ts` (nuevo): `GET` solo lectura con
+  `requireAbogado`, devuelve procedimientos `estado='activo'` (admin puede ver
+  todos con `?incluirTodos=true`). Catálogo compartido, sin scope por abogado.
+
+### Instanciación de checklist desde procedimiento (backend, tarea 2)
+- `lib/sgie/procedimientos-db.ts` (nuevo): `listarProcedimientos`,
+  `obtenerProcedimiento` y `extraerRequisitosDeDefinicion` (pura, defensiva:
+  normaliza `documentosRequeridos/Opcionales/Condicionales` de la `definicion`
+  JSON; no inventa requisitos — si el procedimiento no los define, el
+  expediente nace sin checklist).
+- `lib/sgie/expedientes-db.ts`: `crearExpediente` ahora, si no recibe
+  `requisitosIniciales` pero sí `tipoProcedimientoId`, carga la `definicion`
+  del procedimiento y siembra los requisitos automáticamente. Compatibilidad
+  hacia atrás: `requisitosIniciales` explícito sigue prevaleciendo.
+
+### Diálogos del design system (tarea 3)
+- `components/ui/prompt-dialog.tsx` (nuevo): `PromptDialogProvider` + hook
+  `usePromptDialog()` — alternativa accesible a `prompt()` nativo con textarea,
+  validación de longitud, estado loading, focus trap. Integrado en
+  `app/layout.tsx` junto a `ToastProvider`/`ConfirmProvider`.
+- `app/intranet/sgie/expedientes/[id]/page.tsx`: el rechazo de documentos usa
+  `usePromptDialog()` (textarea, min 1 / max 500, tone danger) en lugar de
+  `prompt()` nativo. Lógica del endpoint intacta.
+
+### Unificación visual Sprint 0 (tarea 4)
+- Pantallas `documentos`, `tareas`, `alertas`, `agenda`, `correos`: sustituidos
+  colores crudos (`bg-gray-100`, `text-blue-700`, `bg-yellow-100`…) por design
+  tokens (`bg-surface-alt`, `text-info`, `bg-warning/10`…). Añadido feedback
+  de error visible (`ErrorState`) donde los `catch` eran silenciosos, estados
+  vacíos accionables, loading state con `Spinner`, y enlace "Volver al cockpit".
+- `expedientes/page.tsx` y `expedientes/[id]/page.tsx`: `EstadoBadge` y labels
+  usan la nueva utilidad de traducción de estados.
+
+### Traducción de estados (tarea 5)
+- `lib/sgie/estados.ts` (nuevo): `traducirEstadoExpediente`,
+  `traducirEstadoDocumento`, `traducirSeveridad`, `traducirPrioridad`,
+  `traducirEstadoTarea`, `traducirEstadoAgenda`, `traducirEstadoCorreo`.
+  Sólo presentación (no muta DB). Fallback capitalizado para estados futuros.
+
+### Tests
+- `tests/sgie-estados.test.ts` (nuevo, 13 tests): traducción de los enums
+  completos, fallback y nulos.
+- `tests/sgie-procedimientos.test.ts` (nuevo, 9 tests): extracción de
+  requisitos desde `definicion` (casos válidos, vacíos, mal formados, seed).
+
+### Validación
+- `npm run lint`: 0 errores (warnings preexistentes en archivos ajenos).
+- `npm test`: 644 tests OK (24 suites), incluidos los 22 nuevos.
+- `npm run build`: compilación + type-check OK, 323/323 páginas.
+- `npm run test:e2e`: **NO VALIDADO** (el webserver de Playwright relanza un
+  build interno que excede el timeout del entorno; no es fallo de código).
+
+### Notas
+- No se han relajado permisos: `requireAbogado`, CSRF, rate limiting y
+  auditoría SGIE intactos en todos los endpoints (nuevos y existentes).
+- No se ha cambiado arquitectura, schema DB ni configuración externa.
+- Los procedimientos deben estar `estado='activo'` para aparecer en el
+  selector (los seeds están `pendiente_validacion_legal` por diseño).
+
+---
+
 ## 2026-06-27 — sgie: Fases 5, 6, 7, 8, 9, 10 + Demo Carlos Pineda
 
 ### Fase 5 — Plantillas de correo Resend
