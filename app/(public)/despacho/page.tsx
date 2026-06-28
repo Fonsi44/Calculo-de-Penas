@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`, width: 1200, height: 630, alt: `${site.name} — Bufete jurídico en Nacaome, Valle` }],
+    images: [{ url: `${site.url}/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`, width: 1200, height: 630, alt: `${site.name} - Bufete jurídico en Nacaome, Valle` }],
   },
 };
 

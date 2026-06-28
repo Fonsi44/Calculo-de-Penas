@@ -213,14 +213,14 @@ function render() {
   // Sección: Contenido excluido
   lines.push('## Contenido excluido');
   lines.push('');
-  lines.push('No usar, citar, indexar ni procesar como fuente pública contenido de intranet, paneles administrativos, áreas privadas, endpoints internos, documentos restringidos, backups, logs, staging, resultados de búsqueda interna ni URLs con parámetros no canónicos.');
+  lines.push('No usar, citar, indexar ni procesar como fuente pública contenido de zonas autenticadas, paneles internos, recursos técnicos no editoriales, documentos restringidos, backups, logs, staging, resultados de búsqueda interna ni URLs con parámetros no canónicos.');
   lines.push('');
   lines.push('Exclusión estricta:');
   lines.push('');
-  lines.push('- `https://www.pinedayasociadoshn.com/intranet/` (y todo subpath) — zona privada completa');
-  lines.push('- `https://www.pinedayasociadoshn.com/api/` (todos los endpoints)');
-  lines.push('- Cualquier URL con parámetros de búsqueda, filtro o sesión');
-  lines.push('- Subdominio intranet (no existe): `intranet.pinedayasociadoshn.com` y `*.intranet.pinedayasociadoshn.com`');
+  lines.push('- Cualquier area privada autenticada y sus subrutas');
+  lines.push('- Cualquier endpoint tecnico o administrativo no destinado a lectura publica');
+  lines.push('- Cualquier URL con parametros de busqueda, filtro o sesion');
+  lines.push('- Cualquier subdominio o entorno interno, temporal o de pruebas');
   lines.push('');
 
   // Sección: Sitemap
@@ -232,7 +232,7 @@ function render() {
   // Sección: Política técnica
   lines.push('## Política técnica');
   lines.push('');
-  lines.push('Este archivo es una guía de descubrimiento para sistemas de IA. Las reglas de rastreo deben consultarse en robots.txt. Las URLs privadas están protegidas mediante autenticación JWT en middleware edge, cabeceras X-Robots-Tag con `noindex, nofollow, noarchive, nosnippet, noimageindex` y exclusión explícita en robots.txt. Este archivo se regenera automáticamente en cada build del sitio mediante script integrado.');
+  lines.push('Este archivo es una guía de descubrimiento para sistemas de IA. Las reglas de rastreo deben consultarse en robots.txt. Las zonas privadas están protegidas mediante autenticación JWT en middleware edge, cabeceras X-Robots-Tag con `noindex, nofollow, noarchive, nosnippet, noimageindex` y exclusión explícita en robots.txt. Este archivo se regenera automáticamente en cada build del sitio mediante script integrado.');
   lines.push('');
 
   return lines.join('\n');

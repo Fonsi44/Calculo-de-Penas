@@ -161,6 +161,86 @@ npm run test:coverage   # genera coverage/ con reporte text + lcov
 Umbral actual (conservador, se subirá gradualmente): 35% líneas. Línea base
 medida en la Fase HQC: **66% líneas, 64% branches, 56% funciones**.
 
+### `seo:gsc` / `seo:audit:gsc-ga4` fallan con `invalid_grant`
+Este error no se corrige solo con cambios de código: normalmente indica
+credenciales OAuth vencidas/revocadas o desalineadas con el service account.
+
+Notas importantes sobre los scripts actuales:
+- `npm run seo:gsc` (`scripts/gsc-analytics.mjs`) usa OAuth refresh token y
+  requiere: `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`,
+  `GOOGLE_SEARCH_CONSOLE_SITE_URL`.
+- `npm run seo:audit:gsc-ga4` (`scripts/seo-audit-gsc-ga4.mjs`) acepta OAuth
+  refresh token o service account, pero si hay credenciales OAuth presentes y
+  están inválidas, el error más probable seguirá siendo `invalid_grant`.
+
+Pasos recomendados:
+```bash
+# 1) Verificar variables OAuth usadas por seo:gsc
+OAUTH_CLIENT_ID
+OAUTH_CLIENT_SECRET
+GOOGLE_REFRESH_TOKEN
+GOOGLE_SEARCH_CONSOLE_SITE_URL
+
+# 2) Verificar variables de service account (si se usa seo:audit:gsc-ga4 sin OAuth)
+GOOGLE_SERVICE_ACCOUNT_EMAIL
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
+GOOGLE_ANALYTICS_PROPERTY_ID
+GOOGLE_SEARCH_CONSOLE_SITE_URL
+
+# 3) Confirmar permisos en Google
+# - El service account debe tener acceso a la propiedad de GSC
+# - El service account debe tener rol de lectura en la propiedad de GA4
+# - El refresh token debe seguir vigente para el cliente OAuth configurado
+
+# 4) Si persiste invalid_grant con OAuth, reautorizar y regenerar refresh token
+#    para el mismo OAUTH_CLIENT_ID / OAUTH_CLIENT_SECRET
+
+# 5) Si se usa service account, regenerar clave si está vencida/revocada
+#    y actualizar .env.local / variables de entorno del deploy
+
+# 6) Revalidar scripts
+npm run seo:gsc
+npm run seo:audit:gsc-ga4
+```
+Si el entorno no tiene credenciales activas, marque la validación como
+`NO VALIDADO` en reportes operativos.
+
+---
+
+## SEO/GEO update (2026-06-28)
+
+Mejoras implementadas en código para indexación, rastreo, conversión y GEO:
+
+- Redirect 301 permanente: `/faq` -> `/preguntas-frecuentes`.
+- `/preguntas-frecuentes` reorganizada por clusters temáticos con índice de anchors,
+  respuestas rápidas GEO y reducción de payload Schema (`FAQPage` limitado a 40 ítems).
+- `/servicios-juridicos` reforzada con matriz de decisión (problema -> área ->
+  primer paso -> enlace) y bloque de decisión rápida.
+- `/derecho-penal` reforzada con tabla de etapas/riesgos/plazos/acciones y
+  módulo de urgencias penales con FAQs accionables.
+- `/abogados-en-choluteca` reforzada con señales locales verificables,
+  modalidades de atención y enlaces de acción rápida a servicios.
+- Inserción automática de CTA contextual a `/solicitar-consulta#formulario`
+  en 6 slugs prioritarios sin CTA dentro del cuerpo del post (alrededor del 60-70%).
+- Reducción de HTML/payload en `/blog` (dataset cliente limitado a 80 entradas)
+  y en home (cobertura local priorizada a 3 landings clave).
+- Compatibilidad OG mejorada: normalización de títulos/alt con guion simple
+  en rutas auditadas para evitar alertas de parsers legados.
+- `llms.txt` ajustado para no listar rutas privadas explícitas, manteniendo
+  política de exclusión para contenido no público.
+
+### Cierre de sprint SEO/GEO (2026-06-28)
+
+- Redirect `/faq` configurado con `statusCode: 301` en [next.config.ts](next.config.ts)
+  y verificado localmente sobre build de producción.
+- `llms.txt` endurecido para GEO sin términos de rutas privadas explícitas;
+  generador y archivo público sincronizados.
+- `audit:internal-links` ahora reporta dos métricas:
+  - CTA persistente en DB.
+  - CTA efectivo (DB + CTA contextual renderizado en plantilla de post).
+  Esto evita falsos negativos cuando el contenido fuente vive en DB externa y
+  la capa de render añade CTA sin modificar body persistido.
+
 ---
 
 ## Contribuir

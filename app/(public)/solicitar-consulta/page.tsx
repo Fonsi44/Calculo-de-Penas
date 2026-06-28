@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Solicitar Consulta Legal` }],
+    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} - Solicitar Consulta Legal` }],
   },
 };
 

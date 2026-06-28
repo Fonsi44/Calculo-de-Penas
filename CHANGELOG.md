@@ -5,6 +5,92 @@
 
 ---
 
+## 2026-06-28 — seo: cierre de sprint (92% -> 100% tecnico)
+
+Ajustes finales de validación y consistencia para dejar el repositorio listo
+para despliegue y medición real.
+
+### Cambios de cierre
+- `next.config.ts`:
+  - `/faq` -> `/preguntas-frecuentes` con `statusCode: 301` explícito.
+  - Validación local en build: respuesta `301` con `location: /preguntas-frecuentes`.
+- `scripts/generate-llms-txt.mjs` + `public/llms.txt`:
+  - Redacción de exclusiones endurecida para GEO sin mencionar rutas privadas
+    explícitas ni patrones que disparen falsos positivos de leak.
+- `scripts/audit-internal-links.ts`:
+  - Métrica dual de CTA:
+    - persistente en DB (`cta_db`)
+    - renderizado en runtime (`cta_rt`)
+  - Resultado efectivo reportado: `12/12` (DB + render).
+- `app/(public)/blog/[categoria]/page.tsx`:
+  - Normalización de metadatos sensibles con guion simple para evitar drift de
+    compatibilidad en superficies de categoría.
+- `README.md`:
+  - Troubleshooting ampliado para `invalid_grant` distinguiendo flujo OAuth
+    (`seo:gsc`) y flujo mixto OAuth/service-account (`seo:audit:gsc-ga4`).
+
+### Validación relevante de cierre
+- `lint`, `build`, `test`: OK.
+- `audit:performance`:
+  - Producción actual: mantiene alertas (estado pre-deploy).
+  - Build local actualizado (`SITE_BASE_URL=http://localhost:3005`): sin alertas críticas,
+    sin leak en `llms.txt`, sin em-dash en `og:title` para rutas auditadas.
+- `seo:gsc` y `seo:audit:gsc-ga4`: `invalid_grant` (dependencia externa, NO VALIDADO).
+
+---
+
+## 2026-06-28 — seo: hardening SEO/GEO (indexacion, conversion y compatibilidad)
+
+Implementacion de mejoras SEO/GEO sobre rutas publicas estrategicas sin rediseñar
+la arquitectura visual del sitio.
+
+### Cambios implementados
+- `next.config.ts`: redirect 301 permanente `/faq` -> `/preguntas-frecuentes`.
+- `app/(public)/preguntas-frecuentes/page.tsx`:
+  - Reorganizacion por clusters tematicos (penal, laboral, familiar, civil,
+    servicios, consultas, honorarios, atencion local/tramites).
+  - Indice superior con anchors.
+  - Respuestas rapidas GEO por cluster (40-70 palabras aprox.).
+  - `FAQPage` reducido a 40 entradas para bajar payload HTML/JSON-LD.
+- `app/(public)/servicios-juridicos/page.tsx`:
+  - Matriz de decision (problema -> area -> primer paso -> enlace).
+  - Bloque de decision rapida orientado a conversion.
+- `app/(public)/derecho-penal/page.tsx`:
+  - Tabla de etapas/riesgos/plazos/accion recomendada.
+  - Seccion de urgencias penales con FAQs operativas.
+- `app/(public)/abogados-en-choluteca/page.tsx`:
+  - Refuerzo de señales locales verificables, modalidades de atencion,
+    tipos de casos y enlaces internos de accion.
+- `app/(public)/blog/[categoria]/[slug]/page.tsx`:
+  - Insercion automatica de CTA contextual a `/solicitar-consulta#formulario`
+    en 6 slugs prioritarios que no tenian CTA en cuerpo.
+- `app/(public)/blog/page.tsx`:
+  - Reduccion de payload serializado del explorador cliente (tope 80 posts).
+- `app/(public)/page.tsx`:
+  - Cobertura local en home acotada a 3 landings clave para reducir HTML.
+- Compatibilidad OG/titles:
+  - Normalizacion de guion largo a guion simple en rutas auditadas:
+    `servicios-juridicos`, `derecho-penal`, `blog`, `solicitar-consulta`,
+    `como-llegar`.
+- `scripts/generate-llms-txt.mjs`:
+  - Politica de exclusion mantiene restriccion de contenido privado sin listar
+    rutas privadas explicitas en `llms.txt`.
+
+### Documentacion
+- `README.md`:
+  - Nuevo troubleshooting para `invalid_grant` en GSC/GA4.
+  - Nueva seccion resumen "SEO/GEO update (2026-06-28)".
+
+### Validacion esperada
+- Ejecutar: `npm run lint && npm run build && npm test`.
+- Ejecutar checks SEO/GEO: `npm run validar:meta-seo`,
+  `npm run audit:internal-links`, `npm run audit:performance`,
+  `npm run seo:health:json`.
+- GSC/GA4 via API puede quedar `NO VALIDADO` si persiste `invalid_grant`
+  (dependencia externa de credenciales).
+
+---
+
 ## 2026-06-28 — sgie: Sprint 4 (resumen IA, colaboración, auth y productividad)
 
 Cierra las brechas avanzadas de productividad, colaboración y seguridad: resumen

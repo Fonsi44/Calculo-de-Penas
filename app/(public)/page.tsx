@@ -153,6 +153,10 @@ export default async function HomePage() {
     })),
   };
 
+  const featuredCoverage = landingsLocales.filter((l) =>
+    ['nacaome', 'choluteca', 'san-lorenzo'].includes(l.slug),
+  );
+
   return (
     <>
       {/* HERO — potente pero equilibrado: texto (7 col) + panel informativo (5 col).
@@ -576,7 +580,7 @@ export default async function HomePage() {
           align="center"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {landingsLocales.map((c) => (
+          {featuredCoverage.map((c) => (
             <Link
               key={c.slug}
               href={`/abogados-en-${c.slug}`}

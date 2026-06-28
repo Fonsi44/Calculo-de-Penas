@@ -23,24 +23,24 @@ import { ServiceSearch } from '@/components/blog/service-search';
 export const metadata: Metadata = {
   // Absolute para controlar la longitud total. Antes el title resuelto medía
   // 73 caracteres (>65) y se truncaba en SERP.
-  title: { absolute: `Abogado Penalista en ${site.address.city} — Defensa Penal` },
+  title: { absolute: `Abogado Penalista en ${site.address.city} - Defensa Penal` },
   description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial en detenciones, audiencias y recursos. Consulta urgente por WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/derecho-penal' },
   keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penalista San Lorenzo', 'abogado penalista Choluteca', 'abogado detención Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'abogado urgente penalista Valle'],
   twitter: {
     card: 'summary_large_image',
-    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} — Defensa Penal`,
+    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
     description: `Defensa penal técnica y confidencial en Nacaome, San Lorenzo y Choluteca. Atendemos detenciones y audiencias. Consulta urgente.`,
     images: [`${site.url}/og-image.png`],
   },
   openGraph: {
-    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} — Defensa Penal`,
+    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
     description: `¿Necesita un abogado penalista en Nacaome, Valle? Defensa técnica y confidencial. Atendemos detenciones, audiencias y recursos en la zona sur de Honduras.`,
     url: `${site.url}/derecho-penal`,
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og/penal.webp`, width: 1200, height: 630, alt: `${site.name} — Derecho Penal` }],
+    images: [{ url: `${site.url}/og/penal.webp`, width: 1200, height: 630, alt: `${site.name} - Derecho Penal` }],
   },
 };
 
@@ -79,6 +79,61 @@ const PRIORITY_PENAL_SLUGS = [
     'fianza-medidas-cautelares-proceso-penal-honduras',
   ];
   const allPenalPosts = await getPostsByCategory('derecho-penal');
+  const penalStages = [
+    {
+      etapa: 'Detencion o citacion',
+      riesgo: 'Declaraciones precipitadas, perdida de evidencia util.',
+      plazo: 'Horas iniciales',
+      accion: 'Contactar abogado penalista y documentar hechos antes de declarar.',
+    },
+    {
+      etapa: 'Audiencia inicial',
+      riesgo: 'Medidas cautelares desfavorables por preparacion incompleta.',
+      plazo: '24-48 horas segun el caso',
+      accion: 'Presentar estrategia de defensa, arraigo y control de legalidad.',
+    },
+    {
+      etapa: 'Etapa intermedia',
+      riesgo: 'Admisiones probatorias que debilitan la defensa.',
+      plazo: 'Semanas a meses',
+      accion: 'Depurar prueba, objetar irregularidades y fortalecer teoria del caso.',
+    },
+    {
+      etapa: 'Juicio oral',
+      riesgo: 'Inconsistencias de testigos y contradicciones no explotadas.',
+      plazo: 'Calendario judicial',
+      accion: 'Litigacion tecnica, interrogatorio estrategico y control de narrativa probatoria.',
+    },
+    {
+      etapa: 'Recursos',
+      riesgo: 'Perder oportunidad de impugnar por extemporaneidad.',
+      plazo: 'Plazos perentorios',
+      accion: 'Evaluar agravios y presentar recurso dentro del termino legal aplicable.',
+    },
+  ];
+
+  const urgentFaq = [
+    {
+      q: 'Que hacer si me detienen',
+      a: 'Mantenga la calma, identifiquese y evite declarar sin defensa tecnica. Solicite contacto inmediato con su abogado y registre hora, lugar y autoridad interviniente. Esta informacion es clave para revisar legalidad de la detencion y medidas cautelares posteriores.',
+    },
+    {
+      q: 'Cuando llamar a un abogado penalista',
+      a: 'Debe llamar en cuanto reciba citacion, aviso de investigacion o noticia de detencion. Esperar suele reducir margen de defensa temprana. La primera intervencion legal permite proteger derechos, ordenar evidencia y definir estrategia antes de decisiones procesales criticas.',
+    },
+    {
+      q: 'Que documentos preparar',
+      a: 'Reuna citaciones, resoluciones, mensajes, videos, constancias medicas y datos de testigos disponibles. Si no tiene todo, aporte lo que exista y reconstruya una linea de tiempo de hechos. La organizacion inicial acelera evaluacion de riesgos y respuesta procesal.',
+    },
+    {
+      q: 'Que errores evitar',
+      a: 'Evite firmar documentos sin lectura tecnica, declarar por presion o eliminar informacion de su telefono. Tambien conviene no discutir el caso en redes sociales. Estos errores suelen complicar la defensa y pueden generar interpretaciones adversas en audiencia.',
+    },
+    {
+      q: 'Como actuar ante una citacion judicial',
+      a: 'No ignore la citacion ni improvise respuesta. Confirme fecha, autoridad y motivo, y consulte de inmediato para preparar comparecencia. Una respuesta ordenada permite llegar con estrategia, documentos pertinentes y control del relato de hechos desde el inicio.',
+    },
+  ];
   const blogPosts = PRIORITY_PENAL_SLUGS
     .map((s) => allPenalPosts.find((p) => p.slug === s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
@@ -187,6 +242,55 @@ const PRIORITY_PENAL_SLUGS = [
               category="penal"
               tone="primary"
             />
+          ))}
+        </div>
+      </Section>
+
+      <Section spacing="md" id="etapas-y-riesgos">
+        <SectionHeader
+          eyebrow="Ruta procesal"
+          title="Etapas, riesgos y accion recomendada en un caso penal"
+          subtitle="Resumen orientativo para decidir con rapidez y responsabilidad en cada fase del proceso penal hondureno."
+        />
+        <div className="overflow-x-auto rounded-lg border border-border/50 bg-background">
+          <table className="w-full min-w-[760px] text-sm">
+            <thead className="bg-surface-alt border-b border-border/50">
+              <tr>
+                <th className="text-left p-3 font-bold text-text">Etapa</th>
+                <th className="text-left p-3 font-bold text-text">Riesgo principal</th>
+                <th className="text-left p-3 font-bold text-text">Plazo orientativo</th>
+                <th className="text-left p-3 font-bold text-text">Accion recomendada</th>
+              </tr>
+            </thead>
+            <tbody>
+              {penalStages.map((stage) => (
+                <tr key={stage.etapa} className="border-b border-border/30 last:border-0">
+                  <td className="p-3 text-text font-semibold">{stage.etapa}</td>
+                  <td className="p-3 text-text-secondary">{stage.riesgo}</td>
+                  <td className="p-3 text-text-secondary">{stage.plazo}</td>
+                  <td className="p-3 text-text-secondary">{stage.accion}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 text-xs text-text-tertiary leading-relaxed">
+          Esta tabla tiene caracter informativo y no sustituye analisis legal individual. La estrategia final depende de hechos, prueba disponible y resoluciones de autoridad competente.
+        </p>
+      </Section>
+
+      <Section background="muted" spacing="md" id="urgencias-penales">
+        <SectionHeader
+          eyebrow="Urgencias penales"
+          title="Respuestas inmediatas para situaciones de alto riesgo"
+          subtitle="Preguntas frecuentes para actuar con criterio tecnico en detenciones, citaciones y primeras audiencias."
+        />
+        <div className="grid gap-3 max-w-4xl mx-auto">
+          {urgentFaq.map((item) => (
+            <Card key={item.q} padding="md" className="border-l-4 border-l-accent">
+              <h3 className="font-bold text-sm text-text leading-tight">{item.q}</h3>
+              <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">{item.a}</p>
+            </Card>
           ))}
         </div>
       </Section>

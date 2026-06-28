@@ -63,18 +63,18 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
-      title: `Blog Jurídico — Artículos de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}`,
+      title: `Blog Jurídico - Articulos de Abogados en Honduras${page > 1 ? ` (Pagina ${page})` : ''}`,
       description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
       images: [`${site.url}/og-image.png`],
     },
     openGraph: {
-      title: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` — Página ${page}` : ''}`,
+      title: `Blog Juridico de Abogados en Honduras${page > 1 ? ` - Pagina ${page}` : ''}`,
       description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
       url: `${site.url}/blog`,
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
-      images: [{ url: `${site.url}/og/blog.webp`, width: 1200, height: 630, alt: `${site.name} — Blog Jurídico` }],
+      images: [{ url: `${site.url}/og/blog.webp`, width: 1200, height: 630, alt: `${site.name} - Blog Juridico` }],
     },
   };
 }
@@ -120,7 +120,8 @@ export default async function BlogHubPage(props: Props) {
   const tags = deriveAllTags(allPosts);
 
   // Payload ligero (sin body) para el explorador cliente.
-  const explorerPosts = monthFiltered.map(toCardData);
+  // Se limita a 80 entradas para evitar serializar el corpus completo en HTML.
+  const explorerPosts = monthFiltered.slice(0, 80).map(toCardData);
   const explorerPagePosts = pagePosts.map(toCardData);
 
   const buildPageUrl = (p: number) => {

@@ -30,6 +30,71 @@ export const revalidate = 3600;
 
 type Props = { params: Promise<{ categoria: string; slug: string }> };
 
+const MID_POST_CTA_COPY: Record<string, { title: string; body: string; anchor: string }> = {
+  'defensa-penal-honduras': {
+    title: 'Necesita una defensa penal inmediata?',
+    body: 'Si enfrenta una investigacion o audiencia, conviene ordenar hechos y evidencia con defensa tecnica desde el inicio.',
+    anchor: 'Solicitar consulta penal confidencial',
+  },
+  'abogado-penalista-sur-honduras': {
+    title: 'Actue a tiempo en su caso penal',
+    body: 'Las primeras decisiones procesales suelen marcar el rumbo del expediente. Una revision temprana ayuda a evitar errores de alto impacto.',
+    anchor: 'Hablar con un abogado penalista',
+  },
+  'despido-laboral-honduras-guia-completa': {
+    title: 'Evalua su despido con enfoque tecnico',
+    body: 'Con contrato, comprobantes y cronologia laboral, puede definirse una ruta clara de reclamo o negociacion en plazos utiles.',
+    anchor: 'Solicitar revision de caso laboral',
+  },
+  'divorcio-honduras-guia-completa': {
+    title: 'Necesita orientacion para su proceso familiar?',
+    body: 'Una estrategia temprana en divorcio, custodia y alimentos reduce conflictos y mejora la proteccion juridica de su familia.',
+    anchor: 'Solicitar consulta de derecho de familia',
+  },
+  'pension-alimenticia-honduras-guia-completa': {
+    title: 'Ordene su caso de pension alimenticia',
+    body: 'Con documentacion correcta y objetivos claros, es posible avanzar con mayor precision en conciliacion o via judicial.',
+    anchor: 'Iniciar consulta sobre pension alimenticia',
+  },
+  'abogados-en-choluteca': {
+    title: 'Atencion legal para Choluteca y zona sur',
+    body: 'Puede iniciar por WhatsApp o llamada y definir una hoja de ruta concreta segun el tipo de asunto y su urgencia.',
+    anchor: 'Solicitar consulta desde Choluteca',
+  },
+};
+
+function injectMidArticleCta(body: string, slug: string): string {
+  const cta = MID_POST_CTA_COPY[slug];
+  if (!cta) return body;
+  if (body.includes('/solicitar-consulta')) return body;
+
+  const paragraphEndRegex = /<\/p>/gi;
+  const paragraphEndPositions: number[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = paragraphEndRegex.exec(body)) !== null) {
+    paragraphEndPositions.push(match.index + match[0].length);
+  }
+
+  const targetIndex = paragraphEndPositions.length >= 3
+    ? Math.max(1, Math.floor(paragraphEndPositions.length * 0.65) - 1)
+    : -1;
+
+  const ctaHtml = `
+<aside class="my-7 rounded-lg border border-accent/30 bg-surface-alt p-4">
+  <p class="text-xxs font-bold uppercase tracking-wider text-accent-dark mb-1">Consulta legal</p>
+  <p class="text-sm font-semibold text-text mb-1">${cta.title}</p>
+  <p class="text-sm text-text-secondary leading-relaxed mb-2">${cta.body}</p>
+  <a href="/solicitar-consulta#formulario" class="text-sm font-semibold text-primary hover:text-accent-dark">${cta.anchor}</a>
+</aside>`;
+
+  if (targetIndex >= 0) {
+    const insertionPoint = paragraphEndPositions[targetIndex];
+    return `${body.slice(0, insertionPoint)}${ctaHtml}${body.slice(insertionPoint)}`;
+  }
+
+  return `${body}${ctaHtml}`;
+}
+
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((p) => ({ categoria: p.category, slug: p.slug }));
@@ -104,6 +169,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
+  const articleHtml = injectMidArticleCta(post.body, post.slug);
   const faqItems = extractFAQSchema(post.body);
   const faqLd = faqPageSchema(faqItems);
 
@@ -198,7 +264,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
             <div className="min-w-0">
               <article>
                 <BlogTOC />
-                <div className="article-body" dangerouslySetInnerHTML={{ __html: post.body }} />
+                <div className="article-body" dangerouslySetInnerHTML={{ __html: articleHtml }} />
 
                 {/* Tags */}
                 {post.tags.length > 0 && (
