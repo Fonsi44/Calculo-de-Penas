@@ -36,6 +36,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { SocialShare } from '@/components/marketing/social-share';
+import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 
 export const metadata: Metadata = {
   // Title absoluto para evitar "Pineda y Asociados — Abogados... Pineda y Asociados".
@@ -492,6 +493,7 @@ export default async function HomePage() {
         subtitle="Guías prácticas sobre las consultas más frecuentes de nuestros clientes en derecho penal, laboral, familiar y notarial."
         ctaLabel="Ver todas las guías del blog"
         ctaHref="/blog"
+        slugs={[...TOP_ORGANIC_GUIDE_SLUGS]}
       />
 
       {/* PREFIERE VERNOS EN PERSONA — sección de cercanía premium.

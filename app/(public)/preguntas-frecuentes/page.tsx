@@ -16,6 +16,7 @@ import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
 export const revalidate = 3600;
 
@@ -370,6 +371,20 @@ export default async function FaqPage() {
           )}
         </Section>
       ))}
+
+      <BlogHighlights
+        slugs={[
+          'custodia-hijos-honduras-juez',
+          'pension-alimenticia-honduras-guia-completa',
+          'estafas-fraudes-tipos-penales-honduras',
+          'poder-legal-honduras-cuando-se-necesita',
+        ]}
+        eyebrow="Guías que amplían estas respuestas"
+        title="Lecturas con demanda real que suelen preceder una consulta"
+        subtitle="Refuerzan dudas frecuentes sobre familia, penal y notarial con contexto más amplio y siguiente paso claro."
+        ctaLabel="Explorar todas las guías del blog"
+        ctaHref="/blog"
+      />
 
       <script
         type="application/ld+json"

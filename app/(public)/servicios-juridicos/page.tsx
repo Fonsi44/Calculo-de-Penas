@@ -15,6 +15,7 @@ import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
+import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 
 export const metadata: Metadata = {
   // Absolute para controlar la longitud total y evitar que el template del
@@ -212,16 +213,16 @@ export default async function AreasJuridicasPage() {
           reforzar el crawl path hacia posts que no reciben enlaces desde /derecho-penal. */}
       <BlogHighlights
         slugs={[
-          'jornada-laboral-horas-extra-descansos-honduras',
-          'calcular-prestaciones-laborales-honduras',
-          'testamentos-sucesiones-herencia-honduras',
-          'compraventa-inmuebles-aspectos-legales-honduras',
-          'contratos-mercantiles-esenciales-empresas-honduras',
-          'poder-legal-honduras-cuando-se-necesita',
+          TOP_ORGANIC_GUIDE_SLUGS[2],
+          TOP_ORGANIC_GUIDE_SLUGS[3],
+          TOP_ORGANIC_GUIDE_SLUGS[4],
+          'pension-alimenticia-honduras-guia-completa',
+          'danos-perjuicios-indemnizacion-honduras',
+          'prescripcion-deudas-plazos-honduras',
         ]}
         eyebrow="Artículos relacionados"
         title="Guías de nuestras áreas de práctica"
-        subtitle="Recursos prácticos sobre derecho laboral, civil, mercantil y notarial escritos por nuestro equipo."
+        subtitle="Recursos con demanda orgánica real sobre familia, notarial, mercantil y conflictos civiles que suelen preceder una consulta jurídica." 
         ctaLabel="Explorar todas las guías del blog"
         ctaHref="/blog"
       />

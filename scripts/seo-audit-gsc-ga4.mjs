@@ -36,6 +36,14 @@ const SA_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
 const PROPERTY_ID = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
 const SITE_URL = process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL;
 
+function isPublicPagePath(path) {
+  return typeof path === 'string'
+    && path.startsWith('/')
+    && !path.startsWith('/intranet')
+    && !path.startsWith('/api')
+    && !path.startsWith('/preview');
+}
+
 function buildAuth(scopes) {
   if (CLIENT_ID && CLIENT_SECRET && REFRESH_TOKEN) {
     const oauth2 = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, 'http://localhost:3000');
@@ -252,6 +260,8 @@ if (PROPERTY_ID) {
       newUsers: gm(3), averageSessionDuration: gm(4), bounceRate: gm(5),
     };
     out.ga4.topPages = (pagesRes.data.rows ?? []).map((r) => ({ page: r.dimensionValues?.[0]?.value, views: Number(r.metricValues?.[0]?.value ?? 0) }));
+    out.ga4.topPublicPages = out.ga4.topPages.filter((p) => isPublicPagePath(p.page));
+    out.ga4.topInternalPages = out.ga4.topPages.filter((p) => !isPublicPagePath(p.page));
     out.ga4.sources = (sourcesRes.data.rows ?? []).map((r) => ({ source: r.dimensionValues?.[0]?.value, sessions: Number(r.metricValues?.[0]?.value ?? 0) }));
     out.ga4.countries = (countriesRes.data.rows ?? []).map((r) => ({ country: r.dimensionValues?.[0]?.value, users: Number(r.metricValues?.[0]?.value ?? 0) }));
     out.ga4.devices = (devicesRes.data.rows ?? []).map((r) => ({ device: r.dimensionValues?.[0]?.value, users: Number(r.metricValues?.[0]?.value ?? 0) }));
@@ -261,6 +271,12 @@ if (PROPERTY_ID) {
     console.log(`  Nuevos: ${out.ga4.metrics.newUsers}, Duración media: ${out.ga4.metrics.averageSessionDuration?.toFixed(1)}s, Rebote: ${((out.ga4.metrics.bounceRate ?? 0) * 100).toFixed(1)}%`);
     console.log('  Top páginas:');
     for (const p of out.ga4.topPages.slice(0, 10)) console.log(`    • ${p.page}: ${p.views} vistas`);
+    console.log('  Top páginas públicas:');
+    for (const p of out.ga4.topPublicPages.slice(0, 10)) console.log(`    • ${p.page}: ${p.views} vistas`);
+    if (out.ga4.topInternalPages.length > 0) {
+      console.log('  Páginas internas/no públicas detectadas en GA4 (contaminación de análisis público):');
+      for (const p of out.ga4.topInternalPages.slice(0, 10)) console.log(`    • ${p.page}: ${p.views} vistas`);
+    }
     console.log('  Fuentes:');
     for (const s of out.ga4.sources.slice(0, 8)) console.log(`    • ${s.source || '(direct)'}: ${s.sessions} sesiones`);
     console.log('  Países:');

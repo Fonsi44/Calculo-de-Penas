@@ -17,6 +17,7 @@ import { getCorporateImage } from '@/data/images';
 import { getPageContent } from '@/lib/page-content-db';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
 export const metadata: Metadata = {
   // Absolute para evitar la duplicación de marca "| Pineda y Asociados |
@@ -152,6 +153,20 @@ export default async function DespachoPage() {
           <LiveOfficeStatus />
         </div>
       </Section>
+
+      <BlogHighlights
+        slugs={[
+          'prescripcion-deudas-plazos-honduras',
+          'estafas-fraudes-tipos-penales-honduras',
+          'custodia-hijos-honduras-juez',
+          'poder-legal-honduras-cuando-se-necesita',
+        ]}
+        eyebrow="Antes de su consulta"
+        title="Temas que ya consultan en Google antes de contactar al despacho"
+        subtitle="Estas guías concentran demanda orgánica real y ayudan a llegar a la primera consulta con mejor contexto, documentos y preguntas útiles."
+        ctaLabel="Ver todas las guías del blog"
+        ctaHref="/blog"
+      />
 
       {/* MISSION */}
       <Section spacing="md">
