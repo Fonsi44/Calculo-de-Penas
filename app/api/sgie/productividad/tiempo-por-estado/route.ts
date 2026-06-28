@@ -55,13 +55,16 @@ export async function GET(request: Request) {
     if (query.fechaDesde) conds.push(gte(historialExpediente.creadoEn, new Date(query.fechaDesde)));
     if (query.fechaHasta) conds.push(lte(historialExpediente.creadoEn, new Date(query.fechaHasta)));
 
-    const eventos = await db.select({
+    const rawEventos = await db.select({
       expedienteId: historialExpediente.expedienteId,
       estadoAnterior: historialExpediente.estadoAnterior,
       estadoNuevo: historialExpediente.estadoNuevo,
       creadoEn: historialExpediente.creadoEn,
     }).from(historialExpediente).where(conds.length > 0 ? and(...conds) : undefined);
 
+    const eventos = rawEventos
+      .filter((e) => e.estadoNuevo !== null && e.creadoEn !== null)
+      .map((e) => ({ expedienteId: e.expedienteId, estadoAnterior: e.estadoAnterior, estadoNuevo: e.estadoNuevo as string, creadoEn: e.creadoEn as Date }));
     if (eventos.length === 0) {
       return Response.json({ tiempoPorEstado: [], cuellosBotella: [], datosInsuficientes: true });
     }

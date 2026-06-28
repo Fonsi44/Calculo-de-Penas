@@ -114,7 +114,7 @@ export async function enviarNotificacionEmailCritica(
     });
     await db.update(correosEnviados).set({
       estado: 'enviado',
-      resendId: result?.id ?? null,
+      resendId: result.data?.id ?? null,
       enviadoEn: new Date(),
     }).where(eq(correosEnviados.id, insertado.id));
     return { enviado: true, motivo: 'enviado', correoId: insertado.id };
