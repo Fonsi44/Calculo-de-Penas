@@ -5,6 +5,8 @@ export const TOP_ORGANIC_GUIDE_SLUGS = [
   'poder-legal-honduras-cuando-se-necesita',
   'contratos-mercantiles-esenciales-empresas-honduras',
   'naturalizacion-obtener-nacionalidad-hondurena',
+  'que-hacer-si-me-detienen-en-honduras',
+  'jornada-laboral-horas-extra-descansos-honduras',
 ] as const;
 
 export const TOP_ORGANIC_GUIDE_LINKS = [

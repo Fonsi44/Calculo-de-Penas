@@ -61,7 +61,6 @@ const IS_DB_REACHABLE = Boolean(
 // Cuando se reescriban (Fase 4), quitar el slug de esta lista.
 // Fuente: docs/indexacion-plan-decision.md §2 (Fase 2).
 export const THIN_POST_SLUGS = new Set([
-  'sanciones-administrativas-como-defenderse-honduras',
   'contratos-franquicia-aspectos',
   'importar-mercancias-guia-aduanera',
   'pineda-asociados-bufete-multidisciplinario-honduras',
@@ -71,7 +70,6 @@ export const THIN_POST_SLUGS = new Set([
   'guarda-custodia-menores-tipos-honduras',
   'abogados-en-choluteca',
   'abogados-en-san-lorenzo',
-  'visas-inversion-rentista-pensionado',
   'usucapion-prescripcion-adquisitiva-honduras',
   'abogado-empresas-san-lorenzo',
   'abogado-familia-choluteca',

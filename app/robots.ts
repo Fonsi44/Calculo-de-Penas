@@ -23,7 +23,31 @@ const allowAll = [
   '/*.ico$',
 ];
 
-const blockPrivate = ['/intranet/', '/api/', '/404', '/500', '/_not-found'];
+const blockPrivate = [
+  '/intranet/',
+  '/api/',
+  '/404',
+  '/500',
+  '/_not-found',
+  '/calculadora/',
+  '/casos/',
+  '/cp/',
+  '/delitos/',
+  '/atajos/',
+  '/admin/',
+];
+
+// Rutas privadas adicionales que los buscadores principales también deben evitar.
+// El proxy ya las protege (401/redirect), pero el Disallow ahorra crawl budget.
+const blockSearchBots = [
+  '/intranet/',
+  '/calculadora/',
+  '/casos/',
+  '/cp/',
+  '/delitos/',
+  '/atajos/',
+  '/admin/',
+];
 
 export default function robots(): MetadataRoute.Robots {
   if (site.noindex) {
@@ -43,64 +67,64 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'Googlebot-Image',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'Bingbot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'DuckDuckBot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'Applebot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
 
       // === Asistentes IA / búsqueda generativa (valor GEO) ===
       {
         userAgent: 'GPTBot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'ChatGPT-User',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'OAI-SearchBot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'PerplexityBot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'ClaudeBot',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'Claude-User',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
       {
         userAgent: 'anthropic-ai',
         allow: '/',
-        disallow: '/intranet/',
+        disallow: blockSearchBots,
       },
 
       // === Scrapers / bots de bajo valor o agresivos ===

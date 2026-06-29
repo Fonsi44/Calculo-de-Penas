@@ -219,6 +219,7 @@ export default async function AreasJuridicasPage() {
           'pension-alimenticia-honduras-guia-completa',
           'danos-perjuicios-indemnizacion-honduras',
           'prescripcion-deudas-plazos-honduras',
+          'jornada-laboral-horas-extra-descansos-honduras',
         ]}
         eyebrow="Artículos relacionados"
         title="Guías de nuestras áreas de práctica"
