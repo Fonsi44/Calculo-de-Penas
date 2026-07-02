@@ -348,6 +348,8 @@ export const FOUNDER_PROFILE = {
   image: '/images/equipo/danilo-pineda-maradiaga.webp',
   /** Retrato alternativo (Foto2) — /derecho-penal + sidebar /solicitar-consulta. */
   imageAlt: '/images/equipo/danilo-pineda-maradiaga-alt.webp',
+  /** Retrato penal (Foto3) — /derecho-penal sección adicional. */
+  imagePenal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
   imageAltText: 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
   description:
     'Abogado penalista en el sur de Honduras con más de 15 años de ejercicio profesional. Colegiado en Honduras. Defensa penal como pilar histórico del bufete: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',

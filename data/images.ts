@@ -60,13 +60,33 @@ const CORPORATE: Record<string, string> = {
 
 /**
  * Retratos del fundador y socio director (Danilo Pineda Maradiaga).
- *   - founder_portrait      → Foto1 (retrato principal: home + /despacho)
- *   - founder_portrait_alt  → Foto2 (retrato alternativo: /derecho-penal + sidebar)
- * Fuente: docs/imagenes/DaniloPineda{1,2}.jpeg → .webp vía sharp (800x1067 / 600x877).
+ *
+ * IMAGE METADATA — Danilo Pineda Maradiaga
+ * ─────────────────────────────────────────
+ * Persona:    Danilo Pineda Maradiaga
+ * Cargo:      Abogado penalista · Socio director
+ * Firma:      Pineda y Asociados Bufete Jurídico
+ * Ubicación:  Nacaome, Valle, Honduras
+ * Alt text:   "Abogado penalista Danilo Pineda Maradiaga en Nacaome, Valle, Honduras"
+ * Title:      "Danilo Pineda Maradiaga, abogado penalista"
+ * Descripción: "Fotografía profesional de Danilo Pineda Maradiaga, abogado penalista
+ *              de Pineda y Asociados en Nacaome, Valle, Honduras"
+ * Keywords:   abogado penalista Nacaome, abogado penal Honduras, defensa penal Valle,
+ *             Pineda y Asociados, Danilo Pineda Maradiaga
+ * Copyright:  No documentado — pertenece al despacho
+ *
+ *   - founder_portrait       → Foto1 800x1000 WebP (61KB) — home + /despacho + schema Person.image
+ *     Fuente: docs/imagenes/DaniloPineda1.jpeg (1220x1619)
+ *   - founder_portrait_alt   → Foto2 800x1000 WebP (131KB) — /derecho-penal + sidebar /solicitar-consulta
+ *     Fuente: docs/imagenes/DaniloPineda2.jpeg 
+ *   - founder_portrait_penal → Foto3 800x1000 WebP (52KB) — /derecho-penal sección adicional penal
+ *     Fuente: docs/imagenes/Danilo.Pineda.Maradiaga.jpeg (1220x1619 → 800x1000, 59% reducción)
+ *     Convertida: 2026-07-02 vía sharp (cover center, quality 85)
  */
 const FOUNDER: Record<string, string> = {
   founder_portrait: '/images/equipo/danilo-pineda-maradiaga.webp',
   founder_portrait_alt: '/images/equipo/danilo-pineda-maradiaga-alt.webp',
+  founder_portrait_penal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
 };
 
 /**

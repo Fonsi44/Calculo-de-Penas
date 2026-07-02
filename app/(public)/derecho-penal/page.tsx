@@ -226,8 +226,8 @@ const PRIORITY_PENAL_SLUGS = [
                 <Image
                   src="/images/equipo/danilo-pineda-maradiaga-penal.webp"
                   alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle, Honduras — defensa penal"
-                  width={300}
-                  height={375}
+                  width={800}
+                  height={1000}
                   className="w-full h-full object-cover"
                   sizes="(max-width: 1024px) 30vw, 112px"
                   priority={false}

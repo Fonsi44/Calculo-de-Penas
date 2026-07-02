@@ -85,9 +85,29 @@
 - Artículos relacionados ampliados (6 vs 3)
 
 ## Imagen convertida
-| Archivo | Tamaño original | Tamaño WebP | Reducción |
-|---------|----------------|-------------|-----------|
-| Danilo.Pineda.Maradiaga.jpeg → danilo-pineda-maradiaga-penal.webp | 128,275 bytes | 23,516 bytes | 81.7% |
+| Archivo | Dimensiones originales | Dimensiones finales | Tamaño original | Tamaño WebP | Reducción |
+|---------|----------------------|---------------------|----------------|-------------|-----------|
+| Danilo.Pineda.Maradiaga.jpeg → danilo-pineda-maradiaga-penal.webp | 1220×1619 | 800×1000 | 128,275 bytes | 52,418 bytes | 59.1% |
+
+### Imágenes de referencia existentes de Danilo Pineda
+| Archivo | Dimensiones | Tamaño | Uso |
+|---------|------------|--------|-----|
+| `danilo-pineda-maradiaga.webp` | 800×1000 | 61,618 bytes | Principal — home, /despacho, schema Person |
+| `danilo-pineda-maradiaga-alt.webp` | 800×1000 | 131,798 bytes | Alternativa — /derecho-penal, sidebar |
+| `danilo-pineda-maradiaga-penal.webp` | 800×1000 | 52,418 bytes | Nueva — estrategia penal (2026-07-02) |
+
+Todas las imágenes comparten las mismas dimensiones (800×1000 = 4:5) para consistencia visual.
+
+### Metadatos de imagen (añadidos en `data/images.ts`)
+- Persona: Danilo Pineda Maradiaga
+- Cargo: Abogado penalista · Socio director
+- Firma: Pineda y Asociados Bufete Jurídico
+- Ubicación: Nacaome, Valle, Honduras
+- Alt text: "Abogado penalista Danilo Pineda Maradiaga en Nacaome, Valle, Honduras"
+- Title: "Danilo Pineda Maradiaga, abogado penalista"
+- Descripción: "Fotografía profesional de Danilo Pineda Maradiaga, abogado penalista de Pineda y Asociados en Nacaome, Valle, Honduras"
+- Keywords: abogado penalista Nacaome, abogado penal Honduras, defensa penal Valle, Pineda y Asociados, Danilo Pineda Maradiaga
+- Copyright: No documentado — pertenece al despacho
 
 Ruta: `public/images/equipo/danilo-pineda-maradiaga-penal.webp`
 Alt: "Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle, Honduras — defensa penal"
