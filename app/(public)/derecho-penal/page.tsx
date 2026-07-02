@@ -219,17 +219,17 @@ const PRIORITY_PENAL_SLUGS = [
               </div>
             </div>
           </div>
-          <div className="hidden sm:block flex-shrink-0 w-28 lg:w-36 self-center">
-            <div className="relative mx-auto max-w-[8rem]">
-              <div className="absolute -inset-3 rounded-2xl bg-primary/5 blur-2xl" aria-hidden="true" />
+          <div className="hidden sm:block flex-shrink-0 w-40 sm:w-44 lg:w-48 self-center">
+            <div className="relative mx-auto max-w-[12rem]">
+              <div className="absolute -inset-4 rounded-2xl bg-primary/5 blur-3xl" aria-hidden="true" />
               <div className="relative rounded-lg border border-primary/20 overflow-hidden bg-surface-alt aspect-[3/4]">
                 <Image
                   src="/images/equipo/danilo-pineda-maradiaga-penal.webp"
                   alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle, Honduras — defensa penal"
-                  width={800}
-                  height={1000}
+                  width={400}
+                  height={500}
                   className="w-full h-full object-cover"
-                  sizes="(max-width: 1024px) 30vw, 112px"
+                  sizes="(max-width: 1024px) 70vw, 192px"
                   priority={false}
                 />
               </div>
