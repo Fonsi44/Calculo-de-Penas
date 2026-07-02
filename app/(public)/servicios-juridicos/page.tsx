@@ -1,5 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import {
+  Gavel,
+  Briefcase,
+  HeartHandshake,
+  Scale,
+  Building2,
+  Receipt,
+  AlertTriangle,
+  Layers,
+  Compass,
+  ArrowRight,
+  type LucideIcon,
+} from 'lucide-react';
 
 import { site, absoluteUrl } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
@@ -45,42 +58,60 @@ export const metadata: Metadata = {
 export default async function AreasJuridicasPage() {
   const areas = await getAreasFromDb('servicio');
   const contentMap = await getPageContent('servicios-juridicos');
-  const decisionMatrix = [
+  const decisionMatrix: { problema: string; area: string; badge: string; primerPaso: string; href: string; icon: LucideIcon; tone: string }[] = [
     {
-      problema: 'Detencion, citacion o investigacion penal',
+      problema: 'Detención, citación o investigación penal',
       area: 'Derecho Penal',
-      primerPaso: 'Preservar pruebas y activar defensa inmediata antes de declarar.',
+      badge: 'Penal',
+      primerPaso: 'No declare sin asesoría. Preserve pruebas, documentos y comunicaciones, y active una defensa inmediata.',
       href: '/derecho-penal',
+      icon: Gavel,
+      tone: 'danger',
     },
     {
-      problema: 'Despido, salario pendiente o accidente laboral',
+      problema: 'Despido, salarios pendientes o accidente laboral',
       area: 'Derecho Laboral',
-      primerPaso: 'Reunir contrato, comprobantes de pago y cronologia de hechos.',
+      badge: 'Laboral',
+      primerPaso: 'Reúna contrato, comprobantes de pago, comunicaciones y una cronología clara de los hechos.',
       href: '/servicios-juridicos/derecho-laboral',
+      icon: Briefcase,
+      tone: 'success',
     },
     {
-      problema: 'Divorcio, custodia o pension alimenticia',
+      problema: 'Divorcio, custodia o pensión alimenticia',
       area: 'Derecho de Familia',
-      primerPaso: 'Preparar documentos familiares y medidas urgentes de proteccion.',
+      badge: 'Familia',
+      primerPaso: 'Organice la documentación familiar y valore si existen medidas urgentes de protección o regulación.',
       href: '/servicios-juridicos/derecho-de-familia',
+      icon: HeartHandshake,
+      tone: 'primary',
     },
     {
       problema: 'Contrato incumplido, deuda o conflicto de propiedad',
       area: 'Derecho Civil y Notarial',
-      primerPaso: 'Revisar clausulas, requerimientos y evidencia documental inicial.',
+      badge: 'Civil',
+      primerPaso: 'Revise contratos, requerimientos, pagos, escrituras y cualquier evidencia documental disponible.',
       href: '/servicios-juridicos/derecho-civil-y-notarial',
+      icon: Scale,
+      tone: 'accent',
     },
     {
       problema: 'Empresa, sociedad, marca o cumplimiento comercial',
       area: 'Derecho Mercantil y Empresarial',
-      primerPaso: 'Definir riesgo contractual y estructura legal antes de operar.',
+      badge: 'Mercantil',
+      primerPaso: 'Evalúe riesgos contractuales, estructura legal y obligaciones antes de firmar, operar o escalar.',
       href: '/servicios-juridicos/derecho-mercantil-empresarial',
+      icon: Building2,
+      tone: 'primary',
     },
     {
-      problema: 'Fiscalizacion SAR, impuestos o facturacion electronica',
-      area: 'Tributario y Fiscal',
-      primerPaso: 'Auditar soportes contables y respuesta tecnica antes de presentar descargos.',
+      problema: 'Fiscalización SAR, impuestos o facturación electrónica',
+      area: 'Derecho Tributario y Fiscal',
+      badge: 'Fiscal',
+      primerPaso: 'Audite soportes contables, notificaciones y descargos antes de responder formalmente.',
       href: '/servicios-juridicos/tributario-fiscal',
+      icon: Receipt,
+      tone: 'warning',
     },
   ];
 
@@ -136,58 +167,147 @@ export default async function AreasJuridicasPage() {
         </div>
       </Section>
 
-      <Section spacing="md">
+      <Section spacing="md" id="matriz-orientacion">
         <SectionHeader
-          eyebrow="Decision rapida"
-          title="Que servicio juridico necesita segun su problema"
-          subtitle="Matriz orientativa para elegir la ruta legal correcta desde el primer contacto."
+          eyebrow="Orientación legal"
+          title="¿Qué servicio jurídico necesita según su situación?"
+          subtitle="Identifique el área legal más adecuada para su caso y conozca el primer paso recomendado antes de tomar decisiones importantes."
+          align="center"
         />
-        <div className="overflow-x-auto rounded-lg border border-border/50 bg-background">
-          <table className="w-full min-w-[760px] text-sm">
-            <thead className="bg-surface-alt border-b border-border/50">
+
+        {/* ── ESCRITORIO: tabla elegante con filas tipo card ── */}
+        <div className="hidden lg:block rounded-lg border border-border/40 bg-background overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-surface-alt border-b border-border/40">
               <tr>
-                <th className="text-left p-3 font-bold text-text">Problema habitual</th>
-                <th className="text-left p-3 font-bold text-text">Area recomendada</th>
-                <th className="text-left p-3 font-bold text-text">Primer paso sugerido</th>
-                <th className="text-left p-3 font-bold text-text">Enlace</th>
+                <th className="text-left p-4 font-bold text-text">Problema habitual</th>
+                <th className="text-left p-4 font-bold text-text">Área recomendada</th>
+                <th className="text-left p-4 font-bold text-text">Primer paso estratégico</th>
+                <th className="text-right p-4 font-bold text-text">Acción</th>
               </tr>
             </thead>
             <tbody>
-              {decisionMatrix.map((item) => (
-                <tr key={item.problema} className="border-b border-border/30 last:border-0">
-                  <td className="p-3 text-text-secondary">{item.problema}</td>
-                  <td className="p-3 text-text font-semibold">{item.area}</td>
-                  <td className="p-3 text-text-secondary">{item.primerPaso}</td>
-                  <td className="p-3">
-                    <Link href={item.href} className="text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-                      Ver servicio
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {decisionMatrix.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <tr key={item.problema} className="border-b border-border/20 last:border-0 hover:bg-surface-alt/50 transition-colors group">
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-11 h-11 rounded-lg bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                          <Icon className="text-accent-dark" size={20} aria-hidden="true" />
+                        </div>
+                        <span className="text-text font-medium leading-snug">{item.problema}</span>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border ${
+                        item.tone === 'danger' ? 'bg-danger/10 border-danger/20 text-danger' :
+                        item.tone === 'success' ? 'bg-success/10 border-success/20 text-success' :
+                        item.tone === 'warning' ? 'bg-warning/10 border-warning/20 text-warning' :
+                        item.tone === 'accent' ? 'bg-accent/10 border-accent/20 text-accent-dark' :
+                        'bg-primary/10 border-primary/20 text-primary'
+                      }`}>
+                        {item.badge}
+                      </span>
+                    </td>
+                    <td className="p-4 text-text-secondary leading-relaxed max-w-md">{item.primerPaso}</td>
+                    <td className="p-4 text-right">
+                      <Link
+                        href={item.href}
+                        className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg border border-border-light bg-surface text-text text-xs font-bold hover:border-accent/40 hover:text-accent-dark transition-colors whitespace-nowrap"
+                      >
+                        Ver servicio <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 mt-6">
-          <Card padding="md" className="h-full border-l-4 border-l-primary/40">
-            <h3 className="font-bold text-sm text-text">Si hay urgencia procesal</h3>
-            <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-              Priorice defensa penal o medidas cautelares antes de tramites secundarios. Actuar en las primeras horas protege su posicion juridica.
+        {/* ── MÓVIL/TABLET: tarjetas verticales ── */}
+        <div className="lg:hidden space-y-4">
+          {decisionMatrix.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Card key={item.problema} padding="md" className="h-full">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-11 h-11 rounded-lg bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                    <Icon className="text-accent-dark" size={20} aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-text font-medium text-sm leading-snug">{item.problema}</p>
+                    <span className={`inline-flex items-center mt-1.5 px-2 py-0.5 rounded-md text-xxs font-bold border ${
+                      item.tone === 'danger' ? 'bg-danger/10 border-danger/20 text-danger' :
+                      item.tone === 'success' ? 'bg-success/10 border-success/20 text-success' :
+                      item.tone === 'warning' ? 'bg-warning/10 border-warning/20 text-warning' :
+                      item.tone === 'accent' ? 'bg-accent/10 border-accent/20 text-accent-dark' :
+                      'bg-primary/10 border-primary/20 text-primary'
+                    }`}>
+                      {item.badge}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-text-secondary leading-relaxed mb-4">{item.primerPaso}</p>
+                <Link
+                  href={item.href}
+                  className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg border border-border-light bg-surface text-text text-xs font-bold hover:border-accent/40 hover:text-accent-dark transition-colors"
+                >
+                  Ver servicio <ArrowRight size={13} />
+                </Link>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* ── 3 TARJETAS DESTACADAS ── */}
+        <div className="grid md:grid-cols-3 gap-4 mt-8">
+          <Card padding="md" className="h-full border-l-4 border-l-danger/50">
+            <div className="flex items-center gap-2.5 mb-2">
+              <AlertTriangle size={18} className="text-danger flex-shrink-0" aria-hidden="true" />
+              <h3 className="font-bold text-sm text-text">Si existe urgencia procesal</h3>
+            </div>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              Priorice la defensa penal, las medidas cautelares o cualquier actuación con plazo inmediato. Las primeras horas pueden ser decisivas para proteger su posición jurídica.
             </p>
           </Card>
-          <Card padding="md" className="h-full border-l-4 border-l-accent/40">
-            <h3 className="font-bold text-sm text-text">Si su caso mezcla varias ramas</h3>
-            <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-              Puede iniciar por el area principal y coordinar apoyo multidisciplinar dentro del despacho para evitar estrategias contradictorias.
+          <Card padding="md" className="h-full border-l-4 border-l-accent/50">
+            <div className="flex items-center gap-2.5 mb-2">
+              <Layers size={18} className="text-accent-dark flex-shrink-0" aria-hidden="true" />
+              <h3 className="font-bold text-sm text-text">Si su caso involucra varias áreas</h3>
+            </div>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              Inicie por el problema principal y coordine una estrategia multidisciplinar dentro del despacho. Esto evita respuestas aisladas o decisiones legales contradictorias.
             </p>
           </Card>
-          <Card padding="md" className="h-full border-l-4 border-l-warning/40">
-            <h3 className="font-bold text-sm text-text">Si no sabe por donde empezar</h3>
-            <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-              Use la consulta inicial para ordenar hechos, riesgos y prioridades. Recibira una hoja de ruta concreta con plazos y documentos clave.
+          <Card padding="md" className="h-full border-l-4 border-l-primary/50">
+            <div className="flex items-center gap-2.5 mb-2">
+              <Compass size={18} className="text-primary flex-shrink-0" aria-hidden="true" />
+              <h3 className="font-bold text-sm text-text">Si no sabe por dónde empezar</h3>
+            </div>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              Solicite una consulta inicial para ordenar hechos, identificar riesgos, revisar documentos clave y recibir una hoja de ruta clara sobre los próximos pasos.
             </p>
           </Card>
+        </div>
+
+        {/* ── CTA FINAL ── */}
+        <div className="mt-8 max-w-2xl mx-auto text-center bg-primary/5 rounded-2xl p-6 border border-primary/10">
+          <h3 className="font-serif font-bold text-lg text-primary">
+            ¿No tiene claro qué área corresponde a su caso?
+          </h3>
+          <p className="mt-2 text-sm text-text-secondary leading-relaxed">
+            Revisamos su situación y le indicamos la ruta legal más adecuada, sin compromiso y con total confidencialidad.
+          </p>
+          <div className="mt-5">
+            <Link
+              href="/solicitar-consulta"
+              className="inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors btn-shadow-primary"
+            >
+              Solicitar orientación inicial <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
       </Section>
 
