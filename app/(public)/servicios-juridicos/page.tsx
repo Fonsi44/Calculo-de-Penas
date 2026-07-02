@@ -291,24 +291,6 @@ export default async function AreasJuridicasPage() {
             </p>
           </Card>
         </div>
-
-        {/* ── CTA FINAL ── */}
-        <div className="mt-8 max-w-2xl mx-auto text-center bg-primary/5 rounded-2xl p-6 border border-primary/10">
-          <h3 className="font-serif font-bold text-lg text-primary">
-            ¿No tiene claro qué área corresponde a su caso?
-          </h3>
-          <p className="mt-2 text-sm text-text-secondary leading-relaxed">
-            Revisamos su situación y le indicamos la ruta legal más adecuada, sin compromiso y con total confidencialidad.
-          </p>
-          <div className="mt-5">
-            <Link
-              href="/solicitar-consulta"
-              className="inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors btn-shadow-primary"
-            >
-              Solicitar orientación inicial <ArrowRight size={15} />
-            </Link>
-          </div>
-        </div>
       </Section>
 
       <Section spacing="sm">
