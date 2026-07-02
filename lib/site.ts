@@ -52,7 +52,7 @@ export const site = {
     'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
+      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   phoneDisplay: '+504 9536-3724',
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
@@ -196,13 +196,14 @@ export function legalServiceSchema() {
     paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     currenciesAccepted: 'HNL, USD',
     areaServed: [
-      // Cobertura REAL y verificable del bufete: sede (Nacaome) + ciudades del
-      // sur de Honduras donde atiende activamente. NO se incluyen Tegucigalpa
-      // ni San Pedro Sula porque no hay presencia física ni operativa allí
-      // (claims de presencia local falsa penalizan SEO y confianza).
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
       { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'City', name: 'Goascorán' },
+      { '@type': 'City', name: 'Amapala' },
+      { '@type': 'City', name: 'Pespire' },
+      { '@type': 'City', name: 'San Marcos de Colón' },
+      { '@type': 'City', name: 'Marcovia' },
       { '@type': 'State', name: site.address.department },
       { '@type': 'Country', name: site.address.country },
     ],
@@ -406,6 +407,11 @@ export function founderSchema() {
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
       { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'City', name: 'Goascorán' },
+      { '@type': 'City', name: 'Amapala' },
+      { '@type': 'City', name: 'Pespire' },
+      { '@type': 'City', name: 'San Marcos de Colón' },
+      { '@type': 'City', name: 'Marcovia' },
       { '@type': 'State', name: site.address.department },
     ],
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
@@ -473,6 +479,11 @@ export function thaniaSchema() {
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
       { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'City', name: 'Goascorán' },
+      { '@type': 'City', name: 'Amapala' },
+      { '@type': 'City', name: 'Pespire' },
+      { '@type': 'City', name: 'San Marcos de Colón' },
+      { '@type': 'City', name: 'Marcovia' },
       { '@type': 'State', name: site.address.department },
     ],
   };
@@ -531,6 +542,11 @@ export function emilSchema() {
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
       { '@type': 'City', name: 'Choluteca' },
+      { '@type': 'City', name: 'Goascorán' },
+      { '@type': 'City', name: 'Amapala' },
+      { '@type': 'City', name: 'Pespire' },
+      { '@type': 'City', name: 'San Marcos de Colón' },
+      { '@type': 'City', name: 'Marcovia' },
       { '@type': 'State', name: site.address.department },
     ],
   };

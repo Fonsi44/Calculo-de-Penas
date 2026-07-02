@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   // lo que Bing interpreta como canonical mismatch ("this page is a redirect").
   // El absoluto garantiza 'https://www.pinedayasociadoshn.com/' exacto.
   alternates: { canonical: `${site.url}/` },
-  keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
+  keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
   robots: {
     index: true,
     follow: true,
@@ -154,9 +154,7 @@ export default async function HomePage() {
     })),
   };
 
-  const featuredCoverage = landingsLocales.filter((l) =>
-    ['nacaome', 'choluteca', 'san-lorenzo'].includes(l.slug),
-  );
+  const featuredCoverage = landingsLocales;
 
   return (
     <>
@@ -241,7 +239,7 @@ export default async function HomePage() {
                     <div>
                       <p className="text-xxs font-bold uppercase tracking-wider text-accent">Cobertura</p>
                       <p className="text-sm font-semibold text-text-inverse mt-1">{site.address.city}, {site.address.department}</p>
-                      <p className="text-xs text-text-inverse/70 mt-0.5">San Lorenzo · Choluteca</p>
+                      <p className="text-xs text-text-inverse/70 mt-0.5">San Lorenzo · Choluteca · Goascorán y más</p>
                     </div>
                     <div>
                       <p className="text-xxs font-bold uppercase tracking-wider text-accent">Horario</p>
@@ -578,10 +576,10 @@ export default async function HomePage() {
         <SectionHeader
           eyebrow="Cobertura"
           title="Abogados en el sur de Honduras"
-          subtitle="Atendemos en Nacaome, San Lorenzo, Choluteca y la zona sur. Conozca nuestra cobertura por ciudad."
+          subtitle="Atendemos en Nacaome, San Lorenzo, Choluteca, Goascorán, Amapala, Pespire, San Marcos de Colón, Marcovia y toda la zona sur. Conozca nuestra cobertura por ciudad."
           align="center"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
           {featuredCoverage.map((c) => (
             <Link
               key={c.slug}

@@ -23,7 +23,7 @@ const AREAS = [
 const DESPACHO = [
   { label: 'El Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
   { label: 'Servicios Jurídicos', title: 'Servicios jurídicos en Nacaome: todas las ramas del derecho', href: '/servicios-juridicos' },
-  { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo y Choluteca', href: '/derecho-penal' },
+  { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo, Choluteca y todo el sur de Honduras', href: '/derecho-penal' },
   { label: 'Blog Jurídico', title: 'Artículos y guías legales para la zona sur de Honduras', href: '/blog' },
   { label: 'Preguntas Frecuentes', title: 'Respuestas a dudas legales frecuentes', href: '/preguntas-frecuentes' },
   { label: 'Solicitar Consulta', title: 'Solicite una consulta legal gratuita y confidencial', href: '/solicitar-consulta#formulario' },
@@ -37,6 +37,11 @@ const COBERTURA = [
   { label: 'Abogados en Nacaome', title: 'Abogados en Nacaome, Valle — sede principal del bufete', href: '/abogados-en-nacaome' },
   { label: 'Abogados en Choluteca', title: 'Abogados en Choluteca, Honduras — defensa y asesoría legal', href: '/abogados-en-choluteca' },
   { label: 'Abogados en San Lorenzo', title: 'Abogados en San Lorenzo, Valle — zona portuaria del sur', href: '/abogados-en-san-lorenzo' },
+  { label: 'Abogados en Goascorán', title: 'Abogados en Goascorán, Valle — zona fronteriza', href: '/abogados-en-goascoran' },
+  { label: 'Abogados en Amapala', title: 'Abogados en Amapala, Valle — Isla del Tigre y Golfo de Fonseca', href: '/abogados-en-amapala' },
+  { label: 'Abogados en Pespire', title: 'Abogados en Pespire, Choluteca — asesoría legal en el sur', href: '/abogados-en-pespire' },
+  { label: 'Abogados en San Marcos de Colón', title: 'Abogados en San Marcos de Colón, Choluteca — zona fronteriza', href: '/abogados-en-san-marcos-de-colon' },
+  { label: 'Abogados en Marcovia', title: 'Abogados en Marcovia, Choluteca — cobertura legal en el sur', href: '/abogados-en-marcovia' },
 ];
 
 const LEGALES = [

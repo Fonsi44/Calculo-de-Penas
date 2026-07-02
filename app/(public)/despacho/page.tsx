@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   title: { absolute: `Bufete de Abogados en ${site.address.city}, ${site.address.department}` },
   description: `Abogados en Nacaome, Valle con más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/despacho' },
-  keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome'],
+  keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome', 'bufete jurídico sur Honduras', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia'],
   twitter: {
     card: 'summary_large_image',
     title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,

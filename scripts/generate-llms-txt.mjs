@@ -59,6 +59,11 @@ const STATIC_ROUTES = [
   { path: '/abogados-en-nacaome', label: 'Abogados en Nacaome', desc: 'Landing SEO local — sede principal.' },
   { path: '/abogados-en-choluteca', label: 'Abogados en Choluteca', desc: 'Landing SEO local — cobertura en Choluteca.' },
   { path: '/abogados-en-san-lorenzo', label: 'Abogados en San Lorenzo', desc: 'Landing SEO local — cobertura en San Lorenzo.' },
+  { path: '/abogados-en-goascoran', label: 'Abogados en Goascorán', desc: 'Landing SEO local — cobertura en Goascorán, Valle.' },
+  { path: '/abogados-en-amapala', label: 'Abogados en Amapala', desc: 'Landing SEO local — cobertura en Amapala, Isla del Tigre.' },
+  { path: '/abogados-en-pespire', label: 'Abogados en Pespire', desc: 'Landing SEO local — cobertura en Pespire, Choluteca.' },
+  { path: '/abogados-en-san-marcos-de-colon', label: 'Abogados en San Marcos de Colón', desc: 'Landing SEO local — cobertura en San Marcos de Colón.' },
+  { path: '/abogados-en-marcovia', label: 'Abogados en Marcovia', desc: 'Landing SEO local — cobertura en Marcovia, Choluteca.' },
 ];
 
 // --------------------------------------------------------------------------

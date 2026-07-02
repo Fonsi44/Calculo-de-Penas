@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   title: 'Consulte a un Abogado en Nacaome, Valle',
   description: 'Solicite una consulta confidencial sin costo en Nacaome, Valle. Evaluación inicial de su caso penal, familiar, laboral o civil con presupuesto por escrito.',
   alternates: { canonical: '/solicitar-consulta' },
-  keywords: ['consulta legal gratuita Nacaome', 'abogado consulta Valle', 'asesoría legal sin costo sur Honduras', 'consulta penal confidencial Nacaome', 'contactar abogado San Lorenzo', 'cita legal Choluteca'],
+  keywords: ['consulta legal gratuita Nacaome', 'abogado consulta Valle', 'asesoría legal sin costo sur Honduras', 'consulta penal confidencial Nacaome', 'contactar abogado San Lorenzo', 'cita legal Choluteca', 'abogado Goascorán consulta', 'contactar abogado Amapala', 'cita legal Pespire', 'contactar abogado sur de Honduras'],
   twitter: {
     card: 'summary_large_image',
     title: 'Consulte a un Abogado en Nacaome, Valle',
