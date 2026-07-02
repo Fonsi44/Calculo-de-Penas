@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, BookOpen, MessageCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, MessageCircle, ShieldAlert, Gavel, FileSearch, Scale, FolderOpen, type LucideIcon } from 'lucide-react';
 import { site, absoluteUrl, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
@@ -93,36 +93,46 @@ const PRIORITY_PENAL_SLUGS = [
     'delitos-mas-comunes-honduras',
   ];
   const allPenalPosts = await getPostsByCategory('derecho-penal');
-  const penalStages = [
+  const penalStages: { etapa: string; riesgo: string; plazo: string; accion: string; icon: LucideIcon; num: number }[] = [
     {
-      etapa: 'Detencion o citacion',
-      riesgo: 'Declaraciones precipitadas, perdida de evidencia util.',
+      etapa: 'Detención o citación',
+      riesgo: 'Declaraciones precipitadas, pérdida de evidencia útil.',
       plazo: 'Horas iniciales',
       accion: 'Contactar abogado penalista y documentar hechos antes de declarar.',
+      icon: ShieldAlert,
+      num: 1,
     },
     {
       etapa: 'Audiencia inicial',
-      riesgo: 'Medidas cautelares desfavorables por preparacion incompleta.',
-      plazo: '24-48 horas segun el caso',
+      riesgo: 'Medidas cautelares desfavorables por preparación incompleta.',
+      plazo: '24-48 horas según el caso',
       accion: 'Presentar estrategia de defensa, arraigo y control de legalidad.',
+      icon: Gavel,
+      num: 2,
     },
     {
       etapa: 'Etapa intermedia',
       riesgo: 'Admisiones probatorias que debilitan la defensa.',
       plazo: 'Semanas a meses',
-      accion: 'Depurar prueba, objetar irregularidades y fortalecer teoria del caso.',
+      accion: 'Depurar prueba, objetar irregularidades y fortalecer teoría del caso.',
+      icon: FileSearch,
+      num: 3,
     },
     {
       etapa: 'Juicio oral',
       riesgo: 'Inconsistencias de testigos y contradicciones no explotadas.',
       plazo: 'Calendario judicial',
-      accion: 'Litigacion tecnica, interrogatorio estrategico y control de narrativa probatoria.',
+      accion: 'Litigación técnica, interrogatorio estratégico y control de narrativa probatoria.',
+      icon: Scale,
+      num: 4,
     },
     {
       etapa: 'Recursos',
       riesgo: 'Perder oportunidad de impugnar por extemporaneidad.',
       plazo: 'Plazos perentorios',
-      accion: 'Evaluar agravios y presentar recurso dentro del termino legal aplicable.',
+      accion: 'Evaluar agravios y presentar recurso dentro del término legal aplicable.',
+      icon: FolderOpen,
+      num: 5,
     },
   ];
 
@@ -292,33 +302,90 @@ const PRIORITY_PENAL_SLUGS = [
       <Section spacing="md" id="etapas-y-riesgos">
         <SectionHeader
           eyebrow="Ruta procesal"
-          title="Etapas, riesgos y accion recomendada en un caso penal"
-          subtitle="Resumen orientativo para decidir con rapidez y responsabilidad en cada fase del proceso penal hondureno."
+          title="Etapas, riesgos y acción recomendada en un caso penal"
+          subtitle="Resumen orientativo para decidir con rapidez y responsabilidad en cada fase del proceso penal hondureño."
+          align="center"
         />
-        <div className="overflow-x-auto rounded-lg border border-border/50 bg-background">
-          <table className="w-full min-w-[760px] text-sm">
-            <thead className="bg-surface-alt border-b border-border/50">
+
+        {/* ── ESCRITORIO: tabla elegante con filas tipo card ── */}
+        <div className="hidden lg:block rounded-lg border border-border/40 bg-background overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-surface-alt border-b border-border/40">
               <tr>
-                <th className="text-left p-3 font-bold text-text">Etapa</th>
-                <th className="text-left p-3 font-bold text-text">Riesgo principal</th>
-                <th className="text-left p-3 font-bold text-text">Plazo orientativo</th>
-                <th className="text-left p-3 font-bold text-text">Accion recomendada</th>
+                <th className="text-left p-4 font-bold text-text">Etapa</th>
+                <th className="text-left p-4 font-bold text-text">Riesgo principal</th>
+                <th className="text-left p-4 font-bold text-text">Plazo orientativo</th>
+                <th className="text-left p-4 font-bold text-text">Acción recomendada</th>
               </tr>
             </thead>
             <tbody>
-              {penalStages.map((stage) => (
-                <tr key={stage.etapa} className="border-b border-border/30 last:border-0">
-                  <td className="p-3 text-text font-semibold">{stage.etapa}</td>
-                  <td className="p-3 text-text-secondary">{stage.riesgo}</td>
-                  <td className="p-3 text-text-secondary">{stage.plazo}</td>
-                  <td className="p-3 text-text-secondary">{stage.accion}</td>
-                </tr>
-              ))}
+              {penalStages.map((stage) => {
+                const Icon = stage.icon;
+                return (
+                  <tr key={stage.etapa} className="border-b border-border/20 last:border-0 hover:bg-surface-alt/50 transition-colors">
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-md bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                          <Icon className="text-accent-dark" size={18} aria-hidden="true" />
+                        </div>
+                        <div>
+                          <span className="block text-xxs font-bold uppercase tracking-wider text-accent-dark">{stage.num}</span>
+                          <span className="text-text font-semibold leading-tight">{stage.etapa}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 text-text-secondary leading-relaxed">{stage.riesgo}</td>
+                    <td className="p-4">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-surface-alt border border-border/40 text-text-secondary whitespace-nowrap">
+                        {stage.plazo}
+                      </span>
+                    </td>
+                    <td className="p-4 text-text-secondary leading-relaxed">{stage.accion}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
-        <p className="mt-4 text-xs text-text-tertiary leading-relaxed">
-          Esta tabla tiene caracter informativo y no sustituye analisis legal individual. La estrategia final depende de hechos, prueba disponible y resoluciones de autoridad competente.
+
+        {/* ── MÓVIL/TABLET: tarjetas verticales ── */}
+        <div className="lg:hidden space-y-4">
+          {penalStages.map((stage) => {
+            const Icon = stage.icon;
+            return (
+              <Card key={stage.etapa} padding="md" className="h-full">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-md bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                    <Icon className="text-accent-dark" size={18} aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="block text-xxs font-bold uppercase tracking-wider text-accent-dark">Etapa {stage.num}</span>
+                    <span className="text-text font-semibold text-sm leading-tight">{stage.etapa}</span>
+                  </div>
+                </div>
+                <div className="space-y-2.5">
+                  <div>
+                    <p className="text-xxs font-bold uppercase tracking-wider text-danger mb-0.5">Riesgo principal</p>
+                    <p className="text-sm text-text-secondary leading-relaxed">{stage.riesgo}</p>
+                  </div>
+                  <div>
+                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted mb-0.5">Plazo orientativo</p>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-surface-alt border border-border/40 text-text-secondary">
+                      {stage.plazo}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-xxs font-bold uppercase tracking-wider text-success mb-0.5">Acción recomendada</p>
+                    <p className="text-sm text-text-secondary leading-relaxed">{stage.accion}</p>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+
+        <p className="mt-6 text-xs text-text-tertiary leading-relaxed text-center max-w-2xl mx-auto">
+          Esta tabla tiene carácter informativo y no sustituye análisis legal individual. La estrategia final depende de hechos, prueba disponible y resoluciones de autoridad competente.
         </p>
       </Section>
 
