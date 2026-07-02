@@ -322,16 +322,13 @@ const PRIORITY_PENAL_SLUGS = [
               {penalStages.map((stage) => {
                 const Icon = stage.icon;
                 return (
-                  <tr key={stage.etapa} className="border-b border-border/20 last:border-0 hover:bg-surface-alt/50 transition-colors">
+                  <tr key={stage.etapa} className="border-b border-border/20 last:border-0 hover:bg-surface-alt/50 transition-colors group">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-md bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
-                          <Icon className="text-accent-dark" size={18} aria-hidden="true" />
+                        <div className="w-11 h-11 rounded-lg bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                          <Icon className="text-accent-dark" size={20} aria-hidden="true" />
                         </div>
-                        <div>
-                          <span className="block text-xxs font-bold uppercase tracking-wider text-accent-dark">{stage.num}</span>
-                          <span className="text-text font-semibold leading-tight">{stage.etapa}</span>
-                        </div>
+                        <span className="text-text font-medium leading-snug">{stage.etapa}</span>
                       </div>
                     </td>
                     <td className="p-4 text-text-secondary leading-relaxed">{stage.riesgo}</td>
@@ -354,16 +351,18 @@ const PRIORITY_PENAL_SLUGS = [
             const Icon = stage.icon;
             return (
               <Card key={stage.etapa} padding="md" className="h-full">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-md bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
-                    <Icon className="text-accent-dark" size={18} aria-hidden="true" />
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-11 h-11 rounded-lg bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                    <Icon className="text-accent-dark" size={20} aria-hidden="true" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className="block text-xxs font-bold uppercase tracking-wider text-accent-dark">Etapa {stage.num}</span>
-                    <span className="text-text font-semibold text-sm leading-tight">{stage.etapa}</span>
+                    <p className="text-text font-medium text-sm leading-snug">{stage.etapa}</p>
+                    <span className="inline-flex items-center mt-1.5 px-2 py-0.5 rounded-md text-xxs font-bold border bg-accent/10 border-accent/20 text-accent-dark">
+                      Etapa {stage.num}
+                    </span>
                   </div>
                 </div>
-                <div className="space-y-2.5">
+                <div className="space-y-3">
                   <div>
                     <p className="text-xxs font-bold uppercase tracking-wider text-danger mb-0.5">Riesgo principal</p>
                     <p className="text-sm text-text-secondary leading-relaxed">{stage.riesgo}</p>
