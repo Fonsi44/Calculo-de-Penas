@@ -21,12 +21,23 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  // Absolute para controlar la longitud total. Antes el title resuelto medía
-  // 73 caracteres (>65) y se truncaba en SERP.
   title: { absolute: `Abogado Penalista en ${site.address.city} - Defensa Penal` },
-  description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial en detenciones, audiencias y recursos. Consulta urgente por WhatsApp ${site.whatsappDisplay}.`,
+  description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial en detenciones, audiencias y recursos. Consulta urgente por WhatsApp ${site.whatsappDisplay}. Cubrimos San Lorenzo, Choluteca y zona sur de Honduras.`,
   alternates: { canonical: '/derecho-penal' },
-  keywords: ['abogado penalista Nacaome', 'defensa penal Valle Honduras', 'abogado penalista San Lorenzo', 'abogado penalista Choluteca', 'abogado detención Honduras', 'audiencia inicial penal Nacaome', 'defensa penal sur Honduras', 'abogado urgente penalista Valle'],
+  keywords: [
+    'abogado penalista Nacaome',
+    'defensa penal Valle Honduras',
+    'abogado penalista San Lorenzo',
+    'abogado penalista Choluteca',
+    'defensa penal sur Honduras',
+    'abogado detención Honduras',
+    'audiencia inicial penal Nacaome',
+    'proceso penal Honduras',
+    'abogado urgente penalista Valle',
+    'asistencia a detenidos Honduras',
+    'bufete penal Nacaome',
+    'defensa criminal Honduras',
+  ],
   twitter: {
     card: 'summary_large_image',
     title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
@@ -35,12 +46,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
-    description: `¿Necesita un abogado penalista en Nacaome, Valle? Defensa técnica y confidencial. Atendemos detenciones, audiencias y recursos en la zona sur de Honduras.`,
+    description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial. Atendemos detenciones, audiencias y recursos en la zona sur de Honduras.`,
     url: `${site.url}/derecho-penal`,
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og/penal.webp`, width: 1200, height: 630, alt: `${site.name} - Derecho Penal` }],
+    images: [{ url: `${site.url}/og/penal.webp`, width: 1200, height: 630, alt: `${site.name} - Derecho Penal en Nacaome, Valle y Honduras` }],
   },
 };
 
@@ -77,6 +88,9 @@ const PRIORITY_PENAL_SLUGS = [
     'estafas-fraudes-tipos-penales-honduras',
     'cuando-prescribe-delito-en-honduras',
     'fianza-medidas-cautelares-proceso-penal-honduras',
+    'que-hacer-si-me-detienen-en-honduras',
+    'defensa-penal-honduras',
+    'delitos-mas-comunes-honduras',
   ];
   const allPenalPosts = await getPostsByCategory('derecho-penal');
   const penalStages = [
@@ -137,7 +151,7 @@ const PRIORITY_PENAL_SLUGS = [
   const blogPosts = PRIORITY_PENAL_SLUGS
     .map((s) => allPenalPosts.find((p) => p.slug === s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
-    .slice(0, 3);
+    .slice(0, 6);
 
   return (
     <>
@@ -170,6 +184,19 @@ const PRIORITY_PENAL_SLUGS = [
 
       <TrustBar background="light" />
 
+      <Section spacing="sm">
+        <div className="max-w-4xl mx-auto bg-accent/5 rounded-2xl p-5 border border-accent/10 text-center">
+          <p className="text-sm text-text-secondary">
+            <strong className="text-text">¿Quiere entender el proceso penal paso a paso?</strong>{' '}
+            Consulte nuestra{' '}
+            <Link href="/proceso-penal" className="text-accent-dark hover:text-primary underline font-semibold">
+              guía completa del proceso penal en Honduras
+            </Link>
+            , desde la investigación hasta la ejecución penal.
+          </p>
+        </div>
+      </Section>
+
       {/* SU ABOGADO PENALISTA —Danilo Pineda Maradiaga. La página de mayor
           intención comercial penal promete «Abogado Penalista en Nacaome» en
           el title; este bloque hace visible la entidad y cierra title↔H1↔autor
@@ -188,6 +215,22 @@ const PRIORITY_PENAL_SLUGS = [
                   height={500}
                   className="w-full h-full object-cover"
                   sizes="(max-width: 1024px) 70vw, 192px"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="hidden sm:block flex-shrink-0 w-28 lg:w-36 self-center">
+            <div className="relative mx-auto max-w-[8rem]">
+              <div className="absolute -inset-3 rounded-2xl bg-primary/5 blur-2xl" aria-hidden="true" />
+              <div className="relative rounded-lg border border-primary/20 overflow-hidden bg-surface-alt aspect-[3/4]">
+                <Image
+                  src="/images/equipo/danilo-pineda-maradiaga-penal.webp"
+                  alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle, Honduras — defensa penal"
+                  width={300}
+                  height={375}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 1024px) 30vw, 112px"
+                  priority={false}
                 />
               </div>
             </div>

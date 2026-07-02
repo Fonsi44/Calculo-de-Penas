@@ -900,6 +900,7 @@ estructura relativa) para dejar el repositorio limpio sin borrar nada. Ver
 | `docs/indexacion-plan-decision.md` | Plan de indexación SEO |
 | `docs/plan-reescritura-blog.md` | Plan editorial de 49 posts thin |
 | `docs/seo-off-page.md` | Estrategia SEO off-page |
+| `docs/seo/estrategia-derecho-penal.md` | Estrategia SEO penal (Jul 2026) |
 | `docs/pagespeed-usabilidad.md` | Métricas PageSpeed |
 | `docs/blog-duplicity-report.md` | Reporte de contenido plantilla |
 | `docs/content-review-schedule.md` | Revisión trimestral de contenido |

@@ -5,6 +5,37 @@
 
 ---
 
+## 2026-07-02 — seo: estrategia penal integral (pilar + satélite + imagen + indexación)
+
+Estrategia completa de posicionamiento para Derecho Penal como clúster de autoridad.
+Basada en auditoría SEO real con scripts internos (15 scripts ejecutados).
+
+### Cambios implementados
+- `app/(public)/proceso-penal/page.tsx`: nueva página satélite sobre el proceso
+  penal hondureño (6 etapas, FAQ, JSON-LD, enlaces internos a pilar penal).
+- `app/(public)/derecho-penal/page.tsx`: mejorada con keywords ampliadas (12 vs 8),
+  imagen adicional de Danilo Pineda, enlace a /proceso-penal y artículos
+  relacionados expandidos (6 vs 3).
+- `public/images/equipo/danilo-pineda-maradiaga-penal.webp`: imagen de Danilo
+  Pineda convertida de JPEG (128KB) a WebP (23.5KB, 81.7% de reducción).
+- `data/seo/canonical-paths.json`: añadida ruta /proceso-penal (priority 0.7),
+  actualizado contador sitemap (203) y techo IndexNow (213).
+- `docs/seo/estrategia-derecho-penal.md`: documento de trazabilidad con fuentes
+  de datos, keywords, URLs objetivo, schema aplicado y próximos pasos.
+
+### Datos de la auditoría
+- 15 scripts SEO ejecutados pre-cambio (health, canibalización, metadatos,
+  indexabilidad, rendimiento, enlaces internos).
+- 0 errores SEO bloqueantes detectados.
+- 1 grupo de canibalización menor (abogados-en-* local, preexistente).
+- 730 tests pass, 0 errores lint, build OK (342 páginas).
+
+### Indexación
+- IndexNow incremental: 11 URLs enviadas (core).
+- IndexNow full: 62 URLs enviadas (catálogo completo + categorías).
+- Endpoints: api.indexnow.org (200) + www.bing.com/indexnow (200).
+- Para envío en CI: `ENABLE_INDEXNOW_SUBMIT=true npm run indexnow:full`.
+
 ## 2026-06-28 — seo: auditoría integral + mejoras basadas en datos (GSC/GA4/Bing)
 
 Auditoría SEO/GEO completa con datos reales de Google Search Console (7d/28d/90d),
