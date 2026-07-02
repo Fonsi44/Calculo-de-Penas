@@ -10,6 +10,7 @@ de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021
 **Auth:** JWT + bcryptjs (cookies `__Host-token` + `__Host-profile`)  
 **Testing:** Vitest (622 tests, 22 suites) + Playwright (40 tests E2E, 5 specs)  
 **CI:** GitHub Actions (`lint → tsc → test → build → validate:seed → validate:dates`)
+**Landings locales:** 8 ciudades (Nacaome, Choluteca, San Lorenzo, Goascorán, Amapala, Pespire, San Marcos de Colón, Marcovia) + 4 landings comerciales (penalista, laboralista, familia, civil Nacaome)
 
 ---
 

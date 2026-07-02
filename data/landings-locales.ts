@@ -15,8 +15,10 @@
  */
 
 export type LandingLocal = {
-  /** Slug usado en la URL: /abogados-en-{slug} */
+  /** Slug usado en la URL: /abogados-en-{slug} (o path personalizado si se define) */
   slug: string;
+  /** Path canónico personalizado (opcional). Si no se define, se usa /abogados-en-{slug} */
+  path?: string;
   /** Nombre de la ciudad para mostrar */
   ciudad: string;
   /** Departamento al que pertenece */
@@ -248,6 +250,163 @@ export const landingsLocales: LandingLocal[] = [
       { categoria: 'practica-legal', slug: 'abogados-en-san-lorenzo', titulo: 'Abogados en San Lorenzo: asesoría legal en el puerto' },
     ],
   },
+  {
+    slug: 'goascoran',
+    ciudad: 'Goascorán',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 35,
+    title: 'Abogados en Goascorán, Valle — Consulta Jurídica',
+    description:
+      'Abogados en Goascorán, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724. Primera consulta sin costo.',
+    heroEyebrow: 'Zona fronteriza · Valle, Honduras',
+    heroTitle: 'Abogados en Goascorán, Valle',
+    heroSubtitle:
+      'Atendemos a clientes de Goascorán y la zona fronteriza con El Salvador. Defensa penal, derecho de familia, laboral, civil y notarial con bufete de la región.',
+    intro:
+      'Goascorán, municipio fronterizo del departamento de Valle, conecta Honduras con El Salvador por el Puente La Amistad. A 35 km de nuestra sede en Nacaome, atendemos a familias, comerciantes y trabajadores de Goascorán y sus alrededores con servicios jurídicos integrales.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en procesos penales conforme al Código Penal hondureño. Acompañamiento desde la detención, audiencia inicial y juicio oral para residentes de Goascorán.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimentaria, custodia de menores y régimen de visitas ante los juzgados de familia con competencia en Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos injustificados, finiquitos y asesoría para trabajadores agrícolas y comerciales de Goascorán.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales, trámites de propiedad y asesoría en derecho civil para la zona fronteriza.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Goascorán?', respuesta: 'Nuestra sede está en Nacaome, a 35 km de Goascorán. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono para casos en Goascorán y la región fronteriza.' },
+      { pregunta: '¿Atienden casos penales en Goascorán?', respuesta: 'Sí. Asumimos la defensa penal en Goascorán y todo el departamento de Valle conforme al Código Penal hondureño vigente, incluyendo audiencias y medidas cautelares.' },
+      { pregunta: '¿Cómo agendo una consulta desde Goascorán?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. Acordamos el medio de atención según la urgencia y tipo de caso.' },
+      { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
+    ],
+    geo: { lat: 13.58, lng: -87.73 },
+  },
+  {
+    slug: 'amapala',
+    ciudad: 'Amapala',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 40,
+    title: 'Abogados en Amapala, Valle — Defensa Legal en el Sur',
+    description:
+      'Abogados en Amapala, Valle (Honduras). Defensa penal, familia, laboral y asesoría portuaria. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Isla y puerto · Valle, Honduras',
+    heroTitle: 'Abogados en Amapala, Valle',
+    heroSubtitle:
+      'Atendemos a clientes de Amapala (Isla del Tigre) y el Golfo de Fonseca. Defensa penal, derecho de familia, laboral y asesoría legal para el sector portuario y pesquero.',
+    intro:
+      'Amapala, municipio insular del departamento de Valle en el Golfo de Fonseca, es un puerto histórico y destino turístico del sur de Honduras. A 40 km de Nacaome, prestamos servicios jurídicos a residentes, comerciantes, pescadores y empresas de la isla y sus alrededores.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño para residentes de Amapala. Asistencia en detenciones, audiencias y juicio oral.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos de familia ante los juzgados del departamento de Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores del sector pesquero, turístico y comercial de Amapala.' },
+      { titulo: 'Derecho mercantil y portuario', descripcion: 'Constitución de empresas, contratos comerciales y asesoría legal para negocios del sector portuario y turístico de la isla.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Amapala?', respuesta: 'Nuestra sede está en Nacaome, a unos 40 km de Amapala. Coordinamos la atención por teléfono, WhatsApp y podemos desplazarnos cuando el caso lo requiera.' },
+      { pregunta: '¿Atienden casos urgentes en Amapala?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Qué servicios ofrecen al sector pesquero?', respuesta: 'Asesoramos en derecho laboral, mercantil y civil a empresas y trabajadores del sector pesquero y portuario de Amapala y el Golfo de Fonseca.' },
+      { pregunta: '¿Cómo solicito una consulta desde Amapala?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Amapala. Evaluamos su caso y le damos un presupuesto por escrito sin compromiso.' },
+    ],
+    geo: { lat: 13.3, lng: -87.65 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-amapala-valle', titulo: 'Abogados en Amapala: guía legal completa' },
+    ],
+  },
+  {
+    slug: 'pespire',
+    ciudad: 'Pespire',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 70,
+    title: 'Abogados en Pespire, Choluteca — Asesoría Legal',
+    description:
+      'Abogados en Pespire, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome para todo el sur. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Pespire, Choluteca',
+    heroSubtitle:
+      'Atendemos a clientes de Pespire y municipios cercanos de Choluteca. Defensa penal, derecho de familia, laboral y civil con bufete del sur de Honduras.',
+    intro:
+      'Pespire es un municipio del departamento de Choluteca con fuerte tradición agropecuaria y comercial. A 70 km de Nacaome, ofrecemos servicios jurídicos integrales a los residentes de Pespire y las comunidades vecinas del corredor sur.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en procesos penales conforme al Código Penal hondureño para residentes de Pespire. Asistencia en audiencias y defensa técnica.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia y procesos familiares ante los juzgados con competencia en el departamento de Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas y comerciales de Pespire y alrededores.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas de terrenos, poderes notariales y trámites de propiedad para residentes de Pespire.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Pespire?', respuesta: 'Nuestra sede principal está en Nacaome, Valle. Atendemos a clientes de Pespire de forma remota con coordinación presencial cuando es necesario, a 70 km de distancia.' },
+      { pregunta: '¿Qué tipo de casos atienden en Pespire?', respuesta: 'Principalmente derecho de familia, laboral, penal y civil. También trámites notariales y asesoría en contratos y propiedad.' },
+      { pregunta: '¿Cómo me contacto si vivo en Pespire?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada para su comodidad.' },
+      { pregunta: '¿Cuánto cuesta una consulta jurídica?', respuesta: 'La primera consulta de evaluación no tiene costo. Tras analizar su caso, le entregamos un presupuesto por escrito para que decida sin compromiso.' },
+    ],
+    geo: { lat: 13.59, lng: -87.36 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-pespire-choluteca', titulo: 'Abogados en Pespire: asesoría legal en 4 áreas' },
+    ],
+  },
+  {
+    slug: 'san-marcos-de-colon',
+    ciudad: 'San Marcos de Colón',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 80,
+    title: 'Abogados en San Marcos de Colón, Choluteca',
+    description:
+      'Abogados en San Marcos de Colón, Choluteca. Defensa penal, familia, laboral, civil y mercantil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Frontera sur · Choluteca, Honduras',
+    heroTitle: 'Abogados en San Marcos de Colón',
+    heroSubtitle:
+      'Atendemos a clientes de San Marcos de Colón y la zona fronteriza con Nicaragua. Defensa penal, derecho de familia, laboral, civil y mercantil en el sur de Honduras.',
+    intro:
+      'San Marcos de Colón, municipio del departamento de Choluteca cercano a la frontera con Nicaragua, combina actividad agrícola, ganadera y comercial. A 80 km de Nacaome, ofrecemos servicios jurídicos a los residentes de San Marcos de Colón y comunidades aledañas.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en delitos conforme al Código Penal hondureño. Defensa técnica para residentes de San Marcos de Colón y la zona fronteriza.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia y procesos familiares ante los juzgados con competencia en Choluteca.' },
+      { titulo: 'Derecho mercantil y aduanero', descripcion: 'Asesoría en comercio fronterizo, contratos mercantiles y trámites aduaneros en la zona de El Espino y Guasaule.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes, trámites notariales y asesoría en propiedad para la zona de San Marcos de Colón.' },
+    ],
+    faqs: [
+      { pregunta: '¿Atienden en San Marcos de Colón?', respuesta: 'Sí. Aunque nuestra sede está en Nacaome, prestamos servicios a clientes de San Marcos de Colón con coordinación de diligencias en la zona fronteriza.' },
+      { pregunta: '¿Manejan trámites aduaneros y fronterizos?', respuesta: 'Sí. Asesoramos en materia aduanera, comercio exterior y trámites relacionados con las fronteras de El Espino y Guasaule.' },
+      { pregunta: '¿Ofrecen consulta a distancia?', respuesta: 'Sí. Puede iniciar su consulta por WhatsApp o teléfono. Si se requiere presencia, coordinamos el desplazamiento a San Marcos de Colón.' },
+      { pregunta: '¿Qué áreas del derecho cubren?', respuesta: 'Derecho penal, de familia, laboral, civil, mercantil y aduanero. Somos un bufete multidisciplinario del sur de Honduras.' },
+    ],
+    geo: { lat: 13.43, lng: -86.82 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-san-marcos-de-colon-choluteca', titulo: 'Abogados en San Marcos de Colón: defensa y asesoría' },
+    ],
+  },
+  {
+    slug: 'marcovia',
+    ciudad: 'Marcovia',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 60,
+    title: 'Abogados en Marcovia, Choluteca — Guía Legal',
+    description:
+      'Abogados en Marcovia, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Marcovia, Choluteca',
+    heroSubtitle:
+      'Servicios jurídicos para residentes de Marcovia y el sur de Choluteca. Defensa penal, derecho de familia, laboral y civil con bufete de la zona sur de Honduras.',
+    intro:
+      'Marcovia es un municipio del departamento de Choluteca con importante actividad agrícola, camaronera y comercial en el sur de Honduras. A 60 km de Nacaome, brindamos asesoría legal integral a los residentes de Marcovia y sus comunidades.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Defensa técnica en procesos penales conforme al Código Penal hondureño. Asistencia en audiencias y acompañamiento legal para residentes de Marcovia.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados de Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores del sector agrícola, camaronero y comercial de Marcovia.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de Marcovia y la zona sur.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Marcovia?', respuesta: 'Nuestra sede está en Nacaome, a unos 60 km de Marcovia. Atendemos a clientes de Marcovia con coordinación remota y presencial cuando el caso lo requiere.' },
+      { pregunta: '¿Atienden casos laborales en Marcovia?', respuesta: 'Sí. Reclamamos prestaciones, despidos injustificados y asesoramos a trabajadores de los sectores agrícola, camaronero y comercial de Marcovia.' },
+      { pregunta: '¿Cómo inicio una consulta legal?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724 o use el formulario web. Evaluamos su caso sin costo y le damos un presupuesto por escrito.' },
+      { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Marcovia, Choluteca, Pespire, San Marcos de Colón y demás municipios del departamento desde nuestra sede en Nacaome.' },
+    ],
+    geo: { lat: 13.28, lng: -87.31 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-marcovia-choluteca', titulo: 'Abogados en Marcovia: guía legal completa' },
+    ],
+  },
 ];
 
 /** Devuelve una landing por slug, o undefined si no existe. */
@@ -263,10 +422,15 @@ export const LANDING_OG_IMAGES: Record<string, string> = {
   nacaome: '/og/nacaome.webp',
   choluteca: '/og/choluteca.webp',
   'san-lorenzo': '/og/san-lorenzo.webp',
+  goascoran: '/og/goascoran.webp',
+  amapala: '/og/amapala.webp',
+  pespire: '/og/pespire.webp',
+  'san-marcos-de-colon': '/og/san-marcos-de-colon.webp',
+  marcovia: '/og/marcovia.webp',
 };
 
 export function landingMetadata(landing: LandingLocal) {
-  const canonical = `/abogados-en-${landing.slug}`;
+  const canonical = landing.path ?? `/abogados-en-${landing.slug}`;
   const ogImage = LANDING_OG_IMAGES[landing.slug] ?? '/og-image.webp';
   return {
     title: landing.title,

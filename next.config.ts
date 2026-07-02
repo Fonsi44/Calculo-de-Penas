@@ -164,6 +164,18 @@ const nextConfig: NextConfig = {
       { source: '/blog/hondurenos-en-espana/tributar-espana-bienes-honduras-guia-fiscal', destination: '/blog/hondurenos-en-espana/tributar-espana-bienes-guia', permanent: true },
       { source: '/blog/hondurenos-en-espana/asuntos-familiares-honduras-viviendo-espana', destination: '/blog/hondurenos-en-espana/asuntos-familiares-honduras-espana', permanent: true },
       { source: '/blog/practica-legal/proceso-consulta-legal-pineda-asociados-honduras', destination: '/blog/practica-legal/proceso-consulta-legal-pineda', permanent: true },
+      // === KEYWORDS COMERCIALES: Valle → Nacaome (Nacaome es cabecera de Valle) ===
+      { source: '/abogado-penalista-valle', destination: '/abogado-penalista-nacaome', permanent: true },
+      { source: '/abogado-laboralista-valle', destination: '/abogado-laboralista-nacaome', permanent: true },
+      { source: '/abogado-de-familia-valle', destination: '/abogado-de-familia-nacaome', permanent: true },
+      { source: '/abogado-civil-valle', destination: '/abogado-civil-nacaome', permanent: true },
+      { source: '/bufete-juridico-valle', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/abogado-penalista-honduras', destination: '/abogado-penalista-nacaome', permanent: true },
+      // === KEYWORDS COMERCIALES: Redirects Choluteca blog→comercial ===
+      { source: '/abogado-penalista-choluteca', destination: '/blog/derecho-penal/abogado-penalista-choluteca', permanent: true },
+      { source: '/abogado-laboralista-choluteca', destination: '/blog/derecho-laboral/abogado-laboral-choluteca', permanent: true },
+      { source: '/abogado-de-familia-choluteca', destination: '/blog/derecho-de-familia/abogado-familia-choluteca', permanent: true },
+      { source: '/abogado-civil-choluteca', destination: '/blog/derecho-civil/abogado-civil-choluteca', permanent: true },
     ];
   },
   // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key

@@ -61,6 +61,151 @@ const MID_POST_CTA_COPY: Record<string, { title: string; body: string; anchor: s
     body: 'Puede iniciar por WhatsApp o llamada y definir una hoja de ruta concreta segun el tipo de asunto y su urgencia.',
     anchor: 'Solicitar consulta desde Choluteca',
   },
+  'danos-perjuicios-indemnizacion-honduras': {
+    title: 'Ha sufrido danos y necesita reclamar?',
+    body: 'La indemnizacion por danos y perjuicios requiere probar el dano, la culpa y la relacion causal. Un abogado civil puede evaluar la viabilidad de su reclamo.',
+    anchor: 'Consultar sobre mi caso de danos',
+  },
+  'prescripcion-deudas-plazos-honduras': {
+    title: 'Tiene una deuda que ya prescribio?',
+    body: 'Conocer los plazos de prescripcion es el primer paso. Un abogado puede confirmar si su deuda ya prescribio y que accion tomar.',
+    anchor: 'Verificar si mi deuda prescribio',
+  },
+  'pension-alimenticia-porcentaje-honduras-2026': {
+    title: 'Necesita fijar o modificar una pension?',
+    body: 'El calculo correcto de la pension alimenticia depende de ingresos, numero de hijos y necesidades del menor. Evite errores que retrasen el proceso.',
+    anchor: 'Calcular mi pension alimenticia',
+  },
+  'estafas-fraudes-tipos-penales-honduras': {
+    title: 'Fue victima de una estafa?',
+    body: 'Las estafas requieren accion penal inmediata para preservar pruebas y evitar que el responsable disponga de los bienes defraudados.',
+    anchor: 'Denunciar una estafa con abogado',
+  },
+  'poder-notarial-honduras-tipos-requisitos': {
+    title: 'Necesita un poder notarial seguro?',
+    body: 'Cada tipo de poder tiene requisitos especificos. Un poder mal redactado puede ser impugnado o rechazado. Hagalo bien desde el inicio.',
+    anchor: 'Solicitar poder notarial en Nacaome',
+  },
+  'custodia-hijos-honduras-juez': {
+    title: 'Esta en disputa la custodia de sus hijos?',
+    body: 'El juez decide segun el interes superior del menor. Una estrategia legal solida puede marcar la diferencia en el resultado.',
+    anchor: 'Consultar sobre custodia de menores',
+  },
+  'pension-alimenticia-honduras-como-solicitarla': {
+    title: 'Listo para solicitar la pension alimenticia?',
+    body: 'El proceso requiere documentacion especifica y seguir los pasos correctos ante el juzgado de familia. No lo haga solo.',
+    anchor: 'Iniciar solicitud de pension ya',
+  },
+  'que-hacer-si-me-detienen-en-honduras': {
+    title: 'Tiene un familiar detenido?',
+    body: 'Las primeras 24 horas son criticas. Un abogado penalista puede garantizar sus derechos desde el primer momento y evitar abusos procesales.',
+    anchor: 'Asistencia inmediata por detencion',
+  },
+  'medidas-sustitutivas-prision-preventiva-honduras': {
+    title: 'Busca evitar la prision preventiva?',
+    body: 'Existen 7 medidas sustitutivas que un abogado puede solicitar al juez. Cada caso tiene particularidades que deben argumentarse tecnicamente.',
+    anchor: 'Solicitar revision de medida cautelar',
+  },
+  'derechos-detenido-honduras-guia-constitucional': {
+    title: 'Conoce a alguien detenido?',
+    body: 'La Constitucion garantiza derechos fundamentales desde la detencion. Un abogado puede verificar que se respeten y actuar si no es asi.',
+    anchor: 'Verificar derechos del detenido',
+  },
+  'calcular-prestaciones-laborales-honduras': {
+    title: 'Quiere saber cuanto le deben?',
+    body: 'El calculo de prestaciones incluye varios conceptos que su empleador podria estar omitiendo. Revise su caso con un abogado laboralista.',
+    anchor: 'Calcular mis prestaciones ahora',
+  },
+  'despido-injustificado-honduras-derechos-trabajador': {
+    title: 'Lo despidieron sin justa causa?',
+    body: 'Tiene derecho a indemnizacion. Pero debe actuar dentro de los plazos legales. No espere: cada dia cuenta en un reclamo laboral.',
+    anchor: 'Reclamar mi despido injustificado',
+  },
+  'acoso-laboral-mobbing-honduras': {
+    title: 'Sufre acoso en su trabajo?',
+    body: 'El mobbing es una violacion a sus derechos laborales. Puede denunciarlo y reclamar indemnizacion. No tiene que soportarlo en silencio.',
+    anchor: 'Denunciar acoso laboral',
+  },
+  'delitos-mas-comunes-honduras': {
+    title: 'Enfrenta una acusacion penal?',
+    body: 'Conocer el delito que le imputan es el primer paso. Un abogado penalista puede explicarle sus opciones y construir su defensa.',
+    anchor: 'Consultar sobre mi caso penal',
+  },
+  'violencia-domestica-ruta-legal-honduras': {
+    title: 'Necesita proteccion urgente?',
+    body: 'La ley preve medidas de proteccion inmediatas para victimas de violencia domestica. No espere a que la situacion empeore.',
+    anchor: 'Solicitar medidas de proteccion',
+  },
+  'audiencia-inicial-proceso-penal-honduras': {
+    title: 'Tiene una audiencia inicial proxima?',
+    body: 'Lo que ocurra en esa audiencia define el rumbo del proceso. Llegar con defensa tecnica es su derecho y su mejor estrategia.',
+    anchor: 'Preparar mi audiencia inicial',
+  },
+  'compraventa-inmuebles-aspectos-legales-honduras': {
+    title: 'Va a comprar o vender una propiedad?',
+    body: 'Una compraventa sin due diligence puede costarle su patrimonio. Verifique gravamenes, impuestos y titularidad antes de firmar.',
+    anchor: 'Revisar mi compraventa con abogado',
+  },
+  'contratos-arrendamiento-derechos-obligaciones-honduras': {
+    title: 'Va a firmar un contrato de alquiler?',
+    body: 'Las clausulas abusivas en contratos de arrendamiento son comunes. Un abogado civil puede revisarlo antes de que firme.',
+    anchor: 'Revisar mi contrato de arrendamiento',
+  },
+  'derechos-laborales-basicos-honduras': {
+    title: 'Conoce todos sus derechos como trabajador?',
+    body: 'Muchos empleadores cuentan con que usted no conozca sus derechos. Informese y, si necesita reclamar, tenga un abogado a su lado.',
+    anchor: 'Consultar mis derechos laborales',
+  },
+  'derechos-trabajadora-embarazada-honduras': {
+    title: 'Esta embarazada y teme por su empleo?',
+    body: 'El fuero maternal la protege contra el despido. Si fue despedida estando embarazada, tiene derecho a reintegro e indemnizacion.',
+    anchor: 'Proteger mi estabilidad laboral',
+  },
+  'testamentos-sucesiones-herencia-honduras': {
+    title: 'Necesita gestionar una herencia?',
+    body: 'Las sucesiones requieren tramites especificos ante notario o juez. Un error puede retrasar la disposicion de los bienes por meses o anos.',
+    anchor: 'Iniciar tramite de sucesion',
+  },
+  'calcular-liquidacion-laboral-honduras': {
+    title: 'No esta seguro de que su liquidacion sea correcta?',
+    body: 'Muchos empleadores calculan de menos. Un abogado laboralista puede revisar su liquidacion y reclamar la diferencia si corresponde.',
+    anchor: 'Verificar mi liquidacion laboral',
+  },
+  'abogado-penalista-choluteca': {
+    title: 'Necesita defensa penal en Choluteca?',
+    body: 'Atendemos casos penales en los juzgados de Choluteca. Contactenos para una consulta confidencial sobre su situacion.',
+    anchor: 'Hablar con abogado penalista en Choluteca',
+  },
+  'divorcio-choluteca': {
+    title: 'Quiere iniciar su divorcio en Choluteca?',
+    body: 'Cada tipo de divorcio tiene requisitos y costos distintos. Una consulta temprana le ayuda a elegir la via mas conveniente.',
+    anchor: 'Consultar sobre divorcio en Choluteca',
+  },
+  'abogado-civil-choluteca': {
+    title: 'Necesita un abogado civil en Choluteca?',
+    body: 'Contratos, herencias, cobro de deudas y compraventas. Asesoria civil con conocimiento de los juzgados de la zona sur.',
+    anchor: 'Consultar con abogado civil',
+  },
+  'cuando-necesito-abogado-penalista-honduras': {
+    title: 'No sabe si necesita un abogado penalista?',
+    body: 'Si recibio una citacion, esta siendo investigado o fue detenido, necesita defensa tecnica cuanto antes. No espere a que sea tarde.',
+    anchor: 'Evaluar mi situacion penal sin costo',
+  },
+  'empleador-no-paga-salario-honduras': {
+    title: 'Su empleador no le paga?',
+    body: 'La retencion de salario es ilegal. Puede reclamar el pago de lo adeudado mas intereses y danos. Actue antes de que prescribe.',
+    anchor: 'Reclamar salarios impagos',
+  },
+  'clausulas-abusivas-contratos-como-detectar-honduras': {
+    title: 'Firmo un contrato con clausulas abusivas?',
+    body: 'Muchas clausulas abusivas pueden declararse nulas. Un abogado civil puede revisar su contrato y asesorarle sobre sus opciones.',
+    anchor: 'Revisar mi contrato ahora',
+  },
+  'usucapion-prescripcion-adquisitiva-honduras': {
+    title: 'Quiere legalizar la propiedad que posee?',
+    body: 'La usucapion permite adquirir la propiedad por posesion continua. El proceso requiere cumplir plazos y requisitos especificos.',
+    anchor: 'Consultar sobre usucapion',
+  },
 };
 
 function injectMidArticleCta(body: string, slug: string): string {
@@ -403,7 +548,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           BlogCtaBar ya ofrece teléfono + WhatsApp + enlace al formulario. */}
       <Section spacing="md">
         <Container size="md">
-          <BlogCtaBar />
+          <BlogCtaBar category={post.category} />
         </Container>
       </Section>
 

@@ -12,7 +12,7 @@ import { landingsLocales, type LandingLocal } from '@/data/landings-locales';
  * (`app/(public)/abogados-en-{slug}/page.tsx`) lo invoca con su landing.
  */
 export function LandingLocalView({ landing }: { landing: LandingLocal }) {
-  const canonical = `/abogados-en-${landing.slug}`;
+  const canonical = landing.path ?? `/abogados-en-${landing.slug}`;
   const url = absoluteUrl(canonical);
   const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
 

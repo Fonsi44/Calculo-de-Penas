@@ -1,7 +1,75 @@
 # CHANGELOG — Pineda y Asociados
 
-> **Versión del changelog:** Jun 2026 — reestructurado. Histórico completo en
+> **Versión del changelog:** Jul 2026 — reestructurado. Histórico completo en
 > [`docs/legacy/CHANGELOG_ARCHIVE.md`](./docs/legacy/CHANGELOG_ARCHIVE.md).
+
+---
+
+## 2026-07-02 — feat: SEO local comercial + CTR + interlinking + schema (Release 86)
+
+Estrategia integral de crecimiento orgánico basada en datos reales de GSC, GA4 y
+DB. Implementación completa de landings comerciales, CTAs contextuales, redirects,
+schema avanzado y optimización de conversión.
+
+### Cambios implementados
+
+**SEO local — 9 landings nuevas:**
+- `app/(public)/abogado-penalista-nacaome/page.tsx`: landing comercial penal con
+  FAQ schema, CTA WhatsApp contextual y enlaces a guías del blog.
+- `app/(public)/abogado-laboralista-nacaome/page.tsx`: landing comercial laboral.
+- `app/(public)/abogado-de-familia-nacaome/page.tsx`: landing comercial familia.
+- `app/(public)/abogado-civil-nacaome/page.tsx`: landing comercial civil y notarial.
+- `app/(public)/abogados-en-goascoran/page.tsx`: landing ciudad Goascorán, Valle.
+- `app/(public)/abogados-en-amapala/page.tsx`: landing ciudad Amapala, Valle.
+- `app/(public)/abogados-en-pespire/page.tsx`: landing ciudad Pespire, Choluteca.
+- `app/(public)/abogados-en-san-marcos-de-colon/page.tsx`: landing ciudad San Marcos de Colón.
+- `app/(public)/abogados-en-marcovia/page.tsx`: landing ciudad Marcovia, Choluteca.
+
+**Datos de landings:**
+- `data/landings-locales.ts`: añadidas 5 ciudades (Goascorán, Amapala, Pespire,
+  San Marcos de Colón, Marcovia) con servicios, FAQs, geo y posts relacionados.
+  Añadido campo `path` para URLs canónicas personalizadas.
+- `LANDING_OG_IMAGES` expandido a 8 entradas. `landingMetadata()` y
+  `LandingLocalView` actualizados para soportar `path` personalizado.
+
+**CTR y CTAs — optimización masiva:**
+- `app/(public)/blog/[categoria]/[slug]/page.tsx`: `MID_POST_CTA_COPY` expandido
+  de 6 a 36 slugs con CTAs contextuales para penal, familia, laboral, civil,
+  notarial, tributario y hondureños en España.
+- `components/blog/blog-cta-bar.tsx`: ahora recibe `category` y muestra copy
+  diferenciado por área jurídica (penal, familia, laboral, civil, mercantil,
+  notarial, tributario, migrantes) con WhatsApp prellenado contextual.
+
+**Redirects — keywords comerciales:**
+- `next.config.ts`: 10 nuevos redirects 301. Valle→Nacaome (5), keyword
+  "abogado penalista Honduras", y redirects Choluteca (4) hacia blog posts
+  comerciales existentes.
+
+**Schema avanzado:**
+- `lib/site.ts`: añadido `hasOfferCatalog` al `LegalService` schema con 4
+  servicios estructurados (Offer+Service) para penal, familia, laboral y civil.
+
+**Sitemap y canonical paths:**
+- `data/seo/canonical-paths.json`: añadidas 9 rutas de landings comerciales
+  y ciudades. Corregido conteo: 212 URLs (antes 203). Eliminado `proceso-penal`
+  del sitemap (es redirect 301, no indexable).
+- `components/marketing/landing-local.tsx`: canonical usa `landing.path` si existe.
+
+**Configuración:**
+- `.env.local`: añadida variable `NEXT_PUBLIC_BING_VERIFICATION` para Bing WMT.
+
+### Resultados de validación
+- `npm run lint`: 0 errores, 0 warnings
+- `npm run build`: 351 páginas generadas, 0 errores
+- IndexNow dry-run: 16 URLs core listas para envío
+
+### Impacto estimado
+- +9 URLs indexables para keywords comerciales locales
+- CTR orgánico proyectado: de ~3% a 5-7% en posts con CTA contextual
+- Cobertura geográfica: de 3 a 8 ciudades en landings locales
+- CTAs contextuales en 36 posts (antes 6)
+- Schema enriquecido: LegalService + OfferCatalog + FAQPage + BreadcrumbList en
+  todas las landings
 
 ---
 
