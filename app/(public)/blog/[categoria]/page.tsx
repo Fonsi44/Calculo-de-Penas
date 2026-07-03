@@ -29,16 +29,21 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const page = parseInt(sp?.page ?? '1', 10) || 1;
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) return {};
-  const canonicalPath = page > 1 ? `/blog/${categoria}?page=${page}` : `/blog/${categoria}`;
+  const isPaginated = page > 1;
+  const canonicalPath = isPaginated ? `/blog/${categoria}` : `/blog/${categoria}`;
   return {
     // Absolute para controlar la longitud total. Antes, el template del layout
     // añadía "| Pineda y Asociados" y, sumado a "{cat.nombre} — Blog Jurídico",
     // varias categorías superaban 65 caracteres (p. ej. Derecho Mercantil y
     // Empresarial = 69) y empeoraba con " — Página N" en la paginación.
-    title: { absolute: `${cat.nombre} - Blog Jurídico${page > 1 ? ` (Página ${page})` : ''}` },
-    description: page > 1 ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
+    title: { absolute: `${cat.nombre} - Blog Jurídico${isPaginated ? ` (Página ${page})` : ''}` },
+    description: isPaginated ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
     alternates: { canonical: canonicalPath },
     keywords: [cat.nombre.toLowerCase(), 'artículos legales Honduras', 'blog jurídico Honduras', `${cat.nombre.toLowerCase()} Honduras`],
+    // Páginas paginadas (page>1): noindex para consolidar autoridad en page 1.
+    robots: isPaginated
+      ? { index: false, follow: true, googleBot: { index: false, follow: true } }
+      : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
       title: `${cat.nombre} - Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,

@@ -60,54 +60,10 @@ const IS_DB_REACHABLE = Boolean(
 // para que Google priorice el rastreo de URLs de mayor calidad editorial.
 // Cuando se reescriban (Fase 4), quitar el slug de esta lista.
 // Fuente: docs/indexacion-plan-decision.md §2 (Fase 2).
-export const THIN_POST_SLUGS = new Set([
-  'contratos-franquicia-aspectos',
-  'importar-mercancias-guia-aduanera',
-  'pineda-asociados-bufete-multidisciplinario-honduras',
-  'expropiacion-forzosa-derechos-propietario-honduras',
-  'abogado-civil-choluteca',
-  'impuestos-pequenas-empresas-guia-basica-honduras',
-  'guarda-custodia-menores-tipos-honduras',
-  'abogados-en-choluteca',
-  'abogados-en-san-lorenzo',
-  'usucapion-prescripcion-adquisitiva-honduras',
-  'abogado-empresas-san-lorenzo',
-  'abogado-familia-choluteca',
-  'adopcion-requisitos-proceso-honduras',
-  'facturacion-electronica-requisitos-sar',
-  'registro-sanitario-alimentos-arsa-paso-a-paso-honduras',
-  'delitos-ambientales-como-denunciarlos-honduras',
-  'estafas-fraudes-tipos-penales-honduras',
-  'costos-honorarios-abogados-como-funcionan-honduras',
-  'defensa-penal-menores-edad-honduras',
-  'etapa-investigacion-proceso-penal-honduras',
-  'centro-conciliacion-arbitraje-ccic',
-  'sobreseimiento-definitivo-provisional',
-  'abogados-en-nacaome',
-  'presentar-denuncia-conadeh-honduras',
-  'abogado-aduanero-san-lorenzo',
-  'habilitacion-clinicas-hospitales',
-  'tarjetas-credito-intereses-cargos-defensa-honduras',
-  'union-de-hecho-requisitos-derechos-honduras',
-  'abogados-en-amapala-valle',
-  'derecho-de-peticion-instituciones-honduras',
-  'sar-notifica-fiscalizacion-que-hacer-honduras',
-  'arraigo-social-laboral-hondurenos-espana',
-  'contratacion-publica-licitaciones',
-  'responsabilidad-medica-mala-praxis-honduras',
-  'contratos-confidencialidad-nda-secreto-comercial-honduras',
-  'tributar-espana-bienes-guia',
-  'competencia-desleal-como-denunciar-honduras',
-  'allanamiento-ilegal-violacion-domicilio-honduras',
-  'lavado-activos-obligaciones',
-  'titulos-valores-cheques-sin-fondo-honduras',
-  'refugio-asilo-solicitarlo',
-  'herencias-transfronterizas-bienes',
-  'fianza-medidas-cautelares-proceso-penal-honduras',
-  'como-obtener-rtn-personas-empresas-honduras',
-  'libertad-expresion-redes-sociales-honduras',
-  'constituir-empresa-guia-paso-a-paso-honduras',
-  'prescripcion-deudas-plazos-honduras',
+export const THIN_POST_SLUGS = new Set<string>([
+  // 2026-07-03 — Fase 17: todos los 48 thin posts publicados fueron expandidos
+  // y verificados por blog:verify-fix. El único que quedaba (guarda-custodia)
+  // es draft (no publicado), no aparece en sitemap. Set vacío intencional.
 ]);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

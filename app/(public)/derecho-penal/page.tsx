@@ -13,8 +13,6 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
-import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
@@ -484,22 +482,6 @@ const PRIORITY_PENAL_SLUGS = [
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
-
-      <Section spacing="sm">
-        {(() => {
-          const magnet = getLeadMagnetByArea('derecho-penal');
-          if (magnet) {
-            return (
-              <LeadMagnetCTA
-                area={magnet.area}
-                titulo={magnet.titulo}
-                descripcion={magnet.descripcion}
-              />
-            );
-          }
-          return null;
-        })()}
-      </Section>
 
       <ConsultationCTA />
     </>

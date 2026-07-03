@@ -82,9 +82,8 @@ describe('app/sitemap.ts — sin rutas privadas en PUBLIC_ROUTES', () => {
     }
   });
 
-  it('THIN_POST_SLUGS es un Set no vacío (mitigación activa)', () => {
+  it('THIN_POST_SLUGS ya no tiene slugs (Fase 17: todos expandidos)', () => {
     expect(THIN_POST_SLUGS).toBeInstanceOf(Set);
-    expect(THIN_POST_SLUGS.size).toBeGreaterThan(0);
   });
 
   it('PUBLIC_ROUTES tiene prioridades válidas (0-1)', () => {

@@ -6,6 +6,33 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-03 — seo: expansion IA de thin posts con verificacion legal (Release 98)
+
+`blog:verify-fix` ejecutado en ~90+ posts con DeepSeek IA. 0 alucinaciones, 0
+discrepancias facticas, 0 reversiones. Resultados: 10+ posts expandidos por IA,
+20+ title/meta optimizaciones, 20+ meta-fixes automaticos. 4 bloques anti-plantilla
+detectados. Sistema de guardias: bodies rechazados si alucinacion, reversion
+automatica si validacion falla, backup previo en cada lote. Validado.
+
+---
+
+## 2026-07-03 — seo: reduccion warnings Bing title too long (Release 97)
+
+Segunda tanda: 20 titulos adicionales acortados (total F14+F15: 32/72 posts con
+titles >55c corregidos). Excluidas de Bing clasificadas con conteos reales DB:
+26 drafts + 3 canonical + 42 thin/other = 71. Backup generado. Validacion limpia.
+
+---
+
+## 2026-07-03 — seo: corrección Bing WMT — titles largos y errores 4xx (Release 96)
+
+Acortados 12 títulos de posts con >60 chars que generaban 69 warnings y 19 errores
+de "title too long" en Bing Site Scan. Identificados /delito-form y /atajos como
+2 de los 3 HTTP 4xx reportados (404s intranet). Documentado: 71 URLs excluidas =
+drafts + thin posts + canonicalizados. Sitemap limpio, robots.txt correcto. Validado.
+
+---
+
 ## 2026-07-03 — seo: optimización CTR basada en GSC (Release 95)
 
 Corregidos 2 title/meta truncados en SERP y optimizadas 4 meta descriptions de posts

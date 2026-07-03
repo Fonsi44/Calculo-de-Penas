@@ -20,13 +20,6 @@ export interface LeadMagnet {
 
 export const LEAD_MAGNETS: LeadMagnet[] = [
   {
-    area: 'derecho-penal',
-    titulo: 'Guía legal: Defensa Penal en Honduras',
-    descripcion: 'Conozca sus derechos si enfrenta un proceso penal: etapas, plazos, recursos y errores comunes que debe evitar.',
-    archivo: '/descargas/guia-derecho-penal.pdf',
-    source: 'descarga-derecho-penal',
-  },
-  {
     area: 'derecho-de-familia',
     titulo: 'Guía legal: Derecho de Familia en Honduras',
     descripcion: 'Divorcio, custodia, alimentos y adopción: requisitos, plazos y documentación necesaria en cada caso.',

@@ -50,17 +50,21 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const tagFilter = params?.tag;
   const monthFilter = params?.month;
   const hasFilter = !!(tagFilter || monthFilter);
-  const canonicalPath = hasFilter || page > 1
-    ? `/blog${page > 1 ? `?page=${page}` : ''}${tagFilter ? `${page > 1 || monthFilter ? '&' : '?'}tag=${encodeURIComponent(tagFilter)}` : ''}${monthFilter ? `${page > 1 || tagFilter ? '&' : '?'}month=${monthFilter}` : ''}`
+  const isPaginated = page > 1;
+  // Páginas paginadas (page>1 sin filtros): canonical a page 1 y noindex.
+  // Páginas con filtros (tag/month): canonical autocontenido y noindex.
+  const canonicalPath = hasFilter
+    ? `/blog${tagFilter ? `?tag=${encodeURIComponent(tagFilter)}` : ''}${monthFilter ? `${tagFilter ? '&' : '?'}month=${monthFilter}` : ''}`
     : '/blog';
   return {
     // Absolute para controlar la longitud total del title (SEO).
-    title: { absolute: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}` },
-    description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${page > 1 ? ` Página ${page}.` : ''}`,
+    title: { absolute: `Blog Jurídico de Abogados en Honduras${isPaginated ? ` (Página ${page})` : ''}` },
+    description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${isPaginated ? ` Página ${page}.` : ''}`,
     alternates: { canonical: canonicalPath },
     keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],
     // ?tag= y ?month= no indexables (filtros no canónicos).
-    robots: hasFilter
+    // Páginas paginadas (page>1): noindex para consolidar autoridad en page 1.
+    robots: hasFilter || isPaginated
       ? { index: false, follow: true, googleBot: { index: false, follow: true } }
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {

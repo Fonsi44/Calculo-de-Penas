@@ -72,18 +72,18 @@
 - [ ] `contratos-franquicia-aspectos` — vence: 2026-06-25
 - [ ] `abogado-penalista-sur-honduras` — vence: 2026-06-26
 - [ ] `poder-desde-espana-para-tramites-honduras` — vence: 2026-06-27
-- [ ] `registrar-marca-honduras-paso-a-paso` — vence: 2026-06-30
 - [ ] `devolucion-impuestos-como-solicitarla-honduras` — vence: 2026-06-30
+- [ ] `registrar-marca-honduras-paso-a-paso` — vence: 2026-06-30
 - [ ] `guia-aduanera-importaciones-honduras` — vence: 2026-06-30
 - [ ] `compraventa-inmuebles-aspectos-legales-honduras` — vence: 2026-07-01
-## Próximos 30 días
 - [ ] `derechos-laborales-basicos-honduras` — vence: 2026-07-03
+## Próximos 30 días
 - [ ] `titulos-valores-cheques-sin-fondo-honduras` — vence: 2026-07-06
 - [ ] `asuntos-familiares-honduras-espana` — vence: 2026-07-07
 - [ ] `impuesto-renta-personas-fisicas-honduras` — vence: 2026-07-09
 - [ ] `danos-perjuicios-indemnizacion-honduras` — vence: 2026-07-10
-- [ ] `tipos-sociedad-mercantil-honduras` — vence: 2026-07-13
 - [ ] `jornada-laboral-horas-extra-descansos-honduras` — vence: 2026-07-13
+- [ ] `tipos-sociedad-mercantil-honduras` — vence: 2026-07-13
 - [ ] `defensa-penal-menores-edad-honduras` — vence: 2026-07-14
 - [ ] `hondurenos-espana-documentos` — vence: 2026-07-15
 - [ ] `elegir-bufete-multidisciplinario-ventajas-honduras` — vence: 2026-07-16
@@ -94,8 +94,8 @@
 - [ ] `delitos-mas-comunes-honduras` — vence: 2026-07-22
 - [ ] `servicios-legales-empresas-sur-honduras` — vence: 2026-07-24
 - [ ] `pension-alimenticia-honduras-guia-completa` — vence: 2026-07-26
-- [ ] `estafas-fraudes-tipos-penales-honduras` — vence: 2026-07-27
 - [ ] `calcular-prestaciones-laborales-honduras` — vence: 2026-07-27
+- [ ] `estafas-fraudes-tipos-penales-honduras` — vence: 2026-07-27
 - [ ] `errores-contratos-civiles-honduras` — vence: 2026-07-29
 - [ ] `abogado-familia-choluteca` — vence: 2026-07-30
 - [ ] `empleador-no-paga-salario-honduras` — vence: 2026-08-01
