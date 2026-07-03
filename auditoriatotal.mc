@@ -1,9 +1,86 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║                    LÍNEA BASE CANÓNICA — PUNTO DE PARTIDA                    ║
+  ╠══════════════════════════════════════════════════════════════════════════════╣
+  ║                                                                              ║
+  ║  Este archivo es el diagnóstico más completo y real existente del sitio.     ║
+  ║  Es la única fuente de verdad sobre el estado de la web a 2026-07-03.       ║
+  ║                                                                              ║
+  ║  REGLAS ABSOLUTAS PARA CUALQUIER AGENTE O PERSONA:                           ║
+  ║                                                                              ║
+  ║  1. LEER este archivo completo antes de tocar NADA.                          ║
+  ║     Es el punto de partida obligatorio.                                      ║
+  ║                                                                              ║
+  ║  2. NO BORRAR este archivo.                                                  ║
+  ║     Puede crearse auditoriatotal-v2.mc, pero este permanece.                 ║
+  ║                                                                              ║
+  ║  3. NO MODIFICAR este archivo.                                               ║
+  ║     No se corrigen datos aquí. Si algo cambió, se crea un archivo nuevo.     ║
+  ║                                                                              ║
+  ║  4. CUALQUIER ACCIÓN sobre la web debe contrastarse primero con este archivo.║
+  ║     Si un problema ya está documentado aquí, no se re-diagnostica: se actúa. ║
+  ║                                                                              ║
+  ║  5. SI SE VA A IMPLEMENTAR algo, leer §20 (Roadmap) y §18 (Problemas).      ║
+  ║     Las prioridades ya están establecidas. No se re-prioriza sin motivo.     ║
+  ║                                                                              ║
+  ║  6. NO HACER PUSH sin autorización expresa.                                  ║
+  ║     Este archivo existe en commit local. Publicar solo si se decide.         ║
+  ║                                                                              ║
+  ║  7. CADA VEZ que se complete una acción del roadmap, documentar:             ║
+  ║     - qué se hizo                                                            ║
+  ║     - qué archivos se modificaron                                            ║
+  ║     - qué métrica mejoró                                                     ║
+  ║     - en un archivo nuevo: auditoria-acciones.md                             ║
+  ║                                                                              ║
+  ║  8. PUNTUACIÓN GLOBAL DE PARTIDA: 73/100.                                    ║
+  ║     Objetivo: 78/100 en 30 días, 83/100 en 90 días, 88/100 en 12 meses.     ║
+  ║                                                                              ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<!-- ⛔ LÍNEA BASE CANÓNICA — NO MODIFICAR — PUNTO DE PARTIDA ⛔ -->
+
 # AUDITORÍA TOTAL — Pineda y Asociados Bufete Jurídico
 
 > **Fecha:** 2026-07-03  
 > **Dominio:** https://www.pinedayasociadoshn.com/  
+> **Tipo:** Línea base canónica de diagnóstico  
 > **Ejecución:** DeepSeek V4 Pro — Modo auditoría profesional  
-> **Versión informe:** 1.0
+> **Versión informe:** 1.0  
+> **Puntuación global:** 🏆 73/100  
+> **Commit:** 0ac08ac (local, sin push)  
+> **Archivo:** INMUTABLE — no modificar — punto de partida para todo agente
+
+---
+
+## 0. PARA EMPEZAR DESDE AQUÍ
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                                                          │
+│   SI ERES UN AGENTE IA O UNA PERSONA QUE VA A TRABAJAR   │
+│   EN ESTE PROYECTO, ESTE ES TU PUNTO DE PARTIDA.         │
+│                                                          │
+│   1. Lee este archivo completo (son 20 secciones).        │
+│   2. Ve directo al §20 (Roadmap) para saber qué hacer.   │
+│   3. Ve al §18 (Problemas) para ver qué urge más.        │
+│   4. No re-diagnostiques: aquí ya está todo.              │
+│   5. Actúa.                                               │
+│                                                          │
+│   Acción inmediata más urgente:                           │
+│   Crear Google Business Profile (P0, sección §20).       │
+│                                                          │
+│   Puntuación de partida: 73/100.                          │
+│   Meta a 30 días: 78/100.                                 │
+│   Meta a 90 días: 83/100.                                 │
+│   Meta a 12 meses: 88/100.                                │
+│                                                          │
+│   ⛔ NO MODIFICAR ESTE ARCHIVO.                           │
+│   ⛔ NO HACER PUSH sin autorización.                      │
+│   ⛔ NO CREAR POSTS NUEVOS sin revisar antes §8.          │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+```
 
 ---
 
