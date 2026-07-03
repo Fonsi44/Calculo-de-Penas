@@ -1,43 +1,39 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import type { TocHeading } from '@/lib/blog-toc';
 
 /**
- * Tabla de contenidos dinámica.
- * Genera un índice a partir de los H2 del artículo.
- * Solo se muestra si hay al menos 2 H2.
+ * Tabla de contenidos del artículo de blog.
+ *
+ * Cambio SEO/GEO: antes este componente era client-only y generaba los IDs de
+ * los H2 en useEffect, por lo que el HTML servidor no contenía anchors
+ * (#section-1) ni el TOC visible para crawlers/LLMs. Ahora:
+ *   - Los IDs se asignan en el servidor (lib/blog-toc.ts injectHeadingIds).
+ *   - Este componente recibe `headings` como prop y se renderiza en SSR.
+ *   - El smooth-scroll al hacer clic se mantiene como enhancement progresivo.
+ *
+ * El componente sigue siendo `'use client'` porque necesita `onClick` para el
+ * scroll suave y el pushState, pero el HTML inicial (el que ven crawlers y
+ * LLMs) ya contiene el TOC completo con los anchors correctos.
+ *
+ * Solo se muestra si hay ≥2 H2.
  */
-export function BlogTOC() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [headings, setHeadings] = useState<Array<{ id: string; text: string }>>([]);
 
-  useEffect(() => {
-    const article = document.querySelector('.article-body');
-    if (!article) return;
+interface BlogTOCProps {
+  /** Headings extraídos en el servidor vía lib/blog-toc.ts. */
+  headings: TocHeading[];
+}
 
-    const h2s = article.querySelectorAll('h2');
-    if (h2s.length < 2) return;
-
-    const items: Array<{ id: string; text: string }> = [];
-    h2s.forEach((h2, i) => {
-      if (!h2.id) {
-        h2.id = `section-${i + 1}`;
-      }
-      items.push({ id: h2.id, text: h2.textContent?.trim() || '' });
-    });
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setHeadings(items);
-  }, []);
-
-  if (headings.length < 2) return null;
+export function BlogTOC({ headings }: BlogTOCProps) {
+  const h2s = headings.filter((h) => h.level === 2);
+  if (h2s.length < 2) return null;
 
   return (
-    <div ref={containerRef} className="mb-8 p-5 rounded-xl border border-border/40 bg-surface-alt border-l-3 border-l-accent">
+    <div className="mb-8 p-5 rounded-xl border border-border/40 bg-surface-alt border-l-3 border-l-accent">
       <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">📑 Tabla de contenidos</p>
       <nav aria-label="Tabla de contenidos">
         <ul className="space-y-1.5">
-          {headings.map((h) => (
+          {h2s.map((h) => (
             <li key={h.id}>
               <a
                 href={`#${h.id}`}

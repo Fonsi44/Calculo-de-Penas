@@ -121,11 +121,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  // Categorías de blog con mayor valor comercial y volumen de posts reciben
+  // mayor prioridad de rastreo. Las YMYL jurídicas principales (penal,
+  // familia, laboral) son las que generan impresiones/clics según GSC.
+  const HIGH_PRIORITY_CATEGORIES = new Set([
+    'derecho-penal',
+    'derecho-de-familia',
+    'derecho-laboral',
+  ]);
+
   const categoryRoutes = blogCategories.map((c) => ({
     url: absoluteUrl(`/blog/${c.slug}`),
     lastModified: latestPostByCategory.get(c.slug) ?? now,
     changeFrequency: 'weekly' as const,
-    priority: 0.5,
+    priority: HIGH_PRIORITY_CATEGORIES.has(c.slug) ? 0.7 : 0.5,
   }));
 
   const blogPostRoutes = dbPosts.map((p) => ({

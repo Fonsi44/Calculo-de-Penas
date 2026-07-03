@@ -123,8 +123,14 @@ export default async function DespachoPage() {
         const heroImg = getCorporateImage('hero_despacho');
         return heroImg ? (
           <div className="relative aspect-[21/9] w-full overflow-hidden bg-primary">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={heroImg} alt={`Interior del despacho ${site.name}`} className="absolute inset-0 w-full h-full object-cover" />
+            <Image
+              src={heroImg}
+              alt={`Interior del despacho ${site.name}`}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+            />
             <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/55 to-transparent" aria-hidden="true" />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center">
               <div className="max-w-2xl text-text-inverse">
@@ -294,8 +300,13 @@ export default async function DespachoPage() {
           const meetingImg = getCorporateImage('corporate_meeting');
           return meetingImg ? (
             <div className="relative aspect-[21/9] w-full overflow-hidden rounded-lg mb-6 border border-border-light">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={meetingImg} alt="Reunión profesional del bufete" className="absolute inset-0 w-full h-full object-cover" />
+              <Image
+                src={meetingImg}
+                alt="Reunión profesional del bufete"
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" aria-hidden="true" />
             </div>
           ) : null;

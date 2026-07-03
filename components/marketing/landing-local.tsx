@@ -4,8 +4,44 @@ import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { type LandingLocal } from '@/data/landings-locales';
 import { CoverageCityGrid, getRelatedCities } from '@/components/marketing/coverage-city-card';
+
+/**
+ * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
+ * /servicios-juridicos/{slug}. Permite enlazar cada servicio listado en las
+ * landings locales a su landing de área dedicada, cerrando el clúster temático
+ * ciudad×área y mejorando el internal linking.
+ *
+ * Las claves se normalizan a minúsculas sin tildes para tolerar variantes.
+ * Si un título no está aquí, el servicio se renderiza sin enlace (no rompe).
+ */
+const SERVICIO_SLUG_MAP: Record<string, string> = {
+  'defensa penal': '/derecho-penal',
+  'derecho penal': '/derecho-penal',
+  'derecho de familia': '/servicios-juridicos/derecho-de-familia',
+  'derecho laboral': '/servicios-juridicos/derecho-laboral',
+  'derecho civil y notarial': '/servicios-juridicos/derecho-civil-y-notarial',
+  'derecho civil': '/servicios-juridicos/derecho-civil-y-notarial',
+  'derecho mercantil': '/servicios-juridicos/derecho-mercantil-empresarial',
+  'derecho mercantil y empresarial': '/servicios-juridicos/derecho-mercantil-empresarial',
+  'derecho bancario': '/servicios-juridicos/derecho-bancario-y-financiero',
+  'derecho bancario y financiero': '/servicios-juridicos/derecho-bancario-y-financiero',
+  'derecho administrativo': '/servicios-juridicos/derecho-administrativo-y-servicio-civil',
+  'derecho aduanero': '/servicios-juridicos/derecho-aduanero-y-comercio-exterior',
+  'derecho aduanero y comercio exterior': '/servicios-juridicos/derecho-aduanero-y-comercio-exterior',
+  'regulacion sanitaria': '/servicios-juridicos/regulacion-sanitaria',
+  'regulación sanitaria': '/servicios-juridicos/regulacion-sanitaria',
+  'extrtranjeria en honduras': '/servicios-juridicos/extranjeria-en-honduras',
+  'extranjeria en honduras': '/servicios-juridicos/extranjeria-en-honduras',
+  'propiedad intelectual': '/servicios-juridicos/propiedad-intelectual',
+  'derecho tributario': '/servicios-juridicos/tributario-fiscal',
+  'tributario fiscal': '/servicios-juridicos/tributario-fiscal',
+  'derecho ambiental': '/servicios-juridicos/derecho-ambiental-regulatorio',
+  'conciliacion y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
+  'conciliación y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
+};
 
 /**
  * Renderiza una landing local de SEO ("/abogados-en-{ciudad}").
@@ -59,10 +95,14 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
     },
   ];
 
-  const nearby = getRelatedCities(landing.slug, 4);
+  const _nearby = getRelatedCities(landing.slug, 4);
 
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: `Abogados en ${landing.ciudad}` },
+      ]} />
       {/* Hero */}
       <section className="relative bg-primary text-text-inverse overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
@@ -135,20 +175,39 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           subtitle="Atención legal multidisciplinaria con respaldo del Código Penal y la legislación hondureña vigente."
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {landing.servicios.map((s, i) => (
-            <div
-              key={i}
-              className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5 hover:border-accent/40 transition-colors"
-            >
-              <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Scale size={20} className="text-accent-dark" aria-hidden="true" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-bold text-sm md:text-base text-primary leading-snug">{s.titulo}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed mt-1">{s.descripcion}</p>
+          {landing.servicios.map((s, i) => {
+            // Internal linking: enlazar cada servicio a su landing de área
+            // dedicada en /servicios-juridicos/{slug}. Antes eran H3 mudos sin
+            // href, rompiendo el clúster temático ciudad×área.
+            const servicioHref = SERVICIO_SLUG_MAP[s.titulo.trim().toLowerCase()];
+            const inner = (
+              <>
+                <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Scale size={20} className="text-accent-dark" aria-hidden="true" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-bold text-sm md:text-base text-primary leading-snug group-hover:text-accent-dark transition-colors">{s.titulo}</h3>
+                  <p className="text-sm text-text-secondary leading-relaxed mt-1">{s.descripcion}</p>
+                </div>
+              </>
+            );
+            return servicioHref ? (
+              <Link
+                key={i}
+                href={servicioHref}
+                className="group flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5 hover:border-accent/40 transition-colors"
+              >
+                {inner}
+              </Link>
+            ) : (
+              <div
+                key={i}
+                className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5"
+              >
+                {inner}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </Section>
 

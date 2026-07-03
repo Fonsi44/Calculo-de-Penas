@@ -297,6 +297,9 @@ export default async function SolicitarConsultaPage() {
               <p className="text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Dirección</p>
               <p className="text-sm font-semibold text-text leading-snug">{site.address.line1}</p>
               <p className="text-xs text-text-secondary mt-0.5">{site.address.line2}</p>
+              <a href={site.googleBusiness} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-accent-dark hover:text-primary transition-colors mt-1">
+                Ver en Google Maps <ArrowRight size={12} />
+              </a>
             </div>
             <div className="flex flex-col items-center text-center p-5 rounded-lg bg-surface border border-border/30">
               <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3 flex-shrink-0">

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description:
       'Política editorial del bufete Pineda y Asociados en Nacaome, Valle: criterios de creación, revisión y actualización de contenidos jurídicos del sitio web.',
   alternates: { canonical: '/politica-editorial' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   twitter: {
     card: 'summary_large_image',
     title: 'Política Editorial | Pineda y Asociados',

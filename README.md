@@ -109,6 +109,67 @@ Nunca compartir tokens ni secretos en chats o logs.
 
 ---
 
+## SEO / GEO / Analytics
+
+La web está optimizada para indexación (Google/Bing), búsqueda generativa
+(GEO/LLMO) y SEO local. Todo se controla desde `lib/site.ts` y variables de
+entorno (ver `.env.example`).
+
+### Indexación y metadata
+- **`app/robots.ts`**: robots dinámico AI-aware (permite GPTBot/ClaudeBot,
+  bloquea scrapers no deseados). Referencia el sitemap.
+- **`app/sitemap.ts`**: sitemap DB-driven (~220 URLs). Rutas estáticas desde
+  `data/seo/canonical-paths.json`, categorías y posts desde la DB.
+- **Canonical absoluto** por página + `metadataBase` global.
+- **`public/llms.txt`** + generador (`scripts/generate-llms-txt.mjs`, corre en
+  `postbuild`): resumen del despacho para modelos de IA.
+- **RSS feed**: `/blog/feed.xml`.
+
+### Schema.org (JSON-LD)
+Inyectado vía layout público y páginas: `LegalService`/`LocalBusiness`/`Attorney`,
+`Organization`, `WebSite`, `Person` (3 abogados), `WebPage`, `BreadcrumbList`,
+`FAQPage`, `Service`, `BlogPosting` (con `wordCount` y `articleSection`),
+`ItemList`, `AggregateRating` (solo con reseñas reales de Google).
+
+### Variables de entorno (opcionales, ver `.env.example`)
+
+| Variable | Descripción |
+|----------|-------------|
+| `NEXT_PUBLIC_GA_ID` | GA4 (formato G-XXXX). Si no hay GTM, se carga gtag.js directo. |
+| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (GTM-XXXX). Si se setea, reemplaza gtag.js. |
+| `NEXT_PUBLIC_FB_PIXEL_ID` | Facebook Pixel. Solo activar con consentimiento de cookies. |
+| `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity (cargado vía snippet, no npm). |
+| `NEXT_PUBLIC_SOCIAL_FACEBOOK` / `_INSTAGRAM` / `_LINKEDIN` / `_YOUTUBE` / `_TIKTOK` / `_X` | Perfiles sociales reales. Alimentan `sameAs` en schemas y el footer. Vacío = sin perfil. |
+| `NEXT_PUBLIC_GOOGLE_VERIFICATION` / `NEXT_PUBLIC_BING_VERIFICATION` | Verificación de Search Console / Bing WMT. |
+| `NEXT_PUBLIC_NOINDEX` | `true` = noindex global (staging). |
+
+### Consentimiento y privacidad
+- **Google Consent Mode v2** activo por defecto: cookies denegadas hasta
+  consentimiento explícito. Las mediciones sin cookies siguen funcionando.
+- Cumple GDPR/ePrivacy para tráfico europeo (`/hondurenos-en-espana`).
+
+### Dependiente de hosting / externos (no código)
+
+| Item | Estado / Acción manual |
+|------|------------------------|
+| **HTTP/2** | Activo por defecto en Vercel. Si se migra de hosting, verificar. |
+| **Compresión gzip/brotli** | Activa en el edge de Vercel/CDN por defecto. |
+| **HSTS** | Configurado en `next.config.ts` (producción). |
+| **Google Business Profile** | Verificar y enlazar perfil real en `lib/site.ts` (`googleBusiness`). |
+| **Perfiles sociales reales** | Setear `NEXT_PUBLIC_SOCIAL_*` cuando existan. |
+| **DMARC/SPF** | Gestionar en el proveedor de DNS (no código). |
+
+---
+
+## Configuración de imágenes
+
+- **Formatos**: AVIF + WebP (`next/image` optimiza automáticamente).
+- **Fuente única de paths**: `data/images.ts` (`getCorporateImage`,
+  `getServiceImage`, `getFounderImage`, etc.).
+- Imágenes locales en `public/images/`; OG images en `public/og/`.
+
+---
+
 ## Pendientes actuales
 
 ### Humanos (Jul 2026)

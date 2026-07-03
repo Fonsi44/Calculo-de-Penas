@@ -25,7 +25,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { GoogleReviews } from '@/components/marketing/google-reviews';
-import { MapEmbed } from '@/components/marketing/map-embed';
+import { MapEmbedLazy as MapEmbed } from '@/components/marketing/map-embed-lazy';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { getFeaturedLandings } from '@/data/landings-locales';
 import { CoverageCityGrid } from '@/components/marketing/coverage-city-card';
@@ -581,6 +581,16 @@ export default async function HomePage() {
           align="center"
         />
         <CoverageCityGrid cities={featuredCoverage} />
+        {/* Enlace a hub de hondureños residentes en España: audiencia
+            internacional que no conoce el despacho en persona. Internal
+            linking para evitar que la página quede huérfana de la home. */}
+        <p className="text-center text-sm text-text-secondary mt-6">
+          ¿Reside en España y necesita tramites legales en Honduras?{' '}
+          <Link href="/hondurenos-en-espana" className="text-accent-dark hover:text-primary underline font-semibold">
+            Atención jurídica para hondureños en España
+          </Link>{' '}
+          — poderes a distancia, apostilla y herencias transfronterizas.
+        </p>
       </Section>
 
       {/* PREGUNTAS FRECUENTES — FAQ con schema FAQPage.

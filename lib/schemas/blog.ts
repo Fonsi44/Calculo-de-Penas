@@ -1,4 +1,5 @@
 import { site, absoluteUrl } from '../site';
+import { stripHtml } from '../strip-html';
 import type { Post } from '@/data/blog/types';
 
 /**
@@ -31,6 +32,11 @@ export function blogPostSchema(post: Post) {
   // se mantiene ese Person con su nombre.
   const isOrgAuthor = !post.author || post.author === site.name;
   const authorId = CATEGORY_TO_AUTHOR_ID[post.category] ?? `${site.url}/#founder`;
+  // Recuento de palabras del cuerpo (texto plano sin HTML) para Article schema.
+  // Google recomienda `wordCount` en contenido YMYL; ayuda a clasificar depth.
+  // stripHtml (sanitize-html) en vez de regex: maneja tags anidados y entidades.
+  const plainBody = post.body ? stripHtml(post.body) : '';
+  const wordCount = plainBody ? plainBody.trim().split(/\s+/).filter(Boolean).length : 0;
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -61,9 +67,9 @@ export function blogPostSchema(post: Post) {
     image: post.coverImage
       ? `${site.url}${post.coverImage}`
       : `${site.url}/og-image.webp`,
-    articleBody: post.body
-      ? post.body.replace(/<[^>]*>/g, '').substring(0, 5000)
-      : undefined,
+    articleBody: plainBody.substring(0, 5000) || undefined,
+    articleSection: post.category,
+    ...(wordCount > 0 ? { wordCount } : {}),
     inLanguage: 'es-HN',
   };
 }

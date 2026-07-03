@@ -8,6 +8,8 @@
  * página; este módulo no renderiza nada por sí mismo.
  */
 
+import { stripHtml } from '../strip-html';
+
 import { site, absoluteUrl } from '../site';
 import type { FaqItem } from '../../data/areas-juridicas';
 
@@ -61,16 +63,10 @@ export function serviceSchema(input: ServiceSchemaInput) {
  * HTML más comunes (&amp; &lt; &gt; &quot; &#39; &nbsp;) y colapsa espacios.
  */
 function toPlainText(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#0?39;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  // Delegado a lib/strip-html (sanitize-html): más robusto que el regex
+  // manual, decodifica todas las entidades HTML (no solo las comunes) y
+  // maneja tags anidados correctamente.
+  return stripHtml(html);
 }
 
 export function faqPageSchema(faqs: FaqItem[], url: string) {

@@ -138,6 +138,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       />
       <AnalyticsScripts
         gaId={site.gaId}
+        gtmId={site.gtmId}
+        fbPixelId={site.fbPixelId}
         clarityId={site.clarityId}
       />
     </div>

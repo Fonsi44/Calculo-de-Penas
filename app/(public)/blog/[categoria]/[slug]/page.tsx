@@ -11,6 +11,7 @@ import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/b
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site } from '@/lib/site';
 import { BlogTOC } from '@/components/blog/blog-toc';
+import { injectHeadingIds } from '@/lib/blog-toc';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
@@ -314,7 +315,11 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
-  const articleHtml = injectMidArticleCta(post.body, post.slug);
+  // Inyecta CTA mid-article y luego asigna IDs estables a los H2/H3 del body
+  // (server-side) para que el TOC y los fragment anchors (#section) existan en
+  // el HTML servidor (SEO/GEO: crawlers y LLMs ven la estructura del doc).
+  const rawHtml = injectMidArticleCta(post.body, post.slug);
+  const { html: articleHtml, headings } = injectHeadingIds(rawHtml);
   const faqItems = extractFAQSchema(post.body);
   const faqLd = faqPageSchema(faqItems);
 
@@ -408,7 +413,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
             <div className="min-w-0">
               <article>
-                <BlogTOC />
+                <BlogTOC headings={headings} />
                 <div className="article-body" dangerouslySetInnerHTML={{ __html: articleHtml }} />
 
                 {/* Tags */}

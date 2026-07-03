@@ -48,9 +48,23 @@ const nextConfig: NextConfig = {
    *   - deviceSizes estándar: móvil (640w), tablet (1080w), desktop (1920w).
    */
   images: {
-    formats: ['image/webp'],
+    // AVIF (30-50% más ligero que WebP) primero; fallback a WebP.
+    // Ambos soportados por los navegadores del browserslist (not safari < 15).
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 1080, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
+  },
+  experimental: {
+    // Tree-shaking de importaciones nombradas en librerías grandes.
+    // lucide-react se importa masivamente; tiptap/recharts solo en admin pero
+    // esto garantiza que el bundle público no arrastre iconos sin usar.
+    optimizePackageImports: [
+      'lucide-react',
+      'recharts',
+      '@tiptap/react',
+      '@tiptap/core',
+      '@tiptap/starter-kit',
+    ],
   },
   // Nota: `X-Frame-Options` se fuerza a DENY por seguridad en la mayor parte del sitio.
   // Para el proxy del editor visual necesitamos permitir framing same-origin,
@@ -81,6 +95,8 @@ const nextConfig: NextConfig = {
       { source: '/areas-de-practica', destination: '/servicios-juridicos', permanent: true },
       { source: '/areas-de-practica/:path*', destination: '/servicios-juridicos/:path*', permanent: true },
       { source: '/derecho-penal-hondureno', destination: '/derecho-penal', permanent: true },
+      // /proceso-penal es una versión antigua y obsoleta. La página canónica
+      // actual es /derecho-penal; el 301 conserva link equity hacia ella.
       { source: '/proceso-penal', destination: '/derecho-penal', permanent: true },
       { source: '/faq', destination: '/preguntas-frecuentes', statusCode: 301 },
       { source: '/contacto', destination: '/solicitar-consulta', permanent: true },
@@ -240,11 +256,21 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
-      // Cache estático: imágenes, fuentes, JS/CSS build de Next.js
+      // Cache estático de assets de build de Next.js (/_next/*) con hash en
+      // el nombre: seguros de cachear 1 año inmutable.
       {
-        source: '/:path(.+\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2?|ttf|js|css))',
+        source: '/_next/:path(.+\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2?|ttf|js|css))',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      // Assets estables en /public (favicons, iconos PWA): cache moderado.
+      // Archivos mutables (og-image, manifest, sw.js, llms.txt, robots, sitemap)
+      // quedan fuera para permitir actualización inmediata.
+      {
+        source: '/:path(icon-\\d+\\.png|apple-touch-icon\\.png|favicon\\.ico)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=604800' },
         ],
       },
       // Regla por defecto para el resto de rutas

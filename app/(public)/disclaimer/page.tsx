@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre la calculadora de penas, contenidos publicados y servicios legales.',
   alternates: { canonical: '/disclaimer' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   twitter: {
     card: 'summary_large_image',
     title: 'Disclaimer | Pineda y Asociados',

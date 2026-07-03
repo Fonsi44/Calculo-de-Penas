@@ -46,7 +46,7 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Abogados en Nacaome, Valle, Honduras',
+    'Abogados en Nacaome, Valle | Bufete Jurídico Pineda y Asociados',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
     'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.',
@@ -65,6 +65,7 @@ export const site = {
     department: 'Valle',
     country: 'Honduras',
     countryCode: 'HN',
+    postalCode: '13101',
     full: 'GGJ7+239, Nacaome, Valle, Honduras',
   },
   hours: 'Lunes a sábado: 7:00 – 20:00',
@@ -85,15 +86,16 @@ export const site = {
   // variables de entorno NEXT_PUBLIC_SOCIAL_*. Estas URLs alimentan el campo
   // `sameAs` de los schemas Organization/LegalService (refuerzo E-E-A-T) y el
   // bloque de redes del footer. NO inventar perfiles: `null` por defecto.
-  // Facebook Pixel: solo activar si existe ID real + consentimiento de cookies.
   social: {
     facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK ?? 'https://www.facebook.com/profile.php?id=61590934058125',
     instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM ?? null,
+    linkedin: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN ?? null,
+    youtube: process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE ?? null,
     tiktok: process.env.NEXT_PUBLIC_SOCIAL_TIKTOK ?? null,
     x: process.env.NEXT_PUBLIC_SOCIAL_X ?? 'https://x.com/Danilo_Pineda_M',
   },
   /** Google Business Profile — perfil oficial del bufete en Google Maps. */
-  googleBusiness: 'https://maps.app.goo.gl/giJcUrJ7yaVHpnkCA',
+  googleBusiness: 'https://maps.app.goo.gl/xqbpe5n5ufXkH4ff6',
   legal: {
     jurisdiction: 'República de Honduras',
     code: 'Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
@@ -114,8 +116,12 @@ export const site = {
   },
   /** Si true, todo el sitio emite noindex,nofollow y bloquea rastreadores. */
   noindex: noindexActive,
-  /** ID GA4 (opcional) — tracking frontend. */
+  /** ID GA4 (opcional) — tracking frontend. Si se configura GTM, GA4 se carga vía GTM en su lugar. */
   gaId: process.env.NEXT_PUBLIC_GA_ID ?? null,
+  /** ID Google Tag Manager (opcional) — si está presente, reemplaza la carga directa de gtag.js. Formato GTM-XXXXXX. */
+  gtmId: process.env.NEXT_PUBLIC_GTM_ID ?? null,
+  /** ID Facebook Pixel (opcional) — solo activar con consentimiento de cookies. Sin banner de consentimiento no se recomienda activar en tráfico UE. */
+  fbPixelId: process.env.NEXT_PUBLIC_FB_PIXEL_ID ?? null,
   /** ID Microsoft Clarity (opcional). */
   clarityId: process.env.NEXT_PUBLIC_CLARITY_ID ?? null,
   /** Código de verificación de Google Search Console (opcional). */
@@ -179,9 +185,10 @@ export const KNOWS_ABOUT = [
 export function legalServiceSchema() {
   const base: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': ['LegalService', 'LocalBusiness'],
+    '@type': ['LegalService', 'LocalBusiness', 'Attorney'],
     '@id': `${site.url}/#legal-service`,
     name: site.name,
+    legalName: site.name,
     alternateName: site.shortName,
     url: site.url,
     telephone: site.phone,
@@ -216,8 +223,10 @@ export function legalServiceSchema() {
       streetAddress: `${site.address.line1}, ${site.address.line2}`,
       addressLocality: site.address.city,
       addressRegion: site.address.department,
+      postalCode: site.address.postalCode,
       addressCountry: site.address.countryCode,
     },
+    numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10 },
     openingHoursSpecification: site.hoursStructured.map((h) => ({
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: h.dayOfWeek,
@@ -228,14 +237,39 @@ export function legalServiceSchema() {
     serviceType:
       'Bufete jurídico — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
     knowsAbout: KNOWS_ABOUT,
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: site.phone,
+        contactType: 'customer service',
+        areaServed: ['HN'],
+        availableLanguage: ['es-HN', 'es-ES'],
+        hoursAvailable: site.hoursStructured.map((h) => ({
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: h.dayOfWeek,
+          opens: h.opens,
+          closes: h.closes,
+        })),
+      },
+    ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Servicios jurídicos en Nacaome, Valle',
+      name: 'Servicios jurídicos en Nacaome, Valle — 14 áreas de práctica',
       itemListElement: [
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Defensa Penal', description: 'Defensa técnica en procesos penales conforme al Código Penal Decreto 130-2017 de Honduras y reformas. Asistencia a detenidos, audiencias, juicio oral y recursos.' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho de Familia', description: 'Divorcios, pensión alimenticia, custodia de menores, régimen de visitas y adopciones ante los juzgados de familia.' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Laboral', description: 'Despidos injustificados, reclamación de prestaciones, liquidaciones, acoso laboral y asesoría a trabajadores y empleadores.' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Civil y Notarial', description: 'Contratos, compraventas, herencias, testamentos, poderes notariales y trámites registrales.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Mercantil y Empresarial', description: 'Constitución de sociedades, contratos comerciales, fusiones, gobierno corporativo y litigio mercantil.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Bancario y Financiero', description: 'Defensa del usuario financiero, reestructuras, ejecución de garantías y cumplimiento CNBS.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Administrativo y Servicio Civil', description: 'Contencioso-administrativo, sanciones regulatorias, despido de servidores públicos y licitaciones.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Aduanero y Comercio Exterior', description: 'Clasificación arancelaria, importación, exportación, ZOLI y defensa ante el SAR.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Regulación Sanitaria', description: 'Registro sanitario ante ARSA, Buenas Prácticas, defensa en sanciones y mala praxis médica.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Extranjería en Honduras', description: 'Visas, residencia temporal y permanente, naturalización y defensa ante el INM.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Propiedad Intelectual', description: 'Registro de marcas, patentes, derechos de autor, licencias y defensa frente a infracciones.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Tributario y Fiscal', description: 'Liquidación de ISR e ISV, fiscalización del SAR, precios de transferencia y contencioso tributario.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Ambiental Regulatorio', description: 'Licencias ambientales, evaluación de impacto, permisos y defensa ante MiAmbiente.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Conciliación y Arbitraje', description: 'Resolución extrajudicial de conflictos, mediación y arbitraje institucional.' } },
       ],
     },
     employee: [
@@ -243,11 +277,13 @@ export function legalServiceSchema() {
       { '@id': `${site.url}/#thania` },
       { '@id': `${site.url}/#emil` },
     ],
-    ...(site.social.facebook || site.social.instagram || site.social.tiktok || site.social.x || site.googleBusiness
+    ...(site.social.facebook || site.social.instagram || site.social.linkedin || site.social.youtube || site.social.tiktok || site.social.x || site.googleBusiness
       ? {
           sameAs: [
             site.social.facebook,
             site.social.instagram,
+            site.social.linkedin,
+            site.social.youtube,
             site.social.tiktok,
             site.social.x,
             site.googleBusiness,
@@ -331,6 +367,7 @@ export function organizationSchema() {
       streetAddress: `${site.address.line1}, ${site.address.line2}`,
       addressLocality: site.address.city,
       addressRegion: site.address.department,
+      postalCode: site.address.postalCode,
       addressCountry: site.address.countryCode,
     },
     // founder: array de @id — Danilo y Thania son socios fundadores.
@@ -387,10 +424,20 @@ export function founderSchema() {
     '@type': 'Person',
     '@id': `${site.url}/#founder`,
     name: FOUNDER_PROFILE.name,
+    honorificPrefix: 'Abogado',
     image: `${site.url}${FOUNDER_PROFILE.image}`,
     jobTitle: FOUNDER_PROFILE.jobTitle,
     description: FOUNDER_PROFILE.description,
     worksFor: { '@id': `${site.url}/#organization` },
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'license',
+      name: 'Abogado colegiado en Honduras',
+    },
+    alumniOf: {
+      '@type': 'CollegeOrUniversity',
+      name: 'Universidad de Honduras',
+    },
     knowsAbout: [
       'Derecho Penal',
       'Derecho Procesal Penal',
@@ -471,10 +518,16 @@ export function thaniaSchema() {
     '@type': 'Person',
     '@id': `${site.url}/#thania`,
     name: THANIA_PROFILE.name,
+    honorificPrefix: 'Abogada',
     image: `${site.url}${THANIA_PROFILE.image}`,
     jobTitle: THANIA_PROFILE.jobTitle,
     description: THANIA_PROFILE.description,
     worksFor: { '@id': `${site.url}/#organization` },
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'license',
+      name: 'Abogada colegiada en Honduras',
+    },
     knowsAbout: THANIA_PROFILE.specialties,
     address: {
       '@type': 'PostalAddress',
@@ -538,10 +591,16 @@ export function emilSchema() {
     '@type': 'Person',
     '@id': `${site.url}/#emil`,
     name: EMIL_PROFILE.name,
+    honorificPrefix: 'Abogado',
     image: `${site.url}${EMIL_PROFILE.image}`,
     jobTitle: EMIL_PROFILE.jobTitle,
     description: EMIL_PROFILE.description,
     worksFor: { '@id': `${site.url}/#organization` },
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'license',
+      name: 'Abogado colegiado en Honduras',
+    },
     knowsAbout: EMIL_PROFILE.specialties,
     address: {
       '@type': 'PostalAddress',

@@ -11,6 +11,7 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { getFaqsForPublicPage, type FaqCategoryPublic } from '@/lib/faq-db';
 import { faqPageSchema } from '@/lib/schemas/legal-page';
+import { stripHtml } from '@/lib/strip-html';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
@@ -167,9 +168,9 @@ const FAQ_CLUSTERS: FaqCluster[] = [
   },
   {
     id: 'atencion-local-y-tramites',
-    title: 'Atencion local y tramites frecuentes',
+    title: 'Atención local y trámites frecuentes',
     quickAnswer:
-      'La atencion local en Nacaome, Choluteca y San Lorenzo facilita diligencias urgentes, coordinacion con juzgados y seguimiento documental oportuno. En tramites frecuentes, preparar requisitos desde el inicio reduce retrasos y rechazos. La prioridad siempre es ejecutar pasos concretos, verificables y adecuados al tipo de asunto.',
+      'La atención local en Nacaome, Choluteca y San Lorenzo facilita diligencias urgentes, coordinación con juzgados y seguimiento documental oportuno. En trámites frecuentes, preparar requisitos desde el inicio reduce retrasos y rechazos. La prioridad siempre es ejecutar pasos concretos, verificables y adecuados al tipo de asunto.',
     categorySlugs: [],
   },
 ];
@@ -227,10 +228,12 @@ export default async function FaqPage() {
   const flatFaqs = categoriasFaq.flatMap((c) =>
     c.preguntas.map((p) => ({
       pregunta: p.pregunta,
-      respuesta: p.respuesta.replace(/<[^>]*>/g, ''),
+      // stripHtml (sanitize-html) en vez de regex: decodifica entidades y
+      // maneja tags anidados correctamente para el FAQPage schema.
+      respuesta: stripHtml(p.respuesta),
     })),
   );
-  const flatFaqsForSchema = flatFaqs.slice(0, 40);
+  const flatFaqsForSchema = flatFaqs;
 
   return (
     <>

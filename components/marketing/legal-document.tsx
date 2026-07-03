@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { AlertTriangle, ShieldCheck } from 'lucide-react';
 import { PageHero } from '@/components/marketing/page-hero';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { Section, Container } from '@/components/marketing/section';
 import { cn } from '@/lib/ui';
 
@@ -42,6 +43,10 @@ export function LegalDocument({
 }: LegalDocumentProps) {
   return (
     <>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: eyebrow },
+      ]} />
       <PageHero
         eyebrow={eyebrow}
         title={title}

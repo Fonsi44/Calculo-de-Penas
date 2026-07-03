@@ -278,6 +278,13 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
     ],
     geo: { lat: 13.58, lng: -87.73 },
+    // Posts de la región de Valle (Nacaome, sede) relevantes para Goascorán.
+    // La ciudad no tiene post dedicado propio; estos slugs ya existen en DB y
+    // son aplicables a toda la zona sur del departamento de Valle.
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-nacaome', titulo: 'Abogados en Nacaome: cómo elegir el despacho adecuado' },
+      { categoria: 'practica-legal', slug: 'tramites-legales-nacaome', titulo: 'Trámites legales en Nacaome, Valle' },
+    ],
   },
   {
     slug: 'pespire',

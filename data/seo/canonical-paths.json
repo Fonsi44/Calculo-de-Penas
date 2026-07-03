@@ -1,8 +1,8 @@
 {
-  "_comment": "Fuente única de verdad (Jun 2026) para las rutas públicas ESTÁTICAS del sitio. La consume app/sitemap.ts (para PUBLIC_ROUTES) y scripts/submit-indexnow.mjs (catálogo IndexNow). Cualquier nueva página pública estática debe añadirse aquí. NO incluir rutas dinámicas (posts del blog, categorías dinámicas) — ésas se derivan en runtime desde la DB vía sitemap.ts. NO incluir rutas privadas (intranet, api, calculadora, casos, cp, delitos, atajos, preview, login) — bloqueadas en robots.ts y excluidas en submit-indexnow.mjs. Mantener en orden alfabético aproximado por prioridad. Sitemap reportado (Bing 2026-06-23): 202 URLs (38 estáticas + 20 categorías + ~159 posts). El techo de envío IndexNow es 212 (202 + 10 de margen) por defecto.",
-  "version": 1,
-  "sitemap_observed_count": 214,
-  "indexnow_safety_cap": 224,
+  "_comment": "Fuente única de verdad (Jun 2026) para las rutas públicas ESTÁTICAS del sitio. La consume app/sitemap.ts (para PUBLIC_ROUTES) y scripts/submit-indexnow.mjs (catálogo IndexNow). Cualquier nueva página pública estática debe añadirse aquí. NO incluir rutas dinámicas (posts del blog, categorías dinámicas) — ésas se derivan en runtime desde la DB vía sitemap.ts. NO incluir rutas privadas (intranet, api, calculadora, casos, cp, delitos, atajos, preview, login) — bloqueadas en robots.ts y excluidas en submit-indexnow.mjs. Mantener en orden alfabético aproximado por prioridad. Sitemap reportado (Bing 2026-06-23): 202 URLs (38 estáticas + 20 categorías + ~159 posts). El techo de envío IndexNow es 212 (202 + 10 de margen) por defecto. Actualizado Jul 2026: noindex aplicado a páginas legales; /proceso-penal eliminado (obsoleto, redirect a /derecho-penal).",
+  "version": 2,
+  "sitemap_observed_count": 208,
+  "indexnow_safety_cap": 218,
   "static_routes": [
     {
       "path": "/",
@@ -154,42 +154,7 @@
       "change_frequency": "weekly",
       "days_ago": 0
     },
-    {
-      "path": "/aviso-legal",
-      "priority": 0.4,
-      "change_frequency": "monthly",
-      "days_ago": 0
-    },
-    {
-      "path": "/politica-editorial",
-      "priority": 0.2,
-      "change_frequency": "monthly",
-      "days_ago": 0
-    },
-    {
-      "path": "/politica-privacidad",
-      "priority": 0.2,
-      "change_frequency": "monthly",
-      "days_ago": 0
-    },
-    {
-      "path": "/politica-cookies",
-      "priority": 0.2,
-      "change_frequency": "monthly",
-      "days_ago": 0
-    },
-    {
-      "path": "/terminos",
-      "priority": 0.2,
-      "change_frequency": "monthly",
-      "days_ago": 0
-    },
-    {
-      "path": "/disclaimer",
-      "priority": 0.2,
-      "change_frequency": "monthly",
-      "days_ago": 0
-    },
+
     {
       "path": "/servicios-juridicos/derecho-de-familia",
       "priority": 0.5,

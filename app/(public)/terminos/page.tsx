@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description:
       'Términos y condiciones de uso del sitio web de Pineda y Asociados en Nacaome, Valle. Reglas de acceso y uso de servicios jurídicos publicados.',
   alternates: { canonical: '/terminos' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   twitter: {
     card: 'summary_large_image',
     title: 'Términos y Condiciones | Pineda y Asociados',

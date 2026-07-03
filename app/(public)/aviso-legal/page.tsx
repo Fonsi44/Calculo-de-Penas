@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Aviso legal e identificación del titular del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle, Honduras.',
   alternates: { canonical: '/aviso-legal' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   twitter: {
     card: 'summary_large_image',
     title: 'Aviso Legal | Pineda y Asociados',

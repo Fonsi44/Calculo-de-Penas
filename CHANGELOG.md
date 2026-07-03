@@ -6,6 +6,74 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-03 — seo/perf/geo: auditoría completa y mejoras técnicas (Release 99)
+
+Auditoría integral de la web pública tras informe SEO externo. La
+infraestructura ya cubría ~90% de las recomendaciones; este release cierra los
+**gaps genuinos** detectados en performance, SEO técnico, contenido y seguridad.
+
+### Performance
+- **AVIF** añadido a `images.formats` (antes solo WebP): 30-50% más ligero.
+- **`experimental.optimizePackageImports`** para lucide-react, recharts, tiptap
+  (mejor tree-shaking del bundle cliente).
+- **`playwright` movido a `devDependencies`** (bajaba navegador headless en
+  `npm install` de producción).
+- **`RootShell`** pasado a Server Component (era `'use client'` innecesario,
+  forzaba hidratación de todo el árbol público).
+- **Clarity** migrado de paquete npm a snippet oficial vía `next/script` (no
+  infla el bundle JS inicial).
+- **`MapEmbed`** lazy-loaded con `dynamic(ssr:false)` (iframe de Google Maps
+  solo carga tras hidratación, no en first paint de la home).
+- **`<img>` de `/despacho`** migrados a `next/image` (evita CLS).
+- **`viewport.colorScheme: ['light','dark']`** y `preconnect` a Clarity.
+
+### SEO técnico
+- **`wordCount` + `articleSection`** en BlogPosting schema (recomendado Google).
+- **TOC del blog server-rendered**: IDs estables en H2/H3 inyectados en SSR vía
+  `lib/blog-toc.ts`; antes se generaban en `useEffect` (invisibles para
+  crawlers/LLMs, sin fragment anchors en SERP).
+- **Páginas legales** (`/aviso-legal`, `/terminos`, `/politica-*`, `/disclaimer`)
+  marcadas `noindex, follow` (evita indexar boilerplate legal).
+- **`/proceso-penal`** eliminado (obsoleto); redirect 301 a `/derecho-penal`
+  conservado.
+- **404**: quitado `canonical: '/_not-found'` (canoncial a ruta técnica generaba
+  warnings en Search Console).
+- **Prioridades de categorías de blog** en sitemap: penal/familia/laboral a 0.7
+  (mayor valor comercial según GSC), resto 0.5.
+
+### Contenido / GEO
+- **Tildes corregidas** en `urgentFaq` de derecho-penal y `FAQ_CLUSTERS` de
+  preguntas-frecuentes (afecta a LLMs y algoritmos de lenguaje).
+- **`urgentFaq`** añadida al FAQPage schema de derecho-penal (antes quedaba fuera
+  del JSON-LD).
+- **Enlace a `/hondurenos-en-espana`** desde la home (antes era página huérfana).
+- **Sección editorial** (~250 palabras) en `/hondurenos-en-espana` cubriendo
+  entidades (apostilla, poder notarial a distancia, homologación de sentencia).
+- **Párrafo introductorio** en `/servicios-juridicos` con entidades por especialidad.
+- **Honeypot antispam** en formulario de consulta (campo `website` oculto).
+
+### Seguridad / UX
+- **`stripHtml` centralizado** (sanitize-html) reemplaza regex `/<[^>]*>/g` en
+  schemas FAQ/BlogPosting: maneja tags anidados y decodifica entidades.
+- **Google Consent Mode v2** añadido (GDPR/ePrivacy para tráfico europeo).
+- **Cache headers** restringidos a `/_next/*` (antes cacheaban `sw.js`,
+  `manifest.json`, `llms.txt` por 1 año inmutable).
+- **Servicios de landings locales** convertidos en enlaces a
+  `/servicios-juridicos/{slug}` (cierra el clúster temático ciudad×área).
+- **Goascorán**: añadido `postsRelacionados` (única ciudad sin enlazado blog).
+
+### Analytics
+- **GTM opcional** (`NEXT_PUBLIC_GTM_ID`): si se configura, reemplaza gtag.js.
+- **Facebook Pixel opcional** (`NEXT_PUBLIC_FB_PIXEL_ID`), env-gated.
+- **Perfiles sociales configurables** por env (Instagram, LinkedIn, YouTube, X,
+  TikTok) en `lib/site.ts`; alimentan `sameAs` en schemas.
+
+### Validación
+- `npm run lint` ✓ · `npm run build` ✓ · `npm test` 730/730 ✓
+- No se ha hecho push (protocolo §1.10).
+
+---
+
 ## 2026-07-03 — seo: expansion IA de thin posts con verificacion legal (Release 98)
 
 `blog:verify-fix` ejecutado en ~90+ posts con DeepSeek IA. 0 alucinaciones, 0

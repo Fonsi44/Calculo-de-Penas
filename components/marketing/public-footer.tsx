@@ -191,6 +191,14 @@ export function PublicFooter() {
                   Enviar correo
                 </a>
               </li>
+              <li className="flex items-center gap-2">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" className="text-accent flex-shrink-0" aria-hidden="true">
+                  <path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6 11 6 11s6-5.75 6-11c0-4.42-3.58-8-8-8zm0 12.5c-2.48 0-4.5-2.02-4.5-4.5S9.52 5.5 12 5.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z" />
+                </svg>
+                <a href={site.googleBusiness} target="_blank" rel="noopener noreferrer" className="text-text-inverse/80 hover:text-accent" aria-label={`Perfil de Google Business de ${site.name}`}>
+                  Google Business Profile
+                </a>
+              </li>
               {site.social.facebook && (
                 <li className="flex items-center gap-2">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" className="text-accent flex-shrink-0" aria-hidden="true">

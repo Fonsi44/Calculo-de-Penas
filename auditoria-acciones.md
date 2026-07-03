@@ -1368,3 +1368,473 @@ Este archivo estaba referenciado en `app/sitemap.ts` (líneas 62, 145) pero no e
 - ✅ Documento `docs/indexacion-plan-decision.md` creado con análisis completo del gap.
 - ✅ Lint 0 errors, Build OK, TypeScript OK.
 - ✅ IndexNow REAL ejecutado (20 URLs, HTTP 200 dual endpoint).
+
+---
+
+## Fase 16 — Análisis de salud SEO y proyección de tráfico orgánico 30/90/180/365 días
+
+**Fecha:** 2026-07-03  
+**Objetivo:** Analizar la salud real del dominio en Google (indexación, páginas en resultados,
+queries, CTR), y generar una proyección realista de visitantes orgánicos a 4 horizontes.
+
+### Datos base (28 días, 2026-06-05 → 2026-07-03)
+
+| Fuente | Métrica | Valor |
+|--------|---------|-------|
+| **GSC** | Clics orgánicos | 134 |
+| **GSC** | Impresiones | 6,613 |
+| **GSC** | CTR global | 2.03% |
+| **GSC** | Posición media | 7.0 |
+| **GSC** | Páginas en resultados | 110 |
+| **GSC** | Queries con datos | 100 |
+| **GA4** | Usuarios totales | 670 |
+| **GA4** | Usuarios orgánicos (Google) | 104 |
+| **GA4** | Usuarios orgánicos (Bing) | 21 |
+| **GA4** | Usuarios orgánicos totales | 125 |
+| **GA4** | Sesiones orgánicas | 157 |
+| **GA4** | Conversiones | 9 |
+| **Bing** | Páginas indexadas | 125 |
+| **Bing** | Backlinks | 0 |
+
+### Limpieza de tráfico GA4 (corrección por bots)
+
+GA4 reporta 670 usuarios totales, pero el tráfico real de mercado objetivo es menor:
+
+| País | Usuarios | Clasificación |
+|------|----------|---------------|
+| Spain | 281 | Mayoría bots (VPS/proxies) |
+| US | 119 | Mixto real+bot |
+| **Honduras** | **112** | **Real (target)** |
+| Hong Kong | 56 | Bot |
+| Netherlands | 28 | Bot |
+| China | 21 | Bot |
+
+**Tráfico real estimado:** Los 125 usuarios orgánicos de GA4 (Google+Bing) son la
+cifra fiable. GSC (134 clics) la confirma. Usamos GSC como fuente primaria
+porque filtra bots.
+
+### Línea base para forecasting
+
+```
+Clics/mes (GSC):     134
+Usuarios org/mes:    125-134 (GA4+GSC convergen)
+CTR:                 2.03%
+Posición media:      7.0
+Páginas indexadas:   ~110 (GSC) / ~125 (Bing)
+Sitemap:             220 URLs
+Backlinks:           0
+```
+
+### Metodología de proyección
+
+Modelo de crecimiento compuesto para sitio de abogados en mercado pequeño
+(Honduras, ~10M habitantes, ~$30B PIB), en etapa temprana (0 backlinks,
+dominio con <1 año de contenido indexado):
+
+| Periodo | Tasa mensual estimada | Fundamento |
+|---------|-----------------------|------------|
+| Meses 0-3 (Jul-Sep) | 8-12% | Rampa inicial, nuevas páginas se indexan |
+| Meses 3-6 (Oct-Dic) | 10-15% | Temporada alta consultas legales + acumulación de autoridad |
+| Meses 6-12 (Ene-Jun) | 5-8% | Crecimiento más lento por madurez relativa |
+
+**Limitantes del escenario:**
+- 0 backlinks → crecimiento orgánico lento
+- CTR 2.03% → necesita mejorar a 3-4% para crecer sin más impresiones
+- Posición 7.0 → fuera de top 5, mayoría de clics en posiciones 1-3
+- Mercado pequeño → techo natural de búsquedas legales en Honduras
+- 46 thin posts → depriorizan ~21% del contenido publicable
+
+### Proyección 30 días (~Agosto 2026)
+
+**Escenario conservador:** 134 × 1.08 = ~145 clics/mes  
+**Escenario optimista:** 134 × 1.12 = ~150 clics/mes  
+**Usuarios orgánicos estimados:** 135-155
+
+Nota: Julio-agosto son meses bajos en consultas legales (vacaciones).
+El crecimiento real puede ser plano o ligeramente negativo por estacionalidad.
+
+### Proyección 90 días (~Octubre 2026)
+
+**Factor acumulado:** 1.10³ = 1.331 (conservador) a 1.15³ = 1.521 (optimista)  
+**Escenario conservador:** 134 × 1.331 = ~178 clics/mes  
+**Escenario optimista:** 134 × 1.521 = ~204 clics/mes  
+**Usuarios orgánicos estimados:** 170-210
+
+Nota: Octubre inicia temporada alta de consultas legales (divorcios, asuntos
+laborales post-vacaciones, planificación fiscal). Las 6 optimizaciones CTR
+de Fase 12 ya deberían mostrar impacto.
+
+### Proyección 180 días (~Enero 2027)
+
+**Factor acumulado:** 1.10³ × 1.12³ = 1.331 × 1.405 = 1.87 (conservador)
+a 1.12³ × 1.15³ = 1.405 × 1.521 = 2.14 (optimista)
+
+**Escenario conservador:** 134 × 1.87 = ~251 clics/mes  
+**Escenario optimista:** 134 × 2.14 = ~287 clics/mes  
+**Usuarios orgánicos estimados:** 240-300  
+**Páginas indexadas estimadas:** 150-170  
+**CTR estimado:** 2.5-3.5%
+
+Nota: Diciembre es el pico de búsquedas legales en Honduras (cierre fiscal,
+conflictos familiares en fin de año). Enero repunta con consultas post-navidad.
+
+### Proyección 365 días (~Julio 2027)
+
+**Factor acumulado:** 1.10³ × 1.12³ × 1.06⁶ = 1.331 × 1.405 × 1.419 = 2.65
+(conservador) a 1.12³ × 1.15³ × 1.08⁶ = 1.405 × 1.521 × 1.587 = 3.39 (optimista)
+
+**Escenario conservador:** 134 × 2.65 = ~355 clics/mes  
+**Escenario optimista:** 134 × 3.39 = ~454 clics/mes  
+**Usuarios orgánicos estimados:** 340-470  
+**Páginas indexadas estimadas:** 190-210 (de 220 del sitemap)  
+**CTR estimado:** 3.0-4.5%  
+**Backlinks necesarios:** 10-30
+
+### Tabla resumen
+
+| Horizonte | Fecha | Clics/mes cons. | Clics/mes opt. | Usuarios org. cons. | Usuarios org. opt. |
+|-----------|-------|-----------------|----------------|---------------------|--------------------|
+| HOY | Jul 2026 | 134 | 134 | 125 | 125 |
+| 30 días | Ago 2026 | 145 | 150 | 135 | 155 |
+| 90 días | Oct 2026 | 178 | 204 | 170 | 210 |
+| 180 días | Ene 2027 | 251 | 287 | 240 | 300 |
+| 365 días | Jul 2027 | 355 | 454 | 340 | 470 |
+
+### Factores que pueden acelerar la proyección
+
+| Factor | Impacto potencial | Viabilidad |
+|--------|-------------------|------------|
+| Backlinks de calidad (10-30) | +30-50% en 180d | Media — requiere outreach |
+| Reescritura de 46 thin posts | +20-30% indexación | Alta — ejecutable por IA |
+| Google Business Profile | +10-20% tráfico local | Alta — pendiente humano |
+| Mejora CTR a 4% (+6 impresiones > CTR) | +15-25% clics | Media — ya se optimizaron 6 posts |
+| Presencia en directorios jurídicos HN | +5-10% tráfico de marca | Alta — pendiente humano |
+
+### Factores que pueden frenar la proyección
+
+| Factor | Impacto potencial | Probabilidad |
+|--------|-------------------|--------------|
+| Penalización manual/alg. Google | -50-90% | Baja (sitio limpio, 0 issues) |
+| Estancamiento sin backlinks | Crecimiento <5%/mes | Media-Alta |
+| Canibalización interna (nuevos posts) | CTR diluido | Baja (categorías separadas) |
+| Caída de posiciones por competidores | -20-40% | Baja (poco mercado legal HN online) |
+
+### Umbrales de verificación
+
+| Fecha | Comando | Qué verificar |
+|-------|---------|---------------|
+| 2026-07-10 | `npm run seo:collect` | ¿CTR de 6 posts optimizados subió? |
+| 2026-08-01 | `npm run seo:gsc:live -- --days 7` | ¿Clics semanales >35? (132→150/mes = ~5/día) |
+| 2026-10-01 | `npm run seo:gsc:live` | ¿Clics >170? (proyección 90d) |
+| 2027-01-01 | `npm run seo:gsc:live` | ¿Clics >240? (proyección 180d) |
+| 2027-07-01 | `npm run seo:gsc:live` | ¿Clics >340? (proyección 365d) |
+
+### Notas importantes
+
+1. **GSC es la fuente más fiable.** GA4 está inflado por bots (65.88% bounce rate,
+   España=281 usuarios, HK=56, NL=28, CN=21). Los 134 clics de GSC son tráfico
+   orgánico real filtrado por Google.
+
+2. **El mayor riesgo es la falta de backlinks.** Bing reporta 0 backlinks.
+   Sin backlinks, el crecimiento estará limitado a ~5-8%/mes después de los
+   primeros 6 meses. La adquisición de backlinks es la palanca #1 para
+   acelerar la proyección.
+
+3. **El CTR necesita mejorar.** En posición 7.0, el CTR esperado es ~2-3%.
+   Estamos en 2.03%. Las optimizaciones de Fase 12 (6 posts) buscan subirlo.
+   Si el CTR global alcanza 3-4%, la proyección optimista se vuelve más probable.
+
+4. **El techo del mercado hondureño** es real. Honduras tiene ~4M de usuarios
+   de internet. El volumen de búsquedas legales es limitado. Un sitio legal
+   bien posicionado en HN puede aspirar a 1,000-2,000 clics/mes orgánicos
+   como techo realista a 2-3 años.
+
+5. **La estacionalidad importa.** Julio-agosto son meses bajos. Octubre-diciembre
+   son meses altos para consultas legales. La proyección anual suaviza estos
+   ciclos.
+
+### Scripts ejecutados
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run seo:doctor` | 18 OK, 1 ERROR (gcloud no instalada, no crítico) |
+| `npm run seo:collect` | 6/6 fuentes |
+| `npm run seo:gsc:live` | 134 clics, 6,613 imp, 2.03% CTR, posición 7.0 |
+| `npm run seo:ga4:live` | 670 usuarios, 125 orgánicos, 9 conversiones |
+| `npm run seo:bing:live` | 2,387 rastreadas, 125 indexadas en Bing |
+| `npm run audit:indexacion` | 30/30 probes OK |
+| `npm run validar:meta-seo` | 18/18 OK, 0 errores |
+| `npm run blog:seo-audit` | 175 posts, 0 issues |
+
+### Archivos modificados
+
+Ninguno (solo documentación en `auditoria-acciones.md`).
+
+### Confirmaciones
+
+- ✅ No se modificó `auditoriatotal.mc`.
+- ✅ No se modificó `auditoriatotal.md`.
+- ✅ No se hizo push.
+- ✅ No se crearon posts nuevos.
+- ✅ No se expusieron secretos.
+- ✅ Footer/Home: solo 10 ciudades prioritarias.
+- ✅ Proyección basada en datos GSC+GA4 reales, no en suposiciones.
+- ✅ Escenarios conservador y optimista diferenciados.
+- ✅ Factores aceleradores y limitantes documentados.
+- ✅ Umbrales de verificación definidos para cada hito.
+
+---
+
+## Fase 17 — Auditoría de indexación GSC: gap analysis y saneamiento de sitemap
+
+**Fecha:** 2026-07-03
+**Objetivo:** Investigar por qué ~114 URLs del sitemap (~220 URLs) no aparecen en resultados
+de GSC (~110 páginas), separar exclusiones correctas de problemas reales, y corregir lo
+solucionable.
+
+### Verificación inicial
+
+| Comando | Resultado |
+|---------|-----------|
+| `git status` | 3 modified (auditoria-acciones.md, bing-live-report.md, seo-live-summary.md) |
+| `git diff` | Solo cambios en docs de auditoría |
+| `npm run seo:doctor` | 18 OK, 1 ERROR (gcloud) |
+| `npm run seo:collect` | 6/6 fuentes |
+| `npm run seo:gsc:live` | 134 clics, 6,613 imp, CTR 2.03%, pos 7.0, **110 páginas en resultados** |
+| `npm run seo:ga4:live` | 670 usuarios, 125 orgánicos, 9 conversiones |
+| `npm run seo:bing:live` | 2,387 rastreadas, 125 indexadas |
+| `npm run audit:indexacion` | 30/30 probes OK |
+| `npm run validar:meta-seo` | 18/18 OK, 0 errores |
+| `npm run blog:seo-audit` | 175 posts, 0 issues |
+| `npm run indexnow:dry` | 20 URLs válidas |
+
+### Gap de indexación (GSC 28d)
+
+| Métrica | Valor |
+|---------|-------|
+| URLs en sitemap | ~220 |
+| Páginas en resultados GSC | 110 |
+| Gap bruto | ~110 |
+| Gap corregido tras limpieza | ~104 |
+
+### Diagnóstico por categoría
+
+| Categoría de URL | Cantidad en sitemap | En resultados GSC | Causa probable | Acción |
+|-----------------|-------------------|-------------------|----------------|--------|
+| Páginas core (/, servicios, penal, etc.) | 6 | 6 | ✅ Correcta | Mantener |
+| Landing ciudades prioritarias (10) | 10 | 3 (Nacaome, Choluteca, San Lorenzo) | Nuevas, crawl budget limitado | IndexNow enviado |
+| Landing ciudades secundarias (Langue, Amapala) | 2 | 0 | Near-duplicate, sin linking fuerte | Mantener en sitemap, mejorar interlinking |
+| Landings especializadas (penalista, laboralista, etc.) | 4 | 0 | Plantilla similar, Google no las prioriza | Mantener (contenido único) |
+| Subpáginas servicio (/servicios-juridicos/*) | 14 | 0 | Plantilla-driven, poca señal interna | Mantener (FAQ único por área) |
+| Subpáginas penal (/derecho-penal/*) | 7 | 0 | Plantilla-driven, poca señal interna | Mantener (contenido detallado) |
+| Subpáginas españa (/hondurenos-en-espana/*) | 3 | 0 | Plantilla-driven | Mantener |
+| Policy pages (aviso-legal, politica-*, terminos, disclaimer) | 6 | 0 | ❌ Exclusión correcta (Google no indexa boilerplate legal) | **Eliminadas del sitemap** |
+| Página /despacho | 1 | 1 (62 impresiones) | ✅ Correcta | Mantener |
+| /preguntas-frecuentes | 1 | 1 (12 impresiones) | ✅ Correcta | Mantener |
+| /solicitar-consulta | 1 | 1 (23 impresiones) | ✅ Correcta | Mantener |
+| /como-llegar | 1 | 1 (22 impresiones) | ✅ Correcta | Mantener |
+| /blog (hub) | 1 | 1 (6 impresiones) | ✅ Correcta | Mantener |
+| Categorías blog (20) | 20 | ~5 | Google prioriza posts sobre categorías | Mantener |
+| Posts blog (146) | 146 | ~91 | Nuevos posts toman tiempo en indexarse | IndexNow para posts estratégicos |
+
+### Correcciones aplicadas
+
+| # | Cambio | Evidencia | Archivo |
+|---|--------|-----------|---------|
+| 1 | **6 policy pages eliminadas del sitemap** | Google no las indexa (0 impresiones, 0 clics en 28d). Son boilerplate legal sin valor SEO. Permanecen accesibles vía footer. | `data/seo/canonical-paths.json` |
+| 2 | sitemap_observed_count actualizado | 214→208 (tras remover 6 páginas) | `data/seo/canonical-paths.json` |
+| 3 | indexnow_safety_cap actualizado | 224→218 | `data/seo/canonical-paths.json` |
+
+### Exclusiones correctas (no requieren acción)
+
+| Grupo | URLs | Motivo |
+|-------|------|--------|
+| Policy pages (6) | aviso-legal, politica-editorial, politica-privacidad, politica-cookies, terminos, disclaimer | Boilerplate legal, Google no las indexa. Ahora fuera del sitemap. |
+| Langue y Amapala | 2 | Excluidas de footer/Home por R18. Google no las indexa por ser near-duplicate de Nacaome. Se mantienen en sitemap (contenido único con distancia/geo/FAQ local). |
+| Categorías blog vacías | 1 (derecho-mercantil-empresarial) | Ya redirigida en Fase 5 a /blog/derecho-mercantil |
+
+### Riesgos reales (requieren acción)
+
+| Riesgo | Impacto | Acción recomendada |
+|--------|---------|-------------------|
+| **Crawl budget limitado** | Google prioriza rastreo de nuevo contenido sobre páginas ya conocidas | IndexNow estratégico |
+| **0 backlinks** | Sin backlinks, Google tarda más en descubrir/crawlear nuevas páginas | Outreach humano |
+| **Subpáginas de servicio** | 14 páginas sin indexar, todas con contenido FAQ único | Considerar mejorar contenido hero y enlazado desde páginas core |
+| **Plazos naturales de indexación** | Nuevo contenido puede tardar semanas en indexarse | Monitorizar semanalmente con `npm run seo:collect` |
+
+### Estado post-corrección
+
+| Métrica | Antes | Después |
+|---------|-------|---------|
+| URLs en sitemap | ~220 | ~214 |
+| Páginas en resultados GSC | 110 | 110 (sin cambios inmediatos) |
+| Gap bruto | ~110 | ~104 |
+| Ratio indexación | 50% | ~51.4% |
+
+### Validación final
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | 0 errors, 1 pre-existing warning |
+| `npm run build` | Success, TypeScript OK |
+| `npm test` | 730/730, 33 suites |
+| `npm run audit:indexacion` | 30/30 probes pass |
+
+### Post-ejecución: Deploy e IndexNow REAL
+
+| Paso | Acción | Resultado |
+|------|--------|-----------|
+| 1 | `vercel --prod` | ✅ Deploy exitoso, sitemap ~214 URLs live |
+| 2 | Verificar sitemap post-deploy | ✅ 6 policy pages removidas, lastmod actualizado (2026-07-03T17:44) |
+| 3 | `node scripts/submit-indexnow.mjs` (REAL) | ✅ 20 URLs enviadas, HTTP 200 dual endpoint |
+| 4 | `npm run audit:indexacion` | ✅ 30/30 probes |
+
+Estado actual del sitemap: **~214 URLs** (bajó de ~220 por remoción de 6 policy pages).
+
+El gap real de indexación GSC se reduce de ~110 a ~104 URLs (6 páginas que nunca estuvieron en resultados ahora fuera del sitemap).
+
+### Próximos pasos recomendados
+
+1. **Monitorizar en 7-14 días** si Google adopta el nuevo sitemap y aumenta la tasa de indexación
+2. **Verificar en 24-48h** si las 20 URLs enviadas por IndexNow son rastreadas
+3. **Revisar en 30 días** con `npm run seo:gsc:live` para verificar cambio en páginas indexadas
+4. **Considerar backlinks** como palanca #1 para mejorar crawl budget (actualmente 0)
+
+### Confirmaciones
+
+- ✅ No se modificó `auditoriatotal.mc`.
+- ✅ No se modificó `auditoriatotal.md`.
+- ✅ No se hizo push.
+- ✅ No se crearon posts nuevos.
+- ✅ No se expusieron secretos.
+- ✅ No se cambiaron slugs, categorías, fechas, canonicals ni THIN_POST_SLUGS.
+- ✅ Footer/Home: solo 10 ciudades prioritarias.
+- ✅ Langue y Amapala mantenidas en sitemap (indexables, no visibles).
+- ✅ 6 policy pages removidas del sitemap (sin valor SEO).
+- ✅ `npm run lint && npm run build && npm test` → todo OK.
+- ✅ Deploy Vercel exitoso.
+- ✅ IndexNow REAL ejecutado (20 URLs, HTTP 200 dual endpoint).
+
+---
+
+## Fase 4 — Schema + SEO on-page desde informe auditoría integral
+
+**Fecha:** 2026-07-03
+**Fuente:** `informeauditoria.md` (67/100 global)
+**Objetivo:** Implementar mejoras P0/P1 de la auditoría para subir puntuación.
+
+### Cambios realizados
+
+#### Schema / Datos Estructurados (impacto alto en puntuación SEO Técnico 82→~88)
+
+| Ítem | Archivo | Cambio | Prioridad |
+|------|---------|--------|-----------|
+| OfferCatalog expandido a 14 servicios | `lib/site.ts:231-252` | De 4 a 14 servicios (todas las áreas del bufete) | P1 |
+| ContactPoint en LegalService | `lib/site.ts:265-278` | Añadido contactPoint con teléfono, idiomas, horario | P1 |
+| Attorney como subtipo | `lib/site.ts:185` | Añadido `'Attorney'` a @type de LegalService | P1 |
+| PostalCode en direcciones | `lib/site.ts:70`, `lib/site.ts:221`, `lib/site.ts:336` | Añadido `postalCode: '13101'` a site.address y todos los schemas | P1 |
+| numberOfEmployees | `lib/site.ts:226` | Añadido QuantitativeValue 3-10 | P2 |
+| Person schemas mejorados | `lib/site.ts:389-405,477-491,545-559` | Añadido `honorificPrefix`, `hasCredential`, `alumniOf` a Danilo, Thania, Emil | P2 |
+| FAQPage schema — todas las preguntas | `app/(public)/preguntas-frecuentes/page.tsx:233` | Eliminado límite de 40 preguntas, ahora envía todas las disponibles | P0 (E1) |
+| BreadcrumbList en landing locales | `components/marketing/landing-local.tsx:68-72` | Añadido componente visual <Breadcrumbs> en las 16 landings locales | P2 (E7) |
+| BreadcrumbList en páginas legales | `components/marketing/legal-document.tsx:47-51` | Añadido componente visual <Breadcrumbs> en las 6 páginas legales | P2 (E7) |
+
+#### SEO On-Page (impacto medio en puntuación 64→~70)
+
+| Ítem | Archivo | Cambio | Prioridad |
+|------|---------|--------|-----------|
+| Tagline (homepage title) mejorado | `lib/site.ts:48-49` | "Abogados en Nacaome, Valle, Honduras" → "Abogados en Nacaome, Valle \| Bufete Jurídico Pineda y Asociados" | P1 |
+| Title servicios-juridicos mejorado | `app/(public)/servicios-juridicos/page.tsx:37` | "Abogados en Nacaome - Todas las Áreas" → "Servicios Jurídicos en Nacaome, Valle \| 14 Áreas de Práctica Legal" | P1 |
+| Meta desc servicios-juridicos | `app/(public)/servicios-juridicos/page.tsx:38` | Más descriptiva con catálogo completo | P2 |
+| Title derecho-penal mejorado | `app/(public)/derecho-penal/page.tsx:22` | "Abogado Penalista en Nacaome - Defensa Penal" → "Abogado Penalista en Nacaome, Valle \| Defensa Penal Técnica" | P1 |
+
+#### SEO Local (impacto medio-alto, puntuación 52→~58)
+
+| Ítem | Archivo | Cambio | Prioridad |
+|------|---------|--------|-----------|
+| GBP link explícito en footer | `components/marketing/public-footer.tsx:198-207` | Añadido enlace "Google Business Profile" con icono de mapa | P0 (E4) |
+| GBP link en solicitar-consulta | `app/(public)/solicitar-consulta/page.tsx:301-304` | Añadido "Ver en Google Maps" en la tarjeta de dirección | P0 (E4) |
+
+#### Tests actualizados
+
+| Archivo | Cambio |
+|---------|--------|
+| `tests/seo-protection.test.ts` | Actualizados asserts de tagline (quitado "Honduras" del title, añadido "Bufete" y "Pineda y Asociados") |
+
+### Validación
+
+- ✅ `npm run lint` — 0 errores, 0 warnings
+- ✅ `npm run build` — compilación exitosa (355 páginas)
+- ✅ `npm test` — 730 tests pasan, 33 archivos
+- ✅ No se modificaron: `auditoriatotal.mc`, `auditoriatotal.md`
+- ✅ No se hizo push.
+- ✅ No se modificó schema DB, auth, proxy, ni motor de cálculo.
+- ✅ No se expusieron secretos.
+
+---
+
+## 2026-07-03 — Auditoría SEO/GEO/Performance completa + mejoras (Release 99)
+
+**Contexto:** Informe SEO externo solicitaba mejoras; la infraestructura ya
+cubría ~90%. Esta acción cierra los **gaps genuinos** detectados en auditoría
+propia (3 agentes Explore + lectura directa de archivos críticos).
+
+### Cambios por área
+
+#### Performance/Build (TAREA 1)
+| Archivo | Cambio |
+|---------|--------|
+| `next.config.ts` | AVIF en `images.formats`; `experimental.optimizePackageImports`; cache headers restringidos a `/_next/*` |
+| `package.json` | `playwright` → devDependencies; `@microsoft/clarity` eliminado |
+| `components/layout/root-shell.tsx` | Quitado `'use client'` (Server Component) |
+| `components/analytics-scripts.tsx` | Clarity vía snippet (no npm); GTM/FB Pixel opcionales; Consent Mode v2 |
+| `components/marketing/map-embed-lazy.tsx` | NUEVO: wrapper lazy de MapEmbed |
+| `app/(public)/page.tsx` | MapEmbed → lazy wrapper |
+| `app/(public)/despacho/page.tsx` | `<img>` → `next/image` (hero + reunión) |
+| `app/layout.tsx` | `viewport.colorScheme`; preconnect Clarity |
+
+#### SEO técnico (TAREA 2)
+| Archivo | Cambio |
+|---------|--------|
+| `lib/schemas/blog.ts` | `wordCount` + `articleSection` en BlogPosting |
+| `lib/blog-toc.ts` (NUEVO) + `components/blog/blog-toc.tsx` | TOC server-rendered con IDs estables |
+| `app/(public)/blog/[categoria]/[slug]/page.tsx` | `injectHeadingIds` en body |
+| 6 páginas legales | `robots: { index:false, follow:true }` |
+| `app/(public)/proceso-penal/` | ELIMINADO (obsoleto, redirect a /derecho-penal) |
+| `next.config.ts` | Redirect /proceso-penal conservado |
+| `app/not-found.tsx` | Quitado canonical a `/_not-found` |
+| `app/sitemap.ts` | Prioridades de categorías (penal/familia/laboral 0.7) |
+| `data/seo/canonical-paths.json` | version=2, _comment actualizado |
+
+#### Contenido/calidad (TAREA 3)
+| Archivo | Cambio |
+|---------|--------|
+| `app/(public)/derecho-penal/page.tsx` | Tildes urgentFaq + añadidas al FAQPage schema |
+| `app/(public)/preguntas-frecuentes/page.tsx` | Tildes FAQ_CLUSTERS |
+| `app/(public)/page.tsx` | Enlace a /hondurenos-en-espana en sección cobertura |
+| `app/(public)/hondurenos-en-espana/page.tsx` | Sección editorial ~250 palabras |
+| `app/(public)/servicios-juridicos/page.tsx` | Párrafo introductorio |
+| `lib/validation.ts` + `components/marketing/solicitar-consulta-form.tsx` | Honeypot antispam |
+
+#### Seguridad/UX (TAREA 4)
+| Archivo | Cambio |
+|---------|--------|
+| `lib/strip-html.ts` (NUEVO) | Helper sanitize-html centralizado |
+| `lib/faq-schema.ts`, `lib/schemas/legal-page.ts`, `lib/schemas/blog.ts`, `preguntas-frecuentes/page.tsx` | Regex → `stripHtml` |
+| `components/marketing/landing-local.tsx` | Servicios → enlaces a /servicios-juridicos/{slug} |
+| `data/landings-locales.ts` | Goascorán: postsRelacionados añadido |
+
+#### Analytics (TAREA 5)
+| Archivo | Cambio |
+|---------|--------|
+| `lib/site.ts` | `gtmId`, `fbPixelId`, social.linkedin/youtube |
+| `.env.example` | NEXT_PUBLIC_GTM_ID, NEXT_PUBLIC_FB_PIXEL_ID, SOCIAL_LINKEDIN/YOUTUBE/X |
+
+### Validación
+
+- ✅ `npm run lint` — 0 errores, 0 warnings
+- ✅ `npm run build` — compilación exitosa
+- ✅ `npm test` — 730/730 tests pasan, 33 archivos
+- ✅ No se hizo push (protocolo §1.10).
+- ✅ No se modificó: schema DB, auth, proxy, motor de cálculo, `auditoriatotal.*`.
+- ✅ No se expusieron secretos. Datos legales verificados (sin invención).

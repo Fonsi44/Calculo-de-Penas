@@ -86,7 +86,6 @@
     "seo:submit-sitemap": "node scripts/submit-sitemap-gsc.mjs"
   },
   "dependencies": {
-    "@microsoft/clarity": "^1.0.2",
     "@modelcontextprotocol/server-filesystem": "^2026.1.14",
     "@modelcontextprotocol/server-github": "^2025.4.8",
     "@modelcontextprotocol/server-postgres": "^0.6.2",
@@ -115,7 +114,6 @@
     "next": "16.2.7",
     "pdfjs-dist": "^4.10.38",
     "pdfkit": "^0.19.1",
-    "playwright": "^1.60.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "recharts": "^3.8.1",
@@ -142,6 +140,7 @@
     "jsdom": "^29.1.1",
     "pixelmatch": "^7.2.0",
     "pngjs": "^7.0.0",
+    "playwright": "^1.60.0",
     "sharp": "^0.35.1",
     "tailwindcss": "^4",
     "typescript": "^5",

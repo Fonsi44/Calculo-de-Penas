@@ -108,6 +108,13 @@ export const contactoSchema = z.object({
   asunto: z.enum(CONTACTO_ASUNTOS, { message: 'Asunto inválido' }),
   mensaje: z.string().trim().min(10, 'Mínimo 10 caracteres').max(5000),
   acepta: z.literal(true, { message: 'Debe aceptar la política de privacidad' }),
+  // Honeypot antispam: campo oculto visible solo para bots. Debe ir vacío.
+  // Si llega con contenido, el submit se rechaza. Nombre engañoso a propósito.
+  website: z
+    .string()
+    .max(0, 'Spam detectado')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
 });
 
 export const CONSULTA_MOTIVOS = [
@@ -134,6 +141,12 @@ export const consultaSchema = z.object({
   motivo: z.enum(CONSULTA_MOTIVOS, { message: 'Motivo inválido' }),
   resumen: z.string().trim().min(15, 'Mínimo 15 caracteres').max(5000),
   acepta: z.literal(true, { message: 'Debe aceptar la política de privacidad' }),
+  // Honeypot antispam: campo oculto visible solo para bots. Debe ir vacío.
+  website: z
+    .string()
+    .max(0, 'Spam detectado')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
 });
 
 export type ContactoInput = z.infer<typeof contactoSchema>;

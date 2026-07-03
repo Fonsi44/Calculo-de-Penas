@@ -77,7 +77,10 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport = { themeColor: "#0B1B3D" };
+export const viewport = {
+  themeColor: "#0B1B3D",
+  colorScheme: ["light", "dark"] as const,
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -90,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
         <link rel="llms-txt" href="/llms.txt" />
         {site.gaId && <link rel="preconnect" href="https://www.googletagmanager.com" />}
+        {site.clarityId && <link rel="preconnect" href="https://www.clarity.ms" />}
         <meta name="application-name" content={site.name} />
         <meta name="author" content={site.name} />
         <meta name="language" content="es-HN" />

@@ -25,6 +25,8 @@ export function SolicitarConsultaForm() {
     motivo: MOTIVOS[1],
     resumen: '',
     acepta: false,
+    // Honeypot: campo oculto para humanos, visible para bots. Debe ir vacío.
+    website: '',
   });
   const [status, setStatus] = useState<Status>('idle');
   const [err, setErr] = useState('');
@@ -76,7 +78,7 @@ export function SolicitarConsultaForm() {
           type="button"
           onClick={() => {
             setStatus('idle');
-            setForm({ nombre: '', telefono: '', email: '', motivo: MOTIVOS[1], resumen: '', acepta: false });
+            setForm({ nombre: '', telefono: '', email: '', motivo: MOTIVOS[1], resumen: '', acepta: false, website: '' });
           }}
           className="mt-4 text-xs font-semibold text-primary hover:text-accent-dark"
         >
@@ -166,11 +168,29 @@ export function SolicitarConsultaForm() {
       </label>
 
       {err && (
-        <div role="alert" className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
+        <div role="alert" aria-live="polite" className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
           <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
           <span>{err}</span>
         </div>
       )}
+
+      {/* Honeypot antispam: campo oculto para humanos (sr-only), visible para
+          bots que rellenan todos los inputs. Si llega con contenido, el
+          backend (Zod schema) rechaza el submit. No usar display:none: algunos
+          bots lo detectan y saltan el campo. aria-hidden + tabindex=-1 para
+          que usuarios de lector de pantalla no interactúen con él. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+        <label htmlFor="consulta-website">No rellenar (website)</label>
+        <input
+          id="consulta-website"
+          type="text"
+          name="website"
+          value={form.website}
+          onChange={onText('website')}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       <button
         type="submit"

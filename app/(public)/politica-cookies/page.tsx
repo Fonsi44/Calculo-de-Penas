@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Política de cookies del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle. Información sobre cookies técnicas y de análisis utilizadas.',
   alternates: { canonical: '/politica-cookies' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   twitter: {
     card: 'summary_large_image',
     title: 'Política de Cookies | Pineda y Asociados',

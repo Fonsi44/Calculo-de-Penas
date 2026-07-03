@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   // Absolute para controlar la longitud total y evitar que el template del
   // layout añada "| Pineda y Asociados" (la marca ya va incluida). Antes el
   // title resuelto medía 77 caracteres (>65): se truncaba en SERP.
-  title: { absolute: `Abogados en ${site.address.city} - Todas las Áreas del Derecho` },
-  description: `Abogados en Nacaome, Valle: penal, familia, laboral, civil, mercantil y tributario. Cobertura San Lorenzo y Choluteca. Consulta por WhatsApp ${site.whatsappDisplay}.`,
+  title: { absolute: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 14 Áreas de Práctica Legal` },
+  description: `Catálogo completo de servicios legales en ${site.address.city} y sur de Honduras. Penal, familia, laboral, civil, mercantil, tributario y 9 áreas más. Consulte hoy. WhatsApp ${site.whatsappDisplay}.`,
   alternates: { canonical: '/servicios-juridicos' },
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
   twitter: {
@@ -145,6 +145,32 @@ export default async function AreasJuridicasPage() {
       </div>
 
       <TrustBar background="light" />
+
+      {/* INTRO EDITORIAL — texto orientado a entidades y SEO/GEO.
+          La página era solo índice + tabla; añadir párrafo introductorio con
+          entidades por especialidad evita thin content y refuerza la intención
+          de búsqueda "abogado [área] Nacaome/Valle". */}
+      <Section spacing="sm">
+        <div className="prose prose-sm sm:prose-base max-w-3xl mx-auto text-text-secondary leading-relaxed">
+          <p>
+            Pineda y Asociados es un bufete multidisciplinario con sede en Nacaome, Valle, que atiende
+            clientes en toda la zona sur de Honduras. Nuestra cartera de servicios cubre las principales
+            ramas del derecho hondureño bajo un mismo techo, lo que permite abordar casos complejos que
+            cruzan fronteras entre especialidades: por ejemplo, un divorcio con empresa familiar involucra
+            a la vez derecho de familia, civil y mercantil; un despido con accidente laboral combina
+            derecho laboral y riesgo profesional.
+          </p>
+          <p>
+            Cada área está a cargo de un abogado con experiencia acreditada en juzgados de Honduras. La
+            <strong> defensa penal</strong> es nuestra especialidad destacada, y la acompañamos con
+            derecho de familia (divorcio, pensión alimenticia, custodia), derecho laboral (despido,
+            prestaciones, accidentes), derecho civil y notarial (contratos, sucesiones, testamentos),
+            derecho mercantil (sociedades, contratos empresariales), derecho tributario, derecho
+            administrativo y servicios para hondureños en el extranjero. Seleccione el área que necesita
+            para acceder a información detallada, preguntas frecuentes y el primer paso recomendado.
+          </p>
+        </div>
+      </Section>
 
       <Section background="muted" spacing="md">
         <SectionHeader

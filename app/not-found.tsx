@@ -6,8 +6,9 @@ import { ArrowLeft, Scale } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Página no encontrada',
   description: `La página que busca no está disponible. ${site.name} — Bufete jurídico en ${site.address.city}, ${site.address.department}.`,
+  // 404: noindex estricto, sin canonical (un canonical a una ruta técnica
+  // como /_not-found puede generar advertencias en Search Console).
   robots: { index: false, follow: false },
-  alternates: { canonical: '/_not-found' },
 };
 
 export default function NotFound() {

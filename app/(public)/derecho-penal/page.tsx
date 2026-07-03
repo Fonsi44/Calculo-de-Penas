@@ -19,7 +19,7 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
-  title: { absolute: `Abogado Penalista en ${site.address.city} - Defensa Penal` },
+  title: { absolute: `Abogado Penalista en ${site.address.city}, ${site.address.department} | Defensa Penal Técnica` },
   description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial en detenciones, audiencias y recursos. Consulta urgente por WhatsApp ${site.whatsappDisplay}. Cubrimos San Lorenzo, Choluteca y zona sur de Honduras.`,
   alternates: { canonical: '/derecho-penal' },
   keywords: [
@@ -57,6 +57,40 @@ export default async function DerechoPenalPage() {
   const url = penalHubHref();
   const penalGroups = await getAreasFromDb('penal');
   const contentMap = await getPageContent('derecho-penal');
+
+  // FAQs urgentes (acciones inmediatas ante detención/citación). Se renderizan
+  // como contenido visible Y se incluyen en el FAQPage schema (antes quedaban
+  // fuera del JSON-LD). Texto con tildes correctas para LLMs y algoritmos.
+  const urgentFaq = [
+    {
+      q: 'Qué hacer si me detienen',
+      a: 'Mantenga la calma, identifíquese y evite declarar sin defensa técnica. Solicite contacto inmediato con su abogado y registre hora, lugar y autoridad interviniente. Esta información es clave para revisar la legalidad de la detención y las medidas cautelares posteriores.',
+    },
+    {
+      q: 'Cuándo llamar a un abogado penalista',
+      a: 'Debe llamar en cuanto reciba citación, aviso de investigación o noticia de detención. Esperar suele reducir el margen de defensa temprana. La primera intervención legal permite proteger derechos, ordenar evidencia y definir estrategia antes de decisiones procesales críticas.',
+    },
+    {
+      q: 'Qué documentos preparar',
+      a: 'Reúna citaciones, resoluciones, mensajes, videos, constancias médicas y datos de testigos disponibles. Si no tiene todo, aporte lo que exista y reconstruya una línea de tiempo de los hechos. La organización inicial acelera la evaluación de riesgos y la respuesta procesal.',
+    },
+    {
+      q: 'Qué errores evitar',
+      a: 'Evite firmar documentos sin lectura técnica, declarar por presión o eliminar información de su teléfono. También conviene no discutir el caso en redes sociales. Estos errores suelen complicar la defensa y pueden generar interpretaciones adversas en la audiencia.',
+    },
+    {
+      q: 'Cómo actuar ante una citación judicial',
+      a: 'No ignore la citación ni improvise una respuesta. Confirme fecha, autoridad y motivo, y consulte de inmediato para preparar la comparecencia. Una respuesta ordenada permite llegar con estrategia, documentos pertinentes y control del relato de hechos desde el inicio.',
+    },
+  ];
+
+  // FAQs combinadas para el schema: las urgentes (acciones inmediatas) +
+  // las del hub penal (procedimiento). Formato { pregunta, respuesta }.
+  const allPenalFaqs = [
+    ...urgentFaq.map((f) => ({ pregunta: f.q, respuesta: f.a })),
+    ...hubPenal.faqs,
+  ];
+
   const ldSchemas = areaSchemas({
     service: {
       slug: 'derecho-penal',
@@ -69,7 +103,7 @@ export default async function DerechoPenalPage() {
       keywords: hubPenal.keywords,
       url,
     },
-    faqs: hubPenal.faqs,
+    faqs: allPenalFaqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
       { name: 'Derecho Penal', url },
@@ -134,28 +168,6 @@ const PRIORITY_PENAL_SLUGS = [
     },
   ];
 
-  const urgentFaq = [
-    {
-      q: 'Que hacer si me detienen',
-      a: 'Mantenga la calma, identifiquese y evite declarar sin defensa tecnica. Solicite contacto inmediato con su abogado y registre hora, lugar y autoridad interviniente. Esta informacion es clave para revisar legalidad de la detencion y medidas cautelares posteriores.',
-    },
-    {
-      q: 'Cuando llamar a un abogado penalista',
-      a: 'Debe llamar en cuanto reciba citacion, aviso de investigacion o noticia de detencion. Esperar suele reducir margen de defensa temprana. La primera intervencion legal permite proteger derechos, ordenar evidencia y definir estrategia antes de decisiones procesales criticas.',
-    },
-    {
-      q: 'Que documentos preparar',
-      a: 'Reuna citaciones, resoluciones, mensajes, videos, constancias medicas y datos de testigos disponibles. Si no tiene todo, aporte lo que exista y reconstruya una linea de tiempo de hechos. La organizacion inicial acelera evaluacion de riesgos y respuesta procesal.',
-    },
-    {
-      q: 'Que errores evitar',
-      a: 'Evite firmar documentos sin lectura tecnica, declarar por presion o eliminar informacion de su telefono. Tambien conviene no discutir el caso en redes sociales. Estos errores suelen complicar la defensa y pueden generar interpretaciones adversas en audiencia.',
-    },
-    {
-      q: 'Como actuar ante una citacion judicial',
-      a: 'No ignore la citacion ni improvise respuesta. Confirme fecha, autoridad y motivo, y consulte de inmediato para preparar comparecencia. Una respuesta ordenada permite llegar con estrategia, documentos pertinentes y control del relato de hechos desde el inicio.',
-    },
-  ];
   const blogPosts = PRIORITY_PENAL_SLUGS
     .map((s) => allPenalPosts.find((p) => p.slug === s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
@@ -197,7 +209,7 @@ const PRIORITY_PENAL_SLUGS = [
           <p className="text-sm text-text-secondary">
             <strong className="text-text">¿Quiere entender el proceso penal paso a paso?</strong>{' '}
             Consulte nuestra{' '}
-            <Link href="/proceso-penal" className="text-accent-dark hover:text-primary underline font-semibold">
+            <Link href="/blog/proceso-penal" className="text-accent-dark hover:text-primary underline font-semibold">
               guía completa del proceso penal en Honduras
             </Link>
             , desde la investigación hasta la ejecución penal.

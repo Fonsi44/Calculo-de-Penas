@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description:
       'Política de privacidad de Pineda y Asociados, bufete en Nacaome, Valle, Honduras. Protección de datos personales conforme al ordenamiento hondureño.',
   alternates: { canonical: '/politica-privacidad' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   twitter: {
     card: 'summary_large_image',
     title: 'Política de Privacidad | Pineda y Asociados',
