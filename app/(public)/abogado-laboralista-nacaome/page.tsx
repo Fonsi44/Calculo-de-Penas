@@ -7,9 +7,9 @@ import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { Scale, FileText, ShieldCheck, Briefcase, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado Laboralista en Nacaome — Despidos y Prestaciones',
+  title: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
   description:
-    'Abogado laboralista en Nacaome, Valle. Reclamación de despidos, prestaciones, liquidaciones y acoso laboral. Consulta sin costo. WhatsApp: +504 9536-3724.',
+    'Abogado laboralista en Nacaome, Valle. Despidos, prestaciones, finiquitos. Defensa de trabajadores. Consulta sin costo. WhatsApp +504 9536-3724.',
   alternates: { canonical: '/abogado-laboralista-nacaome' },
   keywords: [
     'abogado laboralista Nacaome',
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     'reclamo laboral Valle Honduras',
   ],
   openGraph: {
-    title: 'Abogado Laboralista en Nacaome — Despidos y Prestaciones',
+    title: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
     description:
-      'Abogado laboralista en Nacaome, Valle. Reclamación de despidos, prestaciones y liquidaciones. Primera consulta sin costo.',
+      'Abogado laboralista en Nacaome, Valle. Despidos, prestaciones, finiquitos. Defensa de trabajadores. Consulta sin costo.',
     url: '/abogado-laboralista-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -30,8 +30,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Abogado Laboralista en Nacaome — Despidos y Prestaciones',
-    description: 'Reclamación de despidos, prestaciones y liquidaciones en Nacaome, Valle.',
+    title: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
+    description:
+      'Abogado laboralista en Nacaome, Valle. Despidos, prestaciones, finiquitos. Defensa de trabajadores. Consulta sin costo.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -188,7 +189,7 @@ export default async function AbogadoLaboralistaNacaomePage() {
               '@type': 'WebPage',
               '@id': `${url}#webpage`,
               url,
-              name: 'Abogado Laboralista en Nacaome — Despidos y Prestaciones',
+              name: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
               isPartOf: { '@id': `${site.url}#website` },
               about: { '@id': `${site.url}#legal-service` },
             },

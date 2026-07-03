@@ -7,9 +7,9 @@ import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { Heart, Users, Baby, FileText, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado de Familia en Nacaome — Divorcios y Custodia',
+  title: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
   description:
-    'Abogado de familia en Nacaome, Valle. Divorcios, custodia de hijos, pensión alimenticia y adopciones. Consulta confidencial sin costo. WhatsApp: +504 9536-3724.',
+    'Abogado de familia en Nacaome, Valle. Pensión alimenticia, custodia, divorcios. 15+ años de experiencia. Consulta sin costo. WhatsApp +504 9536-3724.',
   alternates: { canonical: '/abogado-de-familia-nacaome' },
   keywords: [
     'abogado de familia Nacaome',
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     'abogado familia Valle Honduras',
   ],
   openGraph: {
-    title: 'Abogado de Familia en Nacaome — Divorcios y Custodia',
+    title: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
     description:
-      'Abogado de familia en Nacaome, Valle. Divorcios, custodia, pensión alimenticia. Primera consulta sin costo.',
+      'Abogado de familia en Nacaome, Valle. Pensión alimenticia, custodia, divorcios. 15+ años de experiencia. Consulta sin costo.',
     url: '/abogado-de-familia-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -30,8 +30,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Abogado de Familia en Nacaome — Divorcios y Custodia',
-    description: 'Divorcios, custodia, pensión alimenticia en Nacaome, Valle.',
+    title: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
+    description:
+      'Abogado de familia en Nacaome, Valle. Pensión alimenticia, custodia, divorcios. 15+ años de experiencia. Consulta sin costo.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -188,7 +189,7 @@ export default async function AbogadoDeFamiliaNacaomePage() {
               '@type': 'WebPage',
               '@id': `${url}#webpage`,
               url,
-              name: 'Abogado de Familia en Nacaome — Divorcios y Custodia',
+              name: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
               isPartOf: { '@id': `${site.url}#website` },
               about: { '@id': `${site.url}#legal-service` },
             },

@@ -7,9 +7,9 @@ import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { FileText, Home, ScrollText, Scale, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado Civil en Nacaome — Contratos, Herencias y Poderes',
+  title: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
   description:
-    'Abogado civil en Nacaome, Valle. Contratos, compraventas, herencias, testamentos y poderes notariales. Consulta sin costo. WhatsApp: +504 9536-3724.',
+    'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales. Consulta sin costo. WhatsApp +504 9536-3724.',
   alternates: { canonical: '/abogado-civil-nacaome' },
   keywords: [
     'abogado civil Nacaome',
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     'abogado notarial Nacaome',
   ],
   openGraph: {
-    title: 'Abogado Civil en Nacaome — Contratos, Herencias y Poderes',
+    title: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
     description:
-      'Abogado civil en Nacaome, Valle. Contratos, compraventas, herencias y poderes notariales. Primera consulta sin costo.',
+      'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales. Consulta sin costo.',
     url: '/abogado-civil-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -31,8 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Abogado Civil en Nacaome — Contratos, Herencias y Poderes',
-    description: 'Contratos, compraventas, herencias y poderes notariales en Nacaome, Valle.',
+    title: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
+    description:
+      'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales. Consulta sin costo.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -188,7 +189,7 @@ export default async function AbogadoCivilNacaomePage() {
               '@type': 'WebPage',
               '@id': `${url}#webpage`,
               url,
-              name: 'Abogado Civil en Nacaome — Contratos, Herencias y Poderes',
+              name: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
               isPartOf: { '@id': `${site.url}#website` },
               about: { '@id': `${site.url}#legal-service` },
             },

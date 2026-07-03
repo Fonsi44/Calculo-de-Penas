@@ -61,9 +61,9 @@ export const landingsLocales: LandingLocal[] = [
     // La home usa "${site.name} — ${site.tagline}" (ej: "Pineda y Asociados — Abogados en Nacaome, Valle, Honduras").
     // Esta landing prioriza la keyword exacta "Abogados en Nacaome, Valle".
     // NO incluye el nombre del bufete: el layout lo añade (%s | Pineda y Asociados).
-    title: 'Abogados en Nacaome, Valle',
+    title: 'Abogados en Nacaome, Valle | Sede Principal · Consulta sin Costo',
     description:
-      'Sede principal de Pineda y Asociados en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Dirección, horario y WhatsApp: +504 9536-3724.',
+      'Sede principal en Nacaome, Valle. Defensa penal, familia, laboral y civil. 15+ años de experiencia en el sur de Honduras. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Sede principal · Valle, Honduras',
     heroTitle: 'Abogados en Nacaome, Valle',
     heroSubtitle:
@@ -127,9 +127,9 @@ export const landingsLocales: LandingLocal[] = [
     sedeFisica: false,
     distanciaKm: 52,
     // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
-    title: 'Abogados en Choluteca, Honduras',
+    title: 'Abogados en Choluteca | Consulta Gratuita · 15+ Años en el Sur',
     description:
-      'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral, mercantil y aduanero. Atención desde nuestra sede en Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral y aduanero. Primera consulta sin costo. WhatsApp +504 9536-3724. Bufete del sur.',
     heroEyebrow: 'Zona sur · Choluteca, Honduras',
     heroTitle: 'Abogados en Choluteca',
     heroSubtitle:
@@ -192,9 +192,9 @@ export const landingsLocales: LandingLocal[] = [
     sedeFisica: false,
     distanciaKm: 17,
     // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
-    title: 'Abogados en San Lorenzo, Valle (Puerto)',
+    title: 'Abogados en San Lorenzo, Valle | Puerto Sur · Asesoría Legal',
     description:
-      'Abogados en San Lorenzo, Valle (Honduras). Puerto y zona comercial del sur. Defensa penal, mercantil, laboral, civil y aduanero. WhatsApp: +504 9536-3724.',
+      'Abogados en San Lorenzo, Valle. Puerto y zona comercial. Defensa penal, mercantil, laboral y aduanero. Consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Puerto y zona comercial · Valle, Honduras',
     heroTitle: 'Abogados en San Lorenzo, Valle',
     heroSubtitle:
@@ -256,9 +256,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Valle',
     sedeFisica: false,
     distanciaKm: 35,
-    title: 'Abogados en Goascorán, Valle — Consulta Jurídica',
+    title: 'Abogados en Goascorán, Valle | Frontera El Salvador · Consulta',
     description:
-      'Abogados en Goascorán, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724. Primera consulta sin costo.',
+      'Abogados en Goascorán, zona fronteriza de Valle. Defensa penal, familia, laboral y civil. Primera consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Zona fronteriza · Valle, Honduras',
     heroTitle: 'Abogados en Goascorán, Valle',
     heroSubtitle:
@@ -285,9 +285,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 70,
-    title: 'Abogados en Pespire, Choluteca — Asesoría Legal',
+    title: 'Abogados en Pespire, Choluteca — Asesoría Legal · Consulta sin Costo',
     description:
-      'Abogados en Pespire, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome para todo el sur. WhatsApp: +504 9536-3724.',
+      'Abogados en Pespire, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome para todo el sur. Primera consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en Pespire, Choluteca',
     heroSubtitle:
@@ -317,9 +317,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 80,
-    title: 'Abogados en San Marcos de Colón, Choluteca',
+    title: 'Abogados en San Marcos de Colón, Choluteca | Frontera Sur',
     description:
-      'Abogados en San Marcos de Colón, Choluteca. Defensa penal, familia, laboral, civil y mercantil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en San Marcos de Colón, frontera con Nicaragua. Defensa penal, familia, laboral, civil y aduanero. Consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Frontera sur · Choluteca, Honduras',
     heroTitle: 'Abogados en San Marcos de Colón',
     heroSubtitle:
@@ -349,9 +349,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 60,
-    title: 'Abogados en Marcovia, Choluteca — Guía Legal',
+    title: 'Abogados en Marcovia, Choluteca — Guía Legal · Consulta sin Costo',
     description:
-      'Abogados en Marcovia, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Marcovia, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. Primera consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en Marcovia, Choluteca',
     heroSubtitle:
@@ -381,9 +381,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 65,
-    title: 'Abogados en El Triunfo, Choluteca — Defensa Legal',
+    title: 'Abogados en El Triunfo, Choluteca — Defensa Legal · Consulta sin Costo',
     description:
-      'Abogados en El Triunfo, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en El Triunfo, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. Primera consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en El Triunfo, Choluteca',
     heroSubtitle:
@@ -415,9 +415,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 55,
-    title: 'Abogados en Namasigüe, Choluteca — Asesoría Legal',
+    title: 'Abogados en Namasigüe, Choluteca — Asesoría Legal · Consulta sin Costo',
     description:
-      'Abogados en Namasigüe, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Namasigüe, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. Primera consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en Namasigüe, Choluteca',
     heroSubtitle:
@@ -449,9 +449,9 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Choluteca',
     sedeFisica: false,
     distanciaKm: 70,
-    title: 'Abogados en Orocuina, Choluteca — Defensa y Consulta',
+    title: 'Abogados en Orocuina, Choluteca — Defensa y Consulta · Consulta sin Costo',
     description:
-      'Abogados en Orocuina, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Orocuina, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. Primera consulta sin costo. WhatsApp +504 9536-3724.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en Orocuina, Choluteca',
     heroSubtitle:

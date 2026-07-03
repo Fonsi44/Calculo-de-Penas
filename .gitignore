@@ -157,3 +157,5 @@ scripts/.bing-audit.json
 # Aparecen como archivos fantasma tras redirecciones mal escapadas en cmd.
 /nul
 /public/nul
+# artefactos de auditoría playwright (temporales, regenerables)
+scripts/.playwright-audit.json
