@@ -4,7 +4,8 @@ import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { landingsLocales, type LandingLocal } from '@/data/landings-locales';
+import { type LandingLocal } from '@/data/landings-locales';
+import { CoverageCityGrid, getRelatedCities } from '@/components/marketing/coverage-city-grid';
 
 /**
  * Renderiza una landing local de SEO ("/abogados-en-{ciudad}").
@@ -57,8 +58,6 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
       ],
     },
   ];
-
-  const otrasCiudades = landingsLocales.filter((l) => l.slug !== landing.slug);
 
   return (
     <>
@@ -239,37 +238,18 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </Card>
       </Section>
 
-      {/* Enlazado interno a otras ciudades */}
+      {/* Enlazado interno a otras ciudades del mismo departamento */}
       <Section spacing="md">
         <SectionHeader
           eyebrow="Cobertura regional"
           title="También atendemos en otras ciudades"
-          subtitle="Bufete con cobertura en la zona sur de Honduras."
+          subtitle={`Bufete con cobertura en ${landing.departamento} y la zona sur de Honduras.`}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {otrasCiudades.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/abogados-en-${c.slug}`}
-              className="group block focus-visible:outline-none"
-            >
-              <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
-                  <MapPin size={20} aria-hidden="true" />
-                </div>
-                <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
-                  {`Abogados en ${c.ciudad}`}
-                </h3>
-                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
-                  {c.departamento}, Honduras
-                </p>
-                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                  Ver cobertura <ArrowRight size={12} />
-                </span>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <CoverageCityGrid
+          cities={getRelatedCities(landing.slug, 4)}
+          maxCities={4}
+          variant="compact"
+        />
       </Section>
 
       {ldSchemas.map((schema, i) => (

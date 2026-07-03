@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="200" height="220">
+  <path d="M100 10 L180 30 L180 100 C180 155 140 190 100 210 C60 190 20 155 20 100 L20 30 Z" fill="none" stroke="#D4AF37" stroke-width="3" opacity="0.12"/>
+  <circle cx="65" cy="55" r="3" fill="#D4AF37" opacity="0.08"/>
+  <circle cx="135" cy="55" r="3" fill="#D4AF37" opacity="0.08"/>
+  <circle cx="65" cy="175" r="3" fill="#D4AF37" opacity="0.08"/>
+  <circle cx="135" cy="175" r="3" fill="#D4AF37" opacity="0.08"/>
+  <text x="100" y="130" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="80" font-weight="bold" fill="#0F1D3A" opacity="0.10">C</text>
+  <text x="100" y="195" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#D4AF37" opacity="0.08">CHOLUTECA</text>
+</svg>

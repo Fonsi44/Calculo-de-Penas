@@ -29,6 +29,7 @@ import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { getFeaturedLandings } from '@/data/landings-locales';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { CoverageCityGrid } from '@/components/marketing/coverage-city-grid';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
@@ -571,38 +572,28 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* COBERTURA REGIONAL — enlazado interno a landings locales (SEO local) */}
+      {/* COBERTURA REGIONAL — enlazado interno a landings locales (SEO local).
+          Tarjetas con escudo decorativo traslúcido + badge departamento. */}
       <Section background="muted" spacing="md" ariaLabel="Cobertura regional">
         <SectionHeader
-          eyebrow="Cobertura"
-          title="Abogados en el sur de Honduras"
+          eyebrow="Cobertura jurídica en el sur de Honduras"
+          title="Abogados en las principales ciudades de Valle y Choluteca"
           subtitle="Atendemos en Nacaome, San Lorenzo, Choluteca, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe y Orocuina. Conozca nuestra cobertura por ciudad."
           align="center"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-          {featuredCoverage.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/abogados-en-${c.slug}`}
-              title={`Abogados en ${c.ciudad}, ${c.departamento} — Pineda y Asociados`}
-              className="group block focus-visible:outline-none"
-            >
-              <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3">
-                  <MapPin size={20} aria-hidden="true" />
-                </div>
-                <h3 className="font-bold text-base text-text leading-tight group-hover:text-primary transition-colors">
-                  {`Abogados en ${c.ciudad}`}
-                </h3>
-                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
-                  {c.departamento}, Honduras
-                </p>
-                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                  Ver cobertura <ArrowRight size={12} />
-                </span>
-              </Card>
-            </Link>
-          ))}
+        <CoverageCityGrid cities={featuredCoverage} />
+        <div className="mt-8 md:mt-10 text-center">
+          <div className="inline-block max-w-2xl mx-auto">
+            <p className="font-serif font-extrabold text-lg md:text-xl text-primary leading-tight text-balance">
+              ¿Necesita asistencia legal en su ciudad?
+            </p>
+            <p className="mt-2 text-sm text-text-secondary leading-relaxed text-pretty">
+              Cuéntenos su caso y le orientaremos con claridad sobre los pasos legales disponibles.
+            </p>
+            <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+              <CTAGroup variant="inline" />
+            </div>
+          </div>
         </div>
       </Section>
 
