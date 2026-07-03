@@ -34,16 +34,16 @@ const DESPACHO = [
 // Landings de SEO local — enlazadas desde todas las páginas (footer) para
 // transferir autoridad interna y facilitar el descubrimiento por Google.
 const COBERTURA = [
-  { label: 'Abogados en Nacaome', title: 'Abogados en Nacaome, Valle — sede principal del bufete', href: '/abogados-en-nacaome' },
   { label: 'Abogados en Choluteca', title: 'Abogados en Choluteca, Honduras — defensa y asesoría legal', href: '/abogados-en-choluteca' },
+  { label: 'Abogados en Nacaome', title: 'Abogados en Nacaome, Valle — sede principal del bufete', href: '/abogados-en-nacaome' },
   { label: 'Abogados en San Lorenzo', title: 'Abogados en San Lorenzo, Valle — zona portuaria del sur', href: '/abogados-en-san-lorenzo' },
-  { label: 'Abogados en Goascorán', title: 'Abogados en Goascorán, Valle — zona fronteriza', href: '/abogados-en-goascoran' },
+  { label: 'Abogados en Marcovia', title: 'Abogados en Marcovia, Choluteca — cobertura legal en el sur', href: '/abogados-en-marcovia' },
   { label: 'Abogados en San Marcos de Colón', title: 'Abogados en San Marcos de Colón, Choluteca — zona fronteriza', href: '/abogados-en-san-marcos-de-colon' },
   { label: 'Abogados en El Triunfo', title: 'Abogados en El Triunfo, Choluteca — zona fronteriza sur', href: '/abogados-en-el-triunfo' },
-  { label: 'Abogados en Marcovia', title: 'Abogados en Marcovia, Choluteca — cobertura legal en el sur', href: '/abogados-en-marcovia' },
+  { label: 'Abogados en Goascorán', title: 'Abogados en Goascorán, Valle — zona fronteriza', href: '/abogados-en-goascoran' },
   { label: 'Abogados en Pespire', title: 'Abogados en Pespire, Choluteca — asesoría legal en el sur', href: '/abogados-en-pespire' },
-  { label: 'Abogados en Namasigüe', title: 'Abogados en Namasigüe, Choluteca — consulta y asesoría legal', href: '/abogados-en-namasigue' },
-  { label: 'Abogados en Orocuina', title: 'Abogados en Orocuina, Choluteca — consulta y asesoría legal', href: '/abogados-en-orocuina' },
+  { label: 'Abogados en Amapala', title: 'Abogados en Amapala, Valle — Isla del Tigre y Golfo de Fonseca', href: '/abogados-en-amapala' },
+  { label: 'Abogados en Langue', title: 'Abogados en Langue, Valle — consulta y asesoría legal', href: '/abogados-en-langue' },
 ];
 
 const LEGALES = [

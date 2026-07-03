@@ -477,6 +477,72 @@ export const landingsLocales: LandingLocal[] = [
       { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
     ],
   },
+  {
+    slug: 'amapala',
+    ciudad: 'Amapala',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 40,
+    title: 'Abogados en Amapala, Valle — Defensa Legal en el Sur',
+    description:
+      'Abogados en Amapala, Valle (Honduras). Defensa penal, familia, laboral y asesoría portuaria. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Isla y puerto · Valle, Honduras',
+    heroTitle: 'Abogados en Amapala, Valle',
+    heroSubtitle:
+      'Atendemos a clientes de Amapala (Isla del Tigre) y el Golfo de Fonseca. Defensa penal, derecho de familia, laboral y asesoría legal para el sector portuario y pesquero.',
+    intro:
+      'Amapala, municipio insular del departamento de Valle en el Golfo de Fonseca, es un puerto histórico y destino turístico del sur de Honduras. A 40 km de Nacaome, prestamos servicios jurídicos a residentes, comerciantes, pescadores y empresas de la isla y sus alrededores.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño para residentes de Amapala. Asistencia en detenciones, audiencias y juicio oral.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos de familia ante los juzgados del departamento de Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores del sector pesquero, turístico y comercial de Amapala.' },
+      { titulo: 'Derecho mercantil y portuario', descripcion: 'Constitución de empresas, contratos comerciales y asesoría legal para negocios del sector portuario y turístico de la isla.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Amapala?', respuesta: 'Nuestra sede está en Nacaome, a unos 40 km de Amapala. Coordinamos la atención por teléfono, WhatsApp y podemos desplazarnos cuando el caso lo requiera.' },
+      { pregunta: '¿Atienden casos urgentes en Amapala?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Qué servicios ofrecen al sector pesquero?', respuesta: 'Asesoramos en derecho laboral, mercantil y civil a empresas y trabajadores del sector pesquero y portuario de Amapala y el Golfo de Fonseca.' },
+      { pregunta: '¿Cómo solicito una consulta desde Amapala?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Amapala. Evaluamos su caso y le damos un presupuesto por escrito sin compromiso.' },
+    ],
+    geo: { lat: 13.3, lng: -87.65 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-amapala-valle', titulo: 'Abogados en Amapala: guía legal completa' },
+    ],
+  },
+  {
+    slug: 'langue',
+    ciudad: 'Langue',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 22,
+    title: 'Abogados en Langue, Valle — Consulta Legal',
+    description:
+      'Abogados en Langue, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome a 22 km. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Langue, Valle',
+    heroSubtitle:
+      'Atendemos a clientes de Langue y municipios cercanos. Defensa penal, derecho de familia, laboral y civil con bufete de la zona sur de Honduras.',
+    intro:
+      'Langue es un municipio del departamento de Valle ubicado a solo 22 km de Nacaome. Atendemos a familias, trabajadores y comerciantes de Langue y sus aldeas con servicios jurídicos integrales respaldados por más de 15 años de ejercicio profesional.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en procesos penales conforme al Código Penal hondureño vigente para residentes de Langue. Asistencia desde la detención y audiencias.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados con competencia en Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos injustificados y asesoría para trabajadores agrícolas y comerciales de Langue.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de Langue y la zona de Valle.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Langue?', respuesta: 'Nuestra sede principal está en Nacaome, a solo 22 km de Langue. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono.' },
+      { pregunta: '¿Qué servicios ofrecen en Langue?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Brindamos asesoría integral a residentes de Langue y el departamento de Valle.' },
+      { pregunta: '¿Cómo agendo una consulta desde Langue?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. La primera consulta de evaluación no tiene costo.' },
+      { pregunta: '¿Atienden casos penales urgentes en Langue?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+    ],
+    geo: { lat: 13.62, lng: -87.65 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
+  },
 ];
 
 /**
@@ -500,16 +566,16 @@ export const landingsLocales: LandingLocal[] = [
  * para evitar saturación visual y mejorar UX.
  */
 export const TOP_COBERTURA_SLUGS = new Set([
-  'nacaome',
   'choluteca',
+  'nacaome',
   'san-lorenzo',
-  'goascoran',
+  'marcovia',
   'san-marcos-de-colon',
   'el-triunfo',
-  'marcovia',
+  'goascoran',
   'pespire',
-  'namasigue',
-  'orocuina',
+  'amapala',
+  'langue',
 ]);
 
 /** Devuelve las landings destacadas para la Home (top 10 por relevancia). */
