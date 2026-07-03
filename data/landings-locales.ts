@@ -550,6 +550,138 @@ export const landingsLocales: LandingLocal[] = [
       { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
     ],
   },
+  // === P7 AUDIT SEO Jul 2026: landings locales secundarias ===
+  // Ciudades antes redirigidas (404 soft) a un vecino. Ahora tienen landing
+  // propia con contenido único, NAP coherente y CTA. Datos geográficos
+  // aproximados verificables (geonames/Honduras). Sin inventar sedes.
+  {
+    slug: 'caridad',
+    ciudad: 'Caridad',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 30,
+    title: 'Abogados en Caridad, Valle — Consulta Legal · Sur de Honduras',
+    description:
+      'Abogados en Caridad, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención coordinada desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Caridad, Valle',
+    heroSubtitle:
+      'Atendemos a residentes de Caridad y municipios cercanos en defensa penal, derecho de familia, laboral y civil, con el respaldo de un bufete del sur de Honduras.',
+    intro:
+      'Caridad es un municipio del departamento de Valle, próximo a San Lorenzo y a unos 30 km de Nacaome. Prestamos servicios jurídicos a familias, trabajadores y comerciantes de Caridad y sus aldeas, coordinando audiencias y diligencias ante los juzgados con competencia en el departamento.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño (Decreto 130-2017 y reformas) para residentes de Caridad. Asistencia en detenciones y audiencias.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia y visitas ante los juzgados de familia con competencia en Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores agrícolas y comerciales de Caridad.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes y trámites registrales para residentes de Caridad y el departamento de Valle.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Caridad?', respuesta: 'Nuestra sede física está en Nacaome, a unos 30 km de Caridad. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando el caso lo requiere.' },
+      { pregunta: '¿Atienden casos penales en Caridad?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, incluyendo audiencia inicial, medidas cautelares y juicio oral.' },
+      { pregunta: '¿Cómo solicito una consulta desde Caridad?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Caridad. La primera consulta de evaluación no tiene costo.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+    ],
+    geo: { lat: 13.74, lng: -87.46 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+    ],
+  },
+  {
+    slug: 'alianza',
+    ciudad: 'Alianza',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 25,
+    title: 'Abogados en Alianza, Valle — Asesoría Jurídica',
+    description:
+      'Abogados en Alianza, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención coordinada desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Alianza, Valle',
+    heroSubtitle:
+      'Atendemos a residentes de Alianza y la zona fronteriza de Valle en defensa penal, familia, laboral y civil con un bufete del sur de Honduras.',
+    intro:
+      'Alianza es un municipio del departamento de Valle, próximo a Goascorán y a la frontera con El Salvador, a unos 25 km de Nacaome. Atendemos a familias y trabajadores de Alianza con servicios jurídicos integrales coordinados desde nuestra sede en Nacaome.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Defensa técnica en procesos penales conforme al Código Penal hondureño para residentes de Alianza y la zona fronteriza.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia y custodia ante los juzgados de familia con competencia en Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores agrícolas de Alianza.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, herencias, poderes notariales y trámites registrales para residentes de Alianza.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Alianza?', respuesta: 'Nuestra sede está en Nacaome, a unos 25 km de Alianza. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando es necesario.' },
+      { pregunta: '¿Atienden casos penales en Alianza?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, desde la audiencia inicial hasta el juicio oral y los recursos.' },
+      { pregunta: '¿Cómo solicito una consulta desde Alianza?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Alianza. La primera consulta de evaluación no tiene costo.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+    ],
+    geo: { lat: 13.78, lng: -87.71 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué hacer si me detienen en Honduras?' },
+    ],
+  },
+  {
+    slug: 'concepcion-de-maria',
+    ciudad: 'Concepción de María',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 65,
+    title: 'Abogados en Concepción de María, Choluteca — Consulta Legal',
+    description:
+      'Abogados en Concepción de María, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Concepción de María',
+    heroSubtitle:
+      'Atendemos a residentes de Concepción de María y el sur de Choluteca en defensa penal, familia, laboral y civil con un bufete del sur de Honduras.',
+    intro:
+      'Concepción de María es un municipio del departamento de Choluteca, en el sur de Honduras, a unos 65 km de Nacaome. Prestamos servicios jurídicos a familias, agricultores y comerciantes de Concepción de María y sus aldeas, coordinando presencia ante los juzgados con competencia en Choluteca.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño (Decreto 130-2017 y reformas) para residentes de Concepción de María.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia y custodia ante los juzgados de familia con competencia en Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores agrícolas y comerciales de Concepción de María.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, herencias, poderes y trámites registrales para residentes de Concepción de María.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Concepción de María?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 65 km de Concepción de María. Coordinamos la atención por WhatsApp y nos desplazamos para audiencias y diligencias.' },
+      { pregunta: '¿Atienden casos penales en Concepción de María?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, coordinando presencia en los juzgados de Choluteca.' },
+      { pregunta: '¿Cómo solicito una consulta desde Concepción de María?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. La primera consulta de evaluación no tiene costo.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+    ],
+    geo: { lat: 13.20, lng: -87.15 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
+    ],
+  },
+  {
+    slug: 'san-antonio-de-flores',
+    ciudad: 'San Antonio de Flores',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 55,
+    title: 'Abogados en San Antonio de Flores, Choluteca — Asesoría Legal',
+    description:
+      'Abogados en San Antonio de Flores, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en San Antonio de Flores',
+    heroSubtitle:
+      'Atendemos a residentes de San Antonio de Flores y el departamento de Choluteca en defensa penal, familia, laboral y civil con un bufete del sur de Honduras.',
+    intro:
+      'San Antonio de Flores es un municipio del departamento de Choluteca, en el sur de Honduras, a unos 55 km de Nacaome. Prestamos servicios jurídicos a familias, agricultores y comerciantes de San Antonio de Flores y sus aldeas, coordinando presencia ante los juzgados con competencia en Choluteca.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño vigente para residentes de San Antonio de Flores.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia y custodia ante los juzgados de familia con competencia en Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores agrícolas de San Antonio de Flores.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, herencias, poderes y trámites registrales para residentes de San Antonio de Flores.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en San Antonio de Flores?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 55 km de San Antonio de Flores. Coordinamos la atención por WhatsApp y nos desplazamos cuando el caso lo requiere.' },
+      { pregunta: '¿Atienden casos penales en San Antonio de Flores?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, coordinando presencia en los juzgados de Choluteca.' },
+      { pregunta: '¿Cómo solicito una consulta desde San Antonio de Flores?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. La primera consulta de evaluación no tiene costo.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+    ],
+    geo: { lat: 13.45, lng: -87.30 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué hacer si me detienen en Honduras?' },
+    ],
+  },
 ];
 
 /**

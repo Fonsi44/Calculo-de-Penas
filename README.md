@@ -118,11 +118,17 @@ entorno (ver `.env.example`).
 ### Indexación y metadata
 - **`app/robots.ts`**: robots dinámico AI-aware (permite GPTBot/ClaudeBot,
   bloquea scrapers no deseados). Referencia el sitemap.
-- **`app/sitemap.ts`**: sitemap DB-driven (~220 URLs). Rutas estáticas desde
-  `data/seo/canonical-paths.json`, categorías y posts desde la DB.
+- **`app/sitemap.ts`**: sitemap DB-driven (~213 URLs). Rutas estáticas desde
+  `data/seo/canonical-paths.json` (53 rutas), categorías y posts desde la DB.
 - **Canonical absoluto** por página + `metadataBase` global.
 - **`public/llms.txt`** + generador (`scripts/generate-llms-txt.mjs`, corre en
-  `postbuild`): resumen del despacho para modelos de IA.
+  `postbuild`): resumen del despacho para modelos de IA, con bloque declarativo
+  factual (identidad, especialidad penal, zona sur, contacto).
+- **SEO local**: 16 landings de ciudad en `data/landings-locales.ts`
+  (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo,
+  Marcovia, Pespire, Namasigüe, Orocuina, Langue, Amapala, Caridad, Alianza,
+  Concepción de María, San Antonio de Flores) + 2 landings comerciales penales
+  (`/abogado-penalista-nacaome`, `/abogado-penalista-choluteca`).
 - **RSS feed**: `/blog/feed.xml`.
 
 ### Schema.org (JSON-LD)

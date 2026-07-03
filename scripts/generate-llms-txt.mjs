@@ -68,6 +68,12 @@ const STATIC_ROUTES = [
   { path: '/abogados-en-orocuina', label: 'Abogados en Orocuina', desc: 'Landing SEO local — cobertura en Orocuina, Choluteca.' },
   { path: '/abogados-en-langue', label: 'Abogados en Langue', desc: 'Landing SEO local — cobertura en Langue, Valle.' },
   { path: '/abogados-en-amapala', label: 'Abogados en Amapala', desc: 'Landing SEO local — cobertura en Amapala, Valle.' },
+  { path: '/abogados-en-caridad', label: 'Abogados en Caridad', desc: 'Landing SEO local — cobertura en Caridad, Valle.' },
+  { path: '/abogados-en-alianza', label: 'Abogados en Alianza', desc: 'Landing SEO local — cobertura en Alianza, Valle.' },
+  { path: '/abogados-en-concepcion-de-maria', label: 'Abogados en Concepción de María', desc: 'Landing SEO local — cobertura en Concepción de María, Choluteca.' },
+  { path: '/abogados-en-san-antonio-de-flores', label: 'Abogados en San Antonio de Flores', desc: 'Landing SEO local — cobertura en San Antonio de Flores, Choluteca.' },
+  { path: '/abogado-penalista-nacaome', label: 'Abogado Penalista en Nacaome', desc: 'Landing comercial — defensa penal especializada en Nacaome, Valle.' },
+  { path: '/abogado-penalista-choluteca', label: 'Abogado Penalista en Choluteca', desc: 'Landing comercial — defensa penal especializada en Choluteca.' },
 ];
 
 // --------------------------------------------------------------------------
@@ -163,6 +169,13 @@ function render() {
   lines.push('# Pineda y Asociados HN');
   lines.push('');
   lines.push('> Sitio web oficial de Pineda y Asociados, bufete jurídico multidisciplinario con sede en Nacaome, Valle, Honduras. Este archivo ayuda a sistemas de IA, motores de respuesta y asistentes de búsqueda a identificar las fuentes públicas, canónicas y relevantes del sitio.');
+  lines.push('');
+
+  // Sección: Descripción factual para motores generativos (GEO, audit P6 Jul 2026).
+  // Bloque declarativo, citable y verificable: identidad, especialidad, zona, contacto.
+  lines.push('## Sobre el despacho (descripción factual)');
+  lines.push('');
+  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras), con más de 15 años de ejercicio profesional. Su especialidad destacada es la defensa penal en el departamento de Valle, Choluteca y el sur de Honduras, conforme al Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Atiende detenciones, audiencias iniciales, medidas cautelares, juicio oral y recursos. Cubre 14 áreas de práctica: penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Horario: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio director: Danilo Pineda Maradiaga, abogado colegiado en Honduras. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
   lines.push('');
 
   // Sección: Sitio oficial

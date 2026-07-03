@@ -6,6 +6,72 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-03 — seo/geo/cro: pilar penal, landings locales y GEO (Release 100)
+
+Implementación de las prioridades derivadas de la auditoría integral
+SEO/GEO/UX/CRO. Foco: derecho penal local, indexabilidad, conversión y
+visibilidad para IA generativa. Sin cambios visuales en la web pública
+fuera de los hubs comerciales (R5). Sin datos inventados (R4).
+
+### SEO local — nuevas landings (P7)
+- **4 landings locales** creadas con contenido único, NAP coherente, FAQ local,
+  schema y CTA: `/abogados-en-caridad`, `/abogados-en-alianza`,
+  `/abogados-en-concepcion-de-maria`, `/abogados-en-san-antonio-de-flores`.
+- Antes redirigían (404 soft) al vecino más cercano; ahora tienen página propia.
+- Datos en `data/landings-locales.ts`; páginas en `app/(public)/abogados-en-*/`.
+- Redirects 301 eliminados en `next.config.ts` para estas 4 rutas.
+
+### Pilar penal — landing comercial Choluteca (P3)
+- **`/abogado-penalista-choluteca`** creada como landing comercial propia
+  (antes redirigía a un post editorial). Hero, áreas de defensa, delitos
+  frecuentes, FAQ local, NAP, CTA WhatsApp/teléfono y schema
+  `Service`+`FAQPage`+`BreadcrumbList`.
+- Redirect invertido: el post `/blog/derecho-penal/abogado-penalista-choluteca`
+  ahora consolida hacia la landing comercial.
+
+### SEO técnico — redirects (P1)
+- Variantes comerciales penales sin página propia consolidadas vía 301 hacia
+  el hub o la landing especializada más cercana (`/abogado-penalista-san-lorenzo`,
+  `/defensa-penal-choluteca`, `/defensa-penal-nacaome`,
+  `/defensa-penal-sur-honduras`).
+- Los 161 errores 4xx de Bing requieren el listado detallado de URLs desde
+  Bing WMT para triaje completo (no inventado — R12).
+
+### GEO / IA generativa (P6)
+- **`llms.txt`** ampliado con sección «Sobre el despacho (descripción factual)»:
+  bloque declarativo, citable y verificable para ChatGPT/Perplexity/Copilot.
+- 6 nuevas rutas añadidas al generador (`scripts/generate-llms-txt.mjs`).
+- Bloque declarativo GEO insertado en `/derecho-penal` (identidad,
+  especialidad, zona, contacto).
+
+### CTR / metadatos (P4)
+- Meta descriptions optimizadas en `/derecho-penal` (CTR: defensa urgente +
+  WhatsApp + sur de Honduras) y `/solicitar-consulta` (respuesta en horario
+  hábil + áreas + WhatsApp).
+
+### CRO (P5)
+- `FloatingContactRail` verificado: render global en `app/(public)/layout.tsx`,
+  presente en todas las páginas públicas incluidas las penales.
+- Formulario `/solicitar-consulta`: campos obligatorios ya limitados a
+  nombre, teléfono y resumen (email opcional). Microcopy de confianza
+  añadido bajo el botón (confidencialidad, sin garantía de resultados).
+
+### Fuente única SEO
+- `data/seo/canonical-paths.json` actualizado: 53 rutas estáticas, techo
+  IndexNow 223, sitemap observado 213. Las 5 nuevas landings añadidas.
+
+### Validación
+- `npm run lint` ✅ (0 errors, 0 warnings)
+- `npm run build` ✅ (53 rutas estáticas compiladas, IndexNow dry-run OK)
+- `npm test` ✅ (730 tests, 33 archivos)
+- `npm run audit:seo` ✅ (0 errores, 0 warnings, 6 infos)
+
+### Riesgos pendientes
+- Triaje completo de los 161 errores 4xx de Bing (requiere listado WMT).
+- Colegiación, reseñas y credenciales verificables: pendiente aporte del despacho.
+
+---
+
 ## 2026-07-03 — seo/perf/geo: auditoría completa y mejoras técnicas (Release 99)
 
 Auditoría integral de la web pública tras informe SEO externo. La

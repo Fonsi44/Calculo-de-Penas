@@ -1,8 +1,8 @@
 {
   "_comment": "Fuente única de verdad (Jun 2026) para las rutas públicas ESTÁTICAS del sitio. La consume app/sitemap.ts (para PUBLIC_ROUTES) y scripts/submit-indexnow.mjs (catálogo IndexNow). Cualquier nueva página pública estática debe añadirse aquí. NO incluir rutas dinámicas (posts del blog, categorías dinámicas) — ésas se derivan en runtime desde la DB vía sitemap.ts. NO incluir rutas privadas (intranet, api, calculadora, casos, cp, delitos, atajos, preview, login) — bloqueadas en robots.ts y excluidas en submit-indexnow.mjs. Mantener en orden alfabético aproximado por prioridad. Sitemap reportado (Bing 2026-06-23): 202 URLs (38 estáticas + 20 categorías + ~159 posts). El techo de envío IndexNow es 212 (202 + 10 de margen) por defecto. Actualizado Jul 2026: noindex aplicado a páginas legales; /proceso-penal eliminado (obsoleto, redirect a /derecho-penal).",
   "version": 2,
-  "sitemap_observed_count": 208,
-  "indexnow_safety_cap": 218,
+  "sitemap_observed_count": 213,
+  "indexnow_safety_cap": 223,
   "static_routes": [
     {
       "path": "/",
@@ -42,6 +42,12 @@
     },
     {
       "path": "/abogado-civil-nacaome",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogado-penalista-choluteca",
       "priority": 0.9,
       "change_frequency": "monthly",
       "days_ago": 0
@@ -115,6 +121,30 @@
     {
       "path": "/abogados-en-amapala",
       "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-caridad",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-alianza",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-concepcion-de-maria",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-san-antonio-de-flores",
+      "priority": 0.8,
       "change_frequency": "monthly",
       "days_ago": 0
     },

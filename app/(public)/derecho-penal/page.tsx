@@ -20,7 +20,7 @@ import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = {
   title: { absolute: `Abogado Penalista en ${site.address.city}, ${site.address.department} | Defensa Penal Técnica` },
-  description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial en detenciones, audiencias y recursos. Consulta urgente por WhatsApp ${site.whatsappDisplay}. Cubrimos San Lorenzo, Choluteca y zona sur de Honduras.`,
+  description: `Abogado penalista en Nacaome, Valle. Defensa urgente en detenciones, audiencias, medidas cautelares y recursos. Consulta confidencial por WhatsApp ${site.whatsappDisplay}. Sur de Honduras.`,
   alternates: { canonical: '/derecho-penal' },
   keywords: [
     'abogado penalista Nacaome',
@@ -203,6 +203,23 @@ const PRIORITY_PENAL_SLUGS = [
       </div>
 
       <TrustBar background="light" />
+
+      {/* Bloque declarativo GEO (audit P6 Jul 2026): párrafo factual y citable
+          para que motores generativos (ChatGPT, Perplexity, Copilot) puedan
+          resumir correctamente identidad, especialidad, zona y contacto. */}
+      <Section spacing="sm">
+        <div className="max-w-3xl mx-auto bg-accent/5 rounded-2xl p-5 border border-accent/10">
+          <p className="text-sm text-text-secondary leading-relaxed">
+            <strong className="text-text">Pineda y Asociados</strong> es un bufete
+            jurídico en <strong className="text-text">Nacaome, Valle (Honduras)</strong>,
+            especializado en <strong className="text-text">defensa penal</strong> en el
+            departamento de Valle, Choluteca y el sur de Honduras. Atiende detenciones,
+            audiencias iniciales, medidas cautelares, juicio oral y recursos conforme al
+            Código Penal Decreto 130-2017 y reformas vigentes. Atención de lunes a sábado
+            de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724.
+          </p>
+        </div>
+      </Section>
 
       <Section spacing="sm">
         <div className="max-w-4xl mx-auto bg-accent/5 rounded-2xl p-5 border border-accent/10 text-center">

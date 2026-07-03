@@ -192,21 +192,28 @@ const nextConfig: NextConfig = {
       { source: '/bufete-juridico-valle', destination: '/abogados-en-nacaome', permanent: true },
       { source: '/abogado-penalista-honduras', destination: '/abogado-penalista-nacaome', permanent: true },
       // === FIX 404: Landings locales huérfanas (Audit Jul 2026, Fase 2) ===
-      // URLs de ciudades secundarias sin page.tsx ni datos en landings-locales.
-      // Redirigimos a la ciudad más cercana o al hub departamental mientras se crean las páginas.
+      // URLs de ciudades secundarias. Cuatro ya tienen landing propia (audit
+      // P7 Jul 2026): Caridad, Alianza, Concepción de María, San Antonio de
+      // Flores. Las restantes siguen redirigiendo al vecino más cercano.
       { source: '/abogados-en-aramcina', destination: '/abogados-en-nacaome', permanent: true },
-      { source: '/abogados-en-caridad', destination: '/abogados-en-san-lorenzo', permanent: true },
-      { source: '/abogados-en-alianza', destination: '/abogados-en-goascoran', permanent: true },
       { source: '/abogados-en-apacilagua', destination: '/abogados-en-choluteca', permanent: true },
-      { source: '/abogados-en-concepcion-de-maria', destination: '/abogados-en-choluteca', permanent: true },
       { source: '/abogados-en-duyure', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
       { source: '/abogados-en-morolica', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
-      { source: '/abogados-en-san-antonio-de-flores', destination: '/abogados-en-choluteca', permanent: true },
-      // === KEYWORDS COMERCIALES: Redirects Choluteca blog→comercial ===
-      { source: '/abogado-penalista-choluteca', destination: '/blog/derecho-penal/abogado-penalista-choluteca', permanent: true },
+      // === KEYWORDS COMERCIALES: Choluteca ===
+      // /abogado-penalista-choluteca es ahora landing comercial propia (audit
+      // SEO Jul 2026, P3). Invertimos el redirect: el post editorial antiguo
+      // consolida autoridad hacia la landing con CTA y NAP.
+      { source: '/blog/derecho-penal/abogado-penalista-choluteca', destination: '/abogado-penalista-choluteca', permanent: true },
       { source: '/abogado-laboralista-choluteca', destination: '/blog/derecho-laboral/abogado-laboral-choluteca', permanent: true },
       { source: '/abogado-de-familia-choluteca', destination: '/blog/derecho-de-familia/abogado-familia-choluteca', permanent: true },
       { source: '/abogado-civil-choluteca', destination: '/blog/derecho-civil/abogado-civil-choluteca', permanent: true },
+      // === P1 AUDIT SEO Jul 2026: variantes comerciales penales sin página propia ===
+      // Variantes de búsqueda frecuentes que no tienen landing dedicada →
+      // consolidan hacia el hub penal o la landing especializada más cercana.
+      { source: '/abogado-penalista-san-lorenzo', destination: '/derecho-penal', permanent: true },
+      { source: '/defensa-penal-choluteca', destination: '/abogado-penalista-choluteca', permanent: true },
+      { source: '/defensa-penal-nacaome', destination: '/abogado-penalista-nacaome', permanent: true },
+      { source: '/defensa-penal-sur-honduras', destination: '/derecho-penal', permanent: true },
     ];
   },
   // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key

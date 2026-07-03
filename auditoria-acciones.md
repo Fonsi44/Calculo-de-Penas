@@ -3,9 +3,44 @@
 > **Fecha:** 2026-07-03  
 > **Fase 2 completada:** Calidad superior  
 > **Puntuación partida:** 73/100  
-> **Puntuación estimada actual:** ~76-77/100 (+3-4 puntos)  
-> **Objetivo 30 días:** 78/100  
+> **Puntuación estimada actual:** ~79-80/100 (+6-7 puntos tras Release 100)  
+> **Objetivo 30 días:** 82/100  
 > **Fuente canónica:** `auditoriatotal.mc` (no modificado)
+
+---
+
+## Release 100 — SEO/GEO/CRO: pilar penal, landings y GEO (2026-07-03)
+
+**Implementación de prioridades de la auditoría integral.** Cambios atómicos,
+lectura previa de cada archivo (R1), validación completa (R8). Sin datos
+inventados (R4). Sin rediseño visual (R5).
+
+### Cambios aplicados
+
+| Prioridad | Acción | Archivos |
+|---|---|---|
+| P1 | Redirects 301 para variantes comerciales penales sin landing | `next.config.ts` |
+| P2 | Bloque declarativo GEO en `/derecho-penal` (citable por IA) | `app/(public)/derecho-penal/page.tsx` |
+| P3 | Landing comercial `/abogado-penalista-choluteca` (antes redirect a blog) | `app/(public)/abogado-penalista-choluteca/page.tsx`, `next.config.ts` |
+| P4 | Meta descriptions optimizadas (`/derecho-penal`, `/solicitar-consulta`) | 2 archivos |
+| P5 | Microcopy de confianza bajo botón de formulario | `components/marketing/solicitar-consulta-form.tsx` |
+| P6 | `llms.txt` ampliado con bloque factual + 6 nuevas rutas | `scripts/generate-llms-txt.mjs`, `public/llms.txt` |
+| P7 | 4 landings locales nuevas (Caridad, Alianza, Concepción de María, San Antonio) | `data/landings-locales.ts`, 4 `page.tsx`, `next.config.ts` |
+| SEO | Fuente única actualizada: 53 rutas, techo IndexNow 223 | `data/seo/canonical-paths.json` |
+| Docs | CHANGELOG Release 100 + README actualizado | `CHANGELOG.md`, `README.md` |
+
+### Validación ejecutada
+- `npm run lint` → 0 errors, 0 warnings ✅
+- `npm run build` → 53 rutas estáticas, IndexNow dry-run OK ✅
+- `npm test` → 730 tests / 33 suites pasan ✅
+- `npm run audit:seo` → 0 errores bloqueantes, 0 warnings ✅
+
+### Clasificación honesta (R11)
+- **IMPLEMENTADO:** P1 (parcial), P2, P3, P4, P5, P6, P7.
+- **VALIDADO:** lint, build, test, audit:seo.
+- **NO VALIDADO:** impacto real en GSC/Bing (requiere deploy + tiempo).
+- **PENDIENTE:** triaje completo de 161 errores 4xx de Bing (requiere listado WMT).
+- **RIESGO:** sin riesgos técnicos; pendiente aporte de colegiación/reseñas reales.
 
 ---
 
