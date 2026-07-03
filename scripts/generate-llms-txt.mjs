@@ -66,6 +66,16 @@ const STATIC_ROUTES = [
   { path: '/abogados-en-pespire', label: 'Abogados en Pespire', desc: 'Landing SEO local — cobertura en Pespire, Choluteca.' },
   { path: '/abogados-en-namasigue', label: 'Abogados en Namasigüe', desc: 'Landing SEO local — cobertura en Namasigüe, Choluteca.' },
   { path: '/abogados-en-orocuina', label: 'Abogados en Orocuina', desc: 'Landing SEO local — cobertura en Orocuina, Choluteca.' },
+  { path: '/abogados-en-amapala', label: 'Abogados en Amapala', desc: 'Landing SEO local — cobertura en Amapala, Valle.' },
+  { path: '/abogados-en-langue', label: 'Abogados en Langue', desc: 'Landing SEO local — cobertura en Langue, Valle.' },
+  { path: '/abogados-en-apacilagua', label: 'Abogados en Apacilagua', desc: 'Landing SEO local — cobertura en Apacilagua, Choluteca.' },
+  { path: '/abogados-en-aramecina', label: 'Abogados en Aramecina', desc: 'Landing SEO local — cobertura en Aramecina, Valle.' },
+  { path: '/abogados-en-caridad', label: 'Abogados en Caridad', desc: 'Landing SEO local — cobertura en Caridad, Valle.' },
+  { path: '/abogados-en-alianza', label: 'Abogados en Alianza', desc: 'Landing SEO local — cobertura en Alianza, Valle.' },
+  { path: '/abogados-en-concepcion-de-maria', label: 'Abogados en Concepción de María', desc: 'Landing SEO local — cobertura en Concepción de María, Choluteca.' },
+  { path: '/abogados-en-duyure', label: 'Abogados en Duyure', desc: 'Landing SEO local — cobertura en Duyure, Choluteca.' },
+  { path: '/abogados-en-morolica', label: 'Abogados en Morolica', desc: 'Landing SEO local — cobertura en Morolica, Choluteca.' },
+  { path: '/abogados-en-san-antonio-de-flores', label: 'Abogados en San Antonio de Flores', desc: 'Landing SEO local — cobertura en San Antonio de Flores, Choluteca.' },
 ];
 
 // --------------------------------------------------------------------------

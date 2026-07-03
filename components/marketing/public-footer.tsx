@@ -44,6 +44,16 @@ const COBERTURA = [
   { label: 'Abogados en Pespire', title: 'Abogados en Pespire, Choluteca — asesoría legal en el sur', href: '/abogados-en-pespire' },
   { label: 'Abogados en Namasigüe', title: 'Abogados en Namasigüe, Choluteca — consulta y asesoría legal', href: '/abogados-en-namasigue' },
   { label: 'Abogados en Orocuina', title: 'Abogados en Orocuina, Choluteca — consulta y asesoría legal', href: '/abogados-en-orocuina' },
+  { label: 'Abogados en Amapala', title: 'Abogados en Amapala, Valle — defensa legal en la isla', href: '/abogados-en-amapala' },
+  { label: 'Abogados en Langue', title: 'Abogados en Langue, Valle — consulta jurídica cercana', href: '/abogados-en-langue' },
+  { label: 'Abogados en Apacilagua', title: 'Abogados en Apacilagua, Choluteca — asesoría jurídica', href: '/abogados-en-apacilagua' },
+  { label: 'Abogados en Aramecina', title: 'Abogados en Aramecina, Valle — asesoría jurídica', href: '/abogados-en-aramecina' },
+  { label: 'Abogados en Caridad', title: 'Abogados en Caridad, Valle — defensa y asesoría legal', href: '/abogados-en-caridad' },
+  { label: 'Abogados en Alianza', title: 'Abogados en Alianza, Valle — consulta jurídica costera', href: '/abogados-en-alianza' },
+  { label: 'Abogados en Concepción de María', title: 'Abogados en Concepción de María, Choluteca', href: '/abogados-en-concepcion-de-maria' },
+  { label: 'Abogados en Duyure', title: 'Abogados en Duyure, Choluteca — asesoría legal', href: '/abogados-en-duyure' },
+  { label: 'Abogados en Morolica', title: 'Abogados en Morolica, Choluteca — defensa legal', href: '/abogados-en-morolica' },
+  { label: 'Abogados en San Antonio de Flores', title: 'Abogados en San Antonio de Flores, Choluteca', href: '/abogados-en-san-antonio-de-flores' },
 ];
 
 const LEGALES = [

@@ -477,6 +477,344 @@ export const landingsLocales: LandingLocal[] = [
       { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
     ],
   },
+  {
+    slug: 'amapala',
+    ciudad: 'Amapala',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 40,
+    title: 'Abogados en Amapala, Valle — Defensa Legal en el Sur',
+    description:
+      'Abogados en Amapala, Valle (Honduras). Defensa penal, familia, laboral y asesoría portuaria. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Isla y puerto · Valle, Honduras',
+    heroTitle: 'Abogados en Amapala, Valle',
+    heroSubtitle:
+      'Atendemos a clientes de Amapala (Isla del Tigre) y el Golfo de Fonseca. Defensa penal, derecho de familia, laboral y asesoría legal para el sector portuario y pesquero.',
+    intro:
+      'Amapala, municipio insular del departamento de Valle en el Golfo de Fonseca, es un puerto histórico y destino turístico del sur de Honduras. A 40 km de Nacaome, prestamos servicios jurídicos a residentes, comerciantes, pescadores y empresas de la isla y sus alrededores.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño para residentes de Amapala. Asistencia en detenciones, audiencias y juicio oral.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos de familia ante los juzgados del departamento de Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría laboral para trabajadores del sector pesquero, turístico y comercial de Amapala.' },
+      { titulo: 'Derecho mercantil y portuario', descripcion: 'Constitución de empresas, contratos comerciales y asesoría legal para negocios del sector portuario y turístico de la isla.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Amapala?', respuesta: 'Nuestra sede está en Nacaome, a unos 40 km de Amapala. Coordinamos la atención por teléfono, WhatsApp y podemos desplazarnos cuando el caso lo requiera.' },
+      { pregunta: '¿Atienden casos urgentes en Amapala?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Qué servicios ofrecen al sector pesquero?', respuesta: 'Asesoramos en derecho laboral, mercantil y civil a empresas y trabajadores del sector pesquero y portuario de Amapala y el Golfo de Fonseca.' },
+      { pregunta: '¿Cómo solicito una consulta desde Amapala?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Amapala. Evaluamos su caso y le damos un presupuesto por escrito sin compromiso.' },
+    ],
+    geo: { lat: 13.3, lng: -87.65 },
+    postsRelacionados: [
+      { categoria: 'practica-legal', slug: 'abogados-en-amapala-valle', titulo: 'Abogados en Amapala: guía legal completa' },
+    ],
+  },
+  {
+    slug: 'langue',
+    ciudad: 'Langue',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 22,
+    title: 'Abogados en Langue, Valle — Consulta Legal',
+    description:
+      'Abogados en Langue, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome a 22 km. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Langue, Valle',
+    heroSubtitle:
+      'Atendemos a clientes de Langue y municipios cercanos. Defensa penal, derecho de familia, laboral y civil con bufete de la zona sur de Honduras.',
+    intro:
+      'Langue es un municipio del departamento de Valle ubicado a solo 22 km de Nacaome. Atendemos a familias, trabajadores y comerciantes de Langue y sus aldeas con servicios jurídicos integrales respaldados por más de 15 años de ejercicio profesional.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en procesos penales conforme al Código Penal hondureño vigente para residentes de Langue. Asistencia desde la detención y audiencias.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados con competencia en Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos injustificados y asesoría para trabajadores agrícolas y comerciales de Langue.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de Langue y la zona de Valle.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Langue?', respuesta: 'Nuestra sede principal está en Nacaome, a solo 22 km de Langue. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono.' },
+      { pregunta: '¿Qué servicios ofrecen en Langue?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Brindamos asesoría integral a residentes de Langue y el departamento de Valle.' },
+      { pregunta: '¿Cómo agendo una consulta desde Langue?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. La primera consulta de evaluación no tiene costo.' },
+      { pregunta: '¿Atienden casos penales urgentes en Langue?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+    ],
+    geo: { lat: 13.62, lng: -87.65 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
+  },
+  {
+    slug: 'aramecina',
+    ciudad: 'Aramecina',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 45,
+    title: 'Abogados en Aramecina, Valle — Asesoría Jurídica',
+    description:
+      'Abogados en Aramecina, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Aramecina, Valle',
+    heroSubtitle:
+      'Servicios jurídicos para residentes de Aramecina y la zona oriental del departamento de Valle. Defensa penal, derecho de familia, laboral y civil.',
+    intro:
+      'Aramecina es un municipio del oriente del departamento de Valle, cercano a la frontera con El Salvador. A 45 km de Nacaome, ofrecemos servicios jurídicos a los residentes de Aramecina y sus comunidades con el respaldo de un bufete multidisciplinario del sur de Honduras.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño para residentes de Aramecina. Acompañamiento en audiencias y defensa técnica.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados de Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas de Aramecina y la zona oriental de Valle.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad en Aramecina y el departamento de Valle.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Aramecina?', respuesta: 'Nuestra sede está en Nacaome, a 45 km de Aramecina. Atendemos a clientes de Aramecina de forma remota y coordinamos presencia cuando el caso lo requiere.' },
+      { pregunta: '¿Qué tipo de casos atienden en Aramecina?', respuesta: 'Principalmente derecho de familia, laboral, penal, civil y trámites notariales para residentes de Aramecina y la zona oriental de Valle.' },
+      { pregunta: '¿Cómo me contacto si vivo en Aramecina?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono para su comodidad.' },
+      { pregunta: '¿Ofrecen consulta sin costo?', respuesta: 'Sí. La primera consulta de evaluación no tiene costo. Tras analizar su caso le entregamos un presupuesto por escrito.' },
+    ],
+    geo: { lat: 13.74, lng: -87.71 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
+  },
+  {
+    slug: 'caridad',
+    ciudad: 'Caridad',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 18,
+    title: 'Abogados en Caridad, Valle — Defensa y Asesoría',
+    description:
+      'Abogados en Caridad, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome a 18 km. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Caridad, Valle',
+    heroSubtitle:
+      'Atendemos a residentes de Caridad y el centro del departamento de Valle. Defensa penal, derecho de familia, laboral y civil con bufete de la región.',
+    intro:
+      'Caridad es un municipio del centro del departamento de Valle, ubicado a solo 18 km de Nacaome. Ofrecemos servicios jurídicos integrales a las familias, trabajadores y comerciantes de Caridad con la cercanía y el respaldo de nuestro bufete en la zona sur.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Defensa técnica en procesos penales conforme al Código Penal hondureño. Asistencia en detenciones y audiencias para residentes de Caridad.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia y régimen de visitas ante los juzgados de familia con competencia en Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos injustificados y asesoría para trabajadores de Caridad y la zona central de Valle.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes y trámites notariales con validez en todo el territorio hondureño.' },
+    ],
+    faqs: [
+      { pregunta: '¿Dónde están ubicados para atender Caridad?', respuesta: 'Nuestra sede está en Nacaome, a solo 18 km de Caridad. La cercanía permite coordinar atención presencial con rapidez.' },
+      { pregunta: '¿Qué servicios jurídicos ofrecen en Caridad?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Somos un bufete multidisciplinario con más de 15 años de experiencia.' },
+      { pregunta: '¿Cómo solicito una consulta desde Caridad?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 o use el formulario de contacto. Le damos un presupuesto por escrito sin compromiso.' },
+      { pregunta: '¿Atienden emergencias fuera de horario?', respuesta: 'En casos de detención o situaciones penales urgentes, contáctenos por WhatsApp indicando que es una emergencia. Estamos para ayudarle.' },
+    ],
+    geo: { lat: 13.47, lng: -87.55 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
+  },
+  {
+    slug: 'alianza',
+    ciudad: 'Alianza',
+    departamento: 'Valle',
+    sedeFisica: false,
+    distanciaKm: 30,
+    title: 'Abogados en Alianza, Valle — Consulta Jurídica',
+    description:
+      'Abogados en Alianza, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome a 30 km. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Valle, Honduras',
+    heroTitle: 'Abogados en Alianza, Valle',
+    heroSubtitle:
+      'Servicios jurídicos para residentes de Alianza y el litoral del departamento de Valle. Defensa penal, derecho de familia, laboral y civil.',
+    intro:
+      'Alianza es un municipio costero del departamento de Valle, ubicado a 30 km de Nacaome en la ribera del Golfo de Fonseca. Atendemos a familias, pescadores y comerciantes de Alianza con servicios jurídicos respaldados por nuestro bufete en la zona sur de Honduras.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación penal conforme al Código Penal hondureño para residentes de Alianza. Defensa técnica en audiencias y procesos.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos de familia ante los juzgados del departamento de Valle.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores del sector pesquero y comercial de Alianza.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de Alianza y la zona costera.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Alianza?', respuesta: 'Nuestra sede principal está en Nacaome, a 30 km de Alianza. Coordinamos la atención por teléfono, WhatsApp y presencia cuando el caso lo requiere.' },
+      { pregunta: '¿Atienden casos del sector pesquero en Alianza?', respuesta: 'Sí. Asesoramos en derecho laboral y civil a trabajadores del sector pesquero y comercial de Alianza y el Golfo de Fonseca.' },
+      { pregunta: '¿Cómo inicio una consulta legal desde Alianza?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724. Evaluamos su caso sin costo y le damos un presupuesto por escrito antes de cualquier gestión.' },
+      { pregunta: '¿Cubren todo el departamento de Valle?', respuesta: 'Sí. Atendemos Alianza, Nacaome, San Lorenzo, Goascorán, Amapala, Langue, Aramecina, Caridad y todos los municipios de Valle.' },
+    ],
+    geo: { lat: 13.35, lng: -87.58 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
+      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
+      { categoria: 'derecho-civil', slug: 'reclamar-deuda-legalmente-honduras', titulo: 'Cómo reclamar una deuda legalmente en Honduras' },
+    ],
+  },
+  {
+    slug: 'apacilagua',
+    ciudad: 'Apacilagua',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 58,
+    title: 'Abogados en Apacilagua, Choluteca — Asesoría Jurídica',
+    description:
+      'Abogados en Apacilagua, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Apacilagua, Choluteca',
+    heroSubtitle:
+      'Servicios jurídicos para residentes de Apacilagua y el centro de Choluteca. Defensa penal, derecho de familia, laboral y civil.',
+    intro:
+      'Apacilagua es un municipio del centro del departamento de Choluteca, con importante actividad agropecuaria en el sur de Honduras. A 58 km de Nacaome, brindamos asesoría legal integral a los residentes de Apacilagua y sus comunidades.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Defensa técnica en procesos penales conforme al Código Penal hondureño para residentes de Apacilagua.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados de Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas de Apacilagua y el centro de Choluteca.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de Apacilagua.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Apacilagua?', respuesta: 'Nuestra sede principal está en Nacaome, a 58 km de Apacilagua. Atendemos a clientes de Apacilagua de forma remota con coordinación presencial cuando es necesario.' },
+      { pregunta: '¿Qué tipo de casos atienden en Apacilagua?', respuesta: 'Principalmente derecho de familia, laboral, penal y civil. También trámites notariales y asesoría en contratos y propiedad.' },
+      { pregunta: '¿Cómo inicio una consulta legal desde Apacilagua?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Evaluamos su caso sin costo y le entregamos un presupuesto por escrito.' },
+      { pregunta: '¿Ofrecen consulta a distancia?', respuesta: 'Sí. Puede iniciar su consulta por WhatsApp o teléfono. Si se requiere presencia, coordinamos el desplazamiento a Apacilagua.' },
+    ],
+    geo: { lat: 13.46, lng: -87.08 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
+      { categoria: 'derecho-laboral', slug: 'derechos-laborales-basicos-honduras', titulo: 'Derechos laborales básicos en Honduras: guía para trabajadores' },
+      { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
+    ],
+  },
+  {
+    slug: 'concepcion-de-maria',
+    ciudad: 'Concepción de María',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 75,
+    title: 'Abogados en Concepción de María, Choluteca',
+    description:
+      'Abogados en Concepción de María, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Concepción de María',
+    heroSubtitle:
+      'Atendemos a clientes de Concepción de María y el sur de Choluteca. Defensa penal, derecho de familia, laboral y civil.',
+    intro:
+      'Concepción de María es un municipio del sur del departamento de Choluteca, cercano a la frontera con Nicaragua. A 75 km de Nacaome, ofrecemos servicios jurídicos a los residentes de Concepción de María y las comunidades fronterizas del sur.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en procesos penales conforme al Código Penal hondureño para residentes de Concepción de María.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia y procesos familiares ante los juzgados con competencia en Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas de Concepción de María y la zona sur.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad en Concepción de María.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Concepción de María?', respuesta: 'Nuestra sede está en Nacaome, a 75 km de Concepción de María. Atendemos con coordinación remota y presencial cuando el caso lo requiere.' },
+      { pregunta: '¿Atienden en la zona fronteriza con Nicaragua?', respuesta: 'Sí. Cubrimos Concepción de María, San Marcos de Colón y otros municipios fronterizos del sur de Choluteca.' },
+      { pregunta: '¿Cómo me contacto si vivo en Concepción de María?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Hacemos la primera consulta por teléfono o videollamada.' },
+      { pregunta: '¿Cuánto cuesta una consulta jurídica?', respuesta: 'La primera consulta de evaluación no tiene costo. Tras analizar su caso, le entregamos un presupuesto por escrito para que decida sin compromiso.' },
+    ],
+    geo: { lat: 13.23, lng: -87.03 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
+      { categoria: 'derecho-laboral', slug: 'derechos-laborales-basicos-honduras', titulo: 'Derechos laborales básicos en Honduras: guía para trabajadores' },
+      { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
+    ],
+  },
+  {
+    slug: 'duyure',
+    ciudad: 'Duyure',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 85,
+    title: 'Abogados en Duyure, Choluteca — Asesoría Legal',
+    description:
+      'Abogados en Duyure, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Duyure, Choluteca',
+    heroSubtitle:
+      'Servicios jurídicos para residentes de Duyure y el oriente de Choluteca. Defensa penal, derecho de familia, laboral y civil.',
+    intro:
+      'Duyure es un municipio del oriente del departamento de Choluteca, con tradición agrícola y ganadera. A 85 km de Nacaome, brindamos asesoría legal integral a los residentes de Duyure y las comunidades del oriente de Choluteca.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Defensa técnica en procesos penales conforme al Código Penal hondureño para residentes de Duyure.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados de Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas de Duyure.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas de terrenos, poderes notariales y trámites de propiedad en Duyure.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Duyure?', respuesta: 'Nuestra sede principal está en Nacaome, Valle, a 85 km de Duyure. Atendemos a clientes de Duyure de forma remota con coordinación presencial cuando es necesario.' },
+      { pregunta: '¿Qué servicios ofrecen en Duyure?', respuesta: 'Defensa penal, derecho de familia, laboral y civil. Brindamos asesoría integral a residentes de Duyure y todo el departamento de Choluteca.' },
+      { pregunta: '¿Cómo inicio una consulta legal desde Duyure?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724 o use el formulario web. Evaluamos su caso sin costo y le damos un presupuesto por escrito.' },
+      { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
+    ],
+    geo: { lat: 13.53, lng: -86.88 },
+    postsRelacionados: [
+      { categoria: 'proceso-penal', slug: 'etapa-investigacion-proceso-penal-honduras', titulo: 'Investigación Penal en Honduras: Plazos, derechos y cómo defenderte' },
+      { categoria: 'derecho-civil', slug: 'danos-perjuicios-indemnizacion-honduras', titulo: 'Daños y Perjuicios en Honduras: Guía Completa para Reclamar' },
+      { categoria: 'practica-legal', slug: 'costos-honorarios-abogados-como-funcionan-honduras', titulo: 'Honorarios de abogados en Honduras: guía completa de costos' },
+    ],
+  },
+  {
+    slug: 'morolica',
+    ciudad: 'Morolica',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 80,
+    title: 'Abogados en Morolica, Choluteca — Defensa Legal',
+    description:
+      'Abogados en Morolica, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en Morolica, Choluteca',
+    heroSubtitle:
+      'Atendemos a clientes de Morolica y el centro-oriente de Choluteca. Defensa penal, derecho de familia, laboral, civil y asesoría notarial.',
+    intro:
+      'Morolica es un municipio del centro-oriente del departamento de Choluteca. A 80 km de Nacaome, ofrecemos servicios jurídicos integrales a los residentes de Morolica y sus comunidades vecinas con el respaldo de un bufete consolidado en la zona sur de Honduras.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Representación en procesos penales conforme al Código Penal hondureño para residentes de Morolica.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia y procesos familiares ante los juzgados con competencia en Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas de Morolica.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de Morolica.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en Morolica?', respuesta: 'Nuestra sede está en Nacaome, a 80 km de Morolica. Atendemos a clientes de Morolica con coordinación remota y presencial cuando el caso lo requiere.' },
+      { pregunta: '¿Qué servicios ofrecen en Morolica?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Somos un bufete multidisciplinario que cubre todo el sur de Honduras.' },
+      { pregunta: '¿Cómo agendo una consulta desde Morolica?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono para su comodidad.' },
+      { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Morolica, Choluteca, Marcovia, Pespire, San Marcos de Colón y todos los municipios de Choluteca.' },
+    ],
+    geo: { lat: 13.56, lng: -86.95 },
+    postsRelacionados: [
+      { categoria: 'proceso-penal', slug: 'etapa-investigacion-proceso-penal-honduras', titulo: 'Investigación Penal en Honduras: Plazos, derechos y cómo defenderte' },
+      { categoria: 'derecho-civil', slug: 'danos-perjuicios-indemnizacion-honduras', titulo: 'Daños y Perjuicios en Honduras: Guía Completa para Reclamar' },
+      { categoria: 'practica-legal', slug: 'costos-honorarios-abogados-como-funcionan-honduras', titulo: 'Honorarios de abogados en Honduras: guía completa de costos' },
+    ],
+  },
+  {
+    slug: 'san-antonio-de-flores',
+    ciudad: 'San Antonio de Flores',
+    departamento: 'Choluteca',
+    sedeFisica: false,
+    distanciaKm: 72,
+    title: 'Abogados en San Antonio de Flores, Choluteca',
+    description:
+      'Abogados en San Antonio de Flores, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+    heroEyebrow: 'Choluteca, Honduras',
+    heroTitle: 'Abogados en San Antonio de Flores',
+    heroSubtitle:
+      'Servicios jurídicos para residentes de San Antonio de Flores y el oriente de Choluteca. Defensa penal, derecho de familia, laboral y civil.',
+    intro:
+      'San Antonio de Flores es un municipio del oriente del departamento de Choluteca. A 72 km de Nacaome, brindamos asesoría legal integral a los residentes de San Antonio de Flores y sus comunidades vecinas.',
+    servicios: [
+      { titulo: 'Defensa penal', descripcion: 'Defensa técnica en procesos penales conforme al Código Penal hondureño para residentes de San Antonio de Flores.' },
+      { titulo: 'Derecho de familia', descripcion: 'Divorcios, pensión alimenticia, custodia de menores y procesos familiares ante los juzgados de Choluteca.' },
+      { titulo: 'Derecho laboral', descripcion: 'Reclamación de prestaciones, despidos y asesoría para trabajadores agrícolas de San Antonio de Flores.' },
+      { titulo: 'Derecho civil y notarial', descripcion: 'Contratos, compraventas, poderes notariales y trámites de propiedad para residentes de San Antonio de Flores.' },
+    ],
+    faqs: [
+      { pregunta: '¿Tienen oficina en San Antonio de Flores?', respuesta: 'Nuestra sede principal está en Nacaome, a 72 km de San Antonio de Flores. Atendemos a clientes de este municipio de forma remota con coordinación presencial.' },
+      { pregunta: '¿Qué tipo de casos atienden en San Antonio de Flores?', respuesta: 'Principalmente derecho de familia, laboral, penal y civil. También trámites notariales y asesoría en contratos y propiedad.' },
+      { pregunta: '¿Cómo inicio una consulta legal?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Evaluamos su caso sin costo y le entregamos un presupuesto por escrito.' },
+      { pregunta: '¿Ofrecen consulta a distancia?', respuesta: 'Sí. Puede iniciar su consulta por WhatsApp o teléfono. Si se requiere presencia, coordinamos el desplazamiento a San Antonio de Flores.' },
+    ],
+    geo: { lat: 13.58, lng: -86.89 },
+    postsRelacionados: [
+      { categoria: 'proceso-penal', slug: 'etapa-investigacion-proceso-penal-honduras', titulo: 'Investigación Penal en Honduras: Plazos, derechos y cómo defenderte' },
+      { categoria: 'derecho-civil', slug: 'danos-perjuicios-indemnizacion-honduras', titulo: 'Daños y Perjuicios en Honduras: Guía Completa para Reclamar' },
+      { categoria: 'practica-legal', slug: 'costos-honorarios-abogados-como-funcionan-honduras', titulo: 'Honorarios de abogados en Honduras: guía completa de costos' },
+    ],
+  },
 ];
 
 /**
@@ -504,12 +842,12 @@ export const TOP_COBERTURA_SLUGS = new Set([
   'choluteca',
   'san-lorenzo',
   'goascoran',
-  'san-marcos-de-colon',
-  'el-triunfo',
+  'amapala',
   'marcovia',
   'pespire',
-  'namasigue',
-  'orocuina',
+  'san-marcos-de-colon',
+  'el-triunfo',
+  'langue',
 ]);
 
 /** Devuelve las landings destacadas para la Home (top 10 por relevancia). */
