@@ -4,67 +4,377 @@
   "sitemap_observed_count": 224,
   "indexnow_safety_cap": 234,
   "static_routes": [
-    { "path": "/", "priority": 1.0, "change_frequency": "weekly", "days_ago": 0 },
-    { "path": "/servicios-juridicos", "priority": 1.0, "change_frequency": "weekly", "days_ago": 0 },
-    { "path": "/derecho-penal", "priority": 1.0, "change_frequency": "weekly", "days_ago": 0 },
-    { "path": "/abogado-penalista-nacaome", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogado-laboralista-nacaome", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogado-de-familia-nacaome", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogado-civil-nacaome", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-nacaome", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-choluteca", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-san-lorenzo", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-goascoran", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-amapala", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-pespire", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-san-marcos-de-colon", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-marcovia", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-langue", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-aramecina", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-caridad", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-alianza", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-el-triunfo", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-namasigue", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-orocuina", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-apacilagua", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-concepcion-de-maria", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-duyure", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-morolica", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/abogados-en-san-antonio-de-flores", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/despacho", "priority": 0.9, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/preguntas-frecuentes", "priority": 0.9, "change_frequency": "weekly", "days_ago": 1 },
-    { "path": "/blog", "priority": 0.6, "change_frequency": "weekly", "days_ago": 1 },
-    { "path": "/solicitar-consulta", "priority": 0.7, "change_frequency": "monthly", "days_ago": 2 },
-    { "path": "/hondurenos-en-espana", "priority": 0.8, "change_frequency": "monthly", "days_ago": 3 },
-    { "path": "/como-llegar", "priority": 0.6, "change_frequency": "weekly", "days_ago": 0 },
-    { "path": "/aviso-legal", "priority": 0.4, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/politica-editorial", "priority": 0.2, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/politica-privacidad", "priority": 0.2, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/politica-cookies", "priority": 0.2, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/terminos", "priority": 0.2, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/disclaimer", "priority": 0.2, "change_frequency": "monthly", "days_ago": 0 },
-    { "path": "/servicios-juridicos/derecho-de-familia", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/derecho-laboral", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/derecho-civil-y-notarial", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/derecho-mercantil-empresarial", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/derecho-bancario-y-financiero", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/derecho-administrativo-y-servicio-civil", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/regulacion-sanitaria", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/extranjeria-en-honduras", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/propiedad-intelectual", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/tributario-fiscal", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/ambiental-regulatorio", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/servicios-juridicos/conciliacion-y-arbitraje", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/atencion-casos-penales-litigiosos", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/mediacion-conflictos-penales-y-multas", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/menores-justicia-juvenil", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/proceso-penal-completo", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/recursos-y-defensa-avanzada", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/estrategia-penal-y-litigio", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/derecho-penal/ejecucion-penal-y-beneficios", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/hondurenos-en-espana/gestion-documental-y-legalizacion", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/hondurenos-en-espana/actos-notariales-internacionales", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 },
-    { "path": "/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero", "priority": 0.5, "change_frequency": "monthly", "days_ago": 30 }
+    {
+      "path": "/",
+      "priority": 1,
+      "change_frequency": "weekly",
+      "days_ago": 0
+    },
+    {
+      "path": "/servicios-juridicos",
+      "priority": 1,
+      "change_frequency": "weekly",
+      "days_ago": 0
+    },
+    {
+      "path": "/derecho-penal",
+      "priority": 1,
+      "change_frequency": "weekly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogado-penalista-nacaome",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogado-laboralista-nacaome",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogado-de-familia-nacaome",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogado-civil-nacaome",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-nacaome",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-choluteca",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-san-lorenzo",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-goascoran",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-amapala",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-pespire",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-san-marcos-de-colon",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-marcovia",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-el-triunfo",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-namasigue",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-alianza",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-apacilagua",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-aramecina",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-caridad",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-concepcion-de-maria",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-duyure",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-langue",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-morolica",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-orocuina",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-san-antonio-de-flores",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/despacho",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/preguntas-frecuentes",
+      "priority": 0.9,
+      "change_frequency": "weekly",
+      "days_ago": 1
+    },
+    {
+      "path": "/blog",
+      "priority": 0.6,
+      "change_frequency": "weekly",
+      "days_ago": 1
+    },
+    {
+      "path": "/solicitar-consulta",
+      "priority": 0.7,
+      "change_frequency": "monthly",
+      "days_ago": 2
+    },
+    {
+      "path": "/hondurenos-en-espana",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 3
+    },
+    {
+      "path": "/como-llegar",
+      "priority": 0.6,
+      "change_frequency": "weekly",
+      "days_ago": 0
+    },
+    {
+      "path": "/aviso-legal",
+      "priority": 0.4,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/politica-editorial",
+      "priority": 0.2,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/politica-privacidad",
+      "priority": 0.2,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/politica-cookies",
+      "priority": 0.2,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/terminos",
+      "priority": 0.2,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/disclaimer",
+      "priority": 0.2,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/servicios-juridicos/derecho-de-familia",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/derecho-laboral",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/derecho-civil-y-notarial",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/regulacion-sanitaria",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/extranjeria-en-honduras",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/propiedad-intelectual",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/tributario-fiscal",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/ambiental-regulatorio",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/servicios-juridicos/conciliacion-y-arbitraje",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/mediacion-conflictos-penales-y-multas",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/menores-justicia-juvenil",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/proceso-penal-completo",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/recursos-y-defensa-avanzada",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/estrategia-penal-y-litigio",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/derecho-penal/ejecucion-penal-y-beneficios",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/hondurenos-en-espana/gestion-documental-y-legalizacion",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    },
+    {
+      "path": "/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero",
+      "priority": 0.5,
+      "change_frequency": "monthly",
+      "days_ago": 30
+    }
   ]
 }

@@ -27,7 +27,7 @@ import { Card } from '@/components/ui/card';
 import { GoogleReviews } from '@/components/marketing/google-reviews';
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
-import { landingsLocales } from '@/data/landings-locales';
+import { getFeaturedLandings } from '@/data/landings-locales';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
@@ -154,7 +154,7 @@ export default async function HomePage() {
     })),
   };
 
-  const featuredCoverage = landingsLocales;
+  const featuredCoverage = getFeaturedLandings();
 
   return (
     <>

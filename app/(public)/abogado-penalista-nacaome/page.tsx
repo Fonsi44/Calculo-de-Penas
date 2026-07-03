@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { site, absoluteUrl, whatsappHref } from '@/lib/site';
+import { site, absoluteUrl, whatsappHref, telHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
-import { Scale, Shield, Clock, Gavel } from 'lucide-react';
+import { Scale, Shield, Clock, Gavel, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Abogado Penalista en Nacaome — Defensa Penal 24h',
@@ -157,6 +157,13 @@ export default async function AbogadoPenalistaNacaomePage() {
               className="btn-shimmer btn-shadow-accent h-12 px-5 rounded-lg bg-accent text-primary font-semibold text-sm flex items-center justify-center gap-2"
             >
               Solicitar consulta penal
+            </a>
+            <a
+              href={telHref()}
+              className="btn-shadow-secondary btn-shadow-secondary-hover h-12 px-5 rounded-lg bg-surface border border-border-strong text-primary font-semibold text-sm flex items-center justify-center gap-2 hover:border-accent transition-colors"
+            >
+              <Phone size={18} aria-hidden="true" />
+              Llamar ahora
             </a>
           </div>
         </Card>

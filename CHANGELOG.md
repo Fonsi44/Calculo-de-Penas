@@ -5,6 +5,89 @@
 
 ---
 
+## 2026-07-03 — feat: restauración 10 landings + top 10 cobertura Home + CRO landings comerciales (Release 89)
+
+Corrección crítica: 10 landings locales eliminadas del working tree son restauradas.
+Home ahora muestra solo top 10 ciudades (de 20 indexables). Landings comerciales
+reciben botón telefónico. llms.txt regenerado con 20 landings. canonical-paths.json
+actualizado. 0 errores lint, 730 tests OK, IndexNow verificado.
+
+### Cambios implementados
+
+**Restauración de landings eliminadas (Fase 1):**
+- 10 archivos `app/(public)/abogados-en-{slug}/page.tsx` estaban eliminados del
+  working tree (`D` en git status). Restaurados vía `git checkout`.
+  Afectados: Langue, Aramecina, Caridad, Alianza, Orocuina, Apacilagua,
+  Concepción de María, Duyure, Morolica, San Antonio de Flores.
+- `data/seo/canonical-paths.json`: añadidas 10 entradas faltantes (priority 0.9,
+  monthly). `sitemap_observed_count`: 214→224. `indexnow_safety_cap`: 224→234.
+  Total: 52 rutas estáticas.
+
+**Top 10 cobertura en Home (Fase 4):**
+- `data/landings-locales.ts`: añadido `TOP_COBERTURA_SLUGS` (Set de 10 slugs)
+  y helper `getFeaturedLandings()` que filtra las 20 landings a las 10 más
+  relevantes para la sección visual principal de Cobertura en la Home.
+- `app/(public)/page.tsx`: sección Cobertura ahora usa `getFeaturedLandings()`
+  en lugar de `landingsLocales` (20→10 ciudades). Eliminada importación sin uso.
+- Criterio documentado: sede física (Nacaome), población regional (Choluteca,
+  San Lorenzo), actividad comercial (puertos), zonas fronterizas (Goascorán,
+  San Marcos de Colón), agroindustria (Marcovia, Pespire, El Triunfo),
+  proximidad (Langue 22km). Balance: 5 Valle + 5 Choluteca.
+- Las 20 ciudades mantienen landings indexables (sitemap, footer, llms.txt,
+  schema areaServed). Solo la Home limita a 10 por UX/SEO local.
+
+**CRO — Botón telefónico en landings comerciales (Fase 7):**
+- 4 landings comerciales (`abogado-penalista-nacaome`, `abogado-laboralista-nacaome`,
+  `abogado-de-familia-nacaome`, `abogado-civil-nacaome`): añadido botón
+  "Llamar ahora" con icono `Phone` en la sección CTA final (background="muted").
+  Ahora tienen 3 CTAs: WhatsApp (verde) + Solicitar consulta (primary) +
+  Llamar ahora (bordered), igual que las landings locales regulares.
+- Añadidos imports: `telHref` de `@/lib/site`, `Phone` de `lucide-react`.
+
+**llms.txt (Fase 8):**
+- `public/llms.txt`: regenerado vía `npm run llms:generate`. 20 landings
+  confirmadas (líneas 16-35). 123 líneas total.
+
+### Auditoría con datos reales
+
+**GSC (7d, 26 Jun–3 Jul):**
+- 43 clics, 2.447 imp, CTR 1.74%, pos media 6.8.
+- 8 posts con alto impresión + CTR bajo (<3%) identificados para optimización:
+  poder-legal (201 imp, 0.50% CTR), estafas (130 imp, 0.77%), prescripción
+  deudas (126 imp, 2.38%), pensión alimenticia (109 imp, 0.92%), custodia
+  hijos (106 imp, 0.94%), derechos trabajadora embarazada (82 imp, 1.22%),
+  sobreseimiento (55 imp, 1.82%), pensión porcentaje (187 imp, 3.21%).
+- Landings comerciales con 0% CTR: Choluteca (36 imp), Nacaome (22 imp),
+  San Lorenzo (8 imp).
+
+**Bing WMT:**
+- 2.387 crawled, 161 errores 4xx, 44 queries. 4 URLs sin indexar.
+
+**Blog CTAs:**
+- `components/blog/blog-cta-bar.tsx`: 20/20 categorías con CTA personalizada.
+- Todos los posts (149) renderizan CTA bar al final del artículo.
+- Mid-article CTA en 35 posts curados.
+
+### Validación
+- `lint`: 0 errores, 0 warnings
+- `test`: 730 tests · 33 suites · 0 fallos
+- `audit:indexacion`: 30/30 probes pass
+- `seo:health`: 15/15 OK
+- `audit:seo:stdout`: 0 errores bloqueantes
+- `validar:meta-seo`: 18/18 rutas OK
+- `audit:internal-links`: 12/12 CTA efectivo
+- `indexnow:dry`: 28 URLs (20 landings + 8 core), dentro del safety cap (234)
+- `build`: OK (363+ páginas estáticas, 0 errores TypeScript)
+
+### Pendientes externos (no automatizables)
+- Optimizar titles/metas de 8 posts con bajo CTR (recomendaciones documentadas).
+- Verificar dominio en Bing Webmaster Tools.
+- Google Business Profile con NAP consistente.
+- Link building local: directorios jurídicos, medios hondureños.
+- Mejorar metas de landings comerciales (0% CTR en GSC).
+
+---
+
 ## 2026-07-03 — feat: auditoría SEO completa + CTA full coverage + OG fix + IndexNow (Release 88)
 
 Auditoría SEO integral con datos reales de GSC, Bing WMT, PostgreSQL y 10 scripts

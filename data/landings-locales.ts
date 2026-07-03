@@ -817,6 +817,40 @@ export const landingsLocales: LandingLocal[] = [
   },
 ];
 
+/**
+ * Top 10 ciudades para la sección visual principal de Cobertura en la Home.
+ *
+ * Criterio (Jul 2026):
+ * - Sede física (Nacaome, distancia 0 km)
+ * - Población y relevancia regional (Choluteca, San Lorenzo)
+ * - Actividad comercial (puertos: San Lorenzo, Amapala)
+ * - Zonas fronterizas (Goascorán → El Salvador, San Marcos de Colón → Nicaragua)
+ * - Agroindustria (Marcovia, Pespire, El Triunfo)
+ * - Proximidad a la sede (Langue, 22 km)
+ * - Balance departamental: 5 Valle + 5 Choluteca
+ *
+ * Las 20 ciudades mantienen sus landings indexables (sitemap, footer, llms.txt,
+ * schema areaServed). Esta lista solo controla qué 10 se muestran en la Home
+ * para evitar saturación visual y mejorar UX.
+ */
+export const TOP_COBERTURA_SLUGS = new Set([
+  'nacaome',
+  'choluteca',
+  'san-lorenzo',
+  'goascoran',
+  'amapala',
+  'marcovia',
+  'pespire',
+  'san-marcos-de-colon',
+  'el-triunfo',
+  'langue',
+]);
+
+/** Devuelve las landings destacadas para la Home (top 10 por relevancia). */
+export function getFeaturedLandings(): LandingLocal[] {
+  return landingsLocales.filter((l) => TOP_COBERTURA_SLUGS.has(l.slug));
+}
+
 /** Devuelve una landing por slug, o undefined si no existe. */
 export function getLandingBySlug(slug: string): LandingLocal | undefined {
   return landingsLocales.find((l) => l.slug === slug);
