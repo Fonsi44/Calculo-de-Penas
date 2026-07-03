@@ -206,6 +206,8 @@ export function legalServiceSchema() {
       { '@type': 'City', name: 'Pespire' },
       { '@type': 'City', name: 'Namasigüe' },
       { '@type': 'City', name: 'Orocuina' },
+      { '@type': 'City', name: 'Langue' },
+      { '@type': 'City', name: 'Amapala' },
       { '@type': 'State', name: site.address.department },
       { '@type': 'Country', name: site.address.country },
     ],
@@ -416,6 +418,8 @@ export function founderSchema() {
       { '@type': 'City', name: 'Pespire' },
       { '@type': 'City', name: 'Namasigüe' },
       { '@type': 'City', name: 'Orocuina' },
+      { '@type': 'City', name: 'Langue' },
+      { '@type': 'City', name: 'Amapala' },
       { '@type': 'State', name: site.address.department },
     ],
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
@@ -490,6 +494,8 @@ export function thaniaSchema() {
       { '@type': 'City', name: 'Pespire' },
       { '@type': 'City', name: 'Namasigüe' },
       { '@type': 'City', name: 'Orocuina' },
+      { '@type': 'City', name: 'Langue' },
+      { '@type': 'City', name: 'Amapala' },
       { '@type': 'State', name: site.address.department },
     ],
   };
@@ -555,6 +561,8 @@ export function emilSchema() {
       { '@type': 'City', name: 'Pespire' },
       { '@type': 'City', name: 'Namasigüe' },
       { '@type': 'City', name: 'Orocuina' },
+      { '@type': 'City', name: 'Langue' },
+      { '@type': 'City', name: 'Amapala' },
       { '@type': 'State', name: site.address.department },
     ],
   };
