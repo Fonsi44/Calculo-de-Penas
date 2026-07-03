@@ -508,6 +508,43 @@ const PRIORITY_PENAL_SLUGS = [
       </Section>
       )}
 
+      {/* CLUSTER GEOGRÁFICO PENAL (Jul 2026): conecta el hub penal con las
+          landings especializadas y las ciudades prioritarias del sur. Antes
+          estas URLs eran semihuérfanas (solo footer/sitemap). Ahora reciben
+          autoridad directa desde el hub pilar. */}
+      <Section background="muted" spacing="md" ariaLabel="Defensa penal por ciudad">
+        <SectionHeader
+          eyebrow="Cobertura penal"
+          title="Defensa penal en el sur de Honduras"
+          subtitle="Atendemos casos penales en Nacaome, Choluteca, San Lorenzo y toda la zona sur. Coordinamos presencia en juzgados y asistencia urgente."
+          align="center"
+        />
+        <div className="max-w-4xl mx-auto flex flex-wrap gap-2 justify-center">
+          <Link
+            href="/abogado-penalista-nacaome"
+            className="focus-ring chip-specialty inline-flex items-center bg-accent/10 border-accent/30 text-accent-dark font-semibold"
+          >
+            Penalista en Nacaome
+          </Link>
+          <Link
+            href="/abogado-penalista-choluteca"
+            className="focus-ring chip-specialty inline-flex items-center bg-accent/10 border-accent/30 text-accent-dark font-semibold"
+          >
+            Penalista en Choluteca
+          </Link>
+          <Link href="/abogados-en-nacaome" className="focus-ring chip-specialty">Nacaome</Link>
+          <Link href="/abogados-en-choluteca" className="focus-ring chip-specialty">Choluteca</Link>
+          <Link href="/abogados-en-san-lorenzo" className="focus-ring chip-specialty">San Lorenzo</Link>
+          <Link href="/abogados-en-goascoran" className="focus-ring chip-specialty">Goascorán</Link>
+          <Link href="/abogados-en-san-marcos-de-colon" className="focus-ring chip-specialty">San Marcos de Colón</Link>
+          <Link href="/abogados-en-el-triunfo" className="focus-ring chip-specialty">El Triunfo</Link>
+          <Link href="/abogados-en-marcovia" className="focus-ring chip-specialty">Marcovia</Link>
+          <Link href="/abogados-en-pespire" className="focus-ring chip-specialty">Pespire</Link>
+          <Link href="/abogados-en-namasigue" className="focus-ring chip-specialty">Namasigüe</Link>
+          <Link href="/abogados-en-orocuina" className="focus-ring chip-specialty">Orocuina</Link>
+        </div>
+      </Section>
+
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}

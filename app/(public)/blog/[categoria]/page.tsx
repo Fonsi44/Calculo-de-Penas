@@ -162,6 +162,32 @@ export default async function BlogCategoryPage(props: Props) {
         )}
       </Section>
 
+      {/* Enlaces cruzados a otras categorías — SSR estático (no JS).
+          CAUSA RAÍZ indexación (Jul 2026): las categorías eran semihuérfanas
+          (solo enlazadas vía sidebar con JS o vía sitemap). Este bloque HTML
+          garantiza que Googlebot descubra todas las categorías sin ejecutar
+          JavaScript, distribuyendo autoridad interna desde cada categoría. */}
+      <Section background="muted" spacing="sm" ariaLabel="Otras categorías del blog">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-serif font-bold text-lg text-primary mb-4">
+            Explore otras áreas del derecho
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {blogCategories
+              .filter((c) => c.slug !== categoria)
+              .map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/blog/${c.slug}`}
+                  className="focus-ring inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-surface border border-border-light text-text-secondary hover:border-accent/40 hover:text-primary transition-colors"
+                >
+                  {c.nombre}
+                </Link>
+              ))}
+          </div>
+        </div>
+      </Section>
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify(blogCollectionSchema(
           `${cat.nombre} | Blog Jurídico | ${site.name}`,

@@ -18,6 +18,8 @@ import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
+import { injectContextLinks, detectMentionedCities } from '@/lib/blog-context-linker';
+import { RelatedCities, RelatedCategories } from '@/components/marketing/related-links';
 import {
   toCardData,
   deriveCategoryCounts,
@@ -319,7 +321,15 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   // (server-side) para que el TOC y los fragment anchors (#section) existan en
   // el HTML servidor (SEO/GEO: crawlers y LLMs ven la estructura del doc).
   const rawHtml = injectMidArticleCta(post.body, post.slug);
-  const { html: articleHtml, headings } = injectHeadingIds(rawHtml);
+  const { html: withHeadings, headings } = injectHeadingIds(rawHtml);
+  // AUTO-LINKING CONTEXTUAL (Jul 2026): inserta enlaces internos a ciudades y
+  // áreas de práctica detectadas en el body. Crea la tela de araña blog→geo.
+  // Anti-over-optimization: máx 5 enlaces, respeta headings y anchors existentes.
+  const articleHtml = injectContextLinks(withHeadings, {
+    excludeHrefs: [postUrl], // evitar self-link
+  });
+  // Detecta ciudades mencionadas para el bloque RelatedCities al final.
+  const mentionedCities = detectMentionedCities(post.body);
   const faqItems = extractFAQSchema(post.body);
   const faqLd = faqPageSchema(faqItems);
 
@@ -546,6 +556,22 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           </Container>
         </Section>
       )}
+
+      {/* CLUSTER CONTEXTUAL (Jul 2026): ciudades + categorías relacionadas.
+          Cierra el silo: post → geo, post → taxonomía. Si el post menciona
+          una ciudad, se prioriza primera en el bloque geográfico. */}
+      <Section background="muted" spacing="sm">
+        <Container size="md">
+          <div className="flex flex-col gap-6">
+            <RelatedCities
+              mentionedCitySlug={mentionedCities[0] ?? null}
+              limit={6}
+              eyebrow="Atendemos en el sur de Honduras"
+            />
+            <RelatedCategories current={post.category} limit={8} />
+          </div>
+        </Container>
+      </Section>
 
       {/* ── FINAL CTA ── */}
       {/* Un único CTA de cierre por post. LocalConsultForm eliminado: era

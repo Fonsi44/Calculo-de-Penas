@@ -20,6 +20,7 @@ import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { RelatedCities } from '@/components/marketing/related-links';
 
 /**
  * Mapa de slug de área → abogado/a especialista que la dirige.
@@ -350,6 +351,16 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
               </p>
             </Card>
           ))}
+        </div>
+      </Section>
+
+      {/* CLUSTER GEOGRÁFICO (Jul 2026): conecta cada servicio con las
+          ciudades del sur. Antes los servicios no enlazaban a ninguna
+          ciudad — era un cluster desconectado. Ahora cada servicio
+          distribuye autoridad hacia las landings locales prioritarias. */}
+      <Section spacing="sm">
+        <div className="max-w-4xl">
+          <RelatedCities limit={8} />
         </div>
       </Section>
 

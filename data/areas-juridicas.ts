@@ -762,7 +762,7 @@ export const hubPenal: HubPenal = {
         { pregunta: '¿Qué delitos admiten conciliación penal en Honduras?', respuesta: 'Los delitos perseguibles por instancia particular, como lesiones leves, amenazas, injurias, daños y algunos delitos patrimoniales sin violencia. La conciliación extingue la acción penal si se cumple el acuerdo.' },
         { pregunta: '¿Puedo impugnar una multa de tránsito o del SAR?', respuesta: 'Sí. Para multas de tránsito, cabe recurso de reposición ante la autoridad municipal o el juzgado de faltas. Para multas del SAR, ARSA, ENEE o CONATEL, se interpone recurso de reconsideración en 15 días y, si se rechaza, demanda contencioso-administrativa.' },
       ],
-      areasRelacionadas: ['atencion-casos-penales-litigiosos', 'asesoria-preventiva'],
+      areasRelacionadas: ['atencion-casos-penales-litigiosos', 'estrategia-penal-y-litigio'],
       keywords: ['mediación penal Honduras', 'criterio de oportunidad', 'conciliación penal'],
     },
     {
@@ -921,7 +921,7 @@ export const hubPenal: HubPenal = {
       faqs: [
         { pregunta: '¿Cuándo se puede pedir libertad condicional en Honduras?', respuesta: 'Tras cumplir la mitad o las dos terceras partes de la pena, según el delito, y con buena conducta comprobada.' },
       ],
-      areasRelacionadas: ['proceso-penal-completo', 'asesoria-preventiva'],
+      areasRelacionadas: ['proceso-penal-completo', 'mediacion-conflictos-penales-y-multas'],
       keywords: ['libertad condicional Honduras', 'beneficios penitenciarios', 'INP Honduras'],
     },
   ],
@@ -1109,14 +1109,22 @@ export function getAllAreaSlugs(): string[] {
   return slugs;
 }
 
-export function getRelatedAreas(slug: string): AreaStandalone[] {
-  const all = [
+/**
+ * Devuelve las áreas relacionadas con un slug dado.
+ *
+ * Arreglado (Jul 2026): antes solo resolvía contra `areasGenerales`, lo que
+ * descartaba silenciosamente los targets penales/migrantes. Ahora resuelve
+ * contra TODAS las áreas (generales + grupos penales + subáreas migrantes).
+ * El tipo de retorno es AnyArea[] para incluir los tres tipos.
+ */
+export function getRelatedAreas(slug: string): AnyArea[] {
+  const all: AnyArea[] = [
     ...areasGenerales,
     ...hubPenal.grupos,
     ...hubMigrantes.subareas,
   ];
   const direct = all.find((a) => a.slug === slug)?.areasRelacionadas ?? [];
   return direct
-    .map((s) => areasGenerales.find((a) => a.slug === s))
-    .filter((a): a is AreaStandalone => Boolean(a));
+    .map((s) => all.find((a) => a.slug === s))
+    .filter((a): a is AnyArea => Boolean(a));
 }

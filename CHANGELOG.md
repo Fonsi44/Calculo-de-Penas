@@ -6,6 +6,50 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-03 — seo/internal-linking: reconstrucción arquitectura enlaces internos (Release 102)
+
+Reconstrucción completa del sistema de enlazado interno para crear una tela
+de araña temática que conecte servicios ↔ blog ↔ ciudades ↔ áreas de práctica.
+Resuelve los 4 clusters desconectados detectados en la auditoría de arquitectura.
+
+### Sistema semántico centralizado
+- **`lib/internal-links.ts`** (nuevo): grafo único de relaciones. Centraliza
+  `SERVICE_TO_BLOG_MAP` (servicio↔blog) y `BLOG_TO_SERVICE` (blog↔servicio)
+  que estaban duplicados en 4 archivos. Helpers: `getRelatedServices`,
+  `getRelatedCitiesForContent`, `getPriorityCities`, `getAllCities`.
+- **`lib/entity-dictionary.ts`** (nuevo): catálogo de 30+ entidades detectables
+  (ciudades, áreas de práctica, conceptos legales) con regex + peso semántico.
+- **`lib/blog-context-linker.ts`** (nuevo): auto-linker HTML-safe que inserta
+  enlaces contextuales en bodies de blog (máx 5/post, 1 por entidad, respeta
+  headings y anchors existentes). `detectMentionedCities` para priorización.
+- **`components/marketing/related-links.tsx`** (nuevo): 3 variantes SSR —
+  `RelatedServices`, `RelatedCities`, `RelatedCategories` (chips premium).
+
+### Puentes creados (clusters reconectados)
+- **Servicio → Ciudad**: cada `/servicios-juridicos/[slug]` ahora enlaza a 8
+  ciudades prioritarias (antes: cero enlaces).
+- **Hub servicios → Ciudades**: `/servicios-juridicos` enlaza a las 10
+  ciudades prioritarias (R18).
+- **Hub penal → Landings especializadas**: `/derecho-penal` enlaza a
+  `/abogado-penalista-nacaome`, `/abogado-penalista-choluteca` y 10 ciudades.
+- **Post → Ciudad/Servicio (auto-linking)**: bodies de blog detectan entidades
+  y enlazan automáticamente a sus páginas canónicas.
+- **Post → Ciudades relacionadas**: bloque SSR al final de cada post.
+- **Post → Otras categorías**: bloque SSR al final de cada post.
+
+### Limpieza de datos
+- **Slugs muertos eliminados**: `asesoria-preventiva` (referenciado pero
+  indefinido) reemplazado por slugs válidos en 2 grupos penales.
+- **`getRelatedAreas()` arreglado**: ahora resuelve penal/migrantes (antes
+  descartaba silenciosamente esos targets).
+
+### Validación
+- `npm run lint` ✅ (0 errors, 0 warnings)
+- `npm run build` ✅ (359 páginas, compilación limpia 28.6s)
+- `npm test` ✅ (730 tests, 33 suites)
+
+---
+
 ## 2026-07-03 — seo/geo/cro: pilar penal, landings locales y GEO (Release 100)
 
 Implementación de las prioridades derivadas de la auditoría integral

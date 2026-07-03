@@ -29,6 +29,7 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
+import { RelatedCities } from '@/components/marketing/related-links';
 
 export const metadata: Metadata = {
   // Absolute para controlar la longitud total y evitar que el template del
@@ -332,6 +333,17 @@ export default async function AreasJuridicasPage() {
               {' · '}
               <Link href="/blog" className="font-semibold text-primary hover:text-accent-dark transition-colors">blog jurídico</Link>
             </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* CLUSTER GEOGRÁFICO (Jul 2026): el hub de servicios conecta con las
+          10 ciudades prioritarias (R18). Distribuye autoridad hacia las
+          landings locales desde el segundo nivel de la arquitectura. */}
+      <Section spacing="sm">
+        <Container size="lg">
+          <div className="max-w-4xl">
+            <RelatedCities limit={10} eyebrow="Atendemos en todo el sur de Honduras" />
           </div>
         </Container>
       </Section>

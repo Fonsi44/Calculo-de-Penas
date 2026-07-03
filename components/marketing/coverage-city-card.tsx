@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { ArrowRight, MapPin, Scale, MessageCircle } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { ArrowRight, MapPin, Scale, MessageCircle, Clock } from 'lucide-react';
 import { whatsappHref } from '@/lib/site';
 import type { LandingLocal } from '@/data/landings-locales';
+import { Reveal } from '@/components/marketing/reveal';
 
 /**
  * Chips de servicios destacados por ciudad.
@@ -43,6 +43,9 @@ const CITY_DESCRIPTIONS: Record<string, string> = {
   caridad: 'Atención legal para Caridad y el centro de Valle, con consulta inicial sin compromiso.',
 };
 
+/** Marca visual para la ciudad sede (distinción jerárquica). */
+const HEADQUARTER_SLUGS = new Set<string>(['nacaome']);
+
 function getDescription(landing: LandingLocal): string {
   return CITY_DESCRIPTIONS[landing.slug] ?? `Atención jurídica integral para clientes de ${landing.ciudad} y la zona sur de Honduras.`;
 }
@@ -52,75 +55,82 @@ function getChips(slug: string): string[] {
 }
 
 /**
- * Tarjeta de ciudad de cobertura mejorada.
+ * Tarjeta de ciudad de cobertura — ficha profesional premium.
  *
- * Funciona como mini-landing: muestra ciudad, departamento, descripción
- * contextual, chips de servicios principales, señal de confianza y CTA
- * hacia la landing local. Incluye CTA secundario de WhatsApp.
+ * Refinamiento (Jul 2026): transformada de "grid genérico de tarjetas" a
+ * ficha de oficina jurídica. Mayor jerarquía del nombre de ciudad, badge de
+ * departamento refinado, chips modernos, separación elegante, hover spring
+ * discreto y elevación progresiva. Mantiene contenido, datos y SEO intactos.
  *
- * Es un Server Component (sin estado). Reutilizable en Home, páginas de
- * cobertura (ciudades cercanas) y cualquier sección de Cobertura.
+ * Server Component (sin estado). El wrapper reveal/escalonado lo aplica
+ * `CoverageCityGrid` vía <Reveal>.
  */
 export function CoverageCityCard({ landing }: { landing: LandingLocal }) {
   const href = `/abogados-en-${landing.slug}`;
   const description = getDescription(landing);
   const chips = getChips(landing.slug);
   const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica.`;
+  const isHQ = HEADQUARTER_SLUGS.has(landing.slug);
 
   return (
-    <Card
-      variant="elevated"
-      premium
-      padding="md"
-      className="h-full flex flex-col"
-    >
-      {/* Badge departamento + icono */}
-      <div className="flex items-center justify-between mb-3">
-        <span className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-          <MapPin size={20} aria-hidden="true" />
+    <article className="city-card focus-ring h-full flex flex-col p-5 md:p-6" tabIndex={-1}>
+      {/* Cabecera: icono + departamento + marca HQ */}
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <span
+          className="w-11 h-11 rounded-lg bg-gradient-to-br from-primary/12 to-primary/6 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0"
+          aria-hidden="true"
+        >
+          <MapPin size={20} />
         </span>
-        <span className="text-xxs font-bold uppercase tracking-widest text-accent-dark bg-accent/10 border border-accent/20 px-2 py-1 rounded-full">
-          {landing.departamento}
-        </span>
+        <div className="flex flex-col items-end gap-1.5">
+          <span className="badge-refined">{landing.departamento}</span>
+          {isHQ && (
+            <span className="inline-flex items-center text-xxs font-bold uppercase tracking-widest text-accent-dark">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent mr-1.5" aria-hidden="true" />
+              Sede
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* Título */}
-      <h3 className="font-bold text-base text-text leading-tight">
-        {`Abogados en ${landing.ciudad}`}
+      {/* Título — jerarquía máxima, serif, tracking ajustado */}
+      <h3 className="font-serif font-bold text-lg md:text-xl text-text leading-tight tracking-tight">
+        {landing.ciudad}
       </h3>
+      <p className="text-xxs font-semibold uppercase tracking-widest text-text-muted mt-1">
+        Abogados en {landing.departamento}
+      </p>
 
       {/* Descripción breve */}
-      <p className="text-sm text-text-secondary mt-1.5 leading-relaxed line-clamp-2">
+      <p className="text-sm text-text-secondary mt-3 leading-relaxed line-clamp-2">
         {description}
       </p>
 
-      {/* Chips de servicios */}
-      <div className="flex flex-wrap gap-1.5 mt-3">
+      {/* Chips de servicios — especialidades modernas */}
+      <div className="flex flex-wrap gap-1.5 mt-4">
         {chips.map((chip) => (
-          <span
-            key={chip}
-            className="inline-flex items-center gap-1 text-xxs font-semibold text-primary bg-primary/5 border border-primary/10 px-2 py-0.5 rounded"
-          >
-            <Scale size={10} aria-hidden="true" />
+          <span key={chip} className="chip-specialty">
+            <Scale size={10} className="text-accent-dark" aria-hidden="true" />
             {chip}
           </span>
         ))}
       </div>
 
-      {/* Separador sutil */}
-      <div className="border-t border-border-light my-4" aria-hidden="true" />
+      {/* Separador elegante */}
+      <hr className="divider-soft my-5" aria-hidden="true" />
 
-      {/* Señal de confianza */}
-      <p className="text-xs text-text-tertiary leading-relaxed">
-        Consulta inicial sin compromiso
-      </p>
+      {/* Señal de confianza + horario */}
+      <div className="flex items-center gap-1.5 text-xs text-text-tertiary">
+        <Clock size={12} aria-hidden="true" />
+        <span>Lun a Sáb 7:00 – 20:00</span>
+      </div>
 
-      {/* CTAs */}
-      <div className="mt-auto pt-3 flex items-center gap-2">
+      {/* CTAs — pegados al fondo */}
+      <div className="mt-auto pt-4 flex items-center gap-2">
         <Link
           href={href}
           aria-label={`Ver cobertura jurídica en ${landing.ciudad}, ${landing.departamento}`}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 rounded"
+          className="focus-ring inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors rounded-md"
         >
           Ver cobertura <ArrowRight size={14} aria-hidden="true" />
         </Link>
@@ -129,18 +139,21 @@ export function CoverageCityCard({ landing }: { landing: LandingLocal }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Consultar por WhatsApp sobre abogados en ${landing.ciudad}`}
-          className="ml-auto inline-flex items-center justify-center w-9 h-9 rounded-lg bg-success/10 border border-success/30 text-success hover:bg-success hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/50"
+          className="focus-ring ml-auto inline-flex items-center justify-center w-9 h-9 rounded-lg bg-success/10 border border-success/30 text-success hover:bg-success hover:text-white transition-all duration-200 hover:shadow-md hover:shadow-success/30"
         >
           <MessageCircle size={16} aria-hidden="true" />
         </a>
       </div>
-    </Card>
+    </article>
   );
 }
 
 /**
- * Grid de tarjetas de cobertura.
- * Renderiza un array de landings usando `CoverageCityCard`.
+ * Grid de tarjetas de cobertura — con reveal escalonado.
+ *
+ * Renderiza un array de landings usando `CoverageCityCard`, envuelto en
+ * <Reveal> para aparición progresiva con delays escalonados (0-360ms).
+ * Respeta prefers-reduced-motion (CSS desactiva la animación).
  */
 export function CoverageCityGrid({
   cities,
@@ -150,13 +163,27 @@ export function CoverageCityGrid({
   maxCities?: number;
 }) {
   const list = maxCities ? cities.slice(0, maxCities) : cities;
+  // Import dinámico para evitar problemas de bundling en Server Components.
+  // Reveal es 'use client', CoverageCityGrid es Server Component.
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-      {list.map((c) => (
-        <CoverageCityCard key={c.slug} landing={c} />
+      {list.map((c, i) => (
+        <RevealItem key={c.slug} index={i}>
+          <CoverageCityCard landing={c} />
+        </RevealItem>
       ))}
     </div>
   );
+}
+
+/**
+ * Wrapper client para reveal escalonado por índice.
+ * Separado para mantener CoverageCityGrid como Server Component.
+ */
+function RevealItem({ index, children }: { index: number; children: React.ReactNode }) {
+  // Ciclo de delays 1-6 (60ms, 120ms, 180ms, 240ms, 300ms, 360ms)
+  const delay = ((index % 6) + 1) as 1 | 2 | 3 | 4 | 5 | 6;
+  return <Reveal delay={delay}>{children}</Reveal>;
 }
 
 /**

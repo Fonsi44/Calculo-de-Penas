@@ -26,6 +26,7 @@ import {
   deriveAllTags,
   filterByMonth,
 } from '@/lib/blog-hub';
+import { blogCategories } from '@/data/blog/categories';
 import { TOP_ORGANIC_GUIDE_LINKS } from '@/data/seo/high-intent-guides';
 
 export const revalidate = 3600;
@@ -247,6 +248,33 @@ export default async function BlogHubPage(props: Props) {
               archive={archive}
               tags={tags}
             />
+          </div>
+        </Container>
+      </section>
+
+      {/* Índice de categorías — enlaces SSR estáticos (no JS).
+          CAUSA RAÍZ indexación (Jul 2026): el explorador de categorías
+          usaba solo onClick (JS), Googlebot no descubría las 20 categorías
+          sin render. Este bloque HTML garantiza descubrimiento + autoridad
+          interna directa desde /blog hacia todas las categorías. */}
+      <section className="py-8 md:py-10 bg-background" aria-label="Categorías del blog">
+        <Container>
+          <h2 className="font-serif font-bold text-xl md:text-2xl text-primary mb-2">
+            Explore el blog por categoría
+          </h2>
+          <p className="text-sm text-text-secondary mb-5 max-w-2xl">
+            Guías y análisis jurídicos organizados por área del derecho para Honduras.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {blogCategories.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/blog/${c.slug}`}
+                className="focus-ring inline-flex items-center px-3.5 py-2 rounded-full text-sm font-medium bg-surface border border-border-light text-text-secondary hover:border-accent/40 hover:text-primary transition-colors"
+              >
+                {c.nombre}
+              </Link>
+            ))}
           </div>
         </Container>
       </section>

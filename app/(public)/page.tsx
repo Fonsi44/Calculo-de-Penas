@@ -27,8 +27,6 @@ import { Card } from '@/components/ui/card';
 import { GoogleReviews } from '@/components/marketing/google-reviews';
 import { MapEmbedLazy as MapEmbed } from '@/components/marketing/map-embed-lazy';
 import { areasGenerales } from '@/data/areas-juridicas';
-import { getFeaturedLandings } from '@/data/landings-locales';
-import { CoverageCityGrid } from '@/components/marketing/coverage-city-card';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
@@ -154,8 +152,6 @@ export default async function HomePage() {
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
   };
-
-  const featuredCoverage = getFeaturedLandings();
 
   return (
     <>
@@ -572,26 +568,10 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* COBERTURA REGIONAL — enlazado interno a landings locales (SEO local) */}
-      <Section background="muted" spacing="md" ariaLabel="Cobertura regional">
-        <SectionHeader
-          eyebrow="Cobertura"
-          title="Abogados en el sur de Honduras"
-          subtitle="Seleccione su ciudad y consulte la cobertura jurídica disponible. Atendemos por WhatsApp, llamada o formulario."
-          align="center"
-        />
-        <CoverageCityGrid cities={featuredCoverage} />
-        {/* Enlace a hub de hondureños residentes en España: audiencia
-            internacional que no conoce el despacho en persona. Internal
-            linking para evitar que la página quede huérfana de la home. */}
-        <p className="text-center text-sm text-text-secondary mt-6">
-          ¿Reside en España y necesita tramites legales en Honduras?{' '}
-          <Link href="/hondurenos-en-espana" className="text-accent-dark hover:text-primary underline font-semibold">
-            Atención jurídica para hondureños en España
-          </Link>{' '}
-          — poderes a distancia, apostilla y herencias transfronterizas.
-        </p>
-      </Section>
+      {/* NOTA (Jul 2026): la sección "Cobertura regional" con el grid de
+          ciudades se eliminó de la home por petición explícita. Las landings
+          locales siguen accesibles vía footer (COBERTURA) y enlazado interno
+          desde /derecho-penal y /servicios-juridicos. SEO local intacto. */}
 
       {/* PREGUNTAS FRECUENTES — FAQ con schema FAQPage.
           Se eliminó la sección "Preguntas reales" (grid de 6 preguntas sin

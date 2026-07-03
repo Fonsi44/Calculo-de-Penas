@@ -124,9 +124,10 @@ export function ServiceCard({
   );
 
   const baseClasses = cn(
-    // rounded-lg (16px) — radius canónico de la web pública (R16).
-    // Antes era rounded-xl (20px), único outlier frente a Card (.card-premium).
-    'group premium-bar card-premium relative flex flex-col overflow-hidden rounded-lg border border-border-light bg-surface hover:border-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40',
+    // Refinamiento premium (Jul 2026): service-card-refined aporta gradiente
+    // cálido sutil + sombra multicapa + halo dorado al hover. Mantiene
+    // rounded-lg (R16) y premium-bar (franja dorada superior al hover).
+    'group premium-bar service-card-refined relative flex flex-col overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40',
     className,
   );
 

@@ -122,7 +122,7 @@ export function SolicitarConsultaForm() {
           id="consulta-motivo"
           value={form.motivo}
           onChange={onText('motivo')}
-          className="w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          className="input-refined w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none"
         >
           {MOTIVOS.map((m) => (
             <option key={m} value={m}>
@@ -141,7 +141,7 @@ export function SolicitarConsultaForm() {
           onChange={onText('resumen')}
           rows={6}
           placeholder="Describa brevemente los hechos. NO incluya documentos ni números sensibles innecesarios."
-          className="w-full px-3 py-2.5 rounded-md border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          className="input-refined w-full px-3 py-2.5 rounded-md border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none"
           required
           minLength={15}
         />
@@ -195,7 +195,7 @@ export function SolicitarConsultaForm() {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full h-12 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors disabled:opacity-50"
+        className="focus-ring cta-primary-refined w-full h-12 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? (
           <>
@@ -239,14 +239,14 @@ function Field({
         {required && <span className="text-aggravation ml-0.5">*</span>}
       </label>
       <div className="relative">
-        <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
+        <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-colors" />
         <input
           id={fieldId}
           type={type}
           value={value}
           onChange={onChange}
           required={required}
-          className="w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          className="input-refined w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none"
         />
       </div>
     </div>

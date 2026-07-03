@@ -80,8 +80,8 @@ export function TrustBar({
           {items.map((it) => {
             const Icon = it.icon;
             return (
-              <div key={it.title} className={cardCls}>
-                <div className={iconBoxCls}>
+              <div key={it.title} className={`spring-lift ${cardCls}`}>
+                <div className={`${iconBoxCls} transition-shadow duration-300`} style={{ willChange: 'transform' }}>
                   <Icon size={20} aria-hidden="true" />
                 </div>
                 <p className={titleCls}>{it.title}</p>
