@@ -203,19 +203,19 @@ export function legalServiceSchema() {
       { '@type': 'City', name: 'San Marcos de Colón' },
       { '@type': 'City', name: 'El Triunfo' },
       { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
+
+
+
       { '@type': 'City', name: 'Amapala' },
       { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Apacilagua' },
-      { '@type': 'City', name: 'Concepción de María' },
-      { '@type': 'City', name: 'Duyure' },
-      { '@type': 'City', name: 'Morolica' },
-      { '@type': 'City', name: 'San Antonio de Flores' },
-      { '@type': 'City', name: 'Aramecina' },
+
+
+
+
+
+
       { '@type': 'City', name: 'Caridad' },
-      { '@type': 'City', name: 'Alianza' },
+
       { '@type': 'State', name: site.address.department },
       { '@type': 'Country', name: site.address.country },
     ],
@@ -423,19 +423,19 @@ export function founderSchema() {
       { '@type': 'City', name: 'San Marcos de Colón' },
       { '@type': 'City', name: 'El Triunfo' },
       { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
+
+
+
       { '@type': 'City', name: 'Amapala' },
       { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Apacilagua' },
-      { '@type': 'City', name: 'Concepción de María' },
-      { '@type': 'City', name: 'Duyure' },
-      { '@type': 'City', name: 'Morolica' },
-      { '@type': 'City', name: 'San Antonio de Flores' },
-      { '@type': 'City', name: 'Aramecina' },
+
+
+
+
+
+
       { '@type': 'City', name: 'Caridad' },
-      { '@type': 'City', name: 'Alianza' },
+
       { '@type': 'State', name: site.address.department },
     ],
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
@@ -507,19 +507,19 @@ export function thaniaSchema() {
       { '@type': 'City', name: 'San Marcos de Colón' },
       { '@type': 'City', name: 'El Triunfo' },
       { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
+
+
+
       { '@type': 'City', name: 'Amapala' },
       { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Apacilagua' },
-      { '@type': 'City', name: 'Concepción de María' },
-      { '@type': 'City', name: 'Duyure' },
-      { '@type': 'City', name: 'Morolica' },
-      { '@type': 'City', name: 'San Antonio de Flores' },
-      { '@type': 'City', name: 'Aramecina' },
+
+
+
+
+
+
       { '@type': 'City', name: 'Caridad' },
-      { '@type': 'City', name: 'Alianza' },
+
       { '@type': 'State', name: site.address.department },
     ],
   };
@@ -582,19 +582,19 @@ export function emilSchema() {
       { '@type': 'City', name: 'San Marcos de Colón' },
       { '@type': 'City', name: 'El Triunfo' },
       { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
+
+
+
       { '@type': 'City', name: 'Amapala' },
       { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Apacilagua' },
-      { '@type': 'City', name: 'Concepción de María' },
-      { '@type': 'City', name: 'Duyure' },
-      { '@type': 'City', name: 'Morolica' },
-      { '@type': 'City', name: 'San Antonio de Flores' },
-      { '@type': 'City', name: 'Aramecina' },
+
+
+
+
+
+
       { '@type': 'City', name: 'Caridad' },
-      { '@type': 'City', name: 'Alianza' },
+
       { '@type': 'State', name: site.address.department },
     ],
   };
