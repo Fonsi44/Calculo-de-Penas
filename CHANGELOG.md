@@ -5,35 +5,77 @@
 
 ---
 
-## 2026-07-03 — feat: cobertura 10 ciudades + IndexNow REAL 72 URLs + GA4 real (Release 90)
+## 2026-07-03 — feat: cobertura 10 ciudades + IndexNow REAL + GA4 + optimización CTR (Release 90 · FINAL)
 
-Ejecución real completada. Cobertura reducida de 20 a 10 ciudades estratégicas.
-IndexNow enviado con HTTP 200 a 72 URLs. GA4 extrajo datos reales (666 usuarios).
-GSC datos guardados. 10 landings sobrantes eliminadas.
+Ejecución real completada en 3 commits. Cobertura reducida de 20→10 ciudades.
+IndexNow REAL enviado 2 veces (72 + 0 URLs). GA4 y GSC datos reales extraídos.
+8 posts actualizados en PostgreSQL con nuevos titles/metas. 14 landings optimizadas.
+CSP de Clarity corregido. Playwright audit ejecutado. 0 errores en todas las
+validaciones.
 
 ### Cambios implementados
 
-**Reducción de cobertura a 10 ciudades:**
+**Reducción de cobertura a 10 ciudades (commit 84b7836):**
 - `data/landings-locales.ts`: 20→10 landings. TOP_COBERTURA_SLUGS actualizado.
   Ciudades: Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón,
-  El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina. Criterio: sede física,
-  población, relevancia comercial, fronteras. Balance: 3 Valle + 7 Choluteca.
+  El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina.
 - 10 carpetas `abogados-en-{slug}/page.tsx` eliminadas.
 - `canonical-paths.json`, footer COBERTURA, schema areaServed (4), llms.txt
-  actualizados a 10 ciudades. Conteos: sitemap 214, safety cap 224.
+  actualizados a 10 ciudades.
 
-**IndexNow REAL:** 72 URLs notificadas con HTTP 200 en api.indexnow.org +
-www.bing.com/indexnow.
+**Optimización CTR — landings (commit c6525d2):**
+- 10 landings locales: titles con `|` separador + sufijos de autoridad
+  ("· Consulta sin Costo", "· 15+ Años en el Sur"). Descriptions con
+  "Primera consulta sin costo. WhatsApp +504 9536-3724".
+- 4 landings comerciales: titles optimizados con keywords de alta intención
+  (Defensa Urgente 24/7, Despidos y Prestaciones, Pensión/Custodia/Divorcio,
+  Contratos/Herencias/Notarial).
+
+**Optimización CTR — blog posts (PostgreSQL, 8 UPDATEs):**
+- poder-legal: "Poder Notarial en Honduras: Tipos, Costos y Cómo Otorgarlo (2026)"
+- estafas-fraudes: "Estafas en Honduras: 7 Tipos Penales, Penas y Cómo Recuperar su Dinero"
+- custodia-hijos: "Custodia de Hijos en Honduras 2026: ¿Cómo Decide el Juez?"
+- pension-guia: "Pensión Alimenticia Honduras 2026: Guía para Madres y Padres"
+- pension-porcentaje: "Pensión Alimenticia 2026: ¿Cuánto se Paga por Hijo? (20%-40%)"
+- trabajadora-embarazada: "Despido por Embarazo en Honduras: Fuero Maternal y Defensa Legal"
+- sobreseimiento: "Sobreseimiento Definitivo vs Provisional: ¿Cierran su Caso Penal?"
+- danos-perjuicios: "Daños y Perjuicios en Honduras: Cómo Reclamar Indemnización (2026)"
+
+**CSP fix (commit c6525d2):**
+- `next.config.ts`: añadido `https://scripts.clarity.ms` a `script-src`.
+  Bug detectado por Playwright: Microsoft Clarity estaba bloqueado por CSP.
+
+**Playwright audit (commit c6525d2):**
+- `scripts/playwright-audit.mjs`: nuevo script reusable. Valida 10 URLs × 2
+  viewports (desktop 1920×1080 + mobile 375×812). Verifica HTTP 200, WhatsApp,
+  teléfono, formulario, title, meta description, errores de consola.
+
+**IndexNow REAL:**
+- 1er envío (commit 84b7836): 72 URLs HTTP 200 en api.indexnow.org + Bing
+- 2º envío (post-deploy): incremental, 0 nuevas (ya enviadas <24h, throttling OK)
 
 **GA4 (28d):** 666 usuarios, 833 sesiones, 4,667 páginas vistas, 393.8s duración.
 
-**GSC (3 meses):** 134 clics, 6,613 imp, CTR 1.12%, pos 6.2. Datos guardados
-en `data/gsc-*.json`.
+**GSC (3 meses):** 134 clics, 6,613 imp, CTR 1.12%, pos 6.2. Datos en `data/gsc-*.json`.
 
-### Validación: lint 0e, build OK, 730 tests OK, audit 30/30, seo:health 15/15.
+**mcp-seo:** Score 89/100. 0 críticos. LCP 544ms, CLS 0. 81 internal links, 0 rotos.
 
-### Pendientes externos: NEXT_PUBLIC_BING_VERIFICATION vacío, optimizar meta titles
-de landings con 0% CTR, 8 posts con CTR <3%, Google Business Profile.
+### Commits
+| Commit | Descripción |
+|--------|-------------|
+| `84b7836` | feat: reducir cobertura a 10 ciudades + IndexNow REAL 72 URLs + GA4 datos reales |
+| `b78bb97` | docs: CHANGELOG Release 90 |
+| `c6525d2` | fix: finalize release 90 — CSP clarity fix + SEO metadata CTR + playwright audit |
+
+### Validación final
+- `lint`: 0 errores · `build`: OK · `test`: 730 tests · 33 suites · 0 fallos
+- `audit:indexacion`: 30/30 · `seo:health`: 15/15 · `validar:meta-seo`: 18/18
+- `audit:internal-links`: 12/12 CTA efectivo · `audit:seo:stdout`: 0 errores
+- Post-deploy: 12/12 URLs HTTP 200 en producción
+
+### Confirmaciones
+- ✅ 0 posts nuevos | ✅ 0 inserts blog_posts | ✅ 0 slugs nuevos | ✅ Diseño respetado
+- ✅ Sin inventar datos | ✅ Sin exponer secretos
 
 ---
 
