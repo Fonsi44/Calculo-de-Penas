@@ -159,3 +159,22 @@ scripts/.bing-audit.json
 /public/nul
 # artefactos de auditoría playwright (temporales, regenerables)
 scripts/.playwright-audit.json
+
+# Bing WMT tokens (nunca commitear)
+.secrets/
+data/bing/exports/
+scripts/.bing-*.json
+
+# Google ADC creds y datos live (nunca commitear — contiene credenciales y JSONs volátiles)
+data/google/
+~/.config/gcloud/
+
+# Export de SEO live data (regenerable, volátil)
+data/seo/
+
+# Bing live JSON (regenerable, volátil)
+data/bing/bing-live.json
+
+# Archivos OAuth de sesión (temporales)
+*.oauth-token.json
+.token-cache.json

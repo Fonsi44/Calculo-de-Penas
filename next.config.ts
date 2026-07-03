@@ -92,6 +92,10 @@ const nextConfig: NextConfig = {
       { source: '/blog/derecho-laboral/despido-laboral-honduras-derechos', destination: '/blog/derecho-laboral/despido-laboral-honduras-guia-completa', permanent: true },
       { source: '/blog/derecho-laboral/calcular-prestaciones-laborales-honduras', destination: '/blog/derecho-laboral/calcular-liquidacion-laboral-honduras', permanent: true },
       { source: '/blog/derecho-mercantil/contratos-mercantiles-proteger-negocio', destination: '/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras', permanent: true },
+      // Redirect de categoría con nombre extendido (slug canónico es /blog/derecho-mercantil)
+      { source: '/blog/derecho-mercantil-empresarial', destination: '/blog/derecho-mercantil', permanent: true },
+      // Servicios: slugs de áreas que apuntan a hubs dedicados (404 → redirect)
+      { source: '/servicios-juridicos/derecho-penal', destination: '/derecho-penal', permanent: true },
       { source: '/blog/derecho-civil/herencias-honduras-fallece-familiar', destination: '/blog/derecho-civil/testamentos-sucesiones-herencia-honduras', permanent: true },
       // Posts genéricos redirigidos a páginas de categoría/servicio
       { source: '/blog/hondurenos-en-espana/hondurenos-en-espana-guia-legal-completa', destination: '/hondurenos-en-espana', permanent: true },

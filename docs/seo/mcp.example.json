@@ -1,0 +1,64 @@
+{
+  "_note": "Este archivo es un EJEMPLO. No contiene secretos reales. Usa variables de entorno o archivos .env.local para las credenciales.",
+  "_version": "1.0.0",
+  "_project": "pineda-y-asociados",
+  "mcpServers": {
+    "mcp-seo": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-seo"],
+      "description": "Auditoría SEO técnica (metadatos, sitemap, structured data, performance, etc.). Recibe URLs como parámetro."
+    },
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-filesystem"],
+      "description": "Acceso al filesystem del proyecto. Lee data/google/, data/bing/, docs/audits/."
+    },
+    "git": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-git"],
+      "description": "Operaciones git: status, diff, log."
+    },
+    "postgres": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-postgres"],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}"
+      },
+      "description": "Consultas a la base de datos (usa DATABASE_URL del entorno, NUNCA hardcodeada)."
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-playwright"],
+      "description": "Navegación real, screenshots, renderizado de páginas."
+    },
+    "fetch": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-fetch"],
+      "description": "HTTP requests a URLs públicas."
+    },
+    "duckduckgo": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-duckduckgo"],
+      "description": "Búsqueda web vía DuckDuckGo."
+    },
+    "_google-search-console": {
+      "_note": "No existe MCP oficial para GSC. Usar CLI: npm run seo:gsc:live y leer data/google/gsc-live.json vía filesystem MCP.",
+      "_auth": "Requiere OAuth 2.0 (gcloud ADC o service account)."
+    },
+    "_google-analytics": {
+      "_note": "No existe MCP oficial para GA4 Data API. Usar CLI: npm run seo:ga4:live y leer data/google/ga4-live.json vía filesystem MCP.",
+      "_auth": "Requiere service account o gcloud ADC con scope analytics.readonly."
+    },
+    "_bing-webmaster": {
+      "_note": "No existe MCP oficial para Bing WMT. Usar CLI: npm run seo:bing:live y leer data/bing/bing-live.json vía filesystem MCP.",
+      "_auth": "API Key (INDEXNOW_KEY) para datos básicos; OAuth (Azure AD) para acceso completo."
+    }
+  }
+}
