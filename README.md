@@ -10,7 +10,7 @@ de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021
 **Auth:** JWT + bcryptjs (cookies `__Host-token` + `__Host-profile`)  
 **Testing:** Vitest (730 tests, 33 suites) + Playwright (40 tests E2E, 5 specs)  
 **CI:** GitHub Actions (`lint → tsc → test → build → validate:seed → validate:dates`)
-**Landings locales:** 20 ciudades (9 Valle + 11 Choluteca) + 4 landings comerciales (penalista, laboralista, familia, civil)
+**Landings locales:** 10 ciudades (3 Valle + 7 Choluteca) + 4 landings comerciales (penalista, laboralista, familia, civil)
 
 ---
 
@@ -79,7 +79,7 @@ data/
   blog/categories.ts  → 20 categorías blog
   faq-categories.ts   → 11 categorías FAQ
   images.ts           → Catálogo de imágenes
-  landings-locales.ts → 24 landings SEO local (20 ciudades + 4 comerciales)
+  landings-locales.ts → 14 landings SEO local (10 ciudades + 4 comerciales)
 tests/                → 33 suites (730 tests)
 e2e/                  → 4 spec files (37 tests)
 scripts/
@@ -615,7 +615,7 @@ development**; en producción no se emiten nunca). Ver `lib/analytics.ts`.
 | Hreflang | No aplica (sitio monolingüe es-HN) |
 | Core Web Vitals | Monitoreados via Lighthouse CI (`.github/workflows/lighthouse.yml`) |
 | SEO Health Check | `npm run seo:health` (15 señales off-page) |
-| SEO Local | 20 landings (9 Valle + 11 Choluteca) + 4 landings comerciales |
+| SEO Local | 10 landings (3 Valle + 7 Choluteca) + 4 landings comerciales |
 | Plan de indexación | `docs/indexacion-plan-decision.md` |
 
 ### SEO técnico y mantenimiento
@@ -790,7 +790,7 @@ npm run llms:dry            # Previsualizar cambios sin escribir
 El archivo `public/llms.txt` se regenera automáticamente en cada build via
 `postbuild`. Contiene 56 URLs públicas organizadas por sección: sitio oficial,
 14 áreas de práctica, 7 subáreas penales, 3 subáreas para hondureños en España,
-20 categorías del blog, 20 landings SEO local y 6 páginas legales. Excluye
+20 categorías del blog, 10 landings SEO local y 6 páginas legales. Excluye
 estrictamente `/intranet/`, `/api/`, `/admin/`, `/calculadora/` y demás zonas
 privadas. Ver `scripts/generate-llms-txt.mjs`.
 
