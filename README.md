@@ -8,9 +8,9 @@ de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021
 **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)  
 **Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM  
 **Auth:** JWT + bcryptjs (cookies `__Host-token` + `__Host-profile`)  
-**Testing:** Vitest (622 tests, 22 suites) + Playwright (40 tests E2E, 5 specs)  
+**Testing:** Vitest (730 tests, 33 suites) + Playwright (40 tests E2E, 5 specs)  
 **CI:** GitHub Actions (`lint → tsc → test → build → validate:seed → validate:dates`)
-**Landings locales:** 8 ciudades (Nacaome, Choluteca, San Lorenzo, Goascorán, Amapala, Pespire, San Marcos de Colón, Marcovia) + 4 landings comerciales (penalista, laboralista, familia, civil Nacaome)
+**Landings locales:** 20 ciudades (9 Valle + 11 Choluteca) + 4 landings comerciales (penalista, laboralista, familia, civil)
 
 ---
 
@@ -79,8 +79,8 @@ data/
   blog/categories.ts  → 20 categorías blog
   faq-categories.ts   → 11 categorías FAQ
   images.ts           → Catálogo de imágenes
-  landings-locales.ts → 9 landings SEO local
-tests/                → 19 suites (397 tests)
+  landings-locales.ts → 24 landings SEO local (20 ciudades + 4 comerciales)
+tests/                → 33 suites (730 tests)
 e2e/                  → 4 spec files (37 tests)
 scripts/
   28 scripts operativos (validadores, IndexNow, health checks, auditar, etc.)
@@ -103,7 +103,7 @@ npm run dev               # http://localhost:3000
 # Validar
 npm run lint              # ESLint — 0 errores requerido
 npm run build             # Next.js build + TypeScript check
-npm test                  # Vitest — 397 tests
+npm test                  # Vitest — 730 tests
 npm run test:e2e          # Playwright — 37 tests E2E
 npm run validate:dates    # Verificar fechas del blog
 npm run content:audit     # Auditoría editorial (71 pendientes hoy)
@@ -615,7 +615,7 @@ development**; en producción no se emiten nunca). Ver `lib/analytics.ts`.
 | Hreflang | No aplica (sitio monolingüe es-HN) |
 | Core Web Vitals | Monitoreados via Lighthouse CI (`.github/workflows/lighthouse.yml`) |
 | SEO Health Check | `npm run seo:health` (15 señales off-page) |
-| SEO Local | 3 landings (Nacaome, Choluteca, San Lorenzo) + 8 posts satélite |
+| SEO Local | 20 landings (9 Valle + 11 Choluteca) + 4 landings comerciales |
 | Plan de indexación | `docs/indexacion-plan-decision.md` |
 
 ### SEO técnico y mantenimiento
@@ -790,7 +790,7 @@ npm run llms:dry            # Previsualizar cambios sin escribir
 El archivo `public/llms.txt` se regenera automáticamente en cada build via
 `postbuild`. Contiene 56 URLs públicas organizadas por sección: sitio oficial,
 14 áreas de práctica, 7 subáreas penales, 3 subáreas para hondureños en España,
-20 categorías del blog, 3 landings SEO local y 6 páginas legales. Excluye
+20 categorías del blog, 20 landings SEO local y 6 páginas legales. Excluye
 estrictamente `/intranet/`, `/api/`, `/admin/`, `/calculadora/` y demás zonas
 privadas. Ver `scripts/generate-llms-txt.mjs`.
 
@@ -941,7 +941,7 @@ Keywords Everywhere, Browser Use (requiere API keys de pago).
 
 ### Validación ejecutada (2026-06-23)
 
-- `npm run lint` ✅ | `npm run build` ✅ (294 páginas) | `npm test` ✅ (601 tests)
+- `npm run lint` ✅ | `npm run build` ✅ (363 páginas) | `npm test` ✅ (730 tests)
 - Auditoría mcp-seo: Score 89/100, 8 JSON-LD válidos, 206 URLs en sitemap
 - Documento completo: `auditoria-seo/mcp-validation-2026-06-23.md`
 
@@ -967,7 +967,7 @@ Tools + IndexNow + DB), se aplicaron 6 commits atómicos en `main`:
   tráfico real (GSC 28d).
 
 **Validado localmente:** `npm run lint && npm run build && npm test`
-(0 errores lint, build OK, 601 tests · 21 suites). Detalle en
+(0 errores lint, build OK, 730 tests · 33 suites). Detalle en
 [`auditoria-seo/seguimiento-2026-06-25-implementacion.md`](./auditoria-seo/seguimiento-2026-06-25-implementacion.md).
 Los redirects y el envío dual de IndexNow entrarán en vigor en Vercel
 tras el próximo deploy (R11 NO VALIDADO en producción).

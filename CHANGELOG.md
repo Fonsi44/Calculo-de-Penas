@@ -5,6 +5,64 @@
 
 ---
 
+## 2026-07-03 — feat: auditoría SEO completa + CTA full coverage + OG fix + IndexNow (Release 88)
+
+Auditoría SEO integral con datos reales de GSC, Bing WMT, PostgreSQL y 10 scripts
+de validación. 0 errores bloqueantes. IndexNow enviado a 83 URLs. Blog CTA bar
+completada para 20/20 categorías. Corrección de imágenes OG rotas en landings.
+
+### Cambios implementados
+
+**Auditoría completa con datos reales:**
+- GSC (7d, 26 Jun–3 Jul): 43 clics, 2.447 imp, CTR 1.74%, pos media 6.8.
+  Top páginas: pensión alimenticia (187 imp, 3.21% CTR), prescripción deudas
+  (126 imp, 2.38% CTR), custodia hijos (106 imp, 0.94% CTR — oportunidad).
+- Bing WMT: 2.387 crawled, 161 errores 4xx, 44 queries. 4 URLs prioritarias sin
+  indexar (servicios-juridicos, blog, despacho, hondurenos-en-espana).
+- PostgreSQL: 149 posts publicados verificados, 100% con enlaces internos,
+  0 imágenes sin alt, 0 HTML desbalanceado, 0 fechas inválidas.
+- Blog SEO audit: 175 posts analizados, 0 nofollow internos, 0 links a
+  redirects, 0 http inseguros, 0 anchors pobres.
+
+**CTA Bar — cobertura completa (20/20 categorías):**
+- `components/blog/blog-cta-bar.tsx`: añadidas 11 categorías faltantes:
+  extranjería-migración, noticias-legales, práctica-legal, derechos-ciudadanos,
+  derecho-bancario, derecho-administrativo, derecho-aduanero, regulación-sanitaria,
+  propiedad-intelectual, derecho-ambiental, conciliación-arbitraje.
+- Cada categoría tiene H2 contextual, body persuasivo y mensaje WhatsApp
+  prellenado específico. Total: 20/20 categorías con CTA personalizada.
+
+**OG images — corrección de referencias rotas:**
+- `data/landings-locales.ts`: eliminadas 5 referencias a imágenes OG inexistentes
+  (goascoran, amapala, pespire, san-marcos-de-colon, marcovia). Ahora usan
+  `/og-image.webp` como fallback. Solo 3 landings tienen OG image propia
+  (nacaome, choluteca, san-lorenzo). Las demás se generarán cuando haya assets.
+
+**IndexNow:**
+- Envío full real: 83 URLs notificadas con éxito (HTTP 200 en api.indexnow.org
+  y www.bing.com/indexnow). Incluye las 4 URLs no indexadas en Bing.
+- Techo de seguridad: 234. URLs enviadas: 83. Sin throttling.
+
+### Validación
+- `lint`: 0 errores
+- `build`: 363 páginas estáticas, 0 errores
+- `test`: 730 tests · 33 suites · 0 fallos
+- `seo:health`: 15/15 OK
+- `audit:seo:stdout`: 0 errores bloqueantes, 7 informativos
+- `audit:indexacion`: 30/30 probes pass
+- `validar:meta-seo`: 18/18 rutas OK (0 errores title/desc)
+- `audit:internal-links`: 12/12 CTA efectivo
+- `blog:seo-audit`: 149 posts, 0 problemas críticos
+
+### Pendientes externos (no automatizables)
+- Verificar dominio en Bing Webmaster Tools (causa del 0% indexación histórica).
+- Google Business Profile con NAP consistente.
+- Link building local: directorios jurídicos, medios hondureños.
+- Rotar OAuth Client Secret (comprometido en git history, Release 81).
+- Generar imágenes OG para 17 landings sin imagen propia.
+
+---
+
 ## 2026-07-03 — feat: cobertura local 12 ciudades + auditoría GSC/Bing + IndexNow + llms.txt (Release 87)
 
 Expansión de cobertura geográfica completa en Valle (9 municipios) y Choluteca

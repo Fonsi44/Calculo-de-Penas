@@ -435,6 +435,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden casos penales urgentes en Langue?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
     ],
     geo: { lat: 13.62, lng: -87.65 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
   },
   {
     slug: 'aramecina',
@@ -464,6 +469,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen consulta sin costo?', respuesta: 'Sí. La primera consulta de evaluación no tiene costo. Tras analizar su caso le entregamos un presupuesto por escrito.' },
     ],
     geo: { lat: 13.74, lng: -87.71 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
   },
   {
     slug: 'caridad',
@@ -493,6 +503,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden emergencias fuera de horario?', respuesta: 'En casos de detención o situaciones penales urgentes, contáctenos por WhatsApp indicando que es una emergencia. Estamos para ayudarle.' },
     ],
     geo: { lat: 13.47, lng: -87.55 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
+      { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
+      { categoria: 'derecho-notarial', slug: 'poder-legal-honduras-cuando-se-necesita', titulo: 'Poder legal en Honduras: cómo otorgarlo' },
+    ],
   },
   {
     slug: 'alianza',
@@ -522,6 +537,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cubren todo el departamento de Valle?', respuesta: 'Sí. Atendemos Alianza, Nacaome, San Lorenzo, Goascorán, Amapala, Langue, Aramecina, Caridad y todos los municipios de Valle.' },
     ],
     geo: { lat: 13.35, lng: -87.58 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
+      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
+      { categoria: 'derecho-civil', slug: 'reclamar-deuda-legalmente-honduras', titulo: 'Cómo reclamar una deuda legalmente en Honduras' },
+    ],
   },
   {
     slug: 'el-triunfo',
@@ -551,6 +571,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cuánto cuesta una consulta jurídica?', respuesta: 'La primera consulta de evaluación no tiene costo. Tras analizar su caso, le entregamos un presupuesto por escrito para que decida sin compromiso.' },
     ],
     geo: { lat: 13.12, lng: -87.01 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
+      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
+      { categoria: 'derecho-civil', slug: 'reclamar-deuda-legalmente-honduras', titulo: 'Cómo reclamar una deuda legalmente en Honduras' },
+    ],
   },
   {
     slug: 'namasigue',
@@ -580,6 +605,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
     ],
     geo: { lat: 13.26, lng: -87.14 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
+      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
+      { categoria: 'derecho-civil', slug: 'reclamar-deuda-legalmente-honduras', titulo: 'Cómo reclamar una deuda legalmente en Honduras' },
+    ],
   },
   {
     slug: 'orocuina',
@@ -609,6 +639,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Orocuina, Choluteca, Marcovia, El Triunfo, Namasigüe, Pespire, San Marcos de Colón y demás municipios del departamento.' },
     ],
     geo: { lat: 13.48, lng: -87.07 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
+      { categoria: 'derecho-laboral', slug: 'derechos-laborales-basicos-honduras', titulo: 'Derechos laborales básicos en Honduras: guía para trabajadores' },
+      { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
+    ],
   },
   {
     slug: 'apacilagua',
@@ -638,6 +673,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen consulta a distancia?', respuesta: 'Sí. Puede iniciar su consulta por WhatsApp o teléfono. Si se requiere presencia, coordinamos el desplazamiento a Apacilagua.' },
     ],
     geo: { lat: 13.46, lng: -87.08 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
+      { categoria: 'derecho-laboral', slug: 'derechos-laborales-basicos-honduras', titulo: 'Derechos laborales básicos en Honduras: guía para trabajadores' },
+      { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
+    ],
   },
   {
     slug: 'concepcion-de-maria',
@@ -667,6 +707,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cuánto cuesta una consulta jurídica?', respuesta: 'La primera consulta de evaluación no tiene costo. Tras analizar su caso, le entregamos un presupuesto por escrito para que decida sin compromiso.' },
     ],
     geo: { lat: 13.23, lng: -87.03 },
+    postsRelacionados: [
+      { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
+      { categoria: 'derecho-laboral', slug: 'derechos-laborales-basicos-honduras', titulo: 'Derechos laborales básicos en Honduras: guía para trabajadores' },
+      { categoria: 'practica-legal', slug: 'como-elegir-abogado-honduras', titulo: 'Cómo Elegir un Buen Abogado en Honduras: 6 Criterios Clave' },
+    ],
   },
   {
     slug: 'duyure',
@@ -696,6 +741,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
     ],
     geo: { lat: 13.53, lng: -86.88 },
+    postsRelacionados: [
+      { categoria: 'proceso-penal', slug: 'etapa-investigacion-proceso-penal-honduras', titulo: 'Investigación Penal en Honduras: Plazos, derechos y cómo defenderte' },
+      { categoria: 'derecho-civil', slug: 'danos-perjuicios-indemnizacion-honduras', titulo: 'Daños y Perjuicios en Honduras: Guía Completa para Reclamar' },
+      { categoria: 'practica-legal', slug: 'costos-honorarios-abogados-como-funcionan-honduras', titulo: 'Honorarios de abogados en Honduras: guía completa de costos' },
+    ],
   },
   {
     slug: 'morolica',
@@ -725,6 +775,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Morolica, Choluteca, Marcovia, Pespire, San Marcos de Colón y todos los municipios de Choluteca.' },
     ],
     geo: { lat: 13.56, lng: -86.95 },
+    postsRelacionados: [
+      { categoria: 'proceso-penal', slug: 'etapa-investigacion-proceso-penal-honduras', titulo: 'Investigación Penal en Honduras: Plazos, derechos y cómo defenderte' },
+      { categoria: 'derecho-civil', slug: 'danos-perjuicios-indemnizacion-honduras', titulo: 'Daños y Perjuicios en Honduras: Guía Completa para Reclamar' },
+      { categoria: 'practica-legal', slug: 'costos-honorarios-abogados-como-funcionan-honduras', titulo: 'Honorarios de abogados en Honduras: guía completa de costos' },
+    ],
   },
   {
     slug: 'san-antonio-de-flores',
@@ -754,6 +809,11 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen consulta a distancia?', respuesta: 'Sí. Puede iniciar su consulta por WhatsApp o teléfono. Si se requiere presencia, coordinamos el desplazamiento a San Antonio de Flores.' },
     ],
     geo: { lat: 13.58, lng: -86.89 },
+    postsRelacionados: [
+      { categoria: 'proceso-penal', slug: 'etapa-investigacion-proceso-penal-honduras', titulo: 'Investigación Penal en Honduras: Plazos, derechos y cómo defenderte' },
+      { categoria: 'derecho-civil', slug: 'danos-perjuicios-indemnizacion-honduras', titulo: 'Daños y Perjuicios en Honduras: Guía Completa para Reclamar' },
+      { categoria: 'practica-legal', slug: 'costos-honorarios-abogados-como-funcionan-honduras', titulo: 'Honorarios de abogados en Honduras: guía completa de costos' },
+    ],
   },
 ];
 
@@ -770,11 +830,8 @@ export const LANDING_OG_IMAGES: Record<string, string> = {
   nacaome: '/og/nacaome.webp',
   choluteca: '/og/choluteca.webp',
   'san-lorenzo': '/og/san-lorenzo.webp',
-  goascoran: '/og/goascoran.webp',
-  amapala: '/og/amapala.webp',
-  pespire: '/og/pespire.webp',
-  'san-marcos-de-colon': '/og/san-marcos-de-colon.webp',
-  marcovia: '/og/marcovia.webp',
+  // Las demás ciudades usan /og-image.webp como fallback (archivo genérico de 1200×630).
+  // Las imágenes OG específicas se añadirán cuando se generen assets visuales por ciudad.
 };
 
 export function landingMetadata(landing: LandingLocal) {

@@ -51,6 +51,61 @@ const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: str
     body: 'Poderes, documentos, trámites notariales y familiares desde el extranjero. Le asistimos sin que tenga que viajar.',
     whatsappMsg: 'Estoy en España y necesito hacer trámites en Honduras. Vi su artículo.',
   },
+  'extranjeria-migracion': {
+    h2: '¿Necesita trámites migratorios en Honduras?',
+    body: 'Visas, residencia, naturalización y permisos migratorios. Un abogado en Nacaome puede gestionar su trámite ante las autoridades hondureñas.',
+    whatsappMsg: 'Necesito asesoría migratoria en Honduras. Vi su artículo en el blog.',
+  },
+  'noticias-legales': {
+    h2: '¿Le afecta un cambio legal reciente?',
+    body: 'Las reformas legislativas pueden impactar sus derechos. Consulte con un abogado en Nacaome cómo le afecta la nueva normativa.',
+    whatsappMsg: 'Quiero consultar sobre un cambio legal reciente. Vi su artículo en el blog.',
+  },
+  'practica-legal': {
+    h2: '¿Necesita aplicar esta información a su caso?',
+    body: 'Cada situación legal es distinta. Un abogado en Nacaome, Valle puede analizar su caso concreto y recomendarle el mejor camino.',
+    whatsappMsg: 'Necesito orientación legal sobre mi caso. Vi su artículo en el blog.',
+  },
+  'derechos-ciudadanos': {
+    h2: '¿Cree que se han vulnerado sus derechos?',
+    body: 'Garantías constitucionales, amparo, habeas corpus. Un abogado en Nacaome puede defender sus derechos fundamentales ante las autoridades.',
+    whatsappMsg: 'Necesito defender mis derechos. Vi su artículo en el blog.',
+  },
+  'derecho-bancario': {
+    h2: '¿Tiene un problema con el banco o una deuda?',
+    body: 'Ejecuciones hipotecarias, demandas bancarias, tarjetas de crédito. Un abogado bancario en Nacaome puede defender sus intereses frente a la entidad financiera.',
+    whatsappMsg: 'Necesito un abogado para un problema bancario. Vi su artículo en el blog.',
+  },
+  'derecho-administrativo': {
+    h2: '¿Enfrenta un procedimiento administrativo?',
+    body: 'Sanciones, contratación pública, amparo administrativo. Un abogado en Nacaome puede representarle ante la administración del Estado.',
+    whatsappMsg: 'Necesito defensa en un procedimiento administrativo. Vi su artículo en el blog.',
+  },
+  'derecho-aduanero': {
+    h2: '¿Tiene un problema aduanero o de importación?',
+    body: 'Clasificación arancelaria, sanciones aduaneras, zonas libres. Un abogado aduanero en la zona sur puede asistirle con las autoridades aduaneras.',
+    whatsappMsg: 'Necesito asesoría aduanera. Vi su artículo en el blog.',
+  },
+  'regulacion-sanitaria': {
+    h2: '¿Necesita registros o permisos sanitarios?',
+    body: 'Registro sanitario ARSA, habilitación de clínicas, responsabilidad médica. Un abogado en Nacaome le guía en el marco regulatorio hondureño.',
+    whatsappMsg: 'Necesito asesoría en regulación sanitaria. Vi su artículo en el blog.',
+  },
+  'propiedad-intelectual': {
+    h2: '¿Necesita proteger su marca, patente o creación?',
+    body: 'Registro de marcas, derechos de autor, patentes y secreto comercial. Un abogado en Nacaome puede proteger sus activos intangibles en Honduras.',
+    whatsappMsg: 'Necesito proteger mi propiedad intelectual. Vi su artículo en el blog.',
+  },
+  'derecho-ambiental': {
+    h2: '¿Necesita una licencia ambiental o enfrenta una sanción?',
+    body: 'Evaluación de impacto ambiental, delitos ecológicos, derechos indígenas. Un abogado en Nacaome le asesora en derecho ambiental hondureño.',
+    whatsappMsg: 'Necesito asesoría en derecho ambiental. Vi su artículo en el blog.',
+  },
+  'conciliacion-arbitraje': {
+    h2: '¿Busca resolver un conflicto sin ir a juicio?',
+    body: 'Mediación, conciliación y arbitraje comercial. Un abogado en Nacaome puede representarle en métodos alternos de resolución de conflictos.',
+    whatsappMsg: 'Necesito mediación o arbitraje. Vi su artículo en el blog.',
+  },
 };
 
 interface BlogCtaBarProps {
