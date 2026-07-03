@@ -28,6 +28,7 @@ import { GoogleReviews } from '@/components/marketing/google-reviews';
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { getFeaturedLandings } from '@/data/landings-locales';
+import { CoverageCityGrid } from '@/components/marketing/coverage-city-card';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
@@ -576,34 +577,10 @@ export default async function HomePage() {
         <SectionHeader
           eyebrow="Cobertura"
           title="Abogados en el sur de Honduras"
-          subtitle="Atendemos en Nacaome, San Lorenzo, Choluteca, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe y Orocuina. Conozca nuestra cobertura por ciudad."
+          subtitle="Seleccione su ciudad y consulte la cobertura jurídica disponible. Atendemos por WhatsApp, llamada o formulario."
           align="center"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-          {featuredCoverage.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/abogados-en-${c.slug}`}
-              title={`Abogados en ${c.ciudad}, ${c.departamento} — Pineda y Asociados`}
-              className="group block focus-visible:outline-none"
-            >
-              <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center mb-3">
-                  <MapPin size={20} aria-hidden="true" />
-                </div>
-                <h3 className="font-bold text-base text-text leading-tight group-hover:text-primary transition-colors">
-                  {`Abogados en ${c.ciudad}`}
-                </h3>
-                <p className="text-sm text-text-secondary mt-1.5 leading-relaxed">
-                  {c.departamento}, Honduras
-                </p>
-                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                  Ver cobertura <ArrowRight size={12} />
-                </span>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <CoverageCityGrid cities={featuredCoverage} />
       </Section>
 
       {/* PREGUNTAS FRECUENTES — FAQ con schema FAQPage.

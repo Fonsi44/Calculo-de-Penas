@@ -66,6 +66,8 @@ const STATIC_ROUTES = [
   { path: '/abogados-en-pespire', label: 'Abogados en Pespire', desc: 'Landing SEO local — cobertura en Pespire, Choluteca.' },
   { path: '/abogados-en-namasigue', label: 'Abogados en Namasigüe', desc: 'Landing SEO local — cobertura en Namasigüe, Choluteca.' },
   { path: '/abogados-en-orocuina', label: 'Abogados en Orocuina', desc: 'Landing SEO local — cobertura en Orocuina, Choluteca.' },
+  { path: '/abogados-en-langue', label: 'Abogados en Langue', desc: 'Landing SEO local — cobertura en Langue, Valle.' },
+  { path: '/abogados-en-amapala', label: 'Abogados en Amapala', desc: 'Landing SEO local — cobertura en Amapala, Valle.' },
 ];
 
 // --------------------------------------------------------------------------

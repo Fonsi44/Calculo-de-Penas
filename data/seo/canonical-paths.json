@@ -107,6 +107,18 @@
       "days_ago": 0
     },
     {
+      "path": "/abogados-en-langue",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/abogados-en-amapala",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
       "path": "/despacho",
       "priority": 0.9,
       "change_frequency": "monthly",

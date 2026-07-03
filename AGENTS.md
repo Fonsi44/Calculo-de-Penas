@@ -14,7 +14,8 @@ En orden:
 2. `AGENTS.md` (este archivo — protocolo canónico)
 3. Archivos afectados por el cambio (leer, no asumir)
 4. `CHANGELOG.md` (últimas releases para contexto)
-5. `docs/auditoria-repositorio-integral.md` §19 (estado post-implementación)
+5. `auditoriatotal.mc` (línea base canónica — **solo lectura, no modificar**)
+6. `auditoria-acciones.md` (registro vivo de acciones ejecutadas y pendientes)
 
 ---
 
@@ -148,9 +149,9 @@ corresponde exactamente.
 npm run lint          # ESLint — 0 errores requerido
 npm run build         # Next.js build — TypeScript + compilación
 npm test              # Vitest — suite completa; 0 fallos nuevos requeridos
-npm run test:e2e      # Playwright — 37 tests E2E (4 specs)
+npm run test:e2e      # Playwright — ~41 tests E2E (5 specs)
 npm run validate:dates  # Validar fechas del blog
-npm run content:audit   # Auditoría editorial (71 pendientes hoy)
+npm run content:audit   # Auditoría editorial (74 pendientes hoy)
 ```
 
 ---
@@ -407,6 +408,32 @@ filesystem → git → postgres → mcp-seo → playwright → fetch → duckduc
 - No usar MCPs premium, de pago o con créditos comerciales sin instrucción explícita del usuario.
 - No usar MCPs que dupliquen capacidades existentes si añaden riesgo o ruido.
 - No modificar configuración de modelos, proveedores o APIs externas desde el repositorio (refuerza R10).
+
+### R18. Cobertura del footer: solo 10 ciudades prioritarias
+
+La sección «Cobertura» del footer (`components/marketing/public-footer.tsx`) y el grid
+de cobertura de la Home (`TOP_COBERTURA_SLUGS` en `data/landings-locales.ts`) deben
+mostrar **exclusivamente las 10 ciudades prioritarias**:
+
+1. Nacaome
+2. Choluteca
+3. San Lorenzo
+4. Goascorán
+5. San Marcos de Colón
+6. El Triunfo
+7. Marcovia
+8. Pespire
+9. Namasigüe
+10. Orocuina
+
+Las ciudades secundarias pueden existir en `sitemap.xml`, `llms.txt`,
+`canonical-paths.json` y `areaServed` del schema **solo si tienen `page.tsx` real**
+(Grupo B: Langue, Amapala). Las secundarias **sin página real** (Caridad, Alianza,
+Apacilagua, Concepción de María, Duyure, Morolica, San Antonio de Flores, Aramecina)
+no deben aparecer en sitemap, `llms.txt` ni `canonical-paths.json` (Grupo D). Solo
+mantienen redirect 301 hacia la ciudad prioritaria más cercana cuando existe
+evidencia de publicación, rastreo o acceso histórico (Grupo C); si no hay evidencia,
+no necesitan 301. URL indexable ≠ ciudad visible en cobertura: son capas distintas.
 
 ---
 

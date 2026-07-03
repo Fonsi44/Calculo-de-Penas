@@ -171,6 +171,17 @@ const nextConfig: NextConfig = {
       { source: '/abogado-civil-valle', destination: '/abogado-civil-nacaome', permanent: true },
       { source: '/bufete-juridico-valle', destination: '/abogados-en-nacaome', permanent: true },
       { source: '/abogado-penalista-honduras', destination: '/abogado-penalista-nacaome', permanent: true },
+      // === FIX 404: Landings locales huérfanas (Audit Jul 2026, Fase 2) ===
+      // URLs de ciudades secundarias sin page.tsx ni datos en landings-locales.
+      // Redirigimos a la ciudad más cercana o al hub departamental mientras se crean las páginas.
+      { source: '/abogados-en-aramcina', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/abogados-en-caridad', destination: '/abogados-en-san-lorenzo', permanent: true },
+      { source: '/abogados-en-alianza', destination: '/abogados-en-goascoran', permanent: true },
+      { source: '/abogados-en-apacilagua', destination: '/abogados-en-choluteca', permanent: true },
+      { source: '/abogados-en-concepcion-de-maria', destination: '/abogados-en-choluteca', permanent: true },
+      { source: '/abogados-en-duyure', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
+      { source: '/abogados-en-morolica', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
+      { source: '/abogados-en-san-antonio-de-flores', destination: '/abogados-en-choluteca', permanent: true },
       // === KEYWORDS COMERCIALES: Redirects Choluteca blog→comercial ===
       { source: '/abogado-penalista-choluteca', destination: '/blog/derecho-penal/abogado-penalista-choluteca', permanent: true },
       { source: '/abogado-laboralista-choluteca', destination: '/blog/derecho-laboral/abogado-laboral-choluteca', permanent: true },

@@ -1,7 +1,8 @@
 # CHANGELOG — Pineda y Asociados
 
-> **Versión del changelog:** Jul 2026 — reestructurado. Histórico completo en
-> [`docs/legacy/CHANGELOG_ARCHIVE.md`](./docs/legacy/CHANGELOG_ARCHIVE.md).
+> **Versión del changelog:** Jul 2026 — reestructurado. Histórico de Releases
+> 1–79 (era pre-2026-06) no presente en el repo; las entradas vigentes están
+> más abajo en orden cronológico inverso.
 
 ---
 
@@ -3019,43 +3020,6 @@ para CI desde releases anteriores.
 
 ---
 
-## Estado actual resumido
-
-| Aspecto | Valor |
-|---------|-------|
-| **Última release** | Release 88 — Fase HQC (Higiene + Calidad + Coherencia) |
-| **Commit** | _(ver `git log -1`)_ |
-| **Fecha** | 2026-06-20 |
-| **Build** | ✅ Compiled + TypeScript OK |
-| **Tests** | 397/397 (19 suites) + 37 E2E (job CI añadido) |
-| **Coverage** | ✅ 66.21% líneas (umbral 35%) |
-| **validate:dates** | ✅ 159 posts sin fechas futuras |
-| **content:audit** | ❌ 71 posts vencidos editoriales (pendiente humano, no bug) |
-| **Pendiente externo crítico** | Rotar OAuth Client Secret en GCP + configurar `RESEND_WEBHOOK_SECRET` en Vercel |
-
----
-
-`kilo.json`, `CLAUDE.md` y el directorio completo `.kilo/` (14 archivos:
-agente SEOSenior, 5 comandos, 1 regla, 5 skills y configs) estaban commiteados
-en git a pesar de que Release 84 los declaró "legacy / no operativos". Esta
-contradicción podía confundir a los agentes y crear conflictos de modelo.
-
-**Cambios:**
-- `git rm` de `kilo.json`, `CLAUDE.md` y `.kilo/` (14 archivos eliminados del
-  tracking; permanecen en disco local si existen).
-- `.gitignore`: entradas para `kilo.json`, `CLAUDE.md`, `.kilo/`.
-- `AGENTS.md` §6 y §9: redacción actualizada — los archivos ya no son "legacy
-  que puede existir", sino "eliminados del repo, no recrear".
-- `README.md`: fila de `.kilo/` eliminada de la tabla de docs; sección
-  "Tooling IA" actualizada.
-
-**No se modificó:** código funcional, rutas, SEO, schemas, auth, proxy, motor
-de cálculo, ni ningún archivo de configuración operativa.
-
-**Validación:** lint 0 errores.
-
----
-
 ## Release 87 — Eliminación de tooling IA legacy del repositorio (2026-06-19)
 
 `kilo.json`, `CLAUDE.md` y el directorio completo `.kilo/` (14 archivos:
@@ -3260,7 +3224,8 @@ Health-check de 15 URLs prioritarias en producción.
 
 ---
 
-### Releases anteriores
+### Releases anteriores (era pre-2026-06)
 
-Ver [`docs/legacy/CHANGELOG_ARCHIVE.md`](./docs/legacy/CHANGELOG_ARCHIVE.md)
-para Releases 1–79.
+El histórico de Releases 1–79 no se mantiene en el repositorio. El contexto
+vigente (arquitectura, stack, scripts, estado SEO, pendientes) está en
+[`README.md`](./README.md); el protocolo operativo en [`AGENTS.md`](./AGENTS.md).

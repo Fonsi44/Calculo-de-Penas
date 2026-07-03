@@ -566,16 +566,16 @@ export const landingsLocales: LandingLocal[] = [
  * para evitar saturación visual y mejorar UX.
  */
 export const TOP_COBERTURA_SLUGS = new Set([
-  'choluteca',
   'nacaome',
+  'choluteca',
   'san-lorenzo',
-  'marcovia',
+  'goascoran',
   'san-marcos-de-colon',
   'el-triunfo',
-  'goascoran',
+  'marcovia',
   'pespire',
-  'amapala',
-  'langue',
+  'namasigue',
+  'orocuina',
 ]);
 
 /** Devuelve las landings destacadas para la Home (top 10 por relevancia). */

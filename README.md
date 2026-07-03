@@ -8,9 +8,9 @@ de Honduras (Decreto 130-2017)** y reformas vigentes (119-2019, 46-2020, 93-2021
 **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)  
 **Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM  
 **Auth:** JWT + bcryptjs (cookies `__Host-token` + `__Host-profile`)  
-**Testing:** Vitest (730 tests, 33 suites) + Playwright (40 tests E2E, 5 specs)  
+**Testing:** Vitest (730 tests, 33 suites) + Playwright (~41 tests E2E, 5 specs)  
 **CI:** GitHub Actions (`lint → tsc → test → build → validate:seed → validate:dates`)
-**Landings locales:** 20 ciudades (9 Valle + 11 Choluteca) + 4 landings comerciales (penalista, laboralista, familia, civil)
+**Landings locales:** 10 ciudades prioritarias en footer/Home (R18) + 2 secundarias con página (Langue, Amapala) + 8 con redirect 301 + 4 landings comerciales (penalista, laboralista, familia, civil)
 
 ---
 
@@ -79,7 +79,7 @@ data/
   blog/categories.ts  → 20 categorías blog
   faq-categories.ts   → 11 categorías FAQ
   images.ts           → Catálogo de imágenes
-  landings-locales.ts → 24 landings SEO local (20 ciudades + 4 comerciales)
+  landings-locales.ts → 12 landings SEO local (10 prioritarias + 2 secundarias) + 4 comerciales
 tests/                → 33 suites (730 tests)
 e2e/                  → 4 spec files (37 tests)
 scripts/
@@ -104,9 +104,9 @@ npm run dev               # http://localhost:3000
 npm run lint              # ESLint — 0 errores requerido
 npm run build             # Next.js build + TypeScript check
 npm test                  # Vitest — 730 tests
-npm run test:e2e          # Playwright — 37 tests E2E
+npm run test:e2e          # Playwright — ~41 tests E2E (5 specs)
 npm run validate:dates    # Verificar fechas del blog
-npm run content:audit     # Auditoría editorial (71 pendientes hoy)
+npm run content:audit     # Auditoría editorial (74 pendientes hoy)
 
 # Despliegue en Vercel (producción)
 # git push → CI automático en main/master/develop
@@ -208,42 +208,6 @@ Si el entorno no tiene credenciales activas, marque la validación como
 
 ---
 
-## SEO/GEO update (2026-06-28)
-
-Mejoras implementadas en código para indexación, rastreo, conversión y GEO:
-
-- Redirect 301 permanente: `/faq` -> `/preguntas-frecuentes`.
-- `/preguntas-frecuentes` reorganizada por clusters temáticos con índice de anchors,
-  respuestas rápidas GEO y reducción de payload Schema (`FAQPage` limitado a 40 ítems).
-- `/servicios-juridicos` reforzada con matriz de decisión (problema -> área ->
-  primer paso -> enlace) y bloque de decisión rápida.
-- `/derecho-penal` reforzada con tabla de etapas/riesgos/plazos/acciones y
-  módulo de urgencias penales con FAQs accionables.
-- `/abogados-en-choluteca` reforzada con señales locales verificables,
-  modalidades de atención y enlaces de acción rápida a servicios.
-- Inserción automática de CTA contextual a `/solicitar-consulta#formulario`
-  en 6 slugs prioritarios sin CTA dentro del cuerpo del post (alrededor del 60-70%).
-- Reducción de HTML/payload en `/blog` (dataset cliente limitado a 80 entradas)
-  y en home (cobertura local priorizada a 3 landings clave).
-- Compatibilidad OG mejorada: normalización de títulos/alt con guion simple
-  en rutas auditadas para evitar alertas de parsers legados.
-- `llms.txt` ajustado para no listar rutas privadas explícitas, manteniendo
-  política de exclusión para contenido no público.
-
-### Cierre de sprint SEO/GEO (2026-06-28)
-
-- Redirect `/faq` configurado con `statusCode: 301` en [next.config.ts](next.config.ts)
-  y verificado localmente sobre build de producción.
-- `llms.txt` endurecido para GEO sin términos de rutas privadas explícitas;
-  generador y archivo público sincronizados.
-- `audit:internal-links` ahora reporta dos métricas:
-  - CTA persistente en DB.
-  - CTA efectivo (DB + CTA contextual renderizado en plantilla de post).
-  Esto evita falsos negativos cuando el contenido fuente vive en DB externa y
-  la capa de render añade CTA sin modificar body persistido.
-
----
-
 ## Contribuir
 
 Este repositorio usa **commits atómicos** con prefijos semánticos en español.
@@ -330,12 +294,12 @@ FloatingContactRail son client components. ISR con `revalidate = 3600`.
 ### Blog (`/blog/**`)
 - **Fuente:** DB (tabla `blog_posts`). `data/blog/posts/` está vacío (migrado).
 - **Editor:** TipTap (visual) + HTML directo, doble pestaña.
-- **159 posts publicados** (ninguno con fecha futura).
+- **149 posts publicados** (ninguno con fecha futura).
 - **20 categorías** en `data/blog/categories.ts`. No crear categorías nuevas sin
   actualizar el archivo.
 - **THIN_POST_SLUGS:** 49 posts con priority 0.3 en sitemap (mitigación activa).
-  Ver `docs/plan-reescritura-blog.md` para el plan editorial.
-- **71 posts con revisión trimestral vencida** (pendiente editorial humano).
+  Reescritura pendiente (trabajo editorial humano).
+- **74 posts con revisión editorial vencida** (pendiente editorial humano).
 - **Canonical override:** campo `canonical_url` en `blog_posts`.
 - **Noindex por artículo:** campo `noindex`.
 - **Generador AI:** `POST /api/admin/blog/generate` (rate limit 10/5min).
@@ -615,8 +579,8 @@ development**; en producción no se emiten nunca). Ver `lib/analytics.ts`.
 | Hreflang | No aplica (sitio monolingüe es-HN) |
 | Core Web Vitals | Monitoreados via Lighthouse CI (`.github/workflows/lighthouse.yml`) |
 | SEO Health Check | `npm run seo:health` (15 señales off-page) |
-| SEO Local | 20 landings (9 Valle + 11 Choluteca) + 4 landings comerciales |
-| Plan de indexación | `docs/indexacion-plan-decision.md` |
+| SEO Local | 12 landings (10 prioritarias en footer/Home + 2 secundarias indexables) + 4 comerciales + 8 redirects 301 |
+| Plan de indexación | `app/sitemap.ts` excluye rutas privadas y posts canonicalizados |
 
 ### SEO técnico y mantenimiento
 
@@ -683,7 +647,7 @@ npm run blog:backup          # Backup completo de blog_posts (JSON restoreable +
 ```
 
 > **`blog:seo-audit`** (`scripts/seo-content-audit.ts`) es la auditoría SEO de
-> contenido dinámico del blog. Lee los 159 posts publicados de la DB y detecta:
+> contenido dinámico del blog. Lee los 149 posts publicados de la DB y detecta:
 > enlaces internos con `rel="nofollow"` (deben eliminarse salvo justificación
 > documentada), enlaces internos que apuntan a rutas con redirect 301 declarado
 > en `next.config.ts`, URLs `http://` inseguras, imágenes `<img>` sin `alt`,
@@ -843,22 +807,10 @@ npm run seed:fase2          # Seed de supuestos penales (Fase 2)
 ### Blog
 - **159 posts publicados.** 71 con revisión trimestral vencida (editorial
   pendiente). 49 thin/plantilla con prioridad reducida en sitemap.
-- **Plan de reescritura:** `docs/plan-reescritura-blog.md`.
+- **Reescritura de los 49 thin:** pendiente editorial humano (ver `THIN_POST_SLUGS`
+  en `app/sitemap.ts`). No modificar este set hasta reescribir los posts.
 - **No modificar `THIN_POST_SLUGS`** en `app/sitemap.ts` hasta que los posts
   se reescriban realmente.
-
-### Archivos legacy (consolidados en `basura/`)
-Los siguientes elementos obsoletos fueron movidos a `basura/` (preservando la
-estructura relativa) para dejar el repositorio limpio sin borrar nada. Ver
-`basura/MANIFEST.md` para el detalle trazable y las instrucciones de reversión:
-- `data/legacy/` — 35 archivos históricos (fragmentos `.txt`, backups) → `basura/data/legacy/`.
-- `scripts/legacy/` — 38 one-shots de migración ya ejecutada → `basura/scripts/legacy/`.
-- `components/marketing/_unused/` — 8 componentes sin uso → `basura/components/marketing/_unused/`.
-- `.backups/` — 4 backups manuales con timestamp → `basura/.backups/`.
-- Logs commiteados (`build.log`, `dev-server2.log`, `dryrun-ctr.log`,
-  `lote1-output.log`, `lote1b-output.log`) → `basura/`.
-- 5 scripts one-shot ya ejecutados + 5 reportes JSON regenerables/stale →
-  `basura/scripts/` y `basura/data/`.
 
 ---
 
@@ -876,11 +828,11 @@ estructura relativa) para dejar el repositorio limpio sin borrar nada. Ver
 3. **Configurar `RESEND_WEBHOOK_SECRET`** en Vercel (sin él, `/api/email/inbound`
    responde 503 en producción).
 4. **Revisar los 71 posts** con revisión trimestral vencida.
-5. **Reescribir los 49 posts thin** (ver `docs/plan-reescritura-blog.md`).
+5. **Reescribir los 49 posts thin** (ver `THIN_POST_SLUGS` en `app/sitemap.ts`).
 
 ### Externos
 - **Verificar dominio en Bing Webmaster Tools** (causa del 0% indexación
-  histórica en Bing). Ver `docs/seo-off-page.md` §2.
+  histórica en Bing).
 - **Google Business Profile:** consistencia NAP.
 - **Configurar redes sociales** (Facebook, Instagram, TikTok) via
   `NEXT_PUBLIC_SOCIAL_*` para que funcione `sameAs` en JSON-LD.
@@ -897,17 +849,15 @@ estructura relativa) para dejar el repositorio limpio sin borrar nada. Ver
 
 | Documento | Contenido |
 |-----------|----------|
-| `docs/auditoria-repositorio-integral.md` | Auditoría integral + estado post-implementación |
-| `docs/indexacion-plan-decision.md` | Plan de indexación SEO |
-| `docs/plan-reescritura-blog.md` | Plan editorial de 49 posts thin |
-| `docs/seo-off-page.md` | Estrategia SEO off-page |
+| `AGENTS.md` | Protocolo operativo canónico para agentes IA (reglas, validación, MCPs) |
+| `CHANGELOG.md` | Histórico de cambios por release |
+| `auditoriatotal.mc` | Línea base canónica — **solo lectura, no modificar** |
+| `auditoria-acciones.md` | Registro vivo de acciones ejecutadas y pendientes |
+| `pinedayasociados.md` | Plan maestro SGIE Autopilot (Fases 1–10) |
+| `redesociales.md` | Plan de contenido para redes sociales |
 | `docs/seo/estrategia-derecho-penal.md` | Estrategia SEO penal (Jul 2026) |
-| `docs/pagespeed-usabilidad.md` | Métricas PageSpeed |
-| `docs/blog-duplicity-report.md` | Reporte de contenido plantilla |
-| `docs/content-review-schedule.md` | Revisión trimestral de contenido |
-| `docs/lighthouse-baseline.md` | Línea base Lighthouse CI |
-| `docs/01-arquitectura.md` — `docs/26-roadmap-implementacion.md` | Docs históricos (ver `docs/`) |
-| `docs/legacy/CHANGELOG_ARCHIVE.md` | Changelog histórico completo |
+| `docs/content-review-schedule.md` | Revisión trimestral de contenido (generado por `content:audit`) |
+| `auditoria-seo/` | Reportes de auditoría SEO y seguimientos (trazabilidad) |
 
 ---
 

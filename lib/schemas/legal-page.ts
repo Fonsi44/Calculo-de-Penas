@@ -40,7 +40,7 @@ export function serviceSchema(input: ServiceSchemaInput) {
       url: site.url,
       telephone: site.phone,
     },
-    areaServed: (input.areaServed ?? ['Nacaome', 'San Lorenzo', 'Choluteca', 'Valle', 'Honduras']).map((name) => ({
+    areaServed: (input.areaServed ?? ['Nacaome', 'San Lorenzo', 'Choluteca', 'Goascorán', 'San Marcos de Colón', 'El Triunfo', 'Marcovia', 'Pespire', 'Namasigüe', 'Orocuina']).map((name) => ({
       '@type': 'Place',
       name,
     })),
