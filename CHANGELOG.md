@@ -5,6 +5,38 @@
 
 ---
 
+## 2026-07-03 — feat: cobertura 10 ciudades + IndexNow REAL 72 URLs + GA4 real (Release 90)
+
+Ejecución real completada. Cobertura reducida de 20 a 10 ciudades estratégicas.
+IndexNow enviado con HTTP 200 a 72 URLs. GA4 extrajo datos reales (666 usuarios).
+GSC datos guardados. 10 landings sobrantes eliminadas.
+
+### Cambios implementados
+
+**Reducción de cobertura a 10 ciudades:**
+- `data/landings-locales.ts`: 20→10 landings. TOP_COBERTURA_SLUGS actualizado.
+  Ciudades: Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón,
+  El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina. Criterio: sede física,
+  población, relevancia comercial, fronteras. Balance: 3 Valle + 7 Choluteca.
+- 10 carpetas `abogados-en-{slug}/page.tsx` eliminadas.
+- `canonical-paths.json`, footer COBERTURA, schema areaServed (4), llms.txt
+  actualizados a 10 ciudades. Conteos: sitemap 214, safety cap 224.
+
+**IndexNow REAL:** 72 URLs notificadas con HTTP 200 en api.indexnow.org +
+www.bing.com/indexnow.
+
+**GA4 (28d):** 666 usuarios, 833 sesiones, 4,667 páginas vistas, 393.8s duración.
+
+**GSC (3 meses):** 134 clics, 6,613 imp, CTR 1.12%, pos 6.2. Datos guardados
+en `data/gsc-*.json`.
+
+### Validación: lint 0e, build OK, 730 tests OK, audit 30/30, seo:health 15/15.
+
+### Pendientes externos: NEXT_PUBLIC_BING_VERIFICATION vacío, optimizar meta titles
+de landings con 0% CTR, 8 posts con CTR <3%, Google Business Profile.
+
+---
+
 ## 2026-07-03 — feat: restauración 10 landings + top 10 cobertura Home + CRO landings comerciales (Release 89)
 
 Corrección crítica: 10 landings locales eliminadas del working tree son restauradas.
