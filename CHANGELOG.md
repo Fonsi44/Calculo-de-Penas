@@ -5,6 +5,96 @@
 
 ---
 
+## 2026-07-03 — feat: cobertura local 12 ciudades + auditoría GSC/Bing + IndexNow + llms.txt (Release 87)
+
+Expansión de cobertura geográfica completa en Valle (9 municipios) y Choluteca
+(11 municipios) con 20 landings locales indexables. Auditoría con datos reales de
+Google Search Console y Bing Webmaster Tools. Envío IndexNow de 17 URLs nuevas.
+
+### Cambios implementados
+
+**Cobertura geográfica — 12 nuevas ciudades:**
+- 12 páginas `app/(public)/abogados-en-{slug}/page.tsx` creadas para: Langue,
+  Aramecina, Caridad, Alianza (Valle) + El Triunfo, Namasigüe, Orocuina,
+  Apacilagua, Concepción de María, Duyure, Morolica, San Antonio de Flores
+  (Choluteca). Total: 20 landings locales (8 existentes + 12 nuevas).
+- `data/landings-locales.ts`: +12 entradas con title, meta description, H1, intro,
+  4 servicios por ciudad, 4 FAQs por ciudad, geo (lat/lng) y CTA WhatsApp
+  contextual. Total: 758 líneas, 20 landings.
+- `components/marketing/public-footer.tsx`: COBERTURA ampliada de 8 a 20 ciudades
+  con enlaces footer indexables.
+
+**Schema área de cobertura:**
+- `lib/site.ts`: `areaServed` actualizado en 4 schemas (LegalService, founderSchema,
+  thaniaSchema, emilSchema) con las 12 nuevas ciudades. Total: 20 ciudades en
+  areaServed + Estado de Valle + Estado de Choluteca + Country Honduras.
+
+**Sitemap + canonical paths:**
+- `data/seo/canonical-paths.json`: +12 rutas de landings (priority 0.9, monthly).
+  `sitemap_observed_count`: 224 (212→224). `indexnow_safety_cap`: 234 (222→234).
+- `app/sitemap.ts`: genera dinámicamente las 20 landings desde canonical-paths.json.
+- Sitemap público verificado: 216 URLs, rutas privadas excluidas, canonical
+  post→landing correctos.
+
+**llms.txt:**
+- `scripts/generate-llms-txt.mjs`: LLMS_SOURCES ampliado de 8 a 20 landings.
+- `public/llms.txt`: regenerado (123 líneas, 20 landings).
+
+**IndexNow:**
+- Envío incremental real: 17 URLs nuevas notificadas a api.indexnow.org (200) y
+  www.bing.com/indexnow (200). 11 URLs throttled (<24h del build anterior).
+- Modo: incremental sobre canonical-paths.json, bajo el techo de seguridad (234).
+
+**Ads.txt:**
+- `public/ads.txt`: verificado presente y válido.
+
+### Datos reales de la auditoría
+- **GSC (26 Jun – 3 Jul, 5d)**: 43 clics, 2.447 impresiones, CTR 1,74%, pos. media
+  6,8. Top país: Honduras (36 clics). Dispositivo: móvil 26 (60%), desktop 17.
+- **Bing WMT**: sitio verificado ✓. Crawl 23d: 2.387 crawled, 161 errores 4xx.
+  44 queries. 6/14 URLs prioritarias sin indexar (servicios-juridicos, blog,
+  despacho, hondurenos-en-espana, etc.) — reenviadas vía SubmitUrlBatch.
+- **GSC oportunidades**: `cuanto es la pensión alimenticia por hijo en honduras`
+  (27 imp, 0 clics, pos 6.6, CTR 0%), `custodia de los hijos` (3 imp, pos 5.0),
+  landings con impresiones y 0 clics (abogados-en-choluteca: 36 imp, pos 8.5).
+- **Bug residual**: `http://pinedayasociadoshn.com/` (39 imp GSC, 0 clics).
+  Redirect 301 www→apex + HTTP→HTTPS ya implementado en next.config.ts (24 Jun).
+  Impresiones residuales de caché de GSC — monitorizar.
+
+### Interlinking verificado
+- Home → 20 landings (vía `landingsLocales` automático)
+- Footer → 20 landings (COBERTURA array)
+- Landing → 19 otras landings (grid de cobertura regional en LandingLocalView)
+- Landing → blog posts relacionados (vía postsRelacionados)
+- Schemas → areaServed 20 ciudades en todas las páginas
+- llms.txt → 20 landings declaradas para rastreadores IA
+
+### Resultados de validación
+- `npm run lint`: 0 errores, 0 warnings
+- `npm run build`: OK (postbuild: llms.txt + IndexNow dry-run)
+- `npm test`: 730 tests pass (33 suites), 0 fallos
+- `npm run seo:health`: 15/15 OK, 0 warn, 0 fail
+- `npm run audit:indexacion`: ✅ todos los probes pasan
+- `npm run audit:seo`: 0 errores bloqueantes, 0 avisos, 7 informativos
+
+### Impacto estimado
+- +12 URLs indexables para keywords locales de alta intención comercial
+- Cobertura geográfica completa: 20 ciudades en Valle + Choluteca (antes 8)
+- schema areaServed: 20 ciudades + 2 departamentos (antes 8 + 2)
+- llms.txt: 123 líneas (antes 111), 20 landings declaradas
+- IndexNow: 17 URLs nuevas notificadas a Bing en esta release
+- CTR proyectado en landings: mejora al indexarse en Google (actualmente pos 6-9
+  pero 0 clics — targeting pos 1-3 para "abogados en {ciudad}")
+- WhatsApp: mensaje prellenado contextual por ciudad en cada landing
+
+### Confirmaciones
+- 0 posts de blog creados
+- 0 inserts en blog_posts
+- 0 cambios visuales no relacionados con SEO
+- Diseño existente respetado en todas las modificaciones
+
+---
+
 ## 2026-07-02 — feat: SEO local comercial + CTR + interlinking + schema (Release 86)
 
 Estrategia integral de crecimiento orgánico basada en datos reales de GSC, GA4 y
