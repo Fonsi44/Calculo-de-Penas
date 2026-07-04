@@ -101,7 +101,10 @@ export function evaluateGuardrails(message: string): GuardrailResult {
  *  - No altera el contenido semántico. */
 export function sanitizeReply(reply: string, maxChars = 1200): string {
   if (typeof reply !== 'string') return '';
-  const trimmed = reply.trim();
+  // Elimina URLs (defensa en profundidad: el system prompt ya las prohíbe,
+  // pero por si el LLM las genera, se filtran aquí antes de llegar al usuario).
+  const sinUrls = reply.replace(/https?:\/\/[^\s]+/g, '');
+  const trimmed = sinUrls.trim();
   if (trimmed.length <= maxChars) return trimmed;
   // Truncar en el último espacio dentro del límite para no cortar palabras.
   const slice = trimmed.slice(0, maxChars);

@@ -296,8 +296,8 @@ export function ChatWidget() {
                 key={i}
                 className={
                   m.role === 'user'
-                    ? 'ml-auto max-w-[82%] rounded-2xl rounded-br-sm bg-primary text-text-inverse px-3.5 py-2 text-sm leading-relaxed shadow-sm'
-                    : 'mr-auto max-w-[88%] rounded-2xl rounded-bl-sm bg-surface text-text px-3.5 py-2 text-sm leading-relaxed border border-border-light shadow-sm'
+                    ? 'ml-auto max-w-[82%] rounded-2xl rounded-br-sm bg-primary text-text-inverse px-3.5 py-2 text-sm leading-relaxed shadow-sm break-words overflow-hidden'
+                    : 'mr-auto max-w-[88%] rounded-2xl rounded-bl-sm bg-surface text-text px-3.5 py-2 text-sm leading-relaxed border border-border-light shadow-sm break-words overflow-hidden'
                 }
               >
                 {m.content}
