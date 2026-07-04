@@ -594,6 +594,33 @@ input[type="checkbox"] {
   opacity: 0.8;
 }
 
+/* ─── Utilidades de ritmo vertical (Fase 2.6 transformación coherente) ───
+ * Aplican sobre <Section> o wrappers para dar respiración adicional entre
+ * bloques largos sin tocar --section-scale global. Componen con SPACING del
+ * Section component (sm/md/lg), no lo reemplazan.
+ */
+.section-breath {
+  padding-top: calc(var(--space-scale, 0.7) * 3rem);
+  padding-bottom: calc(var(--space-scale, 0.7) * 3rem);
+}
+@media (min-width: 768px) {
+  .section-breath {
+    padding-top: calc(var(--space-scale, 0.7) * 4rem);
+    padding-bottom: calc(var(--space-scale, 0.7) * 4rem);
+  }
+}
+/* Compactación para hubs saturados: reduce el padding sin perder coherencia. */
+.rhythm-tight {
+  padding-top: calc(var(--space-scale, 0.7) * 1.25rem);
+  padding-bottom: calc(var(--space-scale, 0.7) * 1.25rem);
+}
+@media (min-width: 768px) {
+  .rhythm-tight {
+    padding-top: calc(var(--space-scale, 0.7) * 1.75rem);
+    padding-bottom: calc(var(--space-scale, 0.7) * 1.75rem);
+  }
+}
+
 /* Borde con gradiente dorado (degradado en el ring, fondo opaco interno). */
 .ring-gradient-accent {
   position: relative;
