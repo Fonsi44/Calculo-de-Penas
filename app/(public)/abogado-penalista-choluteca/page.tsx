@@ -7,6 +7,7 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { Scale, Shield, Clock, Gavel, Phone, MapPin } from 'lucide-react';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { RelatedCities } from '@/components/marketing/related-links';
 
 /**
  * Landing comercial — Abogado Penalista en Choluteca.
@@ -365,6 +366,14 @@ export default async function AbogadoPenalistaCholutecaPage() {
       </Section>
 
       <ConsultationCTA />
+
+      {/* ENLAZADO INTERNO (Fase 4) — reconecta esta landing al grafo.
+          Antes era una hoja huérfana de autoridad. */}
+      <Section spacing="sm">
+        <Container size="lg">
+          <RelatedCities mentionedCitySlug="choluteca" limit={6} eyebrow="Atendemos en el sur de Honduras" />
+        </Container>
+      </Section>
 
       {/* JSON-LD */}
       <script
