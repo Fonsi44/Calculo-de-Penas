@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index } from 'drizzle-orm/pg-core';
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, vector } from 'drizzle-orm/pg-core';
 
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
@@ -1599,3 +1599,46 @@ export const retencionPoliticas = pgTable('retencion_politicas', {
 
 export type RetencionPolitica = typeof retencionPoliticas.$inferSelect;
 export type RetencionPoliticaInsert = typeof retencionPoliticas.$inferInsert;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Vector embeddings para RAG (pgvector)
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Tabla de embeddings vectoriales para el sistema RAG.
+ *
+ * Almacena fragmentos (chunks) de contenido indexado (blog posts,
+ * artículos legales, delitos, FAQs, PDFs, etc.) junto con su vector
+ * de embedding generado por DeepSeek (deepseek-embedding, 1536 dims).
+ *
+ * FUENTE DE VERDAD: el contenido original en sus tablas/archivos fuente
+ * (blog_posts, data/articulos_cp.json, etc.). Esta tabla es un índice
+ * de búsqueda semántica, no una fuente primaria.
+ *
+ * Sprint RAG — Fase 1.
+ */
+export const embeddings = pgTable('embeddings', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  /** Tipo de entidad indexada: blog_post, articulo_cp, delito, etc. */
+  entidadTipo: varchar('entidad_tipo', { length: 50 }).notNull(),
+  /** Identificador único dentro de su tipo (slug del post, número de artículo, etc.) */
+  entidadId: varchar('entidad_id', { length: 255 }).notNull(),
+  /** Índice del chunk dentro de la entidad (0-based) */
+  chunkIndex: integer('chunk_index').notNull().default(0),
+  /** Contenido textual del chunk */
+  contenido: text('contenido').notNull(),
+  /** Vector de embedding (DeepSeek deepseek-embedding, 1536 dimensiones) */
+  embedding: vector('embedding', { dimensions: 1536 }),
+  /** Modelo que generó el embedding */
+  modelo: varchar('modelo', { length: 50 }).notNull().default('deepseek-embedding'),
+  /** Metadatos adicionales (categoría, autor, etc.) */
+  metadata: jsonb('metadata').default({}),
+  /** Fecha de creación */
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  entidadIdx: index('embeddings_entidad_idx').on(table.entidadTipo, table.entidadId),
+  // El índice HNSW se crea vía migración SQL raw porque drizzle-orm no lo soporta directamente
+}));
+
+export type Embedding = typeof embeddings.$inferSelect;
+export type EmbeddingInsert = typeof embeddings.$inferInsert;

@@ -14,6 +14,8 @@
 
 import { areasGenerales, hubPenal, hubMigrantes } from '@/data/areas-juridicas';
 import { site } from '@/lib/site';
+import { recuperarContextoParaChat } from '@/lib/rag/retrieval';
+import { isRagDisponible } from '@/lib/rag/config';
 
 /**
  * Allowlist de enlaces públicos que el asistente puede citar o sugerir.
@@ -125,11 +127,29 @@ PÁGINAS PÚBLICAS PARA DERIVAR AL USUARIO:
 - FAQ: /preguntas-frecuentes
 - Blog: /blog
 
-LÍMITES DE ACTUACIÓN:
+	LÍMITES DE ACTUACIÓN:
 - No se ofrecen asesoramientos jurídicos definitivos por chat.
 - No se calculan penas concretas ni se diseña estrategia procesal cerrada.
 - No se prometen resultados.
 - Ante urgencias (detención, audiencia, citación, allanamiento, violencia,
   amenazas, accidentes, menores en riesgo), se deriva de inmediato a
   WhatsApp o teléfono.`;
+}
+
+/**
+ * Construye contexto RAG para el chat basado en el mensaje del usuario.
+ * Recupera los chunks más relevantes de la base de conocimiento vectorial
+ * mediante búsqueda semántica en pgvector.
+ *
+ * @param mensaje - Mensaje del usuario
+ * @returns Contexto formateado o cadena vacía si no disponible
+ */
+export async function buildRAGContext(mensaje: string): Promise<string> {
+  if (!isRagDisponible()) return '';
+  try {
+    return await recuperarContextoParaChat(mensaje);
+  } catch {
+    console.warn('[chat] RAG no disponible, usando solo base estática');
+    return '';
+  }
 }

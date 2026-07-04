@@ -24,7 +24,9 @@ import { chatRequestSchema } from '@/lib/chat/schema';
 import { chatConfig } from '@/lib/chat/config';
 import { evaluateGuardrails, sanitizeReply } from '@/lib/chat/guardrails';
 import { buildSystemPrompt } from '@/lib/chat/system-prompt';
+import { buildRAGContext } from '@/lib/chat/knowledge-base';
 import { callDeepSeek, isDeepSeekConfigured, type ChatMessage } from '@/lib/chat/deepseek';
+import { isRagDisponible } from '@/lib/rag/config';
 
 export const runtime = 'nodejs';
 
@@ -85,8 +87,13 @@ export async function POST(request: Request) {
   }
 
   // Construir mensajes para el proveedor.
+  // Incluir contexto RAG si está disponible.
+  let ragContext = '';
+  if (isRagDisponible()) {
+    ragContext = await buildRAGContext(message);
+  }
   const messages: ChatMessage[] = [
-    { role: 'system', content: buildSystemPrompt() },
+    { role: 'system', content: buildSystemPrompt(ragContext) },
     ...history.map((h) => ({ role: h.role, content: h.content }) as ChatMessage),
     { role: 'user', content: message },
   ];

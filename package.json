@@ -88,7 +88,11 @@
     "images:optimize": "node scripts/optimize-images.mjs",
     "images:optimize:apply": "node scripts/optimize-images.mjs --apply",
     "images:recompress": "node scripts/optimize-images.mjs --recompress-webp",
-    "images:recompress:apply": "node scripts/optimize-images.mjs --recompress-webp --apply"
+    "images:recompress:apply": "node scripts/optimize-images.mjs --recompress-webp --apply",
+    "rag:indexar": "npx tsx scripts/rag-indexar.ts",
+    "rag:indexar:aplicar": "npx tsx scripts/rag-indexar.ts --aplicar",
+    "rag:extraer-pdfs": "npx tsx scripts/rag-extraer-pdfs.ts",
+    "rag:extraer-pdfs:aplicar": "npx tsx scripts/rag-extraer-pdfs.ts --aplicar"
   },
   "dependencies": {
     "@modelcontextprotocol/server-filesystem": "^2026.1.14",
@@ -116,6 +120,7 @@
     "lucide-react": "^0.471.0",
     "mcp-handler": "^1.1.0",
     "next": "16.2.7",
+    "openai": "^6.45.0",
     "pdfjs-dist": "^4.10.38",
     "pdfkit": "^0.19.1",
     "react": "19.2.4",
@@ -145,8 +150,8 @@
     "eslint-config-next": "16.2.7",
     "jsdom": "^29.1.1",
     "pixelmatch": "^7.2.0",
-    "pngjs": "^7.0.0",
     "playwright": "^1.60.0",
+    "pngjs": "^7.0.0",
     "sharp": "^0.35.1",
     "tailwindcss": "^4",
     "typescript": "^5",

@@ -1,0 +1,105 @@
+Implementación de RAG Legal Autóctono
+Arquitectura de Generación Protegida utilizando Vercel, Neon (pgvector) y LLMs
+
+Tener tu infraestructura alojada en Vercel y utilizar Neon como base de datos serverless te otorga una ventaja competitiva excepcional. No necesitas contratar plataformas externas costosas de IA (como Pinecone o Dify) si no lo deseas, ya que Neon soporta de forma nativa la extensión pgvector . Esto te permite transformar tu base de datos relacional de Postgres en una potente base de datos vectorial.
+A continuación, se detalla el blueprint de arquitectura y código para implementar un sistema RAG (Generación Aumentada por Recuperación) privado que redacte artículos de blog legales fundamentados estrictamente en las leyes de Honduras, erradicando por completo las alucinaciones.
+
+1. ARQUITECTURA GENERAL DEL SISTEMA
+El flujo técnico se divide en dos fases críticas: la Fase de Ingesta (guardar las leyes) y la Fase de Consulta (escribir el artículo).
+
+Componente Almacenamiento de Conocimiento Motor de Orquestación
+Modelo de Embeddings
+Modelo de Generación
+
+Tecnología Neon Postgres + pgvector
+Vercel Serverless / Edge Functions
+OpenAI text-embedding-3small
+GPT-4o o Gemini 1.5 Pro
+
+Función en tu Stack
+Guarda el texto de los artículos de la ley de Honduras y sus correspondientes vectores embebidos.
+Endpoints en Node.js (Next.js API Routes o similar) que procesan la solicitud, consultan la BD y llaman al LLM.
+Convierte el texto legal y las dudas del usuario en vectores matemáticos de 1536 dimensiones.
+Genera el borrador del post final utilizando únicamente el contexto legal inyectado.
+
+2. PASO 1: PREPARACIÓN DE NEON (BASE DE DATOS VECTORIAL)
+Primero, debes conectarte a tu consola de Neon y ejecutar los siguientes comandos SQL para activar las capacidades vectoriales y crear la estructura de tablas para almacenar la legislación:
+-- 1. Habilitar la extensión de vectores en Neon CREATE EXTENSION IF NOT EXISTS vector;
+
+Pineda & Asociados - Arquitectura RAG Legal
+
+Página 1 de 4
+
+-- 2. Crear la tabla que alojará los fragmentos de las leyes
+
+CREATE TABLE leyes_honduras (
+
+id SERIAL PRIMARY KEY,
+
+codigo_nombre TEXT NOT NULL,
+
+-- Ej. 'Código Civil', 'Código del Trabajo'
+
+numero_articulo TEXT NOT NULL, -- Ej. 'Artículo 142'
+
+contenido_texto TEXT NOT NULL, -- El texto explícito de la ley
+
+embedding VECTOR(1536),
+
+-- Vector generado por OpenAI (1536 dimensiones)
+
+fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+);
+
+-- 3. Crear un índice HNSW para búsquedas ultrarrápidas por similitud de cosenos CREATE INDEX ON leyes_honduras USING hnsw (embedding vector_cosine_ops);
+
+3. PASO 2: SCRIPT DE INGESTA (CARGA DE LEYES EN NEON)
+Este script se ejecuta una sola vez (o cada vez que se apruebe una reforma legal). Fragmenta tus PDFs/Textos de leyes artículo por artículo, genera su representación matemática (embedding) y los inserta en Neon. Puedes ejecutarlo localmente en tu entorno de desarrollo ("opencode"):
+import { Client } from 'pg'; import { OpenAI } from 'openai';
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY }); const client = new Client({ connectionString: process.env.DATABASE_URL });
+async function indexarArticuloLegal(codigo, numeroArt, texto) { await client.connect();
+// Generar el embedding matemático del artículo de ley const response = await openai.embeddings.create({
+model: "text-embedding-3-small", input: `${codigo} - ${numeroArt}: ${texto}`, }); const embedding = response.data[0].embedding;
+// Insertar el texto y el vector en tu base de datos Neon await client.query(
+'INSERT INTO leyes_honduras (codigo_nombre, numero_articulo, contenido_texto, embedding) VALUES ($1 [codigo, numeroArt, texto, embedding] );
+await client.end(); console.log(`Éxito: ${numeroArt} indexado.`); }
+
+Pineda & Asociados - Arquitectura RAG Legal
+
+Página 2 de 4
+
+4. PASO 3: SERVELESS FUNCTION EN VERCEL (RECUPERACIÓN Y
+GENERACIÓN)
+Este es el código que vive en tu backend de Vercel. Cuando tú o tu equipo deseen escribir un nuevo post para el blog (ej. "¿Cómo se calculan las prestaciones laborales por despido injustificado?"), este endpoint realiza una búsqueda semántica mediante similitud de cosenos 1 - (A · B) / (||A|| ||B||) y le entrega la información real al LLM.
+import { NextApiRequest, NextApiResponse } from 'next'; import { Client } from 'pg'; import { OpenAI } from 'openai';
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+export default async function handler(req: NextApiRequest, res: NextApiResponse) { const { temaPost } = req.body; // Ej: "Derechos de maternidad en el trabajo"
+// 1. Generar embedding de la consulta del post const embResponse = await openai.embeddings.create({
+model: "text-embedding-3-small", input: temaPost, }); const queryEmbedding = JSON.stringify(embResponse.data[0].embedding);
+// 2. Buscar en Neon los 3 artículos de ley más relevantes mediante distancia de coseno const client = new Client({ connectionString: process.env.DATABASE_URL }); await client.connect();
+const dbRes = await client.query( `SELECT codigo_nombre, numero_articulo, contenido_texto FROM leyes_honduras ORDER BY embedding <=> $1::vector LIMIT 3`, [queryEmbedding]
+);
+// Concatenar las leyes recuperadas reales de Honduras let contextoLegal = ""; dbRes.rows.forEach(row => {
+contextoLegal += `\n[${row.codigo_nombre} - ${row.numero_articulo}]: ${row.contenido_texto}\n`; }); await client.end();
+// 3. Generación protegida contra alucinaciones utilizando el LLM const respuestaFinal = await openai.chat.completions.create({
+model: "gpt-4o", messages: [
+{ role: "system", content: "Eres un abogado experto de la firma Pineda & Asociados en Honduras. Tu tarea es r
+}, {
+role: "user", content: `CONTEXTO LEGAL REAL EN HONDURAS:\n${contextoLegal}\n\nTEMA DEL POST:\n${temaPost} } ], temperature: 0.2 // Mantener la creatividad baja previene alucinaciones
+
+Pineda & Asociados - Arquitectura RAG Legal
+
+Página 3 de 4
+
+}); return res.status(200).json({ articuloBlog: respuestaFinal.choices[0].message.content }); }
+5. BENEFICIOS INMEDIATOS PARA PINEDA & ASOCIADOS
+· Cero Alucinaciones: Al fijar la temperatura del modelo en un rango bajo (0.1 - 0.2) e inyectar el texto exacto desde Neon, obligas a la IA a operar únicamente sobre datos verídicos.
+· Cumplimiento Normativo Local: Al ser tú quien controla la base de datos en Neon, garantizas que las leyes indexadas correspondan a la Gaceta Oficial de la República de Honduras.
+· Propiedad Intelectual: No necesitas enviar tus datos ni tus documentos a herramientas de terceros; todo el conocimiento legal reside en tu propia base de datos Postgres.
+
+Pineda & Asociados - Arquitectura RAG Legal
+
+Página 4 de 4
+
+

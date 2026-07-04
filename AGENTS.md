@@ -54,7 +54,7 @@ comandos de validación. Este protocolo es permanente.
 | Categorías FAQ | `data/faq-categories.ts` (11) |
 | Delitos CP | `data/delitos.json` (483, 100% verificados) |
 | Páginas editables | DB `page_content` vía `lib/page-content-db.ts` |
-| Schema DB | `lib/schema.ts` (35 tablas) |
+| Schema DB | `lib/schema.ts` (66 tablas) |
 | Config sitio | `lib/site.ts` |
 | Artículos CP | `data/articulos_cp.json` (635+) |
 | Constitución | `data/articulos_constitucion.json` (378) |
@@ -62,6 +62,7 @@ comandos de validación. Este protocolo es permanente.
 | Áreas jurídicas | `data/areas-juridicas.ts` (13) |
 | Landings locales | `data/landings-locales.ts` |
 | SEO Live | `data/google/`, `data/bing/`, `data/seo/` (regenerable) |
+| **RAG / Búsqueda semántica** | **DB `embeddings` vía `lib/rag/`** (índice vectorial pgvector) |
 
 ---
 
@@ -90,6 +91,8 @@ comandos de validación. Este protocolo es permanente.
 | IndexNow | `npm run indexnow:dry` |
 | SEO Live | `npm run seo:doctor && npm run seo:collect` |
 | SEO off-page | `npm run seo:health` |
+| RAG / Indexación vectorial | `npm run rag:indexar` (dry-run) → `:aplicar` |
+| RAG / Extraer PDFs | `npm run rag:extraer-pdfs` (dry-run) → `:aplicar` |
 
 ---
 
@@ -110,7 +113,80 @@ Reportes: `docs/audits/seo-live-summary.md`, `docs/audits/seo-live-action-plan.m
 
 ---
 
-## 6. Archivos que NO debe tocar la IA
+## 6. Sistema RAG (Retrieval Augmented Generation)
+
+El sistema RAG usa **Neon (pgvector)** como vector store y **DeepSeek** (`deepseek-embedding`) para generar embeddings. Permite búsqueda semántica sobre toda la base de conocimiento del proyecto.
+
+### Arquitectura
+
+```
+Contenido → Chunking → Embedding (DeepSeek) → pgvector (Neon) → Búsqueda semántica
+```
+
+### Fuentes indexadas en la tabla `embeddings`
+
+| Fuente | Tipo `entidad_tipo` | Cantidad aprox |
+|--------|---------------------|----------------|
+| Blog posts (DB) | `blog_post` | ~149 posts (~400 chunks) |
+| Código Penal | `articulo_cp` | 635 artículos |
+| Constitución | `articulo_const` | 378 artículos |
+| Código Civil | `codigo_civil` | 2,359 artículos |
+| Código de Comercio | `codigo_comercio` | 1,693 artículos |
+| Código de Trabajo | `codigo_trabajo` | 856 artículos |
+| Código Tributario | `codigo_tributario` | 218 artículos |
+| Delitos | `delito` | 483 delitos |
+| FAQs | `faq` | 73 preguntas |
+| Áreas jurídicas | `area_juridica` | 13 áreas |
+| PDFs legales extraídos | `pdf_original` | 8 PDFs (~400 chunks) |
+
+### Integraciones activas
+
+1. **`scripts/blog-verify-fix.ts`**: Antes de llamar a DeepSeek para corregir un post, recupera contexto semántico relevante y lo inyecta en el prompt como "CONTEXTO ADICIONAL — BÚSQUEDA SEMÁNTICA (RAG)". Compatible con flag `--no-rag`.
+
+2. **`app/api/chat/route.ts`**: El asistente virtual público recupera chunks relevantes al mensaje del usuario y los inyecta en el system prompt como contexto adicional.
+
+### Scripts de indexación
+
+```bash
+npm run rag:extraer-pdfs            # Extrae texto de PDFs legales → data/pdfs-chunked/
+npm run rag:extraer-pdfs:aplicar    # Aplica la extracción y guarda chunks
+npm run rag:indexar                 # Indexa contenido en pgvector (dry-run)
+npm run rag:indexar:aplicar         # Aplica indexación en DB
+npm run rag:indexar -- --tipo blog  # Solo blog posts
+npm run rag:indexar -- --tipo legal # Solo códigos legales
+npm run rag:indexar -- --reset      # Re-indexar desde cero (limpia tabla)
+```
+
+### Módulos RAG (`lib/rag/`)
+
+| Archivo | Propósito |
+|---------|-----------|
+| `config.ts` | Configuración centralizada (proveedor, modelo, topK, umbral) |
+| `embeddings.ts` | Motor de embeddings (DeepSeek) + búsqueda vectorial en pgvector |
+| `chunking.ts` | Estrategias de chunking por tipo de contenido |
+| `retrieval.ts` | Orquestación: consulta → embedding → búsqueda → contexto formateado |
+
+### Variables de entorno
+
+```bash
+EMBEDDINGS_PROVEEDOR=deepseek        # Proveedor de embeddings
+EMBEDDINGS_API_KEY=                  # Opcional: si vacía, usa DEEPSEEK_API_KEY
+EMBEDDINGS_MODELO=deepseek-embedding # Modelo de embeddings (1536 dims)
+EMBEDDINGS_DIMENSIONES=1536
+RAG_TOP_K=5                          # Chunks recuperados por consulta
+RAG_MIN_SCORE=0.7                    # Umbral mínimo de similitud
+```
+
+### Seguridad RAG
+
+- **Dry-run por defecto**: `npm run rag:indexar` sin `--aplicar` no escribe en DB.
+- **La API key de DeepSeek** es la misma del chat (`DEEPSEEK_API_KEY`), nunca hardcodeada.
+- **La tabla `embeddings`** es un índice de búsqueda, no una fuente primaria (R2). El contenido original sigue en sus fuentes canónicas.
+- **Los chunks de contenido** se limitan a 2000 caracteres para controlar tokens.
+
+---
+
+## 7. Archivos que NO debe tocar la IA
 
 - Web pública visual (`app/(public)/**/*.tsx`) — salvo SEO.
 - Motor de cálculo (`lib/rules/v1/`).
@@ -122,7 +198,7 @@ Reportes: `docs/audits/seo-live-summary.md`, `docs/audits/seo-live-action-plan.m
 
 ---
 
-## 7. Formato de entrega
+## 8. Formato de entrega
 
 ```
 Porcentaje completado:

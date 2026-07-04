@@ -56,9 +56,13 @@ Si el usuario pide cálculo concreto de penas, estrategia procesal, opinión de 
 	  la interfaz.
 	- Sin listas largas. Tono humano y sereno.`;
 
-/** Prompt de sistema completo (base + reglas + base de conocimiento). */
-export function buildSystemPrompt(): string {
-  return `${BASE_SYSTEM_PROMPT}\n${REGLAS_COMPORTAMIENTO}\n\n${buildKnowledgeBase()}`;
+/** Prompt de sistema completo (base + reglas + base de conocimiento + RAG opcional). */
+export function buildSystemPrompt(ragContext?: string): string {
+  const base = `${BASE_SYSTEM_PROMPT}\n${REGLAS_COMPORTAMIENTO}\n\n${buildKnowledgeBase()}`;
+  if (ragContext) {
+    return `${base}\n\n${ragContext}`;
+  }
+  return base;
 }
 
 export { BASE_SYSTEM_PROMPT, REGLAS_COMPORTAMIENTO };

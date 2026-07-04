@@ -73,6 +73,8 @@ import {
 } from './seo-content-audit';
 import * as fs from 'fs';
 import * as path from 'path';
+import { recuperarContextoParaBlog } from '../lib/rag/retrieval';
+import { isRagDisponible } from '../lib/rag/config';
 
 // Cargar .env.local si existe (sobreescribe .env para desarrollo local)
 const envLocalPath = path.resolve(process.cwd(), '.env.local');
@@ -3508,7 +3510,28 @@ async function corregirConIA(
       + '══════════════════════════════════════════════';
   }
 
-  // Truncar el body para no exceder contexto ni coste (≈25k chars como blog-ai-review)
+	  // ── CONTEXTO RAG (búsqueda semántica) ──
+	  // Recuperar chunks relevantes de la base de conocimiento mediante
+	  // búsqueda vectorial en pgvector. Esto complementa la búsqueda exacta
+	  // de refsTxt con contenido semánticamente relacionado.
+	  let contextoRAGTxt = '';
+	  if (isRagDisponible() && !NO_AI) {
+	    try {
+	      const claimsParaRag = claimsEnBody.map((c) => c.textoOriginal);
+	      const ragResult = await recuperarContextoParaBlog(post.title, claimsParaRag);
+	      if (ragResult) {
+	        contextoRAGTxt = '\n\n══════════════════════════════════════════════\n'
+	          + 'CONTEXTO ADICIONAL — BÚSQUEDA SEMÁNTICA (RAG)\n'
+	          + '══════════════════════════════════════════════\n'
+	          + ragResult
+	          + '\n══════════════════════════════════════════════';
+	      }
+	    } catch (e) {
+	      console.warn('[RAG] Error recuperando contexto semántico:', e);
+	    }
+	  }
+
+	  // Truncar el body para no exceder contexto ni coste (≈25k chars como blog-ai-review)
   const bodyParaIA = bodyBase.length > 25000 ? bodyBase.slice(0, 25000) : bodyBase;
 
   const payload = {
@@ -3517,7 +3540,7 @@ async function corregirConIA(
       { role: 'system', content: PROMPT_SISTEMA_CORRECCION },
       {
         role: 'user',
-        content: `${accion} este artículo del blog jurídico:\n\nTÍTULO: ${post.title}\nCATEGORÍA: ${post.category}\nDESCRIPCIÓN: ${post.description}\nMETA DESCRIPTION ACTUAL: ${post.metaDescription ?? '(vacía)'}\nPALABRAS ACTUALES: ${palabrasBase}\n\n${reporteTxt}${reporteSEOTxt}${instruccionExpandir}${instruccionProfesionalidad}${refsTxt}\n\nCUERPO HTML ACTUAL:\n${bodyParaIA}\n\nDevuelve el JSON con el body ${necesitaCorreccion ? 'corregido' : 'revisado'}. Optimiza también el title y la metaDescription según la sección 8 (CTR) del sistema, o devuelve null en esos campos si ya son óptimos.`,
+	        content: `${accion} este artículo del blog jurídico:\n\nTÍTULO: ${post.title}\nCATEGORÍA: ${post.category}\nDESCRIPCIÓN: ${post.description}\nMETA DESCRIPTION ACTUAL: ${post.metaDescription ?? '(vacía)'}\nPALABRAS ACTUALES: ${palabrasBase}\n\n${reporteTxt}${reporteSEOTxt}${instruccionExpandir}${instruccionProfesionalidad}${refsTxt}${contextoRAGTxt}\n\nCUERPO HTML ACTUAL:\n${bodyParaIA}\n\nDevuelve el JSON con el body ${necesitaCorreccion ? 'corregido' : 'revisado'}. Optimiza también el title y la metaDescription según la sección 8 (CTR) del sistema, o devuelve null en esos campos si ya son óptimos.`,
       },
     ],
     temperature: 0.15,
