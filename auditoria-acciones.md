@@ -1980,3 +1980,45 @@ se añade enlace directo a WhatsApp + teléfono.
 2. Deploy + medir PageSpeed real sobre pilar y 3 landings.
 3. Configurar eventos como conversiones en GA4 (`lead_generated`, `whatsapp_click`).
 4. Monitorizar indexación de /guia-legal-abogados-honduras en GSC tras 1 semana.
+
+---
+
+## 2026-07-04 — Fase 2 advanced SEO/GEO/CRO/analytics
+
+**Agente:** ZCode · **Rama:** `fase2-growth-seo` (continuación) · **Sin push**
+
+### IMPLEMENTADO (8 commits atómicos a778d4b → 7829bf8)
+
+| Commit | Tipo | Acción |
+|---|---|---|
+| a778d4b | fix(content) | Apellidos correctos en pilar (Paz/Barahona según lib/site.ts) + WIP R106 usuario |
+| 2d012a1 | fix(seo) | Des-canibalizar landings: quitar keyword 'abogado penalista {ciudad}', titles diferenciados por tipo de ciudad |
+| 6353f47 | perf | Recompresión parcial WebP delitos-ambientales + habeas-corpus (485→472/474 KB) |
+| aa013f2 | feat(seo) | Enlazar pilar desde home/footer/16 landings locales/derecho-penal/despacho |
+| a3ac75b | feat(geo) | AnswerBlock en servicios-juridicos + hondurenos-en-espana (6 hubs completos) |
+| 202680a | feat(geo) | llms.txt: nueva sección FAQ con 5 páginas + generador actualizado |
+| 11e0c40 | feat(cro) | trackScrollDepth + analytics-listeners scroll 25/50/75/90% + microcopy WhatsApp |
+| 7829bf8 | fix(build) | Section background='light' inválido → 'muted' |
+
+### VALIDADO
+- ✅ `npm run lint` — 0 errores
+- ✅ `npm run build` — 360 rutas estáticas
+- ✅ `npm test` — 730/730 (33 files)
+- ⚠️ `npx tsc --noEmit` — errores preexistentes en `tests/blog-verify-fix.test.ts` (en `main`, no tocados)
+
+### NO VALIDADO / PENDIENTE (R11)
+- PageSpeed live no medido (sin Lighthouse sobre deploy real)
+- Recompresión WebP q60 + resize 1400: lock intermitente la impidió (AVIF ya sirve versión optimizada)
+- FAQ dedicadas para 9 landings secundarias (requiere ~36 Q&A editoriales)
+- SearchAction, VideoObject, HowTo (sin buscador global ni video)
+
+### RIESGOS
+- Des-canibalización es técnica (keywords + titles), no destructiva. Landings de cargo siguen indexables.
+- Apellidos corregidos a fuente canónica (lib/site.ts). R4 cumplido.
+- Sin rediseño visual (R5 cumplido): cambios limitados a AnswerBlocks en hubs, enlaces contextuales, opacidad ya validada.
+- Lock de archivo impidió recompresión completa; AVIF cubre el gap en navegadores modernos.
+
+### Próximo paso recomendado
+1. Mergear `fase2-growth-seo` a main tras revisión.
+2. Deploy + medir PageSpeed sobre home, pilar y 1 landing local.
+3. Verificar en Search Console que las 16 landings reindexan con nuevos titles diferenciados (puede tardar días).

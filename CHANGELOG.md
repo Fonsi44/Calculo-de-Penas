@@ -6,6 +6,63 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — Fase 2 advanced SEO/GEO/CRO/analytics (Release 107)
+
+Segunda fase avanzada de SEO/GEO/performance/CRO sobre la rama `fase2-growth-seo`. 8 commits atómicos (a778d4b → 7829bf8). Validación final: `lint` ✓, `build` ✓ (360 rutas estáticas), `test` ✓ (730/730).
+
+### Fix factual (commit a778d4b)
+- **Página pilar** (`/guia-legal-abogados-honduras`): apellidos corregidos a la fuente canónica `lib/site.ts`. "Thania Pineda" → "Thania Marlene Paz", "Emil Hernández" → "Emil Barahona". Discrepancia detectada entre la pilar (recién creada) y los schemas Person/Organization que alimentan Knowledge Graph.
+- Incluye WIP R106 del usuario (`.prose-pilar` y `.geo-snippet` en globals.css, refactor visual de servicios-juridicos/como-llegar/landing-local).
+
+### Des-canibalización landings locales (commit 2d012a1)
+- **Keyword canibalizadora eliminada**: `abogado penalista {ciudad}` ya no se incluye en las 16 landings locales (competía con las landings de cargo dedicadas `/abogado-penalista-nacaome` y `/abogado-penalista-choluteca`). Reemplazada por `bufete jurídico {ciudad}` no competitiva.
+- **Titles SEO diferenciados por tipo de ciudad** (antes todas compartían `Abogados en {ciudad} | Pineda y Asociados`):
+  - Sede física (Nacaome): `Abogados en Nacaome · Bufete con Sede en Valle` (46 chars)
+  - Distancia ≤60 km: `Abogados en {ciudad} | Sur de Honduras` (~40 chars)
+  - Distancia >60 km: `Abogados en {ciudad} | Bufete desde Nacaome` (~55 chars)
+  - Todas ≤60 chars. Campo opcional `seoTitle` para override manual.
+
+### Performance (commit 6353f47)
+- Recompresión parcial de los 2 WebP >400 KB restantes (`delitos-ambientales`, `habeas-corpus`). Calidad 68 + resize 1600px. Ahorro: 485→472 KB y 485→474 KB (~25 KB total). Lock de archivo intermitente impidió aplicar calidad 60 + resize 1400. AVIF equivalente ya se sirve en Chrome/Edge/Firefox (402 y 388 KB).
+
+### Enlazado página pilar (commit aa013f2)
+La pilar `/guia-legal-abogados-honduras` solo recibía 1 enlace entrante. Era huérfana desde home, footer, landings locales y hubs. Añadidos enlaces contextuales (sin rediseño):
+- **Home**: tercer link en sección FAQ (junto a blog y FAQ).
+- **Footer**: entrada en columna "El Despacho".
+- **Landing-local**: link al final del bloque intro (afecta a las 16 landings locales).
+- **`/derecho-penal`** y **`/despacho`**: link tras "explore las ramas principales del derecho".
+
+### GEO/LLMO — AnswerBlocks en hubs faltantes (commit a3ac75b + 7829bf8)
+- **`/servicios-juridicos`**: AnswerBlock "¿Qué hace un bufete multidisciplinario en Honduras?" con respuesta sobre las 14 áreas y punto de contacto único.
+- **`/hondurenos-en-espana`**: AnswerBlock "¿Puedo tramitar asuntos legales en Honduras residiendo en España?" con respuesta sobre poderes apostillados y seguimiento remoto.
+- Ahora los 6 hubs comerciales principales tienen AnswerBlock (pilar, despacho, solicitar-consulta, derecho-penal, servicios-juridicos, hondurenos-en-espana).
+- Fix build: `Section background="light"` inválido → `muted` (commit 7829bf8).
+
+### GEO/LLMO — llms.txt con sección FAQ (commit 202680a)
+- `scripts/generate-llms-txt.mjs`: nueva sección "Preguntas frecuentes (FAQ)" listando las 5 páginas con schema FAQPage (central + 4 hubs). Cada entrada con 1-liner descriptivo para que ChatGPT, Claude, Perplexity, Copilot y Gemini puedan localizar y citar respuestas directas.
+- `public/llms.txt` regenerado: 159 líneas (era 151).
+
+### CRO + analytics (commit 11e0c40)
+- **`trackScrollDepth(percent)`** en `lib/analytics.ts`: gap cerrado (faltaba `scroll_depth` en el catálogo de eventos).
+- **`analytics-listeners.tsx`**: listener `scroll` con umbrales 25/50/75/90% vía rAF + `Set` de disparados (una vez por umbral por carga de página). Listener pasivo.
+- **`cta-buttons.tsx`**: `DEFAULT_MSG` de WhatsApp ampliado de "Vi su sitio web" a "Los contacto desde la web de Pineda y Asociados" (más específico, ayuda a filtrar leads por canal).
+
+### Validación
+- `npm run lint`: 0 errores.
+- `npm run build`: 360 rutas estáticas.
+- `npm test`: 730 tests (33 suites) pasados.
+- `npx tsc --noEmit`: errores preexistentes en `tests/blog-verify-fix.test.ts` (presentes en `main`, no tocados en esta rama).
+
+### Pendientes declarados (R11)
+- **CSS 1412 líneas**: sin bloques `@layer` muertos identificables; requiere análisis dedicado. Fuera de scope.
+- **Bundle admin libs**: ya aisladas por Turbopack (verificado Fase 1). No se requiere action.
+- **PageSpeed live**: no se mide (sin Lighthouse sobre deploy real).
+- **Recompresión WebP q60 + resize 1400**: lock intermitente impidió aplicación; AVIF equivalente sirve la versión optimizada en navegadores modernos.
+- **FAQ dedicadas para 9 landings secundarias**: las actuales tienen plantilla + contexto local real; diferenciación total requeriría redacción editorial masiva (~36 Q&A).
+- **SearchAction schema, VideoObject/HowTo**: sin buscador global, sin contenido de video.
+
+---
+
 ## 2026-07-04 — Consolidación del sistema de diseño + auditoría pública integral (Release 106)
 
 Segunda fase de la auditoría UX/UI. Tras la normalización de páginas principales en R105, se auditaron sistemáticamente todas las páginas públicas restantes (blog, contacto, legales, landings, subpáginas, guías) y se consolidó el sistema de diseño con nuevas utilidades CSS y normalización de componentes.
