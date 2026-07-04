@@ -386,14 +386,16 @@ export function ChatWidget() {
         </div>
       )}
 
-      {/* Botón flotante — premium con halo dorado */}
+      {/* Botón flotante — premium con halo dorado.
+          Cuando está cerrado: animación de atención (vibración sutil cada ~3s)
+          para invitar al click. Al abrir: quieto para no molestar. */}
       <button
         ref={openBtnRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
         aria-expanded={open}
-        className="relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className={`relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${open ? '' : 'animate-chat-attention'}`}
         style={{
           pointerEvents: 'auto',
           boxShadow:
