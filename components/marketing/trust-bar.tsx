@@ -62,11 +62,11 @@ export function TrustBar({
   // Icono-contenedor canónico de la web pública: w-11 h-11 rounded-lg con
   // borde + tint (R16). Antes era rounded-full, único outlier de forma.
   const iconBoxCls = isDark
-    ? 'w-10 h-10 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
-    : 'w-10 h-10 rounded-lg bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
+    ? 'w-9 h-9 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
+    : 'w-9 h-9 rounded-lg bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
   const titleCls = isDark
-    ? 'text-sm font-bold text-text-inverse leading-tight mt-2.5'
-    : 'text-sm font-bold text-text leading-tight mt-2.5';
+    ? 'text-sm font-bold text-text-inverse leading-tight mt-2'
+    : 'text-sm font-bold text-text leading-tight mt-2';
   // Microcopy legible: text-xs (12px) en vez de text-xxs (11px). Sigue siendo
   // caption, pero ahora se lee con comodidad en todos los tamaños.
   const descCls = isDark
@@ -75,8 +75,8 @@ export function TrustBar({
 
   return (
     <div className={`${wrapperCls} ${className ?? ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-10">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-5 items-stretch">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 md:py-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-4 items-stretch">
           {items.map((it) => {
             const Icon = it.icon;
             return (

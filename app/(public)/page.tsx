@@ -188,41 +188,41 @@ export default async function HomePage() {
           className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-accent/20 to-transparent pointer-events-none"
           aria-hidden="true"
         />
-        <Container size="lg" className="relative py-12 md:py-16 lg:py-20">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <Container size="lg" className="relative py-8 md:py-12 lg:py-16">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             <div className="lg:col-span-7">
-              <div className="flex flex-wrap items-center gap-2 mb-5">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
                 <HeroOfficeBadge />
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-light/50 border border-primary-light/40 text-text-inverse/90 backdrop-blur-sm">
                   <span className="text-xxs font-bold tracking-wider">{t('hero.badge')}</span>
                 </span>
               </div>
-              <h1 className="font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-text-inverse text-balance">
+              <h1 className="font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance">
                 Defensa penal y asesoría jurídica en Nacaome y Honduras
               </h1>
-              <p className="mt-5 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
+              <p className="mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
               </p>
-              <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7">
+              <div className="flex flex-wrap gap-x-5 gap-y-2 mt-5">
                 <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/85">
-                  <CheckCircle2 size={14} className="text-accent" /> {t('hero.check1')}
+                  <CheckCircle2 size={13} className="text-accent" /> {t('hero.check1')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/85">
-                  <CheckCircle2 size={14} className="text-accent" /> {t('hero.check2')}
+                  <CheckCircle2 size={13} className="text-accent" /> {t('hero.check2')}
                 </span>
               </div>
-              <CTAGroup variant="inverse" className="mt-8" />
+              <CTAGroup variant="inverse" className="mt-6" />
             </div>
             {/* Panel visual complementario (lg:col-span-5): equilibra la
                 composición del hero con datos verificados (site, áreas), sin
                 inventar métricas (R4). Panel translúcido con textura de marca. */}
             <div className="hidden lg:block lg:col-span-5">
-              <div className="relative rounded-2xl border border-accent/25 bg-primary-dark/40 backdrop-blur-md p-6 shadow-[0_24px_60px_-24px_rgba(6,14,32,0.6)]">
+              <div className="relative rounded-2xl border border-accent/25 bg-primary-dark/40 backdrop-blur-md p-5 shadow-[0_24px_60px_-24px_rgba(6,14,32,0.6)]">
                 <div className="absolute inset-0 pointer-events-none rounded-2xl bg-grid opacity-40" aria-hidden="true" />
-                <div className="relative space-y-4">
+                <div className="relative space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
-                      <Gavel size={20} aria-hidden="true" />
+                    <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                      <Gavel size={18} aria-hidden="true" />
                     </div>
                     <div>
                       <p className="font-bold text-sm text-text-inverse leading-tight">Defensa penal como pilar</p>
@@ -232,7 +232,7 @@ export default async function HomePage() {
                     </div>
                   </div>
                   <div className="h-px bg-text-inverse/10" />
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3">
                     <div>
                       <p className="text-xxs font-bold uppercase tracking-wider text-accent">Cobertura</p>
                       <p className="text-sm font-semibold text-text-inverse mt-1">{site.address.city}, {site.address.department}</p>
@@ -244,8 +244,8 @@ export default async function HomePage() {
                       <p className="text-xs text-text-inverse/70 mt-0.5 tabular-nums">{site.hours}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 pt-1">
-                    <CheckCircle2 size={14} className="text-accent flex-shrink-0" />
+                  <div className="flex items-center gap-2 pt-0.5">
+                    <CheckCircle2 size={13} className="text-accent flex-shrink-0" />
                     <p className="text-xs text-text-inverse/80">Consulta inicial sin costo · Presupuesto por escrito</p>
                   </div>
                 </div>

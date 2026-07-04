@@ -106,20 +106,20 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
         </div>
-        <Container size="lg" className="relative py-8 md:py-12">
+        <Container size="lg" className="relative py-6 md:py-10">
           <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-2.5">
               {landing.heroEyebrow}
             </p>
-            <h1 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
+            <h1 className="font-serif font-extrabold text-xl md:text-2xl lg:text-3xl leading-tight">
               {landing.heroTitle}
             </h1>
-            <p className="mt-4 text-base md:text-lg text-text-inverse/85 leading-relaxed">
+            <p className="mt-3 text-base md:text-lg text-text-inverse/85 leading-relaxed">
               {landing.heroSubtitle}
             </p>
 
             {/* NAP rápido para SEO local */}
-            <dl className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>
@@ -140,7 +140,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
               </div>
             </dl>
 
-            <div className="mt-5">
+            <div className="mt-4">
               <CTAGroup variant="inverse" message={whatsappMsg} />
             </div>
           </div>
@@ -150,10 +150,10 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
       {/* Intro + contexto local */}
       <Section background="default" spacing="md">
         <div className="max-w-3xl">
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight">
+          <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight">
             {`Bufete de abogados con cobertura en ${landing.ciudad}`}
           </h2>
-          <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed">
+          <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
             {landing.intro}
           </p>
           {!landing.sedeFisica && (
