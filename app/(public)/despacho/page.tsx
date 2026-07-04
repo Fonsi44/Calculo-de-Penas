@@ -499,6 +499,11 @@ export default async function DespachoPage() {
             Ver las ramas principales del derecho <ArrowRight size={14} />
           </Link>
         </div>
+        <div className="mt-4 text-center">
+          <Link href="/guia-legal-abogados-honduras" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-text-inverse transition-colors">
+            Guía para contratar abogado en Honduras <ArrowRight size={14} />
+          </Link>
+        </div>
       </Section>
 
       <script

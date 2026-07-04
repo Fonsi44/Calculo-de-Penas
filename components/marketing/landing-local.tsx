@@ -161,6 +161,12 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
               {`Nuestra sede principal está en Nacaome, Valle, a ${landing.distanciaKm} km de ${landing.ciudad}. Coordinamos atención presencial y seguimiento de diligencias según su caso.`}
             </p>
           )}
+          <Link
+            href="/guia-legal-abogados-honduras"
+            className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Guía para contratar abogado en Honduras <ArrowRight size={14} />
+          </Link>
         </div>
       </Section>
 

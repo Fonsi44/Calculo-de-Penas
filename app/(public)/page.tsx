@@ -591,6 +591,9 @@ export default async function HomePage() {
             <Link href="/blog" title="Leer el blog jurídico de Pineda y Asociados — guías y análisis legal" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
               leer el blog jurídico <ArrowRight size={14} />
             </Link>
+            <Link href="/guia-legal-abogados-honduras" title="Cómo elegir abogado en Honduras: colegiación, honorarios y errores a evitar" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
+              guía para contratar abogado en Honduras <ArrowRight size={14} />
+            </Link>
           </div>
           <div className="lg:col-span-2 space-y-3">
             {FAQ.map((f, i) => (

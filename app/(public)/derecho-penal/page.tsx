@@ -506,6 +506,14 @@ const PRIORITY_PENAL_SLUGS = [
               Explore las ramas principales del derecho <ArrowRight size={16} />
           </Link>
         </div>
+        <div className="max-w-3xl mx-auto mt-4 text-center">
+          <Link
+            href="/guia-legal-abogados-honduras"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Guía para contratar abogado en Honduras <ArrowRight size={16} />
+          </Link>
+        </div>
       </Section>
       )}
 
