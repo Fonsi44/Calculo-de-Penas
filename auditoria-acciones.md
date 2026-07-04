@@ -9,7 +9,37 @@
 
 ---
 
-## Release 109 — Sistema de escala fluida centralizada (2026-07-04)
+## Release 109b — Ajuste fuerte de escala visual v2 (2026-07-04)
+
+**Segunda pasada de compactación tras Release 109.** Tokens más agresivos,
+~30% de reducción visual en estructura, secciones, espacios, chat. Sin
+rediseño (R5). Sin modificar intranet/admin (R6). Validación completa (R8).
+
+### Cambios aplicados
+
+| Prioridad | Acción | Archivos |
+|---|---|---|
+| P1 | Tokens agresivos en :root (--space-scale:0.70, --section-scale:0.68, etc.) | `app/globals.css` |
+| P2 | Section/Container/PageHero reducción adicional ~25% | `components/marketing/section.tsx`, `page-hero.tsx` |
+| P3 | Home hero (page.tsx) padding, título, panel lateral | `app/(public)/page.tsx` |
+| P4 | CTAGroup, TrustBar compactación profunda | `components/marketing/cta-buttons.tsx`, `trust-bar.tsx` |
+| P5 | PublicHeader/PublicFooter logo, padding, gaps | `components/marketing/public-header.tsx`, `public-footer.tsx` |
+| P6 | HubFaq, ServiceCard, LandingLocal segunda pasada | `components/marketing/hub-faq.tsx`, `service-card.tsx`, `landing-local.tsx` |
+| P7 | ChatWidget ~30% reducción (clamp 16/25/20, 480px max) | `components/chat/chat-widget.tsx` |
+
+### Validación ejecutada
+- `npm run lint` → 0 errors ✅
+- `npm run build` → 361 páginas, compilación exitosa ✅
+- `npm test` → 754 tests / 35 suites pasan ✅
+
+### Clasificación honesta (R11)
+- **IMPLEMENTADO:** P1–P7.
+- **VALIDADO:** lint, build, test.
+- **NO VALIDADO:** impacto visual real (requiere inspección DevTools en 6 resoluciones).
+- **PENDIENTE:** verificación responsive en navegador real (Safari iOS, Firefox Android, Chrome desktop).
+- **RIESGO:** sin riesgos técnicos; cambios CSS superficiales sin impacto en lógica/SEO.
+
+---
 
 **Implementación de sistema profesional de densidad fluida vía CSS custom
 properties.** No es zoom global. Sin rediseño visual (R5). Sin modificar

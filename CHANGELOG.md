@@ -6,7 +6,47 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
-## 2026-07-04 — Sistema de escala fluida centralizada (Release 109)
+## 2026-07-04 — Ajuste fuerte de escala visual v2 (Release 109b)
+
+Segunda pasada de compactación tras Release 109. Tokens agresivos que reducen
+~30% la altura de secciones, ~30% espacios, ~22% componentes y ~30% el chat.
+Reducción de texto controlada (~10% máx). Mantiene legibilidad (16px min),
+botones accesibles (≥36px) y proporción profesional.
+
+### Tokens actualizados (`app/globals.css`)
+```
+--ui-scale: 0.82         # antes 0.94
+--font-scale: 0.90       # antes 0.98
+--space-scale: 0.70      # antes 0.88
+--section-scale: 0.68    # antes 0.86
+--component-scale: 0.78  # antes 0.92
+--chat-scale: 0.70       # antes 0.88
+```
+
+### Cambios aplicados
+- **Root font-size**: mantenido `clamp(16px, 0.95rem + 0.15vw, 17px)`
+- **Container/Section/Header**: reducción adicional ~25% en todos los espaciados
+- **Home hero (page.tsx)**: padding `py-12/16/20` → `py-8/12/16`, título reducido
+  un escalón, panel lateral iconos w-11→w-10, p-6→p-5, CTAs mt-8→mt-6.
+- **PageHero**: padding `py-8/12/14` → `py-6/10/12`, title bajado a `text-xl/sm:text-2xl/lg:text-3xl`.
+- **CTAGroup**: UrgencyCallout p-4→p-3.5, ContactStrip p-3→p-2.5 w-10→w-9.
+- **TrustBar**: py-6/10→py-5/8, iconos w-10→w-9, gap reducido.
+- **PublicHeader**: main-bar py-2→py-1.5, logo h-8→h-7, wordmark más fino.
+- **PublicFooter**: py-10/14→py-8/12, logo h-12→h-10, gap-6→gap-5.
+- **HubFaq**: py-10/14→py-8/12, title `text-xl/2xl`→`text-lg/xl`, padding compacto.
+- **ServiceCard**: p-4/5→p-3.5/4, title `text-base/lg`→`text-sm/base`.
+- **LandingLocal**: hero py-8/12→py-6/10, title bajado, NAP mt-5→mt-4.
+- **ChatWidget**: maxWidth `clamp(16rem,25vw,20rem)`, maxHeight `min(480px, calc(100dvh-100px))`,
+  botón w-10 h-10, todos los paddings reducidos ~30%.
+
+### Criterio por resolución
+| Resolución | Efecto esperado |
+|---|---|
+| 1366×768 | ~30% menos altura visual, 4-5 secciones visibles arriba del fold |
+| 1440×900 | Equilibrada, elegante, proporción jurídica premium |
+| 1920×1080 | No parece ampliada, anchos controlados |
+| 768×1024 | Compacta pero cómoda, lectura fluida |
+| 390×844 / 360×740 | Texto legible, menos scroll, chat no invasivo |
 
 Sistema profesional de escala fluida para toda la web pública. Seis CSS custom
 properties en `:root` controlan la densidad global. Sin zoom, sin hacks, sin
