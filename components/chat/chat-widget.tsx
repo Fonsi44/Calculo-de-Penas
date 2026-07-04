@@ -27,7 +27,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
-import { Bot, Send, Loader2, X, MessageCircle, Phone, ArrowRight } from 'lucide-react';
+import { Bot, Send, X, MessageCircle, Phone, ArrowRight } from 'lucide-react';
 import { telHref, whatsappHref } from '@/lib/site';
 import { chatConfig } from '@/lib/chat/config';
 import {
@@ -237,43 +237,57 @@ export function ChatWidget() {
         pointerEvents: 'none',
       }}
     >
-      {/* Panel del chat — ancho fluido proporcional a la resolución,
-          igual que el resto de componentes de la web. */}
+      {/* Panel del chat — premium, elegante, proporcional.
+          Usa los mismos tokens de diseño que el resto de la web
+          (card-premium, shadows, accent, radius-lg). */}
       {open && (
         <div
           role="dialog"
           aria-modal="false"
           aria-label="Asistente virtual"
-          className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text shadow-xl"
+          className="flex flex-col rounded-2xl border border-accent/30 bg-surface text-text overflow-hidden"
           style={{
             pointerEvents: 'auto',
             width: 'calc(100vw - 2rem)',
-            maxWidth: 'clamp(18rem, 32vw, 26rem)',
-            maxHeight: 'min(580px, calc(100dvh - 5rem))',
+            maxWidth: 'clamp(22rem, 38vw, 32rem)',
+            maxHeight: 'min(640px, calc(100dvh - 4rem))',
+            boxShadow:
+              '0 1px 0 0 rgba(255,255,255,0.60) inset, 0 4px 12px rgba(15,29,58,0.10), 0 24px 48px -16px rgba(15,29,58,0.25)',
           }}
         >
-          {/* Cabecera */}
-          <div className="flex items-center justify-between gap-2 px-2 py-1.5 border-b border-accent/20 bg-primary text-text-inverse rounded-t-lg">
-            <div className="flex items-center gap-1.5 min-w-0">
-              <Bot size={13} className="flex-shrink-0 text-accent" aria-hidden="true" />
-              <p className="text-xs font-semibold leading-tight truncate">
-                {chatConfig.assistant.name}
-              </p>
+          {/* Cabecera — gradiente navy con acento dorado */}
+          <div className="relative flex items-center justify-between gap-2 px-4 py-2.5 border-b border-accent/20 bg-primary text-text-inverse">
+            <div
+              className="absolute inset-0 pointer-events-none bg-radial-accent opacity-60"
+              aria-hidden="true"
+            />
+            <div className="relative flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center flex-shrink-0">
+                <Bot size={16} className="text-accent" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold leading-tight truncate font-serif">
+                  {chatConfig.assistant.name}
+                </p>
+                <p className="text-xxs text-text-inverse/70 leading-tight">
+                  Pineda y Asociados
+                </p>
+              </div>
             </div>
             <button
               type="button"
               onClick={close}
               aria-label="Cerrar chat"
-              className="p-1 rounded hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="relative p-1.5 rounded-lg hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
             >
-              <X size={12} aria-hidden="true" />
+              <X size={15} aria-hidden="true" />
             </button>
           </div>
 
-          {/* Mensajes (scroll interno) */}
+          {/* Mensajes (scroll interno) — fondo cálido sutil */}
           <div
             ref={scrollRef}
-            className="flex-1 overflow-y-auto px-2 py-1.5 space-y-1 bg-background"
+            className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5 bg-page-warm"
             aria-live="polite"
             aria-label="Conversación"
           >
@@ -282,8 +296,8 @@ export function ChatWidget() {
                 key={i}
                 className={
                   m.role === 'user'
-                    ? 'ml-auto max-w-[85%] rounded-md bg-primary text-text-inverse px-2 py-1 text-xs'
-                    : 'mr-auto max-w-[92%] rounded-md bg-muted text-text px-2 py-1 text-xs'
+                    ? 'ml-auto max-w-[82%] rounded-2xl rounded-br-sm bg-primary text-text-inverse px-3.5 py-2 text-sm leading-relaxed shadow-sm'
+                    : 'mr-auto max-w-[88%] rounded-2xl rounded-bl-sm bg-surface text-text px-3.5 py-2 text-sm leading-relaxed border border-border-light shadow-sm'
                 }
               >
                 {m.content}
@@ -291,21 +305,25 @@ export function ChatWidget() {
             ))}
 
             {loading && (
-              <div className="mr-auto flex items-center gap-2 text-text-secondary text-xs px-1">
-                <Loader2 size={11} className="animate-spin" aria-hidden="true" />
+              <div className="mr-auto flex items-center gap-2 text-text-secondary text-xs px-2 py-1">
+                <span className="flex gap-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.15s' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.3s' }} />
+                </span>
                 <span>Escribiendo…</span>
               </div>
             )}
 
             {error && (
-              <p className="text-xxs text-warning px-1">
+              <p className="text-xxs text-danger bg-danger-bg rounded-md px-2 py-1.5 mr-auto max-w-[88%]">
                 Se produjo un error. Puede reintentar o contactar directamente.
               </p>
             )}
           </div>
 
-          {/* CTAs */}
-          <div className="flex items-center gap-1.5 px-2 py-1 border-t border-accent/20 bg-muted/50">
+          {/* Barra de contacto rápida */}
+          <div className="flex items-center gap-2 px-3 py-2 border-t border-border-light bg-surface-alt/50">
             <a
               href={whatsappHref(whatsappContextual())}
               target="_blank"
@@ -314,28 +332,28 @@ export function ChatWidget() {
                 trackChatWhatsAppClicked();
                 trackChatContactClicked('whatsapp');
               }}
-              className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity"
             >
-              <MessageCircle size={10} aria-hidden="true" /> WhatsApp
+              <MessageCircle size={12} aria-hidden="true" /> WhatsApp
             </a>
             <a
               href={telHref()}
               onClick={() => trackChatContactClicked('phone')}
-              className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity"
             >
-              <Phone size={10} aria-hidden="true" /> Llamar
+              <Phone size={12} aria-hidden="true" /> Llamar
             </a>
             <a
               href="/solicitar-consulta"
               onClick={() => trackChatContactClicked('consulta')}
-              className="ml-auto flex items-center gap-0.5 text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-1 py-0.5"
+              className="ml-auto flex items-center gap-1 text-xs font-semibold text-accent-dark hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg px-2 py-1.5 transition-colors"
             >
-              Consulta <ArrowRight size={10} aria-hidden="true" />
+              Consulta <ArrowRight size={11} aria-hidden="true" />
             </a>
           </div>
 
           {/* Input */}
-          <form onSubmit={onSubmit} className="flex items-center gap-1.5 px-2 py-1.5 border-t border-accent/20">
+          <form onSubmit={onSubmit} className="flex items-center gap-2 px-3 py-2.5 border-t border-border-light bg-surface">
             <label htmlFor="chat-input" className="sr-only">
               Escriba su mensaje
             </label>
@@ -349,36 +367,49 @@ export function ChatWidget() {
               placeholder="Escriba su mensaje…"
               autoComplete="off"
               disabled={loading}
-              className="flex-1 min-w-0 rounded border border-accent/30 bg-background px-2 py-1.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
+              className="flex-1 min-w-0 rounded-xl border border-border bg-background px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:border-accent/50 focus-visible:ring-2 focus-visible:ring-accent/20 disabled:opacity-50 transition-colors"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Enviar mensaje"
-              className="flex-shrink-0 w-7 h-7 rounded bg-accent text-primary flex items-center justify-center hover:opacity-90 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="flex-shrink-0 w-9 h-9 rounded-xl bg-accent text-primary flex items-center justify-center hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 transition-colors btn-shadow-accent"
             >
-              <Send size={12} aria-hidden="true" />
+              <Send size={15} aria-hidden="true" />
             </button>
           </form>
 
-          {/* Disclaimer en tamaño reducido pero legible */}
-          <p className="px-1.5 pb-1 text-[9px] leading-tight text-text-secondary">
+          {/* Disclaimer discreto */}
+          <p className="px-3 pb-2 pt-0.5 text-[9px] leading-tight text-text-muted bg-surface text-center">
             {chatConfig.assistant.disclaimer}
           </p>
         </div>
       )}
 
-      {/* Botón flotante — tamaño accesible proporcionado */}
+      {/* Botón flotante — premium con halo dorado */}
       <button
         ref={openBtnRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
         aria-expanded={open}
-        className="w-11 h-11 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-        style={{ pointerEvents: 'auto' }}
+        className="relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        style={{
+          pointerEvents: 'auto',
+          boxShadow:
+            '0 1px 0 0 rgba(255,255,255,0.10) inset, 0 4px 12px rgba(15,29,58,0.30), 0 8px 24px -6px rgba(212,175,55,0.25)',
+        }}
       >
-        {open ? <X size={18} aria-hidden="true" /> : <MessageCircle size={18} aria-hidden="true" />}
+        {!open && (
+          <span
+            className="absolute inset-0 rounded-full pointer-events-none animate-ping"
+            style={{ background: 'rgba(212,175,55,0.20)', animationDuration: '2.5s' }}
+            aria-hidden="true"
+          />
+        )}
+        <span className="relative">
+          {open ? <X size={20} aria-hidden="true" /> : <MessageCircle size={20} aria-hidden="true" />}
+        </span>
         {!open && <span className="sr-only">Asistente virtual de Pineda y Asociados</span>}
       </button>
     </div>,
