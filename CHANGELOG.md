@@ -43,6 +43,22 @@ del protocolo respetado (URLs/slugs intactos, tokens R16, commits atómicos).
 
 Ver detalle en `docs/audits/transformacion-web-publica.md`.
 
+### Cierre (2026-07-04)
+Cierre de los 3 pendientes del Release 110 y validación completa de SEO/indexación:
+- **IconBadge aplicado** de forma quirúrgica (4 casos equivalentes); variantes
+  incompatibles dejadas intactas y documentadas.
+- **FAQ i18n home** renombrada a `FAQ_HOME_LEGACY`: rol declarado como
+  structured-data (JSON-LD `FAQPage`), no UI, no fuente canónica. SEO intacto.
+- **Fix SEO**: eliminado `@id` `FAQPage` duplicado en `/derecho-penal` y
+  `/hondurenos-en-espana` (`areaSchemas` + `HubFaq` emitían el mismo bloque).
+- **QA visual real** con Playwright: 22 capturas (11 rutas × desktop/móvil),
+  0 overflow horizontal, 1 h1/página. Errores de consola preexistentes declarados.
+- **SEO validado vía HTTP local**: sitemap 213 URLs, robots sin bloqueos,
+  metadatos 18/18 OK, JSON-LD 0 duplicados, indexabilidad 0 errores.
+- **Infraestructura**: `scripts/qa-visual-cierre.mjs` (QA reutilizable).
+
+Sin push.
+
 ---
 
 ## 2026-07-04 — Ajuste fuerte de escala visual v2 (Release 109b)
