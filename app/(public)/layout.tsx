@@ -7,6 +7,7 @@ import { PWARegistration } from '@/components/pwa/pwa-registration';
 import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
 import { AnalyticsScripts } from '@/components/analytics-scripts';
+import { AnalyticsListeners } from '@/components/marketing/analytics-listeners';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoOverrides();
@@ -130,6 +131,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         fbPixelId={site.fbPixelId}
         clarityId={site.clarityId}
       />
+      <AnalyticsListeners />
     </div>
   );
 }

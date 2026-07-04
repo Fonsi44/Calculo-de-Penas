@@ -94,6 +94,31 @@ export function trackDirectionsClick(..._args: unknown[]) {
   trackEvent('directions_click', { value: 1 });
 }
 
+/**
+ * Apertura de FAQ (cuando el usuario expande una pregunta).
+ * @param question Texto de la pregunta abierta.
+ * @param page Path o identificador de la página donde está la FAQ.
+ */
+export function trackFaqOpen(question: string, page?: string) {
+  trackEvent('faq_open', { question: question.slice(0, 100), ...(page ? { page } : {}) });
+}
+
+/**
+ * Búsqueda interna en el blog.
+ * @param query Texto buscado (truncado a 100 chars por privacidad).
+ */
+export function trackBlogSearch(query: string) {
+  trackEvent('blog_search', { query: query.slice(0, 100) });
+}
+
+/**
+ * Clic en enlace interno (breadcrumb, related, etc.).
+ * @param target Path o etiqueta del enlace pulsado.
+ */
+export function trackInternalClick(target: string) {
+  trackEvent('internal_click', { target: target.slice(0, 100) });
+}
+
 // ---------------------------------------------------------------------------
 // Diagnóstico local (development únicamente)
 // ---------------------------------------------------------------------------

@@ -53,6 +53,8 @@ export function HubFaq({
           {faqs.map((faq, i) => (
             <details
               key={i}
+              data-faq-question={faq.pregunta}
+              data-faq-page={url}
               className="group rounded-lg border border-border bg-surface px-4 py-3 [&_summary::-webkit-details-marker]:hidden"
             >
               <summary className="flex cursor-pointer items-center justify-between gap-3 text-sm font-semibold text-text-secondary hover:text-primary transition-colors">

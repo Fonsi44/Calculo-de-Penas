@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, Calendar, Clock, X, ArrowRight } from 'lucide-react';
 import { getCategoryName, formatDate } from '@/lib/blog';
+import { trackBlogSearch } from '@/lib/analytics';
 
 const PLACEHOLDER_EXAMPLES = [
   'despido injustificado',
@@ -87,6 +88,8 @@ export function BlogSearch({ posts, scope }: Props) {
               <Link
                 key={p.slug}
                 href={`/blog/${p.category}/${p.slug}`}
+                onClick={() => trackBlogSearch(query)}
+                data-internal-link={`blog_search:${p.slug}`}
                 className="flex items-start gap-3 p-3 hover:bg-accent/5 transition-colors group"
               >
                 {p.coverImage && (

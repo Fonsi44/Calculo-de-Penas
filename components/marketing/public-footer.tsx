@@ -187,7 +187,7 @@ export function PublicFooter() {
                 <Mail size={14} className="text-accent flex-shrink-0" aria-hidden="true" />
                 {/* Email no expuesto en texto plano para reducir scraping de bots simples.
                     El mailto: abre el cliente de correo al hacer clic (UX preservada). */}
-                <a href={mailtoHref()} className="text-text-inverse/80 hover:text-accent" aria-label={`Enviar correo a ${site.name}`}>
+                <a href={mailtoHref()} className="text-text-inverse/80 hover:text-accent" aria-label={`Enviar correo a ${site.name}`} data-internal-link="email_click">
                   Enviar correo
                 </a>
               </li>

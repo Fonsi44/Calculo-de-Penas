@@ -35,8 +35,10 @@ export function ConsultationCTA() {
             </h2>
             <p className="mt-4 text-sm md:text-base text-text-secondary max-w-xl mx-auto leading-relaxed text-pretty">
               Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones
-              legales disponibles. Atendemos en Nacaome, San Lorenzo, Choluteca y la zona sur
-              de Honduras. Presupuesto por escrito antes de cualquier actuación.
+              legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán,
+              Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por
+              escrito antes de cualquier actuación. Sus datos están protegidos por el secreto
+              profesional del abogado.
             </p>
             <div className="mt-7 flex justify-center">
               <CTAGroup variant="inline" />
