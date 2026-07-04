@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-import { site, absoluteUrl } from '@/lib/site';
+import { site, absoluteUrl, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -147,31 +147,47 @@ export default async function AreasJuridicasPage() {
 
       <TrustBar background="light" />
 
-      {/* INTRO EDITORIAL — texto orientado a entidades y SEO/GEO.
-          La página era solo índice + tabla; añadir párrafo introductorio con
-          entidades por especialidad evita thin content y refuerza la intención
-          de búsqueda "abogado [área] Nacaome/Valle". */}
-      <Section spacing="sm">
-        <div className="prose prose-sm sm:prose-base max-w-3xl mx-auto text-text-secondary leading-relaxed">
-          <p>
-            Pineda y Asociados es un bufete multidisciplinario con sede en Nacaome, Valle, que atiende
-            clientes en toda la zona sur de Honduras. Nuestra cartera de servicios cubre las principales
-            ramas del derecho hondureño bajo un mismo techo, lo que permite abordar casos complejos que
-            cruzan fronteras entre especialidades: por ejemplo, un divorcio con empresa familiar involucra
-            a la vez derecho de familia, civil y mercantil; un despido con accidente laboral combina
-            derecho laboral y riesgo profesional.
-          </p>
-          <p>
-            Cada área está a cargo de un abogado con experiencia acreditada en juzgados de Honduras. La
-            <strong> defensa penal</strong> es nuestra especialidad destacada, y la acompañamos con
-            derecho de familia (divorcio, pensión alimenticia, custodia), derecho laboral (despido,
-            prestaciones, accidentes), derecho civil y notarial (contratos, sucesiones, testamentos),
-            derecho mercantil (sociedades, contratos empresariales), derecho tributario, derecho
-            administrativo y servicios para hondureños en el extranjero. Seleccione el área que necesita
-            para acceder a información detallada, preguntas frecuentes y el primer paso recomendado.
-          </p>
-        </div>
-      </Section>
+      {/* INTRO EDITORIAL — texto orientado a conversión, entidades y SEO/GEO.
+	          Refuerza el mensaje multidisciplinario, la experiencia del equipo y
+	          cierra con CTA suave que invita al contacto directo. */}
+	      <Section spacing="sm">
+	        <div className="prose prose-sm sm:prose-base max-w-3xl mx-auto text-text-secondary leading-relaxed">
+	          <p>
+	            Cuando un problema legal toca a su puerta, lo último que necesita es dar vueltas de un
+	            despacho a otro. En <strong>Pineda y Asociados</strong>, con sede en <strong>Nacaome,
+	            Valle</strong>, reunimos las principales ramas del derecho hondureño bajo un mismo techo
+	            para que usted y su familia encuentren una sola respuesta: clara, técnica y con seguimiento
+	            real. Atendemos clientes en toda la zona sur de Honduras: Choluteca, San Lorenzo, Valle y
+	            municipios aledaños.
+	          </p>
+	          <p>
+	            Nuestra cartera abarca <strong>14 áreas de práctica</strong> que cubren desde la defensa
+	            penal —nuestra especialidad destacada— hasta derecho de familia, laboral, civil, notarial,
+	            mercantil, tributario, administrativo y más. Este enfoque multidisciplinario nos permite
+	            abordar casos complejos que cruzan fronteras entre especialidades sin que usted tenga que
+	            coordinar entre varios bufetes. Un divorcio con empresa familiar, por ejemplo, involucra a
+	            la vez derecho de familia, civil y mercantil; un despido con accidente laboral combina
+	            derecho laboral y riesgo profesional. Nosotros lo articulamos internamente.
+	          </p>
+	          <p>
+	            <strong>Cada área está dirigida por un abogado con experiencia acreditada en juzgados de
+	            Honduras.</strong> Sabemos que el derecho puede sentirse abrumador cuando está en juego su
+	            libertad, su patrimonio o su familia. Por eso cada caso recibe atención personalizada desde
+	            el primer contacto, con un lenguaje claro y una hoja de ruta realista.
+	          </p>
+	          <p className="font-medium text-primary">
+	            Explore el área que corresponde a su situación más abajo. Si prefiere hablar directamente
+	            con nuestro equipo, escríbanos por{' '}
+	            <a href={whatsappHref('Hola, quisiera consultar sobre un servicio jurídico.')}
+	               className="text-accent-dark hover:text-primary transition-colors"
+	               target="_blank" rel="noopener noreferrer">
+	              WhatsApp al {site.whatsappDisplay}
+	            </a>{' '}
+	            o llámenos al <strong>{site.phone}</strong>. La primera conversación es confidencial y sin
+	            compromiso.
+	          </p>
+	        </div>
+	      </Section>
 
       <Section background="muted" spacing="md">
         <SectionHeader

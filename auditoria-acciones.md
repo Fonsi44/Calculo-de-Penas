@@ -1873,3 +1873,26 @@ propia (3 agentes Explore + lectura directa de archivos críticos).
 - ✅ No se hizo push (protocolo §1.10).
 - ✅ No se modificó: schema DB, auth, proxy, motor de cálculo, `auditoriatotal.*`.
 - ✅ No se expusieron secretos. Datos legales verificados (sin invención).
+
+---
+
+## 2026-07-04 — Mejora editorial intro `/servicios-juridicos`
+
+**Contexto:** El párrafo introductorio de la landing de servicios jurídicos era
+texto plano sin formato, sin CTA y sin gancho comercial. Se reescribe con
+estructura persuasiva (dolor → solución → credenciales → cierre a acción) y
+se añade enlace directo a WhatsApp + teléfono.
+
+### Cambios
+
+| Archivo | Cambio |
+|---------|--------|
+| `app/(public)/servicios-juridicos/page.tsx` | Intro reescrita: hook emocional, 14 áreas, enfoque multidisciplinario, credenciales del equipo, CTA con WhatsApp+teléfono. Añadido `whatsappHref` al import. |
+
+### Validación
+
+- ✅ `npm run lint` — 0 errores, 0 warnings
+- ✅ `npm run build` — compilación exitosa (53 rutas estáticas, IndexNow dry-run OK)
+- ✅ No se hizo push.
+- ✅ No se modificó contenido legal, datos, schema DB, auth, proxy ni motor de cálculo.
+- ✅ No se expusieron secretos.
