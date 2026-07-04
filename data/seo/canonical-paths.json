@@ -23,6 +23,12 @@
       "days_ago": 0
     },
     {
+      "path": "/guia-legal-abogados-honduras",
+      "priority": 0.9,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
       "path": "/abogado-penalista-nacaome",
       "priority": 0.9,
       "change_frequency": "monthly",

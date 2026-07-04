@@ -373,6 +373,26 @@ export default async function AreasJuridicasPage() {
         ctaHref="/blog"
       />
 
+      {/* Enlace a la página pilar / recurso nacional */}
+      <Section background="muted" spacing="sm">
+        <Container size="lg">
+          <Link
+            href="/guia-legal-abogados-honduras"
+            className="block rounded-lg border border-border-light bg-surface p-5 hover:border-accent hover:shadow-md transition-all group"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-dark">
+              Guía legal
+            </p>
+            <p className="mt-1 font-serif text-xl text-primary group-hover:text-accent-dark transition-colors">
+              Cómo contratar abogado en Honduras →
+            </p>
+            <p className="mt-1.5 text-sm text-text-secondary">
+              Colegiación, honorarios, documentos para la primera consulta y errores a evitar. Guía práctica para decidir con criterio.
+            </p>
+          </Link>
+        </Container>
+      </Section>
+
       <ConsultationCTA />
 
       <HubFaq
