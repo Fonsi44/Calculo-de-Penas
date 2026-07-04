@@ -12,7 +12,7 @@ interface CTAGroupProps {
   className?: string;
 }
 
-const DEFAULT_MSG = 'Hola, necesito una consulta jurídica. Vi su sitio web.';
+const DEFAULT_MSG = 'Hola, necesito una consulta jurídica. Los contacto desde la web de Pineda y Asociados.';
 
 export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className }: CTAGroupProps) {
   if (variant === 'compact') {

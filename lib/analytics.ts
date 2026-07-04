@@ -119,6 +119,14 @@ export function trackInternalClick(target: string) {
   trackEvent('internal_click', { target: target.slice(0, 100) });
 }
 
+/**
+ * Profundidad de scroll alcanzada (engagement).
+ * @param percent Porcentaje de página scrolleado (25, 50, 75, 90).
+ */
+export function trackScrollDepth(percent: number) {
+  trackEvent('scroll_depth', { percent, value: percent });
+}
+
 // ---------------------------------------------------------------------------
 // Diagnóstico local (development únicamente)
 // ---------------------------------------------------------------------------
