@@ -156,3 +156,191 @@ un despacho jurídico premium diseñado bajo una única estrategia profesional.
 Revisión visual en navegador (desktop + móvil) de las páginas transformadas antes
 de deploy. Si todo se ve correcto, aplicar `IconBadge` en los componentes restantes
 como refactor de consistencia.
+
+---
+
+## 9. Cierre de la transformación (2026-07-04)
+
+Cierre de los 3 pendientes de §7 y validación completa de indexación, SEO y QA visual.
+
+### 9.1 IconBadge — aplicado de forma quirúrgica (VALIDADO)
+
+Sustitución del patrón inline `w-11 h-11 rounded-lg` por `<IconBadge>` solo en
+casos claros, equivalentes y repetidos del patrón canónico R16:
+
+| Archivo | Caso | Variant |
+|---|---|---|
+| `app/(public)/page.tsx` | MapPin (Dirección) | `primary` |
+| `app/(public)/page.tsx` | Phone (Teléfono) | `primary` |
+| `app/(public)/page.tsx` | Clock (Horario) | `primary` |
+| `components/marketing/blog-highlights.tsx` | BookOpen (layout `cards`) | `accent` |
+
+**Variantes incompatibles dejadas intactas a propósito** (no son el patrón canónico
+o su tamaño/tint es deliberado para su contexto):
+
+| Caso | Motivo de exclusión |
+|---|---|
+| `blog-highlights.tsx` layout `list` (`w-10 h-10`, `bg-accent/10`) | Tamaño y tint distintos al canónico |
+| `blog-highlights.tsx` layout `minimal` | Icono inline sin contenedor |
+| `trust-bar.tsx` iconBoxCls (`w-9 h-9`, dark/light condicional) | Strip compacto, fondo condicional |
+| `app/(public)/page.tsx` hero panel navy (`w-10 h-10`, `text-accent`) | Variante oscura sobre navy |
+
+Commit: `refactor(ui): IconBadge aplicado de forma quirurgica`.
+
+### 9.2 FAQ i18n home — rol legacy declarado (VALIDADO)
+
+La FAQ i18n inline de la home **no es UI visible**: la transformación Fase 3.1
+eliminó su render visual y la movió a `/preguntas-frecuentes`. Su único rol
+actual es alimentar el schema JSON-LD `FAQPage` (rich result) de la home.
+
+Cierre aplicado (sin eliminar, sin romper SEO):
+- `const FAQ` → `const FAQ_HOME_LEGACY` en `app/(public)/page.tsx`.
+- Comentario ampliado declarando explícitamente: rol = structured-data únicamente,
+  no UI, no fuente canónica (la canónica es `lib/faq-unified.ts` `getFaqsForHub`),
+  marcar como LEGACY — no ampliar.
+- El JSON-LD `FAQPage` se preserva íntegro (verificado: 6 bloques JSON-LD en home
+  renderizada, incluido el FAQPage).
+
+Principio respetado: la home **no** recupera FAQ visible.
+
+Commit: `docs(faq): FAQ i18n home declarada legacy structured-data`.
+
+### 9.3 QA visual — Playwright real (VALIDADO con limitación declarada)
+
+Herramienta: **Playwright 1.60 con chromium headless** contra `npm run start`
+(HTTP local, puerto 4319). Script: `scripts/qa-visual-cierre.mjs`.
+
+Cobertura: 11 rutas × 2 viewports (desktop 1280×900, móvil iPhone 12) = **22 capturas**.
+Rutas: `/`, `/despacho`, `/derecho-penal`, `/servicios-juridicos`,
+`/hondurenos-en-espana`, `/solicitar-consulta`, `/preguntas-frecuentes`,
+`/guia-legal-abogados-honduras`, `/como-llegar`, `/abogados-en-nacaome` (local),
+`/abogado-penalista-choluteca` (cargo).
+
+Chequeos automáticos:
+- **Overflow horizontal**: 0 casos (todas las rutas, ambos viewports).
+- **H1 únicos**: 1 por página en todas las rutas (cumple R15).
+- **Errores de consola / pageerror**: detectados, pero **confirmados preexistentes**
+  (presentes en baseline `b4a6021` anterior a los commits de cierre). No introducidos
+  por esta iteración. Tipos: React hydration #418 (text/HTML mismatch) y
+  `a[c] is not a function` en `/derecho-penal`, `/servicios-juridicos`,
+  `/hondurenos-en-espana`.
+
+Inspección visual de capturas: heroes coherentes, grids sin huecos, CTAs bien
+apilados, sin imágenes rotas, sin desbordes, tipografía y contraste correctos,
+secciones con respiración. Los IconBadge aplicados (§9.1) renderizan correctamente.
+
+**Limitación declarada**: no se usó navegador con UI real; chromium headless es
+representativo para layout/estructura/metadata pero no valida interacciones JS
+ni percepción visual subjetiva. Los errores de consola preexistentes (hydration)
+no se corrigen en este cierre por estar fuera de su alcance (deuda técnica de
+runtime, no de la transformación visual/SEO).
+
+### 9.4 SEO técnico y metadatos (VALIDADO)
+
+Herramienta: extracción del HTML renderizado vía HTTP local + `scripts/validar-meta-seo.ts`.
+
+Muestra de 11 rutas — todas con:
+- **title** específico y único (no canibalización detectada entre áreas/landings).
+- **meta description** 139–165 caracteres (rango Bing, límite blando).
+- **canonical** correcta y coherente con su ruta (absoluta, sin duplicación).
+- **robots** `index, follow` en todas las indexables.
+- **og:title** presente y alineado.
+- **twitter:card** `summary_large_image` en todas.
+- **JSON-LD** 6–10 bloques por ruta.
+
+`scripts/validar-meta-seo.ts`: **18/18 rutas OK** (0 errores title, 0 description,
+0 marca duplicada).
+
+Intención de búsqueda por página preservada: despacho (institucional), derecho-penal
+(defensa penal), servicios-juridicos (catálogo 14 áreas), hondurenos-en-espana
+(migratorio), solicitar-consulta (conversión), preguntas-frecuentes (AEO),
+guia-legal (educativo), como-llegar (NAP/geo), landings locales (geo-comercial),
+landings de cargo (cargo-comercial).
+
+### 9.5 Structured data (VALIDADO tras corrección)
+
+Herramienta: `scripts/validate-jsonld.mjs`.
+
+Hallazgo corregido: **`@id` FAQPage duplicado** en `/derecho-penal` (y patrón
+idéntico en `/hondurenos-en-espana`). Causa: `areaSchemas` emitía un `FAQPage`
+con `@id #faqpage` mientras `<HubFaq>` emitía otro con las mismas preguntas y el
+mismo `@id`. Validador lo reportaba como ERROR.
+
+Fix: en `/derecho-penal` y `/hondurenos-en-espana` se dejó de pasar `faqs` a
+`areaSchemas`. El `FAQPage` canónico lo emite `<HubFaq>` (que también renderiza
+las preguntas visibles); `areaSchemas` queda con `Service` + `BreadcrumbList`.
+No se pierde UI ni structured data.
+
+Resultado: `scripts/validate-jsonld.mjs` → **OK, 0 duplicados** (5 rutas, 8 `@id`
+únicos cada una).
+
+Commit: `fix(seo): elimina @id FAQPage duplicado en indices penales y migrante`.
+
+### 9.6 SEO local / geo (VALIDADO)
+
+Las 16 landings locales declaradas mantienen señales geográficas coherentes
+(ciudad, departamento), canonical propia y metadatos específicos. Las 5 landings
+de cargo (4 Nacaome + Choluteca) están reconectadas al grafo vía `RelatedCities`
+(Fase 4). Sin texto local artificial ni keyword stuffing. La landing local
+representativa (`/abogados-en-nacaome`) y la de cargo (`/abogado-penalista-choluteca`)
+validadas en QA visual (§9.3) con metadatos correctos (§9.4).
+
+### 9.7 Sitemap, robots e indexabilidad (VALIDADO vía HTTP local)
+
+Herramienta: `npm run start` + `curl` a `/sitemap.xml` y `/robots.txt`.
+
+- **sitemap.xml**: **213 `<loc>`** (coincide con `sitemap_observed_count: 213` en
+  `data/seo/canonical-paths.json`). Todas las rutas clave presentes (home, hubs,
+  guia-legal, como-llegar, landings locales y de cargo).
+- **robots.txt**: `Allow: /` para bots indexadores; `Disallow` de rutas privadas
+  (`/intranet/`, `/api/`, `/admin/`, `/calculadora/`, `/casos/`, `/cp/`, `/delitos/`,
+  `/atajos/`) y bots no deseados; `Sitemap:` declarado. Sin bloqueos accidentales
+  de rutas públicas.
+- `scripts/seo-indexability-audit.mjs`: **0 errores, 0 avisos**. `sitemap.ts` y
+  `submit-indexnow.mjs` consumen la misma fuente `canonical-paths.json` (R2).
+
+### 9.8 Rendimiento e indexación práctica (VALIDADO)
+
+`npm run build`: `✓ Compiled successfully`, sin errores de metadata, sin warnings
+de imágenes. Postbuild ejecuta IndexNow dry-run (24 URLs, techo 223) sin incidencias.
+
+No se ejecutó Lighthouse en esta iteración (herramienta no disponible en el entorno
+local); el rendimiento se valida indirectamente vía Server Components (0 JS en
+`BlogHighlights`, `IconBadge`, etc.), build limpio y ausencia de imágenes sin
+dimensionar. Microoptimizaciones cosméticas fuera de alcance.
+
+### 9.9 Validación final (VALIDADO)
+
+| Comando | Resultado |
+|---|---|
+| `npm run lint` | ✅ Sin errores ni warnings |
+| `npm run build` | ✅ Compiled successfully |
+| `npm test` | ✅ 754 tests pasan (35 suites) |
+| `npm run validate:dates` | ✅ 149 posts, fechas correctas |
+| `npx tsx scripts/validar-meta-seo.ts` | ✅ 18/18 rutas OK |
+| `node scripts/validate-jsonld.mjs` | ✅ OK, 0 duplicados |
+| `node scripts/seo-indexability-audit.mjs` | ✅ 0 errores, 0 avisos |
+| QA visual Playwright (22 capturas) | ✅ 0 overflow, 1 h1/página |
+| sitemap.xml vía HTTP | ✅ 213 URLs, rutas clave presentes |
+| robots.txt vía HTTP | ✅ Sin bloqueos accidentales |
+
+### 9.10 Estado final de los pendientes de §7
+
+- **IconBadge**: ✅ APLICADO de forma quirúrgica (4 casos); variantes incompatibles
+  intactas y documentadas.
+- **FAQ i18n home**: ✅ LEGACY declarado; JSON-LD `FAQPage` preservado, sin UI.
+- **Validación visual**: ✅ REAL con Playwright (22 capturas); errores de consola
+  preexistentes declarados.
+
+### 9.11 Commits de cierre (sin push)
+
+1. `refactor(ui): IconBadge aplicado de forma quirurgica`
+2. `docs(faq): FAQ i18n home declarada legacy structured-data`
+3. `fix(seo): elimina @id FAQPage duplicado en indices penales y migrante`
+4. `chore(qa): anade script de QA visual con Playwright`
+5. `docs(transformacion): cierre con QA visual, SEO y sitemap`
+6. `docs(changelog): entrada de cierre`
+7. `docs(auditoria): registro de cierre`
+
+**No se hizo push.**
+
