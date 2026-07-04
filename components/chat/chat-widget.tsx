@@ -219,16 +219,17 @@ export function ChatWidget() {
   // Sin sugerencias ni quick replies — el cliente escribe libremente.
 
   // Portal a document.body para evitar stacking contexts complejos.
-  // WRAPPER ÚNICO con position:fixed — tanto el botón como el panel
-  // viven dentro del mismo contenedor fixed, eliminando cualquier
-  // ambigüedad de layout que Chrome tenga con múltiples fixed.
+  // WRAPPER ÚNICO con position:fixed y z-index muy alto para estar siempre
+  // sobre cualquier contenido, incluso durante scroll. pointerEvents:none
+  // en el wrapper, auto en los hijos (botón y panel).
   return createPortal(
     <div
-      className="z-30 print:hidden safe-bottom"
+      className="print:hidden safe-bottom"
       style={{
         position: 'fixed',
         bottom: 0,
         left: 0,
+        zIndex: 9999,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
