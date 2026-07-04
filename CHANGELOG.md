@@ -6,6 +6,135 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — seo/perf/a11y/security: implementación auditoría pública (Release 103)
+
+Implementación priorizada de los hallazgos de la auditoría completa de
+https://www.pinedayasociadoshn.com. 7 commits atómicos en rama
+`mejoras-auditoria-seo`. Validación final: `lint` ✓, `build` ✓, `test` (730) ✓.
+
+### Quick wins (commit d32aadf)
+- **`public/og-image.png` eliminado** (266 KB); todas las referencias migran a
+  `/og-image.webp` (93 KB) en 17 archivos.
+- **`next.config.ts`**: `images.minimumCacheTTL: 86400`, headers
+  `Cross-Origin-Resource-Policy: same-site` y `Cross-Origin-Opener-Policy:
+  same-origin-allow-popups`. CSP de producción añade `upgrade-insecure-requests`
+  y restringe `img-src` a lista explícita (antes wildcard `https:`). CSP de
+  desarrollo permanece permisiva para no romper tests e2e.
+- **`lib/auth.ts`**: `SALT_ROUNDS` 10 → 12. Nuevo `maybeRehashPassword()`
+  que re-hashea progresivamente hashes legacy en login exitoso (no bloqueante).
+  Aplicado en `/api/auth/login`.
+- **`app/(public)/page.tsx`**: quitado `priority` de ServiceCard no-LCP.
+- **Em-dash `—` → `·`** en titles SEO de derecho-penal/[slug], hondurenos-en-espana
+  y su `[slug]`.
+- **Tildes corregidas** en `blog/page.tsx` (OG titles "Juridico" → "Jurídico")
+  y landings locales (Choluteca).
+- **`aria-current="page"`** en breadcrumb actual (`breadcrumbs.tsx`).
+- **Limpieza raíz**: `dev-log.txt`, `cookies.txt`, `nul`, `default.pub`,
+  `solicitar-consulta-form.yml`, `post-submit.yml`, `dev-server*.log`.
+- **`@types/pdfkit`** movido a devDependencies. `@next/bundle-analyzer` añadido
+  + script `analyze`.
+
+### SEO/GEO estructural (commit 9f28b46)
+- **`lib/seo.ts`** (nuevo): helper central `buildMetadata()` que normaliza
+  title/description/OG/Twitter/robots/canonical en un único punto. Robots por
+  defecto con `max-image-preview:large, max-snippet:-1, max-video-preview:-1`.
+- **Migración a `buildMetadata`** de: servicios-juridicos, derecho-penal,
+  despacho, solicitar-consulta, hondurenos-en-espana, `landingMetadata`
+  (afecta a 16 landings locales). Titles recortados a ≤60 chars y descriptions
+  a ≤155. Antes había varios titles 63-69 chars y descriptions 162-198.
+- **Landings locales**: title reescrito a `Abogados en {ciudad} | Pineda y
+  Asociados` (~40 chars, era 66).
+
+### Schema markup (commit 9f28b46)
+- **`lib/site.ts` Organization**: añadido `sameAs` con perfiles reales
+  (Facebook, X, Google Business Profile). Antes ausente.
+- **`lib/schemas/blog.ts` BlogPosting**: `publisher.logo` ahora apunta a
+  `/images/logo.png` (ImageObject con width/height). Antes usaba `og-image.webp`.
+- **`app/(public)/layout.tsx`**: 6 scripts JSON-LD separados → **un único
+  `@graph`** con @id estables. Facilita deduplicación en Knowledge Graph.
+
+### FAQ hubs (commit 9f28b46)
+- **`data/faqs-hubs.ts`** (nuevo): 22 Q&A originales redactados para
+  `/servicios-juridicos` (8), `/despacho` (7), `/solicitar-consulta` (7).
+  Sin inventar datos legales (R4/R13/R14): costos "presupuesto por escrito",
+  plazos "depende del caso", sin prometer resultados.
+- **`components/marketing/hub-faq.tsx`** (nuevo): `<details>`/`<summary>`
+  accesible + JSON-LD `FAQPage` embebido. Patrón visual consistente con home.
+
+### Performance (commit bc5671a)
+- **`scripts/optimize-images.mjs`** (nuevo): pipeline con `sharp` (dry-run +
+  `--apply`). Convierte JPG/PNG grandes a WebP+AVIF, borra JPG >200 KB si
+  existe .webp. Reporte en `docs/audits/image-optimization-report.md`.
+- **Aplicado**: 2 JPGs huérfanos (jorono 3.9 MB, pexels-ekaterina 1.8 MB) →
+  184 KB combinados. **5.4 MB ahorrados**. Total `public/images` 28 MB → 23 MB.
+- **Bundle analyzer**: verificado que Turbopack ya aísla `@tiptap`, `recharts`,
+  `pdfjs-dist`, `@react-pdf`, `pdfkit` fuera del shared bundle público. No se
+  requiere refactor de code-split.
+
+### Accesibilidad WCAG 2.2 AA (commit b96c00a)
+- **`globals.css`**: `--color-text-muted` `#8A8F95` → `#6E7177` (ratio 4.6:1,
+  AA small text). Antes 3.4:1.
+- **Opacidades blancas sobre navy** en `public-header.tsx` y `public-footer.tsx`:
+  `/40`, `/50`, `/60`, `/65` → `/70+`, `/75`, `/80`. Texto small cumple 4.5:1.
+- **`blog-search.tsx`**: placeholder sin opacidad baja (era ~1.7:1).
+- **`solicitar-consulta-form.tsx`**: `<fieldset>`+`<legend>`, `autoComplete`
+  semántico (`given-name`/`tel`/`email`), `aria-required`/`aria-invalid`/
+  `aria-describedby` en cada Field. Cumple WCAG 1.3.5, 3.3.1, 3.3.3.
+- **`live-widgets.tsx` iOS dialog**: `aria-modal="true"`, overlay
+  `role="presentation"` (Escape ya estaba).
+
+### Seguridad (commit 291c5e7)
+- **Cloudflare Turnstile** completo:
+  - `lib/captcha.ts`: `verifyTurnstileToken()` con **bypass seguro si faltan
+    env vars** (rate-limit permanece como red de seguridad) y **fail-closed**
+    si Cloudflare responde `success=false` o hay timeout.
+  - `components/marketing/turnstile-widget.tsx`: widget cliente con lazy-load
+    del script. Si `NEXT_PUBLIC_TURNSTILE_SITE_KEY` no está definida, no
+    renderiza (backend hace bypass declarado).
+  - Endpoints `/api/contacto`, `/api/consulta`, `/api/subscribe`: validación
+    post rate-limit + Zod.
+  - `.env.example` documenta `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`,
+    `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
+- **`proxy.ts`**: reemplazado `decodeJwtPayload` (decodificaba sin verificar
+  firma HS256) por `verifyToken` de `lib/auth`. Mismo comportamiento pero
+  cierra el bypass teórico de rol en edge. `proxy` corre en Node runtime
+  (no edge), así que `jsonwebtoken` con el secret funciona.
+- **`app/error.tsx`** (nuevo): error boundary 5xx con `<meta name="robots"
+  content="noindex,nofollow">` inyectada en head (no se puede exportar
+  `metadata` desde Client Component). CTA contacto (email + WhatsApp) y botón
+  "Reintentar".
+
+### Pendientes declarados (no implementados en esta iteración)
+- **CSP nonce-based** (TODO documentado en `next.config.ts`): requiere refactor
+  de `proxy.ts` para generar nonces y reescribir el inline script de theme
+  detection en `app/layout.tsx`. Fuera de scope por riesgo de regresión.
+- **`Person.sameAs` para Thania y Emil**: a la espera de URLs reales de perfil.
+  No se inventan (R4).
+- **Métricas PageSpeed en vivo**: no se midieron. Requiere Lighthouse sobre
+  URLs reales deployadas. Los 5.4 MB ahorrados en imágenes son proxy claro de
+  mejora LCP pero no se midió el delta real.
+- **Focus trap completo en iOS dialog**: `aria-modal` + Escape ya implementados,
+  pero falta focus inicial y retorno al trigger. Mejora menor pendiente.
+- **CSS global de 148 KB**: 1230 líneas, mayormente design tokens útiles. Sin
+  low-hanging fruit identificable sin análisis dedicado.
+- **WebP >400 KB restantes** (~6 archivos): marcados como WARN por
+  `images:optimize`. Recompresión manual pendiente (lock de archivo impidió
+  ejecución automática en esta sesión).
+- **`Person.sameAs` Thania/Emil, SearchAction, hero→next/image**: fuera de
+  scope (requieren URLs reales, buscador global y aprobación visual
+  respectivamente).
+
+### Validación
+- `npm run lint` ✓ (0 errores)
+- `npm run build` ✓ (solo warning cache-control preexistente)
+- `npm test` ✓ (730 tests, 33 files)
+- `npx tsc --noEmit`: errores preexistentes en `tests/blog-verify-fix.test.ts`
+  (no tocados en esta rama, ya presentes en `main`).
+- Referencias rotas: 0 (`og-image.png`, `decodeJwtPayload`, `SALT_ROUNDS = 10`,
+  em-dash en titles SEO).
+
+---
+
 ## 2026-07-03 — seo/internal-linking: reconstrucción arquitectura enlaces internos (Release 102)
 
 Reconstrucción completa del sistema de enlazado interno para crear una tela

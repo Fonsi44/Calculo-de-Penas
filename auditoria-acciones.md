@@ -1896,3 +1896,43 @@ se añade enlace directo a WhatsApp + teléfono.
 - ✅ No se hizo push.
 - ✅ No se modificó contenido legal, datos, schema DB, auth, proxy ni motor de cálculo.
 - ✅ No se expusieron secretos.
+
+---
+
+## 2026-07-04 — Implementación auditoría pública SEO/GEO/Perf/A11y/Security
+
+**Agente:** ZCode (combined team) · **Rama:** `mejoras-auditoria-seo` (6 commits atómicos) · **Sin push**
+
+### IMPLEMENTADO (6 commits)
+
+| Commit | Área | Acción |
+|---|---|---|
+| d32aadf | Quick wins | og-image.png eliminado, minimumCacheTTL, CORP/COOP headers, CSP estricta prod, bcrypt 10→12 + rehash progresivo, priority no-LCP quitado, em-dash→·, tildes, aria-current, limpieza archivos sueltos, devDeps |
+| 9f28b46 | SEO/GEO + Schema + FAQ | lib/seo.ts helper central, 7 hubs migrados, landingMetadata refactor, Organization.sameAs, BlogPosting.publisher.logo fix, @graph central, 22 Q&A originales en 3 hubs |
+| bc5671a | Perf | scripts/optimize-images.mjs, 2 JPGs huérfanos convertidos (5.4 MB ahorrados), bundle analyzer integrado |
+| b96c00a | A11y | --color-text-muted #6E7177 (AA), opacidades blanco/navy subidas, form con aria-invalid/autoComplete/fieldset, iOS dialog aria-modal |
+| 291c5e7 | Security | Cloudflare Turnstile (lib/captcha.ts bypass seguro), proxy.ts usa verifyToken real, app/error.tsx 5xx con noindex |
+
+### VALIDADO
+- ✅ `npm run lint` — 0 errores
+- ✅ `npm run build` — exitoso
+- ✅ `npm test` — 730/730 (33 files)
+- ⚠️ `npx tsc --noEmit` — errores preexistentes en `tests/blog-verify-fix.test.ts` (en `main`, no tocados en esta rama)
+
+### NO VALIDADO / PENDIENTE (R11)
+- PageSpeed live no medido (sin Lighthouse sobre deploy real)
+- WebP >400 KB restantes marcados como WARN (recompresión manual pendiente)
+- Focus trap completo en iOS dialog (aria-modal + Escape sí implementados)
+- CSP nonce-based (TODO documentado)
+- Person.sameAs Thania/Emil (a la espera de URLs reales)
+
+### RIESGOS
+- Sin rediseño visual (R5 cumplido): cambios visuales limitados a opacidad de texto (#6E7177 y opacidades /70+) y ARIA.
+- Intranet/admin intactos (R6 cumplido).
+- Compatibilidad bcrypt preservada (rehash solo en login exitoso).
+- Turnstile bypass declarado: si las claves no se configuran en Vercel, los formularios públicos siguen funcionando con rate-limit como red de seguridad.
+
+### Próximo paso recomendado
+1. Merge `mejoras-auditoria-seo` a main tras revisión.
+2. Configurar `TURNSTILE_*` y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` en Vercel.
+3. Deploy + medir PageSpeed real sobre 3 URLs representativas.
