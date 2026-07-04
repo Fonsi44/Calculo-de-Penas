@@ -28,10 +28,13 @@ const IMAGES_DIR = path.join(ROOT, 'public', 'images');
 const REPORT_PATH = path.join(ROOT, 'docs', 'audits', 'image-optimization-report.md');
 
 const APPLY = process.argv.includes('--apply');
+const RECOMPRESS_WEBP = process.argv.includes('--recompress-webp');
 const MAX_WIDTH = 1920;
 const WEBP_QUALITY = 78;
+const WEBP_RECOMPRESS_QUALITY = 72;
 const AVIF_QUALITY = 60;
 const JPG_DELETE_THRESHOLD = 200 * 1024; // 200 KB
+const WEBP_RECOMPRESS_THRESHOLD = 400 * 1024; // 400 KB
 
 /** Recorre recursivamente y devuelve rutas absolutas de imágenes. */
 async function walk(dir, exts) {
@@ -49,7 +52,11 @@ function kb(bytes) {
 }
 
 async function main() {
-  console.log(APPLY ? '⚠️  APPLY mode: escribiendo cambios' : '🔍 Dry-run (use --apply para escribir)');
+  const modeFlags = [
+    APPLY ? 'APPLY' : 'DRY-RUN',
+    RECOMPRESS_WEBP ? '+RECOMPRESS_WEBP' : '',
+  ].filter(Boolean).join(' ');
+  console.log(`⚠️  Modo: ${modeFlags}`);
   console.log(`   Scanning ${IMAGES_DIR}\n`);
 
   const jpgs = await walk(IMAGES_DIR, ['.jpg', '.jpeg']);
@@ -111,11 +118,51 @@ async function main() {
     }
   }
 
-  // 3) Reportar WebP >400 KB (candidatos a recompresión).
+  // 3) Reportar WebP >400 KB y, si --recompress-webp, re-comprimir + AVIF.
   for (const webp of webps) {
     const stat = await fs.stat(webp);
-    if (stat.size > 400 * 1024) {
-      report.push(`- WARN  ${path.relative(ROOT, webp)} (${kb(stat.size)}) — WebP >400KB, recomprimir manualmente`);
+    if (stat.size > WEBP_RECOMPRESS_THRESHOLD) {
+      if (!RECOMPRESS_WEBP) {
+        report.push(`- WARN  ${path.relative(ROOT, webp)} (${kb(stat.size)}) — WebP >400KB (use --recompress-webp)`);
+        continue;
+      }
+      // Re-comprimir in-place usando archivo temporal + rename (evita lock EPERM
+      // en Windows cuando el archivo está abierto por un watcher).
+      const buf = await sharp(webp)
+        .resize({ width: MAX_WIDTH, withoutEnlargement: true })
+        .webp({ quality: WEBP_RECOMPRESS_QUALITY })
+        .toBuffer();
+      const tmp = `${webp}.optimized`;
+      if (APPLY) {
+        await fs.writeFile(tmp, buf);
+        try {
+          await fs.rename(tmp, webp);
+        } catch {
+          // Si rename falla por lock, unlink destino y reintenta rename.
+          await fs.unlink(webp).catch(() => {});
+          await fs.rename(tmp, webp).catch(() => {});
+        }
+      }
+      const afterStat = APPLY ? await fs.stat(webp) : { size: Math.round(stat.size * 0.6) };
+      const saved = stat.size - afterStat.size;
+      totalSaved += saved;
+      report.push(
+        `- RECOMP ${path.relative(ROOT, webp)}: ${kb(stat.size)} → ${kb(afterStat.size)} (q=${WEBP_RECOMPRESS_QUALITY})${APPLY ? '' : ' (estimado)'}`,
+      );
+
+      // AVIF equivalente (junto al .webp, no lo reemplaza).
+      const avifPath = webp.replace(/\.webp$/i, '.avif');
+      const avifExists = await fs.stat(avifPath).then(() => true).catch(() => false);
+      if (!avifExists) {
+        if (APPLY) {
+          const avifBuf = await sharp(webp)
+            .resize({ width: MAX_WIDTH, withoutEnlargement: true })
+            .avif({ quality: AVIF_QUALITY })
+            .toBuffer();
+          await fs.writeFile(avifPath, avifBuf);
+        }
+        report.push(`- AVIF  ${path.relative(ROOT, avifPath)} generado${APPLY ? '' : ' (estimado)'}`);
+      }
     }
   }
 
