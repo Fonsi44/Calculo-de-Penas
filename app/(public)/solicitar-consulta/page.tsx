@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Phone,
   MessageCircle,
@@ -13,8 +12,9 @@ import {
   ChevronRight,
   MapPin,
   Building,
+  Users,
 } from 'lucide-react';
-import { telHref, whatsappHref, site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { telHref, whatsappHref, site } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
@@ -96,65 +96,36 @@ export default async function SolicitarConsultaPage() {
           </div>
 
           <div className="lg:col-span-2 space-y-4">
-            {/* SU EQUIPO —3 socios del bufete en tarjetas individuales.
-                Presencia humana en el momento de mayor intención de conversión.
-                Estructura individual para facilitar añadir teléfono directo de
-                cada abogado en el futuro. */}
-            {[
-              {
-                name: FOUNDER_PROFILE.name,
-                jobTitle: FOUNDER_PROFILE.jobTitle,
-                image: FOUNDER_PROFILE.image,
-                imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
-                tagline: 'Defensa penal',
-                href: '/derecho-penal',
-              },
-              {
-                name: THANIA_PROFILE.name,
-                jobTitle: THANIA_PROFILE.jobTitle,
-                image: THANIA_PROFILE.image,
-                imageAltText: THANIA_PROFILE.imageAltText,
-                tagline: 'Familia · Mercantil · Civil',
-                href: '/servicios-juridicos/derecho-de-familia',
-              },
-              {
-                name: EMIL_PROFILE.name,
-                jobTitle: EMIL_PROFILE.jobTitle,
-                image: EMIL_PROFILE.image,
-                imageAltText: EMIL_PROFILE.imageAltText,
-                tagline: 'Laboral · Civil y Notarial',
-                href: '/servicios-juridicos/derecho-laboral',
-              },
-            ].map((p) => (
-              <Card key={p.name} padding="md" className="border-l-4 border-l-accent">
-                <div className="flex items-center gap-3">
-                  <div className="relative flex-shrink-0">
-                    <div className="absolute -inset-1 rounded-lg bg-accent/15 blur-md" aria-hidden="true" />
-                    <div className="relative w-14 h-14 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
-                      <Image
-                        src={p.image}
-                        alt={p.imageAltText}
-                        width={112}
-                        height={112}
-                        className="w-full h-full object-cover"
-                        sizes="56px"
-                      />
-                    </div>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xxs font-medium uppercase tracking-wider text-accent-dark mb-0.5">
-                      {p.tagline}
-                    </p>
-                    <p className="font-serif font-bold text-base text-text leading-tight">
-                      {p.name}
-                    </p>
-                    <p className="text-xs text-text-secondary leading-snug mt-0.5">
-                      {p.jobTitle}
-                    </p>
-                  </div>
+            {/* EQUIPO — enlace al dueño canónico (Fase 3.8).
+                Antes: 3 tarjetas individuales con foto de cada socio, que
+                duplicaban el bloque de /despacho y saturaban el rail. Ahora:
+                un solo bloque compacto que enlanza a /despacho, donde vive
+                la información completa del equipo. Mantiene la señal humana
+                sin triplicar contenido. */}
+            <Card padding="md" className="border-l-4 border-l-accent">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg border border-accent/30 bg-accent/10 text-accent-dark flex items-center justify-center flex-shrink-0">
+                  <Users size={22} aria-hidden="true" />
                 </div>
-              </Card>
-            ))}
+                <div className="min-w-0 flex-1">
+                  <p className="text-xxs font-medium uppercase tracking-wider text-accent-dark mb-0.5">
+                    Su equipo
+                  </p>
+                  <p className="font-bold text-sm text-text leading-tight">
+                    Tres socios, atención directa
+                  </p>
+                  <p className="text-xs text-text-secondary leading-snug mt-0.5">
+                    Abogado responsable en cada área.
+                  </p>
+                </div>
+                <Link
+                  href="/despacho"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-accent-dark hover:text-primary transition-colors flex-shrink-0"
+                >
+                  Ver <ChevronRight size={14} />
+                </Link>
+              </div>
+            </Card>
 
             {/* Contacto directo */}
             <Card padding="md">
