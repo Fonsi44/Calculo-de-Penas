@@ -2,6 +2,7 @@ import { consultaSchema, validate } from '@/lib/validation';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { sendConsultaEmail, sendAutoReplyEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
+import { verifyTurnstileToken } from '@/lib/captcha';
 import { db } from '@/lib/db';
 import { solicitudesConsulta } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
@@ -28,6 +29,15 @@ export async function POST(request: Request) {
   const parsed = validate(consultaSchema, body);
   if (!parsed.success) {
     return Response.json({ error: parsed.error }, { status: 400 });
+  }
+
+  // Cloudflare Turnstile — bypass seguro si faltan claves (lib/captcha.ts).
+  const turnstileOk = await verifyTurnstileToken(
+    (body as Record<string, unknown>)['cf-turnstile-response'] as string | undefined,
+    ip,
+  );
+  if (!turnstileOk) {
+    return Response.json({ error: 'Verificación antispam inválida. Recargue e intente de nuevo.' }, { status: 400 });
   }
 
   // Guardar en BD — siempre funciona, no depende de servicio externo

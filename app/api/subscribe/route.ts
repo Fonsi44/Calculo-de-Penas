@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { newsletterSubscriptions } from '@/lib/schema';
 import { rateLimit } from '@/lib/rate-limit';
+import { verifyTurnstileToken } from '@/lib/captcha';
 
 const schema: { safeParse: (v: unknown) => { success: boolean; data?: { email: string } } } = {
   safeParse: (v: unknown) => {
@@ -38,6 +39,18 @@ export async function POST(request: NextRequest) {
     if (!parsed.success || !parsed.data) {
       return NextResponse.json(
         { success: false, error: 'Correo electrónico inválido.' },
+        { status: 400 },
+      );
+    }
+
+    // Cloudflare Turnstile — bypass seguro si faltan claves (lib/captcha.ts).
+    const turnstileOk = await verifyTurnstileToken(
+      (body as Record<string, unknown>)['cf-turnstile-response'] as string | undefined,
+      ip,
+    );
+    if (!turnstileOk) {
+      return NextResponse.json(
+        { success: false, error: 'Verificación antispam inválida.' },
         { status: 400 },
       );
     }

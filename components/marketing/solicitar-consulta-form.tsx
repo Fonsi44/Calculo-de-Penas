@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail } from 'lucide-react';
 import { trackLeadGenerated } from '@/lib/analytics';
+import { TurnstileWidget } from './turnstile-widget';
 
 const MOTIVOS = [
   'Familiar detenido',
@@ -30,6 +31,7 @@ export function SolicitarConsultaForm() {
   });
   const [status, setStatus] = useState<Status>('idle');
   const [err, setErr] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
 
   const onText = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -51,7 +53,7 @@ export function SolicitarConsultaForm() {
       const res = await fetch('/api/consulta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, 'cf-turnstile-response': turnstileToken }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -195,6 +197,8 @@ export function SolicitarConsultaForm() {
           autoComplete="off"
         />
       </div>
+
+      <TurnstileWidget onToken={setTurnstileToken} />
 
       <button
         type="submit"

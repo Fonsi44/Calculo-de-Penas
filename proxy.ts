@@ -1,15 +1,25 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { COOKIE_NAME, COOKIE_NAME_FALLBACK } from '@/lib/auth';
+import { COOKIE_NAME, COOKIE_NAME_FALLBACK, verifyToken } from '@/lib/auth';
 
-function decodeJwtPayload(token: string): Record<string, unknown> | null {
-  try {
-    const payload = token.split('.')[1];
-    if (!payload) return null;
-    return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
-  } catch {
-    return null;
-  }
+/**
+ * Seguridad — verificación firma JWT en edge.
+ *
+ * Antes este proxy decodificaba el payload sin verificar firma HS256, lo que
+ * permitía teóricamente forjar un JWT con `rol: admin` para bypassear el
+ * filtro de rol en edge. La defensa real estaba en cada handler (`requireAdmin`
+ * / `requireAuth` que sí verifican), pero el edge era filtrable.
+ *
+ * Ahora usamos `verifyToken` de `lib/auth` (que corre en Node runtime — este
+ * proxy no declara `runtime: 'edge'` explícito, así que Next lo ejecuta en
+ * Node y puede usar `jsonwebtoken` con acceso al secret). Si en el futuro se
+ * moviera a edge runtime, se deberá migrar a `jose` o degradar el proxy a
+ * filtro no autoritativo (handlers server-side siguen siendo fuente de verdad).
+ */
+function roleFromToken(token: string | null): string | null {
+  if (!token) return null;
+  const payload = verifyToken(token);
+  return payload?.rol ?? null;
 }
 
 const PUBLIC_API_PREFIXES = [
@@ -115,16 +125,16 @@ export function proxy(request: NextRequest) {
     }
     // Rutas admin API: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/api/admin')) {
-      const payload = decodeJwtPayload(token);
-      if (!payload || payload.rol !== 'admin') {
+      const rol = roleFromToken(token);
+      if (rol !== 'admin') {
         return NextResponse.json({ error: 'Acceso denegado: se requiere rol admin' }, { status: 403 });
       }
     }
     // SGIE API: requiere rol abogado o admin (defensa en profundidad; el handler
     // vuelve a validar con requireAbogado + scope por abogado).
     if (pathname.startsWith('/api/sgie')) {
-      const payload = decodeJwtPayload(token);
-      if (!payload || (payload.rol !== 'admin' && payload.rol !== 'abogado')) {
+      const rol = roleFromToken(token);
+      if (rol !== 'admin' && rol !== 'abogado') {
         return NextResponse.json({ error: 'Acceso denegado: se requiere rol abogado o admin' }, { status: 403 });
       }
     }
@@ -137,8 +147,8 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/intranet')) {
     if (INTRANET_PUBLIC_EXACT.has(pathname)) {
       if (pathname === INTRANET_LOGIN_PATH && token) {
-        const loginPayload = decodeJwtPayload(token);
-        const destino = loginPayload?.rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
+        const rol = roleFromToken(token);
+        const destino = rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
         return NextResponse.redirect(new URL(destino, request.url));
       }
       return NextResponse.next();
@@ -149,8 +159,8 @@ export function proxy(request: NextRequest) {
     }
     // Redirigir admin users de rutas intranet legacy a sus versiones admin
     if (token) {
-      const payload = decodeJwtPayload(token);
-      if (payload?.rol === 'admin') {
+      const rol = roleFromToken(token);
+      if (rol === 'admin') {
         const adminRedirects: Record<string, string> = {
           '/intranet/calculadora': '/intranet/admin/calculadora',
           '/intranet/casos': '/intranet/admin/casos',
@@ -175,8 +185,8 @@ export function proxy(request: NextRequest) {
     }
     // Rutas admin: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/intranet/admin')) {
-      const payload = decodeJwtPayload(token);
-      if (!payload || payload.rol !== 'admin') {
+      const rol = roleFromToken(token);
+      if (rol !== 'admin') {
         return NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url));
       }
     }
@@ -186,8 +196,8 @@ export function proxy(request: NextRequest) {
     // se redirige a su cockpit SGIE. El admin conserva acceso a todo.
     // Referencia: pinedayasociados.md §6.1, §22.1.
     {
-      const payload = decodeJwtPayload(token);
-      const esAdmin = payload?.rol === 'admin';
+      const rol = roleFromToken(token);
+      const esAdmin = rol === 'admin';
       if (!esAdmin) {
         const RUTAS_SGIE_PERMITIDAS = pathname.startsWith('/intranet/sgie');
         const RUTA_TRANSITO = pathname === '/intranet/dashboard';

@@ -2,6 +2,7 @@ import { contactoSchema, validate } from '@/lib/validation';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { sendContactEmail, sendAutoReplyEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
+import { verifyTurnstileToken } from '@/lib/captcha';
 
 const CONTACTO_MAX = 10;
 const CONTACTO_WINDOW_MS = 15 * 60 * 1000;
@@ -23,6 +24,15 @@ export async function POST(request: Request) {
   const parsed = validate(contactoSchema, body);
   if (!parsed.success) {
     return Response.json({ error: parsed.error }, { status: 400 });
+  }
+
+  // Cloudflare Turnstile — bypass seguro si faltan claves (lib/captcha.ts).
+  const turnstileOk = await verifyTurnstileToken(
+    (body as Record<string, unknown>)['cf-turnstile-response'] as string | undefined,
+    ip,
+  );
+  if (!turnstileOk) {
+    return Response.json({ error: 'Verificación antispam inválida. Recargue e intente de nuevo.' }, { status: 400 });
   }
 
   if (!isEmailConfigured()) {
