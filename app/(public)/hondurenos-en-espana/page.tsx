@@ -18,7 +18,7 @@ import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
 export const metadata: Metadata = {
   // Absolute para evitar que el template añada la marca dos veces
-  title: { absolute: 'Hondureños en España — Asistencia Legal desde Honduras' },
+  title: { absolute: 'Hondureños en España · Asistencia Legal desde Honduras' },
   description: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España. Pineda y Asociados.',
   alternates: { canonical: '/hondurenos-en-espana' },
   keywords: ['hondureños en España', 'asistencia legal migrantes', 'poder notarial desde España', 'divorcio internacional Honduras', 'herencias transfronterizas', 'reagrupación familiar Honduras España', 'nacionalidad española hondureños'],

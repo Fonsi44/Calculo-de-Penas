@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
     description: `Defensa penal técnica y confidencial en Nacaome, San Lorenzo y Choluteca. Atendemos detenciones y audiencias. Consulta urgente.`,
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
   openGraph: {
     title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,

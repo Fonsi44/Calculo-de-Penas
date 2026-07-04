@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze": "ANALYZE=true next build",
     "postbuild": "node scripts/generate-llms-txt.mjs && node scripts/submit-indexnow.mjs",
     "llms:generate": "node scripts/generate-llms-txt.mjs",
     "llms:dry": "node scripts/generate-llms-txt.mjs --dry-run",
@@ -101,7 +102,6 @@
     "@tiptap/pm": "^3.26.0",
     "@tiptap/react": "^3.26.0",
     "@tiptap/starter-kit": "^3.26.0",
-    "@types/pdfkit": "^0.17.6",
     "@vercel/blob": "^2.4.1",
     "@vercel/speed-insights": "^2.0.0",
     "bcryptjs": "^3.0.3",
@@ -122,6 +122,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.2.10",
     "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
@@ -130,6 +131,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
+    "@types/pdfkit": "^0.17.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",

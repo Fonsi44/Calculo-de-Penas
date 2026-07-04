@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // Absolute para evitar marca triple ("titulo | Derecho Penal | Pineda y
     // Asociados") que disparaba titles de 75-93 caracteres. Ahora la intención
     // de búsqueda queda clara con el título del grupo + marca única.
-    title: { absolute: `${grupo.titulo} — Abogados Penalistas` },
+    title: { absolute: `${grupo.titulo} · Abogados Penalistas` },
     description: `${grupo.descripcion.substring(0, 90)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
     alternates: { canonical },
     keywords: grupo.keywords,

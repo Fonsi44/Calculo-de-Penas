@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Política Editorial | Pineda y Asociados',
     description: 'Criterios editoriales del bufete Pineda y Asociados en Nacaome, Valle, Honduras para la creación y revisión de contenidos jurídicos.',
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
   openGraph: {
     title: 'Política Editorial | Pineda y Asociados',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Política Editorial` }],
+    images: [{ url: `${site.url}/og-image.webp`, width: 1200, height: 630, alt: `${site.name} — Política Editorial` }],
   },
 };
 

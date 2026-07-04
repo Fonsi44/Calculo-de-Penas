@@ -48,7 +48,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       card: 'summary_large_image',
       title: `${cat.nombre} - Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,
       description: cat.descripcion,
-      images: [`${site.url}/og-image.png`],
+      images: [`${site.url}/og-image.webp`],
     },
     openGraph: {
       title: `${cat.nombre} - Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,

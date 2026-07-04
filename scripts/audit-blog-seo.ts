@@ -129,7 +129,7 @@ async function main() {
 
     // 4. Cover image
     if (!r.coverImage) {
-      add(s, r.category, 'WARN', 'Sin cover image', 'Usar /og-image.png por defecto');
+      add(s, r.category, 'WARN', 'Sin cover image', 'Usar /og-image.webp por defecto');
     }
 
     // 5. Updated date

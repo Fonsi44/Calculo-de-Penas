@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,
     description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en penal, familia, laboral, civil y mercantil. Consulta confidencial.`,
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
   openGraph: {
     title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,

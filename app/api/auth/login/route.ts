@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
-import { verifyPassword, signToken, createAuthResponse } from '@/lib/auth';
+import { verifyPassword, signToken, createAuthResponse, maybeRehashPassword } from '@/lib/auth';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { authLoginSchema, validate } from '@/lib/validation';
@@ -85,6 +85,12 @@ export async function POST(request: Request) {
 
     // SGIE — registra último acceso (campo `ultimo_acceso`).
     await db.update(usuarios).set({ ultimoAcceso: new Date() }).where(eq(usuarios.id, user.id));
+
+    // Seguridad — rehash progresivo: si el hash del usuario se generó con
+    // menos rounds que SALT_ROUNDS (12), se re-hashea ahora. No bloqueante.
+    await maybeRehashPassword(password, user.passwordHash, async (newHash) => {
+      await db.update(usuarios).set({ passwordHash: newHash }).where(eq(usuarios.id, user.id));
+    });
 
     // Sprint 5 — 2FA: si el usuario tiene 2FA habilitado, no emitir el token
     // final. Devolver un challenge temporal firmado para completar el login en

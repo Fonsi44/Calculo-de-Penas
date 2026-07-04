@@ -1,32 +1,65 @@
 import type { NextConfig } from 'next';
+// Bundle analyzer: activo solo cuando ANALYZE=true. Genera reportes en
+// `.next/analyze/` para inspeccionar chunks JS/CSS por ruta. Import dinámico
+// (sin `require`) para no arrastrar la dep a cold start y pasar ESLint.
+const withBundleAnalyzer =
+  process.env.ANALYZE === 'true'
+    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
+      require('@next/bundle-analyzer')({ enabled: true })
+    : (cfg: NextConfig) => cfg;
 
 const isProd = process.env.NODE_ENV === 'production';
 // Indexable por defecto en producción. Solo anti-indexar si
 // NEXT_PUBLIC_NOINDEX=true explícito (staging, previews).
 const noindexActive = process.env.NEXT_PUBLIC_NOINDEX === 'true';
 
-const csp = [
+// CSP en producción: restringe orígenes de imagen a una lista explícita y
+// añade `upgrade-insecure-requests` (redundante con HSTS pero refuerza SSA).
+// En desarrollo se mantiene permisiva (sin upgrade) para no romper tests e2e.
+const cspProd = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https://www.pinedayasociadoshn.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
+  "font-src 'self' data: https://fonts.gstatic.com",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://*.tile.openstreetmap.org https://*.openstreetmap.org https://challenges.cloudflare.com",
+  "frame-src 'self' https://www.openstreetmap.org https://www.google.com https://challenges.cloudflare.com",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
+].join('; ');
+
+const cspDev = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com",
-  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://*.tile.openstreetmap.org https://*.openstreetmap.org",
-  "frame-src 'self' https://www.openstreetmap.org https://www.google.com",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms https://*.tile.openstreetmap.org https://*.openstreetmap.org https://challenges.cloudflare.com",
+  "frame-src 'self' https://www.openstreetmap.org https://www.google.com https://challenges.cloudflare.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
-  // Nota: NO incluimos `upgrade-insecure-requests` porque rompe los
-  // tests e2e (el servidor HTTP local de Playwright no soporta HTTPS)
-  // y es redundante en producción (HSTS ya fuerza HTTPS vía cabecera).
 ].join('; ');
+
+// TODO(P2): migrar CSP a nonce-based. Requiere generar un nonce en `proxy.ts`
+// (o middleware), inyectarlo en inline scripts (theme detection en
+// app/layout.tsx) y eliminar 'unsafe-inline' de script-src. Documentado en
+// docs/audits/ tras esta iteración; fuera de scope por riesgo de regresión.
+const csp = isProd ? cspProd : cspDev;
 
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
+  // Aislamiento cross-origin: refuerzo contra Spectre, side-channel y
+  // ataques de framing/resource embedding sin romper OpenStreetMap embed.
+  { key: 'Cross-Origin-Resource-Policy', value: 'same-site' },
+  { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
   { key: 'Content-Security-Policy', value: csp },
   ...(isProd ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }] : []),
 ];
@@ -53,6 +86,10 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 1080, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
+    // Caché del optimizador: 24h (default 60s). Las imágenes optimizadas son
+    // invariantes para un mismo src + size + format, así que conviene caché
+    // largo en CDN. Aumenta el hit-rate de /_next/image y reduce TTFB.
+    minimumCacheTTL: 86_400,
   },
   experimental: {
     // Tree-shaking de importaciones nombradas en librerías grandes.
@@ -289,4 +326,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

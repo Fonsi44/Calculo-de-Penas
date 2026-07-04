@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     // Absolute para evitar marca triple ("titulo | Hondureños en España |
     // Pineda y Asociados") que disparaba titles de 81-94 caracteres.
-    title: { absolute: `${subarea.titulo} — Abogados Honduras-España` },
+    title: { absolute: `${subarea.titulo} · Abogados Honduras-España` },
     description: `${subarea.descripcion.substring(0, 85)} Consulta confidencial desde Honduras en ${site.name}, Nacaome, Valle.`,
     alternates: { canonical },
     keywords: subarea.keywords,

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Política de Cookies | Pineda y Asociados',
     description: 'Gestión y control de cookies en el sitio web del bufete Pineda y Asociados en Nacaome, Valle, Honduras.',
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
   openGraph: {
     title: 'Política de Cookies | Pineda y Asociados',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} — Política de Cookies` }],
+    images: [{ url: `${site.url}/og-image.webp`, width: 1200, height: 630, alt: `${site.name} — Política de Cookies` }],
   },
 };
 

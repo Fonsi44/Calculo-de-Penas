@@ -14,9 +14,9 @@ export default async function AbogadosEnCholutecaPage() {
   const casosPrioritarios = [
     'Defensa penal y audiencias de urgencia',
     'Despidos, prestaciones y reclamaciones laborales',
-    'Divorcios, custodia y pension alimenticia',
+    'Divorcios, custodia y pensión alimenticia',
     'Contratos civiles y conflictos mercantiles',
-    'Tramites notariales y documentales con seguimiento',
+    'Trámites notariales y documentales con seguimiento',
   ];
 
   const enlacesServicio = [
@@ -34,27 +34,27 @@ export default async function AbogadosEnCholutecaPage() {
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Contexto local"
-          title="Atencion juridica para Choluteca y su zona de influencia"
-          subtitle="Cobertura coordinada desde Nacaome con seguimiento en diligencias, audiencias y tramites frecuentes para clientes de Choluteca."
+          title="Atención jurídica para Choluteca y su zona de influencia"
+          subtitle="Cobertura coordinada desde Nacaome con seguimiento en diligencias, audiencias y trámites frecuentes para clientes de Choluteca."
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card padding="md" className="h-full border-l-4 border-l-primary/40">
-            <h3 className="font-bold text-sm text-text">Cobertura geografica verificable</h3>
+            <h3 className="font-bold text-sm text-text">Cobertura geográfica verificable</h3>
             <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
               Atendemos casos en Choluteca ciudad y municipios cercanos, coordinando presencia en sedes judiciales y administrativas cuando el asunto lo requiere.
             </p>
           </Card>
           <Card padding="md" className="h-full border-l-4 border-l-accent/40">
-            <h3 className="font-bold text-sm text-text">Modalidad de atencion</h3>
+            <h3 className="font-bold text-sm text-text">Modalidad de atención</h3>
             <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-              Puede iniciar por WhatsApp o llamada, seguir con revision documental remota y programar atencion presencial con agenda y hoja de ruta por escrito.
+              Puede iniciar por WhatsApp o llamada, seguir con revisión documental remota y programar atención presencial con agenda y hoja de ruta por escrito.
             </p>
           </Card>
           <Card padding="md" className="h-full border-l-4 border-l-warning/40">
-            <h3 className="font-bold text-sm text-text">Por que contactar al despacho</h3>
+            <h3 className="font-bold text-sm text-text">Por qué contactar al despacho</h3>
             <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-              Recibe estrategia clara, plazos orientativos y coordinacion multidisciplinar cuando su caso combina penal, laboral, familia, civil o mercantil.
+              Recibe estrategia clara, plazos orientativos y coordinación multidisciplinar cuando su caso combina penal, laboral, familia, civil o mercantil.
             </p>
           </Card>
         </div>
@@ -69,7 +69,7 @@ export default async function AbogadosEnCholutecaPage() {
             </ul>
           </Card>
           <Card padding="md" className="h-full">
-            <h3 className="font-bold text-sm text-text">Enlaces de accion rapida</h3>
+            <h3 className="font-bold text-sm text-text">Enlaces de acción rápida</h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {enlacesServicio.map((item) => (
                 <Link
@@ -82,7 +82,7 @@ export default async function AbogadosEnCholutecaPage() {
               ))}
             </div>
             <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-              Si su problema involucra varias ramas, puede iniciar por la principal y el despacho coordina las demas frentes sin duplicar gestiones.
+              Si su problema involucra varias ramas, puede iniciar por la principal y el despacho coordina las demás frentes sin duplicar gestiones.
             </p>
           </Card>
         </div>

@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${site.url}/og-image.png`,
+        url: `${site.url}/og-image.webp`,
         width: 1200,
         height: 630,
         alt: `${site.name} - Bufete jurídico en ${site.address.city}, ${site.address.department}`,
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: site.tagline,
     description: site.description,
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
 };
 
@@ -283,7 +283,6 @@ export default async function HomePage() {
                   category="services"
                   tone={area.color as PlaceholderTone}
                   aspect="4/3"
-                  priority={area.slug === 'derecho-penal'}
                 />
               );
             })}

@@ -68,12 +68,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
-      title: `Blog Jurídico - Articulos de Abogados en Honduras${page > 1 ? ` (Pagina ${page})` : ''}`,
+      title: `Blog Jurídico - Artículos de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}`,
       description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
-      images: [`${site.url}/og-image.png`],
+      images: [`${site.url}/og-image.webp`],
     },
     openGraph: {
-      title: `Blog Juridico de Abogados en Honduras${page > 1 ? ` - Pagina ${page}` : ''}`,
+      title: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` - Página ${page}` : ''}`,
       description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
       url: `${site.url}/blog`,
       siteName: site.name,

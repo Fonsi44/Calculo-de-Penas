@@ -64,7 +64,11 @@ function ensurePreviousSecretValidated() {
   }
 }
 
-const SALT_ROUNDS = 10;
+// OWASP recomienda rounds ≥ 12 (2026). bcryptjs es monótono: hashes generados
+// con rounds anteriores siguen verificando, así que el rehash progresivo en
+// login (`maybeRehashPassword`) eleva el coste de los hashes legacy sin romper
+// sesiones existentes. Subir este valor impacta latencia de login (~250ms/round).
+const SALT_ROUNDS = 12;
 const TOKEN_TTL_SECONDS = 60 * 60 * 24;
 
 let _secret: string | null = null;
@@ -130,6 +134,30 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
   return bcryptjs.compare(password, hash);
+}
+
+/**
+ * Rehash progresivo: si un hash existente se generó con menos `rounds` que
+ * `SALT_ROUNDS` (p.ej. hashes rounds=10 previos al bump), se re-hashea tras
+ * un login exitoso. Recibe un callback de persistencia para desacoplar de la
+ * capa DB y poder testearlo sin Drizzle.
+ *
+ * Es no-bloqueante: un fallo de DB al actualizar no impide el login (sólo
+ * loggea). Idempotente: si los rounds ya son ≥ SALT_ROUNDS, no hace nada.
+ */
+export async function maybeRehashPassword(
+  password: string,
+  hash: string,
+  persist: (newHash: string) => Promise<void>,
+): Promise<void> {
+  try {
+    const rounds = bcryptjs.getRounds(hash);
+    if (!Number.isFinite(rounds) || rounds >= SALT_ROUNDS) return;
+    const newHash = await bcryptjs.hash(password, SALT_ROUNDS);
+    await persist(newHash);
+  } catch (e) {
+    console.warn('[auth] rehash progresivo falló (no bloqueante):', (e as Error).message);
+  }
 }
 
 export function signToken(payload: { userId: string; email: string; rol: string }): string {

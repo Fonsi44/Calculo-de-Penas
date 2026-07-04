@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `Abogados en ${site.address.city} - Todas las Áreas del Derecho`,
     description: `Abogados en Nacaome, Valle: penal, familia, laboral, civil, mercantil y tributario. Cobertura San Lorenzo y Choluteca.`,
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
   openGraph: {
     title: `Abogados en ${site.address.city}, ${site.address.department} - Todas las Áreas del Derecho`,

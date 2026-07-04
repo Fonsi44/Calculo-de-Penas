@@ -289,7 +289,7 @@ export function PageMetadataPanel({ page, initialData, onSave, onClose }: PageMe
               <Input
                 value={form.ogImage}
                 onChange={(e) => update('ogImage', e.target.value)}
-                placeholder="https://.../og-image.png"
+                placeholder="https://.../og-image.webp"
                 className={inputCls}
               />
               {form.ogImage && (

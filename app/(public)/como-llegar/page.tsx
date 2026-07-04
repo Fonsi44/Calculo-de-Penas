@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department}`,
     description: `Indicaciones para llegar a ${site.name} en Nacaome, Valle. Dirección exacta, mapa, rutas y referencias para encontrarnos.`,
-    images: [`${site.url}/og-image.png`],
+    images: [`${site.url}/og-image.webp`],
   },
   openGraph: {
     title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department} | ${site.name}`,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'es_HN',
     type: 'website',
-    images: [{ url: `${site.url}/og-image.png`, width: 1200, height: 630, alt: `${site.name} - Ubicación en Nacaome, Valle` }],
+    images: [{ url: `${site.url}/og-image.webp`, width: 1200, height: 630, alt: `${site.name} - Ubicación en Nacaome, Valle` }],
   },
 };
 

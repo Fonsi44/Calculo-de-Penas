@@ -158,7 +158,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
-      images: [{ url: `${site.url}${ogImage || '/og-image.png'}`, width: 1200, height: 630, alt: area.titulo }],
+      images: [{ url: `${site.url}${ogImage || '/og-image.webp'}`, width: 1200, height: 630, alt: area.titulo }],
     },
   };
 }

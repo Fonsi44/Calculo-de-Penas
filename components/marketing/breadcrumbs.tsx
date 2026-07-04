@@ -53,7 +53,7 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
                 {item.label}
               </Link>
             ) : (
-              <span className="text-text-secondary truncate">{item.label}</span>
+              <span className="text-text-secondary truncate" aria-current="page">{item.label}</span>
             )}
           </span>
         ))}
