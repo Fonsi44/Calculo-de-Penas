@@ -43,6 +43,8 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/descargar',
   '/api/og',
   '/api/oauth/callback',
+  // Chat asistente público (rate-limit + guardrails server-side en el handler).
+  '/api/chat',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>([

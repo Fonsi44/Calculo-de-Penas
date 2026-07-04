@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
 import { FloatingContactRail } from '@/components/marketing/live-widgets';
+import { ChatWidget } from '@/components/chat/chat-widget';
 import { PWARegistration } from '@/components/pwa/pwa-registration';
 import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
@@ -120,6 +121,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       </main>
       <PublicFooter />
       <FloatingContactRail />
+      <ChatWidget />
       <PWARegistration />
       <script
         type="application/ld+json"

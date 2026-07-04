@@ -106,10 +106,67 @@ Nunca compartir tokens ni secretos en chats o logs.
 ## Seguridad
 
 - `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/`, `data/seo/` nunca se commitean.
-- NUNCA hardcodear `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`.
+- NUNCA hardcodear `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`.
 - NUNCA compartir tokens, refresh tokens ni API keys en chats, logs o documentación.
 - Cookies HttpOnly/Secure/SameSite=Lax. Proxy edge protege intranet y API.
 - Si un secreto aparece en git history, requiere rotación en el proveedor.
+
+---
+
+## Chat asistente (DeepSeek)
+
+Chat conversacional en la web pública orientado a conversión y orientación
+inicial. Se monta solo en `app/(public)/layout.tsx` (con salvaguarda adicional
+que impide renderizar en rutas privadas). La `DEEPSEEK_API_KEY` nunca sale del
+servidor: el widget solo llama a la ruta relativa `/api/chat`.
+
+**Arquitectura:** widget → `POST /api/chat` → rate-limit (IP + sessionId) →
+Zod → guardrails server-side → system prompt + base de conocimiento →
+DeepSeek → respuesta filtrada → frontend.
+
+### Variables de entorno (`.env.local`)
+
+| Variable | Default | Descripción |
+|---|---|---|
+| `CHAT_ENABLED` | `true` | `false` desactiva el widget globalmente sin tocar código |
+| `DEEPSEEK_API_KEY` | — | API key (solo servidor; **nunca** en cliente/logs) |
+| `DEEPSEEK_MODEL` | `deepseek-v4-flash` | Requerimiento del proyecto. Los IDs oficiales de la API pueden variar; si el proveedor devuelve error de modelo, basta cambiar esta variable (p. ej. `deepseek-chat`) sin tocar código |
+| `DEEPSEEK_BASE_URL` | `https://api.deepseek.com/v1` | Base URL de la API |
+| `CHAT_TEMPERATURE` | `0.3` | Baja = sobria y consistente |
+| `CHAT_MAX_TOKENS` | `400` | Límite de tokens en la respuesta del modelo |
+| `CHAT_TIMEOUT_MS` | `20000` | Timeout de la llamada al proveedor |
+| `CHAT_MAX_MESSAGE_LENGTH` | `600` | Longitud máxima del mensaje del usuario |
+| `CHAT_RATE_LIMIT_PER_IP` | `12` | Máx mensajes por ventana por IP |
+| `CHAT_RATE_LIMIT_PER_SESSION` | `12` | Máx mensajes por ventana por sessionId |
+| `CHAT_RATE_WINDOW_MS` | `600000` | Ventana de rate-limit (10 min) |
+
+WhatsApp/teléfono se leen de `lib/site.ts` (`NEXT_PUBLIC_CONTACT_*`), no de aquí.
+
+### Privacidad y límites
+- **No** se persisten conversaciones. El widget envía solo los últimos turnos
+  por mensaje; el `sessionId` vive en `localStorage` del navegador.
+- **No** se loguea contenido sensible completo.
+- Disclaimer visible en el widget: "Este chat ofrece orientación inicial y no
+  sustituye una consulta jurídica."
+- Guardrails server-side bloquean: prompt injection, temas privados/intranet y
+  solicitudes de asesoramiento jurídico definitivo (cálculo de penas,
+  estrategia, escritos) — estas derivan directamente a WhatsApp/teléfono.
+- El asistente solo puede enlazar a páginas de la allowlist pública
+  (`lib/chat/knowledge-base.ts`); nunca a rutas privadas, API o técnicas.
+
+### Fallback sin IA
+Si falta `DEEPSEEK_API_KEY`, el modelo falla o se agota el rate-limit, el widget
+sigue ofreciendo WhatsApp, llamada, contacto y servicios (respuesta `source:
+`fallback_*`). El chat nunca queda "muerto".
+
+### Mantenimiento de la base de conocimiento
+La KB se deriva automáticamente de `data/areas-juridicas.ts` y `lib/site.ts`.
+Para añadir/cambiar servicios o datos de contacto, editar esas fuentes canónicas
+(fuentes de verdad del proyecto, ver AGENTS.md §2). No editar la KB a mano.
+
+### Tests
+`tests/api-chat.test.ts` (endpoint) + `tests/chat-guardrails.test.ts` (lógica
+pura + allowlist + system prompt). 24 tests cubren los escenarios de seguridad.
 
 ---
 
