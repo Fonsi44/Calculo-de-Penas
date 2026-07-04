@@ -30,7 +30,6 @@ import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
-import { ServiceSearch } from '@/components/blog/service-search';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 import { RelatedCities } from '@/components/marketing/related-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
@@ -121,20 +120,6 @@ export default async function AreasJuridicasPage() {
         cta={<CTAGroup variant="inverse" />}
         bgImage="/images/servicios/servicios-bg.webp"
       />
-
-      <div className="bg-background py-6 md:py-8">
-        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-          <ServiceSearch
-            items={areas.map((a) => ({
-              href: `/servicios-juridicos/${a.slug}`,
-              title: a.titulo,
-              description: a.descripcionCorta || '',
-            }))}
-            placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"...'
-            domain="servicios-juridicos"
-          />
-        </div>
-      </div>
 
       <TrustBar background="light" />
 

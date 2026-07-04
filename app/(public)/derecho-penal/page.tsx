@@ -19,7 +19,6 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
-import { ServiceSearch } from '@/components/blog/service-search';
 
 export const metadata: Metadata = buildMetadata({
   // 45 chars. Antes 63 (se truncaba).
@@ -177,20 +176,6 @@ const PRIORITY_PENAL_SLUGS = [
         cta={<CTAGroup variant="inverse" />}
         bgImage="/images/derecho-penal/pexels-ekaterina-bolovtsova-6077861.webp"
       />
-
-      <div className="bg-background py-6 md:py-8">
-        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-          <ServiceSearch
-            items={penalGroups.map((g) => ({
-              href: `/derecho-penal/${g.slug}`,
-              title: g.titulo,
-              description: g.descripcionCorta || '',
-            }))}
-            placeholder='Buscar en derecho penal: "defensa", "detención", "audiencia"...'
-            domain="derecho-penal"
-          />
-        </div>
-      </div>
 
       <TrustBar background="light" />
 
