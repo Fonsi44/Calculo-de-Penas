@@ -10,7 +10,6 @@ import { FeaturedPosts } from '@/components/blog/featured-posts';
 import { BlogExplorer } from '@/components/blog/blog-explorer';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
-import { Card } from '@/components/ui/card';
 import {
   getAllPosts,
   getPostsByPage,
@@ -27,7 +26,6 @@ import {
   filterByMonth,
 } from '@/lib/blog-hub';
 import { blogCategories } from '@/data/blog/categories';
-import { TOP_ORGANIC_GUIDE_LINKS } from '@/data/seo/high-intent-guides';
 
 export const revalidate = 3600;
 
@@ -158,46 +156,6 @@ export default async function BlogHubPage(props: Props) {
         postCount={allPosts.length}
         categoryCount={categoryCounts.length}
       />
-
-      <section className="py-6 md:py-8 border-b border-border/30">
-        <Container size="lg">
-          <div className="grid lg:grid-cols-[1fr_auto] gap-5 items-start">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-eyebrow text-accent-dark mb-2">
-                Mas buscado en Google
-              </p>
-              <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight">
-                Guías con demanda orgánica real y siguiente paso claro
-              </h2>
-              <p className="mt-2 text-sm text-text-secondary leading-relaxed max-w-2xl">
-                Estas consultas ya generan impresiones en Google y suelen preceder una consulta jurídica. Si necesita ayuda directa, puede pasar de la guía al servicio correspondiente sin salir del recorrido principal.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Link href="/servicios-juridicos" className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold bg-surface-alt text-primary hover:text-accent-dark transition-colors">
-                Ver servicios jurídicos
-              </Link>
-              <Link href="/solicitar-consulta#formulario" className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold bg-surface-alt text-primary hover:text-accent-dark transition-colors">
-                Solicitar consulta
-              </Link>
-            </div>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
-            {TOP_ORGANIC_GUIDE_LINKS.map((item) => (
-              <Link key={item.href} href={item.href} className="group block focus-visible:outline-none">
-                <Card padding="md" className="h-full group-hover:border-accent/30 group-hover:shadow-md transition-all">
-                  <h3 className="font-bold text-sm text-text leading-tight group-hover:text-primary transition-colors">
-                    {item.label}
-                  </h3>
-                  <p className="mt-2 text-sm text-text-secondary leading-relaxed">
-                    {item.description}
-                  </p>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
 
       {showFeatured && featured.length > 0 && (
         <FeaturedPosts posts={featured.map(toCardData)} />

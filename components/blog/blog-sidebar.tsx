@@ -8,16 +8,13 @@ import type { BlogCardData, BlogCategoryWithCount, BlogArchiveMonth } from '@/da
  * ya derivados por la página (una sola query DB) para no multiplicar
  * consultas.
  *
- * Widgets:
- *  1. Explorar por categoría — enlaces indexables a `/blog/[categoria]` con
- *     conteo. Estas son las URL canónicas de categoría (SEO): el filtro
- *     rápido del hub es cliente y no indexable, pero el sidebar garantiza
- *     que las categorías sean navegables e indexables.
- *  2. Lecturas recomendadas — heurístico determinista (featured + etiquetas +
- *     recencia). Etiqueta honesta: no hay métricas de vistas (R4).
- *  3. Artículos recientes.
- *  4. Archivo por meses — enlaces a `/blog?month=YYYY-MM` con filtrado server-side.
- *  5. Etiquetas — enlaces al filtro `?tag=` existente (noindex).
+ * Depurado (Jul 2026): reducción de enlaces hacia páginas noindex.
+ *   - Categorías: top 8 por volumen (antes 20) — el índice completo vive en /blog.
+ *   - Lecturas recomendadas: 4 (antes 5).
+ *   - Recientes: 4 (antes 5).
+ *   - Archivo: 6 meses (antes 8) con rel="nofollow" (noindex).
+ *   - Etiquetas: 10 estratégicas (antes 24) con rel="nofollow" (noindex).
+ * Total: ~32 enlaces (antes 62). Reduce crawl budget hacia noindex ~55%.
  */
 export function BlogSidebar({
   categories,
@@ -32,12 +29,21 @@ export function BlogSidebar({
   archive: BlogArchiveMonth[];
   tags: string[];
 }) {
+  // Categorías: top 8 por conteo de posts (las más activas editorialmente).
+  // El índice completo de 20 categorías vive en /blog (hub SSR).
+  const topCategories = [...categories].sort((a, b) => b.count - a.count).slice(0, 8);
+  // Tags: 10 máximo (antes 24). Selecciona los primeros; el consumidor ya
+  // pasa los tags ordenados por frecuencia.
+  const topTags = tags.slice(0, 10);
+  // Archivo: últimos 6 meses (antes 8).
+  const recentArchive = archive.slice(0, 6);
+
   return (
     <aside className="space-y-8 lg:sticky lg:top-6 self-start">
-      {/* Categorías */}
+      {/* Categorías — top 8 (las más activas) */}
       <SidebarBlock title="Explorar por categoría" as="h2">
         <ul className="space-y-0.5">
-          {categories.map((c) => (
+          {topCategories.map((c) => (
             <li key={c.slug}>
               <Link
                 href={`/blog/${c.slug}`}
@@ -53,32 +59,33 @@ export function BlogSidebar({
         </ul>
       </SidebarBlock>
 
-      {/* Lecturas recomendadas */}
+      {/* Lecturas recomendadas — 4 */}
       {popular.length > 0 && (
         <SidebarBlock title="Lecturas recomendadas" as="h2">
           <div className="space-y-3">
-            {popular.map((p) => <BlogCard key={p.slug} post={p} variant="compact" />)}
+            {popular.slice(0, 4).map((p) => <BlogCard key={p.slug} post={p} variant="compact" />)}
           </div>
         </SidebarBlock>
       )}
 
-      {/* Recientes */}
+      {/* Recientes — 4 */}
       {recent.length > 0 && (
         <SidebarBlock title="Artículos recientes" as="h2">
           <div className="space-y-3">
-            {recent.map((p) => <BlogCard key={p.slug} post={p} variant="compact" />)}
+            {recent.slice(0, 4).map((p) => <BlogCard key={p.slug} post={p} variant="compact" />)}
           </div>
         </SidebarBlock>
       )}
 
-      {/* Archivo */}
-      {archive.length > 0 && (
+      {/* Archivo — 6 meses, nofollow (páginas noindex) */}
+      {recentArchive.length > 0 && (
         <SidebarBlock title="Archivo" as="h2">
           <ul className="space-y-1">
-            {archive.map((m) => (
+            {recentArchive.map((m) => (
               <li key={m.value}>
                 <Link
                   href={`/blog?month=${m.value}`}
+                  rel="nofollow"
                   className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors group"
                 >
                   <span className="capitalize group-hover:text-primary">{m.label}</span>
@@ -90,14 +97,15 @@ export function BlogSidebar({
         </SidebarBlock>
       )}
 
-      {/* Etiquetas */}
-      {tags.length > 0 && (
+      {/* Etiquetas — 10 máximo, nofollow (páginas noindex) */}
+      {topTags.length > 0 && (
         <SidebarBlock title="Etiquetas" as="h2">
           <div className="flex flex-wrap gap-1.5">
-            {tags.slice(0, 24).map((tag) => (
+            {topTags.map((tag) => (
               <Link
                 key={tag}
                 href={`/blog?tag=${encodeURIComponent(tag)}`}
+                rel="nofollow"
                 className="inline-block px-2.5 py-1 rounded-full bg-surface-alt text-xs text-text-muted hover:bg-primary/10 hover:text-primary transition-colors border border-border/30"
               >
                 {tag}

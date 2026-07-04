@@ -354,13 +354,11 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
         </div>
       </Section>
 
-      {/* CLUSTER GEOGRÁFICO (Jul 2026): conecta cada servicio con las
-          ciudades del sur. Antes los servicios no enlazaban a ninguna
-          ciudad — era un cluster desconectado. Ahora cada servicio
-          distribuye autoridad hacia las landings locales prioritarias. */}
+      {/* CLUSTER GEOGRÁFICO (Jul 2026, depurado): conecta cada servicio con
+          3 ciudades principales (no 8, evita dilución de autoridad). */}
       <Section spacing="sm">
         <div className="max-w-4xl">
-          <RelatedCities limit={8} />
+          <RelatedCities limit={3} />
         </div>
       </Section>
 

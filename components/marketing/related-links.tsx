@@ -34,7 +34,7 @@ interface RelatedServicesProps {
 
 export function RelatedServices({
   currentSlug,
-  limit = 4,
+  limit = 3,
   eyebrow = 'Áreas relacionadas',
 }: RelatedServicesProps) {
   const services: PracticeArea[] = getRelatedServices(currentSlug, limit);
@@ -72,7 +72,7 @@ interface RelatedCitiesProps {
 
 export function RelatedCities({
   mentionedCitySlug,
-  limit = 6,
+  limit = 3,
   eyebrow = 'Atendemos en el sur de Honduras',
 }: RelatedCitiesProps) {
   const cities: CityLink[] = getRelatedCitiesForContent(mentionedCitySlug, limit);
@@ -110,7 +110,7 @@ interface RelatedCategoriesProps {
 
 export function RelatedCategories({
   current,
-  limit = 8,
+  limit = 4,
   eyebrow = 'Otras categorías del blog',
 }: RelatedCategoriesProps) {
   const cats = blogCategories

@@ -163,10 +163,10 @@ export default async function BlogCategoryPage(props: Props) {
       </Section>
 
       {/* Enlaces cruzados a otras categorías — SSR estático (no JS).
-          CAUSA RAÍZ indexación (Jul 2026): las categorías eran semihuérfanas
-          (solo enlazadas vía sidebar con JS o vía sitemap). Este bloque HTML
-          garantiza que Googlebot descubra todas las categorías sin ejecutar
-          JavaScript, distribuyendo autoridad interna desde cada categoría. */}
+          Depurado (Jul 2026): antes mostraba las 19 categorías restantes
+          (sobreoptimización). Ahora muestra 6 máximo: las de mayor afinidad
+          jurídica. El índice completo vive en /blog (hub). Así se evita la
+          dilución de autoridad manteniendo descubrimiento. */}
       <Section background="muted" spacing="sm" ariaLabel="Otras categorías del blog">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-serif font-bold text-lg text-primary mb-4">
@@ -175,6 +175,7 @@ export default async function BlogCategoryPage(props: Props) {
           <div className="flex flex-wrap gap-2">
             {blogCategories
               .filter((c) => c.slug !== categoria)
+              .slice(0, 6)
               .map((c) => (
                 <Link
                   key={c.slug}
