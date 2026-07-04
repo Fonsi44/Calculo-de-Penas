@@ -18,6 +18,7 @@ import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
+import { RelatedServices } from '@/components/marketing/related-links';
 
 export const metadata: Metadata = buildMetadata({
   // 54 chars.
@@ -158,6 +159,22 @@ export default async function MigrantesPage() {
         title="Dudas comunes sobre trámites entre Honduras y España"
         id="preguntas-frecuentes"
       />
+
+      {/* ÁREAS RELACIONADAS (Fase 3.5) — reconecta este hub al grafo del
+          sitio. Antes /hondurenos-en-espana parecía una web paralela: solo
+          enlazaba hacia sus propias subáreas y al blog. Ahora enlaza a las
+          áreas del catálogo principal que más se cruzan con trámites
+          transnacionales (familia, civil y notarial, extranjería) usando el
+          motor de enlazado interno a partir de 'extranjeria-en-honduras'. */}
+      <Section background="muted" spacing="sm">
+        <Container size="lg">
+          <RelatedServices
+            currentSlug="extranjeria-en-honduras"
+            limit={4}
+            eyebrow="Relacionado con"
+          />
+        </Container>
+      </Section>
 
       {/* GUÍAS PARA HONDUREÑOS EN ESPAÑA — sección editorial única.
           Hub de guías del blog de la categoría hondurenos-en-espana.
