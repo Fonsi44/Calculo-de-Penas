@@ -103,12 +103,15 @@ export function ChatWidget() {
 
   useEffect(() => {
     if (open) {
-      scrollToBottom();
+      // Al abrir, scroll al inicio (saludo). El scrollRef apunta al contenedor
+      // de mensajes; scrollTo(0,0) = mostrar el primer mensaje (el saludo).
+      const el = scrollRef.current;
+      if (el) el.scrollTop = 0;
       const t = setTimeout(() => inputRef.current?.focus(), 50);
       trackChatOpened();
       return () => clearTimeout(t);
     }
-  }, [open, scrollToBottom]);
+  }, [open]);
 
   useEffect(() => {
     scrollToBottom();
@@ -239,29 +242,37 @@ export function ChatWidget() {
   // cuando hay stacking contexts complejos). El portal elimina toda ambigüedad.
   return createPortal(
     <>
-      {/* Botón flotante: abajo-izquierda, NO choca con el rail derecho. */}
+      {/* Botón flotante: abajo-izquierda, NO choca con el rail derecho.
+          Position fixed vía inline style para evitar problemas de parsing
+          de Tailwind arbitrary values en Chrome. */}
       <button
         ref={openBtnRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
         aria-expanded={open}
-        className="fixed bottom-4 left-4 z-30 w-10 h-10 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 print:hidden safe-bottom"
+        className="z-30 w-10 h-10 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 print:hidden safe-bottom"
+        style={{ position: 'fixed', bottom: '1rem', left: '1rem' }}
       >
         {open ? <X size={16} aria-hidden="true" /> : <MessageCircle size={16} aria-hidden="true" />}
         {!open && <span className="sr-only">Asistente virtual de Pineda y Asociados</span>}
       </button>
 
-      {/* Panel del chat — ancho fluido con clamp, altura segura con min() */}
+      {/* Panel del chat — ancho fluido con clamp, altura segura con min().
+          Position fixed vía inline style (misma razón que el botón). */}
       {open && (
         <div
           role="dialog"
           aria-modal="false"
           aria-label="Asistente virtual"
-          className="fixed bottom-[4.5rem] left-4 z-30 w-[calc(100vw-1.5rem)] flex flex-col rounded-lg border border-accent/30 bg-surface text-text shadow-xl print:hidden"
+          className="z-30 flex flex-col rounded-lg border border-accent/30 bg-surface text-text shadow-xl print:hidden"
           style={{
+            position: 'fixed',
+            bottom: '4.5rem',
+            left: '1rem',
+            width: 'calc(100vw - 1.5rem)',
             maxWidth: 'clamp(16rem, 25vw, 20rem)',
-            maxHeight: 'min(480px, calc(100dvh - 100px))',
+            maxHeight: 'min(480px, calc(100dvh - 5.5rem))',
           }}
         >
           {/* Cabecera compacta */}
@@ -334,7 +345,7 @@ export function ChatWidget() {
             )}
           </div>
 
-          {/* CTAs compactos */}
+          {/* CTAs compactos — botones pequeños con padding generoso */}
           <div className="flex items-center gap-1.5 px-1.5 py-0.5 border-t border-accent/20 bg-muted/50">
             <a
               href={whatsappHref(whatsappContextual())}
@@ -344,16 +355,16 @@ export function ChatWidget() {
                 trackChatWhatsAppClicked();
                 trackChatContactClicked('whatsapp');
               }}
-              className="flex items-center gap-1 text-xxs font-semibold px-1.5 py-0.5 rounded bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <MessageCircle size={9} aria-hidden="true" /> WhatsApp
+              <MessageCircle size={8} aria-hidden="true" /> WhatsApp
             </a>
             <a
               href={telHref()}
               onClick={() => trackChatContactClicked('phone')}
-              className="flex items-center gap-1 text-xxs font-semibold px-1.5 py-0.5 rounded bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <Phone size={9} aria-hidden="true" /> Llamar
+              <Phone size={8} aria-hidden="true" /> Llamar
             </a>
             <a
               href="/solicitar-consulta"
@@ -391,8 +402,8 @@ export function ChatWidget() {
             </button>
           </form>
 
-          {/* Disclaimer compacto */}
-          <p className="px-1.5 pb-1 text-[10px] leading-tight text-text-secondary">
+          {/* Disclaimer en tamaño reducido pero legible */}
+          <p className="px-1.5 pb-1 text-[9px] leading-tight text-text-secondary">
             {chatConfig.assistant.disclaimer}
           </p>
         </div>
