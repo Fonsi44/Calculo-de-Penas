@@ -141,11 +141,10 @@ export default async function DespachoPage() {
         ) : null;
       })()}
 
-      {/* BLOQUE GEO/LLMO — respuesta directa sobre QUIÉN ES el despacho.
-          Antes respondía "qué servicios ofrece", que duplicaba el rol de
-          /servicios-juridicos. Ahora responde la pregunta institucional
-          propia de /despacho: quién es, dónde está, qué lo define. */}
-      <Section background="warm" spacing="sm">
+      {/* BLOQUE EDITORIAL CANÓNICO — respuesta directa sobre QUIÉN ES el
+          despacho. Modelo unificado: AnswerBlock en Section warm, mismo
+          formato que el resto de páginas. */}
+      <Section background="warm" spacing="md">
         <Container size="lg">
           <AnswerBlock
             eyebrow="El bufete"

@@ -64,15 +64,18 @@ export default async function SolicitarConsultaPage() {
       ]} />
       <PageHero
         eyebrow="Solicitar consulta"
+        badge="Confidencial · Sin costo"
         title={heroTitle}
         subtitle={<>{heroSubtitle}</>}
         cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/corporate/corporate_meeting.webp"
       />
 
       <TrustBar background="light" />
 
-      {/* BLOQUE GEO/LLMO — cómo funciona la consulta. Respuesta directa. */}
-      <Section background="warm" spacing="sm">
+      {/* BLOQUE EDITORIAL CANÓNICO — cómo funciona la consulta.
+          Modelo unificado: AnswerBlock en Section warm spacing=md. */}
+      <Section background="warm" spacing="md">
         <Container size="lg">
           <AnswerBlock
             eyebrow="Cómo funciona"

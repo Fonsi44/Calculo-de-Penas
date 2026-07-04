@@ -111,10 +111,23 @@ export function PageHero({
             )}
           </div>
           <h1 className={titleCls}>{title}</h1>
-          {subtitle && <p className={subtitleCls}>{subtitle}</p>}
+          {/* Línea dorada decorativa bajo el título: aporta jerarquía
+              visual y un "sello" premium común a todas las páginas. */}
+          <div
+            className={`mt-4 h-[3px] w-14 rounded-full ${isPrimary ? 'bg-accent/80' : 'bg-accent'}`}
+            aria-hidden="true"
+          />
+          {subtitle && <p className={`${subtitleCls} mt-4`}>{subtitle}</p>}
           {cta && <div className="mt-5">{cta}</div>}
         </div>
       </Container>
+      {/* Franja inferior dorada: cierra el hero con un acabado premium
+          y lo separa con elegancia del contenido siguiente. Común a todas
+          las variantes para unificar el ritmo visual entre páginas. */}
+      <div
+        className={`absolute inset-x-0 bottom-0 h-1 ${isPrimary ? 'bg-gradient-to-r from-accent/0 via-accent/60 to-accent/0' : 'bg-gradient-to-r from-accent/0 via-accent/50 to-accent/0'}`}
+        aria-hidden="true"
+      />
     </section>
   );
 }

@@ -138,37 +138,25 @@ export default async function AreasJuridicasPage() {
 
       <TrustBar background="light" />
 
-      {/* BLOQUE GEO/LLMO — respuesta directa para motores de IA.
-          Reorientado (Fase 3.4): antes respondía 'qué hace un bufete
-          multidisciplinario', que duplicaba /despacho. Ahora responde la
-          pregunta canónica del catálogo: 'qué área necesita'. */}
-      <Section background="muted" spacing="sm">
+      {/* BLOQUE EDITORIAL CANÓNICO — respuesta directa + intro unificada.
+          Un solo bloque, un solo formato. Antes había dos secciones
+          consecutivas (AnswerBlock en muted + prose-editorial en warm) que
+          decían lo mismo con tipografías distintas. Ahora es un único
+          AnswerBlock con la respuesta directa y un enlace contextual. */}
+      <Section background="warm" spacing="md">
         <Container size="lg">
           <AnswerBlock
             eyebrow="Catálogo de servicios"
             question="¿Qué áreas del derecho atiende Pineda y Asociados?"
             answer={`${site.name} atiende 14 áreas del derecho en Nacaome y la zona sur de Honduras: defensa penal (pilar histórico del bufete), familia, laboral, civil y notarial, mercantil y empresarial, administrativo, bancario, aduanero, tributario, migratorio, propiedad intelectual, ambiental y conciliación. Cada caso lo dirige el abogado especialista de la rama correspondiente; el cliente tiene un único punto de contacto y, cuando un asunto cruza varias ramas, el equipo coordina internamente.`}
-          />
+          >
+            <p className="text-sm text-text-secondary leading-relaxed text-pretty">
+              Seleccione debajo el área que corresponde a su situación. Si su caso combina varias
+              ramas, el equipo coordina internamente para que usted no tenga que gestionar varios
+              despachos.
+            </p>
+          </AnswerBlock>
         </Container>
-      </Section>
-
-      {/* INTRO EDITORIAL — texto directo sobre fondo cálido, sin tarjeta.
-          Compactado (Fase 3.4): antes eran 3 párrafos que repetían el claim
-          'multidisciplinar' que vive en /despacho. Ahora un solo párrafo que
-          conserva el keyword '14 áreas' para SEO y conduce al catálogo. */}
-      <Section background="warm" spacing="sm">
-        <div className="max-w-3xl mx-auto prose-editorial">
-          <h2 className="font-serif font-bold text-xl md:text-2xl text-primary mb-4">
-            14 áreas del derecho bajo un mismo techo, en Nacaome y la zona sur
-          </h2>
-          <p className="text-sm md:text-base text-text-secondary leading-relaxed">
-            Seleccione el área que corresponde a su situación para acceder a información detallada,
-            subservicios y preguntas frecuentes. Si su caso combina varias ramas —por ejemplo penal
-            y familia, o laboral y mercantil— el equipo coordina internamente para que usted no tenga
-            que gestionar varios despachos. La <Link href="/derecho-penal" className="text-accent-dark hover:text-primary font-semibold">defensa penal</Link> es el pilar histórico del bufete; el resto de
-            áreas se integran alrededor de ella para abordar casos complejos con una sola estrategia.
-          </p>
-        </div>
       </Section>
 
       <Section background="muted" spacing="md">
@@ -368,34 +356,26 @@ export default async function AreasJuridicasPage() {
         ctaHref="/blog"
       />
 
-      <Section spacing="sm">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <Link
-            href="/guia-legal-abogados-honduras"
-            className="group block focus-visible:outline-none"
-          >
-            <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-              <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center mb-3 flex-shrink-0">
-                <BookOpen size={20} aria-hidden="true" />
-              </div>
-              <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
-                Guía legal
-              </p>
-              <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                Cómo contratar abogado en Honduras
-              </h3>
-              <p className="text-sm text-text-secondary mt-2 leading-relaxed line-clamp-2">
-                Colegiación, honorarios, documentos para la primera consulta y errores a evitar. Guía práctica para decidir con criterio.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
-                Leer guía <ArrowRight size={12} />
-              </span>
-            </Card>
-          </Link>
-        </div>
-      </Section>
+      {/* ConsultationCTA con enlace contextual a la guía pilar (Fase 5).
+          Antes la guía "Cómo contratar abogado" era una tarjeta suelta en un
+          grid de 3 columnas (con 2 huecos vacíos), colgada entre
+          BlogHighlights y este CTA. Estéticamente rompía el ritmo. Ahora vive
+          como enlace contextual en el pie del CTA, donde encaja temáticamente:
+          un usuario evaluando contratar necesita "cómo contratar abogado". */}
+      <ConsultationCTA
+        variant="closing"
+        subtitle={`Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. ¿Primera vez contratando abogado? Consulte nuestra guía sobre cómo contratar abogado en Honduras.`}
+      />
 
-      <ConsultationCTA />
+      <div className="text-center pb-2 -mt-4">
+        <Link
+          href="/guia-legal-abogados-honduras"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+        >
+          <BookOpen size={14} aria-hidden="true" />
+          Guía: cómo contratar abogado en Honduras <ArrowRight size={14} />
+        </Link>
+      </div>
 
       <HubFaq
         faqs={FAQ_SERVICIOS_JURIDICOS}

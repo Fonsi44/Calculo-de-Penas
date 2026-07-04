@@ -194,45 +194,28 @@ const PRIORITY_PENAL_SLUGS = [
 
       <TrustBar background="light" />
 
-      {/* Bloque declarativo GEO (audit P6 Jul 2026): párrafo factual y citable
-          para que motores generativos (ChatGPT, Perplexity, Copilot) puedan
-          resumir correctamente identidad, especialidad, zona y contacto. */}
-      <Section spacing="sm">
-        <div className="max-w-3xl mx-auto geo-snippet">
-          <p>
-            <strong>Pineda y Asociados</strong> es un bufete
-            jurídico en <strong>Nacaome, Valle (Honduras)</strong>,
-            especializado en <strong>defensa penal</strong> en el
-            departamento de Valle, Choluteca y el sur de Honduras. Atiende detenciones,
-            audiencias iniciales, medidas cautelares, juicio oral y recursos conforme al
-            Código Penal Decreto 130-2017 y reformas vigentes. Atención de lunes a sábado
-            de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724.
-          </p>
-        </div>
-      </Section>
-
-      {/* BLOQUE GEO/LLMO — respuesta directa sobre cuándo contactar. */}
-      <Section background="warm" spacing="sm">
+      {/* BLOQUE EDITORIAL CANÓNICO — respuesta directa sobre defensa penal.
+          Antes había TRES bloques consecutivos con tres formatos distintos
+          (geo-snippet inline + AnswerBlock en warm + geo-snippet centrado con
+          enlace). Ahora es un único AnswerBlock con la respuesta directa, los
+          datos GEO y el enlace a la guía del proceso penal como children.
+          Mismo modelo tipográfico que /servicios-juridicos y /despacho. */}
+      <Section background="warm" spacing="md">
         <Container size="lg">
           <AnswerBlock
-            eyebrow="Cuándo contactar"
-            question="¿Cuándo debo contactar a un abogado penalista?"
-            answer="Contacte a un abogado penalista de inmediato si usted o un familiar están detenidos, han recibido citación judicial, enfrentan una investigación o han sido imputados. La Constitución de Honduras garantiza el derecho a defensa técnica desde el primer momento y a ser presentado ante un juez en 24 horas. No espere a la audiencia inicial: la asistencia letrada temprana puede condicionar las medidas cautelares y el curso del proceso."
-          />
+            eyebrow="Defensa penal en el sur de Honduras"
+            question="¿Qué hace Pineda y Asociados en defensa penal?"
+            answer="Pineda y Asociados es un bufete jurídico en Nacaome, Valle (Honduras), especializado en defensa penal en el departamento de Valle, Choluteca y el sur de Honduras. Atiende detenciones, audiencias iniciales, medidas cautelares, juicio oral y recursos conforme al Código Penal Decreto 130-2017 y reformas vigentes. Atención de lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724. Contacte de inmediato si usted o un familiar están detenidos, han recibido citación judicial o enfrentan una investigación: la Constitución de Honduras garantiza el derecho a defensa técnica desde el primer momento y a ser presentado ante un juez en 24 horas."
+          >
+            <p className="text-sm text-text-secondary leading-relaxed text-pretty">
+              ¿Quiere entender el proceso penal paso a paso? Consulte nuestra{' '}
+              <Link href="/blog/proceso-penal" className="text-accent-dark hover:text-primary font-semibold underline">
+                guía completa del proceso penal en Honduras
+              </Link>
+              , desde la investigación hasta la ejecución penal.
+            </p>
+          </AnswerBlock>
         </Container>
-      </Section>
-
-      <Section spacing="sm">
-        <div className="max-w-4xl mx-auto geo-snippet text-center">
-          <p>
-            <strong>¿Quiere entender el proceso penal paso a paso?</strong>{' '}
-            Consulte nuestra{' '}
-            <Link href="/blog/proceso-penal" className="text-accent-dark hover:text-primary underline font-semibold">
-              guía completa del proceso penal en Honduras
-            </Link>
-            , desde la investigación hasta la ejecución penal.
-          </p>
-        </div>
       </Section>
 
       {/* SU ABOGADO PENALISTA —Danilo Pineda Maradiaga. La página de mayor

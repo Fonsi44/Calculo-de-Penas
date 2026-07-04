@@ -1,14 +1,20 @@
 /**
- * Bloque de respuesta directa optimizado para AEO/GEO.
+ * Bloque editorial canónico para respuestas directas y texto introductorio.
  *
- * Renderiza una sección semántica con:
- *  - eyebrow (categoría, opcional)
- *  - question como <h2> (titular claro que los motores de IA pueden citar)
+ * Modelo ÚNICO de texto para todas las páginas públicas que necesitan un
+ * párrafo de apertura o respuesta directa (AEO/GEO). Sustituye a los
+ * antiguos formatos dispersos (tarjeta con borde dorado, prose-editorial
+ * suelto, geo-snippet inline) que daban sensación de capas añadidas.
+ *
+ * Composición tipográfica sobria y coherente:
+ *  - eyebrow dorado (categoría, opcional)
+ *  - question como <h2> serif (titular claro, citable por LLMs)
  *  - answer como párrafo directo (1-3 frases con la respuesta literal)
+ *  - línea dorada decorativa bajo el título (sello visual común)
  *
- * Estilo sobrio: fondo warm, borde izquierdo dorado, máximo 2xl. Snippet-friendly.
- * Pensado para que ChatGPT, Gemini, Claude, Copilot y Perplexity extraigan la
- * respuesta tal cual. Sin dependencias cliente: es Server Component.
+ * Sin tarjeta, sin fondo, sin borde. Solo tipografía y respiración.
+ * Pensado para que ChatGPT, Gemini, Claude, Copilot y Perplexity extraigan
+ * la respuesta tal cual. Server Component, 0 JS.
  */
 export function AnswerBlock({
   question,
@@ -19,23 +25,26 @@ export function AnswerBlock({
   question: string;
   answer: string;
   eyebrow?: string;
-  /** Contenido adicional opcional (lista, callout). */
+  /** Contenido adicional opcional (lista, callout, enlace contextual). */
   children?: React.ReactNode;
 }) {
   return (
-    <section className="not-prose my-8 max-w-2xl">
-      <div className="rounded-lg border-l-4 border-l-accent bg-accent/5 p-5">
-        {eyebrow && (
-          <p className="text-xxs font-semibold uppercase tracking-[0.18em] text-accent-dark">
-            {eyebrow}
-          </p>
-        )}
-        <h2 className="mt-1 font-serif text-xl text-primary">{question}</h2>
-        <p className="mt-2 text-sm md:text-base text-text-secondary leading-relaxed">
-          {answer}
-        </p>
-        {children && <div className="mt-3">{children}</div>}
-      </div>
-    </section>
+    <div className="max-w-2xl">
+      {eyebrow && (
+        <p className="eyebrow-rule text-accent-dark mb-2.5">{eyebrow}</p>
+      )}
+      <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight text-balance">
+        {question}
+      </h2>
+      <div
+        className="mt-3 h-[3px] w-12 rounded-full bg-accent/80"
+        aria-hidden="true"
+      />
+      <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
+        {answer}
+      </p>
+      {children && <div className="mt-4">{children}</div>}
+    </div>
   );
 }
+

@@ -5,6 +5,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { hubMigrantes } from '@/data/areas-juridicas';
@@ -69,61 +70,54 @@ export default async function MigrantesPage() {
 
       <TrustBar background="light" />
 
-      {/* INTRO EDITORIAL UNIFICADA (Fase 5 pulido).
-          Antes había dos bloques separados con formatos distintos que decían
-          lo mismo: un AnswerBlock (Q&A GEO) + un IntroEditorial (card con
-          barra dorada). Rompían el ritmo y usaban jerarquías tipográficas
-          diferentes, dando sensación de capas añadidas. Ahora es un único
-          bloque fluido con prose-editorial (mismo patrón que
-          /servicios-juridicos), con la respuesta directa primero y los
-          trámites después, bajo el mismo sistema tipográfico. */}
+      {/* BLOQUE EDITORIAL CANÓNICO — respuesta directa + trámites.
+          Modelo unificado: AnswerBlock (mismo formato que /servicios-juridicos,
+          /despacho, /derecho-penal) con la respuesta directa primero y la lista
+          de trámites + cómo trabajamos a distancia como children. Un solo
+          bloque, un solo formato tipográfico. */}
       <Section background="warm" spacing="md">
-        <div className="max-w-3xl mx-auto prose-editorial">
-          <h2 className="font-serif font-bold text-xl md:text-2xl text-primary mb-4">
-            Abogados en Honduras para hondureños residentes en España
-          </h2>
-          <p>
-            Vivir en España no le impide resolver asuntos jurídicos en Honduras. Como hondureño
-            residente en España puede gestionar <strong>poderes notariales, divorcios, custodias,
-            sucesiones y otros trámites</strong> en Honduras sin desplazarse, siempre que cuente con
-            la documentación adecuada y la asesoría de un abogado hondureño colegiado. Trabajamos
-            coordinando con notaría hondureña y, cuando es necesario, con notaría española para
-            poderes apostillados. El proceso se inicia por WhatsApp o videollamada y el seguimiento
-            es remoto.
-          </p>
-          <h3>Trámites más frecuentes</h3>
-          <ul>
-            <li>
-              <strong>Apostilla de La Haya</strong> para documentos emitidos en España que deban surtir
-              efecto en Honduras (sentencias, actas de nacimiento, poderes).
-            </li>
-            <li>
-              <strong>Poder notarial a distancia</strong>: autorizar a un abogado en Honduras para que
-              le represente en juicios, compraventas, divorcios o gestiones registrales.
-            </li>
-            <li>
-              <strong>Homologación de sentencias españolas</strong> en Honduras: divorcios, custodias y
-              resoluciones patrimoniales que requieren reconocimiento judicial para ser ejecutables.
-            </li>
-            <li>
-              <strong>Herencias transfronterizas</strong> con bienes en Honduras y España: declaración
-              de herederos, partición y liquidación de sociedad conyugal.
-            </li>
-          </ul>
-          <h3>Cómo trabajamos a distancia</h3>
-          <p>
-            La primera consulta puede realizarse por videollamada o WhatsApp. Una vez definida la
-            estrategia, le indicamos los documentos necesarios y el procedimiento para otorgar poder
-            desde el Consulado de Honduras en España o ante notario español con posterior apostilla.
-            Mantendremos informado al cliente de cada paso, con presupuesto por escrito y plazos
-            realistas según la carga judicial hondureña.
-          </p>
-          <p className="text-xs text-text-muted">
-            Esta información es orientativa y no constituye asesoría legal específica. Cada caso requiere
-            evaluación particular; los plazos y requisitos pueden variar según el tipo de trámite y la
-            autoridad competente.
-          </p>
-        </div>
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Asistencia legal transfronteriza"
+            question="¿Puedo tramitar asuntos legales en Honduras residiendo en España?"
+            answer="Sí. Como hondureño residente en España puede gestionar poderes notariales, divorcios, custodias, sucesiones y otros trámites en Honduras sin desplazarse, siempre que cuente con la documentación adecuada y la asesoría de un abogado hondureño colegiado. Trabajamos coordinando con notaría hondureña y, cuando es necesario, con notaría española para poderes apostillados. El proceso se inicia por WhatsApp o videollamada y el seguimiento es remoto."
+          >
+            <div className="prose-editorial mt-6">
+              <h3 className="font-serif font-bold text-base text-primary">Trámites más frecuentes</h3>
+              <ul>
+                <li>
+                  <strong>Apostilla de La Haya</strong> para documentos emitidos en España que deban surtir
+                  efecto en Honduras (sentencias, actas de nacimiento, poderes).
+                </li>
+                <li>
+                  <strong>Poder notarial a distancia</strong>: autorizar a un abogado en Honduras para que
+                  le represente en juicios, compraventas, divorcios o gestiones registrales.
+                </li>
+                <li>
+                  <strong>Homologación de sentencias españolas</strong> en Honduras: divorcios, custodias y
+                  resoluciones patrimoniales que requieren reconocimiento judicial para ser ejecutables.
+                </li>
+                <li>
+                  <strong>Herencias transfronterizas</strong> con bienes en Honduras y España: declaración
+                  de herederos, partición y liquidación de sociedad conyugal.
+                </li>
+              </ul>
+              <h3 className="font-serif font-bold text-base text-primary">Cómo trabajamos a distancia</h3>
+              <p>
+                La primera consulta puede realizarse por videollamada o WhatsApp. Una vez definida la
+                estrategia, le indicamos los documentos necesarios y el procedimiento para otorgar poder
+                desde el Consulado de Honduras en España o ante notario español con posterior apostilla.
+                Mantendremos informado al cliente de cada paso, con presupuesto por escrito y plazos
+                realistas según la carga judicial hondureña.
+              </p>
+              <p className="text-xs text-text-muted">
+                Esta información es orientativa y no constituye asesoría legal específica. Cada caso requiere
+                evaluación particular; los plazos y requisitos pueden variar según el tipo de trámite y la
+                autoridad competente.
+              </p>
+            </div>
+          </AnswerBlock>
+        </Container>
       </Section>
 
       <Section background="muted" spacing="md">

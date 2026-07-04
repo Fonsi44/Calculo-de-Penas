@@ -256,6 +256,7 @@ export default async function FaqPage() {
           </>
         }
         cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/corporate/courthouse.webp"
       />
 
       <TrustBar background="light" />

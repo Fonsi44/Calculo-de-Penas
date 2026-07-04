@@ -6,6 +6,7 @@ import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { PageHero } from '@/components/marketing/page-hero';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
@@ -80,14 +81,17 @@ export default function GuiaLegalPage() {
       />
       <PageHero
         eyebrow="Guía legal · Honduras"
+        badge="Guía práctica"
         title="Guía legal para contratar abogado en Honduras"
         subtitle="Cómo verificar la colegiación de un abogado, qué honorarios esperar, qué documentos llevar a la primera consulta y qué errores evitar. Guía práctica de Pineda y Asociados."
-        variant="primary"
+        cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/corporate/courthouse.webp"
       />
       <TrustBar />
 
-      {/* BLOQUE GEO/LLMO — datos del despacho para IA */}
-      <Section background="muted" spacing="sm">
+      {/* BLOQUE EDITORIAL CANÓNICO — datos del despacho para IA.
+          Modelo unificado: AnswerBlock en Section warm spacing=md. */}
+      <Section background="warm" spacing="md">
         <Container size="lg">
           <AnswerBlock
             eyebrow="Datos del despacho"

@@ -16,6 +16,7 @@ import { Card } from '@/components/ui/card';
 import { CopyableAddress } from '@/components/marketing/copyable-address';
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -70,9 +71,11 @@ export default function ComoLlegarPage() {
       ]} />
       <PageHero
         eyebrow="Cómo llegar"
+        badge="Sede en Nacaome"
         title="Visítenos en Nacaome, Valle"
         subtitle={<>Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA. Use el mapa para orientarse o abra Google Maps/Waze desde aquí.</>}
-        bgImage="/images/como-llegar/oficina-nacaome.webp"
+        cta={<CTAGroup variant="inverse" />}
+        bgImage="/images/corporate/hero_despacho.webp"
       />
 
       <TrustBar background="light" />
