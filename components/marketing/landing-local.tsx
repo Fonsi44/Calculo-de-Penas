@@ -106,20 +106,20 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
         </div>
-        <Container size="lg" className="relative py-10 md:py-14">
+        <Container size="lg" className="relative py-8 md:py-12">
           <div className="max-w-3xl">
             <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
               {landing.heroEyebrow}
             </p>
-            <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
+            <h1 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight">
               {landing.heroTitle}
             </h1>
-            <p className="mt-5 text-base md:text-lg text-text-inverse/85 leading-relaxed">
+            <p className="mt-4 text-base md:text-lg text-text-inverse/85 leading-relaxed">
               {landing.heroSubtitle}
             </p>
 
             {/* NAP rápido para SEO local */}
-            <dl className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <dl className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>
@@ -140,7 +140,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
               </div>
             </dl>
 
-            <div className="mt-7">
+            <div className="mt-5">
               <CTAGroup variant="inverse" message={whatsappMsg} />
             </div>
           </div>
@@ -177,7 +177,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           title={`Áreas de práctica en ${landing.ciudad}`}
           subtitle="Atención legal multidisciplinaria con respaldo del Código Penal y la legislación hondureña vigente."
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {landing.servicios.map((s, i) => {
             // Internal linking: enlazar cada servicio a su landing de área
             // dedicada en /servicios-juridicos/{slug}. Antes eran H3 mudos sin

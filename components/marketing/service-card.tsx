@@ -106,18 +106,18 @@ export function ServiceCard({
           </span>
         )}
       </div>
-      <div className="p-5 md:p-6">
-        <h3 className="font-serif text-lg md:text-xl font-bold text-primary leading-snug group-hover:text-primary-light transition-colors">
+      <div className="p-4 md:p-5">
+        <h3 className="font-serif text-base md:text-lg font-bold text-primary leading-snug group-hover:text-primary-light transition-colors">
           {title}
         </h3>
         {description && (
-          <p className="mt-2 text-sm leading-relaxed text-text-secondary line-clamp-3">
+          <p className="mt-1.5 text-sm leading-relaxed text-text-secondary line-clamp-3">
             {description}
           </p>
         )}
-        <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
+        <span className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
           {ctaText}
-          <ArrowRight size={14} aria-hidden="true" />
+          <ArrowRight size={13} aria-hidden="true" />
         </span>
       </div>
     </>
