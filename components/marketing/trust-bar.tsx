@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import { Award, Briefcase, FileText, Phone } from 'lucide-react';
+import { cn } from '@/lib/ui';
 
 interface TrustItem {
   icon: LucideIcon;
@@ -35,6 +36,15 @@ interface TrustBarProps {
   /** Variante de fondo: "light" (crema con borde) o "dark" (navy con acentos). */
   background?: 'light' | 'dark';
   className?: string;
+  /**
+   * Fase 2.1 transformación coherente:
+   *  - 'expanded' (default): 4 items, histórica.
+   *  - 'compact': limita a 3 items y reduce padding vertical. Para hubs
+   *    saturados donde el strip idéntico tras cada PageHero abruma.
+   */
+  variant?: 'expanded' | 'compact';
+  /** Límite explícito de items. Sobrescribe a variant si se pasa. */
+  limit?: number;
 }
 
 /**
@@ -51,11 +61,16 @@ export function TrustBar({
   items = DEFAULT_ITEMS,
   background = 'light',
   className,
+  variant = 'expanded',
+  limit,
 }: TrustBarProps) {
   const isDark = background === 'dark';
+  const effectiveLimit = limit ?? (variant === 'compact' ? 3 : items.length);
+  const visibleItems = items.slice(0, effectiveLimit);
   const wrapperCls = isDark
     ? 'bg-primary-dark text-text-inverse border-y border-primary-light/20'
     : 'bg-surface border-y border-border-light';
+  const wrapperPadCls = variant === 'compact' ? 'py-4 md:py-5' : 'py-5 md:py-8';
   const cardCls = isDark
     ? 'flex flex-col items-center text-center h-full px-2'
     : 'flex flex-col items-center text-center h-full px-2';
@@ -75,9 +90,15 @@ export function TrustBar({
 
   return (
     <div className={`${wrapperCls} ${className ?? ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 md:py-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-4 items-stretch">
-          {items.map((it) => {
+      <div className={cn('max-w-7xl mx-auto px-4 sm:px-6', wrapperPadCls)}>
+        <div
+          className={cn(
+            'grid gap-x-4 gap-y-4 items-stretch',
+            // 3 items → 3 columnas en desktop; 4 items → 4 columnas (histórico).
+            visibleItems.length === 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-4',
+          )}
+        >
+          {visibleItems.map((it) => {
             const Icon = it.icon;
             return (
               <div key={it.title} className={`spring-lift ${cardCls}`}>

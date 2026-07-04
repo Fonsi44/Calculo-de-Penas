@@ -9,12 +9,86 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
  * ring dorado sutil) con jerarquía clara (eyebrow → título serif → subtítulo
  * → CTAs duales) y botones consistentes vía <CTAGroup>.
  *
+ * Fase 2.3 transformación coherente — variantes:
+ *  - 'closing' (default): la card premium histórica con halo dorado. Para el
+ *    cierre de hubs principales. Mantiene los 12 usos existentes sin cambio.
+ *  - 'inline': bloque más compacto, sin halo, fondo muted plano. Para páginas
+ *    que ya tienen otra card premium cerca (evita dos halos dorados juntos).
+ *  - 'footer': franja sobria de cierre con texto breve + CTAs. Para landings
+ *    y páginas secundarias.
+ *
  * Reutiliza CTAGroup (Solicitar consulta + Llamar) para mantener una sola
  * fuente de verdad de botones en toda la web pública (R16).
  */
-export function ConsultationCTA() {
+type ConsultationCTAVariant = 'closing' | 'inline' | 'footer';
+
+interface ConsultationCTAProps {
+  variant?: ConsultationCTAVariant;
+  /** Sobrescribe el título. Útil para contextualizar el CTA por página. */
+  title?: string;
+  /** Sobrescribe el subtítulo. */
+  subtitle?: string;
+  /** Sobrescribe el eyebrow. */
+  eyebrow?: string;
+  className?: string;
+}
+
+export function ConsultationCTA({
+  variant = 'closing',
+  title,
+  subtitle,
+  eyebrow,
+  className,
+}: ConsultationCTAProps) {
+  const defaultEyebrow = 'Consulta confidencial sin costo en Nacaome, Valle';
+  const defaultTitle = 'Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso.';
+  const defaultSubtitle =
+    'Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado.';
+
+  if (variant === 'footer') {
+    return (
+      <Section background="muted" spacing="sm" className={className}>
+        <Container size="md">
+          <div className="text-center py-6">
+            <p className="font-serif font-bold text-lg md:text-xl text-primary text-balance">
+              {title ?? '¿Necesita asesoría jurídica confidencial?'}
+            </p>
+            <p className="mt-2 text-sm text-text-secondary max-w-xl mx-auto text-pretty">
+              {subtitle ?? 'Primera consulta sin costo. Presupuesto por escrito. Atención directa del abogado responsable.'}
+            </p>
+            <div className="mt-5 flex justify-center">
+              <CTAGroup variant="inline" />
+            </div>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
+
+  if (variant === 'inline') {
+    return (
+      <Section background="muted" spacing="md" className={className}>
+        <Container size="md">
+          <div className="rounded-lg border border-border-light bg-surface px-6 py-8 md:px-10 md:py-10 text-center">
+            <p className="eyebrow-label text-accent-dark">{eyebrow ?? defaultEyebrow}</p>
+            <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight mt-3 text-balance tracking-tight">
+              {title ?? defaultTitle}
+            </h2>
+            <p className="mt-3 text-sm md:text-base text-text-secondary max-w-xl mx-auto leading-relaxed text-pretty">
+              {subtitle ?? 'Evaluamos su caso con rigor técnico y le explicamos las opciones legales disponibles, con presupuesto por escrito y bajo secreto profesional.'}
+            </p>
+            <div className="mt-6 flex justify-center">
+              <CTAGroup variant="inline" />
+            </div>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
+
+  // 'closing' — la card premium histórica.
   return (
-    <Section background="muted" spacing="md">
+    <Section background="muted" spacing="md" className={className}>
       <Container size="md">
         <div className="relative rounded-lg card-premium ring-gradient-accent overflow-hidden px-6 py-10 md:px-10 md:py-12 text-center">
           {/* Halo dorado sutil en la parte superior — profundidad premium */}
@@ -27,18 +101,12 @@ export function ConsultationCTA() {
             aria-hidden="true"
           />
           <div className="relative">
-            <p className="eyebrow-label text-accent-dark">
-              Consulta confidencial sin costo en Nacaome, Valle
-            </p>
+            <p className="eyebrow-label text-accent-dark">{eyebrow ?? defaultEyebrow}</p>
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight mt-3 text-balance tracking-tight">
-              Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso.
+              {title ?? defaultTitle}
             </h2>
             <p className="mt-4 text-sm md:text-base text-text-secondary max-w-xl mx-auto leading-relaxed text-pretty">
-              Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones
-              legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán,
-              Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por
-              escrito antes de cualquier actuación. Sus datos están protegidos por el secreto
-              profesional del abogado.
+              {subtitle ?? defaultSubtitle}
             </p>
             <div className="mt-7 flex justify-center">
               <CTAGroup variant="inline" />
