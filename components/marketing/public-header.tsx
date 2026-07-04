@@ -74,10 +74,10 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1.5 md:py-2 flex items-center gap-2">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1 md:py-1.5 flex items-center gap-2">
         <Link
           href="/"
-          className="group flex items-center gap-2 focus-visible:outline-none flex-shrink-0 cursor-pointer"
+          className="group flex items-center gap-1.5 focus-visible:outline-none flex-shrink-0 cursor-pointer"
           aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
           {/* Logo oficial — PNG transparente (741×728, ~cuadrado).
@@ -90,7 +90,7 @@ export function PublicHeader() {
             alt={`${site.name} — Logo oficial`}
             width={741}
             height={728}
-            className="relative flex-shrink-0 h-7 sm:h-8 md:h-9 lg:h-10 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
+            className="relative flex-shrink-0 h-6 sm:h-7 md:h-8 lg:h-9 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
             style={{
               filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(212,175,55,0.18))',
               objectFit: 'contain',

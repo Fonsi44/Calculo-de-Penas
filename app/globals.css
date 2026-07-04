@@ -26,12 +26,12 @@
    Para una web más AMPLIA:   sube --space-scale y --section-scale
    ============================================================ */
 :root {
-  --ui-scale: 0.82;
-  --font-scale: 0.90;
-  --space-scale: 0.70;
-  --section-scale: 0.68;
-  --component-scale: 0.78;
-  --chat-scale: 0.70;
+  --ui-scale: 0.72;
+  --font-scale: 0.84;
+  --space-scale: 0.58;
+  --section-scale: 0.55;
+  --component-scale: 0.66;
+  --chat-scale: 0.56;
 }
 
 @theme {
@@ -316,7 +316,7 @@
    reduciendo agresivamente la fuente base. */
 html {
   scroll-behavior: smooth;
-  font-size: clamp(16px, 0.95rem + 0.15vw, 17px);
+  font-size: clamp(15px, 0.85rem + 0.2vw, 16px);
 }
 
 /* Selección de texto */

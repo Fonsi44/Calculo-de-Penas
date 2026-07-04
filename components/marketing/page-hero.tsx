@@ -53,12 +53,12 @@ export function PageHero({
     : 'eyebrow-rule text-accent-dark';
 
   const titleCls = isPrimary
-    ? 'font-serif font-extrabold text-xl sm:text-2xl lg:text-3xl leading-tight text-text-inverse text-balance'
-    : 'font-serif font-extrabold text-xl sm:text-2xl lg:text-3xl leading-tight text-primary text-balance';
+    ? 'font-serif font-extrabold text-lg sm:text-xl lg:text-2xl leading-tight text-text-inverse text-balance'
+    : 'font-serif font-extrabold text-lg sm:text-xl lg:text-2xl leading-tight text-primary text-balance';
 
   const subtitleCls = isPrimary
-    ? 'mt-3 text-sm md:text-base text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
-    : 'mt-3 text-sm md:text-base text-text-secondary leading-relaxed max-w-3xl text-pretty';
+    ? 'mt-2 text-sm md:text-base text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
+    : 'mt-2 text-sm md:text-base text-text-secondary leading-relaxed max-w-3xl text-pretty';
 
   const alignCls = align === 'center' ? 'text-center mx-auto' : 'max-w-3xl';
 

@@ -250,8 +250,8 @@ export function ChatWidget() {
           style={{
             pointerEvents: 'auto',
             width: 'calc(100vw - 2rem)',
-            maxWidth: 'clamp(22rem, 38vw, 32rem)',
-            maxHeight: 'min(640px, calc(100dvh - 4rem))',
+            maxWidth: 'clamp(19rem, 32vw, 24rem)',
+            maxHeight: 'min(500px, calc(100dvh - 4rem))',
             boxShadow:
               '0 1px 0 0 rgba(255,255,255,0.60) inset, 0 4px 12px rgba(15,29,58,0.10), 0 24px 48px -16px rgba(15,29,58,0.25)',
           }}

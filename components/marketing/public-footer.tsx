@@ -66,8 +66,8 @@ export function PublicFooter() {
         className="absolute inset-0 pointer-events-none bg-radial-accent-footer"
         aria-hidden="true"
       />
-      <div className="relative max-w-7xl mx-auto px-4 py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-6">
+      <div className="relative max-w-7xl mx-auto px-4 py-6 md:py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
           {/* Identidad */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>

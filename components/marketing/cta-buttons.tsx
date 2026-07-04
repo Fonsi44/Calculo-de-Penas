@@ -124,13 +124,13 @@ export function UrgencyCallout({
 }: UrgencyCalloutProps) {
   return (
     <div
-      className={`rounded-lg border border-danger/30 bg-danger-bg p-3.5 md:p-4 flex flex-col md:flex-row md:items-center gap-3 shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_2px_8px_rgba(178,34,52,0.06),0_8px_24px_-8px_rgba(178,34,52,0.10)] ${className ?? ''}`}
+      className={`rounded-lg border border-danger/30 bg-danger-bg p-3 md:p-3.5 flex flex-col md:flex-row md:items-center gap-2 shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_2px_8px_rgba(178,34,52,0.06),0_8px_24px_-8px_rgba(178,34,52,0.10)] ${className ?? ''}`}
       role="complementary"
       aria-label="Atención urgente"
     >
-      <div className="flex items-start gap-2.5 flex-1 min-w-0">
-        <div className="w-9 h-9 rounded-md bg-danger flex items-center justify-center flex-shrink-0 shadow-[0_4px_10px_-2px_rgba(178,34,52,0.45)]">
-          <ShieldAlert size={16} className="text-white" aria-hidden="true" />
+      <div className="flex items-start gap-2 flex-1 min-w-0">
+        <div className="w-8 h-8 rounded-md bg-danger flex items-center justify-center flex-shrink-0 shadow-[0_4px_10px_-2px_rgba(178,34,52,0.45)]">
+          <ShieldAlert size={15} className="text-white" aria-hidden="true" />
         </div>
         <div className="min-w-0">
           <p className="font-bold text-text leading-tight text-sm">{title}</p>

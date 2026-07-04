@@ -106,20 +106,20 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-accent-dark blur-3xl" />
         </div>
-        <Container size="lg" className="relative py-6 md:py-10">
+        <Container size="lg" className="relative py-5 md:py-8">
           <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-2.5">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-2">
               {landing.heroEyebrow}
             </p>
-            <h1 className="font-serif font-extrabold text-xl md:text-2xl lg:text-3xl leading-tight">
+            <h1 className="font-serif font-extrabold text-lg md:text-xl lg:text-2xl leading-tight">
               {landing.heroTitle}
             </h1>
-            <p className="mt-3 text-base md:text-lg text-text-inverse/85 leading-relaxed">
+            <p className="mt-2 text-base md:text-lg text-text-inverse/85 leading-relaxed">
               {landing.heroSubtitle}
             </p>
 
             {/* NAP rápido para SEO local */}
-            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <dl className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>

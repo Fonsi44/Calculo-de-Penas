@@ -37,9 +37,9 @@ const BG: Record<NonNullable<SectionProps['background']>, string> = {
 };
 
 const SPACING = {
-  sm: 'py-4 md:py-6',
-  md: 'py-6 md:py-8',
-  lg: 'py-8 md:py-12',
+  sm: 'py-3 md:py-5',
+  md: 'py-5 md:py-7',
+  lg: 'py-7 md:py-10',
 };
 
 export function Section({
@@ -75,19 +75,19 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
   return (
     <div
       className={cn(
-        'mb-5 md:mb-6',
+        'mb-4 md:mb-5',
         align === 'center' && 'text-center max-w-3xl mx-auto',
         className,
       )}
     >
       {eyebrow && (
-        <div className={cn('eyebrow-rule mb-2.5', invert ? 'text-accent' : 'text-accent-dark')}>
+        <div className={cn('eyebrow-rule mb-2', invert ? 'text-accent' : 'text-accent-dark')}>
           {eyebrow}
         </div>
       )}
       <h2
         className={cn(
-          'font-serif font-extrabold text-xl md:text-2xl lg:text-3xl leading-tight text-balance',
+          'font-serif font-extrabold text-lg md:text-xl lg:text-2xl leading-tight text-balance',
           invert ? 'text-text-inverse' : 'text-primary',
         )}
       >
@@ -96,7 +96,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       {subtitle && (
         <p
           className={cn(
-            'mt-2.5 text-sm md:text-base leading-relaxed text-pretty max-w-3xl',
+            'mt-2 text-sm md:text-base leading-relaxed text-pretty max-w-3xl',
             align === 'center' && 'mx-auto',
             invert ? 'text-text-inverse/85' : 'text-text-secondary',
           )}

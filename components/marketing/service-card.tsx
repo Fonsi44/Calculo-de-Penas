@@ -106,8 +106,8 @@ export function ServiceCard({
           </span>
         )}
       </div>
-      <div className="p-3.5 md:p-4">
-        <h3 className="font-serif text-sm md:text-base font-bold text-primary leading-snug group-hover:text-primary-light transition-colors">
+      <div className="p-3 md:p-3.5">
+        <h3 className="font-serif text-xs md:text-sm font-bold text-primary leading-snug group-hover:text-primary-light transition-colors">
           {title}
         </h3>
         {description && (
@@ -115,9 +115,9 @@ export function ServiceCard({
             {description}
           </p>
         )}
-        <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2.5 transition-all">
+        <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2 transition-all">
           {ctaText}
-          <ArrowRight size={12} aria-hidden="true" />
+          <ArrowRight size={11} aria-hidden="true" />
         </span>
       </div>
     </>

@@ -30,15 +30,15 @@ export function HubFaq({
   };
 
   return (
-    <section id={id} className="py-8 md:py-12" aria-labelledby={`${id}-title`}>
+    <section id={id} className="py-6 md:py-10" aria-labelledby={`${id}-title`}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         {eyebrow && (
           <p className="eyebrow-label text-center">{eyebrow}</p>
         )}
-        <h2 id={`${id}-title`} className="mt-2 text-center font-serif text-lg md:text-xl font-extrabold text-primary leading-tight text-balance">
+        <h2 id={`${id}-title`} className="mt-1.5 text-center font-serif text-base md:text-lg font-extrabold text-primary leading-tight text-balance">
           {title}
         </h2>
-        <div className="mt-5 space-y-2">
+        <div className="mt-4 space-y-1.5">
           {faqs.map((faq, i) => (
             <details
               key={i}
@@ -46,16 +46,16 @@ export function HubFaq({
               data-faq-page={url}
               className="faq-anim group rounded-lg border border-border-light bg-surface shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_1px_2px_rgba(15,29,58,0.04),0_4px_12px_rgba(15,29,58,0.05)] open:border-accent/40 open:shadow-[0_1px_0_0_rgba(255,255,255,0.70)_inset,0_2px_4px_rgba(15,29,58,0.05),0_8px_20px_rgba(15,29,58,0.07)]"
             >
-              <summary className="flex cursor-pointer items-center justify-between gap-2 px-3.5 py-3 text-sm font-semibold text-text leading-snug hover:text-primary transition-colors">
+              <summary className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2.5 text-sm font-semibold text-text leading-snug hover:text-primary transition-colors">
                 <span className="text-pretty">{faq.pregunta}</span>
                 <ChevronDown
-                  size={15}
+                  size={14}
                   className="flex-shrink-0 text-text-muted group-open:rotate-180 transition-transform duration-200"
                 />
               </summary>
               <div className="faq-body">
                 <div className="faq-body-inner">
-                  <div className="border-t border-border/40 px-3.5 pb-3.5 pt-2">
+                  <div className="border-t border-border/40 px-3 pb-3 pt-1.5">
                     <p className="text-sm leading-relaxed text-text-secondary text-pretty">
                       {faq.respuesta}
                     </p>
