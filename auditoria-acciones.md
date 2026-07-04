@@ -39,6 +39,20 @@ Ver `docs/audits/transformacion-web-publica.md` para detalle completo.
 ### Commits atómicos
 14 commits con prefijo `refactor`/`feat`/`docs` según corresponda. Sin push.
 
+### Cierre (2026-07-04)
+Cierre de los 3 pendientes y validación completa SEO/indexación:
+- **IconBadge aplicado** (4 casos quirúrgicos; variantes incompatibles intactas).
+- **FAQ i18n home** → `FAQ_HOME_LEGACY`: rol = structured-data JSON-LD, no UI.
+- **Fix SEO**: `@id` FAQPage duplicado corregido en `/derecho-penal` y
+  `/hondurenos-en-espana` (areaSchemas + HubFaq emitían el mismo bloque).
+- **QA visual real** Playwright: 22 capturas, 0 overflow, 1 h1/página. Errores
+  de consola preexistentes (hydration #418) declarados, no introducidos aquí.
+- **Validación HTTP local**: sitemap 213 URLs, robots sin bloqueos, metadatos
+  18/18 OK, JSON-LD 0 duplicados, indexabilidad 0 errores/avisos.
+- **Infraestructura**: `scripts/qa-visual-cierre.mjs`.
+
+7 commits de cierre (`refactor`, `docs`, `fix`, `chore`). Sin push.
+
 ---
 
 ## Release 109b — Ajuste fuerte de escala visual v2 (2026-07-04)
