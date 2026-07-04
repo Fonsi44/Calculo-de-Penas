@@ -14,6 +14,9 @@
  *    donde el bufete presta servicios (declaradas en `areaServed` del schema).
  */
 
+import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo';
+
 export type LandingLocal = {
   /** Slug usado en la URL: /abogados-en-{slug} (o path personalizado si se define) */
   slug: string;
@@ -739,13 +742,17 @@ export const LANDING_OG_IMAGES: Record<string, string> = {
   // Las imágenes OG específicas se añadirán cuando se generen assets visuales por ciudad.
 };
 
-export function landingMetadata(landing: LandingLocal) {
-  const canonical = landing.path ?? `/abogados-en-${landing.slug}`;
+export function landingMetadata(landing: LandingLocal): Metadata {
+  const canonicalPath = landing.path ?? `/abogados-en-${landing.slug}`;
   const ogImage = LANDING_OG_IMAGES[landing.slug] ?? '/og-image.webp';
-  return {
-    title: landing.title,
+  // Title SEO-friendly (~38-44 chars): "Abogados en {ciudad} | Pineda y Asociados".
+  // Renuncia al claim "15+ años" en title (pasa a H1/subtítulo) para no exceder
+  // 60 chars en SERP.
+  const seoTitle = `Abogados en ${landing.ciudad} | Pineda y Asociados`;
+  return buildMetadata({
+    title: seoTitle,
     description: landing.description,
-    alternates: { canonical },
+    canonicalPath,
     keywords: [
       `abogados en ${landing.ciudad}`,
       `bufete de abogados ${landing.ciudad}`,
@@ -753,27 +760,7 @@ export function landingMetadata(landing: LandingLocal) {
       `abogado ${landing.departamento} Honduras`,
       `consulta jurídica ${landing.ciudad}`,
     ],
-    openGraph: {
-      title: landing.title,
-      description: landing.description,
-      url: canonical,
-      siteName: 'Pineda y Asociados',
-      locale: 'es_HN',
-      type: 'website' as const,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: landing.title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image' as const,
-      title: landing.title,
-      description: landing.description,
-      images: [ogImage],
-    },
-  };
+    ogImage,
+    ogImageAlt: landing.title,
+  });
 }

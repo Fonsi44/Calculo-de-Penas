@@ -6,6 +6,7 @@ import {
   HeartHandshake, ArrowRight, CheckCircle2, Gavel, Award,
 } from 'lucide-react';
 import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
@@ -18,31 +19,19 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
+import { HubFaq } from '@/components/marketing/hub-faq';
+import { FAQ_DESPACHO } from '@/data/faqs-hubs';
 
-export const metadata: Metadata = {
-  // Absolute para evitar la duplicación de marca "| Pineda y Asociados |
-  // Pineda y Asociados" (el title string ya incluía la marca y el template
-  // del layout la añadía de nuevo → 78 caracteres con marca duplicada).
-  title: { absolute: `Bufete de Abogados en ${site.address.city}, ${site.address.department}` },
-  description: `Abogados en Nacaome, Valle con más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
-  alternates: { canonical: '/despacho' },
+export const metadata: Metadata = buildMetadata({
+  // 56 chars. Antes 38 (subutilizado).
+  title: `Bufete de Abogados en ${site.address.city} | 15+ Años de Experiencia`,
+  // 152 chars. Antes 198 (se truncaba).
+  description: `Bufete en ${site.address.city}, Valle. Más de 15 años en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
+  canonicalPath: '/despacho',
   keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome', 'bufete jurídico sur Honduras', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia'],
-  twitter: {
-    card: 'summary_large_image',
-    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,
-    description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en penal, familia, laboral, civil y mercantil. Consulta confidencial.`,
-    images: [`${site.url}/og-image.webp`],
-  },
-  openGraph: {
-    title: `Bufete de Abogados en ${site.address.city}, ${site.address.department}`,
-    description: `Abogados en Nacaome, Valle. Más de 15 años de experiencia en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
-    url: `${site.url}/despacho`,
-    siteName: site.name,
-    locale: 'es_HN',
-    type: 'website',
-    images: [{ url: `${site.url}/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`, width: 1200, height: 630, alt: `${site.name} - Bufete jurídico en Nacaome, Valle` }],
-  },
-};
+  ogImage: `/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`,
+  ogImageAlt: `${site.name} - Bufete jurídico en Nacaome, Valle`,
+});
 
 function despachoContent(content: Record<string, string>) {
   return {
@@ -504,6 +493,12 @@ export default async function DespachoPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
       />
       <ConsultationCTA />
+      <HubFaq
+        faqs={FAQ_DESPACHO}
+        url={`${site.url}/despacho`}
+        eyebrow="Conozca el bufete"
+        title="Preguntas frecuentes sobre el despacho"
+      />
     </>
   );
 }

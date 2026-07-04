@@ -55,9 +55,14 @@ export function blogPostSchema(post: Post) {
       '@type': 'LegalService',
       '@id': `${site.url}/#legal-service`,
       name: site.name,
+      // El `logo` del publisher DEBE ser el logotipo de marca (ImageObject con
+      // width/height), no la imagen social. Antes apuntaba a og-image.webp y
+      // los rich results de Article mostraban la imagen social en vez del logo.
       logo: {
         '@type': 'ImageObject',
-        url: `${site.url}/og-image.webp`,
+        url: `${site.url}/images/logo.png`,
+        width: 512,
+        height: 512,
       },
     },
     mainEntityOfPage: {

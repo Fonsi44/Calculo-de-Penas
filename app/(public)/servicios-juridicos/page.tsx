@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 import { site, absoluteUrl, whatsappHref } from '@/lib/site';
+import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -30,31 +31,19 @@ import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { HubFaq } from '@/components/marketing/hub-faq';
+import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
 
-export const metadata: Metadata = {
-  // Absolute para controlar la longitud total y evitar que el template del
-  // layout añada "| Pineda y Asociados" (la marca ya va incluida). Antes el
-  // title resuelto medía 77 caracteres (>65): se truncaba en SERP.
-  title: { absolute: `Servicios Jurídicos en ${site.address.city}, ${site.address.department} | 14 Áreas de Práctica Legal` },
-  description: `Catálogo completo de servicios legales en ${site.address.city} y sur de Honduras. Penal, familia, laboral, civil, mercantil, tributario y 9 áreas más. Consulte hoy. WhatsApp ${site.whatsappDisplay}.`,
-  alternates: { canonical: '/servicios-juridicos' },
+export const metadata: Metadata = buildMetadata({
+  // 48 chars. Antes 69 (se truncaba en SERP). Mantiene intención local.
+  title: `Servicios Jurídicos en ${site.address.city} | 14 Áreas`,
+  // 153 chars.
+  description: `Catálogo de servicios legales en ${site.address.city} y sur de Honduras. Penal, familia, laboral, civil, mercantil y tributario. Presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
+  canonicalPath: '/servicios-juridicos',
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
-  twitter: {
-    card: 'summary_large_image',
-    title: `Abogados en ${site.address.city} - Todas las Áreas del Derecho`,
-    description: `Abogados en Nacaome, Valle: penal, familia, laboral, civil, mercantil y tributario. Cobertura San Lorenzo y Choluteca.`,
-    images: [`${site.url}/og-image.webp`],
-  },
-  openGraph: {
-    title: `Abogados en ${site.address.city}, ${site.address.department} - Todas las Áreas del Derecho`,
-    description: `Abogados en Nacaome, Valle, Honduras. Penal, familia, laboral, civil, mercantil y tributario bajo un mismo bufete. Cobertura en la zona sur.`,
-    url: `${site.url}/servicios-juridicos`,
-    siteName: site.name,
-    locale: 'es_HN',
-    type: 'website',
-    images: [{ url: `${site.url}/og/civil.webp`, width: 1200, height: 630, alt: `${site.name} - Servicios Jurídicos` }],
-  },
-};
+  ogImage: '/og/civil.webp',
+  ogImageAlt: `${site.name} - Servicios Jurídicos`,
+});
 
 export default async function AreasJuridicasPage() {
   const areas = await getAreasFromDb('servicio');
@@ -385,6 +374,13 @@ export default async function AreasJuridicasPage() {
       />
 
       <ConsultationCTA />
+
+      <HubFaq
+        faqs={FAQ_SERVICIOS_JURIDICOS}
+        url={absoluteUrl('/servicios-juridicos')}
+        eyebrow="Resolvemos sus dudas"
+        title="Preguntas frecuentes sobre nuestros servicios jurídicos"
+      />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify(

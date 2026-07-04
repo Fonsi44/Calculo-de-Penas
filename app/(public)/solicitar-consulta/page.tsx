@@ -15,6 +15,7 @@ import {
   Building,
 } from 'lucide-react';
 import { telHref, whatsappHref, site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { buildMetadata } from '@/lib/seo';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -23,28 +24,17 @@ import { TrustBar } from '@/components/marketing/trust-bar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { webpageSchema } from '@/lib/seo-schema';
+import { HubFaq } from '@/components/marketing/hub-faq';
+import { FAQ_SOLICITAR_CONSULTA } from '@/data/faqs-hubs';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Consulte a un Abogado en Nacaome, Valle',
-  description: 'Solicite consulta confidencial sin costo. Respuesta en horario hábil. Abogados en Nacaome, Valle — defensa penal, familia, laboral y civil. WhatsApp +504 9536-3724.',
-  alternates: { canonical: '/solicitar-consulta' },
+  // 152 chars. Antes 162.
+  description: 'Solicite consulta confidencial sin costo. Respuesta en horario hábil. Abogados en Nacaome, Valle — defensa penal, familia, laboral y civil.',
+  canonicalPath: '/solicitar-consulta',
   keywords: ['consulta legal gratuita Nacaome', 'abogado consulta Valle', 'asesoría legal sin costo sur Honduras', 'consulta penal confidencial Nacaome', 'contactar abogado San Lorenzo', 'cita legal Choluteca', 'abogado Goascorán consulta', 'contactar abogado Amapala', 'cita legal Pespire', 'contactar abogado sur de Honduras'],
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Consulte a un Abogado en Nacaome, Valle',
-    description: 'Solicite una consulta confidencial sin costo. Abogados en Nacaome, Valle. Le respondemos en horario hábil.',
-    images: [`${site.url}/og-image.webp`],
-  },
-  openGraph: {
-    title: 'Consulte a un Abogado en Nacaome, Valle',
-    description: 'Solicite una consulta confidencial con un abogado en Nacaome, Valle. Le respondemos en horario hábil.',
-    url: `${site.url}/solicitar-consulta`,
-    siteName: site.name,
-    locale: 'es_HN',
-    type: 'website',
-    images: [{ url: `${site.url}/og-image.webp`, width: 1200, height: 630, alt: `${site.name} - Solicitar Consulta Legal` }],
-  },
-};
+  ogImageAlt: `${site.name} - Solicitar Consulta Legal`,
+});
 
 export default async function SolicitarConsultaPage() {
   const content = await getPageContent('solicitar-consulta');
@@ -333,6 +323,13 @@ export default async function SolicitarConsultaPage() {
           </div>
         </Container>
       </Section>
+
+      <HubFaq
+        faqs={FAQ_SOLICITAR_CONSULTA}
+        url={`${site.url}/solicitar-consulta`}
+        eyebrow="Antes de contactar"
+        title="Preguntas frecuentes sobre la consulta"
+      />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify([

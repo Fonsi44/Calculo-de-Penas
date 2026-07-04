@@ -343,10 +343,11 @@ export function organizationSchema() {
     // slogan: frase corta sin duplicar la marca (name ya la incluye).
     slogan: 'Abogados en Nacaome, Valle',
     knowsAbout: KNOWS_ABOUT,
-    // sameAs: OMITIDO. Solo debe contener perfiles externos oficiales y
-    // verificados (Facebook, LinkedIn, GBP, etc.). El propio dominio NO es un
-    // perfil externo. Cuando el despacho aporte URLs reales, añadirlas aquí
-    // vía site.social.* (que alimenta también LegalService.sameAs).
+    // sameAs: perfiles externos oficiales y verificados del despacho.
+    // Refuerza E-E-A-T y permite a Google/Microsoft/Knowledge Graph enlazar
+    // identidades. Solo URLs reales (Facebook, X, GBP). El propio dominio NO
+    // es un perfil externo y por eso no aparece aquí.
+    sameAs: [site.social.facebook, site.social.x, site.googleBusiness].filter(Boolean) as string[],
     contactPoint: [
       {
         '@type': 'ContactPoint',

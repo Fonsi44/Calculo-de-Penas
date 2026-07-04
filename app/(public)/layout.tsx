@@ -96,12 +96,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
-  const legalLd = legalServiceSchema();
-  const orgLd = organizationSchema();
-  const webLd = websiteSchema();
-  const founderLd = founderSchema();
-  const thaniaLd = thaniaSchema();
-  const emilLd = emilSchema();
+  // JSON-LD unificado en un único `@graph` central. Antes se emitían 6 scripts
+  // separados lo cual es válido pero fragmenta el grafo para Knowledge Graph.
+  // Un único @graph con @id estables facilita la deduplicación de entidades.
+  const graphLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      legalServiceSchema(),
+      organizationSchema(),
+      websiteSchema(),
+      founderSchema(),
+      thaniaSchema(),
+      emilSchema(),
+    ],
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -114,27 +122,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <PWARegistration />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(legalLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(founderLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(thaniaLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(emilLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(graphLd) }}
       />
       <AnalyticsScripts
         gaId={site.gaId}

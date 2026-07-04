@@ -1,0 +1,150 @@
+/**
+ * FAQ específicas para hubs comerciales (servicios-juridicos, despacho,
+ * solicitar-consulta). Son contenido editorial propio (no de la DB `faq_entries`
+ * que alimenta /preguntas-frecuentes). Cada par Q&A está pensado para:
+ *  - Rich result FAQPage (schema embebido por la página).
+ *  - Optimización AEO/GEO: respuestas directas y sobrias para asistentes IA.
+ *  - Conversión: aclaran dudas frecuentes antes del primer contacto.
+ *
+ * Reglas (AGENTS.md R4, R13, R14):
+ *  - NO se inventan datos legales, plazos exactos, costos fijos ni resultados.
+ *  - Cuando se menciona plazo/costo, va acompañado de "depende del caso" y
+ *    "solicite consulta para evaluación específica".
+ *  - NO se prometen resultados judiciales (R4, ética abogacía).
+ */
+
+export interface HubFaqItem {
+  pregunta: string;
+  respuesta: string;
+}
+
+/**
+ * /servicios-juridicos — hub del catálogo de áreas.
+ * Intención: usuario explorando "qué cubre el bufete" antes de decidir contactar.
+ */
+export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
+  {
+    pregunta: '¿Qué áreas del derecho cubre Pineda y Asociados?',
+    respuesta:
+      'El bufete atiende 14 áreas: derecho penal, de familia, laboral, civil, notarial, mercantil y empresarial, administrativo, constitucional, migratorio, ambiental, agrario, propiedad intelectual y tributario. La defensa penal es el pilar histórico, con cobertura integral en las demás ramas para casos que combinan varios frentes.',
+  },
+  {
+    pregunta: '¿Atienden casos en toda Honduras o solo en el sur?',
+    respuesta:
+      'La sede física está en Nacaome, Valle. La cobertura habitual incluye el departamento de Valle, Choluteca y Francisco Morazán. Para diligencias puntuales fuera de esa zona se coordina según el caso; solicite consulta para confirmar cobertura.',
+  },
+  {
+    pregunta: '¿Cómo decido qué abogado del bufete lleva mi caso?',
+    respuesta:
+      'Cada área la dirige un especialista: Danilo Pineda en derecho penal, Thania Pineda en familia, civil y mercantil, y Emil Hernández en derecho laboral. En la primera consulta se identifica el área principal y se asigna al especialista correspondiente.',
+  },
+  {
+    pregunta: '¿Ofrecen consulta inicial sin costo?',
+    respuesta:
+      'Sí, la primera consulta por WhatsApp, llamada o formulario es confidencial y sin costo. Permite evaluar el caso, plantear una estrategia inicial y entregar un presupuesto por escrito cuando se requiera representación formal.',
+  },
+  {
+    pregunta: '¿Mi caso combina varias ramas del derecho, cómo lo gestionan?',
+    respuesta:
+      'El bufete coordina internamente entre especialistas cuando un caso combina, por ejemplo, penal y familia, o laboral y civil. El cliente tiene un único punto de contacto y no duplica gestiones entre despachos.',
+  },
+  {
+    pregunta: '¿Pueden llevar asuntos a distancia si vivo fuera de Nacaome?',
+    respuesta:
+      'Sí. La revisión documental, reuniones y seguimiento pueden ser remotos por WhatsApp y videollamada. La presencia presencial en sede judicial o notarial se coordina según la diligencia requerida.',
+  },
+  {
+    pregunta: '¿Entregan presupuesto por escrito?',
+    respuesta:
+      'Sí. Tras la consulta inicial se entrega un presupuesto por escrito con el alcance del trabajo, honorarios y estimated timeline. No se inicia ninguna gestión sin autorización expresa del cliente.',
+  },
+  {
+    pregunta: '¿Manejan casos para hondureños residentes en España?',
+    respuesta:
+      'Sí. Existe un módulo específico de asistencia legal para hondureños en España: poderes desde el extranjero, divorcios, custodia, sucesiones y gestión documental coordinada entre España y Honduras.',
+  },
+];
+
+/**
+ * /despacho — página "El Despacho" / about.
+ * Intención: usuario evaluando la credibilidad, experiencia y enfoque del bufete.
+ */
+export const FAQ_DESPACHO: HubFaqItem[] = [
+  {
+    pregunta: '¿Desde cuándo opera Pineda y Asociados?',
+    respuesta:
+      'El bufete ejerce en Nacaome, Valle, desde hace más de 15 años. La defensa penal es su pilar histórico, ampliada progresivamente a familia, laboral, civil, mercantil y demás ramas para atender casos multidisciplinarios.',
+  },
+  {
+    pregunta: '¿Quiénes conforman el equipo de abogados?',
+    respuesta:
+      'El equipo está liderado por Danilo Pineda Maradiaga (socio director, derecho penal), Thania Pineda (familia, civil, mercantil) y Emil Hernández (derecho laboral). Los tres son abogados y notarios públicos colegiados en Honduras.',
+  },
+  {
+    pregunta: '¿Dónde está ubicada la oficina?',
+    respuesta:
+      'La sede física está en Nacaome, Valle: cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. Andara. Se atiende con cita previa para garantizar dedicación a cada caso.',
+  },
+  {
+    pregunta: '¿Cuál es la filosofía de trabajo del bufete?',
+    respuesta:
+      'Defensa técnica con rigor, atención directa del abogado (no intermediarios), presupuesto por escrito y estrategia comunicada al cliente en cada etapa. No se prometen resultados: se compromete trabajo serio.',
+  },
+  {
+    pregunta: '¿Cómo es el proceso tras la primera consulta?',
+    respuesta:
+      'Tras la consulta inicial se entrega un presupuesto por escrito con alcance y honorarios. Una vez autorizado, se firma contrato de prestación de servicios, se abren los plazos reales del caso y se mantiene al cliente informado en cada hito.',
+  },
+  {
+    pregunta: '¿El bufete tiene experiencia en casos penales complejos?',
+    respuesta:
+      'Sí. La defensa penal es el pilar histórico: detenciones, audiencias iniciales, medidas cautelares, juicio oral y recursos. Cada caso se evalúa individualmente; la complejidad técnica se aborda con el rigor que el expediente requiere.',
+  },
+  {
+    pregunta: '¿Manejan confidencialidad de la información del cliente?',
+    respuesta:
+      'Sí. Toda comunicación es estrictamente confidencial y se rige por el secreto profesional del abogado y la normativa hondureña de protección de datos. La información del caso no se comparte sin autorización expresa.',
+  },
+];
+
+/**
+ * /solicitar-consulta — página de contacto/conversión.
+ * Intención: usuario con un caso concreto dudando si contactar.
+ */
+export const FAQ_SOLICITAR_CONSULTA: HubFaqItem[] = [
+  {
+    pregunta: '¿La primera consulta tiene costo?',
+    respuesta:
+      'No. La consulta inicial por WhatsApp, llamada o formulario es gratuita y confidencial. Sirve para evaluar el caso y entregar un presupuesto por escrito si se requiere representación formal.',
+  },
+  {
+    pregunta: '¿Cuánto tardan en responder?',
+    respuesta:
+      'Las consultas se responden en horario hábil (lunes a viernes, 8:00 a 17:00). Casos urgentes como detenciones o audiencias inminentes se priorizan. Para emergencias penales fuera de horario hay línea directa por WhatsApp.',
+  },
+  {
+    pregunta: '¿Qué información debo llevar a la primera consulta?',
+    respuesta:
+      'Cuantos más datos mejor: documento de identidad, fechas relevantes, contratos o documentos relacionados, nombres de las partes y un resumen breve del problema. Si no tiene documentación aún, el abogado le indicará qué conseguir.',
+  },
+  {
+    pregunta: '¿La información que comparto es confidencial?',
+    respuesta:
+      'Sí. Toda comunicación está protegida por el secreto profesional del abogado y la normativa hondureña de protección de datos. No se comparte ningún dato sin autorización expresa del cliente.',
+  },
+  {
+    pregunta: '¿Puedo consultar por un familiar?',
+    respuesta:
+      'Sí. Es habitual en casos de detenciones, custodia o sucesiones. Indique su relación con la persona y el contexto; el abogado le orientará sobre los siguientes pasos y la documentación necesaria.',
+  },
+  {
+    pregunta: '¿Atienden emergencias penales fuera de horario?',
+    respuesta:
+      'Sí. Las detenciones, audiencias iniciales y medidas cautelares urgentes se priorizan. Use el WhatsApp directo (+504 9536-3724) marcando que es una urgencia penal para activar la atención prioritaria.',
+  },
+  {
+    pregunta: '¿Cómo se fijan los honorarios?',
+    respuesta:
+      'Los honorarios dependen del tipo de caso, la complejidad y el tiempo estimado. Tras la consulta inicial se entrega un presupuesto por escrito. No se inicia ninguna gestión sin autorización expresa del cliente.',
+  },
+];

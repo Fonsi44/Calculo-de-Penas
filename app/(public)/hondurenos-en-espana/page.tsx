@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { site, absoluteUrl } from '@/lib/site';
+import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -16,28 +17,16 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
-export const metadata: Metadata = {
-  // Absolute para evitar que el template añada la marca dos veces
-  title: { absolute: 'Hondureños en España · Asistencia Legal desde Honduras' },
-  description: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España. Pineda y Asociados.',
-  alternates: { canonical: '/hondurenos-en-espana' },
+export const metadata: Metadata = buildMetadata({
+  // 54 chars.
+  title: 'Hondureños en España · Asistencia Legal desde Honduras',
+  // 156 chars. Antes 172.
+  description: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España.',
+  canonicalPath: '/hondurenos-en-espana',
   keywords: ['hondureños en España', 'asistencia legal migrantes', 'poder notarial desde España', 'divorcio internacional Honduras', 'herencias transfronterizas', 'reagrupación familiar Honduras España', 'nacionalidad española hondureños'],
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Hondureños en España — Asistencia Legal Internacional',
-      description: 'Gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España. Asistencia legal para hondureños en el extranjero.',
-    images: [`${site.url}/og/migracion.webp`],
-  },
-    openGraph: {
-      title: 'Hondureños en España — Asistencia Legal Internacional',
-      description: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España.',
-    url: `${site.url}/hondurenos-en-espana`,
-    siteName: site.name,
-    locale: 'es_HN',
-    type: 'website',
-    images: [{ url: `${site.url}/og/migracion.webp`, width: 1200, height: 630, alt: `${site.name} — Hondureños en España` }],
-  },
-};
+  ogImage: '/og/migracion.webp',
+  ogImageAlt: `${site.name} - Hondureños en España`,
+});
 
 export default async function MigrantesPage() {
   const url = migrantesHubHref();

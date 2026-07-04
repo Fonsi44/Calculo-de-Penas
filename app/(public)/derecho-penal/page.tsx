@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, BookOpen, MessageCircle, ShieldAlert, Gavel, FileSearch, Scale, FolderOpen, type LucideIcon } from 'lucide-react';
 import { site, absoluteUrl, whatsappHref } from '@/lib/site';
+import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
@@ -18,10 +19,12 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
 
-export const metadata: Metadata = {
-  title: { absolute: `Abogado Penalista en ${site.address.city}, ${site.address.department} | Defensa Penal Técnica` },
-  description: `Abogado penalista en Nacaome, Valle. Defensa urgente en detenciones, audiencias, medidas cautelares y recursos. Consulta confidencial por WhatsApp ${site.whatsappDisplay}. Sur de Honduras.`,
-  alternates: { canonical: '/derecho-penal' },
+export const metadata: Metadata = buildMetadata({
+  // 45 chars. Antes 63 (se truncaba).
+  title: `Abogado Penalista en ${site.address.city} | Defensa Penal`,
+  // 154 chars. Antes 181.
+  description: `Abogado penalista en ${site.address.city}, Valle. Defensa urgente en detenciones, audiencias, medidas cautelares y recursos. Consulta confidencial. WhatsApp ${site.whatsappDisplay}.`,
+  canonicalPath: '/derecho-penal',
   keywords: [
     'abogado penalista Nacaome',
     'defensa penal Valle Honduras',
@@ -36,22 +39,9 @@ export const metadata: Metadata = {
     'bufete penal Nacaome',
     'defensa criminal Honduras',
   ],
-  twitter: {
-    card: 'summary_large_image',
-    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
-    description: `Defensa penal técnica y confidencial en Nacaome, San Lorenzo y Choluteca. Atendemos detenciones y audiencias. Consulta urgente.`,
-    images: [`${site.url}/og-image.webp`],
-  },
-  openGraph: {
-    title: `Abogado Penalista en ${site.address.city}, ${site.address.department} - Defensa Penal`,
-    description: `Abogado penalista en Nacaome, Valle. Defensa técnica y confidencial. Atendemos detenciones, audiencias y recursos en la zona sur de Honduras.`,
-    url: `${site.url}/derecho-penal`,
-    siteName: site.name,
-    locale: 'es_HN',
-    type: 'website',
-    images: [{ url: `${site.url}/og/penal.webp`, width: 1200, height: 630, alt: `${site.name} - Derecho Penal en Nacaome, Valle y Honduras` }],
-  },
-};
+  ogImage: '/og/penal.webp',
+  ogImageAlt: `${site.name} - Derecho Penal en Nacaome, Valle y Honduras`,
+});
 
 export default async function DerechoPenalPage() {
   const url = penalHubHref();
