@@ -250,6 +250,19 @@ function render() {
   }
   lines.push('');
 
+  // Sección: Preguntas frecuentes (FAQ)
+  // Recurso clave para AEO/GEO: los LLMs extraen respuestas de páginas FAQ
+  // estructuradas. Listamos la página central + los 3 hubs comerciales que
+  // tienen FAQ in-page con schema FAQPage.
+  lines.push('## Preguntas frecuentes (FAQ)');
+  lines.push('');
+  lines.push(`- [Preguntas frecuentes (central)](${url('/preguntas-frecuentes')}) — índice organizado por área del derecho (penal, familia, laboral, civil, mercantil, honorarios, atención local).`);
+  lines.push(`- [FAQ: Servicios jurídicos](${url('/servicios-juridicos#faq')}) — áreas cubiertas, cobertura, modalidad de atención y presupuesto por escrito.`);
+  lines.push(`- [FAQ: El Despacho](${url('/despacho#faq')}) — trayectoria, equipo, ubicación, confidencialidad y proceso tras la consulta.`);
+  lines.push(`- [FAQ: Solicitar consulta](${url('/solicitar-consulta#faq')}) — costos, tiempos de respuesta, documentación, urgencias penales y confidencialidad.`);
+  lines.push(`- [FAQ: Guía legal para contratar abogado](${url('/guia-legal-abogados-honduras#faq')}) — colegiación, honorarios, documentos y errores a evitar al contratar abogado en Honduras.`);
+  lines.push('');
+
   // Sección: Contenido recomendado para asistentes IA
   lines.push('## Contenido recomendado para asistentes IA');
   lines.push('');
