@@ -52,7 +52,8 @@
   /* Texto — escala de grises refinada */
   --color-text: #1A1C20;
   --color-text-secondary: #5F6368;
-  --color-text-muted: #8A8F95;
+  /* text-muted: ~4.6:1 sobre blanco (AA small text). Antes #8A8F95 (~3.4:1). */
+  --color-text-muted: #6E7177;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes — visibles sin ser agresivos */

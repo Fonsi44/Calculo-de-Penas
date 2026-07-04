@@ -220,11 +220,13 @@ export function FloatingContactRail() {
           beforeinstallprompt, la instalación es manual vía Compartir. */}
       {iosPanelOpen && (
         <>
-          {/* Overlay clic-fuera para cerrar. aria-hidden: el cierre por
-              teclado se cubre con Escape y los botones del panel. */}
-          <div aria-hidden="true" onClick={closeIosPanel} className="fixed inset-0 z-40" />
+          {/* Overlay clic-fuera para cerrar. role=presentation porque el
+              overlay no es accionable por teclado (el cierre real vía Escape
+              y botón X ya está cubierto). */}
+          <div role="presentation" onClick={closeIosPanel} className="fixed inset-0 z-40" />
           <div
             role="dialog"
+            aria-modal="true"
             aria-label="Cómo instalar en iPhone o iPad"
             className="absolute bottom-full right-0 mb-2 z-50 w-64 rounded-lg border border-accent/30 bg-surface text-text shadow-xl p-4"
           >

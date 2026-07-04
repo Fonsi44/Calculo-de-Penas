@@ -90,13 +90,15 @@ export function SolicitarConsultaForm() {
 
   return (
     <form onSubmit={submit} className="space-y-3">
-      <div className="grid sm:grid-cols-2 gap-3">
+      <fieldset className="grid sm:grid-cols-2 gap-3 border-0 p-0 m-0">
+        <legend className="sr-only">Datos de contacto</legend>
         <Field
           label="Nombre completo"
           icon={User}
           value={form.nombre}
           onChange={onText('nombre')}
           required
+          autoComplete="given-name"
         />
         <Field
           label="Teléfono"
@@ -105,14 +107,16 @@ export function SolicitarConsultaForm() {
           value={form.telefono}
           onChange={onText('telefono')}
           required
+          autoComplete="tel"
         />
-      </div>
+      </fieldset>
       <Field
         label="Correo electrónico"
         icon={Mail}
         type="email"
         value={form.email}
         onChange={onText('email')}
+        autoComplete="email"
       />
       <div>
         <label htmlFor="consulta-motivo" className="block text-xs font-bold text-text mb-1">
@@ -223,6 +227,7 @@ function Field({
   onChange,
   type = 'text',
   required = false,
+  autoComplete,
 }: {
   label: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
@@ -230,13 +235,18 @@ function Field({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   required?: boolean;
+  autoComplete?: string;
 }) {
   const fieldId = `consulta-${label.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-')}`;
+  const descId = `${fieldId}-desc`;
+  // aria-invalid solo cuando el campo requerido está vacío tras interacción.
+  // El form valida submit global, así que marcamos inválido si required y vacío.
+  const invalid = required && value.trim() === '';
   return (
     <div>
       <label htmlFor={fieldId} className="block text-xs font-bold text-text mb-1">
         {label}
-        {required && <span className="text-aggravation ml-0.5">*</span>}
+        {required && <span className="text-aggravation ml-0.5" aria-hidden="true">*</span>}
       </label>
       <div className="relative">
         <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-colors" />
@@ -246,9 +256,16 @@ function Field({
           value={value}
           onChange={onChange}
           required={required}
-          className="input-refined w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none"
+          autoComplete={autoComplete}
+          aria-required={required || undefined}
+          aria-invalid={invalid || undefined}
+          aria-describedby={descId}
+          className="input-refined w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none aria-[invalid=true]:border-aggravation"
         />
       </div>
+      <span id={descId} className="sr-only">
+        {required ? `${label}, campo obligatorio.` : `${label}, campo opcional.`}
+      </span>
     </div>
   );
 }

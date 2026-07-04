@@ -56,15 +56,15 @@ export function PublicHeader() {
               <Phone size={12} aria-hidden="true" />
               <span className="tabular-nums">{site.phoneDisplay}</span>
             </a>
-            <span className="text-text-inverse/40">·</span>
+            <span className="text-text-inverse/70">·</span>
             <span className="text-text-inverse/80">{site.hoursShort}</span>
-            <span className="text-text-inverse/40">·</span>
+            <span className="text-text-inverse/70">·</span>
             <span className="text-text-inverse/80">{site.address.city}, {site.address.department}</span>
           </div>
           <Link
             href="/intranet/admin"
             rel="nofollow"
-            className="flex items-center gap-1.5 text-text-inverse/50 hover:text-accent transition-colors focus-visible:outline-none"
+            className="flex items-center gap-1.5 text-text-inverse/75 hover:text-accent transition-colors focus-visible:outline-none"
             title="Acceso exclusivo para personal del bufete"
           >
             <Lock size={11} aria-hidden="true" />
@@ -229,7 +229,7 @@ export function PublicHeader() {
               <Calendar size={16} />
               Solicitar consulta
             </Link>
-            <p className="px-3 pt-2 text-xxs text-text-inverse/60">{site.hours}</p>
+            <p className="px-3 pt-2 text-xxs text-text-inverse/75">{site.hours}</p>
           </nav>
         </div>
       )}

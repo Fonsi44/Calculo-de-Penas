@@ -88,7 +88,7 @@ export function PublicFooter() {
               con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
               pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
             </p>
-            <p className="text-xs text-text-inverse/65 leading-relaxed mt-3 text-pretty">
+            <p className="text-xs text-text-inverse/80 leading-relaxed mt-3 text-pretty">
               Aplicación rigurosa del {LEGAL_FRAME_BADGE}.
             </p>
             <p className="text-xs text-accent/80 leading-relaxed mt-2 text-pretty">
@@ -244,7 +244,7 @@ export function PublicFooter() {
 
           </ul>
         </div>
-        <div className="mt-4 pt-4 border-t border-accent/10 text-xs text-text-inverse/50">
+        <div className="mt-4 pt-4 border-t border-accent/10 text-xs text-text-inverse/75">
           <p className="text-pretty">
             Contenido elaborado por el <strong className="text-text-inverse/70">Equipo legal de Pineda y Asociados</strong> — abogados en Nacaome, Valle, Honduras.{' '}
             {LEGAL_DISCLAIMER_SHORT}
