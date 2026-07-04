@@ -30,6 +30,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
+import { IconBadge } from '@/components/marketing/icon-badge';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 
 export const metadata: Metadata = {
@@ -359,9 +360,7 @@ export default async function HomePage() {
                   title="Dirección y mapa del bufete Pineda y Asociados en Nacaome, Valle"
                   className="group flex items-start gap-3.5 rounded-lg p-2 -mx-2 hover:bg-surface transition-colors focus-visible:outline-none"
                 >
-                  <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} aria-hidden="true" />
-                  </div>
+                  <IconBadge icon={MapPin} variant="primary" />
                   <div className="min-w-0">
                     <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Dirección</p>
                     <p className="text-sm font-semibold text-text leading-snug mt-0.5">{site.address.line1}</p>
@@ -376,9 +375,7 @@ export default async function HomePage() {
                   title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
                   className="group flex items-start gap-3.5 rounded-lg p-2 -mx-2 hover:bg-surface transition-colors focus-visible:outline-none"
                 >
-                  <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-                    <Phone size={20} aria-hidden="true" />
-                  </div>
+                  <IconBadge icon={Phone} variant="primary" />
                   <div className="min-w-0">
                     <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Teléfono</p>
                     <p className="text-sm font-semibold text-primary leading-snug mt-0.5 tabular-nums group-hover:text-accent-dark transition-colors">{site.phoneDisplay}</p>
@@ -386,9 +383,7 @@ export default async function HomePage() {
                 </a>
               </li>
               <li className="flex items-start gap-3.5 rounded-lg p-2 -mx-2">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-                  <Clock size={20} aria-hidden="true" />
-                </div>
+                <IconBadge icon={Clock} variant="primary" />
                 <div className="min-w-0">
                   <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Horario</p>
                   <p className="text-sm font-semibold text-text leading-snug mt-0.5">{site.hours}</p>

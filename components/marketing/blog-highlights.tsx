@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
+import { IconBadge } from '@/components/marketing/icon-badge';
 import { getAllPosts } from '@/lib/blog';
 import { formatDate } from '@/lib/blog';
 import { cn } from '@/lib/ui';
@@ -121,9 +122,7 @@ export async function BlogHighlights({
                 padding="md"
                 className="h-full group-hover:border-accent group-hover:shadow-md transition-all"
               >
-                <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center mb-3 flex-shrink-0">
-                  <BookOpen size={20} aria-hidden="true" />
-                </div>
+                <IconBadge icon={BookOpen} variant="accent" className="mb-3" />
                 <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
                   {formatDate(post.publishedAt)}
                 </p>
