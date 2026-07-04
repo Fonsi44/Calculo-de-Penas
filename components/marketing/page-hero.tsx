@@ -53,12 +53,12 @@ export function PageHero({
     : 'eyebrow-rule text-accent-dark';
 
   const titleCls = isPrimary
-    ? 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-text-inverse text-balance'
-    : 'font-serif font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-primary text-balance';
+    ? 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance'
+    : 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-primary text-balance';
 
   const subtitleCls = isPrimary
-    ? 'mt-5 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
-    : 'mt-5 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl text-pretty';
+    ? 'mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
+    : 'mt-4 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl text-pretty';
 
   const alignCls = align === 'center' ? 'text-center mx-auto' : 'max-w-3xl';
 
@@ -94,9 +94,9 @@ export function PageHero({
         className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
         aria-hidden="true"
       />
-      <Container size="lg" className="relative py-10 md:py-14 lg:py-16">
+      <Container size="lg" className="relative py-8 md:py-12 lg:py-14">
         <div className={alignCls}>
-          <div className="flex flex-wrap items-center gap-3 mb-5">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className={eyebrowCls}>{eyebrow}</span>
             {badge && (
               <span
@@ -112,7 +112,7 @@ export function PageHero({
           </div>
           <h1 className={titleCls}>{title}</h1>
           {subtitle && <p className={subtitleCls}>{subtitle}</p>}
-          {cta && <div className="mt-8">{cta}</div>}
+          {cta && <div className="mt-6">{cta}</div>}
         </div>
       </Container>
     </section>
