@@ -8,10 +8,11 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { AnswerBlock } from '@/components/marketing/answer-block';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
-import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { CTAGroup, UrgencyCallout } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
+import { HubFaq } from '@/components/marketing/hub-faq';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
@@ -75,12 +76,10 @@ export default async function DerechoPenalPage() {
     },
   ];
 
-  // FAQs combinadas para el schema: las urgentes (acciones inmediatas) +
-  // las del hub penal (procedimiento). Formato { pregunta, respuesta }.
-  const allPenalFaqs = [
-    ...urgentFaq.map((f) => ({ pregunta: f.q, respuesta: f.a })),
-    ...hubPenal.faqs,
-  ];
+  // FAQ schema: solo las preguntas generales (hubPenal.faqs).
+  // Las "Urgencias penales" son pasos de acción, no preguntas FAQ,
+  // y el HubFaq emite su propio JSON-LD FAQPage con las generales.
+  const allPenalFaqs = hubPenal.faqs;
 
   const ldSchemas = areaSchemas({
     service: {
@@ -417,41 +416,41 @@ const PRIORITY_PENAL_SLUGS = [
         </p>
       </Section>
 
+      {/* URGENCIAS PENALES — acciones inmediatas ante situaciones críticas.
+          Tratamiento visual diferenciado: callout rojo de urgencia + grid de
+          pasos concretos. No es un FAQ genérico; es una guía de actuación
+          urgente. Se diferencia claramente del bloque FAQ que viene después. */}
       <Section background="muted" spacing="md" id="urgencias-penales">
         <SectionHeader
           eyebrow="Urgencias penales"
-          title="Respuestas inmediatas para situaciones de alto riesgo"
-          subtitle="Preguntas frecuentes para actuar con criterio tecnico en detenciones, citaciones y primeras audiencias."
+          title="Actúe con criterio técnico desde el primer minuto"
+          subtitle="Pasos concretos para detenciones, citaciones y primeras audiencias. La defensa temprana protege sus derechos y condiciona el resultado del proceso."
         />
-        <div className="grid gap-3 max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto mb-6">
+          <UrgencyCallout />
+        </div>
+        <div className="grid gap-4 max-w-4xl mx-auto sm:grid-cols-2 lg:grid-cols-3">
           {urgentFaq.map((item) => (
-            <Card key={item.q} padding="md" className="border-l-4 border-l-accent">
+            <Card key={item.q} padding="md" className="border-l-4 border-l-accent h-full">
               <h3 className="font-bold text-sm text-text leading-tight">{item.q}</h3>
-              <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">{item.a}</p>
+              <p className="mt-2 text-sm text-text-secondary leading-relaxed">{item.a}</p>
             </Card>
           ))}
         </div>
       </Section>
 
-      <Section spacing="md" id="preguntas-frecuentes">
-        <SectionHeader
-          eyebrow="Preguntas frecuentes"
-          title="Resolvemos sus dudas sobre defensa penal"
-          align="center"
-        />
-        <div className="max-w-3xl mx-auto space-y-3">
-          {hubPenal.faqs.map((faq, i) => (
-            <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
-                {faq.pregunta}
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {faq.respuesta}
-              </p>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      {/* FAQ PENAL — consultas generales sobre proceso, plazos y estrategia.
+          Se usa HubFaq (acordeón) para mantener limpieza visual y no saturar
+          con todas las preguntas expandidas. Se diferencia del bloque de
+          urgencias anterior: aquí son consultas informativas, no pasos de
+          acción inmediata. */}
+      <HubFaq
+        faqs={hubPenal.faqs}
+        url={absoluteUrl('/derecho-penal')}
+        eyebrow="Preguntas frecuentes"
+        title="Resolvemos sus dudas sobre defensa penal"
+        id="preguntas-frecuentes"
+      />
 
       {blogPosts.length > 0 && (
         <Section spacing="md">

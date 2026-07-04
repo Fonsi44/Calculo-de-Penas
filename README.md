@@ -31,7 +31,11 @@ app/(public)/     → Web pública (home, servicios, blog, FAQ, landings)
 app/intranet/     → Dashboard + Admin (requiere auth JWT)
 app/api/          → 70+ endpoints REST
 lib/              → Motor cálculo, DB, auth, schemas, SEO
-components/       → UI pública + admin + blog
+components/       → UI pública + admin + blog + sistema de diseño
+  ├── marketing/     → Componentes reutilizables públicos (Section, ServiceCard, HubFaq, IntroEditorial, etc.)
+  ├── ui/            → Primitivas UI (Button, Card, Badge, Modal, etc.)
+  ├── layout/        → Shell, sidebar, shortcuts
+  └── blog/          → Componentes del blog
 data/             → Delitos CP (483), códigos legales, categorías, landings
 scripts/          → 28+ scripts operativos (validación, SEO, blog, IndexNow)
 tests/            → 33 suites Vitest + 4 specs Playwright E2E

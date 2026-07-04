@@ -6,6 +6,38 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — Auditoría UX/UI + sistema de diseño visual público (Release 105)
+
+### Sistema de diseño
+- **`components/marketing/intro-editorial.tsx`** (nuevo): componente reutilizable para bloques editoriales largos. Card premium con barra lateral dorada, fondo surface, sombra controlada, max-width de lectura óptimo, highlight opcional y CTA integrable. Reemplaza el uso de `prose` Tailwind crudo en páginas de servicios y contenido institucional.
+- **`app/globals.css`**: nueva clase `.prose-editorial` con tipografía, ritmo y jerarquía consistentes para texto editorial largo (h2 serif, p con line-height 1.75, strong en text, links dorados, responsive mobile). Separada de `.article-body` (posts del blog) porque el contexto es distinto: páginas de servicios vs. artículos de blog.
+
+### Páginas normalizadas
+- **`/servicios-juridicos`**: el bloque introductorio de texto plano sin diseño se transformó en un `IntroEditorial` con card premium, barra lateral dorada, título jerarquizado y CTA suave de transición. El contenido respira, se escanea mejor y transmite profesionalismo.
+- **`/derecho-penal`**: unificación de secciones duplicadas. "Urgencias penales" ahora es un bloque de acción concreta (no FAQ): incluye `UrgencyCallout` rojo + grid de pasos. "Preguntas frecuentes" generales migraron a `HubFaq` (acordeón con animación), eliminando la duplicidad visual y conceptual que confundía al usuario. Se diferencian claramente: urgencias = actuar ya; FAQ = informarse.
+- **`/hondurenos-en-espana`**: el bloque editorial migró de `prose` crudo a `IntroEditorial` con la misma card premium. La sección FAQ migró de tarjetas planas a `HubFaq` acordeón.
+
+### Componentes mejorados
+- **`HubFaq`**: rediseño completo. Ahora usa el patrón `card-premium` del sistema: fondo surface, sombra multicapa sutil, borde dorado al expandir, chevron `ChevronDown` de lucide-react, animación grid-rows CSS. Consistencia visual con el resto del sitio.
+- **Esquema FAQ duplicado**: en `/derecho-penal`, el JSON-LD FAQPage incluía las "urgencias" como preguntas FAQ. Corregido: las urgencias son pasos de acción, no preguntas FAQ. El esquema ahora solo incluye las preguntas generales, y `HubFaq` emite su propio FAQPage con `@id` estable para deduplicación.
+
+### Criterios aplicados
+- **Jerarquía visual**: cada página tiene un H1 único (hero), introducción editorial (IntroEditorial), secciones jerarquizadas con eyebrow+title+subtitle (SectionHeader), CTA relevante y FAQ solo si aporta valor.
+- **Coherencia tipográfica**: títulos en Cormorant Garamond (serif), cuerpo en Manrope (sans). Eyebrows con `.eyebrow-label` o `.eyebrow-rule`. Títulos de sección con `.section-title` responsive.
+- **Consistencia de cards**: `card-premium` (superficie con gradiente interno + sombra multicapa + halo dorado hover), `service-card-refined` (servicios con imagen + hover lift), `card-dark` (fondos oscuros).
+- **Sombras**: tokens centralizados en CSS (`--shadow-card`, `--shadow-btn-*`). Sin sombras inline. R16 cumplido.
+- **Radios**: `rounded-lg` (16px) canónico para cards. `rounded-xl` para envolturas editoriales.
+- **Espaciado**: `Section` con `spacing="sm|md|lg"` consistente. `Container` con `max-w-7xl` por defecto.
+- **Responsive**: grid columns adaptativos (1→2→3→4), tablas desktop con fallback a tarjetas en móvil, tipografía escalable.
+
+### Validación
+- `npm run lint`: 0 errores
+- `npm run build`: compilado exitoso (360 páginas estáticas)
+- `npm test`: 730 tests pasados (33 suites)
+- Sin cambios en intranet, API, auth, motor de cálculo ni schema DB (R9).
+
+---
+
 ## 2026-07-04 — Fase 2 growth SEO/GEO/Perf/Conversión (Release 104)
 
 Implementación de la Fase 2 de growth sobre la rama `mejoras-auditoria-seo` (Release 103 ya mergeada). Trabajo en rama `fase2-growth-seo`. 7 commits atómicos.
