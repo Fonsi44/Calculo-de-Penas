@@ -238,8 +238,8 @@ const PRIORITY_PENAL_SLUGS = [
       {/* SU ABOGADO PENALISTA —Danilo Pineda Maradiaga. La página de mayor
           intención comercial penal promete «Abogado Penalista en Nacaome» en
           el title; este bloque hace visible la entidad y cierra title↔H1↔autor
-          (E-E-A-T). Retrato Foto2 (alternativo), tamaño contenido para no
-          dominar visualmente la página. */}
+          (E-E-A-T). Fase 3.3: antes mostraba dos fotos del mismo letrado lado
+          a lado (patrón clonado); ahora una sola, suficiente para E-E-A-T. */}
       <Section spacing="md">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
           <div className="flex-shrink-0 w-40 sm:w-44 lg:w-48">
@@ -253,22 +253,6 @@ const PRIORITY_PENAL_SLUGS = [
                   height={500}
                   className="w-full h-full object-cover"
                   sizes="(max-width: 1024px) 70vw, 192px"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="hidden sm:block flex-shrink-0 w-40 sm:w-44 lg:w-48 self-center">
-            <div className="relative mx-auto max-w-[12rem]">
-              <div className="absolute -inset-4 rounded-2xl bg-primary/5 blur-3xl" aria-hidden="true" />
-              <div className="relative rounded-lg border border-primary/20 overflow-hidden bg-surface-alt aspect-[3/4]">
-                <Image
-                  src="/images/equipo/danilo-pineda-maradiaga-penal.webp"
-                  alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle, Honduras — defensa penal"
-                  width={400}
-                  height={500}
-                  className="w-full h-full object-cover"
-                  sizes="(max-width: 1024px) 70vw, 192px"
-                  priority={false}
                 />
               </div>
             </div>
@@ -419,8 +403,10 @@ const PRIORITY_PENAL_SLUGS = [
       {/* URGENCIAS PENALES — acciones inmediatas ante situaciones críticas.
           Tratamiento visual diferenciado: callout rojo de urgencia + grid de
           pasos concretos. No es un FAQ genérico; es una guía de actuación
-          urgente. Se diferencia claramente del bloque FAQ que viene después. */}
-      <Section background="muted" spacing="md" id="urgencias-penales">
+          urgente. Se diferencia claramente del bloque FAQ que viene después.
+          Fase 3.3: fondo default (antes muted) para crear contraste rítmico
+          con el HubFaq que viene y evitar tres bloques muted/warm seguidos. */}
+      <Section background="default" spacing="md" id="urgencias-penales">
         <SectionHeader
           eyebrow="Urgencias penales"
           title="Actúe con criterio técnico desde el primer minuto"
@@ -482,39 +468,33 @@ const PRIORITY_PENAL_SLUGS = [
               </Link>
             ))}
           </div>
-          <div className="text-center mt-6">
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mt-6 text-center">
             <Link
               href="/blog/derecho-penal"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
             >
               Ver todos los artículos de derecho penal <ArrowRight size={16} />
             </Link>
-        </div>
-        <div className="max-w-3xl mx-auto mt-6 text-center">
-          <Link
-            href="/preguntas-frecuentes#derecho-penal-general"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-          >
-            Ver todas las preguntas frecuentes sobre derecho penal <ArrowRight size={16} />
-          </Link>
-        </div>
-        <div className="max-w-3xl mx-auto mt-4 text-center">
-          <Link
-            href="/servicios-juridicos"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-          >
+            <Link
+              href="/preguntas-frecuentes#derecho-penal-general"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+            >
+              Ver todas las preguntas frecuentes sobre derecho penal <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="/servicios-juridicos"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+            >
               Explore las ramas principales del derecho <ArrowRight size={16} />
-          </Link>
-        </div>
-        <div className="max-w-3xl mx-auto mt-4 text-center">
-          <Link
-            href="/guia-legal-abogados-honduras"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-          >
-            Guía para contratar abogado en Honduras <ArrowRight size={16} />
-          </Link>
-        </div>
-      </Section>
+            </Link>
+            <Link
+              href="/guia-legal-abogados-honduras"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+            >
+              Guía para contratar abogado en Honduras <ArrowRight size={16} />
+            </Link>
+          </div>
+        </Section>
       )}
 
       {/* CLUSTER GEOGRÁFICO PENAL (Jul 2026, depurado): las 2 landings
