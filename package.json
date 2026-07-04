@@ -84,7 +84,9 @@
     "seo:gsc:live": "node scripts/google-search-console-live.mjs",
     "seo:ga4:live": "node scripts/google-analytics-live.mjs",
     "seo:bing:live": "node scripts/bing-webmaster-live.mjs",
-    "seo:submit-sitemap": "node scripts/submit-sitemap-gsc.mjs"
+    "seo:submit-sitemap": "node scripts/submit-sitemap-gsc.mjs",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:optimize:apply": "node scripts/optimize-images.mjs --apply"
   },
   "dependencies": {
     "@modelcontextprotocol/server-filesystem": "^2026.1.14",
