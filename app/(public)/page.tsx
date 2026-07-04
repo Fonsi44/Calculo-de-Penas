@@ -11,6 +11,8 @@ import {
   Phone,
   Clock,
   Gavel,
+  Award,
+  BriefcaseBusiness,
 } from 'lucide-react';
 import { site, telHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
@@ -255,11 +257,13 @@ export default async function HomePage() {
       {/* TRUST BAR — sellos de autoridad (strip compacto) */}
       <TrustBar background="light" />
 
-      {/* ÁREAS DESTACADAS + PILAR PENAL (Fase 3.1 revisada).
-          Las 4 áreas principales en grid + la card del pilar penal como cierre
-          narrativo de la sección, integrada y con contexto. Antes la card del
-          pilar estaba en una sección separada ("Por qué elegirnos") donde en
-          móvil/tablet quedaba flotando sin conexión visual con las áreas. */}
+      {/* ÁREAS DESTACADAS — 4 especialidades principales en grid uniforme
+          (Fase 3.1 revisada). Penal, familia, laboral y civil: las 4 como
+          ServiceCard idénticas, con foto, alineadas en grid de 4 columnas.
+          Antes había una card de texto "pilar histórico" separada que rompía
+          el ritmo y duplicaba la ServiceCard de penal. Eliminada; los claims
+          de valor (+15 años, estrategia unificada, un solo expediente) viven
+          en el EditorialBlock "Por qué elegirnos" que sigue. */}
       <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
         <SectionHeader
           eyebrow="Especialidades principales"
@@ -285,51 +289,24 @@ export default async function HomePage() {
               );
             })}
         </div>
-        {/* Pilar penal — cierre narrativo de la sección de áreas.
-            Contextualiza por qué defensa penal encabeza el grid. */}
-        <div className="mt-6">
-          <Card padding="md" className="card-premium border-accent/20">
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-              <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
-                <Gavel size={20} aria-hidden="true" />
-              </div>
-              <div className="flex-1">
-                <strong className="font-bold text-sm text-text leading-tight block">
-                  Defensa penal como pilar histórico del bufete
-                </strong>
-                <p className="text-sm text-text-secondary leading-relaxed mt-1.5 text-pretty">
-                  Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.
-                  Atención directa del abogado responsable en cada área, coordinación interna
-                  cuando un caso cruza varias ramas del derecho, y presupuesto por escrito antes
-                  de cualquier actuación.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
-                  <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-                    <CheckCircle2 size={12} className="text-accent-dark" /> +15 años de ejercicio
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-                    <CheckCircle2 size={12} className="text-accent-dark" /> Estrategia unificada
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-                    <CheckCircle2 size={12} className="text-accent-dark" /> Un solo expediente
-                  </span>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
       </Section>
 
       {/* POR QUÉ ELEGIRNOS — bloque editorial narrativo (Fase 3.1).
-          Cinco razones del bufete en formato editorial, con respiración.
-          El claim multidisciplinar y el equipo se referencian vía enlace a
-          /despacho, dueño canónico de ese contenido. */}
+          Razones del bufete en formato editorial, con respiración. Incorpora
+          los claims de valor que antes estaban en la card de texto del pilar
+          penal (+15 años, estrategia unificada, un solo expediente), ahora
+          como puntos editoriales coherentes. El equipo se referencia vía
+          enlace a /despacho, dueño canónico de ese contenido. */}
       <Section background="warm" spacing="lg" ariaLabel="Por qué elegirnos" className="section-breath">
         <EditorialBlock
           eyebrow="Por qué elegirnos"
           title={t('why_us.title')}
           intro={t('why_us.subtitle')}
-          points={WHY_POINTS}
+          points={[
+            ...WHY_POINTS,
+            { icon: Award, title: '+15 años de ejercicio profesional', description: 'Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.' },
+            { icon: BriefcaseBusiness, title: 'Estrategia unificada, un solo expediente', description: 'Coordinación interna entre especialistas cuando un caso cruza varias ramas del derecho. Un único punto de contacto, sin gestionar varios despachos.' },
+          ]}
           cta={{ href: '/despacho', label: 'Conozca el despacho' }}
         />
       </Section>
