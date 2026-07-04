@@ -344,3 +344,96 @@ dimensionar. Microoptimizaciones cosméticas fuera de alcance.
 
 **No se hizo push.**
 
+---
+
+## 10. Cierre de deuda runtime (2026-07-04)
+
+Resolución del error de hidratación React #418 declarado como preexistente en §9.3.
+
+### 10.1 Causa raíz (DIAGNOSTICADA)
+
+El `ChatWidget` (`components/chat/chat-widget.tsx`) es un Client Component que
+renderiza su UI vía `createPortal(<div>, document.body)`. Su guard de render era:
+
+```js
+if (!chatConfig.enabled || isPrivateRoute || typeof document === 'undefined') return null;
+```
+
+Este es un **branch server/client clásico**:
+- **SSR**: `typeof document === 'undefined'` → `true` → retorna `null`.
+- **Cliente (primer paint)**: `typeof document !== 'undefined'` → renderiza el
+  portal con `<div className="z-30 print:hidden safe-bottom">`.
+
+Resultado: el HTML del server (`null`) no coincide con el del cliente (el `<div>`
+del portal) → **React error #418** ("server rendered HTML didn't match the client").
+En producción, la cascada de reconciliación producía además un `TypeError` minificado
+`a[c] is not a function` por corrupción del árbol React.
+
+Reproducción y diagnóstico se hicieron en **dev mode** (mensajes no minificados),
+confirmando el diff exacto del árbol: tras `<ChatWidget>`, el server tenía
+`<script type="application/ld+json">` donde el cliente esperaba el `<div>` del portal.
+
+### 10.2 Fix aplicado (VALIDADO)
+
+Patrón `mounted` con `useSyncExternalStore` — la forma canónica de leer "estamos
+en cliente" de forma segura para hidratación:
+
+```js
+const mounted = useSyncExternalStore(
+  () => () => {},   // subscribe (no-op)
+  () => true,        // getSnapshot cliente
+  () => false,       // getServerSnapshot → null en SSR y primer render cliente
+);
+if (!chatConfig.enabled || isPrivateRoute || !mounted) return null;
+```
+
+Esto elimina el branch `typeof document`. El primer render del cliente devuelve
+`null` (igual que el server) y el portal se monta solo tras la hidratación. Sin
+cambios de lógica del chat ni del portal.
+
+> Nota: la primera tentativa usó `useState` + `useEffect(setMounted, [])`, pero
+> la regla `react-hooks/set-state-in-effect` de React 19 la rechaza. `useSyncExternalStore`
+> es la solución idiomática que cumple la regla sin supresiones.
+
+### 10.3 El error `a[c] is not a function` (NO es deuda del proyecto)
+
+El stack trace en dev reveló el origen:
+```
+TypeError: a[c] is not a function
+    at https://www.clarity.ms/tag/x9ghgy2un2:0:29
+```
+
+Es un error **interno del script de Microsoft Clarity** (`components/analytics-scripts.tsx`
+lo carga vía `https://www.clarity.ms/tag/${clarityId}`). Ocurre en el contexto
+headless de Playwright; en navegadores reales con UI no se manifiesta. No hay
+nada que corregir en el código del proyecto. Tras el fix del #418, este es el
+único error de consola residual y es ruido externo de terceros.
+
+### 10.4 Rutas afectadas (todas confirmadas a 0 errores de hidratación)
+
+`/`, `/despacho`, `/derecho-penal`, `/servicios-juridicos`, `/hondurenos-en-espana`,
+`/solicitar-consulta`, `/preguntas-frecuentes`, `/abogados-en-nacaome` — validadas
+desktop y móvil vía Playwright en producción (0 errores #418).
+
+### 10.5 Validación
+
+| Comando / chequeo | Resultado |
+|---|---|
+| `npm run lint` | ✅ Sin errores |
+| `npm run build` | ✅ Compiled successfully |
+| `npm test` | ✅ 754 tests pasan |
+| `npm run validate:dates` | ✅ 149 posts |
+| `validar-meta-seo.ts` | ✅ 18/18 OK |
+| `validate-jsonld.mjs` | ✅ OK, 0 duplicados |
+| QA hidratación Playwright (7 rutas × 2 viewports) | ✅ 0 errores #418 |
+| `e2e/hydration.spec.ts` (regresión) | ✅ 8/8 tests pasan |
+
+### 10.6 Commits de la deuda runtime (sin push)
+
+8. `fix(runtime): corrige hydration mismatch del ChatWidget (#418)`
+9. `test(qa): anade test de regresion de hidratacion`
+10. `docs(transformacion): cierre de deuda runtime`
+
+**No se hizo push.**
+
+

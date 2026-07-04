@@ -53,6 +53,21 @@ Cierre de los 3 pendientes y validación completa SEO/indexación:
 
 7 commits de cierre (`refactor`, `docs`, `fix`, `chore`). Sin push.
 
+### Cierre de deuda runtime (2026-07-04)
+Resuelto el error de hidratación React #418 declarado preexistente:
+- **Causa raíz diagnosticada**: `ChatWidget` usaba `typeof document === 'undefined'`
+  como branch server/client (SSR → `null`, cliente → portal). Mismatch #418 que en
+  producción cascada a `a[c] is not a function`.
+- **Fix quirúrgico**: patrón `mounted` con `useSyncExternalStore` en
+  `components/chat/chat-widget.tsx`. Sin tocar lógica del chat ni del portal.
+- **`a[c] is not a function`**: confirmado NO deuda del proyecto (error interno
+  del script de terceros Microsoft Clarity en contexto headless).
+- **Test de regresión**: `e2e/hydration.spec.ts` (8 rutas, 8/8 pasan).
+- **Validación**: lint + build + 754 tests + dates + meta-seo 18/18 + JSON-LD OK
+  + QA hidratación Playwright (7 rutas × 2 viewports, 0 errores #418).
+
+3 commits (`fix`, `test`, `docs`). Sin push.
+
 ---
 
 ## Release 109b — Ajuste fuerte de escala visual v2 (2026-07-04)

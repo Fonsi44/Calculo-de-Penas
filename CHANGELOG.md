@@ -57,6 +57,17 @@ Cierre de los 3 pendientes del Release 110 y validación completa de SEO/indexac
   metadatos 18/18 OK, JSON-LD 0 duplicados, indexabilidad 0 errores.
 - **Infraestructura**: `scripts/qa-visual-cierre.mjs` (QA reutilizable).
 
+### Cierre de deuda runtime (2026-07-04)
+Resuelto el error de hidratación React #418 declarado preexistente:
+- **Causa raíz**: `ChatWidget` usaba `typeof document === 'undefined'` como
+  branch server/client (SSR retornaba `null`, cliente renderizaba el portal) →
+  mismatch de hidratación #418, que en producción cascada a `a[c] is not a function`.
+- **Fix**: patrón `mounted` con `useSyncExternalStore` (determinista server/client).
+- **`a[c] is not a function`**: NO es deuda del proyecto; es un error interno del
+  script de terceros Microsoft Clarity en contexto headless.
+- **Test de regresión**: `e2e/hydration.spec.ts` (8 rutas, 8/8 pasan).
+- Validado: 0 errores de hidratación en 7 rutas × desktop/móvil en producción.
+
 Sin push.
 
 ---
