@@ -255,10 +255,11 @@ export default async function HomePage() {
       {/* TRUST BAR — sellos de autoridad (strip compacto) */}
       <TrustBar background="light" />
 
-      {/* ÁREAS DESTACADAS — 4 especialidades principales.
-          Grid de 4 columnas en desktop con tarjetas estrechas e imágenes
-          contenidas (aspect 4/3), equilibradas y no dominantes. Antes eran
-          2 columnas con aspect 3/2 = imágenes excesivamente grandes. */}
+      {/* ÁREAS DESTACADAS + PILAR PENAL (Fase 3.1 revisada).
+          Las 4 áreas principales en grid + la card del pilar penal como cierre
+          narrativo de la sección, integrada y con contexto. Antes la card del
+          pilar estaba en una sección separada ("Por qué elegirnos") donde en
+          móvil/tablet quedaba flotando sin conexión visual con las áreas. */}
       <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
         <SectionHeader
           eyebrow="Especialidades principales"
@@ -284,59 +285,53 @@ export default async function HomePage() {
               );
             })}
         </div>
+        {/* Pilar penal — cierre narrativo de la sección de áreas.
+            Contextualiza por qué defensa penal encabeza el grid. */}
+        <div className="mt-6">
+          <Card padding="md" className="card-premium border-accent/20">
+            <div className="flex flex-col sm:flex-row items-start gap-4">
+              <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
+                <Gavel size={20} aria-hidden="true" />
+              </div>
+              <div className="flex-1">
+                <strong className="font-bold text-sm text-text leading-tight block">
+                  Defensa penal como pilar histórico del bufete
+                </strong>
+                <p className="text-sm text-text-secondary leading-relaxed mt-1.5 text-pretty">
+                  Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.
+                  Atención directa del abogado responsable en cada área, coordinación interna
+                  cuando un caso cruza varias ramas del derecho, y presupuesto por escrito antes
+                  de cualquier actuación.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
+                  <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                    <CheckCircle2 size={12} className="text-accent-dark" /> +15 años de ejercicio
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                    <CheckCircle2 size={12} className="text-accent-dark" /> Estrategia unificada
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                    <CheckCircle2 size={12} className="text-accent-dark" /> Un solo expediente
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
       </Section>
 
       {/* POR QUÉ ELEGIRNOS — bloque editorial narrativo (Fase 3.1).
-          Sustituye al antiguo grid de 5 tarjetas + sub-bloque multidisciplinar
-          de 4 tarjetas + sección Equipo (3 socios). Tres bloques de tarjetas
-          consecutivos generaban monotonía y competían con /despacho, que es
-          el dueño canónico del contenido institucional (historia, equipo,
-          valores, visión multidisciplinar). Ahora es un único bloque
-          editorial con respiración; el claim multidisciplinar y el equipo se
-          referencian vía enlace a /despacho. */}
+          Cinco razones del bufete en formato editorial, con respiración.
+          El claim multidisciplinar y el equipo se referencian vía enlace a
+          /despacho, dueño canónico de ese contenido. */}
       <Section background="warm" spacing="lg" ariaLabel="Por qué elegirnos" className="section-breath">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          <div className="lg:col-span-5">
-            <EditorialBlock
-              eyebrow="Por qué elegirnos"
-              title={t('why_us.title')}
-              intro={t('why_us.subtitle')}
-              points={WHY_POINTS}
-              cta={{ href: '/despacho', label: 'Conozca el despacho' }}
-            />
-          </div>
-          <div className="lg:col-span-7">
-            <Card padding="md" className="card-premium border-accent/20 h-full">
-              <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
-                  <Gavel size={20} aria-hidden="true" />
-                </div>
-                <div>
-                  <strong className="font-bold text-sm text-text leading-tight block">
-                    Defensa penal como pilar histórico
-                  </strong>
-                  <p className="text-sm text-text-secondary leading-relaxed mt-1.5 text-pretty">
-                    Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.
-                    Atención directa del abogado responsable en cada área, coordinación interna
-                    cuando un caso cruza varias ramas del derecho, y presupuesto por escrito antes
-                    de cualquier actuación.
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
-                    <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-                      <CheckCircle2 size={12} className="text-accent-dark" /> +15 años de ejercicio
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-                      <CheckCircle2 size={12} className="text-accent-dark" /> Estrategia unificada
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-                      <CheckCircle2 size={12} className="text-accent-dark" /> Un solo expediente
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </div>
+        <EditorialBlock
+          eyebrow="Por qué elegirnos"
+          title={t('why_us.title')}
+          intro={t('why_us.subtitle')}
+          points={WHY_POINTS}
+          cta={{ href: '/despacho', label: 'Conozca el despacho' }}
+        />
       </Section>
 
       {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}
