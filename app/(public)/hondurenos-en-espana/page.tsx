@@ -14,7 +14,7 @@ import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
-import { getAreasFromDb } from '@/lib/areas-db';
+import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
@@ -32,7 +32,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function MigrantesPage() {
   const url = migrantesHubHref();
-  const migrantesSubareas = await getAreasFromDb('migrante');
+  const migrantesSubareas = await getAreasUnified('migrante');
   const contentMap = await getPageContent('hondurenos-en-espana');
   const ldSchemas = areaSchemas({
     service: {

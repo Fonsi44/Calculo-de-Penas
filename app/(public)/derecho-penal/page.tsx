@@ -16,7 +16,7 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { hubPenal } from '@/data/areas-juridicas';
 import { penalHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { getAreasFromDb } from '@/lib/areas-db';
+import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
@@ -47,7 +47,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function DerechoPenalPage() {
   const url = penalHubHref();
-  const penalGroups = await getAreasFromDb('penal');
+  const penalGroups = await getAreasUnified('penal');
   const contentMap = await getPageContent('derecho-penal');
 
   // FAQs urgentes (acciones inmediatas ante detención/citación). Se renderizan

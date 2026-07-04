@@ -26,7 +26,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { Card } from '@/components/ui/card';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
-import { getAreasFromDb } from '@/lib/areas-db';
+import { getAreasUnified } from '@/lib/areas-unified';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
@@ -48,7 +48,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AreasJuridicasPage() {
-  const areas = await getAreasFromDb('servicio');
+  const areas = await getAreasUnified('servicio');
   const contentMap = await getPageContent('servicios-juridicos');
   const decisionMatrix: { problema: string; area: string; badge: string; primerPaso: string; href: string; icon: LucideIcon; tone: string }[] = [
     {
