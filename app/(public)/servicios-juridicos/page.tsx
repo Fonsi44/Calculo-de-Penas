@@ -21,6 +21,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { Card } from '@/components/ui/card';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
@@ -136,6 +137,17 @@ export default async function AreasJuridicasPage() {
       </div>
 
       <TrustBar background="light" />
+
+      {/* BLOQUE GEO/LLMO — respuesta directa para motores de IA */}
+      <Section background="light" spacing="sm">
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Bufete multidisciplinario"
+            question="¿Qué hace un bufete multidisciplinario en Honduras?"
+            answer={`Un bufete multidisciplinario reúne varias ramas del derecho bajo un mismo techo. En ${site.name} cubrimos 14 áreas: penal, familia, laboral, civil, notarial, mercantil, tributario y más. Cada caso lo dirige el abogado especialista correspondiente y el cliente tiene un único punto de contacto, sin coordinar entre despachos.`}
+          />
+        </Container>
+      </Section>
 
       {/* INTRO EDITORIAL — texto directo sobre fondo cálido, sin tarjeta.
           Párrafos breves, lectura rápida, jerarquía clara. */}

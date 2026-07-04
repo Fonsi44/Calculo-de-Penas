@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { site, absoluteUrl } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
-import { Section, SectionHeader } from '@/components/marketing/section';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { IntroEditorial } from '@/components/marketing/intro-editorial';
 import { HubFaq } from '@/components/marketing/hub-faq';
@@ -68,6 +69,17 @@ export default async function MigrantesPage() {
       />
 
       <TrustBar background="light" />
+
+      {/* BLOQUE GEO/LLMO — respuesta directa para motores de IA */}
+      <Section background="light" spacing="sm">
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Asistencia legal transfronteriza"
+            question="¿Puedo tramitar asuntos legales en Honduras residiendo en España?"
+            answer="Sí. Como hondureño residente en España puede gestionar poderes notariales, divorcios, custodias, sucesiones y otros trámites en Honduras sin desplazarse. Trabajamos coordinando con notaría hondureña y, cuando es necesario, con notaría española para poderes apostillados. El proceso se inicia por WhatsApp o videollamada y el seguimiento es remoto."
+          />
+        </Container>
+      </Section>
 
       {/* SECCIÓN EDITORIAL — contenido textual para SEO/GEO.
           Cubre entidades clave (apostilla, poder notarial a distancia,
