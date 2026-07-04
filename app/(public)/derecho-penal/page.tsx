@@ -76,11 +76,11 @@ export default async function DerechoPenalPage() {
     },
   ];
 
-  // FAQ schema: solo las preguntas generales (hubPenal.faqs).
-  // Las "Urgencias penales" son pasos de acción, no preguntas FAQ,
-  // y el HubFaq emite su propio JSON-LD FAQPage con las generales.
-  const allPenalFaqs = hubPenal.faqs;
-
+  // FAQ schema: el bloque <HubFaq> inferior renderiza las preguntas generales
+  // (hubPenal.faqs) Y emite su propio JSON-LD FAQPage con @id #faqpage. Pasar
+  // aquí las mismas faqs a areaSchemas duplicaba ese @id (validación JSON-LD).
+  // Por eso NO se pasa `faqs` a areaSchemas: el FAQPage canónico lo emite HubFaq.
+  // Las "Urgencias penales" son pasos de acción, no preguntas FAQ.
   const ldSchemas = areaSchemas({
     service: {
       slug: 'derecho-penal',
@@ -93,7 +93,6 @@ export default async function DerechoPenalPage() {
       keywords: hubPenal.keywords,
       url,
     },
-    faqs: allPenalFaqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
       { name: 'Derecho Penal', url },

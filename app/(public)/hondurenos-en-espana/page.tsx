@@ -34,6 +34,9 @@ export default async function MigrantesPage() {
   const url = migrantesHubHref();
   const migrantesSubareas = await getAreasUnified('migrante');
   const contentMap = await getPageContent('hondurenos-en-espana');
+  // No se pasa `faqs` a areaSchemas: el bloque <HubFaq> inferior renderiza
+  // hubMigrantes.faqs Y emite su propio JSON-LD FAQPage con @id #faqpage.
+  // Pasarlas aquí también duplicaba ese @id (validación JSON-LD).
   const ldSchemas = areaSchemas({
     service: {
       slug: 'hondurenos-en-espana',
@@ -45,7 +48,6 @@ export default async function MigrantesPage() {
       keywords: hubMigrantes.keywords,
       url,
     },
-    faqs: hubMigrantes.faqs,
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
       { name: 'Hondureños en España', url },
