@@ -43,6 +43,29 @@ drizzle/          → Migraciones + seeds
 docs/             → Documentación técnica (auditorías, SEO, guías)
 ```
 
+### Arquitectura de información (Release 110, Jul 2026)
+
+Cada página pública tiene una **misión canónica única**; el contenido que
+antes se duplicaba ahora tiene un **dueño claro** que las demás referencian:
+
+| Página | Misión | Dueña de |
+|---|---|---|
+| `/` Home | Orientar y conducir | — |
+| `/despacho` | Centro institucional | Bloque Equipo, claims multidisciplinares |
+| `/servicios-juridicos` | Catálogo de áreas | Matriz de orientación |
+| `/derecho-penal` | Hub de especialidad | Etapas/riesgos penales |
+| `/hondurenos-en-espana` | Servicio transnacional | Trámites apostilla/poder |
+| `/preguntas-frecuentes` | Repositorio FAQ | FAQ global |
+| `/guia-legal-abogados-honduras` | Página pilar | Cómo contratar abogado |
+
+**Fuentes de verdad unificadas:**
+- `lib/areas-unified.ts`: puente entre `data/areas-juridicas.ts` (seed canónico) y
+  la tabla DB `areas_juridicas`. Prioriza DB, fallback al TS si no responde.
+- `lib/faq-unified.ts`: documenta los 4 orígenes de FAQ (DB, hubs editorial,
+  áreas embebidas, i18n home DEPRECADA) y expone helpers tipados.
+
+Ver `docs/audits/transformacion-web-publica.md` para el informe completo.
+
 ---
 
 ## Sistema SEO Live

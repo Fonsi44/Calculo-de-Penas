@@ -6,6 +6,45 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — Transformación coherente de la web pública (Release 110)
+
+Reorganización integral de la web pública para eliminar la sensación de
+"crecimiento por acumulación" y convertir el sitio en una experiencia coherente,
+elegante y madura. Override de R5/Sección 6 autorizado por el usuario; el resto
+del protocolo respetado (URLs/slugs intactos, tokens R16, commits atómicos).
+
+### Arquitectura
+- **`lib/areas-unified.ts`**: puente entre seed TS canónico y DB. Resuelve R2.
+- **`lib/faq-unified.ts`**: documenta 4 orígenes de FAQ y expone helpers tipados.
+
+### Componentes nuevos
+- **`EditorialBlock`**: bloque narrativo tipográfico (eyebrow + serif + lista
+  jerárquica) para sustituir grids de tarjetas clonadas.
+- **`IconBadge`**: encapsula patrón icono-contenedor R16 (PENDIENTE de aplicar).
+- Utilidades CSS `.section-breath`, `.rhythm-tight`.
+
+### Variantes en componentes compartidos
+- `BlogHighlights`: `layout="cards"|"list"|"minimal"`.
+- `ConsultationCTA`: `variant="closing"|"inline"|"footer"` + props.
+- `TrustBar`: `variant="expanded"|"compact"` + `limit`.
+
+### Páginas transformadas
+- **Home**: 12 → 7 secciones, 631 → 456 líneas (−28 %). Sin FAQ visual ni Equipo.
+- **`/despacho`**: dueño canónico del Equipo y claims institucionales.
+- **`/derecho-penal`**: sin foto duplicada, CTAs consolidados, contraste rítmico.
+- **`/servicios-juridicos`**: misión catálogo, sin duplicar `/despacho`.
+- **`/hondurenos-en-espana`**: reconectado al catálogo (RelatedServices).
+- **Landings locales**: cierre coherente (ConsultationCTA inline).
+- **5 landings cargo**: RelatedCities al pie (reconectadas al grafo).
+- **`/solicitar-consulta`**: 3 cards Equipo → enlace compacto a `/despacho`.
+
+### Validación
+✅ lint + build + 754 tests + validate:dates + sitemap (213 URLs).
+
+Ver detalle en `docs/audits/transformacion-web-publica.md`.
+
+---
+
 ## 2026-07-04 — Ajuste fuerte de escala visual v2 (Release 109b)
 
 Segunda pasada de compactación tras Release 109. Tokens agresivos que reducen

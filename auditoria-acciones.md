@@ -9,6 +9,38 @@
 
 ---
 
+## Release 110 — Transformación coherente de la web pública (2026-07-04)
+
+**Override de R5 y Sección 6 de AGENTS.md autorizado explícitamente por el usuario.**
+Permite tocar `app/(public)/**/*.tsx` con cambios visuales de composición, ritmo
+vertical, jerarquía y reducción de tarjetas/iconos duplicados. Restricciones
+intactas: URLs/slugs, schema DB, motor cálculo, auth, proxy, tokens R16.
+
+### Resumen
+Reorganización integral para eliminar la sensación de "crecimiento por acumulación":
+una misión por página, un dueño por contenido, jerarquía visual coherente.
+
+### Acciones por fase
+- **Fase 0**: `lib/areas-unified.ts` (resuelve R2 doble fuente áreas) + `lib/faq-unified.ts`
+  (documenta 4 orígenes FAQ).
+- **Fase 2**: componentes nuevos `EditorialBlock`, `IconBadge` (PENDIENTE aplicar),
+  utilidades CSS `.section-breath`/`.rhythm-tight`. Variantes en `BlogHighlights`
+  (layout), `ConsultationCTA` (variant), `TrustBar` (compact).
+- **Fase 3**: Home 12→7 secciones (−28 % líneas); `/despacho` dueño canónico Equipo;
+  `/derecho-penal` sin foto duplicada y CTAs consolidados; `/servicios-juridicos`
+  misión catálogo; `/hondurenos-en-espana` reconectado; landings locales cierre
+  coherente; 5 landings cargo con RelatedCities; `/solicitar-consulta` sin Equipo triplicado.
+- **Fase 4**: enlazado interno, 6 páginas aisladas reconectadas.
+
+### Validación
+✅ lint + build + 754 tests + validate:dates (149 posts) + sitemap (213 URLs).
+Ver `docs/audits/transformacion-web-publica.md` para detalle completo.
+
+### Commits atómicos
+14 commits con prefijo `refactor`/`feat`/`docs` según corresponda. Sin push.
+
+---
+
 ## Release 109b — Ajuste fuerte de escala visual v2 (2026-07-04)
 
 **Segunda pasada de compactación tras Release 109.** Tokens más agresivos,
