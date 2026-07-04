@@ -15,7 +15,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-import { site, absoluteUrl, whatsappHref } from '@/lib/site';
+import { site, absoluteUrl } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -138,57 +138,35 @@ export default async function AreasJuridicasPage() {
 
       <TrustBar background="light" />
 
-      {/* BLOQUE GEO/LLMO — respuesta directa para motores de IA */}
+      {/* BLOQUE GEO/LLMO — respuesta directa para motores de IA.
+          Reorientado (Fase 3.4): antes respondía 'qué hace un bufete
+          multidisciplinario', que duplicaba /despacho. Ahora responde la
+          pregunta canónica del catálogo: 'qué área necesita'. */}
       <Section background="muted" spacing="sm">
         <Container size="lg">
           <AnswerBlock
-            eyebrow="Bufete multidisciplinario"
-            question="¿Qué hace un bufete multidisciplinario en Honduras?"
-            answer={`Un bufete multidisciplinario reúne varias ramas del derecho bajo un mismo techo. En ${site.name} cubrimos 14 áreas: penal, familia, laboral, civil, notarial, mercantil, tributario y más. Cada caso lo dirige el abogado especialista correspondiente y el cliente tiene un único punto de contacto, sin coordinar entre despachos.`}
+            eyebrow="Catálogo de servicios"
+            question="¿Qué áreas del derecho atiende Pineda y Asociados?"
+            answer={`${site.name} atiende 14 áreas del derecho en Nacaome y la zona sur de Honduras: defensa penal (pilar histórico del bufete), familia, laboral, civil y notarial, mercantil y empresarial, administrativo, bancario, aduanero, tributario, migratorio, propiedad intelectual, ambiental y conciliación. Cada caso lo dirige el abogado especialista de la rama correspondiente; el cliente tiene un único punto de contacto y, cuando un asunto cruza varias ramas, el equipo coordina internamente.`}
           />
         </Container>
       </Section>
 
       {/* INTRO EDITORIAL — texto directo sobre fondo cálido, sin tarjeta.
-          Párrafos breves, lectura rápida, jerarquía clara. */}
+          Compactado (Fase 3.4): antes eran 3 párrafos que repetían el claim
+          'multidisciplinar' que vive en /despacho. Ahora un solo párrafo que
+          conserva el keyword '14 áreas' para SEO y conduce al catálogo. */}
       <Section background="warm" spacing="sm">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto prose-editorial">
           <h2 className="font-serif font-bold text-xl md:text-2xl text-primary mb-4">
-            Asesoría jurídica integral en Nacaome, Valle — 14 áreas del derecho bajo un mismo techo
+            14 áreas del derecho bajo un mismo techo, en Nacaome y la zona sur
           </h2>
-          <p className="text-sm md:text-base text-text-secondary leading-relaxed mb-3">
-            Cuando un problema legal toca a su puerta, lo último que necesita es dar vueltas de un
-            despacho a otro. En <strong className="text-text font-semibold">Pineda y Asociados</strong>,
-            con sede en <strong className="text-text font-semibold">Nacaome, Valle</strong>, reunimos
-            las principales ramas del derecho hondureño bajo un mismo techo. Atendemos en toda la zona
-            sur de Honduras: Choluteca, San Lorenzo, Valle y municipios aledaños.
-          </p>
-          <p className="text-sm md:text-base text-text-secondary leading-relaxed mb-3">
-            Nuestra cartera abarca <strong className="text-text font-semibold">14 áreas de práctica</strong>
-            que cubren desde la defensa penal hasta derecho de familia, laboral, civil, notarial,
-            mercantil, tributario y administrativo. Este enfoque multidisciplinario permite abordar
-            casos complejos sin que usted coordine entre varios bufetes.
-          </p>
           <p className="text-sm md:text-base text-text-secondary leading-relaxed">
-            <strong className="text-text font-semibold">Cada área está dirigida por un abogado con
-            experiencia acreditada en juzgados de Honduras.</strong> Cada caso recibe atención
-            personalizada desde el primer contacto, con lenguaje claro y una hoja de ruta realista.
-          </p>
-        </div>
-      </Section>
-
-      {/* CTA SUAVE — transición editorial a contacto */}
-      <Section spacing="sm">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-sm md:text-base text-text-secondary leading-relaxed">
-            Explore el área que corresponde a su situación más abajo. Si prefiere hablar directamente
-            con nuestro equipo, escríbanos por{' '}
-            <a href={whatsappHref('Hola, quisiera consultar sobre un servicio jurídico.')}
-               className="font-semibold text-accent-dark hover:text-primary transition-colors"
-               target="_blank" rel="noopener noreferrer">
-              WhatsApp al {site.whatsappDisplay}
-            </a>{' '}
-            o llámenos al <strong className="text-text">{site.phone}</strong>. La primera conversación es confidencial y sin compromiso.
+            Seleccione el área que corresponde a su situación para acceder a información detallada,
+            subservicios y preguntas frecuentes. Si su caso combina varias ramas —por ejemplo penal
+            y familia, o laboral y mercantil— el equipo coordina internamente para que usted no tenga
+            que gestionar varios despachos. La <Link href="/derecho-penal" className="text-accent-dark hover:text-primary font-semibold">defensa penal</Link> es el pilar histórico del bufete; el resto de
+            áreas se integran alrededor de ella para abordar casos complejos con una sola estrategia.
           </p>
         </div>
       </Section>
@@ -369,9 +347,11 @@ export default async function AreasJuridicasPage() {
       </Section>
 
       {/* GUIAS DESTACADAS + GUÍA LEGAL — enlazado interno servicios→blog.
-          La guía pilar "Cómo contratar abogado" se integra como una tarjeta más
-          en el mismo grid, con idéntico formato visual que los posts del blog. */}
+          layout='list' (Fase 2.2) para diferenciarse de los grids de
+          ServiceCard anteriores y dar respiración. La guía pilar se integra
+          como enlace contextual tras la lista. */}
       <BlogHighlights
+        layout="list"
         slugs={[
           TOP_ORGANIC_GUIDE_SLUGS[2],
           TOP_ORGANIC_GUIDE_SLUGS[3],
