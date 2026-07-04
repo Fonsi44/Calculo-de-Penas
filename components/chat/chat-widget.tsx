@@ -26,7 +26,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Bot, Send, Loader2, X, MessageCircle, Phone, ArrowRight } from 'lucide-react';
 import { telHref, whatsappHref } from '@/lib/site';
 import { chatConfig } from '@/lib/chat/config';
@@ -74,7 +74,6 @@ function whatsappContextual(topic?: string): string {
 
 export function ChatWidget() {
   const pathname = usePathname();
-  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
@@ -201,22 +200,6 @@ export function ChatWidget() {
     [loading, messages],
   );
 
-  const handleQuickReply = useCallback(
-    (text: string) => {
-      if (text === 'Quiero hablar por WhatsApp') {
-        trackChatWhatsAppClicked();
-        window.open(whatsappHref(whatsappContextual()), '_blank', 'noopener,noreferrer');
-        return;
-      }
-      if (text === 'Ver servicios jurídicos') {
-        router.push('/servicios-juridicos');
-        return;
-      }
-      void sendMessage(text);
-    },
-    [router, sendMessage],
-  );
-
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     void sendMessage(input);
@@ -232,9 +215,8 @@ export function ChatWidget() {
   // El portal requiere `document` (solo cliente); en SSR no se renderiza.
   if (!chatConfig.enabled || isPrivateRoute || typeof document === 'undefined') return null;
 
-  // Flujo conversacional natural: al abrir SOLO se muestra el saludo inicial.
-  // Las sugerencias aparecen tras el primer mensaje del usuario, no antes.
-  const showSuggestions = messages.some((m) => m.role === 'user');
+  // Flujo conversacional natural: solo saludo inicial y respuestas del usuario.
+  // Sin sugerencias ni quick replies — el cliente escribe libremente.
 
   // Portal a document.body para evitar stacking contexts complejos.
   // WRAPPER ÚNICO con position:fixed — tanto el botón como el panel
@@ -255,7 +237,8 @@ export function ChatWidget() {
         pointerEvents: 'none',
       }}
     >
-      {/* Panel del chat — ancho fluido con clamp, altura segura con min() */}
+      {/* Panel del chat — ancho fluido proporcional a la resolución,
+          igual que el resto de componentes de la web. */}
       {open && (
         <div
           role="dialog"
@@ -264,15 +247,15 @@ export function ChatWidget() {
           className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text shadow-xl"
           style={{
             pointerEvents: 'auto',
-            width: 'calc(100vw - 1.5rem)',
-            maxWidth: 'clamp(16rem, 25vw, 20rem)',
-            maxHeight: 'min(480px, calc(100dvh - 6rem))',
+            width: 'calc(100vw - 2rem)',
+            maxWidth: 'clamp(18rem, 32vw, 26rem)',
+            maxHeight: 'min(580px, calc(100dvh - 5rem))',
           }}
         >
-          {/* Cabecera compacta */}
-          <div className="flex items-center justify-between gap-1.5 px-1.5 py-1 border-b border-accent/20 bg-primary text-text-inverse rounded-t-lg">
+          {/* Cabecera */}
+          <div className="flex items-center justify-between gap-2 px-2 py-1.5 border-b border-accent/20 bg-primary text-text-inverse rounded-t-lg">
             <div className="flex items-center gap-1.5 min-w-0">
-              <Bot size={11} className="flex-shrink-0 text-accent" aria-hidden="true" />
+              <Bot size={13} className="flex-shrink-0 text-accent" aria-hidden="true" />
               <p className="text-xs font-semibold leading-tight truncate">
                 {chatConfig.assistant.name}
               </p>
@@ -281,16 +264,16 @@ export function ChatWidget() {
               type="button"
               onClick={close}
               aria-label="Cerrar chat"
-              className="p-0.5 rounded hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="p-1 rounded hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <X size={11} aria-hidden="true" />
+              <X size={12} aria-hidden="true" />
             </button>
           </div>
 
           {/* Mensajes (scroll interno) */}
           <div
             ref={scrollRef}
-            className="flex-1 overflow-y-auto px-1.5 py-1 space-y-1 bg-background"
+            className="flex-1 overflow-y-auto px-2 py-1.5 space-y-1 bg-background"
             aria-live="polite"
             aria-label="Conversación"
           >
@@ -299,31 +282,13 @@ export function ChatWidget() {
                 key={i}
                 className={
                   m.role === 'user'
-                    ? 'ml-auto max-w-[85%] rounded-md bg-primary text-text-inverse px-1.5 py-0.5 text-xs'
-                    : 'mr-auto max-w-[92%] rounded-md bg-muted text-text px-1.5 py-0.5 text-xs'
+                    ? 'ml-auto max-w-[85%] rounded-md bg-primary text-text-inverse px-2 py-1 text-xs'
+                    : 'mr-auto max-w-[92%] rounded-md bg-muted text-text px-2 py-1 text-xs'
                 }
               >
                 {m.content}
               </div>
             ))}
-
-            {/* Sugerencias contextuales: SOLO tras el primer mensaje del
-                usuario (no al abrir). Flujo más natural: saludo → usuario
-                escribe → aparecen sugerencias útiles. */}
-            {showSuggestions && !loading && (
-              <div className="flex flex-wrap gap-1 pt-0.5">
-                {chatConfig.assistant.quickReplies.slice(0, 4).map((qr) => (
-                  <button
-                    key={qr}
-                    type="button"
-                    onClick={() => handleQuickReply(qr)}
-                    className="text-left text-xxs px-1.5 py-0.5 rounded border border-accent/30 bg-surface hover:bg-accent/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                  >
-                    {qr}
-                  </button>
-                ))}
-              </div>
-            )}
 
             {loading && (
               <div className="mr-auto flex items-center gap-2 text-text-secondary text-xs px-1">
@@ -339,8 +304,8 @@ export function ChatWidget() {
             )}
           </div>
 
-          {/* CTAs compactos — botones pequeños con padding generoso */}
-          <div className="flex items-center gap-1.5 px-1.5 py-0.5 border-t border-accent/20 bg-muted/50">
+          {/* CTAs */}
+          <div className="flex items-center gap-1.5 px-2 py-1 border-t border-accent/20 bg-muted/50">
             <a
               href={whatsappHref(whatsappContextual())}
               target="_blank"
@@ -369,8 +334,8 @@ export function ChatWidget() {
             </a>
           </div>
 
-          {/* Input compacto */}
-          <form onSubmit={onSubmit} className="flex items-center gap-1.5 px-1.5 py-1 border-t border-accent/20">
+          {/* Input */}
+          <form onSubmit={onSubmit} className="flex items-center gap-1.5 px-2 py-1.5 border-t border-accent/20">
             <label htmlFor="chat-input" className="sr-only">
               Escriba su mensaje
             </label>
@@ -384,15 +349,15 @@ export function ChatWidget() {
               placeholder="Escriba su mensaje…"
               autoComplete="off"
               disabled={loading}
-              className="flex-1 min-w-0 rounded border border-accent/30 bg-background px-1 py-0.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
+              className="flex-1 min-w-0 rounded border border-accent/30 bg-background px-2 py-1.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Enviar mensaje"
-              className="flex-shrink-0 w-5 h-5 rounded bg-accent text-primary flex items-center justify-center hover:opacity-90 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="flex-shrink-0 w-7 h-7 rounded bg-accent text-primary flex items-center justify-center hover:opacity-90 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <Send size={10} aria-hidden="true" />
+              <Send size={12} aria-hidden="true" />
             </button>
           </form>
 
@@ -403,18 +368,17 @@ export function ChatWidget() {
         </div>
       )}
 
-      {/* Botón flotante: abajo-izquierda, dentro del mismo wrapper fixed.
-          pointerEvents auto para que sea clickeable (el wrapper tiene none). */}
+      {/* Botón flotante — tamaño accesible proporcionado */}
       <button
         ref={openBtnRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
         aria-expanded={open}
-        className="w-10 h-10 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className="w-11 h-11 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         style={{ pointerEvents: 'auto' }}
       >
-        {open ? <X size={16} aria-hidden="true" /> : <MessageCircle size={16} aria-hidden="true" />}
+        {open ? <X size={18} aria-hidden="true" /> : <MessageCircle size={18} aria-hidden="true" />}
         {!open && <span className="sr-only">Asistente virtual de Pineda y Asociados</span>}
       </button>
     </div>,
