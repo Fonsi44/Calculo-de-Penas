@@ -349,23 +349,23 @@ export function ChatWidget() {
                 trackChatWhatsAppClicked();
                 trackChatContactClicked('whatsapp');
               }}
-              className="flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <MessageCircle size={8} aria-hidden="true" /> WhatsApp
+              <MessageCircle size={10} aria-hidden="true" /> WhatsApp
             </a>
             <a
               href={telHref()}
               onClick={() => trackChatContactClicked('phone')}
-              className="flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <Phone size={8} aria-hidden="true" /> Llamar
+              <Phone size={10} aria-hidden="true" /> Llamar
             </a>
             <a
               href="/solicitar-consulta"
               onClick={() => trackChatContactClicked('consulta')}
-              className="ml-auto flex items-center gap-0.5 text-xxs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-1 py-0.5"
+              className="ml-auto flex items-center gap-0.5 text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-1 py-0.5"
             >
-              Consulta <ArrowRight size={8} aria-hidden="true" />
+              Consulta <ArrowRight size={10} aria-hidden="true" />
             </a>
           </div>
 
