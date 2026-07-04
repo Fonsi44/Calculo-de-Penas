@@ -26,6 +26,7 @@ import { getPageContent } from '@/lib/page-content-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SOLICITAR_CONSULTA } from '@/data/faqs-hubs';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Consulte a un Abogado en Nacaome, Valle',
@@ -69,6 +70,17 @@ export default async function SolicitarConsultaPage() {
       />
 
       <TrustBar background="light" />
+
+      {/* BLOQUE GEO/LLMO — cómo funciona la consulta. Respuesta directa. */}
+      <Section background="warm" spacing="sm">
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Cómo funciona"
+            question="¿Cómo es el proceso de consulta con Pineda y Asociados?"
+            answer="Primero nos contacta por WhatsApp, llamada o el formulario de esta página. En horario hábil le respondemos, evaluamos su caso de forma confidencial y sin costo, y si procede le entregamos un presupuesto por escrito. Solo cuando usted autoriza por escrito se inicia la representación formal: firmamos contrato, abrimos plazos reales y le mantenemos informado en cada hito del proceso."
+          />
+        </Container>
+      </Section>
 
       <Section spacing="md">
         <div className="grid lg:grid-cols-5 gap-6">

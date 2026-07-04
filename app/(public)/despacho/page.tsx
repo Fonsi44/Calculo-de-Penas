@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
-import { Section, SectionHeader } from '@/components/marketing/section';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { LiveOfficeStatus, StatsCounter } from '@/components/marketing/live-widgets';
@@ -21,6 +21,7 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_DESPACHO } from '@/data/faqs-hubs';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 
 export const metadata: Metadata = buildMetadata({
   // 56 chars. Antes 38 (subutilizado).
@@ -138,6 +139,18 @@ export default async function DespachoPage() {
           </div>
         ) : null;
       })()}
+
+      {/* BLOQUE GEO/LLMO — respuesta directa sobre qué hace el despacho.
+          Optimizado para que motores de IA extraigan la respuesta. */}
+      <Section background="warm" spacing="sm">
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Qué hacemos"
+            question="¿Qué servicios ofrece Pineda y Asociados?"
+            answer={`${site.name} es un bufete jurídico en Nacaome, Valle (Honduras) con más de 15 años de ejercicio profesional. Ofrece defensa penal técnica, derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio, coordinando varias ramas bajo un mismo equipo cuando un caso lo requiere.`}
+          />
+        </Container>
+      </Section>
 
       {/* STATS + LIVE */}
       <Section background="muted" spacing="sm">

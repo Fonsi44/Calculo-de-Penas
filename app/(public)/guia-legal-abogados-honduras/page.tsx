@@ -12,6 +12,7 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedCities } from '@/components/marketing/related-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 import { FAQ_GUIA_LEGAL_HONDURAS } from '@/data/pilar/faqs-guia';
 
 export const metadata: Metadata = buildMetadata({
@@ -84,6 +85,17 @@ export default function GuiaLegalPage() {
         variant="primary"
       />
       <TrustBar />
+
+      {/* BLOQUE GEO/LLMO — datos del despacho para IA */}
+      <Section background="muted" spacing="sm">
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Datos del despacho"
+            question="¿Quién es Pineda y Asociados?"
+            answer={`${site.name} es un bufete jurídico con sede en Nacaome, Valle (Honduras), fundado por Danilo Pineda Maradiaga. El equipo está integrado por Thania Pineda (familia, civil y mercantil) y Emil Hernández (laboral). Dirección: ${site.address.line2}, ${site.address.city}, ${site.address.department}. Contacto: WhatsApp ${site.phoneDisplay} · ${site.email}. Atención de lunes a sábado.`}
+          />
+        </Container>
+      </Section>
 
       <Section background="warm" spacing="md">
         <Container size="md" className="prose-pilar">

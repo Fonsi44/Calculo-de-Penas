@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { ArrowRight, BookOpen, MessageCircle, ShieldAlert, Gavel, FileSearch, Scale, FolderOpen, type LucideIcon } from 'lucide-react';
 import { site, absoluteUrl, whatsappHref } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
-import { Section, SectionHeader } from '@/components/marketing/section';
+import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { AnswerBlock } from '@/components/marketing/answer-block';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -209,6 +210,17 @@ const PRIORITY_PENAL_SLUGS = [
             de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724.
           </p>
         </div>
+      </Section>
+
+      {/* BLOQUE GEO/LLMO — respuesta directa sobre cuándo contactar. */}
+      <Section background="warm" spacing="sm">
+        <Container size="lg">
+          <AnswerBlock
+            eyebrow="Cuándo contactar"
+            question="¿Cuándo debo contactar a un abogado penalista?"
+            answer="Contacte a un abogado penalista de inmediato si usted o un familiar están detenidos, han recibido citación judicial, enfrentan una investigación o han sido imputados. La Constitución de Honduras garantiza el derecho a defensa técnica desde el primer momento y a ser presentado ante un juez en 24 horas. No espere a la audiencia inicial: la asistencia letrada temprana puede condicionar las medidas cautelares y el curso del proceso."
+          />
+        </Container>
       </Section>
 
       <Section spacing="sm">
