@@ -1306,3 +1306,107 @@ details.faq-anim:not([open]) > summary:hover {
   }
 }
 
+/* ============================================================
+   PROSA PILAR — tipografía para páginas de contenido extenso
+   (guías legales, recursos de profundidad). Similar a article-body
+   pero sin los marcadores § en h2. Lectura cómoda y escaneable.
+   ============================================================ */
+.prose-pilar {
+  font-size: 16px;
+  line-height: 1.78;
+  color: var(--color-text-secondary);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+.prose-pilar p {
+  margin-bottom: 1.25rem;
+}
+.prose-pilar h2 {
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-primary);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+.prose-pilar h3 {
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-primary);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.prose-pilar strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+.prose-pilar a {
+  color: var(--color-accent-dark);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.prose-pilar a:hover {
+  color: var(--color-primary);
+}
+.prose-pilar ul, .prose-pilar ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+}
+.prose-pilar li {
+  margin-bottom: 0.4rem;
+}
+.prose-pilar ul li {
+  list-style-type: disc;
+}
+.prose-pilar ol li {
+  list-style-type: decimal;
+}
+@media (max-width: 640px) {
+  .prose-pilar {
+    font-size: 15px;
+    line-height: 1.73;
+  }
+  .prose-pilar h2 {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+  .prose-pilar h3 {
+    font-size: 1.05rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* ============================================================
+   GEO SNIPPET — bloque de respuesta directa optimizado para
+   motores de IA (ChatGPT, Perplexity, Gemini). Fondo cálido
+   muy sutil, borde redondeado, texto escaneable.
+   ============================================================ */
+.geo-snippet {
+  background: rgba(212, 175, 55, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+}
+.geo-snippet p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+}
+.geo-snippet strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .geo-snippet {
+    padding: 1rem;
+  }
+  .geo-snippet p {
+    font-size: 13px;
+  }
+}
+

@@ -16,6 +16,9 @@ import { Card } from '@/components/ui/card';
 import { CopyableAddress } from '@/components/marketing/copyable-address';
 import { MapEmbed } from '@/components/marketing/map-embed';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { PageHero } from '@/components/marketing/page-hero';
+import { TrustBar } from '@/components/marketing/trust-bar';
+import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export const metadata: Metadata = {
   title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department}`,
@@ -61,21 +64,18 @@ export default function ComoLlegarPage() {
 
   return (
     <>
-      <section className="bg-primary text-text-inverse">
-        <Container size="lg" className="py-12 md:py-16">
-          <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-3">
-            Cómo llegar
-          </p>
-          <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight">
-            Visítenos en Nacaome, Valle
-          </h1>
-          <p className="mt-4 text-sm md:text-base text-text-inverse/85 leading-relaxed max-w-2xl">
-            <strong className="font-bold text-accent tabular-nums">GGJ7+239</strong>
-            {' · '}Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA.
-            Use el mapa para orientarse o abra Google Maps/Waze desde aquí.
-          </p>
-        </Container>
-      </section>
+      <Breadcrumbs items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Cómo llegar' },
+      ]} />
+      <PageHero
+        eyebrow="Cómo llegar"
+        title="Visítenos en Nacaome, Valle"
+        subtitle={<>Cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. ANDARA. Use el mapa para orientarse o abra Google Maps/Waze desde aquí.</>}
+        bgImage="/images/como-llegar/oficina-nacaome.webp"
+      />
+
+      <TrustBar background="light" />
 
       {/* MAPA */}
       <Section spacing="md">

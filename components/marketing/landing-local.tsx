@@ -6,7 +6,6 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { type LandingLocal } from '@/data/landings-locales';
-import { CoverageCityGrid, getRelatedCities } from '@/components/marketing/coverage-city-card';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -94,8 +93,6 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
       ],
     },
   ];
-
-  const _nearby = getRelatedCities(landing.slug, 4);
 
   return (
     <>
@@ -297,19 +294,6 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             </a>
           </div>
         </Card>
-      </Section>
-
-      {/* Enlazado interno a otras ciudades (relacionadas, no todas) */}
-      <Section spacing="md">
-        <SectionHeader
-          eyebrow="Cobertura regional"
-          title={`Bufete con cobertura en ${landing.departamento} y la zona sur`}
-          subtitle="También atendemos en otras ciudades cercanas. Seleccione su localidad para ver la cobertura jurídica disponible."
-        />
-        <CoverageCityGrid
-          cities={getRelatedCities(landing.slug, 4)}
-          maxCities={4}
-        />
       </Section>
 
       {ldSchemas.map((schema, i) => (

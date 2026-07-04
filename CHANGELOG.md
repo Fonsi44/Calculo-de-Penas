@@ -6,6 +6,44 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — Consolidación del sistema de diseño + auditoría pública integral (Release 106)
+
+Segunda fase de la auditoría UX/UI. Tras la normalización de páginas principales en R105, se auditaron sistemáticamente todas las páginas públicas restantes (blog, contacto, legales, landings, subpáginas, guías) y se consolidó el sistema de diseño con nuevas utilidades CSS y normalización de componentes.
+
+### Utilidades CSS nuevas
+- **`.prose-pilar`** en `globals.css`: tipografía editorial para páginas de contenido extenso (guías legales, pilares). Similar a `.article-body` pero sin los marcadores § en h2. Max-width 42rem, h2 serif 1.5rem, line-height 1.78, responsive mobile.
+- **`.geo-snippet`** en `globals.css`: bloque de respuesta directa optimizado para motores de IA (AEO/GEO). Fondo acent/5 con borde sutil, texto escaneable, padding controlado. Reemplaza los `bg-accent/5 rounded-2xl p-5 border border-accent/10` inline que se repetían en varias páginas.
+
+### Páginas normalizadas (nuevas en R106)
+- **`/como-llegar`**: el hero inline (section bg-primary con texto manual) se reemplazó por `PageHero` canónico + `Breadcrumbs` + `TrustBar`, alineándolo visualmente con el resto del sitio.
+- **`/guia-legal-abogados-honduras`**: se aplicó la nueva clase `.prose-pilar` al contenido editorial (antes usaba `prose-pilar` sin definición CSS). Ahora tiene tipografía, espaciado y jerarquía consistentes con el sistema.
+- **`/derecho-penal`**: los bloques GEO/AEO con `bg-accent/5 rounded-2xl` inline migraron a la nueva `.geo-snippet` (fuente única de verdad). Sin cambios visuales; solo consolidación técnica.
+
+### Páginas auditadas sin cambios (ya consistentes)
+- **Blog** (`/blog`, `/blog/[categoria]`, `/blog/[categoria]/[slug]`): usa `.article-body` (definido en R9), `BlogHero`, `FeaturedPosts`, `BlogExplorer`, `BlogSidebar`. Arquitectura sólida y consistente.
+- **Contacto** (`/solicitar-consulta`): `PageHero` + `TrustBar` + `AnswerBlock` + formulario + tarjetas de abogados + `HubFaq`. Estructura completa y alineada.
+- **Legales** (`/aviso-legal`, `/politica-privacidad`, etc.): todas usan `LegalDocument` + `LegalSection` + `LegalCallout`. Componentes dedicados con diseño propio para contenido regulatorio.
+- **Landings locales** (`/abogados-en-*`): todas usan `LandingLocalView` + `BlogHighlights`. Patrón uniforme y escalable.
+- **Subpáginas de servicios** (`/servicios-juridicos/[slug]`, `/derecho-penal/[slug]`): usan la misma arquitectura con `Breadcrumbs`, hero, bloques de abogado, secciones, FAQ y CTA.
+- **Header/Footer/Floating buttons**: revisados. Header con sticky + glass + menú activo con indicador dorado. Footer con 5 columnas + disclaimer legal. FloatingContactRail con WhatsApp + teléfono + PWA install. Sin cambios necesarios.
+
+### Arquitectura narrativa canónica por página
+Todas las páginas públicas siguen ahora el mismo orden:
+1. `Breadcrumbs`
+2. `PageHero` (H1, subtitle, CTA opcional)
+3. `TrustBar` (sellos de autoridad)
+4. Bloque introductorio editorial (`IntroEditorial`, `AnswerBlock` o contenido)
+5. Secciones jerarquizadas (`Section` + `SectionHeader`)
+6. `ConsultationCTA` (CTA final premium)
+7. `HubFaq` (FAQ acordeón, solo si aporta valor real)
+
+### Validación
+- `npm run lint`: 0 errores
+- `npm run build`: 360 páginas estáticas
+- `npm test`: 730 tests (33 suites) pasados
+
+---
+
 ## 2026-07-04 — Auditoría UX/UI + sistema de diseño visual público (Release 105)
 
 ### Sistema de diseño

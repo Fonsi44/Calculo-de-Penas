@@ -198,11 +198,11 @@ const PRIORITY_PENAL_SLUGS = [
           para que motores generativos (ChatGPT, Perplexity, Copilot) puedan
           resumir correctamente identidad, especialidad, zona y contacto. */}
       <Section spacing="sm">
-        <div className="max-w-3xl mx-auto bg-accent/5 rounded-2xl p-5 border border-accent/10">
-          <p className="text-sm text-text-secondary leading-relaxed">
-            <strong className="text-text">Pineda y Asociados</strong> es un bufete
-            jurídico en <strong className="text-text">Nacaome, Valle (Honduras)</strong>,
-            especializado en <strong className="text-text">defensa penal</strong> en el
+        <div className="max-w-3xl mx-auto geo-snippet">
+          <p>
+            <strong>Pineda y Asociados</strong> es un bufete
+            jurídico en <strong>Nacaome, Valle (Honduras)</strong>,
+            especializado en <strong>defensa penal</strong> en el
             departamento de Valle, Choluteca y el sur de Honduras. Atiende detenciones,
             audiencias iniciales, medidas cautelares, juicio oral y recursos conforme al
             Código Penal Decreto 130-2017 y reformas vigentes. Atención de lunes a sábado
@@ -223,9 +223,9 @@ const PRIORITY_PENAL_SLUGS = [
       </Section>
 
       <Section spacing="sm">
-        <div className="max-w-4xl mx-auto bg-accent/5 rounded-2xl p-5 border border-accent/10 text-center">
-          <p className="text-sm text-text-secondary">
-            <strong className="text-text">¿Quiere entender el proceso penal paso a paso?</strong>{' '}
+        <div className="max-w-4xl mx-auto geo-snippet text-center">
+          <p>
+            <strong>¿Quiere entender el proceso penal paso a paso?</strong>{' '}
             Consulte nuestra{' '}
             <Link href="/blog/proceso-penal" className="text-accent-dark hover:text-primary underline font-semibold">
               guía completa del proceso penal en Honduras

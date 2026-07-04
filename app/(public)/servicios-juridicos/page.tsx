@@ -11,6 +11,7 @@ import {
   Layers,
   Compass,
   ArrowRight,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -24,7 +25,6 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { Card } from '@/components/ui/card';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
-import { IntroEditorial } from '@/components/marketing/intro-editorial';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -137,35 +137,33 @@ export default async function AreasJuridicasPage() {
 
       <TrustBar background="light" />
 
-      {/* INTRO EDITORIAL — texto orientado a conversión, entidades y SEO/GEO.
-          Refuerza el mensaje multidisciplinario, la experiencia del equipo y
-          cierra con CTA suave que invita al contacto directo. */}
-      <IntroEditorial background="warm">
-        <h2 className="font-serif font-bold text-xl md:text-2xl text-primary mb-4">
-          Asesoría jurídica integral en Nacaome, Valle — 14 áreas del derecho bajo un mismo techo
-        </h2>
-        <p>
-          Cuando un problema legal toca a su puerta, lo último que necesita es dar vueltas de un
-          despacho a otro. En <strong>Pineda y Asociados</strong>, con sede en <strong>Nacaome,
-          Valle</strong>, reunimos las principales ramas del derecho hondureño bajo un mismo techo
-          para que usted y su familia encuentren una sola respuesta: clara, técnica y con seguimiento
-          real. Atendemos clientes en toda la zona sur de Honduras: Choluteca, San Lorenzo, Valle y
-          municipios aledaños.
-        </p>
-        <p>
-          Nuestra cartera abarca <strong>14 áreas de práctica</strong> que cubren desde la defensa
-          penal —nuestra especialidad destacada— hasta derecho de familia, laboral, civil, notarial,
-          mercantil, tributario, administrativo y más. Este enfoque multidisciplinario nos permite
-          abordar casos complejos que cruzan fronteras entre especialidades sin que usted tenga que
-          coordinar entre varios bufetes.
-        </p>
-        <p>
-          <strong>Cada área está dirigida por un abogado con experiencia acreditada en juzgados de
-          Honduras.</strong> Sabemos que el derecho puede sentirse abrumador cuando está en juego su
-          libertad, su patrimonio o su familia. Por eso cada caso recibe atención personalizada desde
-          el primer contacto, con un lenguaje claro y una hoja de ruta realista.
-        </p>
-      </IntroEditorial>
+      {/* INTRO EDITORIAL — texto directo sobre fondo cálido, sin tarjeta.
+          Párrafos breves, lectura rápida, jerarquía clara. */}
+      <Section background="warm" spacing="sm">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-serif font-bold text-xl md:text-2xl text-primary mb-4">
+            Asesoría jurídica integral en Nacaome, Valle — 14 áreas del derecho bajo un mismo techo
+          </h2>
+          <p className="text-sm md:text-base text-text-secondary leading-relaxed mb-3">
+            Cuando un problema legal toca a su puerta, lo último que necesita es dar vueltas de un
+            despacho a otro. En <strong className="text-text font-semibold">Pineda y Asociados</strong>,
+            con sede en <strong className="text-text font-semibold">Nacaome, Valle</strong>, reunimos
+            las principales ramas del derecho hondureño bajo un mismo techo. Atendemos en toda la zona
+            sur de Honduras: Choluteca, San Lorenzo, Valle y municipios aledaños.
+          </p>
+          <p className="text-sm md:text-base text-text-secondary leading-relaxed mb-3">
+            Nuestra cartera abarca <strong className="text-text font-semibold">14 áreas de práctica</strong>
+            que cubren desde la defensa penal hasta derecho de familia, laboral, civil, notarial,
+            mercantil, tributario y administrativo. Este enfoque multidisciplinario permite abordar
+            casos complejos sin que usted coordine entre varios bufetes.
+          </p>
+          <p className="text-sm md:text-base text-text-secondary leading-relaxed">
+            <strong className="text-text font-semibold">Cada área está dirigida por un abogado con
+            experiencia acreditada en juzgados de Honduras.</strong> Cada caso recibe atención
+            personalizada desde el primer contacto, con lenguaje claro y una hoja de ruta realista.
+          </p>
+        </div>
+      </Section>
 
       {/* CTA SUAVE — transición editorial a contacto */}
       <Section spacing="sm">
@@ -358,9 +356,9 @@ export default async function AreasJuridicasPage() {
         </Container>
       </Section>
 
-      {/* GUIAS DESTACADAS — enlazado interno servicios→blog.
-          Cubre categorías no penales (laboral, civil, mercantil, familiar) para
-          reforzar el crawl path hacia posts que no reciben enlaces desde /derecho-penal. */}
+      {/* GUIAS DESTACADAS + GUÍA LEGAL — enlazado interno servicios→blog.
+          La guía pilar "Cómo contratar abogado" se integra como una tarjeta más
+          en el mismo grid, con idéntico formato visual que los posts del blog. */}
       <BlogHighlights
         slugs={[
           TOP_ORGANIC_GUIDE_SLUGS[2],
@@ -373,29 +371,36 @@ export default async function AreasJuridicasPage() {
         ]}
         eyebrow="Artículos relacionados"
         title="Guías de nuestras áreas de práctica"
-        subtitle="Recursos con demanda orgánica real sobre familia, notarial, mercantil y conflictos civiles que suelen preceder una consulta jurídica." 
+        subtitle="Recursos con demanda orgánica real sobre familia, notarial, mercantil y conflictos civiles que suelen preceder una consulta jurídica."
         ctaLabel="Explorar todas las guías del blog"
         ctaHref="/blog"
       />
 
-      {/* Enlace a la página pilar / recurso nacional */}
-      <Section background="muted" spacing="sm">
-        <Container size="lg">
+      <Section spacing="sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <Link
             href="/guia-legal-abogados-honduras"
-            className="block rounded-lg border border-border-light bg-surface p-5 hover:border-accent hover:shadow-md transition-all group"
+            className="group block focus-visible:outline-none"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-dark">
-              Guía legal
-            </p>
-            <p className="mt-1 font-serif text-xl text-primary group-hover:text-accent-dark transition-colors">
-              Cómo contratar abogado en Honduras →
-            </p>
-            <p className="mt-1.5 text-sm text-text-secondary">
-              Colegiación, honorarios, documentos para la primera consulta y errores a evitar. Guía práctica para decidir con criterio.
-            </p>
+            <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
+              <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center mb-3 flex-shrink-0">
+                <BookOpen size={20} aria-hidden="true" />
+              </div>
+              <p className="text-xxs font-medium uppercase tracking-wider text-text-tertiary mb-1.5">
+                Guía legal
+              </p>
+              <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                Cómo contratar abogado en Honduras
+              </h3>
+              <p className="text-sm text-text-secondary mt-2 leading-relaxed line-clamp-2">
+                Colegiación, honorarios, documentos para la primera consulta y errores a evitar. Guía práctica para decidir con criterio.
+              </p>
+              <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark group-hover:text-primary transition-colors">
+                Leer guía <ArrowRight size={12} />
+              </span>
+            </Card>
           </Link>
-        </Container>
+        </div>
       </Section>
 
       <ConsultationCTA />
