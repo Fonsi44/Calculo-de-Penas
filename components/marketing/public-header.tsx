@@ -46,7 +46,7 @@ export function PublicHeader() {
     >
       {/* Barra superior con datos de contacto */}
       <div className="hidden md:block bg-primary-dark/80 border-b border-primary-light/20">
-        <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-between text-xs">
+        <div className="max-w-7xl mx-auto px-4 py-1 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
               href={telHref()}
@@ -74,7 +74,7 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-2.5 md:py-3 flex items-center gap-3">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 py-2 md:py-2.5 flex items-center gap-3">
         <Link
           href="/"
           className="group flex items-center gap-2.5 focus-visible:outline-none flex-shrink-0 cursor-pointer"
@@ -90,7 +90,7 @@ export function PublicHeader() {
             alt={`${site.name} — Logo oficial`}
             width={741}
             height={728}
-            className="relative flex-shrink-0 h-9 sm:h-10 md:h-11 lg:h-12 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
+            className="relative flex-shrink-0 h-8 sm:h-9 md:h-10 lg:h-11 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
             style={{
               filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(212,175,55,0.18))',
               objectFit: 'contain',
@@ -122,7 +122,7 @@ export function PublicHeader() {
                 href={item.href}
                 title={item.title}
                 aria-current={active ? 'page' : undefined}
-                className={`relative px-3 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
+                className={`relative px-2.5 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
                   active
                     ? 'text-accent'
                     : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -149,14 +149,14 @@ export function PublicHeader() {
             aria-label="Contactar por WhatsApp"
             title="Escribir por WhatsApp a Pineda y Asociados — respuesta inmediata"
           >
-            <MessageCircle size={16} aria-hidden="true" />
+            <MessageCircle size={15} aria-hidden="true" />
           </a>
           <Link
             href="/solicitar-consulta#formulario"
             title="Solicitar consulta legal confidencial — Pineda y Asociados"
-            className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none"
+            className="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg bg-accent text-primary text-xs font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none"
           >
-            <Calendar size={14} aria-hidden="true" />
+            <Calendar size={13} aria-hidden="true" />
             Solicitar consulta
           </Link>
         </div>
@@ -184,7 +184,7 @@ export function PublicHeader() {
                   href={item.href}
                   title={item.title}
                   onClick={() => setOpen(false)}
-                  className={`relative px-3 h-11 inline-flex items-center justify-between text-sm font-semibold rounded-md ${
+                  className={`relative px-3 h-10 inline-flex items-center justify-between text-sm font-semibold rounded-md ${
                     active
                       ? 'text-accent bg-primary-light/30'
                       : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -204,7 +204,7 @@ export function PublicHeader() {
               href={telHref()}
               title="Llamar a Pineda y Asociados — abogados en Nacaome"
               onClick={() => setOpen(false)}
-              className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
+              className="px-3 h-10 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
             >
               <Phone size={16} />
               {site.phoneDisplay}
@@ -215,7 +215,7 @@ export function PublicHeader() {
               rel="noopener noreferrer"
               title="Escribir por WhatsApp a Pineda y Asociados"
               onClick={() => setOpen(false)}
-              className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
+              className="px-3 h-10 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
             >
               <MessageCircle size={16} />
               WhatsApp
@@ -224,7 +224,7 @@ export function PublicHeader() {
               href="/solicitar-consulta#formulario"
               title="Solicitar consulta legal con Pineda y Asociados"
               onClick={() => setOpen(false)}
-              className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent"
+              className="mt-2 h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent"
             >
               <Calendar size={16} />
               Solicitar consulta

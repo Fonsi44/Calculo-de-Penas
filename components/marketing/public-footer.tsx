@@ -66,8 +66,8 @@ export function PublicFooter() {
         className="absolute inset-0 pointer-events-none bg-radial-accent-footer"
         aria-hidden="true"
       />
-      <div className="relative max-w-7xl mx-auto px-4 py-14 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+      <div className="relative max-w-7xl mx-auto px-4 py-10 md:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
           {/* Identidad */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
@@ -78,7 +78,7 @@ export function PublicFooter() {
                 alt={`${site.name} — Logo oficial`}
                 width={741}
                 height={728}
-                className="h-14 sm:h-16 w-auto"
+                className="h-12 sm:h-14 w-auto"
                 style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.4)) drop-shadow(0 0 6px rgba(212,175,55,0.16))', objectFit: 'contain' }}
                 loading="lazy"
                 decoding="async"
@@ -99,7 +99,7 @@ export function PublicFooter() {
 
           {/* Servicios */}
           <div>
-            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 Servicios Jurídicos
               </h3>
@@ -117,7 +117,7 @@ export function PublicFooter() {
 
           {/* Despacho */}
           <div>
-            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
               <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
                 El Despacho
               </h3>
@@ -228,7 +228,7 @@ export function PublicFooter() {
           </div>
         </div>
 
-        <div className="divider-accent mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="divider-accent mt-8 pt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <p className="text-xs text-text-inverse/70">
             © {year} {site.name}. Todos los derechos reservados.
           </p>
