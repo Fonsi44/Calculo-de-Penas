@@ -74,10 +74,10 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-2 md:py-2.5 flex items-center gap-3">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1.5 md:py-2 flex items-center gap-2">
         <Link
           href="/"
-          className="group flex items-center gap-2.5 focus-visible:outline-none flex-shrink-0 cursor-pointer"
+          className="group flex items-center gap-2 focus-visible:outline-none flex-shrink-0 cursor-pointer"
           aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
           {/* Logo oficial — PNG transparente (741×728, ~cuadrado).
@@ -90,7 +90,7 @@ export function PublicHeader() {
             alt={`${site.name} — Logo oficial`}
             width={741}
             height={728}
-            className="relative flex-shrink-0 h-8 sm:h-9 md:h-10 lg:h-11 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
+            className="relative flex-shrink-0 h-7 sm:h-8 md:h-9 lg:h-10 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
             style={{
               filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(212,175,55,0.18))',
               objectFit: 'contain',
@@ -104,16 +104,16 @@ export function PublicHeader() {
               sobre subtítulo (eyebrow dorado). Compacto y responsive; queda
               junto al logo en móvil y escritorio. */}
           <span className="flex flex-col leading-tight transition-transform duration-300 ease-out group-hover:scale-105 origin-left">
-            <span className="font-serif font-bold text-text-inverse text-sm sm:text-base whitespace-nowrap">
+            <span className="font-serif font-bold text-text-inverse text-xs sm:text-sm whitespace-nowrap">
               {site.name}
             </span>
-            <span className="text-xxs sm:text-xs font-semibold tracking-eyebrow text-accent whitespace-nowrap">
+            <span className="text-xxs sm:text-xxs font-semibold tracking-eyebrow text-accent whitespace-nowrap">
               Bufete Jurídico
             </span>
           </span>
         </Link>
 
-        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 ml-2 flex-1">
+        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 ml-1 flex-1">
           {NAV.map((item) => {
             const active = isActive(pathname, item.href);
             return (

@@ -53,12 +53,12 @@ export function PageHero({
     : 'eyebrow-rule text-accent-dark';
 
   const titleCls = isPrimary
-    ? 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance'
-    : 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-primary text-balance';
+    ? 'font-serif font-extrabold text-xl sm:text-2xl lg:text-3xl leading-tight text-text-inverse text-balance'
+    : 'font-serif font-extrabold text-xl sm:text-2xl lg:text-3xl leading-tight text-primary text-balance';
 
   const subtitleCls = isPrimary
-    ? 'mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
-    : 'mt-4 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl text-pretty';
+    ? 'mt-3 text-sm md:text-base text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
+    : 'mt-3 text-sm md:text-base text-text-secondary leading-relaxed max-w-3xl text-pretty';
 
   const alignCls = align === 'center' ? 'text-center mx-auto' : 'max-w-3xl';
 
@@ -94,13 +94,13 @@ export function PageHero({
         className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
         aria-hidden="true"
       />
-      <Container size="lg" className="relative py-8 md:py-12 lg:py-14">
+      <Container size="lg" className="relative py-6 md:py-10 lg:py-12">
         <div className={alignCls}>
-          <div className="flex flex-wrap items-center gap-3 mb-4">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className={eyebrowCls}>{eyebrow}</span>
             {badge && (
               <span
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xxs font-bold uppercase tracking-wider ${
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xxs font-bold uppercase tracking-wider ${
                   isPrimary
                     ? 'bg-accent/15 border border-accent/30 text-accent'
                     : 'bg-primary/10 border border-primary/20 text-primary'
@@ -112,7 +112,7 @@ export function PageHero({
           </div>
           <h1 className={titleCls}>{title}</h1>
           {subtitle && <p className={subtitleCls}>{subtitle}</p>}
-          {cta && <div className="mt-6">{cta}</div>}
+          {cta && <div className="mt-5">{cta}</div>}
         </div>
       </Container>
     </section>

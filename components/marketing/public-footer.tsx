@@ -66,8 +66,8 @@ export function PublicFooter() {
         className="absolute inset-0 pointer-events-none bg-radial-accent-footer"
         aria-hidden="true"
       />
-      <div className="relative max-w-7xl mx-auto px-4 py-10 md:py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
+      <div className="relative max-w-7xl mx-auto px-4 py-8 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-6">
           {/* Identidad */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
@@ -78,7 +78,7 @@ export function PublicFooter() {
                 alt={`${site.name} — Logo oficial`}
                 width={741}
                 height={728}
-                className="h-12 sm:h-14 w-auto"
+                className="h-10 sm:h-12 w-auto"
                 style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.4)) drop-shadow(0 0 6px rgba(212,175,55,0.16))', objectFit: 'contain' }}
                 loading="lazy"
                 decoding="async"
@@ -89,10 +89,10 @@ export function PublicFooter() {
               con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
               pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
             </p>
-            <p className="text-xs text-text-inverse/80 leading-relaxed mt-3 text-pretty">
+            <p className="text-xs text-text-inverse/80 leading-relaxed mt-2 text-pretty">
               Aplicación rigurosa del {LEGAL_FRAME_BADGE}.
             </p>
-            <p className="text-xs text-accent/80 leading-relaxed mt-2 text-pretty">
+            <p className="text-xs text-accent/80 leading-relaxed mt-1.5 text-pretty">
               Abogado colegiado en Honduras · Registro profesional vigente.
             </p>
           </div>
