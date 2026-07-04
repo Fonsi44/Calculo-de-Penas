@@ -22,16 +22,16 @@
    límites de legibilidad (clamp, min, max). El texto de
    párrafo se mantiene entre 15px-17px según pantalla.
 
-   Para una web más COMPACTA: baja todas ~0.05 (ej: 0.83, 0.81...)
+   Para una web más COMPACTA: baja todas ~0.05 (ej: 0.75, 0.65...)
    Para una web más AMPLIA:   sube --space-scale y --section-scale
    ============================================================ */
 :root {
-  --ui-scale: 0.94;
-  --font-scale: 0.98;
-  --space-scale: 0.88;
-  --section-scale: 0.86;
-  --component-scale: 0.92;
-  --chat-scale: 0.88;
+  --ui-scale: 0.82;
+  --font-scale: 0.90;
+  --space-scale: 0.70;
+  --section-scale: 0.68;
+  --component-scale: 0.78;
+  --chat-scale: 0.70;
 }
 
 @theme {
