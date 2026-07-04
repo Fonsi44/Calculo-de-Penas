@@ -71,7 +71,7 @@ export default async function MigrantesPage() {
       <TrustBar background="light" />
 
       {/* BLOQUE GEO/LLMO — respuesta directa para motores de IA */}
-      <Section background="light" spacing="sm">
+      <Section background="muted" spacing="sm">
         <Container size="lg">
           <AnswerBlock
             eyebrow="Asistencia legal transfronteriza"
