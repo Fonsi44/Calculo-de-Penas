@@ -582,7 +582,7 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Caridad?', respuesta: 'Nuestra sede física está en Nacaome, a unos 30 km de Caridad. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos penales en Caridad?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, incluyendo audiencia inicial, medidas cautelares y juicio oral.' },
       { pregunta: '¿Cómo solicito una consulta desde Caridad?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Caridad. La primera consulta de evaluación no tiene costo.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la carretera del Litoral Pacífico o el casco urbano de Caridad, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.74, lng: -87.46 },
     postsRelacionados: [
@@ -614,7 +614,7 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Alianza?', respuesta: 'Nuestra sede está en Nacaome, a unos 25 km de Alianza. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando es necesario.' },
       { pregunta: '¿Atienden casos penales en Alianza?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, desde la audiencia inicial hasta el juicio oral y los recursos.' },
       { pregunta: '¿Cómo solicito una consulta desde Alianza?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Alianza. La primera consulta de evaluación no tiene costo.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la zona fronteriza de Alianza o el paso hacia Goascorán, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.78, lng: -87.71 },
     postsRelacionados: [
@@ -646,7 +646,7 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Concepción de María?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 65 km de Concepción de María. Coordinamos la atención por WhatsApp y nos desplazamos para audiencias y diligencias.' },
       { pregunta: '¿Atienden casos penales en Concepción de María?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, coordinando presencia en los juzgados de Choluteca.' },
       { pregunta: '¿Cómo solicito una consulta desde Concepción de María?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. La primera consulta de evaluación no tiene costo.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en el sur de Choluteca o la ruta hacia San Marcos de Colón, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.20, lng: -87.15 },
     postsRelacionados: [
@@ -678,7 +678,7 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en San Antonio de Flores?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 55 km de San Antonio de Flores. Coordinamos la atención por WhatsApp y nos desplazamos cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos penales en San Antonio de Flores?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, coordinando presencia en los juzgados de Choluteca.' },
       { pregunta: '¿Cómo solicito una consulta desde San Antonio de Flores?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. La primera consulta de evaluación no tiene costo.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones o urgencias penales, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
+      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la zona oriental de Choluteca o la ruta a Pespiré, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.45, lng: -87.30 },
     postsRelacionados: [
