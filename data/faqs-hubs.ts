@@ -6,6 +6,12 @@
  *  - Optimización AEO/GEO: respuestas directas y sobrias para asistentes IA.
  *  - Conversión: aclaran dudas frecuentes antes del primer contacto.
  *
+ * Arquitectura FAQ del sitio (ver lib/faq-unified.ts para el mapa completo):
+ *  - DB `faq_entries` + fallback data/faq.ts → /preguntas-frecuentes (global).
+ *  - Este archivo (faqs-hubs.ts) → FAQ editorial por hub comercial.
+ *  - area.faqs embebidas en data/areas-juridicas.ts → páginas de detalle.
+ *  - i18n home inline → DEPRECADA; la home debe usar lib/faq-unified.ts.
+ *
  * Reglas (AGENTS.md R4, R13, R14):
  *  - NO se inventan datos legales, plazos exactos, costos fijos ni resultados.
  *  - Cuando se menciona plazo/costo, va acompañado de "depende del caso" y
