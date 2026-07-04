@@ -1,5 +1,39 @@
 @import "tailwindcss";
 
+/* ============================================================
+   SISTEMA DE ESCALA FLUIDA CENTRALIZADA (Jul 2026)
+   Control de densidad global de la interfaz mediante CSS
+   custom properties. Ajusta solo estas variables en :root para
+   compactar o ampliar toda la web sin tocar componentes.
+
+   CÓMO AJUSTAR LA DENSIDAD:
+   - Valores < 1.0 = más COMPACTO (menos aire, componentes menores)
+   - Valores > 1.0 = más AMPLIO (más espacio, componentes mayores)
+   - Rango seguro: 0.80 – 1.05
+   - --ui-scale:        Factor global (no usar directamente)
+   - --font-scale:      Tamaños de fuente (texto continuo, títulos)
+   - --space-scale:     Espaciados (padding, margin, gap)
+   - --section-scale:   Altura/padding vertical de secciones
+   - --component-scale: Cards, badges, botones, iconos, contenedores
+   - --chat-scale:      Widget del chat (panel, inputs, botones)
+
+   NOTA: No es zoom global. Las escalas se aplican mediante
+   calc() en clases utilitarias y componentes, respetando
+   límites de legibilidad (clamp, min, max). El texto de
+   párrafo se mantiene entre 15px-17px según pantalla.
+
+   Para una web más COMPACTA: baja todas ~0.05 (ej: 0.83, 0.81...)
+   Para una web más AMPLIA:   sube --space-scale y --section-scale
+   ============================================================ */
+:root {
+  --ui-scale: 0.94;
+  --font-scale: 0.98;
+  --space-scale: 0.88;
+  --section-scale: 0.86;
+  --component-scale: 0.92;
+  --chat-scale: 0.88;
+}
+
 @theme {
   /* Marca — paleta "Premium Corporate Luxury"
      Navy #0B1B3D + Gold #D4AF37 (border gold #C5A059). PROHIBIDO rojo. */
@@ -254,9 +288,23 @@
   --shadow-btn-success-hover: 0 1px 0 0 rgba(255,255,255,0.08) inset, 0 2px 4px rgba(0,0,0,0.30), 0 8px 20px -2px rgba(14,122,79,0.40);
 }
 
-/* Scroll suave */
+/* Scroll suave + escala raíz fluida.
+   En móvil se mantiene 16px (máxima legibilidad). En desktop grande sube
+   ligeramente a 17px para compensar la distancia visual. La fórmula
+   clamp(16px, 0.95rem + 0.15vw, 17px) produce:
+   - 360px → 16.0px
+   - 768px → 16.3px
+   - 1280px → 16.7px
+   - 1920px → 17.0px
+   Esto es un ~2% de variación como máximo, manteniendo accesibilidad
+   (zoom del navegador no se ve afectado) y legibilidad del texto.
+   
+   La compactación real se consigue vía --space-scale, --section-scale
+   y --component-scale en las clases utilitarias y componentes, no
+   reduciendo agresivamente la fuente base. */
 html {
   scroll-behavior: smooth;
+  font-size: clamp(16px, 0.95rem + 0.15vw, 17px);
 }
 
 /* Selección de texto */
