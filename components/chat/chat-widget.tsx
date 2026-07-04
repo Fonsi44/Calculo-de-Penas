@@ -236,43 +236,37 @@ export function ChatWidget() {
   // Las sugerencias aparecen tras el primer mensaje del usuario, no antes.
   const showSuggestions = messages.some((m) => m.role === 'user');
 
-  // Portal a document.body: garantiza que `position: fixed` sea siempre
-  // relativo al viewport, independiente de cualquier ancestro del árbol React
-  // (algunos navegadores, notably Chrome, interpretan fixed de forma distinta
-  // cuando hay stacking contexts complejos). El portal elimina toda ambigüedad.
+  // Portal a document.body para evitar stacking contexts complejos.
+  // WRAPPER ÚNICO con position:fixed — tanto el botón como el panel
+  // viven dentro del mismo contenedor fixed, eliminando cualquier
+  // ambigüedad de layout que Chrome tenga con múltiples fixed.
   return createPortal(
-    <>
-      {/* Botón flotante: abajo-izquierda, NO choca con el rail derecho.
-          Position fixed vía inline style para evitar problemas de parsing
-          de Tailwind arbitrary values en Chrome. */}
-      <button
-        ref={openBtnRef}
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
-        aria-expanded={open}
-        className="z-30 w-10 h-10 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 print:hidden safe-bottom"
-        style={{ position: 'fixed', bottom: '1rem', left: '1rem' }}
-      >
-        {open ? <X size={16} aria-hidden="true" /> : <MessageCircle size={16} aria-hidden="true" />}
-        {!open && <span className="sr-only">Asistente virtual de Pineda y Asociados</span>}
-      </button>
-
-      {/* Panel del chat — ancho fluido con clamp, altura segura con min().
-          Position fixed vía inline style (misma razón que el botón). */}
+    <div
+      className="z-30 print:hidden safe-bottom"
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: '0.5rem',
+        padding: '0 0 1rem 1rem',
+        pointerEvents: 'none',
+      }}
+    >
+      {/* Panel del chat — ancho fluido con clamp, altura segura con min() */}
       {open && (
         <div
           role="dialog"
           aria-modal="false"
           aria-label="Asistente virtual"
-          className="z-30 flex flex-col rounded-lg border border-accent/30 bg-surface text-text shadow-xl print:hidden"
+          className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text shadow-xl"
           style={{
-            position: 'fixed',
-            bottom: '4.5rem',
-            left: '1rem',
+            pointerEvents: 'auto',
             width: 'calc(100vw - 1.5rem)',
             maxWidth: 'clamp(16rem, 25vw, 20rem)',
-            maxHeight: 'min(480px, calc(100dvh - 5.5rem))',
+            maxHeight: 'min(480px, calc(100dvh - 6rem))',
           }}
         >
           {/* Cabecera compacta */}
@@ -408,7 +402,22 @@ export function ChatWidget() {
           </p>
         </div>
       )}
-    </>,
+
+      {/* Botón flotante: abajo-izquierda, dentro del mismo wrapper fixed.
+          pointerEvents auto para que sea clickeable (el wrapper tiene none). */}
+      <button
+        ref={openBtnRef}
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
+        aria-expanded={open}
+        className="w-10 h-10 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        style={{ pointerEvents: 'auto' }}
+      >
+        {open ? <X size={16} aria-hidden="true" /> : <MessageCircle size={16} aria-hidden="true" />}
+        {!open && <span className="sr-only">Asistente virtual de Pineda y Asociados</span>}
+      </button>
+    </div>,
     document.body,
   );
 }
