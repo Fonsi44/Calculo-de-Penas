@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import {
   Scale,
   ShieldCheck,
@@ -10,16 +9,10 @@ import {
   CheckCircle2,
   ArrowRight,
   Phone,
-  Briefcase,
   Clock,
   Gavel,
-  Handshake,
-  Building,
-  BriefcaseBusiness,
-  Users,
-  Landmark,
 } from 'lucide-react';
-import { site, telHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { site, telHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -34,7 +27,7 @@ import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { SocialShare } from '@/components/marketing/social-share';
+import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 
 export const metadata: Metadata = {
@@ -126,14 +119,18 @@ export default async function HomePage() {
     { step: 4, title: t('process.step4_title'), desc: t('process.step4_desc') },
   ];
 
-  const WHY = [
-    { icon: MapPin, title: t('why_us.reason1_title'), desc: t('why_us.reason1_desc') },
-    { icon: Scale, title: t('why_us.reason2_title'), desc: t('why_us.reason2_desc') },
-    { icon: ShieldCheck, title: t('why_us.reason3_title'), desc: t('why_us.reason3_desc') },
-    { icon: HeartHandshake, title: t('why_us.reason4_title'), desc: t('why_us.reason4_desc') },
-    { icon: BookOpen, title: t('why_us.reason5_title'), desc: t('why_us.reason5_desc') },
+  const WHY_POINTS = [
+    { icon: MapPin, title: t('why_us.reason1_title'), description: t('why_us.reason1_desc') },
+    { icon: Scale, title: t('why_us.reason2_title'), description: t('why_us.reason2_desc') },
+    { icon: ShieldCheck, title: t('why_us.reason3_title'), description: t('why_us.reason3_desc') },
+    { icon: HeartHandshake, title: t('why_us.reason4_title'), description: t('why_us.reason4_desc') },
+    { icon: BookOpen, title: t('why_us.reason5_title'), description: t('why_us.reason5_desc') },
   ];
 
+  // FAQ i18n: se conserva como datos para el schema JSON-LD (rich result
+  // FAQPage), pero el render visual se mueve a /preguntas-frecuentes para
+  // evitar la triplicación (home + despacho + página FAQ). Mismo SEO AEO,
+  // UI más limpia. Ver Fase 3.1 del plan maestro.
   const FAQ = [
     { q: t('faq.q1'), a: t('faq.a1') },
     { q: t('faq.q2'), a: t('faq.a2') },
@@ -289,178 +286,56 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* POR QUÉ ELEGIRNOS + VISIÓN MULTIDISCIPLINAR (sección fusionada).
-          Antes eran dos secciones "Por qué..." consecutivas con el mismo
-          fondo warm y tarjetas — se sentían repetitivas. Ahora es una sola
-          sección: 5 razones (grid) + sub-bloque multidisciplinar (split). */}
-      <Section background="warm" spacing="md" ariaLabel="Por qué elegirnos" className="relative overflow-hidden">
-        <SectionHeader
-          eyebrow="Por qué elegirnos"
-          title={t('why_us.title')}
-          subtitle={t('why_us.subtitle')}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {WHY.map((w) => (
-            <div key={w.title} className="card-dark p-5">
+      {/* POR QUÉ ELEGIRNOS — bloque editorial narrativo (Fase 3.1).
+          Sustituye al antiguo grid de 5 tarjetas + sub-bloque multidisciplinar
+          de 4 tarjetas + sección Equipo (3 socios). Tres bloques de tarjetas
+          consecutivos generaban monotonía y competían con /despacho, que es
+          el dueño canónico del contenido institucional (historia, equipo,
+          valores, visión multidisciplinar). Ahora es un único bloque
+          editorial con respiración; el claim multidisciplinar y el equipo se
+          referencian vía enlace a /despacho. */}
+      <Section background="warm" spacing="lg" ariaLabel="Por qué elegirnos" className="section-breath">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-5">
+            <EditorialBlock
+              eyebrow="Por qué elegirnos"
+              title={t('why_us.title')}
+              intro={t('why_us.subtitle')}
+              points={WHY_POINTS}
+              cta={{ href: '/despacho', label: 'Conozca el despacho' }}
+            />
+          </div>
+          <div className="lg:col-span-7">
+            <Card padding="md" className="card-premium border-accent/20 h-full">
               <div className="flex items-start gap-3.5">
                 <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
-                  <w.icon size={20} aria-hidden="true" />
+                  <Gavel size={20} aria-hidden="true" />
                 </div>
-                <div className="min-w-0">
-                  <strong className="font-bold text-sm leading-tight text-text text-balance block">
-                    {w.title}
+                <div>
+                  <strong className="font-bold text-sm text-text leading-tight block">
+                    Defensa penal como pilar histórico
                   </strong>
-                  <p className="text-sm leading-relaxed text-text-secondary mt-1.5 text-pretty">
-                    {w.desc}
+                  <p className="text-sm text-text-secondary leading-relaxed mt-1.5 text-pretty">
+                    Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.
+                    Atención directa del abogado responsable en cada área, coordinación interna
+                    cuando un caso cruza varias ramas del derecho, y presupuesto por escrito antes
+                    de cualquier actuación.
                   </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Sub-bloque: visión multidisciplinar dentro de la misma sección */}
-        <div className="mt-10 md:mt-12">
-          <div className="divider-accent mb-8" aria-hidden="true" />
-          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-            <div className="lg:col-span-5">
-              <p className="eyebrow-rule text-accent-dark mb-3">
-                {t('multidisciplinary.title')}
-              </p>
-              <p className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight text-balance">
-                {t('multidisciplinary.subtitle')}
-              </p>
-              <p className="mt-3 text-sm text-text-secondary leading-relaxed text-pretty">
-                {t('multidisciplinary.description')}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
-                  <Handshake size={12} /> Estrategia unificada
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
-                  <BriefcaseBusiness size={12} /> Un solo expediente
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/8 text-primary text-xxs font-bold uppercase tracking-wider">
-                  <Users size={12} /> Equipo coordinado
-                </span>
-              </div>
-              <Link href="/despacho" title="Conozca el bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-                sobre nuestro bufete <ArrowRight size={14} />
-              </Link>
-            </div>
-            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-              {[
-                { icon: Gavel, title: t('multidisciplinary.combo1_title'), desc: t('multidisciplinary.combo1_desc') },
-                { icon: Briefcase, title: t('multidisciplinary.combo2_title'), desc: t('multidisciplinary.combo2_desc') },
-                { icon: Building, title: t('multidisciplinary.combo3_title'), desc: t('multidisciplinary.combo3_desc') },
-                { icon: Landmark, title: t('multidisciplinary.combo4_title'), desc: t('multidisciplinary.combo4_desc') },
-              ].map((it) => (
-                <Card key={it.title} padding="sm" className="h-full flex items-center">
-                  <div className="flex items-center gap-3 w-full">
-                    <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 text-accent-dark flex items-center justify-center flex-shrink-0">
-                      <it.icon size={20} aria-hidden="true" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <strong className="font-bold text-sm text-text leading-tight text-balance block">{it.title}</strong>
-                      <p className="text-sm text-text-secondary leading-relaxed mt-1 text-pretty">
-                        {it.desc}
-                      </p>
-                    </div>
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
+                    <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                      <CheckCircle2 size={12} className="text-accent-dark" /> +15 años de ejercicio
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                      <CheckCircle2 size={12} className="text-accent-dark" /> Estrategia unificada
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                      <CheckCircle2 size={12} className="text-accent-dark" /> Un solo expediente
+                    </span>
                   </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* CONOZCA A SU EQUIPO —3 socios del bufete con su retrato y
-          especialidades. Refuerza E-E-A-T (múltiples autores Person
-          identificados) y alimenta el Knowledge Graph de Google para las
-          entidades «abogado penalista/familia/laboral Nacaome». */}
-      <Section spacing="md" ariaLabel="Conozca a su equipo">
-        <SectionHeader
-          eyebrow="Su equipo"
-          title="Conozca a los abogados que llevarán su caso"
-          subtitle="Tres socios con especialidades complementarias. Atención directa del abogado responsable en cada área, con respaldo multidisciplinar para asuntos que cruzan varias ramas del derecho."
-        />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {[
-            {
-              name: FOUNDER_PROFILE.name,
-              jobTitle: FOUNDER_PROFILE.jobTitle,
-              image: FOUNDER_PROFILE.image,
-              imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
-              tagline: 'Penal · Pilar histórico del bufete',
-              description: 'Más de 15 años de ejercicio profesional. Colegiado en Honduras. Defensa penal, audiencias y recursos en Valle y la zona sur.',
-              href: '/derecho-penal',
-              cta: 'Defensa penal',
-            },
-            {
-              name: THANIA_PROFILE.name,
-              jobTitle: THANIA_PROFILE.jobTitle,
-              image: THANIA_PROFILE.image,
-              imageAltText: THANIA_PROFILE.imageAltText,
-              tagline: 'Familia · Mercantil · Civil · Administrativo',
-              description: 'Socia fundadora del bufete. Atención directa en derecho de familia, civil y notarial, mercantil y empresarial, y administrativo.',
-              href: '/servicios-juridicos/derecho-de-familia',
-              cta: 'Derecho de familia',
-            },
-            {
-              name: EMIL_PROFILE.name,
-              jobTitle: EMIL_PROFILE.jobTitle,
-              image: EMIL_PROFILE.image,
-              imageAltText: EMIL_PROFILE.imageAltText,
-              tagline: 'Laboral · Civil y Notarial',
-              description: 'Socio del bufete. Despidos, prestaciones, accidentes de trabajo, juicio oral laboral y recursos de casación laboral.',
-              href: '/servicios-juridicos/derecho-laboral',
-              cta: 'Derecho laboral',
-            },
-          ].map((p) => (
-            <Card key={p.name} padding="md" className="card-premium border-accent/30 h-full flex flex-col">
-              <div className="relative mx-auto mb-4">
-                <div className="absolute -inset-2 rounded-lg bg-accent/15 blur-xl" aria-hidden="true" />
-                <div className="relative w-28 h-28 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
-                  <Image
-                    src={p.image}
-                    alt={p.imageAltText}
-                    width={224}
-                    height={224}
-                    className="w-full h-full object-cover"
-                    sizes="(max-width: 768px) 70vw, 112px"
-                  />
                 </div>
               </div>
-              <div className="flex-1 flex flex-col justify-center">
-                <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark text-center mb-1">
-                  {p.tagline}
-                </p>
-                <h3 className="font-serif font-bold text-base text-text leading-tight text-center text-balance">
-                  {p.name}
-                </h3>
-                <p className="text-sm text-text-secondary leading-snug mt-0.5 text-center">
-                  {p.jobTitle}
-                </p>
-                <p className="text-sm text-text-secondary leading-relaxed text-pretty mt-3 text-center">
-                  {p.description}
-                </p>
-              </div>
-              <Link
-                href={p.href}
-                className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors self-center"
-              >
-                {p.cta} <ArrowRight size={14} />
-              </Link>
             </Card>
-          ))}
-        </div>
-        <div className="text-center mt-6">
-          <Link
-            href="/despacho"
-            className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
-          >
-            Conozca el despacho <ArrowRight size={14} />
-          </Link>
+          </div>
         </div>
       </Section>
 
@@ -478,10 +353,11 @@ export default async function HomePage() {
       <GoogleReviews />
 
       {/* GUÍAS DESTACADAS — enlazado interno home→blog (crawl path).
-          CTA integrado al blog dentro del propio componente; antes existía
-          un bloque CTA BLOG redundante justo debajo, ya eliminado. */}
+          layout="list" (Fase 2.2) para diferenciar visualmente de los grids
+          de tarjetas anteriores y dar respiración. */}
       <BlogHighlights
         background="muted"
+        layout="list"
         eyebrow="Guías jurídicas destacadas"
         title="Recursos legales para entender su caso"
         subtitle="Guías prácticas sobre las consultas más frecuentes de nuestros clientes en derecho penal, laboral, familiar y notarial."
@@ -490,12 +366,8 @@ export default async function HomePage() {
         slugs={[...TOP_ORGANIC_GUIDE_SLUGS]}
       />
 
-      {/* PREFIERE VERNOS EN PERSONA — sección de cercanía premium.
-          Sustituye a las antiguas secciones "Contact Strip" + "Ubicación",
-          que estaban separadas y se sentían repetitivas. Ahora es un único
-          bloque humano: mensaje + datos de contacto (iconografía unificada)
-          + CTAs claros + mapa contenido. El rail flotante ya ofrece
-          WhatsApp/teléfono en toda la web, por lo que no se duplica aquí. */}
+      {/* VISÍTENOS — bloque de cercanía con datos de contacto + mapa.
+          Conserva el rol de la sección original pero más compacto. */}
       <Section spacing="md" ariaLabel="Visítenos">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           <div className="flex flex-col">
@@ -567,64 +439,17 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* NOTA (Jul 2026): la sección "Cobertura regional" con el grid de
-          ciudades se eliminó de la home por petición explícita. Las landings
-          locales siguen accesibles vía footer (COBERTURA) y enlazado interno
-          desde /derecho-penal y /servicios-juridicos. SEO local intacto. */}
+      {/* CTA FINAL — llamada a la acción premium (componente compartido).
+          Con enlace contextual a /preguntas-frecuentes (antes era una sección
+          visual completa FAQ que duplicaba el hub FAQ canónico). */}
+      <ConsultationCTA
+        variant="closing"
+        subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
+      />
 
-      {/* PREGUNTAS FRECUENTES — FAQ con schema FAQPage.
-          Se eliminó la sección "Preguntas reales" (grid de 6 preguntas sin
-          respuesta) que duplicaba conceptualmente este bloque y enlazaba a
-          la misma ruta /preguntas-frecuentes. Se conserva el FAQ con
-          respuestas + JSON-LD, que es más útil para el usuario y para SEO. */}
-      <Section spacing="md" ariaLabel="Preguntas frecuentes">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div>
-            <SectionHeader
-              eyebrow="FAQ"
-              title={t('faq.title')}
-              subtitle={t('faq.subtitle')}
-            />
-            <Link href="/preguntas-frecuentes" title="Explorar preguntas frecuentes sobre defensa penal y derecho en Honduras" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark">
-              explorar preguntas frecuentes <ArrowRight size={14} />
-            </Link>
-            <Link href="/blog" title="Leer el blog jurídico de Pineda y Asociados — guías y análisis legal" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-              leer el blog jurídico <ArrowRight size={14} />
-            </Link>
-            <Link href="/guia-legal-abogados-honduras" title="Cómo elegir abogado en Honduras: colegiación, honorarios y errores a evitar" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-              guía para contratar abogado en Honduras <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="lg:col-span-2 space-y-3">
-            {FAQ.map((f, i) => (
-              <details
-                key={i}
-                className="group rounded-md border border-border-light bg-surface card-premium open:border-accent/40 faq-anim"
-              >
-                <summary className="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
-                  <span className="font-semibold text-sm text-text leading-snug text-balance">{f.q}</span>
-                  <span className="w-6 h-6 rounded-full bg-surface-alt group-open:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                    <ArrowRight size={12} className="text-text-secondary group-open:rotate-90 group-open:text-accent-dark transition-transform" />
-                  </span>
-                </summary>
-                <div className="faq-content px-4 pb-4 -mt-1 text-sm text-text-secondary leading-relaxed text-pretty" dangerouslySetInnerHTML={{ __html: f.a }} />
-              </details>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* CTA FINAL — llamada a la acción premium (componente compartido) */}
-      <ConsultationCTA />
-
-      {/* COMPARTIR — strip social compacto */}
-      <Section spacing="sm" ariaLabel="Compartir sitio">
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <SocialShare />
-        </div>
-      </Section>
-
-      {/* Schema.org JSON-LD */}
+      {/* Schema.org JSON-LD — FAQPage (las 6 preguntas i18n se conservan
+          para rich results AEO/GEO; el render visual vive en
+          /preguntas-frecuentes para evitar triplicación). */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
     </>
   );
