@@ -4,6 +4,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
+import { RelatedCities } from '@/components/marketing/related-links';
 import { Heart, Users, Baby, FileText, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -179,6 +180,14 @@ export default async function AbogadoDeFamiliaNacaomePage() {
         ctaLabel="Ver todas las guías de derecho de familia"
         ctaHref="/blog/derecho-de-familia"
       />
+
+      {/* ENLAZADO INTERNO (Fase 3.7) — reconecta esta landing de cargo al
+          grafo del sitio. Antes era una hoja huérfana. */}
+      <Section spacing="sm">
+        <Container size="lg">
+          <RelatedCities mentionedCitySlug="nacaome" limit={6} eyebrow="Atendemos en el sur de Honduras" />
+        </Container>
+      </Section>
 
       <script
         type="application/ld+json"

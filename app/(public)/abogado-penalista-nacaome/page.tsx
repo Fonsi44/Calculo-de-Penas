@@ -4,6 +4,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
+import { RelatedCities } from '@/components/marketing/related-links';
 import { Scale, Shield, Clock, Gavel, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -186,6 +187,14 @@ export default async function AbogadoPenalistaNacaomePage() {
         ctaLabel="Ver todas las guías de derecho penal"
         ctaHref="/blog/derecho-penal"
       />
+
+      {/* ENLAZADO INTERNO (Fase 3.7) — reconecta esta landing de cargo al
+          grafo del sitio. Antes era una hoja huérfana. */}
+      <Section spacing="sm">
+        <Container size="lg">
+          <RelatedCities mentionedCitySlug="nacaome" limit={6} eyebrow="Atendemos en el sur de Honduras" />
+        </Container>
+      </Section>
 
       {/* JSON-LD */}
       <script
