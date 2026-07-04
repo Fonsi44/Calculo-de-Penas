@@ -1,14 +1,5 @@
-/**
- * Componente reutilizable para renderizar un bloque FAQ en un hub comercial.
- *
- * Usa `<details>/<summary>` nativos (accesibles por teclado, sin JS) y emite el
- * JSON-LD `FAQPage` para rich results. Reutiliza el patrón visual de la home
- * (animación grid-rows + chevron decorativo) sin introducir nuevo design.
- *
- * El parámetro `faqs` proviene de `data/faqs-hubs.ts` (contenido editorial).
- * El parámetro `url` debe ser la URL absoluta canónica de la página.
- */
 import type { HubFaqItem } from '@/data/faqs-hubs';
+import { ChevronDown } from 'lucide-react';
 
 export function HubFaq({
   faqs,
@@ -40,13 +31,11 @@ export function HubFaq({
 
   return (
     <section id={id} className="py-12 md:py-16" aria-labelledby={`${id}-title`}>
-      <div className="mx-auto max-w-3xl px-4">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
         {eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-dark text-center">
-            {eyebrow}
-          </p>
+          <p className="eyebrow-label text-center">{eyebrow}</p>
         )}
-        <h2 id={`${id}-title`} className="mt-2 text-center font-serif text-2xl md:text-3xl text-primary">
+        <h2 id={`${id}-title`} className="mt-2 text-center font-serif text-2xl md:text-3xl font-extrabold text-primary leading-tight text-balance">
           {title}
         </h2>
         <div className="mt-8 space-y-3">
@@ -55,18 +44,24 @@ export function HubFaq({
               key={i}
               data-faq-question={faq.pregunta}
               data-faq-page={url}
-              className="group rounded-lg border border-border bg-surface px-4 py-3 [&_summary::-webkit-details-marker]:hidden"
+              className="faq-anim group rounded-lg border border-border-light bg-surface shadow-[0_1px_0_0_rgba(255,255,255,0.60)_inset,0_1px_2px_rgba(15,29,58,0.04),0_4px_12px_rgba(15,29,58,0.05)] open:border-accent/40 open:shadow-[0_1px_0_0_rgba(255,255,255,0.70)_inset,0_2px_4px_rgba(15,29,58,0.05),0_8px_20px_rgba(15,29,58,0.07)]"
             >
-              <summary className="flex cursor-pointer items-center justify-between gap-3 text-sm font-semibold text-text-secondary hover:text-primary transition-colors">
-                <span>{faq.pregunta}</span>
-                <span
-                  aria-hidden="true"
-                  className="flex-shrink-0 text-accent-dark transition-transform group-open:rotate-90"
-                >
-                  ›
-                </span>
+              <summary className="flex cursor-pointer items-center justify-between gap-3 px-5 py-4 text-sm font-semibold text-text leading-snug hover:text-primary transition-colors">
+                <span className="text-pretty">{faq.pregunta}</span>
+                <ChevronDown
+                  size={18}
+                  className="flex-shrink-0 text-text-muted group-open:rotate-180 transition-transform duration-200"
+                />
               </summary>
-              <p className="mt-2 text-sm leading-relaxed text-text-secondary">{faq.respuesta}</p>
+              <div className="faq-body">
+                <div className="faq-body-inner">
+                  <div className="border-t border-border/40 px-5 pb-5 pt-3">
+                    <p className="text-sm leading-relaxed text-text-secondary text-pretty">
+                      {faq.respuesta}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </details>
           ))}
         </div>

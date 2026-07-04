@@ -1936,3 +1936,47 @@ se añade enlace directo a WhatsApp + teléfono.
 1. Merge `mejoras-auditoria-seo` a main tras revisión.
 2. Configurar `TURNSTILE_*` y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` en Vercel.
 3. Deploy + medir PageSpeed real sobre 3 URLs representativas.
+
+---
+
+## 2026-07-04 — Fase 2 growth SEO/GEO/Perf/Conversión
+
+**Agente:** ZCode (combined team) · **Rama:** `fase2-growth-seo` (7 commits atómicos) · **Sin push**
+
+### IMPLEMENTADO (7 commits)
+
+| Commit | Área | Acción |
+|---|---|---|
+| fe4cc0d | Auditoría post-Fase 1 | validate-jsonld.mjs + re-validación base |
+| a3f2c1a | Perf Fase 2 | recomprimir 6 WebP + 6 AVIF nuevos (~2.4 MB ahorrados) |
+| fb1e6b5 | Página pilar | /guia-legal-abogados-honduras ~2000 palabras + JSON-LD Article |
+| fe6d541 | Landings locales | 4 P7 con Q4 diferenciadas por contexto geográfico |
+| 5dd7dd2 | GEO/LLMO | answer-block component + 4 aplicaciones + llms.txt con Abogados/Datos del despacho |
+| 99c4b8d | CRO + Analytics | ConsultationCTA 10 ciudades + eventos faq_open/blog_search/internal_click + docs |
+| (este) | Docs | CHANGELOG Release 104 + auditoria-acciones |
+
+### VALIDADO
+- ✅ `npm run lint` — 0 errores
+- ✅ `npm run build` — exitoso
+- ✅ `npm test` — 730/730 (33 archivos)
+- ✅ `validate-jsonld.mjs` — 6 rutas (incluida pilar): 0 errores, sin @id duplicados
+
+### NO VALIDADO / PENDIENTE (R11)
+- PageSpeed live no medido (sin deploy real)
+- CSS purge 148 KB: sin low-hanging fruit identificable con evidencia
+- tsc errors preexistentes en `tests/blog-verify-fix.test.ts` (issue separado)
+- Person.sameAs Thania/Emil (sin URLs reales)
+- breadcrumb_click tracking (sin data-internal-link todavía)
+- view_faq y form_abandon (requieren herramientas adicionales)
+
+### RIESGOS
+- Sin rediseño visual (R5): AnswerBlock usa fondo warm + borde dorado, consistente con design system existente.
+- Intranet/admin intactos (R6).
+- Landings P7: diferenciación ligera en Q4 (no consolidación agresiva). Riesgo de canibalización residual entre las 4 P7 mitigado pero no eliminado.
+- Listener global analytics: safe no-op si GTM/gtag no están disponibles (CSP compatible).
+
+### Próximo paso recomendado
+1. Merge `fase2-growth-seo` a main tras revisión.
+2. Deploy + medir PageSpeed real sobre pilar y 3 landings.
+3. Configurar eventos como conversiones en GA4 (`lead_generated`, `whatsapp_click`).
+4. Monitorizar indexación de /guia-legal-abogados-honduras en GSC tras 1 semana.

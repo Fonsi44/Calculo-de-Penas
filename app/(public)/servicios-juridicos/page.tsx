@@ -24,6 +24,7 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { Card } from '@/components/ui/card';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
+import { IntroEditorial } from '@/components/marketing/intro-editorial';
 import { getAreasFromDb } from '@/lib/areas-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';

@@ -127,15 +127,33 @@ entorno (ver `.env.example`).
 - **SEO local**: 16 landings de ciudad en `data/landings-locales.ts`
   (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo,
   Marcovia, Pespire, Namasigüe, Orocuina, Langue, Amapala, Caridad, Alianza,
-  Concepción de María, San Antonio de Flores) + 2 landings comerciales penales
-  (`/abogado-penalista-nacaome`, `/abogado-penalista-choluteca`).
+  Concepción de María, San Antonio de Flores) + 5 landings comerciales por
+  especialidad (`/abogado-penalista-nacaome`, `/abogado-penalista-choluteca`,
+  `/abogado-de-familia-nacaome`, `/abogado-laboralista-nacaome`,
+  `/abogado-civil-nacaome`).
+- **Página pilar**: `/guia-legal-abogados-honduras` (~2000 palabras) con
+  JSON-LD `Article` + `FAQPage`. Recurso nacional para intención informacional.
 - **RSS feed**: `/blog/feed.xml`.
 
 ### Schema.org (JSON-LD)
 Inyectado vía layout público y páginas: `LegalService`/`LocalBusiness`/`Attorney`,
 `Organization`, `WebSite`, `Person` (3 abogados), `WebPage`, `BreadcrumbList`,
 `FAQPage`, `Service`, `BlogPosting` (con `wordCount` y `articleSection`),
-`ItemList`, `AggregateRating` (solo con reseñas reales de Google).
+`Article` (página pilar), `ItemList`, `AggregateRating` (solo con reseñas reales
+de Google). **`@graph` central** en el layout público unifica las entidades.
+
+### Helper de metadata
+- **`lib/seo.ts`** (`buildMetadata`): fuente única para title/description/OG/
+  Twitter/robots/canonical en páginas públicas. Robots por defecto con
+  `max-image-preview:large, max-snippet:-1`.
+
+### Validadores y scripts SEO
+- **`scripts/validate-jsonld.mjs`**: valida que el JSON-LD prerenderizado tenga
+  `@type` en cada nodo y sin `@id` duplicados.
+- **`scripts/optimize-images.mjs`**: convierte JPG/PNG a WebP+AVIF y recomprime
+  WebP >400 KB (`--recompress-webp`). Reporte en `docs/audits/`.
+- **`scripts/generate-llms-txt.mjs`**: genera `public/llms.txt` con secciones
+  Abogados, Datos del despacho y Contenido recomendado para IA.
 
 ### Variables de entorno (opcionales, ver `.env.example`)
 

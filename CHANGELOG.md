@@ -6,6 +6,74 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — Fase 2 growth SEO/GEO/Perf/Conversión (Release 104)
+
+Implementación de la Fase 2 de growth sobre la rama `mejoras-auditoria-seo` (Release 103 ya mergeada). Trabajo en rama `fase2-growth-seo`. 7 commits atómicos.
+
+### Auditoría post-implementación (commit fe4cc0d)
+- Re-validación: lint OK, 0 refs rotas (`og-image.png`, `decodeJwtPayload`, `SALT_ROUNDS=10`).
+- **`scripts/validate-jsonld.mjs`** (nuevo): parsea HTML prerenderizado y valida que cada nodo JSON-LD tenga `@type` y que no haya `@id` duplicados. Aplicado a 6 rutas: 0 errores.
+- Errores tsc preexistentes en `tests/blog-verify-fix.test.ts` documentados como issue separado (no tocados).
+
+### Performance fase 2 (commit a3f2c1a)
+- **`scripts/optimize-images.mjs`** extendido con modo `--recompress-webp`: re-comprime in-place WebP >400 KB (q72, maxWidth 1920) usando tmp+rename + genera AVIF equivalente (q60).
+- **Aplicado a 6 WebP**: delitos-ambientales (582→486 KB), habeas-corpus (572→485 KB), courthouse (453→383 KB), actos-notariales (514→51 KB ⚡), asuntos-civiles (863→84 KB ⚡), gestion-documental (970→40 KB ⚡). **Ahorro adicional: ~2.4 MB** (total acumulado con Fase 1: ~8 MB en imágenes).
+- **6 AVIF nuevos**: `next/image` los sirve automáticamente cuando el navegador los soporta.
+- Bundle admin libs: verificado que Turbopack ya aísla `@tiptap`, `recharts`, `pdfjs-dist`, `@react-pdf`, `pdfkit` fuera del shared bundle público. Sin acción requerida.
+
+### Página pilar (commit fb1e6b5)
+- **Nueva página `/guia-legal-abogados-honduras`** (~2000 palabras): cómo elegir abogado en Honduras. Estructura H1-H3 impecable: importancia, áreas del derecho, colegiación, honorarios, documentos, errores a evitar, 8 FAQs.
+- **`data/pilar/faqs-guia.ts`**: 8 Q&A originales sin inventar datos legales (R4/R13/R14). Referencias verificadas: Constitución, CP Decreto 130-2017, Colegio de Abogados.
+- **JSON-LD `Article`** con `@id #founder/#legal-service`, `FAQPage` vía `<HubFaq>`.
+- **Sitemap**: añadida con `priority 0.9 monthly` en `canonical-paths.json`.
+- **Enlazado interno**: `/servicios-juridicos` enlaza a la pilar como recurso nacional; la pilar enlaza a 6 servicios, 10 ciudades y 4 posts del blog.
+
+### Landings locales diferenciación (commit fe6d541)
+- Las 4 landings P7 (Caridad, Alianza, Concepción de María, San Antonio de Flores) tenían Q4 "¿Atienden urgencias penales?" clonada con texto idéntico.
+- Cada Q4 reescrita con contexto geográfico único (Caridad→Litoral Pacífico, Alianza→frontera El Salvador/Goascorán, Concepción de María→sur de Choluteca, San Antonio de Flores→ruta a Pespiré).
+- Refuerzo constitucional: "asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas" (Art. 71 Constitución HN).
+
+### GEO/LLMO avanzado (commit 5dd7dd2)
+- **`components/marketing/answer-block.tsx`** (nuevo): componente server snippet-friendly para AEO/GEO (eyebrow + h2 question + p answer directo). Estilo sobrio, fondo warm con borde dorado izquierdo.
+- Aplicado en 4 páginas clave:
+  - `/despacho`: "¿Qué servicios ofrece Pineda y Asociados?"
+  - `/solicitar-consulta`: "¿Cómo es el proceso de consulta?"
+  - `/derecho-penal`: "¿Cuándo debo contactar a un abogado penalista?"
+  - Pilar: "¿Quién es Pineda y Asociados?" (NAP estructurado).
+- **`scripts/generate-llms-txt.mjs`** mejorado:
+  - 3 landings comerciales faltantes añadidas a "Sitio oficial" (familia/laboralista/civil nacaome).
+  - Nueva sección "Abogados del equipo" con Danilo/Thania/Emil y especialidad.
+  - Nueva sección "Datos del despacho" con NAP completo estructurado.
+  - Pilar añadida a "Contenido recomendado para asistentes IA" con 4 recursos pilar.
+
+### CRO + Analytics (commit 99c4b8d)
+- **`ConsultationCTA` microcopy**: añadidas 10 ciudades prioritarias (R18) + mensaje "secreto profesional del abogado" como refuerzo de confianza.
+- **`lib/analytics.ts`**: `trackFaqOpen`, `trackBlogSearch`, `trackInternalClick`.
+- **`components/marketing/analytics-listeners.tsx`** (client, nuevo): listener global en layout público captura `toggle` de `<details>` con `data-faq-question` y `click` en enlaces con `data-internal-link`.
+- `<HubFaq>`: añadidos `data-faq-question` y `data-faq-page` por cada `<details>`.
+- `BlogSearch`: trackea query al clic en resultado + `data-internal-link`.
+- Footer: `mailto:` con `data-internal-link="email_click"`.
+- **`docs/analytics-events.md`**: inventario completo de eventos GA4 activos + Enhanced Measurement.
+
+### Validación
+- `npm run lint` ✓ (0 errores)
+- `npm run build` ✓
+- `npm test` ✓ (730/730, 33 archivos)
+- `validate-jsonld.mjs` ✓ en 6 rutas (incluida pilar): 0 errores, sin `@id` duplicados.
+
+### Pendientes declarados (fuera de scope)
+- PageSpeed live (sin deploy real).
+- CSS purge de 148 KB (sin low-hanging fruit identificable con evidencia; requiere auditoría dedicada).
+- Consolidación de landings P7 (no solicitado por usuario — diferenciación ligera aplicada).
+- `Person.sameAs` Thania/Emil (a la espera de URLs reales).
+- WebSite SearchAction (sin buscador global).
+- Migración hero home a `next/image` (R5 — requiere aprobación visual).
+- `tsc --noEmit` errores preexistentes en `tests/blog-verify-fix.test.ts` (issue separado).
+- `view_faq` (impresión) y `form_abandon` (requieren herramientas adicionales).
+- `breadcrumb_click` tracking (breadcrumbs sin `data-internal-link` todavía).
+
+---
+
 ## 2026-07-04 — seo/perf/a11y/security: implementación auditoría pública (Release 103)
 
 Implementación priorizada de los hallazgos de la auditoría completa de
