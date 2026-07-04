@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { ArrowRight, MapPin, Clock, Phone, MessageCircle, Scale, BookOpen } from 'lucide-react';
-import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
+import { ArrowRight, MapPin, Clock, Phone, Scale, BookOpen } from 'lucide-react';
+import { site, absoluteUrl, telHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { type LandingLocal } from '@/data/landings-locales';
 
 /**
@@ -50,6 +51,7 @@ const SERVICIO_SLUG_MAP: Record<string, string> = {
 export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const canonical = landing.path ?? `/abogados-en-${landing.slug}`;
   const url = absoluteUrl(canonical);
+  // Mensaje contextual para el CTAGroup del hero (Whats App pre-llenado).
   const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
 
   // Schema: FAQPage + BreadcrumbList específicos de la landing.
@@ -212,6 +214,14 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             );
           })}
         </div>
+        <div className="mt-5">
+          <Link
+            href="/servicios-juridicos"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Ver las 14 áreas del derecho que atendemos <ArrowRight size={14} />
+          </Link>
+        </div>
       </Section>
 
       {/* FAQ local */}
@@ -263,44 +273,17 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </Section>
       )}
 
-      {/* CTA final — un único bloque, dinámico por ciudad */}
-      <Section background="muted" spacing="md">
-        <Card padding="lg" className="max-w-3xl mx-auto text-center border-accent/30">
-          <p className="text-xs font-bold uppercase tracking-eyebrow text-accent-dark mb-2">
-            {`Consulta confidencial sin costo en ${landing.ciudad}`}
-          </p>
-          <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary leading-tight mb-2">
-            {`¿Necesita un abogado en ${landing.ciudad}?`}
-          </h2>
-          <p className="text-sm text-text-secondary leading-relaxed">
-            {`Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso. Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales. Atendemos en ${landing.ciudad}${landing.sedeFisica ? '' : ` y toda la zona sur`} de Honduras. Presupuesto por escrito antes de cualquier actuación.`}
-          </p>
-          <div className="mt-5 flex flex-col sm:flex-row gap-2 justify-center">
-            <a
-              href={whatsappHref(whatsappMsg)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover hover:opacity-95 transition-opacity focus-visible:outline-none"
-            >
-              <MessageCircle size={18} aria-hidden="true" />
-              WhatsApp: {site.whatsappDisplay}
-            </a>
-            <Link
-              href="/solicitar-consulta#formulario"
-              className="btn-shimmer inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-primary text-white text-sm font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors"
-            >
-              Solicitar consulta <ArrowRight size={16} />
-            </Link>
-            <a
-              href={telHref()}
-              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-surface border border-border-strong text-primary text-sm font-bold btn-shadow-secondary btn-shadow-secondary-hover hover:border-accent transition-colors focus-visible:outline-none"
-            >
-              <Phone size={18} aria-hidden="true" />
-              Llamar ahora
-            </a>
-          </div>
-        </Card>
-      </Section>
+      {/* CTA final — coherente con el resto del sitio (Fase 3.6).
+          Antes era una card manual personalizada con 3 botones que rompía el
+          patrón de cierre de las demás páginas. Ahora usa ConsultationCTA
+          variant='inline' con título contextualizado por ciudad; los CTAs
+          duales (WhatsApp + Llamar) los aporta el componente compartido. */}
+      <ConsultationCTA
+        variant="inline"
+        eyebrow={`Consulta confidencial sin costo en ${landing.ciudad}`}
+        title={`¿Necesita un abogado en ${landing.ciudad}?`}
+        subtitle={`Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso. Atendemos en ${landing.ciudad}${landing.sedeFisica ? '' : ' y toda la zona sur'} de Honduras, con presupuesto por escrito antes de cualquier actuación.`}
+      />
 
       {ldSchemas.map((schema, i) => (
         <script
