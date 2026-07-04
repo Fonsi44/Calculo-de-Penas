@@ -130,11 +130,14 @@ export default async function HomePage() {
     { icon: BookOpen, title: t('why_us.reason5_title'), description: t('why_us.reason5_desc') },
   ];
 
-  // FAQ i18n: se conserva como datos para el schema JSON-LD (rich result
-  // FAQPage), pero el render visual se mueve a /preguntas-frecuentes para
-  // evitar la triplicación (home + despacho + página FAQ). Mismo SEO AEO,
-  // UI más limpia. Ver Fase 3.1 del plan maestro.
-  const FAQ = [
+  // FAQ i18n home — LEGACY STRUCTURED-DATA (no UI, no fuente canónica).
+  // Único rol: alimentar el schema JSON-LD FAQPage (rich result) de la home.
+  // No se renderiza visible en la home (ver transformación Fase 3.1); la FAQ
+  // visible vive en /preguntas-frecuentes. La fuente canónica de FAQ comercial
+  // es lib/faq-unified.ts (getFaqsForHub). Estas 6 Q/A i18n se conservan
+  // únicamente para sostener el rich result de la home sin introducir
+  // duplicación visual. Marcar como LEGACY: no ampliar ni usar como modelo.
+  const FAQ_HOME_LEGACY = [
     { q: t('faq.q1'), a: t('faq.a1') },
     { q: t('faq.q2'), a: t('faq.a2') },
     { q: t('faq.q3'), a: t('faq.a3') },
@@ -146,7 +149,7 @@ export default async function HomePage() {
   const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: FAQ.map((f) => ({
+    mainEntity: FAQ_HOME_LEGACY.map((f) => ({
       '@type': 'Question',
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
