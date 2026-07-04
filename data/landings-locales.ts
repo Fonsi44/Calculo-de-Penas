@@ -30,8 +30,10 @@ export type LandingLocal = {
   sedeFisica: boolean;
   /** Distancia aproximada en km desde la sede en Nacaome */
   distanciaKm: number;
-  /** <title> SEO (≤ 60 chars aprox.) */
+  /** <title> SEO (≤ 60 chars aprox.). Si se omite, se genera variante por tipo de ciudad. */
   title: string;
+  /** Variante de title SEO específica (opcional). Si se omite, landingMetadata genera una por tipo de ciudad para evitar canibalización. */
+  seoTitle?: string;
   /** Meta description (≤ 155 chars) */
   description: string;
   /** Eyebrow del hero */
@@ -745,18 +747,30 @@ export const LANDING_OG_IMAGES: Record<string, string> = {
 export function landingMetadata(landing: LandingLocal): Metadata {
   const canonicalPath = landing.path ?? `/abogados-en-${landing.slug}`;
   const ogImage = LANDING_OG_IMAGES[landing.slug] ?? '/og-image.webp';
-  // Title SEO-friendly (~38-44 chars): "Abogados en {ciudad} | Pineda y Asociados".
-  // Renuncia al claim "15+ años" en title (pasa a H1/subtítulo) para no exceder
-  // 60 chars en SERP.
-  const seoTitle = `Abogados en ${landing.ciudad} | Pineda y Asociados`;
+  // Title SEO diferenciado por tipo de ciudad para evitar canibalización:
+  // antes TODAS las landings compartían "Abogados en {ciudad} | Pineda y
+  // Asociados", compitiendo entre sí en SERP. Ahora cada tipo de ciudad tiene
+  // una variante única (≤60 chars). Si la landing trae `seoTitle` propio,
+  // tiene prioridad.
+  const seoTitle =
+    landing.seoTitle ??
+    (landing.sedeFisica
+      ? `Abogados en ${landing.ciudad} · Bufete con Sede en Valle`
+      : landing.distanciaKm <= 60
+        ? `Abogados en ${landing.ciudad} | Sur de Honduras`
+        : `Abogados en ${landing.ciudad} | Bufete desde Nacaome`);
   return buildMetadata({
     title: seoTitle,
     description: landing.description,
     canonicalPath,
+    // Keywords des-canibalizadas: NO incluye "abogado penalista {ciudad}"
+    // (esa keyword la targetean las landings de cargo dedicadas
+    // /abogado-penalista-nacaome y /abogado-penalista-choluteca).
+    // Se sustituye por "bufete jurídico {ciudad}" no competitiva.
     keywords: [
       `abogados en ${landing.ciudad}`,
       `bufete de abogados ${landing.ciudad}`,
-      `abogado penalista ${landing.ciudad}`,
+      `bufete jurídico ${landing.ciudad}`,
       `abogado ${landing.departamento} Honduras`,
       `consulta jurídica ${landing.ciudad}`,
     ],
