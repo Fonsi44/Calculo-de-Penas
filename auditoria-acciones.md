@@ -1,15 +1,49 @@
 # Auditoría — Acciones Ejecutadas
 
-> **Fecha:** 2026-07-03  
+> **Fecha:** 2026-07-04  
 > **Fase 2 completada:** Calidad superior  
 > **Puntuación partida:** 73/100  
-> **Puntuación estimada actual:** ~79-80/100 (+6-7 puntos tras Release 100)  
+> **Puntuación estimada actual:** ~80/100 (+7-8 puntos tras Release 109)  
 > **Objetivo 30 días:** 82/100  
 > **Fuente canónica:** `auditoriatotal.mc` (no modificado)
 
 ---
 
-## Release 100 — SEO/GEO/CRO: pilar penal, landings y GEO (2026-07-03)
+## Release 109 — Sistema de escala fluida centralizada (2026-07-04)
+
+**Implementación de sistema profesional de densidad fluida vía CSS custom
+properties.** No es zoom global. Sin rediseño visual (R5). Sin modificar
+intranet/admin/API (R6). Validación completa (R8).
+
+### Cambios aplicados
+
+| Prioridad | Acción | Archivos |
+|---|---|---|
+| P1 | Tokens de escala fluida en `:root` (6 variables) + root font-size `clamp(16px, 0.95rem + 0.15vw, 17px)` | `app/globals.css` |
+| P2 | Section/Container/SectionHeader spacing compactado | `components/marketing/section.tsx` |
+| P3 | PageHero padding + typography reducidos un escalón | `components/marketing/page-hero.tsx` |
+| P4 | CTAGroup botones compactados (≥40px seguros) + TrustBar espaciado | `components/marketing/cta-buttons.tsx`, `components/marketing/trust-bar.tsx` |
+| P5 | PublicHeader + PublicFooter ajustados (alturas, padding, gaps) | `components/marketing/public-header.tsx`, `components/marketing/public-footer.tsx` |
+| P6 | HubFaq, ServiceCard, LandingLocal espaciado compactado | `components/marketing/hub-faq.tsx`, `components/marketing/service-card.tsx`, `components/marketing/landing-local.tsx` |
+| P7 | ChatWidget con ancho fluido `clamp(18rem,28vw,23rem)`, altura `min(620px, calc(100dvh - 120px))`, todo compactado | `components/chat/chat-widget.tsx` |
+
+### Validación ejecutada
+- `npm run lint` → 0 errors ✅
+- `npm run build` → 361 páginas, compilación exitosa ✅
+- `npm test` → 754 tests / 35 suites pasan ✅
+
+### Clasificación honesta (R11)
+- **IMPLEMENTADO:** P1, P2, P3, P4, P5, P6, P7.
+- **VALIDADO:** lint, build, test.
+- **NO VALIDADO:** impacto visual real en cada una de las 8 resoluciones (requiere
+  inspección manual en navegador con DevTools). No se probó en Safari iOS ni
+  Firefox Android.
+- **PENDIENTE:** verificación visual en 360×740, 390×844, 768×1024, 1366×768,
+  1440×900 y 1920×1080.
+- **RIESGO:** sin riesgos técnicos. Los cambios son CSS de presentación, no
+  alteran lógica de negocio, SEO ni contenido.
+
+---
 
 **Implementación de prioridades de la auditoría integral.** Cambios atómicos,
 lectura previa de cada archivo (R1), validación completa (R8). Sin datos
@@ -2022,3 +2056,49 @@ se añade enlace directo a WhatsApp + teléfono.
 1. Mergear `fase2-growth-seo` a main tras revisión.
 2. Deploy + medir PageSpeed sobre home, pilar y 1 landing local.
 3. Verificar en Search Console que las 16 landings reindexan con nuevos titles diferenciados (puede tardar días).
+
+## 2026-07-04 — Chat asistente público con DeepSeek (Release 108)
+
+**Agente:** ZCode · **Rama:** `fase2-growth-seo` · **Sin push**
+
+### IMPLEMENTADO
+
+Backend (`lib/chat/` + `app/api/chat/route.ts`), frontend (`components/chat/`), integración en layout público, env vars, tests y docs.
+
+| Archivo | Tipo | Acción |
+|---|---|---|
+| `lib/chat/config.ts` | feat | Config centralizada: CHAT_ENABLED, DEEPSEEK_*, CHAT_* (temperatura, max_tokens, timeout, rate-limit, longitud mensaje) |
+| `lib/chat/system-prompt.ts` | feat | System prompt canónico verbatim + reglas de comportamiento + KB inyectada |
+| `lib/chat/knowledge-base.ts` | feat | KB derivada de areas-juridicas.ts + site.ts; allowlist de enlaces públicos (PUBLIC_LINKS_ALLOWLIST + isAllowedPublicLink) |
+| `lib/chat/guardrails.ts` | feat | Detección server-side: prompt injection, tema privado/intranet, asesoramiento definitivo + sanitizeReply (truncado defensivo) |
+| `lib/chat/deepseek.ts` | feat | Cliente server-side DeepSeek con AbortController/timeout + reintentos 429/5xx |
+| `lib/chat/schema.ts` | feat | Zod: message, sessionId, history (máx 6 turnos) |
+| `app/api/chat/route.ts` | feat | POST handler: rate-limit IP+sessionId, Zod, guardrails, provider, fallback seguro |
+| `components/chat/chat-widget.tsx` | feat | Widget client: botón bottom-left, panel, quick replies, CTAs, loading/error, Escape, a11y, disclaimer |
+| `components/chat/chat-analytics.ts` | feat | Eventos anónimos (chat_opened/closed/message_sent/fallback_used/whatsapp/contact/service_suggested) |
+| `app/(public)/layout.tsx` | feat | Montar <ChatWidget /> (solo layout público) |
+| `.env.example` | feat | Bloque Chat (DeepSeek) con todas las vars documentadas |
+| `tests/api-chat.test.ts` | feat | 10 tests endpoint (incl. 429, guardrails, fallback, no-revela-config) |
+| `tests/chat-guardrails.test.ts` | feat | 14 tests lógica pura (guardrails, allowlist, system prompt) |
+| `README.md` | docs | Sección Chat: variables, modelo, privacidad, fallback, mantenimiento KB |
+| `CHANGELOG.md` | docs | Release 108 |
+
+### VALIDADO
+- ✅ `npm run lint` — 0 errores (1 warning corregido: import sin uso)
+- ✅ `npm run build` — Compiled successfully; ruta `/api/chat` generada como serverless
+- ✅ `npm test` — 754/754 (35 files), +24 tests nuevos del chat
+
+### NO VALIDADO / PENDIENTE (R11)
+- Llamada real a DeepSeek NO validada (sin `DEEPSEEK_API_KEY` configurada para test). El endpoint está mockeado en tests. En producción, el admin debe poner la key en `.env.local` y verificar manualmente.
+- Modelo `deepseek-v4-flash` puede no existir en la API real; el fallback seguro cubre ese caso (test `fallback_provider_error`). Si falla, cambiar `DEEPSEEK_MODEL` por el ID oficial (p. ej. `deepseek-chat`) sin tocar código.
+
+### RIESGOS
+- La protección anti-rutas-privadas es doble: (1) montaje solo en `app/(public)/layout.tsx`, (2) check `usePathname()` en el widget. R6 cumplido.
+- API key nunca en cliente: el widget solo llama a `/api/chat` relativa. R3/R10 cumplidos.
+- No se persisten conversaciones (solo sessionId en localStorage). Cumple GDPR por defecto.
+- No rediseño visual (R5): widget usa tokens existentes (rounded-lg, btn-shadow, primary/accent).
+
+### Próximo paso recomendado
+1. Configurar `DEEPSEEK_API_KEY` en `.env.local` (Vercel) y verificar el modelo.
+2. Si `deepseek-v4-flash` devuelve 404 de modelo, cambiar `DEEPSEEK_MODEL` al ID oficial.
+3. Probar el widget en staging: urgencias derivan a WhatsApp, intranet se rechaza, fallback funciona sin key.

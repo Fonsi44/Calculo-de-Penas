@@ -6,6 +6,84 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## 2026-07-04 — Sistema de escala fluida centralizada (Release 109)
+
+Sistema profesional de escala fluida para toda la web pública. Seis CSS custom
+properties en `:root` controlan la densidad global. Sin zoom, sin hacks, sin
+rediseño. El root font-size usa `clamp(16px, 0.95rem + 0.15vw, 17px)` para
+mantener legibilidad (±2% variación). La compactación real se consigue en
+spacing, secciones, componentes y chat.
+
+### Tokens de escala (`app/globals.css`)
+```
+--ui-scale: 0.94        # global (no usar directamente)
+--font-scale: 0.98      # texto continuo y títulos
+--space-scale: 0.88     # paddings, margins, gaps
+--section-scale: 0.86   # altura/padding vertical de secciones
+--component-scale: 0.92 # cards, badges, botones, iconos
+--chat-scale: 0.88      # widget del chat
+```
+Documentación inline: "Para web más COMPACTA baja todas ~0.05, para más AMPLIA
+sube --space-scale y --section-scale".
+
+### Componentes refactorizados
+- **Section/Container/SectionHeader**: Container `px-4 sm:px-6` → `px-3 sm:px-5`,
+  SPACING reducido un escalón, SectionHeader `mb-10` → `mb-8`.
+- **PageHero**: padding vertical `py-10 md:py-14 lg:py-16` → `py-8 md:py-12 lg:py-14`.
+  Títulos bajan un escalón (`text-3xl sm:text-4xl lg:text-5xl` → `text-2xl sm:text-3xl lg:text-4xl`).
+- **CTAGroup**: botones inline/primary de `h-12` a `h-11` (44px ≥ 40px). Compact
+  de `h-10` a `h-9` (36px ≥ 36px táctil). Gaps reducidos. UrgencyCallout y
+  ContactStrip con padding e iconos reducidos.
+- **TrustBar**: padding sección `py-8 md:py-12` → `py-6 md:py-10`. Iconos
+  `w-11 h-11` → `w-10 h-10`.
+- **PublicHeader**: barra principal `py-2.5 md:py-3` → `py-2 md:py-2.5`. Logo
+  `h-9/h-12` → `h-8/h-11`. Nav `h-9` mantenido. Drawer móvil `h-11` → `h-10`
+  (40px táctil).
+- **PublicFooter**: padding `py-14 md:py-16` → `py-10 md:py-14`. Grid gap
+  `gap-8 lg:gap-10` → `gap-6 lg:gap-8`. Logo `h-14 sm:h-16` → `h-12 sm:h-14`.
+- **HubFaq**: sección padding reducido, title `text-2xl md:text-3xl` →
+  `text-xl md:text-2xl`, summary/body padding compactado.
+- **ServiceCard**: contenido `p-5 md:p-6` → `p-4 md:p-5`. Title `text-lg md:text-xl`
+  → `text-base md:text-lg`.
+- **LandingLocal**: hero padding reducido, title baje un escalón, NAP grid y CTA
+  spacing compactados. Servicios grid `gap-5` → `gap-4`.
+- **ChatWidget**: ancho fluido `clamp(18rem, 28vw, 23rem)` + `calc(100vw-2rem)`.
+  Altura segura `min(620px, calc(100dvh - 120px))`. Botón flotante `w-11 h-11`.
+  Cabecera, burbujas, CTA bar, input y disclaimer compactados con --chat-scale.
+
+Chat conversacional orientado a conversión y orientación inicial, montado en la
+web pública (`app/(public)/layout.tsx`). Conecta con DeepSeek v4 Flash vía
+endpoint server-side `/api/chat`. La API key nunca sale del servidor; el widget
+solo llama a la ruta relativa same-origin.
+
+### Backend (`lib/chat/`, `app/api/chat/route.ts`)
+- **Config centralizada** (`lib/chat/config.ts`): `CHAT_ENABLED`, `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL`, `DEEPSEEK_BASE_URL`, `CHAT_TEMPERATURE`, `CHAT_MAX_TOKENS`, `CHAT_TIMEOUT_MS`, límites de longitud y rate-limit.
+- **System prompt canónico** (`system-prompt.ts`): texto verbatim del requerimiento; no abogado, no asesoramiento definitivo, no inventar leyes, derivar urgencias a WhatsApp/teléfono.
+- **Base de conocimiento** (`knowledge-base.ts`): derivada de `data/areas-juridicas.ts` y `lib/site.ts`. Allowlist de enlaces públicos (`PUBLIC_LINKS_ALLOWLIST` + `isAllowedPublicLink`): el asistente solo puede citar páginas públicas, nunca rutas privadas/API/técnicas.
+- **Guardrails server-side** (`guardrails.ts`): detección de prompt injection, temas privados/intranet, solicitudes de asesoramiento definitivo (cálculo de penas, estrategia, escritos). Respuestas prefijadas sin llamar al proveedor.
+- **Cliente DeepSeek** (`deepseek.ts`): fetch con `AbortController` (timeout), reintentos en 429/5xx. Reutiliza patrón de `lib/sgie/ia-documental.ts`.
+- **Endpoint `/api/chat`**: rate-limit doble (por IP + por sessionId vía `rateLimits`), validación Zod, guardrails, llamada al proveedor, fallback seguro. No revela configuración interna.
+
+### Frontend (`components/chat/`)
+- **Widget** (`chat-widget.tsx`): botón flotante `bottom-4 left-4` (no tapa el `FloatingContactRail` de la derecha). Panel con mensaje inicial, quick replies, CTAs (WhatsApp contextual, llamar, solicitar consulta), estados loading/error, scroll interno, cierre con Escape, aria-labels, foco visible. Disclaimer visible: "Este chat ofrece orientación inicial y no sustituye una consulta jurídica."
+- **Salvaguarda anti-rutas-privadas**: además del montaje en layout público, el widget devuelve `null` en `/intranet`, `/admin`, `/login`, `/dashboard`, `/panel`, `/auth`, `/private`, `/api`, `/cargar`, `/preview`.
+- **Analytics anónimos** (`chat-analytics.ts`): `chat_opened`, `chat_closed`, `chat_message_sent`, `chat_fallback_used`, `chat_whatsapp_clicked`, `chat_contact_clicked`, `chat_service_suggested`. Sin contenido de conversación.
+- **sessionId** en `localStorage` (sin conversación completa); generado perezosamente en el primer envío.
+
+### Fallback sin IA
+Si falta `DEEPSEEK_API_KEY`, el modelo falla (timeout/HTTP error) o se agota el rate-limit, el widget sigue ofreciendo WhatsApp, llamada, contacto y servicios. Respuesta `source: fallback_*`.
+
+### Modelo
+`DEEPSEEK_MODEL=deepseek-v4-flash` (requerimiento del proyecto). Modificable por env: si el proveedor usa otro identificador oficial, basta cambiar la variable sin tocar código.
+
+### Tests (24 nuevos, 754 totales)
+`tests/api-chat.test.ts` (10) + `tests/chat-guardrails.test.ts` (14): aparece en públicas; no revela configuración; prompt injection bloqueado; intranet rechazada; asesoramiento definitivo deriva; fallback sin API key; allowlist impide rutas privadas; rate-limit 429; system prompt íntegro.
+
+### Validación
+`lint` ✓ (0 errores), `build` ✓ (ruta `/api/chat` generada), `test` ✓ (754/754).
+
+---
+
 ## 2026-07-04 — Fase 2 advanced SEO/GEO/CRO/analytics (Release 107)
 
 Segunda fase avanzada de SEO/GEO/performance/CRO sobre la rama `fase2-growth-seo`. 8 commits atómicos (a778d4b → 7829bf8). Validación final: `lint` ✓, `build` ✓ (360 rutas estáticas), `test` ✓ (730/730).
