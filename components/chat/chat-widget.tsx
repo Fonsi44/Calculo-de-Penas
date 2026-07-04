@@ -24,7 +24,7 @@
  * el layout público; el check de ruta privada es defensa en profundidad.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 import { Bot, Send, X, MessageCircle, Phone, ArrowRight } from 'lucide-react';
@@ -82,6 +82,17 @@ export function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  // `mounted` garantiza que el primer render del cliente coincida con el del
+  // server (null). Antes se usaba `typeof document === 'undefined'`, lo que
+  // provocaba un mismatch de hidratación (#418): el server renderizaba null y
+  // el cliente renderizaba el portal en el primer paint. useSyncExternalStore
+  // es la forma canónica de leer "estamos en cliente" de forma segura para
+  // hidratación (getServerSnapshot devuelve false; snapshot cliente true).
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -212,8 +223,10 @@ export function ChatWidget() {
 
   // Salvaguarda anti-rutas-privadas (defensa en profundidad). La protección
   // principal es el montaje en app/(public)/layout.tsx.
-  // El portal requiere `document` (solo cliente); en SSR no se renderiza.
-  if (!chatConfig.enabled || isPrivateRoute || typeof document === 'undefined') return null;
+  // El portal requiere `document` (solo cliente). Usamos `mounted` (no
+  // `typeof document`) para que el primer render del cliente sea idéntico al
+  // del server (null) y evitar el mismatch de hidratación (#418).
+  if (!chatConfig.enabled || isPrivateRoute || !mounted) return null;
 
   // Flujo conversacional natural: solo saludo inicial y respuestas del usuario.
   // Sin sugerencias ni quick replies — el cliente escribe libremente.
