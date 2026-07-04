@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   Scale, ShieldCheck, Briefcase, BookOpen,
-  HeartHandshake, ArrowRight, CheckCircle2, Gavel, Award,
+  HeartHandshake, ArrowRight, Gavel, Award,
 } from 'lucide-react';
 import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
@@ -22,6 +22,7 @@ import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_DESPACHO } from '@/data/faqs-hubs';
 import { AnswerBlock } from '@/components/marketing/answer-block';
+import { EditorialBlock } from '@/components/marketing/editorial-block';
 
 export const metadata: Metadata = buildMetadata({
   // 56 chars. Antes 38 (subutilizado).
@@ -140,14 +141,16 @@ export default async function DespachoPage() {
         ) : null;
       })()}
 
-      {/* BLOQUE GEO/LLMO — respuesta directa sobre qué hace el despacho.
-          Optimizado para que motores de IA extraigan la respuesta. */}
+      {/* BLOQUE GEO/LLMO — respuesta directa sobre QUIÉN ES el despacho.
+          Antes respondía "qué servicios ofrece", que duplicaba el rol de
+          /servicios-juridicos. Ahora responde la pregunta institucional
+          propia de /despacho: quién es, dónde está, qué lo define. */}
       <Section background="warm" spacing="sm">
         <Container size="lg">
           <AnswerBlock
-            eyebrow="Qué hacemos"
-            question="¿Qué servicios ofrece Pineda y Asociados?"
-            answer={`${site.name} es un bufete jurídico en Nacaome, Valle (Honduras) con más de 15 años de ejercicio profesional. Ofrece defensa penal técnica, derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio, coordinando varias ramas bajo un mismo equipo cuando un caso lo requiere.`}
+            eyebrow="El bufete"
+            question="¿Quién es Pineda y Asociados?"
+            answer={`${site.name} es un bufete jurídico fundado en Nacaome, Valle (Honduras), con más de 15 años de ejercicio profesional. Su pilar histórico es la defensa penal, complementada con derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio. Atiende con un único punto de contacto por caso y coordina internamente entre especialistas cuando un asunto cruza varias ramas del derecho.`}
           />
         </Container>
       </Section>
@@ -175,30 +178,34 @@ export default async function DespachoPage() {
         ctaLabel="Ver todas las guías del blog"
         ctaHref="/blog"
       />
+      <div className="text-center -mt-4 pb-2">
+        <Link href="/guia-legal-abogados-honduras" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors">
+          Guía para contratar abogado en Honduras <ArrowRight size={14} />
+        </Link>
+      </div>
 
-      {/* MISSION */}
-      <Section spacing="md">
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
-          <div>
-            <SectionHeader
+      {/* MISIÓN, VISIÓN Y VALORES — sección consolidada (Fase 3.2).
+          Antes eran 3 bloques separados (Misión+compromisos, 4 cards derechas
+          con Visión/Valores/Credenciales/Especialidad, y VALUES con 4 cards).
+          Ahora es una sola sección coherente: Misión como bloque editorial
+          con los compromisos como puntos, + columna derecha con Visión y la
+          especialidad/credenciales combinadas. La saturación de 12 tarjetas
+          temáticamente próximas se reduce a 2 columnas con jerarquía clara. */}
+      <Section spacing="lg" ariaLabel="Misión, visión y valores" className="section-breath">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-7">
+            <EditorialBlock
               eyebrow="Misión"
               title={c.mision.title}
-              subtitle={c.mision.desc}
+              intro={c.mision.desc}
+              points={c.commitments.map((commitment) => ({ title: commitment }))}
             />
-              <ul className="space-y-2.5 mt-5">
-              {c.commitments.map((commitment, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-text leading-relaxed">
-                  <CheckCircle2 size={16} className="text-success flex-shrink-0 mt-0.5" />
-                  <span>{commitment}</span>
-                </li>
-              ))}
-            </ul>
           </div>
-          <div className="space-y-3">
+          <div className="lg:col-span-5 space-y-4">
             <Card padding="md" className="border-l-4 border-l-accent card-premium">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
-                  <Scale size={20} />
+                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30 flex-shrink-0">
+                  <Scale size={20} aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
@@ -209,70 +216,39 @@ export default async function DespachoPage() {
               </div>
               <p className="text-sm text-text leading-relaxed text-pretty">{c.vision.desc}</p>
             </Card>
-            <Card padding="md" className="border-l-4 border-l-accent card-premium">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30">
-                  <HeartHandshake size={20} />
-                </div>
-                <div>
-                  <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
-                    Valores
-                  </p>
-                  <p className="text-sm font-bold leading-tight text-text">Honestidad · Confidencialidad · Rigor técnico</p>
-                </div>
-              </div>
-              <p className="text-sm text-text leading-relaxed">
-                Honestidad · Confidencialidad · Rigor técnico · Respeto · Empatía · Discreción
-              </p>
-            </Card>
             <Card padding="md" className="border-l-4 border-l-primary card-premium">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/15">
-                  <Award size={20} />
+                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/15 flex-shrink-0">
+                  <Award size={20} aria-hidden="true" />
                 </div>
-                <div>
-                  <p className="text-xxs font-bold uppercase tracking-widest text-primary mb-1">
-                    Credenciales profesionales
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm text-text leading-relaxed">
-                Abogado colegiado en Honduras. Registro profesional vigente. Miembro del
-                Colegio de Abogados de Honduras. Consulte en su primera visita la documentación
-                que acredita nuestra habilitación profesional.
-              </p>
-            </Card>
-            <Card padding="md" className="border-l-4 border-l-primary card-premium">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/15">
-                  <Gavel size={20} />
-                </div>
-                <p className="text-xxs font-bold uppercase tracking-widest text-text-muted">
-                  Especialidad destacada
+                <p className="text-xxs font-bold uppercase tracking-widest text-primary">
+                  Credenciales y especialidad
                 </p>
               </div>
               <p className="text-sm text-text leading-relaxed text-pretty">
-                La defensa penal y procesal penal sigue siendo nuestro pilar histórico. Contamos
-                con experiencia en asistencia a detenidos, audiencias iniciales, preliminares,
-                juicio oral y recursos de casación.
+                Abogado colegiado en Honduras con registro profesional vigente y miembro del
+                Colegio de Abogados. La <strong>defensa penal y procesal penal</strong> es el
+                pilar histórico del bufete, con experiencia en asistencia a detenidos,
+                audiencias iniciales, preliminares, juicio oral y recursos de casación.
               </p>
               <Link
                 href="/derecho-penal"
-                className="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
-                Consulte nuestra especialidad en defensa penal <ArrowRight size={14} />
+                Ver especialidad en defensa penal <ArrowRight size={14} />
               </Link>
             </Card>
           </div>
         </div>
       </Section>
 
-      {/* VALUES */}
+      {/* VALORES — grid compacto de 4 principios que definen al bufete. */}
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Nuestros valores"
           title={c.values.sectionTitle}
           subtitle="Cuatro principios que sostienen cada decisión, cada audiencia, cada escrito."
+          align="center"
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {c.values.items.map((v) => (
@@ -291,12 +267,16 @@ export default async function DespachoPage() {
         </div>
       </Section>
 
-      {/* EQUIPO (placeholder honesto) */}
+      {/* EQUIPO — dueño canónico del bloque (Fase 3.2).
+          La home y /solicitar-consulta referencian aquí; no duplican el
+          bloque. Tres socios con identidad pública y foto; el resto del
+          equipo técnico se identifica a clientes con relación constituida,
+          conforme al secreto profesional. */}
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Equipo"
-          title="Profesionales al servicio de su defensa"
-          subtitle="La información pública del equipo se publica únicamente con consentimiento expreso de cada profesional, conforme al secreto profesional y a la Ley de Protección de Datos."
+          title="Los abogados responsables de cada área"
+          subtitle="Tres socios con especialidades complementarias. Atención directa del abogado responsable en cada caso; el resto del equipo técnico se identifica a los clientes con relación de servicio constituida, conforme al secreto profesional."
         />
         {(() => {
           const meetingImg = getCorporateImage('corporate_meeting');
@@ -439,11 +419,6 @@ export default async function DespachoPage() {
             </Link>
           </Card>
         </div>
-        <p className="text-xs text-text-muted text-center mt-6 italic max-w-2xl mx-auto">
-          Por seguridad y ética profesional, el resto del equipo técnico —colaboradores,
-          pasantes y apoyo administrativo— se identifica únicamente a los clientes con
-          relación de servicio constituida, conforme al secreto profesional.
-        </p>
       </Section>
 
       {/* CÓMO TRABAJAMOS */}
@@ -464,46 +439,27 @@ export default async function DespachoPage() {
         />
       </Section>
 
-      {/* POR QUÉ MULTIDISCIPLINAR */}
+      {/* VISIÓN MULTIDISCIPLINAR — bloque editorial sobrio (Fase 3.2).
+          Antes eran 4 tarjetas navy clonadas que repetían el patrón
+          icono-texto de las secciones anteriores. Ahora es un bloque
+          narrativo que explica el valor de la coordinación interna. */}
       <Section background="primary" spacing="md">
-        <div className="text-text-inverse">
-          <SectionHeader
+        <Container size="md">
+          <EditorialBlock
+            variant="inverted"
+            align="center"
             eyebrow="Visión multidisciplinar"
-            title="Su caso atendido por el área correcta, con apoyo del bufete completo"
-            subtitle="La mayoría de los problemas jurídicos cruzan varias ramas del derecho. Un equipo coordinado es más rápido, más barato y más seguro que tratar cada frente por separado."
-            invert
+            title="Su caso, atendido por el área correcta con respaldo del bufete completo"
+            intro="La mayoría de los problemas jurídicos cruzan varias ramas del derecho. Un equipo coordinado es más rápido, más económico y más seguro que tratar cada frente por separado: un único punto de contacto, un solo expediente y una estrategia coherente."
+            points={[
+              { icon: Gavel, title: 'Penal con repercusión familiar y patrimonial', description: 'Acusaciones que arrastran custodia, bienes o responsabilidades civiles.' },
+              { icon: Briefcase, title: 'Laboral y mercantil en empresas', description: 'Despidos, contratos y sociedades que requieren mirar varias ramas a la vez.' },
+              { icon: Scale, title: 'Civil, tributario y bancario', description: 'Embargos, cobros y obligaciones que conectan patrimonio y fiscalidad.' },
+              { icon: BookOpen, title: 'Notarial y registral', description: 'Compraventas, donaciones, sociedades y traspasos con trazabilidad.' },
+            ]}
+            cta={{ href: '/servicios-juridicos', label: 'Ver las áreas del derecho que atendemos' }}
           />
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { icon: Gavel, title: 'Penal + familia + civil', desc: 'Acusaciones con repercusiones familiares y patrimoniales.' },
-            { icon: Briefcase, title: 'Laboral + mercantil', desc: 'Despidos en empresas con contratos y sociedades cruzadas.' },
-            { icon: Scale, title: 'Civil + tributario + bancario', desc: 'Embargos, cobros, contratos y obligaciones tributarias.' },
-            { icon: BookOpen, title: 'Notarial + registral', desc: 'Compraventas, donaciones, sociedades y traspasos.' },
-          ].map((it) => (
-            <div key={it.title} className="rounded-lg border border-white/15 bg-white/10 p-4">
-              <div className="flex items-start gap-3">
-                <div className="w-11 h-11 rounded-lg bg-accent/20 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
-                  <it.icon size={20} aria-hidden="true" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="font-bold text-sm text-white leading-tight text-balance">{it.title}</h3>
-                  <p className="text-sm text-white/85 leading-relaxed mt-1 text-pretty">{it.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link href="/servicios-juridicos" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-text-inverse transition-colors">
-            Ver las ramas principales del derecho <ArrowRight size={14} />
-          </Link>
-        </div>
-        <div className="mt-4 text-center">
-          <Link href="/guia-legal-abogados-honduras" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-text-inverse transition-colors">
-            Guía para contratar abogado en Honduras <ArrowRight size={14} />
-          </Link>
-        </div>
+        </Container>
       </Section>
 
       <script
