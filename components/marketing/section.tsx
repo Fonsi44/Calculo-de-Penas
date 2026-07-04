@@ -15,7 +15,7 @@ const SIZES = {
 };
 
 export function Container({ children, className, size = 'lg' }: ContainerProps) {
-  return <div className={cn('mx-auto px-4 sm:px-6', SIZES[size], className)}>{children}</div>;
+  return <div className={cn('mx-auto px-3 sm:px-5', SIZES[size], className)}>{children}</div>;
 }
 
 interface SectionProps {
@@ -37,9 +37,9 @@ const BG: Record<NonNullable<SectionProps['background']>, string> = {
 };
 
 const SPACING = {
-  sm: 'py-6 md:py-8',
-  md: 'py-8 md:py-12',
-  lg: 'py-12 md:py-16',
+  sm: 'py-5 md:py-7',
+  md: 'py-7 md:py-10',
+  lg: 'py-10 md:py-14',
 };
 
 export function Section({
@@ -75,13 +75,13 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
   return (
     <div
       className={cn(
-        'mb-8 md:mb-10',
+        'mb-6 md:mb-8',
         align === 'center' && 'text-center max-w-3xl mx-auto',
         className,
       )}
     >
       {eyebrow && (
-        <div className={cn('eyebrow-rule mb-4', invert ? 'text-accent' : 'text-accent-dark')}>
+        <div className={cn('eyebrow-rule mb-3', invert ? 'text-accent' : 'text-accent-dark')}>
           {eyebrow}
         </div>
       )}
@@ -96,7 +96,7 @@ export function SectionHeader({ eyebrow, title, subtitle, align = 'left', invert
       {subtitle && (
         <p
           className={cn(
-            'mt-4 text-sm md:text-base leading-relaxed text-pretty max-w-3xl',
+            'mt-3 text-sm md:text-base leading-relaxed text-pretty max-w-3xl',
             align === 'center' && 'mx-auto',
             invert ? 'text-text-inverse/85' : 'text-text-secondary',
           )}
