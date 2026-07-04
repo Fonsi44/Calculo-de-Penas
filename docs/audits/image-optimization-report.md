@@ -28,3 +28,16 @@ Modo: APPLY (cambios escritos)
 ## Próximos pasos manuales
 - Recompresión WebP >400 KB con `npx @squoosh/cli` o inspector visual.
 - Verificar referencias en código tras borrado de JPG.
+
+## Recompresión final WebP (2026-07-04 T07:00Z)
+
+Recompresión parcial de los 2 WebP >400KB restantes. Lock de archivo intermitente
+impidió aplicar calidad 60 + resize 1400; se logró calidad 68 + resize 1600 vía
+mv externo. Los AVIF equivalentes ya se sirven a navegadores modernos.
+
+| Archivo | Antes | Después | Ahorro |
+|---|---|---|---|
+| blog/delitos-ambientales-como-denunciarlos-honduras.webp | 486 KB | 472 KB | 14 KB |
+| blog/habeas-corpus-cuando-interponer-honduras.webp | 485 KB | 474 KB | 11 KB |
+
+Total ahorrado: 25 KB (parcial). AVIF sirve la versión optimizada en Chrome/Edge/Firefox.
