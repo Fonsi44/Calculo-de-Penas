@@ -89,6 +89,8 @@ const args = process.argv.slice(2);
 const APLICAR = args.includes('--aplicar');
 const NO_AI = args.includes('--no-ai');
 const SOLO_VERIFICAR = args.includes('--solo-verificar');
+const RAG_ONLY = args.includes('--rag-only');
+const ENRIQUECER = args.includes('--enrich');
 const FILTRO_SLUG = (() => {
   const i = args.indexOf('--slug');
   return i >= 0 && args[i + 1] ? args[i + 1] : null;
@@ -135,6 +137,13 @@ Opciones:
   --ctr-only         Optimización CTR forzada: solo title+meta, no reescribe body.
                      Payload ligero (~5-15s/post). No corrige thin/discrepancias.
   --max-reintentos <n> Reintentos de IA si un post thin no llega a 800 (1-5, default 2).
+  --rag-only         Usa SOLO búsqueda semántica RAG. No carga los ~6.500 artículos
+                     legales en memoria. Requiere pgvector poblado (npm run rag:indexar:aplicar).
+  --enrich           ENRIQUECE posts con citas legales reales desde pgvector.
+                     La IA añade artículos relevantes del Código, Ley o Constitución
+                     que falten en el post, citándolos con número exacto y texto.
+                     Solo usa artículos verificados en el contexto RAG. Combínalo
+                     con --rag-only para omitir carga masiva.
   --help, -h         Esta ayuda.
 
 Variables de entorno:
@@ -3467,69 +3476,102 @@ async function corregirConIA(
         : `\n\nEste artículo ya tiene buena longitud (${palabrasBase} palabras) y sin errores fácticos detectados. SOLO revisa su profesionalidad, tono y SEO/GEO. Si es profesional y correcto, devuelve el HTML EXACTO sin cambios. Solo modifica si encuentras lenguaje sensacionalista, clickbait, falta de rigor en temas penales/familia/fiscales, exceso de autopromoción, o problemas SEO/GEO listados arriba.`)
     : '';
 
-  const accion = necesitaCorreccion ? 'CORRIGE' : 'REVISA';
+  const accion = ENRIQUECER ? 'ENRIQUECE' : (necesitaCorreccion ? 'CORRIGE' : 'REVISA');
 
-  // ── TEXTOS LEGALES DE REFERENCIA ──
-  // Inyectar los textos reales de los artículos citados en el body para que
-  // la IA pueda citarlos con precisión en lugar de inventar porcentajes o
-  // valores aproximados. Se busca en todos los códigos cargados (CP, CT,
-  // CC, CM, CTrib) usando el mismo canonicalArticuloKey.
-  let refsTxt = '';
-  const claimsEnBody = extraerClaims(bodyBase);
-  const citados = new Set<string>();
-  for (const claim of claimsEnBody) {
-    if (claim.tipo !== 'articulo_cp' && claim.tipo !== 'articulo_const') continue;
-    const key = canonicalArticuloKey(claim.textoOriginal);
-    if (!key || citados.has(key)) continue;
-    citados.add(key);
-    // Buscar en todos los Maps
-    let art: ArticuloCpRow | undefined;
-    if (articulosCpMap.has(key)) art = articulosCpMap.get(key);
-    else if (articulosCtMap.has(key)) art = articulosCtMap.get(key);
-    else if (articulosCcMap.has(key)) art = articulosCcMap.get(key);
-    else if (articulosCmMap.has(key)) art = articulosCmMap.get(key);
-    else if (articulosCtribMap.has(key)) art = articulosCtribMap.get(key);
-    if (art && art.texto) {
-      const textoCorto = art.texto.length > 600 ? art.texto.slice(0, 600) + '...' : art.texto;
-      refsTxt += `\n${art.articulo} (${art.epigrafe}): ${textoCorto}`;
-    }
-  }
-  if (refsTxt) {
-    refsTxt = '\n\n══════════════════════════════════════════════\n'
-      + 'TEXTOS LEGALES OFICIALES DE HONDURAS — FUENTE CANÓNICA\n'
-      + '══════════════════════════════════════════════\n'
-      + refsTxt
-      + '\n\n══════════════════════════════════════════════\n'
-      + '⚠️ INSTRUCCIÓN CRÍTICA — LEE ESTO CON ATENCIÓN:\n'
-      + 'Los valores numéricos en el body actual pueden ser INCORRECTOS.\n'
-      + 'DEBES reemplazar cualquier porcentaje, plazo o cantidad del body\n'
-      + 'por los valores EXACTOS de los textos oficiales de arriba.\n'
-      + 'Si el texto oficial dice "1 mes por año", NO uses porcentajes.\n'
-      + 'Si el texto oficial dice "2-5 años", NO uses "1 año, 2 años, 3 años".\n'
-      + 'La fuente oficial es la VERDAD. El body actual puede mentir.\n'
-      + '══════════════════════════════════════════════';
-  }
-
-	  // ── CONTEXTO RAG (búsqueda semántica) ──
-	  // Recuperar chunks relevantes de la base de conocimiento mediante
-	  // búsqueda vectorial en pgvector. Esto complementa la búsqueda exacta
-	  // de refsTxt con contenido semánticamente relacionado.
-	  let contextoRAGTxt = '';
-	  if (isRagDisponible() && !NO_AI) {
-	    try {
-	      const claimsParaRag = claimsEnBody.map((c) => c.textoOriginal);
-	      const ragResult = await recuperarContextoParaBlog(post.title, claimsParaRag);
-	      if (ragResult) {
-	        contextoRAGTxt = '\n\n══════════════════════════════════════════════\n'
-	          + 'CONTEXTO ADICIONAL — BÚSQUEDA SEMÁNTICA (RAG)\n'
-	          + '══════════════════════════════════════════════\n'
-	          + ragResult
-	          + '\n══════════════════════════════════════════════';
+	  // ── TEXTOS LEGALES DE REFERENCIA ──
+	  // Inyectar los textos reales de los artículos citados en el body para que
+	  // la IA pueda citarlos con precisión en lugar de inventar porcentajes o
+	  // valores aproximados. Se busca en todos los códigos cargados (CP, CT,
+	  // CC, CM, CTrib) usando el mismo canonicalArticuloKey.
+	  // NOTA: en modo --rag-only, la búsqueda exacta se omite porque los Maps
+	  // no están cargados; se usa solo RAG. Pero extraemos claims igual para
+	  // pasarlos como consulta al recuperador semántico.
+	  let refsTxt = '';
+	  const claimsEnBody = extraerClaims(bodyBase);
+	  if (!RAG_ONLY) {
+	    const citados = new Set<string>();
+	    for (const claim of claimsEnBody) {
+	      if (claim.tipo !== 'articulo_cp' && claim.tipo !== 'articulo_const') continue;
+	      const key = canonicalArticuloKey(claim.textoOriginal);
+	      if (!key || citados.has(key)) continue;
+	      citados.add(key);
+	      // Buscar en todos los Maps
+	      let art: ArticuloCpRow | undefined;
+	      if (articulosCpMap.has(key)) art = articulosCpMap.get(key);
+	      else if (articulosCtMap.has(key)) art = articulosCtMap.get(key);
+	      else if (articulosCcMap.has(key)) art = articulosCcMap.get(key);
+	      else if (articulosCmMap.has(key)) art = articulosCmMap.get(key);
+	      else if (articulosCtribMap.has(key)) art = articulosCtribMap.get(key);
+	      if (art && art.texto) {
+	        const textoCorto = art.texto.length > 600 ? art.texto.slice(0, 600) + '...' : art.texto;
+	        refsTxt += `\n${art.articulo} (${art.epigrafe}): ${textoCorto}`;
 	      }
-	    } catch (e) {
-	      console.warn('[RAG] Error recuperando contexto semántico:', e);
+	    }
+	    if (refsTxt) {
+	      refsTxt = '\n\n══════════════════════════════════════════════\n'
+	        + 'TEXTOS LEGALES OFICIALES DE HONDURAS — FUENTE CANÓNICA\n'
+	        + '══════════════════════════════════════════════\n'
+	        + refsTxt
+	        + '\n\n══════════════════════════════════════════════\n'
+	        + '⚠️ INSTRUCCIÓN CRÍTICA — LEE ESTO CON ATENCIÓN:\n'
+	        + 'Los valores numéricos en el body actual pueden ser INCORRECTOS.\n'
+	        + 'DEBES reemplazar cualquier porcentaje, plazo o cantidad del body\n'
+	        + 'por los valores EXACTOS de los textos oficiales de arriba.\n'
+	        + 'Si el texto oficial dice "1 mes por año", NO uses porcentajes.\n'
+	        + 'Si el texto oficial dice "2-5 años", NO uses "1 año, 2 años, 3 años".\n'
+	        + 'La fuente oficial es la VERDAD. El body actual puede mentir.\n'
+	        + '══════════════════════════════════════════════';
 	    }
 	  }
+
+		  // ── CONTEXTO RAG (búsqueda semántica) ──
+		  // Recuperar chunks relevantes de la base de conocimiento mediante
+		  // búsqueda vectorial en pgvector. Esto complementa la búsqueda exacta
+		  // de refsTxt con contenido semánticamente relacionado.
+		  // Cuando se usa --rag-only, es la ÚNICA fuente de contexto legal.
+		  let contextoRAGTxt = '';
+		  if (isRagDisponible() && !NO_AI) {
+		    try {
+		      const claimsParaRag = claimsEnBody.map((c) => c.textoOriginal);
+		      const ragResult = await recuperarContextoParaBlog(post.title, claimsParaRag);
+		      if (ragResult) {
+		        contextoRAGTxt = '\n\n══════════════════════════════════════════════\n'
+		          + '📖 CONTEXTO RECUPERADO — FUENTE CANÓNICA (RAG)\n'
+		          + '══════════════════════════════════════════════\n'
+			          + ragResult
+			          + '\n\n══════════════════════════════════════════════\n'
+			          + (ENRIQUECER
+			            ? '⚠️  INSTRUCCIÓN — MODO ENRIQUECIMIENTO:\n'
+			              + 'PUEDES y DEBES enriquecer el artículo añadiendo citas legales relevantes\n'
+			              + 'del contexto de arriba que falten en el post.\n'
+			              + 'REGLAS:\n'
+			              + '- Solo cita artículos que aparezcan EXPLÍCITAMENTE en el contexto.\n'
+			              + '- Usa el formato exacto: "Art. N del Código/Ley".\n'
+			              + '- Añade el texto relevante del artículo si contextualiza.\n'
+			              + '- NO inventes artículos que no estén en el contexto.\n'
+			              + '- NO cambies el sentido del post original.\n'
+			              + '- Si el post ya cita un artículo correctamente, déjalo igual.\n'
+			              + '══════════════════════════════════════════════'
+			            : '⚠️  INSTRUCCIÓN ESTRICTA — LEE CON ATENCIÓN:\n'
+			              + 'Responde ÚNICAMENTE con la información del contexto proporcionado arriba.\n'
+			              + 'NO inventes artículos, textos legales, penas, plazos ni porcentajes.\n'
+			              + 'NO cites normas, artículos ni jurisprudencia que no aparezcan en el contexto.\n'
+			              + 'Si no encuentras una respuesta clara en el contexto recuperado, indica:\n'
+			              + '"No he encontrado información suficiente en el Código/Constitución proporcionado."\n'
+			              + '══════════════════════════════════════════════');
+		      } else if (RAG_ONLY) {
+		        // En modo RAG_ONLY, si no hay contexto, forzamos un aviso
+		        contextoRAGTxt = '\n\n⚠️  MODO RAG-ONLY ACTIVO pero no se encontró contexto relevante en pgvector.\n'
+		          + 'Esto puede indicar que la base de conocimiento vectorial está vacía.\n'
+		          + 'Ejecuta: npm run rag:indexar:aplicar\n';
+		      }
+		    } catch (e) {
+		      console.warn('[RAG] Error recuperando contexto semántico:', e);
+		      if (RAG_ONLY) {
+		        contextoRAGTxt = '\n\n⚠️  Error al recuperar contexto RAG. Verifica conexión a pgvector.\n';
+		      }
+		    }
+		  }
 
 	  // Truncar el body para no exceder contexto ni coste (≈25k chars como blog-ai-review)
   const bodyParaIA = bodyBase.length > 25000 ? bodyBase.slice(0, 25000) : bodyBase;
@@ -3981,7 +4023,14 @@ async function main() {
 
   // Cargar datos canónicos
   console.log('Cargando datos canónicos...');
-  cargarDatosCanonicos();
+  // Cargar fuentes canónicas (a menos que se use --rag-only con RAG disponible).
+  // Con RAG, la carga masiva de ~6.500 artículos en memoria no es necesaria:
+  // el contexto se recupera bajo demanda vía búsqueda semántica en pgvector.
+  if (!RAG_ONLY || !isRagDisponible()) {
+    cargarDatosCanonicos();
+  } else {
+    console.log('📡 RAG-ONLY: omitiendo carga masiva de códigos legales (usando pgvector).');
+  }
   console.log('');
 
   if (IA_ENABLED) {
@@ -4165,9 +4214,9 @@ async function main() {
     // posts que NO necesitan corrección de body (sin discrepancies / no thin /
     // no hallazgos críticos-blocking). Si --ctr-only se fuerza pero el post
     // necesita fact-check, baja a body mode para no perder la verificación.
-    const modoCTR = !necesitaCorreccion && !forzarIA &&
-      (necesitaOptimizacionCTR || FORCE_CTR_ONLY);
-    if (IA_ENABLED && (necesitaCorreccion || forzarIA || necesitaOptimizacionCTR || FORCE_CTR_ONLY)) {
+	    const modoCTR = !necesitaCorreccion && !forzarIA && !ENRIQUECER &&
+	      (necesitaOptimizacionCTR || FORCE_CTR_ONLY);
+	    if (IA_ENABLED && (necesitaCorreccion || forzarIA || necesitaOptimizacionCTR || FORCE_CTR_ONLY || ENRIQUECER)) {
       // Loop de reintentos: si la IA expande pero no llega a 800, y su body
       // previo tiene ≥700 palabras (cerca del umbral), se reintenta desde ese
       // body con un prompt que le indica exactamente cuántas palabras faltan.

@@ -26,19 +26,22 @@
 /**
  * Obtiene la configuración RAG con lazy evaluation.
  * Las propiedades se evalúan en el momento de la llamada, no al importar.
+ *
+ * Proveedor por defecto: OpenAI text-embedding-3-small.
+ * Si se prefiere otro, cambiar EMBEDDINGS_PROVEEDOR en .env.local.
  */
 export function getRagConfig() {
   return {
-    provider: process.env.EMBEDDINGS_PROVEEDOR || 'deepseek',
+    provider: process.env.EMBEDDINGS_PROVEEDOR || 'openai',
     apiKey:
       process.env.EMBEDDINGS_API_KEY ||
-      process.env.DEEPSEEK_API_KEY ||
+      process.env.OPENAI_API_KEY ||
       '',
-    model: process.env.EMBEDDINGS_MODELO || 'deepseek-embedding',
+    model: process.env.EMBEDDINGS_MODELO || 'text-embedding-3-small',
     dimensions: Number(process.env.EMBEDDINGS_DIMENSIONES) || 1536,
     baseUrl: (
       process.env.EMBEDDINGS_BASE_URL ||
-      'https://api.deepseek.com/v1'
+      'https://api.openai.com/v1'
     ).replace(/\/+$/, ''),
     topK: Number(process.env.RAG_TOP_K) || 5,
     minScore: Number(process.env.RAG_MIN_SCORE) || 0.7,
@@ -73,6 +76,7 @@ export type EntidadTipo =
 export function isRagDisponible(): boolean {
   const apiKey =
     process.env.EMBEDDINGS_API_KEY ||
+    process.env.OPENAI_API_KEY ||
     process.env.DEEPSEEK_API_KEY ||
     '';
   return Boolean(apiKey);

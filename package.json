@@ -92,9 +92,14 @@
     "rag:indexar": "npx tsx scripts/rag-indexar.ts",
     "rag:indexar:aplicar": "npx tsx scripts/rag-indexar.ts --aplicar",
     "rag:extraer-pdfs": "npx tsx scripts/rag-extraer-pdfs.ts",
-    "rag:extraer-pdfs:aplicar": "npx tsx scripts/rag-extraer-pdfs.ts --aplicar"
+    "rag:extraer-pdfs:aplicar": "npx tsx scripts/rag-extraer-pdfs.ts --aplicar",
+    "corregir:articulos": "npx tsx scripts/corregir-articulos.ts",
+    "corregir:articulos:aplicar": "npx tsx scripts/corregir-articulos.ts --aplicar",
+    "corregir:articulos:dry": "npx tsx scripts/corregir-articulos.ts --limit 5"
   },
   "dependencies": {
+    "@google/genai": "^2.10.0",
+    "@google/generative-ai": "^0.24.1",
     "@modelcontextprotocol/server-filesystem": "^2026.1.14",
     "@modelcontextprotocol/server-github": "^2025.4.8",
     "@modelcontextprotocol/server-postgres": "^0.6.2",

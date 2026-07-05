@@ -103,8 +103,18 @@ export function sanitizeReply(reply: string, maxChars = 1200): string {
   if (typeof reply !== 'string') return '';
   // Elimina URLs (defensa en profundidad: el system prompt ya las prohíbe,
   // pero por si el LLM las genera, se filtran aquí antes de llegar al usuario).
-  const sinUrls = reply.replace(/https?:\/\/[^\s]+/g, '');
-  const trimmed = sinUrls.trim();
+  let limpia = reply;
+  // HTTPS/HTTP URLs
+  limpia = limpia.replace(/https?:\/\/[^\s)]+/g, '');
+  // URLs sin protocolo (www.ejemplo.com, ejemplo.com, etc.)
+  limpia = limpia.replace(/\b(?:www\.)[^\s)]+/g, '');
+  limpia = limpia.replace(/\b[a-z0-9][a-z0-9.-]+\.[a-z]{2,}\/[^\s)]*/g, '');
+  // Enlaces en markdown [texto](url)
+  limpia = limpia.replace(/\[([^\]]*)\]\(https?:\/\/[^\s)]+\)/g, '$1');
+  limpia = limpia.replace(/\[([^\]]*)\]\([a-z0-9][a-z0-9.-]+\.[a-z]{2,}[^)]*\)/g, '$1');
+  // wa.me (WhatsApp) - dejar solo el texto
+  limpia = limpia.replace(/https?:\/\/wa\.me\/[^\s)]+/g, 'WhatsApp');
+  const trimmed = limpia.trim();
   if (trimmed.length <= maxChars) return trimmed;
   // Truncar en el último espacio dentro del límite para no cortar palabras.
   const slice = trimmed.slice(0, maxChars);

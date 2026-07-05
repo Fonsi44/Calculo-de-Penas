@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, vector } from 'drizzle-orm/pg-core';
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector } from 'drizzle-orm/pg-core';
 
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
@@ -1635,10 +1635,11 @@ export const embeddings = pgTable('embeddings', {
   metadata: jsonb('metadata').default({}),
   /** Fecha de creación */
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => ({
-  entidadIdx: index('embeddings_entidad_idx').on(table.entidadTipo, table.entidadId),
-  // El índice HNSW se crea vía migración SQL raw porque drizzle-orm no lo soporta directamente
-}));
+	}, (table) => ({
+	  entidadIdx: index('embeddings_entidad_idx').on(table.entidadTipo, table.entidadId),
+	  uniqueIdx: uniqueIndex('embeddings_unique_idx').on(table.entidadTipo, table.entidadId, table.chunkIndex),
+	  // El índice HNSW se crea vía migración SQL raw porque drizzle-orm no lo soporta directamente
+	}));
 
 export type Embedding = typeof embeddings.$inferSelect;
 export type EmbeddingInsert = typeof embeddings.$inferInsert;

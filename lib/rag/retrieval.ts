@@ -190,8 +190,8 @@ export async function recuperarContextoParaBlog(
  */
 export async function recuperarContextoParaChat(mensaje: string): Promise<string> {
   const resultado = await recuperarContexto(mensaje, {
-    topK: 3,
-    minScore: 0.7,
+    topK: 5,
+    minScore: 0.5,
     prefijo: '📖',
   });
 

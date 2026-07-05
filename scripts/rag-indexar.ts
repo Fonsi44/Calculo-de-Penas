@@ -88,6 +88,48 @@ VARIABLES DE ENTORNO:
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  Checkpoint (reanudar desde donde se quedó)
+// ═══════════════════════════════════════════════════════════════════════════
+
+const CHECKPOINT_PATH = path.resolve(process.cwd(), 'auditoria-blog/checkpoint-rag.json');
+
+function leerCheckpoint(): number | null {
+  try {
+    if (fs.existsSync(CHECKPOINT_PATH)) {
+      const data = JSON.parse(fs.readFileSync(CHECKPOINT_PATH, 'utf-8'));
+      if (data?.ultimoChunk && typeof data.ultimoChunk === 'number') {
+        return data.ultimoChunk;
+      }
+    }
+  } catch {
+    // Ignorar errores de checkpoint
+  }
+  return null;
+}
+
+function guardarCheckpoint(ultimoChunk: number): void {
+  try {
+    const dir = path.dirname(CHECKPOINT_PATH);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(CHECKPOINT_PATH, JSON.stringify({ ultimoChunk, timestamp: new Date().toISOString() }));
+  } catch {
+    // Ignorar errores de checkpoint
+  }
+}
+
+function limpiarCheckpoint(): void {
+  try {
+    if (fs.existsSync(CHECKPOINT_PATH)) {
+      fs.unlinkSync(CHECKPOINT_PATH);
+    }
+  } catch {
+    // Ignorar
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  DB
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -118,33 +160,61 @@ function log(msg: string) {
 async function indexarBlogPosts(): Promise<Chunk[]> {
   console.log('\n📝 Indexando blog posts...');
 
-  const posts = await db
-    .select({
-      slug: blogPosts.slug,
-      title: blogPosts.title,
-      body: blogPosts.body,
-    })
-    .from(blogPosts)
-    .where(
-      SLUG_FILTRO
-        ? eq(blogPosts.slug, SLUG_FILTRO)
-        : sql`1=1`,
-    );
-
-  log(`Posts encontrados: ${posts.length}`);
+  // Paginar para evitar timeouts de Neon con 175 bodies HTML grandes
+  const PAGE_SIZE = 20;
+  let offset = 0;
+  let total = 0;
   const chunks: Chunk[] = [];
 
-  for (const post of posts) {
-    try {
-      const postChunks = chunkBlogPost(post.slug, post.title, post.body);
-      chunks.push(...postChunks);
-      log(`  ✓ ${post.slug} → ${postChunks.length} chunks`);
-    } catch (error) {
-      console.error(`  ✗ Error en ${post.slug}:`, error);
-      errores++;
+  // Primero contar cuántos hay (con reintento)
+  const countResult = await conReintento(
+    () => db
+      .select({ count: sql<number>`count(*)` })
+      .from(blogPosts)
+      .where(
+        SLUG_FILTRO
+          ? eq(blogPosts.slug, SLUG_FILTRO)
+          : sql`1=1`,
+      ),
+    'contar posts',
+  );
+  total = Number(countResult[0]?.count || 0);
+  log(`Posts encontrados: ${total}`);
+
+  while (offset < total) {
+    const posts = await conReintento(
+      () => db
+        .select({
+          slug: blogPosts.slug,
+          title: blogPosts.title,
+          body: blogPosts.body,
+        })
+        .from(blogPosts)
+        .where(
+          SLUG_FILTRO
+            ? eq(blogPosts.slug, SLUG_FILTRO)
+            : sql`1=1`,
+        )
+        .limit(PAGE_SIZE)
+        .offset(offset),
+      `posts offset ${offset}`,
+    );
+
+    for (const post of posts) {
+      try {
+        const postChunks = chunkBlogPost(post.slug, post.title, post.body);
+        chunks.push(...postChunks);
+      } catch (error) {
+        console.error(`  ✗ Error en ${post.slug}:`, error);
+        errores++;
+      }
     }
+    offset += PAGE_SIZE;
+    process.stdout.write(`\r  📄 ${Math.min(offset, total)}/${total} posts procesados`);
   }
 
+  process.stdout.write('\n');
+  log(`→ ${chunks.length} chunks generados`);
   return chunks;
 }
 
@@ -310,6 +380,28 @@ function indexarPDFs(): Chunk[] {
 //  7. Guardar en DB
 // ═══════════════════════════════════════════════════════════════════════════
 
+/**
+ * Ejecuta una función async con reintentos automáticos.
+ * Útil para operaciones de red/DB que pueden fallar transitoriamente.
+ */
+async function conReintento<T>(
+  fn: () => Promise<T>,
+  etiqueta: string,
+  maxReintentos: number = 3,
+): Promise<T> {
+  for (let intento = 1; intento <= maxReintentos; intento++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (intento === maxReintentos) throw error;
+      const espera = Math.min(1000 * Math.pow(2, intento), 10000);
+      console.warn(`  ⚠️  ${etiqueta} (intento ${intento}/${maxReintentos}), reintentando en ${espera}ms...`);
+      await new Promise((r) => setTimeout(r, espera));
+    }
+  }
+  throw new Error('No debería llegar aquí');
+}
+
 async function guardarEnDB(chunks: Chunk[]): Promise<void> {
   if (!APLICAR) {
     console.log('\n⚠️  Modo dry-run. Usa --aplicar para indexar en DB.');
@@ -318,72 +410,79 @@ async function guardarEnDB(chunks: Chunk[]): Promise<void> {
 
   console.log('\n💾 Guardando en Neon (pgvector)...');
 
-  // Batch de 20 chunks para embeddings
-  const BATCH_SIZE = 20;
+  // Checkpoint solo aplica cuando se indexan TODOS los tipos (sin --tipo)
+  // Si se filtra por tipo, se procesan todos los chunks de ese tipo.
+  const usarCheckpoint = !TIPO_FILTRO;
+  const checkpoint = usarCheckpoint ? leerCheckpoint() : null;
+  const inicio = checkpoint !== null && !RESET ? checkpoint : 0;
+  if (inicio > 0) {
+    console.log(`  📌 Reanudando desde chunk ${inicio} (checkpoint previo)`);
+  }
+
+  // Batch más grande: 50 chunks por lote (vs 20 antes)
+  // Menos llamadas OpenAI y menos viajes DB
+  const BATCH_SIZE = 50;
   let insertados = 0;
 
-  for (let i = 0; i < chunks.length; i += BATCH_SIZE) {
+  // Usar neon() como tagged template literal + unsafe
+  const sqlExec = neon(process.env.DATABASE_URL!);
+
+  for (let i = inicio; i < chunks.length; i += BATCH_SIZE) {
     const batch = chunks.slice(i, i + BATCH_SIZE);
 
     try {
-      // Generar embeddings en batch
+      // 1. Generar embeddings en batch (una sola llamada OpenAI)
       const textos = batch.map((c) => c.contenido);
-      const embeddings_vectors = await generarEmbeddingsBatch(textos);
+      const embeddingsVectors = await conReintento(
+        () => generarEmbeddingsBatch(textos),
+        `embeddings batch ${i}`,
+      );
 
-      // Insertar cada chunk con su embedding
+      // 2. Construir INSERT con ON CONFLICT (un solo viaje DB por batch)
+      const valuesRows: string[] = [];
       for (let j = 0; j < batch.length; j++) {
         const chunk = batch[j];
-        const vector = embeddings_vectors[j];
-
-        // Upsert: mismo entidad_tipo + entidad_id + chunk_index → actualizar
-        const exists = await db
-          .select({ id: embeddings.id })
-          .from(embeddings)
-          .where(
-            and(
-              eq(embeddings.entidadTipo, chunk.entidadTipo),
-              eq(embeddings.entidadId, chunk.entidadId),
-              eq(embeddings.chunkIndex, chunk.chunkIndex),
-            ),
-          )
-          .limit(1);
-
-        if (exists.length > 0) {
-          // Actualizar
-          const vecSql = sql`${JSON.stringify(vector)}::vector`;
-          await db
-            .update(embeddings)
-            .set({
-              contenido: chunk.contenido,
-              embedding: vecSql as unknown as null, // se pasa vía sql raw
-              metadata: chunk.metadata,
-            })
-            .where(eq(embeddings.id, exists[0].id));
-        } else {
-          // Insertar
-          const vecSql = sql`${JSON.stringify(vector)}::vector`;
-          await db.insert(embeddings).values({
-            entidadTipo: chunk.entidadTipo,
-            entidadId: chunk.entidadId,
-            chunkIndex: chunk.chunkIndex,
-            contenido: chunk.contenido,
-            embedding: vecSql as unknown as null,
-            modelo: 'deepseek-embedding',
-            metadata: chunk.metadata,
-          });
-        }
-        insertados++;
+        const vector = embeddingsVectors[j];
+        // Escapar comillas simples duplicándolas (SQL safe)
+        const esc = (s: string) => s.replace(/'/g, "''");
+        valuesRows.push(
+          `('${esc(chunk.entidadTipo)}','${esc(chunk.entidadId)}',${chunk.chunkIndex},'${esc(chunk.contenido)}','${JSON.stringify(vector)}'::vector,'deepseek-embedding','${esc(JSON.stringify(chunk.metadata))}'::jsonb)`
+        );
       }
 
-      const progress = `  ${((i + batch.length) / chunks.length * 100).toFixed(0)}%`;
-      process.stdout.write(`\r  Progreso: ${progress} (${insertados}/${chunks.length} chunks)`);
+      const query = `
+        INSERT INTO embeddings (entidad_tipo, entidad_id, chunk_index, contenido, embedding, modelo, metadata)
+        VALUES ${valuesRows.join(',\n')}
+        ON CONFLICT (entidad_tipo, entidad_id, chunk_index) DO UPDATE SET
+          contenido = EXCLUDED.contenido,
+          embedding = EXCLUDED.embedding,
+          metadata = EXCLUDED.metadata
+      `;
+
+      await conReintento(
+        () => sqlExec.unsafe(query) as unknown as Promise<void>,
+        `batch ${i}`,
+      );
+
+      insertados += batch.length;
+
+      // Checkpoint cada batch
+      guardarCheckpoint(i + BATCH_SIZE);
+
+      const pct = ((i + batch.length) / chunks.length * 100).toFixed(0);
+      process.stdout.write(`\r  📊 ${pct}% (${insertados}/${chunks.length} chunks)`);
     } catch (error) {
-      console.error(`\n  ✗ Error en batch ${i}:`, error);
+      console.error(`\n  ✗ Error en lote ${i}:`, (error as Error).message?.slice(0, 120) || error);
       errores++;
     }
   }
 
-  console.log(`\n  ✅ ${insertados} chunks indexados en DB`);
+  if (errores === 0) limpiarCheckpoint();
+
+  console.log(`\n  ✅ ${insertados}/${chunks.length} chunks (${errores} errores)`);
+  if (errores > 0) {
+    console.log('  📌 Re-ejecuta para reanudar desde el checkpoint.');
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

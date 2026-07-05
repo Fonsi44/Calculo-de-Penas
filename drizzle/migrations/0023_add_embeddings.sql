@@ -14,6 +14,9 @@ CREATE TABLE "embeddings" (
 --> statement-breakpoint
 CREATE INDEX "embeddings_entidad_idx" ON "embeddings" USING btree ("entidad_tipo","entidad_id");
 --> statement-breakpoint
+-- Índice único para upsert (ON CONFLICT DO UPDATE)
+CREATE UNIQUE INDEX "embeddings_unique_idx" ON "embeddings" USING btree ("entidad_tipo","entidad_id","chunk_index");
+--> statement-breakpoint
 -- Índice HNSW para búsqueda vectorial por similitud coseno (pgvector)
 -- Este índice acelera las consultas ORDER BY embedding <=> $vector LIMIT k
 CREATE INDEX "embeddings_vector_idx" ON "embeddings" USING hnsw ("embedding" vector_cosine_ops);
