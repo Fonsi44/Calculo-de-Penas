@@ -1686,6 +1686,7 @@ describe('Modo --ctr-only (payload ligero): guardias reusadas', () => {
     //    (paso 1b, antes que la de tema). La guardia es la misma en CTR-only y body.
     const r1 = validarTitleOptimizado(title, 'Demanda civil en Honduras | Pineda y...');
     expect(r1).not.toBeNull();
+    if (!r1) throw new Error("r1 es null");
     expect('nuevo' in r1).toBe(false);
     if (!('nuevo' in r1)) {
       expect(r1.rechazado).toMatch(/puntos suspensivos|\.\.\./i);
@@ -1694,6 +1695,7 @@ describe('Modo --ctr-only (payload ligero): guardias reusadas', () => {
     //    overlap <40% y Jaccard <0.3 → rechazo (no puede cambiar la intención).
     const r2 = validarTitleOptimizado(title, 'Guía de divorcio express en Honduras paso a paso');
     expect(r2).not.toBeNull();
+    if (!r2) throw new Error("r2 es null");
     expect('nuevo' in r2).toBe(false);
     if (!('nuevo' in r2)) {
       expect(r2.rechazado).toMatch(/tema|overlap|keyword/i);
@@ -1708,6 +1710,7 @@ describe('Modo --ctr-only (payload ligero): guardias reusadas', () => {
     const opt = '/intranet/calculadora permite estimar la pensión alimentaria que debe pagar el obligado en Honduras.';
     const r = validarMetaOptimizada(title, original, opt);
     expect(r).not.toBeNull();
+    if (!r) throw new Error("r es null");
     expect('nuevo' in r).toBe(false);
     if (!('nuevo' in r)) {
       expect(r.rechazado).toMatch(/ruta privada|R6|intranet/i);
@@ -1722,7 +1725,7 @@ describe('Modo --ctr-only (payload ligero): guardias reusadas', () => {
     // actualizarse para incluir las nuevas.
     const title = 'Herencia y testamentos en Honduras guía';
     const rT = validarTitleOptimizado(title, 'Herencia y testamentos en Honduras: guía paso a paso');
-    if ('nuevo' in rT) {
+    if (rT && 'nuevo' in rT) {
       expect(rT.nuevo.length).toBeGreaterThan(0);
       expect(rT.nuevo.length).toBeLessThanOrEqual(60);
     }

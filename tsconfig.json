@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "_archived_unused", "scripts/legacy", "**/_unused", "data/legacy", "docs/legacy", "basura"]
+  "exclude": ["node_modules", "_archived_unused", "scripts/legacy", "scripts/archive", "**/_unused", "data/legacy", "docs/legacy", "basura"]
 }

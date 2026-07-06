@@ -131,6 +131,7 @@ Nunca compartir tokens ni secretos en chats o logs.
 - `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/`, `data/seo/` nunca se commitean.
 - NUNCA hardcodear `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`.
 - NUNCA compartir tokens, refresh tokens ni API keys en chats, logs o documentación.
+- **Datos generados:** Revisa siempre los archivos añadidos con `git status`. Nunca trackees archivos generados, caches o checkpoints temporales bajo `data/`.
 - Cookies HttpOnly/Secure/SameSite=Lax. Proxy edge protege intranet y API.
 - Si un secreto aparece en git history, requiere rotación en el proveedor.
 

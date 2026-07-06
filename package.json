@@ -99,7 +99,6 @@
   },
   "dependencies": {
     "@google/genai": "^2.10.0",
-    "@google/generative-ai": "^0.24.1",
     "@modelcontextprotocol/server-filesystem": "^2026.1.14",
     "@modelcontextprotocol/server-github": "^2025.4.8",
     "@modelcontextprotocol/server-postgres": "^0.6.2",

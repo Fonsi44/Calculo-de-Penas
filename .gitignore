@@ -154,6 +154,162 @@ scripts/.bing-audit.json
 
 # archivo espurio de Windows (redirección mal escapada en cmd)
 # `nul` y `public/nul` son dispositivos reservados de Windows (NULL device).
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/.env.local
+backend/.env.*.local
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+!.env.example
+
+# vercel
+.vercel
+
+# IndexNow cache local (URLs enviadas + timestamps; sin secretos pero
+# es estado local de cada entorno, no debe versionarse)
+.indexnow-cache.json
+
+# debug logs
+open-debug/
+
+# next.js logs
+next-stderr.log
+next-stdout.log
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# CP index (regenerable desde scripts/build-cp-index.cjs)
+/data/cp-indice.json
+
+# tool-output local (caches de webfetch)
+/.tool-output/
+
+# opencode + agent debug
+.opencode/
+home-*.png
+neon-mcp-*.log
+.playwright-mcp/
+opencode.jsonc
+opencode.jsonc.bak-*
+scripts/validate-opencode-config.cjs
+.env*
+
+# tooling IA legacy (Release 84: AGENTS.md es el protocolo canónico)
+# kilo.json, CLAUDE.md y .kilo/ quedan fuera del repo. Pueden existir en
+# disco local pero no se commitean. Evita conflictos de modelo/config con
+# el entorno de ejecución dinámico (ZCode/OpenCode).
+kilo.json
+CLAUDE.md
+.kilo/
+
+# security: no commitear claves públicas ni archivos de infraestructura
+*.pub
+
+# legacy wordpress
+/wordpress/
+
+# imagenes RAW
+docs/imagenes/*.png
+docs/imagenes/*.jpg
+
+# screenshots y capturas de pantalla
+*-fullpage.png
+*-mobile.png
+*-desktop.png
+*-after.png
+/docs/screenshots/
+# visual regression: outputs temporales (baselines SÍ se commitean en e2e/visual-baselines/)
+/docs/screenshots-current/
+/docs/screenshots-diff/
+
+# artifactos de test/benchmark
+servicios-juridicos-accessibility.yml
+post-submit.yml
+solicitar-consulta-form.yml
+
+# logs locales
+build-output.log
+dev-log.txt
+dev-server-err.log
+dev-server.log
+cookies.txt
+.vercel-env-check.txt
+
+# auditorias exportadas
+auditoria-blog/
+docs/backups/
+
+# reportes generados por scripts/auditar-cp.js y scripts/auditar-delitos.js
+# (regenerables con `npm run audit:cp` / `audit:delitos`; no deben versionarse)
+/data/auditoria-cp-report.json
+/data/auditoria-delitos-report.json
+# artefactos de auditoría puntuales (stale, no regenerados por flujo activo)
+/data/auditoria-completa-delitos.json
+/data/auditoria-correcciones.json
+/data/analisis-penas.json
+
+# backups de auditorías SEO locales (JSON por sesión, no versionables)
+auditoria-seo/backup-*.json
+
+# exportaciones puntuales de métricas (xlsx)
+docs/*.xlsx
+
+# coverage de vitest (regenerable con npm run test:coverage)
+coverage/
+*.tsbuildinfo
+
+# output del script de auditoría SEO (scripts/seo-audit-gsc-ga4.mjs)
+# Contiene métricas temporales, no secretos, pero es estado local por sesión.
+scripts/.seo-audit.json
+
+# output del script de auditoría Bing WMT (scripts/bing-wmt-audit.mjs)
+scripts/.bing-audit.json
+
+# archivo espurio de Windows (redirección mal escapada en cmd)
+# `nul` y `public/nul` son dispositivos reservados de Windows (NULL device).
 # Aparecen como archivos fantasma tras redirecciones mal escapadas en cmd.
 /nul
 /public/nul
@@ -162,19 +318,28 @@ scripts/.playwright-audit.json
 
 # Bing WMT tokens (nunca commitear)
 .secrets/
-data/bing/exports/
+data/bing/
 scripts/.bing-*.json
 
 # Google ADC creds y datos live (nunca commitear — contiene credenciales y JSONs volátiles)
 data/google/
+data/gsc-*.json
 ~/.config/gcloud/
 
 # Export de SEO live data (regenerable, volátil)
 data/seo/
 
-# Bing live JSON (regenerable, volátil)
-data/bing/bing-live.json
+# Hardening general de secretos y outputs
+*token*.json
+*.token
+*credential*.json
+*.credential
+*secret*.json
+*.secret
+*checkpoint*.json
 
-# Archivos OAuth de sesión (temporales)
-*.oauth-token.json
-.token-cache.json
+# --- Limpieza Fase 1 ---
+scratch/
+_tmp_*
+_chat_*.png
+auditoriablog_*.md

@@ -1,27 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { site } from '@/lib/site';
 
-const allowAll = [
-  '/',
-  '/_next/',
-  '/_next/static/',
-  '/_next/image',
-  '/images/',
-  '/fonts/',
-  '/*.js$',
-  '/*.mjs$',
-  '/*.css$',
-  '/*.woff$',
-  '/*.woff2$',
-  '/*.ttf$',
-  '/*.png$',
-  '/*.jpg$',
-  '/*.jpeg$',
-  '/*.webp$',
-  '/*.avif$',
-  '/*.svg$',
-  '/*.ico$',
-];
+
 
 const blockPrivate = [
   '/intranet/',
@@ -127,6 +107,32 @@ export default function robots(): MetadataRoute.Robots {
         disallow: blockSearchBots,
       },
 
+      // === Bots GEO adicionales: Google AI, Apple AI, You.com, Diffbot ===
+      // Google-Extended: controla si el contenido se usa en Gemini y Search AI.
+      // Applebot-Extended: controla ingesta en Apple Intelligence.
+      // YouBot: motor de búsqueda AI-native con alta visibilidad en respuestas.
+      // Diffbot: alimenta Knowledge Graph de múltiples LLMs.
+      {
+        userAgent: 'Google-Extended',
+        allow: '/',
+        disallow: blockSearchBots,
+      },
+      {
+        userAgent: 'Applebot-Extended',
+        allow: '/',
+        disallow: blockSearchBots,
+      },
+      {
+        userAgent: 'YouBot',
+        allow: '/',
+        disallow: blockSearchBots,
+      },
+      {
+        userAgent: 'Diffbot',
+        allow: '/',
+        disallow: blockSearchBots,
+      },
+
       // === Scrapers / bots de bajo valor o agresivos ===
       {
         userAgent: 'Bytespider',
@@ -162,9 +168,13 @@ export default function robots(): MetadataRoute.Robots {
       },
 
       // === Regla comodín (todo lo demás) ===
+      // allow: '/' en vez de allowAll: allowAll solo permitía extensiones de
+      // archivo (/*.js$, /*.css$…) pero no la raíz HTML, lo que impedía que
+      // bots no listados accedieran a páginas. Con '/' se bloquea solo
+      // blockPrivate y se permite el resto del sitio público.
       {
         userAgent: '*',
-        allow: allowAll,
+        allow: ['/', '/_next/', '/_next/static/', '/_next/image', '/images/', '/fonts/', '/*.js$', '/*.css$', '/*.woff2$', '/*.png$', '/*.webp$', '/*.svg$'],
         disallow: blockPrivate,
       },
     ],
