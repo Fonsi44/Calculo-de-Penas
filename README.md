@@ -5,10 +5,10 @@ Asociados — abogados en Nacaome, Valle, Honduras. Incluye motor de cálculo de
 penas según el Código Penal de Honduras (Decreto 130-2017), sistema SEO live
 con datos reales de GSC/GA4/Bing, y CMS interno.
 
-**Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)
-**Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM
-**Auth:** JWT + bcryptjs (cookies `__Host-token` HttpOnly/Secure/SameSite=Lax)
-**Testing:** Vitest (730 tests, 33 suites) + Playwright
+- **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)
+- **Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM
+- **Auth:** JWT + bcryptjs (cookies `__Host-token` HttpOnly/Secure/SameSite=Lax)
+- **Testing:** Vitest (754 tests, 35 suites) + Playwright
 
 ---
 
@@ -19,7 +19,7 @@ npm install
 npm run dev               # http://localhost:3000
 npm run lint              # ESLint — 0 errores requerido
 npm run build             # Next.js build + TypeScript
-npm test                  # Vitest — 730 tests
+npm test                  # Vitest — 754 tests
 ```
 
 ---
@@ -128,7 +128,8 @@ Nunca compartir tokens ni secretos en chats o logs.
 
 ## Seguridad
 
-- `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/`, `data/seo/` nunca se commitean.
+- `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/` nunca se commitean. Los outputs live o generados bajo `data/seo/` no se versionan, pero las fuentes canónicas explícitas (ej. `data/seo/canonical-paths.json`) sí.
+- **Guías operativas:** Para el manejo estricto de secretos y fuentes de verdad, consulta `data/README.md`. Para el uso seguro de comandos operativos y herramientas IA (`@google/genai`, `openai`), consulta `scripts/README.md`.
 - NUNCA hardcodear `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`.
 - NUNCA compartir tokens, refresh tokens ni API keys en chats, logs o documentación.
 - **Datos generados:** Revisa siempre los archivos añadidos con `git status`. Nunca trackees archivos generados, caches o checkpoints temporales bajo `data/`.

@@ -10,13 +10,13 @@ comandos de validación. Este protocolo es permanente.
 
 1. Leer `AGENTS.md` (este archivo).
 2. Ejecutar `git status` — entender estado del working tree.
-3. Ejecutar `npm run seo:doctor` — verificar credenciales y accesos.
-4. Ejecutar `npm run seo:collect` — recolectar datos live.
-5. Revisar `docs/audits/seo-live-summary.md` para contexto actual.
+3. Ejecutar `npm run seo:doctor` — verificar credenciales (obligatorio solo para tareas SEO/Analytics).
+4. Ejecutar `npm run seo:collect` — recolectar datos live (obligatorio solo para tareas SEO/Analytics).
+5. Revisar `docs/audits/seo-live-summary.md` para contexto actual si aplica.
 6. Leer los archivos que se van a modificar (no asumir contenido).
 7. Aplicar cambios pequeños y justificados.
-8. Validar siempre: `npm run lint && npm run build && npm test`.
-9. Documentar la acción en `auditoria-acciones.md`.
+8. Validar siempre en cambios de código: `npm run lint`, `npx tsc --noEmit`, `npm run test` y `npm run build`.
+9. Documentar la acción: usar `CHANGELOG.md` para releases, `AUDIT_REPOSITORY_REPORT.md` para saneamientos, o `auditoria-acciones.md` para operaciones estándar.
 10. No hacer push.
 
 ---
@@ -32,7 +32,7 @@ comandos de validación. Este protocolo es permanente.
 | R5 | No rediseñar la web pública (`app/(public)/**`). SEO sí; visual no. |
 | R6 | No exponer la intranet. `/intranet/*`, `/admin/*` son PRIVADAS. |
 | R7 | Un cambio lógico por commit. Commits atómicos en español con prefijo. |
-| R8 | Validar siempre: `lint && build && test` (mínimo). |
+| R8 | Validar siempre en cambios de código: `lint`, `tsc --noEmit`, `test` y `build`. |
 | R9 | No cambiar arquitectura sin justificación técnica. |
 | R10 | No modificar configuración de modelos, proveedores o APIs externas. |
 | R11 | Clasificar con honestidad: `IMPLEMENTADO`, `VALIDADO`, `NO VALIDADO`, `PENDIENTE`, `RIESGO`. |
@@ -74,7 +74,7 @@ comandos de validación. Este protocolo es permanente.
 - **Sanitización:** `sanitize-html` en todo HTML de entrada.
 - **Validación:** Zod en todas las rutas POST/PATCH/PUT.
 - **NUNCA hardcodear:** `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`.
-- **NUNCA commitear:** `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/`, `data/seo/`.
+- **NUNCA commitear:** `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/`, tokens, checkpoints, dumps y outputs live generados (ej. reportes bajo `data/seo/`, aunque allí sí se permiten fuentes canónicas como `canonical-paths.json`).
 - Si un secreto está en git history, requiere rotación (el código no lo resuelve).
 
 ---
@@ -83,7 +83,7 @@ comandos de validación. Este protocolo es permanente.
 
 | Área | Comandos |
 |------|----------|
-| Cualquier cambio | `npm run lint && npm run build && npm test` |
+| Cualquier cambio | `npm run lint && npx tsc --noEmit && npm run test && npm run build` |
 | Schema DB | `npx drizzle-kit generate` |
 | SEO / sitemap / robots | `build` + verificar `sitemap.xml` |
 | Blog | `npm run validate:dates && npm run content:audit` |

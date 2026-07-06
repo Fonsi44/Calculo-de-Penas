@@ -6,28 +6,34 @@ están resumidas; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
-## [Unreleased] - 2026-07-06 — Ejecución Fase 1, 2 y 3 de Limpieza
+## [Unreleased] - 2026-07-06 — Saneamiento global del repositorio y mejoras SEO/GEO
+
+Este saneamiento se separó en dos commits atómicos y semánticamente correctos: un `chore` técnico y un `feat(seo)` funcional.
+
+### Commit 1: `chore: saneamiento global del repositorio y hardening operativo`
 - **Fase 1 (Limpieza Básica)**: 
   - Eliminación segura de archivos temporales (`_tmp_*`, `_chat_*.png`, `auditoriablog_*.md`) y limpieza de la carpeta `scratch/`. Actualización de `.gitignore`.
-  - Correcciones: `app/robots.ts` (permitidos `/_next/` bots) y `tests/blog-verify-fix.test.ts` (typecheck fixes).
+  - Correcciones técnicas en `app/robots.ts` (permitidos `/_next/` para bots) y `tests/blog-verify-fix.test.ts` (typecheck fixes).
 - **Fase 2 (Saneamiento Operativo)**:
-  - Consolidación del directorio `scripts/`: Se creó `scripts/README.md` documentando el inventario de scripts mantenidos, utilidades manuales, scripts de testing, SEO y RAG.
-  - Archivado histórico: Se movieron a `scripts/archive/` los scripts huérfanos de migración, recuperación y automatización que ya no se utilizan (ej. `fetch-article.ts`, `process_native.py`, `run-blog-lotes.cmd`).
-  - Verificación de exclusión: Se confirmó que los scripts en `archive/` están ignorados en el typecheck global de `tsconfig.json` y que no están importados en otros scripts ni en la app.
-  - Auditoría de dependencias obsoletas en `package.json` confirmada segura.
-  - Verificación de seguridad: Se confirmó que `.env*` y carpetas de tokens (`data/google/`, `data/bing/`) están correctamente excluidas en `.gitignore` y que los scripts RAG locales no comprometen secretos.
+  - Consolidación del directorio `scripts/`: Se creó `scripts/README.md` documentando el inventario.
+  - Archivado histórico: Se movieron a `scripts/archive/` los scripts huérfanos/obsoletos.
+  - Verificación de exclusión: Se confirmó que `archive/` está ignorado en el typecheck global.
 - **Fase 3 (Consolidación SDK de IA)**:
-  - Auditoría de dependencias `@google/genai` y `@google/generative-ai`.
-  - Se eliminó con seguridad `@google/generative-ai` tras confirmar su nulo uso en el código, unificando toda la conectividad de Gemini sobre la SDK oficial actualizada `@google/genai` y documentando el uso de `openai` para el sistema RAG y DeepSeek.
+  - Se eliminó con seguridad la dependencia legacy `@google/generative-ai`.
+  - Se consolidó la conectividad sobre la SDK oficial `@google/genai` (Gemini) y se documentó el uso de `openai` como cliente para RAG/DeepSeek.
 - **Fase 4 (Hardening de secretos y datos generados)**:
-  - Revisión exhaustiva de tracking de credenciales. No se hallaron tokens expuestos.
-  - Se eliminó del index de Git (vía `git rm --cached`) outputs generados y locales: `data/corregir-checkpoint.json` y `data/gsc-*.json`.
-  - Fortalecimiento de `.gitignore` para bloquear de forma segura y permanente los patrones `*token*.json`, `*secret*.json`, `*credential*.json`, `*checkpoint*.json` y la carpeta `data/bing/`.
-  - Creación de `data/README.md` estipulando la política estricta de "Datos fuente de verdad" (versionables) vs "Datos generados/Locales" (no versionables).
-- **Fase 5 (Validación final y preparación de commit/release)**:
-  - Se validó la coherencia de todos los cambios de saneamiento.
-  - El proyecto logró un 100% de pasaje en `lint`, `typecheck`, `test` (754 tests) y `build` (prerendering completo sin fallos).
-  - Cierre formal del informe de auditoría `AUDIT_REPOSITORY_REPORT.md` y preparado de la rama para release estable.
+  - Se eliminaron del index de Git (vía `git rm --cached`) outputs generados: `data/corregir-checkpoint.json` y `data/gsc-*.json`.
+  - Fortalecimiento de `.gitignore` bloqueando patrones `*token*.json`, `*secret*.json`, `*credential*.json`, `*checkpoint*.json` y `data/bing/`.
+  - Creación de `data/README.md` estipulando la política de "Fuentes de verdad" (versionables) vs "Datos generados/Locales" (no versionables).
+- **Fase 5 (Validación y Cierre)**:
+  - Validación 100% exitosa en `lint`, `typecheck`, `test` (754 tests en 35 suites) y `build`.
+  - Cierre formal del informe `AUDIT_REPOSITORY_REPORT.md`.
+
+### Commit 2: `feat(seo): incorporar mejoras GEO y marcado estructurado para contenido`
+- **Estructura Semántica**:
+  - Ampliado el marcado estructurado del sitio y blog con señales GEO/SEO (`lib/schemas/blog.ts`, `lib/site.ts`).
+  - Añadidas propiedades semánticas orientadas a asistentes (entidades `Organization`, `SpeakableSpecification`, idioma BCP-47).
+  - Actualizado el script `scripts/corregir-articulos.ts` para inyectar bloques estructurales GEO puros (`geo-summary`, `geo-law`, `geo-data`) directamente en los bodies HTML.
 
 ---
 
