@@ -1,8 +1,77 @@
 # CHANGELOG — Pineda y Asociados
 
 Historial de cambios en orden cronológico inverso. Releases anteriores a Jul 2026
-están resumidas; las entradas vigentes desde la reestructuración del changelog
+están resumidos; las entradas vigentes desde la reestructuración del changelog
 (Release 91) mantienen detalle completo.
+
+---
+
+## [Unreleased] - 2026-07-06 — Implementación Fase 1 auditoría SEO/GEO (tareas A-01 a A-04)
+
+Ejecución de las 4 tareas de prioridad ALTA del `SEO_GEO_ACTION_PLAN.md`, generadas
+por la auditoría integral SEO/GEO/YMYL (`AUDITORIA_SEO_GEO_LEGAL_PINEDA.md`).
+
+### Cierre técnico post-implementación (2026-07-06)
+
+Re-validación y cierre operativo de los pendientes externos de Fase 1. Sin cambios
+de código funcionales adicionales — solo documentación de procedimientos externos.
+
+- **Re-validación local:** `lint` ✅, `tsc --noEmit` ✅, `build` ✅ (28.0s, 361 páginas),
+  `seo:doctor` ✅ (18 OK / 1 ERROR gcloud externo / 4 PENDIENTE creds), `test` ✅ (754 tests, 35 suites).
+- **Cierre externo A-01 (Vercel):** documentado procedimiento exacto en
+  `AUDITORIA_SEO_GEO_LEGAL_PINEDA.md` § "Cierre técnico Fase 1". Estado verificado en vivo:
+  cadena apex sigue en 2 saltos (308→308); requiere config manual en Vercel Domains.
+- **Cierre externo A-02 (GSC/Bing):** documentado checklist de validación pasiva.
+  Decisión local mantenida: no forzar `trailingSlash` global. Pendiente confirmación en
+  GSC URL Inspection y Bing WMT SEO Report.
+- **Cierre externo A-04 (Bing WMT/Screaming Frog):** documentado procedimiento de
+  extracción, crawl, clasificación (5 tipos) y corrección. Prohibido redirigir 404 a
+  home o crear páginas vacías. Criterio de cierre: 0 enlaces internos rotos corregibles.
+- **Documentación actualizada:** `AUDITORIA_SEO_GEO_LEGAL_PINEDA.md` (sección "Cierre
+  técnico Fase 1" con instrucciones operativas para Vercel, GSC, Bing WMT y Screaming
+  Frog), `SEO_GEO_ACTION_PLAN.md` (sección "Cierre externo Fase 1").
+- **Progreso:** 92 % completado / 8 % restante (sin cambios). Recomendación: desplegar
+  + cerrar A-01 en Vercel (~10 min) → esperar indexación; A-04 en paralelo.
+
+### `fix(seo): Fase 1 auditoría — enlace autoridad, canonical home y enlace roto`
+
+- **A-03 (Enlace a autoridad jurídica)**: Añadido enlace al Poder Judicial de Honduras
+  (`https://www.poderjudicial.gob.hn/`) en `/despacho` (tarjeta "Credenciales y
+  especialidad") y en el footer (columna identidad). Refuerza E-E-A-T (Trustworthiness)
+  en sitio YMYL jurídico. `rel="noopener noreferrer"`, sin `nofollow`, tono prudente.
+  - `app/(public)/despacho/page.tsx`
+  - `components/marketing/public-footer.tsx`
+- **A-04 (Enlace interno roto)**: Corregido slug de servicio en `landing-local.tsx`:
+  `derecho-ambiental-regulatorio` (404) → `ambiental-regulatorio` (canónico). Coherente
+  con `data/areas-juridicas.ts`, `lib/internal-links.ts`, `public-footer.tsx` y
+  `data/seo/canonical-paths.json`. Enlace latente (no se renderizaba actualmente) pero
+  bug potencial si una landing local añadía un servicio ambiental.
+  - `components/marketing/landing-local.tsx`
+- **A-02 (Canonical home)**: Decisión documentada (sin cambio funcional). Next.js App
+  Router normaliza el trailing slash de la raíz con `trailingSlash: false` (default):
+  el HTML sirve `...com` sin slash, coherente entre canonical, og:url y URL servida.
+  Bing no reporta errores de canonicalización (3.754 2xx, 16 priorityUrls sin "redirect").
+  No se fuerza `trailingSlash: true` global (impactaría 213 URLs del sitemap, ~60
+  redirects y todos los canonicals; riesgo de regresión > beneficio). Comentarios
+  actualizados para reflejar la realidad.
+  - `app/(public)/page.tsx` (comentario)
+  - `app/(public)/layout.tsx` (comentario)
+- **A-01 (Redirect apex)**: PENDIENTE EXTERNA. La cadena 308→308 en el dominio apex
+  (`http://non-www` → `https://non-www` → `https://www`) es infraestructura de Vercel
+  que intercepta antes de la app Next.js. `next.config.ts` ya declara los redirects
+  (líneas 118–119) como defensa en profundidad. Requiere config manual en Vercel →
+  Project Settings → Domains → apex como "Redirect to www" Permanent (301).
+
+### Documentación generada/actualizada
+- `AUDITORIA_SEO_GEO_LEGAL_PINEDA.md`: nueva sección "Implementación Fase 1 — 2026-07-06".
+- `SEO_GEO_ACTION_PLAN.md`: A-01 a A-04 marcadas con estado (pendiente externa / completada / parcial).
+- `SEO_AUDIT_CHECKLIST.md`: 2 ítems ⚠️→✅ (2.6, 7.8); 3 ítems ⚠️ actualizados (1.8, 1.10, 11.9). Total: 128✅ / 23⚠️ / 0❌ (85 %).
+
+### Validaciones
+- `npm run lint` ✅ limpio
+- `npx tsc --noEmit` ✅ limpio
+- `npm run build` ✅ Compiled successfully in 28.8s, 361 páginas estáticas, exit code 0
+- `npm run seo:doctor` ✅ 18 OK / 1 ERROR (gcloud CLI no instalada, no relacionado) / 4 PENDIENTE
 
 ---
 

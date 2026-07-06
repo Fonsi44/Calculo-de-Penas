@@ -95,6 +95,17 @@ export function PublicFooter() {
             <p className="text-xs text-accent/80 leading-relaxed mt-1.5 text-pretty">
               Abogado colegiado en Honduras · Registro profesional vigente.
             </p>
+            <p className="text-xs text-text-inverse/70 leading-relaxed mt-2 text-pretty">
+              Referencia institucional:{' '}
+              <a
+                href="https://www.poderjudicial.gob.hn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-inverse/80 hover:text-accent underline underline-offset-2 decoration-accent/40 transition-colors"
+              >
+                Poder Judicial de Honduras
+              </a>
+            </p>
           </div>
 
           {/* Servicios */}

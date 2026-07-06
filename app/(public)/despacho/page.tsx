@@ -236,6 +236,18 @@ export default async function DespachoPage() {
               >
                 Ver especialidad en defensa penal <ArrowRight size={14} />
               </Link>
+              <p className="text-xs text-text-muted leading-relaxed mt-3 text-pretty">
+                Como referencia institucional del sistema judicial hondureño, puede consultar el
+                sitio oficial del{' '}
+                <a
+                  href="https://www.poderjudicial.gob.hn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-accent-dark hover:text-primary underline underline-offset-2 decoration-accent/40 transition-colors"
+                >
+                  Poder Judicial de Honduras
+                </a>.
+              </p>
             </Card>
           </div>
         </div>

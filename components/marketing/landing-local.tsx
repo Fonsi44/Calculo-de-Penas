@@ -38,7 +38,11 @@ const SERVICIO_SLUG_MAP: Record<string, string> = {
   'propiedad intelectual': '/servicios-juridicos/propiedad-intelectual',
   'derecho tributario': '/servicios-juridicos/tributario-fiscal',
   'tributario fiscal': '/servicios-juridicos/tributario-fiscal',
-  'derecho ambiental': '/servicios-juridicos/derecho-ambiental-regulatorio',
+  // Corregido (A-04, auditoría 2026-07-06): el slug canónico es
+  // `ambiental-regulatorio` (sin prefijo `derecho-`), coherente con
+  // data/areas-juridicas.ts, lib/internal-links.ts, public-footer.tsx y
+  // data/seo/canonical-paths.json. Antes apuntaba a una ruta 404.
+  'derecho ambiental': '/servicios-juridicos/ambiental-regulatorio',
   'conciliacion y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
   'conciliación y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
 };

@@ -38,8 +38,9 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: 'es_HN',
-      // og:url con slash final para coincidir con el canonical de la home
-      // y evitar que Bing marque "this page is a redirect".
+      // og:url de la home. Next.js normaliza el trailing slash (ver nota en
+      // app/(public)/page.tsx). El valor renderizado final es coherente con
+      // el canonical y la URL servida. Auditoría 2026-07-06 (A-02).
       url: `${site.url}/`,
       siteName: site.name,
       title,

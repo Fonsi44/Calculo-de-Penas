@@ -38,10 +38,15 @@ export const metadata: Metadata = {
   // El tagline ya contiene el nombre del bufete (45 chars, óptimo para SERP).
   title: { absolute: site.tagline },
   description: site.description,
-  // Canonical absoluto CON slash final. Si se usa '/' (relativo), Next lo
-  // resuelve contra metadataBase y en la home genera '...com' sin slash,
-  // lo que Bing interpreta como canonical mismatch ("this page is a redirect").
-  // El absoluto garantiza 'https://www.pinedayasociadoshn.com/' exacto.
+  // Canonical de la home. Next.js App Router normaliza el trailing slash de la
+  // raíz con `trailingSlash: false` (default): el HTML renderizado sirve
+  // `https://www.pinedayasociadoshn.com` (sin slash). Esto es COHERENTE:
+  // canonical, og:url y la URL servida son la misma, y Bing Webmaster no
+  // reporta errores de canonicalización (3.754 páginas 2xx rastreadas, sin
+  // "this page is a redirect" en las 16 priorityUrls). No forzamos
+  // `trailingSlash: true` global: impactaría 213 URLs del sitemap, ~60
+  // redirects 301 y todos los canonicals. La normalización de Next es segura.
+  // Auditoría 2026-07-06 (A-02): decisión documentada, sin cambio de código.
   alternates: { canonical: `${site.url}/` },
   keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados Goascorán', 'abogados San Marcos de Colón', 'abogados El Triunfo', 'abogados Marcovia', 'abogados Pespire', 'abogados Namasigüe', 'abogados Orocuina', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
   robots: {
