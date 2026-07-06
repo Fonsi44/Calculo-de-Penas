@@ -215,7 +215,7 @@ export function legalServiceSchema() {
       { '@type': 'City', name: 'Orocuina' },
       { '@type': 'City', name: 'Langue' },
       { '@type': 'City', name: 'Amapala' },
-      { '@type': 'State', name: site.address.department },
+      { '@type': 'AdministrativeArea', name: site.address.department },
       { '@type': 'Country', name: site.address.country },
     ],
     address: {
@@ -354,7 +354,10 @@ export function organizationSchema() {
         telephone: site.phone,
         contactType: 'customer service',
         areaServed: 'HN',
-        availableLanguage: ['Spanish'],
+        // Coherente con LegalService.knowsLanguage: no usar el genérico 'Spanish'
+        // sino los BCP-47 específicos. Los LLMs usan este campo para identificar
+        // la lengua del servicio y geo-localizar respuestas.
+        availableLanguage: ['es-HN', 'es-ES'],
         hoursAvailable: site.hoursStructured.map((h) => ({
           '@type': 'OpeningHoursSpecification',
           dayOfWeek: h.dayOfWeek,
@@ -426,6 +429,9 @@ export function founderSchema() {
     '@id': `${site.url}/#founder`,
     name: FOUNDER_PROFILE.name,
     honorificPrefix: 'Abogado',
+    // knowsLanguage: coherente con LegalService y Organization.
+    // Permite a los LLMs identificar el idioma del especialista.
+    knowsLanguage: ['es-HN', 'es-ES'],
     image: `${site.url}${FOUNDER_PROFILE.image}`,
     jobTitle: FOUNDER_PROFILE.jobTitle,
     description: FOUNDER_PROFILE.description,
@@ -468,7 +474,7 @@ export function founderSchema() {
       { '@type': 'City', name: 'Orocuina' },
       { '@type': 'City', name: 'Langue' },
       { '@type': 'City', name: 'Amapala' },
-      { '@type': 'State', name: site.address.department },
+      { '@type': 'AdministrativeArea', name: site.address.department },
     ],
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
     // es claramente personal (Danilo_Pineda_M). Se añade googleBusiness
@@ -520,6 +526,8 @@ export function thaniaSchema() {
     '@id': `${site.url}/#thania`,
     name: THANIA_PROFILE.name,
     honorificPrefix: 'Abogada',
+    // knowsLanguage: coherente con LegalService y Organization.
+    knowsLanguage: ['es-HN', 'es-ES'],
     image: `${site.url}${THANIA_PROFILE.image}`,
     jobTitle: THANIA_PROFILE.jobTitle,
     description: THANIA_PROFILE.description,
@@ -550,7 +558,7 @@ export function thaniaSchema() {
       { '@type': 'City', name: 'Orocuina' },
       { '@type': 'City', name: 'Langue' },
       { '@type': 'City', name: 'Amapala' },
-      { '@type': 'State', name: site.address.department },
+      { '@type': 'AdministrativeArea', name: site.address.department },
     ],
   };
 }
@@ -593,6 +601,8 @@ export function emilSchema() {
     '@id': `${site.url}/#emil`,
     name: EMIL_PROFILE.name,
     honorificPrefix: 'Abogado',
+    // knowsLanguage: coherente con LegalService y Organization.
+    knowsLanguage: ['es-HN', 'es-ES'],
     image: `${site.url}${EMIL_PROFILE.image}`,
     jobTitle: EMIL_PROFILE.jobTitle,
     description: EMIL_PROFILE.description,
@@ -623,7 +633,7 @@ export function emilSchema() {
       { '@type': 'City', name: 'Orocuina' },
       { '@type': 'City', name: 'Langue' },
       { '@type': 'City', name: 'Amapala' },
-      { '@type': 'State', name: site.address.department },
+      { '@type': 'AdministrativeArea', name: site.address.department },
     ],
   };
 }

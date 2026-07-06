@@ -51,13 +51,16 @@ export function blogPostSchema(post: Post) {
           '@type': 'Person',
           name: post.author,
         },
+    // Publisher = Organization (no LegalService) para que Google valide el
+    // Article Rich Result. La especificación de Google requiere @type Organization
+    // con logo ImageObject. @id apunta al nodo Organization del @graph global
+    // inyectado en app/(public)/layout.tsx para coherencia del Knowledge Graph.
     publisher: {
-      '@type': 'LegalService',
-      '@id': `${site.url}/#legal-service`,
+      '@type': 'Organization',
+      '@id': `${site.url}/#organization`,
       name: site.name,
-      // El `logo` del publisher DEBE ser el logotipo de marca (ImageObject con
-      // width/height), no la imagen social. Antes apuntaba a og-image.webp y
-      // los rich results de Article mostraban la imagen social en vez del logo.
+      // Logo de marca (PNG transparente, 512×512). Google lo muestra en los
+      // rich results de Article junto al nombre del publisher.
       logo: {
         '@type': 'ImageObject',
         url: `${site.url}/images/logo.png`,
@@ -76,6 +79,19 @@ export function blogPostSchema(post: Post) {
     articleSection: post.category,
     ...(wordCount > 0 ? { wordCount } : {}),
     inLanguage: 'es-HN',
+    // Speakable (GEO): indica a asistentes de voz y motores de respuesta IA
+    // (ChatGPT, Perplexity, Google SGE) qué fragmentos del artículo son los
+    // más citables. cssSelector apunta al H1, los H2/H3 del body (que ya
+    // tienen IDs estables por injectHeadingIds) y el primer párrafo.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: [
+        'h1',
+        '.article-body h2',
+        '.article-body h3',
+        '.article-body p:first-of-type',
+      ],
+    },
   };
 }
 

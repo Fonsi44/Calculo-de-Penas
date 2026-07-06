@@ -2,15 +2,15 @@
  * Corrección por lotes de artículos legales con información alucinada/falsa.
  *
  * FUENTE DE VERDAD: tabla `blog_posts` (PostgreSQL/Neon) vía Drizzle ORM.
- * Los artículos se corrigen usando Gemini con Google Search Grounding, que
- * busca en la web en vivo para verificar cada referencia legal (artículos del
- * CP, penas, decretos, Constitución, etc.) antes de corregir.
+ * Los artículos son procesados por Gemini como un formateador estructural
+ * puro, respetando ciegamente la veracidad legal de los textos ya
+ * auditados.
  *
- * PROBLEMA QUE RESUELVE: artículos legales generados por IA que contienen
- * información falsa (artículos inexistentes, penas incorrectas, citas
- * inventadas, decretos que no existen). Este script usa búsqueda web
- * (grounding) para verificar cada referencia contra fuentes reales y
- * reescribe solo lo que está mal, manteniendo estructura y tono original.
+ * PROBLEMA QUE RESUELVE: Inyectar la capa GEO (Bite-Sized Summaries,
+ * blockquotes semánticos y tabulación de datos) sin requerir llamadas de
+ * verificación web.
+ * Gemini usa únicamente su conocimiento interno y el texto base proporcionado,
+ * manteniendo estructura, veracidad y tono original sin buscar en la web.
  *
  * ARQUITECTURA DE PROMPT:
  *   - Rol: Abogado Consultor Senior especializado en Derecho Hondureño
@@ -134,7 +134,7 @@ Sin --aplicar, el script es de solo lectura (dry-run).`);
 //  Constantes
 // ═══════════════════════════════════════════════════════════════════════════
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro';
 const CHECKPOINT_PATH = path.join(process.cwd(), 'data', 'corregir-checkpoint.json');
 const MAX_REINTENTOS = 3;
 const PAUSA_LARGA_MS = 30000; // 30s tras cada lote
@@ -237,11 +237,9 @@ function wordCount(html: string): number {
 // ═══════════════════════════════════════════════════════════════════════════
 
 const ESQUEMA_RESPUESTA_JSON = `{
-  "body": "Cuerpo HTML corregido completo. Mantiene etiquetas originales (p, strong, h2, h3, ul, ol, li, a). Sin introducciones cliché ni conclusiones redundantes. Directo al grano desde el primer párrafo. Encabezados H2/H3 en formato de preguntas basadas en intención de búsqueda real. Cada afirmación clave cita artículo de ley hondureña.",
-  "meta_title": "Título SEO optimizado (50-60 caracteres). Incluye keyword principal al inicio y 'Honduras' o ubicación. Sin keyword stuffing.",
-  "meta_description": "Meta description optimizada (120-155 caracteres). Persuasiva, incluye keyword secundaria y llamada a la acción sutil.",
-  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-  "enfoque_geo": "Breve resumen (1-3 frases) de las leyes, artículos específicos e instituciones hondureñas que se validaron y citan en este artículo. Ej: 'Se verificaron los artículos 214 y 217 del Código Penal de Honduras (Decreto 130-2017) y jurisprudencia de la Corte Suprema de Justicia sobre homicidio simple.'"
+  "bite_sized_summary": "Resumen rápido extraído del texto original (1-2 oraciones).",
+  "html_table": "Tabla HTML con los números/plazos encontrados (o string vacío si no hay).",
+  "blockquote": "Cita legal extraída del texto original envuelta en <blockquote> (o string vacío si no hay law explícita)."
 }`;
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -249,95 +247,26 @@ const ESQUEMA_RESPUESTA_JSON = `{
 // ═══════════════════════════════════════════════════════════════════════════
 
 function construirPrompt(titulo: string, body: string): string {
-  return `Eres un **Abogado Consultor Senior** especializado en **Derecho Hondureño** y experto en **SEO/GEO Avanzado para firmas jurídicas**. Tu tarea es AUDITAR, CORREGIR y OPTIMIZAR el siguiente artículo legal generado por IA que PUEDE CONTENER INFORMACIÓN FALSA, ALUCINACIONES, o texto con formato de "plantilla genérica de IA".
+  return `Eres un formateador estructural puro experto en HTML. Tu tarea es extraer elementos clave del texto y estructurarlos en JSON.
+  
+## 📋 REGLAS ESTRICTAS
+- **PROHIBIDO INVENTAR**: Usa ÚNICAMENTE el texto proporcionado. No añadas, sugieras ni inyectes nombres de instituciones (como ONCAE, SAR, PGR, etc.) ni leyes que no estén explícitamente en el texto original.
+- No alucines, no enriquezcas el contexto, ni cruces referencias.
+- Tu trabajo es extraer la información EXISTENTE y formatearla en los siguientes campos:
+  1. bite_sized_summary: Extrae un resumen directo de 1-2 oraciones basado estrictamente en el texto original.
+  2. html_table: Si el texto contiene datos numéricos o plazos, formatéalos como una tabla HTML. Si no, deja el string vacío ("").
+  3. blockquote: Si el texto menciona una ley explícita, extrae la cita y envuélvela en <blockquote>. Si no, deja el string vacío ("").
 
-## 📋 REGLAS ESTRICTAS — LÉELAS EN SU TOTALIDAD ANTES DE COMENZAR
+## 📄 ARTÍCULO ORIGINAL
 
-### 🚫 REGLAS ANTI-PLANTILLA (prioridad máxima)
-- **PROHIBIDO** usar introducciones cliché como:
-  - "En el complejo mundo legal..." / "En el mundo del derecho..."
-  - "En este artículo exploraremos..." / "A lo largo de este artículo..."
-  - "Es importante destacar que..." / "Cabe señalar que..."
-  - "El derecho penal es una rama del derecho..."
-  - Cualquier variante de estas frases hechas.
-- **PROHIBIDO** usar conclusiones redundantes como:
-  - "En resumen..." / "En conclusión..." / "A modo de conclusión..."
-  - "Como hemos visto a lo largo de este artículo..."
-- El artículo debe **IR DIRECTO AL GRANO** desde el primer párrafo.
-- Cada párrafo debe aportar información sustantiva. Sin relleno.
-- La extensión final debe ser similar a la original (±20% de palabras).
-- Si el original es demasiado corto (<600 palabras), puedes expandir con información legal verificada, pero SIN relleno.
+**Título:** ${titulo}
 
-### ⚖️ RIGOR LEGAL Y E-E-A-T (obligatorio)
-- **ACTIVA GOOGLE SEARCH GROUNDING** para verificar CADA dato legal.
-- Contrasta con la legislación VIGENTE de Honduras:
-  - Constitución de la República de Honduras
-  - Código Penal (Decreto 130-2017 y sus reformas)
-  - Código Procesal Penal
-  - Código Civil, Código de Trabajo, Código de Comercio, Código Tributario
-  - Leyes especiales y reglamentos aplicables
-  - Gacetas oficiales y jurisprudencia de la Corte Suprema de Justicia
-- **CADA afirmación clave debe citar el artículo de ley correspondiente** con número exacto.
-  - Formato correcto: "según el Artículo 214 del Código Penal de Honduras..."
-  - NO cites artículos que no puedas verificar con la búsqueda.
-- Si una ley fue **reformada o derogada**, usa la versión vigente, no la original.
-- Si no puedes verificar una afirmación, ELIMÍNALA por completo.
-
-### 🌍 OPTIMIZACIÓN GEO (Generative Engine Optimization)
-- Incluye menciones naturales de **instituciones públicas reales de Honduras**:
-  - Corte Suprema de Justicia (CSJ)
-  - Ministerio Público (MP) / Fiscalía
-  - Servicio de Administración de Rentas (SAR)
-  - Registro Nacional de las Personas (RNP)
-  - Instituto de la Propiedad (IP)
-  - Secretaría de Derechos Humanos
-  - Juzgados de Letras, Tribunal de Sentencia, Corte de Apelaciones
-  - Dirección General de Migración y Extranjería (DGME)
-- Menciona ubicaciones geográficas reales de Honduras cuando aplique.
-- Usa terminología jurídica hondureña precisa (ej: "recurso de casación", "acción de amparo", "excepción de incompetencia").
-- Esto permite que **Google AI Overviews y otros motores generativos** identifiquen el artículo como fuente autorizada sobre derecho hondureño.
-
-### 📐 ESTRUCTURA OBLIGATORIA
-- Usa **encabezados H2 y H3** basados en **intenciones de búsqueda reales**.
-- Preferentemente en **formato de preguntas frecuentes (FAQ)**:
-  - ✅ "¿Cómo aplica el artículo 214 del Código Penal?"
-  - ✅ "¿Qué requisitos se necesitan para interponer una denuncia?"
-  - ✅ "¿Cuál es la pena para el delito de homicidio simple en Honduras?"
-  - ✅ "¿Qué reformas ha tenido el Código Penal hondureño?"
-- NO uses H2 genéricos como "Introducción" o "Conclusión".
-- Mantén el H1 original (el título del artículo) — solo hay UN H1.
-- Usa negritas (<strong>) para términos legales clave y cantidades numéricas.
-
-### 🎯 TONO Y ESTILO
-- Profesional, autoritativo, pero accesible para el público general.
-- Extensión de párrafos: 2-4 oraciones. Nada de bloques extensos.
-- Usa listas (<ul>/<ol>) para enumerar requisitos, pasos o elementos.
-- Incluye ejemplos prácticos hondureños cuando sea relevante.
-
-## 📄 ARTÍCULO A AUDITAR Y CORREGIR
-
-**Título original:** ${titulo}
-
-**Cuerpo original:**
+**Cuerpo HTML:**
 ${body}
 
-	## ✅ FORMATO DE RESPUESTA (OBLIGATORIO — JSON PURO)
-
-	Debes responder ÚNICAMENTE con un objeto JSON válido. Sin markdown, sin bloques de código (ni \`\`\`json), sin texto adicional antes ni después. El JSON debe seguir EXACTAMENTE esta estructura:
-
-	${ESQUEMA_RESPUESTA_JSON}
-
-### ⚠️ IMPORTANTE: ESCAPA CORRECTAMENTE EL JSON
-- El campo **"body"** contiene HTML. Las comillas dobles dentro del HTML (ej: class="...", href="...") ROMPEN el JSON.
-- Para evitar esto, usa **solo comillas simples** dentro del HTML: \`class='...'\`, \`href='...'\` en lugar de \`class="..."\`.
-- Escapa cualquier carácter especial: saltos de línea como \\n, tabs como \\t.
-- Si el HTML tiene caracteres especiales, usa &quot; o &#39; en lugar de las comillas literales.
-
-### IMPORTANTE SOBRE "contenido_corregido"
-En el JSON de respuesta, la clave debe llamarse **"body"** (no "contenido_corregido"). Si decides que el artículo está 100% correcto y no necesita cambios, devuelve "body": null.
-
-### EJEMPLO DE RESPUESTA VÁLIDA
-{"body": "<p>El homicidio simple está tipificado en el Artículo 214 del Código Penal de Honduras (Decreto 130-2017).</p><h2>¿Cuál es la pena para el homicidio simple en Honduras?</h2><p>La pena establecida es de 6 a 8 años de prisión, conforme al Artículo 214 del CP.</p>","meta_title":"Homicidio Simple en Honduras: Pena y Artículo 214 CP","meta_description":"Conozca la pena, requisitos y artículo del homicidio simple en el Código Penal de Honduras. Abogados penalistas explican la ley.","keywords":["homicidio simple","artículo 214 CP Honduras","pena homicidio Honduras","Código Penal Honduras","abogado penalista"],"enfoque_geo":"Se verificó el Artículo 214 del Código Penal de Honduras (Decreto 130-2017) que tipifica el homicidio simple con pena de 6 a 8 años de prisión. Se consultó jurisprudencia de la Corte Suprema de Justicia de Honduras."}`;
+Debes responder ÚNICAMENTE con un objeto JSON válido con la siguiente estructura:
+${ESQUEMA_RESPUESTA_JSON}
+`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -345,11 +274,9 @@ En el JSON de respuesta, la clave debe llamarse **"body"** (no "contenido_correg
 // ═══════════════════════════════════════════════════════════════════════════
 
 interface GeminiResult {
-  body: string | null;
-  meta_title: string;
-  meta_description: string;
-  keywords: string[];
-  enfoque_geo: string;
+  bite_sized_summary: string;
+  html_table: string;
+  blockquote: string;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -361,15 +288,10 @@ interface GeminiResult {
 function extraerCamposIndividuales(jsonObj: string, rawFallback: string): Record<string, unknown> | null {
   const resultado: Record<string, unknown> = {};
 
-  // Estrategia: extraer cada campo buscando entre comillas de campo conocido
-  // El truco: encontrar "field_name": " y luego buscar el cierre antes del siguiente campo conocido
-
   const camposConocidos = [
-    'meta_title',
-    'meta_description',
-    'keywords',
-    'enfoque_geo',
-    'body',
+    'bite_sized_summary',
+    'html_table',
+    'blockquote',
   ];
 
   function extraerValorString(clave: string, texto: string): string | null {
@@ -412,34 +334,20 @@ function extraerCamposIndividuales(jsonObj: string, rawFallback: string): Record
     return segmento.trim();
   }
 
-  // Extraer body (puede contener HTML con comillas, es el más complejo)
-  const body = extraerValorString('body', jsonObj);
-  if (body) resultado.body = body;
+  // Extraer bite_sized_summary
+  const bite = extraerValorString('bite_sized_summary', jsonObj);
+  if (bite) resultado.bite_sized_summary = bite;
 
-  // Extraer meta_title
-  const metaTitle = extraerValorString('meta_title', jsonObj);
-  if (metaTitle) resultado.meta_title = metaTitle;
+  // Extraer html_table
+  const html = extraerValorString('html_table', jsonObj);
+  if (html) resultado.html_table = html;
 
-  // Extraer meta_description
-  const metaDesc = extraerValorString('meta_description', jsonObj);
-  if (metaDesc) resultado.meta_description = metaDesc;
+  // Extraer blockquote
+  const quote = extraerValorString('blockquote', jsonObj);
+  if (quote) resultado.blockquote = quote;
 
-  // Extraer keywords (array de strings)
-  const kwMatch = jsonObj.match(/"keywords"\s*:\s*\[([\s\S]*?)\]\s*(?:,|$|\})/);
-  if (kwMatch) {
-    const kwStr = kwMatch[1];
-    const kws = kwStr.match(/"([^"]+)"/g);
-    if (kws) {
-      resultado.keywords = kws.map((k) => k.replace(/"/g, '').trim()).filter(Boolean);
-    }
-  }
-
-  // Extraer enfoque_geo
-  const geo = extraerValorString('enfoque_geo', jsonObj);
-  if (geo) resultado.enfoque_geo = geo;
-
-  // Validar que al menos tengamos body o meta_title
-  if (!resultado.body && !resultado.meta_title && !resultado.enfoque_geo) {
+  // Validar que al menos tengamos alguno
+  if (!resultado.bite_sized_summary && !resultado.html_table && !resultado.blockquote) {
     return null;
   }
 
@@ -462,7 +370,7 @@ async function corregirConGemini(
       model: GEMINI_MODEL,
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       config: {
-        tools: [{ googleSearch: {} }],
+        tools: [],
         temperature: TEMPERATURA,
         maxOutputTokens: 8192,
       },
@@ -527,68 +435,27 @@ async function corregirConGemini(
 	      return { resultado: null, error: 'Respuesta no es un objeto JSON válido' };
 	    }
 
-    // Mapear del esquema Gemini (body) al campo esperado
-    const bodyCorregido = typeof parsed.body === 'string' && parsed.body.trim().length > 0
-      ? parsed.body.trim()
-      : null;
+    const bite_sized = typeof parsed.bite_sized_summary === 'string' ? parsed.bite_sized_summary.trim() : '';
+    const html_table = typeof parsed.html_table === 'string' ? parsed.html_table.trim() : '';
+    const blockquote = typeof parsed.blockquote === 'string' ? parsed.blockquote.trim() : '';
 
-    const metaTitle = typeof parsed.meta_title === 'string' ? parsed.meta_title.trim() : '';
-    const metaDescription = typeof parsed.meta_description === 'string' ? parsed.meta_description.trim() : '';
-    const keywords = Array.isArray(parsed.keywords)
-      ? parsed.keywords.filter((k): k is string => typeof k === 'string')
-      : [];
-    const enfoqueGeo = typeof parsed.enfoque_geo === 'string' ? parsed.enfoque_geo.trim() : '';
-
-    // Si body es null, el artículo está correcto
-    if (bodyCorregido === null) {
-      return {
-        resultado: {
-          body: null,
-          meta_title: metaTitle,
-          meta_description: metaDescription,
-          keywords,
-          enfoque_geo: enfoqueGeo,
-        },
-        error: null,
-      };
+    if (!bite_sized && !html_table && !blockquote) {
+      return { resultado: null, error: 'Respuesta vacía: Gemini no extrajo resumen, tabla ni cita. (Fallo de extracción)' };
     }
 
-    // Guardia: el body corregido debe tener al menos 50 palabras
-    const palabras = wordCount(bodyCorregido);
-    if (palabras < 50) {
-      return {
-        resultado: null,
-        error: `Body corregido demasiado corto (${palabras} palabras, mínimo 50)`,
-      };
-    }
-
-    // Guardia: detectar placeholders genéricos
-    const placeholders = [
-      'no pude verificar',
-      'no se pudo verificar',
-      'no fue posible verificar',
-      'información no disponible',
-      'no se encontró información',
-      'consulte con un abogado',
-      'busque asesoría legal',
-    ];
-    const bodyLower = bodyCorregido.toLowerCase();
-    const tienePlaceholder = placeholders.some((p) => bodyLower.includes(p));
-    if (tienePlaceholder && palabras < 100) {
-      return {
-        resultado: null,
-        error:
-          'El body contiene placeholders genéricos y es demasiado corto. Posible fallo en la búsqueda web.',
-      };
+    // Log the actual raw response for the very first execution to debug parsing
+    if (!(global as any).hasLoggedFirstRaw) {
+      console.log('\n--- 🔍 DEBUG: RAW JSON FROM GEMINI ---');
+      console.log(rawJson);
+      console.log('----------------------------------------\n');
+      (global as any).hasLoggedFirstRaw = true;
     }
 
     return {
       resultado: {
-        body: bodyCorregido,
-        meta_title: metaTitle,
-        meta_description: metaDescription,
-        keywords,
-        enfoque_geo: enfoqueGeo,
+        bite_sized_summary: bite_sized,
+        html_table: html_table,
+        blockquote: blockquote
       },
       error: null,
     };
@@ -686,51 +553,7 @@ async function procesarArticulo(articulo: ArticuloRow): Promise<ResultadoProcesa
     };
   }
 
-  // Si body es null, el artículo está correcto
-  if (resultado && resultado.body === null) {
-    console.log(`  ✅ Artículo correcto (sin cambios necesarios)`);
-
-    // Incluir meta_title, meta_description y enfoque_geo aunque el body no cambie
-    if (resultado.meta_title || resultado.meta_description || resultado.enfoque_geo) {
-      console.log(`  ℹ️  Metadatos SEO/GEO generados aunque el body no requirió cambios`);
-    }
-
-    if (APLICAR) {
-      const updateData: Record<string, any> = {
-        reviewStatus: 'reviewed',
-        reviewedAt: new Date(),
-        lastReviewedAt: new Date(),
-        legalReviewNotes: 'Verificado por Gemini + Google Search Grounding — sin cambios en body',
-      };
-
-      // Actualizar metadatos SEO si Gemini los generó
-      if (resultado.meta_title) updateData.metaTitle = resultado.meta_title;
-      if (resultado.meta_description) updateData.metaDescription = resultado.meta_description;
-      if (resultado.enfoque_geo) {
-        updateData.legalReviewNotes = `Verificado por Gemini + Google Search Grounding — sin cambios en body.\nEnfoque GEO: ${resultado.enfoque_geo}`;
-      }
-
-      await db.update(blogPosts).set(updateData).where(eq(blogPosts.id, articulo.id));
-      console.log(`  💾 Marcado como revisado en DB`);
-    }
-
-    return {
-      slug: articulo.slug,
-      titulo: articulo.title,
-      exito: true,
-      cambios: [],
-      fuentes: [],
-      error: null,
-      tiempoMs: Date.now() - inicio,
-      necesitaCorreccion: false,
-      metaTitle: resultado.meta_title || '',
-      metaDescription: resultado.meta_description || '',
-      keywords: resultado.keywords || [],
-      enfoqueGeo: resultado.enfoque_geo || '',
-    };
-  }
-
-  if (!resultado || !resultado.body) {
+  if (!resultado) {
     console.log(`  ❌ Error: resultado inválido de Gemini`);
     return {
       slug: articulo.slug,
@@ -738,7 +561,7 @@ async function procesarArticulo(articulo: ArticuloRow): Promise<ResultadoProcesa
       exito: false,
       cambios: [],
       fuentes: [],
-      error: 'Resultado inválido de Gemini',
+      error: 'Resultado nulo de Gemini',
       tiempoMs: Date.now() - inicio,
       necesitaCorreccion: true,
       metaTitle: '',
@@ -750,57 +573,52 @@ async function procesarArticulo(articulo: ArticuloRow): Promise<ResultadoProcesa
 
   // --- Dry-run / Aplicar ---
 
-  // Log de cambios detectados
-  console.log(`  🔧 Body corregido (${wordCount(resultado.body)} palabras)`);
-  if (resultado.meta_title) console.log(`  🏷️  Meta title: ${resultado.meta_title}`);
-  if (resultado.meta_description) console.log(`  📝 Meta desc: ${resultado.meta_description}`);
-  if (resultado.keywords && resultado.keywords.length > 0) {
-    console.log(`  🔑 Keywords: ${resultado.keywords.join(', ')}`);
-  }
-  if (resultado.enfoque_geo) {
-    console.log(`  🌍 Enfoque GEO: ${resultado.enfoque_geo.slice(0, 120)}${resultado.enfoque_geo.length > 120 ? '…' : ''}`);
-  }
+  console.log(`  🔧 Extracción exitosa. Inyectando GEO blocks.`);
 
   // Extraer "cambios" del enfoque_geo para el log (simulado)
-  const cambiosDetectados: string[] = [];
-  if (resultado.meta_title) cambiosDetectados.push('Meta title generado');
-  if (resultado.meta_description) cambiosDetectados.push('Meta description generada');
-  if (resultado.keywords && resultado.keywords.length > 0) cambiosDetectados.push('Keywords generadas');
-  if (resultado.enfoque_geo) cambiosDetectados.push('Enfoque GEO documentado');
-  cambiosDetectados.push('Body corregido con verificación web');
+  
+  let newBody = articulo.body;
+  if (resultado.bite_sized_summary) {
+    newBody = `<div class="geo-summary"><strong>Resumen rápido:</strong> ${resultado.bite_sized_summary}</div>
+` + newBody;
+  }
+  if (resultado.blockquote) {
+    newBody += `
+<div class="geo-law">${resultado.blockquote}</div>`;
+  }
+  if (resultado.html_table) {
+    newBody += `
+<div class="geo-data">${resultado.html_table}</div>`;
+  }
 
   if (APLICAR) {
     const updateData: Record<string, any> = {
-      body: resultado.body,
+      body: newBody,
       reviewStatus: 'reviewed',
       reviewedAt: new Date(),
       lastReviewedAt: new Date(),
-      legalReviewNotes: `Corregido por Gemini AI + Google Search Grounding.\nEnfoque GEO: ${resultado.enfoque_geo || 'No especificado'}.`,
+      legalReviewNotes: 'Estructurado con GEO (Gemini 3.1 Pro).'
     };
 
-    // Actualizar metadatos SEO si Gemini los generó
-    if (resultado.meta_title) updateData.metaTitle = resultado.meta_title;
-    if (resultado.meta_description) updateData.metaDescription = resultado.meta_description;
-
     await db.update(blogPosts).set(updateData).where(eq(blogPosts.id, articulo.id));
-    console.log(`  💾 Actualizado en DB (body + meta + reviewStatus)`);
+    console.log(`  💾 Actualizado en DB (inyectado GEO)`);
   } else {
-    console.log(`  🔍 Dry-run: cambios detectados pero NO aplicados (usa --aplicar)`);
+    console.log(`  🔍 Dry-run: cambios detectados pero NO aplicados`);
   }
 
   return {
     slug: articulo.slug,
     titulo: articulo.title,
     exito: true,
-    cambios: cambiosDetectados,
+    cambios: [],
     fuentes: [],
     error: null,
     tiempoMs: Date.now() - inicio,
     necesitaCorreccion: true,
-    metaTitle: resultado.meta_title || '',
-    metaDescription: resultado.meta_description || '',
-    keywords: resultado.keywords || [],
-    enfoqueGeo: resultado.enfoque_geo || '',
+    metaTitle: '',
+    metaDescription: '',
+    keywords: [],
+    enfoqueGeo: '',
   };
 }
 
@@ -810,7 +628,7 @@ async function procesarArticulo(articulo: ArticuloRow): Promise<ResultadoProcesa
 
 async function main(): Promise<void> {
   console.log('╔══════════════════════════════════════════════════════════════════╗');
-  console.log('║   CORRECCIÓN DE ARTÍCULOS LEGALES — GEMINI + GROUNDING        ║');
+  console.log('║   GEMINI 3.1 PRO — PURE STRUCTURAL GEO FORMATTER              ║');
   console.log('║   Prompt v2: Anti-plantilla | SEO/GEO | E-E-A-T | Rigor Legal ║');
   console.log('╚══════════════════════════════════════════════════════════════════╝');
   console.log('');
@@ -844,7 +662,7 @@ async function main(): Promise<void> {
         reviewStatus: blogPosts.reviewStatus,
       })
       .from(blogPosts)
-      .where(and(ne(blogPosts.reviewStatus, 'reviewed'), eq(blogPosts.published, true)))
+      .where(eq(blogPosts.published, true))
       .orderBy(blogPosts.publishedAt);
   }
 
