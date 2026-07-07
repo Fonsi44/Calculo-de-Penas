@@ -11,7 +11,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { isPublicApiPath, isPublicPagePath } from '@/proxy';
-import { legalServiceSchema, organizationSchema, websiteSchema, site } from '@/lib/site';
+import { legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema, site } from '@/lib/site';
 import { areaSchemas, faqPageSchema } from '@/lib/schemas/legal-page';
 import robotsFn from '@/app/robots';
 import { PUBLIC_ROUTES, THIN_POST_SLUGS } from '@/app/sitemap';
@@ -189,9 +189,12 @@ describe('app/robots.ts — bloquea rutas privadas con reglas granulares por bot
 });
 
 describe('lib/site.ts — JSON-LD principal válido', () => {
-  it('legalServiceSchema tiene campos obligatorios', () => {
-    const s = legalServiceSchema();
-    expect(s['@context']).toBe('https://schema.org');
+  // Estos schemas se inyectan dentro de un único @graph en app/(public)/layout.tsx.
+  // El @context lo aporta el wrapper del @graph una sola vez; cada nodo NO debe
+  // llevar @context propio (causa error de validación Schema.org — CSV Ahrefs).
+  it('legalServiceSchema tiene campos obligatorios y SIN @context (lo aporta el @graph)', () => {
+    const s = legalServiceSchema() as Record<string, unknown>;
+    expect(s['@context']).toBeUndefined();
     expect(s['@type']).toContain('LegalService');
     expect(s['@type']).toContain('LocalBusiness');
     expect(s.name).toBe(site.name);
@@ -206,7 +209,8 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
   });
 
   it('organizationSchema tiene contactPoint y address', () => {
-    const s = organizationSchema();
+    const s = organizationSchema() as Record<string, unknown>;
+    expect(s['@context']).toBeUndefined();
     expect(s['@type']).toBe('Organization');
     expect(s.name).toBe(site.name);
     expect(Array.isArray(s.contactPoint)).toBe(true);
@@ -219,7 +223,8 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
     // Convención Schema.org: el publisher de un WebSite es la Organization.
     // Antes apuntaba a LegalService (válido pero inusual y dificultaba la
     // vinculación entidad→sitio en el Knowledge Graph).
-    const s = websiteSchema();
+    const s = websiteSchema() as Record<string, unknown>;
+    expect(s['@context']).toBeUndefined();
     expect(s['@type']).toBe('WebSite');
     expect(s.url).toBe(site.url);
     const publisher = s.publisher as Record<string, unknown>;
@@ -239,6 +244,21 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
     expect((s.sameAs as unknown[]).length).toBeGreaterThan(0);
     // Verifica que Google Business Profile esté incluido
     expect(s.sameAs).toContain(site.googleBusiness);
+  });
+
+  it('los 6 schemas del @graph global no incluyen @context (lo aporta el wrapper)', () => {
+    // Causa raíz del CSV structured-data de Ahrefs: cada nodo del @graph repetía
+    // @context, lo cual es inválido. El @context debe estar SOLO en el wrapper.
+    for (const s of [
+      legalServiceSchema(),
+      organizationSchema(),
+      websiteSchema(),
+      founderSchema(),
+      thaniaSchema(),
+      emilSchema(),
+    ] as Record<string, unknown>[]) {
+      expect(s['@context']).toBeUndefined();
+    }
   });
 });
 

@@ -6,6 +6,147 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-07 — Saneamiento SEO Ahrefs Fases A–G (6 CSV nuevos)
+
+Corrección de las incidencias reportadas por los 6 CSV nuevos de Ahrefs:
+`title-too-long` (128 URLs), `meta-descripti` ×2 (41 largas + 17 cortas),
+`orphan-page` (8 URLs con 0 inlinks), `pages-to-submit` (inventario) y
+`structured-data` (212 URLs con errores Schema.org). La Fase 1 y la Fase 6
+parcial (validador DB) ya estaban hechas; este release ejecuta las fases
+pendientes ahora que los CSV existen.
+
+### `fix(seo): titles largos — Fase A (128 → 0 esperado tras recrawl)`
+
+- **`scripts/fix-long-titles.ts`** (nuevo): script idempotente (dry-run/
+  `--aplicar`, backup-required <2h) que corrige `blog_posts.title` y
+  `blog_posts.meta_title` con reglas deterministas:
+  - Decodifica entidades HTML visibles (`&oacute;` → `ó`, `&ntilde;` → `ñ`).
+  - Elimina sufijos de placeholder (`| [Tu Empresa]`) y marca redundante
+    (`| Pineda y Asociados` — el template lo reañade en runtime).
+  - Compacta patrones verbosos ("Guía Completa | Requisitos y Trámites" →
+    "Requisitos y Trámites", elimina ", Honduras" redundante).
+  - Recorta a ≤49 chars DB (→ ≤70 renderizado con marca) prefiriendo cortes
+    naturales en `:` o `,`.
+- **DB**: aplicado a 149 posts publicados (261 campos corregidos en 2 pasadas;
+  idempotente: 0 cambios en tercera corrida).
+- **7 páginas estáticas** con titles largos corregidas manualmente:
+  - 5 cargo landings (`abogado-civil/familia/laboralista/penalista-nacaome`,
+    `abogado-penalista-choluteca`): `title` → `{ absolute }` con marca única
+    ≤48 chars. También reescritas sus meta descriptions (sin "Consulta sin
+    costo. WhatsApp +504..." claim no verificable).
+  - 2 templates `[slug]` (`derecho-penal/[slug]`, `hondurenos-en-espana/[slug]`):
+    sufijo `· Abogados Penalistas` / `· Abogados Honduras-España` (23-28 chars)
+    reemplazado por `| ${site.name}` (alinea con patrón de blog).
+- **`package.json`**: añadido `blog:fix-titles` / `:aplicar`.
+
+### `fix(seo): metas cortas — Fase B (17 categorías → 17 ampliadas)`
+
+- **`data/blog/categories.ts`**: 17 `descripcion` de categorías ampliadas de
+  74–97 chars a 120–155, con contexto hondureño y precisión jurídica. Una sola
+  fuente alimenta meta description + H visible + OG + Twitter. Sin inventar
+  servicios ni claims (R4/R13). Las 3 restantes (<110 pero no en CSV) también
+  ampliadas a ≥120 para coherencia.
+
+### `fix(seo): metas largas/truncadas — Fase C (41 → 0 esperado tras recrawl)`
+
+- **`lib/seo.ts`**: nuevo helper `buildServiceMetaDescription(html)` que
+  sanitiza HTML (vía `stripHtml` de `lib/strip-html.ts` con `sanitize-html`),
+  recorta a 120–155 chars en límite de palabra, sin CTA fijo. Sustituye al
+  patrón bug `${descripcion.substring(0,N)} Consulta confidencial...`.
+- **3 familias corregidas**:
+  - `servicios-juridicos/[slug]`: meta + OG + Twitter ahora usan el helper.
+  - `derecho-penal/[slug]`: antes pasaba `grupo.descripcion` crudo (HTML) sin
+    stripHtml → dejaba `<strong>`/`<a>` en la meta.
+  - `hondurenos-en-espana/[slug]`: antes rompía meta + OG + Twitter con HTML
+    crudo y truncamiento mid-word.
+- **5 landings locales** (Namasigüe, Orocuina, Pespire, Marcovia, El Triunfo):
+  `description` en `data/landings-locales.ts` reescrita a 120–155 chars,
+  eliminando "Primera consulta sin costo. WhatsApp +504 9536-3724." (claim no
+  verificado como política global).
+- **`scripts/fix-long-metas.ts`** (nuevo): script idempotente que recorta
+  `blog_posts.meta_description` a ≤155 en límite de palabra y elimina sufijos
+  de relleno comercial ("Asesoría legal.", "¡Evita multas!", "¡Proteja sus
+  derechos!"). Aplicado a 149 posts (46 corregidos; idempotente).
+- **`package.json`**: añadido `blog:fix-metas` / `:aplicar`.
+
+### `fix(seo): orphan pages — Fase D (8 URLs con 0 inlinks → enlazadas)`
+
+- **`app/(public)/abogados-en-nacaome/page.tsx`** (sede): añadidos 2 bloques
+  contextuales de chips:
+  - "Especialistas por área en Nacaome" → 3 cargo landings (civil, familia,
+    laboral) + penalista-nacaome.
+  - "Cobertura legal en el sur de Honduras" → 5 ciudades secundarias (langue,
+    caridad, alianza, concepcion-de-maria, san-antonio-de-flores).
+- **`app/(public)/servicios-juridicos/[slug]/page.tsx`**: bloque condicional
+  "¿Busca un especialista en Nacaome?" enlaza a la cargo landing
+  correspondiente cuando `slug` es familia/laboral/civil.
+- Cada orphan recibe ahora ≥1 href inlink HTML real (no solo sitemap). Respeta
+  R18 (las 5 secundarias NO van al footer global).
+
+### `fix(seo): structured data — Fase F (212 errores → 0 esperado tras recrawl)`
+
+- **Bug raíz `@context` en `@graph`**: cada uno de los 6 schemas del grafo
+  global (`legalServiceSchema`, `organizationSchema`, `websiteSchema`,
+  `founderSchema`, `thaniaSchema`, `emilSchema` en `lib/site.ts`) incluía su
+  propio `@context: "https://schema.org"`, lo cual es inválido dentro de un
+  `@graph` (el `@context` debe estar solo en el wrapper). Eliminado de los 6
+  nodos; el wrapper `@graph` en `app/(public)/layout.tsx` ya lo aporta.
+- **AggregateRating Home eliminado**: `components/marketing/google-reviews.tsx`
+  emitía `AggregateRating` con `reviewCount: 1` (causaba "Google rich results
+  validation error"). Eliminado por política de self-serving reviews (sin
+  corpus robusto y auditable de reseñas reales). Las reseñas visibles (UI)
+  siguen renderizándose.
+- **`@id` slash unificado**: las 5 cargo landings usaban `${site.url}#website`
+  / `${site.url}#legal-service` (sin slash), mientras el grafo global define
+  `${site.url}/#website`. Unificado a formato con slash para que la resolución
+  `@id` funcione en el Knowledge Graph.
+- **`scripts/validate-jsonld.mjs`** ampliado: detecta `@context` dentro de
+  nodos del `@graph`, `AggregateRating` (warning), y reglas mínimas por
+  `@type` (Service→provider, BlogPosting→author+publisher, FAQPage→mainEntity
+  no vacío). Añadidas rutas default: `/abogados-en-nacaome`,
+  `/abogado-penalista-choluteca`, y un post de blog.
+
+### `feat(seo): validador seo:ahrefs ampliado — Fase G`
+
+- **`scripts/seo-ahrefs-audit.mjs`**: nueva sección 7 que analiza los CSV de
+  las Fases A–F y reporta warnings informativos:
+  - titles >70 chars (indexables) del CSV `title-too-long`.
+  - metas cortas (<110) y largas (>160) del CSV `meta-description`.
+  - HTML crudo en metas (`<strong>`, `<a>`).
+  - descripciones truncadas (patrón "Consulta confidencial" pegado).
+  - orphan pages indexables en sitemap con 0 inlinks.
+  - structured data con errores de validación.
+  - presencia de AggregateRating.
+- `detectType` ampliado para reconocer 5 tipos nuevos de CSV, con checks
+  específicos ANTES del genérico `4xx` (los CSV de Ahrefs comparten columnas
+  HTTP status/Depth/Is indexable).
+
+### `feat(seo): placeholder editorial [Tu Empresa] en meta_title (DB)` (work previo)
+
+- **`scripts/fix-editorial-placeholders.ts`** (nuevo): script idempotente que
+  elimina sufijos de placeholder en `title`/`meta_title`. DB: 1 post corregido.
+- **`scripts/seo-ahrefs-audit.mjs`**: sección 6 con chequeos DB bloqueantes
+  (marca duplicada, placeholders, metadata ausente).
+
+### Validación
+
+- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm test` ✅ (790/790) · `npm run build` ✅
+- `npm run seo:ahrefs` ✅ (OK, sin bloqueantes; sección 6 DB: 0 incidencias)
+- `node scripts/validate-jsonld.mjs` ✅ (8 rutas OK: Home 2 bloques sin AggregateRating,
+  cargo landings con @id unificados, blog post con BlogPosting+FAQPage válidos)
+- Sitemap: 213 URLs, 8 orphans presentes, 0 noindex/legales/intranet
+- Scripts DB idempotentes: `fix-long-titles` (0 cambios 3ª corrida),
+  `fix-long-metas` (0 cambios 2ª corrida)
+- Backup previo: `auditoria-blog/backup-2026-07-07-18-36.json` (175 posts)
+
+### NO VALIDADO (requiere recrawl Ahrefs)
+
+Los warnings de la sección 7 del validador reflejan el CSV estático pre-corrección.
+Desaparecerán tras deploy + recrawl de Ahrefs. Las correcciones de código y DB
+están aplicadas y verificadas localmente (JSON-LD validado en HTML prerenderizado).
+
+---
+
 ## [Unreleased] - 2026-07-07 — Saneamiento SEO Ahrefs Fase 1
 
 Corrección del primer bloque de auditoría Ahrefs: páginas 4XX/404, enlaces

@@ -23,10 +23,9 @@ import { RelatedCities } from '@/components/marketing/related-links';
  *   - Sin sedes, colegiaciones ni reseñas inventadas.
  */
 export const metadata: Metadata = {
-  title:
-    'Abogado Penalista en Choluteca | Defensa Penal Urgente · Sur de Honduras',
+  title: { absolute: 'Abogado Penalista Choluteca | Pineda y Asociados' },
   description:
-    'Abogado penalista en Choluteca. Defensa técnica en detenciones, audiencias, medidas cautelares y juicio oral. Consulta confidencial. WhatsApp +504 9536-3724.',
+    'Abogado penalista en Choluteca. Defensa penal urgente en detenciones, audiencias, medidas cautelares y juicio oral en el sur de Honduras.',
   alternates: { canonical: '/abogado-penalista-choluteca' },
   keywords: [
     'abogado penalista Choluteca',
@@ -42,7 +41,7 @@ export const metadata: Metadata = {
     title:
       'Abogado Penalista en Choluteca | Defensa Penal Urgente · Sur de Honduras',
     description:
-      'Abogado penalista en Choluteca. Defensa técnica en detenciones, audiencias y juicio oral. Consulta confidencial. WhatsApp +504 9536-3724.',
+      'Abogado penalista en Choluteca. Defensa penal urgente en detenciones, audiencias, medidas cautelares y juicio oral en el sur de Honduras.',
     url: '/abogado-penalista-choluteca',
     siteName: site.name,
     locale: 'es_HN',
@@ -61,7 +60,7 @@ export const metadata: Metadata = {
     title:
       'Abogado Penalista en Choluteca | Defensa Penal Urgente · Sur de Honduras',
     description:
-      'Abogado penalista en Choluteca. Defensa técnica en detenciones, audiencias y juicio oral. Consulta confidencial.',
+      'Abogado penalista en Choluteca. Defensa penal urgente en detenciones, audiencias, medidas cautelares y juicio oral en el sur de Honduras.',
     images: ['/og/penal.webp'],
   },
 };
@@ -383,15 +382,15 @@ export default async function AbogadoPenalistaCholutecaPage() {
             {
               '@context': 'https://schema.org',
               '@type': ['Service', 'WebPage'],
-              '@id': `${url}#webpage`,
+              '@id': `${url}/#webpage`,
               url,
               name: 'Abogado Penalista en Choluteca | Defensa Penal Urgente',
               description:
                 'Abogado penalista en Choluteca. Defensa técnica en detenciones, audiencias, medidas cautelares y juicio oral.',
               inLanguage: 'es-HN',
-              isPartOf: { '@id': `${site.url}#website` },
-              about: { '@id': `${site.url}#legal-service` },
-              provider: { '@id': `${site.url}#legal-service` },
+              isPartOf: { '@id': `${site.url}/#website` },
+              about: { '@id': `${site.url}/#legal-service` },
+              provider: { '@id': `${site.url}/#legal-service` },
               serviceType: 'Defensa Penal',
               areaServed: [
                 { '@type': 'City', name: 'Choluteca' },
@@ -402,7 +401,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
             {
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
-              '@id': `${url}#faqpage`,
+              '@id': `${url}/#faqpage`,
               mainEntity: [
                 {
                   '@type': 'Question',

@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { ArrowRight, BookOpen, MessageCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, MessageCircle, Scale } from 'lucide-react';
 import { site, absoluteUrl, whatsappHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { buildServiceMetaDescription } from '@/lib/seo';
 
 function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
@@ -140,9 +141,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const ogImage = OG_IMAGES[slug];
 
   const canonical = `/servicios-juridicos/${slug}`;
+  // Meta description: sanitiza HTML y recorta a 120–155 chars en límite de
+  // palabra. Antes usaba `substring(0,100) + ' Consulta confidencial...'` que
+  // truncaba palabras y dejaba HTML (<strong>) en la meta (CSV Ahrefs).
+  const metaDesc = buildServiceMetaDescription(area.descripcion);
   return {
     title: area.titulo,
-    description: `${descPlain.substring(0, 100)} Consulta confidencial en ${site.name}, Nacaome, Valle.`,
+    description: metaDesc,
     alternates: { canonical },
     keywords: area.keywords,
     twitter: {
@@ -361,6 +366,30 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           <RelatedCities limit={3} />
         </div>
       </Section>
+
+      {/* Especialista en Nacaome — inlink a cargo landing (CSV orphan-page Ahrefs) */}
+      {['derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'].includes(slug) && (
+        <Section spacing="sm">
+          <Container size="lg">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
+              ¿Busca un especialista en Nacaome?
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href={
+                  slug === 'derecho-de-familia' ? '/abogado-de-familia-nacaome'
+                  : slug === 'derecho-laboral' ? '/abogado-laboralista-nacaome'
+                  : '/abogado-civil-nacaome'
+                }
+                className="focus-ring chip-specialty inline-flex items-center"
+              >
+                <Scale size={10} className="text-accent-dark" aria-hidden="true" />
+                Abogado especialista en Nacaome
+              </Link>
+            </div>
+          </Container>
+        </Section>
+      )}
 
       {related.length > 0 && (
         <Section background="muted" spacing="md">

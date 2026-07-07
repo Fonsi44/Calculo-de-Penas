@@ -8,9 +8,9 @@ import { RelatedCities } from '@/components/marketing/related-links';
 import { Heart, Users, Baby, FileText, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
+  title: { absolute: 'Abogado de Familia Nacaome | Pineda y Asociados' },
   description:
-    'Abogado de familia en Nacaome, Valle. Pensión alimenticia, custodia, divorcios. 15+ años de experiencia. Consulta sin costo. WhatsApp +504 9536-3724.',
+    'Abogado de familia en Nacaome, Valle. Divorcios, custodia, pensión alimenticia, sucesiones y violencia intrafamiliar en el sur de Honduras.',
   alternates: { canonical: '/abogado-de-familia-nacaome' },
   keywords: [
     'abogado de familia Nacaome',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
     description:
-      'Abogado de familia en Nacaome, Valle. Pensión alimenticia, custodia, divorcios. 15+ años de experiencia. Consulta sin costo.',
+      'Abogado de familia en Nacaome, Valle. Divorcios, custodia, pensión alimenticia, sucesiones y violencia intrafamiliar en el sur de Honduras.',
     url: '/abogado-de-familia-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
     description:
-      'Abogado de familia en Nacaome, Valle. Pensión alimenticia, custodia, divorcios. 15+ años de experiencia. Consulta sin costo.',
+      'Abogado de familia en Nacaome, Valle. Divorcios, custodia, pensión alimenticia, sucesiones y violencia intrafamiliar en el sur de Honduras.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -196,16 +196,16 @@ export default async function AbogadoDeFamiliaNacaomePage() {
             {
               '@context': 'https://schema.org',
               '@type': 'WebPage',
-              '@id': `${url}#webpage`,
+              '@id': `${url}/#webpage`,
               url,
               name: 'Abogado de Familia en Nacaome | Pensión, Custodia y Divorcio',
-              isPartOf: { '@id': `${site.url}#website` },
-              about: { '@id': `${site.url}#legal-service` },
+              isPartOf: { '@id': `${site.url}/#website` },
+              about: { '@id': `${site.url}/#legal-service` },
             },
             {
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
-              '@id': `${url}#faqpage`,
+              '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Cuánto cuesta un divorcio en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del tipo de divorcio. Solicite una consulta sin costo para recibir un presupuesto por escrito.' } },
                 { '@type': 'Question', name: '¿Cómo se calcula la pensión alimenticia?', acceptedAnswer: { '@type': 'Answer', text: 'El juez fija un porcentaje del salario según el número de hijos. En Honduras oscila entre el 15% y el 50% del ingreso neto.' } },

@@ -11,6 +11,7 @@
  */
 import type { Metadata } from 'next';
 import { site } from './site';
+import { stripHtml } from './strip-html';
 
 const TWITTER_HANDLE = '@Danilo_Pineda_M';
 
@@ -100,4 +101,41 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
           },
         },
   };
+}
+
+/**
+ * Longitud objetivo de una meta description (rango óptimo para SERP).
+ * Google muestra ~155 chars en desktop y ~120 en móvil; apuntamos al rango
+ * 120–155 para que la descripción no se trunque ni quede demasiado corta.
+ */
+export const META_DESC_MIN = 120;
+export const META_DESC_MAX = 155;
+
+/**
+ * Construye una meta description limpia a partir de HTML o texto enriquecido.
+ *
+ * Sustituye al patrón bug `${descripcion.substring(0, N)} Consulta confidencial...`
+ * que (a) dejaba HTML crudo (`<strong>`, `<a href>`) cuando no se sanitizaba,
+ * (b) truncaba palabras a mitad ("...operaciones en Ho Consulta confidencial..."),
+ * y (c) añadía un CTA fijo "Consulta confidencial" que es un claim comercial
+ * no verificado como política global.
+ *
+ * Comportamiento:
+ *  - Sanitiza HTML vía `stripHtml` (decode entidades, sin tags, espacios norm.).
+ *  - Recorta al rango 120–155 chars en límite de palabra (sin cortar palabras).
+ *  - Si el texto es más corto que 120 chars, lo devuelve tal cual (sin relleno).
+ *  - Texto plano, sin HTML, sin entidades rotas, sin CTA fijo.
+ *
+ * Uso en `servicios-juridicos/[slug]`, `derecho-penal/[slug]`,
+ * `hondurenos-en-espana/[slug]` (donde `area.descripcion` contiene HTML).
+ */
+export function buildServiceMetaDescription(html: string): string {
+  const plain = stripHtml(html);
+  if (plain.length <= META_DESC_MAX) return plain;
+  // Recorta en el último espacio dentro del límite para no cortar palabras.
+  const cut = plain.slice(0, META_DESC_MAX);
+  const lastSpace = cut.lastIndexOf(' ');
+  // Si no hay espacio o queda muy corto, usa el corte duro (mejor que palabra rota).
+  const truncated = lastSpace > META_DESC_MIN ? cut.slice(0, lastSpace) : cut;
+  return truncated.trim();
 }

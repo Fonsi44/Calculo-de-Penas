@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
+import { buildServiceMetaDescription } from '@/lib/seo';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
@@ -25,12 +26,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const grupo = hubPenal.grupos.find((g) => g.slug === slug);
   if (!grupo) return {};
   const canonical = `/derecho-penal/${slug}`;
+  // Meta description: sanitiza HTML (grupo.descripcion contiene <strong>/<a>)
+  // y recorta a 120–155 chars en límite de palabra. Antes usaba
+  // `descripcion.substring(0,90) + ' Consulta confidencial...'` sin stripHtml,
+  // dejando HTML crudo y palabras truncadas en la meta (CSV Ahrefs).
+  const metaDesc = buildServiceMetaDescription(grupo.descripcion);
   return {
-    // Absolute para evitar marca triple ("titulo | Derecho Penal | Pineda y
-    // Asociados") que disparaba titles de 75-93 caracteres. Ahora la intención
-    // de búsqueda queda clara con el título del grupo + marca única.
-    title: { absolute: `${grupo.titulo} · Abogados Penalistas` },
-    description: `${grupo.descripcion.substring(0, 90)} Consulta confidencial en ${site.name}, Nacaome, Valle, Honduras.`,
+    // Absolute con marca única: antes usaba `· Abogados Penalistas` (23 chars
+    // extra) que disparaba titles de 75+ chars (CSV Ahrefs title-too-long).
+    // Ahora alinea con el patrón de blog: `${titulo} | ${site.name}`.
+    title: { absolute: `${grupo.titulo} | ${site.name}` },
+    description: metaDesc,
     alternates: { canonical },
     keywords: grupo.keywords,
     twitter: {

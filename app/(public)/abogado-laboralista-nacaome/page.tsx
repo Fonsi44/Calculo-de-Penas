@@ -8,9 +8,9 @@ import { RelatedCities } from '@/components/marketing/related-links';
 import { Scale, FileText, ShieldCheck, Briefcase, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
+  title: { absolute: 'Abogado Laboralista Nacaome | Pineda y Asociados' },
   description:
-    'Abogado laboralista en Nacaome, Valle. Despidos, prestaciones, finiquitos. Defensa de trabajadores. Consulta sin costo. WhatsApp +504 9536-3724.',
+    'Abogado laboral en Nacaome, Valle. Despidos, prestaciones, liquidaciones, accidentes de trabajo y juicios orales laborales en el sur.',
   alternates: { canonical: '/abogado-laboralista-nacaome' },
   keywords: [
     'abogado laboralista Nacaome',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
     description:
-      'Abogado laboralista en Nacaome, Valle. Despidos, prestaciones, finiquitos. Defensa de trabajadores. Consulta sin costo.',
+      'Abogado laboral en Nacaome, Valle. Despidos, prestaciones, liquidaciones, accidentes de trabajo y juicios orales laborales en el sur.',
     url: '/abogado-laboralista-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
     description:
-      'Abogado laboralista en Nacaome, Valle. Despidos, prestaciones, finiquitos. Defensa de trabajadores. Consulta sin costo.',
+      'Abogado laboral en Nacaome, Valle. Despidos, prestaciones, liquidaciones, accidentes de trabajo y juicios orales laborales en el sur.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -196,16 +196,16 @@ export default async function AbogadoLaboralistaNacaomePage() {
             {
               '@context': 'https://schema.org',
               '@type': 'WebPage',
-              '@id': `${url}#webpage`,
+              '@id': `${url}/#webpage`,
               url,
               name: 'Abogado Laboralista en Nacaome | Despidos y Prestaciones',
-              isPartOf: { '@id': `${site.url}#website` },
-              about: { '@id': `${site.url}#legal-service` },
+              isPartOf: { '@id': `${site.url}/#website` },
+              about: { '@id': `${site.url}/#legal-service` },
             },
             {
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
-              '@id': `${url}#faqpage`,
+              '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Me despidieron sin justa causa, qué hago?', acceptedAnswer: { '@type': 'Answer', text: 'Tiene derecho a una indemnización. Reúna su contrato y comprobantes. Contáctenos para evaluar su caso.' } },
                 { '@type': 'Question', name: '¿Cuánto me toca de liquidación?', acceptedAnswer: { '@type': 'Answer', text: 'Incluye preaviso, auxilio de cesantía, vacaciones y décimo cuarto mes proporcionales, más salarios adeudados.' } },

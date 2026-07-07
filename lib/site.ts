@@ -201,7 +201,9 @@ export const KNOWS_ABOUT = [
  */
 export function legalServiceSchema() {
   const base: Record<string, unknown> = {
-    '@context': 'https://schema.org',
+    // Sin @context aquí: el wrapper @graph de app/(public)/layout.tsx lo aporta
+    // una sola vez. Duplicar @context en cada nodo del @graph es un error de
+    // validación Schema.org (causa raíz del CSV structured-data de Ahrefs).
     '@type': ['LegalService', 'LocalBusiness', 'Attorney'],
     '@id': `${site.url}/#legal-service`,
     name: site.name,
@@ -335,7 +337,7 @@ export function legalServiceSchema() {
  */
 export function websiteSchema() {
   return {
-    '@context': 'https://schema.org',
+    // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'WebSite',
     '@id': `${site.url}/#website`,
     url: site.url,
@@ -351,7 +353,7 @@ export function websiteSchema() {
  */
 export function organizationSchema() {
   return {
-    '@context': 'https://schema.org',
+    // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Organization',
     '@id': `${site.url}/#organization`,
     name: site.name,
@@ -459,7 +461,7 @@ export const FOUNDER_PROFILE = {
  */
 export function founderSchema() {
   return {
-    '@context': 'https://schema.org',
+    // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#founder`,
     name: FOUNDER_PROFILE.name,
@@ -563,7 +565,7 @@ export const THANIA_PROFILE = {
  */
 export function thaniaSchema() {
   return {
-    '@context': 'https://schema.org',
+    // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#thania`,
     name: THANIA_PROFILE.name,
@@ -648,7 +650,7 @@ export const EMIL_PROFILE = {
  */
 export function emilSchema() {
   return {
-    '@context': 'https://schema.org',
+    // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#emil`,
     name: EMIL_PROFILE.name,

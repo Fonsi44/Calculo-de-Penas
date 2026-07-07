@@ -8,9 +8,9 @@ import { RelatedCities } from '@/components/marketing/related-links';
 import { FileText, Home, ScrollText, Scale, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
+  title: { absolute: 'Abogado Civil en Nacaome | Pineda y Asociados' },
   description:
-    'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales. Consulta sin costo. WhatsApp +504 9536-3724.',
+    'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales y trámites registrales en el sur de Honduras.',
   alternates: { canonical: '/abogado-civil-nacaome' },
   keywords: [
     'abogado civil Nacaome',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
     description:
-      'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales. Consulta sin costo.',
+      'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales y trámites registrales en el sur de Honduras.',
     url: '/abogado-civil-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
     description:
-      'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales. Consulta sin costo.',
+      'Abogado civil en Nacaome, Valle. Contratos, herencias, testamentos, poderes notariales y trámites registrales en el sur de Honduras.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -197,16 +197,16 @@ export default async function AbogadoCivilNacaomePage() {
             {
               '@context': 'https://schema.org',
               '@type': 'WebPage',
-              '@id': `${url}#webpage`,
+              '@id': `${url}/#webpage`,
               url,
               name: 'Abogado Civil en Nacaome | Contratos, Herencias y Notarial',
-              isPartOf: { '@id': `${site.url}#website` },
-              about: { '@id': `${site.url}#legal-service` },
+              isPartOf: { '@id': `${site.url}/#website` },
+              about: { '@id': `${site.url}/#legal-service` },
             },
             {
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
-              '@id': `${url}#faqpage`,
+              '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Qué necesito para comprar una casa en Honduras?', acceptedAnswer: { '@type': 'Answer', text: 'Verificar que el vendedor sea dueño legítimo, que la propiedad esté libre de gravámenes y al día en impuestos. Le asistimos con la debida diligencia.' } },
                 { '@type': 'Question', name: '¿Cuánto cuesta un poder notarial en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Varía según el tipo de poder. Solicite una consulta sin costo para recibir un presupuesto exacto.' } },

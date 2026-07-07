@@ -84,23 +84,14 @@ export async function GoogleReviews() {
         ))}
       </div>
 
-      {/* ── JSON-LD de reseñas: solo con datos reales de Google ── */}
-      {data.source === 'google' && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'AggregateRating',
-              itemReviewed: { '@type': 'LegalService', name: site.name },
-              ratingValue: data.rating,
-              reviewCount: data.userRatingCount,
-              bestRating: 5,
-              worstRating: 1,
-            }),
-          }}
-        />
-      )}
+      {/* ── JSON-LD AggregateRating eliminado ──
+          Antes se emitía un AggregateRating con `reviewCount` (1 reseña en
+          producción), lo cual provocaba "Google rich results validation error"
+          (CSV structured-data de Ahrefs). La política de Google sobre
+          self-serving reviews requiere reseñas reales y verificables asociadas
+          (no solo ratingValue/reviewCount). Las reseñas visibles siguen
+          renderizándose abajo (UI), pero sin structured data de rating hasta
+          que exista un corpus robusto y auditable de reseñas reales. */}
     </Section>
   );
 }

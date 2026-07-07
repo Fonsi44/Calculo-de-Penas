@@ -1,31 +1,38 @@
 /**
- * Validador SEO Fase 1 — Auditoría Ahrefs.
+ * Validador SEO — Auditoría Ahrefs (Fases 1 y 6).
  *
  * Lee los CSV de `ahrefs/` (UTF-16LE/TSV export de Ahrefs), autodetecta el tipo
- * por columnas (no por nombre), y reporta incidencias técnicas del bloque 1:
+ * por columnas (no por nombre), y reporta incidencias técnicas:
  *   - URLs 4XX/404 reportadas.
  *   - Enlaces internos a 3XX (origen → destino).
  *   - URLs noindex con señales contradictorias (meta noindex + HTTP header index).
  *   - URLs noindex presentes en el sitemap estático (canonical-paths.json).
  *   - Presencia de `/intranet/admin` en componentes HTML públicos.
+ *   - (DB) Titles/meta_title con marca "Pineda y Asociados" duplicada (2+ veces).
+ *   - (DB) Titles/meta_title con placeholders editoriales sin reemplazar
+ *     (`[Tu Empresa]` y similares).
+ *   - (DB) Posts publicados sin title o sin meta_description/description.
  *
  * Códigos de salida:
  *   0 = sin incidencias bloqueantes.
- *   1 = incidencias bloqueantes (enlaces internos a 4XX/3XX activos en datos
- *       vigentes, o `/intranet/admin` en HTML/componentes públicos).
+ *   1 = incidencias bloqueantes (`/intranet/admin` en HTML/componentes públicos,
+ *       titles con marca duplicada, placeholders sin reemplazar, o metadata
+ *       crítica ausente en posts publicados).
  *
  * Uso:
  *   npm run seo:ahrefs
  *   node scripts/seo-ahrefs-audit.mjs            # reporta + valida
  *   node scripts/seo-ahrefs-audit.mjs --quiet    # solo errores bloqueantes
+ *   node scripts/seo-ahrefs-audit.mjs --no-db    # omite chequeos DB
  *
  * Notas:
  *   - NO usa `|| true`: los fallos se reportan y elevan exit 1.
- *   - Distingue artefactos históricos de rastreo (sin referencia en código/DB)
- *     de incidencias reales. La presencia de `/intranet/admin` en componentes
- *     públicos es la única comprobación que valida contra el código fuente.
- *   - Los enlaces a 4XX/3XX se reportan desde los CSV de Ahrefs (no valida DB);
- *     para reescribir en origen usar `npx tsx scripts/fix-internal-redirects.ts`.
+ *   - Los chequeos DB requieren DATABASE_URL. Si no está disponible, se omiten
+ *     con un aviso (no fallan). Usa --no-db para saltarlos explícitamente.
+ *   - Los enlaces a 4XX/3XX se reportan desde los CSV de Ahrefs (históricos);
+ *     para validar/reescribir en origen usar
+ *     `npx tsx scripts/fix-internal-redirects.ts`.
+ *   - Para limpiar placeholders: `npx tsx scripts/fix-editorial-placeholders.ts`.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -37,6 +44,7 @@ const AHREFS_DIR = path.join(ROOT, 'ahrefs');
 const CANONICAL_PATHS = path.join(ROOT, 'data', 'seo', 'canonical-paths.json');
 const BASE_HOST_MATCH = /https?:\/\/[^/]+/;
 const quiet = process.argv.includes('--quiet');
+const skipDb = process.argv.includes('--no-db');
 
 // ── Helpers de parsing ──────────────────────────────────────────────────────
 
@@ -94,6 +102,15 @@ function toRel(url) {
 /** Detecta el tipo de CSV por sus columnas. */
 function detectType(headers) {
   const h = headers.join('|').toLowerCase();
+  // CSV de las Fases A–F (Ahrefs export 2026-07-07) — checks específicos ANTES
+  // del genérico '4xx', porque title-too-long y meta-description también traen
+  // HTTP status code + Depth + Is indexable page (matchearían 4xx si van antes).
+  if (h.includes('title length') && h.includes('title patch')) return 'title-too-long';
+  if (h.includes('meta description length') && h.includes('meta description patch')) return 'meta-description';
+  if (h.includes('no. of href inlinks') && h.includes('referenced in sitemaps')) return 'orphan-page';
+  if (h.includes('schema items') && h.includes('structured data issues')) return 'structured-data';
+  if (h.includes('pages to submit') || (h.includes('is indexable page') && h.includes('submit to index'))) return 'pages-to-submit';
+  // CSV de la Fase 1.
   if (h.includes('http status code') && h.includes('is indexable page') && h.includes('is noindex')) return 'noindex';
   if (h.includes('internal outlinks to 3xx')) return 'links-3xx';
   if (h.includes('internal outlinks nofollow')) return 'nofollow-out';
@@ -174,7 +191,170 @@ function log(...args) {
   if (!quiet) console.log(...args);
 }
 
-function main() {
+/**
+ * Chequeos de metadata contra la DB (blog_posts).
+ * Requiere DATABASE_URL. Devuelve { skipped } si no hay acceso o --no-db.
+ */
+async function checkDbMetadata() {
+  if (skipDb) return { skipped: 'Chequeos DB omitidos (--no-db).' };
+  // Carga .env si está disponible (dotenv). Fallback silencioso si no existe.
+  try {
+    const dotenv = await import('dotenv');
+    dotenv.config();
+  } catch {
+    /* dotenv es dependencia del proyecto; si falla, seguimos con env del proceso */
+  }
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl || dbUrl.includes('placeholder')) {
+    return { skipped: 'DATABASE_URL no configurada; chequeos DB omitidos.' };
+  }
+  let neon;
+  try {
+    ({ neon } = await import('@neondatabase/serverless'));
+  } catch {
+    return { skipped: 'Módulo @neondatabase/serverless no disponible; chequeos DB omitidos.' };
+  }
+  const sql = neon(dbUrl);
+
+  const posts = await sql`
+    SELECT slug, title, meta_title, meta_description, description, published
+    FROM blog_posts
+    WHERE published = true
+    ORDER BY slug
+  `;
+
+  const BRAND_RE = /pineda y asociados/gi;
+  const PLACEHOLDER_RE = /\[?\s*(tu\s+empresa|nombre\s+del\s+bufete|tu\s+bufete)\s*\]?/i;
+
+  const brandDup = [];
+  const placeholders = [];
+  const missingMeta = [];
+
+  for (const p of posts) {
+    // Marca duplicada (2+ ocurrencias) en title o meta_title.
+    for (const campo of ['title', 'meta_title']) {
+      const v = p[campo] ?? '';
+      const m = v.match(BRAND_RE);
+      if (m && m.length >= 2) brandDup.push({ slug: p.slug, campo, valor: v });
+    }
+    // Placeholders editoriales en title o meta_title.
+    for (const campo of ['title', 'meta_title']) {
+      const v = p[campo] ?? '';
+      if (PLACEHOLDER_RE.test(v)) placeholders.push({ slug: p.slug, campo, valor: v });
+    }
+    // Metadata crítica ausente en posts publicados.
+    if (!(p.title ?? '').trim()) missingMeta.push({ slug: p.slug, campo: 'title' });
+    const desc = (p.meta_description ?? '').trim() || (p.description ?? '').trim();
+    if (!desc) missingMeta.push({ slug: p.slug, campo: 'meta_description' });
+  }
+
+  return { brandDup, placeholders, missingMeta, total: posts.length };
+}
+
+/**
+ * Analiza los CSV de las Fases A–F (title-too-long, meta-description ×2,
+ * orphan-page, structured-data) y reporta incidencias informativas.
+ *
+ * Estos chequeos son WARNINGS (no bloqueantes): reportan lo que Ahrefs
+ * flaggeó en el último export. Las correcciones se aplican vía scripts DB
+ * (fix-long-titles, fix-long-metas) y edición de código (metas, schema).
+ * Los bloqueantes (placeholder, marca duplicada, metadata ausente) ya están
+ * cubiertos en la sección 6.
+ */
+function analyzeCsvFasesAF(byType) {
+  const reports = [];
+
+  // Fase A: titles >70 (CSV title-too-long, indexables).
+  if (byType['title-too-long']) {
+    let count = 0;
+    for (const f of byType['title-too-long']) {
+      const { headers, rows } = loadCSV(f);
+      const iIdx = headers.indexOf('Is indexable page');
+      const iLen = headers.indexOf('Title length');
+      for (const r of rows) {
+        if (iIdx >= 0 && r[iIdx] === 'true') {
+          const len = parseInt(r[iLen] || '0', 10);
+          if (len > 70) count++;
+        }
+      }
+    }
+    reports.push(count > 0
+      ? `⚠️  Fase A: ${count} URL(s) indexables con title >70 chars (CSV title-too-long). Corregir con blog:fix-titles.`
+      : '✅ Fase A: sin titles >70 chars en CSV title-too-long.');
+  }
+
+  // Fase B+C: metas cortas (<110) y largas (>160) (CSV meta-description ×2).
+  if (byType['meta-description']) {
+    let cortas = 0, largas = 0, htmlEnMeta = 0, truncadas = 0;
+    for (const f of byType['meta-description']) {
+      const { headers, rows } = loadCSV(f);
+      const iIdx = headers.indexOf('Is indexable page');
+      const iLen = headers.indexOf('Meta description length');
+      const iMeta = headers.indexOf('Meta description');
+      for (const r of rows) {
+        if (iIdx >= 0 && r[iIdx] !== 'true') continue;
+        const len = parseInt(r[iLen] || '0', 10);
+        if (len > 0 && len < 110) cortas++;
+        if (len > 160) largas++;
+        const meta = r[iMeta] || '';
+        if (/<[a-z!/]/i.test(meta)) htmlEnMeta++;
+        // Truncamiento: palabra cortada seguida de "Consulta confidencial" o CTA pegado.
+        if (/Consulta confidencial/i.test(meta) && /[a-zñ] Consulta/i.test(meta)) truncadas++;
+      }
+    }
+    if (cortas > 0) reports.push(`⚠️  Fase B: ${cortas} meta(s) cortas (<110 chars). Ampliar en data/blog/categories.ts o DB.`);
+    else reports.push('✅ Fase B: sin metas cortas (<110) en CSV.');
+    if (largas > 0) reports.push(`⚠️  Fase C: ${largas} meta(s) largas (>160 chars). Corregir con blog:fix-metas o helper buildServiceMetaDescription.`);
+    else reports.push('✅ Fase C: sin metas largas (>160) en CSV.');
+    if (htmlEnMeta > 0) reports.push(`⚠️  Fase C: ${htmlEnMeta} meta(s) con HTML crudo (<strong>, <a>). Usar buildServiceMetaDescription.`);
+    if (truncadas > 0) reports.push(`⚠️  Fase C: ${truncadas} meta(s) truncadas (patrón "Consulta confidencial" pegado). Reescribir helper.`);
+  }
+
+  // Fase D: orphan pages indexables en sitemap con 0 inlinks.
+  if (byType['orphan-page']) {
+    const orphans = [];
+    for (const f of byType['orphan-page']) {
+      const { headers, rows } = loadCSV(f);
+      const iUrl = headers.indexOf('URL');
+      const iInlinks = headers.indexOf('No. of href inlinks');
+      const iSitemap = headers.indexOf('Referenced in sitemaps');
+      for (const r of rows) {
+        const inlinks = parseInt(r[iInlinks] || '0', 10);
+        const inSitemap = (r[iSitemap] || '').includes('sitemap');
+        if (inlinks === 0 && inSitemap) orphans.push(toRel(r[iUrl]));
+      }
+    }
+    if (orphans.length > 0) {
+      reports.push(`⚠️  Fase D: ${orphans.length} orphan page(s) en sitemap con 0 href inlinks:`);
+      for (const o of orphans) reports.push(`       → ${o}`);
+    } else {
+      reports.push('✅ Fase D: sin orphan pages en CSV.');
+    }
+  }
+
+  // Fase F: structured data con errores de validación.
+  if (byType['structured-data']) {
+    let withIssues = 0, aggregateRating = 0;
+    for (const f of byType['structured-data']) {
+      const { headers, rows } = loadCSV(f);
+      const iIssue = headers.indexOf('Structured data issues');
+      const iSchema = headers.indexOf('Schema items');
+      const iIdx = headers.indexOf('Is indexable page');
+      for (const r of rows) {
+        if (iIdx >= 0 && r[iIdx] !== 'true') continue;
+        if ((r[iIssue] || '').trim()) withIssues++;
+        if ((r[iSchema] || '').includes('AggregateRating')) aggregateRating++;
+      }
+    }
+    if (withIssues > 0) reports.push(`⚠️  Fase F: ${withIssues} URL(s) indexables con errores de structured data. Validar con node scripts/validate-jsonld.mjs.`);
+    else reports.push('✅ Fase F: sin errores de structured data en CSV.');
+    if (aggregateRating > 0) reports.push(`⚠️  Fase F: ${aggregateRating} URL(s) con AggregateRating (política Google self-serving reviews).`);
+  }
+
+  return { reports };
+}
+
+async function main() {
   if (!fs.existsSync(AHREFS_DIR)) {
     console.error(`❌ No se encontró la carpeta ahrefs/ en ${ROOT}`);
     process.exit(1);
@@ -292,23 +472,71 @@ function main() {
   }
   log('');
 
+  // 6. Chequeos DB (titles duplicados de marca, placeholders, metadata crítica).
+  const dbFindings = await checkDbMetadata();
+  log('── 6. Metadata de posts (DB): marca duplicada, placeholders, metadata crítica ──');
+  if (dbFindings.skipped) {
+    log(`  ⚠️  ${dbFindings.skipped}`);
+  } else {
+    if (dbFindings.brandDup.length === 0) {
+      log('  ✅ Sin titles/meta_title con marca duplicada.');
+    } else {
+      for (const f of dbFindings.brandDup) log(`  ❌ Marca duplicada: ${f.slug} [${f.campo}]: ${f.valor}`);
+    }
+    if (dbFindings.placeholders.length === 0) {
+      log('  ✅ Sin placeholders editoriales ([Tu Empresa] etc.).');
+    } else {
+      for (const f of dbFindings.placeholders) log(`  ❌ Placeholder: ${f.slug} [${f.campo}]: ${f.valor}`);
+    }
+    if (dbFindings.missingMeta.length === 0) {
+      log('  ✅ Todos los posts publicados tienen title y meta description.');
+    } else {
+      for (const f of dbFindings.missingMeta) log(`  ❌ Metadata ausente: ${f.slug} [sin ${f.campo}]`);
+    }
+  }
+  log('');
+
+  // ── 7. CSV Fases A–F: titles largos, metas, orphans, structured data ──
+  log('── 7. CSV Fases A–F (titles, metas, orphans, structured data) ──');
+  const csvFindings = analyzeCsvFasesAF(byType);
+  if (csvFindings.reports.length === 0) {
+    log('  ℹ️  No hay CSV de las Fases A–F (title-too-long, meta-description, orphan-page, structured-data).');
+  } else {
+    for (const r of csvFindings.reports) log(`  ${r}`);
+  }
+  log('');
+
   // ── Veredicto ──
   log('═══════════════════════════════════════════════════════════');
   log('  VEREDICTO');
   log('═══════════════════════════════════════════════════════════');
 
-  // Bloqueante solo si /intranet/admin aparece en componentes públicos hoy.
+  // Bloqueante si /intranet/admin aparece en componentes públicos hoy, o si la
+  // DB tiene titles con marca duplicada, placeholders sin reemplazar, o metadata
+  // crítica ausente en posts publicados.
   // Las URLs 4XX/3XX de los CSV son históricas (pueden ya estar corregidas en
   // código/DB); se reportan como informativo, no como bloqueante automático.
   if (intranetFindings.length > 0) {
     bloqueantes += intranetFindings.length;
     log(`❌ BLOQUEANTE: /intranet/admin presente en ${intranetFindings.length} componente(s) público(s).`);
   }
+  if (!dbFindings.skipped) {
+    const dbBloqueantes = dbFindings.brandDup.length + dbFindings.placeholders.length + dbFindings.missingMeta.length;
+    if (dbBloqueantes > 0) {
+      bloqueantes += dbBloqueantes;
+      log(`❌ BLOQUEANTE (DB): ${dbFindings.brandDup.length} marca duplicada, ${dbFindings.placeholders.length} placeholder(s), ${dbFindings.missingMeta.length} metadata ausente.`);
+    }
+  }
   if (conflictivos.length > 0) {
     log(`⚠️  ${conflictivos.length} URL(s) noindex con header HTTP contradictorio (revisar next.config.ts headers()).`);
   }
   log(`ℹ️  ${urls4xx.length} URL(s) 4XX en CSV (validar origen con fix-internal-redirects.ts dry-run).`);
   log(`ℹ️  ${dest3xxSorted.length} destino(s) 3XX en CSV (validar con fix-internal-redirects.ts dry-run).`);
+  // Resumen de warnings de las Fases A–F (informativo, no bloqueante).
+  const csvWarnings = csvFindings.reports.filter((r) => r.startsWith('⚠️')).length;
+  if (csvWarnings > 0) {
+    log(`ℹ️  ${csvWarnings} warning(s) de Fases A–F (CSV Ahrefs). Ver sección 7 para detalle.`);
+  }
 
   if (bloqueantes > 0) {
     log('');
@@ -320,4 +548,7 @@ function main() {
   process.exit(0);
 }
 
-main();
+main().catch((e) => {
+  console.error('Error:', e);
+  process.exit(1);
+});

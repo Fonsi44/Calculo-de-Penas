@@ -8,9 +8,9 @@ import { RelatedCities } from '@/components/marketing/related-links';
 import { Scale, Shield, Clock, Gavel, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
+  title: { absolute: 'Abogado Penalista Nacaome | Pineda y Asociados' },
   description:
-    'Abogado penalista en Nacaome, Valle. Defensa penal urgente, detenciones, audiencias. 15+ años de experiencia. Consulta sin costo. WhatsApp +504 9536-3724.',
+    'Abogado penalista en Nacaome, Valle. Defensa en audiencias, medidas cautelares, juicio oral y recursos. Atención urgente para detenidos.',
   alternates: { canonical: '/abogado-penalista-nacaome' },
   keywords: [
     'abogado penalista Nacaome',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
     description:
-      'Abogado penalista en Nacaome, Valle. Defensa penal urgente, detenciones, audiencias. 15+ años de experiencia. Consulta sin costo.',
+      'Abogado penalista en Nacaome, Valle. Defensa en audiencias, medidas cautelares, juicio oral y recursos. Atención urgente para detenidos.',
     url: '/abogado-penalista-nacaome',
     siteName: site.name,
     locale: 'es_HN',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
     description:
-      'Abogado penalista en Nacaome, Valle. Defensa penal urgente, detenciones, audiencias. 15+ años de experiencia. Consulta sin costo.',
+      'Abogado penalista en Nacaome, Valle. Defensa en audiencias, medidas cautelares, juicio oral y recursos. Atención urgente para detenidos.',
     images: ['/og/nacaome.webp'],
   },
 };
@@ -204,18 +204,18 @@ export default async function AbogadoPenalistaNacaomePage() {
             {
               '@context': 'https://schema.org',
               '@type': 'WebPage',
-              '@id': `${url}#webpage`,
+              '@id': `${url}/#webpage`,
               url,
               name: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
               description:
                 'Abogado penalista en Nacaome, Valle. Defensa penal urgente, detenciones, audiencias. 15+ años de experiencia. Consulta sin costo.',
-              isPartOf: { '@id': `${site.url}#website` },
-              about: { '@id': `${site.url}#legal-service` },
+              isPartOf: { '@id': `${site.url}/#website` },
+              about: { '@id': `${site.url}/#legal-service` },
             },
             {
               '@context': 'https://schema.org',
               '@type': 'FAQPage',
-              '@id': `${url}#faqpage`,
+              '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Qué hacer si me detienen en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al +504 9536-3724 y acudimos de inmediato.' } },
                 { '@type': 'Question', name: '¿Cuánto cuesta un abogado penalista en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Ofrecemos una primera consulta sin costo para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito.' } },
