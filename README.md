@@ -79,6 +79,7 @@ npm run seo:gsc:live      # GSC: queries, CTR, posición
 npm run seo:ga4:live      # GA4: usuarios, sesiones, conversiones
 npm run seo:bing:live     # Bing: crawl, queries, backlinks
 npm run indexnow:dry      # IndexNow dry-run (20 URLs)
+npm run seo:ahrefs        # valida CSV de ahrefs/: 4XX, 3XX, noindex, intranet/admin
 ```
 
 ### KPIs actuales (Fase 9, Jul 2026, 28 días)
@@ -120,6 +121,7 @@ Nunca compartir tokens ni secretos en chats o logs.
 | Blog | `validate:dates`, `content:audit`, `blog:normalizar`, `blog:verify-fix` |
 | IndexNow | `indexnow:dry`, `indexnow:core` (envío real) |
 | SEO Health | `seo:health`, `audit:indexacion` |
+| SEO Ahrefs | `seo:ahrefs` (valida CSV de `ahrefs/`: 4XX, 3XX, noindex, `/intranet/admin`) |
 | SEO Live | `seo:doctor`, `seo:collect`, `seo:gsc:live`, `seo:ga4:live`, `seo:bing:live` |
 | DB | `db:check`, `seed:*` |
 | Visual | `visual:check`, `visual:update` |

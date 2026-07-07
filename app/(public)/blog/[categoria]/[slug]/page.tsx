@@ -461,6 +461,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                         <Link
                           key={tag}
                           href={`/blog?tag=${encodeURIComponent(tag)}`}
+                          rel="nofollow"
                           className="inline-block px-3 py-1.5 rounded-full bg-surface-alt text-xs text-text-secondary border border-border/30 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-colors"
                         >
                           {tag}

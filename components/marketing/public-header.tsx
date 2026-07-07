@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, MessageCircle, Lock, Calendar, ChevronDown } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, Calendar, ChevronDown } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
 
@@ -61,15 +61,6 @@ export function PublicHeader() {
             <span className="text-text-inverse/70">·</span>
             <span className="text-text-inverse/80">{site.address.city}, {site.address.department}</span>
           </div>
-          <Link
-            href="/intranet/admin"
-            rel="nofollow"
-            className="flex items-center gap-1.5 text-text-inverse/75 hover:text-accent transition-colors focus-visible:outline-none"
-            title="Acceso exclusivo para personal del bufete"
-          >
-            <Lock size={11} aria-hidden="true" />
-            <span>Acceso Intranet</span>
-          </Link>
         </div>
       </div>
 

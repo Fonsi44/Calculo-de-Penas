@@ -29,6 +29,27 @@ import * as path from 'path';
 
 type RedirectEntry = { source: string; destination: string };
 
+/**
+ * Mapa de URLs internas rotas conocidas que NO están cubiertas por redirects
+ * de next.config.ts y cuyo destino canónico (post 200 existente) es inequívoco.
+ *
+ * Fuentes: auditoría Ahrefs Fase 1 (Jul 2026). Estas URLs aparecen en el body
+ * HTML de posts persistidos en DB (tabla blog_posts, campo body) apuntando a
+ * rutas /articulos/* que nunca existieron como páginas. Se reescriben al post
+ * canónico equivalente verificado (200).
+ *
+ * Idempotente: una vez reescrito, el href apunta al destino y no vuelve a
+ * matchear (el destino no está en este mapa ni en redirects).
+ */
+const REWRITE_MAP: RedirectEntry[] = [
+  { source: '/articulos/declaracion-isr-personas-naturales', destination: '/blog/tributario/impuesto-renta-personas-fisicas-honduras' },
+  { source: '/articulos/facturacion-electronica-honduras', destination: '/blog/tributario/facturacion-electronica-requisitos-sar' },
+  { source: '/articulos/isv-en-honduras', destination: '/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras' },
+  // /contacto redirige (301) a /solicitar-consulta. Reescribimos en origen
+  // para evitar la cadena de redirect (mejor UX + menos hops de crawl).
+  { source: '/contacto', destination: '/solicitar-consulta' },
+];
+
 function loadRedirectsFromConfig(): RedirectEntry[] {
   try {
     const cfgPath = path.join(process.cwd(), 'next.config.ts');
@@ -80,8 +101,13 @@ async function main() {
   const redirectPrefixes = redirects
     .filter((r) => r.source.includes(':path*'))
     .map((r) => ({ prefix: r.source.replace(/\/:path\*$/, '/'), dest: r.destination.replace(/\/:path\*$/, '/') }));
+  // Mapa de reescritura de URLs rotas conocidas (prioridad sobre redirects).
+  const rewriteMap = new Map(REWRITE_MAP.map((r) => [r.source, r.destination]));
 
   function resolveRedirect(href: string): string | null {
+    // 1. URLs rotas conocidas (/articulos/*, /contacto sin redirect-chain).
+    if (rewriteMap.has(href)) return rewriteMap.get(href)!;
+    // 2. Redirects declarados en next.config.ts.
     if (redirectMap.has(href)) return redirectMap.get(href)!;
     for (const rp of redirectPrefixes) {
       if (href.startsWith(rp.prefix)) {
@@ -100,26 +126,30 @@ async function main() {
   let postsModificados = 0;
   let enlacesCorregidos = 0;
   let postsBorradorModificados = 0;
-  const cambios: { slug: string; de: string; a: string; anchor: string }[] = [];
+  const cambios: { slug: string; de: string; a: string; anchor: string; fuente: string }[] = [];
 
   for (const p of posts) {
     const body: string = p.body ?? '';
     let newBody = body;
     let changed = false;
 
-    // Regex para encontrar <a ... href="..." ...>...</a>
-    // Captura: pre-href, href, post-href (atributos restantes + anchor)
-    const linkRe = /(<a\s+[^>]*?href\s*=\s*")([^"]*)("[^>]*>)([\s\S]*?<\/a>)/gi;
-    newBody = newBody.replace(linkRe, (full, pre, href, post, rest) => {
-      // Solo rutas internas relativas que matchean un redirect.
+    // Regex para encontrar <a ... href="..." ...>...</a> o <a ... href='...' ...>...</a>
+    // Tolerante a comillas dobles o simples (algunos posts usan href='/...').
+    // Captura: pre-href (hasta '='), comilla de apertura, href, comilla de cierre,
+    // atributos restantes + '>', anchor.
+    const linkRe = /(<a\s+[^>]*?href\s*=\s*)(["'])([^"']*)\2([^>]*>)([\s\S]*?<\/a>)/gi;
+    newBody = newBody.replace(linkRe, (full, pre, quote, href, attrs, rest) => {
+      // Solo rutas internas relativas que matchean un redirect o rewrite.
       if (!href.startsWith('/')) return full;
       const target = resolveRedirect(href);
       if (!target) return full;
       changed = true;
       enlacesCorregidos++;
       const anchor = rest.replace(/<[^>]*>/g, '').trim().substring(0, 60);
-      cambios.push({ slug: p.slug, de: href, a: target, anchor });
-      return `${pre}${target}${post}${rest}`;
+      const fuente = rewriteMap.has(href) ? 'rewrite-map' : 'redirect-301';
+      cambios.push({ slug: p.slug, de: href, a: target, anchor, fuente });
+      // Reconstruye preservando la comilla original del href.
+      return `${pre}${quote}${target}${quote}${attrs}${rest}`;
     });
 
     if (changed) {
@@ -157,7 +187,7 @@ async function main() {
   if (cambios.length > 0) {
     console.log('── Detalle de cambios ──');
     for (const c of cambios) {
-      console.log(`  ${c.slug}:`);
+      console.log(`  ${c.slug}  [${c.fuente}]:`);
       console.log(`    ${c.de}`);
       console.log(`    → ${c.a}  "${c.anchor}"`);
     }

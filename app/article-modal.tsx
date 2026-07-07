@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { X, FileText } from 'lucide-react';
-import Link from 'next/link';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
 
 interface ArticuloCP {
@@ -87,13 +86,6 @@ export function ArticleModal({ articuloRef, onClose }: ArticleModalProps) {
               <div className="text-sm text-text leading-6 whitespace-pre-line font-serif">
                 {article.texto}
               </div>
-              <Link
-                href={`/intranet/admin/cp/${article.id}`}
-                className="inline-flex items-center gap-1 mt-4 text-xs font-semibold text-accent hover:text-accent-light transition-colors"
-                onClick={onClose}
-              >
-                Ver en la biblioteca completa →
-              </Link>
             </>
           ) : null}
         </div>

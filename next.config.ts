@@ -64,9 +64,32 @@ const securityHeaders = [
   ...(isProd ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }] : []),
 ];
 
-const robotsHeader = noindexActive
-  ? { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet, noimageindex' }
-  : { key: 'X-Robots-Tag', value: 'index, follow, max-image-preview:large, max-snippet:-1' };
+// X-Robots-Tag por ruta (no global). Una regla catch-all con
+// `X-Robots-Tag: index, follow` sobreescribiría la señal `noindex, follow` que
+// envían las páginas legales y los filtros del blog (?tag=, ?month=, ?page=)
+// vía meta robots, generando una contradicción SEO (Ahrefs Fase 1, Jul 2026).
+// Las páginas indexables no necesitan X-Robots-Tag: la metadata por-página y el
+// sitemap son la autoridad. Solo se emite X-Robots-Tag explícito para:
+//   - staging global (noindexActive), o
+//   - rutas explícitamente noindex (legales, intranet, API).
+const noindexAllHeader = {
+  key: 'X-Robots-Tag',
+  value: 'noindex, nofollow, noarchive, nosnippet, noimageindex',
+};
+const noindexFollowHeader = {
+  key: 'X-Robots-Tag',
+  value: 'noindex, follow',
+};
+// Rutas legales públicas con meta robots `noindex, follow` (6). Deben recibir
+// el mismo X-Robots-Tag para no contradecir su metadata.
+const LEGAL_NOINDEX_PATHS = [
+  '/terminos',
+  '/aviso-legal',
+  '/politica-privacidad',
+  '/politica-cookies',
+  '/politica-editorial',
+  '/disclaimer',
+];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -138,6 +161,24 @@ const nextConfig: NextConfig = {
       { source: '/faq', destination: '/preguntas-frecuentes', statusCode: 301 },
       { source: '/contacto', destination: '/solicitar-consulta', permanent: true },
       { source: '/privacidad', destination: '/politica-privacidad', permanent: true },
+      // === FIX 404 Ahrefs Fase 1 (Jul 2026): redirects de red de seguridad ===
+      // Estos 5 destinos se reportaron como 404 en Ahrefs. La causa primaria
+      // (enlaces /articulos/* en el body de un post de la DB) se corrige vía
+      // fix-internal-redirects.ts (reescritura en origen). Estos 301 actúan
+      // como red de seguridad para backlinks externos o rastros históricos.
+      // Destinos canónicos verificados (posts 200 existentes):
+      { source: '/articulos/declaracion-isr-personas-naturales', destination: '/blog/tributario/impuesto-renta-personas-fisicas-honduras', permanent: true },
+      { source: '/articulos/facturacion-electronica-honduras', destination: '/blog/tributario/facturacion-electronica-requisitos-sar', permanent: true },
+      { source: '/articulos/isv-en-honduras', destination: '/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras', permanent: true },
+      // Landings/servicios huérfanos reportados por Ahrefs:
+      { source: '/contacto-tegucigalpa', destination: '/solicitar-consulta', permanent: true },
+      { source: '/servicios/gestoria-ambiental-corporativa', destination: '/servicios-juridicos/ambiental-regulatorio', permanent: true },
+      // NOTA: los slugs con doble prefijo reportados por Ahrefs
+      // (/blog/tributario/blog/derecho-laboral/..., /blog/tributario/blog/tributario/...,
+      // /blog/<cat>/solicitar-consulta, /blog/tributario/abogados-en-choluteca)
+      // NO se redirigen: son artefactos de rastreo sin referencia real en código
+      // ni DB (verificados). Redirigirlos inventaría un destino que no existe.
+      // El script seo:ahrefs los detecta si reaparecen en datos vigentes.
       // === CONSOLIDACIÓN DE BLOG: redirecciones 301 post-auditoría (Jun 2026) ===
       // Fusiones por canibalización: 2 posts → 1
       { source: '/blog/derecho-de-familia/pension-alimenticia-calcular-reclamar-honduras', destination: '/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa', permanent: true },
@@ -317,10 +358,22 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=604800' },
         ],
       },
+      // Rutas legales públicas: X-Robots-Tag `noindex, follow` coherente con su
+      // meta robots. Evita la contradicción con un header global index,follow.
+      // (Si noindexActive está activo, la regla catch-all ya emite noindex.)
+      ...LEGAL_NOINDEX_PATHS.map((source) => ({
+        source,
+        headers: [noindexFollowHeader],
+      })),
       // Regla por defecto para el resto de rutas
       {
         source: '/:path*',
-        headers: [...securityHeaders, robotsHeader],
+        // En producción (noindexActive=false) no se emite X-Robots-Tag global:
+        // cada página controla su indexación vía meta robots (metadata por-página)
+        // y el sitemap solo lista URLs indexables. Así se evita contradecir las
+        // páginas noindex dinámicas (?tag=, ?month=, ?page=) y los filtros.
+        // En staging (noindexActive=true) se fuerza noindex en todo el sitio.
+        headers: noindexActive ? [...securityHeaders, noindexAllHeader] : [...securityHeaders],
       },
     ];
   },

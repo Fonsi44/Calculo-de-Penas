@@ -6,6 +6,82 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-07 — Saneamiento SEO Ahrefs Fase 1
+
+Corrección del primer bloque de auditoría Ahrefs: páginas 4XX/404, enlaces
+internos a 3XX, contradicción meta robots vs `X-Robots-Tag`, nofollow masivo a
+`/intranet/admin` desde el header público, e inconsistencia de `rel` en tags del
+pie de post. Sin cambios visuales, sin inventar contenido jurídico, sin romper
+rutas existentes.
+
+### `fix(seo): X-Robots-Tag por ruta, no global (contradicción con meta noindex)`
+
+- **Causa raíz**: `next.config.ts` emitía `X-Robots-Tag: index, follow` global
+  (regla catch-all `/:path*`) a TODAS las páginas públicas, incluidas las
+  noindex (6 legales + filtros `?tag=`/`?month=`/`?page=`). Ahrefs reportó 601
+  URLs con señal contradictoria (meta `noindex, follow` + header `index, follow`).
+- **`next.config.ts`**: se elimina el `robotsHeader` estático. Las páginas
+  indexables no reciben `X-Robots-Tag` (la metadata por-página + sitemap son la
+  autoridad). Se añaden reglas `headers()` explícitas para las 6 rutas legales
+  (`/terminos`, `/aviso-legal`, `/politica-privacidad`, `/politica-cookies`,
+  `/politica-editorial`, `/disclaimer`) → `X-Robots-Tag: noindex, follow`.
+  `noindexActive` (staging) sigue forzando noindex global.
+
+### `fix(seo): redirects 301 de red de seguridad para 4XX reportados`
+
+- 5 redirects con destino canónico verificado (post 200 existente):
+  - `/articulos/declaracion-isr-personas-naturales` → `/blog/tributario/impuesto-renta-personas-fisicas-honduras`
+  - `/articulos/facturacion-electronica-honduras` → `/blog/tributario/facturacion-electronica-requisitos-sar`
+  - `/articulos/isv-en-honduras` → `/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras`
+  - `/contacto-tegucigalpa` → `/solicitar-consulta`
+  - `/servicios/gestoria-ambiental-corporativa` → `/servicios-juridicos/ambiental-regulatorio`
+- Los slugs con doble prefijo (`/blog/tributario/blog/...`) NO se redirigen: son
+  artefactos de rastreo sin referencia real en código/DB (verificado).
+
+### `fix(seo): reescritura en origen de enlaces rotos (fix-internal-redirects)`
+
+- **`scripts/fix-internal-redirects.ts`**: ampliado con `REWRITE_MAP` para
+  reescribir en el body HTML de los posts los enlaces `/articulos/*` (3 URLs) →
+  posts canónicos, y `/contacto` → `/solicitar-consulta` (evita cadena de
+  redirect). Mantiene patrón dry-run/idempotente/backup-required. Reporte
+  etiqueta cada cambio con su fuente (`rewrite-map` vs `redirect-301`).
+- Dry-run detecta **21 posts / 23 enlaces** a corregir, incluyendo el post
+  `como-obtener-rtn-personas-empresas-honduras` con los 3 enlaces `/articulos/*`
+  rotos. No se ejecuta `--aplicar` en este turno (lo decide el usuario).
+
+### `fix(seo): retirada de /intranet/admin del HTML público`
+
+- **`components/marketing/public-header.tsx`**: eliminado el bloque
+  `Link href="/intranet/admin"` del header global (visible en todas las páginas
+  públicas con `rel=nofollow`). La intranet sigue existiendo, protegida por
+  `robots.ts` + auth; accesible por URL directa conocida por el personal.
+- **`app/article-modal.tsx`**: retirado el CTA "Ver en la biblioteca completa →"
+  que enlazaba a `/intranet/admin/cp/:id` desde el modal público del CP.
+- Reduces superficie de ataque y elimina el patrón de nofollow masivo reportado.
+
+### `fix(seo): rel=nofollow en tags del pie de post`
+
+- **`app/(public)/blog/[categoria]/[slug]/page.tsx`**: los enlaces `?tag=` del
+  pie de cada post ahora llevan `rel="nofollow"` (coherente con el sidebar, que
+  ya lo aplicaba). Evita emitir señales dofollow hacia URLs noindex.
+
+### `feat(seo): validador Fase 1 — npm run seo:ahrefs`
+
+- **`scripts/seo-ahrefs-audit.mjs`** (nuevo): lee los CSV de `ahrefs/`
+  (UTF-16LE/TSV), autodetecta columnas, y reporta 4XX, enlaces a 3XX, noindex
+  con señales contradictorias, noindex en sitemap y `/intranet/admin` en
+  componentes públicos. Exit 1 si hay incidencias bloqueantes.
+- **`package.json`**: añadido `"seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs"`.
+
+### Validación
+
+- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm test` (789 tests) ✅
+- `npm run build` ✅ (sitemap: 213 URLs, 0 legales/intranet/filtros)
+- `npm run seo:ahrefs` ✅ (sin bloqueantes)
+- `fix-internal-redirects` dry-run ✅ (21 posts / 23 enlaces detectados)
+
+---
+
 ## [Unreleased] - 2026-07-07 — Fix "page has broken JavaScript" y títulos duplicados
 
 Corrección de la auditoría SEO que reportaba `/_next/static/chunks/403tsh8uvet9c.js`
