@@ -27,9 +27,10 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
-import { Bot, Send, X, MessageCircle, Phone, ArrowRight } from 'lucide-react';
+import { Bot, Send, X, MessageCircle, Phone, ArrowRight, Zap } from 'lucide-react';
 import { telHref, whatsappHref } from '@/lib/site';
 import { chatConfig } from '@/lib/chat/config';
+import { sugerirAreaLegal } from '@/lib/chat/preconsulta';
 import {
   trackChatOpened,
   trackChatClosed,
@@ -82,6 +83,11 @@ export function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  // Marca de urgencia: cuando el backend o el mensaje del usuario indican
+  // urgencia, se resaltan los CTAs de WhatsApp/teléfono en el widget.
+  const [urgent, setUrgent] = useState(false);
+  // Muestra las quick replies iniciales mientras no haya mensajes del usuario.
+  const [showQuickReplies, setShowQuickReplies] = useState(true);
   // `mounted` garantiza que el primer render del cliente coincida con el del
   // server (null). Antes se usaba `typeof document === 'undefined'`, lo que
   // provocaba un mismatch de hidratación (#418): el server renderizaba null y
@@ -156,7 +162,22 @@ export function ChatWidget() {
       setInput('');
       setLoading(true);
       setError(false);
+      setShowQuickReplies(false);
       trackChatMessageSent();
+
+      // Detección de urgencia client-side (refuerzo del backend).
+      const areaSugerida = sugerirAreaLegal(content);
+      // Mapea el enum AreaLegal (más amplio) al subset que acepta analytics.
+      const AREA_TO_ANALYTICS: Record<string, 'penal' | 'familia' | 'laboral' | 'civil' | 'mercantil' | 'migrantes' | 'general'> = {
+        penal: 'penal',
+        familia: 'familia',
+        laboral: 'laboral',
+        civil: 'civil',
+        mercantil: 'mercantil',
+        migratorio: 'migrantes',
+      };
+      const analyticsArea = areaSugerida ? AREA_TO_ANALYTICS[areaSugerida] ?? 'general' : null;
+      if (analyticsArea) trackChatServiceSuggested(analyticsArea);
 
       try {
         const res = await fetch('/api/chat', {
@@ -180,8 +201,11 @@ export function ChatWidget() {
           throw new Error('chat_error');
         }
 
-        const data = (await res.json()) as { reply?: string; source?: string };
+        const data = (await res.json()) as { reply?: string; source?: string; urgent?: boolean };
         const reply = data.reply?.trim() || chatConfig.fallbackReply;
+
+        // Marca urgencia si el backend lo señala (resalta CTAs de contacto).
+        if (data.urgent === true) setUrgent(true);
 
         if (data.source && data.source.startsWith('fallback')) {
           trackChatFallbackUsed(
@@ -333,6 +357,43 @@ export function ChatWidget() {
                 Se produjo un error. Puede reintentar o contactar directamente.
               </p>
             )}
+
+            {/* Banner de urgencia: si el backend marca urgencia, resalta CTAs */}
+            {urgent && (
+              <div className="mr-auto max-w-[92%] rounded-xl border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-text">
+                <p className="font-semibold flex items-center gap-1.5">
+                  <Zap size={12} className="text-danger" aria-hidden="true" />
+                  Su caso parece urgente
+                </p>
+                <p className="mt-0.5 text-text-secondary">
+                  Le recomendamos contactar ahora por WhatsApp o teléfono para atención inmediata.
+                </p>
+              </div>
+            )}
+
+            {/* Quick replies: solo al inicio, ocultas tras el primer mensaje */}
+            {showQuickReplies && (
+              <div className="flex flex-wrap gap-1.5 mr-auto max-w-[92%]">
+                {chatConfig.assistant.quickReplies.map((qr) => {
+                  const isUrgent = qr === 'Caso urgente';
+                  return (
+                    <button
+                      key={qr}
+                      type="button"
+                      onClick={() => void sendMessage(qr)}
+                      className={`text-xs font-medium px-2.5 py-1.5 rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                        isUrgent
+                          ? 'border-danger/40 bg-danger/10 text-danger hover:bg-danger/15'
+                          : 'border-border bg-surface-alt text-text-secondary hover:border-accent/40 hover:text-accent-dark'
+                      }`}
+                    >
+                      {isUrgent && <Zap size={10} className="inline mr-1" aria-hidden="true" />}
+                      {qr}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Barra de contacto rápida */}
@@ -345,14 +406,14 @@ export function ChatWidget() {
                 trackChatWhatsAppClicked();
                 trackChatContactClicked('whatsapp');
               }}
-              className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity"
+              className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity ${urgent ? 'ring-2 ring-danger/40 animate-pulse' : ''}`}
             >
               <MessageCircle size={12} aria-hidden="true" /> WhatsApp
             </a>
             <a
               href={telHref()}
               onClick={() => trackChatContactClicked('phone')}
-              className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity"
+              className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity ${urgent ? 'ring-2 ring-danger/40 animate-pulse' : ''}`}
             >
               <Phone size={12} aria-hidden="true" /> Llamar
             </a>

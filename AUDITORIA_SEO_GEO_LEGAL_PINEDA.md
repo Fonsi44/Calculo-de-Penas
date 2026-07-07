@@ -736,6 +736,26 @@ Se ejecutó un barrido exhaustivo de enlaces internos en `components/`, `app/(pu
 
 Esta sección consolida el cierre operativo de los tres pendientes externos de Fase 1. Está pensada para que un operador (no necesariamente desarrollador) pueda ejecutar las acciones manuales restantes en Vercel, Google Search Console, Bing Webmaster Tools y Screaming Frog sin ambigüedad.
 
+### ✅ Verificación post-deploy en producción (2026-07-06)
+
+Los cambios de Fase 1 están **confirmados vivos en producción**:
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Enlace Poder Judicial en `/despacho` | ✅ Presente | HTML 265.767 bytes; `href="https://www.poderjudicial.gob.hn/" target="_blank" rel="noopener noreferrer"`, sin `nofollow` |
+| Enlace Poder Judicial en home/footer | ✅ Presente | HTML 249.519 bytes; mismo `rel="noopener noreferrer"`, sin `nofollow` |
+| Texto del enlace | ✅ Prudente | "referencia institucional del sistema judicial hondureño, puede consultar el sitio oficial del Poder Judicial de Honduras" — sin claims verificables |
+| Canonical home | ✅ Coherente | `https://www.pinedayasociadoshn.com` (canonical = og:url = URL servida) |
+| Title / H1 | ✅ Correcto | Title 59 chars único; 1 `<h1>` por página |
+| trailingSlash global | ✅ No activado | URLs del sitemap sin slash final (excepto raíz); `next.config.ts` sin cambios |
+| Robots.txt | ✅ HTTP 200 | Referencia `Sitemap: https://www.pinedayasociadoshn.com/sitemap.xml` |
+| Sitemap.xml | ✅ HTTP 200 | 213 URLs (sin cambios) |
+| Slug A-04 corregido | ✅ Vivo | `/servicios-juridicos/ambiental-regulatorio` sirve 200; 0 referencias al slug erróneo en el repo |
+| Integridad áreas no tocadas | ✅ Intacto | JSON-LD, blog, RGPD/cookies, next.config.ts, proxy.ts, sameAs, CWV: sin cambios en git diff |
+| Redirect apex (A-01) | ⚠️ Pendiente Vercel | Cadena 308→308 confirmada (2 saltos); requiere config manual en Vercel |
+
+**Validaciones locales post-deploy (sin regresiones):** `lint` ✅, `tsc --noEmit` ✅, `build` ✅ (28.0s, 361 páginas), `seo:doctor` ✅ (18 OK), `test` ✅ (754 tests, 35 suites).
+
 ### Re-validación local (post-implementación)
 
 Las validaciones se re-ejecutaron el 2026-07-06 tras confirmar que los cambios siguen en su sitio y no se introdujeron modificaciones fuera de alcance:

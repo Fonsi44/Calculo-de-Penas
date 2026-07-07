@@ -12,6 +12,8 @@ Este plan contiene **únicamente tareas accionables**, priorizadas por criticida
 
 No se han detectado bloqueadores críticos de indexación ni riesgos legales graves que requieran acción inmediata. El sitio es plenamente rastreable, indexable y comprensible.
 
+> **Estado Fase 1 post-deploy (2026-07-06):** A-01 pendiente Vercel · A-02 ✅ completada y validada en producción · A-03 ✅ completada y visible en producción · A-04 parcialmente completada (1 enlace roto corregido y vivo; 232 URLs 4xx requieren tool externo). Deploy confirmado: enlace al Poder Judicial visible en `/despacho` y footer; canonical coherente; sitemap 213 URLs; slug A-04 sirve 200. **Progreso: 92 %** (sin cambios; A-01 Vercel + A-04 detalle externo pendientes).
+
 ---
 
 ## 🟠 ALTA (4 tareas — ejecutar antes de esperar indexación)

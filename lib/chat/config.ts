@@ -72,17 +72,19 @@ export const chatConfig = {
   /** Identidad del asistente mostrada en el widget (client). */
   assistant: {
     name: 'Asistente virtual',
+    // Mensaje inicial con triple aviso obligatorio: IA + no asesoría + privacidad.
     initialMessage:
-      'Hola, soy el asistente virtual de Pineda & Asociados. Estoy a tu disposición para ayudarle a encontrar el servicio adecuado. ¿En qué podemos ayudarle?',
+      'Hola, soy el asistente virtual (IA) de Pineda y Asociados. Le ayudo a identificar el área legal de su consulta, preparar un resumen inicial y contactar con el despacho. No soy abogado y esto no sustituye una consulta jurídica personalizada. Los datos que comparta se usan solo para gestionar su consulta; puede ver nuestra política de privacidad en el pie de página. ¿En qué podemos ayudarle?',
     quickReplies: [
-      'Necesito una consulta penal',
-      'Tengo una urgencia legal',
-      'Quiero saber qué servicio necesito',
+      'Preparar consulta',
+      'Identificar área legal',
+      'Caso urgente',
+      'Enviar WhatsApp',
+      'Ir al formulario',
       'Soy hondureño en España',
-      'Quiero hablar por WhatsApp',
-      'Ver servicios jurídicos',
     ],
-    disclaimer: 'Este chat ofrece orientación inicial y no sustituye una consulta jurídica.',
+    disclaimer:
+      'Asistente de IA. Orientación inicial, no asesoría jurídica. No sustituye una consulta profesional.',
   },
 
   /** Respuesta de fallback cuando no hay IA o el proveedor falla.

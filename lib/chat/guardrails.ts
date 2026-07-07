@@ -6,9 +6,14 @@
  *   1. Prompt injection evidente ("ignora tus reglas", "actúa como", etc.).
  *   2. Preguntas sobre temas privados / intranet / configuración técnica.
  *   3. Solicitudes de asesoramiento jurídico definitivo que deben derivarse.
+ *   4. Detección de urgencia (no bloquea, pero marca la respuesta con un
+ *      aviso para priorizar WhatsApp/teléfono sin prolongar la conversación).
  *
- * Si un guardrail se dispara, se devuelve una respuesta prefijada SIN llamar
- * al proveedor (ahorro de coste y reducción de riesgo).
+ * Si un guardrail de bloqueo (injection/privado/asesoramiento) se dispara,
+ * se devuelve una respuesta prefijada SIN llamar al proveedor (ahorro de
+ * coste y reducción de riesgo). La urgencia NO bloquea: se devuelve como
+ * metadato `urgent: true` para que el widget pueda resaltar los CTAs de
+ * contacto.
  */
 
 export type GuardrailHit = {
@@ -16,9 +21,11 @@ export type GuardrailHit = {
   /** Clave interna para analytics (sin contenido del usuario). */
   reason: 'injection' | 'private_topic' | 'definitive_advice';
   reply: string;
+  /** Una respuesta de guardrail puede además marcar urgencia. */
+  urgent?: boolean;
 };
 
-export type GuardrailOk = { hit: false };
+export type GuardrailOk = { hit: false; urgent: boolean };
 
 export type GuardrailResult = GuardrailHit | GuardrailOk;
 
@@ -33,6 +40,16 @@ const INJECTION_PATTERNS = [
   /developer\s+mode/i,
   /olvida\s+(tus|lo|todo)\s+(reglas|anterior)/i,
   /estás\s+programado|como\s+estás\s+hecho|cuál\s+es\s+tu\s+código/i,
+  // Patrones adicionales de prompt injection (refuerzo Jul 2026).
+  /eres\s+(libre\s+ahora|un\s+modelo\s+sin\s+restricciones)/i,
+  /sin\s+(restricciones|límites|filtros)/i,
+  /no\s+tengas\s+(reglas|límites|restricciones)/i,
+  /resp[oó]ndeme\s+(como|simulando|haciendo\s+creer)/i,
+  /finge\s+ser|pretende\s+ser|simula\s+ser/i,
+  /modo\s+(god|sin\s+filtros|sin\s+restricciones|libre)/i,
+  /\bsobreescribe\s+(tus|las)\s+(reglas|instrucciones)/i,
+  /\bnuevo\s+(system\s+)?prompt\b/i,
+  /system\s*prompt/i,
 ];
 
 const PRIVATE_TOPIC_PATTERNS = [
@@ -69,6 +86,29 @@ const DEFINITIVE_ADVICE_PATTERNS = [
   /qu[eé]\s+(debo\s+)?declarar/i,
 ];
 
+/**
+ * Patrones de URGENCIA (no bloquean; marcan el mensaje para priorizar CTAs).
+ * Detección server-side para responder rápido sin esperar al razonamiento
+ * completo del LLM. El system prompt también cubre estos casos.
+ */
+const URGENCY_PATTERNS = [
+  /\bdetenci[oó]n\b|\bdetuvieron\b|\best[aá]\s+detenido|\blo\s+detuvieron/i,
+  /\baudiencia\b.*\s+(pr[oó]xim|hoy|ma[ñn]ana|ayer|urgente)/i,
+  /\baudiencia\s+inicial/i,
+  /\bdenunci[ao]\s+penal|\bfui\s+denunciad[oa]/i,
+  /\bviolencia\s+(intrafamiliar|dom[eé]stica|de\s+g[eé]nero)/i,
+  /\bmenores?\s+(afectad|en\s+riesgo|involucrad)/i,
+  /\bembargo\b|\bembargar|\bme\s+van\s+a\s+embargar/i,
+  /\bdespido\s+reciente|\bme\s+despidieron/i,
+  /\bvenc(?:e|imiento)\s+(?:de\s+)?(?:el\s+)?plazo|plazo\s+venc|vence\s+(?:el\s+)?plazo|\bplazo\b.*\bvenc/i,
+  /\bcitaci[oó]n\s+judicial/i,
+  /\briesgo\s+migratorio|\bdeportaci[oó]n/i,
+  /\bfecha\s+l[ií]mite\b/i,
+  /\bamenaza|\bacoso/i,
+  /\burgente\b|\bemergencia\b/i,
+  /\bpris[ií]on\s+preventiva|\bmedida\s+cautelar/i,
+];
+
 const INJECTION_REPLY =
   'No puedo atender ese tipo de petición. Estoy diseñado solo para orientar sobre los servicios del despacho y facilitar el contacto. ¿Le ayudo a encontrar el servicio adecuado?';
 
@@ -78,21 +118,27 @@ const PRIVATE_TOPIC_REPLY =
 const DEFINITIVE_ADVICE_REPLY =
   'Esa valoración requiere revisión directa con el despacho, ya que depende del caso concreto y no puedo ofrecerla por chat. Le recomiendo contactar por WhatsApp o teléfono para recibir orientación profesional.';
 
+/** Detecta si el mensaje contiene señales de urgencia. */
+export function detectUrgency(message: string): boolean {
+  return URGENCY_PATTERNS.some((re) => re.test(message ?? ''));
+}
+
 /** Evalúa un mensaje de usuario contra los guardrails. */
 export function evaluateGuardrails(message: string): GuardrailResult {
   const text = message ?? '';
+  const urgent = detectUrgency(text);
 
   // Orden: injection primero (intento de evasión), luego privado, luego asesoramiento.
   if (INJECTION_PATTERNS.some((re) => re.test(text))) {
-    return { hit: true, reason: 'injection', reply: INJECTION_REPLY };
+    return { hit: true, reason: 'injection', reply: INJECTION_REPLY, urgent };
   }
   if (PRIVATE_TOPIC_PATTERNS.some((re) => re.test(text))) {
-    return { hit: true, reason: 'private_topic', reply: PRIVATE_TOPIC_REPLY };
+    return { hit: true, reason: 'private_topic', reply: PRIVATE_TOPIC_REPLY, urgent };
   }
   if (DEFINITIVE_ADVICE_PATTERNS.some((re) => re.test(text))) {
-    return { hit: true, reason: 'definitive_advice', reply: DEFINITIVE_ADVICE_REPLY };
+    return { hit: true, reason: 'definitive_advice', reply: DEFINITIVE_ADVICE_REPLY, urgent };
   }
-  return { hit: false };
+  return { hit: false, urgent };
 }
 
 /** Normalización mínima de la respuesta del modelo antes de devolverla.

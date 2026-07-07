@@ -135,6 +135,7 @@ export default async function PoliticaPrivacidadPage() {
           items={[
             <>Vercel Inc. (alojamiento y despliegue del sitio web). Ver su <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">política de privacidad</a>.</>,
             <>Neon Inc. (base de datos PostgreSQL serverless, región US-East-1). Ver su <a href="https://neon.tech/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">política de privacidad</a>.</>,
+            <>DeepSeek (proveedor del modelo de IA del asistente virtual de preconsulta). Los mensajes que el usuario envía al chat se transmiten a DeepSeek únicamente para generar la respuesta orientativa; no se almacenan en el sitio. Ver su <a href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">información oficial</a>.</>,
           ]}
         />
         <p>
@@ -145,7 +146,32 @@ export default async function PoliticaPrivacidadPage() {
         </p>
       </LegalSection>
 
-      <LegalSection number="6" title="Seguridad de la información">
+      <LegalSection number="6" title="Asistente virtual de preconsulta (IA)">
+        <p>
+          El sitio dispone de un asistente virtual automatizado basado en
+          inteligencia artificial (proveedor DeepSeek) que ofrece
+          orientación inicial sobre los servicios del despacho, ayuda a
+          identificar el área legal probable y facilita el contacto.
+        </p>
+        <LegalList
+          items={[
+            <><strong className="font-semibold text-primary">Naturaleza:</strong> es un sistema automatizado de IA. No es abogado, no emite dictámenes jurídicos, no promete resultados y no sustituye una consulta profesional personalizada.</>,
+            <><strong className="font-semibold text-primary">Datos tratados:</strong> el texto de los mensajes que el usuario decide escribir, su dirección IP (para prevención de abuso) y un identificador de sesión aleatorio almacenado en su navegador.</>,
+            <><strong className="font-semibold text-primary">Datos NO tratados:</strong> el asistente no exige datos sensibles. Si el usuario los aporta voluntariamente, se le advierte que pueden transmitirse al proveedor de IA y se le insta a minimizar la información sensible.</>,
+            <><strong className="font-semibold text-primary">Conservación:</strong> las conversaciones no se almacenan en el sitio. El historial vive únicamente en el navegador del usuario durante la sesión y se pierde al cerrar la página.</>,
+            <><strong className="font-semibold text-primary">Transmisión al proveedor:</strong> para generar la respuesta, el mensaje se envía a DeepSeek. El bufete no controla la retention policy del proveedor más allá de no almacenar los datos en sus propios sistemas.</>,
+            <><strong className="font-semibold text-primary">Derecho a no usar la IA:</strong> el usuario puede contactar directamente por WhatsApp, teléfono o correo sin interactuar con el asistente.</>,
+          ]}
+        />
+        <LegalCallout variant="info">
+          Recomendación: no comparta en el chat datos especialmente sensibles
+          (salud, credenciales, datos de menores) salvo que sean estrictamente
+          necesarios para que el despacho valore su caso. Para asuntos sensibles,
+          prefiera el contacto directo.
+        </LegalCallout>
+      </LegalSection>
+
+      <LegalSection number="7" title="Seguridad de la información">
         <p>
           El bufete aplica medidas técnicas y organizativas razonables para
           proteger los datos personales:
@@ -161,7 +187,7 @@ export default async function PoliticaPrivacidadPage() {
         />
       </LegalSection>
 
-      <LegalSection number="7" title="Derechos del titular de los datos">
+      <LegalSection number="8" title="Derechos del titular de los datos">
         <p>
           El usuario puede ejercer en cualquier momento los derechos
           previstos en la Constitución y en las leyes aplicables:
@@ -183,7 +209,7 @@ export default async function PoliticaPrivacidadPage() {
         </p>
       </LegalSection>
 
-      <LegalSection number="8" title="Menores de edad">
+      <LegalSection number="9" title="Menores de edad">
         <p>
           Este sitio no está dirigido a menores de 18 años. Si el bufete
           detecta que un menor ha facilitado datos personales sin la
@@ -194,7 +220,7 @@ export default async function PoliticaPrivacidadPage() {
         </p>
       </LegalSection>
 
-      <LegalSection number="9" title="Modificaciones de esta política">
+      <LegalSection number="10" title="Modificaciones de esta política">
         <p>
           El bufete podrá modificar la presente política para adaptarla a
           novedades legislativas o jurisprudenciales. Las modificaciones se

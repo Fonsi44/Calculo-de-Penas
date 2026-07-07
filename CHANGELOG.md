@@ -6,10 +6,104 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-06 — Evolución del chat a asistente de preconsulta legal
+
+Transformación del chat asistente de "orientador genérico" a **asistente de preconsulta legal**
+con capacidades estructuradas, manteniendo intactos todos los límites legales/YMYL.
+
+### `feat(chat): asistente de preconsulta — clasificador área, urgencia, resumen y WhatsApp`
+
+- **System prompt (`lib/chat/system-prompt.ts`)**: reescrito con 7 funcionalidades de preconsulta
+  (explicar servicios, clasificar área legal probable, detectar urgencia, preparar resumen de
+  preconsulta, generar mensaje para WhatsApp/correo, checklists documentales orientativos,
+  asistir al formulario). Transparencia IA obligatoria. Frases prohibidas explícitas ("usted
+  ganará", "tiene derecho seguro", "la pena será exactamente", "demande", "haga esto para
+  evitar responsabilidad"). Privacidad y minimización de datos antes de solicitar información.
+  Regla especial RAG intacta.
+- **Guardrails (`lib/chat/guardrails.ts`)**: añadida detección de urgencia server-side
+  (`detectUrgency`, 15 patrones: detención, audiencia, denuncia, violencia intrafamiliar,
+  menores, embargo, despido, vencimiento de plazo, citación, riesgo migratorio, amenaza,
+  urgente, prisión preventiva). No bloquea: marca `urgent: true` para que el widget resalte
+  CTAs de WhatsApp/teléfono. Refuerzo de prompt injection (+8 patrones: "finge ser", "modo god",
+  "sin restricciones", "sobreescribe tus reglas", "system prompt", etc.).
+- **API route (`app/api/chat/route.ts`)**: el flag `urgent` se propaga en la respuesta JSON
+  (guardrail, fallback y deepseek) para que el widget pueda reaccionar.
+- **Config (`lib/chat/config.ts`)**: mensaje inicial con triple aviso obligatorio (IA + no
+  asesoría + privacidad). Quick replies de preconsulta: "Preparar consulta", "Identificar área
+  legal", "Caso urgente", "Enviar WhatsApp", "Ir al formulario", "Soy hondureño en España".
+- **Módulo preconsulta (`lib/chat/preconsulta.ts`)** — NUEVO: clasificador heurístico de área
+  legal (`sugerirAreaLegal`, 12 áreas con keywords), checklists documentales orientativos
+  (`CHECKLISTS_DOCUMENTALES`, 11 áreas), generador de mensaje WhatsApp prudente
+  (`generarMensajeWhatsApp` con marcadores para datos faltantes).
+- **Widget (`components/chat/chat-widget.tsx`)**: quick reply buttons al inicio (ocultos tras el
+  primer mensaje), banner de urgencia con CTAs resaltados (ring + animate-pulse), detección
+  client-side de área legal para analytics, manejo del flag `urgent` del backend.
+
+### `feat(legal): política de privacidad documenta el chat/IA y proveedor DeepSeek`
+
+- **Política de Privacidad (`app/(public)/politica-privacidad/page.tsx`)**: añadida sección 6
+  "Asistente virtual de preconsulta (IA)" con naturaleza, datos tratados, datos no tratados,
+  conservación (no almacenamiento), transmisión al proveedor y derecho a no usar la IA.
+  Renumeradas secciones 7-10. DeepSeek añadido como encargado de tratamiento en sección 5.
+- **Versión política (`lib/legal-content.ts`)**: bumped 0.2 → 0.3, "Junio 2026" → "Julio 2026".
+
+### Tests
+- `tests/chat-guardrails.test.ts`: +3 suites nuevas (detectUrgency, preconsulta-sugerirAreaLegal,
+  preconsulta-generarMensajeWhatsApp, preconsulta-ChecklistsDocumentales). System prompt integrity
+  ampliado (frases prohibidas, privacidad, funcionalidades preconsulta). 27 tests total (antes 13).
+
+### Validaciones
+- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ (31.9s, 361 páginas) ·
+  `npm run test` ✅ (767 tests, 35 suites, +13 respecto al baseline).
+
+### Límites legales implementados
+- El chat informa que es IA en el mensaje inicial y en el system prompt.
+- No emite dictámenes, no promete resultados, no calcula probabilidades de éxito.
+- Frases prohibidas explícitas en system prompt y guardrails.
+- Detección de urgencia deriva inmediatamente a WhatsApp/teléfono.
+- Minimización de datos: aviso de privacidad antes de solicitar información.
+- No almacenamiento de conversaciones (historial solo en navegador del usuario).
+- Prompt injection reforzado (server-side + system prompt).
+- Política de privacidad documenta proveedor DeepSeek, finalidad, datos y no-retención.
+
+### Riesgos restantes
+- **Revisión legal humana recomendada** para confirmar que la sección 6 de la política de
+  privacidad cumple con el ordenamiento hondureño y, si aplica, RGPD/LOPDGDD (tráfico España 41,8%).
+- **Retention policy de DeepSeek**: el bufete no controla cuánto retiene DeepSeek los mensajes
+  enviados; se documenta pero no se puede garantizar desde el código.
+- **Datos sensibles voluntarios**: el sistema aconseja no compartirlos, pero no los bloquea
+  técnicamente si el usuario los escribe (solo se advierte en política y system prompt).
+
+---
+
 ## [Unreleased] - 2026-07-06 — Implementación Fase 1 auditoría SEO/GEO (tareas A-01 a A-04)
 
 Ejecución de las 4 tareas de prioridad ALTA del `SEO_GEO_ACTION_PLAN.md`, generadas
 por la auditoría integral SEO/GEO/YMYL (`AUDITORIA_SEO_GEO_LEGAL_PINEDA.md`).
+
+### Verificación post-deploy en producción (2026-07-06)
+
+Confirmación de que los cambios de Fase 1 están vivos en producción, sin regresiones.
+
+- **Deploy verificado en producción:** enlace al Poder Judicial de Honduras
+  (`https://www.poderjudicial.gob.hn/`) confirmado en `/despacho` (265.767 bytes) y
+  en el footer de la home (249.519 bytes). `rel="noopener noreferrer"`, sin `nofollow`,
+  texto prudente ("referencia institucional del sistema judicial hondureño").
+- **Canonical coherente:** canonical = og:url = URL servida =
+  `https://www.pinedayasociadoshn.com` (sin slash, normalización Next.js). Title 59 chars,
+  1 `<h1>`, sin trailingSlash global.
+- **Sitemap/robots:** ambos HTTP 200; sitemap 213 URLs (sin cambios); robots referencia
+  sitemap correctamente.
+- **Slug A-04 corregido:** 0 referencias al slug erróneo `derecho-ambiental-regulatorio`
+  en el repo; URL correcta `/servicios-juridicos/ambiental-regulatorio` sirve 200.
+- **Integridad confirmada:** JSON-LD, blog, RGPD/cookies, next.config.ts, proxy.ts,
+  sameAs y CWV intactos (sin cambios en git diff).
+- **A-01 sigue pendiente:** cadena apex 308→308 confirmada en vivo (2 saltos). Requiere
+  configuración manual en Vercel → Domains → apex como redirect 301 a www.
+- **Validaciones locales:** `lint` ✅, `tsc --noEmit` ✅, `build` ✅ (28.0s, 361 páginas),
+  `seo:doctor` ✅ (18 OK), `test` ✅ (754 tests, 35 suites).
+- **Progreso:** 92 % completado / 8 % restante (sin cambios: A-01 Vercel + A-04 detalle
+  externo Bing/Screaming Frog). A-02, A-03 completadas y validadas en producción.
 
 ### Cierre técnico post-implementación (2026-07-06)
 

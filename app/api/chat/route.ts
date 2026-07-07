@@ -75,6 +75,7 @@ export async function POST(request: Request) {
     return Response.json({
       reply: guardrail.reply,
       source: 'guardrail',
+      urgent: guardrail.urgent === true,
     });
   }
 
@@ -83,6 +84,7 @@ export async function POST(request: Request) {
     return Response.json({
       reply: chatConfig.fallbackReply,
       source: 'fallback_no_config',
+      urgent: guardrail.urgent,
     });
   }
 
@@ -118,6 +120,9 @@ export async function POST(request: Request) {
   return Response.json({
     reply,
     source: 'deepseek',
+    // Detección de urgencia server-side: si el mensaje del usuario coincide
+    // con patrones de urgencia, se marca para que el widget resalte CTAs.
+    urgent: guardrail.urgent,
   });
 }
 
