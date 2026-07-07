@@ -123,6 +123,7 @@ Nunca compartir tokens ni secretos en chats o logs.
 | SEO Live | `seo:doctor`, `seo:collect`, `seo:gsc:live`, `seo:ga4:live`, `seo:bing:live` |
 | DB | `db:check`, `seed:*` |
 | Visual | `visual:check`, `visual:update` |
+| Assets/Deploy | `verify:chunks` (valida chunks referenciados vs `.next/static/chunks/`) |
 
 ---
 
@@ -161,6 +162,43 @@ npm run test
 npm run build
 npm run seo:doctor
 ```
+
+---
+
+## Consistencia de deploy y assets Next.js
+
+Cada `next build` genera un `.next/BUILD_ID` nuevo y chunks `/_next/static/*`
+con hash distinto. Un deploy inconsistente (HTML de un build + assets de otro,
+o assets no desplegados) produce 404 en chunks JS referenciados desde el HTML,
+rompiendo la página ("page has broken JavaScript" en auditorías SEO). Para
+evitarlo, el `postbuild` ejecuta dos salvaguardas:
+
+1. **`scripts/bump-sw-cache.mjs`** — inyecta el `BUILD_ID` de Next.js en la
+   versión de caché del service worker (`public/sw.js`). Cada deploy activa
+   `install → skipWaiting → activate` y **purga la caché del SW de builds
+   anteriores**, evitando que siga sirviendo chunks obsoletos. El repo
+   mantiene el placeholder `__BUILD_ID__`; el valor real solo vive en el
+   artefacto de build desplegado.
+2. **`scripts/verify-chunks.mjs`** — verifica que todos los chunks
+   referenciados en `build-manifest.json` y `app-build-manifest.json` existan
+   físicamente en `.next/static/chunks/`. Falla el build si hay chunks 404.
+
+Validación manual de chunks contra el dominio en producción:
+
+```bash
+# Validar consistencia local tras el build
+npm run verify:chunks
+
+# Validar que ningún chunk referenciado en producción devuelva 404
+curl -s https://www.pinedayasociadoshn.com/ | tr '"' '\n' \
+  | grep -o '_next/static/chunks/[a-zA-Z0-9_.-]*\.js' | sort -u \
+  | while read c; do code=$(curl -s -o /dev/null -w '%{http_code}' \
+      "https://www.pinedayasociadoshn.com/$c"); echo "$code $c"; done
+```
+
+El service worker (`public/sw.js`) además **purga entradas cacheadas** cuya
+revalidación devuelve 404, limpiando proactivamente chunks huérfanos aunque el
+`activate` no se dispare entre deploys.
 
 ---
 

@@ -11,7 +11,16 @@
  * impide filtraciones de la intranet a través del service worker.
  */
 
-const CACHE = 'pineda-pwa-v1';
+// CACHE se versiona por build (postbuild inyecta el BUILD_ID de Next.js vía
+// scripts/bump-sw-cache.mjs). Esto fuerza `install→activate` en cada deploy y
+// purga los chunks `/_next/*` de builds anteriores: sin esto, el SW sirvió
+// chunks obsoletos (stale-while-revalidate) cuyo HTML referenciaba assets que
+// ya no existían en el servidor → 404 "page has broken JavaScript".
+// El placeholder `__BUILD_ID__` se reemplaza en CI; si no (dev), se usa un
+// valor por defecto para que el SW nunca quede con una versión congelada.
+const CACHE = 'pineda-pwa-' + ('__BUILD_ID__' === '__BUILD_ID__'
+  ? 'dev'
+  : '__BUILD_ID__');
 const PRECACHE = ['/', '/manifest.json'];
 
 // Rutas PRIVADAS (R6): el SW no debe tocarlas. Coincidencia exacta o prefijo
@@ -109,16 +118,20 @@ self.addEventListener('fetch', (event) => {
       (async () => {
         const cache = await caches.open(CACHE);
         const cached = await cache.match(req);
-        // Revalidar en background (sin bloquear la respuesta).
+        // Revalidar en background (sin bloquear la respuesta). Si la red
+        // responde 404 (chunk de build anterior ya no desplegado), se purga
+        // la entrada cacheada para no seguir sirviendo un asset huérfano.
         fetch(req)
           .then((res) => {
             if (res && res.status === 200 && res.type === 'basic') {
               cache.put(req, res.clone());
+            } else if (res && res.status === 404 && cached) {
+              cache.delete(req).catch(() => {});
             }
           })
           .catch(() => {});
         if (cached) return cached;
-        // Sin cache: ir a red (foreground) y cachear.
+        // Sin cache: ir a red (foreground) y cachear solo si es 200.
         try {
           const res = await fetch(req);
           if (res && res.status === 200 && res.type === 'basic') {

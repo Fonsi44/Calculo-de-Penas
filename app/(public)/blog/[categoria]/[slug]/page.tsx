@@ -248,19 +248,45 @@ export async function generateStaticParams() {
   return posts.map((p) => ({ categoria: p.category, slug: p.slug }));
 }
 
+/**
+ * Sufijos de marca que el pipeline editorial (scripts/blog-verify-fix.ts) puede
+ * dejar al final del `metaTitle`/`title`. Si no se normalizan, el template del
+ * layout raíz (`%s | Pineda y Asociados`) duplica la marca y aparece
+ * "... | Pineda y Asociados | Pineda y Asociados" en SERP.
+ *
+ * Se eliminan aquí (no en la DB) para que la marca quede añadida una sola vez
+ * vía `title: { absolute }`, consistente con el resto del blog.
+ */
+const BRAND_SUFFIX = /\s*[\|\-–—]\s*Pineda y Asociados\s*$/i;
+const BRAND_TAIL = /\s+Pineda y Asociados\s*$/i;
+
+function stripDuplicateBrand(raw: string): string {
+  let t = raw.replace(/\s*\.\.\.$/g, '').trim();
+  // Hasta dos pasadas: cubre "... | Pineda y Asociados | Pineda y Asociados".
+  for (let i = 0; i < 2; i++) {
+    const prev = t;
+    t = t.replace(BRAND_SUFFIX, '').replace(BRAND_TAIL, '').trim();
+    if (t === prev) break;
+  }
+  return t;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categoria, slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post || post.category !== categoria) return {};
 
-  const metaTitle = (post.metaTitle || post.title).replace(/\s*\.\.\.$/g, '').trim();
+  // `absolute` evita que el template del layout raíz vuelva a añadir la marca.
+  // stripDuplicateBrand garantiza que la marca no venga ya dentro del metaTitle.
+  const baseTitle = stripDuplicateBrand(post.metaTitle || post.title);
+  const metaTitle = `${baseTitle} | ${site.name}`;
   const metaDesc = post.metaDescription || post.description;
   const ogImg = post.ogImage || post.coverImage || '/og-image.webp';
   const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
   const noindex = post.noindex === true;
 
   return {
-    title: metaTitle,
+    title: { absolute: metaTitle },
     description: metaDesc,
     alternates: { canonical },
     keywords: post.tags,

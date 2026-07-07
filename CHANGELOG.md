@@ -6,6 +6,64 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-07 — Fix "page has broken JavaScript" y títulos duplicados
+
+Corrección de la auditoría SEO que reportaba `/_next/static/chunks/403tsh8uvet9c.js`
+devolviendo 404 desde HTML servido, provocando el error "page has broken JavaScript"
+en todas las páginas de `www.pinedayasociadoshn.com`. Junto a la corrección de
+títulos de blog con la marca "Pineda y Asociados" duplicada.
+
+### `fix(seo): consistencia de assets Next.js y purga de caché SW por build`
+
+- **Causa raíz**: el deploy vigente ya no referenciaba el chunk roto (verificado
+  con `curl` sobre Home, `/despacho`, `/servicios-juridicos`, `/derecho-penal`,
+  `/blog` y posts — 0 referencias al chunk `403tsh8uvet9c.js`). El 404 venía de
+  HTML/Assets inconsistentes entre builds, agravado por un service worker con
+  `CACHE = 'pineda-pwa-v1'` fijo entre deploys: el `activate` nunca purgaba la
+  caché anterior y el SW seguía sirviendo chunks obsoletos (stale-while-revalidate)
+  cuyo HTML referenciaba assets que ya no existían en el servidor.
+- **`public/sw.js`**: la versión de caché ahora se versiona por build vía el
+  placeholder `__BUILD_ID__`, inyectado en CI por `scripts/bump-sw-cache.mjs`.
+  Cada deploy activa `install → skipWaiting → activate` y purga las cachés de
+  builds anteriores. El handler de assets además purga entradas cacheadas cuya
+  revalidación devuelve 404 (chunk huérfano).
+- **`scripts/bump-sw-cache.mjs`** (nuevo): lee `.next/BUILD_ID` y reescribe la
+  línea `const CACHE = ...` de `public/sw.js`. Idempotente: restaura el
+  placeholder antes de reinyectar. El repo mantiene el placeholder; el valor
+  real solo vive en el artefacto de build desplegado.
+- **`scripts/verify-chunks.mjs`** (nuevo): valida tras `next build` que todos
+  los chunks referenciados en `build-manifest.json` y `app-build-manifest.json`
+  existan físicamente en `.next/static/chunks/`. Sale con código 1 si hay
+  chunks 404, previniendo deploys inconsistentes.
+- **`package.json`**: `postbuild` ahora ejecuta `bump-sw-cache` +
+  `verify-chunks` antes de `generate-llms-txt` y `submit-indexnow`. Añadido
+  script `verify:chunks` para validación manual.
+
+### `fix(seo): títulos de blog sin marca "Pineda y Asociados" duplicada`
+
+- **Causa raíz**: `scripts/blog-verify-fix.ts` instruye a la IA a añadir
+  ` | Pineda y Asociados` al final del `metaTitle`. Pero el layout raíz
+  (`app/(public)/layout.tsx`) define `template: '%s | Pineda y Asociados'`, que
+  vuelve a añadir la marca → `"Título | Pineda y Asociados | Pineda y Asociados"`.
+- **`app/(public)/blog/[categoria]/[slug]/page.tsx`**: el `generateMetadata` del
+  post ahora usa `title: { absolute: ... }` (sin template) y `stripDuplicateBrand()`
+  elimina cualquier sufijo de marca (`| Pineda y Asociados`, `- Pineda y Asociados`,
+  `Pineda y Asociados` colgante) que el `metaTitle` traiga de la DB, aplicando la
+  marca una sola vez. Coherente con el resto de páginas slug del blog que ya usan
+  `title: { absolute }`.
+
+### Validación
+
+- `npm run lint` ✓ · `npx tsc --noEmit` ✓ · `npm test` ✓ (789/789, 36 archivos)
+  · `npm run build` ✓ (postbuild: `bump-sw-cache` + `verify-chunks` OK, 7 chunks
+  referenciados, 0 faltantes).
+- `curl` sobre Home, `/despacho`, `/servicios-juridicos`, `/derecho-penal`,
+  `/blog`, un post de blog, `/derecho-penal/proceso-penal-completo` y
+  `/preguntas-frecuentes`: todos los chunks JS referenciados devuelven 200.
+  El chunk `403tsh8uvet9c.js` ya no se referencia en ninguna página.
+
+---
+
 ## [Unreleased] - 2026-07-07 — Refuerzo de Veracidad E-E-A-T y SEO/GEO
 
 Implementación técnica para soportar entidades profesionales verificables sin inventar datos, cumpliendo los requisitos YMYL para sitios jurídicos.
