@@ -334,6 +334,13 @@ export default async function DespachoPage() {
                 </p>
               </div>
             </div>
+            {(FOUNDER_PROFILE.cah || FOUNDER_PROFILE.linkedin || FOUNDER_PROFILE.directorio) && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {FOUNDER_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {FOUNDER_PROFILE.cah}</span>}
+                {FOUNDER_PROFILE.linkedin && <a href={FOUNDER_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {FOUNDER_PROFILE.directorio && <a href={FOUNDER_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+              </div>
+            )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
               Abogado responsable del bufete. Más de 15 años de ejercicio profesional.
               Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio
@@ -377,6 +384,13 @@ export default async function DespachoPage() {
                 </p>
               </div>
             </div>
+            {(THANIA_PROFILE.cah || THANIA_PROFILE.linkedin || THANIA_PROFILE.directorio) && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {THANIA_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {THANIA_PROFILE.cah}</span>}
+                {THANIA_PROFILE.linkedin && <a href={THANIA_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {THANIA_PROFILE.directorio && <a href={THANIA_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+              </div>
+            )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
               Abogada socia fundadora del bufete. Especializada en derecho
               administrativo, familia, civil y notarial, y mercantil y empresarial.
@@ -418,6 +432,13 @@ export default async function DespachoPage() {
                 </p>
               </div>
             </div>
+            {(EMIL_PROFILE.cah || EMIL_PROFILE.linkedin || EMIL_PROFILE.directorio) && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {EMIL_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {EMIL_PROFILE.cah}</span>}
+                {EMIL_PROFILE.linkedin && <a href={EMIL_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {EMIL_PROFILE.directorio && <a href={EMIL_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+              </div>
+            )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
               Abogado socio del bufete. Especializado en derecho laboral, civil y
               notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.

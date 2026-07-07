@@ -132,8 +132,25 @@ export const site = {
 
 export type SiteConfig = typeof site;
 
+/** Valida si una cadena es una URL absoluta válida. */
+export function isValidUrl(url: string | null | undefined): url is string {
+  if (!url) return false;
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Filtra un array para quedarse solo con URLs válidas reales (evita nulos y placeholders). */
+export function validUrlsOnly(urls: (string | null | undefined)[]): string[] {
+  return urls.filter(isValidUrl);
+}
+
 /** URL absoluta de un path interno. */
 export function absoluteUrl(path: string): string {
+
   const clean = path.startsWith('/') ? path : `/${path}`;
   return `${site.url}${clean}`;
 }
@@ -277,9 +294,17 @@ export function legalServiceSchema() {
       { '@id': `${site.url}/#thania` },
       { '@id': `${site.url}/#emil` },
     ],
-    ...(site.social.facebook || site.social.instagram || site.social.linkedin || site.social.youtube || site.social.tiktok || site.social.x || site.googleBusiness
+    ...(validUrlsOnly([
+      site.social.facebook,
+      site.social.instagram,
+      site.social.linkedin,
+      site.social.youtube,
+      site.social.tiktok,
+      site.social.x,
+      site.googleBusiness,
+    ]).length > 0
       ? {
-          sameAs: [
+          sameAs: validUrlsOnly([
             site.social.facebook,
             site.social.instagram,
             site.social.linkedin,
@@ -287,7 +312,7 @@ export function legalServiceSchema() {
             site.social.tiktok,
             site.social.x,
             site.googleBusiness,
-          ].filter(Boolean),
+          ]),
         }
       : {}),
   };
@@ -347,7 +372,14 @@ export function organizationSchema() {
     // Refuerza E-E-A-T y permite a Google/Microsoft/Knowledge Graph enlazar
     // identidades. Solo URLs reales (Facebook, X, GBP). El propio dominio NO
     // es un perfil externo y por eso no aparece aquí.
-    sameAs: [site.social.facebook, site.social.x, site.googleBusiness].filter(Boolean) as string[],
+    sameAs: validUrlsOnly([
+      site.social.facebook,
+      site.social.instagram,
+      site.social.linkedin,
+      site.social.youtube,
+      site.social.x,
+      site.googleBusiness
+    ]),
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -411,6 +443,9 @@ export const FOUNDER_PROFILE = {
     'Abogado penalista en el sur de Honduras con más de 15 años de ejercicio profesional. Colegiado en Honduras. Defensa penal como pilar histórico del bufete: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
   city: 'Nacaome',
   department: 'Valle',
+  cah: process.env.NEXT_PUBLIC_CAH_DANILO || null,
+  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_DANILO || null,
+  directorio: process.env.NEXT_PUBLIC_DIRECTORIO_DANILO || null,
 } as const;
 
 /**
@@ -436,11 +471,15 @@ export function founderSchema() {
     jobTitle: FOUNDER_PROFILE.jobTitle,
     description: FOUNDER_PROFILE.description,
     worksFor: { '@id': `${site.url}/#organization` },
-    hasCredential: {
-      '@type': 'EducationalOccupationalCredential',
-      credentialCategory: 'license',
-      name: 'Abogado colegiado en Honduras',
-    },
+    ...(FOUNDER_PROFILE.cah
+      ? {
+          hasCredential: {
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'license',
+            name: `Abogado colegiado en Honduras (CAH: ${FOUNDER_PROFILE.cah})`,
+          },
+        }
+      : {}),
     alumniOf: {
       '@type': 'CollegeOrUniversity',
       name: 'Universidad de Honduras',
@@ -479,9 +518,9 @@ export function founderSchema() {
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
     // es claramente personal (Danilo_Pineda_M). Se añade googleBusiness
     // (perfil del bufete en Google Maps que lo representa como abogado).
-    // NO se inventan perfiles (R4). Cuando se verifique Facebook/LinkedIn
-    // personal, añadirlos aquí vía site.social.*.
-    sameAs: [site.social.x, site.googleBusiness].filter(Boolean),
+    // NO se inventan perfiles (R4). Cuando se verifique LinkedIn
+    // personal, añadirlo vía variables de entorno.
+    sameAs: validUrlsOnly([site.social.x, site.googleBusiness, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
   };
 }
 
@@ -510,6 +549,9 @@ export const THANIA_PROFILE = {
   ],
   city: 'Nacaome',
   department: 'Valle',
+  cah: process.env.NEXT_PUBLIC_CAH_THANIA || null,
+  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_THANIA || null,
+  directorio: process.env.NEXT_PUBLIC_DIRECTORIO_THANIA || null,
 } as const;
 
 /**
@@ -532,11 +574,15 @@ export function thaniaSchema() {
     jobTitle: THANIA_PROFILE.jobTitle,
     description: THANIA_PROFILE.description,
     worksFor: { '@id': `${site.url}/#organization` },
-    hasCredential: {
-      '@type': 'EducationalOccupationalCredential',
-      credentialCategory: 'license',
-      name: 'Abogada colegiada en Honduras',
-    },
+    ...(THANIA_PROFILE.cah
+      ? {
+          hasCredential: {
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'license',
+            name: `Abogada colegiada en Honduras (CAH: ${THANIA_PROFILE.cah})`,
+          },
+        }
+      : {}),
     knowsAbout: THANIA_PROFILE.specialties,
     address: {
       '@type': 'PostalAddress',
@@ -560,6 +606,9 @@ export function thaniaSchema() {
       { '@type': 'City', name: 'Amapala' },
       { '@type': 'AdministrativeArea', name: site.address.department },
     ],
+    ...(validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]).length > 0
+      ? { sameAs: validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]) }
+      : {}),
   };
 }
 
@@ -586,6 +635,9 @@ export const EMIL_PROFILE = {
   ],
   city: 'Nacaome',
   department: 'Valle',
+  cah: process.env.NEXT_PUBLIC_CAH_EMIL || null,
+  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_EMIL || null,
+  directorio: process.env.NEXT_PUBLIC_DIRECTORIO_EMIL || null,
 } as const;
 
 /**
@@ -607,11 +659,15 @@ export function emilSchema() {
     jobTitle: EMIL_PROFILE.jobTitle,
     description: EMIL_PROFILE.description,
     worksFor: { '@id': `${site.url}/#organization` },
-    hasCredential: {
-      '@type': 'EducationalOccupationalCredential',
-      credentialCategory: 'license',
-      name: 'Abogado colegiado en Honduras',
-    },
+    ...(EMIL_PROFILE.cah
+      ? {
+          hasCredential: {
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'license',
+            name: `Abogado colegiado en Honduras (CAH: ${EMIL_PROFILE.cah})`,
+          },
+        }
+      : {}),
     knowsAbout: EMIL_PROFILE.specialties,
     address: {
       '@type': 'PostalAddress',
@@ -635,5 +691,8 @@ export function emilSchema() {
       { '@type': 'City', name: 'Amapala' },
       { '@type': 'AdministrativeArea', name: site.address.department },
     ],
+    ...(validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]).length > 0
+      ? { sameAs: validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
+      : {}),
   };
 }

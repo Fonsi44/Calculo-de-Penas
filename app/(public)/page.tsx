@@ -14,7 +14,7 @@ import {
   Award,
   BriefcaseBusiness,
 } from 'lucide-react';
-import { site, telHref } from '@/lib/site';
+import { site, FOUNDER_PROFILE, telHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -252,6 +252,12 @@ export default async function HomePage() {
                       <p className="text-xs text-text-inverse/70 mt-0.5 tabular-nums">{site.hours}</p>
                     </div>
                   </div>
+                  {FOUNDER_PROFILE.cah && (
+                    <div className="flex items-center gap-2 pt-0.5">
+                      <Award size={13} className="text-accent flex-shrink-0" />
+                      <p className="text-xs text-text-inverse/80 font-medium">Abogado colegiado (CAH: {FOUNDER_PROFILE.cah})</p>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2 pt-0.5">
                     <CheckCircle2 size={13} className="text-accent flex-shrink-0" />
                     <p className="text-xs text-text-inverse/80">Consulta inicial sin costo · Presupuesto por escrito</p>

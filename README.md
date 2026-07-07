@@ -262,6 +262,15 @@ de Google). **`@graph` central** en el layout público unifica las entidades.
 | `NEXT_PUBLIC_GOOGLE_VERIFICATION` / `NEXT_PUBLIC_BING_VERIFICATION` | Verificación de Search Console / Bing WMT. |
 | `NEXT_PUBLIC_NOINDEX` | `true` = noindex global (staging). |
 
+### Verificación E-E-A-T / YMYL
+Para cumplir con los estándares de calidad de Google (E-E-A-T) y levantar bloqueos en sitios legales (YMYL), es **imprescindible** completar la huella digital externa de los abogados. Esto se logra rellenando las variables de entorno correspondientes en `.env.local`:
+- **Colegiación oficial**: `NEXT_PUBLIC_CAH_DANILO`, `NEXT_PUBLIC_CAH_THANIA`, `NEXT_PUBLIC_CAH_EMIL` (Ej: 12345). Habilita el badge visual y la propiedad `hasCredential` en JSON-LD.
+- **LinkedIn profesional**: `NEXT_PUBLIC_LINKEDIN_DANILO` (etc.). Valida la experiencia (LinkedIn se añade al `sameAs` de JSON-LD).
+- **Directorios jurídicos**: `NEXT_PUBLIC_DIRECTORIO_DANILO` (etc.). Enlaces a perfiles en directorios legales oficiales o verificados.
+- **Redes del bufete**: Rellenar `NEXT_PUBLIC_SOCIAL_*` para validar la entidad corporativa (`Organization`).
+
+> **Importante**: No inventar credenciales ni colocar URLs falsas, ya que esto penaliza severamente el E-E-A-T.
+
 ### Consentimiento y privacidad
 - **Google Consent Mode v2** activo por defecto: cookies denegadas hasta
   consentimiento explícito. Las mediciones sin cookies siguen funcionando.

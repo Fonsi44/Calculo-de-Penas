@@ -6,6 +6,31 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-07 — Refuerzo de Veracidad E-E-A-T y SEO/GEO
+
+Implementación técnica para soportar entidades profesionales verificables sin inventar datos, cumpliendo los requisitos YMYL para sitios jurídicos.
+
+### `feat(seo): soporte completo para entidades profesionales verificables (E-E-A-T)`
+
+- **`lib/site.ts`**: añadida compatibilidad con variables de entorno para colegiación (CAH), LinkedIn y directorios de los tres abogados (`NEXT_PUBLIC_CAH_*`, `NEXT_PUBLIC_LINKEDIN_*`, `NEXT_PUBLIC_DIRECTORIO_*`).
+- **Schema.org**: `hasCredential` condicionado a la existencia de CAH real. `sameAs` filtrado rigurosamente mediante el nuevo helper `validUrlsOnly` para evitar emitir URLs vacías o placeholders.
+- **`.env.example`**: documentadas las nuevas variables con advertencia estricta de no inventar credenciales.
+
+### `feat(ui): microcopy condicional de confianza E-E-A-T`
+
+- **`app/(public)/page.tsx`**: panel informativo del Hero ahora muestra el distintivo "Colegiación CAH Verificada" solo si existen datos configurados.
+- **`app/(public)/despacho/page.tsx`**: tarjetas del equipo actualizadas para renderizar condicionalmente los distintivos de CAH, LinkedIn y directorios jurídicos.
+
+### `feat(geo): archivo llms.txt para motores de IA`
+
+- **`scripts/generate-llms-txt.mjs`**: añadido bloque obligatorio de "Disclaimers Legales y Limitaciones" para clarificar que el contenido no es asesoría y que las herramientas son orientativas.
+- **`public/llms.txt`**: regenerado automáticamente con los nuevos disclaimers.
+
+### `docs`: Actualización de documentación de verificación E-E-A-T
+- **`README.md`**: nueva sección explicando cómo completar la autoridad externa para levantar el bloqueo suave YMYL.
+
+---
+
 ## [Unreleased] - 2026-07-07 — Eliminación completa de DeepSeek del chat público
 
 El chat público ya no depende, no menciona, no llama ni requiere DeepSeek en
