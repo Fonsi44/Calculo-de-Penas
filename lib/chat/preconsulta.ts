@@ -51,7 +51,7 @@ const AREA_KEYWORDS: Array<{ area: AreaLegal; palabras: string[] }> = [
   },
   {
     area: 'laboral',
-    palabras: ['despido', 'despidieron', 'prestaciones', 'liquidación', 'liquidacion', 'salario', 'sueldo', 'acoso laboral', 'mobbing', 'contrato de trabajo', 'jornada', 'horas extra', 'vacaciones', 'reinvidicación laboral', 'sindicato'],
+    palabras: ['derecho laboral', 'laboral', 'despido', 'despidieron', 'prestaciones', 'liquidación', 'liquidacion', 'salario', 'sueldo', 'acoso laboral', 'mobbing', 'contrato de trabajo', 'jornada', 'horas extra', 'vacaciones', 'reinvidicación laboral', 'sindicato'],
   },
   {
     area: 'civil',

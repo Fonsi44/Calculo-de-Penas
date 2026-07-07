@@ -23,7 +23,7 @@ const DEFAULTS: Record<string, LegalPageData> = {
   'politica-privacidad': {
     title: 'Política de Privacidad',
     subtitle: 'Compromiso con la protección de sus datos personales conforme a la Ley de Protección de Datos de Honduras.',
-    version: '0.3',
+    version: '0.5',
     lastUpdated: 'Julio 2026',
   },
   'politica-cookies': {

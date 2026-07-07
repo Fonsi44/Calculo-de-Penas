@@ -2,22 +2,14 @@
  * Configuración centralizada del chat asistente público.
  *
  * Toda la configuración del widget y del endpoint `/api/chat` vive aquí.
- * Esto permite activar/desactivar, ajustar límites y cambiar el proveedor
- * sin tocar componentes ni rutas.
+ * Esto permite activar/desactivar y ajustar límites sin tocar componentes ni rutas.
+ *
+ * El chat funciona exclusivamente con un motor de reglas local: NO usa ningún
+ * proveedor de LLM externo (DeepSeek, OpenAI, etc.) y los mensajes del usuario
+ * no se transmiten a terceros. No se requiere ninguna API key de IA.
  *
  * Variables de entorno (todas en `.env.local`, NUNCA en el cliente):
  *   CHAT_ENABLED                "false" desactiva el widget en producción
- *   DEEPSEEK_API_KEY            API key del proveedor (solo servidor)
- *   DEEPSEEK_MODEL              Identificador del modelo. Por defecto
- *                               "deepseek-v4-flash" (requerimiento del
- *                               proyecto). Si el proveedor usa otro
- *                               identificador oficial (p. ej. deepseek-chat),
- *                               basta con cambiar esta variable, sin tocar
- *                               código. Documentado en README.md § Chat.
- *   DEEPSEEK_BASE_URL           Base URL de la API (default: api.deepseek.com/v1)
- *   CHAT_TEMPERATURE            Temperatura (default 0.3 — baja, sobria)
- *   CHAT_MAX_TOKENS             Máximo tokens de respuesta (default 400)
- *   CHAT_TIMEOUT_MS             Timeout de la llamada al proveedor (default 20000)
  *   CHAT_MAX_MESSAGE_LENGTH     Longitud máxima de mensaje del usuario (default 600)
  *   CHAT_RATE_LIMIT_PER_IP      Máx mensajes por ventana por IP (default 12)
  *   CHAT_RATE_LIMIT_PER_SESSION Máx mensajes por ventana por sessionId (default 12)
@@ -44,24 +36,6 @@ export const chatConfig = {
   /** Activa/desactiva el widget globalmente sin cambiar código. */
   enabled: boolEnv('CHAT_ENABLED', true),
 
-  deepseek: {
-    apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-    /**
-     * "deepseek-v4-flash" es el identificador requerido por el proyecto.
-     * Es modificable por env porque los identificadores oficiales de la API
-     * pueden cambiar; si el proveedor devuelve error de modelo, el endpoint
-     * entra en modo fallback seguro (ver app/api/chat/route.ts).
-     */
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-v4-flash',
-    baseUrl: (process.env.DEEPSEEK_BASE_URL ?? 'https://api.deepseek.com/v1').replace(/\/+$/, ''),
-  },
-
-  generation: {
-    temperature: numEnv('CHAT_TEMPERATURE', 0.3),
-    maxTokens: numEnv('CHAT_MAX_TOKENS', 400),
-    timeoutMs: numEnv('CHAT_TIMEOUT_MS', 20_000),
-  },
-
   limits: {
     maxMessageLength: numEnv('CHAT_MAX_MESSAGE_LENGTH', 600),
     rateLimitPerIp: numEnv('CHAT_RATE_LIMIT_PER_IP', 12),
@@ -72,9 +46,9 @@ export const chatConfig = {
   /** Identidad del asistente mostrada en el widget (client). */
   assistant: {
     name: 'Asistente virtual',
-    // Mensaje inicial con triple aviso obligatorio: IA + no asesoría + privacidad.
+    // Mensaje inicial con triple aviso obligatorio: sistema automatizado + no asesoría + privacidad.
     initialMessage:
-      'Hola, soy el asistente virtual (IA) de Pineda y Asociados. Le ayudo a identificar el área legal de su consulta, preparar un resumen inicial y contactar con el despacho. No soy abogado y esto no sustituye una consulta jurídica personalizada. Los datos que comparta se usan solo para gestionar su consulta; puede ver nuestra política de privacidad en el pie de página. ¿En qué podemos ayudarle?',
+      'Hola, soy el asistente virtual de Pineda y Asociados. Le ayudo a identificar el área legal de su consulta, preparar un resumen inicial y contactar con el despacho. Soy un sistema automatizado (no abogado) y esto no sustituye una consulta jurídica personalizada. Sus mensajes se procesan localmente y no se envían a proveedores externos de IA; puede ver nuestra política de privacidad en el pie de página. ¿En qué podemos ayudarle?',
     quickReplies: [
       'Preparar consulta',
       'Identificar área legal',
@@ -84,13 +58,13 @@ export const chatConfig = {
       'Soy hondureño en España',
     ],
     disclaimer:
-      'Asistente de IA. Orientación inicial, no asesoría jurídica. No sustituye una consulta profesional.',
+      'Asistente automatizado. Orientación inicial, no asesoría jurídica. No sustituye una consulta profesional.',
   },
 
-  /** Respuesta de fallback cuando no hay IA o el proveedor falla.
+  /** Respuesta de fallback cuando ocurre un error inesperado.
    *  Nunca revela configuración interna; solo ofrece canales oficiales. */
   fallbackReply:
-    'En este momento no puedo generar una respuesta automática. Le recomiendo contactar directamente con el despacho por WhatsApp o teléfono para recibir atención personalizada.',
+    'En este momento no puedo procesar su mensaje. Le recomiendo contactar directamente con el despacho por WhatsApp o teléfono para recibir atención personalizada.',
 } as const;
 
 export type ChatConfig = typeof chatConfig;

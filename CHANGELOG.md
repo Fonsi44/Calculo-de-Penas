@@ -6,6 +6,153 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-07 — Eliminación completa de DeepSeek del chat público
+
+El chat público ya no depende, no menciona, no llama ni requiere DeepSeek en
+ningún escenario. Funciona exclusivamente con el motor de reglas local. Las
+API keys de DeepSeek han sido borradas y el chat sigue operativo sin ellas.
+
+### `refactor(chat)!: eliminación completa de DeepSeek del chat público`
+
+- **`app/api/chat/route.ts`**: eliminada toda la lógica dual. El endpoint ahora
+  es mono-flujo: rate-limit → Zod → guardrails → motor de reglas local. Sin
+  bifurcación DeepSeek, sin imports de `deepseek.ts`, sin `CHAT_PROVIDER`.
+- **`lib/chat/deepseek.ts`**: **ELIMINADO** (cliente DeepSeek del chat).
+- **`lib/chat/system-prompt.ts`**: **ELIMINADO** (system prompt para LLM).
+- **`lib/chat/knowledge-base.ts`**: eliminadas `buildKnowledgeBase()` y
+  `buildRAGContext()` (funciones para inyectar contexto al LLM). Se conservan
+  `PUBLIC_LINKS_ALLOWLIST` e `isAllowedPublicLink()` (utilidades de validación).
+- **`lib/chat/config.ts`**: eliminados `CHAT_PROVIDER`, `config.deepseek`,
+  `DEEPSEEK_*`, `generation` (temperature/maxTokens/timeout). El chat no
+  requiere ninguna API key de IA.
+- **`lib/chat/rules-engine.ts`**: único motor de respuestas. Sin cambios
+  funcionales (solo comentario documental).
+
+### `feat(legal): política de privacidad sin DeepSeek en el chat`
+
+- **`app/(public)/politica-privacidad/page.tsx`**: sección 6 reescrita.
+  "Sistema automatizado basado en reglas locales" (no IA generativa).
+  "Los mensajes no se envían a ningún proveedor externo de IA". DeepSeek
+  eliminado de la lista de encargados de tratamiento.
+- **`lib/legal-content.ts`**: versión política 0.4 → 0.5.
+
+### `chore(docs): README y .env.example sin DeepSeek en el chat`
+
+- **`README.md`**: sección chat reescrita. "Motor de reglas local, sin LLM
+  externo". Tabla de variables sin `DEEPSEEK_*` ni `CHAT_PROVIDER`. Nota
+  explícita: las variables `DEEPSEEK_*` del `.env.example` pertenecen a
+  RAG/embeddings y scripts de blog, NO al chat.
+- **`.env.example`**: sección chat limpiada (solo `CHAT_ENABLED` y rate-limit).
+  Variables `DEEPSEEK_*` movidas con nota "INDEPENDIENTE del chat público".
+
+### Tests
+- **`tests/api-chat.test.ts`**: reescrito mono-flujo. Eliminada la suite
+  "modo deepseek (opt-in)". Añadidos tests de regresión: "funciona sin
+  DEEPSEEK_API_KEY" y "no existe path que llame a DeepSeek". 12 tests.
+- **`tests/chat-guardrails.test.ts`**: eliminada suite `system-prompt`
+  (archivo eliminado). 22 tests (antes 27).
+- **`tests/chat-rules-engine.test.ts`**: sin cambios (16 tests).
+
+### Validaciones
+- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ (21.3s) ·
+  `npm run test` ✅ (**789 tests**, 36 suites) · `npm run seo:doctor` ✅.
+
+### Referencias DeepSeek fuera de alcance (subsistemas independientes del chat)
+Estas referencias NO se modificaron porque pertenecen a subsistemas que no
+afectan al chat público ni a los usuarios de la web:
+- `lib/rag/` (embeddings, retrieval vectorial) — usa DeepSeek para embeddings.
+- `scripts/blog-*.ts`, `scripts/seo-*.ts` — corrección editorial de posts.
+- `lib/sgie/ia-documental.ts` — IA documental de la intranet (privado).
+- `drizzle/migrations/meta/0023_snapshot.json` — snapshot de migración RAG.
+
+### Riesgos pendientes
+- **Revisión legal humana**: la política de privacidad ahora declara que el
+  chat no usa IA generativa ni transmite a terceros. Conviene confirmar que
+  la redacción cumple con el ordenamiento hondureño y RGPD/LOPDGDD.
+- **Variables DeepSeek en RAG/scripts**: siguen existiendo para embeddings y
+  corrección de blog. Si en el futuro se quiere eliminar DeepSeek por completo
+  del proyecto, requerirá migrar el subsistema RAG a otro proveedor de
+  embeddings (tarea separada, fuera de alcance).
+
+---
+
+## [Unreleased] - 2026-07-07 — Chat sin LLM externo: motor de reglas local por defecto
+
+Eliminación de la dependencia operativa de DeepSeek en el chat. El asistente ahora
+funciona por defecto con un **motor de reglas local** que no transmite mensajes a
+ningún proveedor externo de IA. DeepSeek queda como opción **opt-in** (requiere
+`CHAT_PROVIDER=deepseek` + `DEEPSEEK_API_KEY`).
+
+### `feat(chat): motor de reglas local (CHAT_PROVIDER=rules) — sin DeepSeek por defecto`
+
+- **Nuevo motor local (`lib/chat/rules-engine.ts`)**: detección de 14 intenciones
+  (saludo, servicios, ubicación, horario, contacto, preparar consulta, caso urgente,
+  identificar área, checklist, WhatsApp, formulario, privacidad, migrantes, no_entendido)
+  mediante patrones regex + plantillas de respuesta prudente. Combina el clasificador
+  de área legal (`sugerirAreaLegal`) y el detector de urgencia (`detectUrgency`).
+  Sin transmisión a terceros.
+- **Config (`lib/chat/config.ts`)**: añadida variable `CHAT_PROVIDER` con default
+  `'rules'`. Valores: `'rules'` (local) | `'deepseek'` (opt-in, requiere API key).
+  Mensaje inicial actualizado para reflejar modo local. Disclaimer ajustado
+  ("Asistente automatizado" en vez de "Asistente de IA").
+- **API route (`app/api/chat/route.ts`)**: refactorizado para rutear al motor local
+  por defecto. DeepSeek solo se llama si `provider === 'deepseek'` Y API key presente.
+  Si DeepSeek falla, cae al motor local como fallback (el chat nunca queda muerto).
+- **Política de privacidad (`app/(public)/politica-privacidad/page.tsx`)**: sección 6
+  reescrita. Modo local por defecto (no transmisión a terceros). DeepSeek como
+  encargado condicional ("solo si se activa expresamente; en la configuración actual
+  está desactivado").
+
+### Funcionalidades conservadas sin LLM
+- ✅ Mensaje inicial con aviso (sistema automatizado + no asesoría + privacidad)
+- ✅ Quick replies de preconsulta
+- ✅ Clasificador de área legal (12 áreas, heurística por keywords)
+- ✅ Detector de urgencia (15 patrones server-side + banner visual + CTAs resaltados)
+- ✅ Preparación de resumen de preconsulta (guía estructurada)
+- ✅ Generador de mensaje WhatsApp (plantilla prudente con marcadores)
+- ✅ Checklists documentales orientativos (11 áreas)
+- ✅ Derivación a WhatsApp, llamada, correo o formulario
+- ✅ Respuestas sobre servicios, ubicación, horario, contacto (datos locales)
+- ✅ Guardrails de prompt injection (18 patrones), temas privados, asesoramiento definitivo
+- ✅ Respuesta segura cuando no entiende (deriva a contacto humano)
+
+### Tests
+- `tests/chat-rules-engine.test.ts` — **NUEVO**: 16 tests (detección intención,
+  urgencia, clasificación área, límites legales, no transmisión, generador WhatsApp,
+  checklists).
+- `tests/api-chat.test.ts`: reescrito con 3 suites (modo rules, validación/guardrails,
+  modo deepseek opt-in). 13 tests.
+- `tests/chat-guardrails.test.ts`: sin cambios (ya cubría guardrails compartidos).
+
+### Validaciones
+- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ (27.1s, 361 páginas) ·
+  `npm run test` ✅ (**796 tests**, 36 suites, +29 respecto al baseline de 767) ·
+  `npm run seo:doctor` ✅ (18 OK).
+
+### Limitaciones del modo sin LLM
+- **Sin comprensión semántica profunda**: el motor detecta intenciones por keywords,
+  no por comprensión del lenguaje natural. Mensajes muy ambiguos o reescritos pueden
+  caer en `no_entendido`.
+- **Sin respuestas generativas**: el motor usa plantillas fijas. No puede redactar
+  resúmenes personalizados del caso del usuario como haría un LLM.
+- **Sin RAG**: en modo local no se inyecta contexto de artículos legales (la integración
+  RAG queda para el modo DeepSeek si se activa).
+- **Tono más repetitivo**: las plantillas pueden sonar similares entre conversaciones
+  distintas. Es la contrapartida de no alucinar.
+
+### Riesgos pendientes
+- **Revisión legal humana**: la política de privacidad refleja el modo local por defecto,
+  pero conviene confirmar que la redacción cumple con el ordenamiento hondureño y, si
+  aplica, RGPD/LOPDGDD.
+- **DeepSeek no se elimina del código**: queda como integración opt-in para quien quiera
+  reactivar el modo generativo. `DEEPSEEK_API_KEY` sigue siendo opcional (no obligatoria
+  para el build).
+- **Scripts RAG/blog** (`lib/rag/`, `scripts/blog-*.ts`) siguen usando DeepSeek para
+  embeddings/corrección de posts — fuera del alcance de este cambio (subsistema separado
+  del chat público).
+
+---
+
 ## [Unreleased] - 2026-07-06 — Evolución del chat a asistente de preconsulta legal
 
 Transformación del chat asistente de "orientador genérico" a **asistente de preconsulta legal**

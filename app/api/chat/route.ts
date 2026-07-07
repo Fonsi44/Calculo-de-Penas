@@ -5,17 +5,22 @@
  *   1. rate-limit por IP y por sessionId (rateLimits, keyPrefix 'chat_ip' / 'chat_sess').
  *   2. validación Zod (mensaje no vacío, longitud, sessionId, historial corto).
  *   3. guardrails server-side (prompt injection, tema privado, asesoramiento definitivo).
- *   4. si todo OK y hay API key → llamada a DeepSeek → respuesta filtrada.
- *   5. si no hay API key, timeout o error del proveedor → fallback seguro.
+ *   4. motor de reglas local (sin LLM externo): los mensajes del usuario NO se
+ *      transmiten a ningún proveedor de IA. Se procesan localmente con reglas,
+ *      plantillas y heurísticas.
  *
- * SEGURIDAD:
- *   - DEEPSEEK_API_KEY nunca se loguea ni se devuelve al cliente.
+ * SEGURIDAD Y PRIVACIDAD:
+ *   - Los mensajes del usuario NO se envían a ningún proveedor externo de IA.
+ *   - No se persisten conversaciones: el historial lo envía el cliente por turnos
+ *     (máx 6 mensajes) y no se almacena en DB.
+ *   - No se loguea contenido sensible completo.
  *   - Errores son genéricos (no vuelcan stack ni configuración).
  *   - Rate-limit protege contra abuso.
- *   - Solo se llama al proveedor tras pasar guardrails (ahorro + seguridad).
  *
- * No almacena conversaciones: el historial lo envía el cliente por turnos
- * (máx 6 mensajes) y no se persiste en DB.
+ * El endpoint se mantiene server-side (en lugar de mover todo al cliente) para:
+ *   - Centralizar los guardrails y rate-limiting (defensa en profundidad).
+ *   - Evitar exponer la lógica de reglas/heurísticas en el bundle del cliente.
+ *   - Registrar eventos mínimos de analytics sin datos sensibles.
  */
 
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
@@ -23,10 +28,7 @@ import { validate } from '@/lib/validation';
 import { chatRequestSchema } from '@/lib/chat/schema';
 import { chatConfig } from '@/lib/chat/config';
 import { evaluateGuardrails, sanitizeReply } from '@/lib/chat/guardrails';
-import { buildSystemPrompt } from '@/lib/chat/system-prompt';
-import { buildRAGContext } from '@/lib/chat/knowledge-base';
-import { callDeepSeek, isDeepSeekConfigured, type ChatMessage } from '@/lib/chat/deepseek';
-import { isRagDisponible } from '@/lib/rag/config';
+import { procesarMensajeLocal } from '@/lib/chat/rules-engine';
 
 export const runtime = 'nodejs';
 
@@ -46,7 +48,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return jsonError(parsed.error, 400);
   }
-  const { message, sessionId, history } = parsed.data;
+  const { message, sessionId } = parsed.data;
 
   // Rate-limit por IP y por sessionId (doble cubierta).
   const ipRl = await rateLimit(ip, {
@@ -63,7 +65,7 @@ export async function POST(request: Request) {
   });
   if (!sessRl.ok) return rateLimitResponse(sessRl);
 
-  // Guardrails server-side: si se disparan, respondemos sin llamar al proveedor.
+  // Guardrails server-side: si se disparan, respondemos sin procesar más.
   const guardrail = evaluateGuardrails(message);
   if (guardrail.hit) {
     // Log estructurado sin contenido del usuario (minimización de datos).
@@ -79,50 +81,12 @@ export async function POST(request: Request) {
     });
   }
 
-  // Sin API key → fallback directo (modo sin IA).
-  if (!isDeepSeekConfigured()) {
-    return Response.json({
-      reply: chatConfig.fallbackReply,
-      source: 'fallback_no_config',
-      urgent: guardrail.urgent,
-    });
-  }
-
-  // Construir mensajes para el proveedor.
-  // Incluir contexto RAG si está disponible.
-  let ragContext = '';
-  if (isRagDisponible()) {
-    ragContext = await buildRAGContext(message);
-  }
-  const messages: ChatMessage[] = [
-    { role: 'system', content: buildSystemPrompt(ragContext) },
-    ...history.map((h) => ({ role: h.role, content: h.content }) as ChatMessage),
-    { role: 'user', content: message },
-  ];
-
-  const result = await callDeepSeek(messages);
-
-  if (!result.ok) {
-    // Log genérico sin volcar el error detallado del proveedor al cliente.
-    console.warn('[chat] proveedor falló', {
-      error: result.error,
-      durationMs: result.durationMs,
-    });
-    return Response.json({
-      reply: chatConfig.fallbackReply,
-      source: 'fallback_provider_error',
-    });
-  }
-
-  // Respuesta filtrada (truncado defensivo por caracteres).
-  const reply = sanitizeReply(result.reply);
-
+  // Motor de reglas local: procesa el mensaje sin llamar a ningún proveedor externo.
+  const result = procesarMensajeLocal(message);
   return Response.json({
-    reply,
-    source: 'deepseek',
-    // Detección de urgencia server-side: si el mensaje del usuario coincide
-    // con patrones de urgencia, se marca para que el widget resalte CTAs.
-    urgent: guardrail.urgent,
+    reply: sanitizeReply(result.reply),
+    source: 'rules',
+    urgent: result.urgent,
   });
 }
 

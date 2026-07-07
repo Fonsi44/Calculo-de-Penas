@@ -1,21 +1,20 @@
 /**
- * Base de conocimiento del chat asistente.
+ * Base de conocimiento del chat asistente — allowlist de enlaces públicos.
  *
- * FUENTE ÚNICA: se deriva de datos públicos ya aprobados del proyecto
- * (data/areas-juridicas.ts y lib/site.ts). NO inventa servicios, ni penas,
- * ni datos legales. El modelo responde prioritariamente desde este texto.
+ * Este módulo conserva la allowlist de rutas públicas que el asistente puede
+ * sugerir y la función de validación `isAllowedPublicLink`. Es la ÚNICA
+ * lista de URLs autorizadas: cualquier otra ruta (intranet, admin, login,
+ * api, dashboard, auth, archivos técnicos) se rechaza.
  *
- * Si una información no está aquí, el asistente debe decirlo claramente y
- * derivar al despacho (regla del system prompt).
+ * HISTÓRICO: antes contenía `buildKnowledgeBase()` (texto inyectado al
+ * system prompt de DeepSeek) y `buildRAGContext()` (contexto vectorial para
+ * el LLM). Ambos se eliminaron al suprimir DeepSeek del chat público (Jul 2026).
+ * El motor de reglas local no necesita ni system prompt ni RAG.
  *
- * NO incluir aquí: datos de intranet, credenciales, endpoints, configuración
- * técnica, ni nada que no sea público y comercial.
+ * FUENTE: los slugs provienen de rutas reales de app/(public)/.
  */
 
-import { areasGenerales, hubPenal, hubMigrantes } from '@/data/areas-juridicas';
 import { site } from '@/lib/site';
-import { recuperarContextoParaChat } from '@/lib/rag/retrieval';
-import { isRagDisponible } from '@/lib/rag/config';
 
 /**
  * Allowlist de enlaces públicos que el asistente puede citar o sugerir.
@@ -77,79 +76,4 @@ export function isAllowedPublicLink(href: string): boolean {
   return PUBLIC_LINKS_ALLOWLIST.some(
     (allowed) => path === allowed || path.startsWith(allowed + '/'),
   );
-}
-
-/** Construye el texto plano de la base de conocimiento inyectada al modelo. */
-export function buildKnowledgeBase(): string {
-  const serviciosGenerales = areasGenerales
-    .map((a) => `- ${a.titulo}: ${a.resumen}`)
-    .join('\n');
-
-  const gruposPenal = hubPenal.grupos
-    .map((g) => `- ${g.titulo}: ${g.resumen}`)
-    .join('\n');
-
-  const subareasMigrantes = hubMigrantes.subareas
-    .map((g) => `- ${g.titulo}: ${g.resumen}`)
-    .join('\n');
-
-  return `BASE DE CONOCIMIENTO APROBADA — Pineda y Asociados
-
-IDENTIDAD:
-- Bufete jurídico en Nacaome, Valle, Honduras (zona sur).
-- Dirección: ${site.address.full}.
-- Horario: ${site.hours}.
-- Teléfono: ${site.phoneDisplay} (${site.phone}).
-- WhatsApp: ${site.whatsappDisplay}.
-- Email: ${site.email}.
-- Sitio web: ${site.url}.
-
-SERVICIOS JURÍDICOS GENERALES:
-${serviciosGenerales}
-
-DERECHO PENAL — GRUPOS ESPECIALIZADOS:
-${gruposPenal}
-
-HONDUREÑOS EN ESPAÑA:
-${subareasMigrantes}
-
-CANALES DE CONTACTO OFICIALES:
-- WhatsApp: https://wa.me/${site.whatsapp}
-- Teléfono: tel:${site.phone.replace(/\s|-/g, '')}
-- Solicitar consulta: ${site.url}/solicitar-consulta
-- Contacto: ${site.url}/contacto
-
-PÁGINAS PÚBLICAS PARA DERIVAR AL USUARIO:
-- Servicios jurídicos: /servicios-juridicos
-- Derecho penal: /derecho-penal
-- Hondureños en España: /hondurenos-en-espana
-- El despacho: /despacho
-- FAQ: /preguntas-frecuentes
-- Blog: /blog
-
-	LÍMITES DE ACTUACIÓN:
-- No se ofrecen asesoramientos jurídicos definitivos por chat.
-- No se calculan penas concretas ni se diseña estrategia procesal cerrada.
-- No se prometen resultados.
-- Ante urgencias (detención, audiencia, citación, allanamiento, violencia,
-  amenazas, accidentes, menores en riesgo), se deriva de inmediato a
-  WhatsApp o teléfono.`;
-}
-
-/**
- * Construye contexto RAG para el chat basado en el mensaje del usuario.
- * Recupera los chunks más relevantes de la base de conocimiento vectorial
- * mediante búsqueda semántica en pgvector.
- *
- * @param mensaje - Mensaje del usuario
- * @returns Contexto formateado o cadena vacía si no disponible
- */
-export async function buildRAGContext(mensaje: string): Promise<string> {
-  if (!isRagDisponible()) return '';
-  try {
-    return await recuperarContextoParaChat(mensaje);
-  } catch {
-    console.warn('[chat] RAG no disponible, usando solo base estática');
-    return '';
-  }
 }

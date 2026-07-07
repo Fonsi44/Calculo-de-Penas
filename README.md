@@ -138,28 +138,26 @@ Nunca compartir tokens ni secretos en chats o logs.
 
 ---
 
-## Chat asistente (DeepSeek)
+## Chat asistente (motor de reglas local, sin LLM externo)
 
-Chat conversacional en la web pública orientado a conversión y orientación
-inicial. Se monta solo en `app/(public)/layout.tsx` (con salvaguarda adicional
-que impide renderizar en rutas privadas). La `DEEPSEEK_API_KEY` nunca sale del
-servidor: el widget solo llama a la ruta relativa `/api/chat`.
+Chat de preconsulta en la web pública orientado a orientación inicial y
+conversión. Funciona exclusivamente con un **motor de reglas local**: los
+mensajes del usuario NO se envían a ningún proveedor de IA externo (DeepSeek,
+OpenAI, etc.) y **no se requiere ninguna API key de IA**.
+
+Se monta solo en `app/(public)/layout.tsx` (con salvaguarda adicional que
+impide renderizar en rutas privadas). El widget solo llama a la ruta relativa
+`/api/chat`.
 
 **Arquitectura:** widget → `POST /api/chat` → rate-limit (IP + sessionId) →
-Zod → guardrails server-side → system prompt + base de conocimiento →
-DeepSeek → respuesta filtrada → frontend.
+Zod → guardrails server-side → **motor de reglas local** → respuesta filtrada
+→ frontend. Sin llamadas a terceros.
 
 ### Variables de entorno (`.env.local`)
 
 | Variable | Default | Descripción |
 |---|---|---|
 | `CHAT_ENABLED` | `true` | `false` desactiva el widget globalmente sin tocar código |
-| `DEEPSEEK_API_KEY` | — | API key (solo servidor; **nunca** en cliente/logs) |
-| `DEEPSEEK_MODEL` | `deepseek-v4-flash` | Requerimiento del proyecto. Los IDs oficiales de la API pueden variar; si el proveedor devuelve error de modelo, basta cambiar esta variable (p. ej. `deepseek-chat`) sin tocar código |
-| `DEEPSEEK_BASE_URL` | `https://api.deepseek.com/v1` | Base URL de la API |
-| `CHAT_TEMPERATURE` | `0.3` | Baja = sobria y consistente |
-| `CHAT_MAX_TOKENS` | `400` | Límite de tokens en la respuesta del modelo |
-| `CHAT_TIMEOUT_MS` | `20000` | Timeout de la llamada al proveedor |
 | `CHAT_MAX_MESSAGE_LENGTH` | `600` | Longitud máxima del mensaje del usuario |
 | `CHAT_RATE_LIMIT_PER_IP` | `12` | Máx mensajes por ventana por IP |
 | `CHAT_RATE_LIMIT_PER_SESSION` | `12` | Máx mensajes por ventana por sessionId |
@@ -167,22 +165,33 @@ DeepSeek → respuesta filtrada → frontend.
 
 WhatsApp/teléfono se leen de `lib/site.ts` (`NEXT_PUBLIC_CONTACT_*`), no de aquí.
 
+**Nota:** Las variables `DEEPSEEK_*` que aparecen en `.env.example` pertenecen
+al subsistema **RAG/embeddings** y a **scripts internos de blog**, NO al chat
+público. El chat público no las usa ni las requiere.
+
 ### Privacidad y límites
-- **No** se persisten conversaciones. El widget envía solo los últimos turnos
-  por mensaje; el `sessionId` vive en `localStorage` del navegador.
+- **No** se persisten conversaciones en el servidor. El widget envía solo los
+  últimos turnos por mensaje; el `sessionId` vive en `localStorage` del navegador.
 - **No** se loguea contenido sensible completo.
-- Disclaimer visible en el widget: "Este chat ofrece orientación inicial y no
-  sustituye una consulta jurídica."
+- **No** se envían mensajes a ningún proveedor externo de IA. Todo el
+  procesamiento es local (reglas y plantillas en el servidor del sitio).
+- Disclaimer visible en el widget: "Asistente automatizado. Orientación
+  inicial, no asesoría jurídica."
 - Guardrails server-side bloquean: prompt injection, temas privados/intranet y
   solicitudes de asesoramiento jurídico definitivo (cálculo de penas,
   estrategia, escritos) — estas derivan directamente a WhatsApp/teléfono.
 - El asistente solo puede enlazar a páginas de la allowlist pública
   (`lib/chat/knowledge-base.ts`); nunca a rutas privadas, API o técnicas.
 
-### Fallback sin IA
-Si falta `DEEPSEEK_API_KEY`, el modelo falla o se agota el rate-limit, el widget
-sigue ofreciendo WhatsApp, llamada, contacto y servicios (respuesta `source:
-`fallback_*`). El chat nunca queda "muerto".
+### Funcionalidades del motor de reglas
+- Clasificador de área legal probable (12 áreas, heurística por keywords).
+- Detector de urgencia (15 patrones server-side + banner visual + CTAs resaltados).
+- Respuestas por intención: saludo, servicios, ubicación, horario, contacto,
+  preparar consulta, caso urgente, identificar área, checklist, WhatsApp,
+  formulario, privacidad, migrantes, no_entendido.
+- Generador de mensaje WhatsApp (plantilla prudente con marcadores).
+- Checklists documentales orientativos (11 áreas).
+- Derivación segura a contacto humano cuando no entiende.
 
 ### Mantenimiento de la base de conocimiento
 La KB se deriva automáticamente de `data/areas-juridicas.ts` y `lib/site.ts`.

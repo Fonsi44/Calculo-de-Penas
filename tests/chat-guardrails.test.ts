@@ -8,7 +8,6 @@ import {
   isAllowedPublicLink,
   PUBLIC_LINKS_ALLOWLIST,
 } from '../lib/chat/knowledge-base';
-import { buildSystemPrompt } from '../lib/chat/system-prompt';
 import {
   sugerirAreaLegal,
   generarMensajeWhatsApp,
@@ -253,45 +252,3 @@ describe('knowledge-base — allowlist de enlaces', () => {
   });
 });
 
-describe('system-prompt — integridad', () => {
-  it('incluye las restricciones clave del requerimiento', () => {
-    const sp = buildSystemPrompt();
-    expect(sp).toContain('Nacaome, Valle, Honduras');
-    expect(sp).toContain('no sustituyes una consulta jurídica personalizada');
-    expect(sp).toContain('prometer resultados');
-    expect(sp).toContain('Inventar normativa');
-    expect(sp).toContain('base de conocimiento');
-  });
-
-  it('incluye las funcionalidades de preconsulta (evolución Jul 2026)', () => {
-    const sp = buildSystemPrompt();
-    expect(sp).toContain('CLASIFICAR ÁREA LEGAL');
-    expect(sp).toContain('DETECTAR URGENCIA');
-    expect(sp).toContain('RESUMEN DE PRECONSULTA');
-    expect(sp).toContain('MENSAJE PARA WHATSAPP');
-    expect(sp).toContain('CHECKLISTS DOCUMENTALES');
-    // Transparencia: el asistente debe identificarse como IA
-    expect(sp.toLowerCase()).toContain('inteligencia artificial');
-  });
-
-  it('incluye las frases prohibidas explícitas del requerimiento', () => {
-    const sp = buildSystemPrompt();
-    expect(sp).toContain('usted ganará');
-    expect(sp).toContain('tiene derecho seguro');
-    expect(sp).toContain('la pena será exactamente');
-    expect(sp).toContain('haga esto para evitar responsabilidad');
-  });
-
-  it('incluye privacidad y minimización de datos', () => {
-    const sp = buildSystemPrompt();
-    expect(sp).toContain('PRIVACIDAD Y MINIMIZACIÓN');
-    expect(sp).toContain('política de privacidad');
-  });
-
-  it('no filtra datos técnicos en el prompt', () => {
-    const sp = buildSystemPrompt().toLowerCase();
-    expect(sp).not.toContain('api key');
-    expect(sp).not.toContain('deepseek_api_key');
-    expect(sp).not.toContain('.env');
-  });
-});
