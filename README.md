@@ -138,6 +138,32 @@ Nunca compartir tokens ni secretos en chats o logs.
 
 ---
 
+## CI/CD (GitHub Actions)
+
+El proyecto cuenta con un pipeline unificado de Integración Continua (CI) en `.github/workflows/ci.yml`.
+
+- **Entorno:** `ubuntu-latest` (Linux)
+- **Node.js:** Versión 22 (LTS)
+- **Gestor de paquetes:** `npm` (versión 11, forzada explícitamente en el pipeline).
+- **Activación:** `push` y `pull_request` hacia ramas principales (`main`, `master`, `develop`).
+
+El CI utiliza ejecución **condicionada e inteligente**: detecta si los comandos existen en el `package.json` antes de ejecutarlos para evitar fallos por mala configuración. Utiliza placeholders seguros para las variables de compilación (`DATABASE_URL`, `JWT_SECRET`, etc.).
+
+### Ejecución Local
+
+Para reproducir la validación del CI en tu máquina, ejecuta esta secuencia exacta. Nota que `test` y `seo:doctor` solo se ejecutarán si el script existe.
+
+```bash
+npm ci --no-audit --no-fund
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+npm run seo:doctor
+```
+
+---
+
 ## Chat asistente (motor de reglas local, sin LLM externo)
 
 Chat de preconsulta en la web pública orientado a orientación inicial y

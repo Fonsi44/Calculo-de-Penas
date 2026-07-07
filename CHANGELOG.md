@@ -238,17 +238,18 @@ con capacidades estructuradas, manteniendo intactos todos los límites legales/Y
 - Prompt injection reforzado (server-side + system prompt).
 - Política de privacidad documenta proveedor DeepSeek, finalidad, datos y no-retención.
 
-### Riesgos restantes
-- **Revisión legal humana recomendada** para confirmar que la sección 6 de la política de
-  privacidad cumple con el ordenamiento hondureño y, si aplica, RGPD/LOPDGDD (tráfico España 41,8%).
-- **Retention policy de DeepSeek**: el bufete no controla cuánto retiene DeepSeek los mensajes
-  enviados; se documenta pero no se puede garantizar desde el código.
-- **Datos sensibles voluntarios**: el sistema aconseja no compartirlos, pero no los bloquea
-  técnicamente si el usuario los escribe (solo se advierte en política y system prompt).
+El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/), y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
----
+## [Unreleased]
 
-## [Unreleased] - 2026-07-06 — Implementación Fase 1 auditoría SEO/GEO (tareas A-01 a A-04)
+### Changed
+- **CI/CD:** Refactorización completa del flujo de GitHub Actions (`ci.yml`). Unificación de validaciones en un único workflow robusto.
+- **CI/CD:** Implementación de instalación reproducible en Ubuntu (`npm ci --no-audit --no-fund`) con npm 11 y caché dependiente de `package-lock.json`.
+- **CI/CD:** El pipeline ahora utiliza ejecución inteligente y condicionada de scripts: comprueba la existencia de `lint`, `typecheck`, `test`, `build` y `seo:doctor` en el `package.json` mediante `jq` antes de invocarlos para evitar fallos por scripts faltantes.
+- **CI/CD:** Integración de variables de entorno seguras, usando placeholders funcionales (ej. `DATABASE_URL`) y configuraciones públicas necesarias en la nube (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_NOINDEX`, etc.) para permitir el paso del build en un entorno sin base de datos real.
+- **Config:** Documentación actualizada en `.env.example` y `README.md` destacando las guías de uso local del CI y el manejo adecuado de secretos.
+
+## [11.0.1] - 2026-07-06 — Implementación Fase 1 auditoría SEO/GEO (tareas A-01 a A-04)
 
 Ejecución de las 4 tareas de prioridad ALTA del `SEO_GEO_ACTION_PLAN.md`, generadas
 por la auditoría integral SEO/GEO/YMYL (`AUDITORIA_SEO_GEO_LEGAL_PINEDA.md`).

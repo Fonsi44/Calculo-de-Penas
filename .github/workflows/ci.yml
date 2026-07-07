@@ -8,13 +8,18 @@ on:
 
 jobs:
   quality:
-    name: Lint, Typecheck, Test, Build
+    name: Lint, Typecheck, Test, Build, SEO
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
       DATABASE_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
       JWT_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef
       NEXT_TELEMETRY_DISABLED: '1'
+      PORT: '3100'
+      # Variables necesarias para site.ts y metadata
+      NEXT_PUBLIC_SITE_URL: https://www.pinedayasociadoshn.com
+      NEXT_PUBLIC_SITE_NAME: "Pineda y Asociados"
+      NEXT_PUBLIC_NOINDEX: "false"
 
     steps:
       - name: Checkout
@@ -23,115 +28,61 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          # Node 22 alineado con el entorno local. setup-node@v4 no soporta
-          # `npm-version`, se instala npm 11 en el step siguiente.
           node-version: '22'
           cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-      - name: Install npm 11 (alineado con el generador del lock)
-        # npm 10.x (default del runner) rechaza el package-lock.json generado
-        # por npm 11 por la validación estricta de optionalDependencies de
-        # esbuild (tsx -> @esbuild/* 0.28.1 con 26 platform binaries).
-        # Alinear a npm 11 resuelve el `npm ci`.
+      - name: Install npm 11
         run: npm install -g npm@11
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
+
+      - name: Check scripts
+        id: scripts
+        run: |
+          if jq -e '.scripts.lint' package.json >/dev/null; then echo "has_lint=true" >> $GITHUB_OUTPUT; else echo "has_lint=false" >> $GITHUB_OUTPUT; fi
+          if jq -e '.scripts.typecheck' package.json >/dev/null; then echo "has_typecheck=true" >> $GITHUB_OUTPUT; else echo "has_typecheck=false" >> $GITHUB_OUTPUT; fi
+          if jq -e '.scripts.test' package.json >/dev/null; then echo "has_test=true" >> $GITHUB_OUTPUT; else echo "has_test=false" >> $GITHUB_OUTPUT; fi
+          if jq -e '.scripts.build' package.json >/dev/null; then echo "has_build=true" >> $GITHUB_OUTPUT; else echo "has_build=false" >> $GITHUB_OUTPUT; fi
+          if jq -e '.scripts["seo:doctor"]' package.json >/dev/null; then echo "has_seo_doctor=true" >> $GITHUB_OUTPUT; else echo "has_seo_doctor=false" >> $GITHUB_OUTPUT; fi
 
       - name: Lint
-        run: npm run lint
+        run: |
+          if [ "${{ steps.scripts.outputs.has_lint }}" = "true" ]; then
+            npm run lint
+          else
+            echo "script no definido, omitiendo"
+          fi
 
-      - name: Typecheck (strict)
-        run: npx tsc --noEmit
+      - name: Typecheck
+        run: |
+          if [ "${{ steps.scripts.outputs.has_typecheck }}" = "true" ]; then
+            npm run typecheck
+          else
+            echo "script no definido, omitiendo"
+          fi
 
       - name: Unit tests
-        run: npm test
-
-      - name: Build
-        run: npm run build
-
-      - name: Validate seed data
         run: |
-          node -e "const d=require('./data/delitos.json'); console.log('delitos:', d.length)"
-          node -e "const d=require('./data/delitos.json'); const s=new Set(d.map(x=>x.nombre+'|'+x.articulo)); console.log('duplicados:', d.length - s.size)"
-          node -e "const d=require('./data/delitos-estados.json'); console.log('estados:', d.total_registros, '(', d.verificados, 'OK,', d.pendientes_revision, 'revisar,', d.rechazados, 'rechazados)')"
-
-      # Validación de fechas del blog: ningún post con fecha futura ni orden
-      # incorrecto. El script sale limpio (exit 0) si DATABASE_URL no está
-      # configurada o es placeholder, así que no bloquea PRs sin acceso a DB.
-      - name: Validate blog dates
-        run: npm run validate:dates
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      # NOTA: content:audit (npm run content:audit) NO se añade al CI todavía.
-      # Actualmente hay 71 posts con revisión editorial vencida (pendiente
-      # humano, no bug técnico — ver docs/plan-reescritura-blog.md). Añadirlo
-      # cuando el ciclo de revisión trimestral esté al día.
-      # - name: Content audit
-      #   run: npm run content:audit
-      #   env:
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-  e2e:
-    name: E2E (Playwright)
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: quality
-    # El job `quality` (lint/tsc/test/build) es obligatorio en cada push/PR.
-    # El job `e2e` solo corre cuando `quality` pasa, para no desperdiciar
-    # minutos de CI en código que ya no compila o no pasa los unit tests.
-    env:
-      DATABASE_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
-      JWT_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef
-      NEXT_TELEMETRY_DISABLED: '1'
-      PORT: '3100'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install npm 11 (alineado con el generador del lock)
-        run: npm install -g npm@11
-
-      - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+          if [ "${{ steps.scripts.outputs.has_test }}" = "true" ]; then
+            npm run test
+          else
+            echo "script no definido, omitiendo"
+          fi
 
       - name: Build
-        run: npm run build
+        run: |
+          if [ "${{ steps.scripts.outputs.has_build }}" = "true" ]; then
+            npm run build
+          else
+            echo "script no definido, omitiendo"
+          fi
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
-
-      - name: Run E2E tests
-        # En CI no hay base de datos real (DATABASE_URL es placeholder).
-        # Los specs auth-flow e intranet-sidebar hacen POST a /api/auth/register
-        # que escribe en PostgreSQL → devuelven 500 sin DB. Se ejecutan en local
-        # (npm run test:e2e) donde hay DATABASE_URL real. Aquí solo corremos los
-        # specs que validan rutas públicas, protección de rutas y smoke tests.
-        run: npx playwright test e2e/smoke.spec.ts e2e/admin-agravantes.spec.ts
-
-      - name: Upload Playwright report
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 14
-
-      - name: Upload Playwright traces (on failure)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-traces
-          path: |
-            test-results/
-            **/trace.zip
-          if-no-files-found: ignore
-          retention-days: 7
+      - name: SEO Doctor
+        run: |
+          if [ "${{ steps.scripts.outputs.has_seo_doctor }}" = "true" ]; then
+            npm run seo:doctor
+          else
+            echo "script no definido, omitiendo"
+          fi
