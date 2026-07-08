@@ -341,14 +341,9 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
-      // Cache estático de assets de build de Next.js (/_next/*) con hash en
-      // el nombre: seguros de cachear 1 año inmutable.
-      {
-        source: '/_next/:path(.+\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2?|ttf|js|css))',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      // Next.js gestiona Cache-Control de /_next/* para assets hasheados.
+      // Evitamos una regla manual aqui porque Next 16 emite warning y puede
+      // interferir con el comportamiento de desarrollo/build.
       // Assets estables en /public (favicons, iconos PWA): cache moderado.
       // Archivos mutables (og-image, manifest, sw.js, llms.txt, robots, sitemap)
       // quedan fuera para permitir actualización inmediata.
