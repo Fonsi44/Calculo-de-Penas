@@ -56,6 +56,7 @@
     "seed:sgie:plantillas": "npx tsx drizzle/seed-sgie-plantillas.ts",
     "seed:sgie:demo:carlos": "npx tsx drizzle/seed-sgie-demo-carlos.ts",
     "db:check": "npx tsx scripts/check-db-state.ts",
+    "security:validate-staging": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/security/validate-staging-security.ps1",
     "seo:health": "node scripts/seo-health-check.mjs",
     "seo:health:json": "node scripts/seo-health-check.mjs --json",
     "seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs",
