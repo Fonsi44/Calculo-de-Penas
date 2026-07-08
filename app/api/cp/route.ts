@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { articulosCp } from '@/lib/schema';
 import { ilike, or, and, eq, asc, sql } from 'drizzle-orm';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -55,6 +56,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     const body = await request.json();
     const [row] = await db.insert(articulosCp).values({
       articulo: body.articulo,

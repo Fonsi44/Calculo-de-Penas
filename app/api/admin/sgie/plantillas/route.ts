@@ -1,6 +1,7 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 import {
   listarPlantillas,
   interpolarPlantilla,
@@ -22,6 +23,7 @@ const querySchema = z.object({
 export async function GET(request: Request) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     if (auth.rol !== 'admin') {
       return Response.json({ error: 'Solo administradores' }, { status: 403 });
     }

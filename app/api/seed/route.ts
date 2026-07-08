@@ -4,6 +4,7 @@ import { count } from 'drizzle-orm';
 import * as fs from 'fs';
 import * as path from 'path';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 
 interface RamaSeed { id: string; nombre: string; parent_id: string | null; nivel: number; orden: number }
 interface ArtConstSeed { numero: number; articulo: string; titulo: string; capitulo: string | null; texto: string }
@@ -13,6 +14,7 @@ interface DelitoSeed { nombre: string; articulo: string; conducta: string | null
 export async function POST(request: Request) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     const dataDir = path.resolve(process.cwd(), 'data');
     const results: string[] = [];
 

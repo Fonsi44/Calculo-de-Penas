@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { documentosExpediente, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function POST(
   request: Request,
@@ -10,6 +11,7 @@ export async function POST(
 ) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     const { id: documentoId } = await params;
 
     const [doc] = await db.select({ expedienteId: documentosExpediente.expedienteId, estado: documentosExpediente.estado })

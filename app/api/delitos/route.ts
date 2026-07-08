@@ -4,6 +4,7 @@ import { and, or, ilike, sql } from 'drizzle-orm';
 import { delitoCreateSchema, validate } from '@/lib/validation';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { getEstadoDelito } from '@/lib/estados-delitos';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -73,6 +74,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     let body: unknown;
     try {
       body = await request.json();

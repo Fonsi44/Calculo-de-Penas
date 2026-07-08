@@ -5,6 +5,7 @@ import { documentosExpediente, expedienteAsignaciones, expedientePermisos } from
 import { eq, and, isNull } from 'drizzle-orm';
 import { encolarJob } from '@/lib/sgie/jobs-db';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { validateCsrf } from '@/lib/csrf';
 
 /**
  * POST /api/sgie/documentos/[id]/procesar
@@ -22,6 +23,7 @@ export async function POST(
 ) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     const { id: documentoId } = await params;
 
     const rl = await rateLimit(`sgie:doc:procesar:${auth.userId}`, {

@@ -1,6 +1,7 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 import {
   obtenerPlantillaPorSlug,
   interpolarPlantilla,
@@ -14,6 +15,7 @@ const previewSchema = z.object({
 export async function POST(request: Request) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     const rl = await rateLimit(`sgie:plantilla:preview:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
     const parsed = previewSchema.parse(await request.json());

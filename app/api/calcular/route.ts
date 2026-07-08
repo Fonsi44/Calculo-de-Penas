@@ -6,6 +6,7 @@ import type { DelitoBase, AgravanteEspecificaMotor, SupuestoPenalMotor } from '@
 import { calcularSchema, validate } from '@/lib/validation';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 const CALC_MAX = 30;
 const CALC_WINDOW_MS = 60_000;
@@ -13,6 +14,7 @@ const CALC_WINDOW_MS = 60_000;
 export async function POST(request: Request) {
   try {
     const user = requireAuth(request);
+    validateCsrf(request);
 
     const rl = await rateLimit(user.userId, { keyPrefix: 'calc', windowMs: CALC_WINDOW_MS, max: CALC_MAX });
     if (!rl.ok) {
