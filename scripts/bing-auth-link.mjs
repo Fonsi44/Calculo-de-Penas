@@ -41,7 +41,7 @@ const TOKEN_URL = `https://login.microsoftonline.com/${TENANT}/oauth2/v2.0/token
 const DEVICE_URL = `https://login.microsoftonline.com/${TENANT}/oauth2/v2.0/devicecode`;
 
 // Scope: Bing WMT API + offline_access para refresh token
-const SCOPE = 'https://ssl.bing.com/.default offline_access';
+const SCOPE = 'https://api.bing.microsoft.com/.default offline_access';
 
 function ensureSecretsDir() {
   if (!fs.existsSync(SECRETS_DIR)) {
@@ -270,3 +270,4 @@ async function main() {
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
+
