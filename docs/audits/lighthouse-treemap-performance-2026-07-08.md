@@ -343,3 +343,37 @@ externo `VALIDADO`; chunks Next.js `VALIDADO` (no accionables sin tocar
 zonas protegidas); cambio gtag deferred loader `APLICADO` y `VALIDADO`
 en build/lint/test/SEO; verificación post-despliegue `PENDIENTE HUMANO`;
 propuestas adicionales `PROPUESTA`. **No se hizo commit. No se hizo push.**
+
+---
+
+## 13. Apéndice — Validación post-despliegue (2026-07-08 mediodía)
+
+El deploy se aplicó (commit `6152875 problema java script solucionado`).
+Working tree `clean`. Se ejecutó validación empírica en producción vía
+Playwright headless (evidencia en
+`docs/audits/post-deploy-lighthouse-treemap-2026-07-08.md`):
+
+- HTML inicial de la home (fetch raw) **no contiene** `<script src="...gtag/js...">`
+  (sólo chunks `/_next/static/chunks/*` y `preconnect` a GTM/Clarity).
+- Runtime sin interacción: `gtag/js` se descarga a **9.352 ms** vía timeout
+  (esperado: el listener no se dispara sin interacción).
+- Runtime con `mousemove`: `gtag/js` se descarga a **5.296 ms** (listener
+  capture activo — dispara inmediatamente).
+- `window.dataLayer` existe con 5 entradas (`consent default`, `js`,
+  `config G-L2PGBN3SWK`, `gtm.dom`, `gtm.load`) → Consent Mode v2 y stub gtag
+  funcionan antes y después de la carga real.
+- `window.gtag` es `function` (stub encolando a `dataLayer`).
+- 0 errores de hidratación Next.js. 1 error de consola del SDK Clarity
+  (`a[c] is not a function`) — preexistente, no relacionado con el cambio.
+- Canonical, robots.txt, sitemap (213 URLs), IndexNow: sin cambios ✓.
+
+**Lighthouse Treemap definitivo (antes/después):** `PARCIAL` — no se pudo
+regenerar local (sin `lighthouse` CLI instalada; `mcp-seo_analyze_performance`
+falla por bug `asyncio.run()` del server). Instrucciones manuales para
+el humano en el apéndice §7 del post-deploy. **Pendiente humano hasta
+ejecutar Lighthouse real y comparar.**
+
+**Estado final del cambio:** `APLICADO` (commit en `main`) + `PARCIAL` para
+treemap real hasta validación visual humana. El comportamiento runtime está
+`VALIDADO` (evidencia Playwright: gtag no bloquea carga inicial, listener
+funciona, dataLayer intacto, eventos encolan).
