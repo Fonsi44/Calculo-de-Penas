@@ -160,12 +160,13 @@ siempre se ejecuta (es determinista, no consume API).`);
 // ═══════════════════════════════════════════════════════════════════════════
 //  DB
 // ═══════════════════════════════════════════════════════════════════════════
-if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder')) {
-  console.error('❌ DATABASE_URL no configurada (o placeholder). Este script requiere acceso real a Neon.');
-  process.exit(1);
+function getDb() {
+  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder')) {
+    throw new Error('DATABASE_URL no configurada (o placeholder). Este script requiere acceso real a Neon.');
+  }
+  const sqlConn = neon(process.env.DATABASE_URL);
+  return drizzle(sqlConn);
 }
-const sqlConn = neon(process.env.DATABASE_URL);
-const db = drizzle(sqlConn);
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  DeepSeek (opcional)
@@ -4016,6 +4017,7 @@ function borrarCheckpoint(): void {
 //  MAIN
 // ═══════════════════════════════════════════════════════════════════════════
 async function main() {
+  const db = getDb();
   const modo = APLICAR ? 'APLICAR' : SOLO_VERIFICAR ? 'SOLO VERIFICAR' : 'DRY-RUN';
   console.log(`\n${'═'.repeat(72)}`);
   console.log(`  VERIFICACIÓN + CORRECCIÓN DEL BLOG — MODO ${modo}`);

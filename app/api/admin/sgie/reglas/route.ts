@@ -5,6 +5,7 @@ import { reglasConfigVersion } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
 import { CONFIG_DEFAULT } from '@/lib/sgie/motor-reglas';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { validateCsrf } from '@/lib/csrf';
 
 const updateSchema = z.object({
   config: z.record(z.string(), z.unknown()),
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     if (auth.rol !== 'admin') return Response.json({ error: 'Solo admin' }, { status: 403 });
     const body = updateSchema.parse(await request.json());
 

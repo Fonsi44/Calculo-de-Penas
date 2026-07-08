@@ -3,6 +3,7 @@ import { delitos } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { getEstadoDelito } from '@/lib/estados-delitos';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function GET(
   _request: Request,
@@ -42,6 +43,7 @@ export async function PUT(
 ) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     const { id } = await params;
     const body = await request.json();
 
@@ -80,6 +82,7 @@ export async function DELETE(
 ) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     const { id } = await params;
     const [row] = await db.delete(delitos).where(eq(delitos.id, id)).returning({ id: delitos.id });
     if (!row) {

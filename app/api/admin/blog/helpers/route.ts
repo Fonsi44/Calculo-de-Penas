@@ -1,6 +1,7 @@
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { extractTags } from '@/lib/blog-helpers';
+import { validateCsrf } from '@/lib/csrf';
 
 const helperSchema = z.object({
   action: z.enum(['tags']),
@@ -13,6 +14,7 @@ const helperSchema = z.object({
 export async function POST(request: Request) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     const body = await request.json();
     const parsed = helperSchema.parse(body);
 

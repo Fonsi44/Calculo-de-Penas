@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { inspectUrl, isSearchConsoleConfigured } from '@/lib/google';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function POST(request: Request) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
   } catch (err) {
     return authFailureResponse(err);
   }

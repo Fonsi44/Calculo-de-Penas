@@ -79,9 +79,9 @@ export const usuarios = pgTable('usuarios', {
   email: varchar('email', { length: 255 }).notNull().unique(),
   passwordHash: varchar('password_hash', { length: 255 }).notNull(),
   nombre: varchar('nombre', { length: 200 }).notNull(),
-  rol: varchar('rol', { length: 50 }).notNull().default('abogado'),
+  rol: varchar('rol', { length: 50 }).notNull().default('pendiente'),
   bufeteId: uuid('bufete_id'),
-  active: boolean('active').default(true),
+  active: boolean('active').default(false),
   mustChangePassword: boolean('must_change_password').default(false),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
   // SGIE — gobernanza de accesos (Fase 2). Columnas aditivas, no rompen filas existentes.

@@ -1,12 +1,14 @@
 import React from 'react';
 import { renderToBuffer, type DocumentProps } from '@react-pdf/renderer';
 import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {
     requireAuth(request);
+    validateCsrf(request);
 
     let body: unknown;
     try { body = await request.json(); } catch {

@@ -19,11 +19,14 @@ import {
 } from '../lib/rate-limit';
 
 describe('rateLimit', () => {
+  const env = process.env as Record<string, string | undefined>;
+
   beforeEach(() => {
     insertMock.mockClear();
     valuesMock.mockClear();
     onConflictDoUpdateMock.mockClear();
     returningMock.mockClear();
+    env.NODE_ENV = 'test';
   });
 
   function mockReturn(count: number, expiresAt?: Date) {
@@ -94,6 +97,30 @@ describe('rateLimit', () => {
     mockReturn(1);
     const b = await rateLimit('user-1', { keyPrefix: 'calcular', max: 3, windowMs: 60_000 });
     expect(b.ok).toBe(true);
+  });
+
+  it('en producción falla cerrado si DB falla en prefijo sensible', async () => {
+    env.NODE_ENV = 'production';
+    insertMock.mockImplementationOnce(() => {
+      throw new Error('db down');
+    });
+
+    const r = await rateLimit('ip-login', { keyPrefix: 'login', max: 5, windowMs: 60_000 });
+
+    expect(r.ok).toBe(false);
+    expect(r.remaining).toBe(0);
+    expect(r.retryAfterSec).toBe(60);
+  });
+
+  it('en test mantiene fallback abierto si DB falla', async () => {
+    insertMock.mockImplementationOnce(() => {
+      throw new Error('db down');
+    });
+
+    const r = await rateLimit('ip-test', { keyPrefix: 'login', max: 5, windowMs: 60_000 });
+
+    expect(r.ok).toBe(true);
+    expect(r.remaining).toBe(5);
   });
 });
 

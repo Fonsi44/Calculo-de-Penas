@@ -2,6 +2,7 @@ import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { alertas } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function POST(
   request: Request,
@@ -9,6 +10,7 @@ export async function POST(
 ) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     const { id: alertaId } = await params;
 
     const [alerta] = await db.select().from(alertas).where(eq(alertas.id, alertaId));

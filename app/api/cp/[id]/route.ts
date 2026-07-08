@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { articulosCp, delitos } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 
 export async function GET(
   _request: Request,
@@ -35,6 +36,7 @@ export async function PUT(
 ) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
     const { id } = await params;
     const numId = parseInt(id, 10);
     if (isNaN(numId)) {

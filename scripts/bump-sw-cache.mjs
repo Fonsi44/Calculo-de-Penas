@@ -54,7 +54,7 @@ let sw = readFileSync(SW_PATH, 'utf8');
 // archivo (build local sin commit intermedio). La regex coincide con cualquier
 // valor de BUILD_ID inyectado y lo revierte al placeholder.
 sw = sw.replace(
-  /const CACHE = 'pineda-pwa-[A-Za-z0-9_]+' \+ \('__BUILD_ID__' === '__BUILD_ID__'/,
+  /const CACHE = 'pineda-pwa-[A-Za-z0-9_-]+' \+ \('__BUILD_ID__' === '__BUILD_ID__'/,
   `const CACHE = 'pineda-pwa-' + ('__BUILD_ID__' === '__BUILD_ID__'`,
 );
 

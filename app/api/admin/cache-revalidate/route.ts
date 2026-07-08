@@ -2,12 +2,14 @@ import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { CACHE_TAGS } from '@/lib/cache-dashboard';
+import { validateCsrf } from '@/lib/csrf';
 
 const VALID_TAGS: ReadonlySet<string> = new Set(Object.values(CACHE_TAGS));
 
 export async function POST(request: Request) {
   try {
     requireAdmin(request);
+    validateCsrf(request);
   } catch (err) {
     return authFailureResponse(err);
   }

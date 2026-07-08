@@ -41,7 +41,7 @@ function authedRequest(body: unknown): Request {
   const t = signToken({ userId: 'test-user', email: 't@x.com', rol: 'abogado' });
   return new Request('http://x/api/calcular', {
     method: 'POST',
-    headers: { 'content-type': 'application/json', cookie: `token=${t}` },
+    headers: { 'content-type': 'application/json', cookie: `token=${t}`, origin: 'http://localhost:3000' },
     body: JSON.stringify(body),
   });
 }
@@ -90,7 +90,7 @@ describe('POST /api/calcular', () => {
     const t = signToken({ userId: 'test-user-2', email: 't@x.com', rol: 'abogado' });
     const req = new Request('http://x/api/calcular', {
       method: 'POST',
-      headers: { 'content-type': 'application/json', cookie: `token=${t}` },
+      headers: { 'content-type': 'application/json', cookie: `token=${t}`, origin: 'http://localhost:3000' },
       body: '{esto no es json',
     });
     const r = await POST(req);

@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { documentosExpediente, expedienteAsignaciones } from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { validateCsrf } from '@/lib/csrf';
 
 const bodySchema = z.object({ motivo: z.string().min(1).max(500) });
 
@@ -13,6 +14,7 @@ export async function POST(
 ) {
   try {
     const auth = requireAbogado(request);
+    validateCsrf(request);
     const { id: documentoId } = await params;
     const { motivo } = bodySchema.parse(await request.json());
 

@@ -127,11 +127,15 @@ async function processEvent(event: ResendEmailReceived): Promise<Response> {
     }
 
     // Reenviar el correo original al destinatario de notificaciones.
-    // IMPORTANTE: todos los campos externos se escapan antes de interpolarlos
-    // en el HTML del reenvío para evitar XSS en el cliente de correo.
+    // El HTML externo NO se inserta: se transforma a texto y se escapa para
+    // evitar scripts, trackers e imágenes remotas en el cliente interno.
     const client = getClient();
     if (client && fromEmail) {
       const notificationTo = getNotificationEmail();
+      if (!notificationTo) {
+        console.error('[email/inbound] CONTACT_NOTIFICATION_EMAIL no configurado; reenvío omitido.');
+        return NextResponse.json({ ok: false }, { status: 503 });
+      }
       const textBody = data.text || data.html?.replace(/<[^>]+>/g, '') || '(sin contenido)';
 
       try {
@@ -140,11 +144,6 @@ async function processEvent(event: ResendEmailReceived): Promise<Response> {
           to: [notificationTo],
           replyTo: fromEmail,
           subject: `[Reenviado] ${data.subject || 'Sin asunto'} — ${fromEmail}`,
-          // El cuerpo HTML original (`data.html`) se inserta tal cual en un
-          // contenedor, pero los metadatos (from/to/subject) se interpolan
-          // escapados. El HTML del remitente es responsabilidad del cliente
-          // de correo (lo renderiza en sandbox); los metadatos sí son nuestra
-          // superficie de inyección y por eso se escapan.
           html: `
             <h2>Correo reenviado desde ${escapeHtml(fromEmail)}</h2>
             <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif;font-size:14px;">
@@ -153,7 +152,7 @@ async function processEvent(event: ResendEmailReceived): Promise<Response> {
               <tr><td><strong>Asunto</strong></td><td>${escapeHtml(data.subject || 'Sin asunto')}</td></tr>
             </table>
             <hr/>
-            <div style="font-family:sans-serif;font-size:14px;white-space:pre-wrap;">${data.html || escapeHtml(textBody)}</div>
+            <div style="font-family:sans-serif;font-size:14px;white-space:pre-wrap;">${escapeHtml(textBody)}</div>
           `,
           text: [
             `Correo reenviado desde ${fromEmail}`,

@@ -12,7 +12,7 @@ const createSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   nombre: z.string().min(1).max(200),
-  rol: z.enum(['admin', 'abogado']).default('abogado'),
+  rol: z.enum(['admin', 'abogado']),
 });
 
 const querySchema = z.object({
@@ -75,6 +75,7 @@ export async function POST(request: Request) {
       passwordHash,
       nombre: parsed.nombre.trim(),
       rol: parsed.rol,
+      active: true,
     }).returning({ id: usuarios.id, email: usuarios.email, nombre: usuarios.nombre, rol: usuarios.rol, creadoEn: usuarios.creadoEn });
 
     await logAudit({
