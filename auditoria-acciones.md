@@ -451,3 +451,44 @@ cambio gtag deferred loader `APLICADO` + `VALIDADO` (build/lint/type/test/SEO);
 chunks locales idénticos `VALIDADO` (sin inflar bundle); verificación
 post-despliegue `PENDIENTE HUMANO`; P1-P6 `PROPUESTA`; bump-sw-cache `PREEXISTENTE`.
 **No se hizo commit. No se hizo push.**
+
+---
+
+## 2026-07-08 — Validación de hotfix y seguridad en scripts/security/validate-staging-security.ps1
+
+**Operación:** Auditoría completa de seguridad post-merge, validación de controles del script de staging y aplicación/confirmación del hotfix de control de placeholders en DATABASE_URL.
+
+**Validaciones ejecutadas:**
+- `git status` → Rama `hotfix/validate-staging-url-guard` con script de validación modificado.
+- Casos de prueba seguros del script `security:validate-staging`:
+  - DATABASE_URL ausente → Aborta limpio con error de configuración.
+  - DATABASE_URL con placeholder `<NEON_STAGING_OR_PREVIEW_DATABASE_URL>` → Aborta limpio detectando placeholder.
+  - DATABASE_URL con "not-a-url" → Aborta limpio sin error de parsing en AbsolutePath.
+- Verificación manual de controles post-merge:
+  - `/api/auth/register` bloqueado (403).
+  - `lib/schema.ts` mantiene `rol = 'pendiente'` y `active = false` por defecto.
+  - Migración `0024_security_user_defaults.sql` presente y configurada.
+  - `lib/rate-limit.ts` implementa fail-closed para rutas sensibles en producción.
+  - `lib/captcha.ts` implementa fail-closed para producción sin Turnstile secret keys.
+  - `lib/email.ts` no utiliza email personal de fallback.
+  - `app/api/email/inbound/route.ts` escapa cabeceras y contenido HTML/texto reenviado.
+  - `vercel.json` y `package.json` configurados con scripts correctos.
+- Ejecución completa del pipeline QA local:
+  - `npm run lint` → Exitoso (0 errores).
+  - `npx tsc --noEmit` → Exitoso (0 errores).
+  - `npm run test` → Exitoso (792 tests pasados).
+  - `npm run build:ci` → Exitoso (Compilación de producción completa sin problemas).
+
+**Cambios aplicados:**
+- Confirmado y comiteado el hotfix en `scripts/security/validate-staging-security.ps1` que añade salvaguardas para parsear y verificar el DATABASE_URL previniendo excepciones no controladas.
+
+**Archivos modificados:**
+- `scripts/security/validate-staging-security.ps1` (comiteado).
+- `auditoria-acciones.md` (este registro).
+
+**Acciones de git realizadas:**
+- Commit: `fix: validar database url placeholder en staging security` (hash: `a4c266a`).
+- Push: Rama `hotfix/validate-staging-url-guard` enviada a `origin`.
+- PR preparada contra `main` en GitHub.
+
+**Clasificación:** `VALIDADO` y `APLICADO`. Hotfix completo y listo para PR.
