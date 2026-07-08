@@ -21,8 +21,13 @@ export function getFromAddress(): string {
   return process.env.RESEND_FROM_EMAIL ?? `no-reply@${VERIFIED_DOMAIN}`;
 }
 
-export function getNotificationEmail(): string {
-  return process.env.CONTACT_NOTIFICATION_EMAIL ?? 'alfonsroiget@gmail.com';
+export function getNotificationEmail(): string | null {
+  const configured = process.env.CONTACT_NOTIFICATION_EMAIL?.trim();
+  if (configured) return configured;
+  if (process.env.NODE_ENV === 'production') {
+    console.error('[email] CONTACT_NOTIFICATION_EMAIL no configurado en producción.');
+  }
+  return null;
 }
 
 export function getFromName(): string {
@@ -53,6 +58,9 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
   }
 
   const to = getNotificationEmail();
+  if (!to) {
+    return { ok: false, error: 'CONTACT_NOTIFICATION_EMAIL no configurado' };
+  }
   const from = getFromAddress();
   const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
   const subject = `[Web] ${payload.asunto} — ${payload.nombre}`;
@@ -135,6 +143,9 @@ export async function sendConsultaEmail(payload: ConsultaEmailPayload): Promise<
   }
 
   const to = getNotificationEmail();
+  if (!to) {
+    return { ok: false, error: 'CONTACT_NOTIFICATION_EMAIL no configurado' };
+  }
   const from = getFromAddress();
   const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
   const subject = `[Solicitud de consulta] ${payload.motivo} — ${payload.nombre}`;

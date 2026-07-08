@@ -4,9 +4,9 @@
  * Comportamiento por entorno:
  *  - Si `TURNSTILE_SECRET_KEY` Y `TURNSTILE_SITE_KEY` están definidos → valida
  *    el token del cliente contra siteverify.
- *  - Si falta alguna clave → **bypass seguro**: devuelve `true` y loggea aviso.
- *    Esto permite que el deploy no rompa mientras se configuran las claves en
- *    Vercel. Rate-limit existente sigue activo como red de seguridad.
+ *  - Si falta alguna clave en producción → fail-closed (`false`).
+ *  - Si falta alguna clave en desarrollo/test → bypass local para no bloquear
+ *    pruebas ni flujos de desarrollo.
  *
  * Variables de entorno (.env.example):
  *  - TURNSTILE_SITE_KEY        (server-side check + referencia)
@@ -24,20 +24,20 @@ export function isCaptchaEnabled(): boolean {
  * Verifica un token de Turnstile contra Cloudflare.
  * @param token Token `cf-turnstile-response` enviado por el widget cliente.
  * @param ip IP del cliente (opcional, refuerza la verificación).
- * @returns `true` si el token es válido o si el captcha está deshabilitado
- *          (claves no configuradas). `false` si está habilitado y el token
- *          falta o es inválido.
+ * @returns `true` si el token es válido. En desarrollo/test también devuelve
+ *          `true` si faltan claves. En producción, faltan claves = `false`.
  */
 export async function verifyTurnstileToken(
   token: string | undefined | null,
   ip?: string | null,
 ): Promise<boolean> {
   if (!isCaptchaEnabled()) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('[captcha] TURNSTILE_SITE_KEY/TURNSTILE_SECRET_KEY no configuradas en producción — fail-closed.');
+      return false;
+    }
     if (process.env.NODE_ENV !== 'test') {
-      console.warn(
-        '[captcha] TURNSTILE_SITE_KEY/TURNSTILE_SECRET_KEY no configuradas — bypass activo. ' +
-          'Rate-limit permanece como red de seguridad.',
-      );
+      console.warn('[captcha] TURNSTILE_SITE_KEY/TURNSTILE_SECRET_KEY no configuradas — bypass solo desarrollo.');
     }
     return true;
   }

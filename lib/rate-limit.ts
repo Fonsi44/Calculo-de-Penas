@@ -20,6 +20,19 @@ const DEFAULTS = {
   max: 5,
 };
 
+const SENSITIVE_PREFIXES = new Set([
+  'login',
+  'auth',
+  'contacto',
+  'consulta',
+  'chat_ip',
+  'chat_sess',
+]);
+
+function shouldFailClosed(keyPrefix: string): boolean {
+  return process.env.NODE_ENV === 'production' && SENSITIVE_PREFIXES.has(keyPrefix);
+}
+
 export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): Promise<RateLimitResult> {
   // Bypass en tests E2E para no bloquear flujos que hacen múltiples logins.
   // Activado por scripts/e2e-start.mjs vía env var.
@@ -64,7 +77,17 @@ export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): P
       retryAfterSec: ok ? 0 : Math.ceil((dbResetAt - Date.now()) / 1000),
     };
   } catch (e) {
-    console.warn('[rate-limit] fallback mode (DB rate limit no disponible):', (e as Error).message);
+    if (shouldFailClosed(keyPrefix)) {
+      console.error('[rate-limit] fail-closed: DB rate limit no disponible para ruta sensible:', keyPrefix);
+      return {
+        ok: false,
+        remaining: 0,
+        resetAt,
+        retryAfterSec: Math.ceil(windowMs / 1000),
+      };
+    }
+
+    console.warn('[rate-limit] fallback mode no-prod/no-sensible (DB rate limit no disponible):', (e as Error).message);
     return { ok: true, remaining: max, resetAt, retryAfterSec: 0 };
   }
 }
