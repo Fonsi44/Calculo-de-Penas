@@ -21,15 +21,42 @@ function Confirm-Exact {
 function Get-SafeDatabaseInfo {
   param([string] $DatabaseUrl)
 
+  if ([string]::IsNullOrWhiteSpace($DatabaseUrl)) {
+    Stop-Safely 'DATABASE_URL no esta configurada. Configure una URL de Neon staging/preview y vuelva a ejecutar.'
+  }
+
+  if ($DatabaseUrl -match '[<>]' -or $DatabaseUrl -match '(?i)(NEON_STAGING_OR_PREVIEW_DATABASE_URL|DATABASE_URL|YOUR_|PLACEHOLDER|REPLACE_ME)') {
+    Stop-Safely 'DATABASE_URL no parece una URL real de Neon staging/preview. Sustituya el placeholder por una URL real de staging/preview. No se ha conectado a la base de datos.'
+  }
+
+  $uri = $null
+
   try {
-    $uri = [Uri] $DatabaseUrl
+    $uri = [System.Uri]::new($DatabaseUrl)
   } catch {
-    Stop-Safely 'DATABASE_URL existe, pero no parece una URL valida.'
+    Stop-Safely 'DATABASE_URL existe, pero no parece una URL valida. No se ha conectado a la base de datos.'
+  }
+
+  if ($null -eq $uri) {
+    Stop-Safely 'DATABASE_URL no pudo interpretarse como URL valida. No se ha conectado a la base de datos.'
+  }
+
+  if (-not $uri.IsAbsoluteUri) {
+    Stop-Safely 'DATABASE_URL debe ser una URL absoluta postgres:// o postgresql://. No se ha conectado a la base de datos.'
+  }
+
+  if ($uri.Scheme -notin @('postgres', 'postgresql')) {
+    Stop-Safely 'DATABASE_URL debe usar esquema postgres:// o postgresql://. No se ha conectado a la base de datos.'
+  }
+
+  if ([string]::IsNullOrWhiteSpace($uri.Host)) {
+    Stop-Safely 'DATABASE_URL no contiene host valido. No se ha conectado a la base de datos.'
   }
 
   $dbName = $uri.AbsolutePath.TrimStart('/')
+
   if ([string]::IsNullOrWhiteSpace($dbName)) {
-    $dbName = '(sin nombre visible)'
+    Stop-Safely 'DATABASE_URL no contiene nombre de base de datos. No se ha conectado a la base de datos.'
   }
 
   [PSCustomObject]@{
@@ -90,17 +117,15 @@ function Show-TableSafe {
 Write-Host 'Validacion staging/preview - seguridad Fase 0'
 Write-Host 'No se imprimira DATABASE_URL completa.'
 
-if ([string]::IsNullOrWhiteSpace($env:DATABASE_URL)) {
-  Stop-Safely 'DATABASE_URL no esta configurada. Configure una URL de Neon staging/preview y vuelva a ejecutar.'
-}
-
 $dbInfo = Get-SafeDatabaseInfo -DatabaseUrl $env:DATABASE_URL
+
 Write-Host ''
 Write-Host 'Destino detectado (seguro):'
 Write-Host ("  Host: {0}" -f $dbInfo.Host)
 Write-Host ("  Base: {0}" -f $dbInfo.Database)
 
 $label = $dbInfo.SafeLabel
+
 if ($label -match '(?i)(prod|production)') {
   Stop-Safely 'La URL parece contener marcador de produccion. Abortado.'
 }
