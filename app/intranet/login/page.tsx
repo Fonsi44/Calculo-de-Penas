@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Scale, Mail, Lock, User, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { Scale, Mail, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Field, Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -9,10 +9,8 @@ import { useToast } from '@/components/ui/toast';
 
 export default function IntranetLoginPage() {
   const toast = useToast();
-  const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [nombre, setNombre] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,26 +20,15 @@ export default function IntranetLoginPage() {
     setLoading(true);
     setError(null);
 
-    if (mode === 'register' && password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
-      setLoading(false);
-      return;
-    }
-
-    const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
-    const body = mode === 'login'
-      ? { email, password }
-      : { email, password, nombre };
-
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Error');
-      toast.success(mode === 'login' ? 'Sesión iniciada' : 'Cuenta creada');
+      toast.success('Sesión iniciada');
       // SGIE — routing post-login por rol: admin → panel admin, abogado → SGIE.
       // El proxy ya hace el mismo derivado si se accede al login con sesión activa.
       const destino = data.user?.rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
@@ -67,45 +54,7 @@ export default function IntranetLoginPage() {
         </div>
 
         <Card padding="md" className="shadow-md">
-          <div className="flex mb-4 bg-surface-alt rounded-md p-0.5" role="tablist">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={mode === 'login'}
-              onClick={() => setMode('login')}
-              className={`flex-1 h-9 text-sm font-semibold rounded transition-colors ${
-                mode === 'login' ? 'bg-surface text-primary shadow-sm' : 'text-text-muted'
-              }`}
-            >
-              Iniciar sesión
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={mode === 'register'}
-              onClick={() => setMode('register')}
-              className={`flex-1 h-9 text-sm font-semibold rounded transition-colors ${
-                mode === 'register' ? 'bg-surface text-primary shadow-sm' : 'text-text-muted'
-              }`}
-            >
-              Registrarse
-            </button>
-          </div>
-
           <form onSubmit={handleSubmit} className="space-y-3" noValidate>
-            {mode === 'register' && (
-              <Field label="Nombre completo" htmlFor="nombre" required>
-                <Input
-                  id="nombre"
-                  value={nombre}
-                  onChange={e => setNombre(e.target.value)}
-                  placeholder="Ej: Juan Pérez"
-                  iconLeft={<User size={16} />}
-                  required
-                />
-              </Field>
-            )}
-
             <Field label="Email" htmlFor="email" required hint="Use su correo corporativo @pinedayasociadoshn.com">
               <Input
                 id="email"
@@ -122,7 +71,6 @@ export default function IntranetLoginPage() {
               label="Contraseña"
               htmlFor="password"
               required
-              hint={mode === 'register' ? 'Mínimo 6 caracteres' : undefined}
             >
               <Input
                 id="password"
@@ -157,9 +105,7 @@ export default function IntranetLoginPage() {
               size="lg"
               loading={loading}
             >
-              {loading
-                ? (mode === 'login' ? 'Ingresando...' : 'Registrando...')
-                : (mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta')}
+              {loading ? 'Ingresando...' : 'Iniciar sesión'}
             </Button>
           </form>
         </Card>
