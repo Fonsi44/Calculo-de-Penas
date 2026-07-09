@@ -15,9 +15,11 @@
  */
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { extraccionesIa, documentosExpediente, alertas, camposExtraidos } from '@/lib/schema';
-import { eq } from 'drizzle-orm';
+import { extraccionesIa, documentosExpediente, alertas, camposExtraidos, validaciones, expedientes, clientes } from '@/lib/schema';
+import { eq, and, desc } from 'drizzle-orm';
 import { createHash } from 'crypto';
+import { calcularScoreYEstado, type ScoreInput, type SuggestedStatus } from '@/lib/sgie/ia/score';
+import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
 // ─── Configuración desde entorno ─────────────────────────────────────────────
 
@@ -259,7 +261,28 @@ export async function procesarDocumentoConIa(
 
   // Modo ai: llamar a DeepSeek solo si la confianza heurística es baja o no hay clasificación
   if (cfg.mode === 'ai') {
-    const necesitaIa = !clasificacionHeuristica || clasificacionHeuristica.confianza < 60 || !textoExtraido;
+    // Fase 4 — SKIP si no hay texto útil (ocr_pendiente/sin extracción).
+    if (!textoExtraido || textoExtraido.trim().length < 10) {
+      const [d] = await db.select({ expedienteId: documentosExpediente.expedienteId }).from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
+      await auditarIa(documentoId, d?.expedienteId ?? '', 'ai_analysis_skipped_no_text', {});
+      return { documentoId, exito: true, estadoFinal: 'texto_extraido', modo: 'ai', camposExtraidos: 0, alertasSugeridas: 0, duracionMs: Date.now() - t0 };
+    }
+
+    // Fase 4 — Idempotencia: si ya existe un run completed con mismo input_hash, no reanalizar.
+    const inputHashCheck = createHash('sha256').update(textoExtraido).digest('hex');
+    const [prev] = await db.select({ id: extraccionesIa.id }).from(extraccionesIa)
+      .where(and(eq(extraccionesIa.documentoId, documentoId), eq(extraccionesIa.inputHash, inputHashCheck), eq(extraccionesIa.runStatus, 'completed')))
+      .orderBy(desc(extraccionesIa.creadoEn)).limit(1);
+    if (prev) {
+      const [d] = await db.select({ expedienteId: documentosExpediente.expedienteId }).from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
+      await auditarIa(documentoId, d?.expedienteId ?? '', 'ai_analysis_completed', { motivo: 'idempotente_run_previo', runId: prev.id });
+      return { documentoId, exito: true, estadoFinal: 'ia_procesada', modo: 'ai', camposExtraidos: 0, alertasSugeridas: 0, duracionMs: Date.now() - t0 };
+    }
+
+    const [dStart] = await db.select({ expedienteId: documentosExpediente.expedienteId }).from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
+    await auditarIa(documentoId, dStart?.expedienteId ?? '', 'ai_analysis_started', { provider: cfg.provider, model: cfg.model });
+
+    const necesitaIa = !clasificacionHeuristica || clasificacionHeuristica.confianza < 60;
 
     if (!necesitaIa) {
       // Confianza alta: no llamar IA, ya está bien clasificado
@@ -278,6 +301,7 @@ export async function procesarDocumentoConIa(
     });
 
     // Registrar extracción (éxito o fallo)
+    const inputHash = createHash('sha256').update(textoExtraido).digest('hex');
     const [extraccion] = await db.insert(extraccionesIa).values({
       documentoId,
       proveedor: cfg.provider,
@@ -289,12 +313,18 @@ export async function procesarDocumentoConIa(
       exito: resultado.ok,
       error: resultado.ok ? null : resultado.error,
       resultadoJson: resultado.ok ? resultado.output as unknown as Record<string, unknown> : null,
+      inputHash,
+      runStatus: resultado.ok ? 'completed' : 'failed',
     }).returning({ id: extraccionesIa.id });
 
     if (!resultado.ok) {
       await db.update(documentosExpediente)
         .set({ estado: 'pendiente_abogado', procesadoEn: new Date() })
         .where(eq(documentosExpediente.id, documentoId));
+      const [dFail] = await db.select({ expedienteId: documentosExpediente.expedienteId }).from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
+      await auditarIa(documentoId, dFail?.expedienteId ?? '', 'ai_analysis_failed', {
+        provider: cfg.provider, model: cfg.model, motivo: resultado.error.slice(0, 200), runId: extraccion?.id,
+      });
       return { documentoId, exito: false, estadoFinal: 'pendiente_abogado', modo: 'ai', camposExtraidos: 0, alertasSugeridas: 0, error: resultado.error, duracionMs: resultado.duracionMs };
     }
 
@@ -334,7 +364,68 @@ export async function procesarDocumentoConIa(
       } catch { /* skip */ }
     }
 
-    // Actualizar estado
+    // ── Fase 4: score compuesto documento-expediente + suggested_status ──
+    const [docFull] = await db.select({ expedienteId: documentosExpediente.expedienteId })
+      .from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
+    const expedienteId = docFull?.expedienteId ?? '';
+
+    // Datos esperados del expediente/cliente para contrastar.
+    const [exp] = expedienteId ? await db.select({ clienteId: expedientes.clienteId, area: expedientes.area })
+      .from(expedientes).where(eq(expedientes.id, expedienteId)) : [undefined];
+    const [cliente] = exp?.clienteId ? await db.select({ nombre: clientes.nombre, identidad: clientes.identidad, rtn: clientes.rtn })
+      .from(clientes).where(eq(clientes.id, exp.clienteId)) : [undefined];
+
+    // Campos extraídos por la IA (clave→valor) para contrastar.
+    const camposMap = new Map<string, string>();
+    for (const c of output.campos) {
+      if (c.valor) camposMap.set(c.clave.toLowerCase(), c.valor);
+    }
+    const identidadExtraida = camposMap.get('identidad') ?? camposMap.get('identidad_or_rtn') ?? null;
+    const rtnExtraido = camposMap.get('rtn') ?? null;
+    const nombreExtraido = camposMap.get('client_name') ?? camposMap.get('nombre') ?? null;
+
+    const scoreInput: ScoreInput = {
+      iaConfidence: output.confianza_tipo,
+      clienteCoincide: cliente?.nombre && nombreExtraido ? normalizar(nombreExtraido).includes(normalizar(cliente.nombre)) : null,
+      identidadCoincide: cliente?.identidad && identidadExtraida ? identidadExtraida.includes(cliente.identidad)
+        : cliente?.rtn && rtnExtraido ? rtnExtraido.includes(cliente.rtn) : null,
+      tipoDocumentalCoincide: clasificacionHeuristica ? clasificacionHeuristica.tipoDocumento === output.tipo_documento : null,
+      numeroJudicialCoincide: null, // sin número judicial esperado en este punto del MVP
+      materiaCoincide: exp?.area ? output.resumen_descriptivo?.toLowerCase().includes(exp.area.toLowerCase()) ?? false : null,
+      juzgadoCoincide: null,
+      contradicciones: output.alertas_sugeridas.some(a => a.severidad === 'error' || a.severidad === 'critico'),
+      contradiccionCritica: output.alertas_sugeridas.some(a => a.severidad === 'critico'),
+      identidadEsperadaAusente: Boolean(cliente?.identidad) && !identidadExtraida,
+      camposExtraidos: camposGuardados,
+    };
+    const { score, checks, suggested_status } = calcularScoreYEstado(scoreInput);
+
+    // Guardar suggested_status/score en la extracción (metadata IA, no estado operativo).
+    if (extraccion?.id) {
+      await db.update(extraccionesIa).set({
+        suggestedStatus: suggested_status,
+        totalConfidence: score,
+        runStatus: 'completed',
+      }).where(eq(extraccionesIa.id, extraccion.id));
+    }
+
+    // Llenar validaciones con los checks (pass/warn/fail/unknown).
+    for (const check of checks) {
+      try {
+        await db.insert(validaciones).values({
+          expedienteId,
+          documentoId,
+          reglaId: `ia_${check.check_name}`,
+          severidad: check.status === 'fail' ? 'error' : check.status === 'warn' ? 'advertencia' : 'info',
+          resultado: check.status,
+          evidencias: { score: check.score, run_id: extraccion?.id },
+          mensaje: check.reason,
+          ejecutadoPor: 'ia',
+        });
+      } catch { /* skip check individual */ }
+    }
+
+    // Actualizar estado operativo del documento (ia_procesada; el humano decide).
     await db.update(documentosExpediente)
       .set({
         estado: 'ia_procesada',
@@ -344,10 +435,20 @@ export async function procesarDocumentoConIa(
           iaResumen: output.resumen_descriptivo,
           iaProximosPasos: output.proximos_pasos_sugeridos,
           iaConfianza: output.confianza_tipo,
+          iaScore: score,
+          iaSuggestedStatus: suggested_status,
           iaExtraccionId: extraccion?.id,
         },
       } as never)
       .where(eq(documentosExpediente.id, documentoId));
+
+    await auditarIa(documentoId, expedienteId, 'ai_analysis_completed', {
+      provider: cfg.provider, model: cfg.model, score, suggestedStatus: suggested_status,
+      runId: extraccion?.id, campos: camposGuardados,
+    });
+
+    // Fase 5 — recalcular readiness del expediente.
+    import('@/lib/sgie/readiness').then((m) => m.recalcularReadinessSiProcede(expedienteId).catch(() => {}));
 
     return {
       documentoId,
@@ -364,3 +465,40 @@ export async function procesarDocumentoConIa(
 
   return { documentoId, exito: false, estadoFinal: 'pendiente_abogado', modo: cfg.mode, camposExtraidos: 0, alertasSugeridas: 0, error: 'Modo no soportado', duracionMs: Date.now() - t0 };
 }
+
+// ─── Helpers Fase 4 ──────────────────────────────────────────────────────────
+
+/** Actor sistema para eventos automáticos del análisis IA (uuid cero). */
+const ACTOR_SISTEMA_IA = '00000000-0000-0000-0000-000000000000';
+
+/** Normaliza texto para comparación (minúsculas, sin acentos ni espacios extra). */
+function normalizar(s: string): string {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Registra un evento de auditoría del análisis IA. NUNCA incluye texto sensible:
+ * solo documentId, expedienteId, provider, model, score, suggestedStatus, runId.
+ */
+async function auditarIa(
+  documentoId: string,
+  expedienteId: string,
+  accion: 'ai_analysis_started' | 'ai_analysis_completed' | 'ai_analysis_failed' | 'ai_analysis_skipped_no_text' | 'ai_analysis_not_configured',
+  metadata: { provider?: string; model?: string; score?: number; suggestedStatus?: SuggestedStatus; runId?: string; campos?: number; motivo?: string },
+): Promise<void> {
+  try {
+    await logSgie({
+      usuarioId: ACTOR_SISTEMA_IA,
+      accion,
+      recurso: 'documento_expediente',
+      recursoId: documentoId,
+      metadata: { expedienteId, ...metadata },
+      exito: accion !== 'ai_analysis_failed',
+    });
+  } catch {
+    // No interrumpir el análisis si la auditoría falla.
+  }
+}
+
+/** Reexporta el tipo para uso en rutas/panel. */
+export type { SuggestedStatus };

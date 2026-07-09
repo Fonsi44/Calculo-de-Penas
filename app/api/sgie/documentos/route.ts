@@ -14,9 +14,15 @@ const querySchema = z.object({
   expedienteId: z.string().uuid().optional(),
   estado: z.string().optional(),
   origen: z.string().optional(),
+  requiereRevision: z.coerce.boolean().optional(),
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(50),
 });
+
+/** Estados que requieren revisión/acción del asistente o abogado (Fase 3). */
+const ESTADOS_REQUIEREN_REVISION: Array<typeof documentosExpediente.estado.enumValues[number]> = [
+  'ocr_pendiente', 'ilegible', 'pendiente_abogado', 'incorrecto',
+];
 
 function contextoDesdeAuth(auth: { userId: string; rol: string }) {
   return { usuarioId: auth.userId, esAdmin: auth.rol === 'admin', rol: auth.rol };
@@ -76,6 +82,9 @@ export async function GET(request: Request) {
     }
     if (query.origen) {
       conditions.push(eq(documentosExpediente.origen, query.origen as typeof documentosExpediente.$inferSelect.origen));
+    }
+    if (query.requiereRevision) {
+      conditions.push(inArray(documentosExpediente.estado, ESTADOS_REQUIEREN_REVISION));
     }
 
     const where = conditions.length > 0 ? and(...conditions) : undefined;

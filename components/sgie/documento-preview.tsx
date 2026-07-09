@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react';
 import { X, FileText, AlertTriangle, Download } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import { useFocusTrap } from '@/hooks/use-focus-trap';
+import { ExtraccionDocumento } from '@/components/sgie/extraccion-documento';
+import { IaDocumento } from '@/components/sgie/ia-documento';
 import { cn } from '@/lib/ui';
 
 interface PreviewState {
@@ -149,6 +151,16 @@ export function DocumentoPreview({
               </a>
             </div>
           )}
+        </div>
+
+        {/* Extracción documental — revisión asistente (Fase 3) */}
+        <div className="border-t border-border-light p-3 max-h-[35vh] overflow-auto">
+          <ExtraccionDocumento documentoId={documentoId} />
+        </div>
+
+        {/* Análisis IA — revisión humana (Fase 4) */}
+        <div className="border-t border-border-light p-3 max-h-[35vh] overflow-auto">
+          <IaDocumento documentoId={documentoId} />
         </div>
       </div>
     </div>

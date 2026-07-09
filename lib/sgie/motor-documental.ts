@@ -12,16 +12,28 @@
  * Referencia: pinedayasociados.md §12, §12.3–§12.5.
  */
 import { db } from '@/lib/db';
-import { documentosExpediente, extraccionesIa, jobsSgie, historialExpediente } from '@/lib/schema';
+import { documentosExpediente, extraccionesIa, jobsSgie, historialExpediente, documentTextPages } from '@/lib/schema';
 import { eq, and, ne } from 'drizzle-orm';
 import { reclamarJob, completarJob, fallarJob } from '@/lib/sgie/jobs-db';
+import { getOcrProvider } from '@/lib/sgie/ocr/provider';
+import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
+
+/** Página individual extraída (Fase 3 — texto por página). */
+export interface PaginaExtraida {
+  pageNumber: number;
+  text: string;
+  method: 'pdf_text' | 'ocr' | 'manual';
+  confidence: number | null;
+}
 
 export interface ResultadoExtraccion {
   texto: string;
   paginas: number;
   metodo: 'capa_texto_pdf' | 'vacio';
+  /** Texto por página (Fase 3). */
+  pages: PaginaExtraida[];
 }
 
 export interface ResultadoClasificacion {
@@ -165,6 +177,7 @@ export async function extraerTextoDePdf(
     const pdf = await loadingTask.promise;
     const numPages = pdf.numPages;
     const partes: string[] = [];
+    const pages: PaginaExtraida[] = [];
 
     for (let i = 1; i <= numPages; i++) {
       const page = await pdf.getPage(i);
@@ -175,22 +188,24 @@ export async function extraerTextoDePdf(
         .join(' ');
       if (pageText.trim()) {
         partes.push(pageText.trim());
+        pages.push({ pageNumber: i, text: pageText.trim(), method: 'pdf_text', confidence: null });
       }
     }
 
     const texto = partes.join('\n').trim();
 
     if (texto.length < 10) {
-      return { texto: '', paginas: numPages, metodo: 'vacio' };
+      return { texto: '', paginas: numPages, metodo: 'vacio', pages: [] };
     }
 
     return {
       texto,
       paginas: numPages,
       metodo: 'capa_texto_pdf',
+      pages,
     };
   } catch {
-    return { texto: '', paginas: 0, metodo: 'vacio' };
+    return { texto: '', paginas: 0, metodo: 'vacio', pages: [] };
   }
 }
 
@@ -390,9 +405,14 @@ export async function procesarDocumento(
     .set({ estado: 'clasificando' })
     .where(eq(documentosExpediente.id, documentoId));
 
+  await auditarExtraccion(documentoId, doc.expedienteId, 'document_extraction_started', {
+    metodo: doc.tipoMime === 'application/pdf' ? 'pdf_text' : doc.tipoMime,
+  });
+
   // 5. Extraer texto (solo PDFs)
   let textoExtraido = '';
   let metodo = 'no_aplica';
+  let paginasExtraidas: PaginaExtraida[] = [];
 
   if (doc.tipoMime === 'application/pdf') {
     try {
@@ -402,29 +422,71 @@ export async function procesarDocumento(
       metodo = resultado.metodo;
 
       if (!textoExtraido || resultado.metodo === 'vacio') {
-        // Sin capa de texto → OCR pendiente o ilegible
-        const metadatosPrevios = (doc.metadata as Record<string, unknown> | null) ?? {};
-        await db
-          .update(documentosExpediente)
-          .set({
-            estado: 'ocr_pendiente',
-            procesadoEn: new Date(),
-            metadata: {
-              ...metadatosPrevios,
-              extraccionMetodo: 'vacio',
-              paginasDetectadas: resultado.paginas,
-            },
-          })
-          .where(eq(documentosExpediente.id, documentoId));
+        // Sin capa de texto → intentar OCR (Fase 3).
+        const ocrProvider = getOcrProvider();
+        if (ocrProvider.isConfigured()) {
+          try {
+            const ocrResult = await ocrProvider.processDocument({
+              buffer,
+              mimeType: doc.tipoMime,
+              pageCount: resultado.paginas,
+            });
+            if (ocrResult.success && ocrResult.pages.length > 0) {
+              const textoOcr = ocrResult.pages.map((p) => p.text).join('\n').trim();
+              if (textoOcr.length >= 10) {
+                textoExtraido = textoOcr;
+                metodo = 'ocr';
+                // Guardar páginas OCR tras la clasificación (más abajo, junto
+                // al guardado de páginas de capa de texto).
+                paginasExtraidas = ocrResult.pages.map((p) => ({
+                  pageNumber: p.pageNumber,
+                  text: p.text,
+                  method: 'ocr' as const,
+                  confidence: p.confidence,
+                }));
+              }
+            }
+          } catch (err) {
+            // OCR falló: registrar y dejar como ocr_pendiente.
+            await auditarExtraccion(documentoId, doc.expedienteId, 'document_extraction_failed', {
+              metodo: 'ocr', error: sanitizarError(err), paginas: resultado.paginas,
+            });
+          }
+        }
 
-        await registrarHistorial(documentoId, doc.expedienteId, 'texto_no_extraido', 'clasificando', 'ocr_pendiente',
-          'PDF sin capa de texto detectable; requiere OCR o reemplazo');
+        // Si tras OCR seguimos sin texto → ocr_pendiente (requiere_ocr).
+        if (!textoExtraido) {
+          const metadatosPrevios = (doc.metadata as Record<string, unknown> | null) ?? {};
+          await db
+            .update(documentosExpediente)
+            .set({
+              estado: 'ocr_pendiente',
+              procesadoEn: new Date(),
+              metadata: {
+                ...metadatosPrevios,
+                extraccionMetodo: 'vacio',
+                paginasDetectadas: resultado.paginas,
+                ocrProvider: ocrProvider.name,
+                ocrConfigurado: ocrProvider.isConfigured(),
+              },
+            })
+            .where(eq(documentosExpediente.id, documentoId));
 
-        return {
-          documentoId,
-          estadoFinal: 'ocr_pendiente',
-          cacheHit: false,
-        };
+          await registrarHistorial(documentoId, doc.expedienteId, 'texto_no_extraido', 'clasificando', 'ocr_pendiente',
+            'PDF sin capa de texto detectable; requiere OCR o reemplazo');
+          await auditarExtraccion(documentoId, doc.expedienteId, 'document_requires_ocr', {
+            metodo: 'vacio', paginas: resultado.paginas, ocrConfigurado: ocrProvider.isConfigured(),
+          });
+
+          return {
+            documentoId,
+            estadoFinal: 'ocr_pendiente',
+            cacheHit: false,
+          };
+        }
+      } else {
+        // Capa de texto OK: guardar páginas extraídas para revisión.
+        paginasExtraidas = resultado.pages;
       }
     } catch (err) {
       const metadatosPrevios = (doc.metadata as Record<string, unknown> | null) ?? {};
@@ -442,6 +504,9 @@ export async function procesarDocumento(
 
       await registrarHistorial(documentoId, doc.expedienteId, 'error_extraccion', 'clasificando', 'ilegible',
         `Error al extraer texto: ${(err as Error).message}`);
+      await auditarExtraccion(documentoId, doc.expedienteId, 'document_extraction_failed', {
+        metodo: 'pdf_text', error: sanitizarError(err),
+      });
 
       return {
         documentoId,
@@ -505,23 +570,75 @@ export async function procesarDocumento(
     (textoExtraido ? `Texto extraído (${textoExtraido.length} chars).` : 'Sin texto extraído.'));
 
   // 9. Registrar extracción IA (esqueleto para Fase 7)
+  let extractionId: string | null = null;
   if (textoExtraido) {
     try {
-      await db.insert(extraccionesIa).values({
+      const [inserted] = await db.insert(extraccionesIa).values({
         documentoId,
-        proveedor: 'heuristico',
-        modelo: 'pdf-parse',
+        proveedor: metodo === 'ocr' ? 'ocr' : 'heuristico',
+        modelo: metodo === 'ocr' ? (getOcrProvider().name) : 'pdf-parse',
         exito: true,
         duracionMs: 0,
         resultadoJson: {
-          metodo: 'capa_texto_pdf',
+          metodo,
           longitud: textoExtraido.length,
           clasificacion: clasificacion.tipoDocumento,
           confianza: clasificacion.confianza,
+          paginas: paginasExtraidas.length,
         },
-      });
+      }).returning({ id: extraccionesIa.id });
+      extractionId = inserted?.id ?? null;
     } catch {
       // No interrumpir el flujo si la tabla extracciones_ia no está disponible
+    }
+  }
+
+  // 10. Guardar texto por página (Fase 3) — solo si hubo extracción con páginas.
+  if (paginasExtraidas.length > 0) {
+    try {
+      // Limpiar páginas previas (reintento) e insertar las nuevas.
+      await db.delete(documentTextPages).where(eq(documentTextPages.documentoId, documentoId));
+      await db.insert(documentTextPages).values(
+        paginasExtraidas.map((p) => ({
+          documentoId,
+          extractionId: extractionId ?? null,
+          pageNumber: p.pageNumber,
+          text: p.text,
+          method: p.method,
+          confidence: p.confidence,
+        })),
+      );
+    } catch {
+      // No interrumpir si falla el guardado de páginas.
+    }
+  }
+
+  await auditarExtraccion(documentoId, doc.expedienteId, 'document_extraction_completed', {
+    metodo, paginas: paginasExtraidas.length, estadoFinal,
+  });
+
+  // Fase 5 — recalcular readiness del expediente.
+  import('@/lib/sgie/readiness').then((m) => m.recalcularReadinessSiProcede(doc.expedienteId).catch(() => {}));
+
+  // Fase 4 — si hay texto útil y la IA está configurada, encolar análisis IA.
+  if (textoExtraido && textoExtraido.trim().length >= 10) {
+    try {
+      const { isIaEnabled } = await import('@/lib/sgie/ia-documental');
+      if (isIaEnabled()) {
+        const { encolarJob } = await import('@/lib/sgie/jobs-db');
+        await encolarJob({
+          tipo: 'ia_extraccion',
+          refId: documentoId,
+          payload: {
+            documentoId,
+            textoExtraido: textoExtraido.slice(0, 8000),
+            tipoHeuristico: clasificacion.tipoDocumento,
+            confianzaHeuristica: clasificacion.confianza,
+          },
+        });
+      }
+    } catch {
+      // No interrumpir el flujo de extracción si el encolado IA falla.
     }
   }
 
@@ -566,7 +683,19 @@ export async function procesarJobsPendientes(limite = 5): Promise<{
     )
     .limit(limite);
 
-  const todosJobs = [...jobs, ...jobsClasif].slice(0, limite);
+  // Fase 4 — jobs de análisis IA (ia_extraccion).
+  const jobsIa = await db
+    .select()
+    .from(jobsSgie)
+    .where(
+      and(
+        eq(jobsSgie.estado, 'pendiente'),
+        eq(jobsSgie.tipo, 'ia_extraccion' as never),
+      ),
+    )
+    .limit(limite);
+
+  const todosJobs = [...jobs, ...jobsClasif, ...jobsIa].slice(0, limite);
 
   const resultados: ResultadoProcesamiento[] = [];
   let procesados = 0;
@@ -582,6 +711,35 @@ export async function procesarJobsPendientes(limite = 5): Promise<{
 
     try {
       await reclamarJob(job.id);
+
+      // Fase 4: los jobs ia_extraccion se procesan con la capa IA; el resto con extracción/clasificación.
+      if (job.tipo === 'ia_extraccion') {
+        const { procesarDocumentoConIa, isIaEnabled } = await import('@/lib/sgie/ia-documental');
+        if (!isIaEnabled()) {
+          await fallarJob(job.id, 'IA no configurada');
+          fallidos++;
+          continue;
+        }
+        // Obtener texto extraído del documento para pasarlo a la IA.
+        const meta = (job.payload as Record<string, unknown> | null) ?? {};
+        const textoExtraido = typeof meta.textoExtraido === 'string' ? meta.textoExtraido : '';
+        const tipoHeuristico = typeof meta.tipoHeuristico === 'string' ? meta.tipoHeuristico : undefined;
+        const confianzaHeuristica = typeof meta.confianzaHeuristica === 'number' ? meta.confianzaHeuristica : undefined;
+        const iaResult = await procesarDocumentoConIa(
+          documentoId,
+          textoExtraido,
+          tipoHeuristico && confianzaHeuristica !== undefined ? { tipoDocumento: tipoHeuristico, confianza: confianzaHeuristica } : undefined,
+        );
+        if (!iaResult.exito && iaResult.error) {
+          await fallarJob(job.id, iaResult.error);
+          fallidos++;
+        } else {
+          await completarJob(job.id);
+          procesados++;
+        }
+        resultados.push({ documentoId, estadoFinal: iaResult.estadoFinal, cacheHit: false, error: iaResult.error });
+        continue;
+      }
 
       const resultado = await procesarDocumento(documentoId);
 
@@ -632,6 +790,42 @@ async function registrarHistorial(
   } catch {
     // No interrumpir el procesamiento si el historial falla
   }
+}
+
+// ─── Auditoría de extracción (Fase 3) ─────────────────────────────────────────
+
+/** Actor sistema para eventos automáticos del pipeline (uuid cero). */
+const ACTOR_SISTEMA_EXTRACCION = '00000000-0000-0000-0000-000000000000';
+
+/**
+ * Registra un evento de auditoría del pipeline de extracción. NUNCA incluye
+ * el texto extraído (sensible): solo metadatos (documentoId, expedienteId,
+ * método, páginas, error sanitizado).
+ */
+async function auditarExtraccion(
+  documentoId: string,
+  expedienteId: string,
+  accion: 'document_extraction_started' | 'document_extraction_completed' | 'document_extraction_failed' | 'document_requires_ocr',
+  metadata: { metodo?: string; paginas?: number; error?: string; estadoFinal?: string; ocrConfigurado?: boolean },
+): Promise<void> {
+  try {
+    await logSgie({
+      usuarioId: ACTOR_SISTEMA_EXTRACCION,
+      accion,
+      recurso: 'documento_expediente',
+      recursoId: documentoId,
+      metadata: { expedienteId, ...metadata },
+      exito: accion !== 'document_extraction_failed',
+    });
+  } catch {
+    // No interrumpir el pipeline si la auditoría falla.
+  }
+}
+
+/** Sanitiza un error para auditoría: mensaje corto, sin stack ni datos sensibles. */
+function sanitizarError(err: unknown): string {
+  const msg = err instanceof Error ? err.message : 'Error desconocido';
+  return msg.slice(0, 300);
 }
 
 // ─── API pública del motor ───────────────────────────────────────────────────

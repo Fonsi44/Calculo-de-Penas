@@ -176,6 +176,41 @@
       "when": 1783512000000,
       "tag": "0024_security_user_defaults",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1783598400000,
+      "tag": "0025_enlaces_token_hash",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1783602000000,
+      "tag": "0026_fase2_bloqueo_recordatorios",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1783605600000,
+      "tag": "0027_fase3_extraccion_paginas",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1783609200000,
+      "tag": "0028_fase4_ia_documental",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1783612800000,
+      "tag": "0029_fase5_listo_para_revision",
+      "breakpoints": true
     }
   ]
 }

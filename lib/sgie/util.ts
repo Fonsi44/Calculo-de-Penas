@@ -17,6 +17,15 @@ export function generarTokenSeguro(): string {
 }
 
 /**
+ * Calcula el hash SHA-256 de un token de enlace mágico para almacenamiento.
+ * Hex lowercase, 64 chars. NUNCA se persiste el token en claro: en
+ * `enlaces_magicos` solo se guarda este hash.
+ */
+export function hashToken(token: string): string {
+  return createHash('sha256').update(token).digest('hex');
+}
+
+/**
  * Calcula el hash SHA-256 de un buffer. Hex lowercase, 64 chars.
  * Obligatorio ANTES de cualquier procesamiento IA/OCR (§12.5, §22.3).
  */

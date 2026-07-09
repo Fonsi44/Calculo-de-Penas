@@ -16,6 +16,8 @@ import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { usePromptDialog } from '@/components/ui/prompt-dialog';
 import { EnlacesExpediente } from '@/components/sgie/enlaces-expediente';
+import { SeguimientoDocumental } from '@/components/sgie/seguimiento-documental';
+import { ReadinessExpediente } from '@/components/sgie/readiness-expediente';
 import { InteligenciaExpediente } from '@/components/sgie/inteligencia-expediente';
 import { cn } from '@/lib/ui';
 import { traducirEstadoExpediente, traducirEstadoDocumento } from '@/lib/sgie/estados';
@@ -428,6 +430,12 @@ export default function SgieExpedienteDetallePage() {
 
       {/* Enlaces de carga documental (Sprint 1) */}
       <EnlacesExpediente expedienteId={detalle.id} />
+
+      {/* Seguimiento documental — recordatorios, estado documental, bloqueo (Fase 2) */}
+      <SeguimientoDocumental expedienteId={detalle.id} />
+
+      {/* Preparación documental — puerta "Listo para revisión" (Fase 5) */}
+      <ReadinessExpediente expedienteId={detalle.id} />
 
       {/* Inteligencia del expediente (Sprint 3) */}
       <InteligenciaExpediente expedienteId={detalle.id} />

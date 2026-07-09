@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector } from 'drizzle-orm/pg-core';
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector, real } from 'drizzle-orm/pg-core';
 
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
@@ -220,6 +220,34 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'notificacion_read',
   'validacion_aprobada',
   'validacion_rechazada',
+  // Fase 2 — seguimiento documental, recordatorios y bloqueo por cliente.
+  'reminder_sent',
+  'case_blocked_by_client',
+  'case_unblocked',
+  'internal_escalation_created',
+  // Fase 3 — pipeline de extracción documental y revisión asistente.
+  'document_extraction_started',
+  'document_extraction_completed',
+  'document_extraction_failed',
+  'document_requires_ocr',
+  'document_extraction_retried',
+  'document_manual_reviewed',
+  // Fase 4 — IA documental (DeepSeek): análisis, revisión humana y auditoría.
+  'ai_analysis_started',
+  'ai_analysis_completed',
+  'ai_analysis_failed',
+  'ai_analysis_skipped_no_text',
+  'ai_analysis_not_configured',
+  'ai_suggestion_accepted',
+  'ai_suggestion_rejected',
+  'ai_human_review_requested',
+  'ai_correction_requested',
+  // Fase 5 — puerta "Listo para revisión" y revisión documental.
+  'readiness_evaluation_completed',
+  'case_ready_for_review',
+  'case_returned_by_lawyer',
+  'case_documental_review_approved',
+  'case_additional_info_requested',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {
@@ -725,6 +753,11 @@ export const expedienteEstadoEnum = pgEnum('expediente_estado', [
   'en_seguimiento',
   'finalizado', // Sólo abogado
   'archivado', // Sólo abogado o política aprobada
+  // Fase 2 — bloqueo documental por falta de respuesta del cliente.
+  'bloqueado_por_cliente',
+  // Fase 5 — puerta "Listo para revisión": preparación documental vs validación jurídica.
+  'listo_para_revision',
+  'devuelto_por_abogado',
 ]);
 
 // Estados que requieren acción humana explícita (transiciones críticas).
@@ -1058,7 +1091,10 @@ export const sugerenciaEstadoEnum = pgEnum('sugerencia_estado', [
 // Scope a expediente/requisito. Acceso público por token (no indexable).
 export const enlacesMagicos = pgTable('enlaces_magicos', {
   id: uuid('id').primaryKey().defaultRandom(),
-  token: varchar('token', { length: 128 }).notNull().unique(),
+  // NUNCA se almacena el token en claro: se persiste su hash SHA-256 (hex, 64).
+  // El token en claro solo vive en memoria en el momento de emisión/envío por
+  // email y viaja en la URL /cargar/{token} como credencial del cliente.
+  tokenHash: varchar('token_hash', { length: 64 }).notNull().unique(),
   expedienteId: uuid('expediente_id').notNull(),
   requisitoExpedienteId: uuid('requisito_expediente_id'),
   clienteEmail: varchar('cliente_email', { length: 255 }),
@@ -1074,7 +1110,7 @@ export const enlacesMagicos = pgTable('enlaces_magicos', {
   expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
   requisitoRef: foreignKey({ columns: [table.requisitoExpedienteId], foreignColumns: [requisitosExpediente.id] }),
   creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
-  tokenIdx: index('enlaces_magicos_token_idx').on(table.token),
+  tokenHashIdx: index('enlaces_magicos_token_hash_idx').on(table.tokenHash),
   expedienteIdx: index('enlaces_magicos_expediente_idx').on(table.expedienteId),
 }));
 
@@ -1187,11 +1223,45 @@ export const extraccionesIa = pgTable('extracciones_ia', {
   exito: boolean('exito').default(true),
   error: text('error'),
   resultadoJson: jsonb('resultado_json'),
+  // Fase 4 — IA documental: estado sugerido, score compuesto e idempotencia.
+  suggestedStatus: varchar('suggested_status', { length: 50 }),
+  totalConfidence: integer('total_confidence'),
+  inputHash: varchar('input_hash', { length: 64 }),
+  runStatus: varchar('run_status', { length: 20 }).default('completed'),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
   documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
   documentoIdx: index('extracciones_ia_documento_idx').on(table.documentoId),
 }));
+
+/**
+ * Texto extraído por página de un documento (Fase 3).
+ *
+ * Cada fila es una página: su texto, el método (pdf_text/ocr/manual) y la
+ * confianza cuando aplique. Permite revisión asistente página a página y
+ * reanálisis sin re-extraer. Vinculada al documento y (opcional) a la
+ * extracción de `extracciones_ia` que la generó.
+ *
+ * No guarda binarios: solo el texto extraído. Referencia: Fase 3 MVP.
+ */
+export const documentTextPages = pgTable('document_text_pages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentoId: uuid('documento_id').notNull(),
+  extractionId: uuid('extraction_id'),
+  pageNumber: integer('page_number').notNull(),
+  text: text('text').notNull(),
+  method: varchar('method', { length: 30 }).notNull().default('pdf_text'),
+  confidence: real('confidence'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  extractionRef: foreignKey({ columns: [table.extractionId], foreignColumns: [extraccionesIa.id] }).onDelete('set null'),
+  documentoIdx: index('document_text_pages_documento_idx').on(table.documentoId),
+  documentoPaginaUnique: unique('document_text_pages_documento_pagina_unique').on(table.documentoId, table.pageNumber),
+}));
+
+export type DocumentTextPage = typeof documentTextPages.$inferSelect;
+export type DocumentTextPageInsert = typeof documentTextPages.$inferInsert;
 
 export type ExtraccionIa = typeof extraccionesIa.$inferSelect;
 export type ExtraccionIaInsert = typeof extraccionesIa.$inferInsert;
@@ -1640,6 +1710,50 @@ export const embeddings = pgTable('embeddings', {
 	  uniqueIdx: uniqueIndex('embeddings_unique_idx').on(table.entidadTipo, table.entidadId, table.chunkIndex),
 	  // El índice HNSW se crea vía migración SQL raw porque drizzle-orm no lo soporta directamente
 	}));
+
+// ─── Fase 5 — Puerta de calidad "Listo para revisión" ──────────────────────
+
+/** Agrupa una evaluación de preparación documental del expediente. */
+export const caseReadinessRuns = pgTable('case_readiness_runs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  estadoFinal: varchar('estado_final', { length: 40 }).notNull(),
+  score: integer('score').default(0),
+  checksTotal: integer('checks_total').default(0),
+  checksPass: integer('checks_pass').default(0),
+  checksWarn: integer('checks_warn').default(0),
+  checksFail: integer('checks_fail').default(0),
+  iniciadoPor: varchar('iniciado_por', { length: 50 }).default('sistema'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  expedienteIdx: index('case_readiness_runs_expediente_idx').on(table.expedienteId),
+}));
+
+/** Un check individual de preparación dentro de un run. Unique por (run, nombre). */
+export const caseReadinessChecks = pgTable('case_readiness_checks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  runId: uuid('run_id').notNull(),
+  expedienteId: uuid('expediente_id').notNull(),
+  checkName: varchar('check_name', { length: 80 }).notNull(),
+  status: varchar('status', { length: 20 }).notNull().default('unknown'),
+  source: varchar('source', { length: 30 }).default('system'),
+  blocking: boolean('blocking').default(false),
+  reason: text('reason'),
+  resolvedAt: timestamp('resolved_at', { withTimezone: true }),
+  resolvedBy: uuid('resolved_by'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  runRef: foreignKey({ columns: [table.runId], foreignColumns: [caseReadinessRuns.id] }).onDelete('cascade'),
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  uniqueRunCheck: unique('case_readiness_checks_run_check_unique').on(table.runId, table.checkName),
+  expedienteIdx: index('case_readiness_checks_expediente_idx').on(table.expedienteId),
+}));
+
+export type CaseReadinessRun = typeof caseReadinessRuns.$inferSelect;
+export type CaseReadinessRunInsert = typeof caseReadinessRuns.$inferInsert;
+export type CaseReadinessCheck = typeof caseReadinessChecks.$inferSelect;
+export type CaseReadinessCheckInsert = typeof caseReadinessChecks.$inferInsert;
 
 export type Embedding = typeof embeddings.$inferSelect;
 export type EmbeddingInsert = typeof embeddings.$inferInsert;

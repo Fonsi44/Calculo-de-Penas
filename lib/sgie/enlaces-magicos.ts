@@ -4,12 +4,17 @@
  * Tokens seguros (256 bits) para que el cliente suba documentos sin cuenta.
  * Expiración obligatoria, usos máximos, revocación manual, scope a
  * expediente/requisito. Rate limit por IP/token en el endpoint.
+ *
+ * SEGURIDAD: el token NUNCA se persiste en claro. Se almacena su hash SHA-256
+ * (`token_hash`). El token en claro solo vive en memoria en el momento de
+ * emisión (envío por email / respuesta inmediata al abogado) y viaja en la URL
+ * /cargar/{token} como credencial del cliente. No se loguea ni audita.
  * Referencia: pinedayasociados.md §22.2.
  */
 import { db } from '@/lib/db';
 import { enlacesMagicos } from '@/lib/schema';
 import { and, eq, isNull, lt, sql } from 'drizzle-orm';
-import { generarTokenSeguro } from './util';
+import { generarTokenSeguro, hashToken } from './util';
 
 export interface CrearEnlaceInput {
   expedienteId: string;
@@ -29,17 +34,32 @@ export interface EnlaceValido {
 }
 
 /**
- * Crea un enlace mágico. Expiración por defecto 7 días, usos máximos 5.
+ * Resultado de crear un enlace. El `token` en claro se devuelve SOLO aquí, en
+ * memoria, para envío inmediato (email/respuesta al abogado). No se persiste.
  */
-export async function crearEnlace(input: CrearEnlaceInput, creadoPor: string) {
+export interface EnlaceCreado {
+  id: string;
+  token: string;
+  expedienteId: string;
+  expiraEn: Date;
+  usosMaximos: number | null;
+}
+
+/**
+ * Crea un enlace mágico. Expiración por defecto 7 días, usos máximos 5.
+ * Persiste solo `tokenHash` (sha256 del token); el token en claro se devuelve
+ * únicamente en el objeto retornado para uso inmediato del emisor.
+ */
+export async function crearEnlace(input: CrearEnlaceInput, creadoPor: string): Promise<EnlaceCreado> {
   const dias = input.diasExpiracion ?? 7;
   const expiraEn = new Date(Date.now() + dias * 24 * 60 * 60 * 1000);
   const token = generarTokenSeguro();
+  const tokenHash = hashToken(token);
 
   const [enlace] = await db
     .insert(enlacesMagicos)
     .values({
-      token,
+      tokenHash,
       expedienteId: input.expedienteId,
       requisitoExpedienteId: input.requisitoExpedienteId ?? null,
       clienteEmail: input.clienteEmail ?? null,
@@ -50,13 +70,12 @@ export async function crearEnlace(input: CrearEnlaceInput, creadoPor: string) {
     })
     .returning({
       id: enlacesMagicos.id,
-      token: enlacesMagicos.token,
       expedienteId: enlacesMagicos.expedienteId,
       expiraEn: enlacesMagicos.expiraEn,
       usosMaximos: enlacesMagicos.usosMaximos,
     });
 
-  return enlace;
+  return { ...enlace, token };
 }
 
 export type ValidacionEnlace =
@@ -64,10 +83,13 @@ export type ValidacionEnlace =
   | { ok: false; error: string; codigo: 'no_encontrado' | 'expirado' | 'revocado' | 'agotado' };
 
 /**
- * Valida un token de enlace mágico: existe, no expirado, no revocado, con usos
- * disponibles. NO consume el uso (eso lo hace el upload exitoso).
+ * Valida un token de enlace mágico: existe (buscado por su hash), no expirado,
+ * no revocado, con usos disponibles. NO consume el uso (eso lo hace el upload
+ * exitoso). Recibe el token en claro y lo hashea para la búsqueda.
  */
 export async function validarEnlace(token: string): Promise<ValidacionEnlace> {
+  const tokenHash = hashToken(token);
+
   const [enlace] = await db
     .select({
       id: enlacesMagicos.id,
@@ -80,7 +102,7 @@ export async function validarEnlace(token: string): Promise<ValidacionEnlace> {
       revocadoEn: enlacesMagicos.revocadoEn,
     })
     .from(enlacesMagicos)
-    .where(eq(enlacesMagicos.token, token));
+    .where(eq(enlacesMagicos.tokenHash, tokenHash));
 
   if (!enlace) {
     return { ok: false, error: 'Enlace no encontrado.', codigo: 'no_encontrado' };

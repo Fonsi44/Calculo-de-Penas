@@ -32,6 +32,9 @@ const ESTADO_EXPEDIENTE_LABELS: Record<string, string> = {
   en_seguimiento: 'En seguimiento',
   finalizado: 'Finalizado',
   archivado: 'Archivado',
+  bloqueado_por_cliente: 'Bloqueado por cliente',
+  listo_para_revision: 'Listo para revisión',
+  devuelto_por_abogado: 'Devuelto por abogado',
 };
 
 /**

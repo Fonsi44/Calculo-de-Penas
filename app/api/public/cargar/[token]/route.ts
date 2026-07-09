@@ -117,6 +117,20 @@ export async function POST(
       metadata: { backend, mimeReal: validacionArchivo.mimeReal },
     });
 
+    // Fase 2 — vincular el documento a su requisito y recalcular el estado
+    // documental del expediente (solo si no es duplicado y hay requisito).
+    if (!doc.duplicado && validacion.enlace.requisitoExpedienteId) {
+      try {
+        const { vincularDocumentoARequisitoOnUpload } = await import('@/lib/sgie/seguimiento-documental');
+        await vincularDocumentoARequisitoOnUpload({
+          expedienteId: validacion.enlace.expedienteId,
+          requisitoExpedienteId: validacion.enlace.requisitoExpedienteId,
+        });
+      } catch {
+        // No bloquear la subida por un fallo de vinculación; queda en auditoría.
+      }
+    }
+
     // Si NO es duplicado, encolar job de extracción de texto + clasificación.
     if (!doc.duplicado) {
       const { encolarJob } = await import('@/lib/sgie/jobs-db');

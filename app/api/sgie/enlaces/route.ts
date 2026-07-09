@@ -102,6 +102,10 @@ export async function POST(request: Request) {
       request,
     });
 
+    // El `token` en claro se devuelve ÚNICAMENTE en esta respuesta inmediata de
+    // creación, para que el abogado pueda copiarlo/enviarlo. No se persiste en
+    // claro (en DB solo hay su hash) ni se incluye en el listado (GET). Riesgo
+    // limitado y consciente al momento de emisión.
     return Response.json({ enlace }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) {

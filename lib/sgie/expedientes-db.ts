@@ -430,7 +430,7 @@ export function transicionPermitida(
     pendiente_de_documentos: ['enlace_enviado', 'documentos_parcialmente_recibidos'],
     enlace_enviado: ['documentos_parcialmente_recibidos', 'documentos_completos'],
     documentos_parcialmente_recibidos: ['documentos_completos', 'enlace_enviado'],
-    documentos_completos: ['analisis_pendiente'],
+    documentos_completos: ['analisis_pendiente', 'listo_para_revision'],
     analisis_pendiente: ['analisis_completado', 'inconsistencias_detectadas'],
     analisis_completado: ['pendiente_validacion_abogado', 'inconsistencias_detectadas'],
     inconsistencias_detectadas: ['pendiente_validacion_abogado', 'analisis_pendiente'],
@@ -441,6 +441,10 @@ export function transicionPermitida(
     en_seguimiento: ['finalizado', 'en_tramite'],
     finalizado: ['archivado'],
     archivado: [],
+    // Fase 5 — puerta "Listo para revisión" y flujo de revisión documental.
+    bloqueado_por_cliente: ['pendiente_de_documentos'],
+    listo_para_revision: ['pendiente_validacion_abogado', 'devuelto_por_abogado'],
+    devuelto_por_abogado: ['pendiente_de_documentos'],
   };
 
   const destinos = permitidas[desde] ?? [];
