@@ -492,3 +492,55 @@ post-despliegue `PENDIENTE HUMANO`; P1-P6 `PROPUESTA`; bump-sw-cache `PREEXISTEN
 - PR preparada contra `main` en GitHub.
 
 **Clasificación:** `VALIDADO` y `APLICADO`. Hotfix completo y listo para PR.
+
+---
+
+## 2026-07-09 — Revisión de alerta GitGuardian «Generic Password»
+
+**Alcance:** alerta reportada para `Fonsi44/Calculo-de-Penas`, atribuida
+inicialmente al commit corto `573c6aa`, con fecha `2026-06-04 16:32:56 UTC`.
+
+**Hallazgo validado:**
+- Candidato exacto: `tests/auth.test.ts:161`.
+- Valor redactado: `se••••23` (11 caracteres).
+- Uso: entrada sintética de `verifyPassword` para comprobar que dos hashes
+  bcrypt diferentes validan la misma contraseña de prueba.
+- `git blame` atribuye la introducción a
+  `d79c45c56b8b69127d9a29fced93f8f93e3801f5`, commit
+  `test: anadir cobertura de auth y /api/calcular (CRIT-09)`, fechado
+  `2026-06-04 16:32:56 UTC`.
+- El commit `573c6aa30bf10597be33215377032880d77f0e94` es posterior
+  (`2026-07-09`) y solo modifica el timeout final de ese test; no introduce
+  ni cambia el valor detectado.
+
+**Clasificación:** `VALIDADO — FALSO POSITIVO / CONTRASEÑA DE PRUEBA`.
+No corresponde a una cuenta, proveedor, variable de entorno ni credencial
+operativa. No se movió a variables de entorno porque hacerlo convertiría un
+test unitario autocontenido en una prueba dependiente de configuración externa.
+No requiere rotación ni limpieza del historial Git.
+
+**Controles revisados:**
+- `.env`, `.env.local`, `.env.production` y variantes cubiertas por `.env*`.
+- `.secrets/` ignorado.
+- Solo `.env.example` está versionado y sus variables sensibles permanecen
+  sin valores reales.
+- Barrido heurístico de archivos versionados para contraseñas, tokens, API
+  keys, secretos, webhooks, URLs con credenciales y claves privadas.
+- Los otros literales encontrados se clasificaron como datos de prueba,
+  placeholders, nombres de variables o ejemplos documentales; no se identificó
+  una credencial operativa expuesta.
+
+**Acción manual recomendada:** cerrar la alerta en GitGuardian como
+`False positive` o `Test credential`, adjuntando este `git blame`. Si la ficha
+remota muestra otra ruta o huella, reabrir la investigación con esos metadatos,
+ya que no están incluidos en la información recibida.
+
+**Validaciones finales:**
+- `npm run lint` → 0 errores y 6 advertencias preexistentes en archivos SGIE.
+- `npx tsc --noEmit` → exitoso.
+- `npm run test` → 41 archivos y 844 pruebas superadas.
+- `npm run build` → primer intento bloqueado por acceso de red a Google Fonts;
+  repetición con red autorizada exitosa, incluidas 362 páginas estáticas,
+  verificación de chunks e IndexNow en dry-run.
+
+**No se hizo commit, push, force push ni reescritura de historial.**
