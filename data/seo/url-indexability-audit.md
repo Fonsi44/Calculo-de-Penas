@@ -1,6 +1,6 @@
 # Auditoría de Indexabilidad de URLs
 
-Fecha: 2026-07-09T11:25:22.729Z
+Fecha: 2026-07-09T12:22:52.859Z
 
 | Ruta | Canónica/Sitemap | Tráfico (GA4/GSC) | Bing Rastreada | Estado/Diagnóstico |
 |---|---|---|---|---|
