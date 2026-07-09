@@ -1480,3 +1480,11 @@ El historial completo de releases 1-90 está disponible en [Releases de GitHub](
 - **Pendientes:** CSV de Bing Webmaster Tools para saneamiento de errores 4xx.
 - **Próxima revisión:** 48-72h para indexación prioritaria, y 28 días para análisis Baseline comparativo.
 
+
+### Seguimiento Post-Deploy (48h-72h)
+- **Validación HTTP Producción:** Confirmado 200 OK en rutas principales, sitemap.xml y robots.txt sin exclusiones erróneas.
+- **Estructura y Tracking:** Canonical absolutos en su lugar, titles actualizados presentes en HTML pre-renderizado, y marcadores de evento seo_blog_cta_click confirmados.
+- **Auditorías de absorción:** Baseline GSC y GA4 confirmados como estables (se requiere extender ventana para detectar variaciones de CTR).
+- **Archivos Bing:** Esperando importación de CSV externo para ejecutar mapeo de 301s.
+- **Reporte generado:** data/seo/post-deploy-48h-report.md con objetivos claros para evaluación a 28 días.
+
