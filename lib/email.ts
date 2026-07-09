@@ -18,14 +18,14 @@ export function isEmailConfigured(): boolean {
 }
 
 export function getFromAddress(): string {
-  return process.env.RESEND_FROM_EMAIL ?? `no-reply@${VERIFIED_DOMAIN}`;
+  return process.env.RESEND_FROM_EMAIL ?? process.env.CONTACT_FROM ?? `contacto@${VERIFIED_DOMAIN}`;
 }
 
 export function getNotificationEmail(): string | null {
-  const configured = process.env.CONTACT_NOTIFICATION_EMAIL?.trim();
+  const configured = process.env.CONTACT_NOTIFICATION_EMAIL?.trim() ?? process.env.CONTACT_TO?.trim();
   if (configured) return configured;
   if (process.env.NODE_ENV === 'production') {
-    console.error('[email] CONTACT_NOTIFICATION_EMAIL no configurado en producción.');
+    console.error('[email] CONTACT_NOTIFICATION_EMAIL / CONTACT_TO no configurado en producción.');
   }
   return null;
 }
