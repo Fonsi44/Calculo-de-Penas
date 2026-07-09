@@ -125,10 +125,24 @@ Nunca compartir tokens ni secretos en chats o logs.
 | SEO Ahrefs | `seo:ahrefs` (CSV `ahrefs/` + DB: 4XX, 3XX, noindex, `/intranet/admin`, marca duplicada, placeholders, metadata ausente, Fases A–F: titles largos, metas cortas/largas, orphans, structured data) |
 | Blog saneamiento | `blog:fix-redirects`, `blog:fix-placeholders`, `blog:fix-titles`, `blog:fix-metas` (dry-run → `:aplicar`) |
 | JSON-LD | `node scripts/validate-jsonld.mjs` (`@context` en `@graph`, `@id` duplicados, reglas por `@type`, AggregateRating) |
-| SEO Live | `seo:doctor`, `seo:collect`, `seo:gsc:live`, `seo:ga4:live`, `seo:bing:live` |
+| SEO Live | `seo:doctor`, `seo:collect`, `seo:gsc:live`, `seo:ga4:live`, `seo:bing:live`, `seo:snapshot` (genera baseline 28 vs 28), `seo:indexability` (auditoría cruzada DB+Sitemap+GSC+GA4), `seo:bing-errors` (importador CSV de Webmaster Tools) |
 | DB | `db:check`, `seed:*` |
 | Visual | `visual:check`, `visual:update` |
 | Assets/Deploy | `verify:chunks` (valida chunks referenciados vs `.next/static/chunks/`) |
+
+### Flujo Analítico y Medición
+1. **CTAs Orgánicos**: Los eventos en CTAs (`data-event-name="seo_blog_cta_click"`) son interceptados por un tracker nativo en `components/analytics-scripts.tsx`.
+   - Se registran en `window.gtag` con propiedades como `source_url`, `destination_url` y `cta_topic`.
+   - Si se usa GTM, crea un Trigger de tipo Click, que reaccione al Data Attribute, y usa estas mismas propiedades del DataLayer.
+2. **Errores 4xx en Bing**: La API de Bing limita la descarga específica de URLs rotas. 
+   - Entra a tu Bing Webmaster Tools > SEO > Crawl Information.
+   - Exporta como CSV las URLs 4xx y renombra a `data/bing/bing-crawl-errors.csv`.
+   - Corre `npm run seo:bing-errors` para mapear recomendaciones de redirects o acciones correctivas.
+3. **Auditoría Global**: Ejecuta periódicamente `npm run seo:indexability` para reevaluar la sanidad de tus páginas dinámicas de la DB y `npm run seo:snapshot` para congelar el state actual y calcular Deltas contra el mes pasado.
+
+**Documentación Operativa de Referencia**:
+- 📌 Checklist mensual: `docs/seo-monthly-ops.md`
+- 📌 Checklist post-deploy: `data/seo/post-deploy-seo-checklist.md`
 
 ---
 

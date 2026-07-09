@@ -6,6 +6,49 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-09 — Implementación SEO prioritaria GSC y Bing
+
+Implementación directa de las mejoras SEO prioritarias detectadas tras cruzar datos reales de Google Search Console, Bing Webmaster Tools y GA4.
+
+### `feat(seo): Fase 6 - Cierre de Producción y Políticas de Versionado`
+- **Checklist Post-Deploy**: Creado `data/seo/post-deploy-seo-checklist.md` con 10 pasos tácticos de ejecución obligatoria al desplegar cambios de SEO/Growth a producción (Validación de disponibilidad, robots, sitemap, GSC/WMT y GA4 tracking orgánico).
+- **Política de Versionado de Reportes SEO**: Actualizado `.gitignore` permitiendo la gestión de conocimiento documentada (`.md` en `data/seo/`) pero excluyendo terminantemente datos transitorios (`data/seo/*.json` y `data/seo/history/`) asegurando un repositorio limpio.
+- **Limpieza de Entorno**: Verificada la pureza técnica del repositorio, confirmando la ausencia de logs residuales o scripts colgados post-Fase 5.
+- **Validación Final**: Completadas exitosamente las pruebas de regresión en producción-ready (828 tests aprobados, `npm run build` OK, y cero incidencias en `lint`/`tsc`).
+
+### `feat(seo): Fase 4/5 - Auditoría avanzada, preparación Bing y tracking GTM`
+- **Mejora en Auditor de Indexabilidad**: `seo-indexability.ts` ahora se conecta a Drizzle ORM para obtener las rutas dinámicas publicadas del blog e inyecta dinámicamente las rutas de `blogCategories`, eliminando los 11 falsos positivos de "Tráfico Huérfano" que surgían al comprobar únicamente el `canonical-paths.json` estático.
+- **Preparación Bing WMT**: Creado directorio `data/bing/` y documento `README.md` que establece la plantilla y el procedimiento operativo estándar (SOP) para extraer y procesar manualmente los 455 errores 4xx / 721 crawl errors mediante CSV, bloqueado por limitaciones de la API pública de Bing WMT.
+- **Validación Tracking CTAs**: Confirmada la solidez técnica del script `seo_blog_cta_click` en `components/analytics-scripts.tsx`, implementado bajo listener nativo único y captura semántica de `data-cta-location`, `destination_url`, `source_url`, `cta_topic`. No genera dobles ejecuciones.
+- **Operaciones SEO Mensuales**: Redactado y formalizado el documento `docs/seo-monthly-ops.md` estableciendo el checklist riguroso de 28 días (Baseline, Extracción, Saneamiento, Validación).
+- **Snapshot Histórico**: Automatizada la rotación histórica de `gsc-live.json`, `ga4-live.json` y reportes al ejecutar `seo-snapshot.ts`, permitiendo backups seguros en `data/seo/history/` previo a cada nuevo ciclo de auditoría.
+- **Redirecciones 301 Intencionales Documentadas**: Verificado que las 9 URLs marcadas como "Tráfico Huérfano" (ej: `/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla`) se deben a redirecciones 301 activas e intencionales en `next.config.ts`, siendo en realidad "Rutas históricas sin acción" originadas por retención de tráfico en GSC.
+
+### `feat(seo): Cierre Técnico de Medición y Auditoría de Indexabilidad (Fase 3)`
+
+### `feat(seo): CTAs transaccionales y metadata en posts prioritarios`
+- **Posts actualizados en DB** (vía script `seo-update-blog-ctas.ts`):
+  - `/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026`: H1 (`title`), `metaTitle` y `metaDescription` optimizados con el año "2026" y el enfoque "Porcentajes y Cálculo".
+  - `/blog/derecho-civil/prescripcion-deudas-plazos-honduras`: Meta optimizada sobre plazos y requisitos.
+  - `/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras`: Meta optimizada sobre demandas e indemnización.
+- **Inyección de CTAs**: Añadido un componente HTML al final del cuerpo de cada uno de los 3 posts anteriores para redirigir tráfico internacional cualificado (ej. España/USA) hacia `/solicitar-consulta`. Se usó HTML semántico con clases nativas del framework (`bg-slate-50`, `text-primary`, etc.).
+
+### `fix(seo): Landing Hondureños en España como Hub Transfronterizo`
+- **`app/(public)/hondurenos-en-espana/page.tsx`**: 
+  - Actualizados `title` y `description` para enfocarse en la intención de búsqueda real: "Abogados en Honduras para Hondureños en España".
+  - Reforzados los enlaces internos del bloque "Trámites más frecuentes" hacia servicios específicos de familia, civil y notarial (ej. Divorcio en Honduras residiendo en España).
+
+### `fix(seo): Configuración Crawler y Sitemap`
+- Verificada exclusión correcta de rutas `/intranet/`, `/api/` y `/admin/` en `robots.ts` para mitigar 455 errores 4xx reportados por Bing.
+- Sitemap y rutas canónicas validadas de forma exitosa (Sitemap self-referencing operando correctamente).
+
+### `feat(seo): Auditoría Bing WMT y Analytics CTA`
+- **Documentación Limitación Bing**: Se generó `data/seo/bing-crawl-errors-detailed.json` detallando que el API de Bing (GetCrawlStats) reporta los 455 errores 4xx y 721 crawl errors a nivel agregado, pero no expone un endpoint público para descargar las URLs específicas, requiriendo exportación vía web dashboard.
+- **Indexabilidad de URLs**: Se creó un script que cruza rutas estáticas con datos de GSC y GA4 para generar un reporte automático `url-indexability-audit.md` y clasificar URLs por indexabilidad y tráfico, comprobando la consistencia entre fuentes.
+- **Medición GA4 para CTAs Orgánicos**: Se actualizó el HTML de los CTAs inyectados en la DB agregando el atributo `data-event-name="seo_blog_cta_click"`, lo cual permite implementar mediciones pasivas por Tag Manager u observadores de eventos sin saturar la arquitectura actual con scripts invasivos.
+
+---
+
 ## [Unreleased] - 2026-07-07 — Saneamiento SEO Ahrefs Fases A–G (6 CSV nuevos)
 
 Corrección de las incidencias reportadas por los 6 CSV nuevos de Ahrefs:

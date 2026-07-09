@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { site, absoluteUrl } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
@@ -21,9 +22,9 @@ import { RelatedServices } from '@/components/marketing/related-links';
 
 export const metadata: Metadata = buildMetadata({
   // 54 chars.
-  title: 'Hondureños en España · Asistencia Legal desde Honduras',
+  title: 'Abogados en Honduras para Hondureños en España',
   // 156 chars. Antes 172.
-  description: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España.',
+  description: 'Servicios legales en Honduras para hondureños residentes en España: poderes, divorcios, trámites familiares, herencias y representación legal.',
   canonicalPath: '/hondurenos-en-espana',
   keywords: ['hondureños en España', 'asistencia legal migrantes', 'poder notarial desde España', 'divorcio internacional Honduras', 'herencias transfronterizas', 'reagrupación familiar Honduras España', 'nacionalidad española hondureños'],
   ogImage: '/og/migracion.webp',
@@ -88,20 +89,19 @@ export default async function MigrantesPage() {
               <h3 className="font-serif font-bold text-base text-primary">Trámites más frecuentes</h3>
               <ul>
                 <li>
-                  <strong>Apostilla de La Haya</strong> para documentos emitidos en España que deban surtir
-                  efecto en Honduras (sentencias, actas de nacimiento, poderes).
-                </li>
-                <li>
-                  <strong>Poder notarial a distancia</strong>: autorizar a un abogado en Honduras para que
+                  <strong><Link href="/servicios-juridicos/derecho-notarial" className="text-primary hover:underline">Poder notarial desde España</Link></strong> para trámites en Honduras: autorizar a un abogado en Honduras para que
                   le represente en juicios, compraventas, divorcios o gestiones registrales.
                 </li>
                 <li>
-                  <strong>Homologación de sentencias españolas</strong> en Honduras: divorcios, custodias y
+                  <strong><Link href="/servicios-juridicos/derecho-de-familia" className="text-primary hover:underline">Divorcio en Honduras residiendo en España</Link></strong> y homologación de sentencias españolas: divorcios, custodias y
                   resoluciones patrimoniales que requieren reconocimiento judicial para ser ejecutables.
                 </li>
                 <li>
-                  <strong>Herencias transfronterizas</strong> con bienes en Honduras y España: declaración
+                  <strong><Link href="/servicios-juridicos/derecho-civil" className="text-primary hover:underline">Herencias, propiedades y representación legal</Link></strong> con bienes en Honduras y España: declaración
                   de herederos, partición y liquidación de sociedad conyugal.
+                </li>
+                <li>
+                  <strong>Trámites familiares para hondureños en el extranjero</strong>: inscripciones de nacimiento, matrimonio, y <Link href="/solicitar-consulta" className="text-primary hover:underline">consulta legal remota con abogados en Honduras</Link>.
                 </li>
               </ul>
               <h3 className="font-serif font-bold text-base text-primary">Cómo trabajamos a distancia</h3>

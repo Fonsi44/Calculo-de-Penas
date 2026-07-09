@@ -327,7 +327,8 @@ data/gsc-*.json
 ~/.config/gcloud/
 
 # Export de SEO live data (regenerable, volátil)
-data/seo/
+data/seo/*.json
+data/seo/history/
 
 # Hardening general de secretos y outputs
 *token*.json
@@ -343,3 +344,4 @@ scratch/
 _tmp_*
 _chat_*.png
 auditoriablog_*.md
+.zcode/

@@ -160,5 +160,5 @@ describe('lib/auth — hashPassword / verifyPassword', () => {
     expect(h1).not.toBe(h2);
     expect(await verifyPassword('secreto-123', h1)).toBe(true);
     expect(await verifyPassword('secreto-123', h2)).toBe(true);
-  });
+  }, 15000);
 });

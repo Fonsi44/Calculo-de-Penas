@@ -7,6 +7,7 @@ import {
   isAnalyticsExcludedPath,
   maskMeasurementId,
   debugAnalytics,
+  trackEvent
 } from '@/lib/analytics';
 
 declare global {
@@ -57,6 +58,32 @@ export function AnalyticsScripts({
   // contenedor gestiona GA4 y cualquier otra etiqueta desde la UI de GTM.
   const useGtm = Boolean(gtmId);
   const effectiveGaId = useGtm ? null : gaId;
+
+  // SEO CTA click tracker (Fase 3)
+  useEffect(() => {
+    function handleGlobalClick(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (!target || !target.closest) return;
+      const el = target.closest('[data-event-name]');
+      if (!el) return;
+      
+      const eventName = el.getAttribute('data-event-name');
+      if (eventName) {
+        trackEvent(eventName, {
+          cta_location: el.getAttribute('data-cta-location') || 'unknown',
+          destination_url: el.getAttribute('href') || 'unknown',
+          source_url: window.location.pathname,
+          cta_topic: el.getAttribute('data-cta-topic') || 'general',
+        });
+        debugAnalytics(`event: ${eventName}`, {
+          destination: el.getAttribute('href'),
+        });
+      }
+    }
+    
+    document.addEventListener('click', handleGlobalClick);
+    return () => document.removeEventListener('click', handleGlobalClick);
+  }, []);
 
   useEffect(() => {
     if (!clarityId) return;

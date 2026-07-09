@@ -1,18 +1,18 @@
 # Bing WMT — Datos LIVE
 
-**Generado:** 2026-07-08T09:23:13.450Z
+**Generado:** 2026-07-09T11:24:56.942Z
 **Modo:** API Key
 
 ## Crawl Stats
 
 | Métrica | Valor |
 |---------|-------|
-| Días reportados | 28 |
-| Páginas rastreadas | 3330 |
-| Respuestas 2xx | 4702 |
-| Errores 4xx | 362 |
+| Días reportados | 29 |
+| Páginas rastreadas | 3646 |
+| Respuestas 2xx | 5186 |
+| Errores 4xx | 455 |
 | Errores 5xx | 0 |
-| Errores de rastreo | 503 |
+| Errores de rastreo | 721 |
 
 ## Top Queries
 
@@ -20,23 +20,23 @@
 |-------|-------|-------------|----------|-----|
 | como hacer una union de hecho postumo en honduras mas declaracion de heredero abintestato en una sola demanda? | 1 | 2 | 0 | 0% |
 | que es la facturacion electronica en honduras | 1 | 2 | 0 | 0% |
-| requisitos para demanda pensión alimenticia honduras | 1 | 1 | 0 | 0% |
 | que es allanamiento de morada en honduras | 1 | 1 | 0 | 0% |
-| cuanto se debe dar de pensión alimenticia a los niños segun normativa honduras | 0 | 2 | 0 | 0% |
-| pequeños paquetes que se pueden importar de otros paises a honduras | 0 | 2 | 0 | 0% |
+| requisitos para demanda pensión alimenticia honduras | 1 | 1 | 0 | 0% |
 | como hacer una union de hecho postumo en honduras | 0 | 2 | 0 | 0% |
 | prescripcion de la pension alimenticia en honduras | 0 | 2 | 0 | 0% |
+| cuanto se debe dar de pensión alimenticia a los niños segun normativa honduras | 0 | 2 | 0 | 0% |
+| pequeños paquetes que se pueden importar de otros paises a honduras | 0 | 2 | 0 | 0% |
 | vigencia de contrato de arrendamiento hondudras, ciuanto dura? | 0 | 2 | 0 | 0% |
 | cálculo de prestaciones laborales en honduras | 0 | 2 | 0 | 0% |
-| cuanto dura una licencia ambiental en honduras | 0 | 1 | 0 | 0% |
 | que se puede importar de otros paises a honduras | 0 | 1 | 0 | 0% |
+| cuanto dura una licencia ambiental en honduras | 0 | 1 | 0 | 0% |
 | productos exentos de isv 2026 en honduras | 0 | 1 | 0 | 0% |
-| registro de pension alimenticia honduras | 0 | 1 | 0 | 0% |
-| pagar derechos e indemnización laboral en honduras tiempos... legislación laboral | 0 | 1 | 0 | 0% |
 | la unión de hecho irregular  en honduras | 0 | 1 | 0 | 0% |
 | honduras el delito de vilación no prescribe? | 0 | 1 | 0 | 0% |
-| male se puede importar a honduras? | 1 | 2 | 0 | 0% |
+| registro de pension alimenticia honduras | 0 | 1 | 0 | 0% |
+| pagar derechos e indemnización laboral en honduras tiempos... legislación laboral | 0 | 1 | 0 | 0% |
 | contrato para empleadas domesticas en honduras | 1 | 2 | 0 | 0% |
+| male se puede importar a honduras? | 1 | 2 | 0 | 0% |
 | condiciones para la validez de union de hecho en honduras | 1 | 1 | 0 | 0% |
 
 ## URLs Prioritarias
