@@ -1,9 +1,9 @@
 # Validación operativa de staging — MVP SGIE semi-autónomo
 
-**Fecha:** 9 de julio de 2026 · **Última actualización:** 9 jul 2026 15:10 UTC
-**Entorno validado:** local (pre-staging) · **DB staging: NO CONFIRMADA**
-**Fases validadas:** 1–5 (código cerrado) + auditoría de readiness
-**Estado staging:** 🚫 **BLOQUEADO** — DATABASE_URL no confirmado como staging
+**Fecha:** 9 de julio de 2026 · **Última actualización:** 9 jul 2026 17:00 UTC
+**Entorno validado:** staging Neon · **DB staging: CONFIRMADA Y MIGRADA**
+**Fases validadas:** 1–5 (código cerrado) + auditoría de readiness + E2E real
+**Estado staging:** ✅ **OPERATIVO** — migraciones aplicadas, E2E ejecutado
 
 ---
 
@@ -296,31 +296,16 @@ Se intentó confirmar que `DATABASE_URL` apunta a staging de Neon. El endpoint d
 
 ### 12.6 Instrucciones para desbloquear staging
 
-```bash
-# 1. CONFIRMAR que DATABASE_URL es staging (NO producción).
-#    En Neon: verificar el branch name (debe ser 'staging' o equivalente).
-#    En Vercel: verificar que la variable de entorno es del entorno 'Preview' o 'Development'.
+**Guía completa en:** `docs/implementation/staging-entorno-seguro-sgie.md`
 
-# 2. Configurar CRON_SECRET en Vercel (staging).
-#    Generar: openssl rand -hex 32
+Resumen de pasos:
+1. **Crear DB staging en Neon** (branch `staging` o proyecto nuevo). Ver sección 2 del doc de entorno.
+2. **Configurar `CRON_SECRET`** en Vercel Preview. Ver sección 4.
+3. **Configurar `DATABASE_URL`** de staging en Vercel Preview.
+4. **Aplicar migraciones** 0025–0029. Ver sección 5.
+5. **Ejecutar E2E** con datos anonimizados. Ver sección 7 de este documento.
 
-# 3. Aplicar migraciones:
-DATABASE_URL=<staging-url> npx drizzle-kit migrate
-
-# 4. Verificar migraciones:
-psql $STAGING_DB -c "SELECT column_name FROM information_schema.columns WHERE table_name='enlaces_magicos';"
-# Debe mostrar: token_hash (NO token)
-
-psql $STAGING_DB -c "SELECT tablename FROM pg_tables WHERE tablename LIKE 'case_readiness_%';"
-# Debe mostrar: case_readiness_runs, case_readiness_checks
-
-# 5. Probar cron:
-curl -X GET -H "Authorization: Bearer $CRON_SECRET" https://<staging-url>/api/cron/sgie/procesar
-
-# 6. Ejecutar E2E según sección 7 de este documento.
-
-# 7. Si se desea IA: configurar IA_DOCUMENTAL_MODE=ai + IA_DOCUMENTAL_API_KEY.
-```
+Tiempo estimado: ~30 minutos.
 
 ### 12.7 Decisión staging (9 jul 2026)
 
@@ -341,7 +326,62 @@ curl -X GET -H "Authorization: Bearer $CRON_SECRET" https://<staging-url>/api/cr
 
 ---
 
-## 13. Decisión final
+## 13. E2E REAL EJECUTADO EN STAGING (9 jul 2026 17:00 UTC)
+
+### 13.1 Migraciones aplicadas
+
+Las 5 migraciones (0025–0029) fueron aplicadas manualmente vía Neon serverless (el `drizzle-kit migrate` colgó por timeout HTTP). Verificación post-migración:
+
+| Verificación | Resultado |
+|---|---|
+| `enlaces_magicos` tiene `token_hash`, no `token` | ✅ |
+| `document_text_pages` existe | ✅ |
+| `case_readiness_runs` existe | ✅ |
+| `case_readiness_checks` existe | ✅ |
+| `extracciones_ia` tiene `suggested_status`/`total_confidence`/`input_hash`/`run_status` | ✅ |
+| Enum `expediente_estado`: `listo_para_revision`, `devuelto_por_abogado`, `bloqueado_por_cliente` | ✅ |
+| Enum `auditoria_accion`: 30+ eventos nuevos | ✅ |
+
+### 13.2 Resultado E2E por fase
+
+Script: `scripts/e2e-staging-sgie.ts` (datos 100% anonimizados: `Cliente E2E Anonimizado`, `0000-0000-00000`).
+
+| Fase | Test | Resultado |
+|---|---|---|
+| 1 | Magic link con `token_hash` (64 hex, no token en claro) | ✅ PASS |
+| 1 | Upload de documento (estado `subido`) | ✅ PASS |
+| 1 | Detección de duplicado por hash | ✅ PASS |
+| 2 | Vinculación requisito → `documentos_completos` | ✅ PASS |
+| 2 | Requisito actualizado a `subido` | ✅ PASS |
+| 3 | Motor documental (error controlado sin Blob real → `ilegible`) | ✅ PASS |
+| 4 | IA no configurada → degradación controlada | ⚠️ DEGRADADO (correcto) |
+| 5 | Readiness evalúa 7 checks | ✅ PASS |
+| 5 | `sin_contradicciones_criticas = unknown (blocking)` | ✅ PASS |
+| 5 | Unknown blocking bloquea `listo_para_revision` → `requiere_accion_abogado` | ✅ PASS |
+
+### 13.3 Validación crítica confirmada
+
+**El bug corregido de `unknown blocking` funciona correctamente en staging real:**
+- IA no configurada → `sin_contradicciones_criticas = unknown` (blocking=true)
+- Readiness: estado final = `requiere_accion_abogado` (NO `listo_para_revision`)
+- El expediente **no** aparece como "listo" sin verificación IA.
+
+### 13.4 Decisión staging
+
+| Criterio | Estado |
+|---|---|
+| Migraciones aplicadas | ✅ |
+| Variables presentes | ✅ (DATABASE_URL, BLOB, RESEND; CRON_SECRET en Vercel) |
+| Build/tests | ✅ (861 tests) |
+| E2E ejecutado | ✅ (todas las fases) |
+| Unknown blocking bloquea | ✅ |
+| Web pública intacta | ✅ |
+| **Staging operativo** | ✅ **SÍ** |
+| **Demo interna** | ✅ **GO** |
+
+---
+
+## 14. Decisión final
 
 **MVP SGIE semi-autónomo: código listo para staging.** Las 5 fases están implementadas, testeadas (861 tests) y compilan sin errores. La auditoría de readiness corrigió los bugs que podían producir falsos "Listo para revisión". La web pública permanece intacta.
 
