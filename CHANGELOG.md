@@ -1471,3 +1471,12 @@ El historial completo de releases 1-90 está disponible en [Releases de GitHub](
 ---
 
 *Changelog mantenido por el sistema de agentes IA. Cada entrada refleja cambios reales verificados con lint/build/test.*
+
+### Deploy: Producción (2026-07-09)
+- **Commit desplegado:** 573c6aa
+- **Validación post-deploy:** Completada con éxito (HTTP 200 en rutas críticas).
+- **Estado robots/sitemap/canonicals:** Validados en producción, sin bloqueos.
+- **Estado CTA tracking:** Activo (evento seo_blog_cta_click inyectado en Client-Side).
+- **Pendientes:** CSV de Bing Webmaster Tools para saneamiento de errores 4xx.
+- **Próxima revisión:** 48-72h para indexación prioritaria, y 28 días para análisis Baseline comparativo.
+
