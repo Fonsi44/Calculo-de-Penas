@@ -108,6 +108,10 @@ const REDIRECT_SOURCE_PATHS = new Set<string>([
   '/blog/conciliacion-arbitraje/arbitraje-cuando-conviene-como-funciona-honduras',
   '/blog/derecho-ambiental/evaluacion-impacto-ambiental-paso-a-paso-honduras',
   '/blog/hondurenos-en-espana/hondurenos-en-espana-guia-legal-completa',
+  // Post consolidado en landing propia /abogado-penalista-choluteca (redirect 301
+  // en next.config.ts:284). Si sigue publicado en DB, el sitemap lo listaría y
+  // serviría un 308. Auditoría Ahrefs 2026-07-10: 1 enlace "Sitemap URL → 308".
+  '/blog/derecho-penal/abogado-penalista-choluteca',
 ]);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

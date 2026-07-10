@@ -89,7 +89,7 @@ export default async function MigrantesPage() {
               <h3 className="font-serif font-bold text-base text-primary">Trámites más frecuentes</h3>
               <ul>
                 <li>
-                  <strong><Link href="/servicios-juridicos/derecho-notarial" className="text-primary hover:underline">Poder notarial desde España</Link></strong> para trámites en Honduras: autorizar a un abogado en Honduras para que
+                  <strong><Link href="/servicios-juridicos/derecho-civil-y-notarial" className="text-primary hover:underline">Poder notarial desde España</Link></strong> para trámites en Honduras: autorizar a un abogado en Honduras para que
                   le represente en juicios, compraventas, divorcios o gestiones registrales.
                 </li>
                 <li>
@@ -97,7 +97,7 @@ export default async function MigrantesPage() {
                   resoluciones patrimoniales que requieren reconocimiento judicial para ser ejecutables.
                 </li>
                 <li>
-                  <strong><Link href="/servicios-juridicos/derecho-civil" className="text-primary hover:underline">Herencias, propiedades y representación legal</Link></strong> con bienes en Honduras y España: declaración
+                  <strong><Link href="/servicios-juridicos/derecho-civil-y-notarial" className="text-primary hover:underline">Herencias, propiedades y representación legal</Link></strong> con bienes en Honduras y España: declaración
                   de herederos, partición y liquidación de sociedad conyugal.
                 </li>
                 <li>

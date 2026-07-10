@@ -1,0 +1,12 @@
+path,status,is_indexable,meta_robots,http_robots,title,note
+/,200,true,follow,,"Abogados en Nacaome, Valle | Bufete Jurídico Pineda y Asocia",
+/servicios-juridicos,200,true,follow,,Servicios Jurídicos en Nacaome | 14 Áreas,
+/derecho-penal,200,true,follow,,Abogado Penalista en Nacaome | Defensa Penal,
+/derecho-laboral,NO_EN_HTML_200,,,,,No encontrada en export HTML 200
+/derecho-de-familia,NO_EN_HTML_200,,,,,No encontrada en export HTML 200
+/servicios-juridicos/derecho-civil-y-notarial,200,true,follow,,Derecho Civil y Notarial | Pineda y Asociados,
+/servicios-juridicos/derecho-mercantil-empresarial,200,true,follow,,Derecho Mercantil y Empresarial | Pineda y Asociados,
+/servicios-juridicos/derecho-administrativo-y-servicio-civil,200,true,follow,,Derecho Administrativo y Servicio Civil | Pineda y Asociados,
+/solicitar-consulta,200,true,follow,,"Consulte a un Abogado en Nacaome, Valle",
+/despacho,200,true,follow,,Bufete de Abogados en Nacaome | 15+ Años de Experiencia,
+/blog,200,true,follow,,Blog Jurídico de Abogados en Honduras,

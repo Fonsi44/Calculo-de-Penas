@@ -6,6 +6,59 @@ están resumidos; las entradas vigentes desde la reestructuración del changelog
 
 ---
 
+## [Unreleased] - 2026-07-10 — Saneamiento Site Audit Ahrefs (enlaces 4xx/3xx, sitemap, H1)
+
+Corrección técnica SEO basada en el análisis de 6 CSV exportados de Ahrefs (crawl 10-jul-2026). Diagnóstico completo en `auditoria_seo/ahrefs_2026_07_10/ahrefs-diagnostico-inicial.md`. Solo correcciones técnicas localizadas; sin reescritura editorial.
+
+### `fix(seo): enlaces internos rotos (4xx) y redirigidos (3xx)`
+- **2 enlaces 4xx corregidos** en `app/(public)/hondurenos-en-espana/page.tsx`: los href a `/servicios-juridicos/derecho-notarial` y `/servicios-juridicos/derecho-civil` (slugs inexistentes) ahora apuntan al slug canónico `/servicios-juridicos/derecho-civil-y-notarial`. Los otros 6 enlaces 4xx del CSV son artefactos de crawl sin referencia real (ya documentados en `next.config.ts:176-181`).
+- **8 posts despublicados** (`published=false`) cuyas rutas están redirigidas (301) en `next.config.ts` hacia URLs consolidadas, pero seguían publicados → generaban **114 enlaces internos a 3xx** vía sitemap, `BlogHighlights`, navegación prev/next y landings. Slugs: `abogado-penalista-choluteca`, `despido-injustificado-honduras-derechos-trabajador`, `empleador-no-paga-salario-honduras`, `calcular-prestaciones-laborales-honduras`, `despido-laboral-honduras-derechos`, `tramites-notariales-frecuentes-honduras`, `elegir-bufete-abogados-nacaome`, `elegir-bufete-multidisciplinario-ventajas-honduras`. Los redirects 301 se mantienen intactos. Script: `scripts/seo-unpublish-consolidated-posts.ts` (dry-run por defecto, con verificación post-escritura).
+
+### `fix(seo): sitemap sin URLs 3xx`
+- Añadido `/blog/derecho-penal/abogado-penalista-choluteca` a `REDIRECT_SOURCE_PATHS` en `app/sitemap.ts` (era el único target 3xx que el sitemap seguía incluyendo; los otros 7 ya estaban excluidos). Defensa en profundidad junto a la despublicación.
+
+### `fix(blog): jerarquía H1 (R15)`
+- 3 posts con doble `<h1>` en el body corregidos (h1→h2) vía `scripts/normalizar-blog.ts --aplicar --solo-h1`: `banco-demanda-deuda-defensa-opciones-honduras`, `como-preparar-demanda-guia-no-abogados-honduras`, `habilitacion-clinicas-hospitales`. La plantilla ya renderiza el título como `<h1>` (`page.tsx:392`).
+
+### Validación
+- `lint` (0 errores), `tsc --noEmit` (EXIT 0), `blog:normalizar` (dry-run OK), `build` (354/354 páginas estáticas, 0 errores), `test` (861/861).
+- Sitemap: 0 de los 8 slugs viejos entrarían al filtro `published=true`.
+- Canonicals: 816 revisados, 0 problemas (paginación y facetas son noindex con canonical self, correcto).
+- Documentación: `auditoria_seo/ahrefs_2026_07_10/` (diagnóstico, correcciones, post-validación, pendientes, 4 CSV de revisión, URLs candidatas IndexNow).
+
+### Clasificación (R11)
+- **VALIDADO**: enlaces 4xx, despublicación 8 posts, exclusión sitemap, H1×3, canonicals.
+- **PENDIENTE**: validación de schema.org con Rich Results Test (sin CSV `all_issues` en este lote); noindex de páginas core en runtime (post-deploy); reemplazo de slugs viejos en landings (`BlogHighlights`) para mantener densidad de enlazado.
+
+
+
+## [Unreleased] - 2026-07-10 — Fase 1.5: Optimización Manual de 5 Posts Estratégicos (SEO Quirúrgico)
+
+Ejecución de la Fase 1 del plan de contenidos, enfocada exclusivamente en la mejora **manual, individual y quirúrgica** de contenido existente. Se evitó cualquier reescritura masiva o uso de plantillas genéricas para preservar la línea editorial y el tono corporativo de Pineda y Asociados.
+
+### `feat(seo): Optimización de Contenido (Fase 1)`
+- **`pension-alimenticia-porcentaje-honduras-2026`**: Eliminadas aseveraciones arriesgadas sobre porcentajes fijos judiciales. Añadida explicación sobre el Principio de Proporcionalidad y FAQ de prescripción.
+- **`allanamiento-ilegal-violacion-domicilio-honduras`**: Reestructuración del H2 inicial para capturar el Featured Snippet del horario legal (6:00 a.m. a 6:00 p.m. Art. 212 CPP). Clarificación de 4 excepciones legales para allanamientos nocturnos.
+- **`prescripcion-deudas-plazos-honduras`**: Corrección crítica técnica (plazo civil general ajustado a 10 años). Diferenciación clara entre vía ejecutiva mercantil y vía ordinaria civil. Añadida prevención sobre tácticas de cobranza extrajudicial.
+- **`calcular-prestaciones-laborales-honduras`**: División semántica entre Derechos Adquiridos (renuncia) e Indemnizaciones (despido). Corrección del plazo de prescripción por despido a 60 días hábiles. Inserción de Disclaimer fuerte sobre el cálculo orientativo.
+- **`contratos-empleadas-domesticas-obligaciones-honduras`**: Suavizado de tono alarmista hacia uno de asesoría patronal preventiva. Precisión sobre cobertura geográfica del IHSS. Nuevo CTA enfocado a empleadores domésticos.
+
+### Validación post-implementación
+- Confirmación de renderizado y metadatos SEO en `.next/server/app/`. Todas las optimizaciones están integradas, el schema se valida correctamente y no hay enlaces internos rotos.
+- Establecida la lista de control de 7/14/30 días para monitorear impacto en GSC y Bing Webmaster Tools.
+
+
+
+## [Unreleased] - 2026-07-10 — Recrawling IndexNow y Validación de Correcciones Bing WMT
+
+Ejecución de la fase de validación técnica y recrawling en Bing WMT para agilizar la actualización del índice tras la corrección masiva de errores de rastreo (511 4xx).
+
+### `feat(seo): Validación y envío de URLs saneadas a IndexNow`
+- **Validación Técnica Local**: Se desarrolló el script `seo-validate-recrawl.mjs` que extrajo y analizó 135 URLs afectadas (obtenidas de GSC, sitemap y auditorías previas), verificando status HTTP 200, metadatos `robots`, `x-robots-tag`, y consistencia canonical mediante peticiones reales (fetch).
+- **Limpieza de Señales**: Se descartaron 8 URLs (404s intencionales y canonical overrides, por ej. `blog?page=3` y antiguas URLs parametrizadas) garantizando que ninguna URL no indexable fuera sometida a recrawling.
+- **IndexNow Submission**: Se desarrolló el script `seo-submit-indexnow.mjs` que sometió exitosamente 127 URLs validadas a la API de IndexNow (api.indexnow.org) en lotes controlados (≤50 URLs), generando un archivo de clave de autenticación local.
+- **Trazabilidad y Control**: Todos los entregables, listados de URLs aceptadas (dry-run y finales), CSVs, y logs detallados (status 202 Accepted) fueron guardados en el nuevo directorio de persistencia `auditoria_seo/recrawl_bing/`, incluyendo el documento `checklist-post-recrawl.md` para monitoreo continuo a 24h, 72h, 7d y 14d.
+
 ## [Unreleased] - 2026-07-09 — Implementación SEO prioritaria GSC y Bing
 
 Implementación directa de las mejoras SEO prioritarias detectadas tras cruzar datos reales de Google Search Console, Bing Webmaster Tools y GA4.
