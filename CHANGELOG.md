@@ -1,5 +1,40 @@
 # CHANGELOG — Pineda y Asociados
 
+## 2026-07-12 — Remediación integral Fases 1-5
+
+### Fase 1 — Cierre de seguridad crítica
+- `invalidateFreshness()` cableado en 7 puntos de mutación crítica (cambio de contraseña, reset admin, bloqueo, rol, desactivación, logout, reset por email).
+- `consumirTokenReset` ahora incrementa `tokenVersion` + resetea `mustChangePassword` (revoca sesiones tras reset por email).
+- `lib/permissions.ts` reconciliado: `AuthError` canónico de `lib/auth.ts` con `status: 403`.
+
+### Fase 2 — Preview y controles de contenido
+- Preview reemplazado: tokens opacos server-side (`preview_tokens`) en lugar de JWT con contenido en URL. Un solo uso, expiración 1h, HTML sanitizado con allowlist estricta.
+- Página de preview requiere autenticación (redirect a login si no hay sesión).
+- Proxy añade `x-correlation-id` en todas las respuestas para trazabilidad.
+- `/api/oauth/callback` removido de rutas públicas (ahora requiere auth vía proxy).
+- Migración 0031: tabla `preview_tokens` con índices y FK.
+
+### Fase 3 — Documentos y endpoints públicos
+- `lib/file-validation.ts`: validación por magic bytes (JPEG, PNG, WebP, AVIF, PDF, ZIP/DOCX) con detección de Zip Slip, extensión vs firma, y límites.
+- Admin upload route usa `validateImage()` con magic bytes (no confía en MIME del cliente).
+- `/api/descargar` migrado de GET a POST: email/área en body (sin PII en URL), rate limiting 5/15min, consent obligatorio, CAPTCHA-ready (Turnstile), caché server-side de PDFs, `Cache-Control: private, no-store`.
+- SGIE `/api/public/cargar` ya tenía validación por magic bytes (verificado).
+
+### Fase 4 — Dependencias, testing, CI
+- Endpoint MCP demo (`app/api/[transport]/`) eliminado: sin consumidores, 3 HIGH CVEs.
+- Dependencias MCP removidas: `mcp-handler`, `@modelcontextprotocol/*` (-6 paquetes).
+- ESLint: 0 errores, 0 warnings (6 unused imports corregidos en readiness, autonomía).
+- SBOM: `@cyclonedx/cyclonedx-npm` (devDep) + script `sbom:generate`.
+- Scripts `deps:audit` y `deps:outdated` para CI.
+- 10 vulnerabilidades moderadas restantes documentadas (transitivas: googleapis, next, drizzle-kit, postcss, esbuild).
+
+### Fase 5 — Integridad jurídica, RAG, operaciones
+- Auditoría de delitos: 483 analizados, 25 críticos (penas 0-0), 142 sin rama, 483 sin clasificación. Reporte en `data/auditoria-delitos-report.json`. Correcciones requieren validación humana con fuentes canónicas.
+- Embeddings: proveedor deepseek-embedding, 1536 dimensiones, consistente entre `.env.example`, `lib/rag/config.ts` y AGENTS.md.
+- Runbook de backup/restauración: `docs/security/runbook-backup-restore.md` (Neon PITR, Vercel Blob, rotación de secretos, SLOs, DRP, mantenimiento periódico).
+
+---
+
 ## Seguridad — Fase 1 de identidad (código completado, pendiente de despliegue y pasos operativos)
 
 - JWT con propósito explícito (`session` / `2fa_challenge`), challenge 2FA con TTL 5 min, `jti` aleatorio y consumo atómico persistente (compare-and-set en DB).
