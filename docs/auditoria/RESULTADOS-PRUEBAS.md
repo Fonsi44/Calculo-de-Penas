@@ -3,6 +3,72 @@
 **Fecha:** 2026-07-12  
 **Regla:** ningún resultado se extrapola más allá del comando/flujo ejecutado.
 
+---
+
+## Validación Staging — Fases 1-5 y Subfases de migraciones/E2E (2026-07-12 13:00)
+
+### Resumen ejecutivo
+
+| Comando | Resultado |
+|---------|-----------|
+| `npm run lint` | ✅ 0 errores, 0 warnings |
+| `npx tsc --noEmit` | ✅ 0 errores |
+| `npm run test` | ✅ 49 archivos, **899/899 tests** |
+| `npm run build` | ✅ Exit 0, 354 páginas |
+| Auditoría migraciones | ✅ 32 entradas coherentes, idempotentes |
+| E2E Playwright | ⚠️ 7 specs preparados, bloqueados por falta de DB de test |
+| SBOM CycloneDX | ⚠️ Bloqueado por npm peer deps (esbuild) |
+
+### Subfase 1 — Consistencia de migraciones
+
+- **Journal**: 32 entradas (0000–0031), secuencia sin saltos, 0 tags duplicados.
+- **0030** (`security_sessions_2fa`): `token_version` ALTER con IF NOT EXISTS, `two_factor_challenges` CREATE IF NOT EXISTS, `jti` PK, `consumed_at` nullable, FK cascade, índice `expires_at`, DOWN separado.
+- **0031** (`preview_tokens`): CREATE IF NOT EXISTS, `token` unique, `expires_at` NOT NULL, `consumed_at` nullable, FK `created_by` cascade, índices `token`+`expires_at`, DOWN separado.
+- **Schema↔SQL**: `twoFactorChallenges` y `previewTokens` en `lib/schema.ts` consistentes con migraciones SQL.
+
+### Subfase 2 — Entorno E2E aislado
+
+Scripts creados en `scripts/e2e/`:
+- `guard.mjs` — fail-closed: exige `ALLOW_TEST_DATABASE=true`, `NODE_ENV=test`, DB name con segmento `test|staging|preview|testing`, bloquea patrones productivos.
+- `setup.mjs` — aplica migraciones + seed sintético + genera `.env.e2e`.
+- `seed.mjs` — 4 usuarios, 3 clientes, 3 expedientes, 3 asignaciones, 1 secreto 2FA (datos deterministas, sin PII).
+- `cleanup.mjs` — DELETE por prefijo de ID, best-effort, ejecutado siempre.
+- `run.mjs` — orquesta guard → setup → Playwright → cleanup.
+
+### Subfase 3 — Matriz E2E crítica
+
+7 specs Playwright en `tests/e2e/`:
+
+| Spec | Escenarios |
+|------|-----------|
+| `critical-auth.spec.ts` | 1-8: Login, bloqueo, 2FA, revocación, logout, redirección |
+| `critical-authorization.spec.ts` | 9-12: Roles, IDOR/BOLA, mutación cruzada, admin |
+| `critical-preview.spec.ts` | 13-14: Token opaco, auth, sanitización, consumo único |
+| `critical-upload.spec.ts` | 15-16: Magic bytes, DOCX, tamaño, nombres maliciosos |
+| `critical-descargar.spec.ts` | 17: POST, consent, rate limit |
+| `critical-security.spec.ts` | 18: Headers, PII, correlation-id |
+| `navigation.spec.ts` | Pública + intranet (desktop + mobile) |
+
+### Subfase 4 — Compatibilidad y regresión
+
+- 304 call sites `requireAuth`/`requireAdmin`/`requireAbogado` → 0 sin `await`.
+- `invalidateFreshness` cableado en 7 rutas de mutación crítica.
+- `ENCRYPTION_KEY` con soporte de rotación (AES-256-GCM + PREVIOUS fallback).
+
+### Subfase 5 — Validación total
+
+- Lint: 0/0. TypeScript: 0. Tests: 899/899. Build: exit 0.
+- E2E: Preparado, bloqueado por falta de DB de test.
+- SBOM: Bloqueado por npm peer deps; alternativa `npm ls --json > deps-tree.json`.
+
+### Riesgos residuales
+
+- 10 vulnerabilidades moderadas (transitivas, documentadas en CHANGELOG).
+- E2E no ejecutado sobre PostgreSQL real.
+- SBOM automatizado requiere `npm dedupe`.
+
+---
+
 ## Resumen
 
 | Grupo | Resultado |

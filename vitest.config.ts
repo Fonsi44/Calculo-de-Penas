@@ -15,6 +15,7 @@ export default defineConfig({
       'node_modules',
       '.next',
       'e2e/**',
+      'tests/e2e/**',
       'playwright-report/**',
       // Excluir tooling local con sus propios node_modules (OpenCode crea
       // .opencode/node_modules con tests internos de dependencias como zod
@@ -42,6 +43,7 @@ export default defineConfig({
         '.next/**',
         'coverage/**',
         'e2e/**',
+        'tests/e2e/**',
         'playwright-report/**',
         'scripts/legacy/**',
         'data/**',

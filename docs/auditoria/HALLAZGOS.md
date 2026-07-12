@@ -250,3 +250,76 @@ La severidad combina impacto, explotabilidad, frecuencia, alcance y esfuerzo del
 - **Impacto:** lectura lenta, inconsistencia lingüística y riesgo de acción incorrecta.
 - **Solución:** catálogo de etiquetas humanas, color/ícono no exclusivos y siguiente acción visible.
 
+## Hallazgos cerrados — Fases 1-5 y Subfases (2026-07-12)
+
+### AUD-SEC-008 — Preview con contenido en JWT dentro de URL
+
+- **Categoría:** Seguridad
+- **Severidad:** Alta
+- **Estado:** `CERRADO` (Fase 2)
+- **Descripción:** El preview de contenido transportaba title, body, description, category dentro de un JWT en la URL (`/preview/<jwt>`). Un JWT en URL queda en logs de proxy, historial del navegador y puede ser compartido accidentalmente.
+- **Solución:** Reemplazado por tokens opacos server-side (`preview_tokens` en DB), single-use, expiración 1h, sanitización HTML con allowlist estricta. Página de preview requiere autenticación. Migración 0031.
+
+### AUD-SEC-009 — `/api/oauth/callback` público sin autenticación
+
+- **Categoría:** Seguridad
+- **Severidad:** Media
+- **Estado:** `CERRADO` (Fase 2)
+- **Descripción:** El endpoint de callback OAuth estaba listado en `PUBLIC_API_EXACT` del proxy, permitiendo acceso anónimo. El código del handler asumía incorrectamente que el proxy lo protegía.
+- **Solución:** Removido de `PUBLIC_API_EXACT`. Ahora requiere autenticación vía proxy (JWT válido).
+
+### AUD-SEC-010 — Upload acepta MIME arbitrario del cliente
+
+- **Categoría:** Seguridad
+- **Severidad:** Alta
+- **Estado:** `CERRADO` (Fase 3)
+- **Descripción:** El endpoint de upload solo validaba `file.type` (provisto por el cliente, spoofeable). Un atacante podía subir un ejecutable renombrado `.jpg`.
+- **Solución:** `lib/file-validation.ts` con validación por magic bytes (JPEG, PNG, WebP, AVIF, PDF, ZIP/DOCX). Detección de Zip Slip, extensión vs firma, límites. Admin upload route migrada a `validateImage()`.
+
+### AUD-SEC-011 — `/api/descargar` GET con PII en URL
+
+- **Categoría:** Seguridad
+- **Severidad:** Media
+- **Estado:** `CERRADO` (Fase 3)
+- **Descripción:** Email en query param de URL (logs, historial). GET con side effects (escritura en DB). Sin rate limiting ni consent.
+- **Solución:** Migrado a POST. Email y área en body. Rate limit 5/15min. Consent obligatorio. CAPTCHA-ready (Turnstile). Cache-Control: private, no-store. PDF cache server-side 1h.
+
+### AUD-SEC-012 — `invalidateFreshness` nunca llamado tras mutaciones
+
+- **Categoría:** Seguridad
+- **Severidad:** Alta
+- **Estado:** `CERRADO` (Fase 1)
+- **Descripción:** La caché de frescura de sesión (5s TTL) no se invalidaba tras cambio de contraseña, bloqueo, cambio de rol, desactivación o logout. Ventana de 5 segundos donde una sesión revocada seguía siendo aceptada.
+- **Solución:** Cableado en 7 rutas: change-password, reset-password admin, PATCH/DELETE usuario, bloqueo, rol, logout, reset por email.
+
+### AUD-SEC-013 — `consumirTokenReset` no incrementaba `tokenVersion`
+
+- **Categoría:** Seguridad
+- **Severidad:** Alta
+- **Estado:** `CERRADO` (Fase 1)
+- **Descripción:** El reset de contraseña por email no invalidaba sesiones existentes porque no incrementaba `tokenVersion`. Un atacante con una sesión robada podía mantener acceso tras el reset.
+- **Solución:** `consumirTokenReset` ahora incrementa `tokenVersion` y resetea `mustChangePassword` en la misma transacción.
+
+### AUD-DEPS-001 — MCP demo con 3 HIGH CVEs sin consumidores
+
+- **Categoría:** Dependencias
+- **Severidad:** Alta
+- **Estado:** `CERRADO` (Fase 4)
+- **Descripción:** `app/api/[transport]/route.ts` era un endpoint MCP de demostración (solo `roll_dice`) con dependencias `@modelcontextprotocol/*` que tenían 3 vulnerabilidades HIGH. Sin consumidores reales.
+- **Solución:** Endpoint eliminado. Dependencias `mcp-handler`, `@modelcontextprotocol/server-github`, `@modelcontextprotocol/server-postgres`, `@modelcontextprotocol/sdk` removidas.
+
+### AUD-QA-002 — ESLint warnings en producción
+
+- **Categoría:** Calidad
+- **Severidad:** Baja
+- **Estado:** `CERRADO` (Fase 4)
+- **Descripción:** 6 warnings `no-unused-vars` en rutas de SGIE (readiness, autonomía).
+- **Solución:** Imports no usados eliminados. ESLint: 0 errores, 0 warnings.
+
+### AUD-MIG-001 — Consistencia de migraciones
+
+- **Categoría:** Infraestructura
+- **Severidad:** Media
+- **Estado:** `CERRADO` (Subfase 1)
+- **Descripción:** Auditoría de 32 migraciones: journal, SQL, schema, idempotencia, DOWN.
+- **Solución:** 0 errores encontrados. 0030 y 0031 con IF NOT EXISTS, DOWN separado, schema↔SQL consistente.

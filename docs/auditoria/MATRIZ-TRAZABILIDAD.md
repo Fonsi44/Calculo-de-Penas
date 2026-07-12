@@ -14,16 +14,23 @@
 | Expediente detalle | `/intranet/sgie/expedientes/[id]` | expediente | GET/PATCH `/api/sgie/expedientes/[id]` | asignación/permiso | código | QA-001 | tests DB cruzados |
 | Documentos carga pública | `/cargar/[token]` | portal carga | `/api/public/cargar/[token]` | token hash, MIME, magic, rate | código; no se subió archivo | ARC-001 | proxy privado + AV opcional |
 | Documento preview | expediente | modal preview | `/api/sgie/documentos/[id]/preview` | scope expediente | código; no probado live | ARC-001 | stream/signed URL temporal |
-| Preview editorial | `/preview/[token]` | preview post | `/api/admin/preview` | admin+CSRF al crear, token al ver | código | SEC-004 | ID opaco, auth y sanitize |
-| Recuperar contraseña | ruta inexistente | pendiente | `/api/auth/reset-password*` | token reset/rate | inventario/build | FUN-001 | página canónica E2E |
-| Cambio de contraseña | perfil | perfil Admin | `/api/auth/change-password` | auth/CSRF | código/tests generales | — | añadir invalidación de sesiones |
-| Descarga lead magnet | público | CTA/lead magnet | `/api/descargar` | validación mínima | código; no llamada live | SEC-005 | POST+captcha+rate+cache |
+| Preview editorial | `/preview/[token]` | preview post | `/api/admin/preview` | admin+CSRF + auth en página | ✅ Implementado (Fase 2) | SEC-004 | Token opaco DB, single-use, sanitize |
+| Recuperar contraseña | `/reset` | email | `/api/auth/reset-password*` | token hasheado + rate 5/15min | ✅ Implementado (Fase 1) | FUN-001 | tokenVersion incrementado, neutro |
+| Cambio de contraseña | perfil | perfil Admin | `/api/auth/change-password` | auth/CSRF, tokenVersion++ | ✅ invalidateFreshness (Fase 1) | — | 7 rutas mutación cubiertas |
+| Descarga lead magnet | público | CTA/lead magnet | `/api/descargar` | POST + rate + consent + Turnstile | ✅ Implementado (Fase 3) | SEC-005 | Cache private no-store, PDF cache 1h |
 | Contacto | público | formulario | `/api/contacto` | Zod, Turnstile, rate fail-closed | tests unitarios | — | conservar y monitorizar |
 | Consulta | `/solicitar-consulta` | formulario | `/api/consulta` | Zod, Turnstile, rate | E2E solo carga; unit tests | PRI-001 | eliminar logs PII |
-| OAuth Google | callback | script/endpoint | `/api/oauth/callback` | público por proxy | código | SEC-008 | eliminar o state+PKCE+admin |
+| OAuth Google | callback | script/endpoint | `/api/oauth/callback` | auth requerida por proxy | ✅ Removido de públicas (Fase 2) | SEC-008 | state+PKCE pendiente |
 | SEO live | Admin/CLI | scripts SEO | GSC/GA4/Bing | OAuth/API keys | doctor + collect | SEO-001 | reautorizar y alertar frescura |
 | Web pública | `/` y hubs | public layout | DB/TS canónicos | CSP/robots/canonical | 22 E2E read-only | PERF-001 | self-host fonts/presupuesto |
 | Admin dashboard | `/intranet/admin` | admin page/sidebar | analytics/blog/users | admin | live desktop/móvil | UX-001 | dashboard por excepciones |
+| Upload archivos | admin | upload | `/api/admin/upload` | magic bytes + extensión | ✅ Implementado (Fase 3) | — | DOCX/ZIP/ZipSlip validados |
+| MCP demo | — | demo | `app/api/[transport]/` | — | ✅ Eliminado (Fase 4) | DEP-001 | 3 HIGH CVEs resueltos |
+| ESLint | global | — | — | — | ✅ 0/0 warnings (Fase 4) | — | 6 warnings corregidos |
+| SBOM | CI | package.json | `npm run sbom:generate` | CycloneDX 1.6 | ✅ Script (Fase 4) | — | Bloqueado por peer deps |
+| E2E staging | staging | `scripts/e2e/` | Playwright + DB efímera | guard fail-closed | ✅ Infra (Subfases 2-3) | — | 7 specs, pendiente DB test |
+| Migraciones | DB | drizzle/ | 0030 + 0031 | idempotentes | ✅ Auditadas (Subfase 1) | — | 32 entradas, 0 errores |
+| Backup/restore | ops | docs/security/ | Neon+Blob+secretos | runbook | ✅ Documentado (Fase 5) | OPS-001 | PITR, SLO 99.9%, DRP |
 | CI | GitHub Actions | `.github/workflows/ci.yml` | npm scripts | placeholders | lectura + comandos locales | DEP-001, QA-002 | audit/SBOM/E2E aislado |
 | Backup/restore | operaciones | docs/ops | Neon+Blob | proveedor | no ejecutado | OPS-001 | runbook RPO/RTO y restore |
 
@@ -33,8 +40,9 @@
 |---|---|---|
 | Inventario y comprensión | informe + conteos + mapa | `VALIDADO` |
 | Calidad y arquitectura | hallazgos + lint/tsc/tests/coverage/build | `VALIDADO` |
-| Seguridad | código, roles live, npm audit | `VALIDADO` con no explotación |
-| Funcionamiento y QA | 861 unit + 22 E2E lectura | `PARCIAL`; mutaciones excluidas |
-| Rendimiento/SEO/resiliencia | build, chunks, SEO 4/6, DR documental | `PARCIAL` |
+| Seguridad (Fases 1-3) | invalidateFreshness, 2FA, preview opaco, magic bytes, descargar POST | `IMPLEMENTADO` |
+| Dependencias (Fase 4) | MCP eliminado, ESLint 0/0, SBOM script | `IMPLEMENTADO` |
+| Operaciones (Fase 5) | runbook backup/restore, auditoría delitos, consistencia embeddings | `IMPLEMENTADO` |
+| Staging/E2E (Subfases 1-5) | migraciones auditadas, E2E preparado, 304 call sites verificados | `PREPARADO` (bloqueado sin DB test) |
 | Rediseño SGIE/Admin | propuesta y wireframes | `PROPUESTA` |
 
