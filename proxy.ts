@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { COOKIE_NAME, COOKIE_NAME_FALLBACK, verifyToken } from '@/lib/auth';
+import { randomUUID } from 'crypto';
+import { COOKIE_NAME, COOKIE_NAME_FALLBACK, verifyToken, validateSessionFreshness } from '@/lib/auth';
 
 /**
- * Seguridad — verificación firma JWT en edge.
+ * Seguridad — verificación firma JWT en edge + frescura de sesión.
  *
  * Antes este proxy decodificaba el payload sin verificar firma HS256, lo que
  * permitía teóricamente forjar un JWT con `rol: admin` para bypassear el
@@ -15,6 +16,10 @@ import { COOKIE_NAME, COOKIE_NAME_FALLBACK, verifyToken } from '@/lib/auth';
  * Node y puede usar `jsonwebtoken` con acceso al secret). Si en el futuro se
  * moviera a edge runtime, se deberá migrar a `jose` o degradar el proxy a
  * filtro no autoritativo (handlers server-side siguen siendo fuente de verdad).
+ *
+ * Además valida la frescura de la sesión (`token_version` + `active` + `bloqueado`)
+ * contra la DB con caché corta, para que un cambio de contraseña o bloqueo
+ * admin revoke sesiones activas sin esperar a que el cliente consulte `/me`.
  */
 function roleFromToken(token: string | null): string | null {
   if (!token) return null;
@@ -42,7 +47,6 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/subscribe',
   '/api/descargar',
   '/api/og',
-  '/api/oauth/callback',
   // Chat asistente público (rate-limit + guardrails server-side en el handler).
   '/api/chat',
 ]);
@@ -113,34 +117,51 @@ function readToken(request: NextRequest): string | undefined {
     ?? request.cookies.get(COOKIE_NAME_FALLBACK)?.value;
 }
 
-export function proxy(request: NextRequest) {
+function withCorrelationId(response: NextResponse, correlationId: string): NextResponse {
+  response.headers.set('x-correlation-id', correlationId);
+  return response;
+}
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  // Correlation ID para trazabilidad en logs y respuesta al cliente.
+  // Si el cliente ya envía x-correlation-id, se reutiliza; si no, se genera.
+  const correlationId = request.headers.get('x-correlation-id') || randomUUID();
+
   // El redirect www → apex lo gestiona Vercel a nivel de dominio,
   // no en el proxy (causaba bucles de redirección con el edge).
 
   const token = readToken(request);
 
   if (pathname.startsWith('/api/')) {
-    if (isPublicApiPath(pathname)) return NextResponse.next();
+    if (isPublicApiPath(pathname)) return withCorrelationId(NextResponse.next(), correlationId);
     if (!token) {
-      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+      return withCorrelationId(NextResponse.json({ error: 'No autorizado' }, { status: 401 }), correlationId);
+    }
+    const payload = verifyToken(token);
+    if (!payload) {
+      return withCorrelationId(NextResponse.json({ error: 'No autorizado' }, { status: 401 }), correlationId);
+    }
+    // Frescura: revoca sesiones cuyo token_version/bloqueo/active hayan cambiado.
+    try {
+      await validateSessionFreshness(payload.userId, payload.tokenVersion);
+    } catch {
+      return withCorrelationId(NextResponse.json({ error: 'No autorizado' }, { status: 401 }), correlationId);
     }
     // Rutas admin API: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/api/admin')) {
-      const rol = roleFromToken(token);
-      if (rol !== 'admin') {
-        return NextResponse.json({ error: 'Acceso denegado: se requiere rol admin' }, { status: 403 });
+      if (payload.rol !== 'admin') {
+        return withCorrelationId(NextResponse.json({ error: 'Acceso denegado: se requiere rol admin' }, { status: 403 }), correlationId);
       }
     }
     // SGIE API: requiere rol abogado o admin (defensa en profundidad; el handler
     // vuelve a validar con requireAbogado + scope por abogado).
     if (pathname.startsWith('/api/sgie')) {
-      const rol = roleFromToken(token);
-      if (rol !== 'admin' && rol !== 'abogado') {
-        return NextResponse.json({ error: 'Acceso denegado: se requiere rol abogado o admin' }, { status: 403 });
+      if (payload.rol !== 'admin' && payload.rol !== 'abogado') {
+        return withCorrelationId(NextResponse.json({ error: 'Acceso denegado: se requiere rol abogado o admin' }, { status: 403 }), correlationId);
       }
     }
-    return NextResponse.next();
+    return withCorrelationId(NextResponse.next(), correlationId);
   }
 
   // Páginas de la intranet: si no hay token, ir al login de intranet.
@@ -148,48 +169,56 @@ export function proxy(request: NextRequest) {
   // admin → /intranet/admin; abogado → /intranet/sgie.
   if (pathname.startsWith('/intranet')) {
     if (INTRANET_PUBLIC_EXACT.has(pathname)) {
-      if (pathname === INTRANET_LOGIN_PATH && token) {
+	  if (pathname === INTRANET_LOGIN_PATH && token) {
         const rol = roleFromToken(token);
         const destino = rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
-        return NextResponse.redirect(new URL(destino, request.url));
+        return withCorrelationId(NextResponse.redirect(new URL(destino, request.url)), correlationId);
       }
-      return NextResponse.next();
+      return withCorrelationId(NextResponse.next(), correlationId);
     }
     if (!token) {
       const loginUrl = new URL(INTRANET_LOGIN_PATH, request.url);
-      return NextResponse.redirect(loginUrl);
+      return withCorrelationId(NextResponse.redirect(loginUrl), correlationId);
     }
+    // Validar sesión (firma + frescura). Una sesión revocada (token_version,
+    // bloqueo o desactivación) redirige al login en lugar de cargar la intranet.
+    const payload = verifyToken(token);
+    if (!payload) {
+      return withCorrelationId(NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url)), correlationId);
+    }
+    try {
+      await validateSessionFreshness(payload.userId, payload.tokenVersion);
+    } catch {
+      return withCorrelationId(NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url)), correlationId);
+    }
+    const rol = payload.rol;
     // Redirigir admin users de rutas intranet legacy a sus versiones admin
-    if (token) {
-      const rol = roleFromToken(token);
-      if (rol === 'admin') {
-        const adminRedirects: Record<string, string> = {
-          '/intranet/calculadora': '/intranet/admin/calculadora',
-          '/intranet/casos': '/intranet/admin/casos',
-          '/intranet/cp': '/intranet/admin/cp',
-          '/intranet/delitos': '/intranet/admin/delitos',
-        };
-        const adminRedirect = adminRedirects[pathname];
-        if (adminRedirect) {
-          return NextResponse.redirect(new URL(adminRedirect, request.url));
-        }
-        // También redirigir rutas legacy con ID bajo /intranet/
-        if (pathname.startsWith('/intranet/casos/') && !pathname.startsWith('/intranet/admin/')) {
-          return NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url));
-        }
-        if (pathname.startsWith('/intranet/cp/') && !pathname.startsWith('/intranet/admin/')) {
-          return NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url));
-        }
-        if (pathname.startsWith('/intranet/delitos/') && !pathname.startsWith('/intranet/admin/')) {
-          return NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url));
-        }
+    if (rol === 'admin') {
+      const adminRedirects: Record<string, string> = {
+        '/intranet/calculadora': '/intranet/admin/calculadora',
+        '/intranet/casos': '/intranet/admin/casos',
+        '/intranet/cp': '/intranet/admin/cp',
+        '/intranet/delitos': '/intranet/admin/delitos',
+      };
+      const adminRedirect = adminRedirects[pathname];
+      if (adminRedirect) {
+        return withCorrelationId(NextResponse.redirect(new URL(adminRedirect, request.url)), correlationId);
+      }
+      // También redirigir rutas legacy con ID bajo /intranet/
+      if (pathname.startsWith('/intranet/casos/') && !pathname.startsWith('/intranet/admin/')) {
+        return withCorrelationId(NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url)), correlationId);
+      }
+      if (pathname.startsWith('/intranet/cp/') && !pathname.startsWith('/intranet/admin/')) {
+        return withCorrelationId(NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url)), correlationId);
+      }
+      if (pathname.startsWith('/intranet/delitos/') && !pathname.startsWith('/intranet/admin/')) {
+        return withCorrelationId(NextResponse.redirect(new URL(pathname.replace('/intranet/', '/intranet/admin/'), request.url)), correlationId);
       }
     }
     // Rutas admin: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/intranet/admin')) {
-      const rol = roleFromToken(token);
       if (rol !== 'admin') {
-        return NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url));
+        return withCorrelationId(NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url)), correlationId);
       }
     }
     // SGIE — aislamiento por rol. Un usuario NO admin que intente acceder a
@@ -198,31 +227,30 @@ export function proxy(request: NextRequest) {
     // se redirige a su cockpit SGIE. El admin conserva acceso a todo.
     // Referencia: pinedayasociados.md §6.1, §22.1.
     {
-      const rol = roleFromToken(token);
       const esAdmin = rol === 'admin';
       if (!esAdmin) {
         const RUTAS_SGIE_PERMITIDAS = pathname.startsWith('/intranet/sgie');
         const RUTA_TRANSITO = pathname === '/intranet/dashboard';
         if (!RUTAS_SGIE_PERMITIDAS && !RUTA_TRANSITO) {
-          return NextResponse.redirect(new URL('/intranet/sgie', request.url));
+          return withCorrelationId(NextResponse.redirect(new URL('/intranet/sgie', request.url)), correlationId);
         }
       }
     }
-    return NextResponse.next();
+    return withCorrelationId(NextResponse.next(), correlationId);
   }
 
   if (isPublicPagePath(pathname)) {
-    return NextResponse.next();
+    return withCorrelationId(NextResponse.next(), correlationId);
   }
 
   // Rutas públicas obsoletas: 404 en lugar de redirigir al login.
   if (OBSOLETE_PUBLIC_PREFIXES.some(p => pathname.startsWith(p))) {
-    return NextResponse.next();
+    return withCorrelationId(NextResponse.next(), correlationId);
   }
 
   // Rutas no reconocidas: pasar a Next.js para que devuelva 404 (not-found.tsx).
   // Esto evita que crawlers y usuarios vean un redirect 307 en lugar del 404 real.
-  return NextResponse.next();
+  return withCorrelationId(NextResponse.next(), correlationId);
 }
 
 export const config = {

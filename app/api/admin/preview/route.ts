@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { validateCsrf } from '@/lib/csrf';
-import jwt from 'jsonwebtoken';
-
-const PREVIEW_SECRET = process.env.JWT_SECRET || 'dev-only-secret-not-for-production-min-32-chars-AAAAA';
-const PREVIEW_EXPIRY = '1h';
+import { createPreviewToken } from '@/lib/preview-db';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
 
     const body = await request.json();
@@ -17,19 +15,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
     }
 
-    const token = jwt.sign(
-      {
-        type: 'preview',
-        title,
-        body: contentBody,
-        category: category || 'derecho-penal',
-        slug: slug || 'preview',
-        description: description || '',
-        createdBy: auth.userId,
-      },
-      PREVIEW_SECRET,
-      { expiresIn: PREVIEW_EXPIRY },
-    );
+    // Sanitize HTML with strict allowlist (lib/sanitize.ts) before storing.
+    const sanitizedBody = sanitizeHtml(contentBody);
+
+    const token = await createPreviewToken({
+      title: String(title).slice(0, 500),
+      body: sanitizedBody,
+      category: category || undefined,
+      slug: slug || undefined,
+      description: description || undefined,
+      createdBy: auth.userId,
+    });
 
     return NextResponse.json({ token, url: `/preview/${token}` });
   } catch (err) {

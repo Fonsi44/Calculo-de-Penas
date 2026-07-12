@@ -1771,3 +1771,25 @@ export type CaseReadinessCheckInsert = typeof caseReadinessChecks.$inferInsert;
 
 export type Embedding = typeof embeddings.$inferSelect;
 export type EmbeddingInsert = typeof embeddings.$inferInsert;
+
+// ─── Preview tokens (Phase 2 — opaque, server-side, single-use) ───
+export const previewTokens = pgTable('preview_tokens', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  token: varchar('token', { length: 128 }).notNull().unique(),
+  title: varchar('title', { length: 500 }).notNull(),
+  body: text('body').notNull(),
+  category: varchar('category', { length: 100 }).default('derecho-penal'),
+  slug: varchar('slug', { length: 300 }).default('preview'),
+  description: text('description').default(''),
+  createdBy: uuid('created_by').notNull(),
+  consumedAt: timestamp('consumed_at', { withTimezone: true }),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  tokenIdx: index('preview_tokens_token_idx').on(table.token),
+  expiresIdx: index('preview_tokens_expires_idx').on(table.expiresAt),
+  createdByRef: foreignKey({ columns: [table.createdBy], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+}));
+
+export type PreviewToken = typeof previewTokens.$inferSelect;
+export type PreviewTokenInsert = typeof previewTokens.$inferInsert;
