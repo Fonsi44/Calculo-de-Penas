@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
-import { requireAdmin, authFailureResponse, isAllowedAuthEmail, hashPassword } from '@/lib/auth';
+import { requireAdmin, authFailureResponse, isAllowedAuthEmail, hashPassword, invalidateFreshness } from '@/lib/auth';
 import { eq, and, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
@@ -19,7 +19,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`usuarios:update:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
@@ -65,6 +65,11 @@ export async function PATCH(
     const [updated] = await db.update(usuarios).set(values).where(eq(usuarios.id, id))
       .returning({ id: usuarios.id, email: usuarios.email, nombre: usuarios.nombre, rol: usuarios.rol, creadoEn: usuarios.creadoEn });
 
+    // Revocar caché de frescura si se cambió contraseña, rol o email.
+    if (parsed.password !== undefined || parsed.rol !== undefined || parsed.email !== undefined) {
+      invalidateFreshness(id);
+    }
+
     if (!updated) {
       return Response.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
@@ -92,7 +97,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`usuarios:delete:${auth.userId}`, { max: 10, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
@@ -121,6 +126,8 @@ export async function DELETE(
     await db.update(usuarios)
       .set({ active: false })
       .where(eq(usuarios.id, id));
+
+    invalidateFreshness(id);
 
     await logAudit({
       usuarioId: auth.userId,

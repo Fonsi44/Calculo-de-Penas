@@ -1,4 +1,4 @@
-import { requireAdmin, authFailureResponse } from '@/lib/auth';
+import { requireAdmin, authFailureResponse, invalidateFreshness } from '@/lib/auth';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
@@ -27,7 +27,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`usuarios:bloqueo:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
@@ -67,6 +67,8 @@ export async function PATCH(
     } else {
       await desbloquearUsuario({ usuarioId: id });
     }
+
+    invalidateFreshness(id);
 
     await logAudit({
       usuarioId: auth.userId,

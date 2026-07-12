@@ -15,6 +15,7 @@ import { eq } from 'drizzle-orm';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { logAudit } from '@/lib/audit';
 import { crearTokenReset, consumirTokenReset, validarTokenReset } from '@/lib/auth-reset';
+import { invalidateFreshness } from '@/lib/auth';
 import { isEmailConfigured, getClient, getFromAddress, getFromName } from '@/lib/email';
 
 const solicitarSchema = z.object({
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
       if (!ok) {
         return Response.json({ error: 'Token inválido, expirado o ya utilizado' }, { status: 400 });
       }
+      invalidateFreshness(usuarioId);
       await logAudit({ usuarioId, accion: 'password_changed', recurso: 'auth', request, metadata: { flujo: 'reset_confirm' } });
       return Response.json({ ok: true, mensaje: 'Contraseña actualizada. Inicie sesión.' });
     }

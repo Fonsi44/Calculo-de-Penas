@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
-import { requireAuth, authFailureResponse, verifyPassword, hashPassword } from '@/lib/auth';
+import { requireAuth, authFailureResponse, verifyPassword, hashPassword, invalidateFreshness } from '@/lib/auth';
 import { validateCsrf } from '@/lib/csrf';
 import { eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
@@ -13,7 +13,7 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAuth(request);
+    const auth = await requireAuth(request);
     validateCsrf(request);
     const body = await request.json();
     const { currentPassword, newPassword } = schema.parse(body);
@@ -35,6 +35,8 @@ export async function POST(request: Request) {
     await db.update(usuarios)
       .set({ passwordHash: newHash, mustChangePassword: false, tokenVersion: sql`${usuarios.tokenVersion} + 1` })
       .where(eq(usuarios.id, auth.userId));
+
+    invalidateFreshness(auth.userId);
 
     await logAudit({
       usuarioId: auth.userId,

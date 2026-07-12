@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
-import { requireAdmin, authFailureResponse, hashPassword } from '@/lib/auth';
+import { requireAdmin, authFailureResponse, hashPassword, invalidateFreshness } from '@/lib/auth';
 import { validateCsrf } from '@/lib/csrf';
 import { eq, and } from 'drizzle-orm';
 import { logAudit } from '@/lib/audit';
@@ -11,7 +11,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const { id } = await params;
 
@@ -33,6 +33,8 @@ export async function POST(
     await db.update(usuarios)
       .set({ passwordHash, mustChangePassword: true })
       .where(eq(usuarios.id, id));
+
+    invalidateFreshness(id);
 
     await logAudit({
       usuarioId: auth.userId,

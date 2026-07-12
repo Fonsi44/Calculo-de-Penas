@@ -15,7 +15,7 @@
 import { createHash, randomBytes } from 'crypto';
 import { db } from '@/lib/db';
 import { passwordResetTokens, usuarios } from '@/lib/schema';
-import { and, eq, isNull, lt } from 'drizzle-orm';
+import { and, eq, isNull, lt, sql } from 'drizzle-orm';
 import { hashPassword } from '@/lib/auth';
 
 const EXPIRACION_MS = 60 * 60 * 1000; // 1 hora
@@ -74,7 +74,11 @@ export async function consumirTokenReset(token: string, nuevaPassword: string): 
 
   const nuevoHash = await hashPassword(nuevaPassword);
   await db.transaction(async (tx) => {
-    await tx.update(usuarios).set({ passwordHash: nuevoHash }).where(eq(usuarios.id, usuarioId));
+    await tx.update(usuarios).set({
+      passwordHash: nuevoHash,
+      tokenVersion: sql`${usuarios.tokenVersion} + 1`,
+      mustChangePassword: false,
+    }).where(eq(usuarios.id, usuarioId));
     await tx.update(passwordResetTokens).set({ consumidoEn: new Date() }).where(eq(passwordResetTokens.tokenHash, tokenHash));
   });
   return true;

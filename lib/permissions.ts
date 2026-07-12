@@ -1,11 +1,11 @@
 import { db } from './db';
 import { roles, permisos, rolesPermisos, usuariosRoles } from './schema';
 import { eq, and } from 'drizzle-orm';
-import { requireAdmin, type AuthUser } from './auth';
+import { requireAdmin, AuthError, type AuthUser } from './auth';
 
 export function requirePermission(recurso: string, accion: string) {
   return async (request: Request): Promise<AuthUser> => {
-    const user = requireAdmin(request);
+    const user = await requireAdmin(request);
     if (user.rol === 'admin') return user;
 
     const [rolPermiso] = await db.select({ id: permisos.id })
@@ -21,16 +21,9 @@ export function requirePermission(recurso: string, accion: string) {
       .limit(1);
 
     if (!rolPermiso) {
-      throw new AuthError(`Permiso denegado: ${accion} ${recurso}`);
+      throw new AuthError(403, `Permiso denegado: ${accion} ${recurso}`);
     }
 
     return user;
   };
-}
-
-export class AuthError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'AuthError';
-  }
 }
