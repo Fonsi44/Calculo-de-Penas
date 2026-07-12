@@ -13,7 +13,7 @@ const helperSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
     const body = await request.json();
     const parsed = helperSchema.parse(body);

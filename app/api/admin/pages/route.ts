@@ -80,7 +80,7 @@ function revalidatePage(page: string) {
 
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     const { searchParams } = new URL(request.url);
     const page = searchParams.get('page');
     const section = searchParams.get('section');
@@ -155,7 +155,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`pages:upsert:${auth.userId}`, { max: 60, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
@@ -220,7 +220,7 @@ export async function POST(request: Request) {
 /** PUT: Batch save metadata for a page. */
 export async function PUT(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const body = await request.json();
     const parsed = metaSchema.parse(body);
@@ -269,7 +269,7 @@ export async function PUT(request: Request) {
 /** PATCH: change page status or duplicate/delete blocks. */
 export async function PATCH(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const body = await request.json();
     const { action } = body;
@@ -316,7 +316,7 @@ export async function PATCH(request: Request) {
 /** DELETE: remove a block/section and all its fields. */
 export async function DELETE(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const { searchParams } = new URL(request.url);
     const page = searchParams.get('page');

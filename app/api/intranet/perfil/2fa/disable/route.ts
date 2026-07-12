@@ -21,7 +21,7 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAuth(request);
+    const auth = await requireAuth(request);
     validateCsrf(request);
     const rl = await rateLimit(`2fa:disable:${auth.userId}`, { keyPrefix: '2fa', windowMs: 60_000, max: 5 });
     if (!rl.ok) return rateLimitResponse(rl);

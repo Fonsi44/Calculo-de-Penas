@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    requireAbogado(request);
+    await requireAbogado(request);
     const { id: expedienteId } = await params;
 
     const rows = await db.select().from(alertas)

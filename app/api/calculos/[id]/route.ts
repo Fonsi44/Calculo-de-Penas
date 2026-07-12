@@ -14,7 +14,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     const { id } = await params;
 
     const [calculo] = await db.select().from(calculos).where(eq(calculos.id, id));
@@ -92,7 +92,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     validateCsrf(request);
     const { id } = await params;
 

@@ -21,7 +21,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    requireAbogado(request);
+    await requireAbogado(request);
     const { id } = await params;
     const plantilla = await obtenerPlantilla(id);
     if (!plantilla) {
@@ -38,7 +38,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     if (auth.rol !== 'admin') {
       return Response.json({ error: 'Solo administradores pueden modificar plantillas' }, { status: 403 });
     }
@@ -73,7 +73,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     if (auth.rol !== 'admin') {
       return Response.json({ error: 'Solo administradores pueden eliminar plantillas' }, { status: 403 });
     }

@@ -7,7 +7,7 @@ import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function GET(request: Request) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
 
     const rows = await db.select({
       id: casos.id,
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     validateCsrf(request);
 
     const body = await request.json();

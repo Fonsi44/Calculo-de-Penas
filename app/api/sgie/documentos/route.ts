@@ -59,7 +59,7 @@ async function idsExpedientesAccesibles(usuarioId: string, esAdmin: boolean): Pr
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const ctx = contextoDesdeAuth(auth);
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));

@@ -57,7 +57,7 @@ const COLUMNAS_EXPEDIENTES: ColumnaCsv[] = [
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const rl = await rateLimit(`sgie:reporte:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
 

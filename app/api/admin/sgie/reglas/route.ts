@@ -14,7 +14,7 @@ const updateSchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    requireAbogado(request);
+    await requireAbogado(request);
     const versiones = await db.select().from(reglasConfigVersion).orderBy(desc(reglasConfigVersion.version)).limit(20);
     const [activa] = await db.select().from(reglasConfigVersion).where(eq(reglasConfigVersion.activa, true)).limit(1);
     return Response.json({ versiones, activa: activa?.config ?? CONFIG_DEFAULT });
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     if (auth.rol !== 'admin') return Response.json({ error: 'Solo admin' }, { status: 403 });
     const body = updateSchema.parse(await request.json());

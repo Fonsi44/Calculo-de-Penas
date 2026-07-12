@@ -1,17 +1,16 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { expedientes, documentosExpediente, extraccionesIa, correosEnviados, expedienteAsignaciones, expedientePermisos, caseReadinessRuns } from '@/lib/schema';
-import { and, eq, isNull, count, inArray } from 'drizzle-orm';
+import { expedientes, extraccionesIa, correosEnviados, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
+import { and, eq, isNull, count } from 'drizzle-orm';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 
 /** GET /api/sgie/metricas/autonomia — KPIs de autonomía del SGIE. Scope por abogado. */
 export async function GET(req: Request) {
   try {
-    const auth = requireAbogado(req);
+    const auth = await requireAbogado(req);
     const rl = await rateLimit(`sgie:metrics:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
 
-    let baseCondition: ReturnType<typeof and> | undefined;
     if (auth.rol !== 'admin') {
       const [asig, perm] = await Promise.all([
         db.select({ id: expedienteAsignaciones.expedienteId }).from(expedienteAsignaciones).where(and(eq(expedienteAsignaciones.abogadoId, auth.userId), isNull(expedienteAsignaciones.revocadaEn))),

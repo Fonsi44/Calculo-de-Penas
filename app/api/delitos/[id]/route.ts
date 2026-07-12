@@ -42,7 +42,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
     const { id } = await params;
     const body = await request.json();
@@ -81,7 +81,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
     const { id } = await params;
     const [row] = await db.delete(delitos).where(eq(delitos.id, id)).returning({ id: delitos.id });

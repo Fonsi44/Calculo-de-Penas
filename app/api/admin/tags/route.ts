@@ -14,7 +14,7 @@ const createSchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     const { searchParams } = new URL(request.url);
     const q = searchParams.get('q');
     const query = db.select().from(tags).orderBy(asc(tags.nombre));
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`tags:create:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);

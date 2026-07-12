@@ -35,7 +35,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
     const { id } = await params;
     const numId = parseInt(id, 10);

@@ -8,8 +8,8 @@
  * Referencia: pinedayasociados.md §8.1 (paso 2: alta o detección de cliente).
  */
 import { db } from '@/lib/db';
-import { clientes, expedienteAsignaciones } from '@/lib/schema';
-import { and, count, eq, ilike, isNull, or, sql } from 'drizzle-orm';
+import { clientes } from '@/lib/schema';
+import { and, count, eq, ilike, or, sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import type { ContextoAbogado } from './expedientes-db';
 
@@ -46,6 +46,20 @@ function hashDuplicado(identidad?: string, rtn?: string): string | null {
   return createHash('sha256').update(base).digest('hex');
 }
 
+/** Política única de ámbito: admin ve todo; abogado solo clientes de expedientes
+ * asignados o permitidos. Se inyecta en SELECT y UPDATE, nunca después. */
+function condicionAmbitoCliente(ctx: ContextoAbogado) {
+  if (ctx.esAdmin) return undefined;
+  return sql`EXISTS (
+    SELECT 1 FROM expedientes e
+    LEFT JOIN expediente_asignaciones ea ON ea.expediente_id = e.id
+      AND ea.abogado_id = ${ctx.usuarioId} AND ea.revocada_en IS NULL
+    LEFT JOIN expediente_permisos ep ON ep.expediente_id = e.id
+      AND ep.abogado_id = ${ctx.usuarioId} AND ep.revocado_en IS NULL
+    WHERE e.cliente_id = ${clientes.id} AND (ea.expediente_id IS NOT NULL OR ep.expediente_id IS NOT NULL)
+  )`;
+}
+
 /**
  * Lista clientes accesibles por el abogado (scope). El admin ve todos.
  */
@@ -70,17 +84,8 @@ export async function listarClientes(
 
   // Para abogado no-admin, filtrar clientes que tengan al menos un expediente
   // asignado al abogado. Se hace vía subquery EXISTS.
-  if (!ctx.esAdmin) {
-    conditions.push(
-      sql`EXISTS (
-        SELECT 1 FROM expedientes e
-        JOIN expediente_asignaciones ea ON ea.expediente_id = e.id
-        WHERE e.cliente_id = ${clientes.id}
-          AND ea.abogado_id = ${ctx.usuarioId}
-          AND ea.revocada_en IS NULL
-      )`,
-    );
-  }
+  const scope = condicionAmbitoCliente(ctx);
+  if (scope) conditions.push(scope);
 
   const where = conditions.length > 0 ? and(...conditions) : undefined;
 
@@ -115,14 +120,19 @@ export async function listarClientes(
  * Detecta duplicados antes de crear un cliente. Devuelve el cliente existente
  * si hay coincidencia por identidad/RTN normalizado.
  */
-export async function detectarDuplicado(input: CrearClienteInput): Promise<string | null> {
+export async function detectarDuplicado(input: CrearClienteInput, ctx: ContextoAbogado): Promise<{ id: string; accesible: boolean } | null> {
   const hash = hashDuplicado(input.identidad, input.rtn);
   if (!hash) return null;
   const [existente] = await db
     .select({ id: clientes.id })
     .from(clientes)
     .where(eq(clientes.duplicadoHash, hash));
-  return existente?.id ?? null;
+  if (!existente) return null;
+  const scope = condicionAmbitoCliente(ctx);
+  if (!scope) return { id: existente.id, accesible: true };
+  const [visible] = await db.select({ id: clientes.id }).from(clientes)
+    .where(and(eq(clientes.id, existente.id), scope));
+  return { id: existente.id, accesible: Boolean(visible) };
 }
 
 /**
@@ -132,10 +142,14 @@ export async function detectarDuplicado(input: CrearClienteInput): Promise<strin
 export async function crearOReutilizarCliente(
   input: CrearClienteInput,
   ctx: ContextoAbogado,
-): Promise<{ id: string; creado: boolean }> {
-  const duplicadoId = await detectarDuplicado(input);
-  if (duplicadoId) {
-    return { id: duplicadoId, creado: false };
+): Promise<{ id?: string; creado: boolean; duplicadoNoAccesible?: boolean }> {
+  const duplicado = await detectarDuplicado(input, ctx);
+  if (duplicado?.accesible) {
+    return { id: duplicado.id, creado: false };
+  }
+  if (duplicado) {
+    // No filtrar existencia ni UUID de un cliente fuera del ámbito.
+    return { creado: false, duplicadoNoAccesible: true };
   }
 
   const [cliente] = await db
@@ -166,6 +180,7 @@ export async function obtenerCliente(
   clienteId: string,
   ctx: ContextoAbogado,
 ): Promise<(ClienteItem & { creadoPor: string | null; desactivadoEn: Date | null; motivoDesactivacion: string | null }) | null> {
+  const scope = condicionAmbitoCliente(ctx);
   const [row] = await db
     .select({
       id: clientes.id,
@@ -184,7 +199,7 @@ export async function obtenerCliente(
       motivoDesactivacion: clientes.motivoDesactivacion,
     })
     .from(clientes)
-    .where(eq(clientes.id, clienteId));
+    .where(scope ? and(eq(clientes.id, clienteId), scope) : eq(clientes.id, clienteId));
 
   if (!row) return null;
 
@@ -197,16 +212,17 @@ export async function obtenerCliente(
     expedientesCount = r?.c ?? 0;
   } else {
     // Sólo expedientes del cliente que estén asignados al abogado.
+    const expedienteVisible = sql`EXISTS (
+      SELECT 1 FROM expediente_asignaciones ea
+      WHERE ea.expediente_id = ${expedientes.id} AND ea.abogado_id = ${ctx.usuarioId}
+        AND ea.revocada_en IS NULL
+      UNION ALL
+      SELECT 1 FROM expediente_permisos ep
+      WHERE ep.expediente_id = ${expedientes.id} AND ep.abogado_id = ${ctx.usuarioId}
+        AND ep.revocado_en IS NULL
+    )`;
     const [r] = await db.select({ c: count() }).from(expedientes)
-      .innerJoin(
-        expedienteAsignaciones,
-        eq(expedienteAsignaciones.expedienteId, expedientes.id),
-      )
-      .where(and(
-        eq(expedientes.clienteId, clienteId),
-        eq(expedienteAsignaciones.abogadoId, ctx.usuarioId),
-        isNull(expedienteAsignaciones.revocadaEn),
-      ));
+      .where(and(eq(expedientes.clienteId, clienteId), expedienteVisible));
     expedientesCount = r?.c ?? 0;
   }
 
@@ -237,7 +253,7 @@ export async function actualizarCliente(
   clienteId: string,
   input: ActualizarClienteInput,
   ctx: ContextoAbogado,
-): Promise<void> {
+): Promise<boolean> {
   const set: Record<string, unknown> = {};
   if (input.nombre !== undefined) set.nombre = input.nombre.trim();
   if (input.identidad !== undefined) set.identidad = input.identidad.trim() || null;
@@ -270,8 +286,12 @@ export async function actualizarCliente(
     }
   }
 
-  if (Object.keys(set).length === 0) return;
+  if (Object.keys(set).length === 0) return Boolean(await obtenerCliente(clienteId, ctx));
 
   set.actualizadoEn = new Date();
-  await db.update(clientes).set(set).where(eq(clientes.id, clienteId));
+  const scope = condicionAmbitoCliente(ctx);
+  const updated = await db.update(clientes).set(set)
+    .where(scope ? and(eq(clientes.id, clienteId), scope) : eq(clientes.id, clienteId))
+    .returning({ id: clientes.id });
+  return updated.length === 1;
 }

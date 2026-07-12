@@ -44,7 +44,7 @@ function revalidatePage(page: string) {
  */
 export async function POST(request: NextRequest) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`pages:batch:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);

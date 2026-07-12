@@ -7,6 +7,14 @@ config();
 const PORT = process.env.PORT ?? '3100';
 const JWT_SECRET = process.env.PWT_JWT_SECRET ?? process.env.JWT_SECRET ?? 'e2e-test-jwt-secret-not-for-production-48-bytes-X7q9Zk-real-random';
 const DATABASE_URL = process.env.DATABASE_URL ?? 'postgresql://placeholder:placeholder@localhost:5432/placeholder';
+{
+  const url = new URL(DATABASE_URL);
+  const host = url.hostname.toLowerCase();
+  const dbName = url.pathname.replace(/^\//, '').toLowerCase();
+  const local = host === 'localhost' || host === '127.0.0.1' || host === '::1';
+  const namedTest = /(^|[-_])test([-_]|$)|_test$|test_/.test(dbName);
+  if (!local && !namedTest) throw new Error('DATABASE_URL de E2E no es una base aislada autorizada');
+}
 
 const env = {
   ...process.env,

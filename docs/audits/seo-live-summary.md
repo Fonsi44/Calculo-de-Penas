@@ -1,13 +1,17 @@
 # SEO Live Summary
 
-**Generado:** 2026-07-10T08:26:00.135Z
+**Generado:** 2026-07-12T08:04:24.741Z
 
 ## Fuentes
 
 | Fuente | Estado | Error |
 |--------|--------|-------|
-| gsc | ✅ | - |
-| ga4 | ✅ | - |
+| gsc | ❌ | Command failed: node scripts/google-search-console-live.mjs --json-only
+ERROR: invalid_grant
+ |
+| ga4 | ❌ | Command failed: node scripts/google-analytics-live.mjs --json-only
+ERROR: invalid_grant
+ |
 | bing | ✅ | - |
 | indexnow | ✅ | - |
 | seoHealth | ✅ | - |

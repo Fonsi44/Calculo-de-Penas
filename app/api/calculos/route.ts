@@ -7,7 +7,7 @@ import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 
 export async function POST(request: Request) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     validateCsrf(request);
     let body: unknown;
     try { body = await request.json(); } catch {

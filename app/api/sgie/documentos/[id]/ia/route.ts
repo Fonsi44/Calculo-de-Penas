@@ -16,7 +16,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id: documentoId } = await params;
 
     const [doc] = await db.select({

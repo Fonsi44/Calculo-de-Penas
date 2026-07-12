@@ -94,35 +94,35 @@ describe('lib/auth — requireAuth / requireAdmin', () => {
     return new Request('http://x', { headers: { cookie: `${COOKIE_NAME}=${t}` } });
   }
 
-  it('requireAuth retorna el payload con token válido', () => {
-    const u = requireAuth(authedRequest());
+  it('requireAuth retorna el payload con token válido', async () => {
+    const u = await requireAuth(authedRequest());
     expect(u.userId).toBe('u-1');
     expect(u.rol).toBe('abogado');
   });
 
-  it('requireAuth lanza AuthError 401 sin token', () => {
-    expect(() => requireAuth(new Request('http://x'))).toThrow(AuthError);
+  it('requireAuth lanza AuthError 401 sin token', async () => {
+    await expect(requireAuth(new Request('http://x'))).rejects.toThrow(AuthError);
     try {
-      requireAuth(new Request('http://x'));
+      await requireAuth(new Request('http://x'));
     } catch (e) {
       expect((e as AuthError).status).toBe(401);
     }
   });
 
-  it('requireAuth rechaza un challenge puesto como cookie de sesión', () => {
+  it('requireAuth rechaza un challenge puesto como cookie de sesión', async () => {
     const challenge = signTwoFactorChallenge({ userId: 'u-1', jti: 'challenge-cookie' });
-    expect(() => requireAuth(new Request('http://x', { headers: { cookie: `${COOKIE_NAME}=${challenge}` } })))
-      .toThrow(AuthError);
+    await expect(requireAuth(new Request('http://x', { headers: { cookie: `${COOKIE_NAME}=${challenge}` } })))
+      .rejects.toThrow(AuthError);
   });
 
-  it('requireAdmin acepta rol admin', () => {
-    const u = requireAdmin(authedRequest('admin'));
+  it('requireAdmin acepta rol admin', async () => {
+    const u = await requireAdmin(authedRequest('admin'));
     expect(u.rol).toBe('admin');
   });
 
-  it('requireAdmin rechaza rol abogado con 403', () => {
+  it('requireAdmin rechaza rol abogado con 403', async () => {
     try {
-      requireAdmin(authedRequest('abogado'));
+      await requireAdmin(authedRequest('abogado'));
       throw new Error('debio haber lanzado');
     } catch (e) {
       expect((e as AuthError).status).toBe(403);

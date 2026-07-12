@@ -13,7 +13,7 @@ interface DelitoSeed { nombre: string; articulo: string; conducta: string | null
 
 export async function POST(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
     const dataDir = path.resolve(process.cwd(), 'data');
     const results: string[] = [];

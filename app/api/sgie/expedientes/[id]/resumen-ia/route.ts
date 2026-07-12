@@ -86,7 +86,7 @@ async function recopilarDatos(expedienteId: string): Promise<DatosResumenInput> 
 /** GET: devuelve el caché vigente. */
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id } = await params;
     if (!(await verificarScope(id, auth.userId, auth.rol === 'admin'))) {
       return Response.json({ error: 'Sin acceso' }, { status: 403 });
@@ -114,7 +114,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 /** POST: genera o regenera el resumen. */
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:resumen_ia:${auth.userId}`, { max: 5, windowMs: 5 * 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);

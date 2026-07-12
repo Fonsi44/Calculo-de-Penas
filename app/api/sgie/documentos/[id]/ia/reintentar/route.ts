@@ -21,7 +21,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:ia:reintentar:${auth.userId}`, {
       max: 20, windowMs: 60_000, keyPrefix: 'sgie',

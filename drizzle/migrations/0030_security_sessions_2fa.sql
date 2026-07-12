@@ -13,3 +13,14 @@ ALTER TABLE "two_factor_challenges" ADD CONSTRAINT "two_factor_challenges_usuari
   FOREIGN KEY ("usuario_id") REFERENCES "usuarios"("id") ON DELETE cascade;
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "two_factor_challenges_expires_idx" ON "two_factor_challenges" ("expires_at");
+
+-- Reversión (DOWN). Revertir esta migración solo en pruebas/staging, nunca en
+-- producción con datos: eliminaría la tabla de challenges y la columna de
+-- versión de sesión. En producción se mantiene la corrección y no se revierte
+-- (ver docs/security/runbook-rotacion-credenciales-fase1.md).
+-- >><down>
+DROP INDEX IF EXISTS "two_factor_challenges_expires_idx";
+--> statement-breakpoint
+DROP TABLE IF EXISTS "two_factor_challenges";
+--> statement-breakpoint
+ALTER TABLE "usuarios" DROP COLUMN IF EXISTS "token_version";

@@ -544,3 +544,28 @@ ya que no están incluidos en la información recibida.
   verificación de chunks e IndexNow en dry-run.
 
 **No se hizo commit, push, force push ni reescritura de historial.**
+
+---
+
+## 2026-07-12 — Auditoría integral de repositorio, producción, SGIE y Admin
+
+**Operación:** auditoría defensiva y documental completa, sin correcciones de código ni cambios de datos productivos.
+
+**Evidencias y comandos:**
+- Estado inicial Git limpio sobre `main`.
+- `seo:doctor` → 15 OK / 2 ERROR / 4 PENDIENTE.
+- `seo:collect` → 4/6; GSC/GA4 `invalid_grant`; Bing, IndexNow dry-run, health y sitemap OK.
+- `lint` → 0 errores / 6 warnings; `tsc --noEmit` → OK.
+- Vitest → 42 archivos / 861 tests OK; cobertura líneas 51,31 %.
+- Build → primer intento sin red falló por Google Fonts; repetición autorizada OK, 354 páginas, 7 chunks, IndexNow dry-run.
+- E2E producción solo lectura → 22/22 OK. Suites con POST/escritura excluidas.
+- `npm audit` → 5 altas / 10 moderadas; `npm outdated` inventariado.
+- Login autorizado Admin y SGIE; separación abogado→Admin validada; responsive 390×844 sin overflow.
+
+**Hallazgos principales:** bypass lógico del challenge 2FA (Crítica), IDOR/BOLA en clientes (Alta), credenciales compartidas débiles (Alta), preview con payload en URL/HTML no sanitizado (Alta), recuperación rota (Alta), dependencias vulnerables (Alta).
+
+**Archivos generados:** `docs/auditoria/INFORME-AUDITORIA.md`, `HALLAZGOS.md`, `PLAN-ACCION.md`, `REDISENO-SGIE-ADMIN.md`, `MATRIZ-TRAZABILIDAD.md`, `RESULTADOS-PRUEBAS.md`.
+
+**Archivos live regenerados por protocolo SEO:** `docs/audits/seo-live-summary.md`, `docs/audits/bing-live-report.md`. No se versionaron secretos ni datos live ignorados.
+
+**Clasificación:** auditoría `VALIDADO` con limitaciones; mutaciones productivas, MFA real, restore, navegadores no Chromium y E2E con DB `NO VALIDADO`. **No se implementaron correcciones. No se hizo commit ni push.**

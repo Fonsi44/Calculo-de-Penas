@@ -7,7 +7,7 @@ con datos reales de GSC/GA4/Bing, y CMS interno.
 
 - **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)
 - **Stack:** Next.js 16.2.7 + React 19.2.4 + Tailwind CSS v4 + Neon PostgreSQL + Drizzle ORM
-- **Auth:** JWT + bcryptjs (cookies `__Host-token` HttpOnly/Secure/SameSite=Lax)
+- **Auth:** JWT con propósito explícito, bcryptjs y 2FA TOTP (cookie `__Host-token` HttpOnly/Secure/SameSite=Lax)
 - **Testing:** Vitest (754 tests, 35 suites) + Playwright
 
 ---
@@ -151,6 +151,7 @@ Nunca compartir tokens ni secretos en chats o logs.
 - `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/` nunca se commitean. Los outputs live o generados bajo `data/seo/` no se versionan, pero las fuentes canónicas explícitas (ej. `data/seo/canonical-paths.json`) sí.
 - **Guías operativas:** Para el manejo estricto de secretos y fuentes de verdad, consulta `data/README.md`. Para el uso seguro de comandos operativos y herramientas IA (`@google/genai`, `openai`), consulta `scripts/README.md`.
 - NUNCA hardcodear `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`.
+- `ENCRYPTION_KEY` es obligatoria en producción para cifrar secretos TOTP; no debe reutilizarse como `JWT_SECRET`.
 - NUNCA compartir tokens, refresh tokens ni API keys en chats, logs o documentación.
 - **Datos generados:** Revisa siempre los archivos añadidos con `git status`. Nunca trackees archivos generados, caches o checkpoints temporales bajo `data/`.
 - Cookies HttpOnly/Secure/SameSite=Lax. Proxy edge protege intranet y API.

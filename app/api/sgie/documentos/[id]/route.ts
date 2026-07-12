@@ -52,7 +52,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id } = await params;
 
     const tieneAcceso = await verificarAccesoDocumento(id, auth.userId, auth.rol === 'admin');

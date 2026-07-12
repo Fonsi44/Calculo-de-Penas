@@ -9,7 +9,7 @@ import { enviarSolicitudDocumental } from '@/lib/sgie/recordatorios-cliente';
 
 /** POST /api/sgie/expedientes/:id/readiness/pedir-info — pedir info adicional al cliente */
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  try { const auth = requireAbogado(req); validateCsrf(req); const { id } = await params;
+  try { const auth = await requireAbogado(req); validateCsrf(req); const { id } = await params;
     const rl = await rateLimit(`sgie:readiness:${auth.userId}`, { max: 15, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
     if (auth.rol !== 'admin') { const [a] = await db.select({ id: expedienteAsignaciones.id }).from(expedienteAsignaciones).where(and(eq(expedienteAsignaciones.expedienteId, id), eq(expedienteAsignaciones.abogadoId, auth.userId), isNull(expedienteAsignaciones.revocadaEn))); if (!a) return Response.json({ error: 'Sin acceso' }, { status: 403 }); }

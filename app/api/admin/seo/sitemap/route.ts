@@ -8,7 +8,7 @@ import { blogCategories } from '@/data/blog/categories';
 
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
   } catch (err) {
     return authFailureResponse(err);
   }

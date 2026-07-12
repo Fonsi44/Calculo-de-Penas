@@ -13,7 +13,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     const { id } = await params;
 
     const [caso] = await db.select().from(casos).where(eq(casos.id, id));

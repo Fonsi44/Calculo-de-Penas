@@ -24,7 +24,7 @@ const createSchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     const { searchParams } = new URL(request.url);
     const categoria = searchParams.get('categoria');
     const where = categoria ? eq(areasJuridicas.categoria, categoria) : undefined;
@@ -35,7 +35,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`areas:create:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
@@ -67,7 +67,7 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

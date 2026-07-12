@@ -18,7 +18,7 @@ const SUP_WINDOW_MS = 60_000;
  */
 export async function GET(request: Request) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
 
     const rl = await rateLimit(user.userId, { keyPrefix: 'supuestos', windowMs: SUP_WINDOW_MS, max: SUP_MAX });
     if (!rl.ok) {

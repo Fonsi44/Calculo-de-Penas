@@ -31,7 +31,7 @@ async function idsAccesibles(usuarioId: string, esAdmin: boolean): Promise<strin
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:notif:email:${auth.userId}`, { max: 1, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);

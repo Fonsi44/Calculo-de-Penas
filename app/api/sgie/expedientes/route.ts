@@ -54,7 +54,7 @@ function contextoDesdeAuth(auth: { userId: string; rol: string }): ContextoAboga
  */
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));
 
@@ -83,7 +83,7 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:expediente:create:${auth.userId}`, {
       max: 30,

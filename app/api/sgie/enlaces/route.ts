@@ -36,7 +36,7 @@ function ctx(auth: { userId: string; rol: string }) {
  */
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { searchParams } = new URL(request.url);
     const query = listSchema.parse(Object.fromEntries(searchParams.entries()));
 
@@ -79,7 +79,7 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:enlace:create:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);

@@ -25,7 +25,7 @@ const createSchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    requireAbogado(request);
+    await requireAbogado(request);
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));
     const { plantillas, total } = await listarPlantillas({
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     if (auth.rol !== 'admin') {
       return Response.json({ error: 'Solo administradores pueden crear plantillas' }, { status: 403 });
     }

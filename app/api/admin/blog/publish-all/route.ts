@@ -25,7 +25,7 @@ const WORD_COUNT_EXPR = sql<number>`array_length(string_to_array(regexp_replace(
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
 
     // Publicar solo los borradores con peso editorial suficiente.

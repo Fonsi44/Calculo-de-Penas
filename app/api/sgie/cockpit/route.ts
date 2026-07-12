@@ -5,7 +5,7 @@ import { and, eq, isNull, inArray, count, desc } from 'drizzle-orm';
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const esAdmin = auth.rol === 'admin';
 
     // IDs de expedientes accesibles

@@ -22,7 +22,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id } = await params;
     const ctx: ContextoAbogado = {
       usuarioId: auth.userId,

@@ -13,7 +13,7 @@ const CALC_WINDOW_MS = 60_000;
 
 export async function POST(request: Request) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     validateCsrf(request);
 
     const rl = await rateLimit(user.userId, { keyPrefix: 'calc', windowMs: CALC_WINDOW_MS, max: CALC_MAX });

@@ -29,7 +29,7 @@ function ctx(auth: { userId: string; rol: string }) {
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));
     const { clientes, total } = await listarClientes(ctx(auth), {
@@ -50,12 +50,15 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:cliente:create:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
     const parsed = createSchema.parse(await request.json());
     const result = await crearOReutilizarCliente(parsed, ctx(auth));
+    if (result.duplicadoNoAccesible || !result.id) {
+      return Response.json({ error: 'No se pudo registrar el cliente.' }, { status: 409 });
+    }
     if (result.creado) {
       await logSgie({
         usuarioId: auth.userId,

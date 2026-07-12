@@ -2,12 +2,11 @@ import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { caseReadinessRuns, caseReadinessChecks, expedienteAsignaciones } from '@/lib/schema';
 import { and, desc, eq, isNull } from 'drizzle-orm';
-import { evaluarPreparacionExpediente } from '@/lib/sgie/readiness';
 
 /** GET /api/sgie/expedientes/:id/readiness */
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const auth = requireAbogado(req); const { id } = await params;
+    const auth = await requireAbogado(req); const { id } = await params;
     if (auth.rol !== 'admin') {
       const [a] = await db.select({ id: expedienteAsignaciones.id }).from(expedienteAsignaciones)
         .where(and(eq(expedienteAsignaciones.expedienteId, id), eq(expedienteAsignaciones.abogadoId, auth.userId), isNull(expedienteAsignaciones.revocadaEn)));

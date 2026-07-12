@@ -1,7 +1,11 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { db } from '@/lib/db';
+import { usuarios } from '@/lib/schema';
+import { eq } from 'drizzle-orm';
 
 const IS_PROD = process.env.NODE_ENV === 'production';
+const IS_TEST = process.env.NODE_ENV === 'test';
 const IS_BUILD_PHASE = process.env.NEXT_PHASE === 'phase-production-build';
 const DEV_FALLBACK_SECRET = 'dev-only-secret-not-for-production-min-32-chars-AAAAA';
 
@@ -254,16 +258,87 @@ export class AuthError extends Error {
   }
 }
 
-export function requireAuth(request: Request): AuthUser {
+/**
+ * Revocación de sesión efectiva (SUBFASE 5).
+ *
+ * El JWT es stateless, pero un cambio de contraseña o un bloqueo administrativo
+ * deben invalidar sesiones activas cuanto antes, no solo cuando el cliente
+ * consulte `/api/auth/me`. Este helper valida que el `tokenVersion` del JWT
+ * coincida con el de la DB y que el usuario siga `active` y no `bloqueado`.
+ *
+ * Para no añadir un round-trip a DB en cada request, se cachea el resultado por
+ * usuario durante `FRESHNESS_TTL_MS` (5 s). El TTL es deliberadamente corto: la
+ * revocación puede tardar hasta este tiempo en propagarse, aceptable frente al
+ * coste de consultar la DB en cada handler protegido.
+ *
+ * Fail-closed en producción: si la DB falla, se rechaza la sesión. En test/dev
+ * falla abierto (sin DB real) salvo que el test inyecte un mock.
+ */
+const FRESHNESS_TTL_MS = 5_000;
+const freshnessCache = new Map<string, { expiresAt: number; ok: boolean }>();
+
+/** Inyecta/reescribe el resultado de frescura para un usuario (uso en tests). */
+export function __setFreshnessForTest(userId: string, ok: boolean, ttlMs = FRESHNESS_TTL_MS): void {
+  freshnessCache.set(userId, { expiresAt: Date.now() + ttlMs, ok });
+}
+
+/** Limpia la caché de frescura (uso en tests y tras mutaciones críticas). */
+export function invalidateFreshness(userId?: string): void {
+  if (userId) freshnessCache.delete(userId);
+  else freshnessCache.clear();
+}
+
+export async function validateSessionFreshness(userId: string, tokenVersion: number): Promise<void> {
+  // Bypass durante el build de Next.js (no hay runtime de DB) y rutas públicas
+  // que no deberían llegar aquí pero defensivamente no bloqueamos.
+  if (IS_BUILD_PHASE) return;
+
+  const cached = freshnessCache.get(userId);
+  if (cached && cached.expiresAt > Date.now()) {
+    if (!cached.ok) throw new AuthError(401, 'Sesión revocada');
+    return;
+  }
+
+  // En tests sin DB real, confiamos en el token salvo mock explícito.
+  if (IS_TEST && !process.env.AUTH_FRESHNESS_DB_ENABLED) {
+    freshnessCache.set(userId, { expiresAt: Date.now() + FRESHNESS_TTL_MS, ok: true });
+    return;
+  }
+
+  let ok = false;
+  try {
+    const [user] = await db.select({
+      tokenVersion: usuarios.tokenVersion,
+      active: usuarios.active,
+      bloqueado: usuarios.bloqueado,
+    }).from(usuarios).where(eq(usuarios.id, userId));
+    ok = !!user && !!user.active && !user.bloqueado && user.tokenVersion === tokenVersion;
+  } catch (_e) {
+    // Fail-closed en producción: un error de DB no debe abrir paso.
+    // Se lee NODE_ENV dinámicamente (no la const IS_PROD) para que la decisión
+    // sea consistente con el entorno real en cada invocación y testeable.
+    if (process.env.NODE_ENV === 'production') {
+      throw new AuthError(401, 'No se pudo verificar la sesión');
+    }
+    // Dev: no bloqueamos desarrollo por una DB caída.
+    ok = true;
+  }
+
+  freshnessCache.set(userId, { expiresAt: Date.now() + FRESHNESS_TTL_MS, ok });
+  if (!ok) throw new AuthError(401, 'Sesión revocada');
+}
+
+export async function requireAuth(request: Request): Promise<AuthUser> {
   const token = getTokenFromCookies(request);
   if (!token) throw new AuthError(401, 'No autorizado');
   const payload = verifyToken(token);
   if (!payload) throw new AuthError(401, 'Sesión inválida o expirada');
+  await validateSessionFreshness(payload.userId, payload.tokenVersion);
   return payload;
 }
 
-export function requireAdmin(request: Request): AuthUser {
-  const user = requireAuth(request);
+export async function requireAdmin(request: Request): Promise<AuthUser> {
+  const user = await requireAuth(request);
   if (user.rol !== 'admin') throw new AuthError(403, 'Requiere rol de administrador');
   return user;
 }
@@ -276,12 +351,12 @@ export function requireAdmin(request: Request): AuthUser {
  * ve un abogado) lo aplican las queries de `lib/sgie/expedientes-db.ts`,
  * no esta función. Referencia: pinedayasociados.md §6.1.
  *
- * NOTA: la verificación de bloqueo (revocación posterior al JWT) se hace en
- * `/api/auth/me` y en el login, no aquí, porque requiere leer la DB. Esta
- * función valida únicamente el JWT (stateless), coherente con `requireAdmin`.
+ * La verificación de bloqueo/revocación (posterior al JWT) se hace vía
+ * `validateSessionFreshness` (token_version + active + bloqueado), con caché
+ * corta para no añadir un round-trip por request.
  */
-export function requireAbogado(request: Request): AuthUser {
-  const user = requireAuth(request);
+export async function requireAbogado(request: Request): Promise<AuthUser> {
+  const user = await requireAuth(request);
   if (user.rol !== 'abogado' && user.rol !== 'admin') {
     throw new AuthError(403, 'Requiere rol de abogado o administrador');
   }

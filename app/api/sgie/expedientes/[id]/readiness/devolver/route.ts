@@ -12,7 +12,7 @@ const bodySchema = z.object({ motivo: z.string().min(1).max(500).optional() });
 
 /** POST /api/sgie/expedientes/:id/readiness/devolver — abogado devuelve por doc. incompleta */
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  try { const auth = requireAbogado(req); validateCsrf(req); const { id } = await params;
+  try { const auth = await requireAbogado(req); validateCsrf(req); const { id } = await params;
     const rl = await rateLimit(`sgie:readiness:${auth.userId}`, { max: 15, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
     const body = bodySchema.parse(await req.json().catch(() => ({})));

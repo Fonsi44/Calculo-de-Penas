@@ -22,7 +22,7 @@ const querySchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     if (auth.rol !== 'admin') {
       return Response.json({ error: 'Solo administradores' }, { status: 403 });
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     if (auth.rol !== 'admin') {
       return Response.json({ error: 'Solo administradores' }, { status: 403 });
     }

@@ -1,5 +1,16 @@
 # CHANGELOG — Pineda y Asociados
 
+## Seguridad — Fase 1 de identidad (código completado, pendiente de despliegue y pasos operativos)
+
+- JWT con propósito explícito (`session` / `2fa_challenge`), challenge 2FA con TTL 5 min, `jti` aleatorio y consumo atómico persistente (compare-and-set en DB).
+- `ENCRYPTION_KEY` dedicada y obligatoria para cifrar secretos TOTP (desacoplada de `JWT_SECRET`); `ENCRYPTION_KEY_PREVIOUS` para rotación controlada.
+- Versión de sesión (`token_version`): la rotación de contraseña invalida tokens previos; verificación en proxy + handlers `require*` con validación DB y caché corta para mitigar impacto en latencia.
+- Ámbito de clientes aplicado dentro de la query DB (SELECT/UPDATE vía EXISTS condicionado), 404 indistinguible para cliente ajeno, sin fuga de UUID en creación/reutilización.
+- Guard anti-producción para tests con escritura (regex reforzada, cableado en arranque de vitest).
+- `rate-limit` fail-closed para prefijo `2fa` en producción, limitación por userId+IP.
+- Suite de pruebas obligatoria: 28 tests nuevos (matriz IDOR clientes, verify 2FA, concurrencia jti, revocación token_version, guard DB); cobertura de auth.ts 86 % y clientes-db.ts 67 %.
+- Requiere: aplicar migración `0030_security_sessions_2fa.sql` en staging, configurar `ENCRYPTION_KEY` en producción, ejecutar runbook de rotación de credenciales. No se cambiaron credenciales productivas desde código.
+
 Historial de cambios en orden cronológico inverso. Releases anteriores a Jul 2026
 están resumidos; las entradas vigentes desde la reestructuración del changelog
 (Release 91) mantienen detalle completo.

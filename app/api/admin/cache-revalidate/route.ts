@@ -8,7 +8,7 @@ const VALID_TAGS: ReadonlySet<string> = new Set(Object.values(CACHE_TAGS));
 
 export async function POST(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
   } catch (err) {
     return authFailureResponse(err);

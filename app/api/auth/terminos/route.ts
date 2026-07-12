@@ -5,7 +5,7 @@ import { requireAuth, authFailureResponse } from '@/lib/auth';
 
 export async function GET(request: Request) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
 
     const [row] = await db.select()
       .from(aceptacionesLegales)

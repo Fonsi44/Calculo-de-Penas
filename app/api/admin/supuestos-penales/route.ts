@@ -14,7 +14,7 @@ import { asc, eq } from 'drizzle-orm';
  */
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
 
     const rows = await db
       .select({

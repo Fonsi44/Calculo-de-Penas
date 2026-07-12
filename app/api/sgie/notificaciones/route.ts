@@ -46,7 +46,7 @@ async function idsAccesibles(usuarioId: string, esAdmin: boolean): Promise<strin
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const rl = await rateLimit(`sgie:notif:${auth.userId}`, { max: 60, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
 
@@ -153,7 +153,7 @@ const marcarSchema = z.object({
  */
 export async function POST(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:notif:marcar:${auth.userId}`, { max: 60, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);

@@ -31,7 +31,7 @@ async function ctx(auth: { userId: string; rol: string }) {
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id } = await params;
     const acceso = await verificarAccesoTarea(id, await ctx(auth));
     if (!acceso) return Response.json({ error: 'Sin acceso a la tarea' }, { status: 403 });
@@ -58,7 +58,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:comentario:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);

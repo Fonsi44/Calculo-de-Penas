@@ -112,7 +112,7 @@ function getIntro(category: string, topic: string): string {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const body = await request.json();
     const parsed = generateSchema.parse(body);

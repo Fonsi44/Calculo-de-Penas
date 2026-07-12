@@ -30,7 +30,7 @@ const updateSchema = z.record(z.string(), z.string());
 
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
   } catch (err) {
     return authFailureResponse(err);
   }
@@ -42,7 +42,7 @@ export async function GET(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`site-config:update:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);

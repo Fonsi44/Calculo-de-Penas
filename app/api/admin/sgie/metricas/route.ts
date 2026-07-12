@@ -8,7 +8,7 @@ import { count, eq, and, sql, gte } from 'drizzle-orm';
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     if (auth.rol !== 'admin') return Response.json({ error: 'Solo admin' }, { status: 403 });
 
     const hace30Dias = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);

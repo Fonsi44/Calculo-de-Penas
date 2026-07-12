@@ -21,7 +21,7 @@ import {
 
 export async function GET(request: Request) {
   try {
-    const auth = requireAuth(request);
+    const auth = await requireAuth(request);
     const habilitado = await tiene2faHabilitado(auth.userId);
     return Response.json({ habilitado });
   } catch (err) {
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAuth(request);
+    const auth = await requireAuth(request);
     validateCsrf(request);
     const rl = await rateLimit(`2fa:setup:${auth.userId}`, { keyPrefix: '2fa', windowMs: 60_000, max: 5 });
     if (!rl.ok) return rateLimitResponse(rl);

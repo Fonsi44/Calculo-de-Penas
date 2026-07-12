@@ -55,7 +55,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id } = await params;
 
     const detalle = await obtenerExpediente(id, contextoDesdeAuth(auth));
@@ -81,7 +81,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:expediente:update:${auth.userId}`, {
       max: 60,

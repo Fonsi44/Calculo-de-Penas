@@ -10,7 +10,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     const { id } = await params;
 
     const [caso] = await db.select().from(casos).where(eq(casos.id, id));
@@ -34,7 +34,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     validateCsrf(request);
     const { id } = await params;
     const body = await request.json();
@@ -76,7 +76,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const user = await requireAuth(request);
     validateCsrf(request);
     const { id } = await params;
 

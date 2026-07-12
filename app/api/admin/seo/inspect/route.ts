@@ -5,7 +5,7 @@ import { validateCsrf } from '@/lib/csrf';
 
 export async function POST(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     validateCsrf(request);
   } catch (err) {
     return authFailureResponse(err);

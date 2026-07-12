@@ -32,7 +32,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     const { id } = await params;
     const cliente = await obtenerCliente(id, ctx(auth));
     if (!cliente) return Response.json({ error: 'Cliente no encontrado' }, { status: 404 });
@@ -53,17 +53,12 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const auth = requireAbogado(request);
+    const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:cliente:update:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
 
     const { id } = await params;
-    // Verificar existencia previa (scope: cualquier abogado puede editar
-    // clientes que ve; el alcance de visibilidad lo da obtenerCliente).
-    const existente = await obtenerCliente(id, ctx(auth));
-    if (!existente) return Response.json({ error: 'Cliente no encontrado' }, { status: 404 });
-
     const parsed = updateSchema.parse(await request.json());
     // email vacío → null (limpiar). El `.or(z.literal(''))` permite borrar.
     const input = {
@@ -83,7 +78,8 @@ export async function PATCH(
       return Response.json({ error: 'El motivo de desactivación es obligatorio.' }, { status: 400 });
     }
 
-    await actualizarCliente(id, input, ctx(auth));
+    const actualizado = await actualizarCliente(id, input, ctx(auth));
+    if (!actualizado) return Response.json({ error: 'Cliente no encontrado' }, { status: 404 });
 
     // Auditoría para baja lógica (Sprint 5). No hay acciones dedicadas en el
     // enum; se usa cliente_updated con metadata explícita del evento.

@@ -28,7 +28,7 @@ const updateSchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    requireAdmin(request);
+    await requireAdmin(request);
     const rows = await db.select().from(menus).orderBy(asc(menus.nombre));
     return Response.json({ menus: rows });
   } catch (err) { return authFailureResponse(err); }
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const rl = await rateLimit(`menus:create:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
@@ -69,7 +69,7 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const auth = requireAdmin(request);
+    const auth = await requireAdmin(request);
     validateCsrf(request);
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
