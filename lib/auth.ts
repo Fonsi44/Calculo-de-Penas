@@ -160,19 +160,46 @@ export async function maybeRehashPassword(
   }
 }
 
-export function signToken(payload: { userId: string; email: string; rol: string }): string {
-  return jwt.sign(payload, getSecret(), { expiresIn: `${TOKEN_TTL_SECONDS}s` });
+export type SessionTokenPayload = {
+  purpose: 'session';
+  userId: string;
+  email: string;
+  rol: string;
+  tokenVersion: number;
+};
+
+export type TwoFactorChallengePayload = {
+  purpose: '2fa_challenge';
+  userId: string;
+  jti: string;
+};
+
+export function signSessionToken(payload: Omit<SessionTokenPayload, 'purpose'>): string {
+  return jwt.sign({ ...payload, purpose: 'session' satisfies SessionTokenPayload['purpose'] }, getSecret(), {
+    expiresIn: `${TOKEN_TTL_SECONDS}s`,
+  });
 }
 
-export function verifyToken(token: string): { userId: string; email: string; rol: string } | null {
+/** Alias explícito de compatibilidad para consumidores internos; siempre emite sesión. */
+export function signToken(payload: { userId: string; email: string; rol: string; tokenVersion?: number }): string {
+  return signSessionToken({ ...payload, tokenVersion: payload.tokenVersion ?? 0 });
+}
+
+export function signTwoFactorChallenge(payload: Omit<TwoFactorChallengePayload, 'purpose'>): string {
+  return jwt.sign({ ...payload, purpose: '2fa_challenge' satisfies TwoFactorChallengePayload['purpose'] }, getSecret(), {
+    expiresIn: '5m',
+  });
+}
+
+function verifyWithCurrentOrPrevious(token: string): jwt.JwtPayload | null {
   const secret = getSecret();
   try {
-    return jwt.verify(token, secret) as { userId: string; email: string; rol: string };
+    return jwt.verify(token, secret) as jwt.JwtPayload;
   } catch {
     const previous = getSecretPrevious();
     if (previous) {
       try {
-        return jwt.verify(token, previous) as { userId: string; email: string; rol: string };
+        return jwt.verify(token, previous) as jwt.JwtPayload;
       } catch {
         return null;
       }
@@ -180,6 +207,24 @@ export function verifyToken(token: string): { userId: string; email: string; rol
     return null;
   }
 }
+
+export function verifySessionToken(token: string): SessionTokenPayload | null {
+  const payload = verifyWithCurrentOrPrevious(token);
+  if (!payload || payload.purpose !== 'session'
+    || typeof payload.userId !== 'string' || typeof payload.email !== 'string'
+    || typeof payload.rol !== 'string' || !Number.isInteger(payload.tokenVersion)) return null;
+  return payload as SessionTokenPayload;
+}
+
+export function verifyTwoFactorChallenge(token: string): TwoFactorChallengePayload | null {
+  const payload = verifyWithCurrentOrPrevious(token);
+  if (!payload || payload.purpose !== '2fa_challenge'
+    || typeof payload.userId !== 'string' || typeof payload.jti !== 'string') return null;
+  return payload as TwoFactorChallengePayload;
+}
+
+/** Compatibilidad segura: verifyToken solo verifica sesiones, nunca challenges. */
+export const verifyToken = verifySessionToken;
 
 function readCookie(cookieHeader: string | null, name: string): string | null {
   if (!cookieHeader) return null;
@@ -199,7 +244,7 @@ export function getTokenFromCookies(request: Request): string | null {
   return null;
 }
 
-export type AuthUser = { userId: string; email: string; rol: string };
+export type AuthUser = { userId: string; email: string; rol: string; tokenVersion: number };
 
 export class AuthError extends Error {
   status: number;

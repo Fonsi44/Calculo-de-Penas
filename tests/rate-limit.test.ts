@@ -112,6 +112,13 @@ describe('rateLimit', () => {
     expect(r.retryAfterSec).toBe(60);
   });
 
+  it('en producción falla cerrado si DB falla durante 2FA', async () => {
+    env.NODE_ENV = 'production';
+    insertMock.mockImplementationOnce(() => { throw new Error('db down'); });
+    const r = await rateLimit('user:ip', { keyPrefix: '2fa', max: 10, windowMs: 60_000 });
+    expect(r.ok).toBe(false);
+  });
+
   it('en test mantiene fallback abierto si DB falla', async () => {
     insertMock.mockImplementationOnce(() => {
       throw new Error('db down');

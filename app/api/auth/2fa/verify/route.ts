@@ -10,7 +10,7 @@
  *
  * Sprint 5 — tarea 1.
  */
-import { verifyToken, signToken, createAuthResponse } from '@/lib/auth';
+import { verifyTwoFactorChallenge, signSessionToken, createAuthResponse } from '@/lib/auth';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { z } from 'zod';
@@ -18,6 +18,7 @@ import { verificarCodigoTotp, obtenerSecretCifrado, usarCodigoRecuperacion } fro
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
+import { consumirChallenge2fa } from '@/lib/two-factor-challenges';
 
 const schema = z.object({
   challenge: z.string().min(10),
@@ -28,15 +29,15 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
-  const rl = await rateLimit(`2fa:verify:${ip}`, { keyPrefix: '2fa', windowMs: 60_000, max: 10 });
-  if (!rl.ok) return rateLimitResponse(rl);
-
   try {
     const parsed = schema.parse(await request.json());
-    const payload = verifyToken(parsed.challenge);
-    if (!payload || !payload.userId) {
+    const payload = verifyTwoFactorChallenge(parsed.challenge);
+    if (!payload) {
       return Response.json({ error: 'Sesión de verificación inválida' }, { status: 401 });
     }
+
+    const rl = await rateLimit(`2fa:verify:${payload.userId}:${ip}`, { keyPrefix: '2fa', windowMs: 60_000, max: 10 });
+    if (!rl.ok) return rateLimitResponse(rl);
 
     const [user] = await db.select().from(usuarios).where(eq(usuarios.id, payload.userId));
     if (!user || !user.active || user.bloqueado) {
@@ -71,6 +72,12 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Código inválido' }, { status: 401 });
     }
 
+    // Compare-and-set persistente: impide que dos verificaciones simultáneas
+    // conviertan el mismo challenge en dos sesiones.
+    if (!await consumirChallenge2fa(payload.jti, user.id)) {
+      return Response.json({ error: 'Sesión de verificación inválida' }, { status: 401 });
+    }
+
     if (usoRecuperacion) {
       await audit({
         accion: 'login',
@@ -91,7 +98,12 @@ export async function POST(request: Request) {
       metadata: { evento: 'two_factor_verified' },
     });
 
-    const token = signToken({ userId: user.id, email: user.email, rol: user.rol });
+    const token = signSessionToken({
+      userId: user.id,
+      email: user.email,
+      rol: user.rol,
+      tokenVersion: user.tokenVersion,
+    });
     return createAuthResponse({
       message: 'Inicio de sesión exitoso',
       user: { id: user.id, email: user.email, nombre: user.nombre, rol: user.rol },

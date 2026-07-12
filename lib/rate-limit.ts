@@ -27,6 +27,7 @@ const SENSITIVE_PREFIXES = new Set([
   'consulta',
   'chat_ip',
   'chat_sess',
+  '2fa',
 ]);
 
 function shouldFailClosed(keyPrefix: string): boolean {

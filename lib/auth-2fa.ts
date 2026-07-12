@@ -84,14 +84,31 @@ function totpVerificar(secretBuf: Buffer, token: string): boolean {
 }
 
 // ─── Cifrado del secret (AES-256-GCM) ────────────────────────────────────
-function claveCifrado(): Buffer {
-  const secret = process.env.JWT_SECRET || process.env.ENCRYPTION_KEY;
-  if (!secret) throw new Error('JWT_SECRET no configurado (requerido para 2FA)');
-  return scryptSync(secret, 'sgie-2fa-salt', 32);
+function claveCifradoActual(): Buffer {
+  const secret = process.env.ENCRYPTION_KEY;
+  if (!secret || secret.length < 32) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('ENCRYPTION_KEY debe estar configurada y tener al menos 32 caracteres para 2FA');
+    }
+    // Solo desarrollo/test: evita bloquear pruebas locales sin reutilizar JWT_SECRET.
+    return scryptSync('dev-only-2fa-encryption-key-not-for-production', 'sgie-2fa-v2', 32);
+  }
+  return scryptSync(secret, 'sgie-2fa-v2', 32);
+}
+
+function clavesLectura(): Buffer[] {
+  const claves = [claveCifradoActual()];
+  const previous = process.env.ENCRYPTION_KEY_PREVIOUS;
+  if (previous && previous.length >= 32) claves.push(scryptSync(previous, 'sgie-2fa-v2', 32));
+  // Compatibilidad de lectura para filas creadas antes de esta remediación.
+  // Nunca se usa para cifrar contenido nuevo; debe retirarse tras migración controlada.
+  const legacy = process.env.JWT_SECRET;
+  if (legacy && legacy.length >= 32) claves.push(scryptSync(legacy, 'sgie-2fa-salt', 32));
+  return claves;
 }
 
 function cifrar(texto: string): string {
-  const key = claveCifrado();
+  const key = claveCifradoActual();
   const iv = randomBytes(12);
   const cipher = createCipheriv('aes-256-gcm', key, iv);
   const enc = Buffer.concat([cipher.update(texto, 'utf8'), cipher.final()]);
@@ -99,8 +116,7 @@ function cifrar(texto: string): string {
   return Buffer.concat([iv, authTag, enc]).toString('base64');
 }
 
-function descifrar(payload: string): string {
-  const key = claveCifrado();
+function descifrarConClave(payload: string, key: Buffer): string {
   const buf = Buffer.from(payload, 'base64');
   const iv = buf.subarray(0, 12);
   const authTag = buf.subarray(12, 28);
@@ -108,6 +124,13 @@ function descifrar(payload: string): string {
   const decipher = createDecipheriv('aes-256-gcm', key, iv);
   decipher.setAuthTag(authTag);
   return Buffer.concat([decipher.update(enc), decipher.final()]).toString('utf8');
+}
+
+function descifrar(payload: string): string {
+  for (const key of clavesLectura()) {
+    try { return descifrarConClave(payload, key); } catch { /* probar la siguiente clave */ }
+  }
+  throw new Error('No se pudo descifrar el secreto 2FA');
 }
 
 const NUM_RECOVERY_CODES = 8;

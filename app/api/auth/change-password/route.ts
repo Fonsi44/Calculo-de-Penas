@@ -2,13 +2,13 @@ import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { requireAuth, authFailureResponse, verifyPassword, hashPassword } from '@/lib/auth';
 import { validateCsrf } from '@/lib/csrf';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 
 const schema = z.object({
   currentPassword: z.string().min(1),
-  newPassword: z.string().min(6),
+  newPassword: z.string().min(12).max(128),
 });
 
 export async function POST(request: Request) {
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
     const newHash = await hashPassword(newPassword);
     await db.update(usuarios)
-      .set({ passwordHash: newHash, mustChangePassword: false })
+      .set({ passwordHash: newHash, mustChangePassword: false, tokenVersion: sql`${usuarios.tokenVersion} + 1` })
       .where(eq(usuarios.id, auth.userId));
 
     await logAudit({

@@ -83,6 +83,8 @@ export const usuarios = pgTable('usuarios', {
   bufeteId: uuid('bufete_id'),
   active: boolean('active').default(false),
   mustChangePassword: boolean('must_change_password').default(false),
+  // Invalida todas las sesiones emitidas antes de un cambio de credenciales.
+  tokenVersion: integer('token_version').notNull().default(0),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
   // SGIE — gobernanza de accesos (Fase 2). Columnas aditivas, no rompen filas existentes.
   // `active=false` es desactivación (soft-delete). `bloqueado=true` es revocación de acceso
@@ -1580,6 +1582,18 @@ export const twoFactorRecoveryCodes = pgTable('two_factor_recovery_codes', {
 
 export type TwoFactorRecoveryCode = typeof twoFactorRecoveryCodes.$inferSelect;
 export type TwoFactorRecoveryCodeInsert = typeof twoFactorRecoveryCodes.$inferInsert;
+
+/** Challenges de segundo factor de un único uso; nunca contienen el token. */
+export const twoFactorChallenges = pgTable('two_factor_challenges', {
+  jti: varchar('jti', { length: 128 }).primaryKey(),
+  usuarioId: uuid('usuario_id').notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  consumedAt: timestamp('consumed_at', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  expiresIdx: index('two_factor_challenges_expires_idx').on(table.expiresAt),
+}));
 
 // --- Fase 6/7: jobs SGIE (cola idempotente) ---
 

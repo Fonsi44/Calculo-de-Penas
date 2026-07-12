@@ -19,6 +19,7 @@ export async function GET(request: Request) {
     email: usuarios.email,
     nombre: usuarios.nombre,
     rol: usuarios.rol,
+    tokenVersion: usuarios.tokenVersion,
     active: usuarios.active,
     bloqueado: usuarios.bloqueado,
   }).from(usuarios).where(eq(usuarios.id, payload.userId));
@@ -32,7 +33,7 @@ export async function GET(request: Request) {
   // el token seguiría siendo válido 24h. Aquí cerramos esa ventana: devolvemos
   // `user: null` para que el cliente cierre sesión. Referencia: pinedayasociados.md
   // Fase 2 — Riesgo "sesión activa persiste tras bloqueo".
-  if (!user.active || user.bloqueado) {
+  if (!user.active || user.bloqueado || user.tokenVersion !== payload.tokenVersion) {
     return Response.json({ user: null }, { status: 200 });
   }
 

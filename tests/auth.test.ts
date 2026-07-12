@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import {
   signToken,
   verifyToken,
+  signTwoFactorChallenge,
+  verifyTwoFactorChallenge,
   requireAuth,
   requireAdmin,
   getTokenFromCookies,
@@ -13,6 +15,7 @@ import {
   AuthError,
   COOKIE_NAME,
 } from '../lib/auth';
+import jwt from 'jsonwebtoken';
 
 describe('lib/auth — signToken / verifyToken', () => {
   const payload = { userId: 'user-1', email: 'a@b.com', rol: 'abogado' };
@@ -24,6 +27,25 @@ describe('lib/auth — signToken / verifyToken', () => {
     expect(r?.userId).toBe(payload.userId);
     expect(r?.email).toBe(payload.email);
     expect(r?.rol).toBe(payload.rol);
+    expect(r?.purpose).toBe('session');
+  });
+
+  it('rechaza challenges 2FA y JWT antiguos como sesión', () => {
+    const challenge = signTwoFactorChallenge({ userId: 'user-1', jti: 'challenge-1' });
+    expect(verifyToken(challenge)).toBeNull();
+    expect(verifyTwoFactorChallenge(challenge)?.purpose).toBe('2fa_challenge');
+  });
+
+  it('rechaza una sesión como challenge 2FA', () => {
+    expect(verifyTwoFactorChallenge(signToken(payload))).toBeNull();
+  });
+
+  it('rechaza JWT antiguo sin purpose y challenge expirado', () => {
+    const secret = 'dev-only-secret-not-for-production-min-32-chars-AAAAA';
+    const legacy = jwt.sign({ userId: 'user-1', email: 'a@b.com', rol: 'abogado' }, secret, { expiresIn: '1h' });
+    const expired = jwt.sign({ purpose: '2fa_challenge', userId: 'user-1', jti: 'expired' }, secret, { expiresIn: -1 });
+    expect(verifyToken(legacy)).toBeNull();
+    expect(verifyTwoFactorChallenge(expired)).toBeNull();
   });
 
   it('retorna null ante token mal formado', () => {
@@ -85,6 +107,12 @@ describe('lib/auth — requireAuth / requireAdmin', () => {
     } catch (e) {
       expect((e as AuthError).status).toBe(401);
     }
+  });
+
+  it('requireAuth rechaza un challenge puesto como cookie de sesión', () => {
+    const challenge = signTwoFactorChallenge({ userId: 'u-1', jti: 'challenge-cookie' });
+    expect(() => requireAuth(new Request('http://x', { headers: { cookie: `${COOKIE_NAME}=${challenge}` } })))
+      .toThrow(AuthError);
   });
 
   it('requireAdmin acepta rol admin', () => {

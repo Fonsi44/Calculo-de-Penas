@@ -1,11 +1,12 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
-import { verifyPassword, signToken, createAuthResponse, maybeRehashPassword } from '@/lib/auth';
+import { verifyPassword, signSessionToken, signTwoFactorChallenge, createAuthResponse, maybeRehashPassword } from '@/lib/auth';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { audit, ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { authLoginSchema, validate } from '@/lib/validation';
 import { tiene2faHabilitado } from '@/lib/auth-2fa';
+import { crearChallenge2fa } from '@/lib/two-factor-challenges';
 
 const LOGIN_MAX = 5;
 const LOGIN_WINDOW_MS = 60_000;
@@ -105,11 +106,9 @@ export async function POST(request: Request) {
         exito: true,
         metadata: { etapa: '2fa_challenge' },
       });
-      // Challenge temporal que identifica al usuario sin dar sesión definitiva.
-      // El endpoint /api/auth/2fa/verify lo consume tras validar el código TOTP.
-      // Nota: signToken no acepta TTL; el challenge se valida inmediatamente en
-      // el verify (flujo de un solo paso). No se persiste en cookie.
-      const challenge = signToken({ userId: user.id, email: user.email, rol: user.rol });
+      // Challenge mínimo, persistido y de un único uso. No es una sesión.
+      const { jti } = await crearChallenge2fa(user.id);
+      const challenge = signTwoFactorChallenge({ userId: user.id, jti });
       return Response.json({
         requiere2fa: true,
         challenge,
@@ -125,14 +124,18 @@ export async function POST(request: Request) {
       exito: true,
     });
 
-    const token = signToken({ userId: user.id, email: user.email, rol: user.rol });
+    const token = signSessionToken({
+      userId: user.id,
+      email: user.email,
+      rol: user.rol,
+      tokenVersion: user.tokenVersion,
+    });
     return createAuthResponse({
       message: 'Inicio de sesión exitoso',
       user: { id: user.id, email: user.email, nombre: user.nombre, rol: user.rol },
     }, token);
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : 'Error interno del servidor';
     console.error('[login] Error:', e);
-    return Response.json({ error: message }, { status: 500 });
+    return Response.json({ error: 'No se pudo iniciar sesión. Intente más tarde.' }, { status: 500 });
   }
 }
