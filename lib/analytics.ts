@@ -20,6 +20,16 @@
 
 type EventParams = Record<string, string | number | boolean>;
 
+/** Valida un Measurement ID de un flujo web GA4 sin registrar su valor. */
+export function isValidGaMeasurementId(value: string | null | undefined): value is string {
+  return typeof value === 'string' && /^G-[A-Z0-9]{6,14}$/i.test(value);
+}
+
+/** Valida un container ID de Google Tag Manager. */
+export function isValidGtmId(value: string | null | undefined): value is string {
+  return typeof value === 'string' && /^GTM-[A-Z0-9]{4,12}$/i.test(value);
+}
+
 /**
  * Prefijos de rutas PRIVADAS/internas que jamás deben disparar GA4.
  * Fuente única (DRY): `components/analytics-scripts.tsx` la consume vía

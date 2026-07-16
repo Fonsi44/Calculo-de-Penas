@@ -201,6 +201,14 @@ RAG_MIN_SCORE=0.7                    # Umbral mínimo de similitud
 ## 8. Formato de entrega
 
 ```
+
+### Analítica pública
+
+- Fuente cliente: `components/analytics-scripts.tsx`; helpers/eventos: `lib/analytics.ts`; configuración: `lib/site.ts`.
+- GA4 directo y GTM son mutuamente excluyentes. No duplicar etiquetas ni enviar PII, consultas legales, nombres, correos, teléfonos o identificadores de expedientes.
+- La analítica solo se monta en el layout público y excluye las rutas declaradas en `ANALYTICS_EXCLUDED_PREFIXES`.
+- Variables: `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_ANALYTICS_TEST` y `NEXT_PUBLIC_ANALYTICS_DEBUG`.
+- Validar cambios con las cuatro comprobaciones de código y, tras deploy, con Network (`gtag/js`, `g/collect`, `clarity.ms`) y GA4 Realtime/DebugView.
 Porcentaje completado:
 Porcentaje restante:
 Archivos modificados:

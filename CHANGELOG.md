@@ -1,5 +1,11 @@
 # CHANGELOG — Pineda y Asociados
 
+## 2026-07-16 — Corrección de pageviews GA4
+
+- Corregida la visita inicial de GA4: `config` vuelve a emitir el `page_view` inicial y se ejecuta `afterInteractive`, eliminando la carrera con el efecto de App Router.
+- Añadidas validaciones de formato para IDs GA4/GTM y exclusión de previews, con opt-in explícito para pruebas.
+- Añadidas pruebas unitarias y documentación de configuración/validación sin secretos.
+
 ## 2026-07-12 — Remediación integral Fases 1-5
 
 ### Fase 1 — Cierre de seguridad crítica

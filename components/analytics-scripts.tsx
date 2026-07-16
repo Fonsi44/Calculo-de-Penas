@@ -7,6 +7,8 @@ import {
   isAnalyticsExcludedPath,
   maskMeasurementId,
   debugAnalytics,
+  isValidGaMeasurementId,
+  isValidGtmId,
   trackEvent
 } from '@/lib/analytics';
 
@@ -44,11 +46,13 @@ export function AnalyticsScripts({
   gtmId,
   fbPixelId,
   clarityId,
+  analyticsEnabled,
 }: {
   gaId: string | null;
   gtmId: string | null;
   fbPixelId: string | null;
   clarityId: string | null;
+  analyticsEnabled: boolean;
 }) {
   const pathname = usePathname();
   const prevPath = useRef<string | null>(null);
@@ -56,8 +60,10 @@ export function AnalyticsScripts({
 
   // GTM reemplaza la carga directa de gtag.js cuando está presente: el
   // contenedor gestiona GA4 y cualquier otra etiqueta desde la UI de GTM.
-  const useGtm = Boolean(gtmId);
-  const effectiveGaId = useGtm ? null : gaId;
+  const validGtmId = analyticsEnabled && isValidGtmId(gtmId) ? gtmId : null;
+  const validGaId = analyticsEnabled && isValidGaMeasurementId(gaId) ? gaId : null;
+  const useGtm = Boolean(validGtmId);
+  const effectiveGaId = useGtm ? null : validGaId;
 
   // SEO CTA click tracker (Fase 3)
   useEffect(() => {
@@ -86,7 +92,7 @@ export function AnalyticsScripts({
   }, []);
 
   useEffect(() => {
-    if (!clarityId) return;
+    if (!analyticsEnabled || !clarityId) return;
     if (typeof window === 'undefined') return;
     // Carga vía snippet oficial (evita empaquetar el SDK npm en el bundle
     // del cliente). Defensivo: si ya se inicializó, no reinyecta.
@@ -108,7 +114,7 @@ export function AnalyticsScripts({
     } catch {
       /* silencioso */
     }
-  }, [clarityId]);
+  }, [analyticsEnabled, clarityId]);
 
   // Carga diferida del script externo gtag.js (interaction + timeout).
   // No reinyecta si ya se cargó (p.ej. tras navegación SPA). Las rutas
@@ -211,9 +217,9 @@ export function AnalyticsScripts({
 
       {/* Google Tag Manager (opcional). Si NEXT_PUBLIC_GTM_ID está configurado,
           GTM gestiona GA4 y el resto de etiquetas; no se carga gtag.js directo. */}
-      {useGtm && gtmId && (
+      {useGtm && validGtmId && (
         <Script id="gtm-loader" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`}
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${validGtmId}');`}
         </Script>
       )}
 
@@ -223,8 +229,8 @@ export function AnalyticsScripts({
           inline `ga4-init` que define `dataLayer` + stub `gtag` para encolar
           eventos previos a la carga real, y dispara el `config` inicial. */}
       {effectiveGaId && (
-        <Script id="ga4-init" strategy="lazyOnload">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${effectiveGaId}',{send_page_view:false});`}
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${effectiveGaId}',{send_page_view:true});`}
         </Script>
       )}
 
