@@ -45,7 +45,13 @@ function ensureDir(dir) {
 
 function run(cmd) {
   try {
-    const out = execSync(cmd, { encoding: 'utf-8', stdio: 'pipe', cwd: ROOT }).trim();
+    const out = execSync(cmd, {
+      encoding: 'utf-8',
+      stdio: 'pipe',
+      cwd: ROOT,
+      timeout: 120_000,
+      windowsHide: true,
+    }).trim();
     return { ok: true, output: out };
   } catch (e) {
     return { ok: false, error: e.message?.substring(0, 200) || String(e) };

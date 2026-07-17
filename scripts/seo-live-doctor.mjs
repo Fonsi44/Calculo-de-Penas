@@ -24,6 +24,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import os from 'node:os';
+import { resolveGcloudCli, runGcloud } from './gcloud-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -62,12 +63,12 @@ async function main() {
   // ── GOOGLE ──
   if (!JSON_MODE) console.log('── GOOGLE (GSC / GA4) ──');
 
-  const gcloudOk = hasCmd('gcloud');
-  add('gcloud CLI', gcloudOk ? 'ok' : 'error', gcloudOk ? 'instalada' : 'no instalada');
+  const gcloudOk = Boolean(resolveGcloudCli());
+  add('gcloud CLI', gcloudOk ? 'ok' : 'error', gcloudOk ? 'instalada (PATH o C:\\gcloud-sdk)' : 'no instalada');
 
   if (gcloudOk) {
     try {
-      const who = execSync('gcloud auth list --filter=status:ACTIVE --format="value(account)"', { encoding: 'utf-8', stdio: 'pipe' }).trim();
+      const who = runGcloud(['auth', 'list', '--filter=status:ACTIVE', '--format=value(account)']).stdout;
       add('Google ADC', who ? 'ok' : 'error', who ? `autenticado: ${who}` : 'no autenticado');
     } catch { add('Google ADC', 'error', 'error verificando'); }
   } else {

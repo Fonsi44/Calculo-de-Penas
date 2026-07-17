@@ -16,6 +16,8 @@ import { config } from 'dotenv';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
+import { atomicWriteJson, hasFlag, resolvePeriod, writeDatasetsCsv, withRetry } from './analytics/export-utils.mjs';
+import { runGcloud } from './gcloud-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -24,6 +26,7 @@ config({ path: resolve(ROOT, '.env.local'), override: true });
 
 const GOOGLE_DATA_DIR = resolve(ROOT, 'data', 'google');
 const OUT_FILE = resolve(GOOGLE_DATA_DIR, 'ga4-live.json');
+const OUT_CSV = resolve(GOOGLE_DATA_DIR, 'ga4-live.csv');
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -32,9 +35,6 @@ function ensureDir(dir) {
 function getArg(name) {
   const i = process.argv.indexOf(name);
   return i >= 0 ? process.argv[i + 1] : null;
-}
-function hasFlag(name) {
-  return process.argv.includes(name);
 }
 
 const DAYS = parseInt(getArg('--days') || '28', 10);
@@ -72,8 +72,8 @@ async function getAuth() {
 
   // gcloud ADC (fallback)
   try {
-    const { execSync } = await import('node:child_process');
-    execSync('gcloud auth application-default print-access-token 2>nul', { stdio: 'pipe' });
+    const probe = runGcloud(['auth', 'application-default', 'print-access-token']);
+    if (!probe.ok) throw new Error('ADC no disponible');
     if (!JSON_ONLY) console.log('Usando gcloud ADC');
     const auth = new google.auth.GoogleAuth({
       scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
@@ -88,17 +88,22 @@ async function runReport(auth, property, startDate, endDate, metrics, dimensions
   const { google } = await import('googleapis');
   const analyticsData = google.analyticsdata({ version: 'v1beta', auth });
 
-  const resp = await analyticsData.properties.runReport({
-    property,
-    requestBody: {
+  const rows = [];
+  let headers;
+  const limit = 10000;
+  for (let offset = 0; ; offset += limit) {
+    const resp = await withRetry(() => analyticsData.properties.runReport({ property, requestBody: {
       dateRanges: [{ startDate, endDate }],
       metrics: metrics.map(m => ({ name: m })),
       dimensions: dimensions.map(d => ({ name: d })),
-      limit: 200,
-    },
-  });
-
-  return resp.data;
+      limit, offset,
+    } }));
+    headers ||= resp.data;
+    const page = resp.data.rows || [];
+    rows.push(...page);
+    if (page.length < limit || rows.length >= Number(resp.data.rowCount || 0)) break;
+  }
+  return { ...headers, rows };
 }
 
 function parseRows(report) {
@@ -141,10 +146,7 @@ async function main() {
     process.exit(0);
   }
 
-  const end = new Date();
-  const start = new Date(end.getTime() - DAYS * 24 * 60 * 60 * 1000);
-  const startStr = start.toISOString().slice(0, 10);
-  const endStr = end.toISOString().slice(0, 10);
+  const { start: startStr, end: endStr } = resolvePeriod(DAYS);
   const property = `properties/${PROPERTY_ID}`;
 
   if (!JSON_ONLY) console.log(`Consultando GA4: ${startStr} → ${endStr}\n`);
@@ -161,13 +163,14 @@ async function main() {
     countries: [],
     devices: [],
     daily: [],
+    eventsByName: [], campaigns: [], landingPages: [], browsers: [],
   };
 
   try {
     // Overview: total users, sessions, screen page views, etc.
     const overview = await runReport(auth, property, startStr, endStr, [
       'totalUsers', 'sessions', 'screenPageViews', 'averageSessionDuration',
-      'bounceRate', 'eventCount', 'conversions',
+      'bounceRate', 'eventCount', 'keyEvents',
     ]);
     if (overview.rows?.length) {
       const r = overview.rows[0];
@@ -178,7 +181,7 @@ async function main() {
         avgSessionSec:   r.metricValues[3]?.value || '0',
         bounceRate:      r.metricValues[4]?.value || '0',
         events:          r.metricValues[5]?.value || '0',
-        conversions:     r.metricValues[6]?.value || '0',
+        keyEvents:       r.metricValues[6]?.value || '0',
       };
     }
 
@@ -217,8 +220,15 @@ async function main() {
     );
     result.daily = parseRows(daily);
 
-    ensureDir(GOOGLE_DATA_DIR);
-    fs.writeFileSync(OUT_FILE, JSON.stringify(result, null, 2));
+    result.eventsByName = parseRows(await runReport(auth, property, startStr, endStr, ['eventCount', 'totalUsers'], ['eventName']));
+    result.campaigns = parseRows(await runReport(auth, property, startStr, endStr, ['sessions', 'totalUsers'], ['sessionCampaignName', 'sessionSourceMedium']));
+    result.landingPages = parseRows(await runReport(auth, property, startStr, endStr, ['sessions', 'newUsers'], ['landingPage']));
+    result.browsers = parseRows(await runReport(auth, property, startStr, endStr, ['totalUsers', 'sessions'], ['browser']));
+
+    if (!hasFlag('--dry-run')) {
+      await atomicWriteJson(OUT_FILE, result);
+      await writeDatasetsCsv(OUT_CSV, { pages: result.topPages, sources: result.sources, countries: result.countries, devices: result.devices, daily: result.daily, events: result.eventsByName, campaigns: result.campaigns, landingPages: result.landingPages, browsers: result.browsers });
+    }
 
     if (!JSON_ONLY) {
       console.log('── RESUMEN ──');
@@ -227,7 +237,7 @@ async function main() {
       console.log(`  Sesiones:       ${o.sessions}`);
       console.log(`  Páginas vistas: ${o.pageViews}`);
       console.log(`  Eventos:        ${o.events}`);
-      console.log(`  Conversiones:   ${o.conversions}`);
+      console.log(`  Eventos clave:  ${o.keyEvents}`);
       console.log(`  Sesión media:   ${o.avgSessionSec}s`);
       console.log(`  Tasa rebote:    ${o.bounceRate}`);
       console.log(`  Páginas top:    ${result.topPages.length}`);
@@ -241,7 +251,7 @@ async function main() {
     result.status = 'error';
     result.error = err.message?.substring(0, 300) || String(err);
     ensureDir(GOOGLE_DATA_DIR);
-    fs.writeFileSync(OUT_FILE, JSON.stringify(result, null, 2));
+    if (!hasFlag('--dry-run')) await atomicWriteJson(OUT_FILE, result);
     console.error('ERROR:', err.message?.substring(0, 300));
     process.exit(1);
   }

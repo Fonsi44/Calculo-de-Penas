@@ -15,6 +15,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import os from 'node:os';
+import { resolveGcloudCli, runGcloud } from './gcloud-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -62,12 +63,12 @@ async function main() {
 
   // Google
   const googleResults = [];
-  const hasGcloud = hasCmd('gcloud');
+  const hasGcloud = Boolean(resolveGcloudCli());
   googleResults.push(hasGcloud ? ok('gcloud CLI instalada') : err('gcloud CLI no instalada — npm run auth:google para instrucciones'));
   
   if (hasGcloud) {
     try {
-      const who = execSync('gcloud auth list --filter=status:ACTIVE --format="value(account)"', { encoding: 'utf-8', stdio: 'pipe' }).trim();
+      const who = runGcloud(['auth', 'list', '--filter=status:ACTIVE', '--format=value(account)']).stdout;
       googleResults.push(who ? ok(`Google: autenticado como ${who}`) : err('Google: no autenticado — npm run auth:google'));
     } catch { googleResults.push(err('Google: error verificando estado')); }
   }

@@ -18,6 +18,15 @@ En Vercel, configurar los IDs cliente solo en Production. Preview queda excluido
 6. Confirmar una sola carga `clarity.ms/tag/...` y revisar en Clarity el masking de inputs y la exclusión/protección de contenido sensible.
 7. Validar `https://www.pinedayasociadoshn.com/robots.txt` y `/sitemap.xml`, canonicals y etiquetas de verificación en el HTML.
 
-Consent Mode empieza denegado. Mientras no exista una interfaz de consentimiento que ejecute `gtag('consent','update', ...)`, solo cabe medición sin cookies; no se debe conceder almacenamiento automáticamente. La configuración de filtros internos, dominio del flujo, roles y eventos clave se comprueba manualmente en GA4 Admin.
+Consent Mode empieza denegado antes de cargar proveedores. El banner permite aceptar, rechazar o configurar analítica y funcionalidad por separado; publicidad permanece siempre denegada. La elección se guarda sin PII en `localStorage`, versión 1, durante 180 días. Un cambio de versión o caducidad vuelve a solicitar decisión. El footer permite reabrir preferencias y una revocación recarga la página para retirar scripts ya descargados.
 
-Los scripts live se ejecutan con `npm run seo:doctor`, `npm run seo:ga4:live`, `npm run seo:gsc:live`, `npm run seo:bing:live` y `npm run seo:collect`. Las credenciales se rotan en el proveedor y Vercel; nunca se copian a Git ni documentación.
+Los exportadores aceptan `--start YYYY-MM-DD`, `--end YYYY-MM-DD`, `--days N`, `--dry-run` y `--json-only`. Generan JSON y CSV mediante temporales y reemplazo atómico. Comandos: `analytics:ga4`, `analytics:search-console`, `analytics:bing`, `analytics:export-all`, `analytics:audit` y `analytics:validate`.
+
+La credencial Google fue renovada el 2026-07-17 con scopes de solo lectura.
+`seo:collect` completó 6/6. Las credenciales se rotan en el proveedor y Vercel;
+nunca se copian a Git ni documentación.
+
+Sin `gcloud`, usar `npm run auth:google:oauth`. Antes debe estar libre
+`localhost:3000`; el flujo no imprime la URL ni el token, solicita scopes de
+solo lectura y caduca tras cinco minutos. No copiar al chat la URL de retorno:
+contiene un código OAuth de un solo uso.

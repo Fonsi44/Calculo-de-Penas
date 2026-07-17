@@ -2,7 +2,7 @@
  * Obtiene un refresh token OAuth2 con scopes para GSC + GA4.
  *
  * Scopes solicitados:
- *   - webmasters           → Google Search Console (lectura y escritura)
+ *   - webmasters.readonly  → Google Search Console (solo lectura)
  *   - analytics.readonly   → Google Analytics 4 Data API (lectura de métricas)
  *
  * Flujo:
@@ -24,12 +24,13 @@
  */
 
 import { config } from 'dotenv';
-import { resolve, dirname, join } from 'path';
+import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { google } from 'googleapis';
 import http from 'http';
 import { exec } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, renameSync, rmSync, writeFileSync } from 'fs';
+import { randomBytes } from 'crypto';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ENV_LOCAL = resolve(root, '.env.local');
@@ -47,9 +48,10 @@ if (!CLIENT_ID || !CLIENT_SECRET) {
 
 const REDIRECT_URI = 'http://localhost:3000';
 const SCOPES = [
-  'https://www.googleapis.com/auth/webmasters',
+  'https://www.googleapis.com/auth/webmasters.readonly',
   'https://www.googleapis.com/auth/analytics.readonly',
 ];
+const OAUTH_STATE = randomBytes(32).toString('hex');
 
 const oauth2 = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -57,23 +59,11 @@ const authUrl = oauth2.generateAuthUrl({
   access_type: 'offline',
   prompt: 'consent',
   scope: SCOPES,
+  state: OAUTH_STATE,
 });
 
 console.log('🔐 Abriendo navegador para autorizar GSC + GA4...');
-console.log('Si no se abre, copia esta URL:\n');
-console.log(authUrl);
-console.log('');
-
-// Abrir navegador
-const cmd = process.platform === 'win32'
-  ? `start "" "${authUrl}"`
-  : process.platform === 'darwin'
-    ? `open "${authUrl}"`
-    : `xdg-open "${authUrl}"`;
-
-exec(cmd, (err) => {
-  if (err) console.log('⚠️  No se pudo abrir el navegador. Abre la URL manualmente.');
-});
+console.log('La URL de autorización no se imprime para evitar registrar códigos o identificadores.');
 
 /**
  * Guarda el refresh token en .env.local reemplazando la línea existente
@@ -92,7 +82,13 @@ function persistRefreshToken(refreshToken) {
   } else {
     env = env.trimEnd() + '\n' + line + '\n';
   }
-  writeFileSync(ENV_LOCAL, env, 'utf8');
+  const temp = `${ENV_LOCAL}.${process.pid}.tmp`;
+  try {
+    writeFileSync(temp, env, { encoding: 'utf8', mode: 0o600 });
+    renameSync(temp, ENV_LOCAL);
+  } finally {
+    try { rmSync(temp, { force: true }); } catch {}
+  }
   return true;
 }
 
@@ -150,10 +146,11 @@ async function verifyToken(refreshToken) {
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:3000`);
   const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
 
-  if (!code) {
+  if (!code || state !== OAUTH_STATE) {
     res.writeHead(400, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end('<h1>Error: no se recibió código</h1>');
+    res.end('<h1>Solicitud OAuth inválida o caducada</h1>');
     return;
   }
 
@@ -165,11 +162,11 @@ const server = http.createServer(async (req, res) => {
     }
 
     console.log('\n✅ Token obtenido!');
-    console.log(`   Scope: ${tokens.scope}`);
+    console.log('   Scopes mínimos de lectura concedidos.');
 
-    // 1. Guardar en .env.local ANTES de cualquier otra cosa (atómico).
+    // 1. Guardar en .env.local mediante reemplazo atómico.
     persistRefreshToken(tokens.refresh_token);
-    console.log(`\n💾 Guardado en .env.local: GOOGLE_REFRESH_TOKEN=${tokens.refresh_token.slice(0, 12)}…`);
+    console.log('\n💾 Refresh token guardado en .env.local (valor no mostrado).');
 
     // 2. Responder al navegador.
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -208,7 +205,7 @@ const server = http.createServer(async (req, res) => {
   } catch (err) {
     console.error('❌ Error:', err.message);
     res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(`<h1>Error: ${err.message}</h1>`);
+    res.end('<h1>No se pudo completar la autorización</h1>');
     server.close();
     process.exit(1);
   }
@@ -216,4 +213,27 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(3000, () => {
   console.log('⏳ Esperando autorización en http://localhost:3000 ...');
+  const cmd = process.platform === 'win32'
+    ? `start "" "${authUrl}"`
+    : process.platform === 'darwin'
+      ? `open "${authUrl}"`
+      : `xdg-open "${authUrl}"`;
+  exec(cmd, (err) => {
+    if (err) console.error('❌ No se pudo abrir el navegador automáticamente.');
+  });
 });
+
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error('❌ El puerto localhost:3000 está ocupado. Cierra la aplicación que lo usa y repite el comando.');
+  } else {
+    console.error(`❌ No se pudo iniciar el callback OAuth: ${error.code || 'error desconocido'}`);
+  }
+  process.exit(1);
+});
+
+setTimeout(() => {
+  console.error('❌ Autorización cancelada por tiempo de espera.');
+  server.close();
+  process.exit(1);
+}, 5 * 60 * 1000).unref();

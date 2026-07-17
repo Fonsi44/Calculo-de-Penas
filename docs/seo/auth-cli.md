@@ -14,14 +14,22 @@ npm run auth:all          # igual que seo:doctor
 ```bash
 npm run auth:google        # abre navegador → inicia sesión con Gmail
 npm run auth:google:status # verificar estado
+npm run auth:google:oauth  # alternativa OAuth localhost sin instalar gcloud
 ```
 
-**Requisito:** `gcloud` CLI instalada.
+**Requisito:** `gcloud` CLI instalada. Los scripts buscan primero
+`GCLOUD_CLI_PATH`, después `C:\gcloud-sdk\google-cloud-sdk\bin\gcloud.cmd` y
+finalmente `gcloud` en `PATH`.
 - Windows: `winget install Google.CloudSDK` o https://cloud.google.com/sdk/docs/install
 - macOS: `brew install google-cloud-sdk`
 - Linux: https://cloud.google.com/sdk/docs/install
 
 **Qué hace:** abre el navegador, inicias sesión con tu cuenta Google/Gmail que tenga acceso a Search Console, GA4 y Google Business Profile, aceptas los permisos, y las credenciales se guardan en `~/.config/gcloud/` (fuera del repo, nunca en Git).
+
+Si `gcloud` no está instalado, `npm run auth:google:oauth` solicita únicamente
+`webmasters.readonly` y `analytics.readonly`, recibe el callback en
+`localhost:3000` con verificación anti-CSRF y reemplaza atómicamente
+`GOOGLE_REFRESH_TOKEN` en `.env.local`. El token nunca se imprime.
 
 ## Bing (Webmaster Tools / IndexNow)
 

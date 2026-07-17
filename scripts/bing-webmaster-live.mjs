@@ -20,6 +20,7 @@ import { config } from 'dotenv';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
+import { atomicWrite, atomicWriteJson, hasFlag, writeDatasetsCsv, withRetry } from './analytics/export-utils.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -29,6 +30,7 @@ config({ path: resolve(ROOT, '.env.local'), override: true });
 const BING_DATA_DIR = resolve(ROOT, 'data', 'bing');
 const OUT_JSON = resolve(BING_DATA_DIR, 'bing-live.json');
 const OUT_MD = resolve(ROOT, 'docs', 'audits', 'bing-live-report.md');
+const OUT_CSV = resolve(BING_DATA_DIR, 'bing-live.csv');
 const TOKEN_FILE = resolve(ROOT, '.secrets', 'bing-oauth.json');
 
 const API_KEY = process.env.INDEXNOW_KEY;
@@ -54,7 +56,7 @@ async function getJson(method, params = {}) {
 
   const url = `https://ssl.bing.com/webmaster/api.svc/json/${method}?${qs.toString()}`;
   try {
-    const res = await fetch(url, { headers: authHeader });
+    const res = await withRetry(() => fetch(url, { headers: authHeader, signal: AbortSignal.timeout(30000) }));
     const text = await res.text();
     try { return { ok: res.ok, ...JSON.parse(text) }; }
     catch { return { ok: false, error: text.slice(0, 200) }; }
@@ -210,8 +212,15 @@ async function main() {
 
   // Save JSON
   ensureDir(BING_DATA_DIR);
-  fs.writeFileSync(OUT_JSON, JSON.stringify(result, null, 2));
-  if (!JSON_ONLY) console.log(`\nDatos guardados en: ${OUT_JSON}`);
+  if (!hasFlag('--dry-run')) {
+    await atomicWriteJson(OUT_JSON, result);
+    await writeDatasetsCsv(OUT_CSV, { queries: result.queries, priorityUrls: result.priorityUrls });
+  }
+  if (!JSON_ONLY) {
+    console.log(hasFlag('--dry-run')
+      ? '\nDry-run: JSON/CSV no escritos.'
+      : `\nDatos guardados en: ${OUT_JSON}`);
+  }
 
   // Generate Markdown report
   ensureDir(resolve(ROOT, 'docs', 'audits'));
@@ -254,8 +263,12 @@ async function main() {
   md += `- [ ] \`.secrets/\` está en \`.gitignore\`\n`;
   md += `- [ ] Datos guardados en \`data/bing/\`\n`;
 
-  fs.writeFileSync(OUT_MD, md, 'utf-8');
-  if (!JSON_ONLY) console.log(`Reporte guardado en: ${OUT_MD}`);
+  if (!hasFlag('--dry-run')) await atomicWrite(OUT_MD, md);
+  if (!JSON_ONLY) {
+    console.log(hasFlag('--dry-run')
+      ? 'Dry-run: reporte Markdown no escrito.'
+      : `Reporte guardado en: ${OUT_MD}`);
+  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

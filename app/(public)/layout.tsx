@@ -9,6 +9,7 @@ import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSch
 import { getSeoOverrides } from '@/lib/site-config-db';
 import { AnalyticsScripts } from '@/components/analytics-scripts';
 import { AnalyticsListeners } from '@/components/marketing/analytics-listeners';
+import { CookieConsent } from '@/components/cookie-consent';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoOverrides();
@@ -139,6 +140,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         }
       />
       <AnalyticsListeners />
+      <CookieConsent />
     </div>
   );
 }

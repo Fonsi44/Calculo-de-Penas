@@ -172,6 +172,7 @@ scripts/.bing-audit.json
 # next.js
 /.next/
 /out/
+/output/
 
 # production
 /build

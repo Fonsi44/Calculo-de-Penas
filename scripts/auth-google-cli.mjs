@@ -14,12 +14,12 @@
  *   npm run auth:google:status  # verificar estado
  */
 
-import { execSync } from 'node:child_process';
 import { config } from 'dotenv';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import os from 'node:os';
+import { resolveGcloudCli, runGcloud } from './gcloud-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -27,13 +27,13 @@ config({ path: resolve(ROOT, '.env.local') });
 config({ path: resolve(ROOT, '.env') });
 
 function hasGcloud() {
-  try { execSync('gcloud version', { stdio: 'pipe' }); return true; }
-  catch { return false; }
+  return Boolean(resolveGcloudCli());
 }
 
 function gcloud(args) {
-  try { return execSync(`gcloud ${args}`, { encoding: 'utf-8', stdio: 'pipe' }).trim(); }
-  catch { return null; }
+  const parsed = args.match(/(?:[^\s"]+|"[^"]*")+/g)?.map((part) => part.replace(/^"|"$/g, '')) || [];
+  const result = runGcloud(parsed);
+  return result.ok ? result.stdout : null;
 }
 
 async function main() {
@@ -95,7 +95,8 @@ async function main() {
   console.log('que tenga acceso a Search Console, GA4 y Google Business Profile.\n');
 
   try {
-    execSync('gcloud auth application-default login', { stdio: 'inherit' });
+    const login = runGcloud(['auth', 'application-default', 'login'], { inherit: true });
+    if (!login.ok) throw new Error('Falló gcloud ADC login');
     console.log('\n✅ Autenticación completada.');
     
     const whoami = gcloud('auth list --filter=status:ACTIVE --format="value(account)"');

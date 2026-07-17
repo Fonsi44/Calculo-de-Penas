@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
 import { LEGAL_DISCLAIMER_SHORT, LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
+import { CookiePreferencesButton } from '@/components/cookie-consent';
 
 const AREAS = [
   { label: 'Derecho Penal', title: 'Abogados penalistas en Nacaome, Valle — defensa penal técnica', href: '/derecho-penal' },
@@ -253,6 +254,7 @@ export function PublicFooter() {
                 </Link>
               </li>
             ))}
+            <li><CookiePreferencesButton /></li>
 
           </ul>
         </div>

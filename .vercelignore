@@ -1,0 +1,27 @@
+# Credenciales y configuración local
+.env
+.env.*
+.secrets/
+.vercel/
+
+# Artefactos locales y documentos potencialmente personales
+output/
+*.pdf
+
+# Exportaciones live y reportes internos (no son runtime)
+data/google/
+data/bing/
+data/seo/*.md
+data/seo/history/
+docs/
+auditoria-seo/
+auditoria_seo/
+auditoria-acciones.md
+AUDIT*.md
+SEO_AUDIT_CHECKLIST.md
+
+# Desarrollo y QA no necesarios para el build remoto
+tests/
+coverage/
+playwright-report/
+test-results/

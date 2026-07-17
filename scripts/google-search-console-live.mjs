@@ -16,6 +16,8 @@ import { config } from 'dotenv';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
+import { atomicWriteJson, hasFlag, resolvePeriod, writeDatasetsCsv, withRetry } from './analytics/export-utils.mjs';
+import { runGcloud } from './gcloud-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -24,6 +26,7 @@ config({ path: resolve(ROOT, '.env.local'), override: true });
 
 const GOOGLE_DATA_DIR = resolve(ROOT, 'data', 'google');
 const OUT_FILE = resolve(GOOGLE_DATA_DIR, 'gsc-live.json');
+const OUT_CSV = resolve(GOOGLE_DATA_DIR, 'gsc-live.csv');
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -32,9 +35,6 @@ function ensureDir(dir) {
 function getArg(name) {
   const i = process.argv.indexOf(name);
   return i >= 0 ? process.argv[i + 1] : null;
-}
-function hasFlag(name) {
-  return process.argv.includes(name);
 }
 
 const DAYS = parseInt(getArg('--days') || '28', 10);
@@ -71,8 +71,8 @@ async function getAuth() {
 
   // gcloud ADC
   try {
-    const { execSync } = await import('node:child_process');
-    execSync('gcloud auth application-default print-access-token 2>nul', { stdio: 'pipe' });
+    const probe = runGcloud(['auth', 'application-default', 'print-access-token']);
+    if (!probe.ok) throw new Error('ADC no disponible');
     if (!JSON_ONLY) console.log('Usando gcloud ADC');
     const auth = new google.auth.GoogleAuth({
       scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
@@ -83,16 +83,19 @@ async function getAuth() {
   }
 }
 
-async function queryGSC(siteUrl, auth, startDate, endDate, dimensions, rowLimit = 500) {
+async function queryGSC(siteUrl, auth, startDate, endDate, dimensions) {
   const { google } = await import('googleapis');
   const sc = google.searchconsole({ version: 'v1', auth });
 
-  const result = await sc.searchanalytics.query({
-    siteUrl,
-    requestBody: { startDate, endDate, dimensions, rowLimit },
-  });
-
-  return result.data.rows || [];
+  const rows = [];
+  const rowLimit = 25000;
+  for (let startRow = 0; ; startRow += rowLimit) {
+    const result = await withRetry(() => sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions, rowLimit, startRow, dataState: 'final' } }));
+    const page = result.data.rows || [];
+    rows.push(...page);
+    if (page.length < rowLimit) break;
+  }
+  return rows;
 }
 
 async function main() {
@@ -121,10 +124,7 @@ async function main() {
     process.exit(0);
   }
 
-  const end = new Date();
-  const start = new Date(end.getTime() - DAYS * 24 * 60 * 60 * 1000);
-  const startStr = start.toISOString().slice(0, 10);
-  const endStr = end.toISOString().slice(0, 10);
+  const { start: startStr, end: endStr } = resolvePeriod(DAYS);
 
   if (!JSON_ONLY) console.log(`Consultando GSC: ${startStr} → ${endStr}\n`);
 
@@ -138,7 +138,9 @@ async function main() {
     pages: [],
     countries: [],
     devices: [],
+    appearances: [],
     daily: [],
+    queryPages: [],
   };
 
   try {
@@ -160,7 +162,7 @@ async function main() {
     }
 
     // Top queries
-    result.queries = (await queryGSC(SITE_URL, auth, startStr, endStr, ['query'], 100))
+    result.queries = (await queryGSC(SITE_URL, auth, startStr, endStr, ['query']))
       .map(r => ({
         query: r.keys[0],
         clicks: Math.round(r.clicks || 0),
@@ -170,7 +172,7 @@ async function main() {
       }));
 
     // Top pages
-    result.pages = (await queryGSC(SITE_URL, auth, startStr, endStr, ['page'], 200))
+    result.pages = (await queryGSC(SITE_URL, auth, startStr, endStr, ['page']))
       .map(r => ({
         page: r.keys[0],
         clicks: Math.round(r.clicks || 0),
@@ -178,7 +180,7 @@ async function main() {
       }));
 
     // Countries
-    result.countries = (await queryGSC(SITE_URL, auth, startStr, endStr, ['country'], 50))
+    result.countries = (await queryGSC(SITE_URL, auth, startStr, endStr, ['country']))
       .map(r => ({
         country: r.keys[0],
         clicks: Math.round(r.clicks || 0),
@@ -186,7 +188,7 @@ async function main() {
       }));
 
     // Devices
-    result.devices = (await queryGSC(SITE_URL, auth, startStr, endStr, ['device'], 10))
+    result.devices = (await queryGSC(SITE_URL, auth, startStr, endStr, ['device']))
       .map(r => ({
         device: r.keys[0],
         clicks: Math.round(r.clicks || 0),
@@ -194,15 +196,19 @@ async function main() {
       }));
 
     // Daily
-    result.daily = (await queryGSC(SITE_URL, auth, startStr, endStr, ['date'], DAYS))
+    result.daily = (await queryGSC(SITE_URL, auth, startStr, endStr, ['date']))
       .map(r => ({
         date: r.keys[0],
         clicks: Math.round(r.clicks || 0),
         impressions: Math.round(r.impressions || 0),
       }));
 
-    ensureDir(GOOGLE_DATA_DIR);
-    fs.writeFileSync(OUT_FILE, JSON.stringify(result, null, 2));
+    result.appearances = (await queryGSC(SITE_URL, auth, startStr, endStr, ['searchAppearance'])).map(r => ({ appearance: r.keys[0], clicks: Math.round(r.clicks || 0), impressions: Math.round(r.impressions || 0), ctr: r.ctr || 0, position: r.position || 0 }));
+    result.queryPages = (await queryGSC(SITE_URL, auth, startStr, endStr, ['query', 'page'])).map(r => ({ query: r.keys[0], page: r.keys[1], clicks: Math.round(r.clicks || 0), impressions: Math.round(r.impressions || 0), ctr: r.ctr || 0, position: r.position || 0 }));
+    if (!hasFlag('--dry-run')) {
+      await atomicWriteJson(OUT_FILE, result);
+      await writeDatasetsCsv(OUT_CSV, { queries: result.queries, pages: result.pages, countries: result.countries, devices: result.devices, appearances: result.appearances, daily: result.daily, queryPages: result.queryPages });
+    }
 
     if (!JSON_ONLY) {
       console.log('── RESUMEN ──');
@@ -223,7 +229,7 @@ async function main() {
     result.status = 'error';
     result.error = err.message?.substring(0, 300) || String(err);
     ensureDir(GOOGLE_DATA_DIR);
-    fs.writeFileSync(OUT_FILE, JSON.stringify(result, null, 2));
+    if (!hasFlag('--dry-run')) await atomicWriteJson(OUT_FILE, result);
     console.error('ERROR:', err.message?.substring(0, 300));
     process.exit(1);
   }

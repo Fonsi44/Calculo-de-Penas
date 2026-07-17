@@ -5,6 +5,14 @@
 - Corregida la visita inicial de GA4: `config` vuelve a emitir el `page_view` inicial y se ejecuta `afterInteractive`, eliminando la carrera con el efecto de App Router.
 - Añadidas validaciones de formato para IDs GA4/GTM y exclusión de previews, con opt-in explícito para pruebas.
 - Añadidas pruebas unitarias y documentación de configuración/validación sin secretos.
+- Consent Mode v2 completado con banner accesible, elección granular, persistencia versionada durante 180 días, revocación y acceso desde el footer.
+- GA4 y Clarity no descargan scripts antes de aceptar analítica; publicidad permanece denegada.
+- Exportadores GA4/GSC paginados y ampliados; JSON/CSV atómicos, reintentos, timeouts y rangos configurables. Bing genera JSON y CSV.
+- Facebook Pixel queda deshabilitado mientras no exista consentimiento publicitario; los dry-runs Google no escriben ni siquiera al fallar y el recolector limita cada subproceso a 120 segundos.
+- Corregido el stub de Clarity para usar la API oficial `window.clarity` y evitar el error productivo `a[c] is not a function`.
+- Endurecido OAuth Google alternativo: scopes mínimos de lectura, `state` anti-CSRF, callback limitado a localhost, token no mostrado y persistencia atómica.
+- Centralizada la detección de gcloud para reconocer la instalación autorizada en `C:\gcloud-sdk` aunque no esté incluida en `PATH`.
+- Renovado OAuth de lectura y validados GA4/GSC/Bing; añadida comprobación Analytics Admin de propiedad, stream, zona horaria, retención y eventos clave sin exponer identificadores completos.
 
 ## 2026-07-12 — Remediación integral Fases 1-5
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 import {
@@ -11,12 +11,15 @@ import {
   isValidGtmId,
   trackEvent
 } from '@/lib/analytics';
+import { getConsentSnapshot, parseConsentSnapshot, subscribeConsent } from '@/lib/cookie-consent';
+
+type ClarityFunction = ((...args: unknown[]) => void) & { q?: unknown[][] };
 
 declare global {
   interface Window {
     gtag?: (type: string, action: string, params?: Record<string, unknown>) => void;
     dataLayer?: unknown[];
-    Clarity?: unknown;
+    clarity?: ClarityFunction;
     _fbq?: unknown;
   }
 }
@@ -57,11 +60,14 @@ export function AnalyticsScripts({
   const pathname = usePathname();
   const prevPath = useRef<string | null>(null);
   const initialised = useRef(false);
+  const consentSnapshot = useSyncExternalStore(subscribeConsent, getConsentSnapshot, () => null);
+  const consent = useMemo(() => parseConsentSnapshot(consentSnapshot), [consentSnapshot]);
 
   // GTM reemplaza la carga directa de gtag.js cuando está presente: el
   // contenedor gestiona GA4 y cualquier otra etiqueta desde la UI de GTM.
-  const validGtmId = analyticsEnabled && isValidGtmId(gtmId) ? gtmId : null;
-  const validGaId = analyticsEnabled && isValidGaMeasurementId(gaId) ? gaId : null;
+  const analyticsGranted = consent?.analytics === true;
+  const validGtmId = analyticsEnabled && analyticsGranted && isValidGtmId(gtmId) ? gtmId : null;
+  const validGaId = analyticsEnabled && analyticsGranted && isValidGaMeasurementId(gaId) ? gaId : null;
   const useGtm = Boolean(validGtmId);
   const effectiveGaId = useGtm ? null : validGaId;
 
@@ -92,20 +98,19 @@ export function AnalyticsScripts({
   }, []);
 
   useEffect(() => {
-    if (!analyticsEnabled || !clarityId) return;
+    if (!analyticsEnabled || !analyticsGranted || !clarityId) return;
     if (typeof window === 'undefined') return;
     // Carga vía snippet oficial (evita empaquetar el SDK npm en el bundle
     // del cliente). Defensivo: si ya se inicializó, no reinyecta.
-    if (window.Clarity) return;
+    if (window.clarity) return;
     try {
       /* Carga del snippet oficial de Microsoft Clarity (lazy).
          Reemplaza al paquete npm @microsoft/clarity para no inflar el bundle. */
-      const w = window as typeof window & { clarityQueue?: unknown[] };
-      const methodName = 'clarity';
-      w[`${methodName}Queue`] = w.clarityQueue || [];
-      window.Clarity = function (...args: unknown[]) {
-        w.clarityQueue!.push(args);
-      };
+      const clarity = function (...args: unknown[]) {
+        clarity.q = clarity.q || [];
+        clarity.q.push(args);
+      } as ClarityFunction;
+      window.clarity = clarity;
       const s = document.createElement('script');
       s.async = true;
       s.src = `https://www.clarity.ms/tag/${clarityId}`;
@@ -114,7 +119,7 @@ export function AnalyticsScripts({
     } catch {
       /* silencioso */
     }
-  }, [analyticsEnabled, clarityId]);
+  }, [analyticsEnabled, analyticsGranted, clarityId]);
 
   // Carga diferida del script externo gtag.js (interaction + timeout).
   // No reinyecta si ya se cargó (p.ej. tras navegación SPA). Las rutas
@@ -135,6 +140,10 @@ export function AnalyticsScripts({
       for (const ev of GTAG_INTERACTION_EVENTS) {
         window.removeEventListener(ev, inject, true);
       }
+      // Una navegación SPA puede volver a ejecutar este efecto antes de que
+      // React estabilice el pathname. Si gtag.js ya está en el documento, no
+      // se vuelve a descargar ni a inicializar.
+      if (document.querySelector(`script[src="${src}"]`)) return;
       const s = document.createElement('script');
       s.async = true;
       s.src = src;
@@ -209,7 +218,7 @@ export function AnalyticsScripts({
           GDPR/ePrivacy: necesario para tráfico europeo (/hondurenos-en-espana).
           Sin banner de consentimiento, las cookies quedan denegadas pero las
           mediciones sin cookies (modeless/analytics) siguen funcionando. */}
-      {(effectiveGaId || gtmId || fbPixelId) && (
+      {analyticsEnabled && (gaId || gtmId || fbPixelId) && (
         <Script id="consent-mode-default" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'denied',security_storage:'granted',wait_for_update:500});`}
         </Script>
@@ -234,13 +243,9 @@ export function AnalyticsScripts({
         </Script>
       )}
 
-      {/* Facebook Pixel (opcional). Solo activar con consentimiento de cookies
-          y NEXT_PUBLIC_FB_PIXEL_ID configurado. No inventar IDs. */}
-      {fbPixelId && (
-        <Script id="fb-pixel" strategy="lazyOnload">
-          {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${fbPixelId}');fbq('track','PageView');`}
-        </Script>
-      )}
+      {/* Facebook Pixel permanece deshabilitado: el modelo de consentimiento
+          actual no concede publicidad y no debe cargarse con un permiso de
+          analítica. La variable se conserva por compatibilidad de config. */}
     </>
   );
 }

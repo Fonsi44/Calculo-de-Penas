@@ -597,3 +597,29 @@ ya que no están incluidos en la información recibida.
 **Causa raíz IMPLEMENTADA:** la inicialización directa usaba `send_page_view:false`, pero el efecto App Router solo enviaba pageviews cuando ya existía una ruta previa. La primera visita no producía `page_view`; además `lazyOnload` introducía una carrera con el efecto. Se cambió la inicialización a `afterInteractive` y `send_page_view:true`, manteniendo pageviews manuales solo para navegaciones posteriores.
 
 **Controles:** validación de IDs GA4/GTM, exclusión de Vercel Preview salvo opt-in de prueba, rutas privadas excluidas y pruebas unitarias. `seo:doctor` mostró GA4/GSC configurados pero sin datos live; `seo:collect` falló localmente con `EPERM`. Bing conserva un snapshot válido del 2026-07-12 con 132 queries. Validación productiva pendiente de deploy.
+
+**Continuación:** Consent Mode v2 implementado sin concesión automática. GA4/Clarity quedan bloqueados hasta aceptar analítica; ads permanecen denegados. `EPERM` se trazó a `open` sobre `data/google/*.json` por restricción del sandbox, no por bloqueo de Windows. Fuera del sandbox Google responde `invalid_grant`; Bing exportó 132 queries, 16 URLs y CSV. Preview Vercel no se subió porque el control externo requiere aprobación específica de transferencia del repositorio.
+
+**Revisión final 2026-07-17:** se revisaron todos los archivos pendientes del working tree. En navegador productivo se confirmó que la versión desplegada aún no contiene el banner y que Clarity falla con `a[c] is not a function`; se corrigió el stub a `window.clarity.q`. También se bloqueó Facebook Pixel mientras publicidad permanezca denegada, se hizo estricto `--dry-run` en los exportadores Google y se añadió timeout de 120 s al recolector. Producción conserva ruta y UTM, pero HTTP apex hace dos redirecciones 308; requiere ajuste en Vercel. Google OAuth sigue `invalid_grant`, por lo que GA4/GSC live y la correspondencia Property ID↔Measurement ID continúan `NO VALIDADO`. Validaciones: lint, TypeScript, 911 tests y build correctos; IndexNow solo dry-run. Sin commit, push ni deploy.
+
+**Continuación OAuth/externos:** se eliminaron scopes de escritura, fragmentos de token y callback sin `state` del flujo OAuth localhost. El callback no pudo completarse porque el PID 18668 ocupa IPv4/IPv6 en el puerto 3000; se requiere que el usuario cierre la aplicación reconocida. GA4/GSC dry-run confirmaron `invalid_grant` sin escritura. Bing dry-run confirmó 5.013 páginas rastreadas, 132 queries y 16/16 URLs. Vercel preview está `BLOQUEADO` por ausencia de CLI/sesión. Estado: local 100%, externo 45%, global 82%; no corresponde afirmar 100% global.
+
+**Actualización externa:** con autorización del usuario se cerraron tres servidores Node locales y se liberó el puerto 3000. OAuth Google se renovó con scopes mínimos; GA4/GSC/Bing y `seo:collect` completaron correctamente. Analytics Admin validó Property↔Measurement↔URL, zona horaria Tegucigalpa, retención 2 meses y 7 eventos clave; moneda EUR queda pendiente de confirmación y filtros no disponibles. Se corrigió la detección persistente de gcloud en `C:\gcloud-sdk`. Vercel CLI y proyecto correcto fueron identificados, pero la subida del working tree fue bloqueada por el control de seguridad hasta aprobación explícita informada. Estado: local 100%, externo 80%, global 94%.
+
+**Preview Vercel autorizado — 2026-07-17:** se añadió `.vercelignore` y se
+revisó el conjunto de subida para excluir entornos, secretos, tokens OAuth,
+`output/`, PDFs, datos live de Google/Bing/SEO, informes privados y temporales.
+El primer preview reveló en navegador local equivalente una reinyección de
+`gtag.js` al navegar por SPA; se añadió una guarda por `src`, se reconstruyó y
+se repitieron los estados rechazado, aceptado, personalizado y retirado. El
+deployment definitivo `dpl_8NhWTJSHzq8d38UbAt52PjSgxPH9` quedó `Ready` con
+target `preview` en
+`https://justicia-verdadera-r2dlu3c98-fonsi-roiget-s-projects.vercel.app`.
+Vercel Authentication impide la sesión interactiva no autenticada y el propio
+código desactiva analítica en Preview salvo `NEXT_PUBLIC_ANALYTICS_TEST=true`;
+no se modificaron variables ni protección. Por ello, Network/Realtime/DebugView
+sobre el host remoto quedan `BLOQUEADO`, mientras el comportamiento del mismo
+build local está `VALIDADO`: antes/retirada 0 GA4, 0 Clarity y 0 Facebook;
+aceptado/personalizado 1 GA4, 1 Clarity y 0 Facebook; navegación SPA conserva
+1/1/0. No se hizo commit, push, merge, rebase, promoción ni cambio de
+producción.

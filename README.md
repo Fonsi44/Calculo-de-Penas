@@ -340,7 +340,7 @@ de Google). **`@graph` central** en el layout público unifica las entidades.
 |----------|-------------|
 | `NEXT_PUBLIC_GA_ID` | GA4 (formato G-XXXX). Si no hay GTM, se carga gtag.js directo. |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (GTM-XXXX). Si se setea, reemplaza gtag.js. |
-| `NEXT_PUBLIC_FB_PIXEL_ID` | Facebook Pixel. Solo activar con consentimiento de cookies. |
+| `NEXT_PUBLIC_FB_PIXEL_ID` | Reservada para Facebook Pixel; actualmente no se carga porque no existe consentimiento publicitario. |
 | `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity (cargado vía snippet, no npm). |
 | `NEXT_PUBLIC_SOCIAL_FACEBOOK` / `_INSTAGRAM` / `_LINKEDIN` / `_YOUTUBE` / `_TIKTOK` / `_X` | Perfiles sociales reales. Alimentan `sameAs` en schemas y el footer. Vacío = sin perfil. |
 | `NEXT_PUBLIC_GOOGLE_VERIFICATION` / `NEXT_PUBLIC_BING_VERIFICATION` | Verificación de Search Console / Bing WMT. |
@@ -356,9 +356,16 @@ Para cumplir con los estándares de calidad de Google (E-E-A-T) y levantar bloqu
 > **Importante**: No inventar credenciales ni colocar URLs falsas, ya que esto penaliza severamente el E-E-A-T.
 
 ### Consentimiento y privacidad
-- **Google Consent Mode v2** activo por defecto: cookies denegadas hasta
-  consentimiento explícito. Las mediciones sin cookies siguen funcionando.
+- **Google Consent Mode v2** activo por defecto: almacenamiento denegado hasta
+  consentimiento explícito. GA4 y Clarity no se descargan antes de aceptar
+  analítica; Facebook Pixel permanece deshabilitado.
+- Banner accesible con aceptación, rechazo, configuración granular,
+  persistencia versionada por 180 días y reapertura desde el footer.
 - Cumple GDPR/ePrivacy para tráfico europeo (`/hondurenos-en-espana`).
+- Operación live: `npm run analytics:validate` comprueba configuración local.
+  `npm run auth:google:oauth` renueva OAuth de lectura cuando `gcloud` no está
+  disponible; requiere `localhost:3000` libre y nunca debe compartirse la URL
+  de callback.
 
 ### Dependiente de hosting / externos (no código)
 
