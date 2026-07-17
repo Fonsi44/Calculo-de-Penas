@@ -671,3 +671,18 @@ TypeScript, `analytics:validate` 6/6, consentimiento 10/10, auth aislado 11/11,
 build y `git diff --check` correctos. Suite completa 910/911 por un timeout
 flaky de `auth-lazy-load` a 5,50 s; pasó en la repetición aislada sin modificar
 el límite.
+
+**Integración selectiva de ramas — 2026-07-17:** se revisaron los commits que
+habían quedado conservados en la historia pero no aplicados al árbol de
+`main`. Se incorporó el arreglo de superposición del chat (`z-index: 9999`) y
+el conjunto más reciente de actualizaciones minor/patch de Dependabot,
+manteniendo los scripts y la configuración actuales. Se alineó todo Tiptap en
+3.28.0 y se declaró su peer de pruebas `@testing-library/dom` 10.4.1. No se
+aplicaron la reducción visual global ni la eliminación de buscadores por la
+prohibición de rediseño público; tampoco la política antigua de robots, Vercel
+Web Analytics (duplicaría la analítica) ni Speed Insights porque este último
+ya estaba integrado. Validaciones: lint correcto, TypeScript correcto, 52
+archivos/911 tests correctos y build de 354 páginas correcto. El primer build
+quedó bloqueado únicamente por Google Fonts sin red y pasó al repetirlo con
+acceso. `npm audit` informa 10 vulnerabilidades moderadas transitivas,
+pendientes de tratamiento separado. Sin push.
