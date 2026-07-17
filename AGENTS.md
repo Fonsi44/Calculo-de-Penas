@@ -9,7 +9,9 @@ comandos de validación. Este protocolo es permanente.
 ## 1. Flujo de trabajo obligatorio
 
 1. Leer `AGENTS.md` (este archivo).
-2. Ejecutar `git status` — entender estado del working tree.
+2. Ejecutar `git status` — entender estado del working tree y confirmar que la
+   rama activa es `main`. Todo el trabajo se realiza directamente sobre
+   `main`; no crear ni cambiar a ramas auxiliares, feature branches o worktrees.
 3. Ejecutar `npm run seo:doctor` — verificar credenciales (obligatorio solo para tareas SEO/Analytics).
 4. Ejecutar `npm run seo:collect` — recolectar datos live (obligatorio solo para tareas SEO/Analytics).
 5. Revisar `docs/audits/seo-live-summary.md` para contexto actual si aplica.
@@ -43,6 +45,7 @@ comandos de validación. Este protocolo es permanente.
 | R16 | Design tokens canónicos: radius `rounded-lg`, sombras vía `.btn-shadow-*`, icono `w-11 h-11`. Dorado solo acento. |
 | R17 | IA en blog: verificar contra fuentes canónicas. Dry-run por defecto. Sin relleno genérico. |
 | R18 | Footer/Home: solo 10 ciudades prioritarias (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina). |
+| R19 | Rama única de trabajo: `main`. No crear ramas ni worktrees. Si la rama activa no es `main`, detenerse y volver a `main` sin descartar cambios. |
 
 ### Fuentes de verdad
 
