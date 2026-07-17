@@ -13,6 +13,12 @@
 - Endurecido OAuth Google alternativo: scopes mínimos de lectura, `state` anti-CSRF, callback limitado a localhost, token no mostrado y persistencia atómica.
 - Centralizada la detección de gcloud para reconocer la instalación autorizada en `C:\gcloud-sdk` aunque no esté incluida en `PATH`.
 - Renovado OAuth de lectura y validados GA4/GSC/Bing; añadida comprobación Analytics Admin de propiedad, stream, zona horaria, retención y eventos clave sin exponer identificadores completos.
+- Validación remota de Consent Mode completada en Preview temporal; detectada
+  ausencia de los IDs públicos GA4/Clarity en el entorno Preview. El deployment
+  y bypass temporales se retiraron sin modificar Production.
+- Corregida la duplicación SPA observada en Network: se retiró el `page_view`
+  manual y se delegaron cambios History API en GA4 Enhanced Measurement.
+  Verificado un hit 204 por ruta, sin reinyección de GA4/Clarity.
 
 ## 2026-07-12 — Remediación integral Fases 1-5
 

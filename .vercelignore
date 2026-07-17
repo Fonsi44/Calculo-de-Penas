@@ -25,3 +25,4 @@ tests/
 coverage/
 playwright-report/
 test-results/
+scripts/preview-analytics-remote.mjs

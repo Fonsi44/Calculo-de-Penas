@@ -173,7 +173,7 @@ export function AnalyticsScripts({
 
     if (!initialised.current) {
       initialised.current = true;
-      // page_view automático inicial: gtag('config', gaId) con send_page_view:false
+      // page_view automático inicial: gtag('config', gaId) con send_page_view:true
       // ya envió el primer page_view al montar. Lo reportamos como diagnóstico.
       debugAnalytics('enabled', {
         pathname,
@@ -183,15 +183,10 @@ export function AnalyticsScripts({
     }
 
     if (prev && prev !== pathname) {
-      // Navegación SPA: page_view manual con pathname + page_location.
-      // page_location se toma de window.location.href (URL ya normalizada por
-      // el navegador); nunca se construye a mano para evitar malformaciones.
-      window.gtag('event', 'page_view', {
-        page_path: pathname,
-        page_location: window.location.href,
-        page_title: document.title,
-      });
-      debugAnalytics('page_view (manual)', {
+      // GA4 Enhanced Measurement observa los cambios de History API de Next
+      // y emite el page_view SPA. No se envía otro evento manual: hacerlo
+      // duplica la ruta cuando la medición mejorada está activa.
+      debugAnalytics('page_view (GA4 history)', {
         pathname,
         from: prev,
       });

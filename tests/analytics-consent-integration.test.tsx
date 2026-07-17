@@ -53,7 +53,7 @@ describe('Analytics consent integration', () => {
     expect(document.querySelectorAll('script[src*="googletagmanager.com/gtag/js"]')).toHaveLength(1);
   });
 
-  it('sends one pageview per SPA path change and none for the initial route', () => {
+  it('does not duplicate GA4 Enhanced Measurement pageviews on SPA changes', () => {
     persistConsent({ analytics: true, functionality: false });
     const gtag = vi.fn();
     window.gtag = gtag;
@@ -61,9 +61,9 @@ describe('Analytics consent integration', () => {
     expect(gtag).not.toHaveBeenCalledWith('event', 'page_view', expect.anything());
     currentPath = '/servicios-juridicos';
     view.rerender(<AnalyticsScripts {...props} />);
-    expect(gtag.mock.calls.filter((call) => call[0] === 'event' && call[1] === 'page_view')).toHaveLength(1);
+    expect(gtag).not.toHaveBeenCalledWith('event', 'page_view', expect.anything());
     view.rerender(<AnalyticsScripts {...props} />);
-    expect(gtag.mock.calls.filter((call) => call[0] === 'event' && call[1] === 'page_view')).toHaveLength(1);
+    expect(gtag).not.toHaveBeenCalledWith('event', 'page_view', expect.anything());
   });
 
   it('does not render analytics on excluded private routes', () => {

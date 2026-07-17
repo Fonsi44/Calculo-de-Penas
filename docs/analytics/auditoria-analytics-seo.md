@@ -7,7 +7,7 @@ La causa de código de la ausencia de pageviews GA4 era reproducible: `ga4-init`
 | Archivo / componente | Servicio | Hallazgo | Gravedad | Corrección | Estado |
 |---|---|---|---|---|---|
 | `components/analytics-scripts.tsx`, `ga4-init` | GA4 | Primer pageview desactivado y nunca compensado | Crítica | `afterInteractive` + `send_page_view:true` | IMPLEMENTADO; producción NO VALIDADA |
-| mismo, App Router | GA4 | Solo las rutas posteriores generan pageview manual | Alta | Se conserva para evitar duplicar la visita inicial | VALIDADO por lectura |
+| mismo, App Router | GA4 | El evento manual duplicaba Enhanced Measurement | Alta | Se eliminó el envío manual; GA4 History emite uno por ruta | VALIDADO por Network remoto |
 | mismo | GA4/GTM | IDs no se validaban antes de inyectar | Media | Guardas de formato | VALIDADO por test |
 | mismo | GA4/Clarity | Podían ejecutarse en Preview | Media | Exclusión de Preview y opt-in de prueba | IMPLEMENTADO |
 | `components/cookie-consent.tsx` | GA4/Clarity | No existía interfaz ni `consent update` | Alta | Banner accesible, aceptar/rechazar/configurar, persistencia y reapertura | IMPLEMENTADO y probado |
@@ -50,8 +50,7 @@ GSC usa metadata de verificación, sitemap dinámico, robots y canonicals existe
 - **VALIDADO local sobre el build desplegado:** rechazado y retirado mantienen
   GA4/Clarity/Facebook en 0; aceptado y personalizado cargan una única instancia
   de GA4 y Clarity, Facebook en 0. Se corrigió una reinyección de `gtag.js` en
-  navegación SPA; la repetición conservó 1/1/0. Los tests verifican un solo
-  `page_view` manual por cambio de ruta y ninguno adicional al rerender.
+  navegación SPA; la repetición conservó 1/1/0.
 - **BLOQUEADO remoto interactivo:** Vercel Authentication exige login y la
   analítica se desactiva en `VERCEL_ENV=preview` salvo que la variable Preview
   ya autorizada `NEXT_PUBLIC_ANALYTICS_TEST` sea `true`. No se cambió protección,
@@ -59,3 +58,50 @@ GSC usa metadata de verificación, sitemap dinámico, robots y canonicals existe
   se presentan como validados.
 - **Progreso:** implementación y preview 100%; verificación remota interactiva
   bloqueada por los controles deliberados del entorno.
+
+### Validación remota adicional
+
+- Preview temporal eliminado: `dpl_26VbugXnvDAqkpXnAF1Mbcf9X1TS`.
+- `NEXT_PUBLIC_ANALYTICS_TEST=true` se aplicó solo al deployment, sin alterar el
+  entorno Preview compartido.
+- Chrome remoto y bypass oficial validaron Consent Mode: rechazo
+  `analytics_storage=denied`, aceptación `granted`, configuración personalizada
+  coherente y retirada posterior `denied`. Persistencia: versión 1, 180 días.
+- Sin consentimiento, rechazo y solo funcionalidad: cero scripts y cero
+  solicitudes GA4, Clarity y Facebook.
+- **BLOQUEADO:** el inventario Preview no contiene `NEXT_PUBLIC_GA_ID` ni
+  `NEXT_PUBLIC_CLARITY_ID`; por tanto tampoco pueden aparecer scripts o hits
+  después de aceptar. Proporcionarlos al deployment sería un cambio adicional
+  no ejecutado sin autorización específica.
+- Restauración confirmada: deployment y cookie temporal eliminados; Preview
+  original y Production intactos.
+- Validaciones: lint, TypeScript, `analytics:validate` y build correctos.
+  Vitest: 909/911; dos timeouts de auth a 5,08 s/5,40 s. En aislamiento uno
+  pasó y el otro repitió timeout a 5,055 s; flakiness documentada sin alterar
+  límites.
+
+### Cierre remoto — Preview con analítica efímera
+
+- Preview de evidencia: `dpl_43w4yCA8ikZPsbmDSbczqJBfwRVz`,
+  `https://justicia-verdadera-jf4fks8ci-fonsi-roiget-s-projects.vercel.app`,
+  target `preview`, estado `Ready`.
+- Inicial y rechazo: Consent Mode default/update `denied`, cero scripts y cero
+  Network de GA4, Clarity o Facebook. Persistencia comprobada tras recarga.
+- Aceptación: una carga `gtag.js` 200, una etiqueta y runtime Clarity 200,
+  `collect` Clarity 204 y un `page_view` GA4 204 con ID enmascarado
+  `G-L…SWK`, hostname Preview, UTM y título correctos.
+- SPA: `/servicios-juridicos` y `/derecho-penal` produjeron exactamente un
+  `page_view` 204 cada una. El primer ensayo detectó duplicación entre evento
+  manual y Enhanced Measurement; se eliminó el evento manual. La repetición
+  confirmó una sola etiqueta GA4/Clarity y cero pageviews en rerender.
+- Personalizado: solo funcionalidad 0/0/0; analítica activa 1 GA4, 1 Clarity,
+  0 Facebook. Sin `a[c] is not a function` ni errores de analítica.
+- Retirada: `analytics_storage=denied`; después de la recarga, cero scripts y
+  cero transmisiones nuevas de los tres proveedores.
+- Realtime/DebugView: `NO VALIDADO`; la autorización impide leer otras
+  credenciales/variables y Network ya proporciona la evidencia directa.
+- Restauración final `VALIDADA`: Preview de evidencia e intermedios, cookie y
+  script temporal eliminados; variables compartidas y Production intactas.
+  Cierre funcional remoto: 100%. Validaciones locales: lint, TypeScript,
+  `analytics:validate`, consentimiento, auth aislado y build correctos; suite
+  completa 910/911 por timeout flaky de 5,50 s, con repetición aislada válida.

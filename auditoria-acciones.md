@@ -623,3 +623,51 @@ build local está `VALIDADO`: antes/retirada 0 GA4, 0 Clarity y 0 Facebook;
 aceptado/personalizado 1 GA4, 1 Clarity y 0 Facebook; navegación SPA conserva
 1/1/0. No se hizo commit, push, merge, rebase, promoción ni cambio de
 producción.
+
+**Intento remoto autorizado — 2026-07-17:** se creó el Preview efímero
+`dpl_26VbugXnvDAqkpXnAF1Mbcf9X1TS` con
+`NEXT_PUBLIC_ANALYTICS_TEST=true` limitado al build/runtime de ese deployment.
+El acceso se realizó con el bypass oficial de `vercel curl`, almacenando la
+cookie únicamente en `%TEMP%` y sin imprimir su valor. Chrome remoto validó
+banner, persistencia por 180 días y actualizaciones Consent Mode para rechazo,
+aceptación, configuración granular y retirada. Facebook permaneció ausente y
+no hubo tráfico de GA4/Clarity antes del consentimiento.
+
+La prueba también demostró que Preview no tiene `NEXT_PUBLIC_GA_ID` ni
+`NEXT_PUBLIC_CLARITY_ID`: después de conceder analítica no se cargaron scripts
+ni hubo solicitudes de esos proveedores. La fuente canónica `lib/site.ts` no
+tiene fallback. Network/pageviews GA4 y carga Clarity continúan `BLOQUEADO`
+hasta autorizar expresamente esos dos identificadores públicos para un Preview
+efímero; no se copiaron desde Production ni desde `.env.local`.
+
+Restauración: cookie temporal eliminada, script de prueba temporal retirado y
+deployment efímero eliminado. El Preview original
+`dpl_8NhWTJSHzq8d38UbAt52PjSgxPH9` permanece `Ready`; no se modificaron
+variables compartidas, protección, aliases ni Production.
+
+Validación posterior: lint, TypeScript, `analytics:validate` 6/6 y build
+correctos. El conjunto Vitest obtuvo 909/911: los mismos dos tests de import de
+auth agotaron 5 s (5,08 s y 5,40 s). En repetición de ambos archivos,
+`auth-lazy-load` pasó y `auth-secret-validation` quedó 55 ms sobre el límite;
+no se aumentó el timeout ni se ocultó la flakiness.
+
+**Cierre Network remoto:** el Preview desechable
+`dpl_43w4yCA8ikZPsbmDSbczqJBfwRVz` confirmó Consent Mode y proveedores con
+IDs efímeros enmascarados. Inicial/rechazo/solo funcionalidad: 0 GA4, 0
+Clarity, 0 Facebook. Aceptación/analítica personalizada: una carga GA4 200,
+un `page_view` 204, una instancia Clarity con collect 204 y 0 Facebook.
+El primer ensayo remoto detectó un `page_view` SPA duplicado por coexistencia
+del evento manual con Enhanced Measurement; se eliminó el evento manual.
+La repetición produjo exactamente un pageview para `/servicios-juridicos` y
+otro para `/derecho-penal`, ninguno en rerender, sin reinyección de scripts.
+Retirada: Consent Mode `denied`; tras recarga, cero scripts y cero tráfico
+nuevo. Realtime/DebugView quedó `NO VALIDADO` por no leer credenciales fuera
+del alcance; Network remoto sí quedó `VALIDADO`.
+
+Restauración final: el Preview de evidencia y los dos Previews intermedios
+fueron eliminados; cookie y script temporal eliminados; variables compartidas
+sin cambios. El Preview original continúa intacto. Validaciones finales: lint,
+TypeScript, `analytics:validate` 6/6, consentimiento 10/10, auth aislado 11/11,
+build y `git diff --check` correctos. Suite completa 910/911 por un timeout
+flaky de `auth-lazy-load` a 5,50 s; pasó en la repetición aislada sin modificar
+el límite.
