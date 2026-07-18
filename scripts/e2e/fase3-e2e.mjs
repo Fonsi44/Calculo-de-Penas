@@ -25,8 +25,10 @@ import { fileURLToPath } from 'url';
 import { createHash, randomBytes } from 'crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-config({ path: resolve(__dirname, '..', '..', '.env.local') });
-config();
+if (!process.env.E2E_SKIP_DOTENV) {
+  config({ path: resolve(__dirname, '..', '..', '.env.local') });
+  config();
+}
 
 const guardPath = resolve(__dirname, 'guard-fase3.mjs');
 await import('file:///' + guardPath.replace(/\\/g, '/'));

@@ -21,8 +21,10 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-config({ path: resolve(__dirname, '..', '..', '.env.local') });
-config();
+if (!process.env.E2E_SKIP_DOTENV) {
+  config({ path: resolve(__dirname, '..', '..', '.env.local') });
+  config();
+}
 
 const REQUIRED_ENV = ['ALLOW_TEST_DATABASE'];
 const ALLOW_TEST = process.env.ALLOW_TEST_DATABASE;
