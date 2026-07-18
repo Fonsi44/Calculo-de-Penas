@@ -153,7 +153,7 @@ function inferirComunicaciones(
 ): Array<{ tipo: string; destinatario: string }> {
   const comunicaciones: Array<{ tipo: string; destinatario: string }> = [];
 
-  for (const fase of fases) {
+  for (const _fase of fases) {
     comunicaciones.push({
       tipo: 'notificacion_fase',
       destinatario: 'Abogado responsable',
@@ -198,7 +198,7 @@ function detectarBloqueos(
 
 function detectarReadiness(
   fases: typeof procedimientoFases.$inferSelect[],
-  datos: { rol: string; eventos: string[] },
+  _datos: { rol: string; eventos: string[] },
 ): string[] {
   const readiness: string[] = [];
 

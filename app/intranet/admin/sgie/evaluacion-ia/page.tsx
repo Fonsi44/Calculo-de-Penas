@@ -1,100 +1,99 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Brain, Search, ChevronDown, ChevronUp, CheckCircle, XCircle,
+  Brain, Search, ChevronDown, ChevronUp, CheckCircle,
   Clock, DollarSign, TrendingUp, AlertCircle,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-
-type TaskType = 'clasificacion' | 'extraccion' | 'resumen' | 'correccion';
-type Modelo = 'gpt-4' | 'deepseek-v3' | 'claude-3' | 'mistral-large';
-type Status = 'exitoso' | 'fallido' | 'corregido';
+import { Spinner } from '@/components/ui/spinner';
 
 interface EvaluacionItem {
   id: string;
-  taskType: TaskType;
-  modelo: Modelo;
+  taskType: string;
+  modelo: string;
   confianza: number;
   tokens: number;
   coste: number;
   latencia: number;
-  status: Status;
+  status: string;
   documento: string;
   fecha: string;
   detalle: string;
 }
 
-const TASK_TYPE_LABEL: Record<TaskType, string> = {
+interface SummaryData {
+  total: number;
+  completados: number;
+  avgConf: number;
+  totalTokens: number;
+  avgLat: number;
+}
+
+const TASK_TYPE_LABEL: Record<string, string> = {
   clasificacion: 'Clasificación',
   extraccion: 'Extracción',
   resumen: 'Resumen',
   correccion: 'Corrección',
 };
 
-const STATUS_LABEL: Record<Status, string> = {
-  exitoso: 'Exitoso',
-  fallido: 'Fallido',
-  corregido: 'Corregido',
-};
-
-const STATUS_TONE: Record<Status, 'success' | 'danger' | 'warning'> = {
+const STATUS_TONE: Record<string, 'success' | 'danger' | 'warning'> = {
   exitoso: 'success',
   fallido: 'danger',
   corregido: 'warning',
 };
 
-const MOCK_EVALUACION: EvaluacionItem[] = [
-  { id: 'e1', taskType: 'clasificacion', modelo: 'gpt-4', confianza: 94.2, tokens: 1240, coste: 0.031, latencia: 2.1, status: 'exitoso', documento: 'escritura_001.pdf', fecha: '2026-07-18', detalle: 'Clasificación correcta. Tipo: Escritura Pública. Subtipo: Compraventa. Confianza alta en todas las categorías.' },
-  { id: 'e2', taskType: 'extraccion', modelo: 'deepseek-v3', confianza: 87.5, tokens: 3400, coste: 0.085, latencia: 3.4, status: 'exitoso', documento: 'contrato_arrendamiento.pdf', fecha: '2026-07-18', detalle: 'Extracción completa. Partes: 2 de 3 identificadas. Fechas correctas. Monto: Q15,000.00.' },
-  { id: 'e3', taskType: 'clasificacion', modelo: 'claude-3', confianza: 62.1, tokens: 980, coste: 0.024, latencia: 1.8, status: 'fallido', documento: 'dictamen_legal.pdf', fecha: '2026-07-17', detalle: 'Confianza baja (62.1%). No se pudo determinar el tipo documental con certeza. Requiere revisión manual.' },
-  { id: 'e4', taskType: 'resumen', modelo: 'gpt-4', confianza: 91.8, tokens: 2100, coste: 0.052, latencia: 2.8, status: 'exitoso', documento: 'sentencia_045.pdf', fecha: '2026-07-17', detalle: 'Resumen generado: 3 párrafos. Hechos clave identificados. Fallo correctamente resumido.' },
-  { id: 'e5', taskType: 'correccion', modelo: 'deepseek-v3', confianza: 78.3, tokens: 890, coste: 0.022, latencia: 1.5, status: 'corregido', documento: 'informe_pericial.pdf', fecha: '2026-07-16', detalle: 'Corrección aplicada: 3 errores ortográficos, 1 inconsistencia numérica. Revisado y aprobado.' },
-  { id: 'e6', taskType: 'extraccion', modelo: 'mistral-large', confianza: 95.0, tokens: 2800, coste: 0.070, latencia: 2.9, status: 'exitoso', documento: 'poder_especial.pdf', fecha: '2026-07-16', detalle: 'Extracción exitosa. Otorgante y apoderado identificados. Facultades: 5 de 5 extraídas.' },
-  { id: 'e7', taskType: 'clasificacion', modelo: 'deepseek-v3', confianza: 88.4, tokens: 1100, coste: 0.028, latencia: 2.2, status: 'exitoso', documento: 'demanda_003.pdf', fecha: '2026-07-15', detalle: 'Clasificación: Demanda. Materia: Civil. Juzgado competente identificado.' },
-  { id: 'e8', taskType: 'resumen', modelo: 'claude-3', confianza: 73.6, tokens: 1900, coste: 0.048, latencia: 2.5, status: 'corregido', documento: 'contrato_sociedad.pdf', fecha: '2026-07-15', detalle: 'Resumen corregido. Se añadieron cláusulas relevantes omitidas por el modelo.' },
-  { id: 'e9', taskType: 'extraccion', modelo: 'gpt-4', confianza: 96.3, tokens: 3100, coste: 0.078, latencia: 3.1, status: 'exitoso', documento: 'testamento_002.pdf', fecha: '2026-07-14', detalle: 'Extracción completa. Herederos: 4. Bienes: 7. Albacea designado.' },
-  { id: 'e10', taskType: 'correccion', modelo: 'mistral-large', confianza: 82.7, tokens: 650, coste: 0.016, latencia: 1.2, status: 'exitoso', documento: 'certificado_050.pdf', fecha: '2026-07-14', detalle: 'Corrección automática aplicada sin revisión humana necesaria.' },
-  { id: 'e11', taskType: 'clasificacion', modelo: 'gpt-4', confianza: 45.2, tokens: 1020, coste: 0.026, latencia: 1.9, status: 'fallido', documento: 'documento_ilegible.pdf', fecha: '2026-07-13', detalle: 'Documento ilegible. OCR no pudo extraer texto suficiente para clasificación.' },
-  { id: 'e12', taskType: 'extraccion', modelo: 'deepseek-v3', confianza: 91.2, tokens: 3600, coste: 0.090, latencia: 3.6, status: 'exitoso', documento: 'escritura_005.pdf', fecha: '2026-07-13', detalle: 'Extracción exitosa. Comparecientes: 2. Datos registrales completos.' },
-];
-
-const MODELOS: Modelo[] = ['gpt-4', 'deepseek-v3', 'claude-3', 'mistral-large'];
-const TASK_TYPES: TaskType[] = ['clasificacion', 'extraccion', 'resumen', 'correccion'];
+function SummaryCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) {
+  return (
+    <div className="bg-surface border border-border-light rounded-lg p-4">
+      <div className="flex items-center gap-2 text-text-muted mb-1.5">
+        {icon}
+        <span className="text-xxs">{label}</span>
+      </div>
+      <p className="text-lg font-extrabold text-primary">{value}</p>
+    </div>
+  );
+}
 
 export default function EvaluacionIaPage() {
-  const [filterTask, setFilterTask] = useState<TaskType | ''>('');
-  const [filterModelo, setFilterModelo] = useState<Modelo | ''>('');
-  const [filterStatus, setFilterStatus] = useState<Status | ''>('');
-  const [filterConfMin, setFilterConfMin] = useState('');
-  const [filterConfMax, setFilterConfMax] = useState('');
-  const [filterDateStart, setFilterDateStart] = useState('');
-  const [filterDateEnd, setFilterDateEnd] = useState('');
+  const [items, setItems] = useState<EvaluacionItem[]>([]);
+  const [summary, setSummary] = useState<SummaryData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string>('');
   const [expanded, setExpanded] = useState<string | null>(null);
 
-  const filtered = useMemo(() => {
-    return MOCK_EVALUACION.filter((item) => {
-      if (filterTask && item.taskType !== filterTask) return false;
-      if (filterModelo && item.modelo !== filterModelo) return false;
-      if (filterStatus && item.status !== filterStatus) return false;
-      if (filterConfMin && item.confianza < parseFloat(filterConfMin)) return false;
-      if (filterConfMax && item.confianza > parseFloat(filterConfMax)) return false;
-      if (filterDateStart && item.fecha < filterDateStart) return false;
-      if (filterDateEnd && item.fecha > filterDateEnd) return false;
-      return true;
-    });
-  }, [filterTask, filterModelo, filterStatus, filterConfMin, filterConfMax, filterDateStart, filterDateEnd]);
-
-  const summary = useMemo(() => {
-    const total = MOCK_EVALUACION.length;
-    const completed = MOCK_EVALUACION.filter((i) => i.status === 'exitoso').length;
-    const avgConf = MOCK_EVALUACION.reduce((s, i) => s + i.confianza, 0) / total;
-    const totalTokens = MOCK_EVALUACION.reduce((s, i) => s + i.tokens, 0);
-    const avgLat = MOCK_EVALUACION.reduce((s, i) => s + i.latencia, 0) / total;
-    return { total, completed, avgConf, totalTokens, avgLat };
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch('/api/admin/evaluacion-ia?limit=200');
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const json = await res.json() as { items?: EvaluacionItem[]; summary?: SummaryData };
+        if (!cancelled) {
+          setItems(json.items ?? []);
+          setSummary(json.summary ?? null);
+        }
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Error al cargar evaluaciones');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
+
+  const filtered = useMemo(() => {
+    if (!filterStatus) return items;
+    return items.filter((i) => i.status === filterStatus);
+  }, [items, filterStatus]);
+
+  if (loading) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
+  if (error) return <div className="p-8 text-center text-danger">{error}</div>;
+  if (!summary) return <div className="p-8 text-center text-text-muted">Sin datos disponibles</div>;
 
   return (
     <div className="space-y-6">
@@ -105,7 +104,7 @@ export default function EvaluacionIaPage() {
 
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         <SummaryCard icon={<Brain size={16} />} label="Total tareas" value={summary.total} />
-        <SummaryCard icon={<CheckCircle size={16} />} label="Completadas" value={summary.completed} />
+        <SummaryCard icon={<CheckCircle size={16} />} label="Completadas" value={summary.completados} />
         <SummaryCard icon={<TrendingUp size={16} />} label="Confianza promedio" value={`${summary.avgConf.toFixed(1)}%`} />
         <SummaryCard icon={<DollarSign size={16} />} label="Tokens totales" value={summary.totalTokens.toLocaleString()} />
         <SummaryCard icon={<Clock size={16} />} label="Latencia promedio" value={`${summary.avgLat.toFixed(1)}s`} />
@@ -116,30 +115,14 @@ export default function EvaluacionIaPage() {
           <Search size={16} className="text-accent-dark" />
           <h2 className="text-sm font-bold text-primary">Filtros</h2>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-          <select value={filterTask} onChange={(e) => setFilterTask(e.target.value as TaskType | '')}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40">
-            <option value="">Tipo</option>
-            {TASK_TYPES.map((t) => <option key={t} value={t}>{TASK_TYPE_LABEL[t]}</option>)}
+        <div className="flex gap-3">
+          <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
+            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none">
+            <option value="">Todos los estados</option>
+            <option value="exitoso">Exitoso</option>
+            <option value="fallido">Fallido</option>
+            <option value="corregido">Corregido</option>
           </select>
-          <select value={filterModelo} onChange={(e) => setFilterModelo(e.target.value as Modelo | '')}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40">
-            <option value="">Modelo</option>
-            {MODELOS.map((m) => <option key={m} value={m}>{m}</option>)}
-          </select>
-          <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as Status | '')}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40">
-            <option value="">Estado</option>
-            {(['exitoso', 'fallido', 'corregido'] as Status[]).map((s) => <option key={s} value={s}>{STATUS_LABEL[s]}</option>)}
-          </select>
-          <input type="number" placeholder="Conf min" value={filterConfMin} onChange={(e) => setFilterConfMin(e.target.value)}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40" />
-          <input type="number" placeholder="Conf max" value={filterConfMax} onChange={(e) => setFilterConfMax(e.target.value)}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40" />
-          <input type="date" value={filterDateStart} onChange={(e) => setFilterDateStart(e.target.value)}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40" />
-          <input type="date" value={filterDateEnd} onChange={(e) => setFilterDateEnd(e.target.value)}
-            className="rounded-lg border border-border-light bg-surface px-2.5 py-2 text-xs text-text focus:outline-none focus:ring-2 focus:ring-accent/40" />
         </div>
       </Card>
 
@@ -162,16 +145,16 @@ export default function EvaluacionIaPage() {
             </thead>
             <tbody>
               {filtered.map((item) => (
-                <>
-                  <tr key={item.id} className="border-b border-border-light/50 hover:bg-surface-alt/40 cursor-pointer"
+                <React.Fragment key={item.id}>
+                  <tr className="border-b border-border-light/50 hover:bg-surface-alt/40 cursor-pointer"
                     onClick={() => setExpanded(expanded === item.id ? null : item.id)}>
-                    <td className="py-2.5 px-2 text-xs text-text"><Badge tone="info" size="sm">{TASK_TYPE_LABEL[item.taskType]}</Badge></td>
+                    <td className="py-2.5 px-2 text-xs"><Badge tone="info" size="sm">{TASK_TYPE_LABEL[item.taskType] || item.taskType}</Badge></td>
                     <td className="py-2.5 px-2 text-xs text-text font-semibold">{item.modelo}</td>
-                    <td className="py-2.5 px-2 text-xs text-text">{item.confianza}%</td>
+                    <td className="py-2.5 px-2 text-xs text-text">{item.confianza.toFixed(1)}%</td>
                     <td className="py-2.5 px-2 text-xs text-text">{item.tokens.toLocaleString()}</td>
                     <td className="py-2.5 px-2 text-xs text-text">${item.coste.toFixed(3)}</td>
-                    <td className="py-2.5 px-2 text-xs text-text">{item.latencia}s</td>
-                    <td className="py-2.5 px-2"><Badge tone={STATUS_TONE[item.status]} size="sm">{STATUS_LABEL[item.status]}</Badge></td>
+                    <td className="py-2.5 px-2 text-xs text-text">{item.latencia.toFixed(1)}s</td>
+                    <td className="py-2.5 px-2"><Badge tone={STATUS_TONE[item.status] ?? 'neutral'} size="sm">{item.status}</Badge></td>
                     <td className="py-2.5 px-2 text-xs text-text-muted font-mono">{item.documento}</td>
                     <td className="py-2.5 px-2 text-xs text-text-muted">{item.fecha}</td>
                     <td className="py-2.5 px-2">{expanded === item.id ? <ChevronUp size={14} className="text-text-muted" /> : <ChevronDown size={14} className="text-text-muted" />}</td>
@@ -183,13 +166,13 @@ export default function EvaluacionIaPage() {
                           <AlertCircle size={14} className="text-info flex-shrink-0 mt-0.5" />
                           <div>
                             <p className="text-sm font-semibold text-text mb-1">Detalle de ejecución</p>
-                            <p className="text-xs text-text-secondary">{item.detalle}</p>
+                            <p className="text-xs text-text-secondary">{item.detalle || 'Sin detalle disponible'}</p>
                           </div>
                         </div>
                       </td>
                     </tr>
                   )}
-                </>
+                </React.Fragment>
               ))}
               {filtered.length === 0 && (
                 <tr>
@@ -200,18 +183,6 @@ export default function EvaluacionIaPage() {
           </table>
         </div>
       </Card>
-    </div>
-  );
-}
-
-function SummaryCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) {
-  return (
-    <div className="bg-surface border border-border-light rounded-lg p-4">
-      <div className="flex items-center gap-2 text-text-muted mb-1.5">
-        {icon}
-        <span className="text-xxs">{label}</span>
-      </div>
-      <p className="text-lg font-extrabold text-primary">{value}</p>
     </div>
   );
 }

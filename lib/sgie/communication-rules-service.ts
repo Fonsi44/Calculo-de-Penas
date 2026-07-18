@@ -2,17 +2,15 @@ import { db } from '@/lib/db';
 import {
   plantillasCorreo,
   correosEnviados,
-  comunicacionesOutbox,
-  type PlantillaCorreo,
 } from '@/lib/schema';
-import { and, eq, count, desc, asc } from 'drizzle-orm';
+import { and, eq, count, desc } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
 export interface CommunicationRule {
   id: string;
   nombre: string;
   disparador: string;
-  condiciones: any;
+  condiciones: Record<string, unknown>;
   destinatario: string;
   plantillaSlug: string;
   retrasoMinutos: number;
@@ -24,7 +22,7 @@ export interface CommunicationRule {
   sensibilidad: string;
   requiereAprobacion: boolean;
   idioma: string;
-  escalado: any;
+  escalado: Record<string, unknown> | null;
   estado: string;
   version: number;
 }
@@ -83,7 +81,7 @@ export async function listarReglas(filters: {
 
 export async function crearRegla(
   input: Partial<CommunicationRule>,
-  ctx: any,
+  ctx: { usuarioId?: string },
 ): Promise<CommunicationRule> {
   const values: {
     slug: string;
@@ -139,10 +137,22 @@ export async function crearRegla(
   };
 }
 
+interface SimularReglaResult {
+  regla: { id: string; nombre: string; slug: string; estado: string };
+  simulacion: {
+    expedienteId: string;
+    coincidencias: number;
+    enviadosPreviamente: number;
+    seEnviaria: boolean;
+    motivo: string;
+    variablesDisponibles: string[];
+  };
+}
+
 export async function simularRegla(
   reglaId: string,
   expedienteId: string,
-): Promise<any> {
+): Promise<SimularReglaResult> {
   const [plantilla] = await db
     .select()
     .from(plantillasCorreo)
@@ -174,7 +184,7 @@ export async function simularRegla(
       enviadosPreviamente: Number(enviadosPrevios?.[0]?.n ?? 0),
       seEnviaria: true,
       motivo: `La regla "${plantilla.nombre}" aplica al expediente ${expedienteId}`,
-      variablesDisponibles: plantilla.variablesPermitidas,
+      variablesDisponibles: plantilla.variablesPermitidas ?? [],
     },
   };
 }

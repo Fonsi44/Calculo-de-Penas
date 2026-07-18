@@ -2,7 +2,6 @@ import { db } from '@/lib/db';
 import {
   jobsSgie,
   documentosExpediente,
-  comunicacionesOutbox,
   correosEnviados,
   ocrResultados,
   aiTaskRouting,
@@ -13,7 +12,7 @@ import {
   invitaciones,
   outboxEvents,
   deadLetterJobs,
-  type UsuarioSgie,
+  type JobSgieTipo,
 } from '@/lib/schema';
 import { eq, count, and, isNull, isNotNull, sql, desc, inArray } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
@@ -74,11 +73,6 @@ export async function obtenerDashboardCompleto(): Promise<{
   automatizacion: DashboardAutomatizacion;
   salud: DashboardSalud;
 }> {
-  const ahora = new Date();
-  const en24h = new Date(ahora.getTime() + 24 * 60 * 60 * 1000);
-  const en48h = new Date(ahora.getTime() + 48 * 60 * 60 * 1000);
-  const en72h = new Date(ahora.getTime() + 72 * 60 * 60 * 1000);
-
   const [
     [dlqCount],
     [docAtascados],
@@ -200,7 +194,7 @@ export async function reintentarJobDlq(jobId: string): Promise<void> {
     const [nuevoJob] = await tx
       .insert(jobsSgie)
       .values({
-        tipo: dlq.tipo as any,
+        tipo: dlq.tipo as JobSgieTipo,
         refId: dlq.refId ?? null,
         payload: (dlq.payload as Record<string, unknown>) ?? null,
         estado: 'pendiente',
@@ -251,7 +245,7 @@ export async function cancelarJob(jobId: string): Promise<void> {
 export async function reasignarExpediente(
   expedienteId: string,
   nuevoResponsableId: string,
-  ctx: any,
+  ctx: { usuarioId?: string },
 ): Promise<void> {
   const [exp] = await db
     .select({ id: expedientes.id })
@@ -267,7 +261,7 @@ export async function reasignarExpediente(
     .where(eq(expedientes.id, expedienteId));
 
   await logSgie({
-    usuarioId: ctx?.usuarioId ?? '00000000-0000-0000-0000-000000000000',
+    usuarioId: ctx.usuarioId ?? '00000000-0000-0000-0000-000000000000',
     accion: 'expediente_updated',
     recurso: 'expediente',
     recursoId: expedienteId,

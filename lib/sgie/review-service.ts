@@ -6,7 +6,7 @@ import {
   ocrResultados,
   extraccionesIa,
 } from '@/lib/schema';
-import { and, eq, desc, count, sql, isNotNull, isNull, gt, lt, or } from 'drizzle-orm';
+import { and, eq, desc, count, sql } from 'drizzle-orm';
 
 export interface ReviewItem {
   id: string;
@@ -17,7 +17,7 @@ export interface ReviewItem {
   estado: string;
   confianza: number | null;
   motivo: string;
-  evidencia: any;
+  evidencia: unknown;
   paginas: number;
   responsableNombre: string | null;
   creadoEn: Date;
@@ -252,7 +252,7 @@ export async function marcarNoAplicable(
 
 export async function reintentarOcr(
   documentoId: string,
-  ctx: { usuarioId: string; esAdmin: boolean },
+  _ctx: { usuarioId: string; esAdmin: boolean },
 ): Promise<void> {
   const [doc] = await db
     .select({ id: documentosExpediente.id })
@@ -270,7 +270,7 @@ export async function reintentarOcr(
 
 export async function reintentarIa(
   documentoId: string,
-  ctx: { usuarioId: string; esAdmin: boolean },
+  _ctx: { usuarioId: string; esAdmin: boolean },
 ): Promise<void> {
   const [doc] = await db
     .select({ id: documentosExpediente.id })

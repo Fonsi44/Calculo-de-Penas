@@ -1,15 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   FileText, ShieldAlert, ScanLine, FileWarning,
-  Ban, Copy, XCircle, AlertTriangle, FileCheck, CheckCircle,
+  Ban, Copy, XCircle, AlertTriangle, FileCheck,
   RotateCcw, Eye, ThumbsUp, FileX, RefreshCw,
   ArrowLeft, Search,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { EmptyState } from '@/components/ui/empty-state';
 import { useAuth } from '@/app/auth-context';
@@ -41,16 +40,6 @@ const FILTROS: { key: FiltroRevision; label: string; icon: React.ComponentType<{
   { key: 'error_tecnico', label: 'Error técnico', icon: AlertTriangle },
 ];
 
-const MOCK_DOCS: DocumentoRevision[] = [
-  { id: 'd1', nombre: 'Escritura de compraventa.pdf', expedienteId: 'exp-1', numeroInterno: 'EXP-2026-0042', requisito: 'Escritura pública', cliente: 'Carlos Mendoza', estado: 'pendiente', confianza: 45, fecha: '2026-07-18T10:30:00Z', tipoError: 'baja_confianza' },
-  { id: 'd2', nombre: 'Certificado de libertad.jpg', expedienteId: 'exp-2', numeroInterno: 'EXP-2026-0038', requisito: 'Certificado registro', cliente: 'María López', estado: 'pendiente', confianza: 30, fecha: '2026-07-17T14:00:00Z', tipoError: 'ocr_insuficiente' },
-  { id: 'd3', nombre: 'Poder especial.png', expedienteId: 'exp-3', numeroInterno: 'EXP-2026-0051', requisito: 'Poder', cliente: 'Juan Pérez', estado: 'pendiente', confianza: 55, fecha: '2026-07-16T09:15:00Z', tipoError: 'clasificacion_dudosa' },
-  { id: 'd4', nombre: 'Identidad_cliente.pdf', expedienteId: 'exp-4', numeroInterno: 'EXP-2026-0029', requisito: 'Documento identidad', cliente: 'Ana Rodríguez', estado: 'pendiente', confianza: 20, fecha: '2026-07-15T11:45:00Z', tipoError: 'ilegible' },
-  { id: 'd5', nombre: 'Recibo_pago.png', expedienteId: 'exp-5', numeroInterno: 'EXP-2026-0015', requisito: 'Comprobante pago', cliente: 'Pedro García', estado: 'pendiente', confianza: 88, fecha: '2026-07-14T16:30:00Z', tipoError: 'duplicado' },
-  { id: 'd6', nombre: 'Contrato_arrendamiento.pdf', expedienteId: 'exp-6', numeroInterno: 'EXP-2026-0012', requisito: 'Contrato', cliente: 'Luis Hernández', estado: 'rechazado', confianza: 15, fecha: '2026-07-13T08:00:00Z', tipoError: 'rechazado' },
-  { id: 'd7', nombre: 'Acta_matrimonio.pdf', expedienteId: 'exp-7', numeroInterno: 'EXP-2026-0023', requisito: 'Acta', cliente: 'Sofía Torres', estado: 'pendiente', confianza: 0, fecha: '2026-07-12T13:20:00Z', tipoError: 'error_tecnico' },
-];
-
 function formatFecha(iso: string): string {
   try { return new Date(iso).toLocaleDateString('es-HN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
   catch { return iso; }
@@ -74,17 +63,43 @@ function toneConfianza(confianza: number): string {
 
 export default function RevisionDocumentalPage() {
   const { user, loading: authLoading } = useAuth();
+  const [docs, setDocs] = useState<DocumentoRevision[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filtroActivo, setFiltroActivo] = useState<FiltroRevision>(null);
   const [accionId, setAccionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch('/api/sgie/revision');
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const json = await res.json();
+        if (!cancelled) setDocs(json.documentos ?? []);
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Error al cargar documentos');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, []);
+
+  const filtrados = filtroActivo
+    ? docs.filter((d) => d.tipoError === filtroActivo)
+    : docs;
 
   if (authLoading) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
   if (!user || (user.rol !== 'abogado' && user.rol !== 'admin')) {
     return <div className="text-center py-20"><p className="font-bold text-primary">Acceso restringido</p></div>;
   }
 
-  const filtrados = filtroActivo
-    ? MOCK_DOCS.filter((d) => d.tipoError === filtroActivo)
-    : MOCK_DOCS;
+  if (loading && docs.length === 0) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
+  if (error) return <div className="p-8 text-center text-danger">{error}</div>;
 
   return (
     <div className="space-y-5">
@@ -92,7 +107,7 @@ export default function RevisionDocumentalPage() {
         <div>
           <h1 className="text-xl font-extrabold text-primary">Revisión documental</h1>
           <p className="text-xs text-text-secondary mt-0.5">
-            {MOCK_DOCS.length} documentos requieren revisión
+            {docs.length} documentos requieren revisión
             {filtroActivo ? ` · ${labelTipoError(filtroActivo)}` : ''}
           </p>
         </div>

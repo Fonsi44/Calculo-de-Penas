@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  Mail, Send, FileText, Settings, AlertTriangle, CheckCircle,
-  Clock, XCircle, RefreshCw, Eye, Copy, Edit3,
+  Mail, Send, FileText, Settings, AlertTriangle,
+  Clock, RefreshCw, Eye, Copy, Edit3,
 } from 'lucide-react';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,23 +32,6 @@ interface PlantillaItem {
   version: number;
 }
 
-const MOCK_OUTBOX: OutboxItem[] = [
-  { id: 'o1', tipo: 'recordatorio', destinatario: 'carlos@example.com', asunto: 'Recordatorio de cita', estado: 'pendiente', intentos: 0, fecha: '2026-07-18T10:00:00Z' },
-  { id: 'o2', tipo: 'notificacion', destinatario: 'maria@example.com', asunto: 'Documentos recibidos', estado: 'enviado', intentos: 1, fecha: '2026-07-17T14:30:00Z' },
-  { id: 'o3', tipo: 'alerta', destinatario: 'ana@example.com', asunto: 'Notificación de vencimiento', estado: 'fallido', intentos: 3, fecha: '2026-07-16T09:00:00Z' },
-  { id: 'o4', tipo: 'notificacion', destinatario: 'juan@example.com', asunto: 'Actualización de expediente', estado: 'pendiente', intentos: 0, fecha: '2026-07-18T08:00:00Z' },
-  { id: 'o5', tipo: 'recordatorio', destinatario: 'luis@example.com', asunto: 'Recordatorio de pago', estado: 'enviado', intentos: 1, fecha: '2026-07-15T11:00:00Z' },
-  { id: 'o6', tipo: 'alerta', destinatario: 'sofia@example.com', asunto: 'Alerta de seguridad', estado: 'fallido', intentos: 5, fecha: '2026-07-14T16:00:00Z' },
-];
-
-const MOCK_PLANTILLAS: PlantillaItem[] = [
-  { id: 'p1', nombre: 'Recordatorio de cita', slug: 'recordatorio-cita', estado: 'activa', version: 3 },
-  { id: 'p2', nombre: 'Notificación documentos', slug: 'notificacion-documentos', estado: 'activa', version: 2 },
-  { id: 'p3', nombre: 'Alerta de vencimiento', slug: 'alerta-vencimiento', estado: 'borrador', version: 1 },
-  { id: 'p4', nombre: 'Bienvenida portal cliente', slug: 'bienvenida-portal', estado: 'activa', version: 4 },
-  { id: 'p5', nombre: 'Recordatorio de pago', slug: 'recordatorio-pago', estado: 'archivada', version: 2 },
-];
-
 const OUTBOX_ESTADO_TONE: Record<string, 'warning' | 'success' | 'danger'> = {
   pendiente: 'warning',
   enviado: 'success',
@@ -75,10 +58,75 @@ function formatFecha(iso: string): string {
   }
 }
 
+interface PlantillaRaw {
+  id: string;
+  nombre: string;
+  slug: string;
+  estado: string;
+  version?: number;
+}
+
 export default function ComunicacionesPage() {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<Tab>('outbox');
   const [filter, setFilter] = useState<string>('todos');
+  const [outbox, setOutbox] = useState<OutboxItem[]>([]);
+  const [plantillas, setPlantillas] = useState<PlantillaItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadTab = async (activeTab: Tab, activeFilter: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams({ tab: activeTab, filter: activeFilter });
+      const res = await fetch(`/api/admin/comunicaciones?${params}`);
+      if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+      const json = await res.json() as { tab?: string; outbox?: OutboxItem[]; plantillas?: PlantillaRaw[]; total?: number };
+
+      if (json.tab === 'outbox') setOutbox(json.outbox ?? []);
+      else if (json.tab === 'plantillas') {
+        setPlantillas((json.plantillas ?? []).map((p: PlantillaRaw) => ({
+          ...p,
+          estado: (p.estado === 'desactivada' ? 'archivada' : p.estado) as 'activa' | 'borrador' | 'archivada',
+          version: p.version ?? 1,
+        })));
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Error al cargar datos');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({ tab, filter });
+        const res = await fetch(`/api/admin/comunicaciones?${params}`);
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const json = await res.json() as { tab?: string; outbox?: OutboxItem[]; plantillas?: PlantillaRaw[]; activa?: Record<string, unknown> };
+
+        if (!cancelled) {
+          if (json.tab === 'outbox') setOutbox(json.outbox ?? []);
+          else if (json.tab === 'plantillas') {
+            setPlantillas((json.plantillas ?? []).map((p: PlantillaRaw) => ({
+              ...p,
+              estado: (p.estado === 'desactivada' ? 'archivada' : p.estado) as 'activa' | 'borrador' | 'archivada',
+              version: p.version ?? 1,
+            })));
+          }
+        }
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Error al cargar datos');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [tab, filter]);
 
   const tabs: { key: Tab; label: string; icon: typeof Mail }[] = [
     { key: 'outbox', label: 'Outbox', icon: Send },
@@ -86,12 +134,8 @@ export default function ComunicacionesPage() {
     { key: 'reglas', label: 'Reglas', icon: Settings },
   ];
 
-  const outboxFiltrados = useMemo(() => {
-    if (filter === 'todos') return MOCK_OUTBOX;
-    return MOCK_OUTBOX.filter((o) => o.estado === filter);
-  }, [filter]);
-
   if (loading) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
+  if (error) return <div className="p-8 text-center text-danger">{error}</div>;
 
   return (
     <div className="space-y-6">
@@ -100,7 +144,6 @@ export default function ComunicacionesPage() {
         <p className="text-xs text-text-secondary mt-0.5">Gestión de outbox, plantillas y reglas de comunicación</p>
       </div>
 
-      {/* Tabs */}
       <div className="flex gap-1 rounded-lg border border-border-light p-1 bg-surface-alt/50 w-fit">
         {tabs.map(({ key, label, icon: Icon }) => (
           <button
@@ -116,7 +159,6 @@ export default function ComunicacionesPage() {
         ))}
       </div>
 
-      {/* Outbox tab */}
       {tab === 'outbox' && (
         <Card padding="md">
           <CardHeader
@@ -127,15 +169,15 @@ export default function ComunicacionesPage() {
                 <select value={filter} onChange={(e) => setFilter(e.target.value)}
                   className="h-8 rounded-md border border-border bg-surface px-2 text-xs outline-none">
                   <option value="todos">Todos</option>
-                  <option value="pendiente">Pendientes</option>
-                  <option value="enviado">Enviados</option>
-                  <option value="fallido">Fallidos</option>
+                  <option value="pending">Pendientes</option>
+                  <option value="sent">Enviados</option>
+                  <option value="failed">Fallidos</option>
                 </select>
-                <Button variant="secondary" size="sm"><RefreshCw size={13} /> Reintentar</Button>
+                <Button variant="secondary" size="sm" onClick={() => loadTab(tab, filter)}><RefreshCw size={13} /> Refrescar</Button>
               </div>
             }
           />
-          {outboxFiltrados.length === 0 ? (
+          {outbox.length === 0 ? (
             <EmptyState icon={<Send size={24} />} title="Sin comunicaciones" description="No hay elementos en el outbox." />
           ) : (
             <div className="overflow-x-auto">
@@ -152,7 +194,7 @@ export default function ComunicacionesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {outboxFiltrados.map((item) => {
+                  {outbox.map((item) => {
                     const Icon = TIPO_ICON[item.tipo] || Mail;
                     return (
                       <tr key={item.id} className="border-b border-border-light/50 hover:bg-surface-alt transition-colors">
@@ -164,7 +206,7 @@ export default function ComunicacionesPage() {
                         <td className="py-2.5 px-2 text-text">{item.destinatario}</td>
                         <td className="py-2.5 px-2 text-text-secondary max-w-[180px] truncate">{item.asunto}</td>
                         <td className="py-2.5 px-2">
-                          <Badge tone={OUTBOX_ESTADO_TONE[item.estado]}>{item.estado}</Badge>
+                          <Badge tone={OUTBOX_ESTADO_TONE[item.estado] ?? 'neutral'}>{item.estado}</Badge>
                         </td>
                         <td className="py-2.5 px-2 text-center text-text-secondary">{item.intentos}</td>
                         <td className="py-2.5 px-2 text-text-secondary whitespace-nowrap">{formatFecha(item.fecha)}</td>
@@ -190,15 +232,14 @@ export default function ComunicacionesPage() {
         </Card>
       )}
 
-      {/* Plantillas tab */}
       {tab === 'plantillas' && (
         <Card padding="md">
           <CardHeader
             title="Plantillas de comunicación"
             subtitle="Gestiona las plantillas de correo y notificaciones"
-            action={<Button variant="primary" size="sm"><FileText size={13} /> Nueva plantilla</Button>}
+            action={<Button variant="primary" size="sm" disabled><FileText size={13} /> Nueva plantilla</Button>}
           />
-          {MOCK_PLANTILLAS.length === 0 ? (
+          {plantillas.length === 0 ? (
             <EmptyState icon={<FileText size={24} />} title="Sin plantillas" description="No hay plantillas disponibles." />
           ) : (
             <div className="overflow-x-auto">
@@ -213,12 +254,12 @@ export default function ComunicacionesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {MOCK_PLANTILLAS.map((p) => (
+                  {plantillas.map((p) => (
                     <tr key={p.id} className="border-b border-border-light/50 hover:bg-surface-alt transition-colors">
                       <td className="py-2.5 px-2 font-semibold text-text">{p.nombre}</td>
                       <td className="py-2.5 px-2 text-text-secondary font-mono">{p.slug}</td>
                       <td className="py-2.5 px-2">
-                        <Badge tone={PLANTILLA_ESTADO_TONE[p.estado]}>{p.estado}</Badge>
+                        <Badge tone={PLANTILLA_ESTADO_TONE[p.estado] ?? 'neutral'}>{p.estado}</Badge>
                       </td>
                       <td className="py-2.5 px-2 text-center text-text-secondary">v{p.version}</td>
                       <td className="py-2.5 px-2 text-right">
@@ -240,55 +281,14 @@ export default function ComunicacionesPage() {
         </Card>
       )}
 
-      {/* Reglas tab */}
       {tab === 'reglas' && (
         <Card padding="md">
           <CardHeader
             title="Reglas de comunicación"
             subtitle="Configuración de reglas de envío y automatización"
-            action={<Button variant="primary" size="sm"><Settings size={13} /> Nueva regla</Button>}
+            action={<Button variant="primary" size="sm" disabled><Settings size={13} /> Nueva regla</Button>}
           />
-          <div className="space-y-3">
-            <div className="rounded-lg border border-border-light p-4">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="text-sm font-bold text-text">Recordatorio automático de citas</h3>
-                  <p className="text-xxs text-text-muted mt-0.5">Envía un recordatorio 24h antes de la cita vía correo electrónico.</p>
-                </div>
-                <Badge tone="success">Activa</Badge>
-              </div>
-              <div className="flex gap-4 mt-2 text-xxs text-text-secondary">
-                <span>Disparador: cita_cliente.estado → confirmada</span>
-                <span>Acción: enviar correo (plantilla recordatorio-cita)</span>
-              </div>
-            </div>
-            <div className="rounded-lg border border-border-light p-4">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="text-sm font-bold text-text">Notificación de documentos recibidos</h3>
-                  <p className="text-xxs text-text-muted mt-0.5">Notifica al cliente cuando se adjuntan documentos a su expediente.</p>
-                </div>
-                <Badge tone="success">Activa</Badge>
-              </div>
-              <div className="flex gap-4 mt-2 text-xxs text-text-secondary">
-                <span>Disparador: documento.estado → recibido</span>
-                <span>Acción: enviar correo (plantilla notificacion-documentos)</span>
-              </div>
-            </div>
-            <div className="rounded-lg border border-border-light p-4 opacity-60">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="text-sm font-bold text-text">Alerta de vencimiento de plazo</h3>
-                  <p className="text-xxs text-text-muted mt-0.5">Alerta automática 72h antes del vencimiento de un plazo procesal.</p>
-                </div>
-                <Badge tone="neutral">Inactiva</Badge>
-              </div>
-              <div className="flex gap-4 mt-2 text-xxs text-text-secondary">
-                <span>Disparador: plazo.dias_restantes → 3</span>
-                <span>Acción: enviar correo + notificación in-app</span>
-              </div>
-            </div>
-          </div>
+          <EmptyState icon={<Settings size={24} />} title="Sin reglas" description="Gestione las reglas desde la sección Reglas de comunicación." />
         </Card>
       )}
     </div>

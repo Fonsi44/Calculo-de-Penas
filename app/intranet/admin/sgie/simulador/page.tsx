@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  Play, AlertTriangle, CheckCircle, XCircle, ArrowRight, ArrowLeft,
-  ListOrdered, FileText, Mail, GitBranch, Ban, Repeat, Info, Layers,
+  Play, AlertTriangle, CheckCircle, ArrowRight,
+  FileText, Mail, GitBranch, Ban, Repeat, Info, Layers,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Spinner } from '@/components/ui/spinner';
 
 interface Procedimiento {
   id: string;
@@ -64,71 +65,62 @@ interface ResultadoSimulacion {
   loops: string[];
 }
 
-const MOCK_PROCEDIMIENTOS: Procedimiento[] = [
-  { id: 'proc-1', nombre: 'Revisión documental', version: '2.1.0' },
-  { id: 'proc-2', nombre: 'Gestión de expedientes', version: '1.5.0' },
-  { id: 'proc-3', nombre: 'Clasificación asistida por IA', version: '1.0.0' },
-  { id: 'proc-4', nombre: 'Notificaciones electrónicas', version: '0.9.0' },
-];
-
-const MOCK_RESULTADO: ResultadoSimulacion = {
-  procedimiento: 'Revisión documental',
-  version: '2.1.0',
-  duracionTotal: '45 min estimados',
-  fases: [
-    { id: 'f1', nombre: 'Carga de documentos', orden: 1, requisitos: ['Documento en formato PDF', 'OCR completado', 'Firma digital válida'], duracionEstimada: '5 min' },
-    { id: 'f2', nombre: 'Clasificación automática', orden: 2, requisitos: ['Metadatos extraídos', 'Área jurídica identificada'], duracionEstimada: '3 min' },
-    { id: 'f3', nombre: 'Revisión de clasificación', orden: 3, requisitos: ['Usuario abogado autenticado', 'Clasificación previa generada'], duracionEstimada: '15 min' },
-    { id: 'f4', nombre: 'Validación de metadatos', orden: 4, requisitos: ['Campos obligatorios completos', 'Coherencia con tipo documental'], duracionEstimada: '5 min' },
-    { id: 'f5', nombre: 'Archivo y notificación', orden: 5, requisitos: ['Almacenamiento confirmado', 'Destinatario disponible'], duracionEstimada: '2 min' },
-    { id: 'f6', nombre: 'Cierre', orden: 6, requisitos: ['Acta de cierre generada', 'Trazabilidad completa'], duracionEstimada: '1 min' },
-  ],
-  tareas: [
-    { id: 't1', nombre: 'Subir documento al sistema', fase: 'Carga de documentos', responsable: 'Sistema' },
-    { id: 't2', nombre: 'Ejecutar OCR', fase: 'Carga de documentos', responsable: 'Sistema' },
-    { id: 't3', nombre: 'Clasificar por tipo documental', fase: 'Clasificación automática', responsable: 'Motor IA' },
-    { id: 't4', nombre: 'Revisar y corregir clasificación', fase: 'Revisión de clasificación', responsable: 'Abogado' },
-    { id: 't5', nombre: 'Validar metadatos', fase: 'Validación de metadatos', responsable: 'Sistema' },
-    { id: 't6', nombre: 'Enviar notificación', fase: 'Archivo y notificación', responsable: 'Sistema' },
-    { id: 't7', nombre: 'Cerrar expediente', fase: 'Cierre', responsable: 'Abogado' },
-  ],
-  comunicaciones: [
-    { id: 'c1', tipo: 'Email', origen: 'Carga de documentos', destino: 'Cliente', plantilla: 'confirmacion_carga' },
-    { id: 'c2', tipo: 'Email', origen: 'Clasificación automática', destino: 'Abogado', plantilla: 'clasificacion_completada' },
-    { id: 'c3', tipo: 'Notificación', origen: 'Archivo y notificación', destino: 'Cliente', plantilla: 'documento_archivado' },
-  ],
-  transiciones: [
-    { id: 'tr1', desde: 'Carga de documentos', hacia: 'Clasificación automática', condicion: 'OCR exitoso y firma válida' },
-    { id: 'tr2', desde: 'Clasificación automática', hacia: 'Revisión de clasificación', condicion: 'Confianza IA >= 70%' },
-    { id: 'tr3', desde: 'Revisión de clasificación', hacia: 'Validación de metadatos', condicion: 'Aprobación del abogado' },
-    { id: 'tr4', desde: 'Validación de metadatos', hacia: 'Archivo y notificación', condicion: 'Metadatos válidos' },
-    { id: 'tr5', desde: 'Archivo y notificación', hacia: 'Cierre', condicion: 'Notificación enviada exitosamente' },
-  ],
-  bloqueos: [
-    { id: 'b1', fase: 'Carga de documentos', razon: 'OCR falla en documentos escaneados de baja calidad', criticidad: 'alto' },
-    { id: 'b2', fase: 'Revisión de clasificación', razon: 'Confianza IA < 70% requiere revisión manual completa', criticidad: 'medio' },
-    { id: 'b3', fase: 'Archivo y notificación', razon: 'Destinatario sin correo electrónico registrado', criticidad: 'bajo' },
-  ],
-  loops: [
-    'Revisión de clasificación → Validación de metadatos (si metadatos inválidos, retorna a revisión)',
-    'Validación de metadatos → Revisión de clasificación (hasta 3 reintentos)',
-  ],
+const BLOQUEO_TONE: Record<string, 'danger' | 'warning' | 'neutral'> = {
+  alto: 'danger',
+  medio: 'warning',
+  bajo: 'neutral',
 };
 
 export default function SimuladorPage() {
+  const [procedimientos, setProcedimientos] = useState<Procedimiento[]>([]);
+  const [loadingProc, setLoadingProc] = useState(true);
   const [selected, setSelected] = useState('');
   const [resultado, setResultado] = useState<ResultadoSimulacion | null>(null);
   const [simulando, setSimulando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const procedimiento = MOCK_PROCEDIMIENTOS.find((p) => p.id === selected);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoadingProc(true);
+      try {
+        const res = await fetch('/api/sgie/tipos-procedimiento?incluirTodos=true');
+        if (!res.ok) throw new Error(`Error ${res.status}`);
+        const json = await res.json() as { tiposProcedimiento?: Array<{ id: string; nombre: string; version: number }> };
+        if (!cancelled) {
+          const mapped = (json.tiposProcedimiento ?? []).map((p) => ({
+            id: p.id,
+            nombre: p.nombre,
+            version: p.version?.toString() ?? '1',
+          }));
+          setProcedimientos(mapped);
+        }
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Error al cargar procedimientos');
+      } finally {
+        if (!cancelled) setLoadingProc(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
-  function handleSimular() {
+  async function handleSimular() {
     if (!selected) return;
     setSimulando(true);
-    setTimeout(() => {
-      setResultado(MOCK_RESULTADO);
+    setError(null);
+    try {
+      const res = await fetch('/api/admin/simulador', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ procedimientoId: selected }),
+      });
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+      setResultado(await res.json() as ResultadoSimulacion);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Error al simular');
+    } finally {
       setSimulando(false);
-    }, 1200);
+    }
   }
 
   function handleReiniciar() {
@@ -136,11 +128,8 @@ export default function SimuladorPage() {
     setSelected('');
   }
 
-  const BLOQUEO_TONE: Record<string, 'danger' | 'warning' | 'neutral'> = {
-    alto: 'danger',
-    medio: 'warning',
-    bajo: 'neutral',
-  };
+  if (loadingProc) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
+  if (error && !resultado) return <div className="p-8 text-center text-danger">{error}</div>;
 
   return (
     <div className="space-y-6">
@@ -167,7 +156,7 @@ export default function SimuladorPage() {
               className="w-full rounded-lg border border-border-light bg-surface px-3 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
             >
               <option value="">Seleccione un procedimiento...</option>
-              {MOCK_PROCEDIMIENTOS.map((p) => (
+              {procedimientos.map((p) => (
                 <option key={p.id} value={p.id}>{p.nombre} (v{p.version})</option>
               ))}
             </select>
@@ -182,7 +171,7 @@ export default function SimuladorPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-sm text-text-secondary">
-              Resultados para <span className="font-bold text-text">{resultado.procedimiento}</span> v{resultado.version} — <span className="text-accent-dark font-semibold">{resultado.duracionTotal}</span>
+              Resultados para <span className="font-bold text-text">{resultado.procedimiento}</span> {resultado.version} — <span className="text-accent-dark font-semibold">{resultado.duracionTotal}</span>
             </p>
             <Button variant="tertiary" size="sm" onClick={handleReiniciar}>Nueva simulación</Button>
           </div>
@@ -193,7 +182,7 @@ export default function SimuladorPage() {
               <h2 className="text-sm font-bold text-primary">Línea de tiempo de fases</h2>
             </div>
             <ol className="relative border-s border-border-light ml-3 space-y-6">
-              {resultado.fases.map((fase, i) => (
+              {resultado.fases.map((fase) => (
                 <li key={fase.id} className="ms-5">
                   <span className="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent/15 text-xs font-bold text-accent-dark">
                     {fase.orden}
@@ -276,7 +265,7 @@ export default function SimuladorPage() {
               <div className="space-y-2">
                 {resultado.bloqueos.map((b) => (
                   <div key={b.id} className="flex items-start gap-3 p-2.5 rounded-lg border border-border-light bg-surface-alt/30">
-                    <AlertTriangle size={14} className={`flex-shrink-0 mt-0.5 text-${b.criticidad === 'alto' ? 'danger' : b.criticidad === 'medio' ? 'warning' : 'text-muted'}`} />
+                    <AlertTriangle size={14} className={`flex-shrink-0 mt-0.5 ${b.criticidad === 'alto' ? 'text-danger' : b.criticidad === 'medio' ? 'text-warning' : 'text-text-muted'}`} />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <p className="text-sm font-semibold text-text">Fase: {b.fase}</p>

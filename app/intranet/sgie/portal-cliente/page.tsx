@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Search, User, Mail, Phone, FileText, Link, Copy, XCircle,
-  CheckCircle, Plus, ExternalLink, AlertTriangle, ShieldAlert,
+  Plus, ExternalLink, AlertTriangle,
 } from 'lucide-react';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ interface EnlacePortal {
   linkStatus: 'enviado' | 'pendiente' | 'accedido';
 }
 
-interface ClienteMock {
+interface ClientePortal {
   id: string;
   nombre: string;
   email: string;
@@ -30,29 +30,23 @@ interface ClienteMock {
   enlaces: EnlacePortal[];
 }
 
-const MOCK_CLIENTES: ClienteMock[] = [
-  {
-    id: 'c1', nombre: 'Carlos Mendoza', email: 'carlos@example.com', telefono: '+504 9999-0001',
-    expedientesCount: 3,
-    enlaces: [
-      { id: 'l1', expedienteNumero: 'EXP-2026-0042', creado: '2026-07-01T10:00:00Z', estado: 'activo', linkStatus: 'enviado' },
-      { id: 'l2', expedienteNumero: 'EXP-2026-0042', creado: '2026-06-28T08:30:00Z', estado: 'activo', linkStatus: 'accedido' },
-      { id: 'l3', expedienteNumero: 'EXP-2026-0038', creado: '2026-06-15T14:00:00Z', estado: 'revocado', linkStatus: 'pendiente' },
-    ],
-  },
-  {
-    id: 'c2', nombre: 'María López', email: 'maria@example.com', telefono: '+504 9999-0002',
-    expedientesCount: 1,
-    enlaces: [
-      { id: 'l4', expedienteNumero: 'EXP-2026-0051', creado: '2026-07-10T09:00:00Z', estado: 'activo', linkStatus: 'enviado' },
-    ],
-  },
-  {
-    id: 'c3', nombre: 'Ana Rodríguez', email: 'ana@example.com', telefono: '+504 9999-0003',
-    expedientesCount: 2,
-    enlaces: [],
-  },
-];
+interface ClienteRaw {
+  id: string;
+  nombre: string;
+  email: string | null;
+  telefono: string | null;
+  expedientesCount?: number;
+  _count?: { expedientes?: number };
+}
+
+interface EnlaceRaw {
+  id: string;
+  expedienteId: string | null;
+  creadoEn: string;
+  revocadoEn: string | null;
+  expiraEn: string | null;
+  usosActuales: number | null;
+}
 
 const ESTADO_ENLACE_TONE: Record<string, 'success' | 'danger' | 'warning'> = {
   activo: 'success',
@@ -72,25 +66,80 @@ function formatFecha(iso: string): string {
 }
 
 export default function PortalClientePage() {
-  const [loading] = useState(false);
+  const [clientes, setClientes] = useState<ClientePortal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selected, setSelected] = useState<ClienteMock | null>(null);
+  const [selected, setSelected] = useState<ClientePortal | null>(null);
   const [showGenerate, setShowGenerate] = useState(false);
 
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch('/api/sgie/clientes?limit=100');
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const json = await res.json() as { clientes?: ClienteRaw[] };
+        if (!cancelled) {
+          const raw = json.clientes ?? [];
+          setClientes(raw.map((c) => ({
+            id: c.id,
+            nombre: c.nombre,
+            email: c.email ?? '',
+            telefono: c.telefono ?? '',
+            expedientesCount: c.expedientesCount ?? c._count?.expedientes ?? 0,
+            enlaces: [],
+          })));
+        }
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Error al cargar clientes');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   const clientesFiltrados = useMemo(() => {
-    if (!searchTerm.trim()) return MOCK_CLIENTES;
+    if (!searchTerm.trim()) return clientes;
     const q = searchTerm.toLowerCase();
-    return MOCK_CLIENTES.filter(
+    return clientes.filter(
       (c) =>
         c.nombre.toLowerCase().includes(q) ||
-        c.email.toLowerCase().includes(q) ||
-        c.enlaces.some((e) => e.expedienteNumero.toLowerCase().includes(q)),
+        c.email.toLowerCase().includes(q),
     );
-  }, [searchTerm]);
+  }, [searchTerm, clientes]);
 
   const mostrarResults = searchTerm.trim().length > 0;
 
+  async function fetchEnlaces(clienteId: string) {
+    try {
+      const res = await fetch(`/api/sgie/enlaces?expedienteId=${clienteId}`);
+      if (!res.ok) return;
+      const json = await res.json() as { enlaces?: EnlaceRaw[] };
+      const enlaces: EnlacePortal[] = (json.enlaces ?? []).map((e) => ({
+        id: e.id,
+        expedienteNumero: e.expedienteId?.slice(0, 8) ?? '',
+        creado: e.creadoEn ?? new Date().toISOString(),
+        estado: e.revocadoEn ? 'revocado' as const : (e.expiraEn && new Date(e.expiraEn) < new Date() ? 'expirado' as const : 'activo' as const),
+        linkStatus: e.usosActuales && e.usosActuales > 0 ? 'accedido' as const : 'enviado' as const,
+      }));
+      setSelected((prev) => prev && prev.id === clienteId ? { ...prev, enlaces } : prev);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function handleSelect(cliente: ClientePortal) {
+    setSelected(cliente);
+    setShowGenerate(false);
+    fetchEnlaces(cliente.id);
+  }
+
   if (loading) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
+  if (error) return <div className="p-8 text-center text-danger">{error}</div>;
 
   return (
     <div className="space-y-6">
@@ -99,17 +148,15 @@ export default function PortalClientePage() {
         <p className="text-xs text-text-secondary mt-0.5">Gestión de accesos y enlaces del portal de clientes</p>
       </div>
 
-      {/* Search */}
       <div className="max-w-lg">
         <Input
-          placeholder="Buscar por nombre, email o expediente..."
+          placeholder="Buscar por nombre o email..."
           value={searchTerm}
           onChange={(e) => { setSearchTerm(e.target.value); setSelected(null); }}
           iconLeft={<Search size={16} />}
         />
       </div>
 
-      {/* Resultados de búsqueda */}
       {mostrarResults && clientesFiltrados.length === 0 && (
         <Card padding="md">
           <EmptyState icon={<Search size={24} />} title="Sin resultados" description="No se encontraron clientes con ese criterio." />
@@ -117,7 +164,6 @@ export default function PortalClientePage() {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Lista de clientes */}
         <Card padding="sm">
           <CardHeader title="Clientes" subtitle={mostrarResults ? `${clientesFiltrados.length} resultados` : 'Escriba para buscar'} />
           {clientesFiltrados.length === 0 && !mostrarResults && (
@@ -128,7 +174,7 @@ export default function PortalClientePage() {
               {clientesFiltrados.map((c) => (
                 <li key={c.id}>
                   <button
-                    onClick={() => { setSelected(c); setShowGenerate(false); }}
+                    onClick={() => handleSelect(c)}
                     className={cn(
                       'w-full text-left px-3 py-2.5 rounded-lg border transition-colors text-xs',
                       selected?.id === c.id
@@ -145,7 +191,6 @@ export default function PortalClientePage() {
           )}
         </Card>
 
-        {/* Detalle del cliente seleccionado */}
         <div className="lg:col-span-2 space-y-4">
           {!selected ? (
             <Card padding="md">
@@ -153,7 +198,6 @@ export default function PortalClientePage() {
             </Card>
           ) : (
             <>
-              {/* Cliente info card */}
               <Card padding="md">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
@@ -169,13 +213,12 @@ export default function PortalClientePage() {
                       </div>
                     </div>
                   </div>
-                  <Button variant="primary" size="sm" onClick={() => setShowGenerate(true)}>
+                  <Button variant="primary" size="sm" onClick={() => setShowGenerate(true)} disabled>
                     <Plus size={14} /> Generar nuevo enlace
                   </Button>
                 </div>
               </Card>
 
-              {/* Generate link form */}
               {showGenerate && (
                 <Card padding="md">
                   <div className="flex items-center justify-between mb-2 pb-2 border-b border-border-light">
@@ -187,18 +230,15 @@ export default function PortalClientePage() {
                   <div className="space-y-3">
                     <select className="w-full h-10 rounded-md border border-border bg-surface text-sm px-3 outline-none">
                       <option value="">Seleccionar expediente...</option>
-                      <option value="EXP-2026-0042">EXP-2026-0042</option>
-                      <option value="EXP-2026-0038">EXP-2026-0038</option>
                     </select>
                     <div className="flex gap-2">
-                      <Button variant="primary" size="sm">Generar enlace</Button>
+                      <Button variant="primary" size="sm" disabled>Generar enlace</Button>
                       <Button variant="ghost" size="sm" onClick={() => setShowGenerate(false)}>Cancelar</Button>
                     </div>
                   </div>
                 </Card>
               )}
 
-              {/* Enlaces table */}
               <Card padding="md">
                 <CardHeader
                   title="Enlaces del portal"

@@ -4,9 +4,7 @@ import {
   procedimientoFases,
   procedimientoTransiciones,
   expedienteFases,
-  tiposProcedimiento,
   historialExpediente,
-  type ProcedimientoFase,
   type ProcedimientoTransicion,
   type ExpedienteFase,
 } from '@/lib/schema';
@@ -21,7 +19,7 @@ export interface InstanciarWorkflowResult {
 export async function instanciarWorkflow(
   expedienteId: string,
   tipoProcedimientoId: string,
-  creadoPor: string,
+  _creadoPor: string,
 ): Promise<InstanciarWorkflowResult> {
   const [version] = await db
     .select()

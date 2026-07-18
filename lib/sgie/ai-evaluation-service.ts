@@ -4,7 +4,7 @@ import {
   extraccionesIa,
   correccionesIa,
 } from '@/lib/schema';
-import { and, eq, desc, count, gte, lte, isNotNull, sql } from 'drizzle-orm';
+import { and, eq, desc, count, isNotNull, sql } from 'drizzle-orm';
 
 export interface AiEvaluationItem {
   id: string;
@@ -83,10 +83,6 @@ export async function listarEvaluacionesIA(filters: {
   const items: AiEvaluationItem[] = rows.map((r) => {
     const confianza =
       (r.resultado as { confianzaTipo?: number } | null)?.confianzaTipo ?? null;
-
-    const extraccion = r.id
-      ? { tokensInput: null as number | null, tokensOutput: null as number | null, duracionMs: null as number | null }
-      : null;
 
     return {
       id: r.id,

@@ -84,6 +84,7 @@ export function getOcrProvider(): OcrProvider {
     return new StubOcrProvider();
   }
   if (provider === 'tesseract') {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { TesseractOcrProvider } = require('./tesseract');
     return new TesseractOcrProvider();
   }

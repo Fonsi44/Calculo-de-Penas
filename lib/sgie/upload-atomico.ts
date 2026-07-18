@@ -16,7 +16,6 @@ import {
 } from '@/lib/schema';
 import { and, eq, gt, isNull, or, sql } from 'drizzle-orm';
 import { hashToken } from './util';
-import { existeHashEnExpediente } from './documentos-db';
 import type { RegistrarDocumentoInput } from './documentos-db';
 
 export interface EnlaceReservado {
@@ -39,7 +38,7 @@ export interface EnlaceReservado {
  */
 export async function reservarEnlaceAtomicamente(
   token: string,
-  requestId: string,
+  _requestId: string,
 ): Promise<EnlaceReservado | null> {
   const tokenHash = hashToken(token);
 

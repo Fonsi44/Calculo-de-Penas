@@ -7,7 +7,7 @@
  */
 import { db } from '@/lib/db';
 import { jobsSgie, comunicacionesOutbox, documentosExpediente, correosEnviados, deadLetterJobs } from '@/lib/schema';
-import { eq, count, desc, isNotNull, isNull, sql } from 'drizzle-orm';
+import { eq, count, desc, isNotNull, sql } from 'drizzle-orm';
 import { getIaConfig } from '@/lib/sgie/ia-documental';
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────

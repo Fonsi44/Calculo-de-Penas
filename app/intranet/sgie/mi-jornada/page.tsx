@@ -1,9 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Clock, AlertTriangle, ThumbsUp, Users, FileText,
-  CheckCircle, XCircle, ArrowRight, FileCheck, Search,
+  ArrowRight, FileCheck, Search,
   Calendar, Mail, RefreshCw,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -26,21 +27,11 @@ interface JornadaItem {
   href: string;
 }
 
-const MOCK_DECISION: JornadaItem[] = [
-  { id: '1', titulo: 'Aprobar clasificación de documentos', expedienteId: 'exp-1', numeroInterno: 'EXP-2026-0042', tipo: 'revision', estado: 'pendiente', prioridad: 'alta', vence: '2026-07-20T12:00:00Z', clienteNombre: 'Carlos Mendoza', href: '/intranet/sgie/revision-documental' },
-  { id: '2', titulo: 'Validar análisis IA de escritura pública', expedienteId: 'exp-2', numeroInterno: 'EXP-2026-0038', tipo: 'revision', estado: 'pendiente', prioridad: 'urgente', vence: '2026-07-19T12:00:00Z', clienteNombre: 'María López', href: '/intranet/sgie/revision-documental' },
-  { id: '3', titulo: 'Revisar propuesta de acuerdo', expedienteId: 'exp-3', numeroInterno: 'EXP-2026-0051', tipo: 'revision', estado: 'pendiente', prioridad: 'media', vence: '2026-07-25T12:00:00Z', clienteNombre: 'Juan Pérez', href: '/intranet/sgie/revision-documental' },
-];
-
-const MOCK_TERCEROS: JornadaItem[] = [
-  { id: '4', titulo: 'Esperando documentos del cliente', expedienteId: 'exp-4', numeroInterno: 'EXP-2026-0029', tipo: 'documentos', estado: 'pendiente', prioridad: 'alta', vence: '2026-07-22T12:00:00Z', clienteNombre: 'Ana Rodríguez', href: '/intranet/sgie/expedientes/exp-4' },
-  { id: '5', titulo: 'Pendiente de respuesta del juzgado', expedienteId: 'exp-5', numeroInterno: 'EXP-2026-0015', tipo: 'externo', estado: 'pendiente', prioridad: 'media', vence: '2026-08-01T12:00:00Z', clienteNombre: 'Pedro García', href: '/intranet/sgie/expedientes/exp-5' },
-];
-
-const MOCK_RIESGO: JornadaItem[] = [
-  { id: '6', titulo: 'Término de prueba vence mañana', expedienteId: 'exp-6', numeroInterno: 'EXP-2026-0012', tipo: 'plazo', estado: 'critico', prioridad: 'urgente', vence: '2026-07-19T12:00:00Z', clienteNombre: 'Luis Hernández', href: '/intranet/sgie/expedientes/exp-6' },
-  { id: '7', titulo: 'Documentación pendiente por 15+ días', expedienteId: 'exp-7', numeroInterno: 'EXP-2026-0023', tipo: 'documentos', estado: 'bloqueado', prioridad: 'alta', vence: null, clienteNombre: 'Sofía Torres', href: '/intranet/sgie/expedientes/exp-7' },
-];
+interface JornadaData {
+  decision: JornadaItem[];
+  terceros: JornadaItem[];
+  riesgo: JornadaItem[];
+}
 
 const PRIORIDAD_TONE: Record<string, string> = {
   baja: 'bg-surface-alt text-text-secondary border-border',
@@ -62,46 +53,76 @@ function esVencido(iso: string | null): boolean {
 
 export default function MiJornadaPage() {
   const { user, loading: authLoading } = useAuth();
+  const [data, setData] = useState<JornadaData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/sgie/mi-jornada');
+      if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+      const json = await res.json();
+      setData(json);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Error al cargar datos');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch('/api/sgie/mi-jornada');
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+        const json = await res.json();
+        if (!cancelled) setData(json);
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Error al cargar datos');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   if (authLoading) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
   if (!user || (user.rol !== 'abogado' && user.rol !== 'admin')) {
     return <div className="text-center py-20"><p className="font-bold text-primary">Acceso restringido</p></div>;
   }
 
+  if (loading) return <div className="flex justify-center py-16"><Spinner size="lg" /></div>;
+  if (error) return <div className="p-8 text-center text-danger">{error}</div>;
+
+  const sections = [
+    { icon: <ThumbsUp size={16} className="text-info" />, titulo: 'Requiere mi decisión', descripcion: 'Elementos que necesitan su revisión y aprobación', items: data?.decision ?? [], vacioMensaje: 'Sin elementos pendientes de decisión.', color: 'info' as const },
+    { icon: <Users size={16} className="text-warning" />, titulo: 'Esperando a terceros', descripcion: 'Acciones pendientes de clientes, juzgados u otros', items: data?.terceros ?? [], vacioMensaje: 'Sin elementos pendientes de terceros.', color: 'warning' as const },
+    { icon: <AlertTriangle size={16} className="text-danger" />, titulo: 'En riesgo', descripcion: 'Plazos próximos a vencer o expedientes bloqueados', items: data?.riesgo ?? [], vacioMensaje: 'Sin elementos en riesgo.', color: 'danger' as const },
+  ];
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-extrabold text-primary">Mi Jornada</h1>
-        <p className="text-xs text-text-secondary mt-0.5">
-          {new Date().toLocaleDateString('es-HN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-extrabold text-primary">Mi Jornada</h1>
+          <p className="text-xs text-text-secondary mt-0.5">
+            {new Date().toLocaleDateString('es-HN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+          </p>
+        </div>
+        <Button variant="secondary" size="sm" onClick={load}>
+          <RefreshCw size={14} /> Refrescar
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <SeccionJornada
-          icon={<ThumbsUp size={16} className="text-info" />}
-          titulo="Requiere mi decisión"
-          descripcion="Elementos que necesitan su revisión y aprobación"
-          items={MOCK_DECISION}
-          vacioMensaje="Sin elementos pendientes de decisión."
-          color="info"
-        />
-        <SeccionJornada
-          icon={<Users size={16} className="text-warning" />}
-          titulo="Esperando a terceros"
-          descripcion="Acciones pendientes de clientes, juzgados u otros"
-          items={MOCK_TERCEROS}
-          vacioMensaje="Sin elementos pendientes de terceros."
-          color="warning"
-        />
-        <SeccionJornada
-          icon={<AlertTriangle size={16} className="text-danger" />}
-          titulo="En riesgo"
-          descripcion="Plazos próximos a vencer o expedientes bloqueados"
-          items={MOCK_RIESGO}
-          vacioMensaje="Sin elementos en riesgo."
-          color="danger"
-        />
+        {sections.map((s) => (
+          <SeccionJornada key={s.titulo} {...s} />
+        ))}
         <Card padding="md">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border-light">
             <RefreshCw size={16} className="text-accent-dark" />

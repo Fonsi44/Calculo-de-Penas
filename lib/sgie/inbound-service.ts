@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { webhookReceipts, type WebhookReceiptInsert } from '@/lib/schema';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { createHmac, timingSafeEqual } from 'crypto';
 
 export interface InboundPayload {
@@ -56,7 +56,7 @@ export async function procesarInbound(payload: InboundPayload): Promise<{ ok: bo
   }
 }
 
-async function procesarBaja(payload: InboundPayload): Promise<{ ok: boolean; error?: string }> {
+async function procesarBaja(_payload: InboundPayload): Promise<{ ok: boolean; error?: string }> {
   await db
     .update(webhookReceipts)
     .set({ estado: 'processed', procesadoEn: new Date() })
@@ -65,7 +65,7 @@ async function procesarBaja(payload: InboundPayload): Promise<{ ok: boolean; err
   return { ok: true };
 }
 
-async function procesarRespuesta(payload: InboundPayload): Promise<{ ok: boolean; error?: string }> {
+async function procesarRespuesta(_payload: InboundPayload): Promise<{ ok: boolean; error?: string }> {
   await db
     .update(webhookReceipts)
     .set({ estado: 'processed', procesadoEn: new Date() })
@@ -74,7 +74,7 @@ async function procesarRespuesta(payload: InboundPayload): Promise<{ ok: boolean
   return { ok: true };
 }
 
-export async function verificarWebhookResend(payload: any, signature: string): Promise<boolean> {
+export async function verificarWebhookResend(payload: string | Record<string, unknown>, signature: string): Promise<boolean> {
   const signingSecret = process.env.RESEND_SIGNING_SECRET;
   if (!signingSecret) return true;
 

@@ -75,7 +75,7 @@ export async function reclamarJobs(workerId: string, limite: number): Promise<Jo
   return (result.rows ?? []) as unknown as JobSgie[];
 }
 
-export async function completarJob(jobId: string, correlationId?: string): Promise<void> {
+export async function completarJob(jobId: string, _correlationId?: string): Promise<void> {
   await db
     .update(jobsSgie)
     .set({
@@ -125,7 +125,7 @@ export async function fallarJob(jobId: string, error: string, errorCode?: string
     .where(eq(jobsSgie.id, jobId));
 }
 
-export async function reintentarJob(jobId: string, correlationId?: string): Promise<void> {
+export async function reintentarJob(jobId: string, _correlationId?: string): Promise<void> {
   await db
     .update(jobsSgie)
     .set({

@@ -5,7 +5,7 @@ import {
   tareas,
   documentosExpediente,
 } from '@/lib/schema';
-import { and, eq, desc, count, sql, lt, isNull, isNotNull, lte, or } from 'drizzle-orm';
+import { and, eq, desc, count, sql, isNotNull, lte } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
 export type SeveridadAlerta = 'info' | 'advertencia' | 'error' | 'critico';
@@ -37,7 +37,7 @@ export async function listarAlertas(filters: {
   const conditions = [];
 
   if (filters.severidad) {
-    conditions.push(eq(alertas.severidad, filters.severidad as any));
+    conditions.push(eq(alertas.severidad, filters.severidad as SeveridadAlerta));
   }
 
   if (filters.expedienteId) {
@@ -88,7 +88,7 @@ export async function cambiarEstadoAlerta(
   alertaId: string,
   nuevoEstado: EstadoAlerta,
   motivo?: string,
-  ctx?: any,
+  ctx?: { usuarioId?: string },
 ): Promise<void> {
   const [alerta] = await db
     .select()
@@ -227,7 +227,7 @@ export async function generarAlertasSla(): Promise<number> {
   return generadas;
 }
 
-function inArray(col: any, values: string[]) {
+function inArray(col: unknown, values: string[]) {
   return sql`${col} IN (${sql.join(values.map(v => sql`${v}`), sql`, `)})`;
 }
 
@@ -278,6 +278,6 @@ export async function generarAlertasInactividad(): Promise<number> {
   return generadas;
 }
 
-function notIn(col: any, values: string[]) {
+function notIn(col: unknown, values: string[]) {
   return sql`${col} NOT IN (${sql.join(values.map(v => sql`${v}`), sql`, `)})`;
 }
