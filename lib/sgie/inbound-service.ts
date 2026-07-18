@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { webhookReceipts, type WebhookReceiptInsert } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
-import { createHmac, timingSafeEqual } from 'crypto';
+import { verifyResendWebhook } from '@/lib/webhook-verify';
 
 export interface InboundPayload {
   from: string;
@@ -74,20 +74,27 @@ async function procesarRespuesta(_payload: InboundPayload): Promise<{ ok: boolea
   return { ok: true };
 }
 
-export async function verificarWebhookResend(payload: string | Record<string, unknown>, signature: string): Promise<boolean> {
-  const signingSecret = process.env.RESEND_SIGNING_SECRET;
-  if (!signingSecret) return true;
-
-  // Resend webhook signature verification: HMAC-SHA256 of the raw body
-  const rawBody = typeof payload === 'string' ? payload : JSON.stringify(payload);
-  const expectedSignature = createHmac('sha256', signingSecret)
-    .update(rawBody)
-    .digest('hex');
-
-  if (!signature) return false;
-
-  return timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(expectedSignature),
-  );
+/**
+ * Verifica la firma de un webhook de Resend.
+ *
+ * Delega en `verifyResendWebhook` (Svix Ed25519, implementación canónica en
+ * `lib/webhook-verify.ts`). Usa `RESEND_WEBHOOK_SECRET` (variable canónica,
+ * documentada en `.env.example`). El nombre `RESEND_SIGNING_SECRET` es un
+ * alias obsoleto que se acepta por compatibilidad con configuraciones
+ * heredadas, pero NO debe usarse en nuevos despliegues.
+ *
+ * Seguridad: si no hay secreto configurado, devuelve `false` (fail-closed),
+ * a diferencia de la implementación anterior que devolvía `true` (bypass).
+ *
+ * @param rawBody  Cuerpo crudo del webhook (string).
+ * @param headers  Cabeceras HTTP de la petición (con svix-id/timestamp/signature).
+ */
+export function verificarWebhookResend(
+  rawBody: string,
+  headers: Record<string, string | string[] | undefined>,
+): boolean {
+  const secret = process.env.RESEND_WEBHOOK_SECRET || process.env.RESEND_SIGNING_SECRET;
+  if (!secret) return false;
+  const result = verifyResendWebhook(rawBody, headers, secret);
+  return result.ok;
 }

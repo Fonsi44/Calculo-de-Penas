@@ -256,53 +256,51 @@ describe('ClientPortalService', () => {
 describe('InboundService', () => {
   describe('verificarWebhookResend', () => {
     beforeEach(() => {
+      delete process.env.RESEND_WEBHOOK_SECRET;
       delete process.env.RESEND_SIGNING_SECRET;
+      vi.resetModules();
     });
 
-    it('returns true when no signing secret configured', async () => {
+    it('returns false (fail-closed) when no signing secret configured', async () => {
       const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
-      const result = await verificarWebhookResend({}, 'some-signature');
-      expect(result).toBe(true);
-    });
-
-    it('returns false when signature is empty', async () => {
-      process.env.RESEND_SIGNING_SECRET = 'test-secret';
-      const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
-      const result = await verificarWebhookResend('{"key":"value"}', '');
+      const result = verificarWebhookResend('{}', { 'svix-id': 'x', 'svix-timestamp': '1', 'svix-signature': 'v1,aaa' });
       expect(result).toBe(false);
     });
 
-    it('validates correct signature', async () => {
-      process.env.RESEND_SIGNING_SECRET = 'test-secret';
-      const { createHmac } = await import('crypto');
-      const payload = '{"key":"value"}';
-      const expectedSig = createHmac('sha256', 'test-secret').update(payload).digest('hex');
-
+    it('returns false when Svix headers are missing', async () => {
+      process.env.RESEND_WEBHOOK_SECRET = 'whsec_test';
       const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
-      const result = await verificarWebhookResend(payload, expectedSig);
-      expect(result).toBe(true);
-    });
-
-    it('rejects incorrect signature', async () => {
-      process.env.RESEND_SIGNING_SECRET = 'test-secret';
-      const { createHmac } = await import('crypto');
-      const payload = 'payload';
-      const wrongSig = createHmac('sha256', 'wrong-secret').update(payload).digest('hex');
-
-      const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
-      const result = await verificarWebhookResend(payload, wrongSig);
+      const result = verificarWebhookResend('{"key":"value"}', {});
       expect(result).toBe(false);
     });
 
-    it('handles object payload', async () => {
-      process.env.RESEND_SIGNING_SECRET = 'test-secret';
-      const { createHmac } = await import('crypto');
-      const payload = { event: 'test', data: { id: '123' } };
-      const rawBody = JSON.stringify(payload);
-      const expectedSig = createHmac('sha256', 'test-secret').update(rawBody).digest('hex');
-
+    it('returns true when verifyResendWebhook accepts (delegación Svix)', async () => {
+      process.env.RESEND_WEBHOOK_SECRET = 'whsec_test';
+      vi.doMock('@/lib/webhook-verify', () => ({
+        verifyResendWebhook: vi.fn().mockReturnValue({ ok: true }),
+      }));
       const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
-      const result = await verificarWebhookResend(payload, expectedSig);
+      const result = verificarWebhookResend('{}', { 'svix-id': 'x', 'svix-timestamp': '1', 'svix-signature': 'v1,aaa' });
+      expect(result).toBe(true);
+    });
+
+    it('returns false when verifyResendWebhook rejects', async () => {
+      process.env.RESEND_WEBHOOK_SECRET = 'whsec_test';
+      vi.doMock('@/lib/webhook-verify', () => ({
+        verifyResendWebhook: vi.fn().mockReturnValue({ ok: false, reason: 'bad sig' }),
+      }));
+      const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
+      const result = verificarWebhookResend('{}', { 'svix-id': 'x', 'svix-timestamp': '1', 'svix-signature': 'v1,aaa' });
+      expect(result).toBe(false);
+    });
+
+    it('acepta alias obsoleto RESEND_SIGNING_SECRET (compatibilidad)', async () => {
+      process.env.RESEND_SIGNING_SECRET = 'whsec_legacy';
+      vi.doMock('@/lib/webhook-verify', () => ({
+        verifyResendWebhook: vi.fn().mockReturnValue({ ok: true }),
+      }));
+      const { verificarWebhookResend } = await import('../lib/sgie/inbound-service');
+      const result = verificarWebhookResend('{}', { 'svix-id': 'x', 'svix-timestamp': '1', 'svix-signature': 'v1,aaa' });
       expect(result).toBe(true);
     });
   });
