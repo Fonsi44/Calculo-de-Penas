@@ -1,15 +1,21 @@
-import { requireAbogado, authFailureResponse } from '@/lib/auth';
+import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { accessService } from '@/lib/access-service';
 import { db } from '@/lib/db';
 import {
   expedientes, documentosExpediente,
   extraccionesIa, correosEnviados, tareas, alertas, correccionesIa,
+  jobsSgie, outboxEvents, comunicacionesOutbox,
 } from '@/lib/schema';
-import { count, eq, and, sql, gte } from 'drizzle-orm';
+import { count, eq, and, gte, sql } from 'drizzle-orm';
+import { httpErrorResponse } from '@/lib/http-errors';
 
 export async function GET(request: Request) {
   try {
-    const auth = await requireAbogado(request);
-    if (auth.rol !== 'admin') return Response.json({ error: 'Solo admin' }, { status: 403 });
+    const auth = await requireAuth(request);
+    await accessService.assertCapability(auth.userId, 'audit.read');
+    if (auth.rol !== 'admin' && auth.rol !== 'administrador') {
+      return Response.json({ error: 'Solo administradores' }, { status: 403 });
+    }
 
     const hace30Dias = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
@@ -29,22 +35,20 @@ export async function GET(request: Request) {
     const [alertasActivas] = await db.select({ c: count() }).from(alertas).where(eq(alertas.resuelta, false));
     const [correccionesCount] = await db.select({ c: count() }).from(correccionesIa);
 
-    // Agrupaciones
+    const [jobsPendientes] = await db.select({ c: count() }).from(jobsSgie).where(eq(jobsSgie.estado, 'pendiente'));
+    const [jobsFallidos] = await db.select({ c: count() }).from(jobsSgie).where(eq(jobsSgie.estado, 'fallido'));
+    const [outboxPendientes] = await db.select({ c: count() }).from(outboxEvents).where(eq(outboxEvents.status, 'pending'));
+    const [outboxFallidos] = await db.select({ c: count() }).from(outboxEvents).where(eq(outboxEvents.status, 'failed'));
+    const [comsPendientes] = await db.select({ c: count() }).from(comunicacionesOutbox).where(eq(comunicacionesOutbox.estado, 'pending'));
+    const [comsFallidas] = await db.select({ c: count() }).from(comunicacionesOutbox).where(eq(comunicacionesOutbox.estado, 'failed'));
+
     const estadosRaw = await db.execute(
-      sql`SELECT estado, COUNT(*)::int as total FROM expedientes GROUP BY estado ORDER BY total DESC`
+      sql`SELECT estado, COUNT(*)::int as total FROM expedientes GROUP BY estado ORDER BY total DESC`,
     );
     const expPorEstado = ((estadosRaw as unknown) as { rows: Array<{ estado: string; total: number }> }).rows ?? [];
 
-    const abogadosRaw = await db.execute(
-      sql`SELECT u.nombre, COUNT(ea.expediente_id)::int as total
-      FROM expediente_asignaciones ea
-      JOIN usuarios u ON u.id = ea.abogado_id
-      WHERE ea.revocada_en IS NULL
-      GROUP BY u.nombre ORDER BY total DESC`
-    );
-    const expPorAbogado = ((abogadosRaw as unknown) as { rows: Array<{ nombre: string; total: number }> }).rows ?? [];
-
     return Response.json({
+      timestamp: new Date().toISOString(),
       totalExpedientes: Number(totalExp?.c ?? 0),
       expedientesActivos30d: Number(expActivos?.c ?? 0),
       totalDocumentos: Number(totalDocs?.c ?? 0),
@@ -58,8 +62,16 @@ export async function GET(request: Request) {
       tareasPendientes: Number(tareasPendientes?.c ?? 0),
       alertasActivas: Number(alertasActivas?.c ?? 0),
       totalCorreccionesIa: Number(correccionesCount?.c ?? 0),
+      jobsPendientes: Number(jobsPendientes?.c ?? 0),
+      jobsFallidos: Number(jobsFallidos?.c ?? 0),
+      outboxPendientes: Number(outboxPendientes?.c ?? 0),
+      outboxFallidos: Number(outboxFallidos?.c ?? 0),
+      comunicacionesPendientes: Number(comsPendientes?.c ?? 0),
+      comunicacionesFallidas: Number(comsFallidas?.c ?? 0),
       expPorEstado,
-      expPorAbogado,
     });
-  } catch (err) { return authFailureResponse(err); }
+  } catch (err) {
+    if (err instanceof Response) return err;
+    return httpErrorResponse(err, request);
+  }
 }

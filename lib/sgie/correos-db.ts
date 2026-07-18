@@ -9,9 +9,10 @@
  * Referencia: pinedayasociados.md §22.3, §23.1.
  */
 import { db } from '@/lib/db';
-import { plantillasCorreo, correosEnviados, type PlantillaCorreo, type PlantillaCorreoInsert } from '@/lib/schema';
-import { eq, and, count, desc, ilike, or } from 'drizzle-orm';
+import { plantillasCorreo, correosEnviados, comunicacionesOutbox, webhookReceipts, requisitosExpediente, type PlantillaCorreo, type PlantillaCorreoInsert, type ComunicacionOutboxInsert, type WebhookReceiptInsert } from '@/lib/schema';
+import { eq, and, count, desc, ilike, or, isNull, lte, inArray } from 'drizzle-orm';
 import { getClient, getFromAddress, getFromName } from '@/lib/email';
+import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 
@@ -376,4 +377,304 @@ export async function listarCorreos(params?: {
     .offset(params?.offset ?? 0);
 
   return { correos, total: countRow?.total ?? 0 };
+}
+
+// ─── Outbox ──────────────────────────────────────────────────────────────────
+
+export async function enviarCorreoConOutbox(input: {
+  expedienteId?: string;
+  tipo: string;
+  destinatario: string;
+  asunto: string;
+  cuerpo: string;
+  programadoPara?: Date;
+  creadoPor?: string;
+}): Promise<{ ok: boolean; id?: string }> {
+  const values: ComunicacionOutboxInsert = {
+    expedienteId: input.expedienteId ?? null,
+    tipo: input.tipo,
+    destinatario: input.destinatario,
+    asunto: input.asunto,
+    cuerpo: input.cuerpo,
+    estado: 'pending',
+    programadoPara: input.programadoPara ?? null,
+    creadoPor: input.creadoPor ?? null,
+  };
+
+  const [record] = await db.insert(comunicacionesOutbox).values(values).returning({ id: comunicacionesOutbox.id });
+
+  await logSgie({
+    usuarioId: input.creadoPor ?? '00000000-0000-0000-0000-000000000000',
+    accion: 'comunicacion_created',
+    recurso: 'comunicaciones_outbox',
+    recursoId: record.id,
+    metadata: { expedienteId: input.expedienteId, tipo: input.tipo, destinatario: input.destinatario },
+  });
+
+  return { ok: true, id: record.id };
+}
+
+export async function procesarOutboxComunicaciones(
+  limite: number = 10,
+): Promise<{ procesadas: number; fallidas: number }> {
+  const pendientes = await db
+    .select()
+    .from(comunicacionesOutbox)
+    .where(
+      and(
+        eq(comunicacionesOutbox.estado, 'pending'),
+        or(
+          isNull(comunicacionesOutbox.programadoPara),
+          lte(comunicacionesOutbox.programadoPara, new Date()),
+        ),
+      ),
+    )
+    .orderBy(comunicacionesOutbox.creadoEn)
+    .limit(limite);
+
+  let procesadas = 0;
+  let fallidas = 0;
+
+  for (const item of pendientes) {
+    try {
+      await db
+        .update(comunicacionesOutbox)
+        .set({ estado: 'sending' })
+        .where(eq(comunicacionesOutbox.id, item.id));
+
+      const resendClient = getClient();
+      if (!resendClient) {
+        await db
+          .update(comunicacionesOutbox)
+          .set({
+            estado: 'failed',
+            error: 'RESEND_API_KEY no configurada',
+            intentos: (item.intentos ?? 0) + 1,
+          })
+          .where(eq(comunicacionesOutbox.id, item.id));
+        fallidas++;
+        await logSgie({
+          usuarioId: '00000000-0000-0000-0000-000000000000',
+          accion: 'comunicacion_failed',
+          recurso: 'comunicaciones_outbox',
+          recursoId: item.id,
+          metadata: { error: 'RESEND_API_KEY no configurada' },
+        });
+        continue;
+      }
+
+      const resendResult = await resendClient.emails.send({
+        from: `${getFromName()} <${getFromAddress()}>`,
+        to: [item.destinatario],
+        subject: item.asunto ?? '',
+        html: item.cuerpo ?? '',
+      });
+
+      if (resendResult.error) {
+        const nuevosIntentos = (item.intentos ?? 0) + 1;
+        const esFinal = nuevosIntentos >= (item.maxIntentos ?? 3);
+        await db
+          .update(comunicacionesOutbox)
+          .set({
+            estado: esFinal ? 'failed' : 'pending',
+            error: resendResult.error.message ?? 'Error de Resend',
+            intentos: nuevosIntentos,
+          })
+          .where(eq(comunicacionesOutbox.id, item.id));
+        if (esFinal) fallidas++;
+        continue;
+      }
+
+      await db
+        .update(comunicacionesOutbox)
+        .set({
+          estado: 'sent',
+          enviadoEn: new Date(),
+          intentos: (item.intentos ?? 0) + 1,
+        })
+        .where(eq(comunicacionesOutbox.id, item.id));
+
+      procesadas++;
+
+      await logSgie({
+        usuarioId: '00000000-0000-0000-0000-000000000000',
+        accion: 'comunicacion_sent',
+        recurso: 'comunicaciones_outbox',
+        recursoId: item.id,
+        metadata: { destinatario: item.destinatario, tipo: item.tipo },
+      });
+    } catch (err) {
+      await db
+        .update(comunicacionesOutbox)
+        .set({
+          estado: 'failed',
+          error: (err as Error).message,
+          intentos: (item.intentos ?? 0) + 1,
+        })
+        .where(eq(comunicacionesOutbox.id, item.id));
+      fallidas++;
+    }
+  }
+
+  return { procesadas, fallidas };
+}
+
+// ─── Webhooks Resend ─────────────────────────────────────────────────────────
+
+export interface ResendWebhookPayload {
+  type: string;
+  data: {
+    email_id: string;
+    created_at?: string;
+    delivered_at?: string;
+    bounced_at?: string;
+    complaint_at?: string;
+    opened_at?: string;
+    clicked_at?: string;
+    summary?: string;
+    bounce?: { bounce_type?: string; reason?: string };
+    complaint?: { complaint_type?: string };
+  };
+}
+
+export async function webhookResend(
+  payload: ResendWebhookPayload,
+): Promise<{ ok: boolean }> {
+  const eventType = payload.type;
+  const resendId = payload.data.email_id;
+
+  // Crear receipt
+  const receiptValues: WebhookReceiptInsert = {
+    fuente: 'resend',
+    eventType,
+    payload: payload as unknown as Record<string, unknown>,
+    estado: 'received',
+  };
+  await db.insert(webhookReceipts).values(receiptValues);
+
+  // Buscar correo por resendId
+  const [correo] = await db
+    .select()
+    .from(correosEnviados)
+    .where(eq(correosEnviados.resendId, resendId));
+
+  if (!correo) {
+    // Webhook para un correo no rastreado en el sistema
+    await db.update(webhookReceipts).set({ estado: 'ignored' }).where(eq(webhookReceipts.eventType, eventType));
+    return { ok: true };
+  }
+
+  const updates: Record<string, unknown> = {};
+
+  switch (eventType) {
+    case 'email.delivered':
+      updates.estado = 'enviado';
+      updates.enviadoEn = payload.data.delivered_at ? new Date(payload.data.delivered_at) : new Date();
+      break;
+    case 'email.bounced':
+      updates.estado = 'fallido';
+      updates.error = `Rebotado: ${payload.data.bounce?.reason ?? payload.data.summary ?? 'sin detalle'}`;
+      break;
+    case 'email.complaint':
+      updates.estado = 'fallido';
+      updates.error = `Queja: ${payload.data.complaint?.complaint_type ?? 'spam'}`;
+      break;
+    case 'email.opened':
+      updates.opened_at = payload.data.opened_at ? new Date(payload.data.opened_at) : new Date();
+      break;
+    case 'email.clicked':
+      updates.clicked_at = payload.data.clicked_at ? new Date(payload.data.clicked_at) : new Date();
+      break;
+    default:
+      break;
+  }
+
+  if (Object.keys(updates).length > 0) {
+    await db
+      .update(correosEnviados)
+      .set(updates as never)
+      .where(eq(correosEnviados.id, correo.id));
+  }
+
+  await db
+    .update(webhookReceipts)
+    .set({ estado: 'processed', procesadoEn: new Date() })
+    .where(eq(webhookReceipts.eventType, eventType));
+
+  const accion = eventType === 'email.bounced'
+    ? 'comunicacion_bounced'
+    : eventType === 'email.delivered'
+      ? 'comunicacion_sent'
+      : 'webhook_processed';
+
+  await logSgie({
+    usuarioId: '00000000-0000-0000-0000-000000000000',
+    accion: accion as 'comunicacion_sent' | 'comunicacion_failed' | 'comunicacion_bounced' | 'webhook_processed',
+    recurso: 'correos_enviados',
+    recursoId: correo.id,
+    metadata: { resendId, eventType, estadoFinal: updates.estado ?? 'actualizado' },
+  });
+
+  return { ok: true };
+}
+
+// ─── Supresión de destinatarios ──────────────────────────────────────────────
+
+export async function suprimirDestinatario(email: string): Promise<{ suprimidos: number }> {
+  const result = await db
+    .update(comunicacionesOutbox)
+    .set({ estado: 'cancelled', error: 'Destinatario suprimido' })
+    .where(
+      and(
+        eq(comunicacionesOutbox.destinatario, email),
+        inArray(comunicacionesOutbox.estado, ['pending', 'sending']),
+      ),
+    )
+    .returning({ id: comunicacionesOutbox.id });
+
+  await logSgie({
+    usuarioId: '00000000-0000-0000-0000-000000000000',
+    accion: 'comunicacion_suppressed',
+    recurso: 'comunicaciones_outbox',
+    metadata: { email, suprimidos: result.length },
+  });
+
+  return { suprimidos: result.length };
+}
+
+// ─── Cancelar recordatorios ──────────────────────────────────────────────────
+
+export async function cancelarRecordatoriosSiCumplido(
+  expedienteId: string,
+  requisitoId: string,
+): Promise<{ cancelados: number }> {
+  const pendientes = await db
+    .select()
+    .from(comunicacionesOutbox)
+    .where(
+      and(
+        eq(comunicacionesOutbox.expedienteId, expedienteId),
+        eq(comunicacionesOutbox.tipo, 'recordatorio'),
+        eq(comunicacionesOutbox.estado, 'pending'),
+      ),
+    );
+
+  if (pendientes.length === 0) return { cancelados: 0 };
+
+  const ids = pendientes.map((r) => r.id);
+
+  await db
+    .update(comunicacionesOutbox)
+    .set({ estado: 'cancelled', error: 'Requisito cumplido — recordatorio cancelado' })
+    .where(inArray(comunicacionesOutbox.id, ids));
+
+  await logSgie({
+    usuarioId: '00000000-0000-0000-0000-000000000000',
+    accion: 'comunicacion_suppressed',
+    recurso: 'comunicaciones_outbox',
+    recursoId: expedienteId,
+    metadata: { expedienteId, requisitoId, cancelados: ids.length },
+  });
+
+  return { cancelados: ids.length };
 }

@@ -1,7 +1,12 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { documentosExpediente, expedienteAsignaciones } from '@/lib/schema';
+import {
+  documentosExpediente,
+  expedienteAsignaciones,
+  comunicacionesOutbox,
+  comunicacionesAuditoria,
+} from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 import { validateCsrf } from '@/lib/csrf';
@@ -18,8 +23,11 @@ export async function POST(
     const { id: documentoId } = await params;
     const { motivo } = bodySchema.parse(await request.json());
 
-    const [doc] = await db.select({ expedienteId: documentosExpediente.expedienteId })
-      .from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
+    const [doc] = await db.select({
+      expedienteId: documentosExpediente.expedienteId,
+      requisitoExpedienteId: documentosExpediente.requisitoExpedienteId,
+      nombreOriginal: documentosExpediente.nombreOriginal,
+    }).from(documentosExpediente).where(eq(documentosExpediente.id, documentoId));
     if (!doc) return Response.json({ error: 'No encontrado' }, { status: 404 });
 
     if (auth.rol !== 'admin') {
@@ -28,12 +36,44 @@ export async function POST(
       if (!asig) return Response.json({ error: 'Sin acceso' }, { status: 403 });
     }
 
-    await db.update(documentosExpediente).set({ estado: 'rechazado', rechazadoPor: auth.userId, rechazadoEn: new Date(), rechazoMotivo: motivo })
-      .where(eq(documentosExpediente.id, documentoId));
+    await db.update(documentosExpediente).set({
+      estado: 'rechazado', rechazadoPor: auth.userId, rechazadoEn: new Date(), rechazoMotivo: motivo,
+    }).where(eq(documentosExpediente.id, documentoId));
 
-    await logSgie({ usuarioId: auth.userId, accion: 'documento_updated', recurso: 'documento', recursoId: documentoId, metadata: { accion: 'rechazar', motivo }, request });
+    const [comunicacion] = await db.insert(comunicacionesOutbox).values({
+      expedienteId: doc.expedienteId,
+      tipo: 'correccion_solicitada',
+      destinatario: '',
+      asunto: 'Corrección solicitada — ' + (doc.nombreOriginal || 'documento'),
+      cuerpo: motivo,
+      estado: 'pending',
+      creadoPor: auth.userId,
+    }).returning({ id: comunicacionesOutbox.id });
 
-    return Response.json({ ok: true });
+    await db.insert(comunicacionesAuditoria).values({
+      comunicacionId: comunicacion?.id ?? null,
+      accion: 'comunicacion_created',
+      estadoAnterior: null,
+      estadoNuevo: 'pending',
+      metadata: {
+        documentoId,
+        expedienteId: doc.expedienteId,
+        requisitoExpedienteId: doc.requisitoExpedienteId,
+        motivo,
+      },
+      actorId: auth.userId,
+    });
+
+    await logSgie({
+      usuarioId: auth.userId,
+      accion: 'documento_updated',
+      recurso: 'documento',
+      recursoId: documentoId,
+      metadata: { accion: 'rechazar', motivo, comunicacionId: comunicacion?.id ?? null },
+      request,
+    });
+
+    return Response.json({ ok: true, comunicacionId: comunicacion?.id ?? null });
   } catch (err) {
     if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
     return authFailureResponse(err);

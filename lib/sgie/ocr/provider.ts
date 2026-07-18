@@ -83,6 +83,10 @@ export function getOcrProvider(): OcrProvider {
   if (provider === 'stub' || provider.length === 0) {
     return new StubOcrProvider();
   }
+  if (provider === 'tesseract') {
+    const { TesseractOcrProvider } = require('./tesseract');
+    return new TesseractOcrProvider();
+  }
   // Futuro: 'google' | 'aws' | 'azure' → instanciar su implementación.
   // Mientras tanto, caer a stub para no romper el build.
   return new StubOcrProvider();

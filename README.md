@@ -149,7 +149,12 @@ búsqueda, no fuente primaria de contenido.
 
 ### SGIE (intranet)
 Sistema de Gestión Integral de Expedientes. Privado (auth + proxy). Documentación
-bajo `docs/implementation/` y `docs/architecture/`.
+bajo `docs/architecture/`:
+
+- **Fase 1:** Núcleo Admin, identidad, RBAC y calendario.
+  [`docs/architecture/fase-1-nucleo-admin-identidad-calendario.md`](docs/architecture/fase-1-nucleo-admin-identidad-calendario.md)
+- **Fase 2:** Núcleo durable de procedimientos, documentos, comunicaciones, OCR e IA.
+  [`docs/architecture/fase-2-nucleo-durable-documentos-comunicaciones.md`](docs/architecture/fase-2-nucleo-durable-documentos-comunicaciones.md)
 
 ---
 

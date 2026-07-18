@@ -254,6 +254,31 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'case_returned_by_lawyer',
   'case_documental_review_approved',
   'case_additional_info_requested',
+  // Fase 2 — Workflows, Outbox, Jobs.
+  'workflow_transition',
+  'outbox_dispatched',
+  'outbox_failed',
+  'job_claimed',
+  'job_completed',
+  'job_failed',
+  'job_dead_lettered',
+  'job_requeued',
+  // Fase 2 — Comunicaciones.
+  'comunicacion_created',
+  'comunicacion_approved',
+  'comunicacion_rejected',
+  'comunicacion_sent',
+  'comunicacion_failed',
+  'comunicacion_bounced',
+  'comunicacion_suppressed',
+  'webhook_received',
+  'webhook_processed',
+  // Fase 2 — IA y OCR.
+  'ai_task_routed',
+  'ai_task_completed',
+  'ai_task_reviewed',
+  'ocr_completed',
+  'ocr_failed',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {
@@ -1145,7 +1170,7 @@ export const correoEstadoEnum = pgEnum('correo_estado', [
 ]);
 
 export const jobSgieEstadoEnum = pgEnum('job_sgie_estado', [
-  'pendiente', 'en_proceso', 'completado', 'fallido', 'cancelado',
+  'pendiente', 'en_proceso', 'completado', 'fallido', 'cancelado', 'dead_lettered',
 ]);
 
 export const jobSgieTipoEnum = pgEnum('job_sgie_tipo', [
@@ -1696,12 +1721,21 @@ export const jobsSgie = pgTable('jobs_sgie', {
   intentos: integer('intentos').default(0),
   maxIntentos: integer('max_intentos').default(3),
   error: text('error'),
+  errorCode: varchar('error_code', { length: 100 }),
   procesadoEn: timestamp('procesado_en', { withTimezone: true }),
   completadoEn: timestamp('completado_en', { withTimezone: true }),
+  lockedAt: timestamp('locked_at', { withTimezone: true }),
+  lockExpiresAt: timestamp('lock_expires_at', { withTimezone: true }),
+  workerId: varchar('worker_id', { length: 100 }),
+  nextRunAt: timestamp('next_run_at', { withTimezone: true }),
+  priority: integer('priority').default(0),
+  idempotencyKey: varchar('idempotency_key', { length: 64 }),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
   estadoIdx: index('jobs_sgie_estado_idx').on(table.estado),
   tipoIdx: index('jobs_sgie_tipo_idx').on(table.tipo),
+  priorityIdx: index('jobs_sgie_priority_idx').on(table.priority),
+  idempotencyKeyUnique: unique('jobs_sgie_idempotency_key_unique').on(table.idempotencyKey),
   // Idempotencia: un job por tipo+ref+ventana.
   idempotenciaUnique: unique('jobs_sgie_idempotencia_unique')
     .on(table.tipo, table.refId, table.ventanaTemporal),
@@ -1882,3 +1916,317 @@ export const previewTokens = pgTable('preview_tokens', {
 
 export type PreviewToken = typeof previewTokens.$inferSelect;
 export type PreviewTokenInsert = typeof previewTokens.$inferInsert;
+
+// ============================================================
+// Fase 2 — Workflows, Outbox, Jobs, Documentos OCR/AI,
+//            Comunicaciones
+// ============================================================
+
+// ─── Procedimiento Versiones ─────────────────────────────────
+
+export const procedimientoVersiones = pgTable('procedimiento_versiones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  procedimientoId: uuid('procedimiento_id').notNull(),
+  version: integer('version').notNull(),
+  definicion: jsonb('definicion'),
+  estado: procedimientoEstadoEnum('estado').notNull().default('pendiente_validacion_legal'),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  procedimientoRef: foreignKey({ columns: [table.procedimientoId], foreignColumns: [tiposProcedimiento.id] }),
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  procedimientoIdx: index('procedimiento_versiones_procedimiento_idx').on(table.procedimientoId),
+  versionUnique: unique('procedimiento_versiones_version_unique').on(table.procedimientoId, table.version),
+}));
+
+export type ProcedimientoVersion = typeof procedimientoVersiones.$inferSelect;
+export type ProcedimientoVersionInsert = typeof procedimientoVersiones.$inferInsert;
+
+// ─── Procedimiento Fases ─────────────────────────────────────
+
+export const procedimientoFases = pgTable('procedimiento_fases', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  procedimientoVersionId: uuid('procedimiento_version_id').notNull(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  slug: varchar('slug', { length: 200 }).notNull(),
+  orden: integer('orden').notNull().default(0),
+  descripcion: text('descripcion'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  versionRef: foreignKey({ columns: [table.procedimientoVersionId], foreignColumns: [procedimientoVersiones.id] }),
+  versionIdx: index('procedimiento_fases_version_idx').on(table.procedimientoVersionId),
+  versionSlugUnique: unique('procedimiento_fases_version_slug_unique').on(table.procedimientoVersionId, table.slug),
+}));
+
+export type ProcedimientoFase = typeof procedimientoFases.$inferSelect;
+export type ProcedimientoFaseInsert = typeof procedimientoFases.$inferInsert;
+
+// ─── Procedimiento Transiciones ──────────────────────────────
+
+export const procedimientoTransiciones = pgTable('procedimiento_transiciones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  procedimientoVersionId: uuid('procedimiento_version_id').notNull(),
+  desdeFaseId: uuid('desde_fase_id').notNull(),
+  haciaFaseId: uuid('hacia_fase_id').notNull(),
+  nombre: varchar('nombre', { length: 200 }),
+  condiciones: jsonb('condiciones'),
+  actoresPermitidos: text('actores_permitidos').array().default(['abogado', 'admin', 'sistema']),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  versionRef: foreignKey({ columns: [table.procedimientoVersionId], foreignColumns: [procedimientoVersiones.id] }),
+  desdeFaseRef: foreignKey({ columns: [table.desdeFaseId], foreignColumns: [procedimientoFases.id] }),
+  haciaFaseRef: foreignKey({ columns: [table.haciaFaseId], foreignColumns: [procedimientoFases.id] }),
+  versionIdx: index('procedimiento_transiciones_version_idx').on(table.procedimientoVersionId),
+  desdeIdx: index('procedimiento_transiciones_desde_idx').on(table.desdeFaseId),
+  haciaIdx: index('procedimiento_transiciones_hacia_idx').on(table.haciaFaseId),
+}));
+
+export type ProcedimientoTransicion = typeof procedimientoTransiciones.$inferSelect;
+export type ProcedimientoTransicionInsert = typeof procedimientoTransiciones.$inferInsert;
+
+// ─── Expediente Fases ────────────────────────────────────────
+
+export const expedienteFases = pgTable('expediente_fases', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  faseId: uuid('fase_id').notNull(),
+  entradaEn: timestamp('entrada_en', { withTimezone: true }).defaultNow(),
+  salidaEn: timestamp('salida_en', { withTimezone: true }),
+  metadata: jsonb('metadata'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  faseRef: foreignKey({ columns: [table.faseId], foreignColumns: [procedimientoFases.id] }),
+  expedienteIdx: index('expediente_fases_expediente_idx').on(table.expedienteId),
+  faseIdx: index('expediente_fases_fase_idx').on(table.faseId),
+}));
+
+export type ExpedienteFase = typeof expedienteFases.$inferSelect;
+export type ExpedienteFaseInsert = typeof expedienteFases.$inferInsert;
+
+// ─── Outbox Events (Transactional Outbox) ────────────────────
+
+export const outboxEvents = pgTable('outbox_events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  eventType: varchar('event_type', { length: 100 }).notNull(),
+  aggregateId: varchar('aggregate_id', { length: 100 }),
+  aggregateType: varchar('aggregate_type', { length: 100 }),
+  payload: jsonb('payload').notNull(),
+  status: varchar('status', { length: 30 }).notNull().default('pending'),
+  intentos: integer('intentos').default(0),
+  maxIntentos: integer('max_intentos').default(3),
+  error: text('error'),
+  lockedAt: timestamp('locked_at', { withTimezone: true }),
+  lockExpiresAt: timestamp('lock_expires_at', { withTimezone: true }),
+  workerId: varchar('worker_id', { length: 100 }),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  procesadoEn: timestamp('procesado_en', { withTimezone: true }),
+}, (table) => ({
+  statusIdx: index('outbox_events_status_idx').on(table.status),
+  eventTypeIdx: index('outbox_events_event_type_idx').on(table.eventType),
+  creadoEnIdx: index('outbox_events_creado_en_idx').on(table.creadoEn),
+}));
+
+export type OutboxEvent = typeof outboxEvents.$inferSelect;
+export type OutboxEventInsert = typeof outboxEvents.$inferInsert;
+
+// ─── Job Attempts ─────────────────────────────────────────────
+
+export const jobAttempts = pgTable('job_attempts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  jobId: uuid('job_id').notNull(),
+  numeroIntento: integer('numero_intento').notNull(),
+  estado: varchar('estado', { length: 30 }).notNull().default('running'),
+  iniciadoEn: timestamp('iniciado_en', { withTimezone: true }).defaultNow(),
+  completadoEn: timestamp('completado_en', { withTimezone: true }),
+  error: text('error'),
+  errorCode: varchar('error_code', { length: 100 }),
+  output: jsonb('output'),
+  correlationId: varchar('correlation_id', { length: 64 }),
+}, (table) => ({
+  jobRef: foreignKey({ columns: [table.jobId], foreignColumns: [jobsSgie.id] }).onDelete('cascade'),
+  jobIdx: index('job_attempts_job_idx').on(table.jobId),
+}));
+
+export type JobAttempt = typeof jobAttempts.$inferSelect;
+export type JobAttemptInsert = typeof jobAttempts.$inferInsert;
+
+// ─── Dead Letter Jobs ─────────────────────────────────────────
+
+export const deadLetterJobs = pgTable('dead_letter_jobs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  jobId: uuid('job_id'),
+  tipo: varchar('tipo', { length: 100 }).notNull(),
+  refId: uuid('ref_id'),
+  payload: jsonb('payload'),
+  motivo: text('motivo'),
+  errorFinal: text('error_final'),
+  errorCode: varchar('error_code', { length: 100 }),
+  intentosTotales: integer('intentos_totales').default(0),
+  enviadoADlqEn: timestamp('enviado_a_dlq_en', { withTimezone: true }).defaultNow(),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  jobRef: foreignKey({ columns: [table.jobId], foreignColumns: [jobsSgie.id] }).onDelete('set null'),
+  tipoIdx: index('dead_letter_jobs_tipo_idx').on(table.tipo),
+}));
+
+export type DeadLetterJob = typeof deadLetterJobs.$inferSelect;
+export type DeadLetterJobInsert = typeof deadLetterJobs.$inferInsert;
+
+// ─── Comunicaciones Outbox ────────────────────────────────────
+
+export const comunicacionesOutbox = pgTable('comunicaciones_outbox', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id'),
+  tipo: varchar('tipo', { length: 50 }).notNull(),
+  destinatario: varchar('destinatario', { length: 255 }).notNull(),
+  asunto: varchar('asunto', { length: 300 }),
+  cuerpo: text('cuerpo'),
+  estado: varchar('estado', { length: 30 }).notNull().default('pending'),
+  intentos: integer('intentos').default(0),
+  maxIntentos: integer('max_intentos').default(3),
+  programadoPara: timestamp('programado_para', { withTimezone: true }),
+  enviadoEn: timestamp('enviado_en', { withTimezone: true }),
+  error: text('error'),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  expedienteIdx: index('comunicaciones_outbox_expediente_idx').on(table.expedienteId),
+  estadoIdx: index('comunicaciones_outbox_estado_idx').on(table.estado),
+}));
+
+export type ComunicacionOutbox = typeof comunicacionesOutbox.$inferSelect;
+export type ComunicacionOutboxInsert = typeof comunicacionesOutbox.$inferInsert;
+
+// ─── Comunicaciones Aprobaciones ──────────────────────────────
+
+export const comunicacionesAprobaciones = pgTable('comunicaciones_aprobaciones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  comunicacionId: uuid('comunicacion_id').notNull(),
+  estado: varchar('estado', { length: 30 }).notNull().default('pending'),
+  aprobadoPor: uuid('aprobado_por'),
+  rechazadoPor: uuid('rechazado_por'),
+  comentario: text('comentario'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  resueltoEn: timestamp('resuelto_en', { withTimezone: true }),
+}, (table) => ({
+  comunicacionRef: foreignKey({ columns: [table.comunicacionId], foreignColumns: [comunicacionesOutbox.id] }).onDelete('cascade'),
+  aprobadoPorRef: foreignKey({ columns: [table.aprobadoPor], foreignColumns: [usuarios.id] }),
+  rechazadoPorRef: foreignKey({ columns: [table.rechazadoPor], foreignColumns: [usuarios.id] }),
+  comunicacionIdx: index('comunicaciones_aprobaciones_comunicacion_idx').on(table.comunicacionId),
+}));
+
+export type ComunicacionAprobacion = typeof comunicacionesAprobaciones.$inferSelect;
+export type ComunicacionAprobacionInsert = typeof comunicacionesAprobaciones.$inferInsert;
+
+// ─── Webhook Receipts ─────────────────────────────────────────
+
+export const webhookReceipts = pgTable('webhook_receipts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  fuente: varchar('fuente', { length: 100 }).notNull(),
+  eventType: varchar('event_type', { length: 100 }),
+  payload: jsonb('payload').notNull(),
+  estado: varchar('estado', { length: 30 }).notNull().default('received'),
+  recibidoEn: timestamp('recibido_en', { withTimezone: true }).defaultNow(),
+  procesadoEn: timestamp('procesado_en', { withTimezone: true }),
+  error: text('error'),
+}, (table) => ({
+  fuenteIdx: index('webhook_receipts_fuente_idx').on(table.fuente),
+  estadoIdx: index('webhook_receipts_estado_idx').on(table.estado),
+}));
+
+export type WebhookReceipt = typeof webhookReceipts.$inferSelect;
+export type WebhookReceiptInsert = typeof webhookReceipts.$inferInsert;
+
+// ─── OCR Resultados ───────────────────────────────────────────
+
+export const ocrResultados = pgTable('ocr_resultados', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentoId: uuid('documento_id').notNull(),
+  textoExtraido: text('texto_extraido').notNull(),
+  metodo: varchar('metodo', { length: 50 }).notNull().default('tesseract'),
+  confianza: real('confianza'),
+  paginas: integer('paginas'),
+  duracionMs: integer('duracion_ms'),
+  modeloOcr: varchar('modelo_ocr', { length: 100 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  documentoIdx: index('ocr_resultados_documento_idx').on(table.documentoId),
+}));
+
+export type OcrResultado = typeof ocrResultados.$inferSelect;
+export type OcrResultadoInsert = typeof ocrResultados.$inferInsert;
+
+// ─── AI Task Routing ──────────────────────────────────────────
+
+export const aiTaskRouting = pgTable('ai_task_routing', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentoId: uuid('documento_id'),
+  taskType: varchar('task_type', { length: 100 }).notNull(),
+  proveedorAsignado: varchar('proveedor_asignado', { length: 100 }),
+  modelo: varchar('modelo', { length: 100 }),
+  estado: varchar('estado', { length: 30 }).notNull().default('pending'),
+  payload: jsonb('payload'),
+  resultado: jsonb('resultado'),
+  asignadoEn: timestamp('asignado_en', { withTimezone: true }).defaultNow(),
+  completadoEn: timestamp('completado_en', { withTimezone: true }),
+  error: text('error'),
+  revisadoPor: uuid('revisado_por'),
+  revisadoEn: timestamp('revisado_en', { withTimezone: true }),
+}, (table) => ({
+  documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  revisadoPorRef: foreignKey({ columns: [table.revisadoPor], foreignColumns: [usuarios.id] }),
+  documentoIdx: index('ai_task_routing_documento_idx').on(table.documentoId),
+  estadoIdx: index('ai_task_routing_estado_idx').on(table.estado),
+}));
+
+export type AiTaskRouting = typeof aiTaskRouting.$inferSelect;
+export type AiTaskRoutingInsert = typeof aiTaskRouting.$inferInsert;
+
+// ─── Plantilla Correo Versiones ───────────────────────────────
+
+export const plantillaCorreoVersiones = pgTable('plantilla_correo_versiones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  plantillaCorreoId: uuid('plantilla_correo_id').notNull(),
+  version: integer('version').notNull(),
+  asunto: varchar('asunto', { length: 300 }).notNull(),
+  cuerpoHtml: text('cuerpo_html').notNull(),
+  variablesPermitidas: text('variables_permitidas').array().default([]),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  plantillaRef: foreignKey({ columns: [table.plantillaCorreoId], foreignColumns: [plantillasCorreo.id] }).onDelete('cascade'),
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  plantillaIdx: index('plantilla_correo_versiones_plantilla_idx').on(table.plantillaCorreoId),
+  versionUnique: unique('plantilla_correo_versiones_version_unique').on(table.plantillaCorreoId, table.version),
+}));
+
+export type PlantillaCorreoVersion = typeof plantillaCorreoVersiones.$inferSelect;
+export type PlantillaCorreoVersionInsert = typeof plantillaCorreoVersiones.$inferInsert;
+
+// ─── Comunicaciones Auditoría ─────────────────────────────────
+
+export const comunicacionesAuditoria = pgTable('comunicaciones_auditoria', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  comunicacionId: uuid('comunicacion_id'),
+  accion: varchar('accion', { length: 100 }).notNull(),
+  estadoAnterior: varchar('estado_anterior', { length: 30 }),
+  estadoNuevo: varchar('estado_nuevo', { length: 30 }),
+  metadata: jsonb('metadata'),
+  actorId: uuid('actor_id'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  comunicacionRef: foreignKey({ columns: [table.comunicacionId], foreignColumns: [comunicacionesOutbox.id] }).onDelete('set null'),
+  actorRef: foreignKey({ columns: [table.actorId], foreignColumns: [usuarios.id] }),
+  comunicacionIdx: index('comunicaciones_auditoria_comunicacion_idx').on(table.comunicacionId),
+  accionIdx: index('comunicaciones_auditoria_accion_idx').on(table.accion),
+  creadoEnIdx: index('comunicaciones_auditoria_creado_en_idx').on(table.creadoEn),
+}));
+
+export type ComunicacionAuditoria = typeof comunicacionesAuditoria.$inferSelect;
+export type ComunicacionAuditoriaInsert = typeof comunicacionesAuditoria.$inferInsert;

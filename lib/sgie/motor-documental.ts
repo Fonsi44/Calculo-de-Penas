@@ -14,7 +14,7 @@
 import { db } from '@/lib/db';
 import { documentosExpediente, extraccionesIa, jobsSgie, historialExpediente, documentTextPages } from '@/lib/schema';
 import { eq, and, ne } from 'drizzle-orm';
-import { reclamarJob, completarJob, fallarJob } from '@/lib/sgie/jobs-db';
+import { completarJob, fallarJob } from '@/lib/sgie/jobs-db';
 import { getOcrProvider } from '@/lib/sgie/ocr/provider';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 
@@ -710,7 +710,7 @@ export async function procesarJobsPendientes(limite = 5): Promise<{
     }
 
     try {
-      await reclamarJob(job.id);
+      await db.update(jobsSgie).set({ estado: 'en_proceso', procesadoEn: new Date() }).where(eq(jobsSgie.id, job.id));
 
       // Fase 4: los jobs ia_extraccion se procesan con la capa IA; el resto con extracción/clasificación.
       if (job.tipo === 'ia_extraccion') {

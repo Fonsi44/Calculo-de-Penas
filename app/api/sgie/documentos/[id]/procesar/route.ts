@@ -4,19 +4,11 @@ import { db } from '@/lib/db';
 import { documentosExpediente, expedienteAsignaciones, expedientePermisos } from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { encolarJob } from '@/lib/sgie/jobs-db';
+import { encolarEvento, OUTBOX_EVENTS } from '@/lib/sgie/outbox';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 import { validateCsrf } from '@/lib/csrf';
+import { randomUUID } from 'crypto';
 
-/**
- * POST /api/sgie/documentos/[id]/procesar
- *
- * Encola un job de procesamiento documental (extracción de texto +
- * clasificación heurística) para un documento ya persistido.
- * No ejecuta trabajo pesado en el route handler.
- *
- * Idempotencia: si ya existe un job pendiente/en_proceso para el mismo
- * documento, no duplica.
- */
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -26,6 +18,8 @@ export async function POST(
     validateCsrf(request);
     const { id: documentoId } = await params;
 
+    const correlationId = randomUUID();
+
     const rl = await rateLimit(`sgie:doc:procesar:${auth.userId}`, {
       max: 30,
       windowMs: 60_000,
@@ -33,7 +27,6 @@ export async function POST(
     });
     if (!rl.ok) return rateLimitResponse(rl);
 
-    // Verificar acceso al documento
     const [doc] = await db
       .select({
         id: documentosExpediente.id,
@@ -48,7 +41,6 @@ export async function POST(
       return Response.json({ error: 'Documento no encontrado' }, { status: 404 });
     }
 
-    // Verificar scope: admin ve todo; abogado solo sus expedientes
     if (auth.rol !== 'admin') {
       const [asignado] = await db
         .select({ id: expedienteAsignaciones.id })
@@ -78,7 +70,6 @@ export async function POST(
       }
     }
 
-    // Validar que el documento esté en un estado procesable
     const estadosProcesables = new Set(['subido', 'clasificando']);
     if (!estadosProcesables.has(doc.estado)) {
       return Response.json({
@@ -87,7 +78,6 @@ export async function POST(
       }, { status: 200 });
     }
 
-    // Encolar job (idempotente: no duplica por tipo+refId+ventanaTemporal)
     const resultado = await encolarJob({
       tipo: 'extraccion_texto',
       refId: documentoId,
@@ -95,15 +85,30 @@ export async function POST(
         documentoId,
         hashSha256: doc.hashSha256,
         reencolado: false,
+        correlationId,
       },
+      correlationId,
+    });
+
+    await encolarEvento({
+      tipo: OUTBOX_EVENTS.DOCUMENT_PROCESSING_REQUESTED,
+      aggregateType: 'documento_expediente',
+      aggregateId: documentoId,
+      payload: {
+        documentoId,
+        expedienteId: doc.expedienteId,
+        hashSha256: doc.hashSha256,
+        jobId: resultado.id,
+      },
+      correlationId,
     });
 
     await logSgie({
       usuarioId: auth.userId,
-      accion: 'documento_updated', // Reutilizamos acción existente
+      accion: 'documento_updated',
       recurso: 'documento',
       recursoId: documentoId,
-      metadata: { jobId: resultado.id, duplicado: resultado.duplicado },
+      metadata: { jobId: resultado.id, duplicado: resultado.duplicado, correlationId },
       request,
     });
 
@@ -111,6 +116,7 @@ export async function POST(
       ok: true,
       jobId: resultado.id,
       duplicado: resultado.duplicado,
+      correlationId,
       mensaje: resultado.duplicado
         ? 'El documento ya tiene un job de procesamiento pendiente.'
         : 'Job de procesamiento encolado correctamente.',

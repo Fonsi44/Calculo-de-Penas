@@ -14,6 +14,39 @@ y este proyecto se adhiere a [Semantic Versioning 2.0.0](https://semver.org/spec
 
 ## [Unreleased]
 
+## [111] — 2026-07-18 — Fase 2 — Núcleo durable de procedimientos, documentos, comunicaciones, OCR e IA
+
+> **Estado:** implementado en `main` (commit `c74840d`). Migraciones 0034–0036 listas para aplicar en staging.
+> Documentación: `docs/architecture/fase-2-nucleo-durable-documentos-comunicaciones.md`, `docs/ops/fase-2-staging-validation.md`,
+> `docs/handoffs/fase-2-a-fase-3.md`, `docs/adr/ADR-003` a `ADR-006`.
+
+### Added
+
+- **SGIE/Workflow engine:** plantillas versionadas de procedimiento (`procedimiento_versiones`), fases (`procedimiento_fases`) con orden/slug, transiciones (`procedimiento_transiciones`) con actores permitidos (`abogado`/`admin`/`sistema`). `instanciarWorkflow()` clona fases activas en `expediente_fases`. `transitarFase()` valida transiciones y actor en transacción atómica. `obtenerFaseActual()` y `obtenerWorkflow()` para consulta de estado.
+- **SGIE/Job queue durable:** tabla `jobs_sgie` ampliada con `next_run_at`, `locked_at`, `lock_expires_at`, `worker_id`, `priority`, `idempotency_key`. Reclamación con `FOR UPDATE SKIP LOCKED`. Backoff exponencial 2^n × 60s + 30% jitter (máx 24h). Dead-letter queue en `dead_letter_jobs` tras 3 intentos. Historial de intentos en `job_attempts`. `recuperarLocksAbandonados()` para limpieza de workers caídos.
+- **SGIE/Transactional outbox:** tabla `outbox_events` con 9 eventos canónicos (`case.created`, `workflow.instantiated`, `document.uploaded`, `document.processing.requested`, `document.processed`, `document.review.required`, `requirement.completed`, `communication.requested`, `communication.cancelled`). Eventos insertados en la misma transacción DB que la operación de negocio. `despacharEventos()` con `FOR UPDATE SKIP LOCKED`.
+- **SGIE/Subida atómica:** `reservarEnlaceAtomicamente()` con UPDATE atómico de usos (previene race conditions). `registrarDocumentoAtomico()` en transacción DB: verificación de duplicado por hash intra-expediente y global + inserción + outbox event + job. `compensarBlobHuerfano()` para limpieza en errores.
+- **SGIE/OCR:** interfaz `OcrProvider` con stub por defecto (nunca inventa texto). Tesseract.js como proveedor local para imágenes (JPEG/PNG/WebP/TIFF/BMP) y PDFs escaneados vía `pdfjs-dist` + `OffscreenCanvas`. Tabla `ocr_resultados` con texto, confianza, páginas y duración.
+- **SGIE/AI Router:** enrutamiento multi-estrategia (deterministic → heuristic → deepseek → deepseek_pro → human). Configurable por `DOCUMENT_AI_MODE`. Umbral de revisión humana configurable vía `DOCUMENT_AI_HUMAN_REVIEW_THRESHOLD`. Revisión humana con approve/reject/correct. Trazabilidad completa en `ai_task_routing` + `logSgie`.
+- **SGIE/Comunicaciones:** CRUD de plantillas versionadas con interpolación segura (HTML escapado). Envío idempotente vía Resend con `onConflictDoNothing`. Outbox de comunicaciones (`comunicaciones_outbox`) con reintentos (max 3) y envío programado. Webhooks Resend (delivered/bounced/complaint/opened/clicked). Auditoría en `comunicaciones_auditoria`. Supresión de destinatarios y cancelación de recordatorios.
+- **SGIE/Observabilidad:** `obtenerMetricasOperativas()` con dashboard completo (jobs, outbox, documentos, comunicaciones, workers). `obtenerEstadoIntegraciones()` para OCR/IA/Resend/Blob. Endpoint `GET /api/admin/sgie/metricas` protegido por rol admin + capacidad `audit.read`.
+- **API endpoints:** `POST /api/public/cargar/[token]` (carga pública con rate limit + enlace mágico atómico), `POST /api/sgie/documentos/[id]/procesar` (procesamiento con requireAbogado + CSRF), `POST /api/sgie/documentos/[id]/rechazar` (rechazo con notificación), `GET /api/cron/sgie/procesar` (pipeline batch con CRON_SECRET).
+- **Migraciones:** `0034_fase2_workflows_outbox_jobs.sql` (14 tablas + alter jobs_sgie), `0035_fase2_documents_ocr_ai.sql` (2 tablas + alter documentos_expediente/document_text_pages), `0036_fase2_communications.sql` (2 tablas + alter correos_enviados/plantillas_correo/comunicaciones_outbox). Todas aditivas con IF NOT EXISTS.
+- **E2E:** `scripts/e2e/fase2-e2e.mjs` valida flujo completo (procedimiento → expediente → enlace → subida → outbox → job → IA → comunicación → auditoría → limpieza).
+- **Documentación:** arquitectura Fase 2, validación staging, handoff a Fase 3, ADRs 003–006 (job queue, outbox, OCR, AI router).
+
+### Changed
+- **SGIE/Checklist:** actualizado con todos los items de Fase 2 marcados COMPLETADO y notas de implementación.
+- **Integraciones:** las variables `DEEPSEEK_*` se usan ahora también para `ia-documental.ts` (no solo RAG/scripts de blog).
+
+### Security
+- Endpoint cron protegido con `CRON_SECRET` (Bearer token).
+- Carga pública con rate limit 10/15min por IP + enlace mágico con token hash SHA-256.
+- Procesamiento/rechazo de documentos con requireAbogado + CSRF + verificación de asignación/permiso de expediente.
+- OCR stub nunca inventa texto; sin OCR real el documento queda en `ocr_pendiente` con auditoría.
+
+## [Unreleased]
+
 ### Added
 - **SGIE/Admin:** invitaciones seguras con token SHA-256, expiración, uso único,
   revocación/reenvío, activación transaccional, resultado real de Resend y
