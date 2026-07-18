@@ -1,1617 +1,203 @@
-# CHANGELOG — Pineda y Asociados
+# Changelog — Pineda y Asociados
 
-## 2026-07-16 — Corrección de pageviews GA4
+Todos los cambios notables de este proyecto se documentan en este archivo.
 
-- Corregida la visita inicial de GA4: `config` vuelve a emitir el `page_view` inicial y se ejecuta `afterInteractive`, eliminando la carrera con el efecto de App Router.
-- Añadidas validaciones de formato para IDs GA4/GTM y exclusión de previews, con opt-in explícito para pruebas.
-- Añadidas pruebas unitarias y documentación de configuración/validación sin secretos.
-- Consent Mode v2 completado con banner accesible, elección granular, persistencia versionada durante 180 días, revocación y acceso desde el footer.
-- GA4 y Clarity no descargan scripts antes de aceptar analítica; publicidad permanece denegada.
-- Exportadores GA4/GSC paginados y ampliados; JSON/CSV atómicos, reintentos, timeouts y rangos configurables. Bing genera JSON y CSV.
-- Facebook Pixel queda deshabilitado mientras no exista consentimiento publicitario; los dry-runs Google no escriben ni siquiera al fallar y el recolector limita cada subproceso a 120 segundos.
-- Corregido el stub de Clarity para usar la API oficial `window.clarity` y evitar el error productivo `a[c] is not a function`.
-- Endurecido OAuth Google alternativo: scopes mínimos de lectura, `state` anti-CSRF, callback limitado a localhost, token no mostrado y persistencia atómica.
-- Centralizada la detección de gcloud para reconocer la instalación autorizada en `C:\gcloud-sdk` aunque no esté incluida en `PATH`.
-- Renovado OAuth de lectura y validados GA4/GSC/Bing; añadida comprobación Analytics Admin de propiedad, stream, zona horaria, retención y eventos clave sin exponer identificadores completos.
-- Validación remota de Consent Mode completada en Preview temporal; detectada
-  ausencia de los IDs públicos GA4/Clarity en el entorno Preview. El deployment
-  y bypass temporales se retiraron sin modificar Production.
-- Corregida la duplicación SPA observada en Network: se retiró el `page_view`
-  manual y se delegaron cambios History API en GA4 Enhanced Measurement.
-  Verificado un hit 204 por ruta, sin reinyección de GA4/Clarity.
+El formato se basa en [Keep a Changelog 1.1.0](https://keepachangelog.com/es-ES/1.1.0/)
+y este proyecto se adhiere a [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
-## 2026-07-12 — Remediación integral Fases 1-5
-
-### Fase 1 — Cierre de seguridad crítica
-- `invalidateFreshness()` cableado en 7 puntos de mutación crítica (cambio de contraseña, reset admin, bloqueo, rol, desactivación, logout, reset por email).
-- `consumirTokenReset` ahora incrementa `tokenVersion` + resetea `mustChangePassword` (revoca sesiones tras reset por email).
-- `lib/permissions.ts` reconciliado: `AuthError` canónico de `lib/auth.ts` con `status: 403`.
-
-### Fase 2 — Preview y controles de contenido
-- Preview reemplazado: tokens opacos server-side (`preview_tokens`) en lugar de JWT con contenido en URL. Un solo uso, expiración 1h, HTML sanitizado con allowlist estricta.
-- Página de preview requiere autenticación (redirect a login si no hay sesión).
-- Proxy añade `x-correlation-id` en todas las respuestas para trazabilidad.
-- `/api/oauth/callback` removido de rutas públicas (ahora requiere auth vía proxy).
-- Migración 0031: tabla `preview_tokens` con índices y FK.
-
-### Fase 3 — Documentos y endpoints públicos
-- `lib/file-validation.ts`: validación por magic bytes (JPEG, PNG, WebP, AVIF, PDF, ZIP/DOCX) con detección de Zip Slip, extensión vs firma, y límites.
-- Admin upload route usa `validateImage()` con magic bytes (no confía en MIME del cliente).
-- `/api/descargar` migrado de GET a POST: email/área en body (sin PII en URL), rate limiting 5/15min, consent obligatorio, CAPTCHA-ready (Turnstile), caché server-side de PDFs, `Cache-Control: private, no-store`.
-- SGIE `/api/public/cargar` ya tenía validación por magic bytes (verificado).
-
-### Fase 4 — Dependencias, testing, CI
-- Endpoint MCP demo (`app/api/[transport]/`) eliminado: sin consumidores, 3 HIGH CVEs.
-- Dependencias MCP removidas: `mcp-handler`, `@modelcontextprotocol/*` (-6 paquetes).
-- ESLint: 0 errores, 0 warnings (6 unused imports corregidos en readiness, autonomía).
-- SBOM: `@cyclonedx/cyclonedx-npm` (devDep) + script `sbom:generate`.
-- Scripts `deps:audit` y `deps:outdated` para CI.
-- 10 vulnerabilidades moderadas restantes documentadas (transitivas: googleapis, next, drizzle-kit, postcss, esbuild).
-
-### Fase 5 — Integridad jurídica, RAG, operaciones
-- Auditoría de delitos: 483 analizados, 25 críticos (penas 0-0), 142 sin rama, 483 sin clasificación. Reporte en `data/auditoria-delitos-report.json`. Correcciones requieren validación humana con fuentes canónicas.
-- Embeddings: proveedor deepseek-embedding, 1536 dimensiones, consistente entre `.env.example`, `lib/rag/config.ts` y AGENTS.md.
-- Runbook de backup/restauración: `docs/security/runbook-backup-restore.md` (Neon PITR, Vercel Blob, rotación de secretos, SLOs, DRP, mantenimiento periódico).
+> **Histórico completo (Releases 1–110):** [`docs/changelog/archive-2026-H1.md`](docs/changelog/archive-2026-H1.md).
+> Este archivo principal conserva solo lo vigente y reciente; el detalle
+> granular (fases SEO A–G, remediación identidad 2FA, fix chunks, evolución del
+> chat) vive en el archivo histórico, conservado íntegro sin reescribir hechos.
 
 ---
-
-## Seguridad — Fase 1 de identidad (código completado, pendiente de despliegue y pasos operativos)
-
-- JWT con propósito explícito (`session` / `2fa_challenge`), challenge 2FA con TTL 5 min, `jti` aleatorio y consumo atómico persistente (compare-and-set en DB).
-- `ENCRYPTION_KEY` dedicada y obligatoria para cifrar secretos TOTP (desacoplada de `JWT_SECRET`); `ENCRYPTION_KEY_PREVIOUS` para rotación controlada.
-- Versión de sesión (`token_version`): la rotación de contraseña invalida tokens previos; verificación en proxy + handlers `require*` con validación DB y caché corta para mitigar impacto en latencia.
-- Ámbito de clientes aplicado dentro de la query DB (SELECT/UPDATE vía EXISTS condicionado), 404 indistinguible para cliente ajeno, sin fuga de UUID en creación/reutilización.
-- Guard anti-producción para tests con escritura (regex reforzada, cableado en arranque de vitest).
-- `rate-limit` fail-closed para prefijo `2fa` en producción, limitación por userId+IP.
-- Suite de pruebas obligatoria: 28 tests nuevos (matriz IDOR clientes, verify 2FA, concurrencia jti, revocación token_version, guard DB); cobertura de auth.ts 86 % y clientes-db.ts 67 %.
-- Requiere: aplicar migración `0030_security_sessions_2fa.sql` en staging, configurar `ENCRYPTION_KEY` en producción, ejecutar runbook de rotación de credenciales. No se cambiaron credenciales productivas desde código.
-
-Historial de cambios en orden cronológico inverso. Releases anteriores a Jul 2026
-están resumidos; las entradas vigentes desde la reestructuración del changelog
-(Release 91) mantienen detalle completo.
-
----
-
-## [Unreleased] - 2026-07-10 — Saneamiento Site Audit Ahrefs (enlaces 4xx/3xx, sitemap, H1)
-
-Corrección técnica SEO basada en el análisis de 6 CSV exportados de Ahrefs (crawl 10-jul-2026). Diagnóstico completo en `auditoria_seo/ahrefs_2026_07_10/ahrefs-diagnostico-inicial.md`. Solo correcciones técnicas localizadas; sin reescritura editorial.
-
-### `fix(seo): enlaces internos rotos (4xx) y redirigidos (3xx)`
-- **2 enlaces 4xx corregidos** en `app/(public)/hondurenos-en-espana/page.tsx`: los href a `/servicios-juridicos/derecho-notarial` y `/servicios-juridicos/derecho-civil` (slugs inexistentes) ahora apuntan al slug canónico `/servicios-juridicos/derecho-civil-y-notarial`. Los otros 6 enlaces 4xx del CSV son artefactos de crawl sin referencia real (ya documentados en `next.config.ts:176-181`).
-- **8 posts despublicados** (`published=false`) cuyas rutas están redirigidas (301) en `next.config.ts` hacia URLs consolidadas, pero seguían publicados → generaban **114 enlaces internos a 3xx** vía sitemap, `BlogHighlights`, navegación prev/next y landings. Slugs: `abogado-penalista-choluteca`, `despido-injustificado-honduras-derechos-trabajador`, `empleador-no-paga-salario-honduras`, `calcular-prestaciones-laborales-honduras`, `despido-laboral-honduras-derechos`, `tramites-notariales-frecuentes-honduras`, `elegir-bufete-abogados-nacaome`, `elegir-bufete-multidisciplinario-ventajas-honduras`. Los redirects 301 se mantienen intactos. Script: `scripts/seo-unpublish-consolidated-posts.ts` (dry-run por defecto, con verificación post-escritura).
-
-### `fix(seo): sitemap sin URLs 3xx`
-- Añadido `/blog/derecho-penal/abogado-penalista-choluteca` a `REDIRECT_SOURCE_PATHS` en `app/sitemap.ts` (era el único target 3xx que el sitemap seguía incluyendo; los otros 7 ya estaban excluidos). Defensa en profundidad junto a la despublicación.
-
-### `fix(blog): jerarquía H1 (R15)`
-- 3 posts con doble `<h1>` en el body corregidos (h1→h2) vía `scripts/normalizar-blog.ts --aplicar --solo-h1`: `banco-demanda-deuda-defensa-opciones-honduras`, `como-preparar-demanda-guia-no-abogados-honduras`, `habilitacion-clinicas-hospitales`. La plantilla ya renderiza el título como `<h1>` (`page.tsx:392`).
-
-### Validación
-- `lint` (0 errores), `tsc --noEmit` (EXIT 0), `blog:normalizar` (dry-run OK), `build` (354/354 páginas estáticas, 0 errores), `test` (861/861).
-- Sitemap: 0 de los 8 slugs viejos entrarían al filtro `published=true`.
-- Canonicals: 816 revisados, 0 problemas (paginación y facetas son noindex con canonical self, correcto).
-- Documentación: `auditoria_seo/ahrefs_2026_07_10/` (diagnóstico, correcciones, post-validación, pendientes, 4 CSV de revisión, URLs candidatas IndexNow).
-
-### Clasificación (R11)
-- **VALIDADO**: enlaces 4xx, despublicación 8 posts, exclusión sitemap, H1×3, canonicals.
-- **PENDIENTE**: validación de schema.org con Rich Results Test (sin CSV `all_issues` en este lote); noindex de páginas core en runtime (post-deploy); reemplazo de slugs viejos en landings (`BlogHighlights`) para mantener densidad de enlazado.
-
-
-
-## [Unreleased] - 2026-07-10 — Fase 1.5: Optimización Manual de 5 Posts Estratégicos (SEO Quirúrgico)
-
-Ejecución de la Fase 1 del plan de contenidos, enfocada exclusivamente en la mejora **manual, individual y quirúrgica** de contenido existente. Se evitó cualquier reescritura masiva o uso de plantillas genéricas para preservar la línea editorial y el tono corporativo de Pineda y Asociados.
-
-### `feat(seo): Optimización de Contenido (Fase 1)`
-- **`pension-alimenticia-porcentaje-honduras-2026`**: Eliminadas aseveraciones arriesgadas sobre porcentajes fijos judiciales. Añadida explicación sobre el Principio de Proporcionalidad y FAQ de prescripción.
-- **`allanamiento-ilegal-violacion-domicilio-honduras`**: Reestructuración del H2 inicial para capturar el Featured Snippet del horario legal (6:00 a.m. a 6:00 p.m. Art. 212 CPP). Clarificación de 4 excepciones legales para allanamientos nocturnos.
-- **`prescripcion-deudas-plazos-honduras`**: Corrección crítica técnica (plazo civil general ajustado a 10 años). Diferenciación clara entre vía ejecutiva mercantil y vía ordinaria civil. Añadida prevención sobre tácticas de cobranza extrajudicial.
-- **`calcular-prestaciones-laborales-honduras`**: División semántica entre Derechos Adquiridos (renuncia) e Indemnizaciones (despido). Corrección del plazo de prescripción por despido a 60 días hábiles. Inserción de Disclaimer fuerte sobre el cálculo orientativo.
-- **`contratos-empleadas-domesticas-obligaciones-honduras`**: Suavizado de tono alarmista hacia uno de asesoría patronal preventiva. Precisión sobre cobertura geográfica del IHSS. Nuevo CTA enfocado a empleadores domésticos.
-
-### Validación post-implementación
-- Confirmación de renderizado y metadatos SEO en `.next/server/app/`. Todas las optimizaciones están integradas, el schema se valida correctamente y no hay enlaces internos rotos.
-- Establecida la lista de control de 7/14/30 días para monitorear impacto en GSC y Bing Webmaster Tools.
-
-
-
-## [Unreleased] - 2026-07-10 — Recrawling IndexNow y Validación de Correcciones Bing WMT
-
-Ejecución de la fase de validación técnica y recrawling en Bing WMT para agilizar la actualización del índice tras la corrección masiva de errores de rastreo (511 4xx).
-
-### `feat(seo): Validación y envío de URLs saneadas a IndexNow`
-- **Validación Técnica Local**: Se desarrolló el script `seo-validate-recrawl.mjs` que extrajo y analizó 135 URLs afectadas (obtenidas de GSC, sitemap y auditorías previas), verificando status HTTP 200, metadatos `robots`, `x-robots-tag`, y consistencia canonical mediante peticiones reales (fetch).
-- **Limpieza de Señales**: Se descartaron 8 URLs (404s intencionales y canonical overrides, por ej. `blog?page=3` y antiguas URLs parametrizadas) garantizando que ninguna URL no indexable fuera sometida a recrawling.
-- **IndexNow Submission**: Se desarrolló el script `seo-submit-indexnow.mjs` que sometió exitosamente 127 URLs validadas a la API de IndexNow (api.indexnow.org) en lotes controlados (≤50 URLs), generando un archivo de clave de autenticación local.
-- **Trazabilidad y Control**: Todos los entregables, listados de URLs aceptadas (dry-run y finales), CSVs, y logs detallados (status 202 Accepted) fueron guardados en el nuevo directorio de persistencia `auditoria_seo/recrawl_bing/`, incluyendo el documento `checklist-post-recrawl.md` para monitoreo continuo a 24h, 72h, 7d y 14d.
-
-## [Unreleased] - 2026-07-09 — Implementación SEO prioritaria GSC y Bing
-
-Implementación directa de las mejoras SEO prioritarias detectadas tras cruzar datos reales de Google Search Console, Bing Webmaster Tools y GA4.
-
-### `feat(seo): Fase 6 - Cierre de Producción y Políticas de Versionado`
-- **Checklist Post-Deploy**: Creado `data/seo/post-deploy-seo-checklist.md` con 10 pasos tácticos de ejecución obligatoria al desplegar cambios de SEO/Growth a producción (Validación de disponibilidad, robots, sitemap, GSC/WMT y GA4 tracking orgánico).
-- **Política de Versionado de Reportes SEO**: Actualizado `.gitignore` permitiendo la gestión de conocimiento documentada (`.md` en `data/seo/`) pero excluyendo terminantemente datos transitorios (`data/seo/*.json` y `data/seo/history/`) asegurando un repositorio limpio.
-- **Limpieza de Entorno**: Verificada la pureza técnica del repositorio, confirmando la ausencia de logs residuales o scripts colgados post-Fase 5.
-- **Validación Final**: Completadas exitosamente las pruebas de regresión en producción-ready (828 tests aprobados, `npm run build` OK, y cero incidencias en `lint`/`tsc`).
-
-### `feat(seo): Fase 4/5 - Auditoría avanzada, preparación Bing y tracking GTM`
-- **Mejora en Auditor de Indexabilidad**: `seo-indexability.ts` ahora se conecta a Drizzle ORM para obtener las rutas dinámicas publicadas del blog e inyecta dinámicamente las rutas de `blogCategories`, eliminando los 11 falsos positivos de "Tráfico Huérfano" que surgían al comprobar únicamente el `canonical-paths.json` estático.
-- **Preparación Bing WMT**: Creado directorio `data/bing/` y documento `README.md` que establece la plantilla y el procedimiento operativo estándar (SOP) para extraer y procesar manualmente los 455 errores 4xx / 721 crawl errors mediante CSV, bloqueado por limitaciones de la API pública de Bing WMT.
-- **Validación Tracking CTAs**: Confirmada la solidez técnica del script `seo_blog_cta_click` en `components/analytics-scripts.tsx`, implementado bajo listener nativo único y captura semántica de `data-cta-location`, `destination_url`, `source_url`, `cta_topic`. No genera dobles ejecuciones.
-- **Operaciones SEO Mensuales**: Redactado y formalizado el documento `docs/seo-monthly-ops.md` estableciendo el checklist riguroso de 28 días (Baseline, Extracción, Saneamiento, Validación).
-- **Snapshot Histórico**: Automatizada la rotación histórica de `gsc-live.json`, `ga4-live.json` y reportes al ejecutar `seo-snapshot.ts`, permitiendo backups seguros en `data/seo/history/` previo a cada nuevo ciclo de auditoría.
-- **Redirecciones 301 Intencionales Documentadas**: Verificado que las 9 URLs marcadas como "Tráfico Huérfano" (ej: `/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla`) se deben a redirecciones 301 activas e intencionales en `next.config.ts`, siendo en realidad "Rutas históricas sin acción" originadas por retención de tráfico en GSC.
-
-### `feat(seo): Cierre Técnico de Medición y Auditoría de Indexabilidad (Fase 3)`
-
-### `feat(seo): CTAs transaccionales y metadata en posts prioritarios`
-- **Posts actualizados en DB** (vía script `seo-update-blog-ctas.ts`):
-  - `/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026`: H1 (`title`), `metaTitle` y `metaDescription` optimizados con el año "2026" y el enfoque "Porcentajes y Cálculo".
-  - `/blog/derecho-civil/prescripcion-deudas-plazos-honduras`: Meta optimizada sobre plazos y requisitos.
-  - `/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras`: Meta optimizada sobre demandas e indemnización.
-- **Inyección de CTAs**: Añadido un componente HTML al final del cuerpo de cada uno de los 3 posts anteriores para redirigir tráfico internacional cualificado (ej. España/USA) hacia `/solicitar-consulta`. Se usó HTML semántico con clases nativas del framework (`bg-slate-50`, `text-primary`, etc.).
-
-### `fix(seo): Landing Hondureños en España como Hub Transfronterizo`
-- **`app/(public)/hondurenos-en-espana/page.tsx`**: 
-  - Actualizados `title` y `description` para enfocarse en la intención de búsqueda real: "Abogados en Honduras para Hondureños en España".
-  - Reforzados los enlaces internos del bloque "Trámites más frecuentes" hacia servicios específicos de familia, civil y notarial (ej. Divorcio en Honduras residiendo en España).
-
-### `fix(seo): Configuración Crawler y Sitemap`
-- Verificada exclusión correcta de rutas `/intranet/`, `/api/` y `/admin/` en `robots.ts` para mitigar 455 errores 4xx reportados por Bing.
-- Sitemap y rutas canónicas validadas de forma exitosa (Sitemap self-referencing operando correctamente).
-
-### `feat(seo): Auditoría Bing WMT y Analytics CTA`
-- **Documentación Limitación Bing**: Se generó `data/seo/bing-crawl-errors-detailed.json` detallando que el API de Bing (GetCrawlStats) reporta los 455 errores 4xx y 721 crawl errors a nivel agregado, pero no expone un endpoint público para descargar las URLs específicas, requiriendo exportación vía web dashboard.
-- **Indexabilidad de URLs**: Se creó un script que cruza rutas estáticas con datos de GSC y GA4 para generar un reporte automático `url-indexability-audit.md` y clasificar URLs por indexabilidad y tráfico, comprobando la consistencia entre fuentes.
-- **Medición GA4 para CTAs Orgánicos**: Se actualizó el HTML de los CTAs inyectados en la DB agregando el atributo `data-event-name="seo_blog_cta_click"`, lo cual permite implementar mediciones pasivas por Tag Manager u observadores de eventos sin saturar la arquitectura actual con scripts invasivos.
-
----
-
-## [Unreleased] - 2026-07-07 — Saneamiento SEO Ahrefs Fases A–G (6 CSV nuevos)
-
-Corrección de las incidencias reportadas por los 6 CSV nuevos de Ahrefs:
-`title-too-long` (128 URLs), `meta-descripti` ×2 (41 largas + 17 cortas),
-`orphan-page` (8 URLs con 0 inlinks), `pages-to-submit` (inventario) y
-`structured-data` (212 URLs con errores Schema.org). La Fase 1 y la Fase 6
-parcial (validador DB) ya estaban hechas; este release ejecuta las fases
-pendientes ahora que los CSV existen.
-
-### `fix(seo): titles largos — Fase A (128 → 0 esperado tras recrawl)`
-
-- **`scripts/fix-long-titles.ts`** (nuevo): script idempotente (dry-run/
-  `--aplicar`, backup-required <2h) que corrige `blog_posts.title` y
-  `blog_posts.meta_title` con reglas deterministas:
-  - Decodifica entidades HTML visibles (`&oacute;` → `ó`, `&ntilde;` → `ñ`).
-  - Elimina sufijos de placeholder (`| [Tu Empresa]`) y marca redundante
-    (`| Pineda y Asociados` — el template lo reañade en runtime).
-  - Compacta patrones verbosos ("Guía Completa | Requisitos y Trámites" →
-    "Requisitos y Trámites", elimina ", Honduras" redundante).
-  - Recorta a ≤49 chars DB (→ ≤70 renderizado con marca) prefiriendo cortes
-    naturales en `:` o `,`.
-- **DB**: aplicado a 149 posts publicados (261 campos corregidos en 2 pasadas;
-  idempotente: 0 cambios en tercera corrida).
-- **7 páginas estáticas** con titles largos corregidas manualmente:
-  - 5 cargo landings (`abogado-civil/familia/laboralista/penalista-nacaome`,
-    `abogado-penalista-choluteca`): `title` → `{ absolute }` con marca única
-    ≤48 chars. También reescritas sus meta descriptions (sin "Consulta sin
-    costo. WhatsApp +504..." claim no verificable).
-  - 2 templates `[slug]` (`derecho-penal/[slug]`, `hondurenos-en-espana/[slug]`):
-    sufijo `· Abogados Penalistas` / `· Abogados Honduras-España` (23-28 chars)
-    reemplazado por `| ${site.name}` (alinea con patrón de blog).
-- **`package.json`**: añadido `blog:fix-titles` / `:aplicar`.
-
-### `fix(seo): metas cortas — Fase B (17 categorías → 17 ampliadas)`
-
-- **`data/blog/categories.ts`**: 17 `descripcion` de categorías ampliadas de
-  74–97 chars a 120–155, con contexto hondureño y precisión jurídica. Una sola
-  fuente alimenta meta description + H visible + OG + Twitter. Sin inventar
-  servicios ni claims (R4/R13). Las 3 restantes (<110 pero no en CSV) también
-  ampliadas a ≥120 para coherencia.
-
-### `fix(seo): metas largas/truncadas — Fase C (41 → 0 esperado tras recrawl)`
-
-- **`lib/seo.ts`**: nuevo helper `buildServiceMetaDescription(html)` que
-  sanitiza HTML (vía `stripHtml` de `lib/strip-html.ts` con `sanitize-html`),
-  recorta a 120–155 chars en límite de palabra, sin CTA fijo. Sustituye al
-  patrón bug `${descripcion.substring(0,N)} Consulta confidencial...`.
-- **3 familias corregidas**:
-  - `servicios-juridicos/[slug]`: meta + OG + Twitter ahora usan el helper.
-  - `derecho-penal/[slug]`: antes pasaba `grupo.descripcion` crudo (HTML) sin
-    stripHtml → dejaba `<strong>`/`<a>` en la meta.
-  - `hondurenos-en-espana/[slug]`: antes rompía meta + OG + Twitter con HTML
-    crudo y truncamiento mid-word.
-- **5 landings locales** (Namasigüe, Orocuina, Pespire, Marcovia, El Triunfo):
-  `description` en `data/landings-locales.ts` reescrita a 120–155 chars,
-  eliminando "Primera consulta sin costo. WhatsApp +504 9536-3724." (claim no
-  verificado como política global).
-- **`scripts/fix-long-metas.ts`** (nuevo): script idempotente que recorta
-  `blog_posts.meta_description` a ≤155 en límite de palabra y elimina sufijos
-  de relleno comercial ("Asesoría legal.", "¡Evita multas!", "¡Proteja sus
-  derechos!"). Aplicado a 149 posts (46 corregidos; idempotente).
-- **`package.json`**: añadido `blog:fix-metas` / `:aplicar`.
-
-### `fix(seo): orphan pages — Fase D (8 URLs con 0 inlinks → enlazadas)`
-
-- **`app/(public)/abogados-en-nacaome/page.tsx`** (sede): añadidos 2 bloques
-  contextuales de chips:
-  - "Especialistas por área en Nacaome" → 3 cargo landings (civil, familia,
-    laboral) + penalista-nacaome.
-  - "Cobertura legal en el sur de Honduras" → 5 ciudades secundarias (langue,
-    caridad, alianza, concepcion-de-maria, san-antonio-de-flores).
-- **`app/(public)/servicios-juridicos/[slug]/page.tsx`**: bloque condicional
-  "¿Busca un especialista en Nacaome?" enlaza a la cargo landing
-  correspondiente cuando `slug` es familia/laboral/civil.
-- Cada orphan recibe ahora ≥1 href inlink HTML real (no solo sitemap). Respeta
-  R18 (las 5 secundarias NO van al footer global).
-
-### `fix(seo): structured data — Fase F (212 errores → 0 esperado tras recrawl)`
-
-- **Bug raíz `@context` en `@graph`**: cada uno de los 6 schemas del grafo
-  global (`legalServiceSchema`, `organizationSchema`, `websiteSchema`,
-  `founderSchema`, `thaniaSchema`, `emilSchema` en `lib/site.ts`) incluía su
-  propio `@context: "https://schema.org"`, lo cual es inválido dentro de un
-  `@graph` (el `@context` debe estar solo en el wrapper). Eliminado de los 6
-  nodos; el wrapper `@graph` en `app/(public)/layout.tsx` ya lo aporta.
-- **AggregateRating Home eliminado**: `components/marketing/google-reviews.tsx`
-  emitía `AggregateRating` con `reviewCount: 1` (causaba "Google rich results
-  validation error"). Eliminado por política de self-serving reviews (sin
-  corpus robusto y auditable de reseñas reales). Las reseñas visibles (UI)
-  siguen renderizándose.
-- **`@id` slash unificado**: las 5 cargo landings usaban `${site.url}#website`
-  / `${site.url}#legal-service` (sin slash), mientras el grafo global define
-  `${site.url}/#website`. Unificado a formato con slash para que la resolución
-  `@id` funcione en el Knowledge Graph.
-- **`scripts/validate-jsonld.mjs`** ampliado: detecta `@context` dentro de
-  nodos del `@graph`, `AggregateRating` (warning), y reglas mínimas por
-  `@type` (Service→provider, BlogPosting→author+publisher, FAQPage→mainEntity
-  no vacío). Añadidas rutas default: `/abogados-en-nacaome`,
-  `/abogado-penalista-choluteca`, y un post de blog.
-
-### `feat(seo): validador seo:ahrefs ampliado — Fase G`
-
-- **`scripts/seo-ahrefs-audit.mjs`**: nueva sección 7 que analiza los CSV de
-  las Fases A–F y reporta warnings informativos:
-  - titles >70 chars (indexables) del CSV `title-too-long`.
-  - metas cortas (<110) y largas (>160) del CSV `meta-description`.
-  - HTML crudo en metas (`<strong>`, `<a>`).
-  - descripciones truncadas (patrón "Consulta confidencial" pegado).
-  - orphan pages indexables en sitemap con 0 inlinks.
-  - structured data con errores de validación.
-  - presencia de AggregateRating.
-- `detectType` ampliado para reconocer 5 tipos nuevos de CSV, con checks
-  específicos ANTES del genérico `4xx` (los CSV de Ahrefs comparten columnas
-  HTTP status/Depth/Is indexable).
-
-### `feat(seo): placeholder editorial [Tu Empresa] en meta_title (DB)` (work previo)
-
-- **`scripts/fix-editorial-placeholders.ts`** (nuevo): script idempotente que
-  elimina sufijos de placeholder en `title`/`meta_title`. DB: 1 post corregido.
-- **`scripts/seo-ahrefs-audit.mjs`**: sección 6 con chequeos DB bloqueantes
-  (marca duplicada, placeholders, metadata ausente).
-
-### Validación
-
-- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm test` ✅ (790/790) · `npm run build` ✅
-- `npm run seo:ahrefs` ✅ (OK, sin bloqueantes; sección 6 DB: 0 incidencias)
-- `node scripts/validate-jsonld.mjs` ✅ (8 rutas OK: Home 2 bloques sin AggregateRating,
-  cargo landings con @id unificados, blog post con BlogPosting+FAQPage válidos)
-- Sitemap: 213 URLs, 8 orphans presentes, 0 noindex/legales/intranet
-- Scripts DB idempotentes: `fix-long-titles` (0 cambios 3ª corrida),
-  `fix-long-metas` (0 cambios 2ª corrida)
-- Backup previo: `auditoria-blog/backup-2026-07-07-18-36.json` (175 posts)
-
-### NO VALIDADO (requiere recrawl Ahrefs)
-
-Los warnings de la sección 7 del validador reflejan el CSV estático pre-corrección.
-Desaparecerán tras deploy + recrawl de Ahrefs. Las correcciones de código y DB
-están aplicadas y verificadas localmente (JSON-LD validado en HTML prerenderizado).
-
----
-
-## [Unreleased] - 2026-07-07 — Saneamiento SEO Ahrefs Fase 1
-
-Corrección del primer bloque de auditoría Ahrefs: páginas 4XX/404, enlaces
-internos a 3XX, contradicción meta robots vs `X-Robots-Tag`, nofollow masivo a
-`/intranet/admin` desde el header público, e inconsistencia de `rel` en tags del
-pie de post. Sin cambios visuales, sin inventar contenido jurídico, sin romper
-rutas existentes.
-
-### `fix(seo): X-Robots-Tag por ruta, no global (contradicción con meta noindex)`
-
-- **Causa raíz**: `next.config.ts` emitía `X-Robots-Tag: index, follow` global
-  (regla catch-all `/:path*`) a TODAS las páginas públicas, incluidas las
-  noindex (6 legales + filtros `?tag=`/`?month=`/`?page=`). Ahrefs reportó 601
-  URLs con señal contradictoria (meta `noindex, follow` + header `index, follow`).
-- **`next.config.ts`**: se elimina el `robotsHeader` estático. Las páginas
-  indexables no reciben `X-Robots-Tag` (la metadata por-página + sitemap son la
-  autoridad). Se añaden reglas `headers()` explícitas para las 6 rutas legales
-  (`/terminos`, `/aviso-legal`, `/politica-privacidad`, `/politica-cookies`,
-  `/politica-editorial`, `/disclaimer`) → `X-Robots-Tag: noindex, follow`.
-  `noindexActive` (staging) sigue forzando noindex global.
-
-### `fix(seo): redirects 301 de red de seguridad para 4XX reportados`
-
-- 5 redirects con destino canónico verificado (post 200 existente):
-  - `/articulos/declaracion-isr-personas-naturales` → `/blog/tributario/impuesto-renta-personas-fisicas-honduras`
-  - `/articulos/facturacion-electronica-honduras` → `/blog/tributario/facturacion-electronica-requisitos-sar`
-  - `/articulos/isv-en-honduras` → `/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras`
-  - `/contacto-tegucigalpa` → `/solicitar-consulta`
-  - `/servicios/gestoria-ambiental-corporativa` → `/servicios-juridicos/ambiental-regulatorio`
-- Los slugs con doble prefijo (`/blog/tributario/blog/...`) NO se redirigen: son
-  artefactos de rastreo sin referencia real en código/DB (verificado).
-
-### `fix(seo): reescritura en origen de enlaces rotos (fix-internal-redirects)`
-
-- **`scripts/fix-internal-redirects.ts`**: ampliado con `REWRITE_MAP` para
-  reescribir en el body HTML de los posts los enlaces `/articulos/*` (3 URLs) →
-  posts canónicos, y `/contacto` → `/solicitar-consulta` (evita cadena de
-  redirect). Mantiene patrón dry-run/idempotente/backup-required. Reporte
-  etiqueta cada cambio con su fuente (`rewrite-map` vs `redirect-301`).
-- Dry-run detecta **21 posts / 23 enlaces** a corregir, incluyendo el post
-  `como-obtener-rtn-personas-empresas-honduras` con los 3 enlaces `/articulos/*`
-  rotos. No se ejecuta `--aplicar` en este turno (lo decide el usuario).
-
-### `fix(seo): retirada de /intranet/admin del HTML público`
-
-- **`components/marketing/public-header.tsx`**: eliminado el bloque
-  `Link href="/intranet/admin"` del header global (visible en todas las páginas
-  públicas con `rel=nofollow`). La intranet sigue existiendo, protegida por
-  `robots.ts` + auth; accesible por URL directa conocida por el personal.
-- **`app/article-modal.tsx`**: retirado el CTA "Ver en la biblioteca completa →"
-  que enlazaba a `/intranet/admin/cp/:id` desde el modal público del CP.
-- Reduces superficie de ataque y elimina el patrón de nofollow masivo reportado.
-
-### `fix(seo): rel=nofollow en tags del pie de post`
-
-- **`app/(public)/blog/[categoria]/[slug]/page.tsx`**: los enlaces `?tag=` del
-  pie de cada post ahora llevan `rel="nofollow"` (coherente con el sidebar, que
-  ya lo aplicaba). Evita emitir señales dofollow hacia URLs noindex.
-
-### `feat(seo): validador Fase 1 — npm run seo:ahrefs`
-
-- **`scripts/seo-ahrefs-audit.mjs`** (nuevo): lee los CSV de `ahrefs/`
-  (UTF-16LE/TSV), autodetecta columnas, y reporta 4XX, enlaces a 3XX, noindex
-  con señales contradictorias, noindex en sitemap y `/intranet/admin` en
-  componentes públicos. Exit 1 si hay incidencias bloqueantes.
-- **`package.json`**: añadido `"seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs"`.
-
-### Validación
-
-- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm test` (789 tests) ✅
-- `npm run build` ✅ (sitemap: 213 URLs, 0 legales/intranet/filtros)
-- `npm run seo:ahrefs` ✅ (sin bloqueantes)
-- `fix-internal-redirects` dry-run ✅ (21 posts / 23 enlaces detectados)
-
----
-
-## [Unreleased] - 2026-07-07 — Fix "page has broken JavaScript" y títulos duplicados
-
-Corrección de la auditoría SEO que reportaba `/_next/static/chunks/403tsh8uvet9c.js`
-devolviendo 404 desde HTML servido, provocando el error "page has broken JavaScript"
-en todas las páginas de `www.pinedayasociadoshn.com`. Junto a la corrección de
-títulos de blog con la marca "Pineda y Asociados" duplicada.
-
-### `fix(seo): consistencia de assets Next.js y purga de caché SW por build`
-
-- **Causa raíz**: el deploy vigente ya no referenciaba el chunk roto (verificado
-  con `curl` sobre Home, `/despacho`, `/servicios-juridicos`, `/derecho-penal`,
-  `/blog` y posts — 0 referencias al chunk `403tsh8uvet9c.js`). El 404 venía de
-  HTML/Assets inconsistentes entre builds, agravado por un service worker con
-  `CACHE = 'pineda-pwa-v1'` fijo entre deploys: el `activate` nunca purgaba la
-  caché anterior y el SW seguía sirviendo chunks obsoletos (stale-while-revalidate)
-  cuyo HTML referenciaba assets que ya no existían en el servidor.
-- **`public/sw.js`**: la versión de caché ahora se versiona por build vía el
-  placeholder `__BUILD_ID__`, inyectado en CI por `scripts/bump-sw-cache.mjs`.
-  Cada deploy activa `install → skipWaiting → activate` y purga las cachés de
-  builds anteriores. El handler de assets además purga entradas cacheadas cuya
-  revalidación devuelve 404 (chunk huérfano).
-- **`scripts/bump-sw-cache.mjs`** (nuevo): lee `.next/BUILD_ID` y reescribe la
-  línea `const CACHE = ...` de `public/sw.js`. Idempotente: restaura el
-  placeholder antes de reinyectar. El repo mantiene el placeholder; el valor
-  real solo vive en el artefacto de build desplegado.
-- **`scripts/verify-chunks.mjs`** (nuevo): valida tras `next build` que todos
-  los chunks referenciados en `build-manifest.json` y `app-build-manifest.json`
-  existan físicamente en `.next/static/chunks/`. Sale con código 1 si hay
-  chunks 404, previniendo deploys inconsistentes.
-- **`package.json`**: `postbuild` ahora ejecuta `bump-sw-cache` +
-  `verify-chunks` antes de `generate-llms-txt` y `submit-indexnow`. Añadido
-  script `verify:chunks` para validación manual.
-
-### `fix(seo): títulos de blog sin marca "Pineda y Asociados" duplicada`
-
-- **Causa raíz**: `scripts/blog-verify-fix.ts` instruye a la IA a añadir
-  ` | Pineda y Asociados` al final del `metaTitle`. Pero el layout raíz
-  (`app/(public)/layout.tsx`) define `template: '%s | Pineda y Asociados'`, que
-  vuelve a añadir la marca → `"Título | Pineda y Asociados | Pineda y Asociados"`.
-- **`app/(public)/blog/[categoria]/[slug]/page.tsx`**: el `generateMetadata` del
-  post ahora usa `title: { absolute: ... }` (sin template) y `stripDuplicateBrand()`
-  elimina cualquier sufijo de marca (`| Pineda y Asociados`, `- Pineda y Asociados`,
-  `Pineda y Asociados` colgante) que el `metaTitle` traiga de la DB, aplicando la
-  marca una sola vez. Coherente con el resto de páginas slug del blog que ya usan
-  `title: { absolute }`.
-
-### Validación
-
-- `npm run lint` ✓ · `npx tsc --noEmit` ✓ · `npm test` ✓ (789/789, 36 archivos)
-  · `npm run build` ✓ (postbuild: `bump-sw-cache` + `verify-chunks` OK, 7 chunks
-  referenciados, 0 faltantes).
-- `curl` sobre Home, `/despacho`, `/servicios-juridicos`, `/derecho-penal`,
-  `/blog`, un post de blog, `/derecho-penal/proceso-penal-completo` y
-  `/preguntas-frecuentes`: todos los chunks JS referenciados devuelven 200.
-  El chunk `403tsh8uvet9c.js` ya no se referencia en ninguna página.
-
----
-
-## [Unreleased] - 2026-07-07 — Refuerzo de Veracidad E-E-A-T y SEO/GEO
-
-Implementación técnica para soportar entidades profesionales verificables sin inventar datos, cumpliendo los requisitos YMYL para sitios jurídicos.
-
-### `feat(seo): soporte completo para entidades profesionales verificables (E-E-A-T)`
-
-- **`lib/site.ts`**: añadida compatibilidad con variables de entorno para colegiación (CAH), LinkedIn y directorios de los tres abogados (`NEXT_PUBLIC_CAH_*`, `NEXT_PUBLIC_LINKEDIN_*`, `NEXT_PUBLIC_DIRECTORIO_*`).
-- **Schema.org**: `hasCredential` condicionado a la existencia de CAH real. `sameAs` filtrado rigurosamente mediante el nuevo helper `validUrlsOnly` para evitar emitir URLs vacías o placeholders.
-- **`.env.example`**: documentadas las nuevas variables con advertencia estricta de no inventar credenciales.
-
-### `feat(ui): microcopy condicional de confianza E-E-A-T`
-
-- **`app/(public)/page.tsx`**: panel informativo del Hero ahora muestra el distintivo "Colegiación CAH Verificada" solo si existen datos configurados.
-- **`app/(public)/despacho/page.tsx`**: tarjetas del equipo actualizadas para renderizar condicionalmente los distintivos de CAH, LinkedIn y directorios jurídicos.
-
-### `feat(geo): archivo llms.txt para motores de IA`
-
-- **`scripts/generate-llms-txt.mjs`**: añadido bloque obligatorio de "Disclaimers Legales y Limitaciones" para clarificar que el contenido no es asesoría y que las herramientas son orientativas.
-- **`public/llms.txt`**: regenerado automáticamente con los nuevos disclaimers.
-
-### `docs`: Actualización de documentación de verificación E-E-A-T
-- **`README.md`**: nueva sección explicando cómo completar la autoridad externa para levantar el bloqueo suave YMYL.
-
----
-
-## [Unreleased] - 2026-07-07 — Eliminación completa de DeepSeek del chat público
-
-El chat público ya no depende, no menciona, no llama ni requiere DeepSeek en
-ningún escenario. Funciona exclusivamente con el motor de reglas local. Las
-API keys de DeepSeek han sido borradas y el chat sigue operativo sin ellas.
-
-### `refactor(chat)!: eliminación completa de DeepSeek del chat público`
-
-- **`app/api/chat/route.ts`**: eliminada toda la lógica dual. El endpoint ahora
-  es mono-flujo: rate-limit → Zod → guardrails → motor de reglas local. Sin
-  bifurcación DeepSeek, sin imports de `deepseek.ts`, sin `CHAT_PROVIDER`.
-- **`lib/chat/deepseek.ts`**: **ELIMINADO** (cliente DeepSeek del chat).
-- **`lib/chat/system-prompt.ts`**: **ELIMINADO** (system prompt para LLM).
-- **`lib/chat/knowledge-base.ts`**: eliminadas `buildKnowledgeBase()` y
-  `buildRAGContext()` (funciones para inyectar contexto al LLM). Se conservan
-  `PUBLIC_LINKS_ALLOWLIST` e `isAllowedPublicLink()` (utilidades de validación).
-- **`lib/chat/config.ts`**: eliminados `CHAT_PROVIDER`, `config.deepseek`,
-  `DEEPSEEK_*`, `generation` (temperature/maxTokens/timeout). El chat no
-  requiere ninguna API key de IA.
-- **`lib/chat/rules-engine.ts`**: único motor de respuestas. Sin cambios
-  funcionales (solo comentario documental).
-
-### `feat(legal): política de privacidad sin DeepSeek en el chat`
-
-- **`app/(public)/politica-privacidad/page.tsx`**: sección 6 reescrita.
-  "Sistema automatizado basado en reglas locales" (no IA generativa).
-  "Los mensajes no se envían a ningún proveedor externo de IA". DeepSeek
-  eliminado de la lista de encargados de tratamiento.
-- **`lib/legal-content.ts`**: versión política 0.4 → 0.5.
-
-### `chore(docs): README y .env.example sin DeepSeek en el chat`
-
-- **`README.md`**: sección chat reescrita. "Motor de reglas local, sin LLM
-  externo". Tabla de variables sin `DEEPSEEK_*` ni `CHAT_PROVIDER`. Nota
-  explícita: las variables `DEEPSEEK_*` del `.env.example` pertenecen a
-  RAG/embeddings y scripts de blog, NO al chat.
-- **`.env.example`**: sección chat limpiada (solo `CHAT_ENABLED` y rate-limit).
-  Variables `DEEPSEEK_*` movidas con nota "INDEPENDIENTE del chat público".
-
-### Tests
-- **`tests/api-chat.test.ts`**: reescrito mono-flujo. Eliminada la suite
-  "modo deepseek (opt-in)". Añadidos tests de regresión: "funciona sin
-  DEEPSEEK_API_KEY" y "no existe path que llame a DeepSeek". 12 tests.
-- **`tests/chat-guardrails.test.ts`**: eliminada suite `system-prompt`
-  (archivo eliminado). 22 tests (antes 27).
-- **`tests/chat-rules-engine.test.ts`**: sin cambios (16 tests).
-
-### Validaciones
-- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ (21.3s) ·
-  `npm run test` ✅ (**789 tests**, 36 suites) · `npm run seo:doctor` ✅.
-
-### Referencias DeepSeek fuera de alcance (subsistemas independientes del chat)
-Estas referencias NO se modificaron porque pertenecen a subsistemas que no
-afectan al chat público ni a los usuarios de la web:
-- `lib/rag/` (embeddings, retrieval vectorial) — usa DeepSeek para embeddings.
-- `scripts/blog-*.ts`, `scripts/seo-*.ts` — corrección editorial de posts.
-- `lib/sgie/ia-documental.ts` — IA documental de la intranet (privado).
-- `drizzle/migrations/meta/0023_snapshot.json` — snapshot de migración RAG.
-
-### Riesgos pendientes
-- **Revisión legal humana**: la política de privacidad ahora declara que el
-  chat no usa IA generativa ni transmite a terceros. Conviene confirmar que
-  la redacción cumple con el ordenamiento hondureño y RGPD/LOPDGDD.
-- **Variables DeepSeek en RAG/scripts**: siguen existiendo para embeddings y
-  corrección de blog. Si en el futuro se quiere eliminar DeepSeek por completo
-  del proyecto, requerirá migrar el subsistema RAG a otro proveedor de
-  embeddings (tarea separada, fuera de alcance).
-
----
-
-## [Unreleased] - 2026-07-07 — Chat sin LLM externo: motor de reglas local por defecto
-
-Eliminación de la dependencia operativa de DeepSeek en el chat. El asistente ahora
-funciona por defecto con un **motor de reglas local** que no transmite mensajes a
-ningún proveedor externo de IA. DeepSeek queda como opción **opt-in** (requiere
-`CHAT_PROVIDER=deepseek` + `DEEPSEEK_API_KEY`).
-
-### `feat(chat): motor de reglas local (CHAT_PROVIDER=rules) — sin DeepSeek por defecto`
-
-- **Nuevo motor local (`lib/chat/rules-engine.ts`)**: detección de 14 intenciones
-  (saludo, servicios, ubicación, horario, contacto, preparar consulta, caso urgente,
-  identificar área, checklist, WhatsApp, formulario, privacidad, migrantes, no_entendido)
-  mediante patrones regex + plantillas de respuesta prudente. Combina el clasificador
-  de área legal (`sugerirAreaLegal`) y el detector de urgencia (`detectUrgency`).
-  Sin transmisión a terceros.
-- **Config (`lib/chat/config.ts`)**: añadida variable `CHAT_PROVIDER` con default
-  `'rules'`. Valores: `'rules'` (local) | `'deepseek'` (opt-in, requiere API key).
-  Mensaje inicial actualizado para reflejar modo local. Disclaimer ajustado
-  ("Asistente automatizado" en vez de "Asistente de IA").
-- **API route (`app/api/chat/route.ts`)**: refactorizado para rutear al motor local
-  por defecto. DeepSeek solo se llama si `provider === 'deepseek'` Y API key presente.
-  Si DeepSeek falla, cae al motor local como fallback (el chat nunca queda muerto).
-- **Política de privacidad (`app/(public)/politica-privacidad/page.tsx`)**: sección 6
-  reescrita. Modo local por defecto (no transmisión a terceros). DeepSeek como
-  encargado condicional ("solo si se activa expresamente; en la configuración actual
-  está desactivado").
-
-### Funcionalidades conservadas sin LLM
-- ✅ Mensaje inicial con aviso (sistema automatizado + no asesoría + privacidad)
-- ✅ Quick replies de preconsulta
-- ✅ Clasificador de área legal (12 áreas, heurística por keywords)
-- ✅ Detector de urgencia (15 patrones server-side + banner visual + CTAs resaltados)
-- ✅ Preparación de resumen de preconsulta (guía estructurada)
-- ✅ Generador de mensaje WhatsApp (plantilla prudente con marcadores)
-- ✅ Checklists documentales orientativos (11 áreas)
-- ✅ Derivación a WhatsApp, llamada, correo o formulario
-- ✅ Respuestas sobre servicios, ubicación, horario, contacto (datos locales)
-- ✅ Guardrails de prompt injection (18 patrones), temas privados, asesoramiento definitivo
-- ✅ Respuesta segura cuando no entiende (deriva a contacto humano)
-
-### Tests
-- `tests/chat-rules-engine.test.ts` — **NUEVO**: 16 tests (detección intención,
-  urgencia, clasificación área, límites legales, no transmisión, generador WhatsApp,
-  checklists).
-- `tests/api-chat.test.ts`: reescrito con 3 suites (modo rules, validación/guardrails,
-  modo deepseek opt-in). 13 tests.
-- `tests/chat-guardrails.test.ts`: sin cambios (ya cubría guardrails compartidos).
-
-### Validaciones
-- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ (27.1s, 361 páginas) ·
-  `npm run test` ✅ (**796 tests**, 36 suites, +29 respecto al baseline de 767) ·
-  `npm run seo:doctor` ✅ (18 OK).
-
-### Limitaciones del modo sin LLM
-- **Sin comprensión semántica profunda**: el motor detecta intenciones por keywords,
-  no por comprensión del lenguaje natural. Mensajes muy ambiguos o reescritos pueden
-  caer en `no_entendido`.
-- **Sin respuestas generativas**: el motor usa plantillas fijas. No puede redactar
-  resúmenes personalizados del caso del usuario como haría un LLM.
-- **Sin RAG**: en modo local no se inyecta contexto de artículos legales (la integración
-  RAG queda para el modo DeepSeek si se activa).
-- **Tono más repetitivo**: las plantillas pueden sonar similares entre conversaciones
-  distintas. Es la contrapartida de no alucinar.
-
-### Riesgos pendientes
-- **Revisión legal humana**: la política de privacidad refleja el modo local por defecto,
-  pero conviene confirmar que la redacción cumple con el ordenamiento hondureño y, si
-  aplica, RGPD/LOPDGDD.
-- **DeepSeek no se elimina del código**: queda como integración opt-in para quien quiera
-  reactivar el modo generativo. `DEEPSEEK_API_KEY` sigue siendo opcional (no obligatoria
-  para el build).
-- **Scripts RAG/blog** (`lib/rag/`, `scripts/blog-*.ts`) siguen usando DeepSeek para
-  embeddings/corrección de posts — fuera del alcance de este cambio (subsistema separado
-  del chat público).
-
----
-
-## [Unreleased] - 2026-07-06 — Evolución del chat a asistente de preconsulta legal
-
-Transformación del chat asistente de "orientador genérico" a **asistente de preconsulta legal**
-con capacidades estructuradas, manteniendo intactos todos los límites legales/YMYL.
-
-### `feat(chat): asistente de preconsulta — clasificador área, urgencia, resumen y WhatsApp`
-
-- **System prompt (`lib/chat/system-prompt.ts`)**: reescrito con 7 funcionalidades de preconsulta
-  (explicar servicios, clasificar área legal probable, detectar urgencia, preparar resumen de
-  preconsulta, generar mensaje para WhatsApp/correo, checklists documentales orientativos,
-  asistir al formulario). Transparencia IA obligatoria. Frases prohibidas explícitas ("usted
-  ganará", "tiene derecho seguro", "la pena será exactamente", "demande", "haga esto para
-  evitar responsabilidad"). Privacidad y minimización de datos antes de solicitar información.
-  Regla especial RAG intacta.
-- **Guardrails (`lib/chat/guardrails.ts`)**: añadida detección de urgencia server-side
-  (`detectUrgency`, 15 patrones: detención, audiencia, denuncia, violencia intrafamiliar,
-  menores, embargo, despido, vencimiento de plazo, citación, riesgo migratorio, amenaza,
-  urgente, prisión preventiva). No bloquea: marca `urgent: true` para que el widget resalte
-  CTAs de WhatsApp/teléfono. Refuerzo de prompt injection (+8 patrones: "finge ser", "modo god",
-  "sin restricciones", "sobreescribe tus reglas", "system prompt", etc.).
-- **API route (`app/api/chat/route.ts`)**: el flag `urgent` se propaga en la respuesta JSON
-  (guardrail, fallback y deepseek) para que el widget pueda reaccionar.
-- **Config (`lib/chat/config.ts`)**: mensaje inicial con triple aviso obligatorio (IA + no
-  asesoría + privacidad). Quick replies de preconsulta: "Preparar consulta", "Identificar área
-  legal", "Caso urgente", "Enviar WhatsApp", "Ir al formulario", "Soy hondureño en España".
-- **Módulo preconsulta (`lib/chat/preconsulta.ts`)** — NUEVO: clasificador heurístico de área
-  legal (`sugerirAreaLegal`, 12 áreas con keywords), checklists documentales orientativos
-  (`CHECKLISTS_DOCUMENTALES`, 11 áreas), generador de mensaje WhatsApp prudente
-  (`generarMensajeWhatsApp` con marcadores para datos faltantes).
-- **Widget (`components/chat/chat-widget.tsx`)**: quick reply buttons al inicio (ocultos tras el
-  primer mensaje), banner de urgencia con CTAs resaltados (ring + animate-pulse), detección
-  client-side de área legal para analytics, manejo del flag `urgent` del backend.
-
-### `feat(legal): política de privacidad documenta el chat/IA y proveedor DeepSeek`
-
-- **Política de Privacidad (`app/(public)/politica-privacidad/page.tsx`)**: añadida sección 6
-  "Asistente virtual de preconsulta (IA)" con naturaleza, datos tratados, datos no tratados,
-  conservación (no almacenamiento), transmisión al proveedor y derecho a no usar la IA.
-  Renumeradas secciones 7-10. DeepSeek añadido como encargado de tratamiento en sección 5.
-- **Versión política (`lib/legal-content.ts`)**: bumped 0.2 → 0.3, "Junio 2026" → "Julio 2026".
-
-### Tests
-- `tests/chat-guardrails.test.ts`: +3 suites nuevas (detectUrgency, preconsulta-sugerirAreaLegal,
-  preconsulta-generarMensajeWhatsApp, preconsulta-ChecklistsDocumentales). System prompt integrity
-  ampliado (frases prohibidas, privacidad, funcionalidades preconsulta). 27 tests total (antes 13).
-
-### Validaciones
-- `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ (31.9s, 361 páginas) ·
-  `npm run test` ✅ (767 tests, 35 suites, +13 respecto al baseline).
-
-### Límites legales implementados
-- El chat informa que es IA en el mensaje inicial y en el system prompt.
-- No emite dictámenes, no promete resultados, no calcula probabilidades de éxito.
-- Frases prohibidas explícitas en system prompt y guardrails.
-- Detección de urgencia deriva inmediatamente a WhatsApp/teléfono.
-- Minimización de datos: aviso de privacidad antes de solicitar información.
-- No almacenamiento de conversaciones (historial solo en navegador del usuario).
-- Prompt injection reforzado (server-side + system prompt).
-- Política de privacidad documenta proveedor DeepSeek, finalidad, datos y no-retención.
-
-El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/), y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- **SGIE/Admin:** invitaciones seguras con token SHA-256, expiración, uso único,
+  revocación/reenvío, activación transaccional, resultado real de Resend y
+  aceptación legal.
+- **SGIE/Admin:** RBAC central con Administrador, Abogado y Supervisor, 17
+  capacidades canónicas, overrides individuales, equipos y política persistida
+  de acceso SGIE/expedientes/calendario.
+- **SGIE/Agenda:** propietario/creador, rango visible paginado, tipos operativos,
+  visibilidad, zona horaria, participantes, recordatorios, edición y cancelación.
+- Migración aditiva `0032_fase1_admin_identidad_calendario.sql` y documento de
+  arquitectura `docs/architecture/fase-1-nucleo-admin-identidad-calendario.md`.
+
 ### Changed
-- **CI/CD:** Refactorización completa del flujo de GitHub Actions (`ci.yml`). Unificación de validaciones en un único workflow robusto.
-- **CI/CD:** Implementación de instalación reproducible en Ubuntu (`npm ci --no-audit --no-fund`) con npm 11 y caché dependiente de `package-lock.json`.
-- **CI/CD:** El pipeline ahora utiliza ejecución inteligente y condicionada de scripts: comprueba la existencia de `lint`, `typecheck`, `test`, `build` y `seo:doctor` en el `package.json` mediante `jq` antes de invocarlos para evitar fallos por scripts faltantes.
-- **CI/CD:** Integración de variables de entorno seguras, usando placeholders funcionales (ej. `DATABASE_URL`) y configuraciones públicas necesarias en la nube (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_NOINDEX`, etc.) para permitir el paso del build en un entorno sin base de datos real.
-- **Config:** Documentación actualizada en `.env.example` y `README.md` destacando las guías de uso local del CI y el manejo adecuado de secretos.
+- **Admin:** dashboard editorial sustituido por resumen operativo real; gestión
+  de usuarios unificada y alta directa reemplazada por invitación.
+- **Expedientes:** creación, responsable, checklist, historial y auditoría ahora
+  comparten una transacción; asignación a terceros exige `cases.assign`.
+- **Errores:** fallos inesperados dejan de degradarse a 401 y devuelven 500 con
+  correlation ID; CSRF devuelve 403 tipado.
+- **docs:** Saneamiento documental de `AGENTS.md`, `README.md` y `CHANGELOG.md`.
+  `AGENTS.md` reestructurado como protocolo canónico conciso con tres modos
+  explícitos (`AUDITORÍA`, `IMPLEMENTACIÓN`, `VERIFICACIÓN`), declaración de que
+  ningún archivo queda excluido de lectura en auditoría, y matriz de validación
+  proporcional en lugar de validación universal. Manuales extensos de SEO Live y
+  RAG condensados y enlazados a `docs/`.
+  `README.md` reducido a entrada técnica profesional verificada: versiones
+  reales del stack (Next.js 16.2.10 + React 19.2.7, no las obsoletas anteriores),
+  eliminación de conteos manuales de tests/suites/endpoints/scripts/KPIs
+  temporales, y reformulación de las afirmaciones de cumplimiento
+  ("cumple GDPR/ePrivacy" → controles técnicos orientados al cumplimiento que
+  requieren revisión jurídica humana).
+  `CHANGELOG.md` normalizado a Keep a Changelog con un único bloque `[Unreleased]`
+  y releases recientes resumidos; el detalle histórico se mueve a
+  `docs/changelog/archive-2026-H1.md` sin perder información.
+- **docs:** Bloque accidental de "Analítica pública" que estaba pegado al final
+  del formato de entrega de `AGENTS.md` (texto huérfano sin cabecera) eliminado.
 
-## [11.0.1] - 2026-07-06 — Implementación Fase 1 auditoría SEO/GEO (tareas A-01 a A-04)
+### Removed
+- Superficies Admin del antiguo CMS: Blog, FAQ, páginas, menús, medios, SEO,
+  analítica pública, Search Console, redirects y editor visual. Se conservan
+  tablas y servicios de lectura requeridos por la web pública.
+- Dependencias Tiptap y componentes editoriales que quedaron huérfanos.
 
-Ejecución de las 4 tareas de prioridad ALTA del `SEO_GEO_ACTION_PLAN.md`, generadas
-por la auditoría integral SEO/GEO/YMYL (`AUDITORIA_SEO_GEO_LEGAL_PINEDA.md`).
+## [110] - 2026-07-04 — Transformación coherente de la web pública
 
-### Verificación post-deploy en producción (2026-07-06)
+Reorganización integral de la web pública para eliminar "crecimiento por
+acumulación" y convertir el sitio en una experiencia coherente. Override de R5
+autorizado; resto del protocolo respetado (URLs/slugs intactos).
 
-Confirmación de que los cambios de Fase 1 están vivos en producción, sin regresiones.
+### Changed
+- `lib/areas-unified.ts` (puente seed TS ↔ tabla DB `areas_juridicas`) y
+  `lib/faq-unified.ts` (documenta 4 orígenes de FAQ) como fuentes unificadas.
+- Componentes nuevos: `EditorialBlock`, `IconBadge`; utilidades `.section-breath`,
+  `.rhythm-tight`. Variantes en `BlogHighlights`/`ConsultationCTA`/`TrustBar`.
+- Home 631 → 456 líneas (−28 %). Cada página pública con misión canónica única.
 
-- **Deploy verificado en producción:** enlace al Poder Judicial de Honduras
-  (`https://www.poderjudicial.gob.hn/`) confirmado en `/despacho` (265.767 bytes) y
-  en el footer de la home (249.519 bytes). `rel="noopener noreferrer"`, sin `nofollow`,
-  texto prudente ("referencia institucional del sistema judicial hondureño").
-- **Canonical coherente:** canonical = og:url = URL servida =
-  `https://www.pinedayasociadoshn.com` (sin slash, normalización Next.js). Title 59 chars,
-  1 `<h1>`, sin trailingSlash global.
-- **Sitemap/robots:** ambos HTTP 200; sitemap 213 URLs (sin cambios); robots referencia
-  sitemap correctamente.
-- **Slug A-04 corregido:** 0 referencias al slug erróneo `derecho-ambiental-regulatorio`
-  en el repo; URL correcta `/servicios-juridicos/ambiental-regulatorio` sirve 200.
-- **Integridad confirmada:** JSON-LD, blog, RGPD/cookies, next.config.ts, proxy.ts,
-  sameAs y CWV intactos (sin cambios en git diff).
-- **A-01 sigue pendiente:** cadena apex 308→308 confirmada en vivo (2 saltos). Requiere
-  configuración manual en Vercel → Domains → apex como redirect 301 a www.
-- **Validaciones locales:** `lint` ✅, `tsc --noEmit` ✅, `build` ✅ (28.0s, 361 páginas),
-  `seo:doctor` ✅ (18 OK), `test` ✅ (754 tests, 35 suites).
-- **Progreso:** 92 % completado / 8 % restante (sin cambios: A-01 Vercel + A-04 detalle
-  externo Bing/Screaming Frog). A-02, A-03 completadas y validadas en producción.
+### Fixed
+- `@id` `FAQPage` duplicado en `/derecho-penal` y `/hondurenos-en-espana`.
+- Deuda de hidratación React #418 en `ChatWidget` (patrón `useSyncExternalStore`).
+- FAQ i18n home renombrada a `FAQ_HOME_LEGACY`: rol declarado como
+  structured-data (JSON-LD), no UI ni fuente canónica.
 
-### Cierre técnico post-implementación (2026-07-06)
+> Detalle completo: [`docs/audits/transformacion-web-publica.md`](docs/audits/transformacion-web-publica.md).
 
-Re-validación y cierre operativo de los pendientes externos de Fase 1. Sin cambios
-de código funcionales adicionales — solo documentación de procedimientos externos.
+## [109] - 2026-07-04 — Ajuste de escala visual + sistema de diseño
 
-- **Re-validación local:** `lint` ✅, `tsc --noEmit` ✅, `build` ✅ (28.0s, 361 páginas),
-  `seo:doctor` ✅ (18 OK / 1 ERROR gcloud externo / 4 PENDIENTE creds), `test` ✅ (754 tests, 35 suites).
-- **Cierre externo A-01 (Vercel):** documentado procedimiento exacto en
-  `AUDITORIA_SEO_GEO_LEGAL_PINEDA.md` § "Cierre técnico Fase 1". Estado verificado en vivo:
-  cadena apex sigue en 2 saltos (308→308); requiere config manual en Vercel Domains.
-- **Cierre externo A-02 (GSC/Bing):** documentado checklist de validación pasiva.
-  Decisión local mantenida: no forzar `trailingSlash` global. Pendiente confirmación en
-  GSC URL Inspection y Bing WMT SEO Report.
-- **Cierre externo A-04 (Bing WMT/Screaming Frog):** documentado procedimiento de
-  extracción, crawl, clasificación (5 tipos) y corrección. Prohibido redirigir 404 a
-  home o crear páginas vacías. Criterio de cierre: 0 enlaces internos rotos corregibles.
-- **Documentación actualizada:** `AUDITORIA_SEO_GEO_LEGAL_PINEDA.md` (sección "Cierre
-  técnico Fase 1" con instrucciones operativas para Vercel, GSC, Bing WMT y Screaming
-  Frog), `SEO_GEO_ACTION_PLAN.md` (sección "Cierre externo Fase 1").
-- **Progreso:** 92 % completado / 8 % restante (sin cambios). Recomendación: desplegar
-  + cerrar A-01 en Vercel (~10 min) → esperar indexación; A-04 en paralelo.
+### Changed
+- Tokens de escala visual agresivos (`--ui-scale`, `--space-scale`, etc.) que
+  reducen ~30 % la altura de secciones manteniendo legibilidad (16 px mín.) y
+  accesibilidad táctil (≥36 px).
+- Sistema de diseño consolidado: `.prose-pilar`, `.geo-snippet`, `.prose-editorial`,
+  patrón `card-premium`. Auditoría UX/UI de todas las páginas públicas.
+- Arquitectura narrativa canónica por página: Breadcrumbs → PageHero → TrustBar
+  → IntroEditorial → Sections → ConsultationCTA → HubFaq.
 
-### `fix(seo): Fase 1 auditoría — enlace autoridad, canonical home y enlace roto`
+## [108] - 2026-07-07 — Chat público sin LLM externo
 
-- **A-03 (Enlace a autoridad jurídica)**: Añadido enlace al Poder Judicial de Honduras
-  (`https://www.poderjudicial.gob.hn/`) en `/despacho` (tarjeta "Credenciales y
-  especialidad") y en el footer (columna identidad). Refuerza E-E-A-T (Trustworthiness)
-  en sitio YMYL jurídico. `rel="noopener noreferrer"`, sin `nofollow`, tono prudente.
-  - `app/(public)/despacho/page.tsx`
-  - `components/marketing/public-footer.tsx`
-- **A-04 (Enlace interno roto)**: Corregido slug de servicio en `landing-local.tsx`:
-  `derecho-ambiental-regulatorio` (404) → `ambiental-regulatorio` (canónico). Coherente
-  con `data/areas-juridicas.ts`, `lib/internal-links.ts`, `public-footer.tsx` y
-  `data/seo/canonical-paths.json`. Enlace latente (no se renderizaba actualmente) pero
-  bug potencial si una landing local añadía un servicio ambiental.
-  - `components/marketing/landing-local.tsx`
-- **A-02 (Canonical home)**: Decisión documentada (sin cambio funcional). Next.js App
-  Router normaliza el trailing slash de la raíz con `trailingSlash: false` (default):
-  el HTML sirve `...com` sin slash, coherente entre canonical, og:url y URL servida.
-  Bing no reporta errores de canonicalización (3.754 2xx, 16 priorityUrls sin "redirect").
-  No se fuerza `trailingSlash: true` global (impactaría 213 URLs del sitemap, ~60
-  redirects y todos los canonicals; riesgo de regresión > beneficio). Comentarios
-  actualizados para reflejar la realidad.
-  - `app/(public)/page.tsx` (comentario)
-  - `app/(public)/layout.tsx` (comentario)
-- **A-01 (Redirect apex)**: PENDIENTE EXTERNA. La cadena 308→308 en el dominio apex
-  (`http://non-www` → `https://non-www` → `https://www`) es infraestructura de Vercel
-  que intercepta antes de la app Next.js. `next.config.ts` ya declara los redirects
-  (líneas 118–119) como defensa en profundidad. Requiere config manual en Vercel →
-  Project Settings → Domains → apex como "Redirect to www" Permanent (301).
+> Sustituye al chat original basado en DeepSeek (Release 108 histórico, archivado).
+> Estado final: el chat público funciona **exclusivamente con un motor de reglas
+> local**; los mensajes del usuario no se transmiten a ningún proveedor externo
+> de IA. Verificado: `lib/chat/` no contiene `deepseek.ts` ni `system-prompt.ts`,
+> y `app/api/chat/route.ts` no referencia DeepSeek.
 
-### Documentación generada/actualizada
-- `AUDITORIA_SEO_GEO_LEGAL_PINEDA.md`: nueva sección "Implementación Fase 1 — 2026-07-06".
-- `SEO_GEO_ACTION_PLAN.md`: A-01 a A-04 marcadas con estado (pendiente externa / completada / parcial).
-- `SEO_AUDIT_CHECKLIST.md`: 2 ítems ⚠️→✅ (2.6, 7.8); 3 ítems ⚠️ actualizados (1.8, 1.10, 11.9). Total: 128✅ / 23⚠️ / 0❌ (85 %).
+### Changed
+- `app/api/chat/route.ts` mono-flujo: rate-limit → Zod → guardrails → motor de
+  reglas local. Eliminados `CHAT_PROVIDER`, cliente DeepSeek y system prompt LLM.
+- Política de privacidad (sección 6) reescrita: "sistema automatizado basado en
+  reglas locales". Versión política 0.4 → 0.5.
 
-### Validaciones
-- `npm run lint` ✅ limpio
-- `npx tsc --noEmit` ✅ limpio
-- `npm run build` ✅ Compiled successfully in 28.8s, 361 páginas estáticas, exit code 0
-- `npm run seo:doctor` ✅ 18 OK / 1 ERROR (gcloud CLI no instalada, no relacionado) / 4 PENDIENTE
+### Security
+- Las variables `DEEPSEEK_*` de `.env.example` pertenecen a RAG/embeddings y
+  scripts internos de blog, **no al chat público**. El chat no requiere API key de IA.
 
----
+### Notes
+- **PENDIENTE:** revisión jurídica humana de la redacción de la política de
+  privacidad frente al ordenamiento hondureño y RGPD/LOPDGDD.
 
-## [Unreleased] - 2026-07-06 — Saneamiento global del repositorio y mejoras SEO/GEO
+## [107] - 2026-07-10 — Saneamiento SEO Ahrefs Fases 1–G
 
-Este saneamiento se separó en dos commits atómicos y semánticamente correctos: un `chore` técnico y un `feat(seo)` funcional.
+Corrección técnica SEO basada en 6 CSV de Ahrefs (crawl 10-jul-2026).
 
-### Commit 1: `chore: saneamiento global del repositorio y hardening operativo`
-- **Fase 1 (Limpieza Básica)**: 
-  - Eliminación segura de archivos temporales (`_tmp_*`, `_chat_*.png`, `auditoriablog_*.md`) y limpieza de la carpeta `scratch/`. Actualización de `.gitignore`.
-  - Correcciones técnicas en `app/robots.ts` (permitidos `/_next/` para bots) y `tests/blog-verify-fix.test.ts` (typecheck fixes).
-- **Fase 2 (Saneamiento Operativo)**:
-  - Consolidación del directorio `scripts/`: Se creó `scripts/README.md` documentando el inventario.
-  - Archivado histórico: Se movieron a `scripts/archive/` los scripts huérfanos/obsoletos.
-  - Verificación de exclusión: Se confirmó que `archive/` está ignorado en el typecheck global.
-- **Fase 3 (Consolidación SDK de IA)**:
-  - Se eliminó con seguridad la dependencia legacy `@google/generative-ai`.
-  - Se consolidó la conectividad sobre la SDK oficial `@google/genai` (Gemini) y se documentó el uso de `openai` como cliente para RAG/DeepSeek.
-- **Fase 4 (Hardening de secretos y datos generados)**:
-  - Se eliminaron del index de Git (vía `git rm --cached`) outputs generados: `data/corregir-checkpoint.json` y `data/gsc-*.json`.
-  - Fortalecimiento de `.gitignore` bloqueando patrones `*token*.json`, `*secret*.json`, `*credential*.json`, `*checkpoint*.json` y `data/bing/`.
-  - Creación de `data/README.md` estipulando la política de "Fuentes de verdad" (versionables) vs "Datos generados/Locales" (no versionables).
-- **Fase 5 (Validación y Cierre)**:
-  - Validación 100% exitosa en `lint`, `typecheck`, `test` (754 tests en 35 suites) y `build`.
-  - Cierre formal del informe `AUDIT_REPOSITORY_REPORT.md`.
+### Fixed
+- 2 enlaces 4xx en `/hondurenos-en-espana` (slugs inexistentes → canónico
+  `/servicios-juridicos/derecho-civil-y-notarial`).
+- 8 posts despublicados cuyas rutas estaban redirigidas (301) pero seguían
+  publicados → generaban 114 enlaces internos a 3xx.
+- H1 duplicado en 3 posts del blog (h1 → h2, vía `normalizar-blog.ts --solo-h1`).
+- Titles largos (Fase A), metas cortas (Fase B), metas largas/truncadas (Fase C),
+  orphan pages (Fase D), structured data `@context` en `@graph` (Fase F).
+- `AggregateRating` eliminado de la home (política self-serving reviews).
+- Retirada de `/intranet/admin` del header público HTML; `rel=nofollow` en tags
+  del pie de post; `X-Robots-Tag` por ruta en `next.config.ts`.
 
-### Commit 2: `feat(seo): incorporar mejoras GEO y marcado estructurado para contenido`
-- **Estructura Semántica**:
-  - Ampliado el marcado estructurado del sitio y blog con señales GEO/SEO (`lib/schemas/blog.ts`, `lib/site.ts`).
-  - Añadidas propiedades semánticas orientadas a asistentes (entidades `Organization`, `SpeakableSpecification`, idioma BCP-47).
-  - Actualizado el script `scripts/corregir-articulos.ts` para inyectar bloques estructurales GEO puros (`geo-summary`, `geo-law`, `geo-data`) directamente en los bodies HTML.
+### Added
+- `scripts/seo-ahrefs-audit.mjs` (validador), `fix-long-titles.ts`,
+  `fix-long-metas.ts`, `fix-editorial-placeholders.ts` (idempotentes, dry-run).
+- `lib/seo.ts` helper `buildServiceMetaDescription()` (sanitiza HTML, recorta a
+  120–155 chars en límite de palabra).
 
----
+### Notes
+- **NO VALIDADO:** los warnings del validador reflejan el CSV estático
+  pre-corrección; desaparecerán tras deploy + recrawl Ahrefs. Las correcciones
+  de código y DB están aplicadas y verificadas localmente.
 
-## 2026-07-04 — Transformación coherente de la web pública (Release 110)
+## [106] - 2026-07-07 — Fix "page has broken JavaScript"
 
-Reorganización integral de la web pública para eliminar la sensación de
-"crecimiento por acumulación" y convertir el sitio en una experiencia coherente,
-elegante y madura. Override de R5/Sección 6 autorizado por el usuario; el resto
-del protocolo respetado (URLs/slugs intactos, tokens R16, commits atómicos).
+### Fixed
+- Service worker con `CACHE` fijo entre deploys causaba 404 en chunks JS
+  referenciados desde HTML servido (chunks obsoletos en caché).
+- `public/sw.js` ahora versiona la caché por build vía placeholder `__BUILD_ID__`;
+  cada deploy purga las cachés de builds anteriores y purga entradas cuya
+  revalidación devuelve 404.
+- Títulos de blog con marca "Pineda y Asociados" duplicada (template + sufijo DB).
 
-### Arquitectura
-- **`lib/areas-unified.ts`**: puente entre seed TS canónico y DB. Resuelve R2.
-- **`lib/faq-unified.ts`**: documenta 4 orígenes de FAQ y expone helpers tipados.
+### Added
+- `scripts/bump-sw-cache.mjs` (inyecta `BUILD_ID` en `sw.js`).
+- `scripts/verify-chunks.mjs` (valida chunks referenciados vs `.next/static/chunks/`).
+- `postbuild` ejecuta `bump-sw-cache` + `verify-chunks` antes de `generate-llms-txt`.
 
-### Componentes nuevos
-- **`EditorialBlock`**: bloque narrativo tipográfico (eyebrow + serif + lista
-  jerárquica) para sustituir grids de tarjetas clonadas.
-- **`IconBadge`**: encapsula patrón icono-contenedor R16 (PENDIENTE de aplicar).
-- Utilidades CSS `.section-breath`, `.rhythm-tight`.
+## [105] - 2026-07-12 — Remediación integral identidad 2FA Fases 1–5
 
-### Variantes en componentes compartidos
-- `BlogHighlights`: `layout="cards"|"list"|"minimal"`.
-- `ConsultationCTA`: `variant="closing"|"inline"|"footer"` + props.
-- `TrustBar`: `variant="expanded"|"compact"` + `limit`.
+> **Estado:** código completado; pendiente de despliegue y pasos operativos
+> (aplicar migración `0030_security_sessions_2fa.sql` en staging, configurar
+> `ENCRYPTION_KEY` en producción, ejecutar runbook de rotación de credenciales).
+> No se cambiaron credenciales productivas desde código.
 
-### Páginas transformadas
-- **Home**: 12 → 7 secciones, 631 → 456 líneas (−28 %). Sin FAQ visual ni Equipo.
-- **`/despacho`**: dueño canónico del Equipo y claims institucionales.
-- **`/derecho-penal`**: sin foto duplicada, CTAs consolidados, contraste rítmico.
-- **`/servicios-juridicos`**: misión catálogo, sin duplicar `/despacho`.
-- **`/hondurenos-en-espana`**: reconectado al catálogo (RelatedServices).
-- **Landings locales**: cierre coherente (ConsultationCTA inline).
-- **5 landings cargo**: RelatedCities al pie (reconectadas al grafo).
-- **`/solicitar-consulta`**: 3 cards Equipo → enlace compacto a `/despacho`.
+### Security
+- JWT con propósito explícito (`session`/`2fa_challenge`), challenge 2FA TTL 5 min,
+  `jti` aleatorio con consumo atómico (compare-and-set en DB).
+- `ENCRYPTION_KEY` dedicada y obligatoria para cifrar secretos TOTP (desacoplada
+  de `JWT_SECRET`); `ENCRYPTION_KEY_PREVIOUS` para rotación controlada.
+- Versión de sesión (`token_version`): la rotación de contraseña invalida tokens previos.
+- Preview reemplazado por tokens opacos server-side (`preview_tokens`): un solo uso,
+  expiración 1 h, HTML sanitizado con allowlist estricta.
+- `/api/descargar` migrado de GET a POST (sin PII en URL), rate limiting, consent
+  obligatorio, CAPTCHA-ready (Turnstile), `Cache-Control: private, no-store`.
+- `lib/file-validation.ts`: validación por magic bytes (Zip Slip, extensión vs firma).
+- Endpoint MCP demo eliminado (3 HIGH CVEs); dependencias MCP removidas (-6 paquetes).
 
-### Validación
-✅ lint + build + 754 tests + validate:dates + sitemap (213 URLs).
+### Added
+- Runbook de backup/restauración: [`docs/security/runbook-backup-restore.md`](docs/security/runbook-backup-restore.md).
+- Runbook de rotación de credenciales Fase 1: [`docs/security/runbook-rotacion-credenciales-fase1.md`](docs/security/runbook-rotacion-credenciales-fase1.md).
 
-Ver detalle en `docs/audits/transformacion-web-publica.md`.
+## [104] - 2026-07-16 — Corrección de pageviews GA4 y Consent Mode v2
 
-### Cierre (2026-07-04)
-Cierre de los 3 pendientes del Release 110 y validación completa de SEO/indexación:
-- **IconBadge aplicado** de forma quirúrgica (4 casos equivalentes); variantes
-  incompatibles dejadas intactas y documentadas.
-- **FAQ i18n home** renombrada a `FAQ_HOME_LEGACY`: rol declarado como
-  structured-data (JSON-LD `FAQPage`), no UI, no fuente canónica. SEO intacto.
-- **Fix SEO**: eliminado `@id` `FAQPage` duplicado en `/derecho-penal` y
-  `/hondurenos-en-espana` (`areaSchemas` + `HubFaq` emitían el mismo bloque).
-- **QA visual real** con Playwright: 22 capturas (11 rutas × desktop/móvil),
-  0 overflow horizontal, 1 h1/página. Errores de consola preexistentes declarados.
-- **SEO validado vía HTTP local**: sitemap 213 URLs, robots sin bloqueos,
-  metadatos 18/18 OK, JSON-LD 0 duplicados, indexabilidad 0 errores.
-- **Infraestructura**: `scripts/qa-visual-cierre.mjs` (QA reutilizable).
+### Fixed
+- Visita inicial de GA4: `config` vuelve a emitir el `page_view` inicial y se
+  ejecuta `afterInteractive` (eliminaba la carrera con el efecto de App Router).
+- Duplicación SPA en Network: retirado el `page_view` manual; cambios History API
+  delegados en GA4 Enhanced Measurement. Verificado un hit 204 por ruta.
+- Stub de Clarity para usar la API oficial `window.clarity` (evitaba `a[c] is not
+  a function`).
+- OAuth Google alternativo endurecido (scopes mínimos, `state` anti-CSRF, callback
+  limitado a localhost, token no mostrado, persistencia atómica).
 
-### Cierre de deuda runtime (2026-07-04)
-Resuelto el error de hidratación React #418 declarado preexistente:
-- **Causa raíz**: `ChatWidget` usaba `typeof document === 'undefined'` como
-  branch server/client (SSR retornaba `null`, cliente renderizaba el portal) →
-  mismatch de hidratación #418, que en producción cascada a `a[c] is not a function`.
-- **Fix**: patrón `mounted` con `useSyncExternalStore` (determinista server/client).
-- **`a[c] is not a function`**: NO es deuda del proyecto; es un error interno del
-  script de terceros Microsoft Clarity en contexto headless.
-- **Test de regresión**: `e2e/hydration.spec.ts` (8 rutas, 8/8 pasan).
-- Validado: 0 errores de hidratación en 7 rutas × desktop/móvil en producción.
-
-Sin push.
+### Changed
+- Consent Mode v2 con banner accesible, elección granular, persistencia
+  versionada 180 días, revocación y acceso desde el footer. GA4 y Clarity no
+  descargan scripts antes de aceptar analítica; publicidad permanece denegada.
+- Exportadores GA4/GSC paginados y ampliados (JSON/CSV atómicos, reintentos,
+  timeouts, rangos configurables). Bing genera JSON y CSV.
 
 ---
 
-## 2026-07-04 — Ajuste fuerte de escala visual v2 (Release 109b)
-
-Segunda pasada de compactación tras Release 109. Tokens agresivos que reducen
-~30% la altura de secciones, ~30% espacios, ~22% componentes y ~30% el chat.
-Reducción de texto controlada (~10% máx). Mantiene legibilidad (16px min),
-botones accesibles (≥36px) y proporción profesional.
-
-### Tokens actualizados (`app/globals.css`)
-```
---ui-scale: 0.82         # antes 0.94
---font-scale: 0.90       # antes 0.98
---space-scale: 0.70      # antes 0.88
---section-scale: 0.68    # antes 0.86
---component-scale: 0.78  # antes 0.92
---chat-scale: 0.70       # antes 0.88
-```
-
-### Cambios aplicados
-- **Root font-size**: mantenido `clamp(16px, 0.95rem + 0.15vw, 17px)`
-- **Container/Section/Header**: reducción adicional ~25% en todos los espaciados
-- **Home hero (page.tsx)**: padding `py-12/16/20` → `py-8/12/16`, título reducido
-  un escalón, panel lateral iconos w-11→w-10, p-6→p-5, CTAs mt-8→mt-6.
-- **PageHero**: padding `py-8/12/14` → `py-6/10/12`, title bajado a `text-xl/sm:text-2xl/lg:text-3xl`.
-- **CTAGroup**: UrgencyCallout p-4→p-3.5, ContactStrip p-3→p-2.5 w-10→w-9.
-- **TrustBar**: py-6/10→py-5/8, iconos w-10→w-9, gap reducido.
-- **PublicHeader**: main-bar py-2→py-1.5, logo h-8→h-7, wordmark más fino.
-- **PublicFooter**: py-10/14→py-8/12, logo h-12→h-10, gap-6→gap-5.
-- **HubFaq**: py-10/14→py-8/12, title `text-xl/2xl`→`text-lg/xl`, padding compacto.
-- **ServiceCard**: p-4/5→p-3.5/4, title `text-base/lg`→`text-sm/base`.
-- **LandingLocal**: hero py-8/12→py-6/10, title bajado, NAP mt-5→mt-4.
-- **ChatWidget**: maxWidth `clamp(16rem,25vw,20rem)`, maxHeight `min(480px, calc(100dvh-100px))`,
-  botón w-10 h-10, todos los paddings reducidos ~30%.
-
-### Criterio por resolución
-| Resolución | Efecto esperado |
-|---|---|
-| 1366×768 | ~30% menos altura visual, 4-5 secciones visibles arriba del fold |
-| 1440×900 | Equilibrada, elegante, proporción jurídica premium |
-| 1920×1080 | No parece ampliada, anchos controlados |
-| 768×1024 | Compacta pero cómoda, lectura fluida |
-| 390×844 / 360×740 | Texto legible, menos scroll, chat no invasivo |
-
-Sistema profesional de escala fluida para toda la web pública. Seis CSS custom
-properties en `:root` controlan la densidad global. Sin zoom, sin hacks, sin
-rediseño. El root font-size usa `clamp(16px, 0.95rem + 0.15vw, 17px)` para
-mantener legibilidad (±2% variación). La compactación real se consigue en
-spacing, secciones, componentes y chat.
-
-### Tokens de escala (`app/globals.css`)
-```
---ui-scale: 0.94        # global (no usar directamente)
---font-scale: 0.98      # texto continuo y títulos
---space-scale: 0.88     # paddings, margins, gaps
---section-scale: 0.86   # altura/padding vertical de secciones
---component-scale: 0.92 # cards, badges, botones, iconos
---chat-scale: 0.88      # widget del chat
-```
-Documentación inline: "Para web más COMPACTA baja todas ~0.05, para más AMPLIA
-sube --space-scale y --section-scale".
-
-### Componentes refactorizados
-- **Section/Container/SectionHeader**: Container `px-4 sm:px-6` → `px-3 sm:px-5`,
-  SPACING reducido un escalón, SectionHeader `mb-10` → `mb-8`.
-- **PageHero**: padding vertical `py-10 md:py-14 lg:py-16` → `py-8 md:py-12 lg:py-14`.
-  Títulos bajan un escalón (`text-3xl sm:text-4xl lg:text-5xl` → `text-2xl sm:text-3xl lg:text-4xl`).
-- **CTAGroup**: botones inline/primary de `h-12` a `h-11` (44px ≥ 40px). Compact
-  de `h-10` a `h-9` (36px ≥ 36px táctil). Gaps reducidos. UrgencyCallout y
-  ContactStrip con padding e iconos reducidos.
-- **TrustBar**: padding sección `py-8 md:py-12` → `py-6 md:py-10`. Iconos
-  `w-11 h-11` → `w-10 h-10`.
-- **PublicHeader**: barra principal `py-2.5 md:py-3` → `py-2 md:py-2.5`. Logo
-  `h-9/h-12` → `h-8/h-11`. Nav `h-9` mantenido. Drawer móvil `h-11` → `h-10`
-  (40px táctil).
-- **PublicFooter**: padding `py-14 md:py-16` → `py-10 md:py-14`. Grid gap
-  `gap-8 lg:gap-10` → `gap-6 lg:gap-8`. Logo `h-14 sm:h-16` → `h-12 sm:h-14`.
-- **HubFaq**: sección padding reducido, title `text-2xl md:text-3xl` →
-  `text-xl md:text-2xl`, summary/body padding compactado.
-- **ServiceCard**: contenido `p-5 md:p-6` → `p-4 md:p-5`. Title `text-lg md:text-xl`
-  → `text-base md:text-lg`.
-- **LandingLocal**: hero padding reducido, title baje un escalón, NAP grid y CTA
-  spacing compactados. Servicios grid `gap-5` → `gap-4`.
-- **ChatWidget**: ancho fluido `clamp(18rem, 28vw, 23rem)` + `calc(100vw-2rem)`.
-  Altura segura `min(620px, calc(100dvh - 120px))`. Botón flotante `w-11 h-11`.
-  Cabecera, burbujas, CTA bar, input y disclaimer compactados con --chat-scale.
-
-Chat conversacional orientado a conversión y orientación inicial, montado en la
-web pública (`app/(public)/layout.tsx`). Conecta con DeepSeek v4 Flash vía
-endpoint server-side `/api/chat`. La API key nunca sale del servidor; el widget
-solo llama a la ruta relativa same-origin.
-
-### Backend (`lib/chat/`, `app/api/chat/route.ts`)
-- **Config centralizada** (`lib/chat/config.ts`): `CHAT_ENABLED`, `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL`, `DEEPSEEK_BASE_URL`, `CHAT_TEMPERATURE`, `CHAT_MAX_TOKENS`, `CHAT_TIMEOUT_MS`, límites de longitud y rate-limit.
-- **System prompt canónico** (`system-prompt.ts`): texto verbatim del requerimiento; no abogado, no asesoramiento definitivo, no inventar leyes, derivar urgencias a WhatsApp/teléfono.
-- **Base de conocimiento** (`knowledge-base.ts`): derivada de `data/areas-juridicas.ts` y `lib/site.ts`. Allowlist de enlaces públicos (`PUBLIC_LINKS_ALLOWLIST` + `isAllowedPublicLink`): el asistente solo puede citar páginas públicas, nunca rutas privadas/API/técnicas.
-- **Guardrails server-side** (`guardrails.ts`): detección de prompt injection, temas privados/intranet, solicitudes de asesoramiento definitivo (cálculo de penas, estrategia, escritos). Respuestas prefijadas sin llamar al proveedor.
-- **Cliente DeepSeek** (`deepseek.ts`): fetch con `AbortController` (timeout), reintentos en 429/5xx. Reutiliza patrón de `lib/sgie/ia-documental.ts`.
-- **Endpoint `/api/chat`**: rate-limit doble (por IP + por sessionId vía `rateLimits`), validación Zod, guardrails, llamada al proveedor, fallback seguro. No revela configuración interna.
-
-### Frontend (`components/chat/`)
-- **Widget** (`chat-widget.tsx`): botón flotante `bottom-4 left-4` (no tapa el `FloatingContactRail` de la derecha). Panel con mensaje inicial, quick replies, CTAs (WhatsApp contextual, llamar, solicitar consulta), estados loading/error, scroll interno, cierre con Escape, aria-labels, foco visible. Disclaimer visible: "Este chat ofrece orientación inicial y no sustituye una consulta jurídica."
-- **Salvaguarda anti-rutas-privadas**: además del montaje en layout público, el widget devuelve `null` en `/intranet`, `/admin`, `/login`, `/dashboard`, `/panel`, `/auth`, `/private`, `/api`, `/cargar`, `/preview`.
-- **Analytics anónimos** (`chat-analytics.ts`): `chat_opened`, `chat_closed`, `chat_message_sent`, `chat_fallback_used`, `chat_whatsapp_clicked`, `chat_contact_clicked`, `chat_service_suggested`. Sin contenido de conversación.
-- **sessionId** en `localStorage` (sin conversación completa); generado perezosamente en el primer envío.
-
-### Fallback sin IA
-Si falta `DEEPSEEK_API_KEY`, el modelo falla (timeout/HTTP error) o se agota el rate-limit, el widget sigue ofreciendo WhatsApp, llamada, contacto y servicios. Respuesta `source: fallback_*`.
-
-### Modelo
-`DEEPSEEK_MODEL=deepseek-v4-flash` (requerimiento del proyecto). Modificable por env: si el proveedor usa otro identificador oficial, basta cambiar la variable sin tocar código.
-
-### Tests (24 nuevos, 754 totales)
-`tests/api-chat.test.ts` (10) + `tests/chat-guardrails.test.ts` (14): aparece en públicas; no revela configuración; prompt injection bloqueado; intranet rechazada; asesoramiento definitivo deriva; fallback sin API key; allowlist impide rutas privadas; rate-limit 429; system prompt íntegro.
-
-### Validación
-`lint` ✓ (0 errores), `build` ✓ (ruta `/api/chat` generada), `test` ✓ (754/754).
-
----
-
-## 2026-07-04 — Fase 2 advanced SEO/GEO/CRO/analytics (Release 107)
-
-Segunda fase avanzada de SEO/GEO/performance/CRO sobre la rama `fase2-growth-seo`. 8 commits atómicos (a778d4b → 7829bf8). Validación final: `lint` ✓, `build` ✓ (360 rutas estáticas), `test` ✓ (730/730).
-
-### Fix factual (commit a778d4b)
-- **Página pilar** (`/guia-legal-abogados-honduras`): apellidos corregidos a la fuente canónica `lib/site.ts`. "Thania Pineda" → "Thania Marlene Paz", "Emil Hernández" → "Emil Barahona". Discrepancia detectada entre la pilar (recién creada) y los schemas Person/Organization que alimentan Knowledge Graph.
-- Incluye WIP R106 del usuario (`.prose-pilar` y `.geo-snippet` en globals.css, refactor visual de servicios-juridicos/como-llegar/landing-local).
-
-### Des-canibalización landings locales (commit 2d012a1)
-- **Keyword canibalizadora eliminada**: `abogado penalista {ciudad}` ya no se incluye en las 16 landings locales (competía con las landings de cargo dedicadas `/abogado-penalista-nacaome` y `/abogado-penalista-choluteca`). Reemplazada por `bufete jurídico {ciudad}` no competitiva.
-- **Titles SEO diferenciados por tipo de ciudad** (antes todas compartían `Abogados en {ciudad} | Pineda y Asociados`):
-  - Sede física (Nacaome): `Abogados en Nacaome · Bufete con Sede en Valle` (46 chars)
-  - Distancia ≤60 km: `Abogados en {ciudad} | Sur de Honduras` (~40 chars)
-  - Distancia >60 km: `Abogados en {ciudad} | Bufete desde Nacaome` (~55 chars)
-  - Todas ≤60 chars. Campo opcional `seoTitle` para override manual.
-
-### Performance (commit 6353f47)
-- Recompresión parcial de los 2 WebP >400 KB restantes (`delitos-ambientales`, `habeas-corpus`). Calidad 68 + resize 1600px. Ahorro: 485→472 KB y 485→474 KB (~25 KB total). Lock de archivo intermitente impidió aplicar calidad 60 + resize 1400. AVIF equivalente ya se sirve en Chrome/Edge/Firefox (402 y 388 KB).
-
-### Enlazado página pilar (commit aa013f2)
-La pilar `/guia-legal-abogados-honduras` solo recibía 1 enlace entrante. Era huérfana desde home, footer, landings locales y hubs. Añadidos enlaces contextuales (sin rediseño):
-- **Home**: tercer link en sección FAQ (junto a blog y FAQ).
-- **Footer**: entrada en columna "El Despacho".
-- **Landing-local**: link al final del bloque intro (afecta a las 16 landings locales).
-- **`/derecho-penal`** y **`/despacho`**: link tras "explore las ramas principales del derecho".
-
-### GEO/LLMO — AnswerBlocks en hubs faltantes (commit a3ac75b + 7829bf8)
-- **`/servicios-juridicos`**: AnswerBlock "¿Qué hace un bufete multidisciplinario en Honduras?" con respuesta sobre las 14 áreas y punto de contacto único.
-- **`/hondurenos-en-espana`**: AnswerBlock "¿Puedo tramitar asuntos legales en Honduras residiendo en España?" con respuesta sobre poderes apostillados y seguimiento remoto.
-- Ahora los 6 hubs comerciales principales tienen AnswerBlock (pilar, despacho, solicitar-consulta, derecho-penal, servicios-juridicos, hondurenos-en-espana).
-- Fix build: `Section background="light"` inválido → `muted` (commit 7829bf8).
-
-### GEO/LLMO — llms.txt con sección FAQ (commit 202680a)
-- `scripts/generate-llms-txt.mjs`: nueva sección "Preguntas frecuentes (FAQ)" listando las 5 páginas con schema FAQPage (central + 4 hubs). Cada entrada con 1-liner descriptivo para que ChatGPT, Claude, Perplexity, Copilot y Gemini puedan localizar y citar respuestas directas.
-- `public/llms.txt` regenerado: 159 líneas (era 151).
-
-### CRO + analytics (commit 11e0c40)
-- **`trackScrollDepth(percent)`** en `lib/analytics.ts`: gap cerrado (faltaba `scroll_depth` en el catálogo de eventos).
-- **`analytics-listeners.tsx`**: listener `scroll` con umbrales 25/50/75/90% vía rAF + `Set` de disparados (una vez por umbral por carga de página). Listener pasivo.
-- **`cta-buttons.tsx`**: `DEFAULT_MSG` de WhatsApp ampliado de "Vi su sitio web" a "Los contacto desde la web de Pineda y Asociados" (más específico, ayuda a filtrar leads por canal).
-
-### Validación
-- `npm run lint`: 0 errores.
-- `npm run build`: 360 rutas estáticas.
-- `npm test`: 730 tests (33 suites) pasados.
-- `npx tsc --noEmit`: errores preexistentes en `tests/blog-verify-fix.test.ts` (presentes en `main`, no tocados en esta rama).
-
-### Pendientes declarados (R11)
-- **CSS 1412 líneas**: sin bloques `@layer` muertos identificables; requiere análisis dedicado. Fuera de scope.
-- **Bundle admin libs**: ya aisladas por Turbopack (verificado Fase 1). No se requiere action.
-- **PageSpeed live**: no se mide (sin Lighthouse sobre deploy real).
-- **Recompresión WebP q60 + resize 1400**: lock intermitente impidió aplicación; AVIF equivalente sirve la versión optimizada en navegadores modernos.
-- **FAQ dedicadas para 9 landings secundarias**: las actuales tienen plantilla + contexto local real; diferenciación total requeriría redacción editorial masiva (~36 Q&A).
-- **SearchAction schema, VideoObject/HowTo**: sin buscador global, sin contenido de video.
-
----
-
-## 2026-07-04 — Consolidación del sistema de diseño + auditoría pública integral (Release 106)
-
-Segunda fase de la auditoría UX/UI. Tras la normalización de páginas principales en R105, se auditaron sistemáticamente todas las páginas públicas restantes (blog, contacto, legales, landings, subpáginas, guías) y se consolidó el sistema de diseño con nuevas utilidades CSS y normalización de componentes.
-
-### Utilidades CSS nuevas
-- **`.prose-pilar`** en `globals.css`: tipografía editorial para páginas de contenido extenso (guías legales, pilares). Similar a `.article-body` pero sin los marcadores § en h2. Max-width 42rem, h2 serif 1.5rem, line-height 1.78, responsive mobile.
-- **`.geo-snippet`** en `globals.css`: bloque de respuesta directa optimizado para motores de IA (AEO/GEO). Fondo acent/5 con borde sutil, texto escaneable, padding controlado. Reemplaza los `bg-accent/5 rounded-2xl p-5 border border-accent/10` inline que se repetían en varias páginas.
-
-### Páginas normalizadas (nuevas en R106)
-- **`/como-llegar`**: el hero inline (section bg-primary con texto manual) se reemplazó por `PageHero` canónico + `Breadcrumbs` + `TrustBar`, alineándolo visualmente con el resto del sitio.
-- **`/guia-legal-abogados-honduras`**: se aplicó la nueva clase `.prose-pilar` al contenido editorial (antes usaba `prose-pilar` sin definición CSS). Ahora tiene tipografía, espaciado y jerarquía consistentes con el sistema.
-- **`/derecho-penal`**: los bloques GEO/AEO con `bg-accent/5 rounded-2xl` inline migraron a la nueva `.geo-snippet` (fuente única de verdad). Sin cambios visuales; solo consolidación técnica.
-
-### Páginas auditadas sin cambios (ya consistentes)
-- **Blog** (`/blog`, `/blog/[categoria]`, `/blog/[categoria]/[slug]`): usa `.article-body` (definido en R9), `BlogHero`, `FeaturedPosts`, `BlogExplorer`, `BlogSidebar`. Arquitectura sólida y consistente.
-- **Contacto** (`/solicitar-consulta`): `PageHero` + `TrustBar` + `AnswerBlock` + formulario + tarjetas de abogados + `HubFaq`. Estructura completa y alineada.
-- **Legales** (`/aviso-legal`, `/politica-privacidad`, etc.): todas usan `LegalDocument` + `LegalSection` + `LegalCallout`. Componentes dedicados con diseño propio para contenido regulatorio.
-- **Landings locales** (`/abogados-en-*`): todas usan `LandingLocalView` + `BlogHighlights`. Patrón uniforme y escalable.
-- **Subpáginas de servicios** (`/servicios-juridicos/[slug]`, `/derecho-penal/[slug]`): usan la misma arquitectura con `Breadcrumbs`, hero, bloques de abogado, secciones, FAQ y CTA.
-- **Header/Footer/Floating buttons**: revisados. Header con sticky + glass + menú activo con indicador dorado. Footer con 5 columnas + disclaimer legal. FloatingContactRail con WhatsApp + teléfono + PWA install. Sin cambios necesarios.
-
-### Arquitectura narrativa canónica por página
-Todas las páginas públicas siguen ahora el mismo orden:
-1. `Breadcrumbs`
-2. `PageHero` (H1, subtitle, CTA opcional)
-3. `TrustBar` (sellos de autoridad)
-4. Bloque introductorio editorial (`IntroEditorial`, `AnswerBlock` o contenido)
-5. Secciones jerarquizadas (`Section` + `SectionHeader`)
-6. `ConsultationCTA` (CTA final premium)
-7. `HubFaq` (FAQ acordeón, solo si aporta valor real)
-
-### Validación
-- `npm run lint`: 0 errores
-- `npm run build`: 360 páginas estáticas
-- `npm test`: 730 tests (33 suites) pasados
-
----
-
-## 2026-07-04 — Auditoría UX/UI + sistema de diseño visual público (Release 105)
-
-### Sistema de diseño
-- **`components/marketing/intro-editorial.tsx`** (nuevo): componente reutilizable para bloques editoriales largos. Card premium con barra lateral dorada, fondo surface, sombra controlada, max-width de lectura óptimo, highlight opcional y CTA integrable. Reemplaza el uso de `prose` Tailwind crudo en páginas de servicios y contenido institucional.
-- **`app/globals.css`**: nueva clase `.prose-editorial` con tipografía, ritmo y jerarquía consistentes para texto editorial largo (h2 serif, p con line-height 1.75, strong en text, links dorados, responsive mobile). Separada de `.article-body` (posts del blog) porque el contexto es distinto: páginas de servicios vs. artículos de blog.
-
-### Páginas normalizadas
-- **`/servicios-juridicos`**: el bloque introductorio de texto plano sin diseño se transformó en un `IntroEditorial` con card premium, barra lateral dorada, título jerarquizado y CTA suave de transición. El contenido respira, se escanea mejor y transmite profesionalismo.
-- **`/derecho-penal`**: unificación de secciones duplicadas. "Urgencias penales" ahora es un bloque de acción concreta (no FAQ): incluye `UrgencyCallout` rojo + grid de pasos. "Preguntas frecuentes" generales migraron a `HubFaq` (acordeón con animación), eliminando la duplicidad visual y conceptual que confundía al usuario. Se diferencian claramente: urgencias = actuar ya; FAQ = informarse.
-- **`/hondurenos-en-espana`**: el bloque editorial migró de `prose` crudo a `IntroEditorial` con la misma card premium. La sección FAQ migró de tarjetas planas a `HubFaq` acordeón.
-
-### Componentes mejorados
-- **`HubFaq`**: rediseño completo. Ahora usa el patrón `card-premium` del sistema: fondo surface, sombra multicapa sutil, borde dorado al expandir, chevron `ChevronDown` de lucide-react, animación grid-rows CSS. Consistencia visual con el resto del sitio.
-- **Esquema FAQ duplicado**: en `/derecho-penal`, el JSON-LD FAQPage incluía las "urgencias" como preguntas FAQ. Corregido: las urgencias son pasos de acción, no preguntas FAQ. El esquema ahora solo incluye las preguntas generales, y `HubFaq` emite su propio FAQPage con `@id` estable para deduplicación.
-
-### Criterios aplicados
-- **Jerarquía visual**: cada página tiene un H1 único (hero), introducción editorial (IntroEditorial), secciones jerarquizadas con eyebrow+title+subtitle (SectionHeader), CTA relevante y FAQ solo si aporta valor.
-- **Coherencia tipográfica**: títulos en Cormorant Garamond (serif), cuerpo en Manrope (sans). Eyebrows con `.eyebrow-label` o `.eyebrow-rule`. Títulos de sección con `.section-title` responsive.
-- **Consistencia de cards**: `card-premium` (superficie con gradiente interno + sombra multicapa + halo dorado hover), `service-card-refined` (servicios con imagen + hover lift), `card-dark` (fondos oscuros).
-- **Sombras**: tokens centralizados en CSS (`--shadow-card`, `--shadow-btn-*`). Sin sombras inline. R16 cumplido.
-- **Radios**: `rounded-lg` (16px) canónico para cards. `rounded-xl` para envolturas editoriales.
-- **Espaciado**: `Section` con `spacing="sm|md|lg"` consistente. `Container` con `max-w-7xl` por defecto.
-- **Responsive**: grid columns adaptativos (1→2→3→4), tablas desktop con fallback a tarjetas en móvil, tipografía escalable.
-
-### Validación
-- `npm run lint`: 0 errores
-- `npm run build`: compilado exitoso (360 páginas estáticas)
-- `npm test`: 730 tests pasados (33 suites)
-- Sin cambios en intranet, API, auth, motor de cálculo ni schema DB (R9).
-
----
-
-## 2026-07-04 — Fase 2 growth SEO/GEO/Perf/Conversión (Release 104)
-
-Implementación de la Fase 2 de growth sobre la rama `mejoras-auditoria-seo` (Release 103 ya mergeada). Trabajo en rama `fase2-growth-seo`. 7 commits atómicos.
-
-### Auditoría post-implementación (commit fe4cc0d)
-- Re-validación: lint OK, 0 refs rotas (`og-image.png`, `decodeJwtPayload`, `SALT_ROUNDS=10`).
-- **`scripts/validate-jsonld.mjs`** (nuevo): parsea HTML prerenderizado y valida que cada nodo JSON-LD tenga `@type` y que no haya `@id` duplicados. Aplicado a 6 rutas: 0 errores.
-- Errores tsc preexistentes en `tests/blog-verify-fix.test.ts` documentados como issue separado (no tocados).
-
-### Performance fase 2 (commit a3f2c1a)
-- **`scripts/optimize-images.mjs`** extendido con modo `--recompress-webp`: re-comprime in-place WebP >400 KB (q72, maxWidth 1920) usando tmp+rename + genera AVIF equivalente (q60).
-- **Aplicado a 6 WebP**: delitos-ambientales (582→486 KB), habeas-corpus (572→485 KB), courthouse (453→383 KB), actos-notariales (514→51 KB ⚡), asuntos-civiles (863→84 KB ⚡), gestion-documental (970→40 KB ⚡). **Ahorro adicional: ~2.4 MB** (total acumulado con Fase 1: ~8 MB en imágenes).
-- **6 AVIF nuevos**: `next/image` los sirve automáticamente cuando el navegador los soporta.
-- Bundle admin libs: verificado que Turbopack ya aísla `@tiptap`, `recharts`, `pdfjs-dist`, `@react-pdf`, `pdfkit` fuera del shared bundle público. Sin acción requerida.
-
-### Página pilar (commit fb1e6b5)
-- **Nueva página `/guia-legal-abogados-honduras`** (~2000 palabras): cómo elegir abogado en Honduras. Estructura H1-H3 impecable: importancia, áreas del derecho, colegiación, honorarios, documentos, errores a evitar, 8 FAQs.
-- **`data/pilar/faqs-guia.ts`**: 8 Q&A originales sin inventar datos legales (R4/R13/R14). Referencias verificadas: Constitución, CP Decreto 130-2017, Colegio de Abogados.
-- **JSON-LD `Article`** con `@id #founder/#legal-service`, `FAQPage` vía `<HubFaq>`.
-- **Sitemap**: añadida con `priority 0.9 monthly` en `canonical-paths.json`.
-- **Enlazado interno**: `/servicios-juridicos` enlaza a la pilar como recurso nacional; la pilar enlaza a 6 servicios, 10 ciudades y 4 posts del blog.
-
-### Landings locales diferenciación (commit fe6d541)
-- Las 4 landings P7 (Caridad, Alianza, Concepción de María, San Antonio de Flores) tenían Q4 "¿Atienden urgencias penales?" clonada con texto idéntico.
-- Cada Q4 reescrita con contexto geográfico único (Caridad→Litoral Pacífico, Alianza→frontera El Salvador/Goascorán, Concepción de María→sur de Choluteca, San Antonio de Flores→ruta a Pespiré).
-- Refuerzo constitucional: "asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas" (Art. 71 Constitución HN).
-
-### GEO/LLMO avanzado (commit 5dd7dd2)
-- **`components/marketing/answer-block.tsx`** (nuevo): componente server snippet-friendly para AEO/GEO (eyebrow + h2 question + p answer directo). Estilo sobrio, fondo warm con borde dorado izquierdo.
-- Aplicado en 4 páginas clave:
-  - `/despacho`: "¿Qué servicios ofrece Pineda y Asociados?"
-  - `/solicitar-consulta`: "¿Cómo es el proceso de consulta?"
-  - `/derecho-penal`: "¿Cuándo debo contactar a un abogado penalista?"
-  - Pilar: "¿Quién es Pineda y Asociados?" (NAP estructurado).
-- **`scripts/generate-llms-txt.mjs`** mejorado:
-  - 3 landings comerciales faltantes añadidas a "Sitio oficial" (familia/laboralista/civil nacaome).
-  - Nueva sección "Abogados del equipo" con Danilo/Thania/Emil y especialidad.
-  - Nueva sección "Datos del despacho" con NAP completo estructurado.
-  - Pilar añadida a "Contenido recomendado para asistentes IA" con 4 recursos pilar.
-
-### CRO + Analytics (commit 99c4b8d)
-- **`ConsultationCTA` microcopy**: añadidas 10 ciudades prioritarias (R18) + mensaje "secreto profesional del abogado" como refuerzo de confianza.
-- **`lib/analytics.ts`**: `trackFaqOpen`, `trackBlogSearch`, `trackInternalClick`.
-- **`components/marketing/analytics-listeners.tsx`** (client, nuevo): listener global en layout público captura `toggle` de `<details>` con `data-faq-question` y `click` en enlaces con `data-internal-link`.
-- `<HubFaq>`: añadidos `data-faq-question` y `data-faq-page` por cada `<details>`.
-- `BlogSearch`: trackea query al clic en resultado + `data-internal-link`.
-- Footer: `mailto:` con `data-internal-link="email_click"`.
-- **`docs/analytics-events.md`**: inventario completo de eventos GA4 activos + Enhanced Measurement.
-
-### Validación
-- `npm run lint` ✓ (0 errores)
-- `npm run build` ✓
-- `npm test` ✓ (730/730, 33 archivos)
-- `validate-jsonld.mjs` ✓ en 6 rutas (incluida pilar): 0 errores, sin `@id` duplicados.
-
-### Pendientes declarados (fuera de scope)
-- PageSpeed live (sin deploy real).
-- CSS purge de 148 KB (sin low-hanging fruit identificable con evidencia; requiere auditoría dedicada).
-- Consolidación de landings P7 (no solicitado por usuario — diferenciación ligera aplicada).
-- `Person.sameAs` Thania/Emil (a la espera de URLs reales).
-- WebSite SearchAction (sin buscador global).
-- Migración hero home a `next/image` (R5 — requiere aprobación visual).
-- `tsc --noEmit` errores preexistentes en `tests/blog-verify-fix.test.ts` (issue separado).
-- `view_faq` (impresión) y `form_abandon` (requieren herramientas adicionales).
-- `breadcrumb_click` tracking (breadcrumbs sin `data-internal-link` todavía).
-
----
-
-## 2026-07-04 — seo/perf/a11y/security: implementación auditoría pública (Release 103)
-
-Implementación priorizada de los hallazgos de la auditoría completa de
-https://www.pinedayasociadoshn.com. 7 commits atómicos en rama
-`mejoras-auditoria-seo`. Validación final: `lint` ✓, `build` ✓, `test` (730) ✓.
-
-### Quick wins (commit d32aadf)
-- **`public/og-image.png` eliminado** (266 KB); todas las referencias migran a
-  `/og-image.webp` (93 KB) en 17 archivos.
-- **`next.config.ts`**: `images.minimumCacheTTL: 86400`, headers
-  `Cross-Origin-Resource-Policy: same-site` y `Cross-Origin-Opener-Policy:
-  same-origin-allow-popups`. CSP de producción añade `upgrade-insecure-requests`
-  y restringe `img-src` a lista explícita (antes wildcard `https:`). CSP de
-  desarrollo permanece permisiva para no romper tests e2e.
-- **`lib/auth.ts`**: `SALT_ROUNDS` 10 → 12. Nuevo `maybeRehashPassword()`
-  que re-hashea progresivamente hashes legacy en login exitoso (no bloqueante).
-  Aplicado en `/api/auth/login`.
-- **`app/(public)/page.tsx`**: quitado `priority` de ServiceCard no-LCP.
-- **Em-dash `—` → `·`** en titles SEO de derecho-penal/[slug], hondurenos-en-espana
-  y su `[slug]`.
-- **Tildes corregidas** en `blog/page.tsx` (OG titles "Juridico" → "Jurídico")
-  y landings locales (Choluteca).
-- **`aria-current="page"`** en breadcrumb actual (`breadcrumbs.tsx`).
-- **Limpieza raíz**: `dev-log.txt`, `cookies.txt`, `nul`, `default.pub`,
-  `solicitar-consulta-form.yml`, `post-submit.yml`, `dev-server*.log`.
-- **`@types/pdfkit`** movido a devDependencies. `@next/bundle-analyzer` añadido
-  + script `analyze`.
-
-### SEO/GEO estructural (commit 9f28b46)
-- **`lib/seo.ts`** (nuevo): helper central `buildMetadata()` que normaliza
-  title/description/OG/Twitter/robots/canonical en un único punto. Robots por
-  defecto con `max-image-preview:large, max-snippet:-1, max-video-preview:-1`.
-- **Migración a `buildMetadata`** de: servicios-juridicos, derecho-penal,
-  despacho, solicitar-consulta, hondurenos-en-espana, `landingMetadata`
-  (afecta a 16 landings locales). Titles recortados a ≤60 chars y descriptions
-  a ≤155. Antes había varios titles 63-69 chars y descriptions 162-198.
-- **Landings locales**: title reescrito a `Abogados en {ciudad} | Pineda y
-  Asociados` (~40 chars, era 66).
-
-### Schema markup (commit 9f28b46)
-- **`lib/site.ts` Organization**: añadido `sameAs` con perfiles reales
-  (Facebook, X, Google Business Profile). Antes ausente.
-- **`lib/schemas/blog.ts` BlogPosting**: `publisher.logo` ahora apunta a
-  `/images/logo.png` (ImageObject con width/height). Antes usaba `og-image.webp`.
-- **`app/(public)/layout.tsx`**: 6 scripts JSON-LD separados → **un único
-  `@graph`** con @id estables. Facilita deduplicación en Knowledge Graph.
-
-### FAQ hubs (commit 9f28b46)
-- **`data/faqs-hubs.ts`** (nuevo): 22 Q&A originales redactados para
-  `/servicios-juridicos` (8), `/despacho` (7), `/solicitar-consulta` (7).
-  Sin inventar datos legales (R4/R13/R14): costos "presupuesto por escrito",
-  plazos "depende del caso", sin prometer resultados.
-- **`components/marketing/hub-faq.tsx`** (nuevo): `<details>`/`<summary>`
-  accesible + JSON-LD `FAQPage` embebido. Patrón visual consistente con home.
-
-### Performance (commit bc5671a)
-- **`scripts/optimize-images.mjs`** (nuevo): pipeline con `sharp` (dry-run +
-  `--apply`). Convierte JPG/PNG grandes a WebP+AVIF, borra JPG >200 KB si
-  existe .webp. Reporte en `docs/audits/image-optimization-report.md`.
-- **Aplicado**: 2 JPGs huérfanos (jorono 3.9 MB, pexels-ekaterina 1.8 MB) →
-  184 KB combinados. **5.4 MB ahorrados**. Total `public/images` 28 MB → 23 MB.
-- **Bundle analyzer**: verificado que Turbopack ya aísla `@tiptap`, `recharts`,
-  `pdfjs-dist`, `@react-pdf`, `pdfkit` fuera del shared bundle público. No se
-  requiere refactor de code-split.
-
-### Accesibilidad WCAG 2.2 AA (commit b96c00a)
-- **`globals.css`**: `--color-text-muted` `#8A8F95` → `#6E7177` (ratio 4.6:1,
-  AA small text). Antes 3.4:1.
-- **Opacidades blancas sobre navy** en `public-header.tsx` y `public-footer.tsx`:
-  `/40`, `/50`, `/60`, `/65` → `/70+`, `/75`, `/80`. Texto small cumple 4.5:1.
-- **`blog-search.tsx`**: placeholder sin opacidad baja (era ~1.7:1).
-- **`solicitar-consulta-form.tsx`**: `<fieldset>`+`<legend>`, `autoComplete`
-  semántico (`given-name`/`tel`/`email`), `aria-required`/`aria-invalid`/
-  `aria-describedby` en cada Field. Cumple WCAG 1.3.5, 3.3.1, 3.3.3.
-- **`live-widgets.tsx` iOS dialog**: `aria-modal="true"`, overlay
-  `role="presentation"` (Escape ya estaba).
-
-### Seguridad (commit 291c5e7)
-- **Cloudflare Turnstile** completo:
-  - `lib/captcha.ts`: `verifyTurnstileToken()` con **bypass seguro si faltan
-    env vars** (rate-limit permanece como red de seguridad) y **fail-closed**
-    si Cloudflare responde `success=false` o hay timeout.
-  - `components/marketing/turnstile-widget.tsx`: widget cliente con lazy-load
-    del script. Si `NEXT_PUBLIC_TURNSTILE_SITE_KEY` no está definida, no
-    renderiza (backend hace bypass declarado).
-  - Endpoints `/api/contacto`, `/api/consulta`, `/api/subscribe`: validación
-    post rate-limit + Zod.
-  - `.env.example` documenta `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`,
-    `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
-- **`proxy.ts`**: reemplazado `decodeJwtPayload` (decodificaba sin verificar
-  firma HS256) por `verifyToken` de `lib/auth`. Mismo comportamiento pero
-  cierra el bypass teórico de rol en edge. `proxy` corre en Node runtime
-  (no edge), así que `jsonwebtoken` con el secret funciona.
-- **`app/error.tsx`** (nuevo): error boundary 5xx con `<meta name="robots"
-  content="noindex,nofollow">` inyectada en head (no se puede exportar
-  `metadata` desde Client Component). CTA contacto (email + WhatsApp) y botón
-  "Reintentar".
-
-### Pendientes declarados (no implementados en esta iteración)
-- **CSP nonce-based** (TODO documentado en `next.config.ts`): requiere refactor
-  de `proxy.ts` para generar nonces y reescribir el inline script de theme
-  detection en `app/layout.tsx`. Fuera de scope por riesgo de regresión.
-- **`Person.sameAs` para Thania y Emil**: a la espera de URLs reales de perfil.
-  No se inventan (R4).
-- **Métricas PageSpeed en vivo**: no se midieron. Requiere Lighthouse sobre
-  URLs reales deployadas. Los 5.4 MB ahorrados en imágenes son proxy claro de
-  mejora LCP pero no se midió el delta real.
-- **Focus trap completo en iOS dialog**: `aria-modal` + Escape ya implementados,
-  pero falta focus inicial y retorno al trigger. Mejora menor pendiente.
-- **CSS global de 148 KB**: 1230 líneas, mayormente design tokens útiles. Sin
-  low-hanging fruit identificable sin análisis dedicado.
-- **WebP >400 KB restantes** (~6 archivos): marcados como WARN por
-  `images:optimize`. Recompresión manual pendiente (lock de archivo impidió
-  ejecución automática en esta sesión).
-- **`Person.sameAs` Thania/Emil, SearchAction, hero→next/image**: fuera de
-  scope (requieren URLs reales, buscador global y aprobación visual
-  respectivamente).
-
-### Validación
-- `npm run lint` ✓ (0 errores)
-- `npm run build` ✓ (solo warning cache-control preexistente)
-- `npm test` ✓ (730 tests, 33 files)
-- `npx tsc --noEmit`: errores preexistentes en `tests/blog-verify-fix.test.ts`
-  (no tocados en esta rama, ya presentes en `main`).
-- Referencias rotas: 0 (`og-image.png`, `decodeJwtPayload`, `SALT_ROUNDS = 10`,
-  em-dash en titles SEO).
-
----
-
-## 2026-07-03 — seo/internal-linking: reconstrucción arquitectura enlaces internos (Release 102)
-
-Reconstrucción completa del sistema de enlazado interno para crear una tela
-de araña temática que conecte servicios ↔ blog ↔ ciudades ↔ áreas de práctica.
-Resuelve los 4 clusters desconectados detectados en la auditoría de arquitectura.
-
-### Sistema semántico centralizado
-- **`lib/internal-links.ts`** (nuevo): grafo único de relaciones. Centraliza
-  `SERVICE_TO_BLOG_MAP` (servicio↔blog) y `BLOG_TO_SERVICE` (blog↔servicio)
-  que estaban duplicados en 4 archivos. Helpers: `getRelatedServices`,
-  `getRelatedCitiesForContent`, `getPriorityCities`, `getAllCities`.
-- **`lib/entity-dictionary.ts`** (nuevo): catálogo de 30+ entidades detectables
-  (ciudades, áreas de práctica, conceptos legales) con regex + peso semántico.
-- **`lib/blog-context-linker.ts`** (nuevo): auto-linker HTML-safe que inserta
-  enlaces contextuales en bodies de blog (máx 5/post, 1 por entidad, respeta
-  headings y anchors existentes). `detectMentionedCities` para priorización.
-- **`components/marketing/related-links.tsx`** (nuevo): 3 variantes SSR —
-  `RelatedServices`, `RelatedCities`, `RelatedCategories` (chips premium).
-
-### Puentes creados (clusters reconectados)
-- **Servicio → Ciudad**: cada `/servicios-juridicos/[slug]` ahora enlaza a 8
-  ciudades prioritarias (antes: cero enlaces).
-- **Hub servicios → Ciudades**: `/servicios-juridicos` enlaza a las 10
-  ciudades prioritarias (R18).
-- **Hub penal → Landings especializadas**: `/derecho-penal` enlaza a
-  `/abogado-penalista-nacaome`, `/abogado-penalista-choluteca` y 10 ciudades.
-- **Post → Ciudad/Servicio (auto-linking)**: bodies de blog detectan entidades
-  y enlazan automáticamente a sus páginas canónicas.
-- **Post → Ciudades relacionadas**: bloque SSR al final de cada post.
-- **Post → Otras categorías**: bloque SSR al final de cada post.
-
-### Limpieza de datos
-- **Slugs muertos eliminados**: `asesoria-preventiva` (referenciado pero
-  indefinido) reemplazado por slugs válidos en 2 grupos penales.
-- **`getRelatedAreas()` arreglado**: ahora resuelve penal/migrantes (antes
-  descartaba silenciosamente esos targets).
-
-### Validación
-- `npm run lint` ✅ (0 errors, 0 warnings)
-- `npm run build` ✅ (359 páginas, compilación limpia 28.6s)
-- `npm test` ✅ (730 tests, 33 suites)
-
----
-
-## 2026-07-03 — seo/geo/cro: pilar penal, landings locales y GEO (Release 100)
-
-Implementación de las prioridades derivadas de la auditoría integral
-SEO/GEO/UX/CRO. Foco: derecho penal local, indexabilidad, conversión y
-visibilidad para IA generativa. Sin cambios visuales en la web pública
-fuera de los hubs comerciales (R5). Sin datos inventados (R4).
-
-### SEO local — nuevas landings (P7)
-- **4 landings locales** creadas con contenido único, NAP coherente, FAQ local,
-  schema y CTA: `/abogados-en-caridad`, `/abogados-en-alianza`,
-  `/abogados-en-concepcion-de-maria`, `/abogados-en-san-antonio-de-flores`.
-- Antes redirigían (404 soft) al vecino más cercano; ahora tienen página propia.
-- Datos en `data/landings-locales.ts`; páginas en `app/(public)/abogados-en-*/`.
-- Redirects 301 eliminados en `next.config.ts` para estas 4 rutas.
-
-### Pilar penal — landing comercial Choluteca (P3)
-- **`/abogado-penalista-choluteca`** creada como landing comercial propia
-  (antes redirigía a un post editorial). Hero, áreas de defensa, delitos
-  frecuentes, FAQ local, NAP, CTA WhatsApp/teléfono y schema
-  `Service`+`FAQPage`+`BreadcrumbList`.
-- Redirect invertido: el post `/blog/derecho-penal/abogado-penalista-choluteca`
-  ahora consolida hacia la landing comercial.
-
-### SEO técnico — redirects (P1)
-- Variantes comerciales penales sin página propia consolidadas vía 301 hacia
-  el hub o la landing especializada más cercana (`/abogado-penalista-san-lorenzo`,
-  `/defensa-penal-choluteca`, `/defensa-penal-nacaome`,
-  `/defensa-penal-sur-honduras`).
-- Los 161 errores 4xx de Bing requieren el listado detallado de URLs desde
-  Bing WMT para triaje completo (no inventado — R12).
-
-### GEO / IA generativa (P6)
-- **`llms.txt`** ampliado con sección «Sobre el despacho (descripción factual)»:
-  bloque declarativo, citable y verificable para ChatGPT/Perplexity/Copilot.
-- 6 nuevas rutas añadidas al generador (`scripts/generate-llms-txt.mjs`).
-- Bloque declarativo GEO insertado en `/derecho-penal` (identidad,
-  especialidad, zona, contacto).
-
-### CTR / metadatos (P4)
-- Meta descriptions optimizadas en `/derecho-penal` (CTR: defensa urgente +
-  WhatsApp + sur de Honduras) y `/solicitar-consulta` (respuesta en horario
-  hábil + áreas + WhatsApp).
-
-### CRO (P5)
-- `FloatingContactRail` verificado: render global en `app/(public)/layout.tsx`,
-  presente en todas las páginas públicas incluidas las penales.
-- Formulario `/solicitar-consulta`: campos obligatorios ya limitados a
-  nombre, teléfono y resumen (email opcional). Microcopy de confianza
-  añadido bajo el botón (confidencialidad, sin garantía de resultados).
-
-### Fuente única SEO
-- `data/seo/canonical-paths.json` actualizado: 53 rutas estáticas, techo
-  IndexNow 223, sitemap observado 213. Las 5 nuevas landings añadidas.
-
-### Validación
-- `npm run lint` ✅ (0 errors, 0 warnings)
-- `npm run build` ✅ (53 rutas estáticas compiladas, IndexNow dry-run OK)
-- `npm test` ✅ (730 tests, 33 archivos)
-- `npm run audit:seo` ✅ (0 errores, 0 warnings, 6 infos)
-
-### Riesgos pendientes
-- Triaje completo de los 161 errores 4xx de Bing (requiere listado WMT).
-- Colegiación, reseñas y credenciales verificables: pendiente aporte del despacho.
-
----
-
-## 2026-07-03 — seo/perf/geo: auditoría completa y mejoras técnicas (Release 99)
-
-Auditoría integral de la web pública tras informe SEO externo. La
-infraestructura ya cubría ~90% de las recomendaciones; este release cierra los
-**gaps genuinos** detectados en performance, SEO técnico, contenido y seguridad.
-
-### Performance
-- **AVIF** añadido a `images.formats` (antes solo WebP): 30-50% más ligero.
-- **`experimental.optimizePackageImports`** para lucide-react, recharts, tiptap
-  (mejor tree-shaking del bundle cliente).
-- **`playwright` movido a `devDependencies`** (bajaba navegador headless en
-  `npm install` de producción).
-- **`RootShell`** pasado a Server Component (era `'use client'` innecesario,
-  forzaba hidratación de todo el árbol público).
-- **Clarity** migrado de paquete npm a snippet oficial vía `next/script` (no
-  infla el bundle JS inicial).
-- **`MapEmbed`** lazy-loaded con `dynamic(ssr:false)` (iframe de Google Maps
-  solo carga tras hidratación, no en first paint de la home).
-- **`<img>` de `/despacho`** migrados a `next/image` (evita CLS).
-- **`viewport.colorScheme: ['light','dark']`** y `preconnect` a Clarity.
-
-### SEO técnico
-- **`wordCount` + `articleSection`** en BlogPosting schema (recomendado Google).
-- **TOC del blog server-rendered**: IDs estables en H2/H3 inyectados en SSR vía
-  `lib/blog-toc.ts`; antes se generaban en `useEffect` (invisibles para
-  crawlers/LLMs, sin fragment anchors en SERP).
-- **Páginas legales** (`/aviso-legal`, `/terminos`, `/politica-*`, `/disclaimer`)
-  marcadas `noindex, follow` (evita indexar boilerplate legal).
-- **`/proceso-penal`** eliminado (obsoleto); redirect 301 a `/derecho-penal`
-  conservado.
-- **404**: quitado `canonical: '/_not-found'` (canoncial a ruta técnica generaba
-  warnings en Search Console).
-- **Prioridades de categorías de blog** en sitemap: penal/familia/laboral a 0.7
-  (mayor valor comercial según GSC), resto 0.5.
-
-### Contenido / GEO
-- **Tildes corregidas** en `urgentFaq` de derecho-penal y `FAQ_CLUSTERS` de
-  preguntas-frecuentes (afecta a LLMs y algoritmos de lenguaje).
-- **`urgentFaq`** añadida al FAQPage schema de derecho-penal (antes quedaba fuera
-  del JSON-LD).
-- **Enlace a `/hondurenos-en-espana`** desde la home (antes era página huérfana).
-- **Sección editorial** (~250 palabras) en `/hondurenos-en-espana` cubriendo
-  entidades (apostilla, poder notarial a distancia, homologación de sentencia).
-- **Párrafo introductorio** en `/servicios-juridicos` con entidades por especialidad.
-- **Honeypot antispam** en formulario de consulta (campo `website` oculto).
-
-### Seguridad / UX
-- **`stripHtml` centralizado** (sanitize-html) reemplaza regex `/<[^>]*>/g` en
-  schemas FAQ/BlogPosting: maneja tags anidados y decodifica entidades.
-- **Google Consent Mode v2** añadido (GDPR/ePrivacy para tráfico europeo).
-- **Cache headers** restringidos a `/_next/*` (antes cacheaban `sw.js`,
-  `manifest.json`, `llms.txt` por 1 año inmutable).
-- **Servicios de landings locales** convertidos en enlaces a
-  `/servicios-juridicos/{slug}` (cierra el clúster temático ciudad×área).
-- **Goascorán**: añadido `postsRelacionados` (única ciudad sin enlazado blog).
-
-### Analytics
-- **GTM opcional** (`NEXT_PUBLIC_GTM_ID`): si se configura, reemplaza gtag.js.
-- **Facebook Pixel opcional** (`NEXT_PUBLIC_FB_PIXEL_ID`), env-gated.
-- **Perfiles sociales configurables** por env (Instagram, LinkedIn, YouTube, X,
-  TikTok) en `lib/site.ts`; alimentan `sameAs` en schemas.
-
-### Validación
-- `npm run lint` ✓ · `npm run build` ✓ · `npm test` 730/730 ✓
-- No se ha hecho push (protocolo §1.10).
-
----
-
-## 2026-07-03 — seo: expansion IA de thin posts con verificacion legal (Release 98)
-
-`blog:verify-fix` ejecutado en ~90+ posts con DeepSeek IA. 0 alucinaciones, 0
-discrepancias facticas, 0 reversiones. Resultados: 10+ posts expandidos por IA,
-20+ title/meta optimizaciones, 20+ meta-fixes automaticos. 4 bloques anti-plantilla
-detectados. Sistema de guardias: bodies rechazados si alucinacion, reversion
-automatica si validacion falla, backup previo en cada lote. Validado.
-
----
-
-## 2026-07-03 — seo: reduccion warnings Bing title too long (Release 97)
-
-Segunda tanda: 20 titulos adicionales acortados (total F14+F15: 32/72 posts con
-titles >55c corregidos). Excluidas de Bing clasificadas con conteos reales DB:
-26 drafts + 3 canonical + 42 thin/other = 71. Backup generado. Validacion limpia.
-
----
-
-## 2026-07-03 — seo: corrección Bing WMT — titles largos y errores 4xx (Release 96)
-
-Acortados 12 títulos de posts con >60 chars que generaban 69 warnings y 19 errores
-de "title too long" en Bing Site Scan. Identificados /delito-form y /atajos como
-2 de los 3 HTTP 4xx reportados (404s intranet). Documentado: 71 URLs excluidas =
-drafts + thin posts + canonicalizados. Sitemap limpio, robots.txt correcto. Validado.
-
----
-
-## 2026-07-03 — seo: optimización CTR basada en GSC (Release 95)
-
-Corregidos 2 title/meta truncados en SERP y optimizadas 4 meta descriptions de posts
-con CTR<3% (240-469 impresiones/mes). Datos de GSC 28d. Backup generado. Sin cambios
-en bodies, slugs ni categorías. 6 posts actualizados en DB.
-
----
-
-## 2026-07-03 — seo: primera corrección basada en SEO Live (Release 94)
-
-**Ejecución correctiva con datos live.** `seo:doctor` 20 OK/0 ERROR. `seo:collect` 6/6.
-Corregidos 3 enlaces internos a redirects 301 en DB (`blog:fix-redirects --aplicar`).
-Detectadas 6 páginas blog con CTR<3% y 8 queries GSC con 0% CTR para optimización editorial.
-Documentado tráfico bot GA4 (HK/NL/CN) y 161 errores 4xx Bing para acción humana.
-
----
-
-## 2026-07-03 — docs: saneamiento documental y sistema SEO live operativo (Release 93)
-
-**Documentación reducida y consolidada.** `AGENTS.md` (452→121 líneas),
-`README.md` (939→149 líneas), `CHANGELOG.md` (3297→~80 líneas). Eliminado ruido,
-información obsoleta, releases infladas y duplicados entre AGENTS/README/CHANGELOG.
-
-**Sistema SEO Live operativo.** `seo:doctor`: 20 OK / 0 ERROR / 3 PENDIENTE.
-`seo:collect`: 6/6 fuentes (GSC 134 clics/6.6K imp, GA4 670 users/9 conversiones,
-Bing 2,387 crawled/44 queries, IndexNow 20 URLs, SEO Health 15/15, Sitemap 30/30).
-
-**Validación:** lint 0e, build OK, test 730/730, seo:doctor 0e, seo:collect 6/6.
-Auditoría indexación: 30/30. IndexNow dry-run: 20 URLs OK.
-
----
-
-## 2026-07-03 — Fase 9: Sistema SEO Live operativo (Release 92)
-
-Scripts live creados: `google-search-console-live.mjs`, `google-analytics-live.mjs`,
-`bing-webmaster-live.mjs`, `seo-live-doctor.mjs`, `seo-live-collect.mjs`.
-Bing crawl stats corregidos. Default 28 días. dotenv load order corregido en 5 scripts.
-
-Documentación: reporte ejecutivo, plan de acción 7/30/90 días, manual operativo,
-MCP connectors. Seguridad verificada: 0 secretos en diff.
-
----
-
-## 2026-07-03 — Fases 1-8: SEO/Bing, Redirects, OAuth, CLI (Release 91)
-
-Bing WMT API Key funcional. IndexNow real enviado (20 URLs). Google OAuth funcionando.
-11 scripts nuevos (auth, Bing OAuth, site explorer, dashboard import).
-Redirect 404 corregido. Documentación saneada. AGENTS.md R18 reforzada.
-
----
-
-## Histórico anterior (Releases 1–90, pre-Jul 2026)
-
-El historial completo de releases 1-90 está disponible en [Releases de GitHub](https://github.com/pineda-y-asociados/justicia-verdadera/releases) (privado). Hitos principales:
-
-- **Release 90:** Cobertura 10 ciudades + IndexNow REAL + GA4 + optimización CTR.
-- **Release 89:** Normalización del blog (CTAs, H1→H2, whitespace).
-- **Release 88:** SGIE Fases 1-10 completas (gestión integral de expedientes).
-- **Release 87:** Limpieza de tooling IA legacy (`.kilo/`, `CLAUDE.md` eliminados).
-- **Release 85:** `AGENTS.md` como protocolo canónico único.
-- **Release 81:** Rotación de OAuth Client Secret (hardcodeado → `.env.local`).
-- **Release 80:** Migración del blog a DB (Drizzle/Neon, `data/blog/posts/` vaciado).
-- **Release 1-79:** Fundación (Next.js, Tailwind, motor cálculo, intranet, calculadora).
-
----
-
-*Changelog mantenido por el sistema de agentes IA. Cada entrada refleja cambios reales verificados con lint/build/test.*
-
-### Deploy: Producción (2026-07-09)
-- **Commit desplegado:** 573c6aa
-- **Validación post-deploy:** Completada con éxito (HTTP 200 en rutas críticas).
-- **Estado robots/sitemap/canonicals:** Validados en producción, sin bloqueos.
-- **Estado CTA tracking:** Activo (evento seo_blog_cta_click inyectado en Client-Side).
-- **Pendientes:** CSV de Bing Webmaster Tools para saneamiento de errores 4xx.
-- **Próxima revisión:** 48-72h para indexación prioritaria, y 28 días para análisis Baseline comparativo.
-
-
-### Seguimiento Post-Deploy (48h-72h)
-- **Validación HTTP Producción:** Confirmado 200 OK en rutas principales, sitemap.xml y robots.txt sin exclusiones erróneas.
-- **Estructura y Tracking:** Canonical absolutos en su lugar, titles actualizados presentes en HTML pre-renderizado, y marcadores de evento seo_blog_cta_click confirmados.
-- **Auditorías de absorción:** Baseline GSC y GA4 confirmados como estables (se requiere extender ventana para detectar variaciones de CTR).
-- **Archivos Bing:** Esperando importación de CSV externo para ejecutar mapeo de 301s.
-- **Reporte generado:** data/seo/post-deploy-48h-report.md con objetivos claros para evaluación a 28 días.
-
-
-### Análisis de Impacto Temprano SEO (Fase 10)
-- **Informe Generado:** data/seo/early-impact-seo-report.md con diagnóstico de señales GSC/GA4/Bing a 48h del despliegue.
-- **Oportunidades GSC:** Identificación de posiciones 2-4 en keywords de familia/deudas para mejora de CTR, e intención informacional latente.
-- **Estado Tracking CTA:** seo_blog_cta_click listo y a la espera de acumular tráfico real en GA4.
-- **Backlog SEO:** Creado plan de trabajo priorizado para el ciclo de optimización mensual (foco en redirecciones Bing y conversión en España).
-- **Medición Futura:** Ciclo comparativo fijado para dentro de 28 días (Agosto 2026).
-
+*Changelog mantenido por el sistema de agentes. Cada entrada refleja cambios
+reales; los estados (`VALIDADO`, `PENDIENTE`, `NO VALIDADO`) se respetan. Para
+el detalle granular anterior a esta versión, consúltese el archivo histórico.*

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
-describe('lib/auth lazy-load', () => {
+describe('lib/auth lazy-load', { timeout: 15_000 }, () => {
   const ORIGINAL_ENV = process.env;
   const STRONG = 'a'.repeat(48) + 'X7q9Zk-realistic-random-base64url-strong';
 

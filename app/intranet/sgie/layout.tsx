@@ -49,7 +49,7 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
 
   // Acceso: abogado o admin. Un usuario sin rol suficiente no entra.
   useEffect(() => {
-    if (!loading && (!user || (user.rol !== 'abogado' && user.rol !== 'admin'))) {
+    if (!loading && (!user || (user.rol !== 'abogado' && user.rol !== 'admin' && user.rol !== 'supervisor'))) {
       router.replace('/intranet/login');
     }
   }, [user, loading, router]);
@@ -76,7 +76,7 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
     );
   }
 
-  if (!user || (user.rol !== 'abogado' && user.rol !== 'admin')) {
+  if (!user || (user.rol !== 'abogado' && user.rol !== 'admin' && user.rol !== 'supervisor')) {
     return null;
   }
 

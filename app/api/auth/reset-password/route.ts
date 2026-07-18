@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       if (isEmailConfigured()) {
         const client = getClient();
         if (client) {
-          const resetUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pinedayasociadoshn.com'}/reset?token=${token}`;
+          const resetUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.pinedayasociadoshn.com'}/intranet/restablecer-clave/${encodeURIComponent(token)}`;
           try {
             await client.emails.send({
               from: `${getFromName()} <${getFromAddress()}>`,

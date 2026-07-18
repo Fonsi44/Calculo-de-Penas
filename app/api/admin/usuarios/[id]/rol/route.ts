@@ -9,7 +9,7 @@ import { usuarios } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 
 const rolSchema = z.object({
-  rol: z.enum(['admin', 'abogado']),
+  rol: z.enum(['admin', 'abogado', 'supervisor']),
 });
 
 /**

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { randomUUID } from 'crypto';
 import { COOKIE_NAME, COOKIE_NAME_FALLBACK, verifyToken, validateSessionFreshness } from '@/lib/auth';
+import { assertSgieAccess } from '@/lib/access-service';
 
 /**
  * Seguridad — verificación firma JWT en edge + frescura de sesión.
@@ -31,6 +32,7 @@ const PUBLIC_API_PREFIXES = [
   '/api/auth/login',
   '/api/auth/logout',
   '/api/auth/register',
+  '/api/auth/invitaciones',
   '/api/auth/me',
   // SGIE — portal de carga por enlace mágico (público por token, no indexable).
   // La validación real (token, expiración, usos, MIME, hash) la hace el handler.
@@ -83,6 +85,11 @@ const INTRANET_PUBLIC_EXACT = new Set<string>([
   '/intranet/recuperar-clave',
   '/intranet/acceso-denegado',
 ]);
+
+const INTRANET_PUBLIC_PREFIXES = [
+  '/intranet/activar-invitacion',
+  '/intranet/restablecer-clave',
+];
 
 // Rutas públicas obsoletas que deben devolver 404 en lugar de redirigir al login.
 const OBSOLETE_PUBLIC_PREFIXES = [
@@ -157,8 +164,13 @@ export async function proxy(request: NextRequest) {
     // SGIE API: requiere rol abogado o admin (defensa en profundidad; el handler
     // vuelve a validar con requireAbogado + scope por abogado).
     if (pathname.startsWith('/api/sgie')) {
-      if (payload.rol !== 'admin' && payload.rol !== 'abogado') {
+      if (payload.rol !== 'admin' && payload.rol !== 'abogado' && payload.rol !== 'supervisor') {
         return withCorrelationId(NextResponse.json({ error: 'Acceso denegado: se requiere rol abogado o admin' }, { status: 403 }), correlationId);
+      }
+      try {
+        await assertSgieAccess(payload.userId);
+      } catch {
+        return withCorrelationId(NextResponse.json({ error: 'Acceso SGIE deshabilitado' }, { status: 403 }), correlationId);
       }
     }
     return withCorrelationId(NextResponse.next(), correlationId);
@@ -168,7 +180,10 @@ export async function proxy(request: NextRequest) {
   // Si hay token y está en el login, mandarlo a su zona según rol:
   // admin → /intranet/admin; abogado → /intranet/sgie.
   if (pathname.startsWith('/intranet')) {
-    if (INTRANET_PUBLIC_EXACT.has(pathname)) {
+    if (
+      INTRANET_PUBLIC_EXACT.has(pathname)
+      || INTRANET_PUBLIC_PREFIXES.some((prefix) => pathname.startsWith(`${prefix}/`))
+    ) {
 	  if (pathname === INTRANET_LOGIN_PATH && token) {
         const rol = roleFromToken(token);
         const destino = rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
@@ -192,6 +207,13 @@ export async function proxy(request: NextRequest) {
       return withCorrelationId(NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url)), correlationId);
     }
     const rol = payload.rol;
+    if (pathname.startsWith('/intranet/sgie')) {
+      try {
+        await assertSgieAccess(payload.userId);
+      } catch {
+        return withCorrelationId(NextResponse.redirect(new URL('/intranet/acceso-denegado', request.url)), correlationId);
+      }
+    }
     // Redirigir admin users de rutas intranet legacy a sus versiones admin
     if (rol === 'admin') {
       const adminRedirects: Record<string, string> = {

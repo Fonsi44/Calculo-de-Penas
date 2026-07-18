@@ -3,7 +3,7 @@
 /**
  * SGIE — Modal "Reprogramar evento" (Sprint 4, tarea 2).
  *
- * Reutiliza el endpoint PATCH /api/sgie/agenda/[id] cambiando `fecha`.
+ * Reutiliza el endpoint PATCH /api/sgie/agenda/[id] cambiando `inicio`.
  * Validación de fecha/hora obligatoria. Motivo opcional. Auditoría
  * `evento_updated` con metadata `reprogramado: true` (la gestiona el endpoint).
  *
@@ -31,6 +31,7 @@ interface EventoReprogramar {
   id: string;
   titulo: string;
   fecha: string;
+  version: number;
 }
 
 export function ReprogramarEventoDialog({
@@ -73,7 +74,8 @@ export function ReprogramarEventoDialog({
       const res = await fetch(`/api/sgie/agenda/${evento.id}`, {
         method: 'PATCH', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fecha: fechaIso.toISOString(),
+          inicio: fechaIso.toISOString(),
+          version: evento.version,
           motivoCategoria,
           motivoDetalle: motivoDetalle.trim() || undefined,
         }),

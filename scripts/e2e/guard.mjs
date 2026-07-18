@@ -29,6 +29,9 @@ const ALLOW_TEST = process.env.ALLOW_TEST_DATABASE;
 const DB_URL = process.env.DATABASE_URL;
 const NODE_ENV = process.env.NODE_ENV || '';
 const E2E_ENV = process.env.E2E_ENV || '';
+const NEON_BRANCH_NAME = process.env.E2E_NEON_BRANCH_NAME || '';
+const NEON_BRANCH_ID = process.env.E2E_NEON_BRANCH_ID || '';
+const NEON_ENDPOINT_ID = process.env.E2E_NEON_ENDPOINT_ID || '';
 
 function fail(reason) {
   console.error(`\n[E2E-GUARD] ❌ BLOQUEADO: ${reason}`);
@@ -69,17 +72,25 @@ if (scheme !== 'postgresql' && scheme !== 'postgres') {
 
 const host = url.hostname.toLowerCase().replace(/^\[|\]$/g, '');
 const dbName = url.pathname.replace(/^\//, '').toLowerCase();
+const endpointId = host.split('.')[0].replace(/-pooler$/, '');
 
 // 4. Localhost always OK
 const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '::1';
 
 // 5. Remote: name must contain test/staging/preview/testing as delimited segment
-const safeNamePattern = /(^|[-_/])(test|testing|staging|preview)([-_/]|$)/;
+const safeNamePattern = /(^|[-_/])(test|testing|staging|preview|validation)([-_/]|$)/;
 const isSafeName = safeNamePattern.test(dbName);
+const isNeon = host.endsWith('.neon.tech');
+const isVerifiedNeonBranch =
+  isNeon &&
+  safeNamePattern.test(NEON_BRANCH_NAME.toLowerCase()) &&
+  /^br-[a-z0-9-]+$/.test(NEON_BRANCH_ID) &&
+  /^ep-[a-z0-9-]+$/.test(NEON_ENDPOINT_ID) &&
+  endpointId === NEON_ENDPOINT_ID;
 
-if (!isLocal && !isSafeName) {
+if (!isLocal && !isSafeName && !isVerifiedNeonBranch) {
   fail(`Base remota no aislada (host=${host}, db=${dbName}). ` +
-       `El nombre debe contener "test", "testing", "staging" o "preview" como segmento delimitado.`);
+       `El nombre debe contener un segmento seguro o deben verificarse rama e endpoint Neon.`);
 }
 
 // 6. Known production patterns blocklist
@@ -98,4 +109,7 @@ for (const pattern of PROD_PATTERNS) {
 }
 
 console.log(`[E2E-GUARD] ✅ Entorno seguro: ${isLocal ? 'local' : 'remoto'}, db=${dbName}, host=${host}`);
+if (isVerifiedNeonBranch) {
+  console.log(`[E2E-GUARD] Rama Neon verificada: ${NEON_BRANCH_NAME} (${NEON_BRANCH_ID}), endpoint=${NEON_ENDPOINT_ID}`);
+}
 process.exit(0);

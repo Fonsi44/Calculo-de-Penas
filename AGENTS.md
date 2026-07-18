@@ -6,35 +6,81 @@ comandos de validación. Este protocolo es permanente.
 
 ---
 
-## 1. Flujo de trabajo obligatorio
+## 0. Modos de operación
 
-1. Leer `AGENTS.md` (este archivo).
-2. Ejecutar `git status` — entender estado del working tree y confirmar que la
-   rama activa es `main`. Todo el trabajo se realiza directamente sobre
-   `main`; no crear ni cambiar a ramas auxiliares, feature branches o worktrees.
-3. Ejecutar `npm run seo:doctor` — verificar credenciales (obligatorio solo para tareas SEO/Analytics).
-4. Ejecutar `npm run seo:collect` — recolectar datos live (obligatorio solo para tareas SEO/Analytics).
-5. Revisar `docs/audits/seo-live-summary.md` para contexto actual si aplica.
-6. Leer los archivos que se van a modificar (no asumir contenido).
-7. Aplicar cambios pequeños y justificados.
-8. Validar siempre en cambios de código: `npm run lint`, `npx tsc --noEmit`, `npm run test` y `npm run build`.
-9. Documentar la acción: usar `CHANGELOG.md` para releases, `AUDIT_REPOSITORY_REPORT.md` para saneamientos, o `auditoria-acciones.md` para operaciones estándar.
-10. No hacer push.
+Todo agente opera en uno de estos tres modos. El modo debe declararse al inicio
+de la tarea y respetarse hasta el final.
+
+| Modo | Lectura | Escritura | Commits | Llamadas externas | Instalaciones / migraciones |
+|------|---------|-----------|---------|-------------------|------------------------------|
+| **`AUDITORÍA`** | Sí, **sin exclusiones** | No | No | Solo GET sin efectos | No |
+| **`IMPLEMENTACIÓN`** | Sí | Cambios autorizados, pequeños y trazables | Commits locales atómicos permitidos (ver §5) | Solo con autorización expresa | Solo con autorización expresa |
+| **`VERIFICACIÓN`** | Sí | No | No | Solo comprobaciones de solo lectura | No |
+
+**Ningún archivo, subsistema o directorio queda excluido de lectura durante una
+auditoría.** La lectura es siempre libre. Las restricciones de la §7 (auth,
+proxy, schema DB, motor de cálculo, datos legales, redirects, web pública) se
+aplican **únicamente a modificaciones no autorizadas**, nunca a la inspección.
+
+Los agentes pueden **detectar, documentar y recomendar** problemas
+arquitectónicos en cualquier archivo, aunque no puedan corregirlos sin
+autorización. La capacidad de observación es total; la de modificación, acotada.
 
 ---
 
-## 2. Reglas absolutas
+## 1. Flujo de trabajo obligatorio
+
+1. Leer `AGENTS.md` (este archivo).
+2. Ejecutar `git status` y confirmar que la rama activa es `main` (ver R19).
+3. **Solo para tareas SEO/Analytics live:** `npm run seo:doctor` (debe dar 0
+   ERROR) y `npm run seo:collect`. Revisar `docs/audits/seo-live-summary.md`.
+4. Leer los archivos que se van a modificar (no asumir contenido).
+5. Aplicar cambios pequeños y justificados (modo `IMPLEMENTACIÓN`).
+6. Validar según la matriz de la §4 (no siempre hace falta la suite completa).
+7. Documentar la acción: `CHANGELOG.md` para releases,
+   `AUDIT_REPOSITORY_REPORT.md` para saneamientos, `auditoria-acciones.md`
+   para operaciones estándar.
+8. No hacer push.
+
+---
+
+## 2. Fuentes de verdad
+
+Una fuente de verdad por subsistema. El contenido original vive en estas
+fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
+
+| Subsistema | Fuente |
+|------------|--------|
+| Blog | DB `blog_posts` vía `lib/blog-db.ts` |
+| Categorías blog | `data/blog/categories.ts` |
+| FAQ | DB `faq_entries` vía `lib/faq-db.ts` |
+| Categorías FAQ | `data/faq-categories.ts` |
+| Delitos CP | `data/delitos.json` (100 % verificables contra CP de Honduras) |
+| Páginas editables | DB `page_content` vía `lib/page-content-db.ts` |
+| Schema DB | `lib/schema.ts` |
+| Config sitio | `lib/site.ts` |
+| Artículos CP | `data/articulos_cp.json` |
+| Constitución | `data/articulos_constitucion.json` |
+| Códigos legales | `data/codigo_trabajo.json`, `codigo_civil.json`, `codigo_comercio.json`, `codigo_tributario.json` |
+| Áreas jurídicas | `data/areas-juridicas.ts` |
+| Landings locales | `data/landings-locales.ts` |
+| SEO Live | `data/google/`, `data/bing/`, `data/seo/` (regenerable) |
+| RAG / Búsqueda semántica | DB `embeddings` vía `lib/rag/` (índice vectorial pgvector) |
+
+---
+
+## 3. Reglas absolutas
 
 | # | Regla |
 |---|-------|
 | R1 | Leer el archivo antes de editarlo. No asumir. |
-| R2 | Una fuente de verdad por subsistema (ver tabla abajo). |
+| R2 | Una fuente de verdad por subsistema (ver §2). |
 | R3 | No usar datos mock como solución final. Persistencia = DB. |
 | R4 | No inventar datos legales. Citas verificables contra CP de Honduras. |
 | R5 | No rediseñar la web pública (`app/(public)/**`). SEO sí; visual no. |
 | R6 | No exponer la intranet. `/intranet/*`, `/admin/*` son PRIVADAS. |
 | R7 | Un cambio lógico por commit. Commits atómicos en español con prefijo. |
-| R8 | Validar siempre en cambios de código: `lint`, `tsc --noEmit`, `test` y `build`. |
+| R8 | Validar según la matriz de la §4 (no siempre suite completa). |
 | R9 | No cambiar arquitectura sin justificación técnica. |
 | R10 | No modificar configuración de modelos, proveedores o APIs externas. |
 | R11 | Clasificar con honestidad: `IMPLEMENTADO`, `VALIDADO`, `NO VALIDADO`, `PENDIENTE`, `RIESGO`. |
@@ -47,48 +93,29 @@ comandos de validación. Este protocolo es permanente.
 | R18 | Footer/Home: solo 10 ciudades prioritarias (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina). |
 | R19 | Rama única de trabajo: `main`. No crear ramas ni worktrees. Si la rama activa no es `main`, detenerse y volver a `main` sin descartar cambios. |
 
-### Fuentes de verdad
-
-| Subsistema | Fuente |
-|------------|--------|
-| Blog | DB `blog_posts` vía `lib/blog-db.ts` |
-| Categorías blog | `data/blog/categories.ts` (20) |
-| FAQ | DB `faq_entries` vía `lib/faq-db.ts` |
-| Categorías FAQ | `data/faq-categories.ts` (11) |
-| Delitos CP | `data/delitos.json` (483, 100% verificados) |
-| Páginas editables | DB `page_content` vía `lib/page-content-db.ts` |
-| Schema DB | `lib/schema.ts` (66 tablas) |
-| Config sitio | `lib/site.ts` |
-| Artículos CP | `data/articulos_cp.json` (635+) |
-| Constitución | `data/articulos_constitucion.json` (378) |
-| Códigos legales | `data/codigo_trabajo.json`, `codigo_civil.json`, `codigo_comercio.json`, `codigo_tributario.json` |
-| Áreas jurídicas | `data/areas-juridicas.ts` (13) |
-| Landings locales | `data/landings-locales.ts` |
-| SEO Live | `data/google/`, `data/bing/`, `data/seo/` (regenerable) |
-| **RAG / Búsqueda semántica** | **DB `embeddings` vía `lib/rag/`** (índice vectorial pgvector) |
-
 ---
 
-## 3. Seguridad
+## 4. Matriz de validación proporcional
 
-- **Auth:** JWT + bcrypt. Cookies `__Host-token` (HttpOnly, Secure, SameSite=Lax).
-- **Proxy:** `proxy.ts` protege `/intranet/*` y `/api/*`. Rol admin para `/api/admin/*`.
-- **Rate limiting:** login (5/60s), contacto (10/15min), calcular (30/min).
-- **Sanitización:** `sanitize-html` en todo HTML de entrada.
-- **Validación:** Zod en todas las rutas POST/PATCH/PUT.
-- **NUNCA hardcodear:** `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`, `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `JWT_SECRET`, `INDEXNOW_KEY`.
-- **NUNCA commitear:** `.env.local`, `.env`, `.secrets/`, `data/google/`, `data/bing/`, tokens, checkpoints, dumps y outputs live generados (ej. reportes bajo `data/seo/`, aunque allí sí se permiten fuentes canónicas como `canonical-paths.json`).
-- Si un secreto está en git history, requiere rotación (el código no lo resuelve).
+La validación universal (`lint` + `tsc` + `test` + `build`) no es siempre
+necesaria ni proporcionada. Aplíquese según el tipo de cambio:
 
----
+| Tipo de cambio | Validación mínima |
+|----------------|-------------------|
+| **Documentación** (`.md`) | Formato, enlaces internos rotos, coherencia. No requiere build ni suite. |
+| **Código localizado** (un módulo, una ruta, un componente) | `npm run lint` + `npx tsc --noEmit` + pruebas relacionadas al módulo. |
+| **Cambios transversales / seguridad / auth / DB / configuración** | `npm run lint && npx tsc --noEmit && npm run test && npm run build`. |
+| **SEO estático** (sitemap, robots, schema, metadata) | `npm run build` + validadores locales (`seo:ahrefs`, `validate-jsonld.mjs`). |
+| **Datos live** (GSC, GA4, Bing, IndexNow) | Solo cuando sean necesarios, existan credenciales válidas y el usuario lo haya autorizado expresamente. |
 
-## 4. Validación por área
+Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
+`npm run test` (Vitest), `npm run build` (Next.js).
+
+### Validación por área
 
 | Área | Comandos |
 |------|----------|
-| Cualquier cambio | `npm run lint && npx tsc --noEmit && npm run test && npm run build` |
 | Schema DB | `npx drizzle-kit generate` |
-| SEO / sitemap / robots | `build` + verificar `sitemap.xml` |
 | Blog | `npm run validate:dates && npm run content:audit` |
 | Contenido editorial | `npm run blog:normalizar` (dry-run) → `:aplicar` |
 | IndexNow | `npm run indexnow:dry` |
@@ -99,97 +126,47 @@ comandos de validación. Este protocolo es permanente.
 
 ---
 
-## 5. Sistema SEO Live
+## 5. Política Git
 
-```bash
-npm run seo:doctor       # diagnóstico de auths y datos (debe dar 0 ERROR)
-npm run seo:collect       # recolecta GSC + GA4 + Bing + IndexNow + Health + Sitemap
-npm run seo:gsc:live      # GSC: queries, páginas, CTR, posición (28d default)
-npm run seo:ga4:live      # GA4: usuarios, sesiones, eventos, conversiones (28d default)
-npm run seo:bing:live     # Bing: crawl stats, queries, backlinks
-npm run indexnow:dry      # IndexNow dry-run (20 URLs prioritarias)
-```
-
-Datos generados: `data/google/gsc-live.json`, `data/google/ga4-live.json`,
-`data/bing/bing-live.json`, `data/seo/live-summary.json`.
-Reportes: `docs/audits/seo-live-summary.md`, `docs/audits/seo-live-action-plan.md`.
+- **`AUDITORÍA`:** no se crean commits. El árbol de trabajo debe quedar
+  inalterado o, si se generan artefactos de inspección, devueltos a su estado.
+- **`IMPLEMENTACIÓN`:** pueden crearse **commits locales atómicos** (un cambio
+  lógico por commit, mensaje en español con prefijo `feat`/`fix`/`chore`/`docs`).
+- **Nunca se hace push** sin orden expresa del usuario.
+- **Prohibido crear ramas, feature branches o worktrees.** Todo el trabajo se
+  realiza directamente sobre `main` (R19). Si la rama activa no es `main`,
+  volver a `main` sin descartar cambios.
 
 ---
 
-## 6. Sistema RAG (Retrieval Augmented Generation)
+## 6. Seguridad
 
-El sistema RAG usa **Neon (pgvector)** como vector store y **DeepSeek** (`deepseek-embedding`) para generar embeddings. Permite búsqueda semántica sobre toda la base de conocimiento del proyecto.
-
-### Arquitectura
-
-```
-Contenido → Chunking → Embedding (DeepSeek) → pgvector (Neon) → Búsqueda semántica
-```
-
-### Fuentes indexadas en la tabla `embeddings`
-
-| Fuente | Tipo `entidad_tipo` | Cantidad aprox |
-|--------|---------------------|----------------|
-| Blog posts (DB) | `blog_post` | ~149 posts (~400 chunks) |
-| Código Penal | `articulo_cp` | 635 artículos |
-| Constitución | `articulo_const` | 378 artículos |
-| Código Civil | `codigo_civil` | 2,359 artículos |
-| Código de Comercio | `codigo_comercio` | 1,693 artículos |
-| Código de Trabajo | `codigo_trabajo` | 856 artículos |
-| Código Tributario | `codigo_tributario` | 218 artículos |
-| Delitos | `delito` | 483 delitos |
-| FAQs | `faq` | 73 preguntas |
-| Áreas jurídicas | `area_juridica` | 13 áreas |
-| PDFs legales extraídos | `pdf_original` | 8 PDFs (~400 chunks) |
-
-### Integraciones activas
-
-1. **`scripts/blog-verify-fix.ts`**: Antes de llamar a DeepSeek para corregir un post, recupera contexto semántico relevante y lo inyecta en el prompt como "CONTEXTO ADICIONAL — BÚSQUEDA SEMÁNTICA (RAG)". Compatible con flag `--no-rag`.
-
-2. **`app/api/chat/route.ts`**: El asistente virtual público recupera chunks relevantes al mensaje del usuario y los inyecta en el system prompt como contexto adicional.
-
-### Scripts de indexación
-
-```bash
-npm run rag:extraer-pdfs            # Extrae texto de PDFs legales → data/pdfs-chunked/
-npm run rag:extraer-pdfs:aplicar    # Aplica la extracción y guarda chunks
-npm run rag:indexar                 # Indexa contenido en pgvector (dry-run)
-npm run rag:indexar:aplicar         # Aplica indexación en DB
-npm run rag:indexar -- --tipo blog  # Solo blog posts
-npm run rag:indexar -- --tipo legal # Solo códigos legales
-npm run rag:indexar -- --reset      # Re-indexar desde cero (limpia tabla)
-```
-
-### Módulos RAG (`lib/rag/`)
-
-| Archivo | Propósito |
-|---------|-----------|
-| `config.ts` | Configuración centralizada (proveedor, modelo, topK, umbral) |
-| `embeddings.ts` | Motor de embeddings (DeepSeek) + búsqueda vectorial en pgvector |
-| `chunking.ts` | Estrategias de chunking por tipo de contenido |
-| `retrieval.ts` | Orquestación: consulta → embedding → búsqueda → contexto formateado |
-
-### Variables de entorno
-
-```bash
-EMBEDDINGS_PROVEEDOR=deepseek        # Proveedor de embeddings
-EMBEDDINGS_API_KEY=                  # Opcional: si vacía, usa DEEPSEEK_API_KEY
-EMBEDDINGS_MODELO=deepseek-embedding # Modelo de embeddings (1536 dims)
-EMBEDDINGS_DIMENSIONES=1536
-RAG_TOP_K=5                          # Chunks recuperados por consulta
-RAG_MIN_SCORE=0.7                    # Umbral mínimo de similitud
-```
-
-### Seguridad RAG
-
-- **Dry-run por defecto**: `npm run rag:indexar` sin `--aplicar` no escribe en DB.
-- **La API key de DeepSeek** es la misma del chat (`DEEPSEEK_API_KEY`), nunca hardcodeada.
-- **La tabla `embeddings`** es un índice de búsqueda, no una fuente primaria (R2). El contenido original sigue en sus fuentes canónicas.
-- **Los chunks de contenido** se limitan a 2000 caracteres para controlar tokens.
+- **Auth:** JWT con propósito explícito + bcrypt + 2FA TOTP. Cookies
+  `__Host-token` (HttpOnly, Secure, SameSite=Lax). Ver `lib/auth.ts`.
+- **Proxy:** `proxy.ts` protege `/intranet/*` y `/api/*`. Rol admin para
+  `/api/admin/*`. Corre en Node runtime (verifica firma HS256).
+- **Rate limiting:** login (5/60s), contacto (10/15min), calcular (30/min).
+- **Sanitización:** `sanitize-html` en todo HTML de entrada.
+- **Validación:** Zod en todas las rutas POST/PATCH/PUT.
+- **NUNCA hardcodear** secretos: `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`,
+  `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `JWT_SECRET`, `ENCRYPTION_KEY`,
+  `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`, `IA_DOCUMENTAL_API_KEY`, `CRON_SECRET`.
+- **NUNCA commitear:** `.env.local`, `.env`, `.secrets/`, `data/google/`,
+  `data/bing/`, tokens, checkpoints, dumps y outputs live generados (p. ej.
+  reportes bajo `data/seo/`, aunque allí sí se permiten fuentes canónicas como
+  `canonical-paths.json`).
+- **No revelar valores de secretos.** Si un agente detecta uno, informa solo su
+  ubicación y tipo, nunca su contenido.
+- Si un secreto está en git history, requiere rotación en el proveedor (el
+  código no lo resuelve).
 
 ---
 
-## 7. Archivos que NO debe tocar la IA
+## 7. Archivos y subsistemas sensibles (modificación restringida)
+
+La lectura es siempre libre (§0). La **modificación no autorizada** de estos
+archivos está restringida por su criticidad; cualquier cambio requiere
+autorización explícita y validación completa (suite + build):
 
 - Web pública visual (`app/(public)/**/*.tsx`) — salvo SEO.
 - Motor de cálculo (`lib/rules/v1/`).
@@ -197,21 +174,45 @@ RAG_MIN_SCORE=0.7                    # Umbral mínimo de similitud
 - Auth (`lib/auth.ts`), Proxy (`proxy.ts`).
 - Datos de delitos (`data/delitos.json`, `data/delitos-estados.json`).
 - Redirects 301 de `next.config.ts`.
-- `auditoriatotal.mc` y `auditoriatotal.md` — solo lectura.
+- `auditoriatotal.mc` y `auditoriatotal.md` — **solo lectura**.
+
+Los agentes pueden auditar y reportar problemas en cualquiera de estos archivos.
 
 ---
 
-## 8. Formato de entrega
+## 8. Subsistemas externos (manuales especializados)
+
+Los manuales operativos extensos viven bajo `docs/`, no en este protocolo.
+`AGENTS.md` solo fija las reglas de comportamiento.
+
+- **SEO Live** (GSC + GA4 + Bing + IndexNow + Health): manual operativo en
+  [`docs/seo/live-data-access.md`](docs/seo/live-data-access.md). Scripts:
+  `seo:doctor`, `seo:collect`, `seo:gsc:live`, `seo:ga4:live`, `seo:bing:live`.
+  Datos generados (no versionar): `data/google/`, `data/bing/`, `data/seo/`.
+  Reportes: `docs/audits/seo-live-summary.md`, `docs/audits/seo-live-action-plan.md`.
+- **RAG** (búsqueda semántica): índice en DB `embeddings` (pgvector) vía
+  `lib/rag/` (`config.ts`, `embeddings.ts`, `chunking.ts`, `retrieval.ts`).
+  Proveedor de embeddings configurado en `.env.example` (`EMBEDDINGS_*`).
+  Scripts: `rag:indexar` (dry-run) → `:aplicar`, `rag:extraer-pdfs`. Dry-run por
+  defecto; la tabla `embeddings` es índice, no fuente primaria (R2).
+- **Analítica pública:** fuente cliente `components/analytics-scripts.tsx`;
+  helpers de eventos `lib/analytics.ts`; configuración `lib/site.ts`. GA4 directo
+  y GTM son **mutuamente excluyentes**. No duplicar etiquetas ni enviar PII,
+  consultas legales, nombres, correos, teléfonos o identificadores de
+  expedientes. Se monta solo en el layout público y excluye las rutas de
+  `ANALYTICS_EXCLUDED_PREFIXES`. Variables: `NEXT_PUBLIC_GA_ID`,
+  `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_ANALYTICS_TEST`,
+  `NEXT_PUBLIC_ANALYTICS_DEBUG`.
+- **Chat público:** motor de reglas local, **sin LLM externo**. Endpoint
+  `POST /api/chat` (rate-limit → Zod → guardrails → motor de reglas). No envía
+  mensajes a terceros. Las variables `DEEPSEEK_*` pertenecen a RAG/scripts de
+  blog, **no al chat**.
+
+---
+
+## 9. Formato de entrega
 
 ```
-
-### Analítica pública
-
-- Fuente cliente: `components/analytics-scripts.tsx`; helpers/eventos: `lib/analytics.ts`; configuración: `lib/site.ts`.
-- GA4 directo y GTM son mutuamente excluyentes. No duplicar etiquetas ni enviar PII, consultas legales, nombres, correos, teléfonos o identificadores de expedientes.
-- La analítica solo se monta en el layout público y excluye las rutas declaradas en `ANALYTICS_EXCLUDED_PREFIXES`.
-- Variables: `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_ANALYTICS_TEST` y `NEXT_PUBLIC_ANALYTICS_DEBUG`.
-- Validar cambios con las cuatro comprobaciones de código y, tras deploy, con Network (`gtag/js`, `g/collect`, `clarity.ms`) y GA4 Realtime/DebugView.
 Porcentaje completado:
 Porcentaje restante:
 Archivos modificados:

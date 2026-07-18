@@ -12,8 +12,10 @@ import {
   usuarios,
   usuariosSgie,
   expedienteAsignaciones,
+  roles,
+  usuariosRoles,
 } from '@/lib/schema';
-import { and, count, eq, ilike, isNull, or, sql } from 'drizzle-orm';
+import { and, count, eq, ilike, inArray, isNull, or, sql } from 'drizzle-orm';
 
 export interface UsuarioGestion {
   id: string;
@@ -28,6 +30,8 @@ export interface UsuarioGestion {
   correoCorporativoVinculado: boolean | null;
   debeCambiarPassword: boolean | null;
   creadoEn: Date | null;
+  activoSgie: boolean;
+  equipo: string | null;
   /** Conteo de expedientes activos asignados (responsable/colaborador, no revocados). */
   expedientesAsignados: number;
 }
@@ -83,8 +87,18 @@ export async function listarUsuariosGestion(opts: ListarUsuariosOpts = {}): Prom
       correoCorporativoVinculado: usuarios.correoCorporativoVinculado,
       debeCambiarPassword: usuarios.mustChangePassword,
       creadoEn: usuarios.creadoEn,
+      activoSgie: usuariosSgie.activoSgie,
+      equipo: sql<string | null>`(
+        SELECT e.nombre
+        FROM equipos_miembros em
+        JOIN equipos e ON e.id = em.equipo_id
+        WHERE em.usuario_id = ${usuarios.id}
+        ORDER BY em.creado_en
+        LIMIT 1
+      )`,
     })
       .from(usuarios)
+      .leftJoin(usuariosSgie, eq(usuariosSgie.usuarioId, usuarios.id))
       .where(where)
       .orderBy(usuarios.creadoEn)
       .limit(limit)
@@ -106,7 +120,7 @@ export async function listarUsuariosGestion(opts: ListarUsuariosOpts = {}): Prom
     .from(expedienteAsignaciones)
     .where(
       and(
-        sql`${expedienteAsignaciones.abogadoId} = ANY(${sql.raw(`ARRAY['${userIds.join("','")}']::uuid[]`)})`,
+        inArray(expedienteAsignaciones.abogadoId, userIds),
         isNull(expedienteAsignaciones.revocadaEn),
       ),
     )
@@ -119,6 +133,7 @@ export async function listarUsuariosGestion(opts: ListarUsuariosOpts = {}): Prom
   return {
     usuarios: rows.map((r) => ({
       ...r,
+      activoSgie: Boolean(r.activoSgie),
       expedientesAsignados: conteoPorAbogado.get(r.id) ?? 0,
     })),
     total: countRow?.total ?? 0,
@@ -144,31 +159,29 @@ export async function contarAdminsActivos(): Promise<number> {
  */
 export async function actualizarRolUsuario(params: {
   usuarioId: string;
-  nuevoRol: 'admin' | 'abogado';
+  nuevoRol: 'admin' | 'abogado' | 'supervisor';
 }): Promise<{ rol: string } | null> {
-  const [updated] = await db
-    .update(usuarios)
-    .set({ rol: params.nuevoRol })
-    .where(eq(usuarios.id, params.usuarioId))
-    .returning({ rol: usuarios.rol });
+  return db.transaction(async (tx) => {
+    const [updated] = await tx
+      .update(usuarios)
+      .set({ rol: params.nuevoRol, tokenVersion: sql`${usuarios.tokenVersion} + 1` })
+      .where(eq(usuarios.id, params.usuarioId))
+      .returning({ rol: usuarios.rol });
+    if (!updated) return null;
 
-  if (!updated) return null;
+    const roleName = params.nuevoRol === 'admin' ? 'administrador' : params.nuevoRol;
+    const [role] = await tx.select({ id: roles.id }).from(roles).where(eq(roles.nombre, roleName));
+    if (role) {
+      await tx.delete(usuariosRoles).where(eq(usuariosRoles.usuarioId, params.usuarioId));
+      await tx.insert(usuariosRoles).values({ usuarioId: params.usuarioId, rolId: role.id });
+    }
 
-  if (params.nuevoRol === 'abogado') {
-    // Upsert de perfil SGIE (si no existe, lo crea activo).
-    await db
-      .insert(usuariosSgie)
-      .values({ usuarioId: params.usuarioId, activoSgie: true })
-      .onConflictDoNothing({ target: usuariosSgie.usuarioId });
-  } else {
-    // Al dejar de ser abogado, se desactiva el perfil SGIE (no se elimina).
-    await db
-      .update(usuariosSgie)
-      .set({ activoSgie: false })
-      .where(eq(usuariosSgie.usuarioId, params.usuarioId));
-  }
-
-  return updated;
+    if (params.nuevoRol === 'abogado' || params.nuevoRol === 'supervisor') {
+      await tx.insert(usuariosSgie).values({ usuarioId: params.usuarioId, activoSgie: true })
+        .onConflictDoNothing({ target: usuariosSgie.usuarioId });
+    }
+    return updated;
+  });
 }
 
 /**

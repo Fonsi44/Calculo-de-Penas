@@ -13,9 +13,9 @@
  *
  * Diseño con tokens. Responsive. Estados loading/error/vacío.
  */
-import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { Calendar, ChevronLeft, ChevronRight, ArrowLeft, Plus, Check, X as XIcon, CheckCheck, Ban, CalendarClock } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, ArrowLeft, Plus, Check, X as XIcon, CheckCheck, Ban, CalendarClock, Pencil } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input, Textarea, Field } from '@/components/ui/input';
@@ -32,6 +32,7 @@ import {
   rejillaMes, rejillaSemana, esMismoDia, formatRangoSemana,
   MESES_ES, DIAS_ES_CORTO, type DiaCalendario,
 } from '@/lib/sgie/calendario';
+import { buildAgendaQuery } from '@/lib/sgie/agenda-query';
 
 interface EventoItem {
   id: string;
@@ -41,6 +42,7 @@ interface EventoItem {
   fecha: string;
   estado: string;
   expedienteId: string | null;
+  version: number;
 }
 
 type Vista = 'mes' | 'semana';
@@ -67,33 +69,44 @@ export default function SgieAgendaPage() {
   const [vista, setVista] = useState<Vista>('mes');
   const [referencia, setReferencia] = useState(() => new Date());
   const [seleccionada, setSeleccionada] = useState<Date | null>(null);
-  const mounted = useRef(false);
 
   // Sprint 3: mutaciones.
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingVersion, setEditingVersion] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [accionId, setAccionId] = useState<string | null>(null);
   const [form, setForm] = useState({ titulo: '', descripcion: '', fecha: '', hora: '10:00', expedienteId: '' });
   const [errores, setErrores] = useState<{ titulo?: string; fecha?: string }>({});
-  const [reprogramando, setReprogramando] = useState<{ id: string; titulo: string; fecha: string } | null>(null);
+  const [reprogramando, setReprogramando] = useState<{ id: string; titulo: string; fecha: string; version: number } | null>(null);
+  const [estadoFiltro, setEstadoFiltro] = useState('todos');
+  const [tipoFiltro, setTipoFiltro] = useState('todos');
 
   const fetchEventos = useCallback(async () => {
     setLoading(true);
     setError(false);
     try {
-      const res = await fetch('/api/sgie/agenda?limit=200', { credentials: 'include' });
-      if (!res.ok) throw new Error('Error');
-      const d = await res.json();
-      setEventos(d.eventos ?? []);
+      const first = await fetch(`/api/sgie/agenda?${buildAgendaQuery(referencia, vista)}`, { credentials: 'include' });
+      if (!first.ok) throw new Error('Error');
+      const firstBody = await first.json();
+      const collected: EventoItem[] = firstBody.eventos ?? [];
+      const pages = Math.ceil(Number(firstBody.total ?? 0) / 100);
+      for (let page = 2; page <= pages; page += 1) {
+        const response = await fetch(`/api/sgie/agenda?${buildAgendaQuery(referencia, vista, page)}`, { credentials: 'include' });
+        if (!response.ok) throw new Error('Error');
+        const body = await response.json();
+        collected.push(...(body.eventos ?? []));
+      }
+      setEventos(collected);
     } catch {
       setError(true);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [referencia, vista]);
 
   useEffect(() => {
-    if (!authLoading && user && !mounted.current) { mounted.current = true; fetchEventos(); }
+    if (!authLoading && user) void fetchEventos(); // eslint-disable-line react-hooks/set-state-in-effect -- carga remota al cambiar el rango visible
   }, [authLoading, user, fetchEventos]);
 
   const dias: DiaCalendario[] = useMemo(() => {
@@ -103,16 +116,21 @@ export default function SgieAgendaPage() {
   }, [vista, referencia]);
 
   // Eventos por día (mapa fecha-iso → eventos).
+  const eventosFiltrados = useMemo(() => eventos.filter((evento) =>
+    (estadoFiltro === 'todos' || evento.estado === estadoFiltro)
+    && (tipoFiltro === 'todos' || evento.tipo === tipoFiltro)
+  ), [estadoFiltro, eventos, tipoFiltro]);
+
   const eventosPorDia = useMemo(() => {
     const m = new Map<string, EventoItem[]>();
-    for (const e of eventos) {
+    for (const e of eventosFiltrados) {
       const d = new Date(e.fecha);
       const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
       if (!m.has(key)) m.set(key, []);
       m.get(key)!.push(e);
     }
     return m;
-  }, [eventos]);
+  }, [eventosFiltrados]);
 
   const eventosDiaSeleccionado = seleccionada
     ? eventosPorDia.get(`${seleccionada.getFullYear()}-${seleccionada.getMonth()}-${seleccionada.getDate()}`) ?? []
@@ -121,11 +139,11 @@ export default function SgieAgendaPage() {
   // Próximos eventos (futuros, ordenados).
   const proximosEventos = useMemo(() => {
     const ahora = new Date();
-    return eventos
+    return eventosFiltrados
       .filter((e) => new Date(e.fecha) >= ahora)
       .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
       .slice(0, 6);
-  }, [eventos]);
+  }, [eventosFiltrados]);
 
   const navegar = (delta: number) => {
     const nueva = new Date(referencia);
@@ -146,6 +164,24 @@ export default function SgieAgendaPage() {
       hora: '10:00', expedienteId: '',
     });
     setErrores({});
+    setEditingId(null);
+    setEditingVersion(null);
+    setShowForm(true);
+  };
+
+  const abrirEditar = (evento: EventoItem) => {
+    const date = new Date(evento.fecha);
+    const pad = (value: number) => String(value).padStart(2, '0');
+    setForm({
+      titulo: evento.titulo,
+      descripcion: evento.descripcion ?? '',
+      fecha: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
+      hora: `${pad(date.getHours())}:${pad(date.getMinutes())}`,
+      expedienteId: evento.expedienteId ?? '',
+    });
+    setEditingId(evento.id);
+    setEditingVersion(evento.version);
+    setErrores({});
     setShowForm(true);
   };
 
@@ -165,13 +201,18 @@ export default function SgieAgendaPage() {
     setSaving(true);
     try {
       const fechaIso = new Date(`${form.fecha}T${form.hora || '10:00'}:00`).toISOString();
-      const res = await fetch('/api/sgie/agenda', {
-        method: 'POST',
+      const res = await fetch(editingId ? `/api/sgie/agenda/${editingId}` : '/api/sgie/agenda', {
+        method: editingId ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           titulo: form.titulo.trim(),
+          ...(editingId ? { version: editingVersion } : {}),
           descripcion: form.descripcion.trim() || undefined,
-          fecha: fechaIso,
+          inicio: fechaIso,
+          ...(!editingId ? {
+            tipo: form.expedienteId ? 'cita_cliente' : 'personal',
+            visibilidad: form.expedienteId ? 'expediente' : 'privado',
+          } : {}),
           expedienteId: form.expedienteId || undefined,
         }),
       });
@@ -179,8 +220,10 @@ export default function SgieAgendaPage() {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || 'Error al crear el evento');
       }
-      toast.success('Evento creado');
+      toast.success(editingId ? 'Evento actualizado' : 'Evento creado');
       setShowForm(false);
+      setEditingId(null);
+      setEditingVersion(null);
       fetchEventos();
     } catch (err) {
       toast.danger(err instanceof Error ? err.message : 'Error al crear');
@@ -201,11 +244,13 @@ export default function SgieAgendaPage() {
     }
     setAccionId(evento.id);
     try {
-      const nuevoEstado = estadoTrasAccion(accion, evento.estado as never);
+      const nuevoEstado = accion === 'cancelar'
+        ? 'cancelada'
+        : estadoTrasAccion(accion, evento.estado as never);
       const res = await fetch(`/api/sgie/agenda/${evento.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ estado: nuevoEstado }),
+        body: JSON.stringify({ estado: nuevoEstado, version: evento.version }),
       });
       if (!res.ok) throw new Error('Error');
       toast.success(etiquetaAccion(accion));
@@ -218,7 +263,7 @@ export default function SgieAgendaPage() {
   };
 
   if (authLoading) return <ListSkeleton rows={5} />;
-  if (!user || (user.rol !== 'abogado' && user.rol !== 'admin')) {
+  if (!user || (user.rol !== 'abogado' && user.rol !== 'admin' && user.rol !== 'supervisor')) {
     return <div className="text-center py-20"><p className="font-bold text-primary">Acceso restringido</p></div>;
   }
 
@@ -261,8 +306,8 @@ export default function SgieAgendaPage() {
         <Card padding="md">
           <form onSubmit={crearEvento} className="space-y-3">
             <div className="flex items-center justify-between mb-1 pb-3 border-b border-border-light">
-              <h2 className="font-bold text-sm text-primary">Nuevo evento</h2>
-              <button type="button" onClick={() => setShowForm(false)} className="p-1 rounded hover:bg-surface-alt text-text-muted" aria-label="Cerrar">
+              <h2 className="font-bold text-sm text-primary">{editingId ? 'Editar evento' : 'Nuevo evento'}</h2>
+              <button type="button" onClick={() => { setShowForm(false); setEditingId(null); }} className="p-1 rounded hover:bg-surface-alt text-text-muted" aria-label="Cerrar">
                 <XIcon size={16} />
               </button>
             </div>
@@ -287,12 +332,28 @@ export default function SgieAgendaPage() {
                 placeholder="Notas del evento (opcional)" />
             </Field>
             <div className="flex gap-2">
-              <Button type="submit" variant="primary" size="sm" loading={saving}>Crear evento</Button>
-              <Button type="button" variant="ghost" size="sm" onClick={() => setShowForm(false)}>Cancelar</Button>
+              <Button type="submit" variant="primary" size="sm" loading={saving}>{editingId ? 'Guardar cambios' : 'Crear evento'}</Button>
+              <Button type="button" variant="ghost" size="sm" onClick={() => { setShowForm(false); setEditingId(null); }}>Cancelar</Button>
             </div>
           </form>
         </Card>
       )}
+
+      <div className="flex flex-wrap gap-2" aria-label="Filtros de agenda">
+        <select value={estadoFiltro} onChange={(event) => setEstadoFiltro(event.target.value)}
+          className="h-9 rounded-md border border-border bg-surface px-3 text-xs">
+          <option value="todos">Todos los estados</option><option value="confirmada">Confirmados</option>
+          <option value="propuesta">Propuestos</option><option value="completada">Completados</option>
+          <option value="cancelada">Cancelados</option>
+        </select>
+        <select value={tipoFiltro} onChange={(event) => setTipoFiltro(event.target.value)}
+          className="h-9 rounded-md border border-border bg-surface px-3 text-xs">
+          <option value="todos">Todos los tipos</option><option value="personal">Personal</option>
+          <option value="cita_cliente">Cita con cliente</option><option value="audiencia">Audiencia</option>
+          <option value="plazo">Plazo</option><option value="revision_interna">Revisión interna</option>
+          <option value="firma">Firma</option><option value="tarea_hito">Tarea o hito</option><option value="ausencia">Ausencia</option>
+        </select>
+      </div>
 
       {loading ? (
         <ListSkeleton rows={6} />
@@ -367,7 +428,15 @@ export default function SgieAgendaPage() {
                       onConfirmar={(ev) => aplicarAccion(ev, 'confirmar')}
                       onCancelar={(ev) => aplicarAccion(ev, 'cancelar')}
                       onCompletar={(ev) => aplicarAccion(ev, 'completar')}
-                      onReprogramar={(ev) => setReprogramando({ id: ev.id, titulo: ev.titulo, fecha: ev.fecha })}
+                      onReprogramar={(ev) =>
+                        setReprogramando({
+                          id: ev.id,
+                          titulo: ev.titulo,
+                          fecha: ev.fecha,
+                          version: ev.version,
+                        })
+                      }
+                      onEditar={abrirEditar}
                     />
                   ))}
                 </ul>
@@ -407,7 +476,7 @@ export default function SgieAgendaPage() {
 
 function EventoCardDetalle({
   evento, accionId,
-  onConfirmar, onCancelar, onCompletar, onReprogramar,
+  onConfirmar, onCancelar, onCompletar, onReprogramar, onEditar,
 }: {
   evento: EventoItem;
   accionId: string | null;
@@ -415,6 +484,7 @@ function EventoCardDetalle({
   onCancelar: (e: EventoItem) => void;
   onCompletar: (e: EventoItem) => void;
   onReprogramar: (e: EventoItem) => void;
+  onEditar: (e: EventoItem) => void;
 }) {
   const activo = evento.estado === 'propuesta' || evento.estado === 'confirmada';
   return (
@@ -430,6 +500,11 @@ function EventoCardDetalle({
         <span className="text-xxs opacity-70">{traducirEstadoAgenda(evento.estado)}</span>
         {activo && (
           <div className="flex items-center gap-1">
+            <button onClick={() => onEditar(evento)} disabled={accionId === evento.id}
+              title="Editar evento" aria-label={`Editar: ${evento.titulo}`}
+              className="p-1 rounded hover:bg-info/15 text-info disabled:opacity-50">
+              <Pencil size={13} />
+            </button>
             <button onClick={() => onReprogramar(evento)} disabled={accionId === evento.id}
               title="Reprogramar evento" aria-label={`Reprogramar: ${evento.titulo}`}
               className="p-1 rounded hover:bg-warning/15 text-warning disabled:opacity-50">

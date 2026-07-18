@@ -143,9 +143,12 @@ describe('lib/auth — authFailureResponse', () => {
     expect(r.status).toBe(403);
   });
 
-  it('errores desconocidos devuelven 401 genérico', async () => {
+  it('errores desconocidos devuelven 500 sin degradarlos a fallo de autenticación', async () => {
     const r = authFailureResponse(new Error('boom'));
-    expect(r.status).toBe(401);
+    expect(r.status).toBe(500);
+    const body = await r.json();
+    expect(body.code).toBe('INTERNAL_ERROR');
+    expect(body.correlationId).toBeTruthy();
   });
 });
 

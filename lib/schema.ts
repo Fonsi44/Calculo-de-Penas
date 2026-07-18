@@ -144,6 +144,10 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'usuario_created',
   'usuario_updated',
   'usuario_deleted',
+  'invitacion_created',
+  'invitacion_accepted',
+  'invitacion_revoked',
+  'invitacion_resent',
   'password_reset',
   'password_changed',
   'blog_created',
@@ -641,6 +645,70 @@ export const usuariosRoles = pgTable('usuarios_roles', {
   pk: unique('usuarios_roles_pk').on(table.usuarioId, table.rolId),
 }));
 
+export const equipos = pgTable('equipos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 200 }).notNull().unique(),
+  activo: boolean('activo').notNull().default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+});
+
+export const equiposMiembros = pgTable('equipos_miembros', {
+  equipoId: uuid('equipo_id').notNull(),
+  usuarioId: uuid('usuario_id').notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  equipoRef: foreignKey({ columns: [table.equipoId], foreignColumns: [equipos.id] }).onDelete('cascade'),
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  pk: unique('equipos_miembros_pk').on(table.equipoId, table.usuarioId),
+  usuarioIdx: index('equipos_miembros_usuario_idx').on(table.usuarioId),
+}));
+
+export const usuariosCapacidades = pgTable('usuarios_capacidades', {
+  usuarioId: uuid('usuario_id').notNull(),
+  permisoId: uuid('permiso_id').notNull(),
+  permitido: boolean('permitido').notNull().default(true),
+  concedidoPor: uuid('concedido_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  permisoRef: foreignKey({ columns: [table.permisoId], foreignColumns: [permisos.id] }).onDelete('cascade'),
+  concedidoPorRef: foreignKey({ columns: [table.concedidoPor], foreignColumns: [usuarios.id] }),
+  pk: unique('usuarios_capacidades_pk').on(table.usuarioId, table.permisoId),
+}));
+
+export const invitacionEstadoEnum = pgEnum('invitacion_estado', [
+  'pendiente', 'aceptada', 'expirada', 'revocada',
+]);
+
+export const invitaciones = pgTable('invitaciones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  tokenHash: varchar('token_hash', { length: 64 }).notNull().unique(),
+  estado: invitacionEstadoEnum('estado').notNull().default('pendiente'),
+  rolInicial: varchar('rol_inicial', { length: 50 }).notNull(),
+  equipoId: uuid('equipo_id'),
+  accesoSgie: boolean('acceso_sgie').notNull().default(false),
+  capacidades: jsonb('capacidades').$type<string[]>().notNull().default([]),
+  creadaPor: uuid('creada_por').notNull(),
+  creadaEn: timestamp('creada_en', { withTimezone: true }).defaultNow(),
+  expiraEn: timestamp('expira_en', { withTimezone: true }).notNull(),
+  aceptadaEn: timestamp('aceptada_en', { withTimezone: true }),
+  revocadaEn: timestamp('revocada_en', { withTimezone: true }),
+  usuarioId: uuid('usuario_id'),
+  emailEstado: varchar('email_estado', { length: 50 }).notNull().default('pendiente'),
+  emailError: varchar('email_error', { length: 500 }),
+  resendId: varchar('resend_id', { length: 200 }),
+}, (table) => ({
+  equipoRef: foreignKey({ columns: [table.equipoId], foreignColumns: [equipos.id] }),
+  creadaPorRef: foreignKey({ columns: [table.creadaPor], foreignColumns: [usuarios.id] }),
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  emailIdx: index('invitaciones_email_idx').on(table.email),
+  estadoIdx: index('invitaciones_estado_idx').on(table.estado),
+  expiraIdx: index('invitaciones_expira_idx').on(table.expiraEn),
+}));
+
 // ============================================================
 // Newsletter subscriptions
 // ============================================================
@@ -1057,10 +1125,15 @@ export const tareaPrioridadEnum = pgEnum('tarea_prioridad', [
 
 export const eventoAgendaTipoEnum = pgEnum('evento_agenda_tipo', [
   'interna', 'procesal_detectada', 'audiencia', 'recordatorio', 'vencimiento_enlace',
+  'personal', 'cita_cliente', 'plazo', 'revision_interna', 'firma', 'tarea_hito', 'ausencia',
 ]);
 
 export const eventoAgendaEstadoEnum = pgEnum('evento_agenda_estado', [
-  'propuesta', 'confirmada', 'descartada', 'completada',
+  'propuesta', 'confirmada', 'descartada', 'completada', 'cancelada',
+]);
+
+export const eventoAgendaVisibilidadEnum = pgEnum('evento_agenda_visibilidad', [
+  'privado', 'expediente', 'equipo',
 ]);
 
 export const plantillaCorreoEstadoEnum = pgEnum('plantilla_correo_estado', [
@@ -1420,21 +1493,37 @@ export type TareaInsert = typeof tareas.$inferInsert;
 
 export const eventosAgenda = pgTable('eventos_agenda', {
   id: uuid('id').primaryKey().defaultRandom(),
+  propietarioId: uuid('propietario_id').notNull(),
+  creadoPor: uuid('creado_por').notNull(),
   expedienteId: uuid('expediente_id'),
   tipo: eventoAgendaTipoEnum('tipo').notNull(),
   titulo: varchar('titulo', { length: 300 }).notNull(),
   descripcion: text('descripcion'),
+  inicio: timestamp('inicio', { withTimezone: true }).notNull(),
+  fin: timestamp('fin', { withTimezone: true }),
+  todoElDia: boolean('todo_el_dia').notNull().default(false),
+  zonaHoraria: varchar('zona_horaria', { length: 100 }).notNull().default('America/Tegucigalpa'),
+  ubicacion: varchar('ubicacion', { length: 500 }),
+  visibilidad: eventoAgendaVisibilidadEnum('visibilidad').notNull().default('privado'),
+  participantes: jsonb('participantes').$type<Array<{ usuarioId?: string; email?: string; nombre?: string }>>().notNull().default([]),
+  recordatorios: jsonb('recordatorios').$type<Array<{ minutosAntes: number; canal: 'email' | 'sistema' }>>().notNull().default([]),
   fecha: timestamp('fecha', { withTimezone: true }).notNull(),
   estado: eventoAgendaEstadoEnum('estado').notNull().default('propuesta'),
+  canceladaEn: timestamp('cancelada_en', { withTimezone: true }),
+  version: integer('version').notNull().default(1),
   origenConfianza: integer('origen_confianza'),
   confirmadaPor: uuid('confirmada_por'),
   confirmadaEn: timestamp('confirmada_en', { withTimezone: true }),
   creadaEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
+  propietarioRef: foreignKey({ columns: [table.propietarioId], foreignColumns: [usuarios.id] }),
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
   expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
   confirmadaPorRef: foreignKey({ columns: [table.confirmadaPor], foreignColumns: [usuarios.id] }),
   expedienteIdx: index('eventos_agenda_expediente_idx').on(table.expedienteId),
   fechaIdx: index('eventos_agenda_fecha_idx').on(table.fecha),
+  propietarioIdx: index('eventos_agenda_propietario_idx').on(table.propietarioId),
+  inicioIdx: index('eventos_agenda_inicio_idx').on(table.inicio),
 }));
 
 export type EventoAgenda = typeof eventosAgenda.$inferSelect;

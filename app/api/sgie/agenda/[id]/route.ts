@@ -1,114 +1,108 @@
-/**
- * PATCH /api/sgie/agenda/:id
- *
- * Actualiza un evento de agenda: título, descripción, fecha (reprogramar),
- * estado (confirmar/cancelar/completar) o expediente asociado. Requiere scope.
- *
- * Sprint 3 — tarea 1. Auditoría evento_updated (no hay eventos dedicados para
- * confirmar/cancelar/reprogramar en el enum; metadata explícita del cambio).
- */
-import { requireAbogado, authFailureResponse } from '@/lib/auth';
+import { and, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
+import { requireAbogado, authFailureResponse } from '@/lib/auth';
+import { db } from '@/lib/db';
+import { eventosAgenda } from '@/lib/schema';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
-import { db } from '@/lib/db';
-import { eventosAgenda, expedienteAsignaciones } from '@/lib/schema';
-import { and, eq, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { accessService, assertSgieAccess } from '@/lib/access-service';
+import { ConflictError, ForbiddenError, NotFoundError, ValidationError } from '@/lib/http-errors';
 
-const updateSchema = z.object({
+const schema = z.object({
+  version: z.number().int().min(1),
   titulo: z.string().min(1).max(300).optional(),
-  descripcion: z.string().max(2000).optional(),
-  fecha: z.string().datetime().optional(),
-  estado: z.enum(['propuesta', 'confirmada', 'descartada', 'completada']).optional(),
-  expedienteId: z.union([z.string().uuid(), z.null()]).optional(),
-  // Sprint 5 — motivo categorizado al reprogramar.
+  descripcion: z.string().max(2000).nullable().optional(),
+  inicio: z.string().datetime().optional(),
+  fin: z.string().datetime().nullable().optional(),
+  todoElDia: z.boolean().optional(),
+  zonaHoraria: z.string().min(1).max(100).optional(),
+  ubicacion: z.string().max(500).nullable().optional(),
+  estado: z.enum(['propuesta', 'confirmada', 'descartada', 'completada', 'cancelada']).optional(),
+  expedienteId: z.string().uuid().nullable().optional(),
+  visibilidad: z.enum(['privado', 'expediente', 'equipo']).optional(),
   motivoCategoria: z.enum(['conflicto_agenda', 'solicitud_cliente', 'requerimiento_juzgado', 'falta_documentacion', 'otro']).optional(),
   motivoDetalle: z.string().max(500).optional(),
+}).superRefine((value, context) => {
+  if (value.inicio && value.fin && new Date(value.fin) < new Date(value.inicio)) {
+    context.addIssue({ code: 'custom', message: 'El final no puede preceder al inicio', path: ['fin'] });
+  }
+  if (value.motivoCategoria === 'otro' && !value.motivoDetalle?.trim()) {
+    context.addIssue({ code: 'custom', message: 'Debe indicar el motivo', path: ['motivoDetalle'] });
+  }
 });
 
-/**
- * Verifica el scope del abogado sobre un evento. El admin siempre tiene acceso.
- * Un abogado tiene acceso si el evento pertenece a un expediente accesible.
- * Los eventos sin expediente sólo los ve el admin (no hay scope alternativo).
- */
-async function tieneAccesoEvento(eventoId: string, usuarioId: string, esAdmin: boolean): Promise<boolean> {
-  if (esAdmin) return true;
-  const [evento] = await db.select({ expedienteId: eventosAgenda.expedienteId })
-    .from(eventosAgenda).where(eq(eventosAgenda.id, eventoId));
-  if (!evento) return false;
-  if (!evento.expedienteId) return false;
-  const [asig] = await db.select({ id: expedienteAsignaciones.expedienteId }).from(expedienteAsignaciones)
-    .where(and(eq(expedienteAsignaciones.expedienteId, evento.expedienteId), eq(expedienteAsignaciones.abogadoId, usuarioId), isNull(expedienteAsignaciones.revocadaEn)));
-  return Boolean(asig);
+async function assertEventWrite(userId: string, eventId: string) {
+  const access = await assertSgieAccess(userId, 'calendar.write');
+  const [event] = await db.select().from(eventosAgenda).where(eq(eventosAgenda.id, eventId));
+  if (!event) throw new NotFoundError('Evento no encontrado');
+  if (event.propietarioId === userId || access.capabilities.has('calendar.manage_team')) return { event, access };
+  if (event.visibilidad === 'expediente' && event.expedienteId) {
+    await accessService.assertCaseAccess({ userId, caseId: event.expedienteId, capability: 'calendar.write' });
+    return { event, access };
+  }
+  throw new ForbiddenError('Sin acceso al evento');
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> },
+export function resolveEventMutationScope(
+  current: { visibilidad: 'privado' | 'expediente' | 'equipo'; expedienteId: string | null },
+  update: { visibilidad?: 'privado' | 'expediente' | 'equipo'; expedienteId?: string | null },
+  canManageTeam: boolean,
 ) {
+  const visibilidad = update.visibilidad ?? current.visibilidad;
+  const expedienteId = update.expedienteId === undefined ? current.expedienteId : update.expedienteId;
+  if (visibilidad === 'equipo' && !canManageTeam) {
+    throw new ForbiddenError('Falta la capacidad calendar.manage_team');
+  }
+  if (visibilidad === 'expediente' && !expedienteId) {
+    throw new ValidationError('La visibilidad de expediente requiere expediente');
+  }
+  return { visibilidad, expedienteId };
+}
+
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const auth = await requireAbogado(request);
     validateCsrf(request);
     const rl = await rateLimit(`sgie:agenda:update:${auth.userId}`, { max: 40, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
-
     const { id } = await params;
-    const esAdmin = auth.rol === 'admin';
-    const tieneAcceso = await tieneAccesoEvento(id, auth.userId, esAdmin);
-    if (!tieneAcceso) return Response.json({ error: 'Sin acceso al evento' }, { status: 403 });
-
-    const parsed = updateSchema.parse(await request.json());
-
-    // Sprint 5 — si motivoCategoria=otro, exigir motivoDetalle.
-    if (parsed.motivoCategoria === 'otro' && !parsed.motivoDetalle?.trim()) {
-      return Response.json({ error: 'Debe indicar el detalle del motivo.' }, { status: 400 });
+    const { event: current, access } = await assertEventWrite(auth.userId, id);
+    const parsed = schema.parse(await request.json());
+    const scope = resolveEventMutationScope(current, parsed, access.capabilities.has('calendar.manage_team'));
+    if (scope.expedienteId && (parsed.expedienteId !== undefined || scope.visibilidad === 'expediente')) {
+      await accessService.assertCaseAccess({ userId: auth.userId, caseId: scope.expedienteId, capability: 'calendar.write' });
     }
-
-    // Validar acceso al expediente si se reasocia.
-    if (parsed.expedienteId && !esAdmin) {
-      const [asig] = await db.select({ id: expedienteAsignaciones.expedienteId }).from(expedienteAsignaciones)
-        .where(and(eq(expedienteAsignaciones.expedienteId, parsed.expedienteId), eq(expedienteAsignaciones.abogadoId, auth.userId), isNull(expedienteAsignaciones.revocadaEn)));
-      if (!asig) return Response.json({ error: 'Sin acceso al expediente' }, { status: 403 });
+    const values: Record<string, unknown> = {};
+    if (parsed.titulo !== undefined) values.titulo = parsed.titulo.trim();
+    if (parsed.descripcion !== undefined) values.descripcion = parsed.descripcion?.trim() || null;
+    if (parsed.inicio !== undefined) {
+      values.inicio = new Date(parsed.inicio);
+      values.fecha = new Date(parsed.inicio);
     }
-
-    const set: Record<string, unknown> = {};
-    if (parsed.titulo !== undefined) set.titulo = parsed.titulo.trim();
-    if (parsed.descripcion !== undefined) set.descripcion = parsed.descripcion.trim() || null;
-    if (parsed.fecha !== undefined) set.fecha = new Date(parsed.fecha);
-    if (parsed.expedienteId !== undefined) set.expedienteId = parsed.expedienteId;
+    if (parsed.fin !== undefined) values.fin = parsed.fin ? new Date(parsed.fin) : null;
+    if (parsed.todoElDia !== undefined) values.todoElDia = parsed.todoElDia;
+    if (parsed.zonaHoraria !== undefined) values.zonaHoraria = parsed.zonaHoraria;
+    if (parsed.ubicacion !== undefined) values.ubicacion = parsed.ubicacion?.trim() || null;
+    if (parsed.expedienteId !== undefined) values.expedienteId = scope.expedienteId;
+    if (parsed.visibilidad !== undefined) values.visibilidad = scope.visibilidad;
     if (parsed.estado !== undefined) {
-      set.estado = parsed.estado;
-      // Confirmar registra quién y cuándo.
-      if (parsed.estado === 'confirmada') {
-        set.confirmadaPor = auth.userId;
-        set.confirmadaEn = new Date();
-      }
+      values.estado = parsed.estado;
+      if (parsed.estado === 'cancelada' || parsed.estado === 'descartada') values.canceladaEn = new Date();
     }
-
-    if (Object.keys(set).length === 0) return Response.json({ ok: true });
-
-    await db.update(eventosAgenda).set(set).where(eq(eventosAgenda.id, id));
-
+    values.version = sql`${eventosAgenda.version} + 1`;
+    const [updated] = await db.update(eventosAgenda).set(values).where(and(
+      eq(eventosAgenda.id, id),
+      eq(eventosAgenda.version, parsed.version),
+    )).returning({ version: eventosAgenda.version });
+    if (!updated) throw new ConflictError('El evento fue modificado por otra sesión; recargue antes de guardar');
     await logSgie({
-      usuarioId: auth.userId,
-      accion: 'evento_updated',
-      recurso: 'evento_agenda',
-      recursoId: id,
-      metadata: {
-        cambios: Object.keys(parsed),
-        estadoNuevo: parsed.estado ?? null,
-        reprogramado: parsed.fecha !== undefined,
-        // Sprint 5 — motivo categorizado.
-        motivoCategoria: parsed.motivoCategoria ?? null,
-        motivoDetalle: parsed.motivoDetalle ?? null,
-      },
-      request,
+      usuarioId: auth.userId, accion: 'evento_updated', recurso: 'evento_agenda',
+      recursoId: id, metadata: { cambios: Object.keys(values), estadoAnterior: current.estado, motivo: parsed.motivoCategoria }, request,
     });
-
-    return Response.json({ ok: true });
-  } catch (err) {
-    if (err instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
-    return authFailureResponse(err);
+    return Response.json({ ok: true, version: updated.version });
+  } catch (error) {
+    if (error instanceof z.ZodError) return Response.json({ error: 'Datos inválidos', details: error.issues }, { status: 422 });
+    return authFailureResponse(error);
   }
 }

@@ -11,6 +11,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+import { ForbiddenError } from '@/lib/http-errors';
 
 export function validateCsrf(request: Request): void {
   if (SAFE_METHODS.has(request.method)) return;
@@ -24,7 +25,7 @@ export function validateCsrf(request: Request): void {
   // y debe rechazarse, no permitirse (fail-closed). Antes este caso se omite
   // con `return`, lo que abría un bypass CSRF potencial.
   if (!origin && !referer) {
-    throw new Error('CSRF: petición de mutación sin cabeceras Origin/Referer');
+    throw new ForbiddenError('Petición rechazada por la política CSRF');
   }
 
   const source = origin ?? referer!;
@@ -36,10 +37,10 @@ export function validateCsrf(request: Request): void {
       return parsed.origin === allowedUrl.origin;
     });
     if (!isAllowed) {
-      throw new Error(`CSRF: origen no permitido: ${source}`);
+      throw new ForbiddenError('Origen no permitido por la política CSRF');
     }
   } catch (err) {
-    if (err instanceof Error && err.message.startsWith('CSRF')) throw err;
-    throw new Error(`CSRF: origen inválido: ${source}`);
+    if (err instanceof ForbiddenError) throw err;
+    throw new ForbiddenError('Origen inválido por la política CSRF');
   }
 }

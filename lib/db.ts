@@ -1,8 +1,8 @@
-import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
-import { drizzle, type NeonHttpDatabase } from 'drizzle-orm/neon-http';
+import { Pool } from '@neondatabase/serverless';
+import { drizzle, type NeonDatabase } from 'drizzle-orm/neon-serverless';
 
-let _sql: NeonQueryFunction<false, false> | null = null;
-let _db: NeonHttpDatabase<Record<string, never>> | null = null;
+let _pool: Pool | null = null;
+let _db: NeonDatabase<Record<string, never>> | null = null;
 
 function getDb() {
   if (_db) return _db;
@@ -10,12 +10,12 @@ function getDb() {
   if (!dbUrl) {
     throw new Error('DATABASE_URL environment variable is required at runtime');
   }
-  _sql = neon(dbUrl);
-  _db = drizzle(_sql);
+  _pool = new Pool({ connectionString: dbUrl });
+  _db = drizzle(_pool);
   return _db;
 }
 
-export const db = new Proxy({} as NeonHttpDatabase<Record<string, never>>, {
+export const db = new Proxy({} as NeonDatabase<Record<string, never>>, {
   get(_target, prop) {
     const target = getDb() as unknown as Record<string | symbol, unknown>;
     const value = target[prop];
@@ -25,4 +25,10 @@ export const db = new Proxy({} as NeonHttpDatabase<Record<string, never>>, {
 
 export function isDbConfigured(): boolean {
   return Boolean(process.env.DATABASE_URL);
+}
+
+export async function closeDb(): Promise<void> {
+  if (_pool) await _pool.end();
+  _pool = null;
+  _db = null;
 }

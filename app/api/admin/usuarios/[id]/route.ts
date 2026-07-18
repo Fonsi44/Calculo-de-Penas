@@ -1,17 +1,17 @@
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
-import { requireAdmin, authFailureResponse, isAllowedAuthEmail, hashPassword, invalidateFreshness } from '@/lib/auth';
+import { requireAdmin, authFailureResponse, isAllowedAuthEmail, invalidateFreshness } from '@/lib/auth';
 import { eq, and, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { logAudit } from '@/lib/audit';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
+import { actualizarRolUsuario } from '@/lib/sgie/usuarios-db';
 
 const updateSchema = z.object({
   nombre: z.string().min(1).max(200).optional(),
   email: z.string().email().optional(),
-  rol: z.enum(['admin', 'abogado']).optional(),
-  password: z.string().min(6).optional(),
+  rol: z.enum(['admin', 'abogado', 'supervisor']).optional(),
 });
 
 export async function PATCH(
@@ -59,14 +59,22 @@ export async function PATCH(
     const values: Record<string, unknown> = {};
     if (parsed.nombre !== undefined) { values.nombre = parsed.nombre.trim(); changes.nombre = parsed.nombre.trim(); }
     if (parsed.email !== undefined) { values.email = parsed.email.trim().toLowerCase(); changes.email = parsed.email.trim().toLowerCase(); }
-    if (parsed.rol !== undefined) { values.rol = parsed.rol; changes.rol = parsed.rol; }
-    if (parsed.password !== undefined) { values.passwordHash = await hashPassword(parsed.password); changes.password = '****'; }
+    if (parsed.rol !== undefined) { changes.rol = parsed.rol; }
 
-    const [updated] = await db.update(usuarios).set(values).where(eq(usuarios.id, id))
-      .returning({ id: usuarios.id, email: usuarios.email, nombre: usuarios.nombre, rol: usuarios.rol, creadoEn: usuarios.creadoEn });
+    const [updated] = Object.keys(values).length > 0
+      ? await db.update(usuarios).set(values).where(eq(usuarios.id, id))
+        .returning({ id: usuarios.id, email: usuarios.email, nombre: usuarios.nombre, rol: usuarios.rol, creadoEn: usuarios.creadoEn })
+      : await db.select({
+        id: usuarios.id, email: usuarios.email, nombre: usuarios.nombre,
+        rol: usuarios.rol, creadoEn: usuarios.creadoEn,
+      }).from(usuarios).where(eq(usuarios.id, id));
+
+    if (parsed.rol !== undefined) {
+      await actualizarRolUsuario({ usuarioId: id, nuevoRol: parsed.rol });
+    }
 
     // Revocar caché de frescura si se cambió contraseña, rol o email.
-    if (parsed.password !== undefined || parsed.rol !== undefined || parsed.email !== undefined) {
+    if (parsed.rol !== undefined || parsed.email !== undefined) {
       invalidateFreshness(id);
     }
 

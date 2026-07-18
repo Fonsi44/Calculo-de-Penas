@@ -20,11 +20,13 @@ import {
   tiposProcedimiento,
   clientes,
   usuarios,
+  auditoriaEventos,
   EXPEDIENTE_ESTADOS_CRITICOS,
   type ExpedienteEstado,
 } from '@/lib/schema';
 import { and, asc, count, desc, eq, ilike, inArray, isNull, or, sql } from 'drizzle-orm';
 import { extraerRequisitosDeDefinicion } from './procedimientos-db';
+import { canAccessCase } from '@/lib/access-service';
 
 export interface ContextoAbogado {
   usuarioId: string;
@@ -193,10 +195,7 @@ export async function verificarAccesoExpediente(
   expedienteId: string,
   ctx: ContextoAbogado,
 ): Promise<boolean> {
-  if (ctx.esAdmin) return true;
-
-  const accesibles = await idsExpedientesAccesibles(ctx);
-  return accesibles?.includes(expedienteId) ?? false;
+  return canAccessCase(ctx.usuarioId, expedienteId);
 }
 
 export interface ExpedienteDetalleCompleto extends ExpedienteDetalle {
@@ -337,42 +336,7 @@ export async function crearExpediente(
     return tp?.version ?? null;
   })();
 
-  const [exp] = await db
-    .insert(expedientes)
-    .values({
-      numeroInterno: input.numeroInterno,
-      clienteId: input.clienteId ?? null,
-      tipoProcedimientoId: input.tipoProcedimientoId ?? null,
-      procedimientoVersion,
-      responsableId: input.responsableId,
-      estado: 'creado',
-      prioridad: input.prioridad ?? 'media',
-      area: input.area ?? null,
-      resumen: input.resumen ?? null,
-      creadoPor: ctx.usuarioId,
-    })
-    .returning({ id: expedientes.id, numeroInterno: expedientes.numeroInterno });
-
-  if (!exp) throw new Error('No se pudo crear el expediente');
-
-  // Asignación responsable.
-  await db.insert(expedienteAsignaciones).values({
-    expedienteId: exp.id,
-    abogadoId: input.responsableId,
-    rol: 'responsable',
-    asignadoPor: ctx.usuarioId,
-  });
-
-  // Checklist inicial.
-  //
-  // Prioridad de fuentes (Sprint 0 — instanciación desde procedimiento):
-  //   1. Si el caller pasa `requisitosIniciales` explícitos, se usan (compat
-  //      hacia atrás con tests y con cualquier caller que los fije).
-  //   2. Si no, y se pasó `tipoProcedimientoId`, se cargan los requisitos desde
-  //      la `definicion` del procedimiento vigente (documentosRequeridos/
-  //      Opcionales/Condicionales). No se inventan requisitos: si la definición
-  //      no los define, el expediente nace sin checklist y el abogado lo
-  //      completa después.
+  // Prioridad de fuentes: caller explícito, después definición versionada.
   let requisitosFinales: Array<{ nombre: string; tipo?: 'obligatorio' | 'opcional' | 'condicional'; orden?: number }> =
     input.requisitosIniciales ?? [];
 
@@ -384,28 +348,53 @@ export async function crearExpediente(
     requisitosFinales = extraerRequisitosDeDefinicion(tp?.definicion);
   }
 
-  if (requisitosFinales.length > 0) {
-    await db.insert(requisitosExpediente).values(
-      requisitosFinales.map((r, i) => ({
+  return db.transaction(async (tx) => {
+    const [exp] = await tx.insert(expedientes).values({
+      numeroInterno: input.numeroInterno,
+      clienteId: input.clienteId ?? null,
+      tipoProcedimientoId: input.tipoProcedimientoId ?? null,
+      procedimientoVersion,
+      responsableId: input.responsableId,
+      estado: 'creado',
+      prioridad: input.prioridad ?? 'media',
+      area: input.area ?? null,
+      resumen: input.resumen ?? null,
+      creadoPor: ctx.usuarioId,
+    }).returning({ id: expedientes.id, numeroInterno: expedientes.numeroInterno });
+    if (!exp) throw new Error('No se pudo crear el expediente');
+
+    await tx.insert(expedienteAsignaciones).values({
+      expedienteId: exp.id,
+      abogadoId: input.responsableId,
+      rol: 'responsable',
+      asignadoPor: ctx.usuarioId,
+    });
+    if (requisitosFinales.length > 0) {
+      await tx.insert(requisitosExpediente).values(requisitosFinales.map((r, i) => ({
         expedienteId: exp.id,
         nombre: r.nombre,
         tipo: r.tipo ?? 'obligatorio',
         orden: r.orden ?? i,
-      })),
-    );
-  }
-
-  // Historial inicial.
-  await db.insert(historialExpediente).values({
-    expedienteId: exp.id,
-    accion: 'expediente_creado',
-    estadoNuevo: 'creado',
-    actorId: ctx.usuarioId,
-    actorTipo: ctx.esAdmin ? 'admin' : 'abogado',
-    mensaje: 'Expediente creado',
+      })));
+    }
+    await tx.insert(historialExpediente).values({
+      expedienteId: exp.id,
+      accion: 'expediente_creado',
+      estadoNuevo: 'creado',
+      actorId: ctx.usuarioId,
+      actorTipo: ctx.esAdmin ? 'admin' : 'abogado',
+      mensaje: 'Expediente creado',
+    });
+    await tx.insert(auditoriaEventos).values({
+      usuarioId: ctx.usuarioId,
+      accion: 'expediente_created',
+      recurso: 'expediente',
+      recursoId: exp.id,
+      metadata: { numeroInterno: exp.numeroInterno, responsableId: input.responsableId },
+      exito: true,
+    });
+    return exp;
   });
-
-  return exp;
 }
 
 /**

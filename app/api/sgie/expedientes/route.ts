@@ -8,7 +8,11 @@ import {
   generarNumeroInterno,
   type ContextoAbogado,
 } from '@/lib/sgie/expedientes-db';
-import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { assertSgieAccess } from '@/lib/access-service';
+import { db } from '@/lib/db';
+import { usuarios } from '@/lib/schema';
+import { eq } from 'drizzle-orm';
+import { ForbiddenError } from '@/lib/http-errors';
 
 const querySchema = z.object({
   q: z.string().optional(),
@@ -95,7 +99,21 @@ export async function POST(request: Request) {
     const body = await request.json();
     const parsed = createSchema.parse(body);
 
-    const responsableId = parsed.responsableId ?? auth.userId;
+    const actorAccess = await assertSgieAccess(auth.userId, 'cases.create');
+    const canAssign = actorAccess.capabilities.has('cases.assign');
+    if (parsed.responsableId && parsed.responsableId !== auth.userId && !canAssign) {
+      throw new ForbiddenError('No puede asignar el expediente a otro responsable');
+    }
+    const responsableId = canAssign ? (parsed.responsableId ?? auth.userId) : auth.userId;
+    await assertSgieAccess(responsableId, 'cases.read');
+    const [actorOrg, targetOrg] = await Promise.all([
+      db.select({ bufeteId: usuarios.bufeteId }).from(usuarios).where(eq(usuarios.id, auth.userId)),
+      db.select({ bufeteId: usuarios.bufeteId }).from(usuarios).where(eq(usuarios.id, responsableId)),
+    ]);
+    if (!targetOrg[0]) return Response.json({ error: 'Responsable no encontrado' }, { status: 404 });
+    if (actorOrg[0]?.bufeteId && targetOrg[0].bufeteId && actorOrg[0].bufeteId !== targetOrg[0].bufeteId) {
+      throw new ForbiddenError('El responsable no pertenece al mismo bufete');
+    }
     const numeroInterno = parsed.numeroInterno?.trim() || (await generarNumeroInterno());
 
     const creado = await crearExpediente(
@@ -111,15 +129,6 @@ export async function POST(request: Request) {
       },
       contextoDesdeAuth(auth),
     );
-
-    await logSgie({
-      usuarioId: auth.userId,
-      accion: 'expediente_created',
-      recurso: 'expediente',
-      recursoId: creado.id,
-      metadata: { numeroInterno: creado.numeroInterno, responsableId },
-      request,
-    });
 
     return Response.json({ expediente: creado }, { status: 201 });
   } catch (err) {

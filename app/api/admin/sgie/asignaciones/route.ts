@@ -6,6 +6,7 @@ import { db } from '@/lib/db';
 import { expedienteAsignaciones } from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
+import { assertSgieAccess } from '@/lib/access-service';
 
 const querySchema = z.object({
   expedienteId: z.string().uuid().optional(),
@@ -57,6 +58,7 @@ export async function POST(request: Request) {
     const rl = await rateLimit(`sgie:asignacion:${auth.userId}`, { max: 30, windowMs: 60_000, keyPrefix: 'admin' });
     if (!rl.ok) return rateLimitResponse(rl);
     const parsed = createSchema.parse(await request.json());
+    await assertSgieAccess(parsed.abogadoId, 'cases.read');
 
     const [asignacion] = await db
       .insert(expedienteAsignaciones)

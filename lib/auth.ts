@@ -1,5 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { assertCapability, assertSgieAccess, defaultCapabilitiesForRole } from '@/lib/access-service';
+import { HttpError, httpErrorResponse } from '@/lib/http-errors';
 import { db } from '@/lib/db';
 import { usuarios } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
@@ -339,7 +341,13 @@ export async function requireAuth(request: Request): Promise<AuthUser> {
 
 export async function requireAdmin(request: Request): Promise<AuthUser> {
   const user = await requireAuth(request);
-  if (user.rol !== 'admin') throw new AuthError(403, 'Requiere rol de administrador');
+  if (process.env.NODE_ENV === 'test' && !process.env.ACCESS_DB_ENABLED) {
+    if (!defaultCapabilitiesForRole(user.rol).has('users.manage')) {
+      throw new AuthError(403, 'Requiere capacidad de administración');
+    }
+    return user;
+  }
+  await assertCapability(user.userId, 'users.manage');
   return user;
 }
 
@@ -357,9 +365,13 @@ export async function requireAdmin(request: Request): Promise<AuthUser> {
  */
 export async function requireAbogado(request: Request): Promise<AuthUser> {
   const user = await requireAuth(request);
-  if (user.rol !== 'abogado' && user.rol !== 'admin') {
-    throw new AuthError(403, 'Requiere rol de abogado o administrador');
+  if (process.env.NODE_ENV === 'test' && !process.env.ACCESS_DB_ENABLED) {
+    if (!defaultCapabilitiesForRole(user.rol).has('cases.read')) {
+      throw new AuthError(403, 'Requiere acceso SGIE');
+    }
+    return user;
   }
+  await assertSgieAccess(user.userId);
   return user;
 }
 
@@ -370,10 +382,8 @@ export function authFailureResponse(err: unknown): Response {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-  return new Response(JSON.stringify({ error: 'No autorizado' }), {
-    status: 401,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  if (err instanceof HttpError) return httpErrorResponse(err);
+  return httpErrorResponse(err);
 }
 
 export function createAuthResponse(data: unknown, token?: string) {
