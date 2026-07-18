@@ -105,9 +105,9 @@
 - [x] E2E Neon de Fase 1 y limpieza de fixtures.
 - [x] E2E documental Fase 2: `scripts/e2e/fase2-e2e.mjs` valida flujo completo (procedimiento → expediente → enlace → subida → outbox → job → IA → comunicación → auditoría → limpieza).
 - [x] Tests unitarios Fase 3: `tests/fase3-experiencia-operativa.test.ts` (9 servicios, mocks aislados).
-- [x] E2E Fase 3: `scripts/e2e/fase3-e2e.mjs` (12 pasos, limpieza en fallo).
+- [x] E2E Fase 3: `scripts/e2e/fase3-e2e.mjs` (13 pasos + 5 bloques, 70 assertions, limpieza robusta en `finally`). Validado en rama Neon aislada (18 jul 2026).
 - [ ] E2E de OCR real y pruebas de rendimiento con PDFs multi-página.
-- [ ] Validación Resend con destinatario real y webhooks.
+- [x] Validación Resend con destinatario real y webhooks (E2E Fase 3, message ID persistido).
 
 ## Deuda técnica
 
@@ -115,18 +115,21 @@
 - [ ] Snapshots Drizzle históricos (journal 36 entradas, snapshots solo hasta 0023).
 - [ ] OCR Tesseract.js sin validación de rendimiento con PDFs de muchas páginas.
 - [ ] OCR stub por defecto: documentos escaneados quedan en `ocr_pendiente` sin alerta automática.
-- [ ] Correos sin Resend real: sin `RESEND_API_KEY`, los correos fallan sin cola de reintentos automática.
-- [ ] E2E Fase 2 inserta directamente en DB; no usa las rutas API HTTP reales.
+- [x] Correos con Resend real validado (E2E Fase 3): `RESEND_API_KEY` configurada, envío real con message ID, `RESEND_WEBHOOK_SECRET` (Svix Ed25519). Queda pendiente probar reintentos automáticos en fallo real.
+- [ ] E2E Fase 2/3 inserta directamente en DB; no usa las rutas API HTTP reales (contract tests del endpoint cron sí cubiertos).
 - [ ] No hay API para reprocesar desde dead-letter queue (solo existe `reintentarJob()` como función interna).
 - [ ] No hay UI para revisión de tareas IA pendientes (`obtenerTareasPendientesRevision()` no tiene pantalla).
 
 ## Próxima acción exacta
 
-Continuar Fase 3: implementar portal seguro del cliente (autenticación del
-cliente, vista de expediente/dashboard), Resend real con webhooks inbound,
-UI de revisión IA para abogados, dashboard de métricas operativas admin, y
-mi jornada / bandeja de tareas unificada. Tests y E2E base ya creados en
-`be926a5`.
+Fase 3 está **implementada y validada** (E2E 70/70 assertions en rama Neon
+aislada, DeepSeek + Resend reales, 963/963 tests locales, build correcto).
+El siguiente paso es **Fase 4** (firma electrónica, workspace global del
+abogado, calendario externo, copiloto RAG transversal, predicción y next
+best action). Ver [`docs/handoffs/fase-3-a-fase-4.md`](../handoffs/fase-3-a-fase-4.md).
+
+La rama Neon aislada `fase3-e2e-validation-20260718` (endpoint
+`ep-fancy-field-ap04213c`) se conserva para reutilizar en Fase 4.
 
 ## Referencias cruzadas
 

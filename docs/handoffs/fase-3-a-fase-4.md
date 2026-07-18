@@ -1,6 +1,8 @@
 # Handoff técnico — Fase 3 a Fase 4
 
-Fecha de cierre: 18 de julio de 2026. Commit: `be926a5`.
+Fecha de cierre: 18 de julio de 2026. Commit de cierre del E2E: ver
+`CHANGELOG.md`. (El commit `be926a5` cerró la **implementación** funcional;
+el E2E real se validó posteriormente corrigiendo el script `fase3-e2e.mjs`.)
 
 ## Estado final de Fase 3
 
@@ -37,5 +39,21 @@ Fase 3 completa la experiencia operativa del abogado, el portal del cliente y la
 14. Simulador nunca escribe datos reales ni envía correos.
 
 ## Tests
-- 54 suites, 963 tests (incluyendo 24 de Fase 2 y 22 de Fase 3)
-- E2E Fase 3 en `scripts/e2e/fase3-e2e.mjs` (requiere DB aislada)
+- 54 suites, 963 tests (incluyendo 24 de Fase 2 y 22 de Fase 3).
+- **E2E Fase 2**: `scripts/e2e/fase2-e2e.mjs` — 9/9 pasos verificados en
+  rama Neon aislada.
+- **E2E Fase 3**: `scripts/e2e/fase3-e2e.mjs` — 70/70 assertions verificadas
+  en rama Neon aislada, con providers reales (DeepSeek + Resend) y limpieza
+  completa de fixtures. Requiere DB aislada; usar el runner
+  `scripts/e2e/run-fase3-isolated.mjs` para configurar el entorno en memoria.
+
+### Correcciones del E2E de Fase 3 (18 jul 2026)
+El script `fase3-e2e.mjs` previo tenía 9 fallos bloqueantes que impedían su
+ejecución (columnas inexistentes: `rol`→`rol_inicial`, `creado_por`→
+`creada_por`, `configuracion` en `usuarios_sgie`, `task_type`/`estado` en
+`extracciones_ia`, `creado_en` en `ai_task_routing`; tablas inexistentes:
+`calendario`→`eventos_agenda`, `log_sgie`→`auditoria_eventos`; enum inválido
+`completado`→`aprobado`; hash >64 chars; limpieza inerte por `id LIKE 'f3e2e%'`
+sobre UUIDs aleatorios). El script se reescribió alineado al schema real y a
+las migraciones 0032–0037, con assertions de concurrencia/DLQ/portal/cron/
+DeepSeek/Resend y limpieza robusta por ID tracking + segundo pase.

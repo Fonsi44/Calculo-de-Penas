@@ -16,9 +16,13 @@ y este proyecto se adhiere a [Semantic Versioning 2.0.0](https://semver.org/spec
 
 ### Added
 - **Fase 3 — Experiencia operativa:** unit tests (`tests/fase3-experiencia-operativa.test.ts`) para los 9 servicios Phase 3: WorkQueueService, ReviewService, AdminOperationsService, AlertasSlaService, ClientPortalService, InboundService, CommunicationRulesService, WorkflowSimulationService, AiEvaluationService. Mocks aislados con `vi.hoisted` + cadena DB simulada.
-- **E2E Fase 3:** `scripts/e2e/fase3-e2e.mjs` valida flujo completo: invitación → activación SGIE → expediente → portal → carga → IA → revisión → requisito → comunicación → Mi jornada → calendario → dashboard → auditoría. Limpieza de fixtures incluso en fallo.
+- **E2E Fase 3:** `scripts/e2e/fase3-e2e.mjs` valida el flujo completo contra una rama Neon aislada con migraciones 0032–0037: invitación → activación SGIE → expediente → portal → carga → IA → revisión → requisito → comunicación → Mi jornada → calendario → dashboard → auditoría. 70 assertions (token válido/expirado/revocado/agotado, acceso cruzado, 409 optimista, FOR UPDATE SKIP LOCKED, DLQ, backoff, recuperación de locks, retry manual, idempotencia outbox, dedup documental, reserva concurrente, webhook duplicado, persistencia tras reconexión). Limpieza robusta de fixtures en `finally` (ID tracking + segundo pase por dependencias FK). Providers reales: DeepSeek (alias `IA_DOCUMENTAL_API_KEY`) y Resend (destinatario técnico, message ID persistido).
+- **Runner E2E aislado:** `scripts/e2e/run-fase3-isolated.mjs` configura el entorno efímero en memoria (DATABASE_URL a la rama aislada, vars del guard, alias DeepSeek, CRON_SECRET efímero) sin tocar `.env`, y ejecuta Fase 2 y/o Fase 3.
 - **Guard Fase 3:** `scripts/e2e/guard-fase3.mjs` bloquea E2E contra producción (mismo patrón que `guard.mjs`).
 - **Checklist SGIE:** items de Fase 3 marcados con commit de referencia.
+
+### Fixed
+- **E2E Fase 3 (schema):** el script `fase3-e2e.mjs` previo tenía 9 fallos bloqueantes que impedían su ejecución y se declaraba completado sin verificar. Corregido y alineado al schema real (`lib/schema.ts`) y migraciones 0032–0037: `rol`→`rol_inicial`, `creado_por`→`creada_por`, columna `configuracion` inexistente en `usuarios_sgie`, `task_type`/`estado` inexistentes en `extracciones_ia` (real: `run_status`), `creado_en` inexistente en `ai_task_routing`, tablas `calendario`→`eventos_agenda` y `log_sgie`→`auditoria_eventos`, enum inválido `completado`→`aprobado`, `hash_sha256` que excedía 64 chars, y limpieza inerte por `id LIKE 'f3e2e%'` sobre UUIDs aleatorios (ahora por ID tracking).
 
 ## [111] — 2026-07-18 — Fase 2 — Núcleo durable de procedimientos, documentos, comunicaciones, OCR e IA
 
