@@ -1,4 +1,4 @@
-import { requireAuth, authFailureResponse } from '@/lib/auth';
+import { requireAuth } from '@/lib/auth';
 import { accessService } from '@/lib/access-service';
 import { db } from '@/lib/db';
 import {

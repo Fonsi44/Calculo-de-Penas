@@ -1,14 +1,16 @@
 /// <reference types="vitest/globals" />
 import { describe, it, expect, beforeEach } from 'vitest';
 
+let queueIdx = 0;
+const _queue: unknown[] = [];
+
 const { chain, mockNext } = vi.hoisted(() => {
   const c: Record<string, unknown> = {};
-  const _queue: unknown[] = [];
 
   const chainingMethods = [
     'select', 'from', 'where', 'orderBy', 'innerJoin', 'leftJoin',
     'insert', 'values', 'onConflictDoNothing',
-    'update', 'set',
+    'update', 'set', 'distinct', 'as',
   ];
   for (const m of chainingMethods) {
     c[m] = vi.fn(() => c);
@@ -16,20 +18,22 @@ const { chain, mockNext } = vi.hoisted(() => {
 
   c.limit = vi.fn(() => c);
   c.offset = vi.fn(() => {
-    const val = _queue.shift();
+    const val = queueIdx < _queue.length ? _queue[queueIdx++] : undefined;
     return Promise.resolve(val !== undefined ? val : []);
   });
-  c.returning = vi.fn(() => Promise.resolve([]));
+  c.returning = vi.fn(() => {
+    const val = queueIdx < _queue.length ? _queue[queueIdx++] : undefined;
+    return Promise.resolve(val !== undefined ? val : []);
+  });
   c.execute = vi.fn(() => Promise.resolve({ rows: [], rowCount: 0 }));
   c.transaction = vi.fn(async (fn: (tx: unknown) => Promise<unknown>) => fn(c));
   c.then = vi.fn((onfulfilled?: (v: unknown) => unknown) => {
-    const val = _queue.shift();
+    const val = queueIdx < _queue.length ? _queue[queueIdx++] : undefined;
     return Promise.resolve(val !== undefined ? val : []).then(onfulfilled);
   });
   c.catch = vi.fn((onrejected?: (v: unknown) => unknown) => {
     return Promise.resolve([]).catch(onrejected);
   });
-  c.clearQueue = () => { _queue.length = 0; };
 
   const mockNext = (val: unknown) => { _queue.push(val); };
 
@@ -47,8 +51,8 @@ beforeEach(() => {
     const m = chain[key] as ReturnType<typeof vi.fn>;
     if (typeof m?.mockClear === 'function') m.mockClear();
   }
-  const chainWithClear = chain as { clearQueue?: () => void };
-  chainWithClear.clearQueue?.();
+  queueIdx = 0;
+  _queue.length = 0;
 });
 
 // ─── 1. WorkQueueService ───────────────────────────────────────────────────────
@@ -208,8 +212,9 @@ describe('AlertasSlaService', () => {
     });
 
     it('accepts en_progreso, pospuesta, descartada_con_motivo', async () => {
-      mockNext([{ id: 'a2', resuelta: false }]);
       const { cambiarEstadoAlerta } = await import('../lib/sgie/alertas-sla-service');
+
+      mockNext([{ id: 'a2', resuelta: false }]);
       await expect(cambiarEstadoAlerta('a2', 'en_progreso')).resolves.toBeUndefined();
 
       mockNext([{ id: 'a3', resuelta: false }]);

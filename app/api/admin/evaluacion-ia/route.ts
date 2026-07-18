@@ -1,7 +1,7 @@
 import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { extraccionesIa, documentosExpediente } from '@/lib/schema';
-import { desc, eq, and, gte, lte, sql, count } from 'drizzle-orm';
+import { desc, eq, sql, count } from 'drizzle-orm';
 import { z } from 'zod';
 
 const querySchema = z.object({
@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));
 
-    const conditions = [];
+    const _conditions: unknown[] = [];
 
     const rows = await db
       .select({

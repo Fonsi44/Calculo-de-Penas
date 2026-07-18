@@ -7,7 +7,7 @@ const ESTADOS_REVISION = ['pendiente_abogado', 'clasificado', 'ia_procesada'] as
 
 export async function GET(request: Request) {
   try {
-    const auth = await requireAbogado(request);
+    await requireAbogado(request);
     const { searchParams } = new URL(request.url);
     const tipoError = searchParams.get('tipoError');
 
@@ -36,14 +36,7 @@ export async function GET(request: Request) {
 
     const rows = docs.map((d) => {
       const meta = d.metadata as Record<string, unknown> | null;
-      const confianza = typeof meta?.confianzaIa === 'number' ? meta.confianzaIa : Math.round(Math.random() * 100);
-      const tipoErrorDetectado = (() => {
-        if (confianza < 30) return 'ilegible';
-        if (confianza < 50) return 'baja_confianza';
-        if (confianza < 70) return 'ocr_insuficiente';
-        if (d.estado === 'clasificado' && confianza < 80) return 'clasificacion_dudosa';
-        return 'baja_confianza';
-      })();
+      const confianza = typeof meta?.confianzaIa === 'number' ? meta.confianzaIa : null;
 
       return {
         id: d.id,

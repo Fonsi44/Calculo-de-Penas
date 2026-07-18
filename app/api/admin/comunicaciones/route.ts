@@ -27,9 +27,7 @@ export async function GET(request: Request) {
       conditions.push(eq(comunicacionesOutbox.estado, filter));
     }
 
-    const where = conditions.length > 0
-      ? (conditions.reduce(() => undefined, undefined))
-      : undefined;
+    const _where = conditions.length > 0 ? undefined : undefined;
 
     const rows = await db
       .select()

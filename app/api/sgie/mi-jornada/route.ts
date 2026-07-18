@@ -1,7 +1,7 @@
 import { requireAbogado, authFailureResponse } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { tareas, expedientes, clientes } from '@/lib/schema';
-import { and, eq, isNull, desc, lt, lte, or, sql } from 'drizzle-orm';
+import { and, eq, isNull, desc } from 'drizzle-orm';
 
 export async function GET(request: Request) {
   try {
