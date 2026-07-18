@@ -32,6 +32,7 @@ autorización. La capacidad de observación es total; la de modificación, acota
 
 1. Leer `AGENTS.md` (este archivo).
 2. Ejecutar `git status` y confirmar que la rama activa es `main` (ver R19).
+   Si no es `main`, detenerse inmediatamente y volver a `main` sin descartar cambios.
 3. **Solo para tareas SEO/Analytics live:** `npm run seo:doctor` (debe dar 0
    ERROR) y `npm run seo:collect`. Revisar `docs/audits/seo-live-summary.md`.
 4. Leer los archivos que se van a modificar (no asumir contenido).
@@ -91,7 +92,7 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | R16 | Design tokens canónicos: radius `rounded-lg`, sombras vía `.btn-shadow-*`, icono `w-11 h-11`. Dorado solo acento. |
 | R17 | IA en blog: verificar contra fuentes canónicas. Dry-run por defecto. Sin relleno genérico. |
 | R18 | Footer/Home: solo 10 ciudades prioritarias (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina). |
-| R19 | Rama única de trabajo: `main`. No crear ramas ni worktrees. Si la rama activa no es `main`, detenerse y volver a `main` sin descartar cambios. |
+| R19 | **Rama única de trabajo: `main`.** Prohibido crear ramas, worktrees, forks, PRs o merges. Todo el trabajo se realiza directamente sobre `main`. Si la rama activa no es `main`, detenerse y volver a `main` sin descartar cambios. No ejecutar `git merge`, `git pull` de otras ramas, `git cherry-pick` entre ramas ni `git rebase`. No crear PRs en GitHub. |
 
 ---
 
@@ -134,8 +135,13 @@ Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
   lógico por commit, mensaje en español con prefijo `feat`/`fix`/`chore`/`docs`).
 - **Nunca se hace push** sin orden expresa del usuario.
 - **Prohibido crear ramas, feature branches o worktrees.** Todo el trabajo se
-  realiza directamente sobre `main` (R19). Si la rama activa no es `main`,
-  volver a `main` sin descartar cambios.
+  realiza directamente sobre `main` (R19).
+- **Prohibido ejecutar `git merge`, `git pull` de otras ramas, `git cherry-pick`
+  entre ramas, `git rebase` o cualquier operación que mezcle líneas de desarrollo.**
+- **Prohibido crear Pull Requests en GitHub.**
+- Si la rama activa no es `main`, **detenerse inmediatamente**. No ejecutar
+  ningún comando. Volver a `main` con `git checkout main` (sin descartar cambios
+  pendientes). Si hay cambios sin versionar, guardarlos con `git stash` temporal.
 
 ---
 
