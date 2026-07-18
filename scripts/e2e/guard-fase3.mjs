@@ -113,4 +113,6 @@ console.log(`[E2E-GUARD-FASE3] ✅ Entorno seguro: ${isLocal ? 'local' : 'remoto
 if (isVerifiedNeonBranch) {
   console.log(`[E2E-GUARD-FASE3] Rama Neon verificada: ${NEON_BRANCH_NAME} (${NEON_BRANCH_ID}), endpoint=${NEON_ENDPOINT_ID}`);
 }
-process.exit(0);
+if (process.argv[1]?.includes('guard-fase3.mjs')) {
+  process.exit(0);
+}

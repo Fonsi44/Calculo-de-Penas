@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { enlacesMagicos, expedientes, requisitosExpediente, documentosExpediente } from '@/lib/schema';
-import { and, eq, isNull, gt, lt } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { hashToken } from '@/lib/sgie/util';
 
 export async function GET(request: Request) {

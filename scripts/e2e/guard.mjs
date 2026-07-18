@@ -112,4 +112,7 @@ console.log(`[E2E-GUARD] ✅ Entorno seguro: ${isLocal ? 'local' : 'remoto'}, db
 if (isVerifiedNeonBranch) {
   console.log(`[E2E-GUARD] Rama Neon verificada: ${NEON_BRANCH_NAME} (${NEON_BRANCH_ID}), endpoint=${NEON_ENDPOINT_ID}`);
 }
-process.exit(0);
+// When imported as module, don't exit - return control to caller.
+if (process.argv[1]?.includes('guard.mjs')) {
+  process.exit(0);
+}

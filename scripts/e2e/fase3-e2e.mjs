@@ -29,7 +29,7 @@ config({ path: resolve(__dirname, '..', '..', '.env.local') });
 config();
 
 const guardPath = resolve(__dirname, 'guard-fase3.mjs');
-await import(guardPath);
+await import('file:///' + guardPath.replace(/\\/g, '/'));
 
 import pg from 'pg';
 const { Pool } = pg;
@@ -42,11 +42,13 @@ function generateToken() {
   return randomBytes(32).toString('base64url');
 }
 
+function uuid() { const h = randomBytes(16).toString('hex'); return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20,32)}`; }
 function generateId() {
-  return randomBytes(16).toString('hex');
+  return uuid();
 }
 
-const PREFIX = 'f3e2e-';
+const TAG = 'f3e2e';
+const createdIds = [];
 const POOL = new Pool({ connectionString: process.env.DATABASE_URL });
 
 async function db() {
@@ -63,15 +65,15 @@ function q(client, sql, params = []) {
 const steps = {};
 
 async function step1_invitacionYActivacion(client) {
-  const adminId = PREFIX + 'admin-' + generateId();
-  const userId = PREFIX + 'user-' + generateId();
-  const email = `${PREFIX}user-${Date.now()}@test.local`;
+  const adminId = generateId();
+  const userId = generateId();
+  const email = `test-user-${Date.now()}@test.local`;
 
   await q(client,
     `INSERT INTO usuarios (id, email, nombre, password_hash, rol, active, bloqueado)
      VALUES ($1, $2, 'Admin F3', 'hash-fake', 'admin', true, false)
      ON CONFLICT (id) DO NOTHING`,
-    [adminId, `${PREFIX}admin-${Date.now()}@test.local`],
+    [adminId, `test-admin-${Date.now()}@test.local`],
   );
 
   await q(client,
@@ -81,7 +83,7 @@ async function step1_invitacionYActivacion(client) {
     [userId, email],
   );
 
-  const invId = PREFIX + 'inv-' + generateId();
+  const invId = generateId();
   const tokenHash = hashToken(generateToken());
   await q(client,
     `INSERT INTO invitaciones (id, email, token_hash, rol, expira_en, estado, creado_por)
@@ -110,8 +112,8 @@ async function step1_invitacionYActivacion(client) {
 }
 
 async function step2_expedienteConWorkflow(client, adminId) {
-  const procId = PREFIX + 'proc-' + generateId();
-  const slug = PREFIX + 'slug-' + generateId();
+  const procId = generateId();
+  const slug = generateId();
 
   await q(client,
     `INSERT INTO tipos_procedimiento (id, slug, nombre, area_juridica, descripcion, version, estado, definicion)
@@ -120,7 +122,7 @@ async function step2_expedienteConWorkflow(client, adminId) {
     [procId, slug, 'Fase 3 Proc ' + Date.now()],
   );
 
-  const expId = PREFIX + 'exp-' + generateId();
+  const expId = generateId();
   const numeroInterno = `F3-E2E-${Date.now()}`;
   await q(client,
     `INSERT INTO expedientes (id, numero_interno, tipo_procedimiento_id, procedimiento_version, responsable_id, estado, creado_por, prioridad)
@@ -143,7 +145,7 @@ async function step2_expedienteConWorkflow(client, adminId) {
 async function step3_solicitudYCarga(client, expedienteId, requisitoId, adminId) {
   const token = generateToken();
   const tokenHash = hashToken(token);
-  const enlaceId = PREFIX + 'enl-' + generateId();
+  const enlaceId = generateId();
   const expiraEn = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
   await q(client,
@@ -152,7 +154,7 @@ async function step3_solicitudYCarga(client, expedienteId, requisitoId, adminId)
     [enlaceId, tokenHash, expedienteId, requisitoId, adminId, expiraEn],
   );
 
-  const docId = PREFIX + 'doc-' + generateId();
+  const docId = generateId();
   const hash = 'f3-e2e-hash-' + generateId();
   await q(client,
     `INSERT INTO documentos_expediente (id, expediente_id, requisito_expediente_id, enlace_magico_id,
@@ -242,7 +244,7 @@ async function step7_requisitoCompletado(client, expedienteId, requisitoId) {
 }
 
 async function step8_comunicacionOutbox(client, expedienteId, adminId) {
-  const comId = PREFIX + 'com-' + generateId();
+  const comId = generateId();
   await q(client,
     `INSERT INTO comunicaciones_outbox (id, expediente_id, tipo, destinatario, asunto, cuerpo, estado, creado_por)
      VALUES ($1, $2, 'notificacion_estado', 'cliente@test.local', 'Estado del expediente F3',
@@ -277,7 +279,7 @@ async function step9_miJornada(client, adminId) {
 }
 
 async function step10_calendario(client, adminId) {
-  const calId = PREFIX + 'cal-' + generateId();
+  const calId = generateId();
   const inicio = new Date(Date.now() + 86400000).toISOString();
   const fin = new Date(Date.now() + 86400000 + 3600000).toISOString();
 
@@ -297,11 +299,11 @@ async function step10_calendario(client, adminId) {
 
 async function step11_dashboardAdmin(client) {
   const [expedientes] = (await q(client,
-    `SELECT COUNT(*)::int AS n FROM expedientes WHERE id LIKE $1`, [`${PREFIX}%`],
+    `SELECT COUNT(*)::int AS n FROM expedientes WHERE id LIKE $1`, [`f3e2e%`],
   )).rows;
 
   const [pendientes] = (await q(client,
-    `SELECT COUNT(*)::int AS n FROM documentos_expediente WHERE id LIKE $1 AND estado = 'pendiente_abogado'`, [`${PREFIX}%`],
+    `SELECT COUNT(*)::int AS n FROM documentos_expediente WHERE id LIKE $1 AND estado = 'pendiente_abogado'`, [`f3e2e%`],
   )).rows;
 
   return { totalExpedientes: expedientes?.n ?? 0, documentosPendientes: pendientes?.n ?? 0 };
@@ -309,7 +311,7 @@ async function step11_dashboardAdmin(client) {
 
 async function step12_auditoria(client) {
   const [logCount] = (await q(client,
-    `SELECT COUNT(*)::int AS n FROM log_sgie WHERE recurso LIKE $1`, [`${PREFIX}%`],
+    `SELECT COUNT(*)::int AS n FROM log_sgie WHERE recurso LIKE $1`, [`f3e2e%`],
   )).rows;
 
   return { registrosAuditoria: logCount?.n ?? 0 };
@@ -341,7 +343,7 @@ async function cleanup(client) {
   ];
   for (const table of tables) {
     try {
-      await client.query(`DELETE FROM ${table} WHERE id LIKE $1`, [`${PREFIX}%`]);
+      await client.query(`DELETE FROM ${table} WHERE id LIKE $1`, [`f3e2e%`]);
     } catch {
       // skip if FK blocks or table doesn't exist
     }
