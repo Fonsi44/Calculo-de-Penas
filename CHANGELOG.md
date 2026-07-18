@@ -14,6 +14,12 @@ y este proyecto se adhiere a [Semantic Versioning 2.0.0](https://semver.org/spec
 
 ## [Unreleased]
 
+### Added
+- **Fase 3 — Experiencia operativa:** unit tests (`tests/fase3-experiencia-operativa.test.ts`) para los 9 servicios Phase 3: WorkQueueService, ReviewService, AdminOperationsService, AlertasSlaService, ClientPortalService, InboundService, CommunicationRulesService, WorkflowSimulationService, AiEvaluationService. Mocks aislados con `vi.hoisted` + cadena DB simulada.
+- **E2E Fase 3:** `scripts/e2e/fase3-e2e.mjs` valida flujo completo: invitación → activación SGIE → expediente → portal → carga → IA → revisión → requisito → comunicación → Mi jornada → calendario → dashboard → auditoría. Limpieza de fixtures incluso en fallo.
+- **Guard Fase 3:** `scripts/e2e/guard-fase3.mjs` bloquea E2E contra producción (mismo patrón que `guard.mjs`).
+- **Checklist SGIE:** items de Fase 3 marcados con commit de referencia.
+
 ## [111] — 2026-07-18 — Fase 2 — Núcleo durable de procedimientos, documentos, comunicaciones, OCR e IA
 
 > **Estado:** implementado en `main` (commit `c74840d`). Migraciones 0034–0036 listas para aplicar en staging.

@@ -4,11 +4,11 @@
 
 - Proyecto: Justicia Verdadera — SGIE penal.
 - Rama: `main`.
-- Commit base: `c74840d`.
+- Commit base: `be926a5`.
 - Última actualización: 18 de julio de 2026.
-- Fase actual: preparación de Fase 3 (comunicaciones y portal del cliente).
+- Fase actual: Fase 3 (experiencia operativa del abogado y portal del cliente).
 - Última fase cerrada: Fase 2.
-- Porcentaje global verificado: 50 %.
+- Porcentaje global verificado: 63 %.
 - Próximo objetivo: portal del cliente, comunicaciones avanzadas y experiencia del abogado.
 
 ## Leyenda
@@ -50,6 +50,9 @@
 
 ## Fase 3 — Portal del cliente, comunicaciones avanzadas y experiencia del abogado
 
+- [x] **Tests unitarios Phase 3** — `tests/fase3-experiencia-operativa.test.ts` cubre servicios WorkQueue, Review, AdminOperations, AlertasSLA, ClientPortal, Inbound, CommunicationRules, WorkflowSimulation, AiEvaluation. Mocks aislados con `vi.hoisted`. Deterministas y sin DB real. (commit `be926a5`)
+- [x] **E2E Fase 3** — `scripts/e2e/fase3-e2e.mjs` valida flujo completo: invitación → activación SGIE → expediente → portal → carga → IA → revisión → requisito → comunicación → Mi jornada → calendario → dashboard → auditoría. Limpieza de fixtures en fallo. (commit `be926a5`)
+- [x] **Guard Fase 3** — `scripts/e2e/guard-fase3.mjs` bloquea E2E contra producción con las mismas validaciones que `guard.mjs`. (commit `be926a5`)
 - [ ] **Portal seguro del cliente** — autenticación del cliente para ver estado de expedientes, documentos subidos y comunicaciones recibidas.
 - [ ] **Resend real** — configurar `RESEND_API_KEY`, validar entrega con webhooks completos, implementar inbound email para respuestas de clientes.
 - [ ] **Recordatorios automáticos** — activar el motor existente (`lib/sgie/motor-recordatorios.ts`) con UI de configuración.
@@ -98,9 +101,11 @@
 
 ## Evidencias de validación
 
-- [x] Lint, TypeScript, 917 pruebas, build y Drizzle check.
+- [x] Lint, TypeScript, 917+ pruebas, build y Drizzle check.
 - [x] E2E Neon de Fase 1 y limpieza de fixtures.
 - [x] E2E documental Fase 2: `scripts/e2e/fase2-e2e.mjs` valida flujo completo (procedimiento → expediente → enlace → subida → outbox → job → IA → comunicación → auditoría → limpieza).
+- [x] Tests unitarios Fase 3: `tests/fase3-experiencia-operativa.test.ts` (9 servicios, mocks aislados).
+- [x] E2E Fase 3: `scripts/e2e/fase3-e2e.mjs` (12 pasos, limpieza en fallo).
 - [ ] E2E de OCR real y pruebas de rendimiento con PDFs multi-página.
 - [ ] Validación Resend con destinatario real y webhooks.
 
@@ -117,9 +122,11 @@
 
 ## Próxima acción exacta
 
-Leer el handoff `docs/handoffs/fase-2-a-fase-3.md`, el checkpoint maestro y los
-ADRs 003–006; después implementar Fase 3 empezando por portal del cliente,
-comunicaciones avanzadas y experiencia del abogado, sin rehacer Fase 1 ni Fase 2.
+Continuar Fase 3: implementar portal seguro del cliente (autenticación del
+cliente, vista de expediente/dashboard), Resend real con webhooks inbound,
+UI de revisión IA para abogados, dashboard de métricas operativas admin, y
+mi jornada / bandeja de tareas unificada. Tests y E2E base ya creados en
+`be926a5`.
 
 ## Referencias cruzadas
 

@@ -21,15 +21,42 @@ type NavItem = {
   match: (p: string) => boolean;
 };
 
+function NavLink({ item, pathname, onNav }: { item: NavItem; pathname: string; onNav: () => void }) {
+  const active = item.match(pathname);
+  return (
+    <Link
+      href={item.href}
+      onClick={onNav}
+      className={cn(
+        'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors relative',
+        active
+          ? 'bg-accent/15 text-primary font-semibold'
+          : 'text-text-secondary hover:bg-surface-alt/70 hover:text-text',
+      )}
+    >
+      {active && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-full bg-accent" />}
+      <item.icon size={15} className={active ? 'text-accent-dark' : ''} />
+      <span>{item.label}</span>
+    </Link>
+  );
+}
+
 const NAV: NavItem[] = [
   { label: 'Cockpit', href: '/intranet/sgie', icon: LayoutDashboard, match: (p) => p === '/intranet/sgie' },
-  { label: 'Clientes', href: '/intranet/sgie/clientes', icon: Users, match: (p) => p.startsWith('/intranet/sgie/clientes') },
   { label: 'Expedientes', href: '/intranet/sgie/expedientes', icon: FolderKanban, match: (p) => p.startsWith('/intranet/sgie/expedientes') },
   { label: 'Documentos', href: '/intranet/sgie/documentos', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/documentos') },
   { label: 'Alertas', href: '/intranet/sgie/alertas', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/sgie/alertas') },
   { label: 'Tareas', href: '/intranet/sgie/tareas', icon: CheckSquare, match: (p) => p.startsWith('/intranet/sgie/tareas') },
   { label: 'Agenda', href: '/intranet/sgie/agenda', icon: Calendar, match: (p) => p.startsWith('/intranet/sgie/agenda') },
   { label: 'Correos', href: '/intranet/sgie/correos', icon: Mail, match: (p) => p.startsWith('/intranet/sgie/correos') },
+];
+
+const NAV_FASE3: NavItem[] = [
+  { label: 'Mi Jornada', href: '/intranet/sgie/mi-jornada', icon: LayoutDashboard, match: (p) => p.startsWith('/intranet/sgie/mi-jornada') },
+  { label: 'Revisión documental', href: '/intranet/sgie/revision-documental', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/revision-documental') },
+  { label: 'Clientes', href: '/intranet/sgie/clientes', icon: Users, match: (p) => p.startsWith('/intranet/sgie/clientes') },
+  { label: 'Informes personales', href: '/intranet/sgie/productividad', icon: CheckSquare, match: (p) => p.startsWith('/intranet/sgie/productividad') },
+  { label: 'Herramientas jurídicas', href: '/intranet/sgie/reportes', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/reportes') },
 ];
 
 export default function SgieLayout({ children }: { children: React.ReactNode }) {
@@ -109,26 +136,11 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
         <nav className="flex-1 px-2 py-3 overflow-y-auto">
           <p className="px-2.5 mb-1 text-xxs font-bold uppercase tracking-wider text-text-muted">Gestión de expedientes</p>
           <div className="space-y-0.5">
-            {NAV.map((item) => {
-              const active = item.match(pathname);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors relative',
-                    active
-                      ? 'bg-accent/15 text-primary font-semibold'
-                      : 'text-text-secondary hover:bg-surface-alt/70 hover:text-text',
-                  )}
-                >
-                  {active && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-full bg-accent" />}
-                  <item.icon size={15} className={active ? 'text-accent-dark' : ''} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+            {NAV.map((item) => <NavLink key={item.href} item={item} pathname={pathname} onNav={() => setMobileOpen(false)} />)}
+          </div>
+          <p className="px-2.5 mt-4 mb-1 text-xxs font-bold uppercase tracking-wider text-text-muted">Experiencia cliente</p>
+          <div className="space-y-0.5">
+            {NAV_FASE3.map((item) => <NavLink key={item.href} item={item} pathname={pathname} onNav={() => setMobileOpen(false)} />)}
           </div>
         </nav>
 

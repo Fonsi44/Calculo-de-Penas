@@ -15,7 +15,7 @@
  */
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { Calendar, ChevronLeft, ChevronRight, ArrowLeft, Plus, Check, X as XIcon, CheckCheck, Ban, CalendarClock, Pencil } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, ArrowLeft, Plus, Check, X as XIcon, CheckCheck, Ban, CalendarClock, Pencil, Trash2, Users, Eye, EyeOff, UserPlus } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input, Textarea, Field } from '@/components/ui/input';
@@ -76,7 +76,11 @@ export default function SgieAgendaPage() {
   const [editingVersion, setEditingVersion] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [accionId, setAccionId] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [form, setForm] = useState({ titulo: '', descripcion: '', fecha: '', hora: '10:00', expedienteId: '' });
+  const [allDay, setAllDay] = useState(false);
+  const [visibilidad, setVisibilidad] = useState<'privado' | 'expediente' | 'equipo'>('privado');
+  const [participantes, setParticipantes] = useState<string[]>([]);
   const [errores, setErrores] = useState<{ titulo?: string; fecha?: string }>({});
   const [reprogramando, setReprogramando] = useState<{ id: string; titulo: string; fecha: string; version: number } | null>(null);
   const [estadoFiltro, setEstadoFiltro] = useState('todos');
@@ -166,6 +170,9 @@ export default function SgieAgendaPage() {
     setErrores({});
     setEditingId(null);
     setEditingVersion(null);
+    setAllDay(false);
+    setVisibilidad('privado');
+    setParticipantes([]);
     setShowForm(true);
   };
 
@@ -182,6 +189,9 @@ export default function SgieAgendaPage() {
     setEditingId(evento.id);
     setEditingVersion(evento.version);
     setErrores({});
+    setAllDay(false);
+    setVisibilidad('privado');
+    setParticipantes([]);
     setShowForm(true);
   };
 
@@ -209,11 +219,13 @@ export default function SgieAgendaPage() {
           ...(editingId ? { version: editingVersion } : {}),
           descripcion: form.descripcion.trim() || undefined,
           inicio: fechaIso,
+          allDay,
           ...(!editingId ? {
             tipo: form.expedienteId ? 'cita_cliente' : 'personal',
-            visibilidad: form.expedienteId ? 'expediente' : 'privado',
+            visibilidad,
           } : {}),
           expedienteId: form.expedienteId || undefined,
+          participantes: participantes.length > 0 ? participantes : undefined,
         }),
       });
       if (!res.ok) {
@@ -326,6 +338,55 @@ export default function SgieAgendaPage() {
                   onChange={(e) => setForm({ ...form, hora: e.target.value })} />
               </Field>
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+              <Field label="Visibilidad" htmlFor="ev-vis">
+                <div className="flex gap-1.5">
+                  {(['privado', 'expediente', 'equipo'] as const).map((v) => (
+                    <button key={v} type="button" onClick={() => setVisibilidad(v)}
+                      className={`flex-1 h-10 rounded-md border text-xs font-semibold transition-colors ${
+                        visibilidad === v
+                          ? 'border-accent bg-accent/10 text-accent-dark'
+                          : 'border-border bg-surface text-text-secondary hover:border-border-strong'
+                      }`}>
+                      {v === 'privado' && <EyeOff size={13} className="inline mr-1" />}
+                      {v === 'expediente' && <Eye size={13} className="inline mr-1" />}
+                      {v === 'equipo' && <Users size={13} className="inline mr-1" />}
+                      {v}
+                    </button>
+                  ))}
+                </div>
+              </Field>
+              <Field label="Día completo">
+                <label className="flex items-center gap-2 h-10 cursor-pointer">
+                  <input type="checkbox" checked={allDay} onChange={(e) => setAllDay(e.target.checked)}
+                    className="w-4 h-4 rounded border-border accent-accent" />
+                  <span className="text-xs text-text-secondary">Evento de día completo</span>
+                </label>
+              </Field>
+            </div>
+            <Field label="Participantes" htmlFor="ev-parts">
+              <div className="flex flex-wrap items-center gap-1.5">
+                {participantes.length === 0 && (
+                  <span className="text-xs text-text-muted">Sin participantes añadidos.</span>
+                )}
+                {participantes.map((p, i) => (
+                  <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-accent/10 text-xxs font-semibold text-accent-dark border border-accent/20">
+                    {p}
+                    <button type="button" onClick={() => setParticipantes(participantes.filter((_, j) => j !== i))}
+                      className="hover:text-danger" aria-label={`Eliminar ${p}`}>
+                      <XIcon size={10} />
+                    </button>
+                  </span>
+                ))}
+                <button type="button" onClick={() => {
+                  const name = prompt('Nombre del participante:');
+                  if (name?.trim()) setParticipantes([...participantes, name.trim()]);
+                }}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-dashed border-border text-xxs text-text-secondary hover:border-accent hover:text-accent-dark transition-colors">
+                  <UserPlus size={12} /> Añadir
+                </button>
+              </div>
+            </Field>
             <Field label="Descripción" htmlFor="ev-desc">
               <Textarea id="ev-desc" value={form.descripcion} maxLength={2000} rows={2}
                 onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
@@ -437,6 +498,7 @@ export default function SgieAgendaPage() {
                         })
                       }
                       onEditar={abrirEditar}
+                      onEliminar={(ev) => setDeleteConfirmId(ev.id)}
                     />
                   ))}
                 </ul>
@@ -470,13 +532,44 @@ export default function SgieAgendaPage() {
         onClose={() => setReprogramando(null)}
         onHecho={() => { setReprogramando(null); fetchEventos(); }}
       />
+
+      {deleteConfirmId && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center p-4" role="presentation">
+          <div className="absolute inset-0 bg-overlay" onClick={() => setDeleteConfirmId(null)} aria-hidden="true" />
+          <div role="alertdialog" aria-modal="true" aria-labelledby="delete-confirm-title"
+            className="relative bg-surface rounded-lg shadow-xl border border-border-light w-full max-w-sm p-5">
+            <div className="flex gap-3">
+              <div className="w-10 h-10 rounded-full bg-danger/15 flex items-center justify-center flex-shrink-0">
+                <Trash2 size={20} className="text-danger" />
+              </div>
+              <div className="flex-1 min-w-0 pr-6">
+                <h2 id="delete-confirm-title" className="text-base font-bold text-text">Eliminar evento</h2>
+                <p className="text-sm text-text-secondary mt-1">¿Está seguro de eliminar este evento? Esta acción no se puede deshacer.</p>
+              </div>
+            </div>
+            <div className="flex gap-2 justify-end mt-5">
+              <button type="button" onClick={() => setDeleteConfirmId(null)}
+                className="px-4 py-2 rounded-md border border-border text-sm font-semibold text-text-secondary hover:bg-surface-alt">
+                Cancelar
+              </button>
+              <button type="button" onClick={() => {
+                setDeleteConfirmId(null);
+                toast.danger('Función de eliminación no implementada');
+              }}
+                className="px-4 py-2 rounded-md bg-danger text-white text-sm font-bold hover:opacity-90">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 function EventoCardDetalle({
   evento, accionId,
-  onConfirmar, onCancelar, onCompletar, onReprogramar, onEditar,
+  onConfirmar, onCancelar, onCompletar, onReprogramar, onEditar, onEliminar,
 }: {
   evento: EventoItem;
   accionId: string | null;
@@ -485,6 +578,7 @@ function EventoCardDetalle({
   onCompletar: (e: EventoItem) => void;
   onReprogramar: (e: EventoItem) => void;
   onEditar: (e: EventoItem) => void;
+  onEliminar: (e: EventoItem) => void;
 }) {
   const activo = evento.estado === 'propuesta' || evento.estado === 'confirmada';
   return (
@@ -528,6 +622,11 @@ function EventoCardDetalle({
               title="Cancelar evento" aria-label={`Cancelar: ${evento.titulo}`}
               className="p-1 rounded hover:bg-danger/15 text-danger disabled:opacity-50">
               <Ban size={13} />
+            </button>
+            <button onClick={() => onEliminar(evento)}
+              title="Eliminar evento" aria-label={`Eliminar: ${evento.titulo}`}
+              className="p-1 rounded hover:bg-danger/15 text-danger opacity-50 hover:opacity-100">
+              <Trash2 size={13} />
             </button>
           </div>
         )}
