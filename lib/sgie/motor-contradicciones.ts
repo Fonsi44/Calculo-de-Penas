@@ -1,15 +1,18 @@
 /**
  * Motor de contradicciones — P2-04 (Fase 4A).
  *
- * Dos capas:
- * 1. Determinista: compara campos extraídos del mismo expediente con reglas
- *    (identidad incompatible, fechas imposibles, expediente externo distinto,
- *    firmante ausente, cuantía incompatible, requisito equivocado, duplicidad).
- * 2. IA (DeepSeek): solo sobre fragmentos previamente recuperados y
- *    autorizados; devuelve severidad, confianza, cita y recomendación.
+ * Capa determinista implementada: compara campos extraídos del mismo
+ * expediente con reglas (identidad incompatible, expediente externo distinto,
+ * duplicidad por hash). Los campos sensibles (identidad, RTN, expediente_externo)
+ * generan contradicción críticas bloqueantes; el resto advertencias.
+ *
+ * PENDIENTE (Fase 4B): capa IA (DeepSeek) sobre fragmentos autorizados para
+ * detectar contradicciones complejas entre múltiples documentos. El header
+ * original prometía esa capa; se elimina la promesa hasta que se implemente.
  *
  * Estados: propuesta → confirmada | rechazada | resuelta | aceptada_con_motivo.
- * Idempotencia: una contradicción por (expediente, tipo, documentoA, documentoB).
+ * Idempotencia: garantizada por UNIQUE (expediente, tipo, document_a, document_b)
+ * añadida en migración 0042.
  * Contradicciones críticas siempre requieren humano.
  */
 import { db } from '@/lib/db';
@@ -171,7 +174,7 @@ export async function detectarContradiccionesExpediente(input: {
         explicacion: d.explicacion,
         origen: d.origen,
         reglaId: d.reglaId ?? null,
-        estado: d.bloqueante ? 'propuesta' : 'propuesta',
+        estado: 'propuesta',
       })
       .onConflictDoNothing()
       .returning();

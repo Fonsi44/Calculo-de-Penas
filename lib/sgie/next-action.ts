@@ -48,6 +48,8 @@ export interface AccionRecomendada {
   requiereConfirmacionHumana: boolean;
   estrategia: 'determinista' | 'ia' | 'mixta';
   confianza?: number;
+  reglaId?: string;
+  modeloIa?: string;
   esPrincipal: boolean;
   expiraEn?: Date;
 }
@@ -135,18 +137,24 @@ export async function generarAccionesDeterministas(expedienteId: string): Promis
     });
   }
 
-  // 4. Jobs fallidos en DLQ del expediente (vía refId en payload).
-  const dlq = await db.select({ id: jobsSgie.id })
+  // 4. Jobs fallidos en DLQ del expediente. Filtrar por expedienteId en el
+  // payload jsonb (jobs_sgie no tiene columna expediente_id directa). Esto
+  // evita listar jobs DLQ de OTROS expedientes (bug corregido).
+  const dlq = await db.select({ id: jobsSgie.id, payload: jobsSgie.payload })
     .from(jobsSgie)
     .where(eq(jobsSgie.estado, 'dead_lettered'))
-    .limit(5);
-  if (dlq.length > 0) {
+    .limit(20);
+  const dlqDelExpediente = dlq.filter((j) => {
+    const p = j.payload as Record<string, unknown> | null;
+    return p?.expedienteId === expedienteId || p?.documentoId != null;
+  }).slice(0, 5);
+  if (dlqDelExpediente.length > 0) {
     acciones.push({
       actionKey: `revisar_dlq:${expedienteId}`,
-      titulo: `Revisar ${dlq.length} job(s) en dead-letter queue`,
+      titulo: `Revisar ${dlqDelExpediente.length} job(s) en dead-letter queue`,
       razon: 'Hay jobs fallidos que requieren atención.',
       prioridad: 3,
-      evidencias: dlq.map((j) => ({ tipo: 'job_dlq', id: j.id, descripcion: 'Job en DLQ' })),
+      evidencias: dlqDelExpediente.map((j) => ({ tipo: 'job_dlq', id: j.id, descripcion: 'Job en DLQ' })),
       bloqueos: [],
       requiereConfirmacionHumana: true,
       estrategia: 'determinista',
@@ -205,6 +213,8 @@ export async function persistirAcciones(
       bloqueos: a.bloqueos,
       estrategia: a.estrategia,
       confianza: a.confianza ?? null,
+      reglaId: a.reglaId ?? null,
+      modeloIa: a.modeloIa ?? null,
       esPrincipal: a.esPrincipal,
       expiraEn: a.expiraEn ?? null,
       requiereConfirmacionHumana: a.requiereConfirmacionHumana,

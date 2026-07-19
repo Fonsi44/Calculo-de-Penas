@@ -2452,7 +2452,9 @@ export type DocumentContradictionInsert = typeof documentContradictions.$inferIn
 
 export const caseSummaryCheckpoints = pgTable('case_summary_checkpoints', {
   id: uuid('id').primaryKey().defaultRandom(),
-  expedienteId: uuid('expediente_id').notNull().unique(),
+  // UNIQUE parcial (solo vigentes) vía índice en migración 0043; permite
+  // histórico de checkpoints invalidados + 1 vigente por expediente.
+  expedienteId: uuid('expediente_id').notNull(),
   sourceHash: varchar('source_hash', { length: 64 }).notNull(),
   watermark: timestamp('watermark', { withTimezone: true }).notNull().defaultNow(),
   cambiosIncluidos: integer('cambios_incluidos').notNull().default(0),

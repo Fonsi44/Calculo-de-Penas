@@ -133,12 +133,11 @@ export async function generarResumenIncremental(input: {
     };
   }
 
-  // Invalidar checkpoint previo.
-  if (prevCheckpoint) {
-    await db.update(caseSummaryCheckpoints).set({ estado: 'invalidado' })
-      .where(eq(caseSummaryCheckpoints.id, prevCheckpoint.id));
-  }
-
+  // La invalidación del checkpoint previo y la inserción del nuevo deben ser
+  // atómicas: si se invalida y luego falla el insert, el expediente se queda
+  // sin checkpoint vigente (ventana de carrera). Transacción explícita.
+  // La llamada a IA va ANTES (fuera de transacción: no se hacen llamadas
+  // externas dentro de transacciones DB).
   const watermark = prevCheckpoint?.watermark ?? new Date(0);
   const cambios = await obtenerCambiosDesdeWatermark(input.expedienteId, watermark);
 
@@ -150,7 +149,7 @@ export async function generarResumenIncremental(input: {
     };
   }
 
-  // Llamar a IA con los cambios.
+  // Llamar a IA con los cambios (FUERA de transacción DB).
   const ia = await generarResumenIa(input.datos);
   if (!ia.ok) {
     return {
@@ -159,34 +158,41 @@ export async function generarResumenIncremental(input: {
     };
   }
 
-  // Persistir nuevo checkpoint + histórico.
-  const [nuevoCheckpoint] = await db.insert(caseSummaryCheckpoints).values({
-    expedienteId: input.expedienteId,
-    sourceHash,
-    watermark: new Date(),
-    cambiosIncluidos: cambios.length,
-    cambiosDetalle: cambios,
-    modelo: ia.modelo,
-    pipelineVersion: PIPELINE_VERSION,
-    tokensInput: ia.tokensInput ?? null,
-    tokensOutput: ia.tokensOutput ?? null,
-    latenciaMs: Date.now() - t0,
-    estado: 'vigente',
-  }).onConflictDoNothing().returning();
+  // Transacción atómica: invalidar previo + insertar nuevo + histórico.
+  await db.transaction(async (tx) => {
+    if (prevCheckpoint) {
+      await tx.update(caseSummaryCheckpoints).set({ estado: 'invalidado' })
+        .where(eq(caseSummaryCheckpoints.id, prevCheckpoint.id));
+    }
+    const [nuevo] = await tx.insert(caseSummaryCheckpoints).values({
+      expedienteId: input.expedienteId,
+      sourceHash,
+      watermark: new Date(),
+      cambiosIncluidos: cambios.length,
+      cambiosDetalle: cambios,
+      modelo: ia.modelo,
+      pipelineVersion: PIPELINE_VERSION,
+      tokensInput: ia.tokensInput ?? null,
+      tokensOutput: ia.tokensOutput ?? null,
+      latenciaMs: Date.now() - t0,
+      estado: 'vigente',
+    }).onConflictDoNothing().returning({ id: caseSummaryCheckpoints.id });
 
-  await db.insert(caseSummaryHistory).values({
-    expedienteId: input.expedienteId,
-    checkpointId: nuevoCheckpoint?.id ?? null,
-    sourceHash,
-    watermark: new Date(),
-    cambiosIncluidos: cambios.length,
-    resumen: ia.resumen,
-    diferenciaAnterior: cambios.length > 0 ? `${cambios.length} cambios desde último resumen` : null,
-    tipoContenido: 'mixto',
-    modelo: ia.modelo,
-    tokensInput: ia.tokensInput ?? null,
-    tokensOutput: ia.tokensOutput ?? null,
-    latenciaMs: Date.now() - t0,
+    await tx.insert(caseSummaryHistory).values({
+      expedienteId: input.expedienteId,
+      checkpointId: nuevo?.id ?? null,
+      sourceHash,
+      watermark: new Date(),
+      cambiosIncluidos: cambios.length,
+      resumen: ia.resumen,
+      diferenciaAnterior: cambios.length > 0 ? `${cambios.length} cambios desde último resumen` : null,
+      tipoContenido: 'mixto',
+      modelo: ia.modelo,
+      tokensInput: ia.tokensInput ?? null,
+      tokensOutput: ia.tokensOutput ?? null,
+      latenciaMs: Date.now() - t0,
+    });
+    return nuevo?.id;
   });
 
   return {
