@@ -2230,3 +2230,332 @@ export const comunicacionesAuditoria = pgTable('comunicaciones_auditoria', {
 
 export type ComunicacionAuditoria = typeof comunicacionesAuditoria.$inferSelect;
 export type ComunicacionAuditoriaInsert = typeof comunicacionesAuditoria.$inferInsert;
+
+// ============================================================
+// Fase 4A — Registro de migraciones SGIE (0038)
+// ============================================================
+
+export const sgieSchemaMigrations = pgTable('sgie_schema_migrations', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 255 }).notNull().unique(),
+  hash: varchar('hash', { length: 64 }).notNull(),
+  appliedAt: timestamp('applied_at', { withTimezone: true }).defaultNow(),
+  appliedBy: varchar('applied_by', { length: 100 }),
+  rowsAffected: integer('rows_affected').notNull().default(0),
+}, (table) => ({
+  nameIdx: index('sgie_schema_migrations_name_idx').on(table.name),
+}));
+
+// ============================================================
+// Fase 4A — Feature flags y kill switches (0039)
+// ============================================================
+
+export const featureFlagScopeEnum = pgEnum('feature_flag_scope', [
+  'global', 'organizacion', 'equipo', 'usuario', 'expediente', 'procedimiento',
+]);
+
+export const featureFlags = pgTable('feature_flags', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  flagKey: varchar('flag_key', { length: 100 }).notNull(),
+  scopeLevel: featureFlagScopeEnum('scope_level').notNull(),
+  organizationId: uuid('organization_id'),
+  teamId: uuid('team_id'),
+  userId: uuid('user_id'),
+  caseId: uuid('case_id'),
+  procedureId: uuid('procedure_id'),
+  enabled: boolean('enabled').notNull().default(false),
+  config: jsonb('config').$type<Record<string, unknown>>().notNull().default({}),
+  killSwitch: boolean('kill_switch').notNull().default(false),
+  validFrom: timestamp('valid_from', { withTimezone: true }),
+  validUntil: timestamp('valid_until', { withTimezone: true }),
+  motivo: varchar('motivo', { length: 500 }),
+  actorId: uuid('actor_id'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  keyIdx: index('feature_flags_key_idx').on(table.flagKey),
+  scopeIdx: index('feature_flags_scope_idx').on(table.scopeLevel),
+}));
+
+export type FeatureFlag = typeof featureFlags.$inferSelect;
+export type FeatureFlagInsert = typeof featureFlags.$inferInsert;
+
+export const featureFlagHistory = pgTable('feature_flag_history', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  flagKey: varchar('flag_key', { length: 100 }).notNull(),
+  scopeLevel: featureFlagScopeEnum('scope_level').notNull(),
+  organizationId: uuid('organization_id'),
+  teamId: uuid('team_id'),
+  userId: uuid('user_id'),
+  caseId: uuid('case_id'),
+  procedureId: uuid('procedure_id'),
+  previousEnabled: boolean('previous_enabled'),
+  newEnabled: boolean('new_enabled').notNull(),
+  previousConfig: jsonb('previous_config'),
+  newConfig: jsonb('new_config'),
+  killSwitch: boolean('kill_switch').notNull().default(false),
+  motivo: varchar('motivo', { length: 500 }),
+  actorId: uuid('actor_id'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  keyIdx: index('feature_flag_history_key_idx').on(table.flagKey),
+  creadoEnIdx: index('feature_flag_history_creado_en_idx').on(table.creadoEn),
+}));
+
+// ============================================================
+// Fase 4A — Pipeline documental (0040)
+// ============================================================
+
+export const documentClassifications = pgTable('document_classifications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentId: uuid('document_id').notNull(),
+  expedienteId: uuid('expediente_id'),
+  pipelineVersion: varchar('pipeline_version', { length: 40 }).notNull(),
+  tipoPropuesto: varchar('tipo_propuesto', { length: 100 }).notNull(),
+  subtipoPropuesto: varchar('subtipo_propuesto', { length: 100 }),
+  idioma: varchar('idioma', { length: 20 }),
+  esCompuestoProbable: boolean('es_compuesto_probable').notNull().default(false),
+  expedienteProbableId: uuid('expediente_probable_id'),
+  requisitoProbableId: uuid('requisito_probable_id'),
+  confianza: integer('confianza').notNull(),
+  alternativas: jsonb('alternativas').notNull().default([]),
+  evidencias: jsonb('evidencias').notNull().default([]),
+  estrategia: varchar('estrategia', { length: 30 }).notNull(),
+  modelo: varchar('modelo', { length: 100 }),
+  promptVersion: varchar('prompt_version', { length: 40 }),
+  schemaVersion: varchar('schema_version', { length: 40 }).notNull().default('1'),
+  estado: varchar('estado', { length: 30 }).notNull().default('propuesta'),
+  decisionPor: uuid('decision_por'),
+  decisionEn: timestamp('decision_en', { withTimezone: true }),
+  decisionMotivo: varchar('decision_motivo', { length: 500 }),
+  correccionTipo: varchar('correccion_tipo', { length: 100 }),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  latenciaMs: integer('latencia_ms'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  docIdx: index('document_classifications_doc_idx').on(table.documentId),
+  estadoIdx: index('document_classifications_estado_idx').on(table.estado),
+  confianzaIdx: index('document_classifications_confianza_idx').on(table.confianza),
+}));
+
+export type DocumentClassification = typeof documentClassifications.$inferSelect;
+export type DocumentClassificationInsert = typeof documentClassifications.$inferInsert;
+
+export const documentLinks = pgTable('document_links', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentId: uuid('document_id').notNull(),
+  expedienteId: uuid('expediente_id').notNull(),
+  requisitoId: uuid('requisito_id'),
+  tipo: varchar('tipo', { length: 30 }).notNull().default('principal'),
+  origen: varchar('origen', { length: 20 }).notNull().default('auto'),
+  confianza: integer('confianza'),
+  estrategia: varchar('estrategia', { length: 30 }),
+  explicacion: text('explicacion'),
+  evidencias: jsonb('evidencias').notNull().default([]),
+  estado: varchar('estado', { length: 30 }).notNull().default('propuesta'),
+  decisionPor: uuid('decision_por'),
+  decisionEn: timestamp('decision_en', { withTimezone: true }),
+  decisionMotivo: varchar('decision_motivo', { length: 500 }),
+  actorId: uuid('actor_id'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  docIdx: index('document_links_doc_idx').on(table.documentId),
+  expIdx: index('document_links_exp_idx').on(table.expedienteId),
+  estadoIdx: index('document_links_estado_idx').on(table.estado),
+}));
+
+export type DocumentLink = typeof documentLinks.$inferSelect;
+export type DocumentLinkInsert = typeof documentLinks.$inferInsert;
+
+export const extractionSchemaVersions = pgTable('extraction_schema_versions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tipoDocumento: varchar('tipo_documento', { length: 100 }).notNull(),
+  version: integer('version').notNull(),
+  campos: jsonb('campos').notNull().default([]),
+  activo: boolean('activo').notNull().default(true),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  tipoIdx: index('extraction_schema_versions_tipo_idx').on(table.tipoDocumento),
+}));
+
+export type ExtractionSchemaVersion = typeof extractionSchemaVersions.$inferSelect;
+export type ExtractionSchemaVersionInsert = typeof extractionSchemaVersions.$inferInsert;
+
+export const documentExtractions = pgTable('document_extractions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentId: uuid('document_id').notNull(),
+  expedienteId: uuid('expediente_id').notNull(),
+  schemaVersionId: uuid('schema_version_id').notNull(),
+  pipelineVersion: varchar('pipeline_version', { length: 40 }).notNull(),
+  campos: jsonb('campos').notNull().default([]),
+  estrategia: varchar('estrategia', { length: 30 }).notNull(),
+  modelo: varchar('modelo', { length: 100 }),
+  promptVersion: varchar('prompt_version', { length: 40 }),
+  confianza: integer('confianza').notNull(),
+  estado: varchar('estado', { length: 30 }).notNull().default('extraido'),
+  validadoPor: uuid('validado_por'),
+  validadoEn: timestamp('validado_en', { withTimezone: true }),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  latenciaMs: integer('latencia_ms'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  docIdx: index('document_extractions_doc_idx').on(table.documentId),
+  expIdx: index('document_extractions_exp_idx').on(table.expedienteId),
+  estadoIdx: index('document_extractions_estado_idx').on(table.estado),
+}));
+
+export type DocumentExtraction = typeof documentExtractions.$inferSelect;
+export type DocumentExtractionInsert = typeof documentExtractions.$inferInsert;
+
+export const documentContradictions = pgTable('document_contradictions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  tipo: varchar('tipo', { length: 60 }).notNull(),
+  hechoA: jsonb('hecho_a').notNull(),
+  hechoB: jsonb('hecho_b').notNull(),
+  documentAId: uuid('document_a_id'),
+  documentBId: uuid('document_b_id'),
+  paginaA: integer('pagina_a'),
+  paginaB: integer('pagina_b'),
+  fragmentoA: text('fragmento_a'),
+  fragmentoB: text('fragmento_b'),
+  severidad: varchar('severidad', { length: 20 }).notNull().default('advertencia'),
+  confianza: integer('confianza').notNull().default(100),
+  bloqueante: boolean('bloqueante').notNull().default(false),
+  explicacion: text('explicacion').notNull(),
+  origen: varchar('origen', { length: 20 }).notNull().default('determinista'),
+  reglaId: varchar('regla_id', { length: 100 }),
+  modeloIa: varchar('modelo_ia', { length: 100 }),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  estado: varchar('estado', { length: 30 }).notNull().default('propuesta'),
+  resolucionPor: uuid('resolucion_por'),
+  resolucionEn: timestamp('resolucion_en', { withTimezone: true }),
+  resolucionMotivo: varchar('resolucion_motivo', { length: 500 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expIdx: index('document_contradictions_exp_idx').on(table.expedienteId),
+  estadoIdx: index('document_contradictions_estado_idx').on(table.estado),
+  severidadIdx: index('document_contradictions_severidad_idx').on(table.severidad),
+}));
+
+export type DocumentContradiction = typeof documentContradictions.$inferSelect;
+export type DocumentContradictionInsert = typeof documentContradictions.$inferInsert;
+
+// ============================================================
+// Fase 4A — Resúmenes incrementales y NextActions (0041)
+// ============================================================
+
+export const caseSummaryCheckpoints = pgTable('case_summary_checkpoints', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull().unique(),
+  sourceHash: varchar('source_hash', { length: 64 }).notNull(),
+  watermark: timestamp('watermark', { withTimezone: true }).notNull().defaultNow(),
+  cambiosIncluidos: integer('cambios_incluidos').notNull().default(0),
+  cambiosDetalle: jsonb('cambios_detalle').notNull().default([]),
+  modelo: varchar('modelo', { length: 100 }),
+  pipelineVersion: varchar('pipeline_version', { length: 40 }).notNull().default('1'),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  latenciaMs: integer('latencia_ms'),
+  estado: varchar('estado', { length: 20 }).notNull().default('vigente'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expIdx: index('case_summary_checkpoints_exp_idx').on(table.expedienteId),
+  estadoIdx: index('case_summary_checkpoints_estado_idx').on(table.estado),
+}));
+
+export type CaseSummaryCheckpoint = typeof caseSummaryCheckpoints.$inferSelect;
+export type CaseSummaryCheckpointInsert = typeof caseSummaryCheckpoints.$inferInsert;
+
+export const caseSummaryHistory = pgTable('case_summary_history', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  checkpointId: uuid('checkpoint_id'),
+  sourceHash: varchar('source_hash', { length: 64 }).notNull(),
+  watermark: timestamp('watermark', { withTimezone: true }).notNull(),
+  cambiosIncluidos: integer('cambios_incluidos').notNull().default(0),
+  resumen: text('resumen').notNull(),
+  diferenciaAnterior: text('diferencia_anterior'),
+  tipoContenido: varchar('tipo_contenido', { length: 20 }).notNull().default('mixto'),
+  modelo: varchar('modelo', { length: 100 }),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  latenciaMs: integer('latencia_ms'),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expIdx: index('case_summary_history_exp_idx').on(table.expedienteId),
+  creadoEnIdx: index('case_summary_history_creado_en_idx').on(table.creadoEn),
+}));
+
+export const caseNextActions = pgTable('case_next_actions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  actionKey: varchar('action_key', { length: 120 }).notNull(),
+  titulo: varchar('titulo', { length: 300 }).notNull(),
+  descripcion: text('descripcion'),
+  razon: text('razon').notNull(),
+  prioridad: integer('prioridad').notNull().default(3),
+  evidencias: jsonb('evidencias').notNull().default([]),
+  bloqueos: jsonb('bloqueos').notNull().default([]),
+  reglaId: varchar('regla_id', { length: 120 }),
+  estrategia: varchar('estrategia', { length: 30 }).notNull().default('determinista'),
+  modeloIa: varchar('modelo_ia', { length: 100 }),
+  confianza: integer('confianza'),
+  esPrincipal: boolean('es_principal').notNull().default(false),
+  expiraEn: timestamp('expira_en', { withTimezone: true }),
+  requiereConfirmacionHumana: boolean('requiere_confirmacion_humana').notNull().default(true),
+  estado: varchar('estado', { length: 30 }).notNull().default('propuesta'),
+  decisionPor: uuid('decision_por'),
+  decisionEn: timestamp('decision_en', { withTimezone: true }),
+  decisionMotivo: varchar('decision_motivo', { length: 500 }),
+  idempotencyKey: varchar('idempotency_key', { length: 120 }),
+  sourceHash: varchar('source_hash', { length: 64 }).notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expIdx: index('case_next_actions_exp_idx').on(table.expedienteId),
+  estadoIdx: index('case_next_actions_estado_idx').on(table.estado),
+  prioridadIdx: index('case_next_actions_prioridad_idx').on(table.prioridad),
+}));
+
+export type CaseNextAction = typeof caseNextActions.$inferSelect;
+export type CaseNextActionInsert = typeof caseNextActions.$inferInsert;
+
+export const aiPipelineRuns = pgTable('ai_pipeline_runs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  correlationId: varchar('correlation_id', { length: 64 }).notNull(),
+  expedienteId: uuid('expediente_id'),
+  documentId: uuid('document_id'),
+  taskType: varchar('task_type', { length: 40 }).notNull(),
+  estrategia: varchar('estrategia', { length: 30 }).notNull(),
+  modelo: varchar('modelo', { length: 100 }),
+  promptVersion: varchar('prompt_version', { length: 40 }),
+  pipelineVersion: varchar('pipeline_version', { length: 40 }).notNull().default('1'),
+  estado: varchar('estado', { length: 30 }).notNull().default('pending'),
+  resultSummary: text('result_summary'),
+  confianza: integer('confianza'),
+  tokensInput: integer('tokens_input'),
+  tokensOutput: integer('tokens_output'),
+  latenciaMs: integer('latencia_ms'),
+  costeEstimadoUsd: real('coste_estimado_usd'),
+  error: text('error'),
+  refTable: varchar('ref_table', { length: 60 }),
+  refId: uuid('ref_id'),
+  actorId: uuid('actor_id'),
+  scopeResuelto: jsonb('scope_resuelto'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  corrIdx: index('ai_pipeline_runs_corr_idx').on(table.correlationId),
+  taskIdx: index('ai_pipeline_runs_task_idx').on(table.taskType),
+  estadoIdx: index('ai_pipeline_runs_estado_idx').on(table.estado),
+  creadoEnIdx: index('ai_pipeline_runs_creado_en_idx').on(table.creadoEn),
+}));
+
+export type AiPipelineRun = typeof aiPipelineRuns.$inferSelect;
+export type AiPipelineRunInsert = typeof aiPipelineRuns.$inferInsert;
