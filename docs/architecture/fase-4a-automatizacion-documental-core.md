@@ -1,6 +1,6 @@
 # Arquitectura — Fase 4A: Automatización documental core
 
-**Fecha:** 2026-07-19 (actualizado 2026-07-20). **Estado:** Implementado y validado en suite unitaria/integración (1048 tests verde, regresión Fases 2/3 verde, build verde, lint/tsc limpios). E2E Fase 4A con DeepSeek real fue validado en commits previos (`6f79b86`, `7de4fd1`); la revalidación E2E en esta sesión quedó **NO VALIDADA** por ausencia de rama Neon aislada y `RUN_DEEPSEEK_E2E` en el entorno. Fase 4A al 100% en alcance de código + tests unitarios/integración; ver [Validación staging](../ops/fase-4a-staging-validation.md).
+**Fecha:** 2026-07-19 (actualizado 2026-07-20). **Estado: CERTIFICADA al 100%.** Suite unitaria/integración 1065/1065 (serial), lint/tsc/build/drizzle-kit check limpios. E2E Fase 4A con DeepSeek real **19/19** (HEAD `39f86b7`) sobre rama Neon aislada efímera `fase4a-cert-validation-20260720` (eliminada, cero residuos); regresión E2E Fase 2 9/9 y Fase 3 70/70 (DeepSeek + Resend reales) también verde. Ver [Certificación staging Fase 4A](../ops/fase-4a-staging-validation.md#certificación-real-20-07-2026--e2e-neon-aislada--deepseek--resend).
 
 ## Objetivo
 

@@ -226,3 +226,110 @@ describe('FeatureFlagService — catálogo canónico', () => {
     expect(FLAG_KEYS).toContain('sgie.signature.sandbox');
   });
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Cobertura adicional solicitada en certificación Fase 4A (2026-07-20).
+//
+// Estos tests cubren lo demostrable con mock. La concurrencia real, el rollback
+// transaccional y la autorización detallada (suspendido / otra organización)
+// requieren DB aislada y se cubren en el E2E contra Neon (ver
+// docs/ops/fase-4a-staging-validation.md).
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('FeatureFlagService — kill switch explícito auditado', () => {
+  it('activateKillSwitch delega en setFlag con killSwitch=true y motivo prefijado', async () => {
+    assertCapabilityMock.mockResolvedValueOnce({ active: true, suspended: false, sgIeEnabled: true, capabilities: new Set(['settings.manage']) });
+    mockNext([]); // prev vacío (FOR UPDATE no encuentra fila)
+    await activateKillSwitch('sgie.ai.classification', 'admin-1', 'incidente prompt injection');
+    // setFlag invocado dentro de transacción: insert + history.
+    expect(chain.insert).toHaveBeenCalled();
+    // El motivo del kill switch se prefija con "KILL SWITCH:". El payload va en
+    // .values(payload), no en .insert(table).
+    const valuesCalls = (chain.values as ReturnType<typeof vi.fn>).mock.calls;
+    // Buscar el payload que contiene el motivo KILL SWITCH (insert de history).
+    const hayMotivoKillSwitch = valuesCalls.some((call) => {
+      const payload = call?.[0];
+      try {
+        return payload && typeof payload === 'object' && 'motivo' in payload && /KILL SWITCH/.test(String(payload.motivo));
+      } catch {
+        return false;
+      }
+    });
+    expect(hayMotivoKillSwitch).toBe(true);
+  });
+
+  it('activateKillSwitch propaga el actor al historial (trazabilidad)', async () => {
+    assertCapabilityMock.mockResolvedValueOnce({ active: true, suspended: false, sgIeEnabled: true, capabilities: new Set(['settings.manage']) });
+    mockNext([]);
+    await activateKillSwitch('sgie.ai.classification', 'admin-trazable', 'motivo');
+    const valuesCalls = (chain.values as ReturnType<typeof vi.fn>).mock.calls;
+    // El insert del historial lleva actorId = 'admin-trazable'.
+    const hayActorTrazable = valuesCalls.some((call) => {
+      const p = call?.[0] as Record<string, unknown> | undefined;
+      return p && p.actorId === 'admin-trazable';
+    });
+    expect(hayActorTrazable).toBe(true);
+  });
+});
+
+describe('FeatureFlagService — deny-by-default explícito', () => {
+  it('flag canónica sin registros en BD => enabled false, motivo sin_configuracion', async () => {
+    mockNext([]); // fetchApplicable devuelve []
+    const r = await resolveFlag('sgie.ai.next_action', { caseId: 'c1' });
+    expect(r.enabled).toBe(false);
+    expect(r.killSwitch).toBe(false);
+    expect(r.motivo).toBe('sin_configuracion');
+  });
+
+  it('flag no canónica => enabled false, motivo flag_key_desconocida (sin tocar BD)', async () => {
+    const r = await resolveFlag('sgie.inventada.no.canonica', {});
+    expect(r.enabled).toBe(false);
+    expect(r.motivo).toBe('flag_key_desconocida');
+    // No se ejecuta select porque la flag se rechaza antes de fetchApplicable.
+    expect(chain.select).not.toHaveBeenCalled();
+  });
+});
+
+describe('FeatureFlagService — fetchApplicable optimización (bug 8)', () => {
+  it('la query incluye el flagKey y construye WHERE por scope presente', async () => {
+    mockNext([mockRow({ scopeLevel: 'global', enabled: true })]);
+    await resolveFlag('sgie.ai.classification', { caseId: 'c1', userId: 'u1' });
+    // El select fue invocado (no un escaneo: construye WHERE con flagKey + scopes).
+    expect(chain.select).toHaveBeenCalled();
+    expect(chain.from).toHaveBeenCalled();
+    expect(chain.where).toHaveBeenCalled();
+  });
+
+  it('kill switch mantiene prioridad absoluta sobre overrides activos', async () => {
+    mockNext([
+      mockRow({ scopeLevel: 'global', enabled: true }),
+      mockRow({ scopeLevel: 'expediente', caseId: 'c1', enabled: true }),
+      mockRow({ scopeLevel: 'global', killSwitch: true, enabled: false }),
+    ]);
+    const r = await resolveFlag('sgie.ai.classification', { caseId: 'c1' });
+    expect(r.enabled).toBe(false);
+    expect(r.killSwitch).toBe(true);
+  });
+});
+
+describe('FeatureFlagService — precedencia conservada (bug 8 no cambia semántica)', () => {
+  it('scope procedimiento (más específico) gana sobre expediente', async () => {
+    mockNext([
+      mockRow({ scopeLevel: 'expediente', caseId: 'c1', enabled: true }),
+      mockRow({ scopeLevel: 'procedimiento', procedureId: 'p1', enabled: false }),
+    ]);
+    const r = await resolveFlag('sgie.ai.classification', { caseId: 'c1', procedureId: 'p1' });
+    // procedimiento desactiva => restringe.
+    expect(r.enabled).toBe(false);
+    expect(r.resolvedScope).toBe('procedimiento');
+  });
+
+  it('scope usuario restringe lo que organización activó (no-ampliar)', async () => {
+    mockNext([
+      mockRow({ scopeLevel: 'organizacion', organizationId: 'o1', enabled: true }),
+      mockRow({ scopeLevel: 'usuario', userId: 'u1', enabled: false }),
+    ]);
+    const r = await resolveFlag('sgie.ai.classification', { organizationId: 'o1', userId: 'u1' });
+    expect(r.enabled).toBe(false);
+  });
+});

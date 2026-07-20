@@ -69,18 +69,17 @@ E2E Fase 3: 70/70 assertions con DeepSeek + Resend reales.
 
 ## Fase 4A
 
-Estado: cerrada y validada (commits `7de4fd1`, `6f79b86` y cierre de bugs
-5-8). Automatización documental core P2-01 a P2-06 integrada vía
+Estado: **CERTIFICADA al 100%** (commits `7de4fd1`, `6f79b86`, `39f86b7` + certificación E2E 20-07-2026). Automatización documental core P2-01 a P2-06 integrada vía
 `DocumentAutomationOrchestrator`. FeatureFlagService con deny-by-default,
 6 scopes, kill switch admin, cache y auditoría. Prompt injection defense.
 Migraciones 0038–0043 (idempotentes, hash SHA-256). ADR-010/011/012.
 Bug 5 (fuente firma pendiente en P2-06), Bug 6 (`setFlag` atómico con
 `FOR UPDATE`+`ON CONFLICT`), Bug 7 (kill switch con `settings.manage`),
 Bug 8 (`fetchApplicable` optimizado con `WHERE OR` por scope).
-E2E Fase 4A: 19/19 assertions con DeepSeek real (validado en commits
-previos; revalidación E2E en sesión del 20-07-2026 quedó NO VALIDADA por
-ausencia de rama Neon aislada). Suite 1048/1048 tests, lint/tsc/build OK,
-sin migración nueva (bugs 5-8 son de lógica, no DDL).
+Certificación E2E real (20-07-2026): Fase 4A 19/19 con DeepSeek
+`deepseek-v4-flash`, Fase 2 9/9, Fase 3 70/70 (DeepSeek + Resend reales)
+sobre rama Neon aislada efímera (eliminada, cero residuos). Suite serial
+1065/1065, lint/tsc/build/drizzle-kit check limpios, web pública intacta.
 
 ## Restricciones
 

@@ -346,3 +346,4 @@ _tmp_*
 _chat_*.png
 auditoriablog_*.md
 .zcode/
+*.tmp

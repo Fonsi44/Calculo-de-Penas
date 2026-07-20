@@ -88,3 +88,42 @@ Esta sesión cerró los bugs 5-8 sobre `feature-flags.ts` y `next-action.ts` y a
 - **Bug 8** (optimización `fetchApplicable`): ya implementado — cláusula `WHERE OR` por scope presente en el contexto; filtro de vigencia y de scope defensivo en JS.
 
 **No se añadió migración nueva** (última `0043`): los bugs 5-8 son de lógica de aplicación, no de DDL. El schema no fue modificado.
+
+## Certificación real (20-07-2026) — E2E Neon aislada + DeepSeek + Resend
+
+Tras el cierre de bugs 5-8, se ejecutó una **certificación E2E real** sobre el HEAD `39f86b7` contra una rama Neon aislada creada para esta certificación.
+
+### Rama Neon aislada
+
+- Creada vía API Neon (`NEON_API_KEY`): `fase4a-cert-validation-20260720` (`br-solitary-dew-aprxev3u`), endpoint `ep-empty-glade-apnhgosx`, desde la rama principal.
+- Migraciones aplicadas en la rama aislada (idempotentes): `0032`, `0033`, `0034`, `0035`, `0036`, `0037`, `0038`–`0043`. La rama principal no tenía las migraciones Fase 1/2/3/4A aplicadas (solo schema base), así que se aplicaron todas en la rama efímera.
+- `DATABASE_URL` aislada construida en memoria (no en `.env`); variables del guard (`ALLOW_TEST_DATABASE`, `E2E_ENV=staging`, `E2E_NEON_BRANCH_*`) solo en memoria.
+- `guard-fase3.mjs` pasó (entorno seguro, rama verificada, producción excluida).
+- **Rama eliminada al finalizar** (endpoint DELETE 200, branch DELETE 200, confirmado).
+- **Cero residuos**: fixtures con prefijo `f2e2e`/`f3e2e`/`f4a` (usuarios, expedientes, documentos, classifs, actions, pipeline_runs) = 0 tras cleanup de cada E2E.
+
+### Resultados E2E reales (HEAD `39f86b7`)
+
+| E2E | Resultado | Detalle |
+|---|---|---|
+| **Fase 4A** (`RUN_DEEPSEEK_E2E=true`) | **19/19 assertions ✓** (EXIT 0) | DeepSeek `deepseek-v4-flash`, latencia 1219ms, tipo `identidad` confianza 95. Persistencia, flags, kill switch global, idempotencia, aislamiento, `ai_pipeline_runs`, reconexión. Cleanup: 18 filas. |
+| **Fase 2** | **9/9 pasos ✓** (EXIT 0) | Procedimiento, expediente, enlace mágico, carga atómica, outbox, job durable, job procesado, IA router, comunicación outbox. |
+| **Fase 3** | **70/70 assertions ✓** (EXIT 0) | DeepSeek `deepseek-v4-flash` latencia 527ms (tokens 112/109); **Resend real** message ID `2e86abc5-2ce...` persistido, latencia 208ms; CRON_SECRET efímero 200/401. SKIP LOCKED, DLQ, idempotencia outbox, dedup documental. Cleanup: 42 filas. |
+
+### Validación local final
+
+| Comprobación | Resultado |
+|---|---|
+| `tests/fase4a-feature-flags.test.ts` | **24/24 ✓** (8 nuevos: kill switch explícito auditado, deny-by-default explícito, fetchApplicable optimización, precedencia procedimiento/usuario) |
+| `tests/fase4a-p2-05-p2-06-extended.test.ts` | **41/41 ✓** (9 nuevos: no-inventa-datos, aislamiento org, alerta SLA, plazo vencido, comunicación pendiente, sustitución por sourceHash) |
+| Suite Vitest (serial, `--fileParallelism=false`) | **1065/1065 ✓ (59 archivos)** |
+| Suite Vitest (paralela) | 1064/1065 (1 fallo preexistente en `fase3-experiencia-operativa.test.ts` por race de paralelización; pasa 22/22 aislado; no relacionado con Fase 4A) |
+| `npm run lint` / `npx tsc --noEmit` | 0 errores / 0 errores |
+| `npx drizzle-kit check` | "Everything's fine 🐶🔥" |
+| `npm run build` | ✓ Compiled successfully (77s) |
+| `git diff --check` | limpio |
+| `app/(public)/` y `public/` | intactos (`public/sw.js` regenerado por build y revertido) |
+
+### Veredicto
+
+**Fase 4A: CERTIFICADA al 100%.** El HEAD `39f86b7` superó E2E Fase 4A con DeepSeek real (19/19), regresión Fase 2 (9/9) y Fase 3 (70/70 con DeepSeek + Resend reales) sobre rama Neon aislada, además de la suite unitaria/integración ampliada (1065/1065 serial). Cero residuos. Web pública intacta.

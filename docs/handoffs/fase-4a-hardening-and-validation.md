@@ -176,3 +176,37 @@ De 16 tests (originales) a **32 tests**. Nuevos:
 ### Sin migración nueva
 
 Los bugs 5-8 son de lógica de aplicación; no hubo cambios en `lib/schema.ts`. Última migración sigue siendo `0043_fase4a_checkpoint_unique_partial.sql`.
+
+---
+
+## Certificación E2E real (20-07-2026, tarde) — CERTIFICADA
+
+Tras la validación local, se ejecutó la **certificación E2E real** sobre `39f86b7` contra una rama Neon aislada creada ex profreso.
+
+### Rama Neon aislada (efímera)
+
+- Nombre: `fase4a-cert-validation-20260720` (`br-solitary-dew-aprxev3u`), endpoint `ep-empty-glade-apnhgosx`.
+- Creada desde la rama principal vía API Neon; migraciones `0032`–`0043` aplicadas (la rama principal no las tenía). Variables del guard solo en memoria.
+- **Eliminada al final** (DELETE endpoint + branch, confirmado). Cero residuos de fixtures (prefijos `f2e2e`/`f3e2e`/`f4a`).
+
+### Resultados E2E (todos EXIT 0)
+
+- **Fase 4A** (`RUN_DEEPSEEK_E2E=true`): **19/19 assertions**. DeepSeek `deepseek-v4-flash` 1219ms, tipo `identidad` confianza 95. Pipeline completo + kill switch + idempotencia + aislamiento + `ai_pipeline_runs` + reconexión. Cleanup 18 filas.
+- **Fase 2**: **9/9 pasos** (procedimiento, expediente, enlace, carga atómica, outbox, job durable, job procesado, IA router, comunicación outbox).
+- **Fase 3**: **70/70 assertions**. DeepSeek `deepseek-v4-flash` 527ms; **Resend real** message ID persistido 208ms; CRON_SECRET efímero 200/401. SKIP LOCKED, DLQ, idempotencia outbox, dedup documental. Cleanup 42 filas.
+
+### Tests unitarios/integración ampliados en esta sesión
+
+- `tests/fase4a-feature-flags.test.ts`: 16 → **24** (+8: kill switch explícito auditado con actor y motivo, deny-by-default explícito, optimización `fetchApplicable`, precedencia procedimiento/usuario, kill switch prioridad absoluta).
+- `tests/fase4a-p2-05-p2-06-extended.test.ts`: 16 → **41** (+25 totales esta sesión: no-inventa-datos, aislamiento org, alerta SLA, plazo vencido, comunicación pendiente, sustitución por sourceHash, único checkpoint, histórico, watermark, concurrencia/idempotencia, firma pendiente, conflictos, evidencias, DLQ aislado).
+- Suite serial completa: **1065/1065**. Paralela: 1064/1065 (1 fallo preexistente en `fase3-experiencia-operativa.test.ts` por race; pasa 22/22 aislado; no relacionado con Fase 4A).
+
+### Veredicto
+
+**Fase 4A: CERTIFICADA al 100%.** HEAD `39f86b7`. E2E Fase 4A con DeepSeek real + regresión Fase 2 + Fase 3 (DeepSeek + Resend reales) verdes sobre rama Neon aislada. Suite 1065/1065 serial. Lint/tsc/build/drizzle-kit check limpios. Web pública intacta. Rama efímera eliminada, cero residuos.
+
+### Hallazgos menores (no bloqueantes)
+
+- El modelo configurado `deepseek-chat` se mapea a `deepseek-v4-flash` en el proveedor (alias automático).
+- Producción no tiene aplicadas las migraciones Fase 1/2/3/4A (solo schema base); fue necesario aplicarlas en la rama efímera para los E2E. Esto es esperado (las migraciones Fase 4A son para entornos staging/test, no producción).
+- El test `fase3-experiencia-operativa.test.ts > WorkQueueService > returns array sorted by priority` falla de forma intermitente bajo paralelización (pasa 22/22 aislado y en serial). Deuda técnica preexistente de aislamiento de mocks.

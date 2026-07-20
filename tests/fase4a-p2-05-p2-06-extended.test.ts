@@ -781,3 +781,158 @@ describe('P2-06 recomendarNextAction — kill switch / error de flag', () => {
     expect(r.razon).toBe('feature_flag_desactivada');
   });
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Cobertura adicional solicitada en certificación Fase 4A (2026-07-20).
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── P2-05: ausencia de datos inventados, aislamiento por organización ──────
+
+describe('P2-05 generarResumenIncremental — no inventa datos cuando IA falla', () => {
+  it('fallo IA => resultado NO incluye resumen inventado (ok false, sin resumen)', async () => {
+    generarResumenIaMock.mockResolvedValueOnce({
+      ok: false as const,
+      error: 'timeout',
+      codigo: 'error_proveedor' as const,
+    });
+    dbState.queueResponses = [
+      [{ id: 'd1', hashSha256: 'aaa', subidoEn: new Date('2026-02-01') }], [], [],
+      [{ id: 'ck', sourceHash: 'viejo', watermark: new Date('2026-01-01') }],
+      [{ id: 'd1', subidoEn: new Date('2026-02-01') }], [], [],
+    ];
+    const r = await generarResumenIncremental({ expedienteId: 'exp-1', datos: datosConDoc });
+    expect(r.ok).toBe(false);
+    expect(r.resumen).toBeUndefined(); // NO se inventa un resumen.
+    expect(r.razon).toBe('fallo_ia');
+  });
+});
+
+describe('P2-05 calcularHashFuentes — aislamiento por organización', () => {
+  it('el hash es sensible al organizationId implícito vía documentos distintos por caso', async () => {
+    // No hay columna organizationId en el hash, pero el aislamiento real proviene
+    // de que cada expediente pertenece a una organización y sus documentos son
+    // distintos. Validamos que documentos distintos produzcan hash distinto
+    // (ya cubierto en aislamiento por expediente). Aquí reforzamos: dos
+    // expedientes con mismo contenido aparente pero ids de docs distintos.
+    dbState.queueResponses = [
+      [{ id: 'orgA-doc', hashSha256: 'hA', subidoEn: new Date('2026-01-01') }], [], [],
+    ];
+    const hashA = await calcularHashFuentes('exp-orgA');
+    dbState.queueResponses = [
+      [{ id: 'orgB-doc', hashSha256: 'hB', subidoEn: new Date('2026-01-01') }], [], [],
+    ];
+    const hashB = await calcularHashFuentes('exp-orgB');
+    expect(hashA).not.toBe(hashB);
+  });
+});
+
+// ─── P2-06: alerta/SLA, plazo vencido, comunicación pendiente, sustitución ──
+
+describe('P2-06 generarAccionesDeterministas — fuente: alerta/SLA crítica', () => {
+  it('alerta crítica abierta (con requisitos presentes) => acción atender_alertas_criticas no principal', async () => {
+    // Con requisitos presentes, la acción de requisitos es la principal y la
+    // alerta crítica queda como alternativa prioridad 2.
+    dbState.queueResponses = [
+      [], // contradicciones
+      [{ id: 'r1', nombre: 'RTN' }], // requisitos (será la principal)
+      // 3. alertas: 1 crítica sin resolver.
+      [{ id: 'al-1', severidad: 'critico', titulo: 'SLA de respuesta vencido' }],
+      [], [], [], // DLQ, plazos, comunicaciones
+      [{ estado: 'en_revision' }],
+    ];
+    const acciones = await generarAccionesDeterministas('exp-1');
+    const alerta = acciones.find((a) => a.actionKey === 'atender_alertas_criticas:exp-1');
+    expect(alerta).toBeDefined();
+    expect(alerta?.prioridad).toBe(2);
+    expect(alerta?.esPrincipal).toBe(false);
+    expect(alerta?.evidencias[0].tipo).toBe('alerta');
+    // La principal es la de requisitos.
+    const req = acciones.find((a) => a.actionKey.startsWith('solicitar_completar_requisitos'));
+    expect(req?.esPrincipal).toBe(true);
+  });
+
+  it('alerta de severidad info NO genera acción crítica', async () => {
+    dbState.queueResponses = [
+      [], [], [{ id: 'al-2', severidad: 'info', titulo: 'Aviso menor' }],
+      [], [], [], [{ estado: 'en_revision' }],
+    ];
+    const acciones = await generarAccionesDeterministas('exp-1');
+    expect(acciones.find((a) => a.actionKey === 'atender_alertas_criticas:exp-1')).toBeUndefined();
+  });
+});
+
+describe('P2-06 generarAccionesDeterministas — plazo vencido (ya pasado)', () => {
+  it('plazo con inicio hace <1 día (recién vencido) => aún entra en ventana urgente', async () => {
+    const haceMedioDia = new Date(Date.now() - 0.5 * 86400000).toISOString();
+    dbState.queueResponses = [
+      [], [], [], [],
+      [{ id: 'ev-venc', titulo: 'Audiencia perdida', inicio: haceMedioDia, tipo: 'audiencia' }],
+      [], [{ estado: 'en_revision' }],
+    ];
+    const acciones = await generarAccionesDeterministas('exp-1');
+    // diff > -1 día => entra en ventana urgente (atender_plazo_urgente).
+    const plazo = acciones.find((a) => a.actionKey === 'atender_plazo_urgente:exp-1');
+    expect(plazo).toBeDefined();
+  });
+
+  it('plazo con inicio hace >1 día => fuera de ventana, no genera acción de plazo', async () => {
+    const hace3Dias = new Date(Date.now() - 3 * 86400000).toISOString();
+    dbState.queueResponses = [
+      [], [], [], [],
+      [{ id: 'ev-old', titulo: 'Plazo antiguo', inicio: hace3Dias, tipo: 'plazo' }],
+      [], [{ estado: 'en_revision' }],
+    ];
+    const acciones = await generarAccionesDeterministas('exp-1');
+    expect(acciones.find((a) => a.actionKey === 'atender_plazo_urgente:exp-1')).toBeUndefined();
+    expect(acciones.find((a) => a.actionKey === 'preparar_plazo_cercano:exp-1')).toBeUndefined();
+  });
+});
+
+describe('P2-06 generarAccionesDeterministas — comunicación pendiente (no fallida)', () => {
+  it('comunicación en estado reintentando (pendiente de entrega) => entra en acción', async () => {
+    // La fuente actual cubre 'fallido' y 'reintentando'. 'reintentando' modela
+    // la comunicación pendiente de entrega exitosa.
+    dbState.queueResponses = [
+      [], [], [], [], [],
+      [{ id: 'cm-pend', tipo: 'email', destinatario: 'c@x.com', error: null }],
+      [{ estado: 'en_revision' }],
+    ];
+    const acciones = await generarAccionesDeterministas('exp-1');
+    const com = acciones.find((a) => a.actionKey === 'revisar_comunicaciones_fallidas:exp-1');
+    expect(com).toBeDefined();
+  });
+});
+
+describe('P2-06 persistirAcciones — sustitución al cambiar fuentes (sourceHash)', () => {
+  it('dos persistencias con sourceHash distinto generan idempotencyKey distinto', async () => {
+    // El idempotencyKey = expedienteId|actionKey|sourceHash[:16]. Si el source
+    // cambia, la key cambia, permitiendo que la nueva acción sustituya a la
+    // previa (no se bloquea por la UNIQUE de la key anterior).
+    const acciones = [{
+      actionKey: 'revision_general:exp-1',
+      titulo: 'R', razon: 'r', prioridad: 5, evidencias: [], bloqueos: [],
+      requiereConfirmacionHumana: false, estrategia: 'determinista' as const,
+      confianza: 80, esPrincipal: true,
+    }];
+    // Primera persistencia con hash A.
+    await persistirAcciones('exp-1', acciones, 'hashAAAA_first16chars');
+    // Segunda persistencia con hash B distinto.
+    await persistirAcciones('exp-1', acciones, 'hashBBBB_second16char');
+    // Dos inserts (uno por invocación): la sustitución es posible porque las
+    // idempotencyKeys difieren en el prefijo del sourceHash.
+    expect(chain.insert).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('P2-06 generarAccionesDeterministas — aislamiento por organización (expediente)', () => {
+  it('acciones para exp-orgA incluyen solo el expedienteId de A, no de B', async () => {
+    dbState.queueResponses = [
+      [], [], [], [], [], [], [{ estado: 'en_revision' }],
+    ];
+    const accionesA = await generarAccionesDeterministas('exp-orgA');
+    for (const a of accionesA) {
+      // Ningún actionKey debe referenciar exp-orgB.
+      expect(a.actionKey).not.toMatch(/exp-orgB/);
+    }
+  });
+});

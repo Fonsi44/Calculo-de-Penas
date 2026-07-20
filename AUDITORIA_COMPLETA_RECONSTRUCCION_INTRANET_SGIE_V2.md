@@ -4724,7 +4724,7 @@ Evidencia ejecutada el 18-07-2026:
 | P0-AI-01…04 | ✅ VALIDADO (§63.7) | Fase 2 | Router, schema/evidencia, OCR y separación de modelos/reglas/revisión. |
 | P0-WF-01…04 | ✅ VALIDADO (§63.7) | Fase 2 | Plantillas aprobadas/versionadas, fases, transición y auditoría. |
 | P1-02, P1-04…10 | ✅ VALIDADO (§63.8) | Fase 3 | UX operativa y consolidación posterior a la durabilidad de Fase 2. |
-| P2-01…06 automatización doc | ✅ VALIDADO (§63.9) | Fase 4A | Clasificación, vinculación, extracción, contradicciones, resumen, next-action. Orchestrator + E2E validados; bugs 5-8 cerrados; ADR-010/011/012; tests P2-05/P2-06 ampliados (16→32). |
+| P2-01…06 automatización doc | ✅ CERTIFICADA (§63.9) | Fase 4A | Clasificación, vinculación, extracción, contradicciones, resumen, next-action. Orchestrator + E2E real revalidado 20-07 (19/19 DeepSeek); bugs 5-8 cerrados; ADR-010/011/012; tests P2-05/P2-06 ampliados (16→41) y feature-flags (16→24). |
 | P2-07 aprobación en bloque | PENDIENTE | Fase 4B | Selección, preview, validación individual, idempotencia, undo seguro. |
 | P2-08 paquete firma | PENDIENTE | Fase 4B | Snapshot congelado, hash, manifiesto, orden, firmantes validados. |
 | P2-09 firma electrónica | PENDIENTE | Fase 4B | Adaptador desacoplado (SignatureProvider), sandbox o proveedor real. |
@@ -4916,18 +4916,18 @@ sin llamadas externas en transacciones. 7 tests.
 - ~~Tests P2-05/P2-06 mínimos~~: **RESUELTO.** 16 tests nuevos (7 P2-05 cache/hash/invalidación/abstención/fallo IA; 9 P2-06 fuentes nuevas/jerarquía/abstención).
 - ~~ADR-010/011/012 y docs~~: **RESUELTOS.** Creados ADR-010, ADR-011, ADR-012, architecture Fase 4A, ops Fase 4A. Actualizados checklist, CHANGELOG, SGIE_NEW_CHAT_CONTEXT.
 
-## 63.10 Estado consolidado por fase (20-07-2026)
+## 63.10 Estado consolidado por fase (20-07-2026, certificación)
 
 | Fase | Estado | Commits clave | E2E | Tests |
 |---|---|---|---|---|
 | Fase 1 — Núcleo admin/identidad/calendario | VALIDADO | `c74840d` | E2E Fase 1 (Neon) | 917 (en su corte) |
-| Fase 2 — Núcleo durable | VALIDADO | `be926a5` | E2E Fase 2: 9/9 | 963 (en su corte) |
-| Fase 3 — Experiencia operativa + portal | VALIDADO | `69fb621`, `8c931af` | E2E Fase 3: 70/70, DeepSeek+Resend reales | 963 |
-| Fase 4A — Automatización documental core | VALIDADO (cierre bugs 5-8 + ADRs/docs) | `7de4fd1`, `6f79b86`, `fix(sgie): close phase 4a automation core` | E2E Fase 4A: 19/19 (commits previos); revalidación E2E 20-07 NO VALIDADA (sin rama Neon aislada) | 1048 (suite completa) |
+| Fase 2 — Núcleo durable | VALIDADO | `be926a5` | E2E Fase 2: 9/9 (revalidado 20-07) | 963 (en su corte) |
+| Fase 3 — Experiencia operativa + portal | VALIDADO | `69fb621`, `8c931af` | E2E Fase 3: 70/70, DeepSeek+Resend reales (revalidado 20-07) | 963 |
+| Fase 4A — Automatización documental core | **CERTIFICADA** | `7de4fd1`, `6f79b86`, `39f86b7` | E2E Fase 4A: **19/19 DeepSeek real** (revalidado 20-07 sobre rama Neon aislada) | 1065 (suite serial) |
 | Fase 4B — Firma, calendario ext, retrieval, copiloto, UI | PENDIENTE | — | — | — |
 | Fase 5 — Predicción, balance carga, brief diario | PENDIENTE | — | — | — |
 
-**Fase 4A cerrada al 100% en alcance de código + tests unitarios/integración.** E2E real con DeepSeek fue validado en commits previos (`6f79b86`, `7de4fd1`); la revalidación E2E de la sesión 20-07-2026 quedó NO VALIDADA por ausencia de rama Neon aislada y `RUN_DEEPSEEK_E2E` en el entorno.
+**Fase 4A: CERTIFICADA al 100%.** Sobre el HEAD `39f86b7` se ejecutaron los tres E2E reales contra una rama Neon aislada efímera (`fase4a-cert-validation-20260720`, eliminada tras la certificación, cero residuos): Fase 4A 19/19 con DeepSeek `deepseek-v4-flash` (tipo identidad, confianza 95), Fase 2 9/9, Fase 3 70/70 (DeepSeek 527ms + Resend real con message ID persistido). Suite serial 1065/1065, lint/tsc/build/drizzle-kit check limpios, web pública intacta. El único elemento NO VALIDADO es el test `fase3-experiencia-operativa.test.ts > WorkQueueService > returns array sorted by priority` bajo paralelización (pasa 22/22 aislado y en serial; deuda técnica preexistente de aislamiento de mocks, no relacionada con Fase 4A).
 
 ---
 
