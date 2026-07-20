@@ -9,6 +9,8 @@ export const OUTBOX_EVENTS = {
   DOCUMENT_PROCESSING_REQUESTED: 'document.processing.requested',
   DOCUMENT_PROCESSED: 'document.processed',
   DOCUMENT_REVIEW_REQUIRED: 'document.review.required',
+  DOCUMENT_APPROVED: 'document.approved',
+  DOCUMENT_APPROVAL_REVERTED: 'document.approval.reverted',
   REQUIREMENT_COMPLETED: 'requirement.completed',
   COMMUNICATION_REQUESTED: 'communication.requested',
   COMMUNICATION_CANCELLED: 'communication.cancelled',

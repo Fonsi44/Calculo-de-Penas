@@ -86,7 +86,7 @@
 
 ### Fase 4B — Firma, calendario externo, retrieval, copiloto, UI — PENDIENTE
 
-- [ ] P2-07 Aprobación en bloque (selección, preview, validación individual, undo seguro).
+- [x] P2-07 Aprobación en bloque (selección, preview, validación individual, undo seguro). Migración 0044, flag `sgie.documents.bulk_approve`, servicio bulk-approval-service, API preview/confirm/status/revert, UI en bandeja. E2E 16/16, suite 1113/1113.
 - [ ] P2-08 Paquete de firma (snapshot congelado, hash, manifiesto, firmantes).
 - [ ] P2-09 Firma electrónica (SignatureProvider, adaptador sandbox/real).
 - [ ] P2-10 Calendario externo (ICS baseline, Google/Microsoft OAuth opcional, sync idempotente).
@@ -131,6 +131,7 @@
 - [x] 0041 Fase 4A: resúmenes incrementales + next actions + ai_pipeline_runs.
 - [x] 0042 Fase 4A: UNIQUEs (idempotencia) + seed 7 schemas canónicos.
 - [x] 0043 Fase 4A: case_summary_checkpoints UNIQUE parcial (solo vigentes).
+- [x] 0044 Fase 4B-1: aprobación en bloque (documentos_expediente.version, document_bulk_approvals, document_bulk_approval_items, enum auditoría, seed flag).
 
 ## Evidencias de validación
 

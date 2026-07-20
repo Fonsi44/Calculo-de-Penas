@@ -204,7 +204,7 @@ describe('outbox', () => {
       expect(OUTBOX_EVENTS.DOCUMENT_UPLOADED).toBe('document.uploaded');
       expect(OUTBOX_EVENTS.COMMUNICATION_REQUESTED).toBe('communication.requested');
       expect(OUTBOX_EVENTS.REQUIREMENT_COMPLETED).toBe('requirement.completed');
-      expect(Object.keys(OUTBOX_EVENTS)).toHaveLength(9);
+      expect(Object.keys(OUTBOX_EVENTS)).toHaveLength(11);
     });
   });
 

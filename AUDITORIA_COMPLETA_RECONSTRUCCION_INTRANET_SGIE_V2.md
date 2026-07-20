@@ -4927,7 +4927,27 @@ sin llamadas externas en transacciones. 7 tests.
 | Fase 4B — Firma, calendario ext, retrieval, copiloto, UI | PENDIENTE | — | — | — |
 | Fase 5 — Predicción, balance carga, brief diario | PENDIENTE | — | — | — |
 
-**Fase 4A: CERTIFICADA al 100%.** Sobre el HEAD `39f86b7` se ejecutaron los tres E2E reales contra una rama Neon aislada efímera (`fase4a-cert-validation-20260720`, eliminada tras la certificación, cero residuos): Fase 4A 19/19 con DeepSeek `deepseek-v4-flash` (tipo identidad, confianza 95), Fase 2 9/9, Fase 3 70/70 (DeepSeek 527ms + Resend real con message ID persistido). Suite serial 1065/1065, lint/tsc/build/drizzle-kit check limpios, web pública intacta. El único elemento NO VALIDADO es el test `fase3-experiencia-operativa.test.ts > WorkQueueService > returns array sorted by priority` bajo paralelización (pasa 22/22 aislado y en serial; deuda técnica preexistente de aislamiento de mocks, no relacionada con Fase 4A).
+**Fase 4A: CERTIFICADA al 100%.** Sobre el HEAD `39f86b7` se ejecutaron los tres E2E reales contra una rama Neon aislada efímera (`fase4a-cert-validation-20260720`, eliminada tras la certificación, cero residuos): Fase 4A 19/19 con DeepSeek `deepseek-v4-flash` (tipo identidad, confianza 95), Fase 2 9/9, Fase 3 70/70 (DeepSeek 527ms + Resend real con message ID persistido). Suite serial 1065/1065, lint/tsc/build/drizzle-kit check limpios, web pública intacta. El único elemento NO VALIDADO era el test `fase3-experiencia-operativa.test.ts > WorkQueueService > returns array sorted by priority` bajo paralelización (pasa 22/22 aislado y en serial); **corregido en Fase 4B-1** (causa raíz: timeout por `await import` en timer; fix: `beforeAll` precarga módulos). Suite paralela ahora estable 3×.
+
+## 63.11 Corte verificado: Fase 4B-1 — P2-07 Aprobación documental en bloque
+
+**Fecha:** 2026-07-20. HEAD: `feat(sgie): add safe bulk document approval`.
+
+**Implementado:**
+- Migración 0044 (`documentos_expediente.version`, `document_bulk_approvals`, `document_bulk_approval_items`, enum `documento_bulk_approved`/`documento_bulk_reverted`, seed flag). Idempotente, hash `ffadd62b8767`.
+- Feature flag `sgie.documents.bulk_approve` (11ª flag canónica, deny-by-default).
+- Servicio `bulk-approval-service` (preview, confirm, status, undo) con control optimista por `version`, idempotencia por `(expediente, idempotencyKey)`, resultado parcial, reversión segura (ventana 72h), cascadas readiness/resumen/next-action, auditoría + outbox.
+- API preview/confirm/status/revert (Zod+CSRF+rate-limit).
+- UI en bandeja de revisión (selección múltiple + modal).
+- ADR-013, arquitectura, ops, handoff.
+
+**Validación:**
+- Tests: servicio 31/31, API 10/10, UI 7/7.
+- E2E Neon aislado efímero `fase4b1-cert-validation-20260720`: 16/16 assertions, rama eliminada, cero residuos.
+- Suite completa: 1113/1113 (3× paralela estables).
+- lint 0, tsc 0, build OK, drizzle-kit check OK, web pública intacta.
+
+**No validado:** P2-08/09/10, retrieval, copiloto (no iniciados).
 
 ---
 

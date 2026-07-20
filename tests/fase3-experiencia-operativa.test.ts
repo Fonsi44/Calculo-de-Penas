@@ -1,5 +1,5 @@
 /// <reference types="vitest/globals" />
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 
 let queueIdx = 0;
 const _queue: unknown[] = [];
@@ -53,6 +53,27 @@ beforeEach(() => {
   }
   queueIdx = 0;
   _queue.length = 0;
+});
+
+// Precargar los módulos bajo test una sola vez antes de los tests.
+// Sin esto, el primer `await import()` dentro de un `it` paga el coste de
+// cargar lib/schema.ts + drizzle-orm mientras corre el timer del test (5000ms),
+// lo que provoca timeouts intermitentes cuando la suite completa corre en
+// paralelo (menos CPU por worker). El `beforeAll` carga los módulos fuera del
+// timer de cada test; los `await import()` posteriores devuelven la versión
+// cacheada (sin coste). Los `vi.mock` de arriba se aplican a estas cargas.
+beforeAll(async () => {
+  await Promise.all([
+    import('../lib/sgie/work-queue-service'),
+    import('../lib/sgie/review-service'),
+    import('../lib/sgie/admin-operations-service'),
+    import('../lib/sgie/alertas-sla-service'),
+    import('../lib/sgie/client-portal-service'),
+    import('../lib/sgie/inbound-service'),
+    import('../lib/sgie/communication-rules-service'),
+    import('../lib/sgie/workflow-simulation-service'),
+    import('../lib/sgie/ai-evaluation-service'),
+  ]);
 });
 
 // ─── 1. WorkQueueService ───────────────────────────────────────────────────────

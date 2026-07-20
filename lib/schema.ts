@@ -203,6 +203,9 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'documento_updated',
   'documento_deleted',
   'documento_ia_processed',
+  // Fase 4B-1: aprobación documental en bloque.
+  'documento_bulk_approved',
+  'documento_bulk_reverted',
   'enlace_created',
   'enlace_revoked',
   'enlace_used',
@@ -1245,6 +1248,10 @@ export const documentosExpediente = pgTable('documentos_expediente', {
   rechazadoEn: timestamp('rechazado_en', { withTimezone: true }),
   rechazoMotivo: text('rechazo_motivo'),
   metadata: jsonb('metadata'),
+  // Fase 4B-1: control optimista por documento para aprobación en bloque.
+  // Incrementado en cada mutación de estado (aprobar/revertir). Permite
+  // detectar conflictos concurrentes: UPDATE ... WHERE id=$1 AND version=$2.
+  version: integer('version').notNull().default(1),
 }, (table) => ({
   expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
   requisitoRef: foreignKey({ columns: [table.requisitoExpedienteId], foreignColumns: [requisitosExpediente.id] }),
@@ -1255,6 +1262,8 @@ export const documentosExpediente = pgTable('documentos_expediente', {
   expedienteIdx: index('documentos_expediente_expediente_idx').on(table.expedienteId),
   hashIdx: index('documentos_expediente_hash_idx').on(table.hashSha256),
   estadoIdx: index('documentos_expediente_estado_idx').on(table.estado),
+  // Índice para el UPDATE optimista (id, version).
+  idVersionIdx: index('documentos_expediente_id_version_idx').on(table.id, table.version),
 }));
 
 export type DocumentoExpediente = typeof documentosExpediente.$inferSelect;
@@ -2561,3 +2570,103 @@ export const aiPipelineRuns = pgTable('ai_pipeline_runs', {
 
 export type AiPipelineRun = typeof aiPipelineRuns.$inferSelect;
 export type AiPipelineRunInsert = typeof aiPipelineRuns.$inferInsert;
+
+// ────────────────────────────────────────────────────────────────────────────
+// Fase 4B-1 — P2-07: Aprobación documental en bloque.
+//
+// Permite que un abogado autorizado apruebe varios documentos de un expediente
+// en una operación segura, explicable, idempotente, auditable y parcialmente
+// reversible. El lote NO es "todo o nada": cada documento se valida y ejecuta
+// de forma individual; un documento inválido no impide aprobar los válidos.
+//
+// - document_bulk_approvals: cabecera del lote (preview hash, idempotency key,
+//   estado, resultados agregados, correlation ID).
+// - document_bulk_approval_items: resultados individuales por documento
+//   (versión snapshot para control optimista, resultado, motivo).
+// ────────────────────────────────────────────────────────────────────────────
+
+// Estado del lote completo.
+export const bulkApprovalEstadoEnumValues = [
+  'pendiente',   // preview generada, sin confirmar.
+  'confirmada',  // todos los documentos aprobados o ya aprobados.
+  'parcial',     // algunos aprobados, otros rechazados por validación.
+  'revertida',   // al menos un documento fue revertido tras confirmar.
+  'fallida',     // error técnico; ningún documento aprobado.
+  'expirada',    // preview caducó sin confirmar.
+] as const;
+export type BulkApprovalEstado = (typeof bulkApprovalEstadoEnumValues)[number];
+
+// Resultado por documento individual.
+export const bulkApprovalItemResultadoEnumValues = [
+  'pendiente',
+  'aprobado',
+  'ya_aprobado',
+  'rechazado_validacion',
+  'conflicto_version',
+  'no_autorizado',
+  'no_encontrado',
+  'bloque_contradiccion',
+  'procesamiento_pendiente',
+  'requiere_revision_humana',
+  'error_tecnico',
+  'revertido',
+] as const;
+export type BulkApprovalItemResultado = (typeof bulkApprovalItemResultadoEnumValues)[number];
+
+export const documentBulkApprovals = pgTable('document_bulk_approvals', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  actorId: uuid('actor_id').notNull(),
+  idempotencyKey: varchar('idempotency_key', { length: 100 }).notNull(),
+  previewHash: varchar('preview_hash', { length: 64 }).notNull(),
+  estado: varchar('estado', { length: 30 }).notNull().default('pendiente'),
+  previewCaducidad: timestamp('preview_caducidad', { withTimezone: true }).notNull(),
+  confirmadaEn: timestamp('confirmada_en', { withTimezone: true }),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  motivo: text('motivo'),
+  total: integer('total').notNull().default(0),
+  aprobados: integer('aprobados').notNull().default(0),
+  yaAprobados: integer('ya_aprobados').notNull().default(0),
+  rechazados: integer('rechazados').notNull().default(0),
+  resultados: jsonb('resultados').notNull().default({}),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  actorRef: foreignKey({ columns: [table.actorId], foreignColumns: [usuarios.id] }),
+  // Idempotencia: (expediente, idempotency_key) único.
+  expedienteIdemUnique: uniqueIndex('document_bulk_approvals_exp_idem_unique').on(table.expedienteId, table.idempotencyKey),
+  // Una preview activa por expediente (pendiente/confirmada/parcial).
+  expedientePreviewActiveUnique: uniqueIndex('document_bulk_approvals_exp_preview_active_unique')
+    .on(table.expedienteId, table.previewHash),
+  actorCreadoIdx: index('document_bulk_approvals_actor_creado_idx').on(table.actorId, table.creadoEn),
+  expedienteEstadoIdx: index('document_bulk_approvals_exp_estado_idx').on(table.expedienteId, table.estado),
+}));
+
+export type DocumentBulkApproval = typeof documentBulkApprovals.$inferSelect;
+export type DocumentBulkApprovalInsert = typeof documentBulkApprovals.$inferInsert;
+
+export const documentBulkApprovalItems = pgTable('document_bulk_approval_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  bulkApprovalId: uuid('bulk_approval_id').notNull(),
+  documentId: uuid('document_id').notNull(),
+  expedienteId: uuid('expediente_id').notNull(),
+  versionSnapshot: integer('version_snapshot').notNull(),
+  tipoDocumento: varchar('tipo_documento', { length: 100 }),
+  requisitoId: uuid('requisito_id'),
+  estadoPrevio: varchar('estado_previo', { length: 30 }),
+  resultado: varchar('resultado', { length: 30 }).notNull().default('pendiente'),
+  motivo: text('motivo'),
+  decididoEn: timestamp('decidido_en', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  bulkApprovalRef: foreignKey({ columns: [table.bulkApprovalId], foreignColumns: [documentBulkApprovals.id] }).onDelete('cascade'),
+  documentRef: foreignKey({ columns: [table.documentId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  // Un documento una sola vez por lote.
+  bulkDocUnique: uniqueIndex('document_bulk_approval_items_bulk_doc_unique').on(table.bulkApprovalId, table.documentId),
+  docIdx: index('document_bulk_approval_items_doc_idx').on(table.documentId),
+  bulkResultadoIdx: index('document_bulk_approval_items_bulk_resultado_idx').on(table.bulkApprovalId, table.resultado),
+}));
+
+export type DocumentBulkApprovalItem = typeof documentBulkApprovalItems.$inferSelect;
+export type DocumentBulkApprovalItemInsert = typeof documentBulkApprovalItems.$inferInsert;

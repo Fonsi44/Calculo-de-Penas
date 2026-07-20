@@ -81,6 +81,19 @@ Certificación E2E real (20-07-2026): Fase 4A 19/19 con DeepSeek
 sobre rama Neon aislada efímera (eliminada, cero residuos). Suite serial
 1065/1065, lint/tsc/build/drizzle-kit check limpios, web pública intacta.
 
+## Fase 4B-1 (P2-07)
+
+Estado: **implementado y validado** (commit `feat(sgie): add safe bulk document approval`).
+Aprobación documental en bloque: preview sin mutaciones, validación individual,
+control optimista por `version`, idempotencia por `(expediente, idempotencyKey)`,
+resultado parcial, reversión segura (ventana 72h), integración readiness/resumen/
+next-action, auditoría y outbox. Flag `sgie.documents.bulk_approve` (deny-by-default,
+11ª flag canónica). Migración 0044. ADR-013. E2E Neon aislado 16/16 (rama efímera
+eliminada, cero residuos). Suite 1113/1113 (3× paralela), lint/tsc/build/drizzle
+limpios, web pública intacta. También corregido test inestable Fase 3 (timeout por
+`await import` en timer → `beforeAll` precarga módulos). No iniciado: P2-08/09/10,
+retrieval, copiloto.
+
 ## Restricciones
 
 (mismas que antes)

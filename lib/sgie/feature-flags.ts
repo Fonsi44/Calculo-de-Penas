@@ -40,6 +40,7 @@ export const FLAG_KEYS = [
   'sgie.ai.contradictions',
   'sgie.ai.incremental_summary',
   'sgie.ai.next_action',
+  'sgie.documents.bulk_approve',
   'sgie.signature.sandbox',
   'sgie.calendar.external',
   'sgie.retrieval.fts',
