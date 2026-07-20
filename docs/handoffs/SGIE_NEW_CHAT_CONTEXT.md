@@ -59,19 +59,43 @@ documentos, comunicaciones, OCR e IA:
 - Tests: 52 suites, 917 tests, todos correctos.
 - Lint, TypeScript y build correctos.
 
+## Fase 3
+
+Estado: cerrada y validada (commit `8c931af`). Mi Jornada, workspace de
+expediente, bandeja de revisión, dashboard Admin, calendario completo
+(equipo, día completo, 409), portal del cliente, inbound email, reglas de
+comunicación, simulador workflow, evaluación IA, alertas/SLA. Migración 0037.
+E2E Fase 3: 70/70 assertions con DeepSeek + Resend reales.
+
+## Fase 4A
+
+Estado: cerrada y validada (commits `7de4fd1`, `6f79b86` y cierre de bugs
+5-8). Automatización documental core P2-01 a P2-06 integrada vía
+`DocumentAutomationOrchestrator`. FeatureFlagService con deny-by-default,
+6 scopes, kill switch admin, cache y auditoría. Prompt injection defense.
+Migraciones 0038–0043 (idempotentes, hash SHA-256). ADR-010/011/012.
+Bug 5 (fuente firma pendiente en P2-06), Bug 6 (`setFlag` atómico con
+`FOR UPDATE`+`ON CONFLICT`), Bug 7 (kill switch con `settings.manage`),
+Bug 8 (`fetchApplicable` optimizado con `WHERE OR` por scope).
+E2E Fase 4A: 19/19 assertions con DeepSeek real (validado en commits
+previos; revalidación E2E en sesión del 20-07-2026 quedó NO VALIDADA por
+ausencia de rama Neon aislada). Suite 1048/1048 tests, lint/tsc/build OK,
+sin migración nueva (bugs 5-8 son de lógica, no DDL).
+
 ## Restricciones
 
 (mismas que antes)
 
-## Prompt de arranque para un chat nuevo (Fase 3)
+## Prompt de arranque para un chat nuevo (Fase 4B)
 
 ```text
-Lee primero AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md,
+Lee primero AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md (sección 63),
 docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md y
 docs/handoffs/SGIE_NEW_CHAT_CONTEXT.md. Revisa el repositorio real y
-continúa únicamente con Fase 3: comunicaciones avanzadas, portal del
-cliente y experiencia del abogado.
-No rehagas Fase 1/2, no modifiques la web pública, no uses producción
+continúa únicamente con Fase 4B: aprobación en bloque (P2-07), paquete de
+firma (P2-08), firma electrónica (P2-09), calendario externo (P2-10),
+retrieval FTS/pg_trgm, copiloto tool calling y base de conocimiento jurídica.
+No rehagas Fases 1/2/3/4A, no modifiques la web pública, no uses producción
 ni datos reales, y no hagas commit/push/merge/despliegue.
 ```
 
@@ -81,7 +105,14 @@ ni datos reales, y no hagas commit/push/merge/despliegue.
 - [Checklist maestro](../roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md)
 - [Handoff Fase 1 a Fase 2](fase-1-a-fase-2.md)
 - [Handoff Fase 2 a Fase 3](fase-2-a-fase-3.md)
+- [Handoff Fase 3 a Fase 4](fase-3-a-fase-4.md)
+- [Handoff Fase 4A](fase-4a-hardening-and-validation.md)
 - [Arquitectura Fase 1](../architecture/fase-1-nucleo-admin-identidad-calendario.md)
 - [Arquitectura Fase 2](../architecture/fase-2-nucleo-durable-documentos-comunicaciones.md)
+- [Arquitectura Fase 4A](../architecture/fase-4a-automatizacion-documental-core.md)
 - [Validación Fase 2](../ops/fase-2-staging-validation.md)
+- [Validación Fase 4A](../ops/fase-4a-staging-validation.md)
 - [Manifiesto de borrados](fase-1-deletion-manifest.md)
+- [ADR-010 Feature flags](../adr/ADR-010-feature-flags-and-kill-switches.md)
+- [ADR-011 Orchestrator](../adr/ADR-011-document-automation-orchestrator.md)
+- [ADR-012 Gobernanza IA](../adr/ADR-012-ai-governance-and-prompt-injection.md)

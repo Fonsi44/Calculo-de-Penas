@@ -30,7 +30,8 @@
  */
 import { db } from '@/lib/db';
 import { featureFlags, featureFlagHistory } from '@/lib/schema';
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, or, sql, type SQL } from 'drizzle-orm';
+import { assertCapability } from '@/lib/access-service';
 
 export const FLAG_KEYS = [
   'sgie.ai.classification',
@@ -122,36 +123,71 @@ function isFlagKey(key: string): key is FlagKey {
 }
 
 /**
- * Lee todos los registros de BD que aplican al contexto dado para una flag,
- * considerando scope descendente (cada nivel más específico sobreescribe).
- * Devuelve en orden de prioridad (más específico primero).
+ * Lee los registros de BD que aplican al contexto dado para una flag.
+ *
+ * Optimización (bug 8): en lugar de cargar TODAS las filas de la flag y
+ * filtrar en JS, construye una cláusula WHERE que recupera solo los scopes
+ * relevantes para el contexto (global + el específico de cada nivel presente).
+ * Sigue aplicando el filtro de vigencia temporal en BD. Evita N+1 y escaneos.
+ *
+ * Devuelve en orden de prioridad (más específico primero) tras el filtrado.
  */
 async function fetchApplicable(flagKey: string, ctx: FlagContext) {
+  // Construir OR de condiciones por scope aplicable al contexto.
+  // Usar sql`` para combinar scope_level + id en cada rama (Drizzle no acepta
+  // and() con un solo arg de forma tipada, y el COALESCE del índice UNIQUE
+  // exige que coincida exactamente el id del scope).
+  const scopeConds: SQL[] = [sql`"scope_level" = 'global'`];
+  if (ctx.organizationId) {
+    scopeConds.push(sql`("scope_level" = 'organizacion' AND "organization_id" = ${ctx.organizationId})`);
+  }
+  if (ctx.teamId) {
+    scopeConds.push(sql`("scope_level" = 'equipo' AND "team_id" = ${ctx.teamId})`);
+  }
+  if (ctx.userId) {
+    scopeConds.push(sql`("scope_level" = 'usuario' AND "user_id" = ${ctx.userId})`);
+  }
+  if (ctx.caseId) {
+    scopeConds.push(sql`("scope_level" = 'expediente' AND "case_id" = ${ctx.caseId})`);
+  }
+  if (ctx.procedureId) {
+    scopeConds.push(sql`("scope_level" = 'procedimiento' AND "procedure_id" = ${ctx.procedureId})`);
+  }
+
   const rows = await db
     .select()
     .from(featureFlags)
-    .where(eq(featureFlags.flagKey, flagKey))
+    .where(
+      and(
+        eq(featureFlags.flagKey, flagKey),
+        or(...scopeConds),
+      ),
+    )
     .orderBy(desc(featureFlags.creadoEn));
 
+  // Filtro de vigencia temporal Y de scope en JS como defensa adicional.
+  // El SQL ya filtra por scope para optimizar (evita cargar filas irrelevantes),
+  // pero este filtro JS garantiza corrección semántica incluso si la query SQL
+  // devuelve filas que no aplican al contexto (ej. mocks de test, o si el
+  // optimizador de BD no respeta el OR de scopes correctamente).
   const now = Date.now();
   return rows.filter((r) => {
-    // Filtro de vigencia.
     if (r.validFrom && new Date(r.validFrom).getTime() > now) return false;
     if (r.validUntil && new Date(r.validUntil).getTime() < now) return false;
-    // Filtro de scope: el registro aplica si su scope coincide con el ctx.
+    // Filtro de scope defensivo.
     switch (r.scopeLevel) {
       case 'global':
         return true;
       case 'organizacion':
-        return ctx.organizationId && r.organizationId === ctx.organizationId;
+        return ctx.organizationId != null && r.organizationId === ctx.organizationId;
       case 'equipo':
-        return ctx.teamId && r.teamId === ctx.teamId;
+        return ctx.teamId != null && r.teamId === ctx.teamId;
       case 'usuario':
-        return ctx.userId && r.userId === ctx.userId;
+        return ctx.userId != null && r.userId === ctx.userId;
       case 'expediente':
-        return ctx.caseId && r.caseId === ctx.caseId;
+        return ctx.caseId != null && r.caseId === ctx.caseId;
       case 'procedimiento':
-        return ctx.procedureId && r.procedureId === ctx.procedureId;
+        return ctx.procedureId != null && r.procedureId === ctx.procedureId;
       default:
         return false;
     }
@@ -303,25 +339,34 @@ export async function setFlag(input: FlagMutacionInput): Promise<void> {
     throw new Error(`scope_sin_id: ${input.scopeLevel} requiere el ID correspondiente en context`);
   }
 
-  // Leer estado anterior si existe (para historial).
-  const prevRows = await db
-    .select()
-    .from(featureFlags)
-    .where(
-      and(
-        eq(featureFlags.flagKey, input.flagKey),
-        eq(featureFlags.scopeLevel, input.scopeLevel),
-      ),
-    )
-    .limit(1);
-  const prev = prevRows[0];
-  const prevEnabled = prev?.enabled ?? null;
-  const prevConfig = prev?.config ?? null;
-
-  // Upsert (ON CONFLICT por scope unique no es directo en Drizzle con COALESCE;
-  // usamos delete + insert en transacción).
+  // Upsert atómico bajo concurrencia. El patrón previo (select-then-update/insert)
+  // tenía una race condition TOCTOU: dos writers concurrentes podían leer ambos
+  // "no existe", insertar ambos, y violar el UNIQUE (o perder una actualización).
+  //
+  // Solución: transacción con SELECT ... FOR UPDATE (bloqueo pesimista de la
+  // fila existente) + INSERT ... ON CONFLICT DO NOTHING + UPDATE si el INSERT
+  // no afectó filas. El FOR UPDATE serializa los writers sobre la misma flag.
+  // Para el caso "no existe", el ON CONFLICT del UNIQUE compuesto garantiza
+  // que solo un insert gane; el segundo hará el UPDATE.
   await db.transaction(async (tx) => {
+    // Bloquear la fila existente (si la hay) para serializar writers.
+    const prevRows = await tx.execute(
+      sql`SELECT * FROM "feature_flags"
+          WHERE "flag_key" = ${input.flagKey}
+            AND "scope_level" = ${input.scopeLevel}
+            AND COALESCE("organization_id", '00000000-0000-0000-0000-000000000000') = COALESCE(${input.context.organizationId ?? null}::uuid, '00000000-0000-0000-0000-000000000000')
+            AND COALESCE("team_id", '00000000-0000-0000-0000-000000000000') = COALESCE(${input.context.teamId ?? null}::uuid, '00000000-0000-0000-0000-000000000000')
+            AND COALESCE("user_id", '00000000-0000-0000-0000-000000000000') = COALESCE(${input.context.userId ?? null}::uuid, '00000000-0000-0000-0000-000000000000')
+            AND COALESCE("case_id", '00000000-0000-0000-0000-000000000000') = COALESCE(${input.context.caseId ?? null}::uuid, '00000000-0000-0000-0000-000000000000')
+            AND COALESCE("procedure_id", '00000000-0000-0000-0000-000000000000') = COALESCE(${input.context.procedureId ?? null}::uuid, '00000000-0000-0000-0000-000000000000')
+          FOR UPDATE`,
+    );
+    const prev = (prevRows as unknown as Array<Record<string, unknown>>)[0];
+    const prevEnabled = (prev?.enabled as boolean | undefined) ?? null;
+    const prevConfig = (prev?.config as Record<string, unknown> | undefined) ?? null;
+
     if (prev) {
+      // UPDATE sobre la fila bloqueada.
       await tx
         .update(featureFlags)
         .set({
@@ -334,24 +379,53 @@ export async function setFlag(input: FlagMutacionInput): Promise<void> {
           actorId: input.actorId,
           actualizadoEn: new Date(),
         })
-        .where(eq(featureFlags.id, prev.id));
+        .where(eq(featureFlags.id, prev.id as string));
     } else {
-      await tx.insert(featureFlags).values({
-        flagKey: input.flagKey,
-        scopeLevel: input.scopeLevel,
-        organizationId: input.context.organizationId,
-        teamId: input.context.teamId,
-        userId: input.context.userId,
-        caseId: input.context.caseId,
-        procedureId: input.context.procedureId,
-        enabled: input.enabled,
-        config: input.config ?? {},
-        killSwitch: input.killSwitch ?? false,
-        validFrom: input.validFrom,
-        validUntil: input.validUntil,
-        motivo: input.motivo,
-        actorId: input.actorId,
-      });
+      // INSERT con ON CONFLICT DO NOTHING (UNIQUE compuesto protege).
+      // Si otro writer ganó, no hacemos nada aquí; la próxima invocación verá
+      // la fila y hará UPDATE. Para no perder la escritura, re-leemos y si la
+      // fila apareció, actualizamos.
+      const inserted = await tx
+        .insert(featureFlags)
+        .values({
+          flagKey: input.flagKey,
+          scopeLevel: input.scopeLevel,
+          organizationId: input.context.organizationId,
+          teamId: input.context.teamId,
+          userId: input.context.userId,
+          caseId: input.context.caseId,
+          procedureId: input.context.procedureId,
+          enabled: input.enabled,
+          config: input.config ?? {},
+          killSwitch: input.killSwitch ?? false,
+          validFrom: input.validFrom,
+          validUntil: input.validUntil,
+          motivo: input.motivo,
+          actorId: input.actorId,
+        })
+        .onConflictDoNothing()
+        .returning({ id: featureFlags.id });
+      if (inserted.length === 0) {
+        // Otro writer ganó la inserción; actualizar la fila existente.
+        await tx
+          .update(featureFlags)
+          .set({
+            enabled: input.enabled,
+            config: input.config ?? {},
+            killSwitch: input.killSwitch ?? false,
+            validFrom: input.validFrom,
+            validUntil: input.validUntil,
+            motivo: input.motivo,
+            actorId: input.actorId,
+            actualizadoEn: new Date(),
+          })
+          .where(
+            and(
+              eq(featureFlags.flagKey, input.flagKey),
+              eq(featureFlags.scopeLevel, input.scopeLevel),
+            ),
+          );
+      }
     }
     // Historial inmutable.
     await tx.insert(featureFlagHistory).values({
@@ -377,8 +451,22 @@ export async function setFlag(input: FlagMutacionInput): Promise<void> {
 }
 
 /**
+ * Valida autorización para activar/desactivar kill switches. Requiere capacidad
+ * administrativa `settings.manage`. Deny-by-default: lanza ForbiddenError si
+ * el actor no está autenticado, está suspendido/inactivo, o no tiene la
+ * capacidad. No acepta rol proporcionado por cliente.
+ */
+async function assertKillSwitchAuthorization(actorId: string): Promise<void> {
+  await assertCapability(actorId, 'settings.manage');
+}
+
+/**
  * Activa el kill switch global de una flag. Prioridad absoluta sobre cualquier
- * override. Solo admin.
+ * override.
+ *
+ * Autorización: requiere `settings.manage` (capacidad administrativa). Valida
+ * cuenta activa, no suspendida, acceso SGIE y capacidad en servidor vía
+ * AccessService. Deny-by-default: cualquier fallo de autorización aborta.
  */
 export async function activateKillSwitch(
   flagKey: string,
@@ -388,6 +476,8 @@ export async function activateKillSwitch(
   if (!isFlagKey(flagKey)) {
     throw new Error(`flag_key_desconocida: ${flagKey}`);
   }
+  // Autorización admin obligatoria (deny-by-default).
+  await assertKillSwitchAuthorization(actorId);
   await setFlag({
     flagKey,
     scopeLevel: 'global',
@@ -401,13 +491,19 @@ export async function activateKillSwitch(
 
 /**
  * Desactiva el kill switch global de una flag (restaura el comportamiento
- * normal). Solo admin.
+ * normal).
+ *
+ * Autorización: misma que activateKillSwitch (`settings.manage`).
  */
 export async function deactivateKillSwitch(
   flagKey: string,
   actorId: string,
   motivo: string,
 ): Promise<void> {
+  if (!isFlagKey(flagKey)) {
+    throw new Error(`flag_key_desconocida: ${flagKey}`);
+  }
+  await assertKillSwitchAuthorization(actorId);
   // Eliminar el registro de kill switch global.
   await db
     .delete(featureFlags)

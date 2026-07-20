@@ -29,9 +29,12 @@ import {
   documentContradictions,
   alertas,
   jobsSgie,
+  eventosAgenda,
+  comunicacionesOutbox,
+  expedientes,
   type CaseNextAction,
 } from '@/lib/schema';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, eq, inArray, or as orDrizzle } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import { isFlagEnabled } from './feature-flags';
 
@@ -163,7 +166,139 @@ export async function generarAccionesDeterministas(expedienteId: string): Promis
     });
   }
 
-  // 5. Si no hay acciones (expediente en buen estado): acción de revisión general.
+  // 5. Plazos/vencimientos próximos (eventos de agenda tipo plazo/audiencia/vencimiento).
+  // Prioridad 2 si vencen en <= 3 días; prioridad 3 si en <= 7 días.
+  const plazosProximos = await db.select({ id: eventosAgenda.id, titulo: eventosAgenda.titulo, inicio: eventosAgenda.inicio, tipo: eventosAgenda.tipo })
+    .from(eventosAgenda)
+    .where(and(
+      eq(eventosAgenda.expedienteId, expedienteId),
+      inArray(eventosAgenda.estado, ['confirmada', 'propuesta']),
+      inArray(eventosAgenda.tipo, ['audiencia', 'plazo', 'vencimiento_enlace', 'firma', 'cita_cliente']),
+    ))
+    .limit(10);
+  const ahora = Date.now();
+  const plazosUrgentes = plazosProximos.filter((p) => {
+    if (!p.inicio) return false;
+    const diff = new Date(p.inicio).getTime() - ahora;
+    return diff <= 3 * 86400000 && diff > -86400000; // <=3d futuro, no >1d pasado
+  });
+  if (plazosUrgentes.length > 0) {
+    acciones.push({
+      actionKey: `atender_plazo_urgente:${expedienteId}`,
+      titulo: `Atender ${plazosUrgentes.length} plazo(s) próximo(s)`,
+      descripcion: plazosUrgentes.map((p) => `${p.titulo} (${p.tipo})`).join(', '),
+      razon: 'Hay plazos/audiencias que vencen en 3 días o menos.',
+      prioridad: 2,
+      evidencias: plazosUrgentes.map((p) => ({ tipo: 'plazo', id: p.id, descripcion: `${p.titulo} (${p.tipo}) ${p.inicio ? new Date(p.inicio).toISOString().slice(0, 10) : ''}` })),
+      bloqueos: [],
+      requiereConfirmacionHumana: true,
+      estrategia: 'determinista',
+      confianza: 100,
+      reglaId: 'det.plazo_3dias',
+      esPrincipal: false,
+    });
+  } else {
+    const plazosCercanos = plazosProximos.filter((p) => {
+      if (!p.inicio) return false;
+      const diff = new Date(p.inicio).getTime() - ahora;
+      return diff <= 7 * 86400000 && diff > 3 * 86400000;
+    });
+    if (plazosCercanos.length > 0) {
+      acciones.push({
+        actionKey: `preparar_plazo_cercano:${expedienteId}`,
+        titulo: `Preparar ${plazosCercanos.length} plazo(s) en <=7 días`,
+        descripcion: plazosCercanos.map((p) => p.titulo).join(', '),
+        razon: 'Plazos/audiencias en los próximos 7 días.',
+        prioridad: 3,
+        evidencias: plazosCercanos.map((p) => ({ tipo: 'plazo', id: p.id, descripcion: p.titulo })),
+        bloqueos: [],
+        requiereConfirmacionHumana: false,
+        estrategia: 'determinista',
+        confianza: 100,
+        reglaId: 'det.plazo_7dias',
+        esPrincipal: false,
+      });
+    }
+  }
+
+  // 6. Comunicaciones fallidas/rebotadas pendientes de revisión.
+  const comFallidas = await db.select({ id: comunicacionesOutbox.id, tipo: comunicacionesOutbox.tipo, destinatario: comunicacionesOutbox.destinatario, error: comunicacionesOutbox.error })
+    .from(comunicacionesOutbox)
+    .where(and(
+      eq(comunicacionesOutbox.expedienteId, expedienteId),
+      orDrizzle(eq(comunicacionesOutbox.estado, 'fallido'), eq(comunicacionesOutbox.estado, 'reintentando')),
+    ))
+    .limit(5);
+  if (comFallidas.length > 0) {
+    acciones.push({
+      actionKey: `revisar_comunicaciones_fallidas:${expedienteId}`,
+      titulo: `Revisar ${comFallidas.length} comunicación(es) fallida(s)`,
+      descripcion: comFallidas.map((c) => `${c.tipo} a ${c.destinatario}`).join(', '),
+      razon: 'Hay comunicaciones que fallaron o están reintentando.',
+      prioridad: 3,
+      evidencias: comFallidas.map((c) => ({ tipo: 'comunicacion', id: c.id, descripcion: `${c.tipo}: ${c.error ?? 'sin detalle'}` })),
+      bloqueos: [],
+      requiereConfirmacionHumana: true,
+      estrategia: 'determinista',
+      confianza: 100,
+      reglaId: 'det.comunicacion_fallida',
+      esPrincipal: false,
+    });
+  }
+
+  // 7. Firma/paquete pendiente: eventos de agenda tipo 'firma' en estado
+  // 'propuesta' (pendiente de confirmar/enviar) que NO hayan sido ya captados
+  // por la rama de plazos urgentes/cercanos (ventana <=7 días). En Fase 4A no
+  // existe tabla signature_packages (llega en Fase 4B / P2-08); la fuente
+  // canónica de "firma pendiente" son los eventos_agenda de tipo 'firma'. No
+  // se inventa un origen de datos: se reutiliza el schema existente.
+  const yaCubiertosPorPlazos = new Set(plazosUrgentes.concat(plazosProximos.filter((p) => {
+    if (!p.inicio) return false;
+    const diff = new Date(p.inicio).getTime() - ahora;
+    return diff <= 7 * 86400000 && diff > 3 * 86400000;
+  })).map((p) => p.id));
+  const firmasPendientes = plazosProximos.filter(
+    (p) => p.tipo === 'firma' && !yaCubiertosPorPlazos.has(p.id),
+  );
+  if (firmasPendientes.length > 0) {
+    acciones.push({
+      actionKey: `gestionar_firma_pendiente:${expedienteId}`,
+      titulo: `Gestionar ${firmasPendientes.length} firma(s) pendiente(s)`,
+      descripcion: firmasPendientes.map((p) => p.titulo).join(', '),
+      razon: 'Hay paquetes/eventos de firma pendientes de confirmar o enviar.',
+      prioridad: 2,
+      evidencias: firmasPendientes.map((p) => ({ tipo: 'firma_pendiente', id: p.id, descripcion: p.titulo })),
+      bloqueos: [],
+      requiereConfirmacionHumana: true,
+      estrategia: 'determinista',
+      confianza: 100,
+      reglaId: 'det.firma_pendiente',
+      esPrincipal: false,
+    });
+  }
+
+  // 8. Readiness bloqueado: si el expediente está en estado 'devuelto_por_abogado'
+  // o 'inconsistencias_detectadas', hay bloqueos de preparación que atender.
+  const expedienteEstado = await db.select({ estado: expedientes.estado }).from(expedientes).where(eq(expedientes.id, expedienteId)).limit(1);
+  const estadosBloqueoReadiness = ['devuelto_por_abogado', 'inconsistencias_detectadas', 'bloqueado_por_cliente'];
+  if (estadosBloqueoReadiness.includes(expedienteEstado[0]?.estado ?? '')) {
+    acciones.push({
+      actionKey: `resolver_bloqueo_readiness:${expedienteId}`,
+      titulo: `Resolver bloqueo de readiness`,
+      descripcion: `Expediente en estado "${expedienteEstado[0]?.estado}"`,
+      razon: 'El expediente tiene un bloqueo de preparación documental que requiere atención.',
+      prioridad: 2,
+      evidencias: [{ tipo: 'estado_expediente', id: expedienteId, descripcion: `Estado: ${expedienteEstado[0]?.estado}` }],
+      bloqueos: [{ tipo: 'readiness', descripcion: 'Preparación documental bloqueada' }],
+      requiereConfirmacionHumana: true,
+      estrategia: 'determinista',
+      confianza: 100,
+      reglaId: 'det.readiness_bloqueado',
+      esPrincipal: false,
+    });
+  }
+
+  // 9. Si no hay acciones (expediente en buen estado): acción de revisión general.
   if (acciones.length === 0) {
     acciones.push({
       actionKey: `revision_general:${expedienteId}`,

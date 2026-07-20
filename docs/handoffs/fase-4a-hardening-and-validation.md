@@ -136,3 +136,43 @@ Cleanup en `finally` del E2E: **18 filas eliminadas, 0 restantes** (assertion de
 - Copiloto tool calling.
 - Base de conocimiento jurídica.
 - UI extensa.
+
+---
+
+## Actualización 2026-07-20 — Cierre de bugs 5-8 y ADRs
+
+Esta sesión cerró la deuda documentada arriba (bugs 5-8 + ADR-010/011/012 + docs).
+
+### Bugs cerrados
+
+| # | Estado | Detalle |
+|---|---|---|
+| 5 | **Cerrado** | Añadida fuente `det.firma_pendiente` en `next-action.ts`: detecta `eventos_agenda` tipo `firma` en estado `propuesta`/`confirmada` no cubiertos por la ventana de plazos (≤7d). Fuentes plazos, comunicaciones fallidas/rebotadas y readiness ya estaban implementadas en el commit previo. |
+| 6 | **Cerrado (commit previo + verificado)** | `setFlag` usa transacción con `SELECT ... FOR UPDATE` + `INSERT ... ON CONFLICT DO NOTHING` + `UPDATE` fallback + historial en la misma transacción. Resuelve la race TOCTOU del patrón select-then-update/insert. |
+| 7 | **Cerrado (commit previo + verificado)** | `activateKillSwitch`/`deactivateKillSwitch` validan `settings.manage` vía `assertKillSwitchAuthorization` → `assertCapability` (deny-by-default: cuenta activa, no suspendida, acceso SGIE, capacidad en servidor). No acepta rol de cliente. |
+| 8 | **Cerrado (commit previo + verificado)** | `fetchApplicable` construye `WHERE OR` por scope presente en el contexto (global + específico de cada nivel), evitando cargar todas las filas. Filtro de vigencia y de scope defensivo en JS. Precedencia, kill switch y deny-by-default sin cambios. |
+
+### Tests ampliados (`tests/fase4a-p2-05-p2-06-extended.test.ts`)
+
+De 16 tests (originales) a **32 tests**. Nuevos:
+
+- **P2-05**: único checkpoint vigente (transacción), histórico se escribe, watermark avanzado, concurrencia/idempotencia (primero escribe, segundo cache hit sin IA), aislamiento por expediente, flag apagado, kill switch implícito.
+- **P2-06**: fuente firma pendiente (prioridad 2, no duplica con plazos), conflictos/prioridades (bloqueante > resto; varias fuentes con prioridades correctas), evidencias verificables, DLQ aislado por expediente, idempotencia por `sourceHash` en `persistirAcciones`, flag apagado en `recomendarNextAction`, kill switch/error capturado como deny.
+
+### ADRs creados
+
+- [ADR-010: Feature flags y kill switches](../adr/ADR-010-feature-flags-and-kill-switches.md)
+- [ADR-011: Orquestador de automatización documental](../adr/ADR-011-document-automation-orchestrator.md)
+- [ADR-012: Gobernanza IA y prompt injection](../adr/ADR-012-ai-governance-and-prompt-injection.md)
+
+### Validación local real (20-07-2026)
+
+- `tests/fase4a-*`: 85/85 ✓ (feature-flags 16, p2-05-p2-06 extended 32, orchestrator 7, servicios-core 19, clasificacion 11).
+- Regresión Fase 2: 24/24 ✓. Fase 3: 22/22 ✓.
+- Suite Vitest completa: **1048/1048 ✓ (59 archivos)**.
+- `npm run lint`: 0 errores. `npx tsc --noEmit`: 0 errores. `npm run build`: ✓ Compiled successfully. `git diff --check`: limpio. `app/(public)/`: intacta.
+- **NO VALIDADO en esta sesión**: E2E Fase 4A con DeepSeek real (sin rama Neon aislada ni `RUN_DEEPSEEK_E2E`). E2E fue verde en commits previos.
+
+### Sin migración nueva
+
+Los bugs 5-8 son de lógica de aplicación; no hubo cambios en `lib/schema.ts`. Última migración sigue siendo `0043_fase4a_checkpoint_unique_partial.sql`.

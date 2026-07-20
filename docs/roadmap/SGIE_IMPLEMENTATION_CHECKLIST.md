@@ -65,10 +65,36 @@
 - [ ] **Operaciones por lote** — selección múltiple de documentos para procesar/rechazar en lote.
 - [ ] **Firma mediante adaptador independiente.**
 
-## Fase 4 — Experiencia del abogado y workspace (ampliado)
+## Fase 4 — Automatización documental, firma, calendario externo y retrieval
 
-- [ ] Workspace completo, riesgos y revisión por excepción.
-- [ ] Historial, próxima acción y calendario avanzado.
+### Fase 4A — Automatización documental core (P2-01 a P2-06) — VALIDADA
+
+- [x] Migraciones 0038–0043 aplicadas en Neon aislada (sgie_schema_migrations con hash).
+- [x] FeatureFlagService: deny-by-default, 6 scopes, precedencia, kill switch, cache, auditoría.
+- [x] P2-01 Clasificación documental (heurística→DeepSeek, evidencia, tipos críticos humano).
+- [x] P2-02 Auto-vinculación reversible (candidato único, confianza, sin bloqueantes).
+- [x] P2-03 Extracción estructurada versionada (regex→DeepSeek, schemas canónicos sembrados).
+- [x] P2-04 Contradicciones deterministas (campos sensibles=>crítica bloqueante, duplicidad hash).
+- [x] P2-05 Resumen incremental (hash fuentes, watermark, cache hit, abstención).
+- [x] P2-06 NextActionService (bloqueantes > requisitos > alertas > DLQ > plazos ≤3d/≤7d > firma pendiente > comunicaciones > readiness).
+- [x] DocumentAutomationOrchestrator (autorización, correlationId, ai_pipeline_runs, resiliencia).
+- [x] Prompt injection defense (documento=DATO, allowlist tipos, tipos críticos humano).
+- [x] ADR-010 (feature flags), ADR-011 (orchestrator), ADR-012 (gobernanza IA).
+- [x] E2E Fase 4A: 19/19 assertions con DeepSeek real (deepseek-v4-flash, 792ms).
+- [x] Regresión Fases 2 y 3 verde.
+- [x] Suite 1015+ tests, lint/tsc/build/drizzle OK.
+
+### Fase 4B — Firma, calendario externo, retrieval, copiloto, UI — PENDIENTE
+
+- [ ] P2-07 Aprobación en bloque (selección, preview, validación individual, undo seguro).
+- [ ] P2-08 Paquete de firma (snapshot congelado, hash, manifiesto, firmantes).
+- [ ] P2-09 Firma electrónica (SignatureProvider, adaptador sandbox/real).
+- [ ] P2-10 Calendario externo (ICS baseline, Google/Microsoft OAuth opcional, sync idempotente).
+- [ ] Retrieval FTS/pg_trgm (sin embeddings; PostgreSQL FTS + pg_trgm + tool calling).
+- [ ] Copiloto tool calling (allowlist, plan de consulta tipado, contexto controlado).
+- [ ] Base de conocimiento jurídica versionada (fuentes, aprobación, vigencia, índice textual).
+- [ ] Workspace global del abogado + UI extensa.
+- [ ] Evaluación continua de automatizaciones (datasets, métricas, gates).
 
 ## Fase 5 — Copiloto, conocimiento y cierre productivo
 
@@ -98,6 +124,13 @@
 - [x] 0034 Fase 2: workflow engine, outbox, jobs durables, comunicaciones outbox base.
 - [x] 0035 Fase 2: OCR resultados, AI task routing, pipeline tracking en documentos.
 - [x] 0036 Fase 2: plantillas de correo versionadas, delivery tracking, webhooks, auditoría de comunicaciones.
+- [x] 0037 Fase 3: alertas SLA, inbound messages, portal sessions, communication rules, workflow snapshots, user activity log.
+- [x] 0038 Fase 4A: registro de migraciones SGIE (sgie_schema_migrations con hash SHA-256).
+- [x] 0039 Fase 4A: feature flags + historial (6 scopes, kill switch, precedencia).
+- [x] 0040 Fase 4A: pipeline documental (clasificaciones, vínculos, schemas extracción, extracciones, contradicciones).
+- [x] 0041 Fase 4A: resúmenes incrementales + next actions + ai_pipeline_runs.
+- [x] 0042 Fase 4A: UNIQUEs (idempotencia) + seed 7 schemas canónicos.
+- [x] 0043 Fase 4A: case_summary_checkpoints UNIQUE parcial (solo vigentes).
 
 ## Evidencias de validación
 
@@ -124,7 +157,7 @@
 
 Fase 3 está **implementada y validada** (E2E 70/70 assertions en rama Neon
 aislada, DeepSeek + Resend reales, 963/963 tests locales, build correcto).
-El siguiente paso es **Fase 4** (firma electrónica, workspace global del
+El siguiente paso es **Fase 4B** (firma electrónica, paquetes de firma, calendario externo,
 abogado, calendario externo, copiloto RAG transversal, predicción y next
 best action). Ver [`docs/handoffs/fase-3-a-fase-4.md`](../handoffs/fase-3-a-fase-4.md).
 

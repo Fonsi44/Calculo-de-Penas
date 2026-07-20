@@ -14,6 +14,7 @@ const { chain, mockNext } = vi.hoisted(() => {
   for (const m of chainingMethods) c[m] = vi.fn(() => c);
   c.limit = vi.fn(() => c);
   c.offset = vi.fn(() => c);
+  c.onConflictDoNothing = vi.fn(() => c); // permite encadenar .returning() después
   c.returning = vi.fn(() => {
     const val = queueIdx < _queue.length ? _queue[queueIdx++] : undefined;
     return Promise.resolve(val !== undefined ? val : []);
@@ -28,6 +29,12 @@ const { chain, mockNext } = vi.hoisted(() => {
 });
 
 vi.mock('@/lib/db', () => ({ db: chain }));
+
+// Mock de access-service para tests de kill switch (bug 7).
+const { assertCapabilityMock } = vi.hoisted(() => ({
+  assertCapabilityMock: vi.fn(async () => ({ active: true, suspended: false, sgIeEnabled: true, capabilities: new Set(['settings.manage']) })),
+}));
+vi.mock('@/lib/access-service', () => ({ assertCapability: assertCapabilityMock }));
 
 const {
   resolveFlag, isFlagEnabled, setFlag, activateKillSwitch, clearFlagCache, FLAG_KEYS,
@@ -62,6 +69,8 @@ beforeEach(() => {
   queueIdx = 0;
   _queue.length = 0;
   clearFlagCache();
+  assertCapabilityMock.mockClear();
+  assertCapabilityMock.mockResolvedValue({ active: true, suspended: false, sgIeEnabled: true, capabilities: new Set(['settings.manage']) });
 });
 
 describe('FeatureFlagService — deny-by-default', () => {
@@ -140,12 +149,19 @@ describe('FeatureFlagService — kill switch', () => {
     expect(r.motivo).toBe('kill_switch_activo');
   });
 
-  it('activateKillSwitch delega en setFlag con killSwitch=true', async () => {
-    // setFlag lee prev (limit().returning()) y luego update + insert history en tx.
+  it('activateKillSwitch delega en setFlag con killSwitch=true (admin autorizado)', async () => {
+    assertCapabilityMock.mockResolvedValueOnce({ active: true, suspended: false, sgIeEnabled: true, capabilities: new Set(['settings.manage']) });
     mockNext([]); // prev vacío
     await activateKillSwitch('sgie.ai.classification', 'admin-1', 'emergencia');
     // No debe lanzar; la transacción mock acepta las llamadas.
-    expect(true).toBe(true);
+    expect(assertCapabilityMock).toHaveBeenCalledWith('admin-1', 'settings.manage');
+  });
+
+  it('activateKillSwitch rechaza abogado sin settings.manage (deny-by-default)', async () => {
+    assertCapabilityMock.mockRejectedValueOnce(new Error('ForbiddenError: Falta la capacidad settings.manage'));
+    await expect(
+      activateKillSwitch('sgie.ai.classification', 'abogado-1', 'emergencia'),
+    ).rejects.toThrow();
   });
 });
 

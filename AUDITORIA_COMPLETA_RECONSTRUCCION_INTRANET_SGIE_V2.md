@@ -25,6 +25,13 @@
 
 # 1. Veredicto ejecutivo
 
+> **⚠️ Estado actual (19-07-2026):** este veredicto describe el estado ORIGINAL
+> de la auditoría (previo a Fase 1) y se conserva como diagnóstico histórico.
+> El estado real y verificado hoy está en la **sección 63** (Control maestro de
+> progreso): Fases 1, 2 y 3 VALIDADAS; Fase 4A ~85% (automatización documental
+> core con E2E real y DeepSeek validado); Fase 4B (firma, calendario externo,
+> retrieval, copiloto) PENDIENTE.
+
 La intranet tiene una base técnica valiosa y bastante más avanzada de lo que aparenta desde la interfaz: existen expedientes, asignaciones, permisos, checklists, enlaces seguros de carga, almacenamiento en Blob, extracción documental, IA, readiness, tareas, alertas, auditoría, autenticación, 2FA y pruebas unitarias.
 
 El problema principal no es la ausencia total de funcionalidades. El problema es que se han construido **varios productos parcialmente superpuestos sin una arquitectura de producto común**:
@@ -4701,18 +4708,30 @@ Evidencia ejecutada el 18-07-2026:
 
 ## 63.3 Backlog pendiente por fase
 
-| ID | Estado | Fase prevista | Criterio mínimo de cierre |
+> **Actualización 19-07-2026:** los items P0 de Fase 2, los P1 de Fase 3 y los
+> P2-01…06 de Fase 4A **ya están IMPLEMENTADOS/VALIDADOS**. La tabla siguiente
+> conserva el criterio histórico de cierre; el estado real actual está en
+> §63.7 (Fase 2), §63.8 (Fase 3), §63.9 (Fase 4A) y §63.10 (consolidado).
+
+| ID | Estado (19-07-2026) | Fase prevista | Criterio mínimo de cierre |
 |---|---|---|---|
-| P0-09 cola durable | PENDIENTE | Fase 2 | Claim atómico, intentos, backoff, lock, DLQ e idempotencia verificable. |
-| P0-10 outbox documental | PENDIENTE | Fase 2 | Evento durable creado con la operación; dispatcher reintentable. |
-| P0-11 cron/worker | PENDIENTE | Fase 2 | Scheduler/worker versionado, autenticado y observable. |
-| P0-13 OCR real | PENDIENTE | Fase 2 | Adaptador real, estados, confianza y pruebas controladas. |
-| P0-14 flujo documental E2E | PENDIENTE | Fase 2 | Upload → trabajo durable → procesamiento → revisión, sin mocks de persistencia. |
-| P0-COM-01…08 | PENDIENTE | Fase 2 | Outbox, entrega, webhook seguro, preferencias y aprobaciones. |
-| P0-AI-01…04 | PENDIENTE | Fase 2 | Router, schema/evidencia, OCR y separación de modelos/reglas/revisión. |
-| P0-WF-01…04 | PENDIENTE | Fase 2 | Plantillas aprobadas/versionadas, fases, transición y auditoría. |
-| P1-02, P1-04…10 | PENDIENTE | Fase 3 | UX operativa y consolidación posterior a la durabilidad de Fase 2. |
-| P2 y P3 | PENDIENTE | Fases posteriores | No iniciar antes de cerrar los P0 de Fase 2. |
+| P0-09 cola durable | ✅ VALIDADO (§63.7) | Fase 2 | Claim atómico, intentos, backoff, lock, DLQ e idempotencia verificable. |
+| P0-10 outbox documental | ✅ VALIDADO (§63.7) | Fase 2 | Evento durable creado con la operación; dispatcher reintentable. |
+| P0-11 cron/worker | ✅ VALIDADO (§63.7) | Fase 2 | Scheduler/worker versionado, autenticado y observable. |
+| P0-13 OCR real | ⚠️ IMPLEMENTADO (§63.7) | Fase 2 | Adaptador real, estados, confianza y pruebas controladas. Pendiente: rendimiento PDFs grandes. |
+| P0-14 flujo documental E2E | ✅ VALIDADO (§63.7) | Fase 2 | Upload → trabajo durable → procesamiento → revisión, sin mocks de persistencia. |
+| P0-COM-01…08 | ✅ VALIDADO (§63.7) | Fase 2 | Outbox, entrega, webhook seguro, preferencias y aprobaciones. |
+| P0-AI-01…04 | ✅ VALIDADO (§63.7) | Fase 2 | Router, schema/evidencia, OCR y separación de modelos/reglas/revisión. |
+| P0-WF-01…04 | ✅ VALIDADO (§63.7) | Fase 2 | Plantillas aprobadas/versionadas, fases, transición y auditoría. |
+| P1-02, P1-04…10 | ✅ VALIDADO (§63.8) | Fase 3 | UX operativa y consolidación posterior a la durabilidad de Fase 2. |
+| P2-01…06 automatización doc | ✅ VALIDADO (§63.9) | Fase 4A | Clasificación, vinculación, extracción, contradicciones, resumen, next-action. Orchestrator + E2E validados; bugs 5-8 cerrados; ADR-010/011/012; tests P2-05/P2-06 ampliados (16→32). |
+| P2-07 aprobación en bloque | PENDIENTE | Fase 4B | Selección, preview, validación individual, idempotencia, undo seguro. |
+| P2-08 paquete firma | PENDIENTE | Fase 4B | Snapshot congelado, hash, manifiesto, orden, firmantes validados. |
+| P2-09 firma electrónica | PENDIENTE | Fase 4B | Adaptador desacoplado (SignatureProvider), sandbox o proveedor real. |
+| P2-10 calendario externo | PENDIENTE | Fase 4B | ICS baseline, Google/Microsoft OAuth opcional, sync idempotente. |
+| Retrieval FTS/pg_trgm + copiloto | PENDIENTE | Fase 4B | Sin embeddings; PostgreSQL FTS + pg_trgm + tool calling con allowlist. |
+| Base conocimiento jurídica | PENDIENTE | Fase 4B | Fuentes versionadas, aprobadas, vigencia, índice textual. |
+| P3 predicción / balance / brief | PENDIENTE | Fase 5 | No iniciar antes de cerrar Fase 4 completa. |
 
 ## 63.4 Invariantes de continuidad
 
@@ -4726,13 +4745,22 @@ Evidencia ejecutada el 18-07-2026:
 
 ## 63.5 Riesgos de control antes de Fase 2
 
+> **Actualización 19-07-2026:** los dos primeros riesgos están RESUELTOS.
+> Resend validado con destinatario técnico real en E2E Fase 3 (commit
+> `8c931af`, message ID persistido). El árbol de trabajo está limpio y los
+> borrados de documentación/SEO se confirmaron en Fase 1. El riesgo de
+> snapshots Drizzle sigue vigente.
+
 - Los snapshots Drizzle 0024–0033 no existen; no ejecutar `drizzle-kit generate`
   para reconstruirlos automáticamente. Usar `drizzle-kit check` y planificar una
-  baseline separada.
-- Resend no se ha validado con destinatario técnico seguro.
-- El árbol de trabajo contiene borrados amplios de documentación/SEO ajenos al
-  núcleo de Fase 1. Deben confirmarse o aislarse antes de confirmar un bloque
-  estable de cambios.
+  baseline separada. **Sigue vigente.** Las migraciones 0038–0043 de Fase 4A
+  usan una tabla propia (`sgie_schema_migrations`) con hash SHA-256 para no
+  depender del journal Drizzle.
+- ~~Resend no se ha validado con destinatario técnico seguro.~~ **RESUELTO:**
+  validado en E2E Fase 3 paso 11b (`CONTACT_NOTIFICATION_EMAIL`/`CONTACT_TO`,
+  message ID persistido, webhook Svix Ed25519).
+- ~~El árbol de trabajo contiene borrados amplios de documentación/SEO ajenos
+  al núcleo de Fase 1.~~ **RESUELTO:** confirmados y commiteados en Fase 1.
 
 ## 63.6 Handoff de arranque para Fase 2
 
@@ -4754,6 +4782,152 @@ Referencias: [checklist maestro](docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md),
 [arquitectura Fase 1](docs/architecture/fase-1-nucleo-admin-identidad-calendario.md),
 [validación staging](docs/ops/fase-1-staging-validation.md) y
 [manifiesto de borrados](docs/handoffs/fase-1-deletion-manifest.md).
+
+## 63.7 Corte verificado: Fase 2 — Núcleo durable
+
+Evidencia ejecutada (commit `be926a5`, 18-07-2026; migraciones 0034–0036):
+
+- Workflow engine versionado: `procedimiento_versiones`, `procedimiento_fases`,
+  `procedimiento_transiciones` con actores permitidos. `instanciarWorkflow()`,
+  `transitarFase()`, `obtenerFaseActual()`.
+- Cola durable `jobs_sgie`: `FOR UPDATE SKIP LOCKED`, backoff exponencial
+  `2^n × 60s` + jitter 30% (máx 24h), `dead_letter_jobs` tras 3 intentos,
+  `job_attempts`, `recuperarLocksAbandonados()`.
+- Transactional outbox `outbox_events`: 9 eventos canónicos insertados en la
+  misma transacción; `despacharEventos()` con SKIP LOCKED.
+- Carga documental atómica: `upload-atomico.ts` con reserva UPDATE…RETURNING,
+  `enlaces_magicos.token_hash` SHA-256, `documentos_expediente` con dedup.
+- Worker/cron autenticado: `app/api/cron/sgie/procesar/route.ts` con
+  `CRON_SECRET`.
+- OCR: interfaz `OcrProvider` + Tesseract.js (`ADR-005`); stub nunca inventa.
+- IA router 4 estrategias (`ADR-006`): deterministic → heuristic → DeepSeek →
+  humano, revisión humana obligatoria para legales.
+- Comunicaciones: `comunicaciones_outbox` + webhook Resend (`ADR-008`).
+- Observabilidad: `ai_task_routing`, `extracciones_ia`, `ocr_resultados`.
+
+| ID histórico | Estado actual | Fase | Evidencia primaria |
+|---|---|---|---|
+| P0-09 cola durable | VALIDADO | Fase 2 | `lib/sgie/jobs-db.ts` (SKIP LOCKED, backoff, DLQ, recuperación locks). E2E Fase 2 paso 8b. |
+| P0-10 outbox documental | VALIDADO | Fase 2 | `lib/sgie/outbox.ts`, `registrarDocumentoAtomico`. E2E paso 3. |
+| P0-11 cron/worker | VALIDADO | Fase 2 | `app/api/cron/sgie/procesar/route.ts` + `CRON_SECRET`. Contract test en E2E Fase 3 paso 12b. |
+| P0-13 OCR real | IMPLEMENTADO | Fase 2 | `lib/sgie/ocr/tesseract.ts`. Pendiente: validación rendimiento PDFs multi-página. |
+| P0-14 flujo documental E2E | VALIDADO | Fase 2 | `scripts/e2e/fase2-e2e.mjs` (9/9 pasos en Neon aislada, commit `8c931af`). |
+| P0-COM-01…08 | VALIDADO | Fase 2 | `comunicaciones_outbox`, `correos_enviados`, `webhook_receipts`, `lib/webhook-verify.ts` (Svix). E2E Fase 3 paso 11b (envío real Resend). |
+| P0-AI-01…04 | VALIDADO | Fase 2 | `lib/sgie/ia-router.ts`, `lib/sgie/ia-documental.ts`, schemas Zod, separación reglas/IA/revisión. DeepSeek validado en E2E Fase 3 paso 10b. |
+| P0-WF-01…04 | VALIDADO | Fase 2 | `lib/sgie/workflow.ts`, plantillas versionadas, fases, transiciones con actor. |
+| P0-16 subida atómica | VALIDADO | Fase 2 | `upload-atomico.ts`. E2E Fase 2 paso 4. |
+| P0-17 carrera usos enlace | VALIDADO | Fase 2 | Reserva UPDATE…WHERE usos_actuales<usos_maximos RETURNING. E2E Fase 3 bloque concurrencia. |
+| P0-18 carrera duplicados | VALIDADO | Fase 2 | `existeHashEnExpediente` + dedup concurrente en E2E Fase 3. |
+
+## 63.8 Corte verificado: Fase 3 — Experiencia operativa y portal
+
+Evidencia ejecutada (commits `69fb621`/`d0e717c` implementación; `8c931af`
+validación E2E real, 18-07-2026; migración 0037):
+
+- Mi Jornada con 4 colas accionables (`lib/sgie/work-queue-service.ts`).
+- Workspace de expediente con pestañas; bandeja revisión documental.
+- Dashboard Admin con 5 grupos de métricas (`admin-operations-service.ts`).
+- Calendario: equipo, día completo, DELETE lógico, 409 conflicto optimista
+  (versionado). **Cierra P1-09** que quedó PARCIAL en Fase 1.
+- Portal del cliente por enlace mágico (`ADR-007`); `portal_sessions` (0037).
+- Inbound email con webhook Resend (`ADR-008`); `inbound_messages`.
+- Reglas de comunicación versionadas; simulador dry-run.
+- Alertas y SLA deterministas (`ADR-009`); `alertas_sla`, `alertas`.
+- Resumen IA con caché por hash de entrada (`resumenes_ia_expediente`).
+
+**Validación real** (commit `8c931af`, rama Neon aislada
+`fase3-e2e-validation-20260718`, endpoint `ep-fancy-field-ap04213c`):
+
+- E2E Fase 2: 9/9 pasos, código 0.
+- E2E Fase 3: **70/70 assertions**, código 0, ~15s.
+- DeepSeek real: latencia ~450ms, modelo `deepseek-v4-flash`, schema JSON.
+- Resend real: message ID persistido en `correos_enviados`, webhook Svix.
+- CRON_SECRET efímero con contract test 200/401.
+- Limpieza: 42 filas, 0 restantes.
+
+| ID histórico | Estado actual | Fase | Evidencia primaria |
+|---|---|---|---|
+| P1-09 calendario completo | VALIDADO | Fase 3 | Eventos equipo/día-completo, 409 por versión, cancelación. E2E Fase 3 paso 11. |
+| P1-02…10 (UX operativa) | VALIDADO | Fase 3 | Mi Jornada, workspace, dashboard, bandeja revisión, reglas comunicación. 9 servicios Phase 3. |
+| Portal cliente | VALIDADO | Fase 3 | `client-portal-service.ts`, `portal_sessions`. E2E paso 4 (token válido/expirado/revocado/agotado/acceso cruzado). |
+| Inbound email | VALIDADO | Fase 3 | `inbound-service.ts`, webhook verify Svix. |
+
+**Corrección de deuda heredada** (commit `e3f99d6`, 19-07-2026):
+`lib/sgie/inbound-service.verificarWebhookResend` usaba HMAC-SHA256
+(algoritmo incorrecto: Resend usa Svix Ed25519) y devolvía `true` sin secreto
+(bypass). Corregido: delega en `verifyResendWebhook` (Svix correcto),
+fail-closed, unifica `RESEND_WEBHOOK_SECRET` (canónica) con alias
+`RESEND_SIGNING_SECRET`. 22/22 tests actualizados.
+
+## 63.9 Corte verificado: Fase 4A — Automatización documental core
+
+Evidencia ejecutada (commits `7de4fd1` implementación + `6f79b86` hardening y
+validación, 19-07-2026; migraciones 0038–0043):
+
+**Feature flags y kill switches** (`lib/sgie/feature-flags.ts`):
+deny-by-default, precedencia (procedimiento>expediente>usuario>equipo>org>
+global), scope inferior solo RESTRINGE, kill switch con prioridad absoluta,
+cache TTL 5s, auditoría en `feature_flag_history`. 10 flags canónicas.
+15 tests.
+
+**Servicios P2-01 a P2-06** (cada uno con feature flag + idempotencia):
+
+| Servicio | Estado | Tests | Evidencia |
+|---|---|---|---|
+| P2-01 Clasificación | VALIDADO | 11 | `clasificacion-documental.ts`: heurística→DeepSeek, tipos críticos nunca auto-aprobados, prompt injection como dato. UNIQUE por (doc, pipeline). |
+| P2-02 Auto-vinculación | IMPLEMENTADO | 5 | `auto-vinculacion.ts`: candidato único + confianza≥75 + sin bloqueantes; conflictos a revisión; reversible. UNIQUE vigente (0042). |
+| P2-03 Extracción estructurada | IMPLEMENTADO | 7 | `extraccion-estructurada.ts`: regex determinista (identidad/RTN/fecha HN)→DeepSeek, schemas versionados. UNIQUE por (doc, pipeline). |
+| P2-04 Contradicciones | IMPLEMENTADO | 4 | `motor-contradicciones.ts`: determinista (campos sensibles=>crítica bloqueante), duplicidad hash. UNIQUE (0042). Capa IA pendiente Fase 4B. |
+| P2-05 Resumen incremental | IMPLEMENTADO | 1 (mínimo) | `resumen-incremental.ts`: hash fuentes + watermark, cache hit, abstención, transacción atómica invalidar+insert. UNIQUE parcial vigente (0043). |
+| P2-06 NextAction | IMPLEMENTADO | 1 (mínimo) | `next-action.ts`: determinista (bloqueantes>requisitos>alertas>DLQ). DLQ filtrado por expediente (bug corregido). Fuentes 5-8 pendientes. |
+
+**DocumentAutomationOrchestrator** (`lib/sgie/document-automation-orchestrator.ts`):
+encadena P2-01→P2-06 con autorización `canAccessCase`, correlationId,
+`ai_pipeline_runs` por etapa, kill switch, resiliente (fallo no aborta),
+sin llamadas externas en transacciones. 7 tests.
+
+**Migraciones 0038–0043** (idempotentes, hash SHA-256 registrado en
+`sgie_schema_migrations`, aplicadas a Neon aislada):
+
+| # | Contenido |
+|---|---|
+| 0038 | registro migraciones SGIE (tabla propia). |
+| 0039 | `feature_flags` + `feature_flag_history`. |
+| 0040 | `document_classifications`, `document_links`, `extraction_schema_versions`, `document_extractions`, `document_contradictions`. |
+| 0041 | `case_summary_checkpoints`, `case_summary_history`, `case_next_actions`, `ai_pipeline_runs`. |
+| 0042 | UNIQUEs (idempotencia) + seed 7 schemas canónicos (identidad, rtn, resolución_judicial, escrito_juridico, poder, comprobante, otro). |
+| 0043 | `case_summary_checkpoints` UNIQUE absoluto → parcial (solo vigentes). |
+
+**Validación real** (commit `6f79b86`):
+
+- E2E Fase 4A: **19/19 assertions** con DeepSeek real
+  (`RUN_DEEPSEEK_E2E=true`). DeepSeek: `deepseek-v4-flash`, 792ms,
+  clasificó identidad hondureña sintética con confianza 95.
+- Regresión: Fase 2 (9/9) + Fase 3 (70/70) verdes.
+- Suite local: lint 0, tsc 0, **1015/1015 tests**, build OK, drizzle OK.
+- Limpieza: 18 filas, 0 restantes.
+
+**Deuda Fase 4A resuelta** (cierre de bugs 5-8, commit de cierre `fix(sgie): close phase 4a automation core`):
+
+- ~~Bug 5 (fuentes P2-06)~~: **RESUELTO.** Añadidos plazos próximos (≤3d prioridad 2, ≤7d prioridad 3), comunicaciones fallidas (prioridad 3), readiness bloqueado (prioridad 2) y **fuente firma pendiente** (`det.firma_pendiente`, prioridad 2) que detecta `eventos_agenda` tipo `firma` en estado `propuesta`/`confirmada` no cubiertos por la ventana de plazos, sin duplicar acción cuando la cubre `det.plazo_3dias`/`det.plazo_7dias`. Validado con 2 tests nuevos (firma fuera de ventana y no-duplicación).
+- ~~Bug 6 (race `setFlag`)~~: **RESUELTO.** UPSERT atómico con `SELECT FOR UPDATE` + `ON CONFLICT DO NOTHING` en transacción.
+- ~~Bug 7 (`activateKillSwitch` sin autorización)~~: **RESUELTO.** `assertKillSwitchAuthorization` valida `settings.manage` vía `assertCapability`. Deny-by-default.
+- ~~Bug 8 (`fetchApplicable` rendimiento)~~: **RESUELTO.** WHERE por scope aplicable en la query SQL (no carga todas las filas).
+- ~~Tests P2-05/P2-06 mínimos~~: **RESUELTO.** 16 tests nuevos (7 P2-05 cache/hash/invalidación/abstención/fallo IA; 9 P2-06 fuentes nuevas/jerarquía/abstención).
+- ~~ADR-010/011/012 y docs~~: **RESUELTOS.** Creados ADR-010, ADR-011, ADR-012, architecture Fase 4A, ops Fase 4A. Actualizados checklist, CHANGELOG, SGIE_NEW_CHAT_CONTEXT.
+
+## 63.10 Estado consolidado por fase (20-07-2026)
+
+| Fase | Estado | Commits clave | E2E | Tests |
+|---|---|---|---|---|
+| Fase 1 — Núcleo admin/identidad/calendario | VALIDADO | `c74840d` | E2E Fase 1 (Neon) | 917 (en su corte) |
+| Fase 2 — Núcleo durable | VALIDADO | `be926a5` | E2E Fase 2: 9/9 | 963 (en su corte) |
+| Fase 3 — Experiencia operativa + portal | VALIDADO | `69fb621`, `8c931af` | E2E Fase 3: 70/70, DeepSeek+Resend reales | 963 |
+| Fase 4A — Automatización documental core | VALIDADO (cierre bugs 5-8 + ADRs/docs) | `7de4fd1`, `6f79b86`, `fix(sgie): close phase 4a automation core` | E2E Fase 4A: 19/19 (commits previos); revalidación E2E 20-07 NO VALIDADA (sin rama Neon aislada) | 1048 (suite completa) |
+| Fase 4B — Firma, calendario ext, retrieval, copiloto, UI | PENDIENTE | — | — | — |
+| Fase 5 — Predicción, balance carga, brief diario | PENDIENTE | — | — | — |
+
+**Fase 4A cerrada al 100% en alcance de código + tests unitarios/integración.** E2E real con DeepSeek fue validado en commits previos (`6f79b86`, `7de4fd1`); la revalidación E2E de la sesión 20-07-2026 quedó NO VALIDADA por ausencia de rama Neon aislada y `RUN_DEEPSEEK_E2E` en el entorno.
 
 ---
 
