@@ -301,6 +301,15 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'signature_package_cancelled',
   'signature_package_superseded',
   'signature_package_verified',
+  // Fase 4B-3 — Firma electrónica.
+  'signature_envelope_created',
+  'signature_envelope_sent',
+  'signature_envelope_completed',
+  'signature_envelope_cancelled',
+  'signature_envelope_declined',
+  'signature_envelope_expired',
+  'signature_webhook_received',
+  'signature_artifact_downloaded',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {
@@ -2911,3 +2920,114 @@ export const signaturePackageSigners = pgTable('signature_package_signers', {
 
 export type SignaturePackageSigner = typeof signaturePackageSigners.$inferSelect;
 export type SignaturePackageSignerInsert = typeof signaturePackageSigners.$inferInsert;
+
+// ─── P2-09: Firma electrónica mediante proveedor desacoplado ───────────────
+
+export const signatureEnvelopes = pgTable('signature_envelopes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  expedienteId: uuid('expediente_id').notNull(),
+  signaturePackageId: uuid('signature_package_id').notNull(),
+  packageVersion: integer('package_version').notNull(),
+  provider: varchar('provider', { length: 50 }).notNull(),
+  providerEnvelopeId: varchar('provider_envelope_id', { length: 200 }),
+  estadoInterno: varchar('estado_interno', { length: 40 }).notNull().default('draft'),
+  estadoExterno: varchar('estado_externo', { length: 100 }),
+  idempotencyKey: varchar('idempotency_key', { length: 120 }).notNull(),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  createdBy: uuid('created_by').notNull(),
+  sentAt: timestamp('sent_at', { withTimezone: true }),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  declinedAt: timestamp('declined_at', { withTimezone: true }),
+  cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
+  expiredAt: timestamp('expired_at', { withTimezone: true }),
+  lastSyncedAt: timestamp('last_synced_at', { withTimezone: true }),
+  providerMetadata: jsonb('provider_metadata').notNull().default(sql`'{}'`),
+  cancelMotivo: text('cancel_motivo'),
+  version: integer('version').notNull().default(1),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  packageRef: foreignKey({ columns: [table.signaturePackageId], foreignColumns: [signaturePackages.id] }),
+  createdByRef: foreignKey({ columns: [table.createdBy], foreignColumns: [usuarios.id] }),
+  pkgVersionActiveUnique: uniqueIndex('signature_envelopes_pkg_version_active_unique')
+    .on(table.signaturePackageId, table.packageVersion)
+    .where(sql`estado_interno NOT IN ('cancelled', 'declined', 'expired', 'completed')`),
+  pkgIdemUnique: uniqueIndex('signature_envelopes_pkg_idem_unique').on(table.signaturePackageId, table.idempotencyKey),
+  expEstadoIdx: index('signature_envelopes_exp_estado_idx').on(table.expedienteId, table.estadoInterno),
+  providerIdIdx: index('signature_envelopes_provider_id_idx').on(table.providerEnvelopeId),
+}));
+
+export type SignatureEnvelope = typeof signatureEnvelopes.$inferSelect;
+export type SignatureEnvelopeInsert = typeof signatureEnvelopes.$inferInsert;
+
+export const signatureEnvelopeSigners = pgTable('signature_envelope_signers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  envelopeId: uuid('envelope_id').notNull(),
+  packageSignerId: uuid('package_signer_id').notNull(),
+  providerSignerId: varchar('provider_signer_id', { length: 200 }),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  identificador: varchar('identificador', { length: 100 }),
+  rolDocumento: varchar('rol_documento', { length: 100 }).notNull(),
+  orden: integer('orden').notNull().default(0),
+  obligatorio: boolean('obligatorio').notNull().default(true),
+  estado: varchar('estado', { length: 30 }).notNull().default('pending'),
+  viewedAt: timestamp('viewed_at', { withTimezone: true }),
+  signedAt: timestamp('signed_at', { withTimezone: true }),
+  declinedAt: timestamp('declined_at', { withTimezone: true }),
+  failureReason: text('failure_reason'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  envelopeRef: foreignKey({ columns: [table.envelopeId], foreignColumns: [signatureEnvelopes.id] }).onDelete('cascade'),
+  packageSignerRef: foreignKey({ columns: [table.packageSignerId], foreignColumns: [signaturePackageSigners.id] }),
+  envSignerUnique: uniqueIndex('signature_envelope_signers_env_signer_unique').on(table.envelopeId, table.packageSignerId),
+  envIdx: index('signature_envelope_signers_env_idx').on(table.envelopeId),
+}));
+
+export type SignatureEnvelopeSigner = typeof signatureEnvelopeSigners.$inferSelect;
+export type SignatureEnvelopeSignerInsert = typeof signatureEnvelopeSigners.$inferInsert;
+
+export const signatureEvents = pgTable('signature_events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  envelopeId: uuid('envelope_id').notNull(),
+  provider: varchar('provider', { length: 50 }).notNull(),
+  providerEventId: varchar('provider_event_id', { length: 200 }),
+  tipo: varchar('tipo', { length: 100 }).notNull(),
+  payloadHash: varchar('payload_hash', { length: 64 }),
+  occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull(),
+  receivedAt: timestamp('received_at', { withTimezone: true }).notNull().defaultNow(),
+  verified: boolean('verified').notNull().default(true),
+  processedAt: timestamp('processed_at', { withTimezone: true }),
+  result: varchar('result', { length: 100 }),
+  error: text('error'),
+  correlationId: varchar('correlation_id', { length: 64 }),
+}, (table) => ({
+  envelopeRef: foreignKey({ columns: [table.envelopeId], foreignColumns: [signatureEnvelopes.id] }).onDelete('cascade'),
+  providerEventUnique: uniqueIndex('signature_events_provider_event_unique').on(table.provider, table.providerEventId),
+  envelopeIdx: index('signature_events_envelope_idx').on(table.envelopeId),
+}));
+
+export type SignatureEvent = typeof signatureEvents.$inferSelect;
+export type SignatureEventInsert = typeof signatureEvents.$inferInsert;
+
+export const signatureArtifacts = pgTable('signature_artifacts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  envelopeId: uuid('envelope_id').notNull(),
+  tipo: varchar('tipo', { length: 50 }).notNull(),
+  blobUrl: varchar('blob_url', { length: 1000 }),
+  nombre: varchar('nombre', { length: 500 }).notNull(),
+  mime: varchar('mime', { length: 200 }),
+  tamanoBytes: integer('tamano_bytes'),
+  hashSha256: varchar('hash_sha256', { length: 64 }),
+  providerArtifactId: varchar('provider_artifact_id', { length: 200 }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  verifiedAt: timestamp('verified_at', { withTimezone: true }),
+}, (table) => ({
+  envelopeRef: foreignKey({ columns: [table.envelopeId], foreignColumns: [signatureEnvelopes.id] }).onDelete('cascade'),
+  envelopeIdx: index('signature_artifacts_envelope_idx').on(table.envelopeId),
+}));
+
+export type SignatureArtifact = typeof signatureArtifacts.$inferSelect;
+export type SignatureArtifactInsert = typeof signatureArtifacts.$inferInsert;

@@ -19,6 +19,12 @@ export const OUTBOX_EVENTS = {
   SIGNATURE_PACKAGE_LOCKED: 'signature.package.locked',
   SIGNATURE_PACKAGE_CANCELLED: 'signature.package.cancelled',
   SIGNATURE_PACKAGE_SUPERSEDED: 'signature.package.superseded',
+  SIGNATURE_ENVELOPE_CREATED: 'signature.envelope.created',
+  SIGNATURE_ENVELOPE_SENT: 'signature.envelope.sent',
+  SIGNATURE_ENVELOPE_COMPLETED: 'signature.envelope.completed',
+  SIGNATURE_ENVELOPE_CANCELLED: 'signature.envelope.cancelled',
+  SIGNATURE_ENVELOPE_DECLINED: 'signature.envelope.declined',
+  SIGNATURE_ENVELOPE_EXPIRED: 'signature.envelope.expired',
 } as const;
 
 export type OutboxEventType = (typeof OUTBOX_EVENTS)[keyof typeof OUTBOX_EVENTS];

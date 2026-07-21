@@ -18,6 +18,10 @@ export const CAPABILITIES = [
   'cases.read', 'cases.read_all', 'cases.create', 'cases.assign', 'cases.update',
   'documents.read', 'documents.review', 'documents.approve',
   'signature.manage',
+  'signature.send',
+  'signature.read',
+  'signature.cancel',
+  'signature.retry',
   'calendar.read', 'calendar.write', 'calendar.manage_team',
   'settings.manage', 'audit.read',
 ] as const;
