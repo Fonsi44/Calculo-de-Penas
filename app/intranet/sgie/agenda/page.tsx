@@ -28,6 +28,7 @@ import { cn } from '@/lib/ui';
 import { traducirEstadoAgenda } from '@/lib/sgie/estados';
 import { etiquetaAccion, estadoTrasAccion } from '@/lib/sgie/agenda-helpers';
 import { ReprogramarEventoDialog } from '@/components/sgie/reprogramar-evento-dialog';
+import { CalendarExternalSection } from '@/components/sgie/calendar-external-section';
 import {
   rejillaMes, rejillaSemana, esMismoDia, formatRangoSemana,
   MESES_ES, DIAS_ES_CORTO, type DiaCalendario,
@@ -563,10 +564,12 @@ export default function SgieAgendaPage() {
           </div>
         </div>
       )}
+
+    {user && !authLoading && <CalendarExternalSection userId={user.id} />}
+
     </div>
   );
 }
-
 function EventoCardDetalle({
   evento, accionId,
   onConfirmar, onCancelar, onCompletar, onReprogramar, onEditar, onEliminar,
