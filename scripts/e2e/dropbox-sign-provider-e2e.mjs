@@ -114,10 +114,10 @@ async function main() {
 
     // ─── 7. Error sanitizado ─────────────────────────────────────────────
     console.log('\n7. Error sanitizado...');
-    const r7 = await fetch(`${BASE}/signature_request/inexistente-${Date.now()}`, {
+    const r7 = await fetch(`${BASE}/signature_request/${'0'.repeat(40)}`, {
       headers: { Authorization: auth },
     });
-    assert(r7.status === 404 || r7.status === 410 || r7.status >= 400, `request inexistente → ${r7.status} (error sanitizado)`);
+    assert(r7.status === 404 || r7.status === 410, `request inexistente → ${r7.status} (error sanitizado)`);
 
     // ─── 8. PDF real ─────────────────────────────────────────────────────
     console.log('\n8. Verificando PDF real...');

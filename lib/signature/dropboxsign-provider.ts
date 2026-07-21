@@ -229,15 +229,6 @@ function normalizeEventType(type: string): string {
   return map[type] || type;
 }
 
-function getEstado(statusCode: string, isComplete: boolean, isDeclined: boolean): string {
-  if (isComplete) return 'completed';
-  if (isDeclined) return 'declined';
-  if (statusCode === 'signed') return 'partially_signed';
-  if (statusCode === 'viewed') return 'viewed';
-  if (statusCode === 'awaiting_signature') return 'sent';
-  return 'sent';
-}
-
 export class DropboxSignError extends Error {
   constructor(public code: string, message: string, public statusCode = 400) {
     super(message);
