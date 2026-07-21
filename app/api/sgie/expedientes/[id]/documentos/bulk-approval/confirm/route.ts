@@ -16,13 +16,13 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   try {
     const auth = await requireAbogado(req);
     validateCsrf(req);
-    await params; // expedienteId validado vía batchId en el servicio.
+    const { id: expedienteId } = await params;
     const rl = await rateLimit(`sgie:bulk:confirm:${auth.userId}`, { max: 10, windowMs: 60_000, keyPrefix: 'sgie' });
     if (!rl.ok) return rateLimitResponse(rl);
 
     const body = confirmSchema.parse(await req.json());
     const result = await confirmarAprobacion(
-      { batchId: body.batchId, idempotencyKey: body.idempotencyKey, previewHash: body.previewHash },
+      { batchId: body.batchId, idempotencyKey: body.idempotencyKey, previewHash: body.previewHash, expedienteId },
       { actorId: auth.userId },
     );
     return Response.json(result);

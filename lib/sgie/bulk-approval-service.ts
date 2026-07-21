@@ -352,7 +352,7 @@ export async function generarPreview(
       id: batchId,
       expedienteId: input.expedienteId,
       actorId: ctx.actorId,
-      idempotencyKey: '', // se asigna en confirmar; preview no la requiere aún.
+      idempotencyKey: `preview:${batchId}`, // clave temporal única; se reemplaza en confirmar.
       previewHash,
       estado: 'pendiente',
       previewCaducidad: caducidad,
@@ -391,27 +391,47 @@ export async function generarPreview(
 
 // ─── 2. CONFIRMAR (validación individual + ejecución por documento) ─────────
 export async function confirmarAprobacion(
-  input: { batchId: string; idempotencyKey: string; previewHash: string },
+  input: { batchId: string; idempotencyKey: string; previewHash: string; expedienteId?: string },
   ctx: BulkApprovalContext,
 ): Promise<ConfirmResult> {
   const flagOn = await isFlagEnabled('sgie.documents.bulk_approve', ctx.flagContext ?? {}).catch(() => false);
   if (!flagOn) throw new BulkApprovalError('FLAG_OFF', 'Aprobación en bloque desactivada', 403);
 
-  // Cargar lote.
+  // Cargar lote con campos necesarios para idempotencia.
   const [batch] = await db
-    .select()
+    .select({
+      id: documentBulkApprovals.id,
+      expedienteId: documentBulkApprovals.expedienteId,
+      actorId: documentBulkApprovals.actorId,
+      idempotencyKey: documentBulkApprovals.idempotencyKey,
+      previewHash: documentBulkApprovals.previewHash,
+      estado: documentBulkApprovals.estado,
+      previewCaducidad: documentBulkApprovals.previewCaducidad,
+      resultados: documentBulkApprovals.resultados,
+      correlationId: documentBulkApprovals.correlationId,
+    })
     .from(documentBulkApprovals)
     .where(eq(documentBulkApprovals.id, input.batchId))
     .limit(1);
   if (!batch) throw new BulkApprovalError('NOT_FOUND', 'Lote no encontrado', 404);
 
-  // Idempotencia: si ya fue confirmado con misma key.
-  if (batch.idempotencyKey && batch.idempotencyKey === input.idempotencyKey && batch.estado !== 'pendiente') {
+  // Defensa en profundidad: expediente del URL debe coincidir con el del lote.
+  if (input.expedienteId && batch.expedienteId !== input.expedienteId) {
+    throw new BulkApprovalError('VALIDATION', 'El expediente no coincide con el lote', 422);
+  }
+
+  // Idempotencia: si ya fue confirmado con misma key (no en estado preview).
+  const isPreviewState = batch.idempotencyKey.startsWith('preview:');
+  if (!isPreviewState && batch.idempotencyKey === input.idempotencyKey && batch.estado !== 'pendiente') {
     if (batch.previewHash !== input.previewHash) {
       throw new BulkApprovalError('IDEMPOTENCY_MISMATCH', 'IdempotencyKey reutilizada con preview distinta', 409);
     }
-    // Devolver resultado previo cacheado.
     return reconstruirResultado(batch);
+  }
+
+  // Si ya fue confirmado por otro actor (key distinta, ya no en preview).
+  if (!isPreviewState && batch.idempotencyKey !== input.idempotencyKey) {
+    throw new BulkApprovalError('CONFLICT', 'El lote ya fue confirmado con otra clave de idempotencia', 409);
   }
 
   // Validar preview hash.
@@ -434,17 +454,34 @@ export async function confirmarAprobacion(
     capability: 'documents.approve',
   });
 
-  // Re-asignar idempotencyKey al lote (atomicidad).
-  await db
-    .update(documentBulkApprovals)
-    .set({ idempotencyKey: input.idempotencyKey, correlationId: randomUUID(), actualizadoEn: new Date() })
-    .where(eq(documentBulkApprovals.id, input.batchId));
-
+  // Asignación atómica de idempotencyKey + correlationId (solo si aún en preview).
   const correlationId = randomUUID();
-  await db
+  const claimResult = await db
     .update(documentBulkApprovals)
-    .set({ correlationId, actualizadoEn: new Date() })
-    .where(eq(documentBulkApprovals.id, input.batchId));
+    .set({ idempotencyKey: input.idempotencyKey, correlationId, actualizadoEn: new Date() })
+    .where(
+      and(
+        eq(documentBulkApprovals.id, input.batchId),
+        eq(documentBulkApprovals.idempotencyKey, `preview:${input.batchId}`),
+      ),
+    )
+    .returning({ id: documentBulkApprovals.id });
+
+  if (claimResult.length === 0) {
+    // Otro proceso reclamó el lote primero. Re-leer para determinar la respuesta.
+    const [actual] = await db
+      .select({ id: documentBulkApprovals.id, expedienteId: documentBulkApprovals.expedienteId, idempotencyKey: documentBulkApprovals.idempotencyKey, estado: documentBulkApprovals.estado, resultados: documentBulkApprovals.resultados, correlationId: documentBulkApprovals.correlationId, previewHash: documentBulkApprovals.previewHash })
+      .from(documentBulkApprovals)
+      .where(eq(documentBulkApprovals.id, input.batchId));
+    if (!actual) throw new BulkApprovalError('NOT_FOUND', 'Lote eliminado concurrentemente', 404);
+    if (actual.idempotencyKey === input.idempotencyKey) {
+      if (actual.previewHash !== input.previewHash) {
+        throw new BulkApprovalError('IDEMPOTENCY_MISMATCH', 'IdempotencyKey reutilizada con preview distinta', 409);
+      }
+      return reconstruirResultado(actual);
+    }
+    throw new BulkApprovalError('CONFLICT', 'El lote fue confirmado por otro proceso concurrente', 409);
+  }
 
   // Cargar items del lote.
   const itemsBatch = await db
@@ -600,11 +637,11 @@ async function marcarItem(itemId: string, resultado: CodigoResultado, motivo: st
     .where(eq(documentBulkApprovalItems.id, itemId));
 }
 
-async function reconstruirResultado(batch: { id: string; expedienteId: string; estado: string; resultados: unknown; correlationId: string | null }): Promise<ConfirmResult> {
+async function reconstruirResultado(batch: { id?: string; expedienteId?: string; estado: string; resultados: unknown; correlationId: string | null; batchId?: string }): Promise<ConfirmResult> {
   const r = (batch.resultados as { aprobados?: string[]; yaAprobados?: string[]; rechazados?: ItemResultado[] }) ?? {};
   return {
-    batchId: batch.id,
-    expedienteId: batch.expedienteId,
+    batchId: (batch.batchId ?? batch.id)!,
+    expedienteId: batch.expedienteId!,
     estado: batch.estado,
     aprobados: r.aprobados ?? [],
     yaAprobados: r.yaAprobados ?? [],

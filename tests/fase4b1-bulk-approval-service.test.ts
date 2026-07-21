@@ -240,14 +240,14 @@ describe('P2-07 confirmarAprobacion — validaciones', () => {
   });
 
   it('preview hash distinto => PREVIEW_STALE', async () => {
-    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: '', previewHash: 'otro', estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }]);
+    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'otro', estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }]);
     await expect(
       confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345', previewHash: 'a'.repeat(64) }, CTX).catch((e) => e),
     ).resolves.toMatchObject({ code: 'PREVIEW_STALE' });
   });
 
   it('preview caducada => PREVIEW_EXPIRED', async () => {
-    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: '', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() - 60000), resultados: {}, correlationId: null }]);
+    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() - 60000), resultados: {}, correlationId: null }]);
     await expect(
       confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345', previewHash: 'a'.repeat(64) }, CTX).catch((e) => e),
     ).resolves.toMatchObject({ code: 'PREVIEW_EXPIRED' });
@@ -279,25 +279,23 @@ describe('P2-07 confirmarAprobacion — idempotencia', () => {
 });
 
 describe('P2-07 confirmarAprobacion — ejecución y control optimista', () => {
-  // Orden de consumos en confirmarAprobacion:
+  // Orden de consumos en confirmarAprobacion (nuevo flujo atómico):
   //   1. select batch (then)
-  //   2. update batch idempotencyKey (then, sin returning)
-  //   3. update batch correlationId (then, sin returning)
-  //   4. select items (then)
+  //   2. claim update returning (returning)
+  //   3. select items (then)
   //   por cada item:
-  //     5. select doc actual (then)
-  //     6. si aprueba: update doc ... returning (returning)
-  //     7. marcarItem: update items (then, sin returning)
+  //     4. select doc actual (then)
+  //     5. si aprueba: update doc ... returning (returning)
+  //     6. marcarItem: update items (then)
   //   + cascadas (mockeadas, no consumen DB aquí).
   it('documento válido => aprobado (update invocado, version+1)', async () => {
     resetQueue(
-      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: '', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }], // 1. batch
-      [], // 2. update idempotencyKey
-      [], // 3. update correlationId
-      [{ id: 'it-1', bulkApprovalId: 'b1', documentId: 'doc-1', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null }], // 4. items
-      [{ id: 'doc-1', estado: 'pendiente_abogado', version: 1, aprobadoPor: null }], // 5. doc actual
-      [{ id: 'doc-1' }], // 6. returning update doc (aprobado)
-      [], // 7. marcarItem
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }], // 1. batch
+      [{ id: 'b1' }], // 2. claim update returning (éxito)
+      [{ id: 'it-1', bulkApprovalId: 'b1', documentId: 'doc-1', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null }], // 3. items
+      [{ id: 'doc-1', estado: 'pendiente_abogado', version: 1, aprobadoPor: null }], // 4. doc actual
+      [{ id: 'doc-1' }], // 5. returning update doc (aprobado)
+      [], // 6. marcarItem
       [], // update batch estado final
     );
     const r = await confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345678', previewHash: 'a'.repeat(64) }, CTX);
@@ -307,8 +305,8 @@ describe('P2-07 confirmarAprobacion — ejecución y control optimista', () => {
 
   it('control optimista: versión cambió => conflicto_version', async () => {
     resetQueue(
-      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: '', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
-      [], [], // updates batch
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
+      [{ id: 'b1' }], // claim update returning (éxito)
       [{ id: 'it-1', bulkApprovalId: 'b1', documentId: 'doc-1', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null }],
       [{ id: 'doc-1', estado: 'pendiente_abogado', version: 1, aprobadoPor: null }],
       [], // returning vacío => conflicto
@@ -322,8 +320,8 @@ describe('P2-07 confirmarAprobacion — ejecución y control optimista', () => {
 
   it('documento ya aprobado por otra vía => ya_aprobado', async () => {
     resetQueue(
-      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: '', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
-      [], [],
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
+      [{ id: 'b1' }], // claim update
       [{ id: 'it-1', bulkApprovalId: 'b1', documentId: 'doc-1', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null }],
       [{ id: 'doc-1', estado: 'aprobado', version: 2, aprobadoPor: 'otro' }], // ya aprobado
       [], // marcarItem ya_aprobado
@@ -335,20 +333,18 @@ describe('P2-07 confirmarAprobacion — ejecución y control optimista', () => {
 
   it('resultado parcial: mezcla válido + conflicto', async () => {
     resetQueue(
-      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: '', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
-      [], [],
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
+      [{ id: 'b1' }], // claim update
       [
         { id: 'it-1', bulkApprovalId: 'b1', documentId: 'd-ok', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null },
         { id: 'it-2', bulkApprovalId: 'b1', documentId: 'd-bad', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null },
       ],
-      // Item 1 (d-ok): aprobado.
       [{ id: 'd-ok', estado: 'pendiente_abogado', version: 1, aprobadoPor: null }],
       [{ id: 'd-ok' }], // returning (aprobado)
-      [], // marcarItem
-      // Item 2 (d-bad): conflicto.
+      [], // marcarItem d-ok
       [{ id: 'd-bad', estado: 'pendiente_abogado', version: 1, aprobadoPor: null }],
-      [], // returning vacío (conflicto)
-      [], // marcarItem
+      [], // returning vacío (conflicto) d-bad
+      [], // marcarItem d-bad
       [], // update batch estado final
     );
     const r = await confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345678', previewHash: 'a'.repeat(64) }, CTX);
@@ -446,5 +442,101 @@ describe('P2-07 concurrencia — dos confirmaciones del mismo lote', () => {
     expect(r.aprobados).toEqual(['d1']);
     // No se invoca update de documentos (no duplica aprobación).
     expect(chain.update).not.toHaveBeenCalled();
+  });
+
+  it('confirmación concurrente con clave distinta (ya confirmado por otro) => CONFLICT', async () => {
+    resetQueue([{
+      id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'otra-key', previewHash: 'a'.repeat(64),
+      estado: 'confirmada', previewCaducidad: new Date(Date.now() + 60000),
+      resultados: {}, correlationId: 'c1',
+    }]);
+    await expect(
+      confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'mi-key', previewHash: 'a'.repeat(64) }, CTX).catch((e) => e),
+    ).resolves.toMatchObject({ code: 'CONFLICT' });
+  });
+
+  it('dos confirmaciones concurrentes: la primera reclama, la segunda ve CONFLICT', async () => {
+    // Batch en preview + claim fallido (returning vacío) + re-lectura muestra otra key.
+    resetQueue(
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
+      [], // claim returning vacío (otro llegó primero)
+      [{ idempotencyKey: 'otra-key', estado: 'confirmada', resultados: {}, correlationId: 'c2', previewHash: 'a'.repeat(64) }], // re-lectura
+    );
+    await expect(
+      confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'mi-key', previewHash: 'a'.repeat(64) }, CTX).catch((e) => e),
+    ).resolves.toMatchObject({ code: 'CONFLICT' });
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Defensa en profundidad y autorización adicional
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('P2-07 defensa en profundidad — expedienteId', () => {
+  it('expedienteId del URL no coincide con el del batch => VALIDATION', async () => {
+    resetQueue([{ id: 'b1', expedienteId: 'exp-real', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }]);
+    await expect(
+      confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345678', previewHash: 'a'.repeat(64), expedienteId: 'exp-falso' }, CTX).catch((e) => e),
+    ).resolves.toMatchObject({ code: 'VALIDATION' });
+  });
+
+  it('expedienteId coincide => procede normalmente', async () => {
+    resetQueue(
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }],
+      [{ id: 'b1' }], // claim OK
+      [{ id: 'it-1', bulkApprovalId: 'b1', documentId: 'doc-1', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'pendiente', motivo: null }],
+      [{ id: 'doc-1', estado: 'pendiente_abogado', version: 1, aprobadoPor: null }],
+      [{ id: 'doc-1' }],
+      [],
+      [],
+    );
+    const r = await confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345678', previewHash: 'a'.repeat(64), expedienteId: 'exp-1' }, CTX);
+    expect(r.aprobados).toContain('doc-1');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Autorización adicional
+// ═══════════════════════════════════════════════════════════════════════════
+
+describe('P2-07 autorización — acceso revocado o denegado', () => {
+  it('autorización denegada en confirmar => FORBIDDEN', async () => {
+    assertCaseAccessMock.mockRejectedValueOnce(Object.assign(new Error('Sin acceso'), { status: 403 }));
+    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'preview:b1', previewHash: 'a'.repeat(64), estado: 'pendiente', previewCaducidad: new Date(Date.now() + 60000), resultados: {}, correlationId: null }]);
+    const err = await confirmarAprobacion({ batchId: 'b1', idempotencyKey: 'key-12345678', previewHash: 'a'.repeat(64) }, CTX).catch((e) => e);
+    expect(err).toBeTruthy();
+  });
+
+  it('consultarResultado con autorización denegada => FORBIDDEN', async () => {
+    assertCaseAccessMock.mockRejectedValueOnce(Object.assign(new Error('Sin acceso'), { status: 403 }));
+    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'k', previewHash: 'h', estado: 'confirmada', previewCaducidad: new Date(), resultados: {}, correlationId: 'c1' }]);
+    const err = await consultarResultado('b1', CTX).catch((e) => e);
+    expect(err).toBeTruthy();
+  });
+
+  it('revertir con flag off => FLAG_OFF', async () => {
+    isFlagEnabledMock.mockResolvedValueOnce(false);
+    await expect(
+      revertirAprobacion({ batchId: 'b1', motivo: 'motivo válido de reversión' }, CTX).catch((e) => e),
+    ).resolves.toMatchObject({ code: 'FLAG_OFF' });
+  });
+
+  it('revertir con autorización denegada => FORBIDDEN', async () => {
+    assertCaseAccessMock.mockRejectedValueOnce(Object.assign(new Error('Sin acceso'), { status: 403 }));
+    resetQueue([{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'k', previewHash: 'h', estado: 'confirmada', previewCaducidad: new Date(), resultados: {}, correlationId: 'c1' }]);
+    const err = await revertirAprobacion({ batchId: 'b1', motivo: 'motivo válido de reversión' }, CTX).catch((e) => e);
+    expect(err).toBeTruthy();
+  });
+
+  it('revertir con ventana de 72h superada => denegada', async () => {
+    resetQueue(
+      [{ id: 'b1', expedienteId: 'exp-1', idempotencyKey: 'k', previewHash: 'h', estado: 'confirmada', previewCaducidad: new Date(), resultados: {}, correlationId: 'corr-1' }],
+      [{ id: 'it-1', bulkApprovalId: 'b1', documentId: 'doc-1', expedienteId: 'exp-1', versionSnapshot: 1, tipoDocumento: 'identidad', requisitoId: null, estadoPrevio: 'pendiente_abogado', resultado: 'aprobado', motivo: null }],
+      [{ id: 'exp-1', estado: 'creado' }],
+      [{ id: 'doc-1', version: 2, aprobadoPor: 'admin-1', aprobadoEn: new Date(Date.now() - 73 * 60 * 60 * 1000) }], // >72h
+    );
+    const r = await revertirAprobacion({ batchId: 'b1', motivo: 'motivo válido de reversión' }, CTX);
+    expect(r.revertidos).toHaveLength(0);
+    expect(r.denegados[0].motivo).toMatch(/72h/);
   });
 });
