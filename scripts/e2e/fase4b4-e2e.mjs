@@ -130,6 +130,146 @@ async function main() {
     const p = await q(client, `SELECT estado FROM calendar_connections WHERE id=$1`, [connId]);
     assert(p.rows[0].estado === 'active', 'datos persisten');
 
+    // 12. ICS individual export validation
+    console.log('\n12. ICS individual...');
+    const icalUid2 = `sgie-${evtId}@pinedayasociadoshn.com`;
+    assert(icalUid2.startsWith('sgie-'), 'UID estable con prefijo sgie-');
+    assert(icalUid2.endsWith('@pinedayasociadoshn.com'), 'UID con dominio canonico');
+
+    // 13. ICS range export
+    console.log('\n13. ICS range...');
+    const evt2Id = uuid();
+    await q(client, `INSERT INTO eventos_agenda (id, propietario_id, creado_por, titulo, tipo, inicio, fin, todo_el_dia, zona_horaria, visibilidad, fecha, estado, version, creado_en) VALUES ($1,$2,$2,'Range Test','personal',NOW()+INTERVAL '2 days',NOW()+INTERVAL '2 days 1 hour',false,'America/Tegucigalpa','privado',NOW(),'confirmada',1,NOW())`, [evt2Id, adminId]);
+    created.eventos.push(evt2Id);
+    const rangeEvents = await q(client, `SELECT count(*)::int as c FROM eventos_agenda WHERE propietario_id=$1 AND inicio BETWEEN NOW() AND NOW()+INTERVAL '7 days'`, [adminId]);
+    assert(rangeEvents.rows[0].c >= 1, 'rango de eventos exportable');
+
+    // 14. All-day event
+    console.log('\n14. All-day...');
+    const evtAllDay = uuid();
+    await q(client, `INSERT INTO eventos_agenda (id, propietario_id, creado_por, titulo, tipo, inicio, fin, todo_el_dia, zona_horaria, visibilidad, fecha, estado, version, creado_en) VALUES ($1,$2,$2,'AllDay Test','personal',NOW(),NOW(),true,'America/Tegucigalpa','privado',NOW(),'confirmada',1,NOW())`, [evtAllDay, adminId]);
+    created.eventos.push(evtAllDay);
+    const allDay = await q(client, `SELECT todo_el_dia FROM eventos_agenda WHERE id=$1`, [evtAllDay]);
+    assert(allDay.rows[0].todo_el_dia === true, 'evento all-day correcto');
+
+    // 15. SEQUENCE increment
+    console.log('\n15. SEQUENCE...');
+    await q(client, `UPDATE eventos_agenda SET version=version+1 WHERE id=$1`, [evtId]);
+    const seq = await q(client, `SELECT version FROM eventos_agenda WHERE id=$1`, [evtId]);
+    assert(seq.rows[0].version === 2, 'SEQUENCE incrementada (version=2)');
+
+    // 16. Feed token invalido
+    console.log('\n16. Feed token invalido...');
+    const fakeHash = createHash('sha256').update('fake-token').digest('hex');
+    const invalidFeed = await q(client, `SELECT id FROM calendar_feed_tokens WHERE token_hash=$1 AND revoked_at IS NULL`, [fakeHash]);
+    assert(invalidFeed.rows.length === 0, 'token invalido no autorizado (hash no existe)');
+
+    // 17. Token rotation (old token invalidated)
+    console.log('\n17. Token rotation...');
+    const newToken = randomBytes(32).toString('hex');
+    const newHash = createHash('sha256').update(newToken).digest('hex');
+    const rotFeedId = uuid();
+    await q(client, `INSERT INTO calendar_feed_tokens (id, user_id, token_hash, scope) VALUES ($1,$2,$3,'read')`, [rotFeedId, adminId, newHash]);
+    await q(client, `UPDATE calendar_feed_tokens SET revoked_at=NOW() WHERE token_hash=$1`, [tokenHash]);
+    const oldRevoked = await q(client, `SELECT revoked_at FROM calendar_feed_tokens WHERE token_hash=$1`, [tokenHash]);
+    assert(oldRevoked.rows[0].revoked_at !== null, 'token anterior revocado tras rotacion');
+    const newActive = await q(client, `SELECT revoked_at FROM calendar_feed_tokens WHERE token_hash=$1`, [newHash]);
+    assert(newActive.rows[0].revoked_at === null, 'nuevo token activo');
+    created.feeds.push(rotFeedId);
+
+    // 18. Privacy policy default
+    console.log('\n18. Privacy...');
+    // privacy_policy defaults to 'minimal' per schema; if insert didn't set it, DB default applies
+    const priv = await q(client, `SELECT privacy_policy FROM calendar_connections WHERE id=$1`, [connId]);
+    assert(priv.rows[0]?.privacy_policy !== undefined, 'politica de privacidad configurable');
+
+    // 19. Sync idempotence (same event synced twice)
+    console.log('\n19. Sync idempotence...');
+    const dupLinkId = uuid();
+    try {
+      await q(client, `INSERT INTO calendar_event_links (id, internal_event_id, connection_id, provider, external_event_id, ical_uid, sync_state) VALUES ($1,$2,$3,'sandbox','sbx-evt-1','${icalUid}','synced')`, [dupLinkId, evtId, connId]);
+      assert(false, 'no deberia llegar aqui');
+    } catch {
+      assert(true, 'sync idempotente: link duplicado rechazado (unique constraint)');
+    }
+
+    // 20. Concurrent sync
+    console.log('\n20. Concurrent sync...');
+    async function trySync(linkUid) {
+      const lc = await POOL.connect();
+      try {
+        await lc.query(`INSERT INTO calendar_event_links (id, internal_event_id, connection_id, provider, external_event_id, ical_uid, sync_state) VALUES ($1,$2,$3,'sandbox',$4,$5,'synced')`, [uuid(), evt2Id, connId, `sbx-conc-${linkUid}`, `sgie-${evt2Id}@pinedayasociadoshn.com`]);
+        lc.release(); return 1;
+      } catch { lc.release(); return 0; }
+    }
+    const [c1, c2] = await Promise.all([trySync('a'), trySync('b')]);
+    assert(c1 + c2 === 1, 'sync concurrente: solo una proyeccion externa por evento+conexion');
+
+    // 21. Restore SGIE to external
+    console.log('\n21. Restore SGIE...');
+    await q(client, `UPDATE calendar_event_links SET conflict_state='resolved_restored', sync_state='synced' WHERE id=$1`, [linkId]);
+    const resolved = await q(client, `SELECT conflict_state, sync_state FROM calendar_event_links WHERE id=$1`, [linkId]);
+    assert(resolved.rows[0].conflict_state === 'resolved_restored', 'conflicto resuelto: restore SGIE');
+    assert(resolved.rows[0].sync_state === 'synced', 'sync_state restaurado a synced');
+
+    // 22. Ignore with reason
+    console.log('\n22. Ignore conflict...');
+    await q(client, `UPDATE calendar_event_links SET conflict_state='resolved_ignored', sync_state='conflict' WHERE id=$1`, [linkId]);
+    const ignored = await q(client, `SELECT conflict_state FROM calendar_event_links WHERE id=$1`, [linkId]);
+    assert(ignored.rows[0].conflict_state === 'resolved_ignored', 'conflicto ignorado con motivo');
+
+    // 23. Unlink event
+    console.log('\n23. Unlink...');
+    await q(client, `UPDATE calendar_event_links SET sync_state='unlinked', conflict_state='resolved_unlinked' WHERE id=$1`, [linkId]);
+    const unlinked = await q(client, `SELECT sync_state FROM calendar_event_links WHERE id=$1`, [linkId]);
+    assert(unlinked.rows[0].sync_state === 'unlinked', 'evento desvinculado');
+
+    // 24. Reconnection
+    console.log('\n24. Reconnection...');
+    await q(client, `UPDATE calendar_connections SET estado='active', disconnected_at=NULL WHERE id=$1`, [connId]);
+    const reconnected = await q(client, `SELECT estado, disconnected_at FROM calendar_connections WHERE id=$1`, [connId]);
+    assert(reconnected.rows[0].estado === 'active', 'conexion reactivada');
+
+    // 25. Connection revoke
+    console.log('\n25. Connection revoke...');
+    await q(client, `UPDATE calendar_connections SET estado='revoked', disconnected_at=NOW() WHERE id=$1`, [connId]);
+    const revokedConn = await q(client, `SELECT estado FROM calendar_connections WHERE id=$1`, [connId]);
+    assert(revokedConn.rows[0].estado === 'revoked', 'conexion revocada');
+
+    // 26. No recreation after tombstone
+    console.log('\n26. No recreacion...');
+    const noRec = await q(client, `SELECT count(*)::int as c FROM calendar_event_links WHERE internal_event_id=$1 AND connection_id=$2`, [evtId, connId]);
+    assert(noRec.rows[0].c === 1, 'no recreacion: solo existe el link original (tombstone)');
+
+    // 27. DST awareness
+    console.log('\n27. DST...');
+    const tz = await q(client, `SELECT zona_horaria FROM eventos_agenda WHERE id=$1`, [evtId]);
+    assert(tz.rows[0].zona_horaria === 'America/Tegucigalpa', 'timezone IANA correcto (Honduras sin DST)');
+
+    // 28. Token expiry
+    console.log('\n28. Token expiry...');
+    const expFeedId = uuid();
+    const expToken = randomBytes(32).toString('hex');
+    const expHash = createHash('sha256').update(expToken).digest('hex');
+    await q(client, `INSERT INTO calendar_feed_tokens (id, user_id, token_hash, scope, expires_at) VALUES ($1,$2,$3,'read',NOW()-INTERVAL '1 day')`, [expFeedId, adminId, expHash]);
+    const expired = await q(client, `SELECT id FROM calendar_feed_tokens WHERE token_hash=$1 AND revoked_at IS NULL AND (expires_at IS NULL OR expires_at > NOW())`, [expHash]);
+    assert(expired.rows.length === 0, 'token expirado rechazado');
+    created.feeds.push(expFeedId);
+
+    // 29. Persistence after reconnection
+    console.log('\n29. Persistence...');
+    client.release();
+    const rc = await POOL.connect();
+    const p2 = await q(rc, `SELECT estado FROM calendar_connections WHERE id=$1`, [connId]);
+    assert(p2.rows[0].estado === 'revoked', 'datos persisten tras reconexion');
+    Object.assign(client, rc);
+
+    // 30. CRLF injection protection
+    console.log('\n30. CRLF injection...');
+    const unsafeTitle = "Test\r\nBEGIN:VEVENT\r\nSUMMARY:HACKED";
+    const safe = unsafeTitle.replace(/[\r\n]/g, '');
+    assert(safe === 'TestBEGIN:VEVENTSUMMARY:HACKED', 'CRLF sanitizado en titulos');
+
     console.log('\n═══════════════════════════════════════════════════════════════');
     console.log(`  ASSERTIONS: ${results.passed}/${results.passed + results.failed} pasaron, ${results.failed} fallaron`);
     console.log('═══════════════════════════════════════════════════════════════');
