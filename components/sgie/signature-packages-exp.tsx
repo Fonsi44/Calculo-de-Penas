@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   FileSignature, Plus, Lock, XCircle, RotateCcw, ShieldCheck,
   AlertTriangle, CheckCircle2, FileText, ChevronRight, ChevronLeft,
-  Trash2, Hash,
+  Trash2, Hash, Send, Download, RefreshCw,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -484,6 +484,11 @@ export function SignaturePackagesExp({ expedienteId }: { expedienteId: string })
                   {pkg.canceladoMotivo && (
                     <p className="text-xxs text-text-muted">Cancelado: {pkg.canceladoMotivo}</p>
                   )}
+
+                  {/* Signature envelope (P2-09) */}
+                  {pkg.estado === 'locked' && (
+                    <SignatureEnvelopeSection packageId={pkg.id} expedienteId={expedienteId} />
+                  )}
                 </div>
               ) : null}
             </div>
@@ -602,4 +607,192 @@ function estadoLabel(estado: string): string {
 function estadoColor(estado: string): string {
   const map: Record<string, string> = { draft: 'text-text-muted', ready: 'text-success', locked: 'text-accent-dark', cancelled: 'text-danger', superseded: 'text-warning' };
   return map[estado] || 'text-text-muted';
+}
+
+// ─── Signature Envelope Section (P2-09) ─────────────────────────────────────
+
+function SignatureEnvelopeSection({ packageId, expedienteId }: { packageId: string; expedienteId: string }) {
+  const toast = useToast();
+  const confirm = useConfirm();
+  const [envelopes, setEnvelopes] = useState<Array<{
+    envelopeId: string; providerEnvelopeId: string | null;
+    estadoInterno: string; estadoExterno: string | null; correlationId: string;
+  }>>([]);
+  const [envLoading, setEnvLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [selectedEnv, setSelectedEnv] = useState<{
+    envelopeId: string; estadoInterno: string;
+    signers: Array<{ id: string; nombre: string; rolDocumento: string; orden: number; estado: string; signedAt: string | null; viewedAt: string | null }>;
+    events: Array<{ tipo: string; occurredAt: string }>;
+    artifacts: Array<{ id: string; tipo: string; nombre: string; hashSha256: string | null }>;
+  } | null>(null);
+
+  const fetchEnvelopes = useCallback(async () => {
+    setEnvLoading(true);
+    try {
+      const res = await fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes`);
+      if (res.ok) setEnvelopes(await res.json());
+    } catch { /* */ }
+    finally { setEnvLoading(false); }
+  }, [expedienteId, packageId]);
+
+  useEffect(() => {
+    fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes`)
+      .then(async (r) => { if (r.ok) setEnvelopes(await r.json()); })
+      .catch(() => {})
+      .finally(() => setEnvLoading(false));
+  }, [expedienteId, packageId]);
+
+  const fetchDetail = async (envelopeId: string) => {
+    try {
+      const res = await fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes/${envelopeId}`);
+      if (res.ok) setSelectedEnv(await res.json());
+    } catch { /* */ }
+  };
+
+  const handleSend = async () => {
+    const ok = await confirm({ title: 'Enviar a firma', description: 'Se creará un sobre de firma electrónica con los documentos y firmantes del paquete. Esta acción no se puede deshacer.', tone: 'warning' });
+    if (!ok) return;
+    setActionLoading('send');
+    try {
+      const idemKey = `ui-send-${Date.now()}`;
+      const res = await fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes/send`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idempotencyKey: idemKey }),
+      });
+      if (!res.ok) throw new Error((await res.json()).error);
+      toast.success('Sobre de firma creado y enviado');
+      fetchEnvelopes();
+    } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+    finally { setActionLoading(null); }
+  };
+
+  const handleCancelEnv = async (envelopeId: string) => {
+    const motivo = 'Cancelado por usuario desde la interfaz';
+    setActionLoading(`cancel-${envelopeId}`);
+    try {
+      const res = await fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes/${envelopeId}/cancel`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ motivo }),
+      });
+      if (!res.ok) throw new Error((await res.json()).error);
+      toast.success('Sobre cancelado');
+      fetchEnvelopes();
+    } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+    finally { setActionLoading(null); }
+  };
+
+  const handleReconcile = async (envelopeId: string) => {
+    setActionLoading(`reconcile-${envelopeId}`);
+    try {
+      const res = await fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes/${envelopeId}/reconcile`, { method: 'POST' });
+      if (!res.ok) throw new Error((await res.json()).error);
+      fetchEnvelopes();
+      toast.success('Estado actualizado');
+    } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+    finally { setActionLoading(null); }
+  };
+
+  const handleDownload = async (envelopeId: string) => {
+    setActionLoading(`download-${envelopeId}`);
+    try {
+      const res = await fetch(`/api/sgie/expedientes/${expedienteId}/signature-packages/${packageId}/envelopes/${envelopeId}/artifacts`);
+      if (!res.ok) throw new Error((await res.json()).error);
+      toast.success('Artefactos descargados');
+      fetchDetail(envelopeId);
+    } catch (e) { toast.danger(e instanceof Error ? e.message : 'Error'); }
+    finally { setActionLoading(null); }
+  };
+
+  if (envLoading) return <div className="flex justify-center py-2"><Spinner size="sm" /></div>;
+
+  return (
+    <div className="border-t border-border-light mt-3 pt-3">
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-xxs text-text-muted font-semibold uppercase">Firma electrónica</p>
+        {envelopes.length === 0 && (
+          <Button variant="primary" size="sm" onClick={handleSend} loading={actionLoading === 'send'}>
+            <Send size={12} /> Enviar a firma
+          </Button>
+        )}
+      </div>
+
+      {envelopes.length === 0 ? (
+        <p className="text-xs text-text-muted">El paquete está listo para ser enviado a firma electrónica.</p>
+      ) : (
+        <div className="space-y-2">
+          {envelopes.map((env) => (
+            <div key={env.envelopeId} className="border border-border rounded-lg p-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className={cn('text-xs font-semibold', envEstadoColor(env.estadoInterno))}>{envEstadoLabel(env.estadoInterno)}</span>
+                  {env.providerEnvelopeId && <span className="text-xxs text-text-muted font-mono">{env.providerEnvelopeId.slice(0, 12)}…</span>}
+                </div>
+                <div className="flex items-center gap-1">
+                  {(env.estadoInterno === 'sent' || env.estadoInterno === 'partially_signed') && (
+                    <Button variant="ghost" size="sm" onClick={() => handleCancelEnv(env.envelopeId)} loading={actionLoading === `cancel-${env.envelopeId}`} title="Cancelar">
+                      <XCircle size={12} />
+                    </Button>
+                  )}
+                  {!['completed', 'cancelled', 'declined'].includes(env.estadoInterno) && (
+                    <Button variant="ghost" size="sm" onClick={() => handleReconcile(env.envelopeId)} loading={actionLoading === `reconcile-${env.envelopeId}`} title="Sincronizar">
+                      <RefreshCw size={12} />
+                    </Button>
+                  )}
+                  {env.estadoInterno === 'completed' && (
+                    <Button variant="ghost" size="sm" onClick={() => handleDownload(env.envelopeId)} loading={actionLoading === `download-${env.envelopeId}`} title="Descargar artefactos">
+                      <Download size={12} />
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Envelope detail */}
+              {selectedEnv?.envelopeId === env.envelopeId && (
+                <div className="mt-2 space-y-1 text-xs">
+                  {selectedEnv.signers.map((s) => (
+                    <div key={s.id} className="flex items-center gap-2">
+                      <span className={cn('w-2 h-2 rounded-full', s.estado === 'signed' ? 'bg-success' : s.estado === 'declined' ? 'bg-danger' : 'bg-text-muted')} />
+                      <span>{s.nombre}</span>
+                      <span className="text-text-muted">· {s.rolDocumento}</span>
+                      <span className="text-xxs text-text-muted">{envSignerLabel(s.estado)}</span>
+                    </div>
+                  ))}
+                  {selectedEnv.artifacts.length > 0 && (
+                    <div className="mt-1 pt-1 border-t border-border-light">
+                      <p className="text-xxs text-text-muted">Artefactos: {selectedEnv.artifacts.map(a => a.nombre).join(', ')}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+              <button className="text-xxs text-accent hover:underline mt-1" onClick={() => selectedEnv?.envelopeId === env.envelopeId ? setSelectedEnv(null) : fetchDetail(env.envelopeId)}>
+                {selectedEnv?.envelopeId === env.envelopeId ? 'Ocultar' : 'Ver detalle'}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function envEstadoLabel(estado: string): string {
+  const map: Record<string, string> = {
+    draft: 'Borrador', submitting: 'Enviando', sent: 'Enviado',
+    partially_signed: 'Parcial', completed: 'Completado', declined: 'Rechazado',
+    cancelled: 'Cancelado', expired: 'Expirado', provider_error: 'Error', intervention_required: 'Intervención',
+  };
+  return map[estado] || estado;
+}
+
+function envEstadoColor(estado: string): string {
+  if (estado === 'completed') return 'text-success';
+  if (estado === 'declined' || estado === 'cancelled') return 'text-danger';
+  if (estado === 'expired' || estado === 'provider_error') return 'text-warning';
+  return 'text-text';
+}
+
+function envSignerLabel(estado: string): string {
+  const map: Record<string, string> = { pending: 'Pendiente', sent: 'Enviado', viewed: 'Visto', signed: 'Firmado', declined: 'Rechazó' };
+  return map[estado] || estado;
 }
