@@ -6,7 +6,7 @@
  * de webhooks → descarga de artefactos → actualización del expediente.
  */
 import { db } from '@/lib/db';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, sql } from 'drizzle-orm';
 import { createHash, randomUUID } from 'crypto';
 import { signatureEnvelopes, signatureEnvelopeSigners, signatureEvents, signatureArtifacts, signaturePackages, signaturePackageSigners, caseSummaryCheckpoints } from '@/lib/schema';
 import { isFlagEnabled } from './feature-flags';
@@ -345,6 +345,51 @@ export async function listEnvelopes(signaturePackageId: string, ctx: { actorId: 
 
   const envelopes = await db.select().from(signatureEnvelopes).where(eq(signatureEnvelopes.signaturePackageId, signaturePackageId)).orderBy(signatureEnvelopes.creadoEn);
   return envelopes.map((e) => ({ envelopeId: e.id, signaturePackageId: e.signaturePackageId, providerEnvelopeId: e.providerEnvelopeId, estadoInterno: e.estadoInterno as EnvelopeEstado, estadoExterno: e.estadoExterno, correlationId: e.correlationId ?? '' }));
+}
+
+// ─── RECONCILE STALE (cron job) ─────────────────────────────────────────
+
+const ENVELOPE_STALE_MINUTES = 30;
+
+export async function reconcileStaleEnvelopes(): Promise<{ reconciled: number; errors: number; stalest: number }> {
+  const stale = await db
+    .select()
+    .from(signatureEnvelopes)
+    .where(
+      and(
+        sql`estado_interno IN ('sent', 'partially_signed', 'submitting')`,
+        sql`last_synced_at IS NULL OR last_synced_at < NOW() - INTERVAL '30 minutes'`,
+      ),
+    )
+    .limit(10);
+
+  let reconciled = 0;
+  let errors = 0;
+
+  for (const env of stale) {
+    try {
+      if (!env.providerEnvelopeId) continue;
+      const snapshot = await getProvider().getEnvelope({ providerEnvelopeId: env.providerEnvelopeId });
+      const nuevoEstado = normalizeEstado(snapshot.estado);
+
+      await db.update(signatureEnvelopes)
+        .set({ estadoInterno: nuevoEstado, estadoExterno: snapshot.estado, lastSyncedAt: new Date(), actualizadoEn: new Date() })
+        .where(eq(signatureEnvelopes.id, env.id));
+
+      if (nuevoEstado === 'completed') {
+        await db.update(signatureEnvelopes).set({ completedAt: new Date() }).where(eq(signatureEnvelopes.id, env.id));
+        await encolarEvento({ tipo: OUTBOX_EVENTS.SIGNATURE_ENVELOPE_COMPLETED, aggregateType: 'signature_envelope', aggregateId: env.id, payload: { envelopeId: env.id }, correlationId: env.correlationId ?? undefined });
+        await ejecutarCascadas(env.expedienteId);
+      }
+
+      reconciled++;
+    } catch {
+      errors++;
+      if (errors >= 3) break; // stop processing on persistent failures
+    }
+  }
+
+  return { reconciled, errors, stalest: stale.length };
 }
 
 // ─── Cascades ───────────────────────────────────────────────────────────────

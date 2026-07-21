@@ -10,6 +10,7 @@ import { despacharEventos, recuperarEventosBloqueados, obtenerMetricasOutbox } f
 import { procesarDocumento } from '@/lib/sgie/motor-documental';
 import { procesarDocumentoConIa, isIaEnabled } from '@/lib/sgie/ia-documental';
 import { procesarRecordatoriosPendientes } from '@/lib/sgie/motor-recordatorios';
+import { reconcileStaleEnvelopes } from '@/lib/sgie/signature-service';
 import { randomUUID } from 'crypto';
 
 const LOTE = 5;
@@ -134,6 +135,9 @@ export async function GET(request: Request) {
     const metricasJobs = await obtenerMetricas();
     const metricasOutbox = await obtenerMetricasOutbox();
 
+    // P2-09: reconciliar envelopes de firma estancados
+    const signatureReconciled = await reconcileStaleEnvelopes();
+
     return Response.json({
       ok: true,
       correlationId: cid,
@@ -151,6 +155,7 @@ export async function GET(request: Request) {
         metricas: metricasOutbox,
       },
       recordatorios,
+      signature: signatureReconciled,
     });
   } catch (err) {
     return Response.json({
