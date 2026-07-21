@@ -39,6 +39,7 @@ import { recalcularReadinessSiProcede } from './readiness';
 import { recomendarNextAction } from './next-action';
 import { logSgie, registrarHistorialExpediente } from './auditoria-sgie';
 import { OUTBOX_EVENTS, encolarEvento } from './outbox';
+import { getBlockingPackages } from './signature-package-service';
 import type { FlagContext } from './feature-flags';
 
 // ─── Estados aprobables ─────────────────────────────────────────────────────
@@ -770,9 +771,16 @@ export async function revertirAprobacion(
       continue;
     }
 
-    // Dependencia de firma/paquete (P2-08 no existe aún; verificamos document_links
-    // activos que otros podrían depender — no bloquea, pero se documenta).
-    // Cuando P2-08 exista, aquí se consultará signature_packages.
+    // P2-08: verificar que ningún paquete de firma active dependa de este documento.
+    const blocking = await getBlockingPackages([item.documentId]);
+    if (blocking.length > 0) {
+      denegados.push({
+        documentId: item.documentId,
+        revertido: false,
+        motivo: `El documento está incluido en ${blocking.length} paquete(s) de firma activo(s): ${blocking.map(b => b.packageId).join(', ')} (estado: ${blocking.map(b => b.estado).join(', ')})`,
+      });
+      continue;
+    }
 
     // Expediente avanzó: no revertir.
     if (expedienteAvanzado) {

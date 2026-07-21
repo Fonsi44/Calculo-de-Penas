@@ -14,6 +14,11 @@ export const OUTBOX_EVENTS = {
   REQUIREMENT_COMPLETED: 'requirement.completed',
   COMMUNICATION_REQUESTED: 'communication.requested',
   COMMUNICATION_CANCELLED: 'communication.cancelled',
+  SIGNATURE_PACKAGE_CREATED: 'signature.package.created',
+  SIGNATURE_PACKAGE_READY: 'signature.package.ready',
+  SIGNATURE_PACKAGE_LOCKED: 'signature.package.locked',
+  SIGNATURE_PACKAGE_CANCELLED: 'signature.package.cancelled',
+  SIGNATURE_PACKAGE_SUPERSEDED: 'signature.package.superseded',
 } as const;
 
 export type OutboxEventType = (typeof OUTBOX_EVENTS)[keyof typeof OUTBOX_EVENTS];

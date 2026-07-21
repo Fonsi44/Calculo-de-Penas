@@ -17,6 +17,7 @@ export const CAPABILITIES = [
   'users.read', 'users.manage', 'users.invite', 'roles.manage',
   'cases.read', 'cases.read_all', 'cases.create', 'cases.assign', 'cases.update',
   'documents.read', 'documents.review', 'documents.approve',
+  'signature.manage',
   'calendar.read', 'calendar.write', 'calendar.manage_team',
   'settings.manage', 'audit.read',
 ] as const;

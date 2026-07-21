@@ -41,6 +41,7 @@ export const FLAG_KEYS = [
   'sgie.ai.incremental_summary',
   'sgie.ai.next_action',
   'sgie.documents.bulk_approve',
+  'sgie.signature.packages',
   'sgie.signature.sandbox',
   'sgie.calendar.external',
   'sgie.retrieval.fts',

@@ -59,6 +59,9 @@ vi.mock('@/lib/sgie/auditoria-sgie', () => ({
   logSgie: vi.fn(async () => undefined),
   registrarHistorialExpediente: vi.fn(async () => undefined),
 }));
+vi.mock('@/lib/sgie/signature-package-service', () => ({
+  getBlockingPackages: vi.fn(async () => []),
+}));
 vi.mock('@/lib/sgie/outbox', () => ({
   OUTBOX_EVENTS: { DOCUMENT_APPROVED: 'document.approved', DOCUMENT_APPROVAL_REVERTED: 'document.approval.reverted' },
   encolarEvento: vi.fn(async () => ({ id: 'evt-1' })),

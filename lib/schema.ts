@@ -1,5 +1,5 @@
-import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector, real } from 'drizzle-orm/pg-core';
-
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector, real, time } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
   nombre: varchar('nombre', { length: 300 }).notNull(),
@@ -282,6 +282,25 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'ai_task_reviewed',
   'ocr_completed',
   'ocr_failed',
+  // Fase 3 — Portal del cliente y sesiones.
+  'portal_session_created',
+  'portal_session_expired',
+  'portal_document_uploaded',
+  // Fase 4A — Orquestación documental IA y feature flags.
+  'ai_pipeline_run_started',
+  'ai_pipeline_run_completed',
+  'ai_pipeline_run_failed',
+  'feature_flag_changed',
+  // Fase 4B-1 — Aprobación documental en bloque.
+  'documento_bulk_approved',
+  'documento_bulk_reverted',
+  // Fase 4B-2 — Paquetes preparados para firma.
+  'signature_package_created',
+  'signature_package_ready',
+  'signature_package_locked',
+  'signature_package_cancelled',
+  'signature_package_superseded',
+  'signature_package_verified',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {
@@ -1219,6 +1238,26 @@ export const enlacesMagicos = pgTable('enlaces_magicos', {
 
 export type EnlaceMagico = typeof enlacesMagicos.$inferSelect;
 export type EnlaceMagicoInsert = typeof enlacesMagicos.$inferInsert;
+
+export const portalSessions = pgTable('portal_sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tokenHash: varchar('token_hash', { length: 64 }).notNull(),
+  enlaceId: uuid('enlace_id'),
+  clienteEmail: varchar('cliente_email', { length: 255 }),
+  ultimoAcceso: timestamp('ultimo_acceso', { withTimezone: true }),
+  expiraEn: timestamp('expira_en', { withTimezone: true }).notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  enlaceRef: foreignKey({ columns: [table.enlaceId], foreignColumns: [enlacesMagicos.id] }).onDelete('cascade'),
+  tokenHashIdx: index('portal_sessions_token_hash_idx').on(table.tokenHash),
+  enlaceIdx: index('portal_sessions_enlace_idx').on(table.enlaceId),
+  clienteEmailIdx: index('portal_sessions_cliente_email_idx').on(table.clienteEmail),
+  expiraIdx: index('portal_sessions_expira_idx').on(table.expiraEn),
+}));
+
+export type PortalSession = typeof portalSessions.$inferSelect;
+export type PortalSessionInsert = typeof portalSessions.$inferInsert;
+
 
 // Metadatos de documentos. Hash SHA-256 obligatorio antes de cualquier
 // procesamiento IA/OCR. Detección de duplicados por hash. Bytes en Blob privado.
@@ -2343,6 +2382,7 @@ export const documentClassifications = pgTable('document_classifications', {
   latenciaMs: integer('latencia_ms'),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
+  docPipelineUnique: uniqueIndex('document_classifications_doc_pipeline_unique').on(table.documentId, table.pipelineVersion),
   docIdx: index('document_classifications_doc_idx').on(table.documentId),
   estadoIdx: index('document_classifications_estado_idx').on(table.estado),
   confianzaIdx: index('document_classifications_confianza_idx').on(table.confianza),
@@ -2412,6 +2452,7 @@ export const documentExtractions = pgTable('document_extractions', {
   latenciaMs: integer('latencia_ms'),
   creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
 }, (table) => ({
+  docPipelineUnique: uniqueIndex('document_extractions_doc_pipeline_unique').on(table.documentId, table.pipelineVersion),
   docIdx: index('document_extractions_doc_idx').on(table.documentId),
   expIdx: index('document_extractions_exp_idx').on(table.expedienteId),
   estadoIdx: index('document_extractions_estado_idx').on(table.estado),
@@ -2638,7 +2679,8 @@ export const documentBulkApprovals = pgTable('document_bulk_approvals', {
   expedienteIdemUnique: uniqueIndex('document_bulk_approvals_exp_idem_unique').on(table.expedienteId, table.idempotencyKey),
   // Una preview activa por expediente (pendiente/confirmada/parcial).
   expedientePreviewActiveUnique: uniqueIndex('document_bulk_approvals_exp_preview_active_unique')
-    .on(table.expedienteId, table.previewHash),
+    .on(table.expedienteId, table.previewHash)
+    .where(sql`estado IN ('preview_pending', 'preview_confirmed', 'preview_partial')`),
   actorCreadoIdx: index('document_bulk_approvals_actor_creado_idx').on(table.actorId, table.creadoEn),
   expedienteEstadoIdx: index('document_bulk_approvals_exp_estado_idx').on(table.expedienteId, table.estado),
 }));
@@ -2670,3 +2712,202 @@ export const documentBulkApprovalItems = pgTable('document_bulk_approval_items',
 
 export type DocumentBulkApprovalItem = typeof documentBulkApprovalItems.$inferSelect;
 export type DocumentBulkApprovalItemInsert = typeof documentBulkApprovalItems.$inferInsert;
+
+export const alertasSla = pgTable('alertas_sla', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tipo: varchar('tipo', { length: 100 }).notNull(),
+  severidad: varchar('severidad', { length: 30 }).notNull().default('info'),
+  titulo: varchar('titulo', { length: 300 }).notNull(),
+  mensaje: text('mensaje'),
+  expedienteId: uuid('expediente_id'),
+  propietarioId: uuid('propietario_id'),
+  vencimiento: timestamp('vencimiento', { withTimezone: true }),
+  estado: varchar('estado', { length: 30 }).notNull().default('activa'),
+  resueltaPor: uuid('resuelta_por'),
+  resueltaEn: timestamp('resuelta_en', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  propietarioRef: foreignKey({ columns: [table.propietarioId], foreignColumns: [usuarios.id] }),
+  resueltaPorRef: foreignKey({ columns: [table.resueltaPor], foreignColumns: [usuarios.id] }),
+  expedienteIdx: index('alertas_sla_expediente_idx').on(table.expedienteId),
+  propietarioIdx: index('alertas_sla_propietario_idx').on(table.propietarioId),
+  estadoIdx: index('alertas_sla_estado_idx').on(table.estado),
+  severidadIdx: index('alertas_sla_severidad_idx').on(table.severidad),
+  vencimientoIdx: index('alertas_sla_vencimiento_idx').on(table.vencimiento),
+}));
+
+export const inboundMessages = pgTable('inbound_messages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  messageId: varchar('message_id', { length: 255 }).notNull().unique(),
+  fromEmail: varchar('from_email', { length: 255 }).notNull(),
+  toEmail: varchar('to_email', { length: 255 }).notNull(),
+  subject: varchar('subject', { length: 500 }),
+  bodyText: text('body_text'),
+  bodyHtml: text('body_html'),
+  expedienteId: uuid('expediente_id'),
+  requisitoId: uuid('requisito_id'),
+  documentoId: uuid('documento_id'),
+  estado: varchar('estado', { length: 30 }).notNull().default('recibido'),
+  procesadoEn: timestamp('procesado_en', { withTimezone: true }),
+  error: text('error'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('set null'),
+  requisitoRef: foreignKey({ columns: [table.requisitoId], foreignColumns: [requisitosExpediente.id] }).onDelete('set null'),
+  documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('set null'),
+  messageIdIdx: index('inbound_messages_message_id_idx').on(table.messageId),
+  expedienteIdx: index('inbound_messages_expediente_idx').on(table.expedienteId),
+  estadoIdx: index('inbound_messages_estado_idx').on(table.estado),
+  fromIdx: index('inbound_messages_from_idx').on(table.fromEmail),
+}));
+
+export const communicationRules = pgTable('communication_rules', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  disparador: varchar('disparador', { length: 100 }).notNull(),
+  condiciones: jsonb('condiciones').default({}),
+  destinatario: varchar('destinatario', { length: 255 }).notNull(),
+  plantillaSlug: varchar('plantilla_slug', { length: 100 }),
+  retrasoMinutos: integer('retraso_minutos').default(0),
+  horarioInicio: time('horario_inicio'),
+  horarioFin: time('horario_fin'),
+  cadenciaHoras: integer('cadencia_horas'),
+  maximoEnvio: integer('maximo_envio').default(1),
+  cancelacionSi: jsonb('cancelacion_si').default([]),
+  sensibilidad: varchar('sensibilidad', { length: 30 }).default('normal'),
+  requiereAprobacion: boolean('requiere_aprobacion').notNull().default(false),
+  idioma: varchar('idioma', { length: 10 }).default('es'),
+  escalado: jsonb('escalado').default([]),
+  estado: varchar('estado', { length: 30 }).notNull().default('borrador'),
+  version: integer('version').notNull().default(1),
+  creadoPor: uuid('creado_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  disparadorIdx: index('communication_rules_disparador_idx').on(table.disparador),
+  estadoIdx: index('communication_rules_estado_idx').on(table.estado),
+  creadoPorIdx: index('communication_rules_creado_por_idx').on(table.creadoPor),
+}));
+
+export const workflowSnapshots = pgTable('workflow_snapshots', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  procedimientoVersionId: uuid('procedimiento_version_id'),
+  snapshot: jsonb('snapshot').notNull().default({}),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  versionRef: foreignKey({ columns: [table.procedimientoVersionId], foreignColumns: [procedimientoVersiones.id] }).onDelete('set null'),
+  expedienteIdx: index('workflow_snapshots_expediente_idx').on(table.expedienteId),
+  versionIdx: index('workflow_snapshots_version_idx').on(table.procedimientoVersionId),
+}));
+
+export const userActivityLog = pgTable('user_activity_log', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id'),
+  tipo: varchar('tipo', { length: 100 }).notNull(),
+  recurso: varchar('recurso', { length: 100 }),
+  recursoId: varchar('recurso_id', { length: 100 }),
+  metadata: jsonb('metadata').default({}),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('set null'),
+  usuarioIdx: index('user_activity_log_usuario_idx').on(table.usuarioId),
+  tipoIdx: index('user_activity_log_tipo_idx').on(table.tipo),
+  creadoEnIdx: index('user_activity_log_creado_en_idx').on(table.creadoEn),
+   recursoIdx: index('user_activity_log_recurso_idx').on(table.recurso, table.recursoId),
+}));
+
+// ─── P2-08: Paquetes preparados para firma ─────────────────────────────────
+
+export const signaturePackages = pgTable('signature_packages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  organizationId: uuid('organization_id'),
+  actorId: uuid('actor_id').notNull(),
+  estado: varchar('estado', { length: 30 }).notNull().default('draft'),
+  version: integer('version').notNull().default(1),
+  proposito: varchar('proposito', { length: 100 }),
+  titulo: varchar('titulo', { length: 300 }).notNull(),
+  idempotencyKey: varchar('idempotency_key', { length: 120 }).notNull(),
+  previewHash: varchar('preview_hash', { length: 64 }),
+  manifestHash: varchar('manifest_hash', { length: 64 }),
+  manifestSchemaVersion: varchar('manifest_schema_version', { length: 20 }).notNull().default('1.0'),
+  hashAlgorithm: varchar('hash_algorithm', { length: 20 }).notNull().default('sha256'),
+  manifestJson: jsonb('manifest_json'),
+  documentOrder: jsonb('document_order').notNull().default(sql`'[]'`),
+  readinessRunId: uuid('readiness_run_id'),
+  readinessException: boolean('readiness_exception').notNull().default(false),
+  readinessExceptionMotivo: text('readiness_exception_motivo'),
+  congeladoEn: timestamp('congelado_en', { withTimezone: true }),
+  expiracionEn: timestamp('expiracion_en', { withTimezone: true }),
+  canceladoMotivo: text('cancelado_motivo'),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  actorRef: foreignKey({ columns: [table.actorId], foreignColumns: [usuarios.id] }),
+  expIdemUnique: uniqueIndex('signature_packages_exp_idem_unique').on(table.expedienteId, table.idempotencyKey),
+  expActiveUnique: uniqueIndex('signature_packages_exp_active_unique').on(table.expedienteId).where(sql`estado IN ('ready', 'locked')`),
+  expEstadoIdx: index('signature_packages_exp_estado_idx').on(table.expedienteId, table.estado),
+  actorIdx: index('signature_packages_actor_idx').on(table.actorId),
+}));
+
+export type SignaturePackage = typeof signaturePackages.$inferSelect;
+export type SignaturePackageInsert = typeof signaturePackages.$inferInsert;
+
+export const signaturePackageItems = pgTable('signature_package_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  packageId: uuid('package_id').notNull(),
+  documentId: uuid('document_id').notNull(),
+  expedienteId: uuid('expediente_id').notNull(),
+  versionFrozen: integer('version_frozen').notNull(),
+  nombreNormalizado: varchar('nombre_normalizado', { length: 500 }).notNull(),
+  mime: varchar('mime', { length: 200 }),
+  tamanoBytes: integer('tamano_bytes'),
+  hashSha256: varchar('hash_sha256', { length: 64 }).notNull(),
+  aprobadoPor: uuid('aprobado_por'),
+  aprobadoEn: timestamp('aprobado_en', { withTimezone: true }),
+  orden: integer('orden').notNull().default(0),
+  requisitoId: uuid('requisito_id'),
+  tipoDocumento: varchar('tipo_documento', { length: 100 }),
+  metadataSnapshot: jsonb('metadata_snapshot'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  packageRef: foreignKey({ columns: [table.packageId], foreignColumns: [signaturePackages.id] }).onDelete('cascade'),
+  documentRef: foreignKey({ columns: [table.documentId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  pkgDocVerUnique: uniqueIndex('signature_package_items_pkg_doc_ver_unique').on(table.packageId, table.documentId, table.versionFrozen),
+  pkgIdx: index('signature_package_items_pkg_idx').on(table.packageId),
+  docIdx: index('signature_package_items_doc_idx').on(table.documentId),
+}));
+
+export type SignaturePackageItem = typeof signaturePackageItems.$inferSelect;
+export type SignaturePackageItemInsert = typeof signaturePackageItems.$inferInsert;
+
+export const signaturePackageSigners = pgTable('signature_package_signers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  packageId: uuid('package_id').notNull(),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  identificador: varchar('identificador', { length: 100 }),
+  rolDocumento: varchar('rol_documento', { length: 100 }).notNull(),
+  orden: integer('orden').notNull().default(0),
+  obligatorio: boolean('obligatorio').notNull().default(true),
+  metodoFuturo: varchar('metodo_futuro', { length: 50 }),
+  estadoValidacion: varchar('estado_validacion', { length: 30 }).notNull().default('pendiente'),
+  fuente: varchar('fuente', { length: 30 }).notNull().default('manual'),
+  consentimiento: text('consentimiento'),
+  validadoEn: timestamp('validado_en', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  packageRef: foreignKey({ columns: [table.packageId], foreignColumns: [signaturePackages.id] }).onDelete('cascade'),
+  pkgNameRolUnique: uniqueIndex('signature_package_signers_pkg_name_rol_unique').on(table.packageId, table.nombre, table.rolDocumento),
+  pkgIdx: index('signature_package_signers_pkg_idx').on(table.packageId),
+}));
+
+export type SignaturePackageSigner = typeof signaturePackageSigners.$inferSelect;
+export type SignaturePackageSignerInsert = typeof signaturePackageSigners.$inferInsert;
