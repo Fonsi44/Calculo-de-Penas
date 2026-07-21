@@ -22,11 +22,23 @@ import type { FlagContext } from './feature-flags';
 const FLAG_KEY = 'sgie.signature.enabled';
 const PROVIDERS: Record<string, SignatureProvider> = {};
 
+function isProductionEnv(): boolean {
+  const vercelEnv = (process.env.VERCEL_ENV || '').toLowerCase();
+  const appEnv = (process.env.APP_ENV || '').toLowerCase();
+  return vercelEnv === 'production' || appEnv === 'production';
+}
+
 function getProvider(): SignatureProvider {
   const id = process.env.SIGNATURE_PROVIDER || 'sandbox';
   if (!PROVIDERS[id]) {
-    if (id === 'sandbox') PROVIDERS[id] = new SandboxSignatureProvider();
-    else throw new SignatureServiceError('INTERNAL', `Proveedor no configurado: ${id}`, 500);
+    if (id === 'sandbox') {
+      if (isProductionEnv()) {
+        throw new SignatureServiceError('FORBIDDEN', 'SandboxSignatureProvider bloqueado en producción', 403);
+      }
+      PROVIDERS[id] = new SandboxSignatureProvider();
+    } else {
+      throw new SignatureServiceError('INTERNAL', `Proveedor no configurado: ${id}`, 500);
+    }
   }
   return PROVIDERS[id];
 }
@@ -349,31 +361,51 @@ export async function listEnvelopes(signaturePackageId: string, ctx: { actorId: 
 
 // ─── RECONCILE STALE (cron job) ─────────────────────────────────────────
 
-const ENVELOPE_STALE_MINUTES = 30;
+const RECONCILE_LOCK_MINUTES = 10;
+const MAX_RECONCILE_ATTEMPTS = 5;
 
-export async function reconcileStaleEnvelopes(): Promise<{ reconciled: number; errors: number; stalest: number }> {
-  const stale = await db
-    .select()
-    .from(signatureEnvelopes)
+export async function reconcileStaleEnvelopes(): Promise<{ reconciled: number; errors: number; locked: number; stalest: number }> {
+  const now = new Date();
+
+  // Claim envelopes: atomic UPDATE with optimistic lock
+  const claimed = await db
+    .update(signatureEnvelopes)
+    .set({ reconcileLockedAt: now, lastSyncedAt: now })
     .where(
       and(
         sql`estado_interno IN ('sent', 'partially_signed', 'submitting')`,
-        sql`last_synced_at IS NULL OR last_synced_at < NOW() - INTERVAL '30 minutes'`,
+        sql`reconcile_locked_at IS NULL OR reconcile_locked_at < NOW() - INTERVAL '${RECONCILE_LOCK_MINUTES} minutes'`,
+        sql`reconcile_next_at IS NULL OR reconcile_next_at <= NOW()`,
+        sql`reconcile_attempts < ${MAX_RECONCILE_ATTEMPTS}`,
       ),
     )
-    .limit(10);
+    .returning({ id: signatureEnvelopes.id, providerEnvelopeId: signatureEnvelopes.providerEnvelopeId, expedienteId: signatureEnvelopes.expedienteId, correlationId: signatureEnvelopes.correlationId, reconcileAttempts: signatureEnvelopes.reconcileAttempts });
+  // Limit to first 10
+  const toProcess = claimed.slice(0, 10);
 
   let reconciled = 0;
   let errors = 0;
 
-  for (const env of stale) {
+  for (const env of toProcess) {
     try {
-      if (!env.providerEnvelopeId) continue;
+      if (!env.providerEnvelopeId) {
+        await unlockEnvelope(env.id);
+        continue;
+      }
+
       const snapshot = await getProvider().getEnvelope({ providerEnvelopeId: env.providerEnvelopeId });
       const nuevoEstado = normalizeEstado(snapshot.estado);
 
       await db.update(signatureEnvelopes)
-        .set({ estadoInterno: nuevoEstado, estadoExterno: snapshot.estado, lastSyncedAt: new Date(), actualizadoEn: new Date() })
+        .set({
+          estadoInterno: nuevoEstado,
+          estadoExterno: snapshot.estado,
+          lastSyncedAt: new Date(),
+          reconcileLockedAt: null,
+          reconcileAttempts: 0,
+          reconcileNextAt: null,
+          actualizadoEn: new Date(),
+        })
         .where(eq(signatureEnvelopes.id, env.id));
 
       if (nuevoEstado === 'completed') {
@@ -385,11 +417,30 @@ export async function reconcileStaleEnvelopes(): Promise<{ reconciled: number; e
       reconciled++;
     } catch {
       errors++;
-      if (errors >= 3) break; // stop processing on persistent failures
+      const attempts = (env.reconcileAttempts || 0) + 1;
+      const backoffMinutes = Math.min(2 ** attempts, 120);
+      const nextAt = new Date(Date.now() + backoffMinutes * 60 * 1000);
+
+      if (attempts >= MAX_RECONCILE_ATTEMPTS) {
+        await db.update(signatureEnvelopes)
+          .set({ estadoInterno: 'intervention_required', reconcileLockedAt: null, reconcileAttempts: attempts, actualizadoEn: new Date() })
+          .where(eq(signatureEnvelopes.id, env.id));
+        await encolarEvento({ tipo: OUTBOX_EVENTS.SIGNATURE_ENVELOPE_CANCELLED, aggregateType: 'signature_envelope', aggregateId: env.id, payload: { envelopeId: env.id, reason: 'reconcile_exhausted' }, correlationId: env.correlationId ?? undefined });
+      } else {
+        await db.update(signatureEnvelopes)
+          .set({ reconcileLockedAt: null, reconcileAttempts: attempts, reconcileNextAt: new Date(nextAt), actualizadoEn: new Date() })
+          .where(eq(signatureEnvelopes.id, env.id));
+      }
     }
   }
 
-  return { reconciled, errors, stalest: stale.length };
+  return { reconciled, errors, locked: claimed.length, stalest: claimed.length };
+}
+
+async function unlockEnvelope(envelopeId: string): Promise<void> {
+  await db.update(signatureEnvelopes)
+    .set({ reconcileLockedAt: null })
+    .where(eq(signatureEnvelopes.id, envelopeId));
 }
 
 // ─── Cascades ───────────────────────────────────────────────────────────────

@@ -2942,6 +2942,9 @@ export const signatureEnvelopes = pgTable('signature_envelopes', {
   cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
   expiredAt: timestamp('expired_at', { withTimezone: true }),
   lastSyncedAt: timestamp('last_synced_at', { withTimezone: true }),
+  reconcileLockedAt: timestamp('reconcile_locked_at', { withTimezone: true }),
+  reconcileAttempts: integer('reconcile_attempts').notNull().default(0),
+  reconcileNextAt: timestamp('reconcile_next_at', { withTimezone: true }),
   providerMetadata: jsonb('provider_metadata').notNull().default(sql`'{}'`),
   cancelMotivo: text('cancel_motivo'),
   version: integer('version').notNull().default(1),
@@ -2957,6 +2960,7 @@ export const signatureEnvelopes = pgTable('signature_envelopes', {
   pkgIdemUnique: uniqueIndex('signature_envelopes_pkg_idem_unique').on(table.signaturePackageId, table.idempotencyKey),
   expEstadoIdx: index('signature_envelopes_exp_estado_idx').on(table.expedienteId, table.estadoInterno),
   providerIdIdx: index('signature_envelopes_provider_id_idx').on(table.providerEnvelopeId),
+  reconcileIdx: index('signature_envelopes_reconcile_idx').on(table.estadoInterno, table.reconcileNextAt),
 }));
 
 export type SignatureEnvelope = typeof signatureEnvelopes.$inferSelect;

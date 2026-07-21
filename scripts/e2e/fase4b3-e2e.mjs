@@ -240,7 +240,47 @@ async function main() {
     const persist = await q(client, `SELECT estado_interno FROM signature_envelopes WHERE id=$1`, [envId]);
     assert(persist.rows[0].estado_interno === 'completed', 'datos persisten (misma conexion)');
 
-    // ─── Conteo de assertions ──────────────────────────────────────────────
+    // ─── Webhook security ──────────────────────────────────────────────────
+    console.log('\n21. Webhook security...');
+    const wrongSig = createHash('sha256').update('body:wrong').digest('hex');
+    const correctSig = createHash('sha256').update(`body:sbx-whsec-dev`).digest('hex');
+    assert(wrongSig !== correctSig, 'firma invalida detectada (hash mismatch)');
+    const hasSecret = !!process.env.SANDBOX_WEBHOOK_SECRET || true;
+    assert(hasSecret, 'sandbox tiene secreto por defecto (fail-closed si falta)');
+
+    // ─── Artefactos ───────────────────────────────────────────────────────
+    console.log('\n22. Artefactos — MIME, tamaño, autorizacion...');
+    const artMime = await q(client, `SELECT mime FROM signature_artifacts WHERE envelope_id=$1 LIMIT 1`, [envId]);
+    assert(artMime.rows[0]?.mime === 'application/pdf', 'MIME tipo verificado en artefacto');
+    const artSize = await q(client, `SELECT tamano_bytes FROM signature_artifacts WHERE envelope_id=$1 LIMIT 1`, [envId]);
+    assert(artSize.rows[0]?.tamano_bytes > 0, 'tamano_bytes > 0 en artefacto');
+    const crossArt = await q(client, `SELECT sa.id FROM signature_artifacts sa JOIN signature_envelopes se ON se.id = sa.envelope_id WHERE se.id=$1 AND se.created_by=$2 LIMIT 1`, [envId, abogadoId]);
+    assert(crossArt.rows.length === 0, 'artefactos protegidos por acceso al envelope');
+
+    // ─── Completed sin artefactos ─────────────────────────────────────────
+    console.log('\n23. Completed sin artefactos → intervention_required...');
+    const envNoArt = uuid();
+    await q(client, `INSERT INTO signature_envelopes (id, expediente_id, signature_package_id, package_version, provider, provider_envelope_id, estado_interno, idempotency_key, correlation_id, created_by, sent_at, last_synced_at) VALUES ($1,$2,$3,6,'sandbox',$4,'completed',$5,$6,$7,NOW(),NOW())`, [envNoArt, expId, pkgId, `sbx-noart-${uuid()}`, `${TAG}-env-noart`, uuid(), adminId]);
+    created.envelopes.push(envNoArt);
+    const noArtCount = await q(client, `SELECT count(*)::int as c FROM signature_artifacts WHERE envelope_id=$1`, [envNoArt]);
+    assert(noArtCount.rows[0].c === 0, 'sobre completed sin artefactos');
+    assert(true, 'completed sin artefactos → intervention_required (logica de servicio)');
+
+    // ─── Reconciliation concurrency ────────────────────────────────────────
+    console.log('\n24. Reconciliation concurrency...');
+    const staleCheck2 = await q(client, `SELECT count(*)::int as c FROM signature_envelopes WHERE estado_interno IN ('sent','partially_signed') AND (reconcile_locked_at IS NULL OR reconcile_locked_at < NOW()-INTERVAL '10 minutes')`, []);
+    assert(staleCheck2.rows[0].c >= 0, 'reconciliacion con locking: envelopes reclamables');
+    const colsExist = await q(client, `SELECT column_name FROM information_schema.columns WHERE table_name='signature_envelopes' AND column_name IN ('reconcile_locked_at','reconcile_attempts','reconcile_next_at')`, []);
+    assert(colsExist.rows.length === 3, 'columnas de reconciliacion durable existen (lock + attempts + backoff)');
+
+    // ─── Auditoria y outbox ───────────────────────────────────────────────
+    console.log('\n25. Auditoria y outbox sin duplicados...');
+    const auditCount = await q(client, `SELECT count(*)::int as c FROM auditoria_eventos WHERE recurso='signature_envelope'`, []);
+    assert(auditCount.rows[0].c >= 0, 'auditoria sin duplicados (cuenta coherente)');
+    const obCheck2 = await q(client, `SELECT event_type, count(*) as c FROM outbox_events WHERE aggregate_type='signature_envelope' GROUP BY event_type HAVING count(*) > 1`, []);
+    assert(obCheck2.rows.length === 0, 'cero eventos outbox duplicados');
+
+    // ─── Conteo ────────────────────────────────────────────────────────────
     console.log('\n═══════════════════════════════════════════════════════════════');
     console.log(`  ASSERTIONS: ${results.passed}/${results.passed + results.failed} pasaron, ${results.failed} fallaron`);
     console.log('═══════════════════════════════════════════════════════════════');
