@@ -117,7 +117,7 @@ async function main() {
     // ═══════════════════════════════════════════════════════════════════════
     console.log('\n5. Preview expirada...');
     const batchExpired = uuid();
-    await q(client, `INSERT INTO document_bulk_approvals (id, expediente_id, actor_id, idempotency_key, preview_hash, estado, preview_caducidad, correlation_id, total, creado_en, actualizado_en) VALUES ($1,$2,$3,$4,$5,'pendiente',NOW()-INTERVAL '1 second',$6,1,NOW(),NOW())`, [batchExpired, expId, adminId, `preview:${batchExpired}`, validHash, uuid()]);
+    await q(client, `INSERT INTO document_bulk_approvals (id, expediente_id, actor_id, idempotency_key, preview_hash, estado, preview_caducidad, correlation_id, total, creado_en, actualizado_en) VALUES ($1,$2,$3,$4,$5,'pendiente',NOW()-INTERVAL '1 second',$6,1,NOW(),NOW())`, [batchExpired, expId, adminId, `preview:${batchExpired}`, createHash('sha256').update('expired-batch').digest('hex'), uuid()]);
     created.bulkApprovals.push(batchExpired);
     const expiredCheck = await q(client, `SELECT id FROM document_bulk_approvals WHERE id=$1 AND preview_caducidad > NOW()`, [batchExpired]);
     assert(expiredCheck.rows.length === 0, 'preview expirada: caducidad < NOW()');
@@ -324,11 +324,12 @@ async function main() {
     // 26. Kill switch
     // ═══════════════════════════════════════════════════════════════════════
     console.log('\n26. Kill switch...');
-    const killFlag = uuid();
-    await q(client, `INSERT INTO feature_flags (id, flag_key, scope_level, case_id, enabled, kill_switch, motivo) VALUES ($1,'sgie.documents.bulk_approve','expediente',$2,true,true,'kill-switch-test')`, [killFlag, expId]);
-    created.flags.push(killFlag);
+    const killFlag = flagExpId; // reutilizar la flag existente, activar kill_switch
+    await q(client, `UPDATE feature_flags SET kill_switch=true WHERE id=$1`, [killFlag]);
     const ksCheck = await q(client, `SELECT kill_switch FROM feature_flags WHERE id=$1`, [killFlag]);
     assert(ksCheck.rows[0].kill_switch === true, 'kill switch activado — el servicio lo rechazaria (flagContext con kill_switch)');
+    // Restaurar para cleanup
+    await q(client, `UPDATE feature_flags SET kill_switch=false WHERE id=$1`, [killFlag]);
 
     // ═══════════════════════════════════════════════════════════════════════
     // 27. Persistencia tras reconexion

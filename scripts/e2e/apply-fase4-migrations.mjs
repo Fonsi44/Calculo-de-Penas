@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 /**
- * Aplicador de migraciones SGIE para Fase 4A contra la rama Neon aislada.
+ * Aplicador canónico de migraciones SGIE para ramas Neon aisladas.
  *
  * Cumple §5.2 del prompt:
- * - Lee *.sql de drizzle/migrations/ cuyo nombre empieza por 0038+.
+ * - Lee *.sql de drizzle/migrations/ cuyo nombre empieza por 0032+.
  * - Calcula hash SHA-256 del contenido; lo registra en sgie_schema_migrations.
  * - Idempotente: la segunda ejecución produce cero cambios.
  * - Aborta si una migración ya registrada tiene hash distinto (alguien la mutó).
  * - Aplica cada migración en una transacción de BD (cuando PG lo permite).
  * - No usa drizzle-kit push/generate/migrate.
+ * - Aplica seeds, backfills y DML (drizzle-kit push solo aplica DDL).
  *
  * Uso:
  *   node scripts/e2e/apply-fase4-migrations.mjs           # aplica pendientes
  *   node scripts/e2e/apply-fase4-migrations.mjs --check   # solo reporta estado
  *
- * Requiere DATABASE_URL apuntando a la rama Neon aislada (el runner
- * run-fase4a-isolated.mjs configura el entorno efímero).
+ * Requiere DATABASE_URL apuntando a la rama Neon aislada.
  */
 import { config } from 'dotenv';
 import { resolve, dirname } from 'path';
@@ -31,7 +31,7 @@ import pg from 'pg';
 const { Pool } = pg;
 
 const MIGRATIONS_DIR = resolve(__dirname, '..', '..', 'drizzle', 'migrations');
-const MIN_PREFIX = '0038'; // solo migraciones Fase 4A+
+const MIN_PREFIX = '0032'; // todas las migraciones desde Fase 1 (incluye seeds/roles/permisos)
 const CHECK_ONLY = process.argv.includes('--check');
 
 function sha256(content) {
@@ -98,7 +98,7 @@ async function main() {
   }
   const host = (() => { try { return new URL(dbUrl).hostname; } catch { return '?'; } })();
   console.log('═══════════════════════════════════════════════════════════════');
-  console.log('  Aplicador de migraciones SGIE Fase 4A');
+  console.log('  Aplicador de migraciones SGIE (0032–0044)');
   console.log('  Host destino:', host);
   console.log('  Modo:', CHECK_ONLY ? 'CHECK (solo reporte)' : 'APLICAR');
   console.log('═══════════════════════════════════════════════════════════════\n');
