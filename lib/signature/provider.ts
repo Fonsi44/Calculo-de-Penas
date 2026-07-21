@@ -27,6 +27,8 @@ export interface CreateEnvelopeInput {
   ordenFirma: boolean;
   callbackUrl: string;
   idempotencyKey: string;
+  /** Buffers de los archivos a firmar (requerido por Dropbox Sign). */
+  files?: Array<{ nombre: string; buffer: Buffer; mime: string }>;
 }
 
 export interface CreateEnvelopeResult {
@@ -76,6 +78,10 @@ export interface CancelEnvelopeResult {
   estado: string;
 }
 
+export interface ResendNotificationInput {
+  providerEnvelopeId: string;
+}
+
 export interface DownloadArtifactsInput {
   providerEnvelopeId: string;
 }
@@ -112,4 +118,6 @@ export interface SignatureProvider {
   cancelEnvelope(input: CancelEnvelopeInput): Promise<CancelEnvelopeResult>;
   downloadSignedArtifacts(input: DownloadArtifactsInput): Promise<SignedArtifact[]>;
   verifyWebhook(input: VerifyWebhookInput): Promise<VerifiedWebhookEvent>;
+  /** Reenviar notificación a firmantes pendientes. Opcional. */
+  resendNotification?(input: ResendNotificationInput): Promise<void>;
 }

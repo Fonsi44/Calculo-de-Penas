@@ -16,6 +16,7 @@ import { OUTBOX_EVENTS, encolarEvento } from './outbox';
 import { recalcularReadinessSiProcede } from './readiness';
 import { recomendarNextAction } from './next-action';
 import { SandboxSignatureProvider } from '@/lib/signature/sandbox-provider';
+import { DropboxSignProvider } from '@/lib/signature/dropboxsign-provider';
 import type { SignatureProvider, CreateEnvelopeInput } from '@/lib/signature/provider';
 import type { FlagContext } from './feature-flags';
 
@@ -36,6 +37,8 @@ function getProvider(): SignatureProvider {
         throw new SignatureServiceError('FORBIDDEN', 'SandboxSignatureProvider bloqueado en producción', 403);
       }
       PROVIDERS[id] = new SandboxSignatureProvider();
+    } else if (id === 'dropboxsign') {
+      PROVIDERS[id] = new DropboxSignProvider();
     } else {
       throw new SignatureServiceError('INTERNAL', `Proveedor no configurado: ${id}`, 500);
     }
