@@ -136,7 +136,11 @@ async function main() {
       { params: Promise.resolve({ token }) },
     ).then(async (response) => ({ status: response.status, body: await response.json(), index })),
   ));
-  assert.equal(accepts.filter((result) => result.status === 200).length, 1);
+  const successCount = accepts.filter((result) => result.status === 200).length;
+  if (successCount !== 1) {
+    console.error('Acceptance failed:', JSON.stringify(accepts, null, 2));
+  }
+  assert.equal(successCount, 1);
   assert.equal(accepts.filter((result) => result.status === 409).length, 7);
 
   const [accepted] = await db.select().from(invitaciones).where(eq(invitaciones.id, invitation.id));

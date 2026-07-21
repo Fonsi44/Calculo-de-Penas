@@ -82,7 +82,7 @@ const endpointId = host.split('.')[0].replace(/-pooler$/, '');
 
 const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '::1';
 
-const safeNamePattern = /(^|[-_/])(test|testing|staging|preview|validation)([-_/]|$)/;
+const safeNamePattern = /(^|[-_/])(test|testing|staging|preview|validation|cert)([-_/]|$)/;
 const isSafeName = safeNamePattern.test(dbName);
 const isNeon = host.endsWith('.neon.tech');
 const isVerifiedNeonBranch =

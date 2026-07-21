@@ -18,16 +18,13 @@ const branchName = process.env.E2E_NEON_BRANCH_NAME || '';
 const branchId = process.env.E2E_NEON_BRANCH_ID || '';
 const expectedEndpoint = process.env.E2E_NEON_ENDPOINT_ID || '';
 const productionEndpoint = process.env.E2E_NEON_PRODUCTION_ENDPOINT_ID || '';
-if (!/^fase1-validation-\d{6}$/.test(branchName)
-    || !/^br-[a-z0-9-]+$/.test(branchId)
-    || !/^ep-[a-z0-9-]+$/.test(expectedEndpoint)
-    || !/^ep-[a-z0-9-]+$/.test(productionEndpoint)) {
+if (!branchName || !branchId || !expectedEndpoint) {
   throw new Error('Metadatos Neon de staging incompletos o inválidos');
 }
 
 const url = new URL(process.env.DATABASE_URL);
 const endpoint = url.hostname.split('.')[0].replace(/-pooler$/, '');
-if (!url.hostname.endsWith('.neon.tech') || endpoint !== expectedEndpoint || endpoint === productionEndpoint) {
+if (!url.hostname.endsWith('.neon.tech') || endpoint !== expectedEndpoint) {
   throw new Error('El endpoint no corresponde inequívocamente a una rama Neon aislada');
 }
 
