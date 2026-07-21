@@ -19,6 +19,7 @@ import { EnlacesExpediente } from '@/components/sgie/enlaces-expediente';
 import { SeguimientoDocumental } from '@/components/sgie/seguimiento-documental';
 import { ReadinessExpediente } from '@/components/sgie/readiness-expediente';
 import { InteligenciaExpediente } from '@/components/sgie/inteligencia-expediente';
+import { SignaturePackagesExp } from '@/components/sgie/signature-packages-exp';
 import { cn } from '@/lib/ui';
 import { traducirEstadoExpediente, traducirEstadoDocumento } from '@/lib/sgie/estados';
 
@@ -439,6 +440,9 @@ export default function SgieExpedienteDetallePage() {
 
       {/* Inteligencia del expediente (Sprint 3) */}
       <InteligenciaExpediente expedienteId={detalle.id} />
+
+      {/* Paquetes para firma (Fase 4B-2 / P2-08) */}
+      <SignaturePackagesExp expedienteId={detalle.id} />
 
       {/* Acciones críticas del abogado */}
       <Card padding="md">
