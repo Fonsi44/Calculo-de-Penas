@@ -22,6 +22,7 @@
  *   sgie.ai.next_action
  *   sgie.signature.sandbox
  *   sgie.calendar.external
+ *   sgie.calendar.ics.enabled
  *   sgie.retrieval.fts
  *   sgie.copilot
  *
@@ -45,6 +46,7 @@ export const FLAG_KEYS = [
   'sgie.signature.enabled',
   'sgie.signature.sandbox',
   'sgie.calendar.external',
+  'sgie.calendar.ics.enabled',
   'sgie.retrieval.fts',
   'sgie.copilot',
 ] as const;

@@ -23,6 +23,7 @@ export const CAPABILITIES = [
   'signature.cancel',
   'signature.retry',
   'calendar.read', 'calendar.write', 'calendar.manage_team',
+  'calendar.external.connect', 'calendar.external.read',
   'settings.manage', 'audit.read',
 ] as const;
 
@@ -34,7 +35,8 @@ const ROLE_DEFAULTS: Record<string, ReadonlySet<Capability>> = {
   supervisor: new Set([
     'users.read', 'cases.read', 'cases.read_all', 'cases.create', 'cases.assign',
     'cases.update', 'documents.read', 'documents.review', 'documents.approve',
-    'calendar.read', 'calendar.write', 'calendar.manage_team', 'audit.read',
+    'calendar.read', 'calendar.write', 'calendar.manage_team',
+    'calendar.external.connect', 'calendar.external.read', 'audit.read',
   ]),
   abogado: new Set([
     'cases.read', 'cases.create', 'cases.update', 'documents.read',

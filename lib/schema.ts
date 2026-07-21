@@ -310,6 +310,13 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'signature_envelope_expired',
   'signature_webhook_received',
   'signature_artifact_downloaded',
+  // Fase 4B-4 — Calendario externo.
+  'calendar_connection_created',
+  'calendar_event_synced',
+  'calendar_event_sync_failed',
+  'calendar_conflict_resolved',
+  'calendar_feed_created',
+  'calendar_feed_revoked',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {
@@ -3035,3 +3042,64 @@ export const signatureArtifacts = pgTable('signature_artifacts', {
 
 export type SignatureArtifact = typeof signatureArtifacts.$inferSelect;
 export type SignatureArtifactInsert = typeof signatureArtifacts.$inferInsert;
+
+// ─── P2-10: Calendario externo ─────────────────────────────────────────────
+
+export const calendarConnections = pgTable('calendar_connections', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  userId: uuid('user_id').notNull(),
+  provider: varchar('provider', { length: 50 }).notNull(),
+  externalAccountId: varchar('external_account_id', { length: 200 }),
+  externalCalendarId: varchar('external_calendar_id', { length: 200 }),
+  estado: varchar('estado', { length: 30 }).notNull().default('active'),
+  syncDirection: varchar('sync_direction', { length: 20 }).notNull().default('outbound'),
+  timezone: varchar('timezone', { length: 100 }).notNull().default('America/Tegucigalpa'),
+  privacyPolicy: varchar('privacy_policy', { length: 20 }).notNull().default('minimal'),
+  cursor: text('cursor'),
+  lastSyncAt: timestamp('last_sync_at', { withTimezone: true }),
+  lastSuccessfulSyncAt: timestamp('last_successful_sync_at', { withTimezone: true }),
+  disconnectedAt: timestamp('disconnected_at', { withTimezone: true }),
+  version: integer('version').notNull().default(1),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  userRef: foreignKey({ columns: [table.userId], foreignColumns: [usuarios.id] }),
+  userProviderUnique: uniqueIndex('calendar_connections_user_provider_unique').on(table.userId, table.provider),
+  userIdx: index('calendar_connections_user_idx').on(table.userId),
+}));
+
+export const calendarEventLinks = pgTable('calendar_event_links', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  internalEventId: uuid('internal_event_id').notNull(),
+  connectionId: uuid('connection_id').notNull(),
+  provider: varchar('provider', { length: 50 }).notNull(),
+  externalEventId: varchar('external_event_id', { length: 200 }),
+  iCalUid: varchar('ical_uid', { length: 200 }),
+  externalEtag: varchar('external_etag', { length: 200 }),
+  internalVersion: integer('internal_version').notNull().default(1),
+  lastSyncedInternalVersion: integer('last_synced_internal_version'),
+  lastExternalModifiedAt: timestamp('last_external_modified_at', { withTimezone: true }),
+  syncState: varchar('sync_state', { length: 30 }).notNull().default('pending'),
+  conflictState: varchar('conflict_state', { length: 30 }),
+  deletedInternallyAt: timestamp('deleted_internally_at', { withTimezone: true }),
+  deletedExternallyAt: timestamp('deleted_externally_at', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  internalEventRef: foreignKey({ columns: [table.internalEventId], foreignColumns: [eventosAgenda.id] }).onDelete('cascade'),
+  connectionRef: foreignKey({ columns: [table.connectionId], foreignColumns: [calendarConnections.id] }).onDelete('cascade'),
+  eventConnectionUnique: uniqueIndex('calendar_event_links_event_conn_unique').on(table.internalEventId, table.connectionId),
+}));
+
+export const calendarFeedTokens = pgTable('calendar_feed_tokens', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull(),
+  tokenHash: varchar('token_hash', { length: 64 }).notNull().unique(),
+  scope: varchar('scope', { length: 30 }).notNull().default('read'),
+  revokedAt: timestamp('revoked_at', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }),
+}, (table) => ({
+  userRef: foreignKey({ columns: [table.userId], foreignColumns: [usuarios.id] }),
+  userIdx: index('calendar_feed_tokens_user_idx').on(table.userId),
+}));
