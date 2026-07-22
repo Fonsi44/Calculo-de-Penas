@@ -1,27 +1,22 @@
 /**
- * GET /api/sgie/buscar?q=...
- *
- * Búsqueda global con scope por abogado (clientes, expedientes, documentos,
- * tareas). Devuelve payload pequeño y homogéneo para el buscador ⌘K.
- *
- * Seguridad: `requireAbogado` + scope aplicado en buscar-db.ts.
- * Rate limit ajustado a búsquedas (más permisivo que mutaciones).
- *
- * Sprint 1 — tarea 4.
+ * GET /api/sgie/buscar?q=... — Búsqueda textual con FTS + pg_trgm (Fase 4B-5).
+ * Fallback a ILIKE cuando la flag FTS está apagada.
  */
-import { requireAbogado, authFailureResponse } from '@/lib/auth';
+import { requireAbogado } from '@/lib/auth';
 import { z } from 'zod';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { buscar, normalizarTermino } from '@/lib/sgie/buscar-db';
+import { searchFts } from '@/lib/sgie/search-db';
+import { isFlagEnabled } from '@/lib/sgie/feature-flags';
+import { accessService } from '@/lib/access-service';
 
 const querySchema = z.object({
   q: z.string().min(1).max(200),
-  porTipo: z.coerce.number().int().min(1).max(20).default(5),
+  resourceType: z.enum(['expediente','documento','cliente','tarea','evento','comunicacion']).optional(),
+  expedienteId: z.string().uuid().optional(),
+  cursor: z.coerce.number().int().min(0).optional(),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
 });
-
-function ctx(auth: { userId: string; rol: string }) {
-  return { usuarioId: auth.userId, rol: auth.rol, esAdmin: auth.rol === 'admin' };
-}
 
 export async function GET(request: Request) {
   try {
@@ -32,21 +27,39 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const query = querySchema.parse(Object.fromEntries(searchParams.entries()));
 
-    // Si el término no es buscable, devolver vacío sin tocar la DB.
     if (!normalizarTermino(query.q)) {
-      return Response.json({ resultados: [], total: 0 });
+      return Response.json({ results: [], total: 0, hasMore: false });
     }
 
-    const { resultados, total } = await buscar(ctx(auth), {
-      q: query.q,
-      porTipo: query.porTipo,
-    });
+    // Check FTS flag; fallback to ILIKE if off
+    const ftsOn = await isFlagEnabled('sgie.retrieval.fts', {}).catch(() => false);
+    if (ftsOn) {
+      await accessService.assertSgieAccess(auth.userId, 'search.use');
+      const result = await searchFts({
+        actorUserId: auth.userId,
+        query: query.q,
+        resourceTypes: query.resourceType ? [query.resourceType] : undefined,
+        expedienteId: query.expedienteId,
+        cursor: query.cursor,
+        limit: query.limit,
+      });
+      return Response.json(result);
+    }
 
-    return Response.json({ resultados, total });
+    // Fallback ILIKE
+    const { resultados, total } = await buscar(
+      { usuarioId: auth.userId, rol: auth.rol, esAdmin: auth.rol === 'admin' },
+      { q: query.q, porTipo: 5 },
+    );
+    return Response.json({ results: resultados, total, hasMore: false });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
+      return Response.json({ error: 'Datos inválidos', details: err.issues }, { status: 422 });
     }
-    return authFailureResponse(err);
+    if (err && typeof err === 'object' && 'status' in err) {
+      const e = err as { status: number; message?: string };
+      return Response.json({ error: e.message || 'Forbidden' }, { status: e.status });
+    }
+    return Response.json({ error: 'Error interno' }, { status: 500 });
   }
 }
