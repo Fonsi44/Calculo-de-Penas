@@ -20,7 +20,7 @@ const { isFlagEnabledMock } = vi.hoisted(() => ({ isFlagEnabledMock: vi.fn(async
 vi.mock('@/lib/db', () => ({ db: chain }));
 vi.mock('@/lib/sgie/feature-flags', () => ({ isFlagEnabled: isFlagEnabledMock }));
 vi.mock('@/lib/sgie/ia-documental', () => ({
-  getIaConfig: vi.fn(() => ({ provider: 'deepseek', model: 'deepseek-chat', baseUrl: 'https://api.deepseek.com/v1', apiKey: 'fake', mode: 'ai', timeoutMs: 5000, maxRetries: 1 })),
+  getIaConfig: vi.fn(() => ({ provider: 'deepseek', model: 'deepseek-v4-flash', baseUrl: 'https://api.deepseek.com/v1', apiKey: 'fake', mode: 'ai', timeoutMs: 5000, maxRetries: 1 })),
   isIaEnabled: vi.fn(() => false),
 }));
 vi.mock('@/lib/sgie/resumen-ia', () => ({

@@ -74,7 +74,7 @@ const DEFAULT_CONFIG: AiRouterConfig = {
   },
   heuristicConfidenceThreshold: 60,
   humanReviewThreshold: 65,
-  proModel: 'deepseek-chat',
+  proModel: 'deepseek-v4-flash',
   versionPrompt: 'v2.0',
 };
 

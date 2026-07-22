@@ -285,7 +285,7 @@ describe('ia-router', () => {
     delete process.env.IA_DOCUMENTAL_API_KEY;
     mockGetIaConfig.mockReturnValue({
       provider: 'deepseek',
-      model: 'deepseek-chat',
+      model: 'deepseek-v4-flash',
       baseUrl: 'https://api.deepseek.com/v1',
       apiKey: '',
       mode: 'heuristic',
@@ -306,7 +306,7 @@ describe('ia-router', () => {
       mockIsIaEnabled.mockReturnValue(true);
       mockGetIaConfig.mockReturnValue({
         provider: 'deepseek',
-        model: 'deepseek-chat',
+        model: 'deepseek-v4-flash',
         baseUrl: 'https://api.deepseek.com/v1',
         apiKey: 'sk-xxxxxxxxxxxxxx',
         mode: 'ai',
@@ -329,7 +329,7 @@ describe('ia-router', () => {
       mockIsIaEnabled.mockReturnValue(false);
       mockGetIaConfig.mockReturnValue({
         provider: 'deepseek',
-        model: 'deepseek-chat',
+        model: 'deepseek-v4-flash',
         baseUrl: 'https://api.deepseek.com/v1',
         apiKey: '',
         mode: 'disabled',
@@ -360,7 +360,7 @@ describe('observabilidad', () => {
     delete process.env.BLOB_READ_WRITE_TOKEN;
     mockGetIaConfig.mockReturnValue({
       provider: 'deepseek',
-      model: 'deepseek-chat',
+      model: 'deepseek-v4-flash',
       baseUrl: 'https://api.deepseek.com/v1',
       apiKey: '',
       mode: 'disabled',
@@ -387,7 +387,7 @@ describe('observabilidad', () => {
       process.env.BLOB_READ_WRITE_TOKEN = 'blob_token';
       mockGetIaConfig.mockReturnValue({
         provider: 'deepseek',
-        model: 'deepseek-chat',
+        model: 'deepseek-v4-flash',
         baseUrl: 'https://api.deepseek.com/v1',
         apiKey: 'sk-xxxxxxxxxxxxxx',
         mode: 'ai',

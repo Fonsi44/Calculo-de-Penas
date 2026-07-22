@@ -53,7 +53,7 @@ env.E2E_NEON_ENDPOINT_ID = ENDPOINT_ID;
 // Alias seguro DeepSeek (prompt §9).
 env.IA_DOCUMENTAL_API_KEY = env.IA_DOCUMENTAL_API_KEY || env.DEEPSEEK_API_KEY || '';
 env.IA_DOCUMENTAL_BASE_URL = env.IA_DOCUMENTAL_BASE_URL || env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com/v1';
-env.IA_DOCUMENTAL_MODEL = env.IA_DOCUMENTAL_MODEL || env.DEEPSEEK_MODEL || 'deepseek-chat';
+env.IA_DOCUMENTAL_MODEL = env.IA_DOCUMENTAL_MODEL || env.DEEPSEEK_MODEL || 'deepseek-v4-flash';
 // Asegurar modo ai para que el bloque DeepSeek del E2E realmente llame al proveedor.
 if (!env.IA_DOCUMENTAL_MODE || env.IA_DOCUMENTAL_MODE === 'disabled') {
   env.IA_DOCUMENTAL_MODE = 'ai';

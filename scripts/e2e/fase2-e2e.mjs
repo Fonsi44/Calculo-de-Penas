@@ -123,7 +123,7 @@ async function simulateAiRouting(client, docId) {
   const id = track(uuid());
   await q(client,
     `INSERT INTO ai_task_routing (id, documento_id, task_type, proveedor_asignado, modelo, estado, payload)
-     VALUES ($1, $2, 'classification', 'deepseek', 'deepseek-chat', 'pending', '{}')`,
+     VALUES ($1, $2, 'classification', 'deepseek', 'deepseek-v4-flash', 'pending', '{}')`,
     [id, docId]);
   return (await q(client, `SELECT id FROM ai_task_routing WHERE id = $1`, [id])).rows[0];
 }

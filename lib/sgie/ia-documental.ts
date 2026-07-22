@@ -36,7 +36,7 @@ interface IaConfig {
 export function getIaConfig(): IaConfig {
   return {
     provider: process.env.IA_DOCUMENTAL_PROVIDER || 'deepseek',
-    model: process.env.IA_DOCUMENTAL_MODEL || 'deepseek-chat',
+    model: process.env.IA_DOCUMENTAL_MODEL || 'deepseek-v4-flash',
     baseUrl: process.env.IA_DOCUMENTAL_BASE_URL || 'https://api.deepseek.com/v1',
     apiKey: process.env.IA_DOCUMENTAL_API_KEY || '',
     mode: (process.env.IA_DOCUMENTAL_MODE as IaConfig['mode']) || 'heuristic',

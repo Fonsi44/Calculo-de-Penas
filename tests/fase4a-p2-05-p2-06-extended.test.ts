@@ -71,7 +71,7 @@ vi.mock('@/lib/db', () => ({ db: chain }));
 vi.mock('@/lib/sgie/feature-flags', () => ({ isFlagEnabled: isFlagEnabledMock }));
 vi.mock('@/lib/sgie/ia-documental', () => ({
   getIaConfig: vi.fn(() => ({
-    provider: 'deepseek', model: 'deepseek-chat', baseUrl: 'https://api.deepseek.com/v1',
+    provider: 'deepseek', model: 'deepseek-v4-flash', baseUrl: 'https://api.deepseek.com/v1',
     apiKey: 'fake', mode: 'ai', timeoutMs: 5000, maxRetries: 1,
   })),
   isIaEnabled: vi.fn(() => false),
@@ -212,7 +212,7 @@ describe('P2-05 generarResumenIncremental — regeneración exitosa', () => {
       ok: true as const,
       resumen: 'Nuevo resumen regenerado por IA',
       proveedor: 'deepseek',
-      modelo: 'deepseek-chat',
+      modelo: 'deepseek-v4-flash',
       tokensInput: 120,
       tokensOutput: 80,
       confianza: 85,
@@ -234,7 +234,7 @@ describe('P2-05 generarResumenIncremental — regeneración exitosa', () => {
     expect(r.ok).toBe(true);
     expect(r.regenerado).toBe(true);
     expect(r.resumen).toBe('Nuevo resumen regenerado por IA');
-    expect(r.modelo).toBe('deepseek-chat');
+    expect(r.modelo).toBe('deepseek-v4-flash');
     expect(generarResumenIaMock).toHaveBeenCalledTimes(1);
   });
 });
@@ -518,7 +518,7 @@ describe('P2-05 generarResumenIncremental — único checkpoint vigente', () => 
       ok: true as const,
       resumen: 'Resumen nuevo',
       proveedor: 'deepseek',
-      modelo: 'deepseek-chat',
+      modelo: 'deepseek-v4-flash',
       tokensInput: 10,
       tokensOutput: 5,
       confianza: 90,
@@ -542,7 +542,7 @@ describe('P2-05 generarResumenIncremental — histórico se escribe', () => {
       ok: true as const,
       resumen: 'Resumen con histórico',
       proveedor: 'deepseek',
-      modelo: 'deepseek-chat',
+      modelo: 'deepseek-v4-flash',
       tokensInput: 30,
       tokensOutput: 20,
       confianza: 88,
@@ -566,7 +566,7 @@ describe('P2-05 generarResumenIncremental — watermark avanzado', () => {
       ok: true as const,
       resumen: 'R',
       proveedor: 'deepseek',
-      modelo: 'deepseek-chat',
+      modelo: 'deepseek-v4-flash',
       tokensInput: 1,
       tokensOutput: 1,
       confianza: 80,
@@ -591,7 +591,7 @@ describe('P2-05 generarResumenIncremental — concurrencia/idempotencia', () => 
       ok: true as const,
       resumen: 'Primer resumen',
       proveedor: 'deepseek',
-      modelo: 'deepseek-chat',
+      modelo: 'deepseek-v4-flash',
       tokensInput: 5,
       tokensOutput: 5,
       confianza: 85,

@@ -125,7 +125,7 @@ const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 const DEEPSEEK_ENDPOINT =
   process.env.DEEPSEEK_API_BASE ??
   'https://api.deepseek.com/chat/completions';
-const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL ?? 'deepseek-chat';
+const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL ?? 'deepseek-v4-flash';
 const IA_ENABLED = !NO_AI && Boolean(DEEPSEEK_API_KEY);
 
 // ═══════════════════════════════════════════════════════════════════════

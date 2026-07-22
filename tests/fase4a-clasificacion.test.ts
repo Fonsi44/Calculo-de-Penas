@@ -30,7 +30,7 @@ vi.mock('@/lib/sgie/feature-flags', () => ({
 }));
 vi.mock('@/lib/sgie/ia-documental', () => ({
   getIaConfig: vi.fn(() => ({
-    provider: 'deepseek', model: 'deepseek-chat', baseUrl: 'https://api.deepseek.com/v1',
+    provider: 'deepseek', model: 'deepseek-v4-flash', baseUrl: 'https://api.deepseek.com/v1',
     apiKey: 'fake', mode: 'ai', timeoutMs: 30000, maxRetries: 1,
   })),
   isIaEnabled: vi.fn(() => false), // por defecto IA deshabilitada en tests

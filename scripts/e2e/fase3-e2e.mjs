@@ -50,7 +50,7 @@ if (!process.env.E2E_SKIP_DOTENV) {
 // solo asigna en memoria si el namespace oficial está vacío.
 process.env.IA_DOCUMENTAL_API_KEY ??= process.env.DEEPSEEK_API_KEY;
 process.env.IA_DOCUMENTAL_BASE_URL ??= process.env.DEEPSEEK_BASE_URL;
-process.env.IA_DOCUMENTAL_MODEL ??= process.env.DEEPSEEK_MODEL || 'deepseek-chat';
+process.env.IA_DOCUMENTAL_MODEL ??= process.env.DEEPSEEK_MODEL || 'deepseek-v4-flash';
 
 // CRON_SECRET efímero (prompt §11): generado en memoria para la sesión E2E.
 // No se escribe en .env ni Git. Permite validar el endpoint protegido.
@@ -485,7 +485,7 @@ async function step5_procesamientoIa(client, documentoId) {
     `INSERT INTO extracciones_ia
        (id, documento_id, proveedor, modelo, resultado_json, total_confidence,
         run_status, suggested_status, exito)
-     VALUES ($1, $2, 'deepseek', 'deepseek-chat',
+     VALUES ($1, $2, 'deepseek', 'deepseek-v4-flash',
        '{"tipoDocumento":"identificacion","confianzaTipo":45,"campos":[]}',
        45, 'completed', 'pendiente_abogado', true)`,
     [extId, documentoId],
@@ -499,7 +499,7 @@ async function step5_procesamientoIa(client, documentoId) {
     client,
     `INSERT INTO ai_task_routing
        (id, documento_id, task_type, proveedor_asignado, modelo, estado, resultado)
-     VALUES ($1, $2, 'classification', 'deepseek', 'deepseek-chat', 'completed',
+     VALUES ($1, $2, 'classification', 'deepseek', 'deepseek-v4-flash', 'completed',
        '{"confianza":45,"requiereRevision":true,"suggestedStatus":"pendiente_abogado"}')`,
     [taskId, documentoId],
   );
@@ -1176,7 +1176,7 @@ async function bloqueDeepSeekReal() {
   }
 
   const baseUrl = process.env.IA_DOCUMENTAL_BASE_URL || 'https://api.deepseek.com/v1';
-  const model = process.env.IA_DOCUMENTAL_MODEL || 'deepseek-chat';
+  const model = process.env.IA_DOCUMENTAL_MODEL || 'deepseek-v4-flash';
   const t0 = Date.now();
   let respuesta;
   try {
