@@ -25,6 +25,7 @@ export const CAPABILITIES = [
   'calendar.read', 'calendar.write', 'calendar.manage_team',
   'calendar.external.connect', 'calendar.external.read',
   'search.use', 'search.reindex', 'search.configure',
+  'knowledge.read', 'knowledge.create', 'knowledge.review', 'knowledge.approve', 'knowledge.publish', 'knowledge.withdraw', 'knowledge.configure',
   'settings.manage', 'audit.read',
 ] as const;
 
