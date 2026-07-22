@@ -339,9 +339,7 @@ async function main() {
     const reconnected = await POOL.connect();
     const persistCheck = await q(reconnected, `SELECT count(*)::int as c FROM document_bulk_approvals WHERE expediente_id=$1`, [expId]);
     assert(persistCheck.rows[0].c >= 1, 'datos persisten tras desconectar y reconectar');
-    // Mantener referencia para cleanup
-    client.release = () => {}; // prevent double release
-    Object.assign(client, reconnected);
+    reconnected.release();
 
     // ═══════════════════════════════════════════════════════════════════════
     // RESUMEN
@@ -351,7 +349,7 @@ async function main() {
     console.log('═══════════════════════════════════════════════════════════════');
 
   } finally {
-    try { client.release(); } catch (_) { /* ok */ }
+    try { client.release(); } catch { /* already released by persistence test */ }
   }
 
   // ═══════════════════════════════════════════════════════════════════════
@@ -398,5 +396,6 @@ async function main() {
 
 main().catch((e) => {
   console.error('\n[FASE4B1-E2E] ❌ Error fatal:', e);
-  POOL.end().then(() => process.exit(1));
+  POOL.end().then(() => process.exit(1)).catch(() => process.exit(1));
+  setTimeout(() => process.exit(1), 5000); // safety timeout
 });
