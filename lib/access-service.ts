@@ -24,6 +24,7 @@ export const CAPABILITIES = [
   'signature.retry',
   'calendar.read', 'calendar.write', 'calendar.manage_team',
   'calendar.external.connect', 'calendar.external.read',
+  'search.use', 'search.reindex', 'search.configure',
   'settings.manage', 'audit.read',
 ] as const;
 

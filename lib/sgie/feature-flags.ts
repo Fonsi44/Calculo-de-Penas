@@ -48,6 +48,8 @@ export const FLAG_KEYS = [
   'sgie.calendar.external',
   'sgie.calendar.ics.enabled',
   'sgie.retrieval.fts',
+  'sgie.search.full_text',
+  'sgie.search.trigram',
   'sgie.copilot',
 ] as const;
 export type FlagKey = (typeof FLAG_KEYS)[number];

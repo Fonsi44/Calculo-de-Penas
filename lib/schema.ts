@@ -3103,3 +3103,42 @@ export const calendarFeedTokens = pgTable('calendar_feed_tokens', {
   userRef: foreignKey({ columns: [table.userId], foreignColumns: [usuarios.id] }),
   userIdx: index('calendar_feed_tokens_user_idx').on(table.userId),
 }));
+
+// ─── Fase 4B-5: Retrieval textual FTS ──────────────────────────────────────
+
+export const sgieSearchEntries = pgTable('sgie_search_entries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  resourceType: varchar('resource_type', { length: 40 }).notNull(),
+  resourceId: uuid('resource_id').notNull(),
+  expedienteId: uuid('expediente_id'),
+  documentId: uuid('document_id'),
+  documentVersionId: integer('document_version_id'),
+  pageNumber: integer('page_number'),
+  ownerUserId: uuid('owner_user_id'),
+  sensitivity: varchar('sensitivity', { length: 20 }).notNull().default('internal'),
+  approvalStatus: varchar('approval_status', { length: 30 }),
+  validFrom: timestamp('valid_from', { withTimezone: true }),
+  validUntil: timestamp('valid_until', { withTimezone: true }),
+  title: varchar('title', { length: 500 }).notNull(),
+  normalizedTitle: varchar('normalized_title', { length: 500 }),
+  content: text('content'),
+  contentHash: varchar('content_hash', { length: 64 }),
+  sourceVersion: integer('source_version').notNull().default(1),
+  indexedAt: timestamp('indexed_at', { withTimezone: true }).notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  metadata: jsonb('metadata').notNull().default(sql`'{}'`),
+}, (table) => ({
+  resourceUnique: uniqueIndex('sgie_search_entries_resource_unique')
+    .on(table.resourceType, table.resourceId, table.documentVersionId, sql`COALESCE(page_number, 0)`),
+  orgIdx: index('sgie_search_entries_org_idx').on(table.organizationId),
+  expIdx: index('sgie_search_entries_exp_idx').on(table.expedienteId),
+  ownerIdx: index('sgie_search_entries_owner_idx').on(table.ownerUserId),
+  sensitivityIdx: index('sgie_search_entries_sensitivity_idx').on(table.sensitivity),
+  approvalIdx: index('sgie_search_entries_approval_idx').on(table.approvalStatus),
+  typeExpIdx: index('sgie_search_entries_type_exp_idx').on(table.resourceType, table.expedienteId),
+  deletedIdx: index('sgie_search_entries_deleted_idx').on(table.deletedAt).where(sql`deleted_at IS NOT NULL`),
+}));
+
+export type SgieSearchEntry = typeof sgieSearchEntries.$inferSelect;
+export type SgieSearchEntryInsert = typeof sgieSearchEntries.$inferInsert;
