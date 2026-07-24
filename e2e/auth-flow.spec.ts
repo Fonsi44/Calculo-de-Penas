@@ -93,10 +93,17 @@ test.describe('Auth flow E2E (API)', () => {
   });
 
   test('rate limit en login: bloquea tras mÃºltiples intentos', async ({ request }) => {
-    const rlDisabled = process.env.DISABLE_RATE_LIMIT === 'true' || process.env.DISABLE_RATE_LIMIT === '1';
-    test.skip(rlDisabled, 'Rate limiting desactivado por DISABLE_RATE_LIMIT');
+    const rlDisabled = process.env.DISABLE_RATE_LIMIT === 'true';
+    const testEmail = `ratelimit-${Date.now()}-${Math.random().toString(36).slice(2, 6)}@pinedayasociadoshn.com`;
 
-    const testEmail = `ratelimit-${Date.now()}@pinedayasociadoshn.com`;
+    if (rlDisabled) {
+      const res = await request.post('/api/auth/login', {
+        data: { email: testEmail, password: 'wrong-password-123' },
+      });
+      expect(res.status(), 'con DISABLE_RATE_LIMIT el login debe responder 400 o 401, no 429').not.toBe(429);
+      return;
+    }
+
     let got429 = false;
     for (let i = 0; i < 15; i++) {
       const res = await request.post('/api/auth/login', {
