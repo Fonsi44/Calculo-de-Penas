@@ -2079,6 +2079,7 @@ export const outboxEvents = pgTable('outbox_events', {
   status: varchar('status', { length: 30 }).notNull().default('pending'),
   intentos: integer('intentos').default(0),
   maxIntentos: integer('max_intentos').default(3),
+  idempotencyKey: varchar('idempotency_key', { length: 128 }),
   error: text('error'),
   lockedAt: timestamp('locked_at', { withTimezone: true }),
   lockExpiresAt: timestamp('lock_expires_at', { withTimezone: true }),
@@ -2089,6 +2090,7 @@ export const outboxEvents = pgTable('outbox_events', {
 }, (table) => ({
   statusIdx: index('outbox_events_status_idx').on(table.status),
   eventTypeIdx: index('outbox_events_event_type_idx').on(table.eventType),
+  idempotencyUnique: unique('outbox_events_idempotency_unique').on(table.idempotencyKey),
   creadoEnIdx: index('outbox_events_creado_en_idx').on(table.creadoEn),
 }));
 

@@ -37,7 +37,36 @@ export async function encolarEvento(input: {
   aggregateId?: string;
   payload: Record<string, unknown>;
   correlationId?: string;
+  idempotencyKey?: string;
 }): Promise<OutboxEvent> {
+  // If idempotencyKey is provided, try insert with ON CONFLICT DO NOTHING
+  if (input.idempotencyKey) {
+    const [evento] = await db
+      .insert(outboxEvents)
+      .values({
+        eventType: input.tipo,
+        aggregateType: input.aggregateType ?? null,
+        aggregateId: input.aggregateId ?? null,
+        payload: input.payload,
+        correlationId: input.correlationId ?? null,
+        idempotencyKey: input.idempotencyKey,
+      })
+      .onConflictDoNothing({ target: outboxEvents.idempotencyKey })
+      .returning();
+
+    // If ON CONFLICT prevented insert, return the existing event
+    if (!evento) {
+      const [existing] = await db
+        .select()
+        .from(outboxEvents)
+        .where(eq(outboxEvents.idempotencyKey, input.idempotencyKey))
+        .limit(1);
+      if (existing) return existing;
+    }
+    if (!evento) throw new Error('No se pudo crear el evento de outbox (idempotent)');
+    return evento;
+  }
+
   const [evento] = await db
     .insert(outboxEvents)
     .values({
