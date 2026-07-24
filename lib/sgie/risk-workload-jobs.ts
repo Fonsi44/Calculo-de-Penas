@@ -56,7 +56,7 @@ export async function processNextJobs(limit = 10): Promise<{ despachados: number
 
 export async function recalculateAllRisk(): Promise<number> {
   const expedientes = await db.execute(sql`
-    SELECT id FROM expedientes WHERE estado NOT IN ('cerrado','archivado')
+    SELECT id FROM expedientes WHERE estado NOT IN ('finalizado','archivado')
   `);
   const rows = (expedientes as unknown as { rows: Array<{ id: string }> }).rows ?? [];
   for (const row of rows) {

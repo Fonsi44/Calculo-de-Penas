@@ -18,10 +18,10 @@ export interface WorkloadResult {
 export async function calculateWorkload(userId: string): Promise<WorkloadResult> {
   const data = await db.execute(sql`
     SELECT
-      (SELECT count(*)::int FROM expedientes WHERE responsable_id=${userId}::uuid AND estado NOT IN ('cerrado','archivado')) as active_cases,
-      (SELECT count(*)::int FROM expedientes WHERE responsable_id=${userId}::uuid AND estado IN ('urgente','critical')) as critical_cases,
-      (SELECT count(*)::int FROM tareas WHERE asignado_a=${userId}::uuid AND estado != 'completada') as open_tasks,
-      (SELECT count(*)::int FROM tareas WHERE asignado_a=${userId}::uuid AND estado != 'completada' AND fecha_vencimiento < NOW()) as overdue_tasks,
+      (SELECT count(*)::int FROM expedientes WHERE responsable_id=${userId}::uuid AND estado NOT IN ('finalizado','archivado')) as active_cases,
+      (SELECT count(*)::int FROM expedientes WHERE responsable_id=${userId}::uuid AND prioridad='urgente') as critical_cases,
+      (SELECT count(*)::int FROM tareas WHERE asignada_a=${userId}::uuid AND estado != 'completada') as open_tasks,
+      (SELECT count(*)::int FROM tareas WHERE asignada_a=${userId}::uuid AND estado != 'completada' AND fecha_vencimiento < NOW()) as overdue_tasks,
       (SELECT count(*)::int FROM events WHERE event_type='deadline' AND resource_id IN (SELECT id FROM expedientes WHERE responsable_id=${userId}::uuid) AND due_date BETWEEN NOW() AND NOW() + INTERVAL '7 days') as upcoming_deadlines,
       (SELECT count(*)::int FROM documentos_expediente de JOIN expedientes e ON e.id=de.expediente_id WHERE e.responsable_id=${userId}::uuid AND de.estado NOT IN ('aprobado','rechazado')) as pending_documents
   `);

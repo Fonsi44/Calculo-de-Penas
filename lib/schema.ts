@@ -3145,6 +3145,24 @@ export const sgieSearchEntries = pgTable('sgie_search_entries', {
 export type SgieSearchEntry = typeof sgieSearchEntries.$inferSelect;
 export type SgieSearchEntryInsert = typeof sgieSearchEntries.$inferInsert;
 
+// ─── Events table for risk deadlines ────────────────────────────────────
+export const events = pgTable('events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  eventType: varchar('event_type', { length: 100 }).notNull(),
+  resourceId: uuid('resource_id'),
+  resourceType: varchar('resource_type', { length: 50 }),
+  dueDate: timestamp('due_date', { withTimezone: true }),
+  payload: jsonb('payload').notNull().default(sql`'{}'::jsonb`),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  resourceIdx: index('events_resource_idx').on(table.resourceId),
+  typeIdx: index('events_type_idx').on(table.eventType),
+  dueDateIdx: index('events_due_date_idx').on(table.dueDate),
+}));
+
+export type Event = typeof events.$inferSelect;
+export type EventInsert = typeof events.$inferInsert;
+
 // ─── Fase 5A — Evaluaciones de riesgo ─────────────────────────────────────
 export const riskEvaluations = pgTable('risk_evaluations', {
   id: uuid('id').primaryKey().defaultRandom(),

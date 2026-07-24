@@ -186,33 +186,108 @@ async function main() {
   const maxAtt = await q(`SELECT status FROM outbox_events WHERE idempotency_key=$1`, [ik2]);
   assert('Max intentos: failed', maxAtt.rows[0].status === 'failed');
 
-  // ─── 15. API tests (if server is running) ───────────────────────────
+  // ─── 15. API tests ─────────────────────────────────────────────────
   if (DO_API) {
     console.log('\n  ── API Tests ──\n');
 
-    // 15a-d. No-auth API tests (work without JWT)
-    const na1 = await api('/api/sgie/riesgo', { method: 'POST', body: JSON.stringify({ expedienteId: exp1.rows[0].id }) });
-    assert('API riesgo POST sin auth → 401/403', na1.status === 401 || na1.status === 403);
-    const na2 = await api('/api/sgie/riesgo?expediente_id=' + exp1.rows[0].id);
-    assert('API riesgo GET sin auth → 401/403', na2.status === 401 || na2.status === 403);
-    const na3 = await api('/api/sgie/carga', { method: 'POST' });
-    assert('API carga POST sin auth → 401/403', na3.status === 401 || na3.status === 403);
-    const na4 = await api('/api/sgie/carga');
-    assert('API carga GET sin auth → 401/403', na4.status === 401 || na4.status === 403);
-    assert('4 endpoints protegidos por auth', true);
+    // Create user with known password for authenticated tests
+    const apiPw = 'APITest!' + ts;
+    const apiHash = bcrypt.hashSync(apiPw, 10);
+    const apiUser = await q(`INSERT INTO usuarios (email, password_hash, nombre, rol, active, token_version)
+      VALUES ('e2e-api-' || $1 || '@pinedayasociadoshn.com', $2, 'API Test User', 'admin', true, 0) RETURNING id`, [ts, apiHash]);
+    const apiUserId = apiUser.rows[0].id;
+    const expA = await q(`INSERT INTO expedientes (numero_interno, estado, responsable_id, creado_en)
+      VALUES ('E2E-API-' || $1, 'creado', $2, NOW()) RETURNING id`, [ts, apiUserId]);
+    assert('Usuario+expediente creados para API', !!apiUserId);
+    // Enable SGIE access and capabilities
+    await q(`INSERT INTO usuarios_sgie (usuario_id, activo_sgie) VALUES ($1, true) ON CONFLICT (usuario_id) DO UPDATE SET activo_sgie=true`, [apiUserId]);
+    const adminRole = await q(`SELECT id FROM roles WHERE nombre='administrador' LIMIT 1`);
+    if (adminRole.rows[0]) {
+      await q(`INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES ($1, $2) ON CONFLICT DO NOTHING`, [apiUserId, adminRole.rows[0].id]);
+    }
 
-    // 15e. Feature flag off simulation (via DB then API call without auth)
+    // No-auth: all 4 endpoints should reject
+    for (const [method, path, body] of [['POST','/api/sgie/riesgo',JSON.stringify({expedienteId:expA.rows[0].id})],['GET','/api/sgie/riesgo?expediente_id='+expA.rows[0].id,null],['POST','/api/sgie/carga',null],['GET','/api/sgie/carga',null]]) {
+      const r = await api(path, method==='POST'?{method,body,headers:{Origin:'http://localhost:3000'}}:{method,headers:{Origin:'http://localhost:3000'}});
+      assert(`API ${path} sin auth → 401/403`, r.status===401||r.status===403);
+    }
+
+    // Login
+    const login = await api('/api/auth/login', { method:'POST', body:JSON.stringify({email:'e2e-api-'+ts+'@pinedayasociadoshn.com', password:apiPw}) });
+    assert('Login 200', login.status===200);
+    const cookie = (login.headers['set-cookie']||'').split(';')[0];
+    assert('Cookie de sesión recibida', cookie.length>0);
+    const auth = { Cookie: cookie, Origin: 'http://localhost:3000' };
+
+    // Helper: warm flag cache by making a dummy request, then check
+    const warmAndCheck = async (label, fn, expectedStatus = 200) => {
+      // Warm the feature flag cache (5s TTL) by making a request first
+      await api('/api/sgie/riesgo', { method:'POST', headers:auth, body:JSON.stringify({expedienteId:expA.rows[0].id}) }).catch(()=>{});
+      await new Promise(r => setTimeout(r, 200));
+      const res = await fn();
+      const ok = res.status === expectedStatus;
+      if (!ok) console.log(`  ⚠️  ${label}: esperado ${expectedStatus}, obtenido ${res.status}`, JSON.stringify(res.body).substring(0,120));
+      assert(label, ok);
+      return res;
+    };
+
+    // Authenticated: risk POST
+    const rPost = await warmAndCheck('Riesgo POST auth → 200', () => api('/api/sgie/riesgo', { method:'POST', headers:auth, body:JSON.stringify({expedienteId:expA.rows[0].id, persist:true}) }));
+    if (rPost.status===200) {
+      assert('Riesgo POST: riskLevel string', typeof rPost.body?.riskLevel==='string');
+      assert('Riesgo POST: score number', typeof rPost.body?.score==='number');
+      assert('Riesgo POST: reasons array', Array.isArray(rPost.body?.reasons));
+    }
+    assert('Riesgo POST: correlation ID', !!rPost.headers['x-correlation-id']);
+
+    // Authenticated: risk GET
+    const rGet = await warmAndCheck('Riesgo GET auth → 200', () => api('/api/sgie/riesgo?expediente_id='+expA.rows[0].id, { headers:auth }));
+    if (rGet.status===200) assert('Riesgo GET: riskLevel', typeof rGet.body?.riskLevel==='string');
+    assert('Riesgo GET: correlation ID', !!rGet.headers['x-correlation-id']);
+
+    // Authenticated: carga POST
+    const wPost = await warmAndCheck('Carga POST auth → 200', () => api('/api/sgie/carga', { method:'POST', headers:auth }));
+    if (wPost.status===200) {
+      assert('Carga POST: utilization', typeof wPost.body?.utilization==='number');
+      assert('Carga POST: weighted_load', typeof wPost.body?.weightedLoad==='number');
+    }
+    assert('Carga POST: correlation ID', !!wPost.headers['x-correlation-id']);
+
+    // Authenticated: carga GET
+    const wGet = await warmAndCheck('Carga GET auth → 200', () => api('/api/sgie/carga', { headers:auth }));
+    if (wGet.status===200) assert('Carga GET: utilization', typeof wGet.body?.utilization==='number');
+    assert('Carga GET: correlation ID', !!wGet.headers['x-correlation-id']);
+
+    // Feature flag off → 503
     await q(`UPDATE feature_flags SET enabled=false WHERE flag_key='sgie.risk.enabled'`);
-    assert('Flag off verificable vía DB', true);
+    await new Promise(r => setTimeout(r, 200));
+    const flagOff = await api('/api/sgie/riesgo', { method:'POST', headers:auth, body:JSON.stringify({expedienteId:expA.rows[0].id}) });
+    assert('Flag off → 503', flagOff.status===503);
+    assert('Correlation ID en 503', !!flagOff.headers['x-correlation-id']);
     await q(`UPDATE feature_flags SET enabled=true WHERE flag_key='sgie.risk.enabled'`);
 
-    // 15f. Kill switch (via DB)
+    // Kill switch → 503
     await q(`UPDATE feature_flags SET kill_switch=true WHERE flag_key='sgie.workload.enabled'`);
-    assert('Kill switch verificable vía DB', true);
+    await new Promise(r => setTimeout(r, 200));
+    const ks = await api('/api/sgie/carga', { method:'POST', headers:auth });
+    assert('Kill switch → 503', ks.status===503);
     await q(`UPDATE feature_flags SET kill_switch=false WHERE flag_key='sgie.workload.enabled'`);
 
-    // 15g. Simulate rate limit check (the API has rate limiting middleware)
-    assert('Rate limit configurado en rutas', true);
+    // Persistence: POST then GET same score
+    await q(`DELETE FROM risk_evaluations WHERE expediente_id=$1`, [expA.rows[0].id]);
+    await new Promise(r => setTimeout(r, 500));
+    const p1 = await warmAndCheck('Persist POST', () => api('/api/sgie/riesgo', { method:'POST', headers:auth, body:JSON.stringify({expedienteId:expA.rows[0].id, persist:true}) }));
+    const p2 = await warmAndCheck('Persist GET', () => api('/api/sgie/riesgo?expediente_id='+expA.rows[0].id, { headers:auth }));
+    if (p1.status===200 && p2.status===200) assert('Persist: score coincide', p2.body?.score === p1.body?.score);
+
+    // Cleanup API user + expediente
+    await q(`DELETE FROM risk_evaluations WHERE expediente_id=$1`, [expA.rows[0].id]).catch(()=>{});
+    await q(`DELETE FROM expedientes WHERE id=$1`, [expA.rows[0].id]).catch(()=>{});
+    await q(`DELETE FROM usuarios_roles WHERE usuario_id=$1`, [apiUserId]).catch(()=>{});
+    await q(`DELETE FROM auditoria_eventos WHERE usuario_id=$1`, [apiUserId]).catch(()=>{});
+    await q(`DELETE FROM usuarios WHERE id=$1`, [apiUserId]).catch(()=>{});
+
+    console.log('  ── API tests complete ──\n');
   } else {
     console.log('\n  ── Saltando API tests (API_BASE_URL no configurado) ──\n');
   }

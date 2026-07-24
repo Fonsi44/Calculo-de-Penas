@@ -78,7 +78,7 @@ export async function evaluateRisk(expedienteId: string): Promise<RiskResult> {
       (SELECT count(*)::int FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date < NOW()) as overdue_deadlines,
       (SELECT count(*)::int FROM tareas WHERE expediente_id=${expedienteId}::uuid AND estado != 'completada') as open_tasks,
       (SELECT CASE WHEN count(*) > 0 THEN EXTRACT(DAY FROM NOW() - MAX(creado_en))::int ELSE NULL END FROM events WHERE resource_id=${expedienteId}) as days_since_last_update,
-      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado = 'pendiente') as has_active_block,
+      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado IN ('solicitado','pendiente_abogado')) as has_active_block,
       (SELECT COALESCE(json_agg(due_date ORDER BY due_date), '[]'::json) FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date >= NOW()) as upcoming_due_dates
   `);
   const row = (data as unknown as { rows: Record<string, unknown>[] }).rows?.[0] || {};
@@ -98,7 +98,7 @@ export async function evaluateAndPersistRisk(expedienteId: string): Promise<Risk
       (SELECT count(*)::int FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date < NOW()) as overdue_deadlines,
       (SELECT count(*)::int FROM tareas WHERE expediente_id=${expedienteId}::uuid AND estado != 'completada') as open_tasks,
       (SELECT CASE WHEN count(*) > 0 THEN EXTRACT(DAY FROM NOW() - MAX(creado_en))::int ELSE NULL END FROM events WHERE resource_id=${expedienteId}) as days_since_last_update,
-      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado = 'pendiente') as has_active_block,
+      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado IN ('solicitado','pendiente_abogado')) as has_active_block,
       (SELECT COALESCE(json_agg(due_date ORDER BY due_date), '[]'::json) FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date >= NOW()) as upcoming_due_dates
   `);
   const row = (data as unknown as { rows: Record<string, unknown>[] }).rows?.[0] || {};
