@@ -292,6 +292,11 @@ const nextConfig: NextConfig = {
       { source: '/defensa-penal-choluteca', destination: '/abogado-penalista-choluteca', permanent: true },
       { source: '/defensa-penal-nacaome', destination: '/abogado-penalista-nacaome', permanent: true },
       { source: '/defensa-penal-sur-honduras', destination: '/derecho-penal', permanent: true },
+      // === FIX 404: URL de naturalización huérfana con tráfico GSC (Fase 2) ===
+      // GSC reporta impresiones para /blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena
+      // pero el slug canónico publicado es naturalizacion-nacionalidad-hondurena.
+      // 301 conserva link equity hacia el post publicado.
+      { source: '/blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena', destination: '/blog/extranjeria-migracion/naturalizacion-nacionalidad-hondurena', permanent: true },
     ];
   },
   // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key
