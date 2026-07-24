@@ -140,9 +140,24 @@ automáticamente.
 npm >= 11 requiere aprobación explícita. El `package.json` ya incluye
 `allowScripts`. Si añades nuevas dependencias nativas, agrégalas allí.
 
+## Estado del proyecto
+
+| Fase | Estado |
+|---|---|
+| Fase 4 | CERTIFICADA |
+| Fase 5 | NO INICIADA en la historia recuperable |
+| Entorno macOS | VALIDADO |
+| Producción | NO MODIFICADA |
+
+El trabajo entre `c0292ae` (origin/main) y `f18eaeb` (PC Windows anterior) se
+perdió por inaccesibilidad del ordenador Windows. El MacBook Pro es ahora el
+repositorio autoritativo.
+
 ## Historial de adaptación macOS
 
 | Commit | Cambio |
 |---|---|
 | `5a1a51a1` | Añadido `allowScripts` para módulos nativos y stub `lib/google-reviews.ts` |
 | `c19f6574` | Corrección de lint `react-hooks/set-state-in-effect` |
+| `4bc776d8` | Documentación macOS |
+| `b873a899` | Timeout fetch google-reviews + abort controller Knowledge UI |
