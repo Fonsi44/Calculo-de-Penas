@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { riskEvaluations, type RiskEvaluation, type RiskEvaluationInsert } from '@/lib/schema';
-import { sql, eq, and, desc } from 'drizzle-orm';
+import { sql, eq, desc } from 'drizzle-orm';
 
 export type RiskLevel = 'low' | 'medium' | 'high' | 'critical' | 'unknown';
 
@@ -78,7 +78,8 @@ export async function evaluateRisk(expedienteId: string): Promise<RiskResult> {
       (SELECT count(*)::int FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date < NOW()) as overdue_deadlines,
       (SELECT count(*)::int FROM tareas WHERE expediente_id=${expedienteId}::uuid AND estado != 'completada') as open_tasks,
       (SELECT CASE WHEN count(*) > 0 THEN EXTRACT(DAY FROM NOW() - MAX(creado_en))::int ELSE NULL END FROM events WHERE resource_id=${expedienteId}) as days_since_last_update,
-      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado = 'pendiente') as has_active_block
+      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado = 'pendiente') as has_active_block,
+      (SELECT COALESCE(json_agg(due_date ORDER BY due_date), '[]'::json) FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date >= NOW()) as upcoming_due_dates
   `);
   const row = (data as unknown as { rows: Record<string, unknown>[] }).rows?.[0] || {};
   const pendingDocs = Number(row.pending_docs) || 0;
@@ -86,13 +87,29 @@ export async function evaluateRisk(expedienteId: string): Promise<RiskResult> {
   const openTasks = Number(row.open_tasks) || 0;
   const daysSinceLastUpdate = row.days_since_last_update != null ? Number(row.days_since_last_update) : null;
   const hasActiveBlock = Boolean(row.has_active_block);
-
   const result = computeRisk(pendingDocs, overdueDeadlines, openTasks, daysSinceLastUpdate, hasActiveBlock);
   return result;
 }
 
 export async function evaluateAndPersistRisk(expedienteId: string): Promise<RiskResult> {
-  const result = await evaluateRisk(expedienteId);
+  const data = await db.execute(sql`
+    SELECT
+      (SELECT count(*)::int FROM documentos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado NOT IN ('aprobado','rechazado')) as pending_docs,
+      (SELECT count(*)::int FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date < NOW()) as overdue_deadlines,
+      (SELECT count(*)::int FROM tareas WHERE expediente_id=${expedienteId}::uuid AND estado != 'completada') as open_tasks,
+      (SELECT CASE WHEN count(*) > 0 THEN EXTRACT(DAY FROM NOW() - MAX(creado_en))::int ELSE NULL END FROM events WHERE resource_id=${expedienteId}) as days_since_last_update,
+      (SELECT count(*)::int > 0 FROM requisitos_expediente WHERE expediente_id=${expedienteId}::uuid AND estado = 'pendiente') as has_active_block,
+      (SELECT COALESCE(json_agg(due_date ORDER BY due_date), '[]'::json) FROM events WHERE event_type='deadline' AND resource_id=${expedienteId} AND due_date >= NOW()) as upcoming_due_dates
+  `);
+  const row = (data as unknown as { rows: Record<string, unknown>[] }).rows?.[0] || {};
+  const pendingDocs = Number(row.pending_docs) || 0;
+  const overdueDeadlines = Number(row.overdue_deadlines) || 0;
+  const openTasks = Number(row.open_tasks) || 0;
+  const daysSinceLastUpdate = row.days_since_last_update != null ? Number(row.days_since_last_update) : null;
+  const hasActiveBlock = Boolean(row.has_active_block);
+  const dueDates = (row.upcoming_due_dates as string[]) || [];
+
+  const result = computeRisk(pendingDocs, overdueDeadlines, openTasks, daysSinceLastUpdate, hasActiveBlock);
 
   const insert: RiskEvaluationInsert = {
     expedienteId,
@@ -100,7 +117,7 @@ export async function evaluateAndPersistRisk(expedienteId: string): Promise<Risk
     score: result.score,
     reasons: JSON.parse(JSON.stringify(result.reasons)),
     blockingFactors: JSON.parse(JSON.stringify(result.blockingFactors)),
-    dueDates: [],
+    dueDates: JSON.parse(JSON.stringify(dueDates)),
     dataQuality: result.dataQuality,
     confidence: result.confidence,
     suggestedActions: JSON.parse(JSON.stringify(result.suggestedActions)),

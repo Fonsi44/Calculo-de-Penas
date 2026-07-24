@@ -219,12 +219,16 @@ describe('FeatureFlagService — validación de mutación', () => {
 });
 
 describe('FeatureFlagService — catálogo canónico', () => {
-  it('FLAG_KEYS tiene exactamente las 11 flags esperadas', () => {
-    expect(FLAG_KEYS).toHaveLength(16);
+  it('FLAG_KEYS tiene exactamente las 20 flags esperadas', () => {
+    expect(FLAG_KEYS).toHaveLength(20);
     expect(FLAG_KEYS).toContain('sgie.ai.classification');
     expect(FLAG_KEYS).toContain('sgie.copilot');
     expect(FLAG_KEYS).toContain('sgie.signature.sandbox');
     expect(FLAG_KEYS).toContain('sgie.documents.bulk_approve');
+    expect(FLAG_KEYS).toContain('sgie.risk.enabled');
+    expect(FLAG_KEYS).toContain('sgie.workload.enabled');
+    expect(FLAG_KEYS).toContain('sgie.daily_brief.enabled');
+    expect(FLAG_KEYS).toContain('sgie.autonomy_metrics.enabled');
   });
 });
 

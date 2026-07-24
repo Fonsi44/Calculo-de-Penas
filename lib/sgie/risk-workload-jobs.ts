@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { sql, eq, and } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 import { encolarEvento, OUTBOX_EVENTS } from '@/lib/sgie/outbox';
 import { evaluateAndPersistRisk } from '@/lib/sgie/risk-service';
 import { calculateAndPersistWorkload } from '@/lib/sgie/workload-service';

@@ -1,5 +1,6 @@
 import { requireAbogado } from '@/lib/auth';
 import { z } from 'zod';
+import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { assertCapability } from '@/lib/access-service';
 import { evaluateRisk, evaluateAndPersistRisk, getLatestRisk, listRisksByLevel } from '@/lib/sgie/risk-service';
@@ -15,6 +16,7 @@ const evaluateSchema = z.object({
 export async function POST(request: Request) {
   try {
     const abogado = await requireAbogado(request);
+    validateCsrf(request);
 
     const rl = await rateLimit(`riesgo:${abogado.userId}`, { max: 30, windowMs: 60000 });
     if (!rl.ok) return rateLimitResponse(rl);

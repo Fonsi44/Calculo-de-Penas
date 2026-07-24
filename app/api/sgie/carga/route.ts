@@ -1,7 +1,8 @@
 import { requireAbogado } from '@/lib/auth';
+import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { assertCapability } from '@/lib/access-service';
-import { calculateWorkload, calculateAndPersistWorkload, getLatestWorkload, listOverloadedUsers } from '@/lib/sgie/workload-service';
+import { calculateAndPersistWorkload, getLatestWorkload } from '@/lib/sgie/workload-service';
 import { isFlagEnabled } from '@/lib/sgie/feature-flags';
 import { httpErrorResponse } from '@/lib/http-errors';
 import { NextResponse } from 'next/server';
@@ -9,6 +10,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const abogado = await requireAbogado(request);
+    validateCsrf(request);
 
     const rl = await rateLimit(`carga:${abogado.userId}`, { max: 30, windowMs: 60000 });
     if (!rl.ok) return rateLimitResponse(rl);
