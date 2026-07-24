@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Field, Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast';
+import { isAdminRole } from '@/lib/roles';
 
 export default function IntranetLoginPage() {
   const toast = useToast();
@@ -31,7 +32,7 @@ export default function IntranetLoginPage() {
       toast.success('Sesión iniciada');
       // SGIE — routing post-login por rol: admin → panel admin, abogado → SGIE.
       // El proxy ya hace el mismo derivado si se accede al login con sesión activa.
-      const destino = data.user?.rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
+      const destino = isAdminRole(data.user?.rol) ? '/intranet/admin' : '/intranet/sgie';
       window.location.href = destino;
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error desconocido');

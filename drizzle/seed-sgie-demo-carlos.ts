@@ -14,7 +14,7 @@ import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import {
-  usuarios, clientes, tiposProcedimiento, expedientes, expedienteAsignaciones,
+  usuarios, usuariosSgie, clientes, tiposProcedimiento, expedientes, expedienteAsignaciones,
   requisitosExpediente, documentosExpediente, alertas, tareas, eventosAgenda,
   correosEnviados, historialExpediente, enlacesMagicos, camposExtraidos,
   confianzaResultados, extraccionesIa, correccionesIa,
@@ -57,6 +57,30 @@ async function main() {
     }).returning({ id: usuarios.id });
     carlosId = u.id;
     console.log(`  ✅ Usuario Carlos creado (${carlosId})`);
+  }
+
+  // Reparar o crear membresía SGIE (crítica para assertSgieAccess)
+  if (carlosId) {
+    await db.insert(usuariosSgie).values({
+      usuarioId: carlosId,
+      correoCorporativo: DEMO_EMAIL,
+      activoSgie: true,
+      actualizadoEn: new Date(),
+    }).onConflictDoUpdate({
+      target: usuariosSgie.usuarioId,
+      set: { activoSgie: true, correoCorporativo: DEMO_EMAIL, actualizadoEn: new Date() },
+    });
+    console.log(`  ✅ Membresía SGIE asegurada para Carlos (activo_sgie=true)`);
+    // Si el usuario existía, reparar estado
+    if (existente) {
+      await db.update(usuarios).set({
+        rol: 'abogado',
+        active: true,
+        bloqueado: false,
+        correoCorporativoVinculado: true,
+      }).where(eq(usuarios.id, carlosId));
+      console.log(`  ✅ Estado de Carlos reparado (rol=abogado, active, no bloqueado)`);
+    }
   }
 
   // ─── 2. Clientes demo ───────────────────────────────────────────────────

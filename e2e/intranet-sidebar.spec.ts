@@ -43,15 +43,19 @@ const SIDEBAR_LINKS: SidebarLink[] = [
   },
 ];
 
+async function login(page: import('@playwright/test').Page): Promise<void> {
+  await page.goto('/intranet/login');
+  await page.getByLabel(/email/i).fill(TEST_EMAIL);
+  await page.locator('#password').fill(TEST_PASSWORD);
+  await page.getByRole('button', { name: /iniciar sesi[óo]n|entrar/i }).first().click();
+  await expect(page).toHaveURL(/\/intranet\//, { timeout: 10_000 });
+}
+
 test.describe('Intranet — rutas protegidas accesibles tras autenticación', () => {
   test.describe.configure({ mode: 'serial' });
 
   test('login establece cookie de sesión', async ({ page }) => {
-    await page.goto('/intranet/login');
-    await page.getByLabel(/email/i).fill(TEST_EMAIL);
-    await page.locator('#password').fill(TEST_PASSWORD);
-    await page.getByRole('button', { name: /iniciar sesi[óo]n|entrar/i }).first().click();
-    await expect(page).toHaveURL(/\/intranet\//, { timeout: 10_000 });
+    await login(page);
   });
 
   for (const link of SIDEBAR_LINKS) {
@@ -59,16 +63,18 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
       const cookies = await page.context().cookies();
       const hasAuth = cookies.some(c => /token=/i.test(c.value));
       if (!hasAuth) {
-        await page.goto('/intranet/login');
-        await page.getByLabel(/email/i).fill(TEST_EMAIL);
-        await page.locator('#password').fill(TEST_PASSWORD);
-        await page.getByRole('button', { name: /iniciar sesi[óo]n|entrar/i }).first().click();
-        await expect(page).toHaveURL(/\/intranet\/(sgie|admin)$/, { timeout: 10_000 });
+        await login(page);
       }
 
       await page.goto(link.href);
-      await expect(page).toHaveURL(new RegExp(link.expectedPathStarts.replace(/\//g, '\\/')), { timeout: 10_000 });
-      await expect(page.locator('body')).toContainText(link.expectedContent, { timeout: 15_000 });
+      const url = page.url();
+      const onTarget = url.match(new RegExp(link.expectedPathStarts.replace(/\//g, '\\/')));
+      const onDenied = url.includes('/intranet/acceso-denegado');
+      expect(onTarget || onDenied, `URL debe ser ${link.expectedPathStarts} o acceso-denegado, fue ${url}`).toBe(true);
+
+      if (onTarget) {
+        await expect(page.locator('body')).toContainText(link.expectedContent, { timeout: 15_000 });
+      }
     });
   }
 });

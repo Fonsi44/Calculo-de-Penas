@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import { randomUUID } from 'crypto';
 import { COOKIE_NAME, COOKIE_NAME_FALLBACK, verifyToken, validateSessionFreshness } from '@/lib/auth';
 import { assertSgieAccess } from '@/lib/access-service';
+import { isAdminRole } from '@/lib/roles';
 
 /**
  * Seguridad — verificación firma JWT en edge + frescura de sesión.
@@ -157,14 +158,14 @@ export async function proxy(request: NextRequest) {
     }
     // Rutas admin API: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/api/admin')) {
-      if (payload.rol !== 'admin') {
+      if (!isAdminRole(payload.rol)) {
         return withCorrelationId(NextResponse.json({ error: 'Acceso denegado: se requiere rol admin' }, { status: 403 }), correlationId);
       }
     }
     // SGIE API: requiere rol abogado o admin (defensa en profundidad; el handler
     // vuelve a validar con requireAbogado + scope por abogado).
     if (pathname.startsWith('/api/sgie')) {
-      if (payload.rol !== 'admin' && payload.rol !== 'abogado' && payload.rol !== 'supervisor') {
+      if (!isAdminRole(payload.rol) && payload.rol !== 'abogado' && payload.rol !== 'supervisor') {
         return withCorrelationId(NextResponse.json({ error: 'Acceso denegado: se requiere rol abogado o admin' }, { status: 403 }), correlationId);
       }
       try {
@@ -184,9 +185,9 @@ export async function proxy(request: NextRequest) {
       INTRANET_PUBLIC_EXACT.has(pathname)
       || INTRANET_PUBLIC_PREFIXES.some((prefix) => pathname.startsWith(`${prefix}/`))
     ) {
-	  if (pathname === INTRANET_LOGIN_PATH && token) {
+ 	  if (pathname === INTRANET_LOGIN_PATH && token) {
         const rol = roleFromToken(token);
-        const destino = rol === 'admin' ? '/intranet/admin' : '/intranet/sgie';
+        const destino = isAdminRole(rol) ? '/intranet/admin' : '/intranet/sgie';
         return withCorrelationId(NextResponse.redirect(new URL(destino, request.url)), correlationId);
       }
       return withCorrelationId(NextResponse.next(), correlationId);
@@ -215,7 +216,7 @@ export async function proxy(request: NextRequest) {
       }
     }
     // Redirigir admin users de rutas intranet legacy a sus versiones admin
-    if (rol === 'admin') {
+    if (isAdminRole(rol)) {
       const adminRedirects: Record<string, string> = {
         '/intranet/calculadora': '/intranet/admin/calculadora',
         '/intranet/casos': '/intranet/admin/casos',
@@ -239,7 +240,7 @@ export async function proxy(request: NextRequest) {
     }
     // Rutas admin: verificar rol admin desde el token JWT.
     if (pathname.startsWith('/intranet/admin')) {
-      if (rol !== 'admin') {
+      if (!isAdminRole(rol)) {
         return withCorrelationId(NextResponse.redirect(new URL(INTRANET_LOGIN_PATH, request.url)), correlationId);
       }
     }
@@ -249,7 +250,7 @@ export async function proxy(request: NextRequest) {
     // se redirige a su cockpit SGIE. El admin conserva acceso a todo.
     // Referencia: pinedayasociados.md §6.1, §22.1.
     {
-      const esAdmin = rol === 'admin';
+      const esAdmin = isAdminRole(rol);
       if (!esAdmin) {
         const RUTAS_SGIE_PERMITIDAS = pathname.startsWith('/intranet/sgie');
         const RUTA_TRANSITO = pathname === '/intranet/dashboard';

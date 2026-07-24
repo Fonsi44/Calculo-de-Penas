@@ -12,6 +12,7 @@ import {
 import { useAuth } from '@/app/auth-context';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/ui';
+import { isAdminRole } from '@/lib/roles';
 
 type Item = {
   label: string;
@@ -90,11 +91,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && (!user || user.rol !== 'admin')) router.replace('/intranet/login');
+    if (!loading && (!user || !isAdminRole(user.rol))) router.replace('/intranet/login');
   }, [loading, router, user]);
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Spinner size="lg" /></div>;
-  if (!user || user.rol !== 'admin') return null;
+  if (!user || !isAdminRole(user.rol)) return null;
 
   return <div className="flex h-screen bg-background overflow-hidden">
     {mobileOpen && <button className="fixed inset-0 bg-overlay z-40 lg:hidden" onClick={() => setMobileOpen(false)} aria-label="Cerrar menú" />}

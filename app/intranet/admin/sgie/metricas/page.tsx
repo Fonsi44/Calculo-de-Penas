@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useAuth } from '@/app/auth-context';
 import { Spinner } from '@/components/ui/spinner';
+import { isAdminRole } from '@/lib/roles';
 import { CheckCircle, FileText, Mail, AlertTriangle, Database, Cpu, Brain } from 'lucide-react';
 
 interface Metricas {

@@ -2,11 +2,12 @@ import { db } from './db';
 import { roles, permisos, rolesPermisos, usuariosRoles } from './schema';
 import { eq, and } from 'drizzle-orm';
 import { requireAdmin, AuthError, type AuthUser } from './auth';
+import { isAdminRole } from './roles';
 
 export function requirePermission(recurso: string, accion: string) {
   return async (request: Request): Promise<AuthUser> => {
     const user = await requireAdmin(request);
-    if (user.rol === 'admin') return user;
+    if (isAdminRole(user.rol)) return user;
 
     const [rolPermiso] = await db.select({ id: permisos.id })
       .from(permisos)

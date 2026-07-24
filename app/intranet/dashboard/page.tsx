@@ -3,6 +3,7 @@
 import { useAuth } from '@/app/auth-context';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { isAdminRole } from '@/lib/roles';
 
 /**
  * Página de tránsito de la intranet.
@@ -20,7 +21,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (loading || !user) return;
-    if (user.rol === 'admin') {
+    if (isAdminRole(user.rol)) {
       router.replace('/intranet/admin');
     } else {
       // SGIE — el abogado se dirige a su cockpit.

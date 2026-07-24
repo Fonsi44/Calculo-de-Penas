@@ -12,6 +12,7 @@ import {
   usuariosSgie,
 } from '@/lib/schema';
 import { ForbiddenError, NotFoundError } from '@/lib/http-errors';
+import { isAdminRole } from '@/lib/roles';
 
 export const CAPABILITIES = [
   'users.read', 'users.manage', 'users.invite', 'roles.manage',
@@ -115,7 +116,7 @@ export async function getPersistedAccess(userId: string): Promise<PersistedAcces
     rol: account.rol,
     active: Boolean(account.active),
     suspended: Boolean(account.suspended),
-    sgIeEnabled: account.rol === 'admin' || account.rol === 'administrador'
+    sgIeEnabled: isAdminRole(account.rol)
       ? true
       : Boolean(account.sgIeEnabled),
     capabilities,

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/auth-context';
 import { useTheme } from '@/app/theme-context';
 import { LogOut, Moon, Sun, ChevronDown, User as UserIcon, Shield } from 'lucide-react';
+import { isAdminRole } from '@/lib/roles';
 import { IconButton } from '@/components/ui/icon-button';
 
 export function UserActions() {
@@ -84,7 +85,7 @@ export function UserActions() {
                 <p className="text-xs font-bold text-text truncate">{user.nombre}</p>
                 <p className="text-xxs text-text-secondary truncate">{user.email}</p>
               </div>
-              {user.rol === 'admin' && (
+              {isAdminRole(user.rol) && (
                 <Link
                   href="/intranet/admin"
                   role="menuitem"
