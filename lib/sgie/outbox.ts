@@ -30,6 +30,7 @@ export const OUTBOX_EVENTS = {
   DOCUMENT_SEGMENTATION_REQUESTED: 'document.segmentation.requested',
   DOCUMENT_COMPARISON_REQUESTED: 'document.comparison.requested',
   DOCUMENT_CONTRADICTION_REVIEW_REQUESTED: 'document.contradiction.review_requested',
+  DAILY_BRIEF_GENERATION_REQUESTED: 'daily_brief.generation.requested',
 } as const;
 
 export type OutboxEventType = (typeof OUTBOX_EVENTS)[keyof typeof OUTBOX_EVENTS];

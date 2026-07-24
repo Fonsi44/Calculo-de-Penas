@@ -54,6 +54,7 @@ const NAV: NavItem[] = [
 const NAV_FASE5: NavItem[] = [
   { label: 'Riesgo', href: '/intranet/sgie/riesgo', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/sgie/riesgo') },
   { label: 'Carga', href: '/intranet/sgie/carga', icon: Briefcase, match: (p) => p.startsWith('/intranet/sgie/carga') },
+  { label: 'Brief diario', href: '/intranet/sgie/brief', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/brief') },
   { label: 'Segmentación', href: '/intranet/sgie/documentos/segmentacion', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/documentos/segmentacion') },
   { label: 'Comparación', href: '/intranet/sgie/documentos/comparacion', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/documentos/comparacion') },
   { label: 'Contradicciones', href: '/intranet/sgie/contradicciones', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/sgie/contradicciones') },
