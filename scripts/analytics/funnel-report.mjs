@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 /**
- * Conversion Funnel Report (Fase 3)
- * Reads GA4 + GSC data and produces an organic funnel by landing page.
- * 
+ * Funnel Report Fase 3 — Embudo orgánico por landing page
+ *
  * Uso: node scripts/analytics/funnel-report.mjs
  */
 
@@ -10,7 +9,6 @@ import { config } from 'dotenv';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
-import { google } from 'googleapis';
 import { atomicWrite } from './export-utils.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,10 +18,9 @@ config({ path: resolve(ROOT, '.env.local'), override: true });
 
 const OUT_FILE = resolve(ROOT, 'docs', 'analytics', 'funnel-report.md');
 const PROPERTY_ID = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
-const SITE_URL = process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL;
 const property = `properties/${PROPERTY_ID}`;
 
-async function getAuth() {
+async function getGoogle() {
   const { google } = await import('googleapis');
   const auth = new google.auth.OAuth2(
     process.env.OAUTH_CLIENT_ID,
@@ -32,17 +29,16 @@ async function getAuth() {
   );
   auth.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
   await auth.getAccessToken();
-  return auth;
+  return { google, auth };
 }
 
-async function ga4Query(auth, metrics, dimensions = [], dateRange = { start: '28daysAgo', end: 'yesterday' }) {
-  const { google } = await import('googleapis');
+async function ga4RunReport(google, auth, metrics, dimensions = []) {
   const data = google.analyticsdata({ version: 'v1beta', auth });
   const limit = 10000;
   const rows = [];
   for (let offset = 0; ; offset += limit) {
     const resp = await data.properties.runReport({ property, requestBody: {
-      dateRanges: [{ startDate: dateRange.start, endDate: dateRange.end }],
+      dateRanges: [{ startDate: '28daysAgo', endDate: 'yesterday' }],
       metrics: metrics.map(m => ({ name: m })),
       dimensions: dimensions.map(d => ({ name: d })),
       limit, offset,
@@ -54,84 +50,85 @@ async function ga4Query(auth, metrics, dimensions = [], dateRange = { start: '28
   return rows;
 }
 
-function parseRow(row) {
-  const obj = {};
-  row.dimensionValues.forEach((dv, i) => { obj[`dim${i}`] = dv.value; });
-  row.metricValues.forEach((mv, i) => { obj[`met${i}`] = mv.value; });
-  return obj;
-}
-
 async function main() {
   console.log('Funnel Report — Fase 3\n');
-  const auth = getAuth();
+  const { google, auth } = await getGoogle();
 
-  // Get landing pages with organic sessions + events in 28d
-  const funnelQuery = await ga4Query(auth,
+  // 1. Organic sessions by landing page
+  const organicQuery = await ga4RunReport(google, auth,
     ['sessions', 'totalUsers'],
-    ['landingPage', 'sessionSource', 'sessionMedium'],
-    { start: '28daysAgo', end: 'yesterday' }
+    ['landingPage', 'sessionSource', 'sessionMedium']
   );
 
-  // Filter to organic sessions only
-  const organicLandings = funnelQuery
-    .map(r => parseRow(r))
-    .filter(r => r.dim1 === 'google' && r.dim2 === 'organic')
-    .sort((a, b) => Number(b.met0) - Number(a.met0))
-    .slice(0, 30);
+  const organicByLP = {};
+  for (const row of organicQuery) {
+    const lp = row.dimensionValues[0]?.value || '/';
+    const source = row.dimensionValues[1]?.value || '';
+    const medium = row.dimensionValues[2]?.value || '';
+    if (source === 'google' && medium === 'organic') {
+      if (!organicByLP[lp]) organicByLP[lp] = { sessions: 0, users: 0 };
+      organicByLP[lp].sessions += parseInt(row.metricValues[0]?.value || '0');
+      organicByLP[lp].users += parseInt(row.metricValues[1]?.value || '0');
+    }
+  }
 
-  // Get events by path (CTA clicks, form starts, form submits, whatsapp, phone)
-  const eventsQuery = await ga4Query(auth,
+  // 2. Events by landing page
+  const eventsQuery = await ga4RunReport(google, auth,
     ['eventCount'],
-    ['eventName', 'landingPage'],
-    { start: '28daysAgo', end: 'yesterday' }
+    ['eventName', 'landingPage']
   );
 
-  const eventsByPath = {};
+  const eventsByLP = {};
   for (const row of eventsQuery) {
-    const r = parseRow(row);
-    const key = r.dim1 || '/';
-    if (!eventsByPath[key]) eventsByPath[key] = {};
-    eventsByPath[key][r.dim0] = (eventsByPath[key][r.dim0] || 0) + Number(r.met0);
+    const eventName = row.dimensionValues[0]?.value || '';
+    const lp = row.dimensionValues[1]?.value || '/';
+    if (!eventsByLP[lp]) eventsByLP[lp] = {};
+    eventsByLP[lp][eventName] = (eventsByLP[lp][eventName] || 0) + parseInt(row.metricValues[0]?.value || '0');
   }
 
-  let md = '# Funnel Orgánico por Landing Page\n\n';
+  // 3. Build funnel table for target pages
+  const targetPages = [
+    'pension-alimenticia-porcentaje',
+    'pension-alimenticia-honduras-guia-completa',
+    'prescripcion-deudas',
+    'danos-perjuicios',
+    'poder-legal',
+    'custodia-hijos',
+    'divorcio-honduras-guia-completa',
+  ];
+
+  let md = '# Funnel Orgánico 28d — Post-despliegue Fase 1B\n\n';
   md += `**Generado:** ${new Date().toISOString()}\n\n`;
-  md += '## Embudo 28 días (orgánico Google)\n\n';
-  md += '| Landing | Sesiones | Usuarios | CTA clicks | Form starts | Form submits | WhatsApp | Phone |\n';
-  md += '|---------|--------:|--------:|----------:|-----------:|------------:|--------:|-----:|\n';
+  md += '| Landing | Sesiones org | Usuarios | CTA clicks | Form submits | WhatsApp | Phone |\n';
+  md += '|---------|------------:|--------:|----------:|------------:|--------:|-----:|\n';
 
-  for (const lp of organicLandings) {
-    const path = lp.dim0 || '/';
-    const events = eventsByPath[path] || {};
-    md += `| ${path} | ${lp.met0} | ${lp.met1} | ${events['seo_blog_cta_click'] || 0} | ${events['form_start'] || 0} | ${events['contact_form_submit'] || 0} | ${events['whatsapp_click'] || 0} | ${events['phone_click'] || 0} |\n`;
+  const targetEvents = ['seo_blog_cta_click', 'contact_form_submit', 'whatsapp_click', 'phone_click'];
+
+  for (const target of targetPages) {
+    for (const [lp, data] of Object.entries(organicByLP)) {
+      if (!lp.includes(target)) continue;
+      const ev = eventsByLP[lp] || {};
+      md += `| ${lp.replace('https://www.pinedayasociadoshn.com', '')} | ${data.sessions} | ${data.users} | ${ev['seo_blog_cta_click'] || 0} | ${ev['contact_form_submit'] || 0} | ${ev['whatsapp_click'] || 0} | ${ev['phone_click'] || 0} |\n`;
+    }
   }
 
-  // Summary
-  const totalSessions = organicLandings.reduce((s, r) => s + Number(r.met0), 0);
-  const totalCtaClicks = Object.values(eventsByPath).reduce((s, e) => s + (e['seo_blog_cta_click'] || 0), 0);
-  const totalFormStarts = Object.values(eventsByPath).reduce((s, e) => s + (e['form_start'] || 0), 0);
-  const totalFormSubmits = Object.values(eventsByPath).reduce((s, e) => s + (e['contact_form_submit'] || 0), 0);
-  const totalWhatsApp = Object.values(eventsByPath).reduce((s, e) => s + (e['whatsapp_click'] || 0), 0);
-  const totalPhone = Object.values(eventsByPath).reduce((s, e) => s + (e['phone_click'] || 0), 0);
+  const totalSessions = Object.values(organicByLP).reduce((s, d) => s + d.sessions, 0);
+  const totalUsers = Object.values(organicByLP).reduce((s, d) => s + d.users, 0);
+  const totalCTA = Object.values(eventsByLP).reduce((s, e) => s + (e['seo_blog_cta_click'] || 0), 0);
+  const totalSubmit = Object.values(eventsByLP).reduce((s, e) => s + (e['contact_form_submit'] || 0), 0);
 
   md += '\n## Totales\n\n';
-  md += `| Métrica | Valor |\n|---------|-----:|\n`;
-  md += `| Sesiones orgánicas | ${totalSessions} |\n`;
-  md += `| CTA clicks | ${totalCtaClicks} |\n`;
-  md += `| Form starts | ${totalFormStarts} |\n`;
-  md += `| Form submits | ${totalFormSubmits} |\n`;
-  md += `| WhatsApp clicks | ${totalWhatsApp} |\n`;
-  md += `| Phone clicks | ${totalPhone} |\n`;
+  md += `| Sesiones orgánicas (Google) | ${totalSessions} |\n`;
+  md += `| Usuarios orgánicos | ${totalUsers} |\n`;
+  md += `| CTA clicks | ${totalCTA} |\n`;
+  md += `| Contact form submits | ${totalSubmit} |\n`;
+  md += `| Tasa CTA/sesión | ${totalSessions > 0 ? (totalCTA / totalSessions * 100).toFixed(1) + '%' : 'N/A'} |\n`;
 
-  if (totalSessions > 0) {
-    md += `\n| Tasa CTA/sesión | ${(totalCtaClicks / totalSessions * 100).toFixed(1)}% |\n`;
-    md += `| Tasa submit/inicio | ${totalFormStarts > 0 ? (totalFormSubmits / totalFormStarts * 100).toFixed(1) + '%' : 'N/A'} |\n`;
-  }
+  md += '\n*Nota: Datos de 28 días previos al 2026-07-24 (periodo post-despliegue Fase 1B insuficiente).*\n';
 
   await atomicWrite(OUT_FILE, md);
-  console.log(`Report generated: ${OUT_FILE}`);
-  console.log(`Organic sessions: ${totalSessions}`);
-  console.log(`Form submits: ${totalFormSubmits}`);
+  console.log(`Report: ${OUT_FILE}`);
+  console.log(`Organic sessions: ${totalSessions}, CTA clicks: ${totalCTA}, Form submits: ${totalSubmit}`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => { console.error(e.message?.slice(0, 200)); process.exit(1); });

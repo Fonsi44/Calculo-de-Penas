@@ -46,10 +46,10 @@ Componente `LegalArticleCta` con props tipadas para área jurídica, slug, posic
 
 ## Dominio
 
-- Dominio canónico: `https://www.pinedayasocioshn.com`
-- Variantes verificadas: `https://pinedayasocioshn.com` (308 → canónico), `http://www.pinedayasocioshn.com` (308 → HTTPS canónico)
+- Dominio canónico: `https://www.pinedayasociadoshn.com`
+- Variantes verificadas: `https://pinedayasociadoshn.com` (308 → canónico), `http://www.pinedayasociadoshn.com` (308 → HTTPS canónico)
 - Redirecciones: 308 permanente en ambos casos, 1 salto
-- Canonicals: Usan dominio correcto (`site.url` = `https://www.pinedayasocioshn.com`)
+- Canonicals: Usan dominio correcto (`site.url` = `https://www.pinedayasociadoshn.com`)
 - Sitemap: 212 URLs con dominio correcto
 - JSON-LD: Usa `site.url` (dominio correcto)
 - GA4 hostname: Propiedad `541022095`, sin filtros de hostname (se gestiona vía código)
@@ -128,7 +128,7 @@ No se modificó contenido en Neon en esta fase. Los enlaces se gestionan mediant
 - Push: ✅ origin/main
 - Preview: https://justicia-verdadera-x2q7ksycn-fonsi-roiget-s-projects.vercel.app
 - Deployment productivo: ✅ Vercel
-- URL: https://www.pinedayasocioshn.com
+- URL: https://www.pinedayasociadoshn.com
 - Fecha: 2026-07-24T22:30Z
 - Rollback: `vercel rollback`
 
