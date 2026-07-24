@@ -1,5 +1,6 @@
 import { and, eq, isNull } from 'drizzle-orm';
 import { db } from '@/lib/db';
+import { isAdminRole } from '@/lib/roles';
 import {
   expedienteAsignaciones,
   expedientePermisos,
@@ -115,9 +116,7 @@ export async function getPersistedAccess(userId: string): Promise<PersistedAcces
     rol: account.rol,
     active: Boolean(account.active),
     suspended: Boolean(account.suspended),
-    sgIeEnabled: account.rol === 'admin' || account.rol === 'administrador'
-      ? true
-      : Boolean(account.sgIeEnabled),
+    sgIeEnabled: isAdminRole(account.rol) ? true : Boolean(account.sgIeEnabled),
     capabilities,
   };
 }

@@ -317,6 +317,10 @@ export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
   'calendar_conflict_resolved',
   'calendar_feed_created',
   'calendar_feed_revoked',
+  // Hotfix — reparación de acceso.
+  'admin_access_repaired',
+  'sgie_access_repaired',
+  'session_invalidated_after_access_repair',
 ]);
 
 export const auditoriaEventos = pgTable('auditoria_eventos', {

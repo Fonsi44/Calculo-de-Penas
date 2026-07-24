@@ -13,6 +13,7 @@ import { cn } from '@/lib/ui';
 import { Spinner } from '@/components/ui/spinner';
 import { GlobalSearch } from '@/components/sgie/global-search';
 import { NotificationsPopover } from '@/components/sgie/notifications-popover';
+import { isAdminRole, isSgieRole } from '@/lib/roles';
 
 type NavItem = {
   label: string;
@@ -86,7 +87,7 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
 
   // Acceso: abogado o admin. Un usuario sin rol suficiente no entra.
   useEffect(() => {
-    if (!loading && (!user || (user.rol !== 'abogado' && user.rol !== 'admin' && user.rol !== 'supervisor'))) {
+    if (!loading && (!user || !isSgieRole(user.rol))) {
       router.replace('/intranet/login');
     }
   }, [user, loading, router]);
@@ -113,11 +114,11 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
     );
   }
 
-  if (!user || (user.rol !== 'abogado' && user.rol !== 'admin' && user.rol !== 'supervisor')) {
+  if (!user || !isSgieRole(user.rol)) {
     return null;
   }
 
-  const isAdmin = user.rol === 'admin';
+  const isAdmin = isAdminRole(user.rol);
 
   return (
     <div className="flex h-screen bg-background overflow-hidden">
