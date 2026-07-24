@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { workloadSnapshots, type WorkloadSnapshot, type WorkloadSnapshotInsert } from '@/lib/schema';
-import { sql, eq, desc, and } from 'drizzle-orm';
+import { sql, eq, desc } from 'drizzle-orm';
 
 export interface WorkloadResult {
   activeCases: number;

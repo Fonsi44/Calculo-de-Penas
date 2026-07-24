@@ -3,11 +3,9 @@
  * Conectado a outbox + jobs para mantener sgie_search_entries actualizado.
  */
 import { db } from '@/lib/db';
-import { sgieSearchEntries, documentTextPages, documentosExpediente, expedientes } from '@/lib/schema';
+import { sgieSearchEntries, documentTextPages, documentosExpediente } from '@/lib/schema';
 import { eq, and, isNull } from 'drizzle-orm';
 import { createHash } from 'crypto';
-import { encolarEvento, OUTBOX_EVENTS } from './outbox';
-
 function sha256(content: string): string {
   return createHash('sha256').update(content).digest('hex');
 }

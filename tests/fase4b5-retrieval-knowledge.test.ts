@@ -2,7 +2,7 @@
 /**
  * Tests de Retrieval FTS + Knowledge (Fase 4B-5/6).
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 describe('Fase 4B-5 — Retrieval FTS/pg_trgm', () => {
   // Security: exact match

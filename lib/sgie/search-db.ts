@@ -4,7 +4,7 @@
  */
 import { db } from '@/lib/db';
 import { sgieSearchEntries } from '@/lib/schema';
-import { and, eq, like, or, sql, gte, lte, isNull, inArray } from 'drizzle-orm';
+import { and, eq, like, sql, gte, lte, isNull, inArray } from 'drizzle-orm';
 import { isFlagEnabled } from './feature-flags';
 import { accessService } from '@/lib/access-service';
 
