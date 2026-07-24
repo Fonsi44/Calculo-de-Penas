@@ -8,7 +8,6 @@ interface SidebarLink {
   href: string;
   expectedPathStarts: string;
   expectedContent: RegExp;
-  requiresCapability: boolean;
 }
 
 const SIDEBAR_LINKS: SidebarLink[] = [
@@ -17,35 +16,30 @@ const SIDEBAR_LINKS: SidebarLink[] = [
     href: '/intranet/calculadora',
     expectedPathStarts: '/intranet/calculadora',
     expectedContent: /Calculadora de Penas|Paso 1 de 8/i,
-    requiresCapability: true,
   },
   {
     label: 'Mis casos',
     href: '/intranet/casos',
     expectedPathStarts: '/intranet/casos',
     expectedContent: /Mis casos|Crear.*caso|Sin casos todav/i,
-    requiresCapability: false,
   },
   {
     label: 'Biblioteca CP',
     href: '/intranet/cp',
     expectedPathStarts: '/intranet/cp',
     expectedContent: /Biblioteca|C[oó]digo Penal|Art[ií]culo/i,
-    requiresCapability: true,
   },
   {
     label: 'Catálogo de delitos',
     href: '/intranet/delitos',
     expectedPathStarts: '/intranet/delitos',
     expectedContent: /Cat[aá]logo|delitos/i,
-    requiresCapability: true,
   },
   {
     label: 'Atajos de teclado',
     href: '/intranet/atajos',
     expectedPathStarts: '/intranet/atajos',
     expectedContent: /Atajos|teclado|Calculadora de penas/i,
-    requiresCapability: false,
   },
 ];
 
@@ -54,12 +48,10 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
 
   test('login establece cookie de sesión', async ({ page }) => {
     await page.goto('/intranet/login');
-    await page.waitForSelector('#email');
     await page.locator('#email').fill(TEST_EMAIL);
     await page.locator('#password').fill(TEST_PASSWORD);
     await page.locator('button[type="submit"]').click();
-    await page.waitForURL(/\/intranet\//, { timeout: 10_000 });
-    expect(page.url()).toContain('/intranet/');
+    await expect(page).toHaveURL(/\/intranet\/(sgie|admin|login)$/, { timeout: 10_000 });
   });
 
   for (const link of SIDEBAR_LINKS) {
@@ -68,17 +60,10 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
       await page.locator('#email').fill(TEST_EMAIL);
       await page.locator('#password').fill(TEST_PASSWORD);
       await page.locator('button[type="submit"]').click();
-      await page.waitForURL(/\/intranet\//, { timeout: 10_000 });
+      await expect(page).toHaveURL(/\/intranet\/(sgie|admin|login)$/, { timeout: 10_000 });
 
-      const resp = await page.request.get(link.href);
-
-      if (link.requiresCapability) {
-        expect([200, 302, 401, 403], `${link.label}: esperado acceso controlado, status ${resp.status()}`).toContain(resp.status());
-        return;
-      }
-
-      expect(resp.status(), `${link.label}: esperado 200`).toBe(200);
-      await page.goto(link.href);
+      await page.goto(link.href, { waitUntil: 'networkidle' });
+      await expect(page).toHaveURL(new RegExp(link.expectedPathStarts.replace(/\//g, '\\/')), { timeout: 15_000 });
       await expect(page.locator('body')).toContainText(link.expectedContent, { timeout: 15_000 });
     });
   }

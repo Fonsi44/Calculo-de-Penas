@@ -93,11 +93,14 @@ test.describe('Auth flow E2E (API)', () => {
   });
 
   test('rate limit en login: bloquea tras mÃºltiples intentos', async ({ request }) => {
-    const uniqueId = `rl-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const rlDisabled = process.env.DISABLE_RATE_LIMIT === 'true' || process.env.DISABLE_RATE_LIMIT === '1';
+    test.skip(rlDisabled, 'Rate limiting desactivado por DISABLE_RATE_LIMIT');
+
+    const testEmail = `ratelimit-${Date.now()}@pinedayasociadoshn.com`;
     let got429 = false;
     for (let i = 0; i < 15; i++) {
       const res = await request.post('/api/auth/login', {
-        data: { email: `${uniqueId}-${i}@pinedayasociadoshn.com`, password: 'wrong-password-123' },
+        data: { email: testEmail, password: 'wrong-password-123' },
       });
       if (res.status() === 429) { got429 = true; break; }
     }
