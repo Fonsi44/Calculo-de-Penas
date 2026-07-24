@@ -74,10 +74,14 @@ async function fetchGoogleReviews(): Promise<ReviewsData> {
     '&languageCode=es';
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
     const response = await fetch(url, {
       headers: { 'X-Goog-FieldMask': 'rating,userRatingCount,reviews' },
       next: { revalidate: 86400 },
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
 
     if (!response.ok) return fallbackData();
 

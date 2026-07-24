@@ -27,10 +27,12 @@ export default function KnowledgeAdminPage() {
   };
 
   useEffect(() => {
-    fetch('/api/admin/knowledge')
+    const controller = new AbortController();
+    fetch('/api/admin/knowledge', { signal: controller.signal })
       .then(async r => { if (r.ok) setSources((await r.json()).sources || []); })
       .catch(() => {})
       .finally(() => setLoading(false));
+    return () => controller.abort();
   }, []);
 
   const handleCreate = async () => {
