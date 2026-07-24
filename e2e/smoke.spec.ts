@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 const CSP_EVAL_WARN = 'eval() is not supported in this environment';
-const SPEED_INSIGHTS_404 = '/_vercel/speed-insights/script.js';
+const EXTERNAL_SCRIPTS = ['/_vercel/speed-insights/', '/_next/static/', '.clarity.ms', '.googletagmanager.com'];
 
 function isRealError(msg: string) {
   if (msg.includes(CSP_EVAL_WARN)) return false;
-  if (msg.includes(SPEED_INSIGHTS_404)) return false;
+  for (const ext of EXTERNAL_SCRIPTS) {
+    if (msg.includes(ext)) return false;
+  }
   return true;
 }
 

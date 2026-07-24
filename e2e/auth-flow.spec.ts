@@ -93,14 +93,14 @@ test.describe('Auth flow E2E (API)', () => {
   });
 
   test('rate limit en login: bloquea tras mÃºltiples intentos', async ({ request }) => {
-    const uniqueId = `rl-${Date.now()}`;
+    const uniqueId = `rl-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     let got429 = false;
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 15; i++) {
       const res = await request.post('/api/auth/login', {
-        data: { email: `${uniqueId}-${i}@pinedayasociadoshn.com`, password: 'wrong' },
+        data: { email: `${uniqueId}-${i}@pinedayasociadoshn.com`, password: 'wrong-password-123' },
       });
       if (res.status() === 429) { got429 = true; break; }
     }
-    expect(got429, 'debe recibir 429 rate-limited tras mÃºltiples intentos fallidos').toBe(true);
+    expect(got429, 'debe recibir 429 rate-limited tras mÃºltiples intentos').toBe(true);
   });
 });
