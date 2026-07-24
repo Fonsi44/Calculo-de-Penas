@@ -135,7 +135,6 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         fbPixelId={site.fbPixelId}
         clarityId={site.clarityId}
         analyticsEnabled={
-          process.env.NEXT_PUBLIC_ANALYTICS_TEST === 'true' ||
           (process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV !== 'preview')
         }
       />

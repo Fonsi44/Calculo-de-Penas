@@ -96,6 +96,16 @@ export function trackLeadGenerated(..._args: unknown[]) {
   trackEvent('lead_generated', { value: 1 });
 }
 
+/** Evento de conversión: formulario de consulta enviado con éxito.
+ *  Debe marcarse como evento clave en GA4 (ver informe Fase 1).
+ *  Se dispara solo tras respuesta exitosa del servidor (HTTP 200).
+ *  No incluye datos personales. Solo parámetros seguros:
+ *  - motivo: categoría seleccionada en el formulario
+ *  - ruta: página desde la que se envió */
+export function trackContactFormSubmit(params?: { motivo?: string; ruta?: string }) {
+  trackEvent('contact_form_submit', { value: 1, ...(params ? { motivo: params.motivo?.slice(0, 40), ruta: params.ruta?.slice(0, 100) } : {}) });
+}
+
 export function trackEmailClick(..._args: unknown[]) {
   trackEvent('email_click', { value: 1 });
 }

@@ -24,23 +24,6 @@ declare global {
   }
 }
 
-/**
- * Retrasa la descarga del script externo de gtag.js (157 KiB gzip) fuera de
- * la ventana de auditoría de Lighthouse sin perder eventos: la cola
- * `dataLayer` (definida por el inline `ga4-init`) encola cualquier
- * `gtag('event', ...)` previo a la carga real, y gtag.js los procesa al
- * llegar. El disparador es la primera interacción del usuario (mousemove,
- * scroll, click, keydown, touchstart) o un timeout de 5 s, lo que ocurra
- * primero. `requestIdleCallback` no basta: Lighthouse captura el treemap
- * durante toda la ventana, así que un script diferido post-`load` igual
- * se descarga y computa dentro del periodo de auditoría.
- *
- * El timeout (5 s) actúa como red de seguridad para usuarios que readean
- * la página sin interactuar: aun así reciben page_view (a ~5 s). Lighthouse
- * no interactúa con la página, y los 5 s reales ≈ 20 s bajo throttling 4x
- * del laboratorio, fuera de su ventana típica, por lo que gtag.js no entra
- * en el treemap de la auditoría.
- */
 const GTAG_DEFER_TIMEOUT_MS = 5000;
 const GTAG_INTERACTION_EVENTS = ['mousemove', 'scroll', 'click', 'keydown', 'touchstart'] as const;
 
@@ -63,22 +46,19 @@ export function AnalyticsScripts({
   const consentSnapshot = useSyncExternalStore(subscribeConsent, getConsentSnapshot, () => null);
   const consent = useMemo(() => parseConsentSnapshot(consentSnapshot), [consentSnapshot]);
 
-  // GTM reemplaza la carga directa de gtag.js cuando está presente: el
-  // contenedor gestiona GA4 y cualquier otra etiqueta desde la UI de GTM.
   const analyticsGranted = consent?.analytics === true;
   const validGtmId = analyticsEnabled && analyticsGranted && isValidGtmId(gtmId) ? gtmId : null;
   const validGaId = analyticsEnabled && analyticsGranted && isValidGaMeasurementId(gaId) ? gaId : null;
   const useGtm = Boolean(validGtmId);
   const effectiveGaId = useGtm ? null : validGaId;
 
-  // SEO CTA click tracker (Fase 3)
+  // SEO CTA click tracker
   useEffect(() => {
     function handleGlobalClick(e: MouseEvent) {
       const target = e.target as HTMLElement;
       if (!target || !target.closest) return;
       const el = target.closest('[data-event-name]');
       if (!el) return;
-      
       const eventName = el.getAttribute('data-event-name');
       if (eventName) {
         trackEvent(eventName, {
@@ -92,20 +72,16 @@ export function AnalyticsScripts({
         });
       }
     }
-    
     document.addEventListener('click', handleGlobalClick);
     return () => document.removeEventListener('click', handleGlobalClick);
   }, []);
 
+  // Clarity lazy load
   useEffect(() => {
     if (!analyticsEnabled || !analyticsGranted || !clarityId) return;
     if (typeof window === 'undefined') return;
-    // Carga vía snippet oficial (evita empaquetar el SDK npm en el bundle
-    // del cliente). Defensivo: si ya se inicializó, no reinyecta.
     if (window.clarity) return;
     try {
-      /* Carga del snippet oficial de Microsoft Clarity (lazy).
-         Reemplaza al paquete npm @microsoft/clarity para no inflar el bundle. */
       const clarity = function (...args: unknown[]) {
         clarity.q = clarity.q || [];
         clarity.q.push(args);
@@ -116,15 +92,10 @@ export function AnalyticsScripts({
       s.src = `https://www.clarity.ms/tag/${clarityId}`;
       const x = document.getElementsByTagName('script')[0];
       x.parentNode?.insertBefore(s, x);
-    } catch {
-      /* silencioso */
-    }
+    } catch { /* silencioso */ }
   }, [analyticsEnabled, analyticsGranted, clarityId]);
 
-  // Carga diferida del script externo gtag.js (interaction + timeout).
-  // No reinyecta si ya se cargó (p.ej. tras navegación SPA). Las rutas
-  // excluidas no montan nada (el early return de más abajo ya lo impide,
-  // pero este efecto no corre en ellas porque el JSX retorna null antes).
+  // Deferred gtag.js external script load (interaction + adaptive timeout)
   useEffect(() => {
     if (!effectiveGaId) return;
     if (!pathname || isAnalyticsExcludedPath(pathname)) return;
@@ -133,6 +104,15 @@ export function AnalyticsScripts({
     const src = `https://www.googletagmanager.com/gtag/js?id=${effectiveGaId}`;
     let fired = false;
 
+    const isMobile = typeof navigator !== 'undefined' && (
+      /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    );
+    const conn = (typeof navigator !== 'undefined' && 'connection' in navigator)
+      ? (navigator as Navigator & { connection?: { effectiveType?: string } }).connection?.effectiveType
+      : undefined;
+    const isSlowConnection = conn === 'slow-2g' || conn === '2g';
+    const adaptiveTimeout = isSlowConnection ? 2000 : isMobile ? 3000 : GTAG_DEFER_TIMEOUT_MS;
+
     function inject() {
       if (fired) return;
       fired = true;
@@ -140,9 +120,6 @@ export function AnalyticsScripts({
       for (const ev of GTAG_INTERACTION_EVENTS) {
         window.removeEventListener(ev, inject, true);
       }
-      // Una navegación SPA puede volver a ejecutar este efecto antes de que
-      // React estabilice el pathname. Si gtag.js ya está en el documento, no
-      // se vuelve a descargar ni a inicializar.
       if (document.querySelector(`script[src="${src}"]`)) return;
       const s = document.createElement('script');
       s.async = true;
@@ -150,7 +127,7 @@ export function AnalyticsScripts({
       document.head.appendChild(s);
     }
 
-    const timer = window.setTimeout(inject, GTAG_DEFER_TIMEOUT_MS);
+    const timer = window.setTimeout(inject, adaptiveTimeout);
 
     for (const ev of GTAG_INTERACTION_EVENTS) {
       window.addEventListener(ev, inject, { once: true, passive: true, capture: true });
@@ -164,40 +141,53 @@ export function AnalyticsScripts({
     };
   }, [effectiveGaId, pathname]);
 
+  // Estrategia ÚNICA de page_view:
+  //   - send_page_view: false en el config (no se envía page_view automático)
+  //   - Primera carga: se envía page_view manual desde el efecto
+  //   - Navegación SPA: se envía page_view manual con el pathname anterior como referrer
+  //   - Re-render con misma ruta: cero eventos
+  //   - El título se captura después de requestAnimationFrame para esperar a metadata
+  function sendPageView(pagePath: string, referrer: string) {
+    const w = window;
+    if (!w.gtag) return;
+    w.gtag('event', 'page_view', {
+      page_path: pagePath,
+      page_location: w.location.href,
+      page_title: document.title,
+      page_referrer: referrer,
+    });
+  }
+
   useEffect(() => {
     if (!effectiveGaId) return;
     if (!pathname || isAnalyticsExcludedPath(pathname)) return;
-    if (!window.gtag) return;
 
     const prev = prevPath.current;
 
     if (!initialised.current) {
       initialised.current = true;
-      // page_view automático inicial: gtag('config', gaId) con send_page_view:true
-      // ya envió el primer page_view al montar. Lo reportamos como diagnóstico.
-      debugAnalytics('enabled', {
+      // Primera carga: page_view manual con document.referrer (origen externo real)
+      // El efecto se ejecuta tras el commit de React, cuando document.title ya está actualizado
+      sendPageView(pathname, document.referrer);
+      debugAnalytics('page_view (first)', {
         pathname,
-        gaId: maskMeasurementId(effectiveGaId),
-        pageView: 'auto (config)',
+        referrer: document.referrer,
+        title: document.title,
       });
-    }
-
-    if (prev && prev !== pathname) {
-      // GA4 Enhanced Measurement observa los cambios de History API de Next
-      // y emite el page_view SPA. No se envía otro evento manual: hacerlo
-      // duplica la ruta cuando la medición mejorada está activa.
-      debugAnalytics('page_view (GA4 history)', {
+    } else if (prev && prev !== pathname) {
+      // Navegación SPA: page_view manual con la ruta anterior como referrer
+      sendPageView(pathname, prev);
+      debugAnalytics('page_view (spa)', {
         pathname,
         from: prev,
+        title: document.title,
       });
     }
 
     prevPath.current = pathname;
   }, [effectiveGaId, pathname]);
 
-  // Ruta excluida: no se monta ningún script de GA4/GTM y no se disparan hits.
-  // El log de diagnóstico se emite aquí (lado render) para que sea visible aun
-  // cuando window.gtag no existiera.
+  // Ruta excluida: no se monta nada
   if (!pathname || isAnalyticsExcludedPath(pathname)) {
     debugAnalytics('skipped', {
       pathname: pathname ?? '(empty)',
@@ -208,39 +198,26 @@ export function AnalyticsScripts({
 
   return (
     <>
-      {/* Google Consent Mode v2 — default denegado hasta que el usuario
-          consienta. Los scripts de GA4/FB Pixel respetan estos flags.
-          GDPR/ePrivacy: necesario para tráfico europeo (/hondurenos-en-espana).
-          Sin banner de consentimiento, las cookies quedan denegadas pero las
-          mediciones sin cookies (modeless/analytics) siguen funcionando. */}
+      {/* Google Consent Mode v2 — default denegado */}
       {analyticsEnabled && (gaId || gtmId || fbPixelId) && (
         <Script id="consent-mode-default" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'denied',security_storage:'granted',wait_for_update:500});`}
         </Script>
       )}
 
-      {/* Google Tag Manager (opcional). Si NEXT_PUBLIC_GTM_ID está configurado,
-          GTM gestiona GA4 y el resto de etiquetas; no se carga gtag.js directo. */}
+      {/* Google Tag Manager */}
       {useGtm && validGtmId && (
         <Script id="gtm-loader" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${validGtmId}');`}
         </Script>
       )}
 
-      {/* GA4 directo (gtag.js). Solo cuando NO hay GTM configurado.
-          El script externo lo inyecta el useEffect de carga diferida
-          (interaction + timeout 5s) definido arriba; aquí solo queda el
-          inline `ga4-init` que define `dataLayer` + stub `gtag` para encolar
-          eventos previos a la carga real, y dispara el `config` inicial. */}
+      {/* GA4 directo — send_page_view: false para control manual completo */}
       {effectiveGaId && (
         <Script id="ga4-init" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${effectiveGaId}',{send_page_view:true});`}
+          {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${effectiveGaId}',{send_page_view:false});`}
         </Script>
       )}
-
-      {/* Facebook Pixel permanece deshabilitado: el modelo de consentimiento
-          actual no concede publicidad y no debe cargarse con un permiso de
-          analítica. La variable se conserva por compatibilidad de config. */}
     </>
   );
 }

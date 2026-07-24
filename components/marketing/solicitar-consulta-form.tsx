@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail } from 'lucide-react';
-import { trackLeadGenerated } from '@/lib/analytics';
+import { trackContactFormSubmit, trackLeadGenerated } from '@/lib/analytics';
 import { TurnstileWidget } from './turnstile-widget';
 
 const MOTIVOS = [
@@ -61,6 +61,7 @@ export function SolicitarConsultaForm() {
       }
       setStatus('success');
       trackLeadGenerated('consulta_form');
+      trackContactFormSubmit({ motivo: form.motivo, ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
     } catch (e) {
       setStatus('error');
       setErr(e instanceof Error ? e.message : 'Error desconocido.');
