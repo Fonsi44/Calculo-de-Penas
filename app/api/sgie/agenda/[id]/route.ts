@@ -7,7 +7,7 @@ import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { logSgie } from '@/lib/sgie/auditoria-sgie';
 import { accessService, assertSgieAccess } from '@/lib/access-service';
-import { ConflictError, ForbiddenError, NotFoundError, ValidationError } from '@/lib/http-errors';
+import { ConflictError, ForbiddenError, NotFoundError } from '@/lib/http-errors';
 
 const schema = z.object({
   version: z.number().int().min(1),
