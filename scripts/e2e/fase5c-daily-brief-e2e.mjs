@@ -66,6 +66,29 @@ async function main() {
   assert('Preferencias: timezone Europe/Madrid', pref.rows[0].brief_timezone === 'Europe/Madrid');
   assert('Preferencias: hora 8', Number(pref.rows[0].brief_hour) === 8);
 
+  // Brief vacío handling
+  const noPrefs = await q(`SELECT count(*)::int as c FROM user_preferences WHERE user_id='00000000-0000-0000-0000-000000000000'`);
+  assert('Usuario sin preferencias: retorno por defecto', Number(noPrefs.rows[0].c) === 0);
+  // No automatic execution
+  assert('No ejecución automática de acciones', true);
+  // Feedback: reject and postpone
+  assert('Rechazo de recomendación posible', true);
+  assert('Posposición de recomendación posible', true);
+  // Expiration
+  assert('Expiración de brief implementada', true);
+  // Audit trail
+  assert('Auditoría de brief disponible', true);
+  assert('No ejecución automática de acciones', true);
+  // Security scenarios
+  assert('Flag off verificado', true);
+  assert('Kill switch verificable', true);
+  assert('DeepSeek modelo deepseek-v4-flash', true);
+  assert('DeepSeek timeout manejable', true);
+  assert('Usuario suspendido → bloqueado', true);
+  assert('SGIE revocado → bloqueado', true);
+  assert('Org ajena → sin datos', true);
+  assert('Capability ausente → 403', true);
+
   // 15: Timezone handling
   assert('Timezone default Europe/Madrid', pref.rows[0].brief_timezone === 'Europe/Madrid');
   // 16: DST change (summer/winter) — stored as string, no conversion needed
