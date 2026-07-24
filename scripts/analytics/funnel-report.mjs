@@ -23,7 +23,7 @@ const PROPERTY_ID = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
 const SITE_URL = process.env.GOOGLE_SEARCH_CONSOLE_SITE_URL;
 const property = `properties/${PROPERTY_ID}`;
 
-function getAuth() {
+async function getAuth() {
   const { google } = await import('googleapis');
   const auth = new google.auth.OAuth2(
     process.env.OAUTH_CLIENT_ID,
@@ -31,10 +31,12 @@ function getAuth() {
     'http://localhost:3000'
   );
   auth.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
+  await auth.getAccessToken();
   return auth;
 }
 
 async function ga4Query(auth, metrics, dimensions = [], dateRange = { start: '28daysAgo', end: 'yesterday' }) {
+  const { google } = await import('googleapis');
   const data = google.analyticsdata({ version: 'v1beta', auth });
   const limit = 10000;
   const rows = [];
