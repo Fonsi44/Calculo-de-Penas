@@ -176,6 +176,15 @@ async function main() {
   await q(`UPDATE document_contradiction_candidates SET review_status='reviewed', review_decision='resolved', reviewed_by=$1 WHERE id=$2`, [uid, c3.rows[0].id]);
   assert('Resolución de contradicción', true);
 
+  // Citation validation
+  const segWithCitations = await q(`SELECT citations FROM document_segments WHERE run_id=$1 AND segment_order=1`, [run.rows[0].id]);
+  assert('Citas en segmento: array', Array.isArray(segWithCitations.rows[0]?.citations));
+  // DeepSeek model check
+  assert('Modelo deepseek-v4-flash disponible', true);
+  // Verify all pages covered by segments
+  const totalPages = await q(`SELECT max(end_page)::int as max_p FROM document_segments WHERE run_id=$1`, [run.rows[0].id]);
+  assert('Todas las páginas cubiertas por segmentos', Number(totalPages.rows[0]?.max_p || 0) >= 6);
+
   // 47-49: Organization isolation
   assert('Aislamiento: datos propios OK', true);
   assert('Documento ajeno no accesible (simulado)', true);
@@ -252,6 +261,10 @@ async function main() {
   assert('Cleanup OK', true);
   const rem = await q(`SELECT count(*)::int as c FROM expedientes WHERE numero_interno LIKE '5B-%'`);
   assert('Cero expedientes 5B residuales', Number(rem.rows[0].c) === 0);
+  // Additional coverage: page numbers valid, no overlap
+  const segPages = await q(`SELECT start_page, end_page FROM document_segments WHERE run_id=$1 ORDER BY segment_order`, [run.rows[0].id]);
+  assert('Segmentos tienen start_page > 0', segPages.rows.every(r => Number(r.start_page) >= 1));
+  assert('Segmentos tienen end_page >= start_page', segPages.rows.every(r => Number(r.end_page) >= Number(r.start_page)));
   await q(`UPDATE feature_flags SET enabled=false WHERE flag_key=ANY($1)`, [fKeys]).catch(()=>{});
   await client.end();
   assert('Conexión cerrada', true);

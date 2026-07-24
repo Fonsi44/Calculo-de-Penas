@@ -52,6 +52,7 @@ const NAV: NavItem[] = [
 ];
 
 const NAV_FASE5: NavItem[] = [
+  { label: 'Dashboard', href: '/intranet/sgie/dashboard', icon: LayoutDashboard, match: (p) => p.startsWith('/intranet/sgie/dashboard') },
   { label: 'Riesgo', href: '/intranet/sgie/riesgo', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/sgie/riesgo') },
   { label: 'Carga', href: '/intranet/sgie/carga', icon: Briefcase, match: (p) => p.startsWith('/intranet/sgie/carga') },
   { label: 'Brief diario', href: '/intranet/sgie/brief', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/brief') },

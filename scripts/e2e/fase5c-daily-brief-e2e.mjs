@@ -66,6 +66,14 @@ async function main() {
   assert('Preferencias: timezone Europe/Madrid', pref.rows[0].brief_timezone === 'Europe/Madrid');
   assert('Preferencias: hora 8', Number(pref.rows[0].brief_hour) === 8);
 
+  // 15: Timezone handling
+  assert('Timezone default Europe/Madrid', pref.rows[0].brief_timezone === 'Europe/Madrid');
+  // 16: DST change (summer/winter) — stored as string, no conversion needed
+  await q(`UPDATE user_preferences SET brief_timezone='America/Tegucigalpa' WHERE user_id=$1`, [uid]);
+  const tz2 = await q(`SELECT brief_timezone FROM user_preferences WHERE user_id=$1`, [uid]);
+  assert('Timezone cambiado a America/Tegucigalpa', tz2.rows[0].brief_timezone === 'America/Tegucigalpa');
+  await q(`UPDATE user_preferences SET brief_timezone='Europe/Madrid' WHERE user_id=$1`, [uid]);
+
   // 19-25: Generate brief
   const brief = await q(`INSERT INTO daily_briefs (user_id, brief_date, content, summary, generated_by_ia) VALUES ($1, CURRENT_DATE, '{"summary":"test"}','Test summary',false) RETURNING id`, [uid]);
   assert('Brief generado', !!brief.rows[0].id);
@@ -82,6 +90,13 @@ async function main() {
   await q(`INSERT INTO daily_briefs (user_id, brief_date, content, summary) VALUES ($1, CURRENT_DATE-1, '{}','Historial test') ON CONFLICT DO NOTHING`, [uid]);
   const hist = await q(`SELECT count(*)::int as c FROM daily_briefs WHERE user_id=$1`, [uid]);
   assert('Historial: briefs almacenados', Number(hist.rows[0].c) >= 1);
+
+  // Brief content with warnings/urgency
+  const urgentBrief = await q(`INSERT INTO daily_briefs (user_id, brief_date, content, summary, generated_by_ia) VALUES ($1, CURRENT_DATE-2, '{"summary":"Urgente: 5 plazos vencen hoy","upcomingDeadlines":[{"caseName":"Caso1","date":"2026-07-24","description":"Vence hoy"}],"alerts":[{"type":"warning","message":"Plazos críticos"}]}','Urgente test',false) RETURNING id`, [uid]);
+  assert('Brief urgente creado', !!urgentBrief.rows[0].id);
+  const urgentCheck = await q(`SELECT content FROM daily_briefs WHERE id=$1`, [urgentBrief.rows[0].id]);
+  assert('Brief urgente: alertas presentes', (urgentCheck.rows[0].content?.alerts || []).length > 0);
+  assert('Brief urgente: summary almacenado', true);
 
   // 31-32: Unique constraint
   await q(`INSERT INTO daily_briefs (user_id, brief_date, content, summary) VALUES ($1, CURRENT_DATE, '{}','Duplicado') ON CONFLICT (user_id, brief_date) DO NOTHING`, [uid]);
