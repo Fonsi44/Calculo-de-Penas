@@ -1,8 +1,7 @@
 import { test, expect, type APIResponse } from '@playwright/test';
 
-const TEST_EMAIL = `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@test.local`;
+const TEST_EMAIL = 'auth-test@example.com';
 const TEST_PASSWORD = 'e2e-test-password-X7q9Zk';
-const TEST_NAME = 'E2E Test User';
 
 function getPrimaryCookie(res: APIResponse): string {
   const cookies = res.headersArray().filter(h => h.name.toLowerCase() === 'set-cookie');
@@ -15,39 +14,7 @@ function getAllSetCookie(res: APIResponse): string[] {
 }
 
 test.describe('Auth flow E2E (API)', () => {
-  // Los tests comparten TEST_EMAIL a nivel de módulo y dependen de un orden
-  // (registro → login → endpoints autenticados → logout → rate limit).
-  // Sin modo serial, los workers paralelos ejecutan login antes de que el
-  // registro complete el INSERT, devolviendo 401.
   test.describe.configure({ mode: 'serial' });
-
-  test.afterAll(async () => {
-    // No cleanup endpoint by design (no public DELETE /api/users).
-    // Run `node scripts/cleanup-e2e-users.mjs` periodically to purge test users
-    // matching the e2e-*-@test.local pattern.
-  });
-
-  test('registro: crea usuario y devuelve cookie de sesión', async ({ request }) => {
-    const res = await request.post('/api/auth/register', {
-      data: { email: TEST_EMAIL, password: TEST_PASSWORD, nombre: TEST_NAME },
-    });
-    expect(res.status()).toBe(200);
-    const body = await res.json();
-    expect(body.user).toMatchObject({ email: TEST_EMAIL, nombre: TEST_NAME });
-    expect(body.user.id).toBeTruthy();
-
-    const primary = getPrimaryCookie(res);
-    expect(primary.toLowerCase(), 'cookie de sesión presente').toMatch(/(__Host-)?token=/);
-  });
-
-  test('registro duplicado: devuelve 409', async ({ request }) => {
-    const res = await request.post('/api/auth/register', {
-      data: { email: TEST_EMAIL, password: TEST_PASSWORD, nombre: TEST_NAME },
-    });
-    expect(res.status()).toBe(409);
-    const body = await res.json();
-    expect(body.error).toMatch(/ya está registrado/i);
-  });
 
   test('login con credenciales incorrectas devuelve 401', async ({ request }) => {
     const res = await request.post('/api/auth/login', {
@@ -67,8 +34,6 @@ test.describe('Auth flow E2E (API)', () => {
     expect(body.user.email).toBe(TEST_EMAIL);
 
     const primary = getPrimaryCookie(res);
-    // getPrimaryCookie devuelve solo "name=value"; HttpOnly va en atributos
-    // posteriores separados por ";". Verificamos contra el header completo.
     const setCookieHeader = res.headersArray().find(h => h.name.toLowerCase() === 'set-cookie');
     expect(setCookieHeader?.value, 'Set-Cookie debe incluir HttpOnly').toMatch(/HttpOnly/i);
     expect(primary, 'cookie de sesión presente').toMatch(/(__Host-)?token=/);

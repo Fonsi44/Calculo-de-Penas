@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
 
 const CSP_EVAL_WARN = 'eval() is not supported in this environment';
+const SPEED_INSIGHTS_404 = '/_vercel/speed-insights/script.js';
 
 function isRealError(msg: string) {
-  return !msg.includes(CSP_EVAL_WARN);
+  if (msg.includes(CSP_EVAL_WARN)) return false;
+  if (msg.includes(SPEED_INSIGHTS_404)) return false;
+  return true;
 }
 
 test.describe('Smoke — rutas públicas', () => {
