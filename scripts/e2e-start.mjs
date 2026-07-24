@@ -13,7 +13,8 @@ const DATABASE_URL = process.env.DATABASE_URL ?? 'postgresql://placeholder:place
   const dbName = url.pathname.replace(/^\//, '').toLowerCase();
   const local = host === 'localhost' || host === '127.0.0.1' || host === '::1';
   const namedTest = /(^|[-_])test([-_]|$)|_test$|test_/.test(dbName);
-  if (!local && !namedTest) throw new Error('DATABASE_URL de E2E no es una base aislada autorizada');
+  const namedStaging = /^(staging|preview)[_-]/.test(dbName) || /[_-](staging|preview)$/.test(dbName);
+  if (!local && !namedTest && !namedStaging) throw new Error('DATABASE_URL de E2E no es una base aislada autorizada');
 }
 
 const env = {
