@@ -5,7 +5,7 @@ import { CAPABILITIES, defaultCapabilitiesForRole } from '../lib/access-service'
 import { buildAgendaQuery, visibleAgendaRange } from '../lib/sgie/agenda-query';
 import { generateInvitationToken, hashInvitationToken } from '../lib/invitations';
 import { POST as register } from '../app/api/auth/register/route';
-import { resolveEventMutationScope } from '../app/api/sgie/agenda/[id]/route';
+import { resolveEventMutationScope } from '@/lib/agenda-helpers';
 
 describe('Fase 1 — invitaciones', () => {
   it('genera tokens criptográficos distintos y almacenable solo por hash', () => {

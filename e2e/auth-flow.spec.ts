@@ -1,6 +1,6 @@
 import { test, expect, type APIResponse } from '@playwright/test';
 
-const TEST_EMAIL = 'auth-test@example.com';
+const TEST_EMAIL = 'auth-test@pinedayasociadoshn.com';
 const TEST_PASSWORD = 'e2e-test-password-X7q9Zk';
 
 function getPrimaryCookie(res: APIResponse): string {
@@ -92,15 +92,15 @@ test.describe('Auth flow E2E (API)', () => {
     expect(clearsSession, 'logout debe emitir Set-Cookie con Max-Age=0').toBe(true);
   });
 
-  test('rate limit en login: bloquea tras 5 intentos', async ({ request }) => {
-    for (let i = 0; i < 5; i++) {
-      await request.post('/api/auth/login', {
-        data: { email: 'nonexistent@test.local', password: 'wrong' },
+  test('rate limit en login: bloquea tras mÃºltiples intentos', async ({ request }) => {
+    const uniqueId = `rl-${Date.now()}`;
+    let got429 = false;
+    for (let i = 0; i < 12; i++) {
+      const res = await request.post('/api/auth/login', {
+        data: { email: `${uniqueId}-${i}@pinedayasociadoshn.com`, password: 'wrong' },
       });
+      if (res.status() === 429) { got429 = true; break; }
     }
-    const res = await request.post('/api/auth/login', {
-      data: { email: 'nonexistent@test.local', password: 'wrong' },
-    });
-    expect([429, 401], 'sexto intento debe ser rate-limited o seguir 401 si el test corre antes de que se acumule').toContain(res.status());
+    expect(got429, 'debe recibir 429 rate-limited tras mÃºltiples intentos fallidos').toBe(true);
   });
 });

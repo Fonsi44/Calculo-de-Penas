@@ -2,7 +2,6 @@ import { ImageResponse } from 'next/og';
 import { site } from '@/lib/site';
 
 export const runtime = 'edge';
-export const contentType = 'image/png';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
