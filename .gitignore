@@ -347,3 +347,4 @@ _chat_*.png
 auditoriablog_*.md
 .zcode/
 *.tmp
+.neon/
