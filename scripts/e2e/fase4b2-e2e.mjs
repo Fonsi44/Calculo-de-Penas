@@ -303,13 +303,14 @@ async function main() {
   for (const id of created.signers) { const r = await POOL.query(`DELETE FROM signature_package_signers WHERE id=$1`, [id]); eliminados += (r.rowCount ?? 0); }
   for (const id of created.items) { const r = await POOL.query(`DELETE FROM signature_package_items WHERE id=$1`, [id]); eliminados += (r.rowCount ?? 0); }
   for (const id of created.packages) { const r = await POOL.query(`DELETE FROM signature_packages WHERE id=$1`, [id]); eliminados += (r.rowCount ?? 0); }
-  const dlAudit = await POOL.query(`DELETE FROM auditoria_eventos WHERE recurso='signature_package' AND recurso_id=ANY($1::uuid[])`, [created.packages]); eliminados += (dlAudit.rowCount ?? 0);
+  const dlAudit = await POOL.query(`DELETE FROM auditoria_eventos WHERE recurso='signature_package' AND recurso_id=ANY($1::text[])`, [created.packages]); eliminados += (dlAudit.rowCount ?? 0);
   const dlOut = await POOL.query(`DELETE FROM outbox_events WHERE aggregate_type='signature_package' AND aggregate_id IN (${created.packages.map((_,i)=>`$${i+1}`).join(',')})`, created.packages); eliminados += (dlOut.rowCount ?? 0);
   const dlDocs = await POOL.query(`DELETE FROM documentos_expediente WHERE expediente_id=ANY($1::uuid[])`, [created.expedientes]); eliminados += (dlDocs.rowCount ?? 0);
   const dlAsig = await POOL.query(`DELETE FROM expediente_asignaciones WHERE expediente_id=ANY($1::uuid[])`, [created.expedientes]); eliminados += (dlAsig.rowCount ?? 0);
   const dlExp = await POOL.query(`DELETE FROM expedientes WHERE id=ANY($1::uuid[])`, [created.expedientes]); eliminados += (dlExp.rowCount ?? 0);
   const dlProc = await POOL.query(`DELETE FROM tipos_procedimiento WHERE id=ANY($1::uuid[])`, [created.tiposProc]); eliminados += (dlProc.rowCount ?? 0);
   const dlFlags = await POOL.query(`DELETE FROM feature_flags WHERE id=ANY($1::uuid[])`, [created.flags]); eliminados += (dlFlags.rowCount ?? 0);
+  const dlRoles = await POOL.query(`DELETE FROM usuarios_roles WHERE usuario_id=ANY($1::uuid[])`, [created.usuarios]); eliminados += (dlRoles.rowCount ?? 0);
   const dlUsr = await POOL.query(`DELETE FROM usuarios WHERE id=ANY($1::uuid[])`, [created.usuarios]); eliminados += (dlUsr.rowCount ?? 0);
 
   console.log(`   🗑️  ${eliminados} filas eliminadas.`);

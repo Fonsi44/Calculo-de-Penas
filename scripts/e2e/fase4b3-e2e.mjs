@@ -290,9 +290,9 @@ async function main() {
   // Cleanup
   console.log('\n🧹 Limpiando fixtures...');
   let elim = 0;
-  for (const k of ['artifacts','events','envSigners','envelopes','pkgSigners','items','packages','documentos','asignaciones','expedientes','tiposProc','flags','usuarios']) {
+  for (const k of ['artifacts','events','envSigners','envelopes','pkgSigners','items','packages','riskEvals','workloads','auditEvents','documentos','asignaciones','expedientes','tiposProc','flags','usuarios']) {
     const ids = created[k];
-    if (ids.length === 0) continue;
+    if (!ids || ids.length === 0) continue;
     let s = '';
     if (k === 'artifacts') s = `DELETE FROM signature_artifacts WHERE id=ANY($1::uuid[])`;
     else if (k === 'events') s = `DELETE FROM signature_events WHERE id=ANY($1::uuid[])`;
@@ -301,9 +301,15 @@ async function main() {
     else if (k === 'pkgSigners') s = `DELETE FROM signature_package_signers WHERE id=ANY($1::uuid[])`;
     else if (k === 'items') s = `DELETE FROM signature_package_items WHERE id=ANY($1::uuid[])`;
     else if (k === 'packages') s = `DELETE FROM signature_packages WHERE id=ANY($1::uuid[])`;
+    else if (k === 'riskEvals') s = `DELETE FROM risk_evaluations WHERE expediente_id=ANY($1::uuid[])`;
+    else if (k === 'workloads') s = `DELETE FROM workload_snapshots WHERE user_id=ANY($1::uuid[])`;
+    else if (k === 'auditEvents') s = `DELETE FROM auditoria_eventos WHERE recurso_id=ANY($1::text[])`;
     else if (k === 'documentos') s = `DELETE FROM documentos_expediente WHERE expediente_id=ANY($1::uuid[])`;
     else if (k === 'asignaciones') s = `DELETE FROM expediente_asignaciones WHERE expediente_id=ANY($1::uuid[])`;
     else if (k === 'expedientes') s = `DELETE FROM expedientes WHERE id=ANY($1::uuid[])`;
+    else if (k === 'expByPattern') s = `DELETE FROM expedientes WHERE numero_interno LIKE '${TAG}-%'`;
+    else if (k === 'eventsTable') s = `DELETE FROM events WHERE resource_id=ANY($1::uuid[])`;
+    else if (k === 'riskEvals2') s = `DELETE FROM risk_evaluations WHERE expediente_id=ANY($1::uuid[])`;
     else if (k === 'tiposProc') s = `DELETE FROM tipos_procedimiento WHERE id=ANY($1::uuid[])`;
     else if (k === 'flags') s = `DELETE FROM feature_flags WHERE id=ANY($1::uuid[])`;
     else if (k === 'usuarios') s = `DELETE FROM usuarios WHERE id=ANY($1::uuid[])`;
@@ -312,7 +318,18 @@ async function main() {
   console.log(`   🗑️  ${elim} filas eliminadas (algunas FK pueden quedar por orden de cascada).`);
   const residEnv = await POOL.query(`SELECT count(*)::int as c FROM signature_envelopes WHERE signature_package_id=ANY($1::uuid[])`, [created.packages]);
   assert(residEnv.rows[0].c === 0, 'cero residuos en signature_envelopes');
-  const residExp = await POOL.query(`SELECT count(*)::int as c FROM expedientes WHERE numero_interno LIKE $1`, [`${TAG}-%`]);
+  // Force cleanup via LIKE pattern with individual table deletion
+  const likePat = `${TAG}-%`;
+  const expIds = (await POOL.query(`SELECT id FROM expedientes WHERE numero_interno LIKE $1`, [likePat]).catch(()=>({rows:[]}))).rows.map(r=>r.id);
+  if (expIds.length > 0) {
+    for (const tbl of ['signature_events','signature_envelope_signers','signature_envelopes','signature_package_signers','signature_package_items','signature_packages','events','risk_evaluations','workload_snapshots','auditoria_eventos','documentos_expediente','expediente_asignaciones','usuarios_roles']) {
+      for (const col of ['expediente_id','resource_id','recurso_id','signature_package_id']) {
+        try { await POOL.query(`DELETE FROM ${tbl} WHERE ${col}=ANY($1::uuid[])`, [expIds]); } catch {}
+      }
+    }
+    try { await POOL.query(`DELETE FROM expedientes WHERE id=ANY($1::uuid[])`, [expIds]); } catch {}
+  }
+  const residExp = await POOL.query(`SELECT count(*)::int as c FROM expedientes WHERE numero_interno LIKE $1`, [likePat]);
   assert(residExp.rows[0].c === 0, 'cero residuos en expedientes');
   await POOL.end();
   if (results.failed > 0) { console.error(`\n[FASE4B3-E2E] ❌ FALLÓ (${results.failed}).`); process.exit(1); }
