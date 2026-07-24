@@ -18,7 +18,7 @@ export default function KnowledgeAdminPage() {
   const [type, setType] = useState('norma');
   const [content, setContent] = useState('');
 
-  const fetchSources = () => {
+  const refreshSources = () => {
     setLoading(true);
     fetch('/api/admin/knowledge')
       .then(async r => { if (r.ok) setSources((await r.json()).sources || []); })
@@ -26,7 +26,12 @@ export default function KnowledgeAdminPage() {
       .finally(() => setLoading(false));
   };
 
-  useEffect(() => { fetchSources(); }, []);
+  useEffect(() => {
+    fetch('/api/admin/knowledge')
+      .then(async r => { if (r.ok) setSources((await r.json()).sources || []); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleCreate = async () => {
     if (!title.trim() || !content.trim()) return;
@@ -38,7 +43,7 @@ export default function KnowledgeAdminPage() {
       if (!resp.ok) throw new Error((await resp.json()).error);
       toast.success('Fuente creada');
       setShowCreate(false); setTitle(''); setContent('');
-      fetchSources();
+      refreshSources();
     } catch (e: unknown) { toast.danger(e instanceof Error ? e.message : 'Error'); }
   };
 
@@ -50,7 +55,7 @@ export default function KnowledgeAdminPage() {
       });
       if (!resp.ok) throw new Error((await resp.json()).error);
       toast.success(`"${action}" completado`);
-      fetchSources();
+      refreshSources();
     } catch (e: unknown) { toast.danger(e instanceof Error ? e.message : 'Error'); }
   };
 
