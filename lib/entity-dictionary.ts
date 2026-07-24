@@ -167,6 +167,42 @@ const legalConceptEntities: LinkableEntity[] = [
     anchor: 'liquidación laboral',
     weight: 3,
   },
+  {
+    pattern: /\bprescripci[oó]n de deudas\b/gi,
+    href: '/blog/derecho-civil/prescripcion-deudas-plazos-honduras',
+    anchor: 'prescripción de deudas',
+    weight: 4,
+  },
+  {
+    pattern: /\bcustodia de (hijos|menores)\b/gi,
+    href: '/blog/derecho-de-familia/custodia-hijos-honduras-juez',
+    anchor: 'custodia de hijos',
+    weight: 4,
+  },
+  {
+    pattern: /\bdivorcio\b/gi,
+    href: '/blog/derecho-de-familia/divorcio-honduras-guia-completa',
+    anchor: 'divorcio',
+    weight: 4,
+  },
+  {
+    pattern: /\bdaños y perjuicios\b/gi,
+    href: '/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras',
+    anchor: 'daños y perjuicios',
+    weight: 4,
+  },
+  {
+    pattern: /\bpoder notarial\b/gi,
+    href: '/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita',
+    anchor: 'poder notarial',
+    weight: 4,
+  },
+  {
+    pattern: /\bnaturalizaci[oó]n\b/gi,
+    href: '/blog/extranjeria-migracion/naturalizacion-nacionalidad-hondurena',
+    anchor: 'naturalización',
+    weight: 3,
+  },
 ];
 
 /**
