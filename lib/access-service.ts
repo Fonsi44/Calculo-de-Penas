@@ -31,6 +31,7 @@ export const CAPABILITIES = [
   'brief.read', 'brief.configure',
   'metrics.read',
   'portal.read',
+  'document_intelligence.read', 'document_intelligence.run', 'document_intelligence.review', 'document_intelligence.confirm', 'document_intelligence.manage',
   'settings.manage', 'audit.read',
 ] as const;
 

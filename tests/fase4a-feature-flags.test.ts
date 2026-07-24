@@ -219,8 +219,8 @@ describe('FeatureFlagService — validación de mutación', () => {
 });
 
 describe('FeatureFlagService — catálogo canónico', () => {
-  it('FLAG_KEYS tiene exactamente las 20 flags esperadas', () => {
-    expect(FLAG_KEYS).toHaveLength(20);
+  it('FLAG_KEYS tiene exactamente las 23 flags esperadas', () => {
+    expect(FLAG_KEYS).toHaveLength(23);
     expect(FLAG_KEYS).toContain('sgie.ai.classification');
     expect(FLAG_KEYS).toContain('sgie.copilot');
     expect(FLAG_KEYS).toContain('sgie.signature.sandbox');
@@ -229,6 +229,9 @@ describe('FeatureFlagService — catálogo canónico', () => {
     expect(FLAG_KEYS).toContain('sgie.workload.enabled');
     expect(FLAG_KEYS).toContain('sgie.daily_brief.enabled');
     expect(FLAG_KEYS).toContain('sgie.autonomy_metrics.enabled');
+    expect(FLAG_KEYS).toContain('sgie.document_segmentation.enabled');
+    expect(FLAG_KEYS).toContain('sgie.document_comparison.enabled');
+    expect(FLAG_KEYS).toContain('sgie.document_contradictions.enabled');
   });
 });
 

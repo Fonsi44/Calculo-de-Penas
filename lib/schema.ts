@@ -3270,3 +3270,165 @@ export const autonomyMetrics = pgTable('autonomy_metrics', {
 
 export type AutonomyMetric = typeof autonomyMetrics.$inferSelect;
 export type AutonomyMetricInsert = typeof autonomyMetrics.$inferInsert;
+
+// ─── Fase 5B — Document Segmentation Runs ─────────────────────────────
+export const documentSegmentationRuns = pgTable('document_segmentation_runs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  expedienteId: uuid('expediente_id').notNull(),
+  documentoId: uuid('documento_id').notNull(),
+  documentVersionId: varchar('document_version_id', { length: 100 }),
+  status: varchar('status', { length: 30 }).notNull().default('pending'),
+  provider: varchar('provider', { length: 50 }),
+  model: varchar('model', { length: 100 }),
+  algorithmVersion: varchar('algorithm_version', { length: 20 }).notNull().default('1.0'),
+  inputHash: varchar('input_hash', { length: 64 }),
+  idempotencyKey: varchar('idempotency_key', { length: 128 }).unique(),
+  confidence: integer('confidence').default(0),
+  startedAt: timestamp('started_at', { withTimezone: true }),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  error: text('error'),
+  requestedBy: uuid('requested_by'),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  expIdx: index('doc_seg_runs_exp_idx').on(table.expedienteId),
+  docIdx: index('doc_seg_runs_doc_idx').on(table.documentoId),
+  statusIdx: index('doc_seg_runs_status_idx').on(table.status),
+}));
+
+export type DocumentSegmentationRun = typeof documentSegmentationRuns.$inferSelect;
+export type DocumentSegmentationRunInsert = typeof documentSegmentationRuns.$inferInsert;
+
+// ─── Fase 5B — Document Segments ──────────────────────────────────────
+export const documentSegments = pgTable('document_segments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  runId: uuid('run_id').notNull(),
+  documentoId: uuid('documento_id').notNull(),
+  startPage: integer('start_page').notNull(),
+  endPage: integer('end_page').notNull(),
+  suggestedType: varchar('suggested_type', { length: 100 }),
+  suggestedTitle: text('suggested_title'),
+  signals: jsonb('signals').notNull().default(sql`'[]'::jsonb`),
+  citations: jsonb('citations').notNull().default(sql`'[]'::jsonb`),
+  confidence: integer('confidence').notNull().default(0),
+  requiresHumanReview: boolean('requires_human_review').notNull().default(true),
+  reviewStatus: varchar('review_status', { length: 30 }).notNull().default('pending'),
+  reviewedBy: uuid('reviewed_by'),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  correctedStartPage: integer('corrected_start_page'),
+  correctedEndPage: integer('corrected_end_page'),
+  correctedType: varchar('corrected_type', { length: 100 }),
+  reviewDecision: varchar('review_decision', { length: 30 }),
+  reviewMotivo: text('review_motivo'),
+  segmentOrder: integer('segment_order').notNull().default(0),
+  hash: varchar('hash', { length: 64 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  runRef: foreignKey({ columns: [table.runId], foreignColumns: [documentSegmentationRuns.id] }).onDelete('cascade'),
+  documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  runOrderUnique: unique('doc_segments_run_order_unique').on(table.runId, table.segmentOrder),
+  runIdx: index('doc_segments_run_idx').on(table.runId),
+  docIdx: index('doc_segments_doc_idx').on(table.documentoId),
+  reviewIdx: index('doc_segments_review_idx').on(table.reviewStatus),
+}));
+
+export type DocumentSegment = typeof documentSegments.$inferSelect;
+export type DocumentSegmentInsert = typeof documentSegments.$inferInsert;
+
+// ─── Fase 5B — Document Comparisons ──────────────────────────────────
+export const documentComparisons = pgTable('document_comparisons', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  expedienteId: uuid('expediente_id'),
+  sourceDocumentoId: uuid('source_documento_id').notNull(),
+  targetDocumentoId: uuid('target_documento_id').notNull(),
+  sourceVersionId: varchar('source_version_id', { length: 100 }),
+  targetVersionId: varchar('target_version_id', { length: 100 }),
+  sourceHash: varchar('source_hash', { length: 64 }),
+  targetHash: varchar('target_hash', { length: 64 }),
+  status: varchar('status', { length: 30 }).notNull().default('pending'),
+  summary: text('summary'),
+  confidence: integer('confidence').default(0),
+  requiresHumanReview: boolean('requires_human_review').notNull().default(true),
+  provider: varchar('provider', { length: 50 }),
+  model: varchar('model', { length: 100 }),
+  idempotencyKey: varchar('idempotency_key', { length: 128 }).unique(),
+  correlationId: varchar('correlation_id', { length: 64 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  sourceRef: foreignKey({ columns: [table.sourceDocumentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  targetRef: foreignKey({ columns: [table.targetDocumentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
+  expIdx: index('doc_comp_exp_idx').on(table.expedienteId),
+  srcIdx: index('doc_comp_src_idx').on(table.sourceDocumentoId),
+  tgtIdx: index('doc_comp_tgt_idx').on(table.targetDocumentoId),
+}));
+
+export type DocumentComparison = typeof documentComparisons.$inferSelect;
+export type DocumentComparisonInsert = typeof documentComparisons.$inferInsert;
+
+// ─── Fase 5B — Comparison Changes ────────────────────────────────────
+export const documentComparisonChanges = pgTable('document_comparison_changes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  comparisonId: uuid('comparison_id').notNull(),
+  changeType: varchar('change_type', { length: 50 }).notNull(),
+  pageSection: varchar('page_section', { length: 100 }),
+  textBefore: text('text_before'),
+  textAfter: text('text_after'),
+  evidence: text('evidence'),
+  importance: varchar('importance', { length: 30 }).default('medium'),
+  confidence: integer('confidence').default(0),
+  citations: jsonb('citations').notNull().default(sql`'[]'::jsonb`),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  comparisonRef: foreignKey({ columns: [table.comparisonId], foreignColumns: [documentComparisons.id] }).onDelete('cascade'),
+  compIdx: index('doc_changes_comp_idx').on(table.comparisonId),
+}));
+
+export type DocumentComparisonChange = typeof documentComparisonChanges.$inferSelect;
+export type DocumentComparisonChangeInsert = typeof documentComparisonChanges.$inferInsert;
+
+// ─── Fase 5B — Contradiction Candidates ──────────────────────────────
+export const documentContradictionCandidates = pgTable('document_contradiction_candidates', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  expedienteId: uuid('expediente_id'),
+  sourceDocumentoId: uuid('source_documento_id'),
+  sourceVersionId: varchar('source_version_id', { length: 100 }),
+  sourcePage: integer('source_page'),
+  sourceExcerpt: text('source_excerpt'),
+  relatedDocumentoId: uuid('related_documento_id'),
+  relatedVersionId: varchar('related_version_id', { length: 100 }),
+  relatedPage: integer('related_page'),
+  relatedExcerpt: text('related_excerpt'),
+  relatedFactId: varchar('related_fact_id', { length: 100 }),
+  classification: varchar('classification', { length: 50 }).notNull().default('possible_contradiction'),
+  description: text('description'),
+  confidence: integer('confidence').default(0),
+  limitations: jsonb('limitations').notNull().default(sql`'[]'::jsonb`),
+  reviewStatus: varchar('review_status', { length: 30 }).notNull().default('pending'),
+  reviewedBy: uuid('reviewed_by'),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  reviewDecision: varchar('review_decision', { length: 30 }),
+  reviewMotivo: text('review_motivo'),
+  comparisonId: uuid('comparison_id'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  sourceDocRef: foreignKey({ columns: [table.sourceDocumentoId], foreignColumns: [documentosExpediente.id] }).onDelete('set null'),
+  relatedDocRef: foreignKey({ columns: [table.relatedDocumentoId], foreignColumns: [documentosExpediente.id] }).onDelete('set null'),
+  compRef: foreignKey({ columns: [table.comparisonId], foreignColumns: [documentComparisons.id] }).onDelete('set null'),
+  expIdx: index('doc_contra_exp_idx').on(table.expedienteId),
+  reviewIdx: index('doc_contra_review_idx').on(table.reviewStatus),
+  classIdx: index('doc_contra_class_idx').on(table.classification),
+}));
+
+export type DocumentContradictionCandidate = typeof documentContradictionCandidates.$inferSelect;
+export type DocumentContradictionCandidateInsert = typeof documentContradictionCandidates.$inferInsert;

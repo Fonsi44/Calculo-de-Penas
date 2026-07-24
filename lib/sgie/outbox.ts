@@ -27,6 +27,9 @@ export const OUTBOX_EVENTS = {
   SIGNATURE_ENVELOPE_EXPIRED: 'signature.envelope.expired',
   RISK_EVALUATION_REQUESTED: 'risk.evaluation.requested',
   WORKLOAD_CALCULATION_REQUESTED: 'workload.calculation.requested',
+  DOCUMENT_SEGMENTATION_REQUESTED: 'document.segmentation.requested',
+  DOCUMENT_COMPARISON_REQUESTED: 'document.comparison.requested',
+  DOCUMENT_CONTRADICTION_REVIEW_REQUESTED: 'document.contradiction.review_requested',
 } as const;
 
 export type OutboxEventType = (typeof OUTBOX_EVENTS)[keyof typeof OUTBOX_EVENTS];

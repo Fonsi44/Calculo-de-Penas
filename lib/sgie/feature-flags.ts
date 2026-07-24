@@ -55,6 +55,9 @@ export const FLAG_KEYS = [
   'sgie.workload.enabled',
   'sgie.daily_brief.enabled',
   'sgie.autonomy_metrics.enabled',
+  'sgie.document_segmentation.enabled',
+  'sgie.document_comparison.enabled',
+  'sgie.document_contradictions.enabled',
 ] as const;
 export type FlagKey = (typeof FLAG_KEYS)[number];
 
