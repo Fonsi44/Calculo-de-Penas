@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector, real, time } from 'drizzle-orm/pg-core';
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index, uniqueIndex, vector, real, time, date } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 export const ramasJuridicas = pgTable('ramas_juridicas', {
   id: varchar('id', { length: 100 }).primaryKey(),
@@ -3142,3 +3142,111 @@ export const sgieSearchEntries = pgTable('sgie_search_entries', {
 
 export type SgieSearchEntry = typeof sgieSearchEntries.$inferSelect;
 export type SgieSearchEntryInsert = typeof sgieSearchEntries.$inferInsert;
+
+// ─── Fase 5A — Evaluaciones de riesgo ─────────────────────────────────────
+export const riskEvaluations = pgTable('risk_evaluations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  expedienteId: uuid('expediente_id').notNull(),
+  riskLevel: varchar('risk_level', { length: 20 }).notNull(),
+  score: integer('score').notNull().default(0),
+  reasons: jsonb('reasons').notNull().default(sql`'[]'::jsonb`),
+  blockingFactors: jsonb('blocking_factors').notNull().default(sql`'[]'::jsonb`),
+  dueDates: jsonb('due_dates').notNull().default(sql`'[]'::jsonb`),
+  dataQuality: integer('data_quality').notNull().default(100),
+  confidence: integer('confidence').notNull().default(100),
+  suggestedActions: jsonb('suggested_actions').notNull().default(sql`'[]'::jsonb`),
+  modelVersion: varchar('model_version', { length: 20 }).notNull().default('1.0'),
+  calculatedAt: timestamp('calculated_at', { withTimezone: true }).notNull().defaultNow(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
+  expIdx: index('risk_evaluations_exp_idx').on(table.expedienteId),
+  levelIdx: index('risk_evaluations_level_idx').on(table.riskLevel),
+}));
+
+export type RiskEvaluation = typeof riskEvaluations.$inferSelect;
+export type RiskEvaluationInsert = typeof riskEvaluations.$inferInsert;
+
+// ─── Fase 5A — Carga de trabajo ──────────────────────────────────────────
+export const workloadSnapshots = pgTable('workload_snapshots', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull(),
+  activeCases: integer('active_cases').notNull().default(0),
+  criticalCases: integer('critical_cases').notNull().default(0),
+  openTasks: integer('open_tasks').notNull().default(0),
+  overdueTasks: integer('overdue_tasks').notNull().default(0),
+  upcomingDeadlines: integer('upcoming_deadlines').notNull().default(0),
+  pendingDocuments: integer('pending_documents').notNull().default(0),
+  weightedLoad: integer('weighted_load').notNull().default(0),
+  capacity: integer('capacity').notNull().default(100),
+  utilization: integer('utilization').notNull().default(0),
+  suggestedReassignments: jsonb('suggested_reassignments').notNull().default(sql`'[]'::jsonb`),
+  calculatedAt: timestamp('calculated_at', { withTimezone: true }).notNull().defaultNow(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  userRef: foreignKey({ columns: [table.userId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  userIdx: index('workload_snapshots_user_idx').on(table.userId),
+}));
+
+export type WorkloadSnapshot = typeof workloadSnapshots.$inferSelect;
+export type WorkloadSnapshotInsert = typeof workloadSnapshots.$inferInsert;
+
+// ─── Fase 5C — Briefs diarios ────────────────────────────────────────────
+export const dailyBriefs = pgTable('daily_briefs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull(),
+  briefDate: date('brief_date').notNull(),
+  content: jsonb('content').notNull().default(sql`'{}'::jsonb`),
+  summary: text('summary'),
+  generatedByIa: boolean('generated_by_ia').notNull().default(false),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  userRef: foreignKey({ columns: [table.userId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  userDateIdx: index('daily_briefs_user_idx').on(table.userId, table.briefDate),
+  userDateUnique: unique('daily_briefs_user_date_unique').on(table.userId, table.briefDate),
+}));
+
+export type DailyBrief = typeof dailyBriefs.$inferSelect;
+export type DailyBriefInsert = typeof dailyBriefs.$inferInsert;
+
+// ─── Fase 5C — Preferencias de usuario ───────────────────────────────────
+export const userPreferences = pgTable('user_preferences', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull(),
+  briefEnabled: boolean('brief_enabled').notNull().default(true),
+  briefFrequency: varchar('brief_frequency', { length: 20 }).notNull().default('daily'),
+  briefTimezone: varchar('brief_timezone', { length: 100 }).notNull().default('Europe/Madrid'),
+  briefHour: integer('brief_hour').notNull().default(8),
+  briefScope: varchar('brief_scope', { length: 20 }).notNull().default('my_cases'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  userRef: foreignKey({ columns: [table.userId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  userIdx: index('user_preferences_user_idx').on(table.userId),
+  userUnique: unique('user_preferences_user_unique').on(table.userId),
+}));
+
+export type UserPreference = typeof userPreferences.$inferSelect;
+export type UserPreferenceInsert = typeof userPreferences.$inferInsert;
+
+// ─── Fase 5D — Métricas de autonomía ─────────────────────────────────────
+export const autonomyMetrics = pgTable('autonomy_metrics', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id'),
+  metricDate: date('metric_date').notNull(),
+  level: integer('level').notNull().default(0),
+  casesTotal: integer('cases_total').notNull().default(0),
+  autoClassified: integer('auto_classified').notNull().default(0),
+  autoReminders: integer('auto_reminders').notNull().default(0),
+  proposedActions: integer('proposed_actions').notNull().default(0),
+  acceptedActions: integer('accepted_actions').notNull().default(0),
+  rejectedActions: integer('rejected_actions').notNull().default(0),
+  humanInterventions: integer('human_interventions').notNull().default(0),
+  estimatedTimeSavedMinutes: integer('estimated_time_saved_minutes').notNull().default(0),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => ({
+  orgDateUnique: unique('autonomy_metrics_org_date_unique').on(table.organizationId, table.metricDate),
+  orgIdx: index('autonomy_metrics_org_idx').on(table.organizationId),
+}));
+
+export type AutonomyMetric = typeof autonomyMetrics.$inferSelect;
+export type AutonomyMetricInsert = typeof autonomyMetrics.$inferInsert;

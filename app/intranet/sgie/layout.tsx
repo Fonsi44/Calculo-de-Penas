@@ -51,6 +51,11 @@ const NAV: NavItem[] = [
   { label: 'Correos', href: '/intranet/sgie/correos', icon: Mail, match: (p) => p.startsWith('/intranet/sgie/correos') },
 ];
 
+const NAV_FASE5: NavItem[] = [
+  { label: 'Riesgo', href: '/intranet/sgie/riesgo', icon: AlertTriangle, match: (p) => p.startsWith('/intranet/sgie/riesgo') },
+  { label: 'Carga', href: '/intranet/sgie/carga', icon: Briefcase, match: (p) => p.startsWith('/intranet/sgie/carga') },
+];
+
 const NAV_FASE3: NavItem[] = [
   { label: 'Mi Jornada', href: '/intranet/sgie/mi-jornada', icon: LayoutDashboard, match: (p) => p.startsWith('/intranet/sgie/mi-jornada') },
   { label: 'Revisión documental', href: '/intranet/sgie/revision-documental', icon: FileText, match: (p) => p.startsWith('/intranet/sgie/revision-documental') },
@@ -141,6 +146,10 @@ export default function SgieLayout({ children }: { children: React.ReactNode }) 
           <p className="px-2.5 mt-4 mb-1 text-xxs font-bold uppercase tracking-wider text-text-muted">Experiencia cliente</p>
           <div className="space-y-0.5">
             {NAV_FASE3.map((item) => <NavLink key={item.href} item={item} pathname={pathname} onNav={() => setMobileOpen(false)} />)}
+          </div>
+          <p className="px-2.5 mt-4 mb-1 text-xxs font-bold uppercase tracking-wider text-text-muted">Riesgo y carga</p>
+          <div className="space-y-0.5">
+            {NAV_FASE5.map((item) => <NavLink key={item.href} item={item} pathname={pathname} onNav={() => setMobileOpen(false)} />)}
           </div>
         </nav>
 
