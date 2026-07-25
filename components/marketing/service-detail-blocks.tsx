@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
+import { InstitutionsBlock as CanonicalInstitutionsBlock } from '@/components/marketing/institutions-block';
 import { Card } from '@/components/ui/card';
 import type {
   BloqueSeparacion,
@@ -280,6 +281,11 @@ export function ProcessList({
  * Lista de autoridades posiblemente involucradas. Texto general, sin atribuir
  * a una institución la responsabilidad exclusiva de un trámite que requiere
  * varias (instrucción FASE 3 §9).
+ *
+ * Hito 7.4 (FASE 5): delega el render en el componente canónico
+ * `<InstitutionsBlock>` de `institutions-block.tsx`. Conserva la API pública
+ * (`items: string[]`) para no romper las páginas que la usan, y mapea los
+ * strings al tipo `InstitutionItem`.
  */
 export function InstitutionsBlock({
   items,
@@ -294,28 +300,13 @@ export function InstitutionsBlock({
 }) {
   if (!items.length) return null;
   return (
-    <Section spacing="sm">
-      <SectionHeader
-        eyebrow={eyebrow}
-        title={title}
-        subtitle={
-          subtitle ??
-          'La intervención concreta depende del asunto. Algunos trámites requieren varias autoridades de forma coordinada.'
-        }
-        align="left"
-      />
-      <ul className="mt-4 flex flex-wrap gap-2 max-w-4xl">
-        {items.map((item) => (
-          <li
-            key={item}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-surface-alt border border-border-light text-xs md:text-sm text-text-secondary"
-          >
-            <Building2 size={14} className="text-accent-dark" aria-hidden="true" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </Section>
+    <CanonicalInstitutionsBlock
+      items={items.map((name) => ({ name }))}
+      eyebrow={eyebrow}
+      title={title}
+      subtitle={subtitle}
+      variant="chips"
+    />
   );
 }
 

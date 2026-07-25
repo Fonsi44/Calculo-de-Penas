@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Building2, FileText, MapPin } from 'lucide-react';
 import { Section, SectionHeader } from '@/components/marketing/section';
+import { InstitutionsBlock } from '@/components/marketing/institutions-block';
 import { Card } from '@/components/ui/card';
 import { DISTANCIA_APROX_NOTA, type LandingLocal } from '@/data/landings-locales';
 import { site } from '@/lib/site';
@@ -65,33 +66,21 @@ export function LocalAtencionBlock({ landing }: { landing: LandingLocal }) {
 }
 
 /** Instituciones reales con competencia en la zona, en texto general.
- *  No atribuye responsabilidades exclusivas ni inventa organismos. */
+ *  No atribuye responsabilidades exclusivas ni inventa organismos.
+ *
+ *  Hito 7.4 (FASE 5): delega el render en el componente canónico
+ *  `<InstitutionsBlock>` de `institutions-block.tsx`, preservando el título
+ *  específico de la ciudad y la variante 'cards' (grid con icono). */
 export function LocalInstitutionsBlock({ landing }: { landing: LandingLocal }) {
   if (!landing.institutions || landing.institutions.length === 0) return null;
   return (
-    <Section background="muted" spacing="md">
-      <SectionHeader
-        eyebrow="Autoridades e instituciones"
-        title={`Instituciones relevantes para trámites en ${landing.ciudad}`}
-        subtitle="Referencias generales sobre organismos con competencia en la zona; la autoridad concreta depende del tipo de asunto."
-        align="left"
-      />
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {landing.institutions.map((inst) => (
-          <Card key={inst.name} padding="md" className="h-full border-l-4 border-l-primary/40">
-            <div className="flex items-start gap-3">
-              <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0">
-                <Building2 size={20} className="text-accent-dark" aria-hidden="true" />
-              </span>
-              <div>
-                <h3 className="font-bold text-sm text-primary leading-snug">{inst.name}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed mt-1">{inst.role}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-    </Section>
+    <InstitutionsBlock
+      items={landing.institutions.map((inst) => ({ name: inst.name, role: inst.role }))}
+      eyebrow="Autoridades e instituciones"
+      title={`Instituciones relevantes para trámites en ${landing.ciudad}`}
+      subtitle="Referencias generales sobre organismos con competencia en la zona; la autoridad concreta depende del tipo de asunto."
+      variant="cards"
+    />
   );
 }
 
