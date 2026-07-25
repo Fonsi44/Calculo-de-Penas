@@ -718,16 +718,17 @@ pendientes de tratamiento separado. Sin push.
 
 **Commits locales atómicos:** `7757396d`, `162e232c`, `64a0ab42`,
 `92031bf3`, `9cbc9c0f`, `00b8c44f`, `804b717e`, `6dcfe3fd`,
-`4ccf5fe2`.
+`4ccf5fe2`, `902be8ea`.
 
 **Validación local posterior:**
 
 - `npm run lint`: 0 errores; 58 warnings preexistentes fuera del alcance;
 - `npm run typecheck`: OK;
-- `npm run test`: 78 archivos y 1.490 pruebas correctas;
+- `npm run test`: 79 archivos y 1.493 pruebas correctas;
 - `ENABLE_INDEXNOW_SUBMIT=false npm run build`: build de producción correcto,
   356 páginas generadas e IndexNow solo en dry-run;
-- `npm run validar:meta-seo`: 18/18 rutas correctas;
+- `npm run validar:meta-seo`: 18/18 rutas correctas, 0 errores y 0
+  advertencias sobre la salida compilada real;
 - `node scripts/validate-jsonld.mjs`: 8/8 rutas correctas;
 - `node scripts/seo-indexability-audit.mjs`: 0 errores y 0 warnings;
 - `npm run analytics:audit`: 9/9 controles correctos;
@@ -744,6 +745,15 @@ efectivos en el body, 41 enlaces contextuales añadidos, 12/12 posts con al meno
 dos enlaces en el cuerpo, 12/12 con enlace a servicio y 12/12 con CTA efectiva.
 El autoenlazado queda limitado a cinco destinos por artículo y sus clics, junto
 con los CTA inline, quedan instrumentados.
+
+**Metadata compilada:** el auditor anterior comparaba copias manuales de
+titles y descriptions, por lo que podía quedar verde aunque el HTML real
+incumpliera los límites. Ahora lee los archivos prerenderizados de `.next` y
+la función dinámica del hub de blog, exige una única etiqueta por campo,
+canonical exacta y política de robots coherente. Al aplicarlo detectó y
+permitió corregir el title real de la home (63 → 54 caracteres) y la
+description de servicios (165 → 153 caracteres). Resultado final: 18/18 rutas
+de control sin incidencias.
 
 **Datos live:** `seo:doctor` mantuvo 17 OK, 1 ERROR (gcloud CLI no instalada) y
 5 pendientes; GSC/GA4 siguen accesibles por OAuth. `seo:collect` extrajo GSC,
