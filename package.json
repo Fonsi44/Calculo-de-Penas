@@ -44,6 +44,8 @@
     "blog:review:aplicar": "npx tsx scripts/blog-ai-review.ts --aplicar",
     "blog:verify-fix": "npx tsx scripts/blog-verify-fix.ts",
     "blog:verify-fix:aplicar": "npx tsx scripts/blog-verify-fix.ts --aplicar",
+    "blog:fix-critical-citations": "npx tsx scripts/corregir-citas-criticas-blog.ts",
+    "blog:fix-critical-citations:aplicar": "npx tsx scripts/corregir-citas-criticas-blog.ts --aplicar",
     "validar:blog": "npx tsx scripts/validar-blog.ts",
     "validar:blog:json": "npx tsx scripts/validar-blog.ts --json",
     "validar:blog:blocking": "npx tsx scripts/validar-blog.ts --solo-blocking",

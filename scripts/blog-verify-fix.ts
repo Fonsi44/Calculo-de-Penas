@@ -469,6 +469,12 @@ const articulosCmSet = new Set<string>();                 // Código de Comercio
 const articulosCmMap = new Map<string, ArticuloCpRow>();  // clave → artículo CM
 const articulosCtribSet = new Set<string>();              // Código Tributario: "art. 1 ctrib"
 const articulosCtribMap = new Map<string, ArticuloCpRow>(); // clave → artículo CTrib
+const articulosCppSet = new Set<string>();                // Código Procesal Penal: "art. 1 cpp"
+const articulosCppMap = new Map<string, ArticuloCpRow>();
+const articulosCfSet = new Set<string>();                 // Código de Familia: "art. 1 cf"
+const articulosCfMap = new Map<string, ArticuloCpRow>();
+const articulosCaSet = new Set<string>();                 // CAUCA: "art. 1 ca"
+const articulosCaMap = new Map<string, ArticuloCpRow>();
 
 export function cargarDatosCanonicos(): void {
   const dataDir = path.join(process.cwd(), 'data');
@@ -612,6 +618,47 @@ export function cargarDatosCanonicos(): void {
   } else {
     console.warn('⚠ data/codigo_tributario.json no encontrado.');
   }
+
+  const cargarCodigoVerificado = (
+    archivo: string,
+    nombre: string,
+    set: Set<string>,
+    map: Map<string, ArticuloCpRow>,
+  ) => {
+    const archivoPath = path.join(dataDir, archivo);
+    if (!fs.existsSync(archivoPath)) {
+      console.warn(`⚠ data/${archivo} no encontrado.`);
+      return;
+    }
+    const parsed: ArticuloCpRow[] = JSON.parse(fs.readFileSync(archivoPath, 'utf8'));
+    for (const articulo of parsed) {
+      const key = canonicalArticuloKey(articulo.articulo);
+      if (key) {
+        set.add(key);
+        map.set(key, articulo);
+      }
+    }
+    console.log(`✓ Cargados ${parsed.length} artículos de ${nombre} (${set.size} claves únicas)`);
+  };
+
+  cargarCodigoVerificado(
+    'codigo_procesal_penal_verificado.json',
+    'Código Procesal Penal',
+    articulosCppSet,
+    articulosCppMap,
+  );
+  cargarCodigoVerificado(
+    'codigo_familia_verificado.json',
+    'Código de Familia',
+    articulosCfSet,
+    articulosCfMap,
+  );
+  cargarCodigoVerificado(
+    'cauca_verificado.json',
+    'CAUCA',
+    articulosCaSet,
+    articulosCaMap,
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -633,7 +680,7 @@ export function cargarDatosCanonicos(): void {
  */
 export function canonicalArticuloKey(texto: string): string | null {
   const m = texto.match(
-    /art(?:ículo)?\.?\s*(\d+(?:-\w+)?)\s*(?:del?(?:\s+la)?\s+)?(código\s+penal|cp|código\s+procesal\s+penal|cpp|código\s+civil|cc|código\s+de\s+familia|cf|código\s+de\s+trabajo|ct|código\s+de\s+comercio|cm|código\s+de\s+la\s+niñez|cn|código\s+tributario|ctrib|código\s+aduanero|ca|constitución|constitucion)?/i,
+    /art(?:ículo)?\.?\s*(\d+(?:-\w+)?)\s*(?:del?(?:\s+la)?\s+)?(código\s+procesal\s+penal|cpp|código\s+penal|cp|código\s+civil|cc|código\s+de\s+familia|cf|código\s+de\s+trabajo|ct|código\s+de\s+comercio|cm|código\s+de\s+la\s+niñez|cn|código\s+tributario|ctrib|código\s+aduanero|ca|constitución|constitucion)?/i,
   );
   if (!m) return null;
   const num = m[1];
@@ -819,6 +866,10 @@ export function extraerClaims(body: string): ClaimExtraido[] {
  * @returns la cita sin comillas, o null si no hay cita atribuida explícita.
  */
 export function extraerCitaAtribuida(contexto: string): string | null {
+  const articuloMatch = contexto.match(/art(?:ículo)?(?:\.?\s*\d+)?/i);
+  if (!articuloMatch || articuloMatch.index === undefined) return null;
+  const finReferencia = articuloMatch.index + articuloMatch[0].length;
+
   // Buscar texto entre comillas (", ", «, ») de ≥15 palabras que sea sustantivo.
   // El umbral de 15 palabras evita falsos positivos con comillas cortas
   // (nombres propios, términos técnicos entrecomillados).
@@ -826,6 +877,19 @@ export function extraerCitaAtribuida(contexto: string): string | null {
   let m: RegExpExecArray | null;
   let citaLarga: string | null = null;
   while ((m = reCita.exec(contexto)) !== null) {
+    // La cita debe estar realmente atribuida al artículo: aparecer poco después
+    // de la referencia y estar introducida por un verbo atributivo o dos puntos.
+    // Sin esta guarda, una cita de una FAQ posterior dentro de la ventana de
+    // contexto se asociaba erróneamente al artículo anterior.
+    const puente = contexto.slice(finReferencia, m.index);
+    if (
+      m.index < finReferencia ||
+      puente.length > 180 ||
+      /[.!?]/.test(puente) ||
+      !/(?:establece|dispone|señala|dice|reza|indica|determina|:)\s*$/i.test(puente)
+    ) {
+      continue;
+    }
     const cita = m[1].trim();
     const palabras = cita.split(/\s+/).filter((w) => w.length > 0).length;
     if (palabras >= 12) {
@@ -878,14 +942,17 @@ export function verificarClaims(claims: ClaimExtraido[]): Discrepancia[] {
         const existeEnCc = articulosCcSet.has(key);
         const existeEnCm = articulosCmSet.has(key);
         const existeEnCtrib = articulosCtribSet.has(key);
-        if (!existeEnCp && !existeEnDelitos && !existeEnCt && !existeEnCc && !existeEnCm && !existeEnCtrib) {
+        const existeEnCpp = articulosCppSet.has(key);
+        const existeEnCf = articulosCfSet.has(key);
+        const existeEnCa = articulosCaSet.has(key);
+        if (!existeEnCp && !existeEnDelitos && !existeEnCt && !existeEnCc && !existeEnCm && !existeEnCtrib && !existeEnCpp && !existeEnCf && !existeEnCa) {
           discrepancias.push({
             claim,
             severidad: 'critico',
-            mensaje: `El artículo "${claim.textoOriginal}" no se encuentra en las fuentes canónicas (CP, delitos, Código de Trabajo, Civil, Comercio, Tributario). Posiblemente inventado por IA.`,
+            mensaje: `El artículo "${claim.textoOriginal}" no se encuentra en las fuentes canónicas cargadas. Posiblemente inventado por IA.`,
             valorEncontrado: claim.textoOriginal,
             valorCorrecto: '(no encontrado en fuentes canónicas)',
-            fuente: 'data/articulos_cp.json + data/delitos.json + data/codigo_trabajo.json + data/codigo_civil.json + data/codigo_comercio.json + data/codigo_tributario.json',
+            fuente: 'data/*_verificado.json + data/articulos_*.json + data/codigo_*.json',
           });
           break;
         }
@@ -893,7 +960,15 @@ export function verificarClaims(claims: ClaimExtraido[]): Discrepancia[] {
         // si el contexto incluye un texto entrecomillado atribuido al artículo,
         // comprobar que coincide con el texto canónico del CP. La IA puede
         // fabricar citas sobre artículos reales.
-        const articuloCp = articulosCpMap.get(key);
+        const articuloCp =
+          articulosCpMap.get(key) ??
+          articulosCtMap.get(key) ??
+          articulosCcMap.get(key) ??
+          articulosCmMap.get(key) ??
+          articulosCtribMap.get(key) ??
+          articulosCppMap.get(key) ??
+          articulosCfMap.get(key) ??
+          articulosCaMap.get(key);
         const cita = extraerCitaAtribuida(claim.contexto);
         if (articuloCp && cita) {
           const sim = similitudCitaCanonica(cita, articuloCp.texto);

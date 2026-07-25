@@ -179,6 +179,10 @@ describe('canonicalArticuloKey', () => {
     expect(canonicalArticuloKey('Art. 12 del Código Procesal Penal')).toBe('art. 12 cpp');
   });
 
+  it('no confunde la abreviatura CPP con CP', () => {
+    expect(canonicalArticuloKey('Art. 285 CPP')).toBe('art. 285 cpp');
+  });
+
   it('devuelve null si no hay número de artículo', () => {
     expect(canonicalArticuloKey('Código Penal de Honduras')).toBeNull();
   });
@@ -1249,6 +1253,11 @@ describe('extraerCitaAtribuida — extrae cita entrecomillada del contexto', () 
     const ctx = 'El artículo 183 de la Constitución regula el recurso de amparo en Honduras.';
     const cita = extraerCitaAtribuida(ctx);
     expect(cita).toBeNull();
+  });
+
+  it('no atribuye al artículo una cita perteneciente a una sección posterior', () => {
+    const ctx = 'El Artículo 285 del Código Procesal Penal regula la puesta a disposición judicial. Pregunta frecuente: "Realidad: Cualquier persona puede interponer un recurso de hábeas corpus en favor de otra persona detenida ilegalmente ante el juez competente."';
+    expect(extraerCitaAtribuida(ctx)).toBeNull();
   });
 
   it('devuelve la cita más larga si hay varias (la más probablemente atribuida)', () => {
