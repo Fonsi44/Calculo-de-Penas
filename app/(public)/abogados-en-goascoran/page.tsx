@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import { getLandingBySlug, landingMetadata } from '@/data/landings-locales';
 import { LandingLocalView } from '@/components/marketing/landing-local';
+import {
+  LocalAtencionBlock,
+  LocalInstitutionsBlock,
+  LocalDocumentLogistics,
+} from '@/components/marketing/local-context-blocks';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
 const landing = getLandingBySlug('goascoran')!;
@@ -10,6 +15,11 @@ export default async function AbogadosEnGoascoranPage() {
   return (
     <>
       <LandingLocalView landing={landing} />
+      {/* FASE 4 (§7): secciones únicas reales para Goascorán, basadas en su
+          carácter de zona fronteriza con El Salvador. */}
+      <LocalAtencionBlock landing={landing} />
+      <LocalInstitutionsBlock landing={landing} />
+      <LocalDocumentLogistics landing={landing} />
       <BlogHighlights
         slugs={[
           'abogado-penalista-choluteca',

@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import { getLandingBySlug, landingMetadata } from '@/data/landings-locales';
 import { LandingLocalView } from '@/components/marketing/landing-local';
+import {
+  LocalAtencionBlock,
+  LocalInstitutionsBlock,
+  LocalDocumentLogistics,
+} from '@/components/marketing/local-context-blocks';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 
 const landing = getLandingBySlug('el-triunfo')!;
@@ -11,6 +16,11 @@ export default async function AbogadosEnElTriunfoPage() {
   return (
     <>
       <LandingLocalView landing={landing} />
+      {/* FASE 4 (§7): secciones únicas reales para El Triunfo, sur de
+          Choluteca cercano a la frontera con Nicaragua. */}
+      <LocalAtencionBlock landing={landing} />
+      <LocalInstitutionsBlock landing={landing} />
+      <LocalDocumentLogistics landing={landing} />
       <BlogHighlights
         slugs={[
           'abogado-penalista-choluteca',

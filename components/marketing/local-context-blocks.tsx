@@ -1,0 +1,147 @@
+import Link from 'next/link';
+import { Building2, FileText, MapPin } from 'lucide-react';
+import { Section, SectionHeader } from '@/components/marketing/section';
+import { Card } from '@/components/ui/card';
+import { DISTANCIA_APROX_NOTA, type LandingLocal } from '@/data/landings-locales';
+import { site } from '@/lib/site';
+
+/**
+ * Bloques presentacionales reutilizables por las páginas locales prioritarias
+ * (FASE 4 §7). Consumen campos opcionales del modelo territorial de
+ * `LandingLocal`. Cada bloque se renderiza solo si recibe datos, evitando
+ * secciones vacías y respetando el diseño canónico (rounded-lg, design tokens).
+ *
+ * Reglas (AGENTS.md R5): SEO y contenido, sin rediseño visual. Sin inventar
+ * instituciones, distancias o competencias. Todo proviene de la fuente única
+ * `data/landings-locales.ts`.
+ */
+
+/** Modalidad de atención y distancia aproximada, con aviso orientativo.
+ *  Refuerza la transparencia sobre la sede de Nacaome (FASE 4 §7.2/§7.4). */
+export function LocalAtencionBlock({ landing }: { landing: LandingLocal }) {
+  const modos: Record<string, string> = {
+    office: 'Atención presencial en Nacaome',
+    remote: 'Primera revisión por teléfono, WhatsApp o videollamada',
+    travel: 'Coordinación de desplazamiento cuando el caso lo requiere',
+  };
+  const modosTexto = (landing.serviceModes ?? [])
+    .map((m) => modos[m])
+    .filter(Boolean)
+    .join(' · ');
+
+  return (
+    <Section background="default" spacing="md">
+      <div className="max-w-3xl">
+        <SectionHeader
+          eyebrow="Modalidad de atención"
+          title={`Cómo atendemos a clientes de ${landing.ciudad}`}
+          align="left"
+        />
+        <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
+          {landing.sedeFisica
+            ? `Pineda y Asociados tiene su sede principal en ${landing.ciudad}, ${landing.departamento}. La atención puede ser presencial en la oficina o iniciarse por medios remotos según el tipo de asunto.`
+            : `Pineda y Asociados atiende a clientes de ${landing.ciudad} desde ${landing.servedFrom ?? 'nuestra oficina en Nacaome'}. La primera revisión puede realizarse por teléfono o medios remotos, y el desplazamiento o la comparecencia presencial se determina según el tipo de asunto, la autoridad competente y la documentación disponible.`}
+        </p>
+        {!landing.sedeFisica && (
+          <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+            <strong className="text-text">Distancia aproximada:</strong>{' '}
+            {landing.distanciaKm} km desde Nacaome
+            {landing.approximateTravelTime ? ` (${landing.approximateTravelTime})` : ''}.
+            {modosTexto ? ` ${modosTexto}.` : ''}
+          </p>
+        )}
+        <p className="mt-2 text-xs text-text-muted leading-relaxed">{DISTANCIA_APROX_NOTA}</p>
+        {!landing.sedeFisica && (
+          <Link
+            href="/como-llegar"
+            className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Cómo llegar a la oficina en Nacaome <MapPin size={14} />
+          </Link>
+        )}
+      </div>
+    </Section>
+  );
+}
+
+/** Instituciones reales con competencia en la zona, en texto general.
+ *  No atribuye responsabilidades exclusivas ni inventa organismos. */
+export function LocalInstitutionsBlock({ landing }: { landing: LandingLocal }) {
+  if (!landing.institutions || landing.institutions.length === 0) return null;
+  return (
+    <Section background="muted" spacing="md">
+      <SectionHeader
+        eyebrow="Autoridades e instituciones"
+        title={`Instituciones relevantes para trámites en ${landing.ciudad}`}
+        subtitle="Referencias generales sobre organismos con competencia en la zona; la autoridad concreta depende del tipo de asunto."
+        align="left"
+      />
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {landing.institutions.map((inst) => (
+          <Card key={inst.name} padding="md" className="h-full border-l-4 border-l-primary/40">
+            <div className="flex items-start gap-3">
+              <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <Building2 size={20} className="text-accent-dark" aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className="font-bold text-sm text-primary leading-snug">{inst.name}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed mt-1">{inst.role}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+/** Cuándo es necesario acudir presencialmente y cómo enviar documentación.
+ *  Contenido genérico, prudente y reutilizable (FASE 4 §7.8/§7.7). */
+export function LocalDocumentLogistics({ landing }: { landing: LandingLocal }) {
+  return (
+    <Section background="default" spacing="md">
+      <div className="max-w-3xl">
+        <SectionHeader
+          eyebrow="Documentación y comparecencia"
+          title="Cuándo es necesaria la presencia física"
+          align="left"
+        />
+        <div className="mt-4 space-y-4">
+          <Card padding="md">
+            <h3 className="font-bold text-sm text-text flex items-center gap-2">
+              <FileText size={16} className="text-accent-dark" aria-hidden="true" />
+              Envío de documentación
+            </h3>
+            <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
+              Para iniciar la revisión puede enviar copias legibles por WhatsApp al{' '}
+              <a href={`tel:${site.phone}`} className="text-accent-dark hover:underline">
+                {site.phoneDisplay}
+              </a>
+              {' '}o mediante el formulario. No envíe documentos originales en el primer contacto:
+              con copias claras basta para una primera evaluación.
+            </p>
+          </Card>
+          <Card padding="md">
+            <h3 className="font-bold text-sm text-text">Casos en los que suele requerirse presencia</h3>
+            <ul className="mt-2 space-y-1.5 text-sm text-text-secondary leading-relaxed list-disc pl-5">
+              <li>Audiencias judiciales y comparecencias ante la autoridad competente.</li>
+              <li>Otorgamiento de poderes y firmas notariales que exigen comparecencia.</li>
+              <li>Diligencias registrales o trámites que no admiten representación.</li>
+            </ul>
+            <p className="mt-2 text-xs text-text-muted leading-relaxed">
+              {landing.sedeFisica
+                ? ''
+                : `En estos casos coordinamos la comparecencia desde ${landing.servedFrom ?? 'nuestra oficina en Nacaome'} o el desplazamiento a ${landing.ciudad} cuando proceda.`}
+            </p>
+          </Card>
+        </div>
+        <Link
+          href="/solicitar-consulta"
+          className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+        >
+          Solicitar consulta desde {landing.ciudad} <MapPin size={14} />
+        </Link>
+      </div>
+    </Section>
+  );
+}

@@ -7,6 +7,7 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { type LandingLocal } from '@/data/landings-locales';
+import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -58,10 +59,14 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   // Mensaje contextual para el CTAGroup del hero (Whats App pre-llenado).
   const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
 
-  // Schema: FAQPage + BreadcrumbList específicos de la landing.
+  // Schema: WebPage + Service (con areaServed por ciudad) + FAQPage +
+  // BreadcrumbList específicos de la landing.
   // NOTA: LegalService/Organization/WebSite ya los inyecta el layout público
   // (con areaServed de 10 ciudades prioritarias). Aquí solo añadimos lo específico de la
   // página para no duplicar entidades con el mismo @id.
+  // FASE 4 (§18): se usa Service (no LocalBusiness) para representar el área
+  // atendida sin sugerir una sede local distinta de Nacaome. El proveedor
+  // enlaza al LegalService canónico único.
   const ldSchemas = [
     {
       '@context': 'https://schema.org',
@@ -72,7 +77,20 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
       description: landing.description,
       inLanguage: 'es-HN',
       isPartOf: { '@id': `${site.url}/#website` },
-      about: { '@id': `${site.url}/#legal-service` },
+      about: { '@id': `${url}#service` },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      '@id': `${url}#service`,
+      name: `Servicios jurídicos para clientes de ${landing.ciudad}`,
+      serviceType: 'Asesoría y representación jurídica',
+      areaServed: [
+        { '@type': 'City', name: landing.ciudad },
+        { '@type': 'AdministrativeArea', name: landing.departamento },
+      ],
+      provider: { '@id': `${site.url}/#legal-service` },
+      url,
     },
     {
       '@context': 'https://schema.org',
@@ -102,6 +120,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
 
   return (
     <>
+      <ViewLocalPageTracker locationSlug={landing.slug} />
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
         { label: `Abogados en ${landing.ciudad}` },
