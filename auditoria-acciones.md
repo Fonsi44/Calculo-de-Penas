@@ -686,3 +686,69 @@ archivos/911 tests correctos y build de 354 páginas correcto. El primer build
 quedó bloqueado únicamente por Google Fonts sin red y pasó al repetirlo con
 acceso. `npm audit` informa 10 vulnerabilidades moderadas transitivas,
 pendientes de tratamiento separado. Sin push.
+
+---
+
+## 2026-07-25 — Correcciones SEO/GEO posteriores a auditoría integral
+
+**Modo:** `IMPLEMENTACIÓN`, autorizado por el usuario. Trabajo directo sobre
+`main`, sin ramas, PR, push, cambios de base de datos ni despliegue.
+
+**Implementado:**
+
+- validación estricta de `NEXT_PUBLIC_SITE_URL` antes de construir metadata,
+  sitemap, robots, RSS y JSON-LD; se rechazan caracteres de control, dominios,
+  protocolos, paths, queries, fragmentos o puertos no canónicos;
+- pruebas de regresión para el valor contaminado observado en producción;
+- `llms.txt` corregido con Thania Marlene Paz y Emil Barahona, Proxy Node.js
+  actualizado, dominio validado y datos institucionales confirmados;
+- GA4 directo y GTM declarados mutuamente excluyentes, con auditor estático de
+  conversión de formulario;
+- titles de blog limitados a 60 caracteres, sin marca parcial ni palabras
+  colgantes;
+- hrefs relativos de cuerpos de blog normalizados desde la raíz y dos enlaces
+  locales actualizados al slug laboral canónico;
+- `foundingDate: 2010`, fundadores, “15+ años” y colegiación restaurados en
+  contenido y schema tras confirmación directa del titular; los números CAH
+  siguen siendo condicionales a variables explícitas y no se atribuye la
+  condición de notario;
+- diálogo de cookies convertido en modal real con foco inicial, trampa de foco,
+  Escape al reabrir, restauración de foco, fondo bloqueado y widgets flotantes
+  ocultos/inertes.
+
+**Commits locales atómicos:** `7757396d`, `162e232c`, `64a0ab42`,
+`92031bf3`, `9cbc9c0f`, `00b8c44f`, `804b717e`, `6dcfe3fd`.
+
+**Validación local posterior:**
+
+- `npm run lint`: 0 errores; 58 warnings preexistentes fuera del alcance;
+- `npm run typecheck`: OK;
+- `npm run test`: 78 archivos y 1.484 pruebas correctas;
+- `ENABLE_INDEXNOW_SUBMIT=false npm run build`: build de producción correcto,
+  356 páginas generadas e IndexNow solo en dry-run;
+- `npm run validar:meta-seo`: 18/18 rutas correctas;
+- `node scripts/validate-jsonld.mjs`: 8/8 rutas correctas;
+- `node scripts/seo-indexability-audit.mjs`: 0 errores y 0 warnings;
+- `npm run analytics:audit`: 8/8 controles correctos;
+- `npm run blog:fix-redirects`: 175 posts analizados y 0 enlaces a redirects
+  pendientes;
+- `npm run seo:ahrefs`: sin incidencias bloqueantes. Los 1.855 registros 4XX
+  que enumera proceden de CSV históricos y el propio auditor los clasifica
+  como información para contrastar, no como fallo del código actual.
+
+**Oportunidad no bloqueante:** el auditor de enlazado interno calcula una media
+de 0,3 enlaces editoriales por post prioritario y CTA efectiva en 6/12. Conviene
+tratar este refuerzo editorial en una fase separada, con revisión de intención
+y sin insertar enlaces masivos.
+
+**Datos live:** `seo:doctor` mantuvo 17 OK, 1 ERROR (gcloud CLI no instalada) y
+5 pendientes; GSC/GA4 siguen accesibles por OAuth. `seo:collect` extrajo GSC,
+GA4, Bing e IndexNow dry-run, pero confirmó el fallo del health check y sitemap
+de la producción todavía desplegada. Los artefactos live regenerados se
+restauraron y no se versionaron.
+
+**Pendiente externo:** corregir la variable de producción, desplegar, repetir
+el rastreo de 212 URLs y solo entonces reenviar sitemap/IndexNow. La antigüedad,
+el año de fundación, los fundadores y la colegiación quedan confirmados por el
+titular; la revisión jurídica de porcentajes, plazos y demás afirmaciones del
+registro legal continúa `NO VALIDADO`.
