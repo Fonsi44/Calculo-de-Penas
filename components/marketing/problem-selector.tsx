@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   Gavel,
   HeartHandshake,
@@ -6,10 +5,10 @@ import {
   Scale,
   Globe,
   HelpCircle,
-  ArrowRight,
   type LucideIcon,
 } from 'lucide-react';
 import { Container } from '@/components/marketing/section';
+import { NavCardGrid, type NavCardItem } from '@/components/marketing/nav-card-grid';
 
 /**
  * Selector por problema (FASE 2 — Página de inicio).
@@ -17,8 +16,13 @@ import { Container } from '@/components/marketing/section';
  * Accesos comprensibles para personas que NO conocen la rama jurídica de su
  * problema. Cada entrada dirige a una página real y adecuada del sitio.
  *
+ * Hito 7.2 (FASE 5): delega la presentación en `<NavCardGrid variant='problems'>`,
+ * compartida con `ServiceBlocks`. Conserva exactamente las 6 entradas, sus
+ * rutas, iconos, hints y la cabecera explicativa. No cambia enlaces ni
+ * contenido.
+ *
  * Restricciones (AGENTS.md R5):
- *  - Reutiliza el design system existente (Section, Card, tokens canónicos R16).
+ *  - Reutiliza el design system existente (Section, IconBadge, tokens canónicos R16).
  *  - No introduce nuevos estilos visuales; solo estructura y jerarquía.
  *  - No afirma especialidades no confirmadas; usa redacción prudente.
  *
@@ -73,6 +77,13 @@ const PROBLEM_ENTRIES: readonly ProblemEntry[] = [
   },
 ] as const;
 
+const ITEMS: NavCardItem[] = PROBLEM_ENTRIES.map((e) => ({
+  title: e.label,
+  description: e.hint,
+  icon: e.icon,
+  href: e.href,
+}));
+
 export function ProblemSelector() {
   return (
     <nav aria-label="Seleccione su problema jurídico" className="py-2">
@@ -89,36 +100,7 @@ export function ProblemSelector() {
             que mejor describa su situación y le llevamos a la información correcta.
           </p>
         </div>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {PROBLEM_ENTRIES.map((entry) => {
-            const Icon = entry.icon;
-            return (
-              <li key={entry.href}>
-                <Link
-                  href={entry.href}
-                  className="group flex items-start gap-3.5 rounded-lg border border-border-light bg-surface p-4 hover:border-accent/40 hover:shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 h-full"
-                >
-                  <span className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/20 group-hover:bg-accent/15 transition-colors">
-                    <Icon size={20} aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-bold text-text leading-snug text-pretty">
-                      {entry.label}
-                    </span>
-                    <span className="block text-xs text-text-secondary mt-1 leading-relaxed">
-                      {entry.hint}
-                    </span>
-                  </span>
-                  <ArrowRight
-                    size={16}
-                    className="text-text-muted flex-shrink-0 mt-1 group-hover:text-accent-dark group-hover:translate-x-0.5 transition-all"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <NavCardGrid items={ITEMS} variant="problems" columns={3} />
       </Container>
     </nav>
   );

@@ -1,14 +1,13 @@
-import Link from 'next/link';
 import {
   HeartHandshake,
   Briefcase,
   ShieldCheck,
   Gavel,
   Globe,
-  ArrowRight,
   type LucideIcon,
 } from 'lucide-react';
 import { Container } from '@/components/marketing/section';
+import { NavCardGrid, type NavCardItem } from '@/components/marketing/nav-card-grid';
 
 /**
  * Bloques de servicios por necesidad (FASE 2 — /servicios-juridicos).
@@ -114,48 +113,20 @@ const SERVICE_BLOCKS: readonly ServiceBlock[] = [
 ] as const;
 
 export function ServiceBlocks() {
+  const items: NavCardItem[] = SERVICE_BLOCKS.map((block) => ({
+    title: block.title,
+    description: block.need,
+    primaryLabel: 'Atiende',
+    category: block.audience,
+    icon: block.icon,
+    href: block.services[0]?.href ?? '/servicios-juridicos',
+    links: block.services.map((svc) => ({ label: svc.label, href: svc.href })),
+  }));
+
   return (
     <nav aria-label="Servicios por tipo de necesidad" className="py-2">
       <Container size="lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-          {SERVICE_BLOCKS.map((block) => {
-            const Icon = block.icon;
-            return (
-              <article
-                key={block.id}
-                className="flex flex-col rounded-lg border border-border-light bg-surface p-5 h-full"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/20">
-                    <Icon size={20} aria-hidden="true" />
-                  </span>
-                  <h3 className="font-serif font-bold text-base text-text leading-tight">
-                    {block.title}
-                  </h3>
-                </div>
-                <p className="text-xs text-text-secondary leading-relaxed mb-1 text-pretty">
-                  <span className="font-semibold text-text">Atiende:</span> {block.need}
-                </p>
-                <p className="text-xs text-text-muted leading-relaxed mb-4 text-pretty">
-                  <span className="font-semibold text-text-secondary">Cliente:</span> {block.audience}
-                </p>
-                <ul className="mt-auto flex flex-wrap gap-2">
-                  {block.services.map((svc) => (
-                    <li key={`${block.id}-${svc.href}-${svc.label}`}>
-                      <Link
-                        href={svc.href}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-primary/5 border border-border-light text-xs font-semibold text-text hover:border-accent/40 hover:text-accent-dark transition-colors"
-                      >
-                        {svc.label}
-                        <ArrowRight size={11} className="opacity-60" aria-hidden="true" />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            );
-          })}
-        </div>
+        <NavCardGrid items={items} variant="services" columns={3} />
       </Container>
     </nav>
   );
