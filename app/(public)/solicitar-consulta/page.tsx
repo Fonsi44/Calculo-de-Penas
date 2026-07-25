@@ -98,15 +98,14 @@ export default async function SolicitarConsultaPage() {
             </Card>
           </div>
 
+          {/* RAIL DERECHO — reducido a 3 agrupaciones (Hito 9.5).
+              Antes: 6 tarjetas independientes. Ahora: 3 bloques temáticos
+              que agrupan la misma información con menos saturación visual. */}
           <div className="lg:col-span-2 space-y-4">
-            {/* EQUIPO — enlace al dueño canónico (Fase 3.8).
-                Antes: 3 tarjetas individuales con foto de cada socio, que
-                duplicaban el bloque de /despacho y saturaban el rail. Ahora:
-                un solo bloque compacto que enlanza a /despacho, donde vive
-                la información completa del equipo. Mantiene la señal humana
-                sin triplicar contenido. */}
+
+            {/* 1. CONTACTO Y HORARIO — equipo + teléfono + WhatsApp + horario */}
             <Card padding="md" className="border-l-4 border-l-accent">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/30">
                 <div className="w-12 h-12 rounded-lg border border-accent/30 bg-accent/10 text-accent-dark flex items-center justify-center flex-shrink-0">
                   <Users size={22} aria-hidden="true" />
                 </div>
@@ -128,98 +127,45 @@ export default async function SolicitarConsultaPage() {
                   Ver <ChevronRight size={14} />
                 </Link>
               </div>
-            </Card>
-
-            {/* Contacto directo */}
-            <Card padding="md">
-              <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">
-                <Phone size={15} className="text-accent-dark" />
-                Contacto directo
-              </h3>
-              <p className="text-xs text-text-secondary mb-4 leading-relaxed">
-                Si prefiere hablar con nosotros directamente, estamos disponibles en horario hábil.
-              </p>
               <div className="space-y-2.5">
                 <a
                   href={telHref()}
-                  className="flex items-center gap-3 p-3 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-accent/5 transition-all group"
+                  className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-surface-alt transition-colors group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
-                    <Phone size={18} />
-                  </div>
+                  <span className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+                    <Phone size={16} />
+                  </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-bold uppercase tracking-wider text-text-muted">Teléfono</p>
                     <p className="text-sm font-semibold text-text leading-tight mt-0.5 tabular-nums">{site.phoneDisplay}</p>
                   </div>
-                  <ChevronRight size={16} className="text-text-muted flex-shrink-0 group-hover:text-accent-dark transition-colors" />
                 </a>
                 <a
                   href={whatsappHref('Hola, necesito una consulta jurídica.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-lg border border-border/30 hover:border-accent/30 hover:bg-accent/5 transition-all group"
+                  className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-surface-alt transition-colors group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-success/15 text-success flex items-center justify-center flex-shrink-0 group-hover:bg-success/20 transition-colors">
-                    <MessageCircle size={18} />
-                  </div>
+                  <span className="w-9 h-9 rounded-lg bg-success/15 text-success flex items-center justify-center flex-shrink-0 group-hover:bg-success/20 transition-colors">
+                    <MessageCircle size={16} />
+                  </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-bold uppercase tracking-wider text-text-muted">WhatsApp</p>
                     <p className="text-sm font-semibold text-text leading-tight mt-0.5">Respuesta inmediata</p>
                   </div>
-                  <ChevronRight size={16} className="text-text-muted flex-shrink-0 group-hover:text-accent-dark transition-colors" />
                 </a>
-              </div>
-            </Card>
-
-            {/* Emergencia */}
-            <div className="p-4 rounded-lg bg-gradient-to-br from-aggravation/10 to-aggravation/5 border border-aggravation/20">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-9 h-9 rounded-lg bg-aggravation flex items-center justify-center flex-shrink-0">
-                  <AlertTriangle size={18} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm text-aggravation leading-tight">¿Emergencia con detenido?</h3>
-                  <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                    Si un familiar está siendo detenido o necesita asistencia inmediata, no espere un minuto.
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <a
-                  href={telHref()}
-                  className="flex-1 inline-flex items-center justify-center gap-2 h-10 rounded-lg bg-aggravation text-white text-sm font-bold hover:opacity-90 transition-opacity"
-                >
-                  <Phone size={15} /> Llamar ahora
-                </a>
-                <a
-                  href={whatsappHref('Emergencia: necesito asistencia legal inmediata.')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 h-10 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
-                >
-                  <MessageCircle size={15} /> WhatsApp
-                </a>
-              </div>
-            </div>
-
-            {/* Motivos frecuentes */}
-            <Card padding="sm">
-              <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">
-                <Calendar size={15} className="text-accent-dark" />
-                Motivos frecuentes
-              </h3>
-              <div className="grid grid-cols-2 gap-1.5">
-                {REASONS.map((r) => (
-                  <div key={r} className="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-primary/5 text-xs text-text-secondary">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent-dark flex-shrink-0" />
-                    {r}
+                <div className="flex items-center gap-2.5 p-2.5">
+                  <Clock size={16} className="text-text-muted flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-bold text-text">Horario de atención</p>
+                    <p className="text-xxs text-text-muted">{site.hours}</p>
                   </div>
-                ))}
+                </div>
               </div>
             </Card>
 
-            {/* Garantías */}
-            <Card padding="sm">
+            {/* 2. PRIVACIDAD Y FUNCIONAMIENTO — garantías + motivos frecuentes */}
+            <Card padding="md">
               <h3 className="font-bold text-sm text-primary mb-3 flex items-center gap-2">
                 <ShieldCheck size={15} className="text-accent-dark" />
                 Nuestras garantías
@@ -237,17 +183,54 @@ export default async function SolicitarConsultaPage() {
                   </div>
                 ))}
               </div>
+              <div className="mt-4 pt-4 border-t border-border/30">
+                <h4 className="text-xs font-bold text-text mb-2 flex items-center gap-2">
+                  <Calendar size={13} className="text-accent-dark" />
+                  Motivos frecuentes de consulta
+                </h4>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {REASONS.map((r) => (
+                    <div key={r} className="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-primary/5 text-xs text-text-secondary">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent-dark flex-shrink-0" />
+                      {r}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </Card>
 
-            {/* Horario */}
-            <div className="flex items-center gap-2.5 px-4 py-3 rounded-lg border border-border/30 bg-surface-alt">
-              <div className="w-8 h-8 rounded-md bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                <Clock size={15} />
+            {/* 3. URGENCIAS Y LÍMITES — emergencia + privacidad */}
+            <div className="p-4 rounded-lg bg-gradient-to-br from-aggravation/10 to-aggravation/5 border border-aggravation/20">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg bg-aggravation flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle size={18} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm text-aggravation leading-tight">¿Emergencia con detenido?</h3>
+                  <p className="text-xs text-text-secondary mt-1 leading-relaxed">
+                    Si un familiar está siendo detenido o necesita asistencia inmediata, no espere un minuto.
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-bold text-text">Horario de atención</p>
-                <p className="text-xxs text-text-muted">Lun–sáb 7:00–20:00 · Nacaome, Valle</p>
+              <div className="flex gap-2 mb-4">
+                <a
+                  href={telHref()}
+                  className="flex-1 inline-flex items-center justify-center gap-2 h-10 rounded-lg bg-aggravation text-white text-sm font-bold hover:opacity-90 transition-opacity"
+                >
+                  <Phone size={15} /> Llamar ahora
+                </a>
+                <a
+                  href={whatsappHref('Emergencia: necesito asistencia legal inmediata.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 h-10 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
+                >
+                  <MessageCircle size={15} /> WhatsApp
+                </a>
               </div>
+              <p className="text-xxs text-text-secondary leading-relaxed">
+                Consulta confidencial y sin compromiso · Sus datos están protegidos por el secreto profesional.
+              </p>
             </div>
           </div>
         </div>
