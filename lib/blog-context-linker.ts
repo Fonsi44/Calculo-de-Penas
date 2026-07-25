@@ -41,6 +41,34 @@ const MAX_TOTAL_LINKS = 8;
  * scripts. h4-h6 sí se permiten (son menos estructurales).
  */
 const PROTECTED_TAGS = ['a', 'h1', 'h2', 'h3', 'script', 'pre', 'code', 'button', 'style'];
+const ALREADY_ROOTED_OR_EXTERNAL = /^(?:\/|#|\?|[a-z][a-z0-9+.-]*:)/i;
+
+/**
+ * Convierte hrefs relativos almacenados en cuerpos editoriales a rutas desde
+ * la raíz. Un `href="solicitar-consulta"` dentro de `/blog/categoria/post`
+ * apuntaría, por semántica HTML, a una URL inexistente bajo esa carpeta.
+ *
+ * No modifica enlaces absolutos, protocolos especiales, anchors, queries ni
+ * rutas que ya empiezan por `/`.
+ */
+export function normalizeBlogInternalLinks(html: string): string {
+  return html.replace(
+    /(<a\b[^>]*\bhref\s*=\s*)(["'])([^"']*)\2/gi,
+    (full, prefix: string, quote: string, rawHref: string) => {
+      const href = rawHref.trim();
+      if (
+        !href ||
+        ALREADY_ROOTED_OR_EXTERNAL.test(href) ||
+        href.startsWith('./') ||
+        href.startsWith('../')
+      ) {
+        return full;
+      }
+
+      return `${prefix}${quote}/${href}${quote}`;
+    },
+  );
+}
 
 /**
  * Tokeniza el HTML separando texto de etiquetas, de forma que solo se

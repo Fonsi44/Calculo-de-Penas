@@ -562,7 +562,7 @@ export const landingsLocales: LandingLocal[] = [
     ],
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
-      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
+      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-guia-completa', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
       { categoria: 'derecho-civil', slug: 'reclamar-deuda-legalmente-honduras', titulo: 'Cómo reclamar una deuda legalmente en Honduras' },
     ],
   },
@@ -600,7 +600,7 @@ export const landingsLocales: LandingLocal[] = [
     distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
-      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
+      { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-guia-completa', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
       { categoria: 'derecho-civil', slug: 'reclamar-deuda-legalmente-honduras', titulo: 'Cómo reclamar una deuda legalmente en Honduras' },
     ],
   },

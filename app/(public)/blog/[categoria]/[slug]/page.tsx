@@ -19,7 +19,11 @@ import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
-import { injectContextLinks, detectMentionedCities } from '@/lib/blog-context-linker';
+import {
+  injectContextLinks,
+  detectMentionedCities,
+  normalizeBlogInternalLinks,
+} from '@/lib/blog-context-linker';
 import { RelatedCities, RelatedCategories } from '@/components/marketing/related-links';
 import {
   toCardData,
@@ -328,7 +332,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   // AUTO-LINKING CONTEXTUAL (Jul 2026): inserta enlaces internos a ciudades y
   // áreas de práctica detectadas en el body. Crea la tela de araña blog→geo.
   // Anti-over-optimization: máx 5 enlaces, respeta headings y anchors existentes.
-  const articleHtml = injectContextLinks(withHeadings, {
+  const articleHtml = injectContextLinks(normalizeBlogInternalLinks(withHeadings), {
     excludeHrefs: [postUrl], // evitar self-link
   });
   // Detecta ciudades mencionadas para el bloque RelatedCities al final.
