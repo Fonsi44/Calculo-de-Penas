@@ -1513,3 +1513,9 @@ details.faq-anim:not([open]) > summary:hover {
   }
 }
 
+/* Un modal de consentimiento abierto debe tener prioridad sobre cualquier
+   widget flotante, especialmente en viewports móviles. */
+body[data-consent-dialog-open='true'] [data-floating-widget] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

@@ -261,6 +261,7 @@ export function ChatWidget() {
   // auto en los hijos (botón y panel).
   return createPortal(
     <div
+      data-floating-widget
       className="print:hidden safe-bottom"
       style={{
         position: 'fixed',

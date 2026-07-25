@@ -168,6 +168,7 @@ export function FloatingContactRail() {
 
   return (
     <div
+      data-floating-widget
       aria-label="Acceso rápido de contacto"
       className="fixed bottom-4 right-4 z-30 flex flex-col gap-2 print:hidden safe-bottom"
     >
