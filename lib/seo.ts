@@ -14,6 +14,66 @@ import { site } from './site';
 import { stripHtml } from './strip-html';
 
 const TWITTER_HANDLE = '@Danilo_Pineda_M';
+export const META_TITLE_MAX = 60;
+const BRAND_SUFFIX = /\s*[\|\-–—]\s*Pineda y Asociados\s*$/i;
+const BRAND_TAIL = /\s+Pineda y Asociados\s*$/i;
+const DANGLING_TITLE_WORDS = new Set([
+  'y', 'o', 'e', 'u', 'ni', 'de', 'del', 'a', 'al', 'en', 'ante', 'la', 'el',
+  'las', 'los', 'un', 'una', 'unos', 'unas', 'con', 'sin', 'por', 'para',
+  'sobre', 'tras', 'desde', 'hasta', 'como', 'que', 'se', 'su', 'sus',
+]);
+
+function removeDanglingTitleEnding(value: string): string {
+  let result = value.replace(/\s*[\|\-–—:;,]\s*$/, '').trim();
+
+  for (let i = 0; i < 3; i++) {
+    const words = result.split(/\s+/).filter(Boolean);
+    if (words.length <= 1) break;
+    const last = words.at(-1)?.toLocaleLowerCase('es') ?? '';
+    if (!DANGLING_TITLE_WORDS.has(last)) break;
+    result = words.slice(0, -1).join(' ');
+  }
+
+  return result;
+}
+
+function truncateTitleAtWord(value: string, maxLength: number): string {
+  if (value.length <= maxLength) return removeDanglingTitleEnding(value);
+  const cut = value.slice(0, maxLength + 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  const truncated = lastSpace >= Math.floor(maxLength * 0.6)
+    ? cut.slice(0, lastSpace)
+    : value.slice(0, maxLength);
+  return removeDanglingTitleEnding(truncated);
+}
+
+/**
+ * Construye el title final de un artículo sin duplicar la marca, sin palabras
+ * colgantes y sin exceder el objetivo de presentación en SERP.
+ *
+ * La marca solo se añade cuando cabe completa. Si no cabe, se conserva la
+ * consulta principal: Google ya recibe `siteName` por metadata y JSON-LD.
+ */
+export function buildBlogMetaTitle(
+  rawTitle: string,
+  brand = site.name,
+  maxLength = META_TITLE_MAX,
+): string {
+  let baseTitle = rawTitle.replace(/\s*\.\.\.$/g, '').trim();
+
+  for (let i = 0; i < 2; i++) {
+    const previous = baseTitle;
+    baseTitle = baseTitle
+      .replace(BRAND_SUFFIX, '')
+      .replace(BRAND_TAIL, '')
+      .trim();
+    if (baseTitle === previous) break;
+  }
+
+  baseTitle = truncateTitleAtWord(baseTitle, maxLength);
+  const brandedTitle = `${baseTitle} | ${brand}`;
+  return brandedTitle.length <= maxLength ? brandedTitle : baseTitle;
+}
 
 export interface BuildMetadataInput {
   /** Título absoluto (sin sufijo de marca). Máx ~60 chars. */
