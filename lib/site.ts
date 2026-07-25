@@ -40,6 +40,57 @@ const envNoindex = process.env.NEXT_PUBLIC_NOINDEX;
  */
 const noindexActive = envNoindex === 'true';
 
+export const CANONICAL_SITE_ORIGIN = 'https://www.pinedayasociadoshn.com';
+const CANONICAL_SITE_HOSTNAME = 'www.pinedayasociadoshn.com';
+const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/;
+
+/**
+ * Normaliza y valida el origen canónico antes de que alimente metadata,
+ * sitemap, robots, RSS y JSON-LD.
+ *
+ * La validación es deliberadamente estricta: una variable de entorno con
+ * prefijos, saltos de línea, otro dominio, query o path debe detener el build
+ * en vez de publicar señales SEO corruptas.
+ */
+export function normalizeSiteOrigin(raw: string | null | undefined): string {
+  const candidate = (raw ?? CANONICAL_SITE_ORIGIN).trim();
+
+  if (!candidate || CONTROL_CHARACTERS.test(candidate)) {
+    throw new Error('NEXT_PUBLIC_SITE_URL contiene caracteres de control o está vacía.');
+  }
+
+  let parsed: URL;
+  try {
+    parsed = new URL(candidate);
+  } catch {
+    throw new Error('NEXT_PUBLIC_SITE_URL debe ser una URL absoluta válida.');
+  }
+
+  const hasUnexpectedParts =
+    parsed.protocol !== 'https:' ||
+    parsed.hostname !== CANONICAL_SITE_HOSTNAME ||
+    parsed.port !== '' ||
+    parsed.username !== '' ||
+    parsed.password !== '' ||
+    (parsed.pathname !== '' && parsed.pathname !== '/') ||
+    parsed.search !== '' ||
+    parsed.hash !== '';
+
+  const hasUnexpectedSpelling =
+    candidate !== CANONICAL_SITE_ORIGIN &&
+    candidate !== `${CANONICAL_SITE_ORIGIN}/`;
+
+  if (
+    hasUnexpectedParts ||
+    hasUnexpectedSpelling ||
+    parsed.origin !== CANONICAL_SITE_ORIGIN
+  ) {
+    throw new Error(`NEXT_PUBLIC_SITE_URL debe ser exactamente ${CANONICAL_SITE_ORIGIN}.`);
+  }
+
+  return CANONICAL_SITE_ORIGIN;
+}
+
 /**
  * Formatea un número E.164 (+50495363724) a display legible (+504 9536-3724).
  * Fuente única para phoneDisplay y whatsappDisplay → NAP coherente en todo el
@@ -61,7 +112,7 @@ function formatPhoneDisplay(e164: string): string {
 }
 
 export const site = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.pinedayasociadoshn.com').replace(/\/+$/, ''),
+  url: normalizeSiteOrigin(process.env.NEXT_PUBLIC_SITE_URL),
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? 'Pineda y Asociados',
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
