@@ -2,13 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   MapPin,
-  Navigation,
   Car,
   Bus,
   Phone,
   MessageCircle,
   Clock,
-  ExternalLink,
 } from 'lucide-react';
 import { site, absoluteUrl, telHref, whatsappHref } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
@@ -20,6 +18,7 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { TrackedMapsLink } from '@/components/marketing/tracked-maps-link';
 
 export const metadata: Metadata = {
   title: `Cómo Llegar al Bufete en ${site.address.city}, ${site.address.department}`,
@@ -52,9 +51,11 @@ const REF_POINTS = [
 
 const FROM_CITIES = [
   { from: 'Tegucigalpa', km: '~90 km', time: '1 h 45 min', route: 'Carretera CA-5 sur → desvío a Nacaome' },
-  { from: 'Choluteca', km: '~65 km', time: '1 h 10 min', route: 'Carretera Panamericana CA-1 oeste' },
-  { from: 'San Lorenzo', km: '~30 km', time: '40 min', route: 'Carretera CA-1 hacia Nacaome' },
-  { from: 'Amapala', km: '~50 km', time: '1 h 20 min', route: 'Vía Goascorán → Nacaome' },
+  // Distancias verificadas (FASE 1) contra cartografía: Rome2Rio/Travelmath/Toponavi.
+  // Valores aproximados por carretera; la distancia real varía según el trazado.
+  { from: 'Choluteca', km: '~55 km', time: '1 h', route: 'Carretera Panamericana CA-1 oeste' },
+  { from: 'San Lorenzo', km: '~18 km', time: '20 min', route: 'Carretera CA-1 hacia Nacaome' },
+  { from: 'Amapala', km: '~45 km', time: '1 h', route: 'Vía Goascorán → Nacaome (cruce en lancha a la Isla del Tigre)' },
 ];
 
 export default function ComoLlegarPage() {
@@ -84,6 +85,19 @@ export default function ComoLlegarPage() {
       <Section spacing="md">
         <Container size="lg">
           <div className="max-w-3xl mb-8">
+            {/* Aclaración sede real vs. zonas atendidas (FASE 2). La sede física
+                del bufete está únicamente en Nacaome; las demás localidades son
+                zonas de atención habitual, no oficinas. Sin afirmar accesibilidad
+                o estacionamiento no confirmados. */}
+            <div className="rounded-lg border border-accent/20 bg-accent/5 p-4 mb-5">
+              <p className="text-sm text-text leading-relaxed text-pretty">
+                <strong className="text-accent-dark">Sede única:</strong> la oficina
+                física de {site.name} está en {site.address.city}, {site.address.department}.
+                Las demás localidades que mencionamos en el sitio (San Lorenzo, Choluteca,
+                Goascorán y otras) son <strong>zonas de atención habitual</strong>, no
+                oficinas del bufete.
+              </p>
+            </div>
             <p className="text-sm md:text-base text-text-secondary leading-relaxed">
               Nuestro despacho se encuentra en el centro de {site.address.city}, sobre una de las vías
               principales de la ciudad. La oficina está señalizada y es de fácil acceso tanto en
@@ -95,6 +109,13 @@ export default function ComoLlegarPage() {
               abogado responsable de su caso. Si prefiere no desplazarse, también ofrecemos consulta
               telefónica y por videollamada. En cualquier caso, la primera consulta es confidencial
               y sin costo.
+            </p>
+            {/* Matiz de distancias aproximadas (FASE 2): las distancias y tiempos
+                listados abajo son aproximados por carretera y pueden variar según
+                la ruta, el tráfico y las condiciones climáticas. */}
+            <p className="text-xs text-text-muted leading-relaxed mt-3">
+              Las distancias y tiempos indicados más abajo son aproximados por carretera
+              y pueden variar según la ruta elegida, el tráfico y las condiciones climáticas.
             </p>
           </div>
         </Container>
@@ -114,15 +135,13 @@ export default function ComoLlegarPage() {
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <a
+                  <TrackedMapsLink
                     href={gmapsLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    origen="como-llegar-google-maps"
                     className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-white text-xs font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors"
                   >
-                    <Navigation size={14} /> Google Maps
-                    <ExternalLink size={11} className="opacity-70" />
-                  </a>
+                    Google Maps
+                  </TrackedMapsLink>
                   <Link
                     href="/solicitar-consulta#formulario"
                     className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border-light text-text text-xs font-bold btn-shadow-secondary btn-shadow-secondary-hover hover:bg-surface-alt"

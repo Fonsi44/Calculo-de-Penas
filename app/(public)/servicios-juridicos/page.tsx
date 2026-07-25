@@ -35,6 +35,7 @@ import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 import { RelatedCities } from '@/components/marketing/related-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
+import { ServiceBlocks } from '@/components/marketing/service-blocks';
 
 export const metadata: Metadata = buildMetadata({
   // 48 chars. Antes 69 (se truncaba en SERP). Mantiene intención local.
@@ -157,6 +158,21 @@ export default async function AreasJuridicasPage() {
             </p>
           </AnswerBlock>
         </Container>
+      </Section>
+
+      {/* BLOQUES POR NECESIDAD (FASE 2) — agrupa las áreas por intención de
+          necesidad (Personas y familia, Empresas, Sectores regulados,
+          Resolución de conflictos, Hondureños en España). Facilita la
+          navegación a usuarios no jurídicos. No sustituye al catálogo
+          completo (sigue abajo) ni modifica páginas individuales. */}
+      <Section background="muted" spacing="md" ariaLabel="Servicios por tipo de necesidad">
+        <SectionHeader
+          eyebrow="Por tipo de necesidad"
+          title="Encuentre el área según su situación"
+          subtitle="Si no conoce el nombre técnico del área, seleccione el bloque que mejor describa su caso. El catálogo completo de 14 áreas sigue a continuación."
+          align="center"
+        />
+        <ServiceBlocks />
       </Section>
 
       <Section background="muted" spacing="md">

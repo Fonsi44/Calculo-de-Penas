@@ -53,7 +53,7 @@ export const categoriasFaq: FaqCategory[] = [
       },
       {
         pregunta: '¿Cuándo prescribe un delito en Honduras?',
-        respuesta: 'La prescripción varía según la gravedad: los delitos graves pueden prescribir en 10 a 15 años, los menos graves en 3 a 5 años y las faltas en 6 meses. Delitos de lesa humanidad y algunos graves son imprescriptibles.',
+        respuesta: 'La prescripción de la acción penal está regulada por el Código Penal de Honduras (Decreto 130-2017 y reformas). El cómputo empieza el día en que se cometió el delito y el plazo depende de la pena máxima prevista para cada figura delictiva, por lo que varía considerablemente según el caso. Ciertos delitos graves y los de lesa humanidad son imprescriptibles. La prescripción se interrumpe al iniciarse el procedimiento. Para saber si su caso concreto prescribe, solicite consulta con el expediente.',
       },
     ],
   },
@@ -201,7 +201,7 @@ export const categoriasFaq: FaqCategory[] = [
       },
       {
         pregunta: '¿Las horas extras se pagan?',
-        respuesta: 'Sí. Las horas extras se pagan con un recargo del 100% sobre el salario ordinario para las primeras dos horas diurnas, y del 150% para horas nocturnas y las siguientes.',
+        respuesta: 'Sí. Conforme al Código del Trabajo de Honduras (arts. 270, 273 y 352), el trabajo en horas extraordinarias se paga con un recargo sobre el salario ordinario: 25 % para horas extras diurnas y 50 % para las nocturnas. El recargo exacto depende del tipo de jornada y del convenio aplicable; en la consulta revisamos su caso concreto.',
       },
     ],
   },
@@ -360,31 +360,43 @@ export const categoriasFaq: FaqCategory[] = [
     preguntas: [
       {
         pregunta: '¿En qué zonas de Honduras trabajan?',
-        respuesta: 'Nuestra sede está en Nacaome, Valle. Cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca y municipios aledaños. Para casos que requieran desplazamiento fuera de esta zona, puede consultarnos y valoramos la viabilidad del caso.',
+        respuesta: `Nuestra sede física está en Nacaome, Valle. Cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca, Goascorán, Amapala y municipios aledaños. Las demás localidades que mencionamos son zonas de atención habitual, no oficinas del bufete. Para casos que requieran desplazamiento fuera de esta zona, puede consultarnos y valoramos la viabilidad del caso.`,
       },
       {
         pregunta: '¿Ofrecen consulta inicial gratuita?',
-        respuesta: 'Sí, ofrecemos una consulta inicial confidencial y sin compromiso para evaluar su caso y determinar si podemos ayudarle.',
+        respuesta: 'Sí, ofrecemos una consulta inicial confidencial y sin compromiso para evaluar su caso y determinar si podemos ayudarle. La primera consulta no le obliga a contratar nuestros servicios.',
       },
       {
         pregunta: '¿Cómo se cobran los honorarios?',
-        respuesta: 'Trabajamos con honorarios fijos por caso, cuotas periódicas o porcentaje según la naturaleza del asunto. Todo se entrega por escrito y se acuerda previamente.',
+        respuesta: 'Los honorarios dependen de la complejidad, la urgencia y las etapas previstas del caso. Trabajamos con honorarios fijos por caso, cuotas periódicas o porcentaje según la naturaleza del asunto. En todos los casos se entregan por escrito y se acuerdan previamente; no hay tarifa fija sin analizar el expediente.',
       },
       {
-        pregunta: '¿Qué métodos de pago aceptan?',
-        respuesta: 'Aceptamos efectivo, transferencia bancaria, depósito en cuenta y pagos electrónicos. Para su comodidad, ofrecemos opciones de pago fraccionado en ciertos casos.',
+        pregunta: '¿Cómo se entrega el presupuesto?',
+        respuesta: 'Tras la consulta inicial se entrega un presupuesto por escrito con el alcance del trabajo, las etapas previstas y los honorarios. Ninguna actuación profesional se inicia sin su autorización expresa, así que usted decide con información completa antes de contratar.',
       },
       {
-        pregunta: '¿Puedo contratarlos desde el extranjero?',
-        respuesta: 'Sí. Atendemos consultas virtuales y podemos representarlo mediante poder notarial. Trabajamos con hondureños residentes en Estados Unidos, España y otros países.',
+        pregunta: '¿Qué ocurre después del primer contacto?',
+        respuesta: 'Tras recibir su solicitud, el bufete revisa la información en horario hábil y le responde por el canal que haya indicado. Si procede, se agenda una consulta y, después, se entrega un presupuesto por escrito. El envío del formulario de consulta no implica aceptación formal del asunto: la relación profesional nace únicamente con la firma del contrato de prestación de servicios.',
       },
       {
-        pregunta: '¿Cuánto tiempo tengo para demandar después de un accidente?',
-        respuesta: 'Depende del tipo de acción. En materia civil, el plazo general es de 1 a 5 años según el caso. En materia penal, varía según el delito. Consulte con un abogado lo antes posible.',
+        pregunta: '¿Atienden urgencias penales?',
+        respuesta: 'Las detenciones, audiencias iniciales y medidas cautelares urgentes se priorizan. Para activar la atención prioritaria use el WhatsApp directo marcando que es una urgencia penal. No se compromete respuesta inmediata ni disponibilidad permanente: el compromiso es atender en horario hábil con la diligencia que cada caso requiere.',
+      },
+      {
+        pregunta: '¿La información que comparto es confidencial?',
+        respuesta: 'Sí. Toda comunicación está protegida por el secreto profesional del abogado y la normativa hondureña de protección de datos. No se comparte ningún dato sin autorización expresa del cliente.',
       },
       {
         pregunta: '¿Qué debo llevar a mi primera consulta?',
-        respuesta: 'Documentos relacionados con su caso: identificación, contratos, facturas, notificaciones, actas, certificaciones o cualquier documento que considere relevante. Nosotros le orientaremos.',
+        respuesta: 'No envíe originales en el primer contacto: para la evaluación inicial basta con una descripción de la situación y, si los tiene, copias digitales legibles de documentos relacionados (identificación, contratos, facturas, notificaciones, actas o certificaciones). El abogado le indicará qué documentación adicional conviene aportar y en qué formato, una vez conocido el caso.',
+      },
+      {
+        pregunta: '¿Puedo contratarlos desde el extranjero?',
+        respuesta: 'Sí. Atendemos consultas virtuales y podemos representarlo mediante poder notarial. Trabajamos con hondureños residentes en Estados Unidos, España y otros países. Lo que requiere autoridad hondureña lo gestionamos directamente; lo que corresponde a autoridades del país de residencia se orienta con claridad.',
+      },
+      {
+        pregunta: '¿Qué métodos de pago aceptan?',
+        respuesta: 'Los medios de pago se acuerdan en el presupuesto por escrito (efectivo, transferencia y depósito en cuenta son habituales). Los detalles concretos y la posibilidad de pago fraccionado se confirman en la contratación según el caso, no en el primer contacto.',
       },
     ],
   },

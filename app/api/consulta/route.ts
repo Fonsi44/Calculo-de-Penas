@@ -31,6 +31,39 @@ export async function POST(request: Request) {
     return Response.json({ error: parsed.error }, { status: 400 });
   }
 
+  // FASE 2: los campos opcionales (medio preferido, localidad, urgencia y
+  // condicionales) se agregan al resumen que se persiste en DB y se envía por
+  // email. No se añaden columnas a solicitudesConsulta (no se migra el schema,
+  // restricción §7 AGENTS.md). Solo se incluyen los campos con valor real.
+  const extras: string[] = [];
+  const d = parsed.data;
+  if (d.medioPreferido) {
+    const labels: Record<string, string> = {
+      whatsapp: 'WhatsApp',
+      telefono: 'Teléfono',
+      email: 'Correo',
+      llamada: 'Llamada programada',
+    };
+    extras.push(`Medio preferido: ${labels[d.medioPreferido] ?? d.medioPreferido}`);
+  }
+  if (d.localidad) extras.push(`Localidad/país: ${d.localidad}`);
+  if (d.urgencia) {
+    const uLabels: Record<string, string> = {
+      normal: 'Normal',
+      alta: 'Alta',
+      penal: 'Urgencia penal',
+    };
+    extras.push(`Urgencia: ${uLabels[d.urgencia] ?? d.urgencia}`);
+  }
+  if (d.fechaAudiencia) extras.push(`Fecha audiencia/citación: ${d.fechaAudiencia}`);
+  if (d.hayDetencion) extras.push(`¿Hay detención?: ${d.hayDetencion === 'si' ? 'Sí' : 'No'}`);
+  if (d.fechaDespido) extras.push(`Fecha de despido: ${d.fechaDespido}`);
+  if (d.residenciaEspana) extras.push(`Reside en España: ${d.residenciaEspana === 'si' ? 'Sí' : 'No'}`);
+  if (d.disponibleLlamada) extras.push(`Disponible para llamada: ${d.disponibleLlamada === 'si' ? 'Sí' : 'No'}`);
+  const resumenCompleto = extras.length > 0
+    ? `${d.resumen}\n\n— Datos del formulario —\n${extras.join('\n')}`
+    : d.resumen;
+
   // Cloudflare Turnstile — bypass seguro si faltan claves (lib/captcha.ts).
   const turnstileOk = await verifyTurnstileToken(
     (body as Record<string, unknown>)['cf-turnstile-response'] as string | undefined,
@@ -46,7 +79,7 @@ export async function POST(request: Request) {
     telefono: parsed.data.telefono,
     email: parsed.data.email ?? null,
     motivo: parsed.data.motivo,
-    resumen: parsed.data.resumen,
+    resumen: resumenCompleto,
     ip: ipFromRequest(request),
     userAgent: uaFromRequest(request),
     emailStatus: 'pending',
@@ -68,7 +101,7 @@ export async function POST(request: Request) {
         telefono: parsed.data.telefono,
         email: parsed.data.email ?? null,
         motivo: parsed.data.motivo,
-        resumen: parsed.data.resumen,
+        resumen: resumenCompleto,
         ip: ipFromRequest(request),
         userAgent: uaFromRequest(request),
         submittedAt: new Date(),

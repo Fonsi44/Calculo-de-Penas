@@ -22,6 +22,21 @@ import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { RelatedCities } from '@/components/marketing/related-links';
+// FASE 3 — bloques de detalle para servicios prioritarios.
+import {
+  RespuestaDirecta,
+  SituacionesHabituales,
+  SeparacionAudiencias,
+  DocumentChecklist,
+  ProcessList,
+  InstitutionsBlock,
+  FactorsThatVary,
+  CommonMistakes,
+  SourcesAndDisclaimer,
+  ContextualCta,
+  ViewServiceTracker,
+} from '@/components/marketing/service-detail-blocks';
+import { LegalReviewNotice } from '@/components/marketing/legal-review-notice';
 
 /**
  * Mapa de slug de área → abogado/a especialista que la dirige.
@@ -235,6 +250,48 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           </div>
         </Container>
       </section>
+
+      {/* FASE 3 — Bloques de detalle condicionales (solo si el área los aporta).
+          Cada bloque es independiente; las áreas secundarias que no tengan estos
+          campos simplemente no los renderizan, sin dejar bloques vacíos. */}
+      {area.respuestaDirecta ? (
+        <RespuestaDirecta texto={area.respuestaDirecta} />
+      ) : null}
+
+      {area.situacionesHabituales && area.situacionesHabituales.length > 0 ? (
+        <SituacionesHabituales items={area.situacionesHabituales} />
+      ) : null}
+
+      {area.separacionAudiencias && area.separacionAudiencias.length > 0 ? (
+        <SeparacionAudiencias bloques={area.separacionAudiencias} />
+      ) : null}
+
+      {area.documentosIniciales && area.documentosIniciales.items.length > 0 ? (
+        <DocumentChecklist
+          items={area.documentosIniciales.items}
+          nota={area.documentosIniciales.nota}
+        />
+      ) : null}
+
+      {area.proceso && area.proceso.pasos.length > 0 ? (
+        <ProcessList
+          pasos={area.proceso.pasos}
+          intro={area.proceso.intro}
+          nota={area.proceso.nota}
+        />
+      ) : null}
+
+      {area.autoridades && area.autoridades.length > 0 ? (
+        <InstitutionsBlock items={area.autoridades} />
+      ) : null}
+
+      {area.factoresQueVarian && area.factoresQueVarian.length > 0 ? (
+        <FactorsThatVary items={area.factoresQueVarian} />
+      ) : null}
+
+      {area.erroresFrecuentes && area.erroresFrecuentes.length > 0 ? (
+        <CommonMistakes items={area.erroresFrecuentes} />
+      ) : null}
 
       {/* SU ABOGADO/A —bloque condicional por slug. Refuerza E-E-A-T
           alineando title↔H1↔entidad visible. Solo se renderiza si el área
@@ -500,10 +557,35 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
         return null;
       })()}
 
+      {/* FASE 3 — fuentes generales + aviso orientativo (§13). No muestra
+          "Revisado por": la página queda pending/needs_update hasta firma humana. */}
+      <SourcesAndDisclaimer fuentes={area.fuentesGenerales} />
+
+      {/* FASE 3 — CTA contextual del área (§15). Reemplaza al ConsultationCTA
+          genérico cuando el área define ctaContextual; conserva el cierre estándar
+          en caso contrario para no romper áreas secundarias. */}
+      {area.ctaContextual ? (
+        <ContextualCta
+          href={area.ctaContextual.href}
+          label={area.ctaContextual.label}
+          secondaryHref="/despacho"
+          secondaryLabel="Conozca el despacho"
+        />
+      ) : (
+        <ConsultationCTA />
+      )}
+
+      {/* FASE 3 — atribución de revisión (no renderiza en pending) y aviso. */}
+      <Container>
+        <LegalReviewNotice path={`/servicios-juridicos/${slug}`} />
+      </Container>
+
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
-      <ConsultationCTA />
+
+      {/* FASE 3 — view_service al montar (sin PII; excluido en preview/intranet). */}
+      <ViewServiceTracker serviceSlug={slug} />
     </>
   );
 }

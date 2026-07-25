@@ -13,6 +13,7 @@ import {
   Gavel,
   Award,
   BriefcaseBusiness,
+  Globe,
 } from 'lucide-react';
 import { site, FOUNDER_PROFILE, telHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
@@ -31,6 +32,8 @@ import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { IconBadge } from '@/components/marketing/icon-badge';
+import { ProblemSelector } from '@/components/marketing/problem-selector';
+import { TrustLimits } from '@/components/marketing/trust-limits';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 
 export const metadata: Metadata = {
@@ -272,6 +275,14 @@ export default async function HomePage() {
       {/* TRUST BAR — sellos de autoridad (strip compacto) */}
       <TrustBar background="light" />
 
+      {/* SELECTOR POR PROBLEMA (FASE 2) — accesos comprensibles para usuarios
+          que no conocen la rama jurídica. Cada entrada dirige a una página
+          real verificada. No sustituye al catálogo de áreas (lo hace la
+          sección siguiente), sino que ataja la decisión del usuario. */}
+      <Section background="muted" spacing="md" ariaLabel="Selector por problema">
+        <ProblemSelector />
+      </Section>
+
       {/* ÁREAS DESTACADAS — 4 especialidades principales en grid uniforme
           (Fase 3.1 revisada). Penal, familia, laboral y civil: las 4 como
           ServiceCard idénticas, con foto, alineadas en grid de 4 columnas.
@@ -353,6 +364,36 @@ export default async function HomePage() {
         slugs={[...TOP_ORGANIC_GUIDE_SLUGS]}
       />
 
+      {/* ATENCIÓN PARA HONDUREÑOS EN ESPAÑA (FASE 2) — bloque breve que
+          conecta la portada con el módulo específico. No detalla trámites
+          (lo hace /hondurenos-en-espana); solo señala la línea de servicio
+          y delimita HN vs ES sin inventar colaboraciones. */}
+      <Section background="warm" spacing="md" ariaLabel="Hondureños en España">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
+            <Globe size={20} aria-hidden="true" />
+          </span>
+          <p className="eyebrow-rule text-accent-dark text-xs font-bold uppercase tracking-eyebrow mb-2">
+            Hondureños en España
+          </p>
+          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
+            ¿Reside en España y necesita gestionar algo en Honduras?
+          </h2>
+          <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
+            Coordinamos poderes, divorcios, custodia, sucesiones, trámites
+            documentales y apostilla entre España y Honduras. Lo que requiere
+            autoridad hondureña lo gestionamos directamente; lo que corresponde a
+            la Administración española se orienta con claridad.
+          </p>
+          <Link
+            href="/hondurenos-en-espana"
+            className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Ver servicios para hondureños en España <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Section>
+
       {/* VISÍTENOS — bloque de cercanía con datos de contacto + mapa.
           Conserva el rol de la sección original pero más compacto. */}
       <Section spacing="md" ariaLabel="Visítenos">
@@ -418,6 +459,14 @@ export default async function HomePage() {
             </Card>
           </div>
         </div>
+      </Section>
+
+      {/* CONFIANZA Y LÍMITES (FASE 2) — elementos confirmados del bufete
+          (sede, atención directa, confidencialidad, presupuesto, equipo) más
+          un bloque explícito de lo que NO se garantiza. Sin contadores
+          ficticios ni resultados no comprobados (R4, R12). */}
+      <Section background="muted" spacing="md" ariaLabel="Confianza y límites">
+        <TrustLimits />
       </Section>
 
       {/* CTA FINAL — llamada a la acción premium (componente compartido).

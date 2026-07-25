@@ -336,7 +336,7 @@ export default async function SolicitarConsultaPage() {
               telephone: site.phone,
               contactType: 'customer service',
               areaServed: 'HN',
-              availableLanguage: ['Spanish'],
+              availableLanguage: ['es-HN', 'es-ES'],
               hoursAvailable: site.hoursStructured.map((h) => ({
                 '@type': 'OpeningHoursSpecification',
                 dayOfWeek: h.dayOfWeek,

@@ -23,6 +23,7 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_DESPACHO } from '@/data/faqs-hubs';
 import { AnswerBlock } from '@/components/marketing/answer-block';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
+import { TrustLimits } from '@/components/marketing/trust-limits';
 
 export const metadata: Metadata = buildMetadata({
   // 56 chars. Antes 38 (subutilizado).
@@ -492,6 +493,58 @@ export default async function DespachoPage() {
             cta={{ href: '/servicios-juridicos', label: 'Ver las áreas del derecho que atendemos' }}
           />
         </Container>
+      </Section>
+
+      {/* CÓMO SE ASIGNAN LOS ASUNTOS + PRESUPUESTO Y CONTRATACIÓN (FASE 2).
+          Dos bloques breves que explican el proceso interno y la transparencia
+          económica. Sin cifras fijas (R4): el presupuesto siempre es por
+          escrito y caso a caso. No se prometen plazos cerrados ni resultados. */}
+      <Section background="muted" spacing="md" ariaLabel="Asignación y contratación">
+        <div className="grid md:grid-cols-2 gap-4 lg:gap-5">
+          <Card padding="md" className="h-full border-l-4 border-l-accent card-premium">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center border border-accent/30 flex-shrink-0">
+                <Scale size={20} aria-hidden="true" />
+              </div>
+              <h2 className="font-serif font-bold text-lg text-text leading-tight">
+                Cómo se asignan los asuntos
+              </h2>
+            </div>
+            <p className="text-sm text-text-secondary leading-relaxed text-pretty">
+              En la primera consulta se identifica el área principal del caso y se
+              asigna al abogado responsable de esa rama. Cuando el asunto cruza
+              varias ramas, el equipo coordina internamente y el cliente mantiene
+              un único punto de contacto. El responsable del caso es quien firma
+              los escritos y comparece, no un intermediario.
+            </p>
+          </Card>
+          <Card padding="md" className="h-full border-l-4 border-l-primary card-premium">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/15 flex-shrink-0">
+                <Briefcase size={20} aria-hidden="true" />
+              </div>
+              <h2 className="font-serif font-bold text-lg text-text leading-tight">
+                Presupuesto y contratación
+              </h2>
+            </div>
+            <p className="text-sm text-text-secondary leading-relaxed text-pretty">
+              Tras la consulta inicial se entrega un presupuesto por escrito con el
+              alcance del trabajo y los honorarios. Los honorarios dependen de la
+              complejidad, la urgencia y las etapas previstas: no hay tarifa fija.
+              Ninguna actuación profesional se inicia sin su autorización expresa,
+              y la relación jurídica nace con la firma del contrato de prestación
+              de servicios.
+            </p>
+          </Card>
+        </div>
+      </Section>
+
+      {/* CONFIANZA Y LÍMITES (FASE 2) — reutiliza el componente de la home.
+          En /despacho omitimos el enlace "Conozca el despacho" (estamos ya en
+          ella). El bloque de límites declara de forma prudente lo que NO se
+          garantiza, sin afirmaciones pendientes (P01–P15) ni cifras inventadas. */}
+      <Section spacing="md" ariaLabel="Confianza y límites">
+        <TrustLimits showLimitsLink={false} />
       </Section>
 
       <script
