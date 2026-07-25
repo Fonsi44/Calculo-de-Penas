@@ -33,6 +33,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
+import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { Card } from '@/components/ui/card';
 import type {
   BloqueSeparacion,
@@ -250,28 +251,19 @@ export function ProcessList({
   title?: string;
 }) {
   if (!pasos.length) return null;
+  // Mapeo de PasoProceso (data) → ProcessStep (UI) preservando orden y contenido.
+  // El render interno delega en <ProcessStepper variant='timeline'> (Hito 7.3).
+  const steps = pasos.map((paso, i) => ({
+    step: i + 1,
+    title: paso.titulo,
+    desc: paso.descripcion,
+  }));
   return (
     <Section background="default" spacing="md" id="proceso">
       <SectionHeader eyebrow={eyebrow} title={title} subtitle={intro} align="left" />
-      <ol className="mt-6 space-y-4 max-w-3xl">
-        {pasos.map((paso, i) => (
-          <li key={paso.titulo}>
-            <Card padding="md" className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">
-                {i + 1}
-              </span>
-              <div className="min-w-0">
-                <h3 className="font-bold text-sm md:text-base text-primary leading-snug">
-                  {paso.titulo}
-                </h3>
-                <p className="mt-1 text-sm text-text-secondary leading-relaxed">
-                  {paso.descripcion}
-                </p>
-              </div>
-            </Card>
-          </li>
-        ))}
-      </ol>
+      <div className="mt-6">
+        <ProcessStepper steps={steps} variant="timeline" />
+      </div>
       <p className="mt-4 text-xs text-text-muted leading-relaxed max-w-3xl">
         {nota ??
           'El envío del formulario de consulta no supone aceptación formal del asunto. La estrategia y los honorarios se confirman por escrito tras la revisión preliminar.'}
