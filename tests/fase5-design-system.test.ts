@@ -25,7 +25,6 @@ import { resolve } from 'node:path';
 import { site } from '@/lib/site';
 
 const ROOT = resolve(__dirname, '..');
-const PUBLIC = resolve(ROOT, 'app/(public)');
 const COMPONENTS = resolve(ROOT, 'components/marketing');
 
 function readRoot(rel: string): string {
