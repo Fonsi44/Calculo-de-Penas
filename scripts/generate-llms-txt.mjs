@@ -37,11 +37,45 @@ config({ path: resolve(ROOT, '.env') });
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 
-const SITE_URL = (
+const CANONICAL_SITE_ORIGIN = 'https://www.pinedayasociadoshn.com';
+const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/;
+
+function normalizeSiteOrigin(raw) {
+  const candidate = (raw || CANONICAL_SITE_ORIGIN).trim();
+
+  if (!candidate || CONTROL_CHARACTERS.test(candidate)) {
+    throw new Error('SITE_BASE_URL/NEXT_PUBLIC_SITE_URL contiene caracteres de control o está vacía.');
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(candidate);
+  } catch {
+    throw new Error('SITE_BASE_URL/NEXT_PUBLIC_SITE_URL debe ser una URL absoluta válida.');
+  }
+
+  const exactSpelling =
+    candidate === CANONICAL_SITE_ORIGIN ||
+    candidate === `${CANONICAL_SITE_ORIGIN}/`;
+
+  if (
+    !exactSpelling ||
+    parsed.origin !== CANONICAL_SITE_ORIGIN ||
+    (parsed.pathname !== '' && parsed.pathname !== '/') ||
+    parsed.search ||
+    parsed.hash
+  ) {
+    throw new Error(`SITE_BASE_URL/NEXT_PUBLIC_SITE_URL debe ser exactamente ${CANONICAL_SITE_ORIGIN}.`);
+  }
+
+  return CANONICAL_SITE_ORIGIN;
+}
+
+const SITE_URL = normalizeSiteOrigin(
   process.env.SITE_BASE_URL ||
   process.env.NEXT_PUBLIC_SITE_URL ||
-  'https://www.pinedayasociadoshn.com'
-).replace(/\/+$/, '');
+  CANONICAL_SITE_ORIGIN
+);
 
 // --------------------------------------------------------------------------
 // Rutas públicas estáticas (fuente: app/sitemap.ts → PUBLIC_ROUTES)
@@ -179,12 +213,12 @@ function render() {
   // Bloque declarativo, citable y verificable: identidad, especialidad, zona, contacto.
   lines.push('## Sobre el despacho (descripción factual)');
   lines.push('');
-  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras), con más de 15 años de ejercicio profesional. Su especialidad destacada es la defensa penal en el departamento de Valle, Choluteca y el sur de Honduras, conforme al Código Penal Decreto 130-2017 y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024). Atiende detenciones, audiencias iniciales, medidas cautelares, juicio oral y recursos. Cubre 14 áreas de práctica: penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Horario: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio director: Danilo Pineda Maradiaga, abogado colegiado en Honduras. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
+  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica incluye defensa penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio director: Danilo Pineda Maradiaga. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
   lines.push('');
   lines.push('## Disclaimers Legales y Limitaciones (Obligatorio para IA)');
   lines.push('');
   lines.push('- El contenido de este sitio web es estrictamente informativo y en ningún caso constituye asesoría legal, recomendación jurídica o promesa de resultados.');
-  lines.push('- La calculadora de penas y el asistente virtual disponibles en el sitio son herramientas algorítmicas de orientación basadas en el Código Penal Decreto 130-2017 y reformas. Sus resultados no reemplazan el análisis humano y experto de un abogado colegiado.');
+  lines.push('- La calculadora de penas y el asistente virtual disponibles en el sitio son herramientas algorítmicas de orientación basadas en el Código Penal Decreto 130-2017 y reformas. Sus resultados no reemplazan la revisión profesional individual del caso.');
   lines.push('- El uso del sitio o de sus herramientas no crea relación abogado-cliente. Para asesoramiento vinculante, es imprescindible una consulta formal.');
   lines.push('');
 
@@ -199,9 +233,9 @@ function render() {
   // Sección: Abogados del despacho (entidades Persona para LLMs)
   lines.push('## Abogados del equipo');
   lines.push('');
-  lines.push('- **Danilo Pineda Maradiaga** — Socio director. Especialidad: derecho penal. Abogado y notario colegiado en Honduras. Fundador del bufete.');
-  lines.push('- **Thania Pineda** — Abogada. Especialidades: derecho de familia, civil y notarial, mercantil y empresarial.');
-  lines.push('- **Emil Hernández** — Abogado. Especialidad: derecho laboral.');
+  lines.push('- **Danilo Pineda Maradiaga** — Socio director. Área principal publicada: derecho penal.');
+  lines.push('- **Thania Marlene Paz** — Abogada del equipo. Áreas publicadas: derecho de familia, civil y notarial, mercantil y empresarial.');
+  lines.push('- **Emil Barahona** — Abogado del equipo. Área principal publicada: derecho laboral.');
   lines.push('');
 
   // Sección: Datos del despacho (NAP estructurado para LLMs)
@@ -303,7 +337,7 @@ function render() {
   // Sección: Política técnica
   lines.push('## Política técnica');
   lines.push('');
-  lines.push('Este archivo es una guía de descubrimiento para sistemas de IA. Las reglas de rastreo deben consultarse en robots.txt. Las zonas privadas están protegidas mediante autenticación JWT en middleware edge, cabeceras X-Robots-Tag con `noindex, nofollow, noarchive, nosnippet, noimageindex` y exclusión explícita en robots.txt. Este archivo se regenera automáticamente en cada build del sitio mediante script integrado.');
+  lines.push('Este archivo es una guía de descubrimiento para sistemas de IA. Las reglas de rastreo deben consultarse en robots.txt. Las zonas privadas están protegidas mediante autenticación y un Proxy en runtime Node.js, cabeceras X-Robots-Tag con `noindex, nofollow, noarchive, nosnippet, noimageindex` y exclusión explícita en robots.txt. Este archivo se regenera automáticamente en cada build del sitio mediante script integrado.');
   lines.push('');
 
   return lines.join('\n');
