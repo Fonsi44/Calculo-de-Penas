@@ -47,7 +47,13 @@ import type {
 /**
  * Respuesta directa orientada a AEO/GEO. Debe ser comprensible fuera del
  * contexto de la página y potencialmente citable por buscadores y asistentes.
- * Reutiliza el patrón visual del `AnswerBlock` pero con foco en la respuesta.
+ *
+ * FASE 5: composición tipográfica alineada con `AnswerBlock` (mismo eyebrow
+ * `eyebrow-rule text-accent-dark`, misma línea dorada decorativa de 12×3px,
+ * mismo ancho legible `max-w-2xl`). La diferencia semántica con AnswerBlock
+ * es que aquí NO hay pregunta como <h2>: el H1 lo aporta el hero de la
+ * página de servicio, y la respuesta directa es un párrafo post-H1, no una
+ * pregunta formada. Forzar una h2 aquí inventaría contenido (R4/R17).
  */
 export function RespuestaDirecta({
   texto,
@@ -61,15 +67,21 @@ export function RespuestaDirecta({
   return (
     <Section background="warm" spacing="md">
       <Container size="lg">
-        <p className="eyebrow-rule text-accent-dark mb-3">{eyebrow}</p>
-        <p className="text-base md:text-lg text-text leading-relaxed text-pretty max-w-3xl">
-          {texto}
-        </p>
-        {children ? (
-          <div className="mt-4 text-sm text-text-secondary leading-relaxed">
-            {children}
-          </div>
-        ) : null}
+        <div className="max-w-2xl">
+          <p className="eyebrow-rule text-accent-dark mb-2.5">{eyebrow}</p>
+          <div
+            className="mb-4 h-[3px] w-12 rounded-full bg-accent/80"
+            aria-hidden="true"
+          />
+          <p className="text-base md:text-lg text-text leading-relaxed text-pretty">
+            {texto}
+          </p>
+          {children ? (
+            <div className="mt-4 text-sm text-text-secondary leading-relaxed">
+              {children}
+            </div>
+          ) : null}
+        </div>
       </Container>
     </Section>
   );
