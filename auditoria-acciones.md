@@ -692,7 +692,8 @@ pendientes de tratamiento separado. Sin push.
 ## 2026-07-25 — Correcciones SEO/GEO posteriores a auditoría integral
 
 **Modo:** `IMPLEMENTACIÓN`, autorizado por el usuario. Trabajo directo sobre
-`main`, sin ramas, PR, push, cambios de base de datos ni despliegue.
+`main`, sin ramas, PR, push ni cambios de base de datos. El despliegue de
+producción fue autorizado expresamente en una segunda fase.
 
 **Implementado:**
 
@@ -759,14 +760,23 @@ categorías. Las tres consolidaciones canónicas de artículos locales solo se
 aceptan porque sus URLs no están en el sitemap y sus landings destino sí.
 Resultado final: 221/221 rutas sin incidencias.
 
-**Datos live:** `seo:doctor` mantuvo 17 OK, 1 ERROR (gcloud CLI no instalada) y
-5 pendientes; GSC/GA4 siguen accesibles por OAuth. `seo:collect` extrajo GSC,
-GA4, Bing e IndexNow dry-run, pero confirmó el fallo del health check y sitemap
-de la producción todavía desplegada. Los artefactos live regenerados se
-restauraron y no se versionaron.
+**Producción desplegada:** se sobrescribió únicamente
+`NEXT_PUBLIC_SITE_URL` con `https://www.pinedayasociadoshn.com` y se publicó el
+commit validado. El dominio principal quedó asociado a la nueva versión. La
+auditoría prioritaria obtuvo 30/30 probes correctos y el rastreo independiente
+de producción verificó 212/212 URLs del sitemap, 801 destinos internos y 840
+bloques JSON-LD con 0 errores. `robots.txt`, `llms.txt`, la key de IndexNow,
+DNS y redirección HTTP→HTTPS responden correctamente.
 
-**Pendiente externo:** corregir la variable de producción, desplegar, repetir
-el rastreo de 212 URLs y solo entonces reenviar sitemap/IndexNow. La antigüedad,
-el año de fundación, los fundadores y la colegiación quedan confirmados por el
-titular; la revisión jurídica de porcentajes, plazos y demás afirmaciones del
-registro legal continúa `NO VALIDADO`.
+**Notificación a buscadores:** IndexNow recibió 74 URLs canónicas en un único
+lote controlado; tanto `api.indexnow.org` como Bing respondieron HTTP 200. El
+reenvío del sitemap a Google Search Console por API fue rechazado con HTTP 403
+porque el refresh token local solo tiene alcance de lectura. La propiedad sí
+figura con permiso `siteOwner`; queda pendiente completar el envío desde la
+sesión web o renovar el token con alcance `webmasters`.
+
+**Pendiente externo residual:** confirmar el sitemap en Google Search Console
+y vigilar su procesamiento. La antigüedad, el año de fundación, los fundadores
+y la colegiación quedan confirmados por el titular; la revisión jurídica de
+porcentajes, plazos y demás afirmaciones del registro legal continúa
+`NO VALIDADO`.
