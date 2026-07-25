@@ -38,8 +38,7 @@ export const metadata: Metadata = {
     'medidas cautelares Choluteca',
   ],
   openGraph: {
-    title:
-      'Abogado Penalista en Choluteca | Defensa Penal Urgente · Sur de Honduras',
+    title: 'Abogado Penalista Choluteca | Pineda y Asociados',
     description:
       'Abogado penalista en Choluteca. Defensa penal urgente en detenciones, audiencias, medidas cautelares y juicio oral en el sur de Honduras.',
     url: '/abogado-penalista-choluteca',
@@ -57,8 +56,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title:
-      'Abogado Penalista en Choluteca | Defensa Penal Urgente · Sur de Honduras',
+    title: 'Abogado Penalista Choluteca | Pineda y Asociados',
     description:
       'Abogado penalista en Choluteca. Defensa penal urgente en detenciones, audiencias, medidas cautelares y juicio oral en el sur de Honduras.',
     images: ['/og/penal.webp'],

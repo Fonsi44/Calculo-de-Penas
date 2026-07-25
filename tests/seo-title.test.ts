@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { buildBlogMetaTitle, META_TITLE_MAX } from '@/lib/seo';
+import {
+  buildBlogMetaDescription,
+  buildBlogMetaTitle,
+  META_DESC_MAX,
+  META_DESC_MIN,
+  META_TITLE_MAX,
+} from '@/lib/seo';
 
 describe('buildBlogMetaTitle', () => {
   it('añade la marca cuando cabe completa', () => {
@@ -44,5 +50,46 @@ describe('buildBlogMetaTitle', () => {
 
     expect(title.length).toBeLessThanOrEqual(META_TITLE_MAX);
     expect(title).not.toMatch(/\s(y|o|de|del|para|con|en)$/i);
+  });
+});
+
+describe('buildBlogMetaDescription', () => {
+  const fullSummary =
+    'Resumen editorial completo sobre requisitos, plazos, opciones y pasos legales aplicables en Honduras para orientar al lector antes de consultar.';
+
+  it('conserva la meta explícita cuando ya está en el rango recomendado', () => {
+    const meta =
+      'Guía jurídica sobre derechos, requisitos, plazos y opciones disponibles en Honduras, con pasos prácticos para preparar cada gestión legal.';
+
+    expect(buildBlogMetaDescription(meta, fullSummary)).toBe(meta);
+  });
+
+  it('usa el resumen editorial si la meta explícita es demasiado corta', () => {
+    const result = buildBlogMetaDescription(
+      'Descripción demasiado corta.',
+      fullSummary,
+    );
+
+    expect(result).toBe(fullSummary);
+    expect(result.length).toBeGreaterThanOrEqual(META_DESC_MIN);
+  });
+
+  it('usa el resumen editorial si la meta explícita supera el máximo', () => {
+    const result = buildBlogMetaDescription(
+      'Meta demasiado extensa '.repeat(12),
+      fullSummary,
+    );
+
+    expect(result).toBe(fullSummary);
+  });
+
+  it('recorta en límite de palabra cuando solo existe una fuente extensa', () => {
+    const result = buildBlogMetaDescription(
+      `${fullSummary} Información adicional que excede el límite recomendado para el snippet.`,
+    );
+
+    expect(result.length).toBeGreaterThanOrEqual(META_DESC_MIN);
+    expect(result.length).toBeLessThanOrEqual(META_DESC_MAX);
+    expect(result).not.toMatch(/\s$/);
   });
 });

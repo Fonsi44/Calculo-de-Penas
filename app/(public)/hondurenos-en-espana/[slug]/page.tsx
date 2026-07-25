@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
-import { buildServiceMetaDescription } from '@/lib/seo';
+import { buildBlogMetaTitle, buildServiceMetaDescription } from '@/lib/seo';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup, ContactStrip } from '@/components/marketing/cta-buttons';
@@ -34,22 +34,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   // `descripcion.substring(0,85) + ' Consulta confidencial...'` sin stripHtml,
   // dejando HTML crudo y palabras truncadas en meta + OG + Twitter (CSV Ahrefs).
   const metaDesc = buildServiceMetaDescription(subarea.descripcion);
+  const metaTitle = buildBlogMetaTitle(subarea.titulo);
   return {
     // Absolute con marca única: antes usaba `· Abogados Honduras-España`
     // (28 chars extra) que disparaba titles de 75+ chars (CSV Ahrefs).
-    // Ahora alinea con el patrón de blog: `${titulo} | ${site.name}`.
-    title: { absolute: `${subarea.titulo} | ${site.name}` },
+    // Ahora usa el patrón de blog: conserva la consulta y añade la marca solo
+    // cuando cabe completa dentro de 60 caracteres.
+    title: { absolute: metaTitle },
     description: metaDesc,
     alternates: { canonical },
     keywords: subarea.keywords,
     twitter: {
       card: 'summary_large_image',
-      title: `${subarea.titulo} | Hondureños en España | ${site.name}`,
+      title: metaTitle,
       description: metaDesc,
       images: [`${site.url}/og/migracion.webp`],
     },
     openGraph: {
-      title: `${subarea.titulo} | Hondureños en España | ${site.name}`,
+      title: metaTitle,
       description: metaDesc,
       url: `${site.url}${canonical}`,
       siteName: site.name,

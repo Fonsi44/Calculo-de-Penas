@@ -10,7 +10,7 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site } from '@/lib/site';
-import { buildBlogMetaTitle } from '@/lib/seo';
+import { buildBlogMetaDescription, buildBlogMetaTitle } from '@/lib/seo';
 import { BlogTOC } from '@/components/blog/blog-toc';
 import { injectHeadingIds } from '@/lib/blog-toc';
 import { ShareButtons } from '@/components/blog/share-buttons';
@@ -261,7 +261,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // `absolute` evita que el template raíz añada otra marca. El helper conserva
   // primero la intención de búsqueda y solo añade la marca si cabe completa.
   const metaTitle = buildBlogMetaTitle(post.metaTitle || post.title);
-  const metaDesc = post.metaDescription || post.description;
+  const metaDesc = buildBlogMetaDescription(
+    post.metaDescription,
+    post.description,
+  );
   const ogImg = post.ogImage || post.coverImage || '/og-image.webp';
   const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
   const noindex = post.noindex === true;

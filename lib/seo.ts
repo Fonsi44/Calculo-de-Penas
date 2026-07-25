@@ -199,3 +199,31 @@ export function buildServiceMetaDescription(html: string): string {
   const truncated = lastSpace > META_DESC_MIN ? cut.slice(0, lastSpace) : cut;
   return truncated.trim();
 }
+
+/**
+ * Elige la mejor descripción disponible para un artículo y la mantiene dentro
+ * del rango recomendado. Algunas filas antiguas de la DB tienen una
+ * `metaDescription` demasiado corta o larga, mientras que su resumen editorial
+ * (`description`) ya contiene una alternativa completa y específica.
+ *
+ * No persiste ni inventa contenido: prioriza la meta explícita cuando cumple,
+ * usa el resumen existente como respaldo y recorta solo en límite de palabra.
+ */
+export function buildBlogMetaDescription(
+  metaDescription?: string,
+  description?: string,
+): string {
+  const candidates = [metaDescription, description]
+    .map((value) => stripHtml(value ?? ''))
+    .filter(Boolean);
+
+  const inRange = candidates.find(
+    (value) => value.length >= META_DESC_MIN && value.length <= META_DESC_MAX,
+  );
+  const selected = inRange
+    ?? candidates.find((value) => value.length >= META_DESC_MIN)
+    ?? candidates[0]
+    ?? '';
+
+  return buildServiceMetaDescription(selected);
+}

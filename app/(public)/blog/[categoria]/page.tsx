@@ -11,6 +11,7 @@ import { CategoryFilter } from '@/components/blog/category-filter';
 import { BlogSearch } from '@/components/blog/blog-search';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { buildBlogMetaTitle } from '@/lib/seo';
 
 export const revalidate = 3600;
 
@@ -31,12 +32,15 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!cat) return {};
   const isPaginated = page > 1;
   const canonicalPath = isPaginated ? `/blog/${categoria}` : `/blog/${categoria}`;
+  const metaTitle = buildBlogMetaTitle(
+    `${cat.nombre} - Blog Jurídico${isPaginated ? ` (Página ${page})` : ''}`,
+  );
   return {
     // Absolute para controlar la longitud total. Antes, el template del layout
     // añadía "| Pineda y Asociados" y, sumado a "{cat.nombre} — Blog Jurídico",
     // varias categorías superaban 65 caracteres (p. ej. Derecho Mercantil y
     // Empresarial = 69) y empeoraba con " — Página N" en la paginación.
-    title: { absolute: `${cat.nombre} - Blog Jurídico${isPaginated ? ` (Página ${page})` : ''}` },
+    title: { absolute: metaTitle },
     description: isPaginated ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
     alternates: { canonical: canonicalPath },
     keywords: [cat.nombre.toLowerCase(), 'artículos legales Honduras', 'blog jurídico Honduras', `${cat.nombre.toLowerCase()} Honduras`],
@@ -46,12 +50,12 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
-      title: `${cat.nombre} - Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,
+      title: metaTitle,
       description: cat.descripcion,
       images: [`${site.url}/og-image.webp`],
     },
     openGraph: {
-      title: `${cat.nombre} - Blog Jurídico | ${site.name}${page > 1 ? ` (Página ${page})` : ''}`,
+      title: metaTitle,
       description: cat.descripcion,
       url: `${site.url}${canonicalPath}`,
       siteName: site.name,

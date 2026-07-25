@@ -4,18 +4,22 @@
  * Ejecutar después de `npm run build`:
  *   npm run validar:meta-seo
  *
- * A diferencia del auditor histórico, este script no mantiene copias manuales
- * de titles y descriptions. Lee los HTML prerenderizados de `.next` y obtiene
- * la metadata del hub dinámico `/blog` desde su propia función exportada.
+ * Audita todos los HTML públicos prerenderizados de `.next` y completa la
+ * cobertura con las rutas dinámicas de `/blog` y `/blog/[categoria]` mediante
+ * sus funciones reales `generateMetadata`. Excluye la intranet, protegida con
+ * `X-Robots-Tag: noindex, nofollow` y fuera del sitemap público.
  */
 
-import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { relative, resolve } from 'node:path';
 import type { Metadata } from 'next';
 import { generateMetadata as generateBlogMetadata } from '@/app/(public)/blog/page';
+import { generateMetadata as generateBlogCategoryMetadata } from '@/app/(public)/blog/[categoria]/page';
+import { blogCategories } from '@/data/blog/categories';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const BUILD_APP_DIR = resolve(ROOT, '.next', 'server', 'app');
+const BUILD_SITEMAP_FILE = resolve(BUILD_APP_DIR, 'sitemap.xml.body');
 const CANONICAL_ORIGIN = 'https://www.pinedayasociadoshn.com';
 const BRAND = 'Pineda y Asociados';
 const TITLE_MIN = 30;
@@ -25,29 +29,7 @@ const DESC_MAX = 160;
 const SOCIAL_TITLE_MAX = 60;
 const SOCIAL_DESC_MAX = 160;
 
-const ROUTES = [
-  '/',
-  '/servicios-juridicos',
-  '/derecho-penal',
-  '/blog',
-  '/despacho',
-  '/solicitar-consulta',
-  '/hondurenos-en-espana',
-  '/preguntas-frecuentes',
-  '/como-llegar',
-  '/abogados-en-nacaome',
-  '/abogados-en-choluteca',
-  '/abogados-en-san-lorenzo',
-  '/politica-privacidad',
-  '/politica-cookies',
-  '/aviso-legal',
-  '/terminos',
-  '/disclaimer',
-  '/politica-editorial',
-] as const;
-
-type RoutePath = (typeof ROUTES)[number];
-const NOINDEX_ROUTES = new Set<RoutePath>([
+const NOINDEX_ROUTES = new Set<string>([
   '/politica-privacidad',
   '/politica-cookies',
   '/aviso-legal',
@@ -57,7 +39,7 @@ const NOINDEX_ROUTES = new Set<RoutePath>([
 ]);
 
 interface RouteMetadata {
-  path: RoutePath;
+  path: string;
   source: 'build' | 'generateMetadata';
   title: string;
   description: string;
@@ -95,16 +77,13 @@ function decodeHtml(value: string): string {
 
 function getAttribute(tag: string, name: string): string {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = tag.match(new RegExp(`\\b${escaped}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, 'i'));
+  const match = tag.match(
+    new RegExp(`\\b${escaped}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, 'i'),
+  );
   return decodeHtml(match?.[1] ?? match?.[2] ?? '');
 }
 
-function extractUnique(
-  html: string,
-  path: RoutePath,
-  field: string,
-  values: string[],
-): string {
+function extractUnique(path: string, field: string, values: string[]): string {
   const nonEmpty = values.filter(Boolean);
   if (nonEmpty.length !== 1) {
     issues.push({
@@ -119,15 +98,49 @@ function extractUnique(
   return nonEmpty[0] ?? '';
 }
 
-function extractBuiltMetadata(path: Exclude<RoutePath, '/blog'>): RouteMetadata {
-  const relativeFile = path === '/' ? 'index.html' : `${path.slice(1)}.html`;
-  const file = resolve(BUILD_APP_DIR, relativeFile);
-  if (!existsSync(file)) {
+function findHtmlFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const absolute = resolve(directory, entry.name);
+    return entry.isDirectory() ? findHtmlFiles(absolute) : [absolute];
+  }).filter((file) => file.endsWith('.html'));
+}
+
+function routeFromHtmlFile(file: string): string {
+  const relativeFile = relative(BUILD_APP_DIR, file).replaceAll('\\', '/');
+  if (relativeFile === 'index.html') return '/';
+  return `/${relativeFile.replace(/\.html$/, '')}`;
+}
+
+function discoverPublicBuildFiles(): Array<{ path: string; file: string }> {
+  return findHtmlFiles(BUILD_APP_DIR)
+    .map((file) => ({
+      file,
+      relativeFile: relative(BUILD_APP_DIR, file).replaceAll('\\', '/'),
+    }))
+    .filter(({ relativeFile }) => (
+      !relativeFile.startsWith('_')
+      && !relativeFile.startsWith('intranet/')
+    ))
+    .map(({ file }) => ({ file, path: routeFromHtmlFile(file) }));
+}
+
+function readSitemapPaths(): Set<string> {
+  if (!existsSync(BUILD_SITEMAP_FILE)) {
     throw new Error(
-      `No existe ${file}. Ejecute npm run build antes de validar metadata.`,
+      'No existe .next/server/app/sitemap.xml.body. Ejecute npm run build antes de este auditor.',
     );
   }
 
+  const xml = readFileSync(BUILD_SITEMAP_FILE, 'utf8');
+  return new Set(
+    [...xml.matchAll(/<loc>([\s\S]*?)<\/loc>/gi)].map((match) => {
+      const url = new URL(decodeHtml(match[1]));
+      return url.pathname.replace(/\/$/, '') || '/';
+    }),
+  );
+}
+
+function extractBuiltMetadata(path: string, file: string): RouteMetadata {
   const html = readFileSync(file, 'utf8');
   const titleValues = [...html.matchAll(/<title>([\s\S]*?)<\/title>/gi)]
     .map((match) => decodeHtml(match[1]));
@@ -150,25 +163,22 @@ function extractBuiltMetadata(path: Exclude<RoutePath, '/blog'>): RouteMetadata 
   return {
     path,
     source: 'build',
-    title: extractUnique(html, path, 'title', titleValues),
-    description: extractUnique(html, path, 'description', metaValues('description')),
-    canonical: extractUnique(html, path, 'canonical', canonicalValues),
-    robots: extractUnique(html, path, 'robots', metaValues('robots')),
-    ogTitle: extractUnique(html, path, 'og:title', metaValues('og:title')),
+    title: extractUnique(path, 'title', titleValues),
+    description: extractUnique(path, 'description', metaValues('description')),
+    canonical: extractUnique(path, 'canonical', canonicalValues),
+    robots: extractUnique(path, 'robots', metaValues('robots')),
+    ogTitle: extractUnique(path, 'og:title', metaValues('og:title')),
     ogDescription: extractUnique(
-      html,
       path,
       'og:description',
       metaValues('og:description'),
     ),
     twitterTitle: extractUnique(
-      html,
       path,
       'twitter:title',
       metaValues('twitter:title'),
     ),
     twitterDescription: extractUnique(
-      html,
       path,
       'twitter:description',
       metaValues('twitter:description'),
@@ -202,16 +212,16 @@ function absoluteCanonical(value: unknown): string {
   return new URL(canonical, `${CANONICAL_ORIGIN}/`).toString().replace(/\/$/, '');
 }
 
-async function extractBlogMetadata(): Promise<RouteMetadata> {
-  const metadata = await generateBlogMetadata({
-    searchParams: Promise.resolve({}),
-  });
+function extractGeneratedMetadata(
+  path: string,
+  metadata: Metadata,
+): RouteMetadata {
   const openGraph = metadata.openGraph as Record<string, unknown> | null | undefined;
   const twitter = metadata.twitter as Record<string, unknown> | null | undefined;
   const alternates = metadata.alternates as Record<string, unknown> | null | undefined;
 
   return {
-    path: '/blog',
+    path,
     source: 'generateMetadata',
     title: metadataText(metadata.title),
     description: metadataText(metadata.description),
@@ -222,6 +232,24 @@ async function extractBlogMetadata(): Promise<RouteMetadata> {
     twitterTitle: metadataText(twitter?.title),
     twitterDescription: metadataText(twitter?.description),
   };
+}
+
+async function extractDynamicMetadata(): Promise<RouteMetadata[]> {
+  const blog = extractGeneratedMetadata(
+    '/blog',
+    await generateBlogMetadata({ searchParams: Promise.resolve({}) }),
+  );
+
+  const categories = await Promise.all(blogCategories.map(async (category) => {
+    const path = `/blog/${category.slug}`;
+    const metadata = await generateBlogCategoryMetadata({
+      params: Promise.resolve({ categoria: category.slug }),
+      searchParams: Promise.resolve({}),
+    });
+    return extractGeneratedMetadata(path, metadata);
+  }));
+
+  return [blog, ...categories];
 }
 
 function addIssue(
@@ -282,11 +310,11 @@ function checkBrandDuplicate(path: string, field: string, value: string) {
   }
 }
 
-function expectedCanonical(path: RoutePath): string {
+function expectedCanonical(path: string): string {
   return path === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${path}`;
 }
 
-function validateRoute(route: RouteMetadata) {
+function validateRoute(route: RouteMetadata, sitemapPaths: Set<string>) {
   checkLength(route.path, 'title', route.title, TITLE_MIN, TITLE_MAX);
   checkLength(route.path, 'description', route.description, DESC_MIN, DESC_MAX);
   checkLength(route.path, 'og:title', route.ogTitle, 1, SOCIAL_TITLE_MAX);
@@ -324,16 +352,33 @@ function validateRoute(route: RouteMetadata) {
     if (field.endsWith('title')) checkBrandDuplicate(route.path, field, value);
   }
 
-  if (route.canonical !== expectedCanonical(route.path)) {
+  let canonicalUrl: URL | null = null;
+  try {
+    canonicalUrl = new URL(route.canonical);
+  } catch {
+    // La incidencia se añade en el bloque común inferior.
+  }
+  const canonicalPath = canonicalUrl?.pathname.replace(/\/$/, '') || '/';
+  const isSelfCanonical = route.canonical === expectedCanonical(route.path);
+  const isValidInternalConsolidation = Boolean(
+    canonicalUrl
+    && canonicalUrl.origin === CANONICAL_ORIGIN
+    && canonicalPath !== route.path
+    && sitemapPaths.has(canonicalPath)
+    && !sitemapPaths.has(route.path),
+  );
+
+  if (!isSelfCanonical && !isValidInternalConsolidation) {
     addIssue(
       route.path,
       'canonical',
       'ERROR',
-      'Canonical ausente o distinto de la URL canónica esperada',
+      'Canonical ausente, inválida o incoherente con el sitemap',
       route.canonical,
-      expectedCanonical(route.path),
+      `${expectedCanonical(route.path)} o consolidación interna excluida del sitemap`,
     );
   }
+
   const isNoindex = /\bnoindex\b/i.test(route.robots);
   const expectsNoindex = NOINDEX_ROUTES.has(route.path);
   if (!expectsNoindex && isNoindex) {
@@ -341,7 +386,7 @@ function validateRoute(route: RouteMetadata) {
       route.path,
       'robots',
       'ERROR',
-      'Ruta pública prioritaria marcada noindex',
+      'Ruta pública marcada noindex',
       route.robots,
       'index, follow',
     );
@@ -355,6 +400,26 @@ function validateRoute(route: RouteMetadata) {
       'noindex, follow',
     );
   }
+
+  if (expectsNoindex && sitemapPaths.has(route.path)) {
+    addIssue(
+      route.path,
+      'sitemap',
+      'ERROR',
+      'Página noindex presente en el sitemap',
+      route.path,
+      'Ausente del sitemap',
+    );
+  } else if (!expectsNoindex && isSelfCanonical && !sitemapPaths.has(route.path)) {
+    addIssue(
+      route.path,
+      'sitemap',
+      'ERROR',
+      'Ruta indexable autocanónica ausente del sitemap',
+      route.path,
+      'Presente en el sitemap',
+    );
+  }
 }
 
 async function main() {
@@ -362,36 +427,38 @@ async function main() {
     throw new Error('No existe .next/server/app. Ejecute npm run build antes de este auditor.');
   }
 
-  const staticRoutes = ROUTES
-    .filter((path): path is Exclude<RoutePath, '/blog'> => path !== '/blog')
-    .map(extractBuiltMetadata);
-  const routes = [...staticRoutes, await extractBlogMetadata()]
-    .sort((a, b) => ROUTES.indexOf(a.path) - ROUTES.indexOf(b.path));
+  const builtRoutes = discoverPublicBuildFiles()
+    .map(({ path, file }) => extractBuiltMetadata(path, file));
+  const routes = [...builtRoutes, ...await extractDynamicMetadata()]
+    .sort((a, b) => a.path.localeCompare(b.path, 'es'));
+  const sitemapPaths = readSitemapPaths();
 
-  for (const route of routes) validateRoute(route);
+  const duplicatePaths = routes
+    .filter((route, index) => routes.findIndex((item) => item.path === route.path) !== index)
+    .map((route) => route.path);
+  for (const path of new Set(duplicatePaths)) {
+    addIssue(path, 'route', 'ERROR', 'Ruta auditada más de una vez', 2, '1');
+  }
+
+  for (const route of routes) validateRoute(route, sitemapPaths);
 
   const errors = issues.filter((issue) => issue.severity === 'ERROR');
   const warnings = issues.filter((issue) => issue.severity === 'WARN');
+  const affectedPaths = new Set(issues.map((issue) => issue.path));
 
   console.log('\n══════════════════════════════════════════════════');
-  console.log(' AUDITORÍA SEO — METADATA REAL DEL BUILD');
+  console.log(' AUDITORÍA SEO — METADATA PÚBLICA REAL DEL BUILD');
   console.log('══════════════════════════════════════════════════\n');
+  console.log(`HTML públicos prerenderizados: ${builtRoutes.length}`);
+  console.log(`Rutas dinámicas de blog: ${routes.length - builtRoutes.length}`);
   console.log(`Total URLs auditadas: ${routes.length}`);
+  console.log(`URLs canónicas en sitemap: ${sitemapPaths.size}`);
   console.log(`Errores: ${errors.length}`);
   console.log(`Advertencias: ${warnings.length}\n`);
 
-  for (const route of routes) {
-    const routeIssues = issues.filter((issue) => issue.path === route.path);
-    const icon = routeIssues.some((issue) => issue.severity === 'ERROR')
-      ? '❌'
-      : routeIssues.length > 0
-        ? '⚠'
-        : '✅';
-    console.log(`${icon} ${route.path} [${route.source}]`);
-    console.log(`   title (${route.title.length}c): ${route.title}`);
-    console.log(`   desc  (${route.description.length}c): ${route.description}`);
-    console.log(`   canonical: ${route.canonical}`);
-    for (const issue of routeIssues) {
+  for (const path of [...affectedPaths].sort((a, b) => a.localeCompare(b, 'es'))) {
+    console.log(`❌ ${path}`);
+    for (const issue of issues.filter((item) => item.path === path)) {
       console.log(`   ${issue.severity}: ${issue.field} — ${issue.message}`);
     }
   }
