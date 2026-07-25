@@ -293,7 +293,6 @@ export default async function FaqPage() {
           spacing="md"
         >
           <SectionHeader
-            eyebrow={cluster.title}
             title={cluster.title}
             subtitle={cluster.quickAnswer}
           />
