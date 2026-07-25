@@ -248,3 +248,35 @@ describe('FASE 5 §7 — Preservación de garantías', () => {
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// §13 — Dominio canónico (FASE 5 — corrección SEO productiva)
+// ---------------------------------------------------------------------------
+describe('FASE 5 §13 — dominio canónico único', () => {
+  const WRONG = 'pinedayasocioshn.com';
+  const CORRECT = 'pinedayasociadoshn.com';
+
+  it('lib/site.ts usa el dominio correcto como fallback', () => {
+    const src = readFileSync('lib/site.ts', 'utf-8');
+    expect(src).toMatch(new RegExp(CORRECT.replace('.', '\\.')));
+  });
+
+  it('no hay ocurrencias operativas del dominio incorrecto en lib/site.ts', () => {
+    const src = readFileSync('lib/site.ts', 'utf-8');
+    const lines = src.split('\n').filter(l => l.includes(WRONG));
+    for (const line of lines) {
+      const trimmed = line.trim();
+      expect(
+        trimmed.startsWith('//') || trimmed.startsWith('/*') || trimmed.startsWith('*')
+      ).toBe(true);
+    }
+  });
+
+  it('site.url contiene el dominio correcto', () => {
+    expect(site.url).toContain(CORRECT);
+  });
+
+  it('el email de contacto usa el dominio correcto', () => {
+    expect(site.email).toContain(CORRECT);
+  });
+});
