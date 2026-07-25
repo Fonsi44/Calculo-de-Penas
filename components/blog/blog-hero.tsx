@@ -23,8 +23,9 @@ export function BlogHero({
     <section className="relative bg-hero-gradient text-text-inverse overflow-hidden">
       <div className="absolute inset-0 pointer-events-none bg-grid opacity-60" aria-hidden="true" />
       <div className="absolute inset-0 pointer-events-none bg-radial-accent" aria-hidden="true" />
-      <Container size="lg" className="relative py-12 md:py-16 lg:py-20">
-        <div className="max-w-3xl">
+      <Container size="lg" className="relative py-10 md:py-12 lg:py-14">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_auto] gap-8 lg:gap-14 items-end">
+          <div className="max-w-3xl">
           <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className="eyebrow-rule text-accent">Blog Jurídico</span>
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xxs font-bold uppercase tracking-wider bg-accent/15 border border-accent/30 text-accent">
@@ -37,18 +38,19 @@ export function BlogHero({
           <p className="mt-5 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty">
             {subtitle}
           </p>
+          </div>
           {(postCount > 0 || categoryCount > 0) && (
-            <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+            <dl className="grid grid-cols-2 gap-3 rounded-lg border border-accent/25 bg-primary-dark/35 p-4 backdrop-blur-sm min-w-[15rem]">
               {postCount > 0 && (
-                <div className="flex items-baseline gap-2">
-                  <dt className="text-text-inverse/60 uppercase tracking-wider text-xxs font-bold">Artículos</dt>
-                  <dd className="font-serif font-bold text-xl text-accent">{postCount}</dd>
+                <div>
+                  <dd className="font-serif font-bold text-2xl text-accent">{postCount}</dd>
+                  <dt className="mt-1 text-text-inverse/65 uppercase tracking-wider text-xxs font-bold">Artículos</dt>
                 </div>
               )}
               {categoryCount > 0 && (
-                <div className="flex items-baseline gap-2">
-                  <dt className="text-text-inverse/60 uppercase tracking-wider text-xxs font-bold">Categorías</dt>
-                  <dd className="font-serif font-bold text-xl text-accent">{categoryCount}</dd>
+                <div>
+                  <dd className="font-serif font-bold text-2xl text-accent">{categoryCount}</dd>
+                  <dt className="mt-1 text-text-inverse/65 uppercase tracking-wider text-xxs font-bold">Categorías</dt>
                 </div>
               )}
             </dl>

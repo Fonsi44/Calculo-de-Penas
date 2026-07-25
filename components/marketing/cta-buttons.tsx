@@ -31,7 +31,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           href={whatsappHref(message)}
           target="_blank"
           rel="noopener noreferrer"
-          title="Escribir por WhatsApp a Pineda y Asociados — respuesta inmediata"
+          title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
           onClick={() => trackWhatsAppClick('cta_compact')}
           className="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-lg bg-success text-white text-xs font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
         >
@@ -153,7 +153,7 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
     {
       icon: <MessageCircle size={20} aria-hidden="true" />,
       label: 'WhatsApp',
-      value: 'Respuesta inmediata',
+      value: 'Atención en horario hábil',
       href: whatsappHref(DEFAULT_MSG),
       external: true,
     },
@@ -218,6 +218,5 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
     </div>
   );
 }
-
 
 

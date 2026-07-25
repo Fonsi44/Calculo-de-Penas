@@ -288,7 +288,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         variant="inline"
         eyebrow={`Consulta confidencial sin costo en ${landing.ciudad}`}
         title={`¿Necesita un abogado en ${landing.ciudad}?`}
-        subtitle={`Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso. Atendemos en ${landing.ciudad}${landing.sedeFisica ? '' : ' y toda la zona sur'} de Honduras, con presupuesto por escrito antes de cualquier actuación.`}
+        subtitle={`Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso. Atendemos en ${landing.ciudad}, Honduras${landing.sedeFisica ? '' : ', y en toda la zona sur'}, con presupuesto por escrito antes de cualquier actuación.`}
       />
 
       {ldSchemas.map((schema, i) => (

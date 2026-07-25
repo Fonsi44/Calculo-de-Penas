@@ -53,12 +53,12 @@ export function PageHero({
     : 'eyebrow-rule text-accent-dark';
 
   const titleCls = isPrimary
-    ? 'font-serif font-extrabold text-xl sm:text-2xl lg:text-3xl leading-tight text-text-inverse text-balance'
-    : 'font-serif font-extrabold text-xl sm:text-2xl lg:text-3xl leading-tight text-primary text-balance';
+    ? 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance'
+    : 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-primary text-balance';
 
   const subtitleCls = isPrimary
-    ? 'mt-3 text-sm md:text-base text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
-    : 'mt-3 text-sm md:text-base text-text-secondary leading-relaxed max-w-3xl text-pretty';
+    ? 'mt-3 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
+    : 'mt-3 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl text-pretty';
 
   const alignCls = align === 'center' ? 'text-center mx-auto' : 'max-w-3xl';
 
@@ -94,7 +94,7 @@ export function PageHero({
         className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
         aria-hidden="true"
       />
-      <Container size="lg" className="relative py-6 md:py-10 lg:py-12">
+      <Container size="lg" className="relative py-8 md:py-12 lg:py-16">
         <div className={alignCls}>
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className={eyebrowCls}>{eyebrow}</span>

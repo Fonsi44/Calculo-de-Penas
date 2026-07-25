@@ -188,7 +188,7 @@ export function SolicitarConsultaForm() {
     // Confirmación ampliada FASE 2: recibido, plazo prudente, urgencia penal,
     // no aceptación implícita, no originales, protección de datos.
     return (
-      <div className="rounded-md border border-success/30 bg-success/10 p-6">
+      <div className="rounded-lg border border-success/30 bg-success/10 p-6">
         <div className="flex items-start gap-3">
           <CheckCircle2 size={32} className="text-success flex-shrink-0 mt-0.5" />
           <div className="min-w-0">
@@ -199,7 +199,7 @@ export function SolicitarConsultaForm() {
               respuesta inmediata: el compromiso es atender con la diligencia que
               cada caso requiere.
             </p>
-            <div className="mt-4 rounded-md border border-aggravation/20 bg-aggravation/5 p-3">
+            <div className="mt-4 rounded-lg border border-aggravation/20 bg-aggravation/5 p-3">
               <p className="flex items-center gap-2 text-xs font-bold text-aggravation">
                 <AlertTriangle size={14} /> ¿Urgencia penal?
               </p>
@@ -242,6 +242,15 @@ export function SolicitarConsultaForm() {
     );
   }
 
+  const isPenalMatter =
+    form.motivo === 'Familiar detenido'
+    || form.motivo === 'Citaciones o audiencias'
+    || form.motivo === 'Investigación en curso';
+  const isLaborMatter = form.motivo === 'Despido o prestaciones laborales';
+  const isSpainMatter = form.motivo === 'Asunto desde España';
+  const needsCallAvailability = isSpainMatter || form.medioPreferido === 'llamada';
+  const hasAdditionalFields = isPenalMatter || isLaborMatter || isSpainMatter || needsCallAvailability;
+
   return (
     <form onSubmit={submit} className="space-y-3">
       <fieldset className="grid sm:grid-cols-2 gap-3 border-0 p-0 m-0">
@@ -273,7 +282,7 @@ export function SolicitarConsultaForm() {
         autoComplete="email"
       />
       <p className="text-xxs text-text-muted -mt-1">
-        Indique al menos un medio de contacto (teléfono o correo) para que podamos responderle.
+        El teléfono es necesario para devolverle el contacto. El correo es opcional y se utiliza también para enviar confirmaciones.
       </p>
 
       <div className="grid sm:grid-cols-2 gap-3">
@@ -309,7 +318,7 @@ export function SolicitarConsultaForm() {
           id="consulta-motivo"
           value={form.motivo}
           onChange={onText('motivo')}
-          className="input-refined w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none"
+          className="input-refined w-full h-11 px-3 rounded-lg border border-border-light bg-surface text-sm text-text focus:outline-none"
         >
           {MOTIVOS.map((m) => (
             <option key={m} value={m}>
@@ -321,13 +330,14 @@ export function SolicitarConsultaForm() {
 
       {/* CAMPOS CONDICIONALES (FASE 2) — solo se muestran cuando aportan valor
           según el tipo de asunto. No se solicita detalle penal excesivo. */}
-      <details className="rounded-md border border-border-light bg-surface-alt/40 p-3">
-        <summary className="cursor-pointer text-xs font-bold text-text-secondary select-none">
-          Información adicional (opcional, según su caso)
-        </summary>
-        <div className="mt-3 space-y-3">
-          {/* Penal: audiencia/detención */}
-          {(form.motivo === 'Familiar detenido' || form.motivo === 'Citaciones o audiencias' || form.motivo === 'Investigación en curso') && (
+      {hasAdditionalFields && (
+      <details className="rounded-lg border border-border-light bg-surface-alt/40 p-3">
+          <summary className="cursor-pointer text-xs font-bold text-text-secondary select-none">
+            Información adicional para este tipo de asunto (opcional)
+          </summary>
+          <div className="mt-3 space-y-3">
+            {/* Penal: audiencia/detención */}
+            {isPenalMatter && (
             <div className="grid sm:grid-cols-2 gap-3">
               <Field
                 label="Fecha de audiencia o citación (si la tiene)"
@@ -348,40 +358,46 @@ export function SolicitarConsultaForm() {
               />
             </div>
           )}
-          {/* Laboral: fecha de despido */}
-          <Field
-            label="Fecha de despido (si es un caso laboral)"
-            value={form.fechaDespido}
-            onChange={onText('fechaDespido')}
-            placeholder="Ej.: 15 de junio de 2026"
-          />
-          {/* España: residencia + disponibilidad llamada */}
-          <div className="grid sm:grid-cols-2 gap-3">
-            <SelectField
-              id="consulta-espana"
-              label="¿Reside usted en España?"
-              value={form.residenciaEspana}
-              onChange={onText('residenciaEspana')}
-              options={[
-                { value: '', label: '— Seleccione —' },
-                { value: 'si', label: 'Sí' },
-                { value: 'no', label: 'No' },
-              ]}
-            />
-            <SelectField
-              id="consulta-llamada"
-              label="¿Disponible para una llamada?"
-              value={form.disponibleLlamada}
-              onChange={onText('disponibleLlamada')}
-              options={[
-                { value: '', label: '— Seleccione —' },
-                { value: 'si', label: 'Sí' },
-                { value: 'no', label: 'No' },
-              ]}
-            />
+            {/* Laboral: fecha de despido */}
+            {isLaborMatter && (
+              <Field
+                label="Fecha de despido (si la conoce)"
+                value={form.fechaDespido}
+                onChange={onText('fechaDespido')}
+                placeholder="Ej.: 15 de junio de 2026"
+              />
+            )}
+            {/* España: residencia */}
+            {isSpainMatter && (
+              <SelectField
+                id="consulta-espana"
+                label="¿Se encuentra actualmente en España?"
+                value={form.residenciaEspana}
+                onChange={onText('residenciaEspana')}
+                options={[
+                  { value: '', label: '— Seleccione —' },
+                  { value: 'si', label: 'Sí' },
+                  { value: 'no', label: 'No' },
+                ]}
+              />
+            )}
+            {/* Disponibilidad: solo para consultas desde España o llamadas programadas */}
+            {needsCallAvailability && (
+              <SelectField
+                id="consulta-llamada"
+                label="¿Está disponible para una llamada?"
+                value={form.disponibleLlamada}
+                onChange={onText('disponibleLlamada')}
+                options={[
+                  { value: '', label: '— Seleccione —' },
+                  { value: 'si', label: 'Sí' },
+                  { value: 'no', label: 'No' },
+                ]}
+              />
+            )}
           </div>
-        </div>
-      </details>
+        </details>
+      )}
 
       <div>
         <label htmlFor="consulta-resumen" className="block text-xs font-bold text-text mb-1">
@@ -393,7 +409,7 @@ export function SolicitarConsultaForm() {
           onChange={onText('resumen')}
           rows={6}
           placeholder="Describa brevemente los hechos. NO incluya documentos, números de tarjeta ni datos de identidad completos."
-          className="input-refined w-full px-3 py-2.5 rounded-md border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none"
+          className="input-refined w-full px-3 py-2.5 rounded-lg border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none"
           required
           minLength={15}
         />
@@ -420,7 +436,7 @@ export function SolicitarConsultaForm() {
       </label>
 
       {err && (
-        <div role="alert" aria-live="polite" className="flex items-start gap-2 p-2.5 rounded-md bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
+        <div role="alert" aria-live="polite" className="flex items-start gap-2 p-2.5 rounded-lg bg-aggravation/10 border border-aggravation/30 text-xs text-aggravation">
           <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
           <span>{err}</span>
         </div>
@@ -449,7 +465,7 @@ export function SolicitarConsultaForm() {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="focus-ring cta-primary-refined w-full h-12 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="focus-ring cta-primary-refined w-full h-12 inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white text-base font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? (
           <>
@@ -489,11 +505,10 @@ function Field({
   autoComplete?: string;
   placeholder?: string;
 }) {
+  const [touched, setTouched] = useState(false);
   const fieldId = `consulta-${label.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-')}`;
   const descId = `${fieldId}-desc`;
-  // aria-invalid solo cuando el campo requerido está vacío tras interacción.
-  // El form valida submit global, así que marcamos inválido si required y vacío.
-  const invalid = required && value.trim() === '';
+  const invalid = touched && required && value.trim() === '';
   return (
     <div>
       <label htmlFor={fieldId} className="block text-xs font-bold text-text mb-1">
@@ -509,13 +524,14 @@ function Field({
           type={type}
           value={value}
           onChange={onChange}
+          onBlur={() => setTouched(true)}
           required={required}
           autoComplete={autoComplete}
           placeholder={placeholder}
           aria-required={required || undefined}
           aria-invalid={invalid || undefined}
           aria-describedby={descId}
-          className={`input-refined w-full h-11 ${Icon ? 'pl-9' : 'pl-3'} pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none aria-[invalid=true]:border-aggravation`}
+          className={`input-refined w-full h-11 ${Icon ? 'pl-9' : 'pl-3'} pr-3 rounded-lg border border-border-light bg-surface text-sm text-text focus:outline-none aria-[invalid=true]:border-aggravation`}
         />
       </div>
       <span id={descId} className="sr-only">
@@ -547,7 +563,7 @@ function SelectField({
         id={id}
         value={value}
         onChange={onChange}
-        className="input-refined w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none"
+        className="input-refined w-full h-11 px-3 rounded-lg border border-border-light bg-surface text-sm text-text focus:outline-none"
       >
         {options.map((o) => (
           <option key={`${id}-${o.value}`} value={o.value}>

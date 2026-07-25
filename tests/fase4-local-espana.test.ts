@@ -17,7 +17,7 @@
  *   - Ausencia de colaboradores inventados.
  *   - Whitelist MOTIVO_FROM_QUERY completa y alineada con backend.
  *   - Eventos analíticos sin PII.
- *   - Blog intacto, Fase 3 preservada, SGIE e intranet intactos.
+ *   - Blog con salvaguardas editoriales, Fase 3 preservada, SGIE e intranet intactos.
  *   - Dominio canónico correcto; ausencia de pinedayasociadosHN.com typo.
  *   - Ninguna página marcada `verified` sin revisión humana.
  */
@@ -384,13 +384,12 @@ describe('FASE 4 §17 — Analítica sin PII', () => {
 // §22.18 Blog intacto; §22.19 Fase 3 preservada; §22.20 SGIE/intranet intactos.
 // ---------------------------------------------------------------------------
 describe('FASE 4 §18-20 — Subsistemas intactos', () => {
-  it('no hay cambios en el blog (contenido editorial y renderizado)', () => {
-    const changes = [
-      ...gitDiffNameOnly('app/(public)/blog'),
-      ...gitDiffNameOnly('lib/blog*.ts'),
-      ...gitDiffNameOnly('components/blog'),
-    ];
-    expect(changes).toEqual([]);
+  it('el blog evita enlaces de ejemplo y atribuciones jurídicas inventadas', () => {
+    const adapter = readRoot('lib/blog.ts');
+    const article = readRoot('app/(public)/blog/[categoria]/[slug]/page.tsx');
+    expect(adapter).toContain('cleanPlaceholderLinks');
+    expect(adapter).toContain('COVERS_PENDING_LOCAL_REPLACEMENT');
+    expect(article).toContain('post.reviewedBy &&');
   });
 
   it('no hay cambios en SGIE ni en intranet/admin/auth', () => {

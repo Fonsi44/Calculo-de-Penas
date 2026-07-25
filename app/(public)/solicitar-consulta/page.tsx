@@ -18,7 +18,6 @@ import { telHref, whatsappHref, site } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
-import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -26,7 +25,6 @@ import { getPageContent } from '@/lib/page-content-db';
 import { webpageSchema } from '@/lib/seo-schema';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SOLICITAR_CONSULTA } from '@/data/faqs-hubs';
-import { AnswerBlock } from '@/components/marketing/answer-block';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Consulte a un Abogado en Nacaome, Valle',
@@ -40,7 +38,10 @@ export const metadata: Metadata = buildMetadata({
 export default async function SolicitarConsultaPage() {
   const content = await getPageContent('solicitar-consulta');
   const heroTitle = content['hero.title'] || 'Cuéntenos su caso. Le escuchamos con discreción.';
-  const heroSubtitle = content['hero.subtitle'] || 'Complete el formulario o contáctenos directamente. Toda comunicación es estrictamente confidencial.';
+  const heroSubtitle = (
+    content['hero.subtitle']
+    || 'Complete el formulario o contáctenos directamente. La información que comparta está protegida por el secreto profesional.'
+  ).replace(/toda comunicación es estrictamente confidencial/gi, 'la información que comparta está protegida por el secreto profesional');
 
   const REASONS = [
     content['reasons.r1'] || 'Familiar detenido',
@@ -52,9 +53,9 @@ export default async function SolicitarConsultaPage() {
   ];
 
   const GUARANTEES = [
-    { icon: ShieldCheck, title: content['guarantees.g1_title'] || 'Confidencialidad absoluta', desc: content['guarantees.g1_desc'] || 'Su información está protegida por el secreto profesional.' },
+    { icon: ShieldCheck, title: 'Secreto profesional', desc: 'La información que comparta se trata conforme al deber de confidencialidad profesional.' },
     { icon: CheckCircle2, title: content['guarantees.g2_title'] || 'Sin compromiso', desc: content['guarantees.g2_desc'] || 'La consulta inicial no le obliga a contratar nuestros servicios.' },
-    { icon: Calendar, title: content['guarantees.g3_title'] || 'Respuesta en horario hábil', desc: content['guarantees.g3_desc'] || 'Le respondemos el mismo día hábil por el canal que prefiera.' },
+    { icon: Calendar, title: 'Atención en horario hábil', desc: 'Revisamos cada solicitud y respondemos por el canal indicado durante el horario de atención.' },
   ];
   return (
     <>
@@ -67,25 +68,9 @@ export default async function SolicitarConsultaPage() {
         badge="Confidencial · Sin costo"
         title={heroTitle}
         subtitle={<>{heroSubtitle}</>}
-        cta={<CTAGroup variant="inverse" />}
-        bgImage="/images/corporate/corporate_meeting.webp"
       />
 
-      <TrustBar background="light" />
-
-      {/* BLOQUE EDITORIAL CANÓNICO — cómo funciona la consulta.
-          Modelo unificado: AnswerBlock en Section warm spacing=md. */}
-      <Section background="warm" spacing="md">
-        <Container size="lg">
-          <AnswerBlock
-            eyebrow="Cómo funciona"
-            question="¿Cómo es el proceso de consulta con Pineda y Asociados?"
-            answer="Primero nos contacta por WhatsApp, llamada o el formulario de esta página. En horario hábil le respondemos, evaluamos su caso de forma confidencial y sin costo, y si procede le entregamos un presupuesto por escrito. Solo cuando usted autoriza por escrito se inicia la representación formal: firmamos contrato, abrimos plazos reales y le mantenemos informado en cada hito del proceso."
-          />
-        </Container>
-      </Section>
-
-      <Section spacing="md">
+      <Section spacing="lg">
         <div className="grid lg:grid-cols-5 gap-6">
           <div className="lg:col-span-3">
             <Card id="formulario" padding="md" className="border-l-4 border-l-accent">
@@ -106,8 +91,8 @@ export default async function SolicitarConsultaPage() {
             {/* 1. CONTACTO Y HORARIO — equipo + teléfono + WhatsApp + horario */}
             <Card padding="md" className="border-l-4 border-l-accent">
               <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/30">
-                <div className="w-12 h-12 rounded-lg border border-accent/30 bg-accent/10 text-accent-dark flex items-center justify-center flex-shrink-0">
-                  <Users size={22} aria-hidden="true" />
+                <div className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 text-accent-dark flex items-center justify-center flex-shrink-0">
+                  <Users size={20} aria-hidden="true" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-xxs font-medium uppercase tracking-wider text-accent-dark mb-0.5">
@@ -132,8 +117,8 @@ export default async function SolicitarConsultaPage() {
                   href={telHref()}
                   className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-surface-alt transition-colors group"
                 >
-                  <span className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
-                    <Phone size={16} />
+                  <span className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+                    <Phone size={20} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-bold uppercase tracking-wider text-text-muted">Teléfono</p>
@@ -146,12 +131,12 @@ export default async function SolicitarConsultaPage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-surface-alt transition-colors group"
                 >
-                  <span className="w-9 h-9 rounded-lg bg-success/15 text-success flex items-center justify-center flex-shrink-0 group-hover:bg-success/20 transition-colors">
-                    <MessageCircle size={16} />
+                  <span className="w-11 h-11 rounded-lg bg-success/15 text-success flex items-center justify-center flex-shrink-0 group-hover:bg-success/20 transition-colors">
+                    <MessageCircle size={20} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-bold uppercase tracking-wider text-text-muted">WhatsApp</p>
-                    <p className="text-sm font-semibold text-text leading-tight mt-0.5">Respuesta inmediata</p>
+                    <p className="text-sm font-semibold text-text leading-tight mt-0.5">Atención en horario hábil</p>
                   </div>
                 </a>
                 <div className="flex items-center gap-2.5 p-2.5">
@@ -173,8 +158,8 @@ export default async function SolicitarConsultaPage() {
               <div className="space-y-2.5">
                 {GUARANTEES.map((g) => (
                   <div key={g.title} className="flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded-md bg-success/15 text-success flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <g.icon size={13} />
+                    <div className="w-11 h-11 rounded-lg bg-success/15 text-success flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <g.icon size={20} />
                     </div>
                     <div>
                       <p className="text-xs font-bold text-text leading-tight">{g.title}</p>
@@ -202,13 +187,13 @@ export default async function SolicitarConsultaPage() {
             {/* 3. URGENCIAS Y LÍMITES — emergencia + privacidad */}
             <div className="p-4 rounded-lg bg-gradient-to-br from-aggravation/10 to-aggravation/5 border border-aggravation/20">
               <div className="flex items-start gap-3 mb-3">
-                <div className="w-9 h-9 rounded-lg bg-aggravation flex items-center justify-center flex-shrink-0">
-                  <AlertTriangle size={18} className="text-white" />
+                <div className="w-11 h-11 rounded-lg bg-aggravation flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle size={20} className="text-white" />
                 </div>
                 <div>
                   <h3 className="font-bold text-sm text-aggravation leading-tight">¿Emergencia con detenido?</h3>
                   <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                    Si un familiar está siendo detenido o necesita asistencia inmediata, no espere un minuto.
+                    Si hay una detención en curso o una audiencia inminente, contacte por teléfono o WhatsApp e indique que se trata de una urgencia penal.
                   </p>
                 </div>
               </div>
@@ -236,13 +221,14 @@ export default async function SolicitarConsultaPage() {
         </div>
       </Section>
 
+      <TrustBar background="light" />
 
       <Section background="muted" spacing="md">
         <Container size="lg">
           <div className="text-center mb-8">
             <p className="text-xs font-bold uppercase tracking-eyebrow text-accent-dark mb-2">Visítenos</p>
             <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
-              Prefiere vernos en persona
+              ¿Prefiere vernos en persona?
             </h2>
             <p className="mt-2 text-sm text-text-secondary max-w-lg mx-auto">
               Con cita previa. Estaremos encantados de atenderle en nuestro despacho.

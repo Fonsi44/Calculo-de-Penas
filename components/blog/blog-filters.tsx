@@ -47,7 +47,7 @@ export function BlogFilters({
           onClick={() => onSort('recent')}
           aria-pressed={sort === 'recent'}
           className={cn(
-            'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-semibold transition-colors',
+            'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors',
             sort === 'recent' ? 'bg-surface-raised text-primary shadow-sm' : 'text-text-secondary hover:text-primary',
           )}
         >
@@ -58,7 +58,7 @@ export function BlogFilters({
           onClick={() => onSort('relevant')}
           aria-pressed={sort === 'relevant'}
           className={cn(
-            'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-semibold transition-colors',
+            'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors',
             sort === 'relevant' ? 'bg-surface-raised text-primary shadow-sm' : 'text-text-secondary hover:text-primary',
           )}
         >

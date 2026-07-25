@@ -66,7 +66,7 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel, classN
         title={post.title}
         className="group flex items-start gap-3 rounded-lg p-2 -m-2 hover:bg-surface-alt transition-colors"
       >
-        <div className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0 bg-primary/5 border border-border/30">
+        <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-primary/5 border border-border/30">
           {post.coverImage ? (
             <Image
               src={post.coverImage}
@@ -109,7 +109,7 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel, classN
               fill
               priority={priority}
               sizes="(max-width: 768px) 100vw, 66vw"
-              className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              className="object-cover group-hover:scale-[1.025] transition-transform duration-200"
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-accent/15" />
@@ -158,7 +158,7 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel, classN
               fill
               priority={priority}
               sizes="128px"
-              className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
+              className="object-cover group-hover:scale-[1.025] transition-transform duration-200"
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
@@ -195,7 +195,7 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel, classN
             fill
             priority={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
+            className="object-cover group-hover:scale-[1.025] transition-transform duration-200"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />

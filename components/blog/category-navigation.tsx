@@ -114,7 +114,7 @@ export function CategoryNavigation({
                 role="menuitem"
                 onClick={() => { onSelect(active === c.slug ? null : c.slug); setMoreOpen(false); }}
                 className={cn(
-                  'flex items-center justify-between gap-2 px-3 py-2 rounded-md text-sm text-left transition-colors',
+                  'flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-sm text-left transition-colors',
                   active === c.slug
                     ? 'bg-primary/10 text-primary font-semibold'
                     : 'text-text-secondary hover:bg-surface-alt hover:text-primary',

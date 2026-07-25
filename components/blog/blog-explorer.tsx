@@ -54,6 +54,7 @@ export function BlogExplorer({
   totalPages,
   activeTag,
   itemsPerPage = 12,
+  withSidebar = false,
 }: {
   posts: BlogCardData[];
   categories: BlogCategoryWithCount[];
@@ -62,6 +63,7 @@ export function BlogExplorer({
   totalPages: number;
   activeTag?: string | null;
   itemsPerPage?: number;
+  withSidebar?: boolean;
 }) {
   const router = useRouter();
 
@@ -201,7 +203,7 @@ export function BlogExplorer({
           />
         ) : (
           <div className="space-y-6">
-            <BlogCardGrid withSidebar>
+            <BlogCardGrid withSidebar={withSidebar}>
               {visibleFiltered.map((p) => (
                 <BlogCard key={p.slug} post={p} />
               ))}
@@ -229,7 +231,7 @@ export function BlogExplorer({
             />
           ) : (
             <>
-              <BlogCardGrid withSidebar>
+              <BlogCardGrid withSidebar={withSidebar}>
                 {pagePosts.map((p) => (
                   <BlogCard key={p.slug} post={p} />
                 ))}

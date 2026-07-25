@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Scale, ShieldCheck, Briefcase, BookOpen,
-  HeartHandshake, ArrowRight, Gavel, Award,
+  HeartHandshake, ArrowRight, Award,
 } from 'lucide-react';
 import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
@@ -14,11 +13,9 @@ import { LiveOfficeStatus, StatsCounter } from '@/components/marketing/live-widg
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
-import { getCorporateImage } from '@/data/images';
 import { getPageContent } from '@/lib/page-content-db';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
-import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_DESPACHO } from '@/data/faqs-hubs';
 import { AnswerBlock } from '@/components/marketing/answer-block';
@@ -37,12 +34,25 @@ export const metadata: Metadata = buildMetadata({
 });
 
 function despachoContent(content: Record<string, string>) {
+  const storedHeroTitle = content['hero.title']?.trim();
+  const storedHeroSubtitle = content['hero.subtitle']?.trim();
+  const heroTitle =
+    !storedHeroTitle || storedHeroTitle.includes('Visión de Vanguardia')
+      ? 'Bufete de abogados en Nacaome, Valle'
+      : storedHeroTitle;
+  const heroSubtitle =
+    !storedHeroSubtitle
+    || storedHeroSubtitle.includes('rigor metodológico')
+    || storedHeroSubtitle.includes('confidencialidad absoluta')
+      ? `${site.name} es un despacho fundado en Nacaome con más de 15 años de ejercicio profesional. La defensa penal es nuestro pilar histórico y la complementamos con atención en familia, laboral, civil, notarial, mercantil y otras áreas del derecho hondureño.`
+      : storedHeroSubtitle;
+
   return {
     hero: {
       eyebrow: content['hero.eyebrow'] || 'El Despacho',
       badge: content['hero.badge'] || 'Multidisciplinar',
-      title: content['hero.title'] || 'Bufete de Abogados en Nacaome, Valle — Compromiso Legal, Rigor Técnico y Visión de Vanguardia',
-      subtitle: content['hero.subtitle'] || `${site.name} es un bufete jurídico fundado sobre los pilares del rigor metodológico, la confidencialidad absoluta y la excelencia jurídica. Nos especializamos en ofrecer soluciones legales estratégicas tanto en el ámbito penal como en las distintas ramas del derecho empresarial y privado. Nuestro enfoque combina una sólida solvencia técnica con la digitalización de procesos, garantizando a cada cliente un respaldo legal robusto, transparente y de alto nivel en un entorno global.`,
+      title: heroTitle,
+      subtitle: heroSubtitle,
     },
     mision: {
       title: content['mision_vision.mision_title'] || 'Defender con técnica, servir con humanidad',
@@ -110,38 +120,6 @@ export default async function DespachoPage() {
       {/* TRUST BAR */}
       <TrustBar background="light" />
 
-      {/* HERO CORPORATIVO */}
-      {(() => {
-        const heroImg = getCorporateImage('hero_despacho');
-        return heroImg ? (
-          <div className="relative aspect-[21/9] w-full overflow-hidden bg-primary">
-            <Image
-              src={heroImg}
-              alt={`Interior del despacho ${site.name}`}
-              fill
-              sizes="100vw"
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/55 to-transparent" aria-hidden="true" />
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center">
-              <div className="max-w-2xl text-text-inverse">
-                <p className="eyebrow-rule text-xxs font-bold uppercase tracking-eyebrow text-accent mb-3">
-                  Sede del bufete
-                </p>
-                <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl leading-tight text-balance">
-                  Atención presencial en Nacaome, Valle
-                </h2>
-                <p className="mt-3 text-sm md:text-base text-text-inverse/85 leading-relaxed text-pretty">
-                  {site.address.line1}, {site.address.line2}.
-                  Le recibimos con cita previa para garantizar confidencialidad.
-                </p>
-              </div>
-            </div>
-          </div>
-        ) : null;
-      })()}
-
       {/* BLOQUE EDITORIAL CANÓNICO — respuesta directa sobre QUIÉN ES el
           despacho. Modelo unificado: AnswerBlock en Section warm, mismo
           formato que el resto de páginas. */}
@@ -164,25 +142,6 @@ export default async function DespachoPage() {
           <LiveOfficeStatus />
         </div>
       </Section>
-
-      <BlogHighlights
-        slugs={[
-          'prescripcion-deudas-plazos-honduras',
-          'estafas-fraudes-tipos-penales-honduras',
-          'custodia-hijos-honduras-juez',
-          'poder-legal-honduras-cuando-se-necesita',
-        ]}
-        eyebrow="Antes de su consulta"
-        title="Temas que ya consultan en Google antes de contactar al despacho"
-        subtitle="Estas guías concentran demanda orgánica real y ayudan a llegar a la primera consulta con mejor contexto, documentos y preguntas útiles."
-        ctaLabel="Ver todas las guías del blog"
-        ctaHref="/blog"
-      />
-      <div className="text-center -mt-4 pb-2">
-        <Link href="/guia-legal-abogados-honduras" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors">
-          Guía para contratar abogado en Honduras <ArrowRight size={14} />
-        </Link>
-      </div>
 
       {/* MISIÓN, VISIÓN Y VALORES — sección consolidada (Fase 3.2).
           Antes eran 3 bloques separados (Misión+compromisos, 4 cards derechas
@@ -254,31 +213,6 @@ export default async function DespachoPage() {
         </div>
       </Section>
 
-      {/* VALORES — bloque editorial con divisores (Hito 9.4).
-          Antes: grid de 4 tarjetas idénticas con icono central. Ahora:
-          composición de dos columnas con divisores entre pares. */}
-      <Section background="muted" spacing="md">
-        <SectionHeader
-          eyebrow="Nuestros valores"
-          title={c.values.sectionTitle}
-          subtitle="Cuatro principios que sostienen cada decisión, cada audiencia, cada escrito."
-          align="center"
-        />
-        <dl className="max-w-4xl mx-auto divide-y divide-border/40 md:columns-2 md:gap-x-10 md:divide-y-0 [column-rule:1px_solid_hsl(220_10%_85%)]">
-          {c.values.items.map((v) => (
-            <div key={v.title} className="py-5 md:py-6 md:break-inside-avoid">
-              <dt className="flex items-center gap-3">
-                <span className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
-                  <v.icon size={20} aria-hidden="true" />
-                </span>
-                <span className="font-bold text-sm text-text leading-tight">{v.title}</span>
-              </dt>
-              <dd className="mt-2 ml-14 text-sm text-text-secondary leading-relaxed text-pretty">{v.desc}</dd>
-            </div>
-          ))}
-        </dl>
-      </Section>
-
       {/* EQUIPO — dueño canónico del bloque (Fase 3.2).
           La home y /solicitar-consulta referencian aquí; no duplican el
           bloque. Tres socios con identidad pública y foto; el resto del
@@ -290,39 +224,12 @@ export default async function DespachoPage() {
           title="Los abogados responsables de cada área"
           subtitle="Tres socios con especialidades complementarias. Atención directa del abogado responsable en cada caso; el resto del equipo técnico se identifica a los clientes con relación de servicio constituida, conforme al secreto profesional."
         />
-        {(() => {
-          const meetingImg = getCorporateImage('corporate_meeting');
-          return meetingImg ? (
-            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-lg mb-6 border border-border-light">
-              <Image
-                src={meetingImg}
-                alt="Reunión profesional del bufete"
-                fill
-                sizes="100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" aria-hidden="true" />
-            </div>
-          ) : null;
-        })()}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Danilo Pineda Maradiaga — socio director (identidad pública).
               Su foto y nombre se exponen con su consentimiento expreso. */}
           <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
             <div className="flex items-center gap-4">
-              <div className="relative flex-shrink-0">
-                <div className="absolute -inset-1.5 rounded-lg bg-accent/15 blur-xl" aria-hidden="true" />
-                <div className="relative w-20 h-20 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
-                  <Image
-                    src="/images/equipo/danilo-pineda-maradiaga.webp"
-                    alt={FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)'}
-                    width={160}
-                    height={160}
-                    className="w-full h-full object-cover"
-                    sizes="80px"
-                  />
-                </div>
-              </div>
+              <span className="team-monogram" aria-hidden="true">DP</span>
               <div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                   Dirección y defensa penal
@@ -360,19 +267,7 @@ export default async function DespachoPage() {
               civil y notarial, mercantil y empresarial). */}
           <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
             <div className="flex items-center gap-4">
-              <div className="relative flex-shrink-0">
-                <div className="absolute -inset-1.5 rounded-lg bg-accent/15 blur-xl" aria-hidden="true" />
-                <div className="relative w-20 h-20 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
-                  <Image
-                    src="/images/equipo/thania-marlene-paz.webp"
-                    alt={THANIA_PROFILE.imageAltText}
-                    width={160}
-                    height={160}
-                    className="w-full h-full object-cover"
-                    sizes="80px"
-                  />
-                </div>
-              </div>
+              <span className="team-monogram" aria-hidden="true">TP</span>
               <div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                   Familia · Mercantil · Administrativo
@@ -408,19 +303,7 @@ export default async function DespachoPage() {
           {/* Emil Barahona — socio del bufete (laboral, penal, civil y notarial). */}
           <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
             <div className="flex items-center gap-4">
-              <div className="relative flex-shrink-0">
-                <div className="absolute -inset-1.5 rounded-lg bg-accent/15 blur-xl" aria-hidden="true" />
-                <div className="relative w-20 h-20 rounded-lg border border-accent/30 overflow-hidden bg-surface-alt">
-                  <Image
-                    src="/images/equipo/emil-barahona.webp"
-                    alt={EMIL_PROFILE.imageAltText}
-                    width={160}
-                    height={160}
-                    className="w-full h-full object-cover"
-                    sizes="80px"
-                  />
-                </div>
-              </div>
+              <span className="team-monogram" aria-hidden="true">EB</span>
               <div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                   Laboral · Civil y Notarial
@@ -470,29 +353,6 @@ export default async function DespachoPage() {
           ]}
           withConnector
         />
-      </Section>
-
-      {/* VISIÓN MULTIDISCIPLINAR — bloque editorial sobrio (Fase 3.2).
-          Antes eran 4 tarjetas navy clonadas que repetían el patrón
-          icono-texto de las secciones anteriores. Ahora es un bloque
-          narrativo que explica el valor de la coordinación interna. */}
-      <Section background="primary" spacing="md">
-        <Container size="md">
-          <EditorialBlock
-            variant="inverted"
-            align="center"
-            eyebrow="Visión multidisciplinar"
-            title="Su caso, atendido por el área correcta con respaldo del bufete completo"
-            intro="La mayoría de los problemas jurídicos cruzan varias ramas del derecho. Un equipo coordinado es más rápido, más económico y más seguro que tratar cada frente por separado: un único punto de contacto, un solo expediente y una estrategia coherente."
-            points={[
-              { icon: Gavel, title: 'Penal con repercusión familiar y patrimonial', description: 'Acusaciones que arrastran custodia, bienes o responsabilidades civiles.' },
-              { icon: Briefcase, title: 'Laboral y mercantil en empresas', description: 'Despidos, contratos y sociedades que requieren mirar varias ramas a la vez.' },
-              { icon: Scale, title: 'Civil, tributario y bancario', description: 'Embargos, cobros y obligaciones que conectan patrimonio y fiscalidad.' },
-              { icon: BookOpen, title: 'Notarial y registral', description: 'Compraventas, donaciones, sociedades y traspasos con trazabilidad.' },
-            ]}
-            cta={{ href: '/servicios-juridicos', label: 'Ver las áreas del derecho que atendemos' }}
-          />
-        </Container>
       </Section>
 
       {/* CÓMO SE ASIGNAN LOS ASUNTOS + PRESUPUESTO Y CONTRATACIÓN (FASE 2).

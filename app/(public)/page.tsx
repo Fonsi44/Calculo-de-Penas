@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   Scale,
@@ -7,30 +6,24 @@ import {
   BookOpen,
   MapPin,
   CheckCircle2,
-  ArrowRight,
-  Phone,
   Gavel,
   Award,
-  BriefcaseBusiness,
-  Globe,
-  MessageCircle,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE, telHref, whatsappHref } from '@/lib/site';
+import { site, FOUNDER_PROFILE } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { GoogleReviews } from '@/components/marketing/google-reviews';
-import { areasGenerales } from '@/data/areas-juridicas';
+import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
 import { ServiceCard } from '@/components/marketing/service-card';
+import { Reveal } from '@/components/marketing/reveal';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { ProblemSelector } from '@/components/marketing/problem-selector';
-import { TrustLimits } from '@/components/marketing/trust-limits';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 
 export const metadata: Metadata = {
@@ -87,7 +80,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600;
 
-const HIGHLIGHTED_AREAS = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
+const HIGHLIGHTED_AREAS = ['derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'];
 
 export default async function HomePage() {
   // NOTA: el índice de búsqueda (searchIndex) se eliminó de la home para
@@ -133,6 +126,10 @@ export default async function HomePage() {
     { icon: ShieldCheck, title: t('why_us.reason3_title'), description: t('why_us.reason3_desc') },
     { icon: HeartHandshake, title: t('why_us.reason4_title'), description: t('why_us.reason4_desc') },
     { icon: BookOpen, title: t('why_us.reason5_title'), description: t('why_us.reason5_desc') },
+  ];
+  const highlightedAreas = [
+    hubPenal,
+    ...areasGenerales.filter((area) => HIGHLIGHTED_AREAS.includes(area.slug)),
   ];
 
   // FAQ i18n home — LEGACY STRUCTURED-DATA (no UI, no fuente canónica).
@@ -225,12 +222,12 @@ export default async function HomePage() {
                 composición del hero con datos verificados (site, áreas), sin
                 inventar métricas (R4). Panel translúcido con textura de marca. */}
             <div className="hidden lg:block lg:col-span-5">
-              <div className="relative rounded-2xl border border-accent/25 bg-primary-dark/40 backdrop-blur-md p-5 shadow-[0_24px_60px_-24px_rgba(6,14,32,0.6)]">
-                <div className="absolute inset-0 pointer-events-none rounded-2xl bg-grid opacity-40" aria-hidden="true" />
+              <div className="relative rounded-lg border border-accent/25 bg-primary-dark/40 backdrop-blur-md p-5 shadow-xl">
+                <div className="absolute inset-0 pointer-events-none rounded-lg bg-grid opacity-40" aria-hidden="true" />
                 <div className="relative space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
-                      <Gavel size={18} aria-hidden="true" />
+                    <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30">
+                      <Gavel size={20} aria-hidden="true" />
                     </div>
                     <div>
                       <p className="font-bold text-sm text-text-inverse leading-tight">Defensa penal como pilar</p>
@@ -276,39 +273,31 @@ export default async function HomePage() {
           que no conocen la rama jurídica. Cada entrada dirige a una página
           real verificada. No sustituye al catálogo de áreas (lo hace la
           sección siguiente), sino que ataja la decisión del usuario. */}
-      <Section background="muted" spacing="md" ariaLabel="Selector por problema">
+      <Section background="muted" spacing="lg" ariaLabel="Orientación y especialidades">
         <ProblemSelector />
-      </Section>
 
-      {/* ÁREAS DESTACADAS — 4 especialidades principales en grid uniforme
-          (Fase 3.1 revisada). Penal, familia, laboral y civil: las 4 como
-          ServiceCard idénticas, con foto, alineadas en grid de 4 columnas.
-          Antes había una card de texto "pilar histórico" separada que rompía
-          el ritmo y duplicaba la ServiceCard de penal. Eliminada; los claims
-          de valor (+15 años, estrategia unificada, un solo expediente) viven
-          en el EditorialBlock "Por qué elegirnos" que sigue. */}
-      <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
+        <div className="divider-soft my-8 md:my-10" aria-hidden="true" />
         <SectionHeader
           eyebrow="Especialidades principales"
-          title={t('specialties.title')}
+          title="Cuatro áreas con presencia constante"
           subtitle={t('specialties.subtitle')}
         />
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {areasGenerales
-            .filter((a) => HIGHLIGHTED_AREAS.includes(a.slug))
-            .map((area) => {
+          {highlightedAreas.map((area, index) => {
               const areaSlug = area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`;
               return (
-                <ServiceCard
-                  key={area.slug}
-                  href={areaSlug}
-                  slug={area.slug}
-                  title={area.titulo}
-                  description={area.resumen}
-                  category="services"
-                  tone={area.color as PlaceholderTone}
-                  aspect="4/3"
-                />
+                <Reveal key={area.slug} delay={([1, 2, 3, 4] as const)[index % 4]} className="h-full">
+                  <ServiceCard
+                    href={areaSlug}
+                    slug={area.slug}
+                    title={area.titulo}
+                    description={area.resumen}
+                    category="services"
+                    tone={('color' in area ? area.color : 'primary') as PlaceholderTone}
+                    aspect="4/3"
+                    className="h-full"
+                  />
+                </Reveal>
               );
             })}
         </div>
@@ -325,11 +314,7 @@ export default async function HomePage() {
           eyebrow="Por qué elegirnos"
           title={t('why_us.title')}
           intro={t('why_us.subtitle')}
-          points={[
-            ...WHY_POINTS,
-            { icon: Award, title: '+15 años de ejercicio profesional', description: 'Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.' },
-            { icon: BriefcaseBusiness, title: 'Estrategia unificada, un solo expediente', description: 'Coordinación interna entre especialistas cuando un caso cruza varias ramas del derecho. Un único punto de contacto, sin gestionar varios despachos.' },
-          ]}
+          points={WHY_POINTS}
           cta={{ href: '/despacho', label: 'Conozca el despacho' }}
         />
       </Section>
@@ -344,32 +329,6 @@ export default async function HomePage() {
         <ProcessStepper steps={PROCESS} withConnector />
       </Section>
 
-      {/* EQUIPO Y DESPACHO — referencia al dueño canónico (Hito 9.7).
-          Bloque breve que conecta al /despacho sin duplicar su contenido. */}
-      <Section background="muted" spacing="sm" ariaLabel="El equipo">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="eyebrow-rule text-accent-dark text-xs font-bold uppercase tracking-eyebrow mb-2">
-            El despacho
-          </p>
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
-            Un bufete con más de 15 años de experiencia
-          </h2>
-          <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
-            Tres socios con especialidades complementarias, atención directa del abogado
-            responsable y coordinación interna cuando su caso cruza varias ramas del derecho.
-          </p>
-          <Link
-            href="/despacho"
-            className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-          >
-            Conozca el despacho <ArrowRight size={14} />
-          </Link>
-        </div>
-      </Section>
-
-      {/* GOOGLE REVIEWS — reseñas reales verificadas del perfil de Google Business */}
-      <GoogleReviews />
-
       {/* GUÍAS DESTACADAS — enlazado interno home→blog (crawl path).
           layout="list" (Fase 2.2) para diferenciar visualmente de los grids
           de tarjetas anteriores y dar respiración. */}
@@ -383,63 +342,6 @@ export default async function HomePage() {
         ctaHref="/blog"
         slugs={[...TOP_ORGANIC_GUIDE_SLUGS]}
       />
-
-      {/* COBERTURA TERRITORIAL, ESPAÑA Y VISITA — fusionado (Hito 9.7).
-          Combina Hondureños en España + Visítenos en una sección única con
-          tres columnas, evitando repetir la información de sede del hero. */}
-      <Section background="warm" spacing="md" ariaLabel="Cobertura y visita">
-        <SectionHeader
-          eyebrow="Cobertura y visita"
-          title="Le atendemos en Nacaome, en el sur de Honduras y desde España"
-          subtitle="Atención presencial en el despacho, coordinación remota para otros puntos del país y asistencia exprés desde España para trámites en Honduras."
-          align="center"
-        />
-        <div className="grid md:grid-cols-3 gap-4 mt-6">
-          <div className="text-center p-5 rounded-lg bg-surface border border-border/30">
-            <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
-              <MapPin size={20} aria-hidden="true" />
-            </span>
-            <h3 className="font-bold text-sm text-text">Presencial en Nacaome</h3>
-            <p className="text-xs text-text-secondary mt-1 leading-relaxed">Con cita previa. {site.address.line1}, {site.address.city}.</p>
-            <Link href="/como-llegar" className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark hover:text-primary transition-colors">
-              Cómo llegar <ArrowRight size={12} />
-            </Link>
-          </div>
-          <div className="text-center p-5 rounded-lg bg-surface border border-border/30">
-            <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
-              <Globe size={20} aria-hidden="true" />
-            </span>
-            <h3 className="font-bold text-sm text-text">Hondureños en España</h3>
-            <p className="text-xs text-text-secondary mt-1 leading-relaxed">Poderes, divorcios, sucesiones y trámites documentales entre España y Honduras.</p>
-            <Link href="/hondurenos-en-espana" className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark hover:text-primary transition-colors">
-              Ver servicios <ArrowRight size={12} />
-            </Link>
-          </div>
-          <div className="text-center p-5 rounded-lg bg-surface border border-border/30">
-            <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
-              <Phone size={20} aria-hidden="true" />
-            </span>
-            <h3 className="font-bold text-sm text-text">Contacto directo</h3>
-            <p className="text-xs text-text-secondary mt-1 leading-relaxed">{site.phoneDisplay} · {site.hours}</p>
-            <div className="flex gap-2 justify-center mt-3">
-              <a href={telHref()} className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-primary text-white text-xs font-bold hover:bg-primary-light transition-colors">
-                <Phone size={12} /> Llamar
-              </a>
-              <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-success text-white text-xs font-bold hover:opacity-90 transition-colors">
-                <MessageCircle size={12} /> WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* CONFIANZA Y LÍMITES (FASE 2) — elementos confirmados del bufete
-          (sede, atención directa, confidencialidad, presupuesto, equipo) más
-          un bloque explícito de lo que NO se garantiza. Sin contadores
-          ficticios ni resultados no comprobados (R4, R12). */}
-      <Section background="muted" spacing="md" ariaLabel="Confianza y límites">
-        <TrustLimits />
-      </Section>
 
       {/* CTA FINAL — llamada a la acción premium (componente compartido).
           Con enlace contextual a /preguntas-frecuentes (antes era una sección

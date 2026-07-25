@@ -49,7 +49,7 @@ export function BlogSearch({ posts, scope }: Props) {
   }, [query, posts]);
 
   return (
-    <div className="rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md shadow-accent/5">
+    <div className="rounded-lg border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md">
       <div className="relative">
         <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
         <label htmlFor="blog-search" className="sr-only">Buscar artículos del blog jurídico</label>
@@ -93,7 +93,7 @@ export function BlogSearch({ posts, scope }: Props) {
                 className="flex items-start gap-3 p-3 hover:bg-accent/5 transition-colors group"
               >
                 {p.coverImage && (
-                  <div className="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 bg-primary/5 border border-border/20">
+                  <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-primary/5 border border-border/20">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={p.coverImage} alt="" className="w-full h-full object-cover" />
                   </div>

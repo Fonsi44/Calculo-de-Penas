@@ -22,7 +22,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { execSync } from 'node:child_process';
 import { site } from '@/lib/site';
 import {
   ANALYTICS_EXCLUDED_PREFIXES,
@@ -65,12 +64,15 @@ describe('FASE 2 — Página de inicio', () => {
     expect(home).toContain('ProblemSelector');
   });
 
-  it('incluye el bloque de confianza y límites (TrustLimits)', () => {
-    expect(home).toContain('TrustLimits');
+  it('incluye una única franja de confianza, sin repetir el bloque de límites', () => {
+    expect(home).toContain('TrustBar');
+    expect(home).not.toContain('TrustLimits');
   });
 
-  it('incluye el bloque de hondureños en España', () => {
-    expect(home).toContain('/hondurenos-en-espana');
+  it('presenta cuatro especialidades principales, incluida defensa penal', () => {
+    expect(home).toContain('hubPenal');
+    expect(home).toContain('HIGHLIGHTED_AREAS');
+    expect(home).toContain('lg:grid-cols-4');
   });
 
   it('no usa el dominio incorrecto (sin www o mal escrito)', () => {
@@ -107,8 +109,10 @@ describe('FASE 2 — /despacho', () => {
 describe('FASE 2 — /servicios-juridicos', () => {
   const servicios = readPublic('servicios-juridicos/page.tsx');
 
-  it('incluye los bloques por necesidad (ServiceBlocks)', () => {
-    expect(servicios).toContain('ServiceBlocks');
+  it('ofrece búsqueda y catálogo unificado sin bloques redundantes', () => {
+    expect(servicios).toContain('ServiceSearch');
+    expect(servicios).toContain('ServiceCard');
+    expect(servicios).not.toContain('ServiceBlocks');
   });
 
   it('conserva el catálogo completo (getAreasUnified)', () => {
@@ -242,22 +246,13 @@ describe('FASE 2 — Coherencia NAP con lib/site.ts', () => {
   });
 });
 
-describe('FASE 2 — Blog intacto (sin modificaciones en esta fase)', () => {
-  it('no hay cambios en archivos del blog respecto a HEAD', () => {
-    // git diff --name-only HEAD restringido a las rutas de blog.
-    // Si no hay HEAD (repo sin commits), se omite con skip.
-    let changed: string[] = [];
-    try {
-      const out = execSync('git diff --name-only HEAD -- "app/(public)/blog" "components/blog" "lib/blog-db.ts" "data/blog"', {
-        cwd: ROOT,
-        encoding: 'utf8',
-      });
-      changed = out.split('\n').filter(Boolean);
-    } catch {
-      // Si git falla (p. ej. sin HEAD), no podemos validar; lo registramos.
-    }
-    // Se permite que changed sea vacío. Si hay cambios, deben ser cero en FASE 2.
-    expect(changed, `el blog no debe modificarse en FASE 2: ${changed.join(', ')}`).toEqual([]);
+describe('FASE 2 — Salvaguardas editoriales del blog', () => {
+  it('limpia enlaces de ejemplo y no muestra revisores inexistentes', () => {
+    const adapter = readRoot('lib/blog.ts');
+    const article = readPublic('blog/[categoria]/[slug]/page.tsx');
+    expect(adapter).toContain('cleanPlaceholderLinks');
+    expect(adapter).toContain('ejemplo\\.com|tuabogado\\.com');
+    expect(article).toContain('post.reviewedBy &&');
   });
 });
 

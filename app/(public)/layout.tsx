@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
-import { FloatingContactRail } from '@/components/marketing/live-widgets';
+import { FloatingContactRail, MobileContactBar } from '@/components/marketing/live-widgets';
 import { ChatWidget } from '@/components/chat/chat-widget';
 import { PWARegistration } from '@/components/pwa/pwa-registration';
 import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema } from '@/lib/site';
@@ -116,13 +116,14 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background pb-16 md:pb-0">
       <PublicHeader />
-      <main id="main" className="flex-1 pb-20 sm:pb-24">
+      <main id="main" className="flex-1">
         {children}
       </main>
       <PublicFooter />
       <FloatingContactRail />
+      <MobileContactBar />
       <ChatWidget />
       <PWARegistration />
       <script

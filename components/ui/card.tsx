@@ -21,9 +21,9 @@ const TONE: Record<NonNullable<CardProps['tone']>, string> = {
 
 const PAD: Record<NonNullable<CardProps['padding']>, string> = {
   none: '',
-  sm: 'p-3.5',
+  sm: 'p-4',
   md: 'p-5',
-  lg: 'p-6',
+  lg: 'p-6 md:p-7',
 };
 
 export function Card({
@@ -39,7 +39,7 @@ export function Card({
     variant === 'flat'
       ? 'bg-surface border border-border-light shadow-xs'
       : variant === 'elevated'
-        ? 'bg-surface border border-border-light shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300'
+        ? 'bg-surface border border-border-light shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200'
         : 'card-premium';
   // 'default' (card-premium) ya incluye su propio border y background.
   // 'flat' y 'elevated' usan TONE[tone] para colorear el borde.
@@ -47,10 +47,7 @@ export function Card({
   return (
     <div
       className={cn(
-        // Radius canónico de la web pública = rounded-lg (16px) — R16.
-        // Antes era rounded-md (12px), que entraba en conflicto con
-        // .card-premium (que forzaba 14px). Ahora Card y .card-premium
-        // coinciden en var(--radius-lg).
+        // Radius canónico de la web pública: rounded-lg.
         'rounded-lg',
         variantCls,
         toneCls,

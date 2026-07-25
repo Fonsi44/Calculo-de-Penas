@@ -1,6 +1,7 @@
 'use client';
 
 import type { TocHeading } from '@/lib/blog-toc';
+import { ListTree } from 'lucide-react';
 
 /**
  * Tabla de contenidos del artículo de blog.
@@ -29,8 +30,11 @@ export function BlogTOC({ headings }: BlogTOCProps) {
   if (h2s.length < 2) return null;
 
   return (
-    <div className="mb-8 p-5 rounded-xl border border-border/40 bg-surface-alt border-l-3 border-l-accent">
-      <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-3">📑 Tabla de contenidos</p>
+    <div className="mb-8 p-5 rounded-lg border border-border/40 bg-surface-alt border-l-3 border-l-accent">
+      <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-text-muted mb-3">
+        <ListTree size={16} className="text-accent-dark" aria-hidden="true" />
+        Tabla de contenidos
+      </p>
       <nav aria-label="Tabla de contenidos">
         <ul className="space-y-1.5">
           {h2s.map((h) => (

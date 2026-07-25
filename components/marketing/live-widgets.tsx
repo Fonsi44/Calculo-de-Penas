@@ -1,34 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { Activity, Download, MessageCircle, Phone, Share, X } from 'lucide-react';
+import { Activity, Calendar, Download, MessageCircle, Phone, Share, X } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 import { useInstallPrompt } from '@/hooks/use-install-prompt';
-
-/**
- * Indicador "vivo": pulso animado, número de visitantes simulados,
- * reloj en tiempo real. Refuerza la sensación de oficina activa.
- */
-export function LiveBadge() {
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setTick((v) => v + 1), 6000);
-    return () => clearInterval(t);
-  }, []);
-
-  const visitors = 2 + (tick % 4);
-  return (
-    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/30 text-success text-xxs font-bold">
-      <span className="relative flex h-2 w-2">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
-      </span>
-      <span>{visitors} {visitors === 1 ? 'consulta activa' : 'consultas activas'} ahora</span>
-    </div>
-  );
-}
 
 export function LiveClock() {
   const [now, setNow] = useState<Date | null>(() => new Date());
@@ -64,13 +41,13 @@ export function HeroOfficeBadge() {
     ? 'Verificando horario'
     : isOpen
     ? 'Atendiendo ahora'
-    : 'Cerrado ahora';
+    : 'Fuera de horario · respondemos al abrir';
 
   const dotColor = isOpen === null
     ? 'bg-text-muted'
     : isOpen
     ? 'bg-success'
-    : 'bg-aggravation';
+    : 'bg-accent';
 
   const pulseClass = isOpen
     ? 'animate-glow-pulse'
@@ -170,14 +147,14 @@ export function FloatingContactRail() {
     <div
       data-floating-widget
       aria-label="Acceso rápido de contacto"
-      className="fixed bottom-4 right-4 z-30 flex flex-col gap-2 print:hidden safe-bottom"
+      className="fixed bottom-4 right-4 z-30 hidden md:flex flex-col gap-2 print:hidden safe-bottom"
     >
       <a
         href={whatsappHref('Hola, necesito orientación jurídica.')}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackWhatsAppClick('floating_button')}
-        className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center shadow-lg shadow-success/30 hover:scale-105 transition-transform"
+        className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-transform"
         aria-label="Contactar por WhatsApp"
         title="WhatsApp"
       >
@@ -186,19 +163,6 @@ export function FloatingContactRail() {
           WhatsApp
         </span>
       </a>
-      <a
-        href={telHref()}
-        onClick={() => trackPhoneClick('floating_button')}
-        className="group w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 transition-transform"
-        aria-label="Llamar al bufete"
-        title={`Llamar ${site.phoneDisplay}`}
-      >
-        <Phone size={20} aria-hidden="true" />
-        <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none tabular-nums">
-          {site.phoneDisplay}
-        </span>
-      </a>
-
       {/* Botón "Instalar app" (PWA): visible cuando el navegador permite
           instalar (beforeinstallprompt) o en iOS (instrucciones manuales).
           Oculto si ya está instalada o si el usuario lo descartó (<30 días). */}
@@ -206,7 +170,7 @@ export function FloatingContactRail() {
         <button
           type="button"
           onClick={handleInstallClick}
-          className="group w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center shadow-lg shadow-accent/40 hover:scale-105 transition-transform focus-visible:outline-none"
+          className="group w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 transition-transform focus-visible:outline-none"
           aria-label="Instalar como aplicación"
           title="Instalar esta web como aplicación"
         >
@@ -277,9 +241,45 @@ export function FloatingContactRail() {
   );
 }
 
+export function MobileContactBar() {
+  return (
+    <nav
+      data-floating-widget
+      aria-label="Contacto rápido"
+      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-px border-t border-border bg-surface/95 px-2 py-2 shadow-lg backdrop-blur-md md:hidden print:hidden safe-bottom"
+    >
+      <a
+        href={telHref()}
+        onClick={() => trackPhoneClick('mobile_contact_bar')}
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-primary/5"
+      >
+        <Phone size={18} aria-hidden="true" />
+        Llamar
+      </a>
+      <a
+        href={whatsappHref('Hola, necesito orientación jurídica.')}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackWhatsAppClick('mobile_contact_bar')}
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-success text-xs font-bold text-white btn-shadow-success"
+      >
+        <MessageCircle size={18} aria-hidden="true" />
+        WhatsApp
+      </a>
+      <a
+        href="/solicitar-consulta#formulario"
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-accent/10"
+      >
+        <Calendar size={18} aria-hidden="true" />
+        Consulta
+      </a>
+    </nav>
+  );
+}
+
 export function Ticker() {
   const items = [
-    'Asistencia a detenidos · Respuesta inmediata por WhatsApp',
+    'Asistencia a detenidos · Atención prioritaria en horario hábil',
     'Procesos penales, familia, laboral, civil y mercantil',
     'Ubicados en Nacaome, Valle · Atención en todo Honduras',
   ];
@@ -310,8 +310,8 @@ export function StatsCounter() {
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {[
         { value: '+15', label: 'Años de ejercicio', icon: Activity },
-        { value: '60h', label: 'Horario continuo', icon: Phone },
-        { value: '100%', label: 'Privacidad legal', icon: MessageCircle },
+        { value: '3', label: 'Socios identificados', icon: MessageCircle },
+        { value: '6 días', label: 'Atención semanal', icon: Phone },
       ].map((s, i) => (
         <div
           key={i}

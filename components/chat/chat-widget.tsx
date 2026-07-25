@@ -262,13 +262,12 @@ export function ChatWidget() {
   return createPortal(
     <div
       data-floating-widget
-      className="print:hidden safe-bottom"
+      className="hidden md:flex print:hidden safe-bottom"
       style={{
         position: 'fixed',
         bottom: 0,
         left: 0,
         zIndex: 9999,
-        display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         gap: '0.5rem',
@@ -284,14 +283,12 @@ export function ChatWidget() {
           role="dialog"
           aria-modal="false"
           aria-label="Asistente virtual"
-          className="flex flex-col rounded-2xl border border-accent/30 bg-surface text-text overflow-hidden"
+          className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text overflow-hidden shadow-xl"
           style={{
             pointerEvents: 'auto',
             width: 'calc(100vw - 2rem)',
             maxWidth: 'clamp(22rem, 38vw, 32rem)',
             maxHeight: 'min(640px, calc(100dvh - 4rem))',
-            boxShadow:
-              '0 1px 0 0 rgba(255,255,255,0.60) inset, 0 4px 12px rgba(15,29,58,0.10), 0 24px 48px -16px rgba(15,29,58,0.25)',
           }}
         >
           {/* Cabecera — gradiente navy con acento dorado */}
@@ -335,8 +332,8 @@ export function ChatWidget() {
                 key={i}
                 className={
                   m.role === 'user'
-                    ? 'ml-auto max-w-[82%] rounded-2xl rounded-br-sm bg-primary text-text-inverse px-3.5 py-2 text-sm leading-relaxed shadow-sm break-words overflow-hidden'
-                    : 'mr-auto max-w-[88%] rounded-2xl rounded-bl-sm bg-surface text-text px-3.5 py-2 text-sm leading-relaxed border border-border-light shadow-sm break-words overflow-hidden'
+                    ? 'ml-auto max-w-[82%] rounded-lg bg-primary text-text-inverse px-3.5 py-2 text-sm leading-relaxed shadow-sm break-words overflow-hidden'
+                    : 'mr-auto max-w-[88%] rounded-lg bg-surface text-text px-3.5 py-2 text-sm leading-relaxed border border-border-light shadow-sm break-words overflow-hidden'
                 }
               >
                 {m.content}
@@ -355,14 +352,14 @@ export function ChatWidget() {
             )}
 
             {error && (
-              <p className="text-xxs text-danger bg-danger-bg rounded-md px-2 py-1.5 mr-auto max-w-[88%]">
+              <p className="text-xxs text-danger bg-danger-bg rounded-lg px-2 py-1.5 mr-auto max-w-[88%]">
                 Se produjo un error. Puede reintentar o contactar directamente.
               </p>
             )}
 
             {/* Banner de urgencia: si el backend marca urgencia, resalta CTAs */}
             {urgent && (
-              <div className="mr-auto max-w-[92%] rounded-xl border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-text">
+              <div className="mr-auto max-w-[92%] rounded-lg border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-text">
                 <p className="font-semibold flex items-center gap-1.5">
                   <Zap size={12} className="text-danger" aria-hidden="true" />
                   Su caso parece urgente
@@ -443,13 +440,13 @@ export function ChatWidget() {
               placeholder="Escriba su mensaje…"
               autoComplete="off"
               disabled={loading}
-              className="flex-1 min-w-0 rounded-xl border border-border bg-background px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:border-accent/50 focus-visible:ring-2 focus-visible:ring-accent/20 disabled:opacity-50 transition-colors"
+              className="flex-1 min-w-0 rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:border-accent/50 focus-visible:ring-2 focus-visible:ring-accent/20 disabled:opacity-50 transition-colors"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Enviar mensaje"
-              className="flex-shrink-0 w-9 h-9 rounded-xl bg-accent text-primary flex items-center justify-center hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 transition-colors btn-shadow-accent"
+              className="flex-shrink-0 w-9 h-9 rounded-lg bg-accent text-primary flex items-center justify-center hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 transition-colors btn-shadow-accent"
             >
               <Send size={15} aria-hidden="true" />
             </button>
@@ -471,20 +468,11 @@ export function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
         aria-expanded={open}
-        className={`relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${open ? '' : 'animate-chat-attention'}`}
+        className="relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         style={{
           pointerEvents: 'auto',
-          boxShadow:
-            '0 1px 0 0 rgba(255,255,255,0.10) inset, 0 4px 12px rgba(15,29,58,0.30), 0 8px 24px -6px rgba(212,175,55,0.25)',
         }}
       >
-        {!open && (
-          <span
-            className="absolute inset-0 rounded-full pointer-events-none animate-ping"
-            style={{ background: 'rgba(212,175,55,0.20)', animationDuration: '2.5s' }}
-            aria-hidden="true"
-          />
-        )}
         <span className="relative">
           {open ? <X size={20} aria-hidden="true" /> : <MessageCircle size={20} aria-hidden="true" />}
         </span>

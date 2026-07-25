@@ -47,7 +47,7 @@ export function BlogSidebar({
             <li key={c.slug}>
               <Link
                 href={`/blog/${c.slug}`}
-                className="flex items-center justify-between gap-2 px-3 py-2 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors group"
+                className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors group"
               >
                 <span className="truncate group-hover:text-primary">{c.nombre}</span>
                 <span className="text-xxs text-text-muted tabular-nums flex-shrink-0 bg-surface-alt px-1.5 py-0.5 rounded-full">
@@ -86,7 +86,7 @@ export function BlogSidebar({
                 <Link
                   href={`/blog?month=${m.value}`}
                   rel="nofollow"
-                  className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-md text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors group"
+                  className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:bg-surface-alt hover:text-primary transition-colors group"
                 >
                   <span className="capitalize group-hover:text-primary">{m.label}</span>
                   <span className="text-xxs text-text-muted tabular-nums">{m.count}</span>

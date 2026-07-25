@@ -68,14 +68,14 @@ export function LegalArticleCta({ area, sourceSlug, position, title, description
           href={`${href}#formulario`}
           data-event-name="seo_blog_cta_click"
           onClick={handleClick}
-          className="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-sm font-medium"
+          className="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-sm font-medium btn-shadow-primary"
         >
           Solicitar consulta
         </a>
         <a
           href="tel:+50495363724"
           onClick={() => trackEvent('phone_click', { value: 1, source_path: `/blog/${sourceSlug}` })}
-          className="inline-flex items-center justify-center rounded-md border border-border bg-surface px-4 py-2 text-sm font-medium text-text hover:bg-surface-alt"
+          className="inline-flex items-center justify-center rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-text hover:bg-surface-alt"
         >
           Llamar ahora
         </a>

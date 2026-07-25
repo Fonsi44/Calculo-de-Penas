@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import {
-  Calendar, Clock, User, ArrowLeft, ArrowRight,
+  Calendar, Clock, User, ArrowLeft, ArrowRight, BadgeCheck,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
@@ -217,8 +217,8 @@ const MID_POST_CTA_COPY: Record<string, { title: string; body: string; anchor: s
 };
 
 function injectMidArticleCta(body: string, slug: string): string {
-  const cta = MID_POST_CTA_COPY[slug];
-  if (!cta) return body;
+  const hasContextualTopic = Boolean(MID_POST_CTA_COPY[slug]);
+  if (!hasContextualTopic) return body;
   if (body.includes('/solicitar-consulta')) return body;
 
   const paragraphEndRegex = /<\/p>/gi;
@@ -235,9 +235,9 @@ function injectMidArticleCta(body: string, slug: string): string {
   const ctaHtml = `
 <aside class="my-7 rounded-lg border border-accent/30 bg-surface-alt p-4">
   <p class="text-xxs font-bold uppercase tracking-wider text-accent-dark mb-1">Consulta legal</p>
-  <p class="text-sm font-semibold text-text mb-1">${cta.title}</p>
-  <p class="text-sm text-text-secondary leading-relaxed mb-2">${cta.body}</p>
-  <a href="/solicitar-consulta#formulario" data-event-name="seo_blog_cta_click" data-cta-location="blog_inline" data-cta-topic="${slug}" class="text-sm font-semibold text-primary hover:text-accent-dark">${cta.anchor}</a>
+  <p class="text-sm font-semibold text-text mb-1">¿Necesita orientación sobre este tema?</p>
+  <p class="text-sm text-text-secondary leading-relaxed mb-2">Podemos revisar su situación concreta, explicarle las opciones disponibles y, si procede, preparar un presupuesto por escrito. No se garantizan resultados.</p>
+  <a href="/solicitar-consulta#formulario" data-event-name="seo_blog_cta_click" data-cta-location="blog_inline" data-cta-topic="${slug}" class="text-sm font-semibold text-primary hover:text-accent-dark">Solicitar una consulta confidencial</a>
 </aside>`;
 
   if (targetIndex >= 0) {
@@ -398,6 +398,15 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <User size={15} className="text-accent-dark" />
                 {post.author}
               </span>
+              {post.reviewedBy && (
+                <span className="flex items-center gap-1.5">
+                  <BadgeCheck size={15} className="text-accent-dark" />
+                  Revisión jurídica: {post.reviewedBy}
+                  {post.reviewedAt && (
+                    <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
+                  )}
+                </span>
+              )}
             </div>
           </div>
         </Container>
@@ -473,6 +482,15 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                         Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
                         colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                       </p>
+                      {post.reviewedBy && (
+                        <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-text-secondary">
+                          <BadgeCheck size={14} className="text-accent-dark" />
+                          Revisión jurídica: {post.reviewedBy}
+                          {post.reviewedAt && (
+                            <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
+                          )}
+                        </p>
+                      )}
                       <Link
                         href="/blog"
                         className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
@@ -549,7 +567,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 >
                   <div className="relative h-40 overflow-hidden">
                     {rp.coverImage ? (
-                      <Image src={rp.coverImage} alt={rp.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <Image src={rp.coverImage} alt={rp.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-[1.025] transition-transform duration-200" />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
                     )}

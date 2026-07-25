@@ -40,7 +40,7 @@ export function RelatedService({ category }: Props) {
   const resolved = service ?? fallback;
 
   return (
-    <div className="mt-8 p-5 rounded-xl border border-accent/30 bg-white">
+    <div className="mt-8 p-5 rounded-lg border border-accent/30 bg-white">
       <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-2">Servicio relacionado</p>
       <p className="text-sm text-text leading-relaxed">
         Este artículo pertenece al área de <strong>{resolved.name}</strong>.

@@ -549,7 +549,7 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
         },
         {
           key: 'guarantees', label: 'Garantías', fields: [
-            { key: 'g1_title', label: 'Garantía 1 — título', type: 'text', default: 'Confidencialidad absoluta' },
+            { key: 'g1_title', label: 'Garantía 1 — título', type: 'text', default: 'Secreto profesional' },
             { key: 'g1_desc', label: 'Garantía 1 — descripción', type: 'textarea', default: 'Su información está protegida por el secreto profesional.' },
             { key: 'g2_title', label: 'Garantía 2 — título', type: 'text', default: 'Sin compromiso' },
             { key: 'g2_desc', label: 'Garantía 2 — descripción', type: 'textarea', default: 'La consulta inicial no le obliga a contratar nuestros servicios.' },

@@ -53,9 +53,9 @@ describe('FASE 5 §1 — Tokens centralizados en @theme', () => {
   });
 
   it('define las 3 duraciones canónicas (--duration-fast/normal/slow)', () => {
-    expect(css).toMatch(/--duration-fast:\s*150ms/);
+    expect(css).toMatch(/--duration-fast:\s*160ms/);
     expect(css).toMatch(/--duration-normal:\s*220ms/);
-    expect(css).toMatch(/--duration-slow:\s*320ms/);
+    expect(css).toMatch(/--duration-slow:\s*280ms/);
   });
 
   it('define --shadow-focus-ring y --shadow-focus-ring-subtle', () => {

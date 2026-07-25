@@ -30,7 +30,7 @@ export function ServiceSearch({ items, placeholder, domain }: Props) {
   }, [query, items]);
 
   return (
-    <div className="rounded-xl border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md shadow-accent/5">
+    <div className="rounded-lg border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md">
       <div className="relative">
         <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
         <input

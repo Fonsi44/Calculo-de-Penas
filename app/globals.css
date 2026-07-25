@@ -26,12 +26,12 @@
    Para una web más AMPLIA:   sube --space-scale y --section-scale
    ============================================================ */
 :root {
-  --ui-scale: 0.82;
-  --font-scale: 0.90;
-  --space-scale: 0.70;
-  --section-scale: 0.68;
-  --component-scale: 0.78;
-  --chat-scale: 0.70;
+  --ui-scale: 0.95;
+  --font-scale: 1;
+  --space-scale: 0.90;
+  --section-scale: 0.90;
+  --component-scale: 0.95;
+  --chat-scale: 0.85;
 }
 
 @theme {
@@ -170,9 +170,9 @@
   /* FASE 5: duraciones de transición canónicas.
      Antes había 7 valores dispersos hardcodeados en utilidades
      (150/200/220/240/280/300/320 ms). Estos 3 tokens los consolidan. */
-  --duration-fast: 150ms;     /* micro: focus, links contextuales */
+  --duration-fast: 160ms;     /* micro: focus, links contextuales */
   --duration-normal: 220ms;   /* estándar: hovers de tarjeta, chips, reveals */
-  --duration-slow: 320ms;     /* entrada: card-premium, faq-anim */
+  --duration-slow: 280ms;     /* entrada: card-premium, faq-anim */
 
   /* FASE 5: focus ring canónico.
      Antes la utilidad .focus-ring usaba opacidad 0.40 mientras 21 sitios
@@ -182,7 +182,7 @@
   --shadow-focus-ring-subtle: 0 0 0 3px rgba(212, 175, 55, 0.18);
 
   /* Animaciones */
-  --animate-fade-in-up: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in-up: fade-in-up 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-scale-in: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-scroll-x: scroll-x 35s linear infinite;
   --animate-scroll-x-reverse: scroll-x 35s linear infinite reverse;
@@ -194,7 +194,7 @@
 }
 
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -508,12 +508,12 @@ input[type="checkbox"] {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   transition:
-    transform 320ms var(--ease-spring),
-    box-shadow 320ms var(--ease-spring),
-    border-color 320ms var(--ease-spring);
+    transform var(--duration-normal) var(--ease-spring),
+    box-shadow var(--duration-normal) var(--ease-spring),
+    border-color var(--duration-normal) var(--ease-spring);
 }
 .card-premium:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
   border-color: rgba(212, 175, 55, 0.35);
 }
@@ -1048,7 +1048,7 @@ details.faq-anim:not([open]) > summary:hover {
    Animación < 250ms con easing spring (suave, profesional). */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(10px);
   transition:
     opacity 220ms var(--ease-spring),
     transform 220ms var(--ease-spring);
@@ -1058,13 +1058,13 @@ details.faq-anim:not([open]) > summary:hover {
   opacity: 1;
   transform: translateY(0);
 }
-/* Delays escalonados para grids (0ms, 60ms, 120ms, 180ms...) */
-.reveal-delay-1 { transition-delay: 60ms; }
-.reveal-delay-2 { transition-delay: 120ms; }
-.reveal-delay-3 { transition-delay: 180ms; }
-.reveal-delay-4 { transition-delay: 240ms; }
-.reveal-delay-5 { transition-delay: 300ms; }
-.reveal-delay-6 { transition-delay: 360ms; }
+/* Delays escalonados breves para grids. */
+.reveal-delay-1 { transition-delay: 40ms; }
+.reveal-delay-2 { transition-delay: 80ms; }
+.reveal-delay-3 { transition-delay: 120ms; }
+.reveal-delay-4 { transition-delay: 160ms; }
+.reveal-delay-5 { transition-delay: 200ms; }
+.reveal-delay-6 { transition-delay: 240ms; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .reveal-delay-1, .reveal-delay-2, .reveal-delay-3,
@@ -1249,13 +1249,13 @@ details.faq-anim:not([open]) > summary:hover {
     0 1px 2px rgba(15, 29, 58, 0.04),
     0 6px 16px -8px rgba(15, 29, 58, 0.08);
   transition:
-    transform 280ms var(--ease-spring),
-    box-shadow 280ms var(--ease-spring),
-    border-color 280ms var(--ease-spring);
+    transform var(--duration-normal) var(--ease-spring),
+    box-shadow var(--duration-normal) var(--ease-spring),
+    border-color var(--duration-normal) var(--ease-spring);
   overflow: hidden;
 }
 .service-card-refined:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   border-color: rgba(212, 175, 55, 0.35);
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.80) inset,
@@ -1304,9 +1304,9 @@ details.faq-anim:not([open]) > summary:hover {
    Para formularios: focus más visible, validación sutil. */
 .input-refined {
   transition:
-    border-color 200ms var(--ease-soft),
-    box-shadow 200ms var(--ease-soft),
-    background 200ms var(--ease-soft);
+    border-color var(--duration-fast) var(--ease-soft),
+    box-shadow var(--duration-fast) var(--ease-soft),
+    background var(--duration-fast) var(--ease-soft);
 }
 .input-refined:focus {
   border-color: rgba(212, 175, 55, 0.50);
@@ -1396,7 +1396,7 @@ details.faq-anim:not([open]) > summary:hover {
 }
 @media (max-width: 640px) {
   .prose-editorial {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.7;
   }
   .prose-editorial h2 {
@@ -1407,6 +1407,26 @@ details.faq-anim:not([open]) > summary:hover {
     font-size: 1rem;
     margin-top: 1.25rem;
   }
+}
+
+.team-monogram {
+  width: 5rem;
+  height: 5rem;
+  flex: 0 0 5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.22), transparent 42%),
+    linear-gradient(145deg, var(--color-primary-light), var(--color-primary-dark));
+  color: var(--color-accent-light);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
 }
 
 /* ============================================================

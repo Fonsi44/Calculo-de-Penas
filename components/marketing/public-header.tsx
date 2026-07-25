@@ -19,8 +19,9 @@ const NAV = [
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === '/') return pathname === '/';
-  return pathname === href || pathname.startsWith(href + '/');
+  const hrefPath = href.split('#')[0] || '/';
+  if (hrefPath === '/') return pathname === '/';
+  return pathname === hrefPath || pathname.startsWith(hrefPath + '/');
 }
 
 export function PublicHeader() {
@@ -38,15 +39,15 @@ export function PublicHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full text-text-inverse transition-all duration-300 ${
+      className={`sticky top-0 z-50 w-full text-text-inverse transition-all duration-200 ${
         scrolled
-          ? 'bg-primary/95 backdrop-blur-md border-b border-primary-light/40 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.45)]'
+          ? 'bg-primary/95 backdrop-blur-md border-b border-primary-light/40 shadow-lg'
           : 'bg-primary border-b border-primary-light/60'
       }`}
     >
       {/* Barra superior con datos de contacto */}
       <div className="hidden md:block bg-primary-dark/80 border-b border-primary-light/20">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between text-xs">
+        <div className="max-w-7xl mx-auto px-6 py-1.5 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
               href={telHref()}
@@ -65,7 +66,7 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1 md:py-1.5 flex items-center gap-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center gap-2">
         <Link
           href="/"
           className="group flex items-center gap-2 focus-visible:outline-none flex-shrink-0 cursor-pointer"
@@ -81,7 +82,7 @@ export function PublicHeader() {
             alt={`${site.name} — Logo oficial`}
             width={741}
             height={728}
-            className="relative flex-shrink-0 h-7 sm:h-8 md:h-9 lg:h-10 w-auto transition-all duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
+            className="relative flex-shrink-0 h-8 sm:h-9 lg:h-10 w-auto transition-all duration-200 ease-out group-hover:opacity-90"
             style={{
               filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(212,175,55,0.18))',
               objectFit: 'contain',
@@ -94,8 +95,8 @@ export function PublicHeader() {
               reforzar la marca sin dominar la barra: nombre (serif, blanco)
               sobre subtítulo (eyebrow dorado). Compacto y responsive; queda
               junto al logo en móvil y escritorio. */}
-          <span className="flex flex-col leading-tight transition-transform duration-300 ease-out group-hover:scale-105 origin-left">
-            <span className="font-serif font-bold text-text-inverse text-xs sm:text-sm whitespace-nowrap">
+          <span className="flex flex-col leading-tight">
+            <span className="font-serif font-bold text-text-inverse text-sm whitespace-nowrap">
               {site.name}
             </span>
             <span className="text-xxs sm:text-xxs font-semibold tracking-eyebrow text-accent whitespace-nowrap">
@@ -104,7 +105,7 @@ export function PublicHeader() {
           </span>
         </Link>
 
-        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 ml-1 flex-1">
+        <nav aria-label="Navegación principal" className="hidden xl:flex items-center gap-0.5 ml-2 flex-1">
           {NAV.map((item) => {
             const active = isActive(pathname, item.href);
             return (
@@ -113,7 +114,7 @@ export function PublicHeader() {
                 href={item.href}
                 title={item.title}
                 aria-current={active ? 'page' : undefined}
-                className={`relative px-2.5 h-9 inline-flex items-center text-sm font-semibold rounded-md transition-colors focus-visible:outline-none ${
+                className={`relative px-2 h-10 inline-flex items-center text-[13px] font-semibold rounded-lg transition-colors focus-visible:outline-none ${
                   active
                     ? 'text-accent'
                     : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -123,7 +124,7 @@ export function PublicHeader() {
                 {active && (
                   <span
                     aria-hidden="true"
-                    className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,175,55,0.55)]"
+                    className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-accent"
                   />
                 )}
               </Link>
@@ -131,14 +132,14 @@ export function PublicHeader() {
           })}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-2">
+        <div className="hidden xl:flex items-center gap-2">
           <a
             href={whatsappHref('Hola, necesito una consulta jurídica.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none"
             aria-label="Contactar por WhatsApp"
-            title="Escribir por WhatsApp a Pineda y Asociados — respuesta inmediata"
+            title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
           >
             <MessageCircle size={15} aria-hidden="true" />
           </a>
@@ -155,7 +156,7 @@ export function PublicHeader() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden ml-auto w-9 h-9 inline-flex items-center justify-center rounded-md bg-primary-light/40 hover:bg-primary-light/60 focus-visible:outline-none transition-colors"
+          className="xl:hidden ml-auto w-10 h-10 inline-flex items-center justify-center rounded-lg bg-primary-light/40 hover:bg-primary-light/60 focus-visible:outline-none transition-colors"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={open}
         >
@@ -165,7 +166,7 @@ export function PublicHeader() {
 
       {/* Drawer móvil */}
       {open && (
-        <div ref={mobileTrapRef} className="lg:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
+        <div ref={mobileTrapRef} className="xl:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
           <nav aria-label="Navegación móvil" className="px-3 py-3 flex flex-col gap-1">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
@@ -175,7 +176,7 @@ export function PublicHeader() {
                   href={item.href}
                   title={item.title}
                   onClick={() => setOpen(false)}
-                  className={`relative px-3 h-10 inline-flex items-center justify-between text-sm font-semibold rounded-md ${
+                  className={`relative px-3 h-10 inline-flex items-center justify-between text-sm font-semibold rounded-lg ${
                     active
                       ? 'text-accent bg-primary-light/30'
                       : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -183,7 +184,7 @@ export function PublicHeader() {
                 >
                   <span>{item.label}</span>
                   {active ? (
-                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,175,55,0.65)]" />
+                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent" />
                   ) : (
                     <ChevronDown size={14} className="-rotate-90" />
                   )}
@@ -227,5 +228,3 @@ export function PublicHeader() {
     </header>
   );
 }
-
-

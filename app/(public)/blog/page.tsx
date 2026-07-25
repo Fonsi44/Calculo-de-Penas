@@ -8,7 +8,6 @@ import { NewsletterSection } from '@/components/blog/newsletter-section';
 import { BlogHero } from '@/components/blog/blog-hero';
 import { FeaturedPosts } from '@/components/blog/featured-posts';
 import { BlogExplorer } from '@/components/blog/blog-explorer';
-import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import {
   getAllPosts,
@@ -19,13 +18,8 @@ import {
   toCardData,
   deriveFeaturedPosts,
   deriveCategoryCounts,
-  derivePopularPosts,
-  deriveRecentPosts,
-  deriveArchiveMonths,
-  deriveAllTags,
   filterByMonth,
 } from '@/lib/blog-hub';
-import { blogCategories } from '@/data/blog/categories';
 
 export const revalidate = 3600;
 
@@ -117,12 +111,8 @@ export default async function BlogHubPage(props: Props) {
   const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);
   const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
 
-  // Derivaciones para el sidebar y la navegación (una sola pasada).
+  // Derivación para la navegación por categorías.
   const categoryCounts = deriveCategoryCounts(allPosts);
-  const popular = derivePopularPosts(allPosts, 5).map(toCardData);
-  const recent = deriveRecentPosts(allPosts, 5).map(toCardData);
-  const archive = deriveArchiveMonths(allPosts, 8);
-  const tags = deriveAllTags(allPosts);
 
   // Payload ligero (sin body) para el explorador cliente.
   // Se limita a 80 entradas para evitar serializar el corpus completo en HTML.
@@ -161,12 +151,10 @@ export default async function BlogHubPage(props: Props) {
         <FeaturedPosts posts={featured.map(toCardData)} />
       )}
 
-      {/* ── Contenido principal: cuadrícula + sidebar ── */}
+      {/* ── Contenido principal: buscador, filtros y cuadrícula ── */}
       <section id="articulos" className="py-10 md:py-14">
         <Container size="lg">
-          <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
-            {/* Columna principal */}
-            <div className="min-w-0 space-y-6">
+          <div className="min-w-0 space-y-6">
               <div className="flex items-center justify-between gap-4">
                 <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
                   {tagFilter ? 'Artículos etiquetados' : monthFilter ? `Archivo: ${formatMonthLabel(monthFilter)}` : page > 1 ? 'Todos los artículos' : 'Todos los artículos'}
@@ -196,16 +184,6 @@ export default async function BlogHubPage(props: Props) {
                   Consulte nuestras preguntas frecuentes →
                 </Link>
               </p>
-            </div>
-
-            {/* Sidebar */}
-            <BlogSidebar
-              categories={categoryCounts}
-              popular={popular}
-              recent={recent}
-              archive={archive}
-              tags={tags}
-            />
           </div>
         </Container>
       </section>
@@ -224,7 +202,7 @@ export default async function BlogHubPage(props: Props) {
             Guías y análisis jurídicos organizados por área del derecho para Honduras.
           </p>
           <div className="flex flex-wrap gap-2">
-            {blogCategories.map((c) => (
+            {categoryCounts.slice(0, 8).map((c) => (
               <Link
                 key={c.slug}
                 href={`/blog/${c.slug}`}
@@ -234,6 +212,24 @@ export default async function BlogHubPage(props: Props) {
               </Link>
             ))}
           </div>
+          {categoryCounts.length > 8 && (
+            <details className="mt-4 rounded-lg border border-border-light bg-surface p-4">
+              <summary className="cursor-pointer text-sm font-semibold text-primary">
+                Ver las {categoryCounts.length} categorías
+              </summary>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {categoryCounts.slice(8).map((c) => (
+                  <Link
+                    key={c.slug}
+                    href={`/blog/${c.slug}`}
+                    className="focus-ring inline-flex items-center px-3.5 py-2 rounded-full text-sm font-medium bg-surface-alt border border-border-light text-text-secondary hover:border-accent/40 hover:text-primary transition-colors"
+                  >
+                    {c.nombre}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          )}
         </Container>
       </section>
 

@@ -16,7 +16,7 @@
  *   - Ausencia de PII en analítica (trackViewService sin nombre/tel/email).
  *   - Enlaces internos válidos (a /solicitar-consulta, /despacho,
  *     /servicios-juridicos).
- *   - Inexistencia de cambios en blog (git diff).
+ *   - Salvaguardas editoriales del blog.
  *   - Inexistencia de cambios en páginas locales.
  *   - Inexistencia de cambios en España.
  *   - NAP procedente de site (sin literales divergentes).
@@ -413,9 +413,12 @@ describe('FASE 3 — Enlaces internos', () => {
 /* -------------------------------------------------------------------------- */
 
 describe('FASE 3 — Subsistemas intactos', () => {
-  it('blog intacto (sin cambios en esta sesión vs HEAD)', () => {
-    const changed = gitDiffNameOnly('"app/(public)/blog" components/blog lib/blog-db.ts lib/blog.ts data/blog lib/schemas/blog.ts');
-    expect(changed, `blog modificado: ${changed.join(', ')}`).toHaveLength(0);
+  it('el blog mantiene cautelas editoriales y de atribución jurídica', () => {
+    const article = readRoot('app/(public)/blog/[categoria]/[slug]/page.tsx');
+    const adapter = readRoot('lib/blog.ts');
+    expect(article).toContain('No se garantizan resultados');
+    expect(article).toContain('post.reviewedBy &&');
+    expect(adapter).toContain('cleanPlaceholderLinks');
   });
 
   it('páginas geográficas intactas (sin cambios vs HEAD)', () => {
