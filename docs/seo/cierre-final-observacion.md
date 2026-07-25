@@ -8,15 +8,43 @@ Dominio canónico: `https://www.pinedayasociadoshn.com`
 
 ## Día 0 (despliegue)
 
-- [ ] CI de GitHub Actions en verde para el commit final.
-- [ ] Deployment de Vercel correspondiente a `HEAD == origin/main`.
-- [ ] Producción responde en el dominio canónico (HTTP 200, redirects correctos).
-- [ ] Sitemap y robots accesibles y correctos.
-- [ ] URLs modificadas notificadas vía IndexNow (registro de URLs).
-- [ ] Eventos GA4 nuevos (`view_local_page`, `view_spain_service`, `cta_spain`)
-  llegan a GA4 (sin PII).
+- [x] CI de GitHub Actions en verde para el commit final (`51d0ca6e`, run 30144643887, success 3m9s).
+- [x] Deployment de Vercel correspondiente a `HEAD == origin/main` (deployment `czmsp9vkq`, Ready, creado 2026-07-25 06:48:04 GMT+2, alias `git-main`; verificado en producción por contenido Fase 4 visible).
+- [x] Producción responde en el dominio canónico (HTTP 200 www; apex → www 308; http → https 308).
+- [x] Sitemap y robots accesibles y correctos.
+- [x] URLs modificadas notificadas vía IndexNow (24 URLs, HTTP 200 dual endpoint).
+- [ ] Eventos GA4 nuevos (`view_local_page`, `view_spain_service`, `cta_spain`) llegan a GA4 (sin PII) — verificar en GA4 en los próximos días.
 
-**URLs notificadas a IndexNow:** (rellenar tras ejecutar `indexnow:aplicar`)
+**URLs notificadas a IndexNow (24, envío REAL 2026-07-25):**
+
+```
+https://www.pinedayasociadoshn.com/
+https://www.pinedayasociadoshn.com/servicios-juridicos
+https://www.pinedayasociadoshn.com/derecho-penal
+https://www.pinedayasociadoshn.com/abogados-en-nacaome
+https://www.pinedayasociadoshn.com/abogados-en-choluteca
+https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo
+https://www.pinedayasociadoshn.com/abogados-en-goascoran
+https://www.pinedayasociadoshn.com/abogados-en-pespire
+https://www.pinedayasociadoshn.com/abogados-en-san-marcos-de-colon
+https://www.pinedayasociadoshn.com/abogados-en-marcovia
+https://www.pinedayasociadoshn.com/abogados-en-el-triunfo
+https://www.pinedayasociadoshn.com/abogados-en-namasigue
+https://www.pinedayasociadoshn.com/abogados-en-orocuina
+https://www.pinedayasociadoshn.com/abogados-en-langue
+https://www.pinedayasociadoshn.com/abogados-en-amapala
+https://www.pinedayasociadoshn.com/abogados-en-caridad
+https://www.pinedayasociadoshn.com/abogados-en-alianza
+https://www.pinedayasociadoshn.com/abogados-en-concepcion-de-maria
+https://www.pinedayasociadoshn.com/abogados-en-san-antonio-de-flores
+https://www.pinedayasociadoshn.com/despacho
+https://www.pinedayasociadoshn.com/hondurenos-en-espana
+https://www.pinedayasociadoshn.com/preguntas-frecuentes
+https://www.pinedayasociadoshn.com/solicitar-consulta
+https://www.pinedayasociadoshn.com/como-llegar
+```
+
+> Nota: IndexNow notifica a Bing/Yandex y, vía integración, contribuye al rastreo. No garantiza indexación inmediata ni posicionamiento. La indexación real se confirma solo en Search Console / Bing Webmaster Tools en los días siguientes.
 
 ## Día 7
 
