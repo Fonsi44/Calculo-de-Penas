@@ -717,29 +717,33 @@ pendientes de tratamiento separado. Sin push.
   ocultos/inertes.
 
 **Commits locales atómicos:** `7757396d`, `162e232c`, `64a0ab42`,
-`92031bf3`, `9cbc9c0f`, `00b8c44f`, `804b717e`, `6dcfe3fd`.
+`92031bf3`, `9cbc9c0f`, `00b8c44f`, `804b717e`, `6dcfe3fd`,
+`4ccf5fe2`.
 
 **Validación local posterior:**
 
 - `npm run lint`: 0 errores; 58 warnings preexistentes fuera del alcance;
 - `npm run typecheck`: OK;
-- `npm run test`: 78 archivos y 1.484 pruebas correctas;
+- `npm run test`: 78 archivos y 1.490 pruebas correctas;
 - `ENABLE_INDEXNOW_SUBMIT=false npm run build`: build de producción correcto,
   356 páginas generadas e IndexNow solo en dry-run;
 - `npm run validar:meta-seo`: 18/18 rutas correctas;
 - `node scripts/validate-jsonld.mjs`: 8/8 rutas correctas;
 - `node scripts/seo-indexability-audit.mjs`: 0 errores y 0 warnings;
-- `npm run analytics:audit`: 8/8 controles correctos;
+- `npm run analytics:audit`: 9/9 controles correctos;
 - `npm run blog:fix-redirects`: 175 posts analizados y 0 enlaces a redirects
   pendientes;
 - `npm run seo:ahrefs`: sin incidencias bloqueantes. Los 1.855 registros 4XX
   que enumera proceden de CSV históricos y el propio auditor los clasifica
   como información para contrastar, no como fallo del código actual.
 
-**Oportunidad no bloqueante:** el auditor de enlazado interno calcula una media
-de 0,3 enlaces editoriales por post prioritario y CTA efectiva en 6/12. Conviene
-tratar este refuerzo editorial en una fase separada, con revisión de intención
-y sin insertar enlaces masivos.
+**Enlazado interno efectivo:** el auditor anterior medía únicamente el body
+persistido en DB y omitía el autoenlazado y los componentes SSR. Se actualizó
+para reproducir la transformación real. Resultado: media de 4,3 enlaces
+efectivos en el body, 41 enlaces contextuales añadidos, 12/12 posts con al menos
+dos enlaces en el cuerpo, 12/12 con enlace a servicio y 12/12 con CTA efectiva.
+El autoenlazado queda limitado a cinco destinos por artículo y sus clics, junto
+con los CTA inline, quedan instrumentados.
 
 **Datos live:** `seo:doctor` mantuvo 17 OK, 1 ERROR (gcloud CLI no instalada) y
 5 pendientes; GSC/GA4 siguen accesibles por OAuth. `seo:collect` extrajo GSC,
