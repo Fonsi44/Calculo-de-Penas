@@ -1,8 +1,9 @@
 # FASE 5 — Accesibilidad y responsive
 
-> **Método:** spec Playwright `e2e/fase5-design.spec.ts` (21 tests) + inspección de
-> `app/globals.css` para WCAG/reduced-motion. Las capturas before/after están en
-> `docs/design/fase-5/{baseline,after}/{375,768,1280,1440}/`.
+> **Método:** spec Playwright `e2e/fase5-design.spec.ts` (21 tests locales) +
+> 39 tests sobre producción (`https://www.pinedayasocioshn.com`, 9 rutas × 4 viewports) +
+> inspección de `app/globals.css` para WCAG/reduced-motion. Las capturas before/after
+> están en `docs/design/fase-5/{baseline,after}/{375,768,1280,1440}/`.
 
 ---
 
@@ -78,8 +79,9 @@ Validado por smoke HTTP 200 + render correcto en 14 rutas. Lighthouse CI
 
 ## 4. Pendiente de validación
 
-- **Audit formal con axe-core** (no ejecutado en esta iteración). El spec Playwright cubre
-  los criterios del brief §24 pero un audit axe completo detectaría issues residuales de
-  contraste/aria en componentes no tocados. Recomendado para iteración futura.
-- **Validación manual con lector de pantalla** (VoiceOver/NVDA). No realizada; los landmarks
+- **Audit formal con axe-core**: NO APLICA — `@axe-core/playwright` no instalado. El spec
+  Playwright cubre los criterios del brief §24 (landmarks, headings, focus, acordeones,
+  drawer, skip link, teclado, reduced motion, scroll horizontal) pero un audit axe completo
+  detectaría issues residuales de contraste/aria. Recomendado para iteración futura.
+- **Validación manual con lector de pantalla** (VoiceOver/NVDA): PENDIENTE. Los landmarks
   y aria-labels están pero la navegación real con SR no se probó.

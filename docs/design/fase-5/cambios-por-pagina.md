@@ -1,7 +1,9 @@
 # FASE 5 — Cambios por página
 
-> **Convención de estado:** ✅ Cambio aplicado en esta iteración · ⏳ Cambio planificado
-> pero pendiente (iteración futura) · — sin cambio necesario.
+> **Convención de estado:** ✅ Cambio aplicado y verificado en producción ·
+> ⏳ Cambio planificado pero pendiente (iteración futura) · — sin cambio necesario.
+> **Validación productiva:** Playwright 39/39 sobre `https://www.pinedayasocioshn.com`
+> (9 rutas × 4 viewports). Canonical verificado correcto.
 
 Esta página documenta qué se modificó en cada ruta pública de `app/(public)/**` durante
 FASE 5. Los cambios son **chrome visual y consolidación de componentes**: URLs, canonicals,

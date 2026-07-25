@@ -3,11 +3,13 @@
 > **Método:** capturas Playwright (`scripts/fase5-capturas.mjs`) en 4 viewports
 > (375 / 768 / 1280 / 1440) sobre 14 rutas, en dos momentos:
 > - **baseline**: estado `main@40ab8d243` (HEAD al inicio de FASE 5).
-> - **after**: estado `main@b9430eaa` (tras los 7 commits de FASE 5).
+> - **after**: estado `main@b9430eaa` (tras los primeros commits de FASE 5).
+> - **final**: validación productiva sobre `https://www.pinedayasociadoshn.com`
+>   con Playwright 39/39 (commits `83983e29..4f1df5b5`, 23 commits).
 >
 > Ubicación: `docs/design/fase-5/{baseline,after}/{<ancho>}/*.png` (112 PNGs totales,
 > no commiteados — ver `.gitignore`). Las comparaciones se hacen por inspección visual +
-> medición de alturas full-page.
+> medición de alturas full-page. La validación final se realizó contra producción.
 
 ---
 
@@ -93,7 +95,33 @@ detectaron desbordamientos horizontales en ninguna página tras los cambios.
 
 ---
 
-## 4. Veredicto global de la iteración
+## 4. Validación productiva final
+
+Se ejecutó Playwright contra `https://www.pinedayasociadoshn.com` sobre 9 rutas
+en 4 viewports (375, 768, 1280, 1440 px). **39/39 tests PASS**:
+
+- HTTP 200 en todas las rutas.
+- Un solo `<h1>` por página.
+- Sin scroll horizontal en ningún viewport.
+- CTA de contacto visible.
+- Skip link presente y enfocable.
+- FAQ acordeón `<details>` funcional (HubFaq en landings y [slug]).
+- Drawer móvil con apertura y enlace visible.
+- Sin errores de consola críticos.
+
+Canonical productivo verificado: `https://www.pinedayasociadoshn.com/` (correcto).
+
+**axe-core:** NO APLICA — `@axe-core/playwright` no instalado.
+
+**Lector de pantalla manual:** PENDIENTE (riesgo residual).
+
+**Capturas locales:** no regeneradas en esta fase (requieren servidor local
+`next dev -p 3178`; la validación visual está cubierta por Playwright
+productivo).
+
+---
+
+## 5. Veredicto global de la iteración
 
 **Mejora real y verificada:**
 - 12 landings locales consolidadas (FAQ + IconBadge + eyebrow canónico).
