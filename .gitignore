@@ -349,3 +349,8 @@ auditoriablog_*.md
 *.tmp
 .neon
 .neon/
+
+# FASE 5 — capturas Playwright de auditoría visual (regenerables con scripts/fase5-capturas.mjs)
+# Los .md de docs/design/fase-5/ SÍ se commitean; los PNG no (artefactos pesados y volátiles).
+/docs/design/fase-5/baseline/
+/docs/design/fase-5/after/
