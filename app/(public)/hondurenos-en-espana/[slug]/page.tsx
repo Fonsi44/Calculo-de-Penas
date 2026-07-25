@@ -16,6 +16,8 @@ import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
+import { SpainJurisdictionNotice } from '@/components/marketing/spain-jurisdiction-notice';
+import { ViewSpainServiceTracker } from '@/components/marketing/view-spain-service-tracker';
 
 export function generateStaticParams() {
   return hubMigrantes.subareas.map((s) => ({ slug: s.slug }));
@@ -94,6 +96,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
 
   return (
     <>
+      <ViewSpainServiceTracker serviceSlug={slug} />
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
         { label: 'Hondureños en España', href: url },
@@ -107,6 +110,9 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
       />
 
       <TrustBar background="light" />
+
+      {/* FASE 4 (§10) — Aviso jurisdiccional visible en cada subpágina. */}
+      <SpainJurisdictionNotice />
 
       <Section background="default" spacing="md">
         <div className="max-w-3xl mb-8">

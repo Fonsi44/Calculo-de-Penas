@@ -12,13 +12,14 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { hubMigrantes } from '@/data/areas-juridicas';
 import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
-import { getLeadMagnetByArea } from '@/lib/lead-magnets';
 import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedServices } from '@/components/marketing/related-links';
+import { SpainJurisdictionNotice } from '@/components/marketing/spain-jurisdiction-notice';
+import { CtaSpain } from '@/components/marketing/cta-spain';
+import { Card } from '@/components/ui/card';
 
 export const metadata: Metadata = buildMetadata({
   // 54 chars.
@@ -122,6 +123,54 @@ export default async function MigrantesPage() {
         </Container>
       </Section>
 
+      {/* FASE 4 (§10/§11) — Aviso jurisdiccional visible y delimitación clara
+          del alcance: derecho hondureño sí; España requiere profesional
+          habilitado. Sin inventar colaboraciones. */}
+      <SpainJurisdictionNotice />
+
+      {/* FASE 4 (§11) — Alcance por jurisdicción. Bloque autosuficiente (GEO). */}
+      <Section background="default" spacing="md">
+        <Container size="lg">
+          <SectionHeader
+            eyebrow="Qué se puede hacer y desde dónde"
+            title="Alcance del servicio entre Honduras y España"
+            subtitle="Una guía clara sobre qué gestionamos en Honduras, qué se coordina desde España y qué requiere actuación en ese país."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <Card padding="md" className="h-full border-l-4 border-l-success/50">
+              <h3 className="font-bold text-sm text-primary leading-snug">Desde Honduras (derecho hondureño)</h3>
+              <ul className="mt-2 space-y-1.5 text-sm text-text-secondary leading-relaxed list-disc pl-5">
+                <li>Divorcios, custodia y pensión alimentaria ante juzgados hondureños.</li>
+                <li>Sucesiones, herencias y partición de bienes ubicados en Honduras.</li>
+                <li>Representación judicial y trámites notariales y registrales en Honduras.</li>
+                <li>Constitución y representación de sociedades hondureñas.</li>
+              </ul>
+            </Card>
+            <Card padding="md" className="h-full border-l-4 border-l-accent/50">
+              <h3 className="font-bold text-sm text-primary leading-snug">Coordinable desde España</h3>
+              <ul className="mt-2 space-y-1.5 text-sm text-text-secondary leading-relaxed list-disc pl-5">
+                <li>Otorgamiento de poderes ante consulado o notario español con apostilla.</li>
+                <li>Envío seguro de copias documentales para evaluación previa.</li>
+                <li>Seguimiento remoto del caso y videollamadas con el despacho.</li>
+                <li>Revisión del contenido de documentos antes de firmarlos.</li>
+              </ul>
+            </Card>
+            <Card padding="md" className="h-full border-l-4 border-l-warning/60">
+              <h3 className="font-bold text-sm text-primary leading-snug">Requiere actuación en España</h3>
+              <ul className="mt-2 space-y-1.5 text-sm text-text-secondary leading-relaxed list-disc pl-5">
+                <li>Procedimientos reservados a profesionales habilitados en España.</li>
+                <li>Comparecencias personales ante autoridades españolas.</li>
+                <li>Trámites de extranjería y nacionalidad española propios del interesado.</li>
+              </ul>
+              <p className="mt-2 text-xs text-text-muted leading-relaxed">
+                En estos casos le orientamos sobre el alcance y le indicamos cuándo conviene
+                contar con un profesional habilitado en España.
+              </p>
+            </Card>
+          </div>
+        </Container>
+      </Section>
+
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Asistencia transnacional"
@@ -192,21 +241,46 @@ export default async function MigrantesPage() {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
 
-      <Section spacing="sm">
-        {(() => {
-          const magnet = getLeadMagnetByArea('hondurenos-en-espana');
-          if (magnet) {
-            return (
-              <LeadMagnetCTA
-                area={magnet.area}
-                titulo={magnet.titulo}
-                descripcion={magnet.descripcion}
-              />
-            );
-          }
-          return null;
-        })()}
+      {/* FASE 4 (§13) — Guía prudente de envío seguro de documentación.
+          No promete cifrado o almacenamiento seguro no implementados; da
+          recomendaciones de prudencia al usuario. */}
+      <Section background="default" spacing="md">
+        <Container size="lg">
+          <SectionHeader
+            eyebrow="Envío seguro de documentos"
+            title="Cómo enviarnos documentación desde España"
+            subtitle="Recomendaciones de prudencia para el primer contacto. No envíe información sensible innecesaria."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <Card padding="md" className="h-full">
+              <h3 className="font-bold text-sm text-primary leading-snug">Recomendado</h3>
+              <ul className="mt-2 space-y-1.5 text-sm text-text-secondary leading-relaxed list-disc pl-5">
+                <li>Use copias legibles, no originales, en el primer contacto.</li>
+                <li>Indique el país y la autoridad emisora de cada documento.</li>
+                <li>Confirme con nosotros el canal seguro antes de enviar.</li>
+                <li>Avisenos si el documento ya está apostillado.</li>
+                <li>Conserve siempre sus originales.</li>
+              </ul>
+            </Card>
+            <Card padding="md" className="h-full">
+              <h3 className="font-bold text-sm text-primary leading-snug">Evite enviar</h3>
+              <ul className="mt-2 space-y-1.5 text-sm text-text-secondary leading-relaxed list-disc pl-5">
+                <li>Documentos originales en el primer contacto.</li>
+                <li>Contraseñas o claves de acceso.</li>
+                <li>Números bancarios completos.</li>
+                <li>Datos completos de menores cuando no sean imprescindibles.</li>
+              </ul>
+              <p className="mt-2 text-xs text-text-muted leading-relaxed">
+                El alcance del servicio y el canal de comunicación se confirman tras la
+                evaluación inicial del caso.
+              </p>
+            </Card>
+          </div>
+        </Container>
       </Section>
+
+      {/* FASE 4 (§14) — CTA contextual España con motivo preseleccionado seguro. */}
+      <CtaSpain />
 
       <ConsultationCTA />
     </>
