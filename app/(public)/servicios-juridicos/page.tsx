@@ -182,17 +182,20 @@ export default async function AreasJuridicasPage() {
           subtitle={contentMap['content.section_subtitle'] || 'Seleccione el área que necesita y acceda a información detallada sobre nuestros servicios, subservicios y preguntas frecuentes.'}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {areas.map((area) => (
-            <ServiceCard
-              key={area.slug}
-              href={`/servicios-juridicos/${area.slug}`}
-              slug={area.slug}
-              title={area.titulo}
-              description={area.descripcionCorta}
-              category="services"
-              tone="primary"
-            />
-          ))}
+          {areas.map((area) => {
+            const isPriority = ['derecho-penal', 'derecho-de-familia', 'derecho-laboral', 'derecho-civil-y-notarial'].includes(area.slug);
+            return (
+              <ServiceCard
+                key={area.slug}
+                href={`/servicios-juridicos/${area.slug}`}
+                slug={area.slug}
+                title={area.titulo}
+                description={area.descripcionCorta}
+                category="services"
+                tone={isPriority ? 'primary' : 'administrativo'}
+              />
+            );
+          })}
         </div>
       </Section>
 
