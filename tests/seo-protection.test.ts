@@ -293,11 +293,9 @@ describe('SEO on-page — home page (página raíz)', () => {
     expect(CHECK2_DEFAULT.toLowerCase()).toContain('abogados en nacaome');
   });
 
-  it('el title del sitio (tagline) incluye los términos clave y tiene 35-65 caracteres', () => {
-    // El title absoluto de la home es site.tagline en lugar de usar el template
-    // (45 car.) para que el layout añada "| Pineda y Asociados" sin duplicar.
-    // El `<title>` renderizado es: "Abogados en Nacaome, Valle | Bufete Jurídico Pineda y Asociados".
-    // Ver `app/(public)/page.tsx` línea 43 (title absoluto) y layout.tsx (template %s | site.name).
+  it('el title del sitio (tagline) incluye los términos clave y no supera 60 caracteres', () => {
+    // La home usa site.tagline como title absoluto. Debe contener intención
+    // local, tipo de entidad y marca sin depender del template del layout.
     const title = site.tagline;
     expect(title).toContain('Abogados');
     expect(title).toContain('Nacaome');
@@ -305,7 +303,7 @@ describe('SEO on-page — home page (página raíz)', () => {
     expect(title).toContain('Bufete');
     expect(title).toContain('Pineda y Asociados');
     expect(title.length).toBeGreaterThanOrEqual(35);
-    expect(title.length).toBeLessThanOrEqual(65);
+    expect(title.length).toBeLessThanOrEqual(60);
   });
 
   it('el title (tagline) tiene palabras que aparecen en el H1 y viceversa (coherencia semántica)', () => {

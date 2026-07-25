@@ -1,40 +1,72 @@
 /**
- * Script de auditoría SEO — validación de metadatos (titles, descriptions, OG/Twitter)
- * para todas las URLs públicas indexables del sitio.
+ * Auditoría SEO de metadata sobre la salida real de Next.js.
  *
- * Ejecutar: npx tsx scripts/validar-meta-seo.ts
+ * Ejecutar después de `npm run build`:
+ *   npm run validar:meta-seo
  *
- * Evalúa contra límites de Bing Webmaster Tools:
- *   - title: 30-60 caracteres
- *   - meta description: 120-160 caracteres
- *   - OG/Twitter title: ideal ≤ 55, aceptable ≤ 60
- *   - OG/Twitter description: ideal ≤ 160
- *   - Detecta marca duplicada (Pineda y Asociados repetido)
- *   - Detecta mojibake (caracteres de reemplazo �)
- *   - Detecta canonical ausente
+ * A diferencia del auditor histórico, este script no mantiene copias manuales
+ * de titles y descriptions. Lee los HTML prerenderizados de `.next` y obtiene
+ * la metadata del hub dinámico `/blog` desde su propia función exportada.
  */
 
-const SITE_NAME = 'Pineda y Asociados';
-const BRAND = SITE_NAME;
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import type { Metadata } from 'next';
+import { generateMetadata as generateBlogMetadata } from '@/app/(public)/blog/page';
+
+const ROOT = resolve(import.meta.dirname, '..');
+const BUILD_APP_DIR = resolve(ROOT, '.next', 'server', 'app');
+const CANONICAL_ORIGIN = 'https://www.pinedayasociadoshn.com';
+const BRAND = 'Pineda y Asociados';
 const TITLE_MIN = 30;
 const TITLE_MAX = 60;
 const DESC_MIN = 120;
 const DESC_MAX = 160;
-const OG_TITLE_MAX = 60;
-const OG_DESC_MAX = 160;
+const SOCIAL_TITLE_MAX = 60;
+const SOCIAL_DESC_MAX = 160;
 
-interface RouteMeta {
-  path: string;
-  title: string;               // Final title with template applied where applicable
-  titleRaw: string;            // The raw title from source (before template)
+const ROUTES = [
+  '/',
+  '/servicios-juridicos',
+  '/derecho-penal',
+  '/blog',
+  '/despacho',
+  '/solicitar-consulta',
+  '/hondurenos-en-espana',
+  '/preguntas-frecuentes',
+  '/como-llegar',
+  '/abogados-en-nacaome',
+  '/abogados-en-choluteca',
+  '/abogados-en-san-lorenzo',
+  '/politica-privacidad',
+  '/politica-cookies',
+  '/aviso-legal',
+  '/terminos',
+  '/disclaimer',
+  '/politica-editorial',
+] as const;
+
+type RoutePath = (typeof ROUTES)[number];
+const NOINDEX_ROUTES = new Set<RoutePath>([
+  '/politica-privacidad',
+  '/politica-cookies',
+  '/aviso-legal',
+  '/terminos',
+  '/disclaimer',
+  '/politica-editorial',
+]);
+
+interface RouteMetadata {
+  path: RoutePath;
+  source: 'build' | 'generateMetadata';
+  title: string;
   description: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  twitterTitle?: string;
-  twitterDescription?: string;
-  hasAbsoluteTitle?: boolean;  // true if uses title.absolute (no template)
-  hasTemplate?: boolean;       // true if subject to public layout template `%s | Pineda y Asociados`
-  descriptionSource?: string;
+  canonical: string;
+  robots: string;
+  ogTitle: string;
+  ogDescription: string;
+  twitterTitle: string;
+  twitterDescription: string;
 }
 
 interface Issue {
@@ -48,272 +80,331 @@ interface Issue {
 
 const issues: Issue[] = [];
 
-function addIssue(path: string, field: string, severity: 'ERROR' | 'WARN', message: string, actual: string | number | null, expected: string) {
+function decodeHtml(value: string): string {
+  return value
+    .replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code: string) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getAttribute(tag: string, name: string): string {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = tag.match(new RegExp(`\\b${escaped}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, 'i'));
+  return decodeHtml(match?.[1] ?? match?.[2] ?? '');
+}
+
+function extractUnique(
+  html: string,
+  path: RoutePath,
+  field: string,
+  values: string[],
+): string {
+  const nonEmpty = values.filter(Boolean);
+  if (nonEmpty.length !== 1) {
+    issues.push({
+      path,
+      field,
+      severity: 'ERROR',
+      message: `Se esperaban exactamente 1 valor y se encontraron ${nonEmpty.length}`,
+      actual: nonEmpty.length,
+      expected: '1',
+    });
+  }
+  return nonEmpty[0] ?? '';
+}
+
+function extractBuiltMetadata(path: Exclude<RoutePath, '/blog'>): RouteMetadata {
+  const relativeFile = path === '/' ? 'index.html' : `${path.slice(1)}.html`;
+  const file = resolve(BUILD_APP_DIR, relativeFile);
+  if (!existsSync(file)) {
+    throw new Error(
+      `No existe ${file}. Ejecute npm run build antes de validar metadata.`,
+    );
+  }
+
+  const html = readFileSync(file, 'utf8');
+  const titleValues = [...html.matchAll(/<title>([\s\S]*?)<\/title>/gi)]
+    .map((match) => decodeHtml(match[1]));
+  const metaTags = html.match(/<meta\b[^>]*>/gi) ?? [];
+  const linkTags = html.match(/<link\b[^>]*>/gi) ?? [];
+
+  const metaValues = (key: string) => metaTags
+    .filter((tag) => {
+      const name = getAttribute(tag, 'name');
+      const property = getAttribute(tag, 'property');
+      return name.toLowerCase() === key.toLowerCase()
+        || property.toLowerCase() === key.toLowerCase();
+    })
+    .map((tag) => getAttribute(tag, 'content'));
+
+  const canonicalValues = linkTags
+    .filter((tag) => getAttribute(tag, 'rel').toLowerCase() === 'canonical')
+    .map((tag) => getAttribute(tag, 'href'));
+
+  return {
+    path,
+    source: 'build',
+    title: extractUnique(html, path, 'title', titleValues),
+    description: extractUnique(html, path, 'description', metaValues('description')),
+    canonical: extractUnique(html, path, 'canonical', canonicalValues),
+    robots: extractUnique(html, path, 'robots', metaValues('robots')),
+    ogTitle: extractUnique(html, path, 'og:title', metaValues('og:title')),
+    ogDescription: extractUnique(
+      html,
+      path,
+      'og:description',
+      metaValues('og:description'),
+    ),
+    twitterTitle: extractUnique(
+      html,
+      path,
+      'twitter:title',
+      metaValues('twitter:title'),
+    ),
+    twitterDescription: extractUnique(
+      html,
+      path,
+      'twitter:description',
+      metaValues('twitter:description'),
+    ),
+  };
+}
+
+function metadataText(value: unknown): string {
+  if (typeof value === 'string') return value;
+  if (value instanceof URL) return value.toString();
+  if (value && typeof value === 'object') {
+    const record = value as Record<string, unknown>;
+    if (typeof record.absolute === 'string') return record.absolute;
+    if (typeof record.default === 'string') return record.default;
+    if (typeof record.url === 'string') return record.url;
+  }
+  return '';
+}
+
+function metadataRobots(value: Metadata['robots']): string {
+  if (typeof value === 'string') return value;
+  if (!value || typeof value !== 'object') return '';
+  const index = value.index === false ? 'noindex' : 'index';
+  const follow = value.follow === false ? 'nofollow' : 'follow';
+  return `${index}, ${follow}`;
+}
+
+function absoluteCanonical(value: unknown): string {
+  const canonical = metadataText(value);
+  if (!canonical) return '';
+  return new URL(canonical, `${CANONICAL_ORIGIN}/`).toString().replace(/\/$/, '');
+}
+
+async function extractBlogMetadata(): Promise<RouteMetadata> {
+  const metadata = await generateBlogMetadata({
+    searchParams: Promise.resolve({}),
+  });
+  const openGraph = metadata.openGraph as Record<string, unknown> | null | undefined;
+  const twitter = metadata.twitter as Record<string, unknown> | null | undefined;
+  const alternates = metadata.alternates as Record<string, unknown> | null | undefined;
+
+  return {
+    path: '/blog',
+    source: 'generateMetadata',
+    title: metadataText(metadata.title),
+    description: metadataText(metadata.description),
+    canonical: absoluteCanonical(alternates?.canonical),
+    robots: metadataRobots(metadata.robots),
+    ogTitle: metadataText(openGraph?.title),
+    ogDescription: metadataText(openGraph?.description),
+    twitterTitle: metadataText(twitter?.title),
+    twitterDescription: metadataText(twitter?.description),
+  };
+}
+
+function addIssue(
+  path: string,
+  field: string,
+  severity: 'ERROR' | 'WARN',
+  message: string,
+  actual: string | number | null,
+  expected: string,
+) {
   issues.push({ path, field, severity, message, actual, expected });
 }
 
-function checkLen(path: string, field: string, value: string, min: number, max: number) {
-  const len = value.length;
-  if (len < min) {
-    addIssue(path, field, 'WARN', `Demasiado corto (${len} chars)`, len, `${min}-${max}`);
-  } else if (len > max) {
-    addIssue(path, field, 'ERROR', `Demasiado largo (${len} chars)`, len, `${min}-${max}`);
+function checkLength(
+  path: string,
+  field: string,
+  value: string,
+  min: number,
+  max: number,
+) {
+  if (!value) {
+    addIssue(path, field, 'ERROR', 'Campo ausente', null, `${min}-${max} caracteres`);
+  } else if (value.length < min) {
+    addIssue(
+      path,
+      field,
+      'WARN',
+      `Demasiado corto (${value.length} caracteres)`,
+      value.length,
+      `${min}-${max}`,
+    );
+  } else if (value.length > max) {
+    addIssue(
+      path,
+      field,
+      'ERROR',
+      `Demasiado largo (${value.length} caracteres)`,
+      value.length,
+      `${min}-${max}`,
+    );
+  }
+}
+
+function checkText(path: string, field: string, value: string) {
+  if (/[\u0000-\u001F\u007F]/.test(value)) {
+    addIssue(path, field, 'ERROR', 'Contiene caracteres de control', value, 'Texto limpio');
+  }
+  if (value.includes('\uFFFD')) {
+    addIssue(path, field, 'ERROR', 'Contiene mojibake (�)', value, 'Sin caracteres de reemplazo');
   }
 }
 
 function checkBrandDuplicate(path: string, field: string, value: string) {
-  const count = (value.match(new RegExp(BRAND.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length;
+  const escapedBrand = BRAND.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const count = value.match(new RegExp(escapedBrand, 'gi'))?.length ?? 0;
   if (count > 1) {
-    addIssue(path, field, 'ERROR', `Marca duplicada (${count}x): "${value}"`, count, '1');
+    addIssue(path, field, 'ERROR', `Marca duplicada (${count}x)`, count, '0-1');
   }
 }
 
-function checkMojibake(path: string, field: string, value: string) {
-  if (value.includes('\uFFFD')) {
-    addIssue(path, field, 'ERROR', `Contiene mojibake (�): "${value}"`, value, 'Sin caracteres de reemplazo');
+function expectedCanonical(path: RoutePath): string {
+  return path === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${path}`;
+}
+
+function validateRoute(route: RouteMetadata) {
+  checkLength(route.path, 'title', route.title, TITLE_MIN, TITLE_MAX);
+  checkLength(route.path, 'description', route.description, DESC_MIN, DESC_MAX);
+  checkLength(route.path, 'og:title', route.ogTitle, 1, SOCIAL_TITLE_MAX);
+  checkLength(
+    route.path,
+    'og:description',
+    route.ogDescription,
+    1,
+    SOCIAL_DESC_MAX,
+  );
+  checkLength(
+    route.path,
+    'twitter:title',
+    route.twitterTitle,
+    1,
+    SOCIAL_TITLE_MAX,
+  );
+  checkLength(
+    route.path,
+    'twitter:description',
+    route.twitterDescription,
+    1,
+    SOCIAL_DESC_MAX,
+  );
+
+  for (const [field, value] of [
+    ['title', route.title],
+    ['description', route.description],
+    ['og:title', route.ogTitle],
+    ['og:description', route.ogDescription],
+    ['twitter:title', route.twitterTitle],
+    ['twitter:description', route.twitterDescription],
+  ] as const) {
+    checkText(route.path, field, value);
+    if (field.endsWith('title')) checkBrandDuplicate(route.path, field, value);
+  }
+
+  if (route.canonical !== expectedCanonical(route.path)) {
+    addIssue(
+      route.path,
+      'canonical',
+      'ERROR',
+      'Canonical ausente o distinto de la URL canónica esperada',
+      route.canonical,
+      expectedCanonical(route.path),
+    );
+  }
+  const isNoindex = /\bnoindex\b/i.test(route.robots);
+  const expectsNoindex = NOINDEX_ROUTES.has(route.path);
+  if (!expectsNoindex && isNoindex) {
+    addIssue(
+      route.path,
+      'robots',
+      'ERROR',
+      'Ruta pública prioritaria marcada noindex',
+      route.robots,
+      'index, follow',
+    );
+  } else if (expectsNoindex && !isNoindex) {
+    addIssue(
+      route.path,
+      'robots',
+      'ERROR',
+      'Página legal auxiliar indexable contra la política declarada',
+      route.robots,
+      'noindex, follow',
+    );
   }
 }
 
-function applyTemplate(title: string): string {
-  return `${title} | ${BRAND}`;
+async function main() {
+  if (!existsSync(BUILD_APP_DIR)) {
+    throw new Error('No existe .next/server/app. Ejecute npm run build antes de este auditor.');
+  }
+
+  const staticRoutes = ROUTES
+    .filter((path): path is Exclude<RoutePath, '/blog'> => path !== '/blog')
+    .map(extractBuiltMetadata);
+  const routes = [...staticRoutes, await extractBlogMetadata()]
+    .sort((a, b) => ROUTES.indexOf(a.path) - ROUTES.indexOf(b.path));
+
+  for (const route of routes) validateRoute(route);
+
+  const errors = issues.filter((issue) => issue.severity === 'ERROR');
+  const warnings = issues.filter((issue) => issue.severity === 'WARN');
+
+  console.log('\n══════════════════════════════════════════════════');
+  console.log(' AUDITORÍA SEO — METADATA REAL DEL BUILD');
+  console.log('══════════════════════════════════════════════════\n');
+  console.log(`Total URLs auditadas: ${routes.length}`);
+  console.log(`Errores: ${errors.length}`);
+  console.log(`Advertencias: ${warnings.length}\n`);
+
+  for (const route of routes) {
+    const routeIssues = issues.filter((issue) => issue.path === route.path);
+    const icon = routeIssues.some((issue) => issue.severity === 'ERROR')
+      ? '❌'
+      : routeIssues.length > 0
+        ? '⚠'
+        : '✅';
+    console.log(`${icon} ${route.path} [${route.source}]`);
+    console.log(`   title (${route.title.length}c): ${route.title}`);
+    console.log(`   desc  (${route.description.length}c): ${route.description}`);
+    console.log(`   canonical: ${route.canonical}`);
+    for (const issue of routeIssues) {
+      console.log(`   ${issue.severity}: ${issue.field} — ${issue.message}`);
+    }
+  }
+
+  console.log('\n══════════════════════════════════════════════════');
+  console.log(`Rutas sin errores: ${routes.filter((route) => !errors.some((issue) => issue.path === route.path)).length}/${routes.length}`);
+  console.log(`Errores: ${errors.length} · Advertencias: ${warnings.length}`);
+  console.log('══════════════════════════════════════════════════\n');
+
+  process.exitCode = errors.length > 0 ? 1 : 0;
 }
 
-function checkAll(path: string, title: string, desc: string, opts?: { noTemplate?: boolean; ogTitle?: string; ogDesc?: string; twTitle?: string; twDesc?: string }) {
-  const finalTitle = opts?.noTemplate ? title : applyTemplate(title);
-  checkLen(path, 'title', finalTitle, TITLE_MIN, TITLE_MAX);
-  checkBrandDuplicate(path, 'title', finalTitle);
-  checkMojibake(path, 'title', finalTitle);
-
-  checkLen(path, 'description', desc, DESC_MIN, DESC_MAX);
-  checkBrandDuplicate(path, 'description', desc);
-  checkMojibake(path, 'description', desc);
-
-  if (opts?.ogTitle) {
-    checkLen(path, 'og:title', opts.ogTitle, 1, OG_TITLE_MAX);
-    checkBrandDuplicate(path, 'og:title', opts.ogTitle);
-    checkMojibake(path, 'og:title', opts.ogTitle);
-  }
-  if (opts?.ogDesc) {
-    checkLen(path, 'og:description', opts.ogDesc, 1, OG_DESC_MAX);
-  }
-  if (opts?.twTitle) {
-    checkLen(path, 'twitter:title', opts.twTitle, 1, OG_TITLE_MAX);
-    checkBrandDuplicate(path, 'twitter:title', opts.twTitle);
-  }
-  if (opts?.twDesc) {
-    checkLen(path, 'twitter:description', opts.twDesc, 1, OG_DESC_MAX);
-  }
-}
-
-// ── STATIC ROUTES ──
-
-const siteTagline = 'Abogados en Nacaome, Valle | Pineda y Asociados'; // site.tagline
-const siteDesc = 'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.';
-
-// Public layout default (when no page overrides)
-const publicLayoutDefault = `${SITE_NAME} - ${siteTagline}`;
-const publicLayoutDesc = siteDesc;
-
-// Home — uses title.absolute
-checkAll('/', siteTagline, siteDesc, {
-  noTemplate: true,
-  ogTitle: siteTagline,
-  ogDesc: siteDesc,
-  twTitle: siteTagline,
-  twDesc: siteDesc,
+main().catch((error) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exitCode = 1;
 });
-
-// Servicios Jurídicos
-checkAll('/servicios-juridicos',
-  'Servicios Jurídicos en Nacaome, Valle',
-  'Cobertura legal integral: Nacaome, Valle, San Lorenzo y Choluteca. Penal, familia, laboral, civil, mercantil y tributario. Bufete multidisciplinar.',
-  {
-    ogTitle: 'Servicios Jurídicos en Nacaome, Valle',
-    ogDesc: 'Cobertura legal integral en Nacaome, Valle, Honduras: las ramas principales del derecho bajo un mismo bufete.',
-    twTitle: 'Servicios Jurídicos en Nacaome, Valle',
-  }
-);
-
-// Derecho Penal
-const hubPenalDesc = 'Defensa penal técnica y confidencial en Nacaome, Valle, San Lorenzo y Choluteca. Abogados penalistas con sede en Nacaome y cobertura en la zona sur de Honduras.';
-checkAll('/derecho-penal',
-  'Abogados Penalistas en Nacaome, Valle',
-  hubPenalDesc,
-  {
-    ogTitle: 'Abogados Penalistas en Nacaome, Valle',
-    ogDesc: 'Defensa penal técnica y confidencial en Nacaome, Valle. Presencia activa en la zona sur de Honduras: San Lorenzo y Choluteca.',
-    twTitle: 'Abogados Penalistas en Nacaome, Valle',
-  }
-);
-
-// Blog
-checkAll('/blog',
-  'Blog Jurídico de Abogados en Honduras',
-  'Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de Pineda y Asociados.',
-  {
-    ogTitle: 'Blog Jurídico de Abogados en Honduras',
-    ogDesc: 'Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de Pineda y Asociados.',
-    twTitle: 'Blog Jurídico de Abogados en Honduras',
-  }
-);
-
-// Despacho
-checkAll('/despacho',
-  'El Despacho — Bufete en Nacaome, Valle',
-  'Conozca Pineda y Asociados, bufete en Nacaome, Valle. Más de 15 años de defensa penal y soluciones legales en derecho empresarial, de familia, laboral y civil.',
-  {
-    ogTitle: 'El Despacho — Bufete en Nacaome, Valle',
-    ogDesc: 'Conoce Pineda y Asociados: bufete en Nacaome, Valle. Rigor técnico y soluciones legales estratégicas en penal, derecho empresarial y privado.',
-    twTitle: 'El Despacho — Bufete en Nacaome, Valle',
-  }
-);
-
-// Solicitar Consulta
-checkAll('/solicitar-consulta',
-  'Consulte a un Abogado en Nacaome, Valle',
-  'Solicite una consulta confidencial sin costo en Nacaome, Valle. Evaluación inicial de su caso penal, familiar, laboral o civil con presupuesto por escrito.',
-  {
-    ogTitle: 'Consulte a un Abogado en Nacaome, Valle',
-    ogDesc: 'Solicite una consulta confidencial con un abogado en Nacaome, Valle. Le respondemos en horario hábil.',
-    twTitle: 'Consulte a un Abogado en Nacaome, Valle',
-  }
-);
-
-// Hondureños en España (uses absolute title to avoid double brand)
-const hondurenosTitle = 'Hondureños en España — Asistencia Legal desde Honduras';
-checkAll('/hondurenos-en-espana', hondurenosTitle,
-  'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España. Pineda y Asociados.',
-  {
-    noTemplate: true,
-    ogTitle: 'Hondureños en España — Asistencia Legal Internacional',
-    ogDesc: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España.',
-    twTitle: 'Hondureños en España — Asistencia Legal Internacional',
-  }
-);
-
-// Preguntas Frecuentes
-checkAll('/preguntas-frecuentes',
-  'Preguntas Frecuentes en Honduras',
-  '73 respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con Pineda y Asociados.',
-  {
-    ogTitle: 'Preguntas Frecuentes en Honduras',
-    ogDesc: '73 respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con Pineda y Asociados.',
-    twTitle: 'Preguntas Frecuentes en Honduras',
-  }
-);
-
-// Cómo Llegar
-checkAll('/como-llegar',
-  'Cómo Llegar al Bufete en Nacaome, Valle',
-  'Indicaciones para llegar a Pineda y Asociados en Nacaome, Valle. Dirección exacta, mapa, rutas, cómo llegar desde Tegucigalpa, Choluteca y San Lorenzo.',
-  {
-    ogTitle: 'Cómo Llegar al Bufete en Nacaome, Valle | Pineda y Asociados',
-    ogDesc: 'Indicaciones para llegar a Pineda y Asociados en Nacaome, Valle. Dirección exacta, mapa y rutas desde Tegucigalpa, Choluteca y San Lorenzo.',
-    twTitle: 'Cómo Llegar al Bufete en Nacaome, Valle',
-  }
-);
-
-// Landings locales
-const landings = [
-  { path: '/abogados-en-nacaome', title: 'Bufete de Abogados en Nacaome (Sede)', desc: 'Sede principal de Pineda y Asociados en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Dirección, horario y WhatsApp: +504 9536-3724.' },
-  { path: '/abogados-en-choluteca', title: 'Abogados en Choluteca, Honduras', desc: 'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral, mercantil y aduanero. Atención desde nuestra sede en Nacaome. WhatsApp: +504 9536-3724.' },
-  { path: '/abogados-en-san-lorenzo', title: 'Abogados en San Lorenzo, Valle (Puerto)', desc: 'Abogados en San Lorenzo, Valle (Honduras). Puerto y zona comercial del sur. Defensa penal, mercantil, laboral, civil y aduanero. WhatsApp: +504 9536-3724.' },
-];
-for (const l of landings) {
-  checkAll(l.path, l.title, l.desc);
-}
-
-// Legal pages
-const legalPages = [
-  { path: '/politica-privacidad', title: 'Política de Privacidad', desc: 'Política de privacidad de Pineda y Asociados, bufete en Nacaome, Valle, Honduras. Protección de datos personales conforme al ordenamiento hondureño.' },
-  { path: '/politica-cookies', title: 'Política de Cookies', desc: 'Política de cookies del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle. Información sobre cookies técnicas y de análisis utilizadas.' },
-  { path: '/aviso-legal', title: 'Aviso Legal', desc: 'Aviso legal e identificación del titular del sitio web de Pineda y Asociados, bufete jurídico en Nacaome, Valle, Honduras.' },
-  { path: '/terminos', title: 'Términos y Condiciones', desc: 'Términos y condiciones de uso del sitio web de Pineda y Asociados en Nacaome, Valle. Reglas de acceso y uso de servicios jurídicos publicados.' },
-  { path: '/disclaimer', title: 'Exención de Responsabilidad', desc: 'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre la calculadora de penas, contenidos publicados y servicios legales.' },
-  { path: '/politica-editorial', title: 'Política Editorial', desc: 'Política editorial del bufete Pineda y Asociados en Nacaome, Valle: criterios de creación, revisión y actualización de contenidos jurídicos del sitio web.' },
-];
-for (const p of legalPages) {
-  checkAll(p.path, p.title, p.desc);
-}
-
-// ── GENERATE REPORT ──
-console.log('\n══════════════════════════════════════════════════');
-console.log('   AUDITORÍA SEO — METADATOS (Bing Webmaster)');
-console.log('══════════════════════════════════════════════════\n');
-
-const errors = issues.filter(i => i.severity === 'ERROR');
-const warnings = issues.filter(i => i.severity === 'WARN');
-
-console.log(`Total URLs auditadas: ${[ ...landings, ...legalPages, '/', '/servicios-juridicos', '/derecho-penal', '/blog', '/despacho', '/solicitar-consulta', '/hondurenos-en-espana', '/preguntas-frecuentes', '/como-llegar' ].length}`);
-console.log(`\n🔴 ERRORES (deben corregirse): ${errors.length}`);
-console.log(`🟡 ADVERTENCIAS (revisar): ${warnings.length}\n`);
-
-if (errors.length > 0) {
-  console.log('─── ERRORES ───\n');
-  for (const e of errors) {
-    console.log(`  [${e.path}] ${e.field}: ${e.message}`);
-    console.log(`    Actual:   ${typeof e.actual === 'string' ? `"${e.actual.substring(0, 100)}${e.actual.length > 100 ? '...' : ''}"` : e.actual}`);
-    console.log(`    Esperado: ${e.expected}\n`);
-  }
-}
-
-if (warnings.length > 0) {
-  console.log('─── ADVERTENCIAS ───\n');
-  for (const w of warnings) {
-    console.log(`  [${w.path}] ${w.field}: ${w.message}`);
-    console.log(`    Actual:   ${typeof w.actual === 'string' ? `"${w.actual.substring(0, 100)}${w.actual.length > 100 ? '...' : ''}"` : w.actual}`);
-    console.log(`    Esperado: ${w.expected}\n`);
-  }
-}
-
-// Detailed per-route summary
-console.log('\n─── DETALLE POR RUTA ───\n');
-const allRoutes: RouteMeta[] = [
-  { path: '/', title: siteTagline, titleRaw: 'site.tagline', description: siteDesc, hasAbsoluteTitle: true, hasTemplate: false },
-  { path: '/servicios-juridicos', title: applyTemplate('Servicios Jurídicos en Nacaome, Valle'), titleRaw: 'Servicios Jurídicos en Nacaome, Valle', description: 'Cobertura legal integral: Nacaome, Valle, San Lorenzo y Choluteca. Penal, familia, laboral, civil, mercantil y tributario. Bufete multidisciplinar.', hasTemplate: true },
-  { path: '/derecho-penal', title: applyTemplate('Abogados Penalistas en Nacaome, Valle'), titleRaw: 'Abogados Penalistas en Nacaome, Valle', description: hubPenalDesc, hasTemplate: true },
-  { path: '/blog', title: applyTemplate('Blog Jurídico de Abogados en Honduras'), titleRaw: 'Blog Jurídico de Abogados en Honduras', description: 'Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de Pineda y Asociados.', hasTemplate: true },
-  { path: '/despacho', title: applyTemplate('El Despacho — Bufete en Nacaome, Valle'), titleRaw: 'El Despacho — Bufete en Nacaome, Valle', description: 'Conozca Pineda y Asociados, bufete en Nacaome, Valle. Más de 15 años de defensa penal y soluciones legales en derecho empresarial, de familia, laboral y civil.', hasTemplate: true },
-  { path: '/solicitar-consulta', title: applyTemplate('Consulte a un Abogado en Nacaome, Valle'), titleRaw: 'Consulte a un Abogado en Nacaome, Valle', description: 'Solicite una consulta confidencial sin costo en Nacaome, Valle. Evaluación inicial de su caso penal, familiar, laboral o civil con presupuesto por escrito.', hasTemplate: true },
-  { path: '/hondurenos-en-espana', title: hondurenosTitle, titleRaw: hondurenosTitle, description: 'Asistencia legal para hondureños en España: gestión documental, actos notariales, divorcios, custodias y sucesiones entre Honduras y España. Pineda y Asociados.', hasAbsoluteTitle: true, hasTemplate: false },
-  { path: '/preguntas-frecuentes', title: applyTemplate('Preguntas Frecuentes en Honduras'), titleRaw: 'Preguntas Frecuentes en Honduras', description: '73 respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con Pineda y Asociados.', hasTemplate: true },
-  { path: '/como-llegar', title: applyTemplate('Cómo Llegar al Bufete en Nacaome, Valle'), titleRaw: 'Cómo Llegar al Bufete en Nacaome, Valle', description: 'Indicaciones para llegar a Pineda y Asociados en Nacaome, Valle. Dirección exacta, mapa, rutas, cómo llegar desde Tegucigalpa, Choluteca y San Lorenzo.', hasTemplate: true },
-  ...landings.map(l => ({ path: l.path, title: applyTemplate(l.title), titleRaw: l.title, description: l.desc, hasTemplate: true })),
-  ...legalPages.map(p => ({ path: p.path, title: applyTemplate(p.title), titleRaw: p.title, description: p.desc, hasTemplate: true })),
-];
-
-for (const r of allRoutes) {
-  const titleOk = r.title.length >= TITLE_MIN && r.title.length <= TITLE_MAX;
-  const descOk = r.description.length >= DESC_MIN && r.description.length <= DESC_MAX;
-  const brandDup = (r.title.match(new RegExp(BRAND.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length > 1;
-
-  const statusIcon = titleOk && descOk && !brandDup ? '✅' : '❌';
-  const issues_list: string[] = [];
-  if (!titleOk) issues_list.push(`title: ${r.title.length}c`);
-  if (!descOk) issues_list.push(`desc: ${r.description.length}c`);
-  if (brandDup) issues_list.push('marca duplicada');
-
-  console.log(`  ${statusIcon} ${r.path}`);
-  console.log(`     title (${r.title.length}c): ${r.title.substring(0, 80)}${r.title.length > 80 ? '...' : ''}`);
-  console.log(`     desc  (${r.description.length}c): ${r.description.substring(0, 80)}${r.description.length > 80 ? '...' : ''}`);
-  if (issues_list.length > 0) {
-    console.log(`     ⚠ ${issues_list.join(', ')}`);
-  }
-  console.log('');
-}
-
-// Summary
-const totalOk = allRoutes.filter(r => {
-  const titleOk = r.title.length >= TITLE_MIN && r.title.length <= TITLE_MAX;
-  const descOk = r.description.length >= DESC_MIN && r.description.length <= DESC_MAX;
-  const brandDup = (r.title.match(new RegExp(BRAND.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length > 1;
-  return titleOk && descOk && !brandDup;
-}).length;
-
-console.log('══════════════════════════════════════════════════');
-console.log(`  Rutas OK: ${totalOk}/${allRoutes.length}`);
-console.log(`  Rutas con issues: ${allRoutes.length - totalOk}`);
-console.log(`  Errores title: ${errors.filter(e => e.field === 'title').length}`);
-console.log(`  Errores description: ${errors.filter(e => e.field === 'description').length}`);
-console.log(`  Errores marca duplicada: ${errors.filter(e => e.message.includes('Marca duplicada')).length}`);
-console.log('══════════════════════════════════════════════════\n');

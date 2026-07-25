@@ -41,7 +41,7 @@ export const metadata: Metadata = buildMetadata({
   // 48 chars. Antes 69 (se truncaba en SERP). Mantiene intención local.
   title: `Servicios Jurídicos en ${site.address.city} | 14 Áreas`,
   // 153 chars.
-  description: `Catálogo de servicios legales en ${site.address.city} y sur de Honduras. Penal, familia, laboral, civil, mercantil y tributario. Presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
+  description: `Servicios legales en ${site.address.city} y sur de Honduras: penal, familia, laboral, civil, mercantil y tributario. Presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
   canonicalPath: '/servicios-juridicos',
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
   ogImage: '/og/civil.webp',

@@ -138,7 +138,7 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Abogados en Nacaome, Valle | Bufete Jurídico Pineda y Asociados',
+    'Abogados en Nacaome, Valle | Bufete Pineda y Asociados',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
     'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.',
