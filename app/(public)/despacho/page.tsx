@@ -254,7 +254,9 @@ export default async function DespachoPage() {
         </div>
       </Section>
 
-      {/* VALORES — grid compacto de 4 principios que definen al bufete. */}
+      {/* VALORES — bloque editorial con divisores (Hito 9.4).
+          Antes: grid de 4 tarjetas idénticas con icono central. Ahora:
+          composición de dos columnas con divisores entre pares. */}
       <Section background="muted" spacing="md">
         <SectionHeader
           eyebrow="Nuestros valores"
@@ -262,21 +264,19 @@ export default async function DespachoPage() {
           subtitle="Cuatro principios que sostienen cada decisión, cada audiencia, cada escrito."
           align="center"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <dl className="max-w-4xl mx-auto divide-y divide-border/40 md:columns-2 md:gap-x-10 md:divide-y-0 [column-rule:1px_solid_hsl(220_10%_85%)]">
           {c.values.items.map((v) => (
-            <Card key={v.title} padding="md" className="h-full card-premium">
-              <div className="flex flex-col items-center justify-center text-center h-full gap-3">
-                <div className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
+            <div key={v.title} className="py-5 md:py-6 md:break-inside-avoid">
+              <dt className="flex items-center gap-3">
+                <span className="w-11 h-11 rounded-lg bg-accent/15 text-accent-dark flex items-center justify-center flex-shrink-0 border border-accent/30">
                   <v.icon size={20} aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm text-text leading-tight text-balance">{v.title}</h3>
-                  <p className="text-sm text-text-secondary mt-1.5 leading-relaxed text-pretty">{v.desc}</p>
-                </div>
-              </div>
-            </Card>
+                </span>
+                <span className="font-bold text-sm text-text leading-tight">{v.title}</span>
+              </dt>
+              <dd className="mt-2 ml-14 text-sm text-text-secondary leading-relaxed text-pretty">{v.desc}</dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </Section>
 
       {/* EQUIPO — dueño canónico del bloque (Fase 3.2).
