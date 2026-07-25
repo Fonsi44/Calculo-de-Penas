@@ -1,9 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail } from 'lucide-react';
-import { trackContactFormSubmit, trackLeadGenerated } from '@/lib/analytics';
+import { useState, useEffect } from 'react';
+import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail, PhoneCall, MessageCircle, AlertTriangle } from 'lucide-react';
+import {
+  trackContactFormSubmit,
+  trackLeadGenerated,
+  trackConsultationFormView,
+  trackConsultationFormStart,
+  trackConsultationFormError,
+} from '@/lib/analytics';
 import { TurnstileWidget } from './turnstile-widget';
+import { telHref, whatsappHref } from '@/lib/site';
 
 const MOTIVOS = [
   'Familiar detenido',
@@ -13,38 +20,146 @@ const MOTIVOS = [
   'Recurso o apelación',
   'Asesoría preventiva',
   'Atención a víctima',
+  'Despido o prestaciones laborales',
+  'Divorcio, custodia o pensión de alimentos',
+  'Contrato, propiedad, sucesión o trámite notarial',
+  'Asunto desde España',
   'Otro asunto',
-];
+] as const;
+
+/**
+ * FASE 3 (§15) + FASE 4 (§14) — Whitelist slug de servicio → motivo textual
+ * del dropdown. Permite preseleccionar el motivo cuando se llega desde un CTA
+ * contextual (p. ej. /solicitar-consulta?motivo=derecho-penal#formulario).
+ *
+ * Reglas de seguridad:
+ *  - Solo se aceptan slugs explícitamente listados (no inyección).
+ *  - El valor mapeado debe existir en MOTIVOS Y en CONSULTA_MOTIVOS (backend);
+ *    si no, se ignora. Antes 3 de 4 valores mapeaban a motivos que el backend
+ *    rechazaba con 400 "Motivo inválido"; ahora las listas están alineadas.
+ *  - El parámetro NO se reenvía automáticamente: solo preselecciona el
+ *    dropdown, que el usuario puede cambiar libremente.
+ *  - No registra PII: el `motivo` es una categoría, no contenido del usuario.
+ */
+const MOTIVO_FROM_QUERY: Record<string, string> = {
+  'derecho-penal': 'Citaciones o audiencias',
+  'derecho-de-familia': 'Divorcio, custodia o pensión de alimentos',
+  'derecho-laboral': 'Despido o prestaciones laborales',
+  'derecho-civil-y-notarial': 'Contrato, propiedad, sucesión o trámite notarial',
+  'hondurenos-en-espana': 'Asunto desde España',
+};
+
+const MEDIOS = [
+  { value: 'whatsapp', label: 'WhatsApp' },
+  { value: 'telefono', label: 'Teléfono' },
+  { value: 'email', label: 'Correo electrónico' },
+  { value: 'llamada', label: 'Llamada programada' },
+] as const;
+
+const URGENCIAS = [
+  { value: 'normal', label: 'Normal' },
+  { value: 'alta', label: 'Alta (audiencia/citación próxima)' },
+  { value: 'penal', label: 'Urgencia penal (detención en curso)' },
+] as const;
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
+interface FormState {
+  nombre: string;
+  telefono: string;
+  email: string;
+  motivo: string;
+  medioPreferido: string;
+  localidad: string;
+  urgencia: string;
+  fechaAudiencia: string;
+  hayDetencion: string;
+  fechaDespido: string;
+  residenciaEspana: string;
+  disponibleLlamada: string;
+  resumen: string;
+  acepta: boolean;
+  // Honeypot: campo oculto para humanos, visible para bots. Debe ir vacío.
+  website: string;
+}
+
+const INITIAL_FORM: FormState = {
+  nombre: '',
+  telefono: '',
+  email: '',
+  motivo: MOTIVOS[1],
+  medioPreferido: 'whatsapp',
+  localidad: '',
+  urgencia: 'normal',
+  fechaAudiencia: '',
+  hayDetencion: '',
+  fechaDespido: '',
+  residenciaEspana: '',
+  disponibleLlamada: '',
+  resumen: '',
+  acepta: false,
+  website: '',
+};
+
+/**
+ * FASE 3 (§15) — Lee el motivo preseleccionado desde ?motivo={slug} de forma
+ * segura. Solo acepta slugs de la whitelist MOTIVO_FROM_QUERY; cualquier otro
+ * valor (o ausencia del parámetro) se ignora. No reenvía el parámetro ni
+ * registra PII. Se invoca como inicializador perezoso del useState (una sola
+ * vez, sin efecto secundario posterior).
+ */
+function leerMotivoInicial(motivoPorDefecto: string): string {
+  if (typeof window === 'undefined') return motivoPorDefecto;
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get('motivo');
+  if (!raw) return motivoPorDefecto;
+  const mapped = MOTIVO_FROM_QUERY[raw];
+  // Doble validación: el slug debe estar en la whitelist Y el motivo mapeado
+  // debe seguir siendo una opción válida del catálogo actual.
+  if (mapped && (MOTIVOS as readonly string[]).includes(mapped)) {
+    return mapped;
+  }
+  return motivoPorDefecto;
+}
+
 export function SolicitarConsultaForm() {
-  const [form, setForm] = useState({
-    nombre: '',
-    telefono: '',
-    email: '',
-    motivo: MOTIVOS[1],
-    resumen: '',
-    acepta: false,
-    // Honeypot: campo oculto para humanos, visible para bots. Debe ir vacío.
-    website: '',
-  });
+  // Inicialización perezosa: preselecciona el motivo si ?motivo= es válido.
+  const [form, setForm] = useState<FormState>(() => ({
+    ...INITIAL_FORM,
+    motivo: leerMotivoInicial(INITIAL_FORM.motivo),
+  }));
   const [status, setStatus] = useState<Status>('idle');
   const [err, setErr] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [started, setStarted] = useState(false);
 
-  const onText = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((f) => ({ ...f, [k]: e.target.value }));
-  };
+  // Vista del formulario al montar (evento de conversión FASE 2, sin PII).
+  // Se dispara una sola vez al montar el componente.
+  useEffect(() => {
+    trackConsultationFormView(typeof window !== 'undefined' ? window.location.pathname : '');
+  }, []);
+
+  const onText =
+    (k: keyof FormState) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      setForm((f) => ({ ...f, [k]: e.target.value }));
+      // Primer campo editado → dispara form_start una sola vez.
+      if (!started) {
+        setStarted(true);
+        trackConsultationFormStart(typeof window !== 'undefined' ? window.location.pathname : '');
+      }
+    };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.acepta) {
       setErr('Debe aceptar la política de privacidad.');
+      trackConsultationFormError({ campo: 'acepta', tipo: 'consent', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
       return;
     }
     if (form.resumen.length < 15) {
       setErr('Describa brevemente su situación (mínimo 15 caracteres).');
+      trackConsultationFormError({ campo: 'resumen', tipo: 'minlength', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
       return;
     }
     setStatus('sending');
@@ -65,23 +180,59 @@ export function SolicitarConsultaForm() {
     } catch (e) {
       setStatus('error');
       setErr(e instanceof Error ? e.message : 'Error desconocido.');
+      trackConsultationFormError({ tipo: 'submit', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
     }
   };
 
   if (status === 'success') {
+    // Confirmación ampliada FASE 2: recibido, plazo prudente, urgencia penal,
+    // no aceptación implícita, no originales, protección de datos.
     return (
-      <div className="rounded-md border border-success/30 bg-success/10 p-6 text-center">
-        <CheckCircle2 size={40} className="text-success mx-auto mb-3" />
-        <p className="font-bold text-text text-base">Solicitud recibida</p>
-        <p className="text-sm text-text-secondary mt-2 leading-relaxed max-w-md mx-auto">
-          Hemos registrado su consulta. Le contactaremos en horario hábil por el canal
-          que haya indicado. Si requiere atención inmediata, use el teléfono o WhatsApp.
-        </p>
+      <div className="rounded-md border border-success/30 bg-success/10 p-6">
+        <div className="flex items-start gap-3">
+          <CheckCircle2 size={32} className="text-success flex-shrink-0 mt-0.5" />
+          <div className="min-w-0">
+            <p className="font-bold text-text text-base">Solicitud recibida</p>
+            <p className="text-sm text-text-secondary mt-2 leading-relaxed text-pretty">
+              Hemos registrado su consulta. La revisamos en horario hábil y le
+              contactamos por el canal que haya indicado. No se garantiza
+              respuesta inmediata: el compromiso es atender con la diligencia que
+              cada caso requiere.
+            </p>
+            <div className="mt-4 rounded-md border border-aggravation/20 bg-aggravation/5 p-3">
+              <p className="flex items-center gap-2 text-xs font-bold text-aggravation">
+                <AlertTriangle size={14} /> ¿Urgencia penal?
+              </p>
+              <p className="text-xs text-text-secondary mt-1 leading-relaxed">
+                Si hay una detención en curso o una audiencia inminente, no espere:
+                use el teléfono o WhatsApp directo para activar la atención prioritaria.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                <a href={telHref()} className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-aggravation text-white text-xs font-bold">
+                  <PhoneCall size={12} /> Llamar
+                </a>
+                <a
+                  href={whatsappHref('Emergencia: necesito asistencia legal inmediata.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-success text-white text-xs font-bold"
+                >
+                  <MessageCircle size={12} /> WhatsApp
+                </a>
+              </div>
+            </div>
+            <ul className="mt-4 space-y-1.5 text-xs text-text-secondary leading-relaxed">
+              <li>• El envío del formulario <strong>no implica aceptación formal</strong> del asunto.</li>
+              <li>• <strong>No envíe originales</strong>: para la evaluación inicial basta con copias digitales.</li>
+              <li>• Sus datos están protegidos por el secreto profesional y la normativa de protección de datos.</li>
+            </ul>
+          </div>
+        </div>
         <button
           type="button"
           onClick={() => {
             setStatus('idle');
-            setForm({ nombre: '', telefono: '', email: '', motivo: MOTIVOS[1], resumen: '', acepta: false, website: '' });
+            setForm(INITIAL_FORM);
           }}
           className="mt-4 text-xs font-semibold text-primary hover:text-accent-dark"
         >
@@ -114,16 +265,45 @@ export function SolicitarConsultaForm() {
         />
       </fieldset>
       <Field
-        label="Correo electrónico"
+        label="Correo electrónico (opcional)"
         icon={Mail}
         type="email"
         value={form.email}
         onChange={onText('email')}
         autoComplete="email"
       />
+      <p className="text-xxs text-text-muted -mt-1">
+        Indique al menos un medio de contacto (teléfono o correo) para que podamos responderle.
+      </p>
+
+      <div className="grid sm:grid-cols-2 gap-3">
+        <SelectField
+          id="consulta-medio"
+          label="Medio de contacto preferido"
+          value={form.medioPreferido}
+          onChange={onText('medioPreferido')}
+          options={MEDIOS.map((m) => ({ value: m.value, label: m.label }))}
+        />
+        <SelectField
+          id="consulta-urgencia"
+          label="Nivel de urgencia"
+          value={form.urgencia}
+          onChange={onText('urgencia')}
+          options={URGENCIAS.map((u) => ({ value: u.value, label: u.label }))}
+        />
+      </div>
+
+      <Field
+        label="Localidad o país"
+        value={form.localidad}
+        onChange={onText('localidad')}
+        placeholder="Ej.: Nacaome, Valle · Choluteca · Madrid, España"
+        autoComplete="address-level2"
+      />
+
       <div>
         <label htmlFor="consulta-motivo" className="block text-xs font-bold text-text mb-1">
-          Motivo de la consulta
+          Tipo general de asunto
         </label>
         <select
           id="consulta-motivo"
@@ -138,16 +318,81 @@ export function SolicitarConsultaForm() {
           ))}
         </select>
       </div>
+
+      {/* CAMPOS CONDICIONALES (FASE 2) — solo se muestran cuando aportan valor
+          según el tipo de asunto. No se solicita detalle penal excesivo. */}
+      <details className="rounded-md border border-border-light bg-surface-alt/40 p-3">
+        <summary className="cursor-pointer text-xs font-bold text-text-secondary select-none">
+          Información adicional (opcional, según su caso)
+        </summary>
+        <div className="mt-3 space-y-3">
+          {/* Penal: audiencia/detención */}
+          {(form.motivo === 'Familiar detenido' || form.motivo === 'Citaciones o audiencias' || form.motivo === 'Investigación en curso') && (
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Field
+                label="Fecha de audiencia o citación (si la tiene)"
+                value={form.fechaAudiencia}
+                onChange={onText('fechaAudiencia')}
+                placeholder="Ej.: 30 de julio de 2026"
+              />
+              <SelectField
+                id="consulta-detencion"
+                label="¿Hay alguna persona detenida?"
+                value={form.hayDetencion}
+                onChange={onText('hayDetencion')}
+                options={[
+                  { value: '', label: '— Seleccione —' },
+                  { value: 'si', label: 'Sí' },
+                  { value: 'no', label: 'No' },
+                ]}
+              />
+            </div>
+          )}
+          {/* Laboral: fecha de despido */}
+          <Field
+            label="Fecha de despido (si es un caso laboral)"
+            value={form.fechaDespido}
+            onChange={onText('fechaDespido')}
+            placeholder="Ej.: 15 de junio de 2026"
+          />
+          {/* España: residencia + disponibilidad llamada */}
+          <div className="grid sm:grid-cols-2 gap-3">
+            <SelectField
+              id="consulta-espana"
+              label="¿Reside usted en España?"
+              value={form.residenciaEspana}
+              onChange={onText('residenciaEspana')}
+              options={[
+                { value: '', label: '— Seleccione —' },
+                { value: 'si', label: 'Sí' },
+                { value: 'no', label: 'No' },
+              ]}
+            />
+            <SelectField
+              id="consulta-llamada"
+              label="¿Disponible para una llamada?"
+              value={form.disponibleLlamada}
+              onChange={onText('disponibleLlamada')}
+              options={[
+                { value: '', label: '— Seleccione —' },
+                { value: 'si', label: 'Sí' },
+                { value: 'no', label: 'No' },
+              ]}
+            />
+          </div>
+        </div>
+      </details>
+
       <div>
         <label htmlFor="consulta-resumen" className="block text-xs font-bold text-text mb-1">
-          Resumen de la situación
+          Descripción breve de la situación
         </label>
         <textarea
           id="consulta-resumen"
           value={form.resumen}
           onChange={onText('resumen')}
           rows={6}
-          placeholder="Describa brevemente los hechos. NO incluya documentos ni números sensibles innecesarios."
+          placeholder="Describa brevemente los hechos. NO incluya documentos, números de tarjeta ni datos de identidad completos."
           className="input-refined w-full px-3 py-2.5 rounded-md border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none"
           required
           minLength={15}
@@ -233,14 +478,16 @@ function Field({
   type = 'text',
   required = false,
   autoComplete,
+  placeholder,
 }: {
   label: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   required?: boolean;
   autoComplete?: string;
+  placeholder?: string;
 }) {
   const fieldId = `consulta-${label.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-')}`;
   const descId = `${fieldId}-desc`;
@@ -254,7 +501,9 @@ function Field({
         {required && <span className="text-aggravation ml-0.5" aria-hidden="true">*</span>}
       </label>
       <div className="relative">
-        <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-colors" />
+        {Icon && (
+          <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-colors" />
+        )}
         <input
           id={fieldId}
           type={type}
@@ -262,15 +511,50 @@ function Field({
           onChange={onChange}
           required={required}
           autoComplete={autoComplete}
+          placeholder={placeholder}
           aria-required={required || undefined}
           aria-invalid={invalid || undefined}
           aria-describedby={descId}
-          className="input-refined w-full h-11 pl-9 pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none aria-[invalid=true]:border-aggravation"
+          className={`input-refined w-full h-11 ${Icon ? 'pl-9' : 'pl-3'} pr-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none aria-[invalid=true]:border-aggravation`}
         />
       </div>
       <span id={descId} className="sr-only">
         {required ? `${label}, campo obligatorio.` : `${label}, campo opcional.`}
       </span>
+    </div>
+  );
+}
+
+function SelectField({
+  id,
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: { value: string; label: string }[];
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-xs font-bold text-text mb-1">
+        {label}
+      </label>
+      <select
+        id={id}
+        value={value}
+        onChange={onChange}
+        className="input-refined w-full h-11 px-3 rounded-md border border-border-light bg-surface text-sm text-text focus:outline-none"
+      >
+        {options.map((o) => (
+          <option key={`${id}-${o.value}`} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

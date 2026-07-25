@@ -125,6 +125,10 @@ export const CONSULTA_MOTIVOS = [
   'Recurso o apelación',
   'Asesoría preventiva',
   'Atención a víctima',
+  'Despido o prestaciones laborales',
+  'Divorcio, custodia o pensión de alimentos',
+  'Contrato, propiedad, sucesión o trámite notarial',
+  'Asunto desde España',
   'Otro asunto',
 ] as const;
 
@@ -141,6 +145,49 @@ export const consultaSchema = z.object({
   motivo: z.enum(CONSULTA_MOTIVOS, { message: 'Motivo inválido' }),
   resumen: z.string().trim().min(15, 'Mínimo 15 caracteres').max(5000),
   acepta: z.literal(true, { message: 'Debe aceptar la política de privacidad' }),
+  // ── Campos opcionales FASE 2 (no se almacenan en columnas propias de la DB;
+  //    se agregan al resumen que se persiste y se envía por email). No son PII
+  //    sensibles: no se solicitan documentos, tarjetas ni datos de menores. ──
+  medioPreferido: z
+    .enum(['whatsapp', 'telefono', 'email', 'llamada'], { message: 'Medio inválido' })
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  localidad: z
+    .string()
+    .trim()
+    .max(120, 'Localidad demasiado larga')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  urgencia: z
+    .enum(['normal', 'alta', 'penal'], { message: 'Nivel de urgencia inválido' })
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  // Campos condicionales opcionales (solo cuando aportan valor al caso).
+  // No se exige detalle penal excesivo en el primer contacto.
+  fechaAudiencia: z
+    .string()
+    .trim()
+    .max(60, 'Fecha demasiado larga')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  hayDetencion: z
+    .enum(['si', 'no'], { message: 'Valor inválido' })
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  fechaDespido: z
+    .string()
+    .trim()
+    .max(60, 'Fecha demasiado larga')
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  residenciaEspana: z
+    .enum(['si', 'no'], { message: 'Valor inválido' })
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  disponibleLlamada: z
+    .enum(['si', 'no'], { message: 'Valor inválido' })
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
   // Honeypot antispam: campo oculto visible solo para bots. Debe ir vacío.
   website: z
     .string()
