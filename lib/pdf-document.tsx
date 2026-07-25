@@ -3,6 +3,7 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import type { DelitoConfig } from '@/lib/rules/v1/types';
 import { formatMeses, formatFechaHora } from '@/lib/ui';
 import { formatHondurasDate } from '@/lib/datetime';
+import { site } from '@/lib/site';
 
 const colors = {
   primary: '#1A2B4A',
@@ -541,7 +542,7 @@ export function CasoPDFDocument({ caso }: { caso: Caso }) {
 
         <View style={styles.footerLine} fixed />
         <View style={styles.footer} fixed>
-          <Text>Pineda y Asociados · contacto@pinedayasocioshn.com</Text>
+          <Text>{site.name} · {site.email}</Text>
           <Text>Generado el {formatFechaHora(new Date().toISOString())}</Text>
         </View>
 

@@ -40,6 +40,26 @@ const envNoindex = process.env.NEXT_PUBLIC_NOINDEX;
  */
 const noindexActive = envNoindex === 'true';
 
+/**
+ * Formatea un número E.164 (+50495363724) a display legible (+504 9536-3724).
+ * Fuente única para phoneDisplay y whatsappDisplay → NAP coherente en todo el
+ * sitio (visible, tel:, JSON-LD). Si el número no encaja en el patrón HN
+ * conocido, devuelve el original sin alterar (no inventa formato).
+ */
+function formatPhoneDisplay(e164: string): string {
+  const digits = e164.replace(/\D/g, '');
+  // Honduras: 504 + 8 dígitos → "+504 XXXX-XXXX"
+  const hn = digits.match(/^504(\d{4})(\d{4})$/);
+  if (hn) return `+504 ${hn[1]}-${hn[2]}`;
+  // Generic fallback con prefijo internacional y el resto agrupado en 4s.
+  const intl = digits.match(/^(\d{1,3})(\d+)$/);
+  if (intl) {
+    const rest = intl[2].replace(/(.{4})/g, '$1 ').trim();
+    return `+${intl[1]} ${rest}`;
+  }
+  return e164;
+}
+
 export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.pinedayasociadoshn.com').replace(/\/+$/, ''),
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? 'Pineda y Asociados',
@@ -54,9 +74,15 @@ export const site = {
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
-  phoneDisplay: '+504 9536-3724',
+  /** Formato legible del teléfono. Deriva del mismo número que `phone` para
+   *  garantizar NAP coherente (un solo dato). Si se cambia NEXT_PUBLIC_CONTACT_PHONE,
+   *  el display sigue siendo consistente; solo se sobrescribe con env explícito. */
+  phoneDisplay: process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY
+    ?? formatPhoneDisplay(process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724'),
   whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
-  whatsappDisplay: '+504 9536-3724',
+  /** WhatsApp legible. Misma lógica que phoneDisplay: deriva de `whatsapp`. */
+  whatsappDisplay: process.env.NEXT_PUBLIC_CONTACT_WHATSAPP_DISPLAY
+    ?? formatPhoneDisplay('+' + (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, '')),
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'contacto@pinedayasociadoshn.com',
   address: {
     line1: 'GGJ7+239',
@@ -379,6 +405,7 @@ export function organizationSchema() {
       site.social.instagram,
       site.social.linkedin,
       site.social.youtube,
+      site.social.tiktok,
       site.social.x,
       site.googleBusiness
     ]),
@@ -482,10 +509,15 @@ export function founderSchema() {
           },
         }
       : {}),
-    alumniOf: {
-      '@type': 'CollegeOrUniversity',
-      name: 'Universidad de Honduras',
-    },
+    // alumniOf: formación académica del fundador. Solo se publica si se aporta
+    // vía NEXT_PUBLIC_ALUMNI_DANILO el nombre exacto y verificable de la
+    // universidad (R4 — no inventar datos profesionales). "Universidad de
+    // Honduras" NO es denominación oficial de ninguna universidad hondureña
+    // (la pública es UNAH; existen varias privadas con nombres propios), por lo
+    // que NO se publica por defecto hasta que el despacho confirme el dato.
+    ...(process.env.NEXT_PUBLIC_ALUMNI_DANILO
+      ? { alumniOf: { '@type': 'CollegeOrUniversity', name: process.env.NEXT_PUBLIC_ALUMNI_DANILO } }
+      : {}),
     knowsAbout: [
       'Derecho Penal',
       'Derecho Procesal Penal',

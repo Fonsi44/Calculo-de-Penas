@@ -1,0 +1,193 @@
+/**
+ * Infraestructura de revisión jurídica/editorial (FASE 1 — Exactitud jurídica).
+ *
+ * Modelo declarativo y auditable para registrar el estado de revisión legal de
+ * cada página o bloque de contenido YMYL del sitio. Diseñado para coexistir con
+ * la arquitectura existente (`lib/site.ts`, `lib/legal-disclaimer.ts`,
+ * `lib/legal-content.ts`) sin competir con ellas: la fuente única de identidad
+ * sigue siendo `lib/site.ts`; este módulo solo aporta metadatos de revisión.
+ *
+ * Principios (AGENTS.md §7, R4, R11):
+ *  - `verified` requiere revisor humano real y fecha válida. No se acepta
+ *    GLM-5.2 (ni ningún modelo de IA) como revisor jurídico.
+ *  - Una página `pending` NO muestra atribución "Revisado por".
+ *  - No se inventan fechas de revisión.
+ *  - Las marcas internas (`[REVISIÓN PENDIENTE]`) son internas: nunca se
+ *    exponen en producción. El componente público <LegalReviewNotice> emite un
+ *    aviso jurídico general prudente, no marcas internas.
+ *  - El sistema no obliga a tocar el blog; el registro es por página de
+ *    servicios/landing/FAQ, opcional.
+ */
+
+export type LegalReviewStatus = 'pending' | 'verified' | 'needs_update';
+
+export type LegalJurisdiction = 'HN' | 'ES' | 'HN_ES' | 'general';
+
+export interface LegalReviewSource {
+  title: string;
+  institution: string;
+  url: string;
+  consultedAt?: string;
+}
+
+export interface LegalReview {
+  /** Revisor humano real (nombre). Para `verified` es obligatorio. NO usar
+   *  nombres de modelos de IA. Si se omite, el estado DEBE ser `pending`. */
+  reviewedBy?: string;
+  /** Fecha ISO (YYYY-MM-DD) de la revisión. Para `verified` es obligatoria y
+   *  debe ser válida y no futura. */
+  reviewedAt?: string;
+  jurisdiction: LegalJurisdiction;
+  reviewStatus: LegalReviewStatus;
+  sources?: LegalReviewSource[];
+  /** Nota editorial interna (no se muestra en producción). */
+  note?: string;
+}
+
+/**
+ * Nombres del equipo profesional canónicos (fuente única: `lib/site.ts`).
+ * Cualquier atribución "revisado por" debe coincidir con uno de estos nombres,
+ * o quedar vacío (`pending`). Esto impide firmar con nombres inventados o con
+ * variantes incorrectas (p. ej. "Thania Pineda").
+ */
+import { FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from './site';
+
+export const CANONICAL_REVIEWERS: readonly string[] = [
+  FOUNDER_PROFILE.name,
+  THANIA_PROFILE.name,
+  EMIL_PROFILE.name,
+] as const;
+
+/**
+ * Valida que un objeto LegalReview sea internamente coherente.
+ * Lanza Error descriptivo si encuentra una violación. Usado por los tests y
+ * por el helper isLegalReviewPubliclySound (no lanza, devuelve boolean).
+ */
+export function assertLegalReviewValid(review: LegalReview): void {
+  if (review.reviewStatus === 'verified') {
+    if (!review.reviewedBy || review.reviewedBy.trim() === '') {
+      throw new Error(
+        'LegalReview inválido: estado "verified" requiere revisor humano (reviewedBy).',
+      );
+    }
+    if (review.reviewedBy.includes('GLM') || /modelo|IA\b/i.test(review.reviewedBy)) {
+      throw new Error(
+        `LegalReview inválido: "${review.reviewedBy}" no es un revisor jurídico humano válido (no se aceptan modelos de IA).`,
+      );
+    }
+    if (!review.reviewedAt || !isValidIsoDate(review.reviewedAt)) {
+      throw new Error(
+        'LegalReview inválido: estado "verified" requiere fecha válida (reviewedAt ISO YYYY-MM-DD).',
+      );
+    }
+    if (isFutureDate(review.reviewedAt)) {
+      throw new Error(
+        `LegalReview inválido: reviewedAt "${review.reviewedAt}" es posterior a hoy (no se inventan fechas futuras).`,
+      );
+    }
+    if (!CANONICAL_REVIEWERS.includes(review.reviewedBy)) {
+      throw new Error(
+        `LegalReview inválido: revisor "${review.reviewedBy}" no figura en la fuente única de identidad (lib/site.ts). Revisores válidos: ${CANONICAL_REVIEWERS.join(', ')}.`,
+      );
+    }
+  }
+  // pending y needs_update no exigen revisor/fecha, pero si los aportan deben
+  // cumplir las mismas reglas de coherencia (mismo nombre canónico, fecha válida).
+  if (review.reviewedBy && !CANONICAL_REVIEWERS.includes(review.reviewedBy)) {
+    throw new Error(
+      `LegalReview inválido: revisor "${review.reviewedBy}" no canónico. Revisores válidos: ${CANONICAL_REVIEWERS.join(', ')}.`,
+    );
+  }
+  if (review.reviewedAt && !isValidIsoDate(review.reviewedAt)) {
+    throw new Error(`LegalReview inválido: reviewedAt "${review.reviewedAt}" no es fecha ISO válida.`);
+  }
+}
+
+/** ¿Es seguro mostrar públicamente la atribución "Revisado por" de esta review? */
+export function isReviewAttributable(review: LegalReview): boolean {
+  try {
+    assertLegalReviewValid(review);
+    return review.reviewStatus === 'verified' && !!review.reviewedBy && !!review.reviewedAt;
+  } catch {
+    return false;
+  }
+}
+
+function isValidIsoDate(s: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+  const d = new Date(s + 'T00:00:00Z');
+  return !Number.isNaN(d.getTime());
+}
+
+function isFutureDate(s: string): boolean {
+  const d = new Date(s + 'T00:00:00Z');
+  const today = new Date(new Date().toISOString().slice(0, 10) + 'T00:00:00Z');
+  return d.getTime() > today.getTime();
+}
+
+/**
+ * Registro de revisión por página pública (clave = path o slug de servicio).
+ *
+ * Estado inicial FASE 1: todo `pending` salvo correcciones ya aplicadas y
+ * trazadas en docs/seo/fase-1/revision-juridica-fase1.md. Ninguna página YMYL
+ * queda como `verified` sin revisión humana expresa del despacho, porque eso
+ * requeriría que un abogado firme — y ese paso queda pendiente de validación
+ * humana (ver informe final FASE 1, punto 3).
+ *
+ * Añadir entradas aquí a medida que el despacho revise páginas concretas.
+ * El registro es la única fuente de verdad para la atribución pública de
+ * revisión; el componente <LegalReviewNotice> lo consulta vía getLegalReview().
+ */
+export const LEGAL_REVIEW_REGISTRY: Record<string, LegalReview> = {
+  // Ejemplo de plantilla (NO verified: pendiente de firma del despacho):
+  '/preguntas-frecuentes': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 1: corregidas horas extras (arts. 270/273/352 CT) y prescripción penal (art. 39 CP). Pendiente de firma del despacho para pasar a verified.',
+  },
+  '/servicios-juridicos/derecho-laboral': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 1: pendiente validar cesantía máxima 25 meses, preaviso y fechas de aguinaldo (Decreto 135-80). FASE 3: enriquecida con bloques de detalle, documentos y proceso; FAQ ampliada (P03/P04 preservadas sin reforzar).',
+  },
+  '/servicios-juridicos/derecho-de-familia': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 3: enriquecida con respuesta directa, documentos, proceso y FAQ ampliada. P01 (rango pensión) preservada sin reforzar. Pendiente firma del abogado de familia.',
+  },
+  '/servicios-juridicos/derecho-civil-y-notarial': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 3: enriquecida con separación civil/notarial/registral, documentos y proceso. P06 (prescripción civil) preservada sin reforzar. Capacidad notarial no afirmada. Pendiente firma.',
+  },
+  '/derecho-penal': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 3: enriquecida con respuesta directa, documentos, proceso, factores y errores. Sin plazos cerrados ni tabla de penas/prescripción. P09/P14/P15 viven en /derecho-penal/[slug] (fuera de alcance). Pendiente firma del abogado penalista.',
+  },
+  '/abogado-laboralista-nacaome': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 1: corregido "décimo cuarto mes" → "décimo tercer mes (aguinaldo)". Pendiente firma.',
+  },
+  '/abogado-penalista-choluteca': {
+    jurisdiction: 'HN',
+    reviewStatus: 'needs_update',
+    note: 'FASE 1: distancia Nacaome-Choluteca unificada a ~55 km (Rome2Rio/Travelmath). Pendiente firma.',
+  },
+  '/como-llegar': {
+    jurisdiction: 'general',
+    reviewStatus: 'needs_update',
+    note: 'FASE 1: distancias Choluteca/San Lorenzo/Amapala verificadas contra cartografía. Pendiente firma.',
+  },
+};
+
+/** Obtiene la revisión de una página, o un valor pending por defecto. */
+export function getLegalReview(path: string): LegalReview {
+  return (
+    LEGAL_REVIEW_REGISTRY[path] ?? {
+      jurisdiction: 'general',
+      reviewStatus: 'pending',
+    }
+  );
+}

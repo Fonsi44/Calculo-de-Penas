@@ -17,7 +17,15 @@
  *  - Cuando se menciona plazo/costo, va acompañado de "depende del caso" y
  *    "solicite consulta para evaluación específica".
  *  - NO se prometen resultados judiciales (R4, ética abogacía).
+ *  - NAP coherente: horario, teléfono y WhatsApp se derivan de `lib/site.ts`
+ *    (FASE 2). No se hardcodean literales divergentes.
+ *  - Colegiación CAH (P10): no se afirma categóricamente ni se inventa nº.
+ *    La afirmación prudente es «abogados en ejercicio en Honduras»; el nº de
+ *    colegiación solo se publica vía badges condicionales en /despacho si el
+ *    despacho aporta el dato (NEXT_PUBLIC_CAH_*).
  */
+
+import { site } from '@/lib/site';
 
 export interface HubFaqItem {
   pregunta: string;
@@ -42,7 +50,7 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
   {
     pregunta: '¿Cómo decido qué abogado del bufete lleva mi caso?',
     respuesta:
-      'Cada área la dirige un especialista: Danilo Pineda en derecho penal, Thania Pineda en familia, civil y mercantil, y Emil Hernández en derecho laboral. En la primera consulta se identifica el área principal y se asigna al especialista correspondiente.',
+      'Cada área la dirige un especialista: Danilo Pineda Maradiaga en derecho penal, Thania Marlene Paz en familia, civil y mercantil, y Emil Barahona en derecho laboral. En la primera consulta se identifica el área principal y se asigna al especialista correspondiente.',
   },
   {
     pregunta: '¿Ofrecen consulta inicial sin costo?',
@@ -84,7 +92,7 @@ export const FAQ_DESPACHO: HubFaqItem[] = [
   {
     pregunta: '¿Quiénes conforman el equipo de abogados?',
     respuesta:
-      'El equipo está liderado por Danilo Pineda Maradiaga (socio director, derecho penal), Thania Pineda (familia, civil, mercantil) y Emil Hernández (derecho laboral). Los tres son abogados y notarios públicos colegiados en Honduras.',
+      'El equipo está liderado por Danilo Pineda Maradiaga (socio director, derecho penal), Thania Marlene Paz (familia, civil y mercantil) y Emil Barahona (derecho laboral). Los tres son abogados en ejercicio en Honduras; el número de colegiación ante el Colegio de Abogados de Honduras se muestra en la página del despacho cuando procede.',
   },
   {
     pregunta: '¿Dónde está ubicada la oficina?',
@@ -126,7 +134,7 @@ export const FAQ_SOLICITAR_CONSULTA: HubFaqItem[] = [
   {
     pregunta: '¿Cuánto tardan en responder?',
     respuesta:
-      'Las consultas se responden en horario hábil (lunes a viernes, 8:00 a 17:00). Casos urgentes como detenciones o audiencias inminentes se priorizan. Para emergencias penales fuera de horario hay línea directa por WhatsApp.',
+      `Las consultas se responden en horario hábil (${site.hoursShort}). Los casos urgentes, como detenciones o audiencias inminentes, se priorizan. Para emergencias penales fuera de horario hay línea directa por WhatsApp. No comprometemos respuesta inmediata: el compromiso es atender en horario hábil con la diligencia que cada caso requiere.`,
   },
   {
     pregunta: '¿Qué información debo llevar a la primera consulta?',
@@ -146,11 +154,41 @@ export const FAQ_SOLICITAR_CONSULTA: HubFaqItem[] = [
   {
     pregunta: '¿Atienden emergencias penales fuera de horario?',
     respuesta:
-      'Sí. Las detenciones, audiencias iniciales y medidas cautelares urgentes se priorizan. Use el WhatsApp directo (+504 9536-3724) marcando que es una urgencia penal para activar la atención prioritaria.',
+      `Las detenciones, audiencias iniciales y medidas cautelares urgentes se priorizan. Use el WhatsApp directo (${site.whatsappDisplay}) marcando que es una urgencia penal para activar la atención prioritaria. La disponibilidad efectiva depende del momento y la diligencia concreta; en la primera consulta se confirma el alcance de la asistencia posible.`,
   },
   {
     pregunta: '¿Cómo se fijan los honorarios?',
     respuesta:
       'Los honorarios dependen del tipo de caso, la complejidad y el tiempo estimado. Tras la consulta inicial se entrega un presupuesto por escrito. No se inicia ninguna gestión sin autorización expresa del cliente.',
+  },
+  {
+    pregunta: '¿Cómo se entrega el presupuesto y qué incluye?',
+    respuesta:
+      'El presupuesto se entrega por escrito tras la consulta inicial. Incluye el alcance del trabajo, las etapas previstas y los honorarios. No se inicia ninguna actuación profesional sin su autorización expresa, así que usted decide con información completa antes de contratar.',
+  },
+  {
+    pregunta: '¿Qué ocurre después del primer contacto?',
+    respuesta:
+      `Tras recibir su solicitud, el bufete revisa la información en horario hábil (${site.hoursShort}) y le responde por el canal que haya indicado. Si procede, se agenda una consulta y, después, se entrega un presupuesto por escrito. El envío del formulario no implica aceptación formal del asunto: la relación profesional nace únicamente con la firma del contrato de prestación de servicios.`,
+  },
+  {
+    pregunta: '¿Atienden a personas de otras localidades, no solo de Nacaome?',
+    respuesta:
+      'Sí. La sede física está en Nacaome (Valle), pero el bufete atiende habitualmente en el departamento de Valle, Choluteca y la zona sur de Honduras. La revisión documental y el seguimiento pueden hacerse de forma remota por WhatsApp o videollamada; la presencia presencial en sede judicial o notarial se coordina según la diligencia requerida.',
+  },
+  {
+    pregunta: '¿Trabajan con clientes hondureños residentes en España?',
+    respuesta:
+      'Sí. Existe un módulo específico de asistencia para hondureños en España: poderes desde el extranjero, divorcios, custodia, sucesiones, trámites documentales y apostilla coordinados entre España y Honduras. Lo que requiere autoridad española (como trámites ante la Administración española) se orienta; lo que corresponde a autoridades hondureñas se gestiona directamente.',
+  },
+  {
+    pregunta: '¿Debo enviar originales de documentos por formulario o correo?',
+    respuesta:
+      'No. Nunca envíe originales en el primer contacto. Para la evaluación inicial basta con una descripción de la situación y, si los tiene, copias digitales legibles. El abogado le indicará qué documentación adicional conviene aportar y en qué formato, una vez conocido el caso.',
+  },
+  {
+    pregunta: '¿Qué medios de pago aceptan?',
+    respuesta:
+      'Los medios de pago se acuerdan en el presupuesto por escrito. Para evitar errores y mantener la trazabilidad, los detalles concretos se confirman en la contratación, no en el primer contacto.',
   },
 ];
