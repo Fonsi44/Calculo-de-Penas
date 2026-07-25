@@ -22,26 +22,34 @@ const publicClaimFiles = [
   'lib/site.ts',
 ].map((file) => readFileSync(file, 'utf8')).join('\n');
 
-describe('afirmaciones públicas pendientes de verificación', () => {
-  it('no publica una antigüedad concreta ni vigencia registral incondicional', () => {
-    expect(publicClaimFiles).not.toMatch(/más de 15 años|\+15 años/i);
-    expect(publicClaimFiles).not.toMatch(/registro profesional vigente/i);
+describe('afirmaciones institucionales confirmadas por el titular', () => {
+  it('conserva la antigüedad y la colegiación confirmadas', () => {
+    expect(publicClaimFiles).toMatch(/más de 15 años|\+15 años/i);
+    expect(publicClaimFiles).toMatch(/registro profesional vigente/i);
   });
 
-  it('no publica año ni fundadores en Organization hasta disponer de evidencia', () => {
+  it('publica el año y los fundadores confirmados en Organization', () => {
     const organization = organizationSchema() as Record<string, unknown>;
-    expect(organization.foundingDate).toBeUndefined();
-    expect(organization.founder).toBeUndefined();
+    expect(organization.foundingDate).toBe('2010');
+    expect(organization.founder).toEqual([
+      { '@id': `${site.url}/#danilo-pineda-maradiaga` },
+      { '@id': `${site.url}/#thania` },
+    ]);
   });
 
-  it('mantiene perfiles de equipo sin atribuir condición fundacional', () => {
-    expect(FOUNDER_PROFILE.description).not.toMatch(/más de 15 años|colegiado/i);
-    expect(THANIA_PROFILE.jobTitle).toBe('Abogada · Socia');
-    expect(THANIA_PROFILE.description).not.toMatch(/fundadora/i);
+  it('mantiene la condición fundacional en los perfiles del equipo', () => {
+    expect(FOUNDER_PROFILE.description).toMatch(/más de 15 años/i);
+    expect(FOUNDER_PROFILE.description).toMatch(/colegiado/i);
+    expect(THANIA_PROFILE.jobTitle).toBe('Abogada · Socia fundadora');
+    expect(THANIA_PROFILE.description).toMatch(/fundadora/i);
   });
 
   it('usa un identificador de persona descriptivo para el socio director', () => {
     const person = founderSchema() as Record<string, unknown>;
     expect(person['@id']).toBe(`${site.url}/#danilo-pineda-maradiaga`);
+  });
+
+  it('no atribuye la condición de notario, que no fue confirmada', () => {
+    expect(publicClaimFiles).not.toMatch(/notario colegiado/i);
   });
 });

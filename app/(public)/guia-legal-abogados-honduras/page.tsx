@@ -96,7 +96,7 @@ export default function GuiaLegalPage() {
           <AnswerBlock
             eyebrow="Datos del despacho"
             question="¿Quién es Pineda y Asociados?"
-            answer={`${site.name} es un bufete jurídico con sede en Nacaome, Valle (Honduras). Su socio director es Danilo Pineda Maradiaga y el equipo incluye a Thania Marlene Paz (familia, civil y mercantil) y Emil Barahona (laboral). Dirección: ${site.address.line2}, ${site.address.city}, ${site.address.department}. Contacto: WhatsApp ${site.phoneDisplay} · ${site.email}. Atención de lunes a sábado.`}
+            answer={`${site.name} es un bufete jurídico con sede en Nacaome, Valle (Honduras), fundado por Danilo Pineda Maradiaga y Thania Marlene Paz. El equipo también incluye a Emil Barahona (laboral). Dirección: ${site.address.line2}, ${site.address.city}, ${site.address.department}. Contacto: WhatsApp ${site.phoneDisplay} · ${site.email}. Atención de lunes a sábado.`}
           />
         </Container>
       </Section>

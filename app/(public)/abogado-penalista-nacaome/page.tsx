@@ -57,7 +57,7 @@ export default async function AbogadoPenalistaNacaomePage() {
           </h1>
           <p className="text-base md:text-lg text-text-inverse/85 max-w-3xl mb-8">
             Defensa técnica inmediata conforme al Código Penal hondureño. Asistencia desde la detención,
-            audiencia inicial y hasta el juicio oral, con atención coordinada desde Nacaome para el
+            audiencia inicial y hasta el juicio oral. Más de 15 años de ejercicio profesional en el
             sur de Honduras.
           </p>
           <CTAGroup variant="inverse" message={whatsappMsg} />

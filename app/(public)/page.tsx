@@ -285,7 +285,7 @@ export default async function HomePage() {
           ServiceCard idénticas, con foto, alineadas en grid de 4 columnas.
           Antes había una card de texto "pilar histórico" separada que rompía
           el ritmo y duplicaba la ServiceCard de penal. Eliminada; los claims
-          de valor (estrategia unificada, un solo expediente) viven
+          de valor (+15 años, estrategia unificada, un solo expediente) viven
           en el EditorialBlock "Por qué elegirnos" que sigue. */}
       <Section background="muted" spacing="md" ariaLabel="Áreas destacadas">
         <SectionHeader
@@ -317,7 +317,7 @@ export default async function HomePage() {
       {/* POR QUÉ ELEGIRNOS — bloque editorial narrativo (Fase 3.1).
           Razones del bufete en formato editorial, con respiración. Incorpora
           los claims de valor que antes estaban en la card de texto del pilar
-          penal (estrategia unificada, un solo expediente), ahora
+          penal (+15 años, estrategia unificada, un solo expediente), ahora
           como puntos editoriales coherentes. El equipo se referencia vía
           enlace a /despacho, dueño canónico de ese contenido. */}
       <Section background="warm" spacing="lg" ariaLabel="Por qué elegirnos" className="section-breath">
@@ -327,7 +327,7 @@ export default async function HomePage() {
           intro={t('why_us.subtitle')}
           points={[
             ...WHY_POINTS,
-            { icon: Award, title: 'Cobertura en el sur de Honduras', description: 'Atención coordinada desde nuestra sede en Nacaome para asuntos en Valle, Choluteca y otras zonas.' },
+            { icon: Award, title: '+15 años de ejercicio profesional', description: 'Bufete fundado en Nacaome con presencia activa en juzgados del sur de Honduras.' },
             { icon: BriefcaseBusiness, title: 'Estrategia unificada, un solo expediente', description: 'Coordinación interna entre especialistas cuando un caso cruza varias ramas del derecho. Un único punto de contacto, sin gestionar varios despachos.' },
           ]}
           cta={{ href: '/despacho', label: 'Conozca el despacho' }}
@@ -352,7 +352,7 @@ export default async function HomePage() {
             El despacho
           </p>
           <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
-            Un equipo con especialidades complementarias
+            Un bufete con más de 15 años de experiencia
           </h2>
           <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
             Tres socios con especialidades complementarias, atención directa del abogado

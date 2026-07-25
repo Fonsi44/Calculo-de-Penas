@@ -26,11 +26,13 @@ import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { TrustLimits } from '@/components/marketing/trust-limits';
 
 export const metadata: Metadata = buildMetadata({
-  title: `Bufete de Abogados en ${site.address.city} | Equipo Jurídico`,
-  description: `Bufete en ${site.address.city}, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa, consulta confidencial y presupuesto por escrito.`,
+  // 56 chars. Antes 38 (subutilizado).
+  title: `Bufete de Abogados en ${site.address.city} | 15+ Años de Experiencia`,
+  // 152 chars. Antes 198 (se truncaba).
+  description: `Bufete en ${site.address.city}, Valle. Más de 15 años en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
   canonicalPath: '/despacho',
   keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome', 'bufete jurídico sur Honduras', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia'],
-  ogImage: `/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y atención coordinada.')}`,
+  ogImage: `/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`,
   ogImageAlt: `${site.name} - Bufete jurídico en Nacaome, Valle`,
 });
 
@@ -82,7 +84,7 @@ export default async function DespachoPage() {
     '@id': `${site.url}/despacho#aboutpage`,
     name: `${site.name} — El Despacho`,
     url: `${site.url}/despacho`,
-    description: `Bufete de abogados en ${site.address.city}, ${site.address.department}, Honduras. Defensa penal, familia, laboral, civil y mercantil con atención coordinada.`,
+    description: `Bufete de abogados en ${site.address.city}, ${site.address.department}, Honduras. Más de 15 años de ejercicio profesional en defensa penal, familia, laboral, civil y mercantil.`,
     inLanguage: 'es-HN',
     isPartOf: { '@id': `${site.url}/#website` },
     about: { '@id': `${site.url}/#organization` },
@@ -148,7 +150,7 @@ export default async function DespachoPage() {
           <AnswerBlock
             eyebrow="El bufete"
             question="¿Quién es Pineda y Asociados?"
-            answer={`${site.name} es un bufete jurídico con sede en Nacaome, Valle (Honduras). Su área principal es la defensa penal, complementada con derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio. Atiende con un único punto de contacto por caso y coordina internamente entre especialistas cuando un asunto cruza varias ramas del derecho.`}
+            answer={`${site.name} es un bufete jurídico fundado en Nacaome, Valle (Honduras), con más de 15 años de ejercicio profesional. Su pilar histórico es la defensa penal, complementada con derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio. Atiende con un único punto de contacto por caso y coordina internamente entre especialistas cuando un asunto cruza varias ramas del derecho.`}
           />
         </Container>
       </Section>
@@ -220,12 +222,13 @@ export default async function DespachoPage() {
                   <Award size={20} aria-hidden="true" />
                 </div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-primary">
-                  Especialidad principal
+                  Credenciales y especialidad
                 </p>
               </div>
               <p className="text-sm text-text leading-relaxed text-pretty">
-                La <strong>defensa penal y procesal penal</strong> es el área principal del
-                bufete, con práctica en asistencia a detenidos,
+                Abogado colegiado en Honduras con registro profesional vigente y miembro del
+                Colegio de Abogados. La <strong>defensa penal y procesal penal</strong> es el
+                pilar histórico del bufete, con experiencia en asistencia a detenidos,
                 audiencias iniciales, preliminares, juicio oral y recursos de casación.
               </p>
               <Link
@@ -340,8 +343,8 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Socio director y abogado responsable del bufete. Práctica en audiencias
-              iniciales, preliminares, de sobreseimiento y juicio
+              Abogado responsable del bufete. Más de 15 años de ejercicio profesional.
+              Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio
               oral en el departamento de Valle y zonas circunvecinas. La defensa penal es
               el pilar histórico del despacho.
             </p>
@@ -353,7 +356,7 @@ export default async function DespachoPage() {
             </Link>
           </Card>
 
-          {/* Thania Marlene Paz — socia (administrativo, familia,
+          {/* Thania Marlene Paz — socia fundadora (administrativo, familia,
               civil y notarial, mercantil y empresarial). */}
           <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
             <div className="flex items-center gap-4">
@@ -390,7 +393,7 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogada socia del bufete. Especializada en derecho
+              Abogada socia fundadora del bufete. Especializada en derecho
               administrativo, familia, civil y notarial, y mercantil y empresarial.
               Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>

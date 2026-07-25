@@ -462,6 +462,9 @@ export function organizationSchema() {
     // Imagen para Knowledge Graph de Google. Reutilizamos og-image.webp (1200x630)
     // como imagen representativa del sitio.
     image: `${site.url}/og-image.webp`,
+    // Año de fundación confirmado directamente por el titular del sitio
+    // durante la implementación del 2026-07-25.
+    foundingDate: '2010',
     // slogan: frase corta sin duplicar la marca (name ya la incluye).
     slogan: 'Abogados en Nacaome, Valle',
     knowsAbout: KNOWS_ABOUT,
@@ -504,15 +507,23 @@ export function organizationSchema() {
       postalCode: site.address.postalCode,
       addressCountry: site.address.countryCode,
     },
+    // Socios fundadores confirmados directamente por el titular del sitio.
+    founder: [
+      { '@id': `${site.url}/#danilo-pineda-maradiaga` },
+      { '@id': `${site.url}/#thania` },
+    ],
   };
 }
 
 /**
- * Datos del socio director del bufete.
+ * Datos del fundador y socio director del bufete.
  *
  * Identidad pública verificable: el handle de X (Danilo_Pineda_M) y la firma
  * «Pineda y Asociados» confirman a Danilo Pineda Maradiaga como socio director.
- * Claims públicos conservados sin atribuir antigüedad ni vigencia registral:
+ * Claims confirmados directamente por el titular del sitio el 2026-07-25:
+ *   - «más de 15 años de ejercicio profesional»
+ *   - «Abogado colegiado en Honduras»
+ *   - socio fundador y director
  *   - «defensa penal como área principal» (/despacho)
  *   - «asistencia a detenidos, audiencias iniciales, preliminares, de
  *      sobreseimiento, juicio oral y recursos de casación» (/despacho)
@@ -529,7 +540,7 @@ export const FOUNDER_PROFILE = {
   imagePenal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
   imageAltText: 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
   description:
-    'Socio director con práctica enfocada en defensa penal en el sur de Honduras: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
+    'Abogado colegiado, socio fundador y director de Pineda y Asociados, con más de 15 años de ejercicio profesional en el sur de Honduras. Práctica enfocada en defensa penal: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
   city: 'Nacaome',
   department: 'Valle',
   cah: process.env.NEXT_PUBLIC_CAH_DANILO || null,
@@ -538,12 +549,12 @@ export const FOUNDER_PROFILE = {
 } as const;
 
 /**
- * Schema.org Person para el socio director (Danilo Pineda Maradiaga).
+ * Schema.org Person para el fundador y socio director (Danilo Pineda Maradiaga).
  *
  * Refuerza E-E-A-T (Experience, Expertise, Authoritativeness,
  * Trustworthiness) para temas YMYL jurídicos: Google exige autor
- * identificable en derecho. Se vincula desde LegalService.employee y
- * BlogPosting.author (vía @id) para alimentar el
+ * identificable en derecho. Se vincula desde Organization.founder,
+ * LegalService.employee y BlogPosting.author (vía @id) para alimentar el
  * Knowledge Graph y posibilitar el panel de conocimiento de la entidad.
  */
 export function founderSchema() {
@@ -619,22 +630,22 @@ export function founderSchema() {
 }
 
 /**
- * Datos de Thania Marlene Paz — socia del bufete.
+ * Datos de Thania Marlene Paz — socia fundadora del bufete.
  *
  * Especialidades verificables (aportadas por el despacho, R4 — no inventar):
  *   - Derecho Administrativo y Servicio Civil
  *   - Derecho de Familia
  *   - Derecho Civil y Notarial
  *   - Derecho Mercantil y Empresarial
- * Condición pública conservada: socia del bufete.
+ * Condición de socia fundadora confirmada por el titular del sitio.
  */
 export const THANIA_PROFILE = {
   name: 'Thania Marlene Paz',
-  jobTitle: 'Abogada · Socia',
+  jobTitle: 'Abogada · Socia fundadora',
   image: '/images/equipo/thania-marlene-paz.webp',
-  imageAltText: 'Thania Marlene Paz, abogada socia de Pineda y Asociados en Nacaome, Valle (Honduras)',
+  imageAltText: 'Thania Marlene Paz, abogada socia fundadora de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
-    'Abogada socia de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+    'Abogada socia fundadora de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
   specialties: [
     'Derecho Administrativo y Servicio Civil',
     'Derecho de Familia',
@@ -649,9 +660,10 @@ export const THANIA_PROFILE = {
 } as const;
 
 /**
- * Schema.org Person para Thania Marlene Paz (socia).
+ * Schema.org Person para Thania Marlene Paz (socia fundadora).
  *
- * Se vincula desde LegalService.employee y BlogPosting.author (categorías de familia, civil,
+ * Se vincula desde Organization.founder, LegalService.employee y
+ * BlogPosting.author (categorías de familia, civil,
  * mercantil, administrativo, propiedad intelectual) vía @id.
  */
 export function thaniaSchema() {

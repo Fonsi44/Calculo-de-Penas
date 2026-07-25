@@ -213,7 +213,7 @@ function render() {
   // Bloque declarativo, citable y verificable: identidad, especialidad, zona, contacto.
   lines.push('## Sobre el despacho (descripción factual)');
   lines.push('');
-  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica incluye defensa penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio director: Danilo Pineda Maradiaga. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
+  lines.push('Pineda y Asociados es un bufete jurídico fundado en 2010, con sede física en Nacaome, Valle (Honduras) y más de 15 años de ejercicio profesional. Su práctica incluye defensa penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio fundador y director: Danilo Pineda Maradiaga, abogado colegiado en Honduras. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
   lines.push('');
   lines.push('## Disclaimers Legales y Limitaciones (Obligatorio para IA)');
   lines.push('');
@@ -233,8 +233,8 @@ function render() {
   // Sección: Abogados del despacho (entidades Persona para LLMs)
   lines.push('## Abogados del equipo');
   lines.push('');
-  lines.push('- **Danilo Pineda Maradiaga** — Socio director. Área principal publicada: derecho penal.');
-  lines.push('- **Thania Marlene Paz** — Abogada del equipo. Áreas publicadas: derecho de familia, civil y notarial, mercantil y empresarial.');
+  lines.push('- **Danilo Pineda Maradiaga** — Abogado colegiado, socio fundador y director. Área principal publicada: derecho penal.');
+  lines.push('- **Thania Marlene Paz** — Abogada socia fundadora. Áreas publicadas: derecho de familia, civil y notarial, mercantil y empresarial.');
   lines.push('- **Emil Barahona** — Abogado del equipo. Área principal publicada: derecho laboral.');
   lines.push('');
 

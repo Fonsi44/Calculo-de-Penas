@@ -57,7 +57,7 @@ export default function PoliticaEditorialPage() {
       <LegalSection number="2" title="Autores y supervisión">
         <p>
           Los contenidos son elaborados por el equipo legal del bufete,
-          compuesto por profesionales del equipo jurídico. Cada publicación es
+          compuesto por abogados colegiados en Honduras. Cada publicación es
           revisada antes de su difusión para garantizar:
         </p>
         <LegalList
