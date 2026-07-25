@@ -1,7 +1,8 @@
 import { Star, ExternalLink } from 'lucide-react';
 import { site } from '@/lib/site';
-import { getGoogleReviews, formatReviewDate, type Review } from '@/lib/google-reviews';
+import { getGoogleReviews, formatReviewDate } from '@/lib/google-reviews';
 import { Section } from '@/components/marketing/section';
+import { TestimonialCard } from '@/components/marketing/testimonial-card';
 
 /**
  * Reseñas de Google Business Profile — sección sutil y compacta.
@@ -80,7 +81,16 @@ export async function GoogleReviews() {
       {/* ── Grid compacto de reseñas ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
         {visible.map((review, idx) => (
-          <ReviewCard key={`${review.authorName}-${idx}`} review={review} />
+          <TestimonialCard
+            key={`${review.authorName}-${idx}`}
+            name={review.authorName}
+            body={review.text}
+            rating={review.rating}
+            date={formatReviewDate(review.publishTime) || review.relativeTime}
+            source="Google"
+            avatarUrl={review.profilePhoto}
+            variant="compact"
+          />
         ))}
       </div>
 
@@ -93,81 +103,6 @@ export async function GoogleReviews() {
           renderizándose abajo (UI), pero sin structured data de rating hasta
           que exista un corpus robusto y auditable de reseñas reales. */}
     </Section>
-  );
-}
-
-/* ================================================================== */
-/*  Tarjeta de reseña individual — compacta y sobria                   */
-/* ================================================================== */
-function ReviewCard({ review }: { review: Review }) {
-  const displayDate = formatReviewDate(review.publishTime) || review.relativeTime;
-  const initials = review.authorName
-    .split(' ')
-    .map((n) => n.charAt(0).toUpperCase())
-    .slice(0, 2)
-    .join('');
-
-  return (
-    <div className="card-premium p-4 sm:p-5 flex flex-col h-full">
-      {/* Estrellas pequeñas */}
-      <div
-        className="flex items-center gap-0.5 mb-2.5"
-        role="img"
-        aria-label={`${review.rating} de 5 estrellas`}
-      >
-        {[1, 2, 3, 4, 5].map((i) => (
-          <Star
-            key={i}
-            size={12}
-            className={
-              i <= review.rating ? 'fill-accent text-accent' : 'fill-border text-border'
-            }
-            aria-hidden="true"
-          />
-        ))}
-      </div>
-
-      {/* Texto de la reseña — extracto elegante */}
-      {review.text ? (
-        <p className="text-sm text-text-secondary leading-relaxed text-pretty flex-1 line-clamp-4">
-          &ldquo;{review.text}&rdquo;
-        </p>
-      ) : (
-        // Reseña solo con valoración (sin comentario escrito): placeholder sutil
-        // para que la tarjeta mantenga el mismo peso visual que las demás y no
-        // parezca un hueco roto. Google devuelve reseñas con estrellas pero sin
-        // texto; las mostramos igual para completar la fila de 3 en desktop.
-        <p className="text-sm text-text-muted italic flex-1">
-          Valoración solo con estrellas, sin comentario escrito.
-        </p>
-      )}
-
-      {/* Autor — avatar pequeño + nombre + fecha discreta */}
-      <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-border-light">
-        {review.profilePhoto ? (
-          <div className="w-9 h-9 rounded-full overflow-hidden border border-border-light flex-shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={review.profilePhoto}
-              alt={review.authorName}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-        ) : (
-          <div className="w-9 h-9 rounded-full bg-primary/8 text-primary border border-primary/15 flex items-center justify-center flex-shrink-0 text-xs font-extrabold">
-            {initials}
-          </div>
-        )}
-        <div className="min-w-0">
-          <p className="font-bold text-sm text-text leading-tight truncate">
-            {review.authorName}
-          </p>
-          <p className="text-xxs text-text-muted mt-0.5">{displayDate}</p>
-        </div>
-      </div>
-    </div>
   );
 }
 
