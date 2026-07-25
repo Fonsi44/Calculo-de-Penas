@@ -718,17 +718,18 @@ pendientes de tratamiento separado. Sin push.
 
 **Commits locales atómicos:** `7757396d`, `162e232c`, `64a0ab42`,
 `92031bf3`, `9cbc9c0f`, `00b8c44f`, `804b717e`, `6dcfe3fd`,
-`4ccf5fe2`, `902be8ea`.
+`4ccf5fe2`, `902be8ea`, `084490da`.
 
 **Validación local posterior:**
 
 - `npm run lint`: 0 errores; 58 warnings preexistentes fuera del alcance;
 - `npm run typecheck`: OK;
-- `npm run test`: 79 archivos y 1.493 pruebas correctas;
+- `npm run test`: 79 archivos y 1.499 pruebas correctas;
 - `ENABLE_INDEXNOW_SUBMIT=false npm run build`: build de producción correcto,
   356 páginas generadas e IndexNow solo en dry-run;
-- `npm run validar:meta-seo`: 18/18 rutas correctas, 0 errores y 0
-  advertencias sobre la salida compilada real;
+- `npm run validar:meta-seo`: 221/221 rutas públicas correctas, 0 errores y
+  0 advertencias; 200 HTML prerenderizados, 21 rutas dinámicas de blog y 212
+  URLs canónicas contrastadas con el sitemap;
 - `node scripts/validate-jsonld.mjs`: 8/8 rutas correctas;
 - `node scripts/seo-indexability-audit.mjs`: 0 errores y 0 warnings;
 - `npm run analytics:audit`: 9/9 controles correctos;
@@ -748,12 +749,15 @@ con los CTA inline, quedan instrumentados.
 
 **Metadata compilada:** el auditor anterior comparaba copias manuales de
 titles y descriptions, por lo que podía quedar verde aunque el HTML real
-incumpliera los límites. Ahora lee los archivos prerenderizados de `.next` y
-la función dinámica del hub de blog, exige una única etiqueta por campo,
-canonical exacta y política de robots coherente. Al aplicarlo detectó y
-permitió corregir el title real de la home (63 → 54 caracteres) y la
-description de servicios (165 → 153 caracteres). Resultado final: 18/18 rutas
-de control sin incidencias.
+incumpliera los límites. Ahora descubre todos los HTML públicos de `.next`,
+añade el hub y las 20 categorías dinámicas, exige una única etiqueta por campo,
+valida longitudes, robots y coherencia canonical/sitemap, y excluye únicamente
+la intranet protegida. Al aplicarlo permitió corregir el title real de la home
+(63 → 54 caracteres), la description de servicios (165 → 153), seis
+descripciones de artículos, títulos sociales de subáreas penales/España y tres
+categorías. Las tres consolidaciones canónicas de artículos locales solo se
+aceptan porque sus URLs no están en el sitemap y sus landings destino sí.
+Resultado final: 221/221 rutas sin incidencias.
 
 **Datos live:** `seo:doctor` mantuvo 17 OK, 1 ERROR (gcloud CLI no instalada) y
 5 pendientes; GSC/GA4 siguen accesibles por OAuth. `seo:collect` extrajo GSC,
