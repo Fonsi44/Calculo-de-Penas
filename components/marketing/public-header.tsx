@@ -46,11 +46,11 @@ export function PublicHeader() {
     >
       {/* Barra superior con datos de contacto */}
       <div className="hidden md:block bg-primary-dark/80 border-b border-primary-light/20">
-        <div className="max-w-7xl mx-auto px-4 py-1 flex items-center justify-between text-xs">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
               href={telHref()}
-              title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
+              title="Llamar a Pineda y Asociados"
               className="flex items-center gap-1.5 hover:text-accent transition-colors focus-visible:outline-none"
             >
               <Phone size={12} aria-hidden="true" />
@@ -65,7 +65,7 @@ export function PublicHeader() {
       </div>
 
       {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1.5 md:py-2 flex items-center gap-2">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1 md:py-1.5 flex items-center gap-1">
         <Link
           href="/"
           className="group flex items-center gap-2 focus-visible:outline-none flex-shrink-0 cursor-pointer"
