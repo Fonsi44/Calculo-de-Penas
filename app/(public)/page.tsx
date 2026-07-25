@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   ArrowRight,
   Phone,
-  Clock,
   Gavel,
   Award,
   BriefcaseBusiness,
@@ -20,7 +19,6 @@ import { site, FOUNDER_PROFILE, telHref, whatsappHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { Card } from '@/components/ui/card';
 import { GoogleReviews } from '@/components/marketing/google-reviews';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
@@ -31,7 +29,6 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
-import { IconBadge } from '@/components/marketing/icon-badge';
 import { ProblemSelector } from '@/components/marketing/problem-selector';
 import { TrustLimits } from '@/components/marketing/trust-limits';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
