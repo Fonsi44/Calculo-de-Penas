@@ -13,6 +13,7 @@ import { hubMigrantes, type AreaBase } from '@/data/areas-juridicas';
 import { areaSchemas, migrantesHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { HubFaq } from '@/components/marketing/hub-faq';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -143,25 +144,13 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
         </div>
       </Section>
 
-      <Section spacing="md" id="preguntas-frecuentes">
-        <SectionHeader
-          eyebrow="Preguntas frecuentes"
-          title={`Dudas comunes sobre ${subarea.titulo.toLowerCase()}`}
-          align="center"
-        />
-        <div className="max-w-3xl mx-auto space-y-3">
-          {subarea.faqs.map((faq, i) => (
-            <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
-                {faq.pregunta}
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {faq.respuesta}
-              </p>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      {/* FAQ — acordeón canónico HubFaq (Hito 9.6). */}
+      <HubFaq
+        faqs={subarea.faqs}
+        url={`${site.url}/hondurenos-en-espana/${slug}`}
+        eyebrow="Preguntas frecuentes"
+        title={`Dudas comunes sobre ${subarea.titulo.toLowerCase()}`}
+      />
 
       {related.length > 0 && (
         <Section background="muted" spacing="md">

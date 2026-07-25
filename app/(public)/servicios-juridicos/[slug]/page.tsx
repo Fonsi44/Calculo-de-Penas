@@ -16,6 +16,7 @@ import { areasGenerales, getAreaBySlug, type AreaStandalone } from '@/data/areas
 import { areaHref, areaSchemas } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { HubFaq } from '@/components/marketing/hub-faq';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
@@ -396,25 +397,15 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
         </div>
       </Section>
 
-      <Section spacing="md" id="preguntas-frecuentes">
-        <SectionHeader
-          eyebrow="Preguntas frecuentes"
-          title={`Dudas comunes sobre ${area.titulo.toLowerCase()}`}
-          align="center"
-        />
-        <div className="max-w-3xl mx-auto space-y-3">
-          {area.faqs.map((faq, i) => (
-            <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
-                {faq.pregunta}
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {faq.respuesta}
-              </p>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      {/* FAQ — acordeón canónico HubFaq (Hito 9.6).
+          Reemplaza cards estáticas border-l-accent por el patrón <details>
+          unificado con JSON-LD FAQPage incrustado. */}
+      <HubFaq
+        faqs={area.faqs}
+        url={`${site.url}/servicios-juridicos/${slug}`}
+        eyebrow="Preguntas frecuentes"
+        title={`Dudas comunes sobre ${area.titulo.toLowerCase()}`}
+      />
 
       {/* CLUSTER GEOGRÁFICO (Jul 2026, depurado): conecta cada servicio con
           3 ciudades principales (no 8, evita dilución de autoridad). */}

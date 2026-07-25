@@ -13,6 +13,7 @@ import { hubPenal, type AreaBase } from '@/data/areas-juridicas';
 import { areaSchemas, penalHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { HubFaq } from '@/components/marketing/hub-faq';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategory, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -140,25 +141,13 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
         </div>
       </Section>
 
-      <Section spacing="md" id="preguntas-frecuentes">
-        <SectionHeader
-          eyebrow="Preguntas frecuentes"
-          title={`Dudas comunes sobre ${grupo.titulo.toLowerCase()}`}
-          align="center"
-        />
-        <div className="max-w-3xl mx-auto space-y-3">
-          {grupo.faqs.map((faq, i) => (
-            <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">
-                {faq.pregunta}
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {faq.respuesta}
-              </p>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      {/* FAQ — acordeón canónico HubFaq (Hito 9.6). */}
+      <HubFaq
+        faqs={grupo.faqs}
+        url={`${site.url}/derecho-penal/${slug}`}
+        eyebrow="Preguntas frecuentes"
+        title={`Dudas comunes sobre ${grupo.titulo.toLowerCase()}`}
+      />
 
       <Section background="muted" spacing="md">
         <SectionHeader
