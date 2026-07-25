@@ -148,6 +148,93 @@ export function trackScrollDepth(percent: number) {
 }
 
 // ---------------------------------------------------------------------------
+// Eventos de conversión FASE 2 (páginas centrales).
+// Reglas (AGENTS.md §3, §6): sin PII, sin descripciones del caso, sin nombre,
+// correo o teléfono en parámetros. Los parámetros son solo identificadores
+// estables (ruta, categoría, sección). Se excluyen de preview e intranet vía
+// isAnalyticsExcludedPath, que ya filtra /preview y /intranet.
+// ---------------------------------------------------------------------------
+
+/** Vista del formulario de consulta (cuando el bloque es visible). */
+export function trackConsultationFormView(ruta?: string) {
+  trackEvent('consultation_form_view', { value: 1, ...(ruta ? { ruta: ruta.slice(0, 100) } : {}) });
+}
+
+/** Inicio de interacción con el formulario de consulta (primer campo editado). */
+export function trackConsultationFormStart(ruta?: string) {
+  trackEvent('consultation_form_start', { value: 1, ...(ruta ? { ruta: ruta.slice(0, 100) } : {}) });
+}
+
+/** Error de validación del formulario de consulta.
+ *  NO incluye el valor del campo (puede ser PII): solo el identificador del
+ *  campo y el tipo de error. */
+export function trackConsultationFormError(params?: { campo?: string; tipo?: string; ruta?: string }) {
+  trackEvent('consultation_form_error', {
+    value: 1,
+    ...(params?.campo ? { campo: params.campo.slice(0, 40) } : {}),
+    ...(params?.tipo ? { tipo: params.tipo.slice(0, 40) } : {}),
+    ...(params?.ruta ? { ruta: params.ruta.slice(0, 100) } : {}),
+  });
+}
+
+/** Clic en un enlace de mapa o indicaciones (Google Maps, Waze, etc.). */
+export function trackClickMaps(origen?: string) {
+  trackEvent('click_maps', { value: 1, ...(origen ? { origen: origen.slice(0, 40) } : {}) });
+}
+
+/** Vista de una página o tarjeta de servicio. */
+export function trackViewService(servicio?: string) {
+  trackEvent('view_service', { value: 1, ...(servicio ? { servicio: servicio.slice(0, 60) } : {}) });
+}
+
+/** Vista de la sección de equipo. */
+export function trackViewTeamSection(ruta?: string) {
+  trackEvent('view_team_section', { value: 1, ...(ruta ? { ruta: ruta.slice(0, 100) } : {}) });
+}
+
+// ---------------------------------------------------------------------------
+// Eventos FASE 4 (páginas locales y Honduras–España).
+// Reglas (AGENTS.md §3, §6): sin PII. Los parámetros son solo identificadores
+// estables (slug de localidad o servicio, categoría de CTA). Nunca se envían
+// nombre, correo, teléfono, ciudad exacta del cliente, descripción del caso,
+// documentos ni datos de menores. Se excluyen de preview e intranet vía
+// isAnalyticsExcludedPath (ya filtra /preview, /intranet, /api, /admin).
+// ---------------------------------------------------------------------------
+
+/** Vista de una página local (/abogados-en-{slug}).
+ *  @param locationSlug Slug de la localidad (p. ej. "choluteca"). Es una
+ *  categoría, no la dirección o ciudad exacta del usuario. */
+export function trackViewLocalPage(locationSlug?: string) {
+  trackEvent('view_local_page', {
+    value: 1,
+    ...(locationSlug ? { location_slug: locationSlug.slice(0, 60) } : {}),
+  });
+}
+
+/** Vista de una subpágina/servicio del hub Honduras–España.
+ *  @param serviceSlug Slug del servicio (p. ej. "poderes"). */
+export function trackViewSpainService(serviceSlug?: string) {
+  trackEvent('view_spain_service', {
+    value: 1,
+    ...(serviceSlug ? { service_slug: serviceSlug.slice(0, 60) } : {}),
+  });
+}
+
+/** Clic en un CTA de una página local.
+ *  @param location Slug de la localidad de origen del CTA (categoría). */
+export function trackCtaLocal(location?: string) {
+  trackEvent('cta_local', {
+    value: 1,
+    ...(location ? { cta_location: location.slice(0, 60) } : {}),
+  });
+}
+
+/** Clic en un CTA del hub Honduras–España. Sin parámetros identificadores. */
+export function trackCtaSpain() {
+  trackEvent('cta_spain', { value: 1 });
+}
+
+// ---------------------------------------------------------------------------
 // Diagnóstico local (development únicamente)
 // ---------------------------------------------------------------------------
 

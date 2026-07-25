@@ -26,9 +26,10 @@ export type LandingLocal = {
   ciudad: string;
   /** Departamento al que pertenece */
   departamento: string;
-  /** True si el bufete tiene sede física allí (afecta NAP y schema) */
+  /** True si el bufete tiene sede física allí (afecta NAP y schema).
+   *  Solo Nacaome tiene sedeFisica: true. */
   sedeFisica: boolean;
-  /** Distancia aproximada en km desde la sede en Nacaome */
+  /** Distancia aproximada en km desde la sede en Nacaome. */
   distanciaKm: number;
   /** <title> SEO (≤ 60 chars aprox.). Si se omite, se genera variante por tipo de ciudad. */
   title: string;
@@ -53,7 +54,49 @@ export type LandingLocal = {
   /** Slugs de posts del blog relacionados con la ciudad (categoría/slug)
    *  para enlazado interno bidireccional landing ↔ blog. */
   postsRelacionados?: { categoria: string; slug: string; titulo: string }[];
+  // ─────────────────────────────────────────────────────────────────────
+  // FASE 4 (§5) — Modelo territorial. Campos opcionales que representan de
+  // forma inequívoca que la atención se presta DESDE Nacaome (única sede),
+  // las modalidades posibles y la distancia con fuente verificable.
+  // Los datos visibles y JSON-LD proceden de esta misma fuente (DRY, §2).
+  // ─────────────────────────────────────────────────────────────────────
+  /** Texto corto que describe desde dónde se presta la atención. Por defecto
+   *  "nuestra oficina en Nacaome". Nunca debe sugerir sede fuera de Nacaome. */
+  servedFrom?: string;
+  /** Modalidades de atención reales para esa localidad. */
+  serviceModes?: Array<'office' | 'remote' | 'travel'>;
+  /** Tiempo de viaje aproximado en texto (p. ej. "45–60 min"). Opcional. */
+  approximateTravelTime?: string;
+  /** Fuente cartográfica o institucional de la distancia (p. ej. "Google Maps",
+   *  "Rome2Rio/Travelmath"). Siempre interpretar como APROXIMADA. */
+  distanceSource?: string;
+  /** Fecha ISO (YYYY-MM-DD) en que se comprobó la distancia. */
+  distanceCheckedAt?: string;
+  /** Contexto local real que diferencia la página (actividad económica
+   *  predominante respaldada, frontera, puerto, etc.). Sin folclore inventado. */
+  localContext?: string[];
+  /** Instituciones reales con competencia en la zona, sin atribuirles
+   *  responsabilidades incorrectas. */
+  institutions?: Array<{ name: string; role: string }>;
 };
+
+/**
+ * Aviso orientativo reutilizable sobre distancias y tiempos por carretera.
+ * Texto coherente con /como-llegar y las landings locales, para evitar
+ * falsa precisión (FASE 4 §6).
+ */
+export const DISTANCIA_APROX_NOTA =
+  'Las distancias y tiempos son aproximados por carretera y pueden variar según el punto de salida, la ruta elegida, el tráfico y las condiciones de la vía.';
+
+/**
+ * Sede canónica del despacho: única oficina física. Usado por helpers,
+ * wrappers y schemas para no dispersar la fuente de verdad de la sede.
+ */
+export const SEDE_CANONICA = {
+  ciudad: 'Nacaome',
+  departamento: 'Valle',
+  descripcion: 'nuestra oficina en Nacaome',
+} as const;
 
 export const landingsLocales: LandingLocal[] = [
   {
@@ -120,6 +163,20 @@ export const landingsLocales: LandingLocal[] = [
       },
     ],
     geo: { lat: 13.53, lng: -87.48 },
+    // FASE 4 (§5) — Territorial: Nacaome es la única sede física del despacho.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['office', 'remote'],
+    distanceSource: 'Sede del despacho (cabecera de Valle)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Cabecera del departamento de Valle',
+      'Centro judicial y comercial del sur de Honduras',
+      'Conexión por carretera con San Lorenzo, Amapala y Goascorán',
+    ],
+    institutions: [
+      { name: 'Juzgados de Letras de Valle', role: 'Sede judicial departamental con competencia en civil, penal, familia y laboral' },
+      { name: 'Municipalidad de Nacaome', role: 'Gobierno local' },
+    ],
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-nacaome', titulo: 'Abogados en Nacaome: cómo elegir el despacho adecuado' },
       { categoria: 'practica-legal', slug: 'tramites-legales-nacaome', titulo: 'Trámites legales en Nacaome, Valle' },
@@ -130,7 +187,9 @@ export const landingsLocales: LandingLocal[] = [
     ciudad: 'Choluteca',
     departamento: 'Choluteca',
     sedeFisica: false,
-    distanciaKm: 52,
+    // FASE 4 (§6) — Unificado a 55 km para coherencia con la FAQ interna y con
+    // lib/legal-review.ts (verificación Rome2Rio/Travelmath). Antes 52 km.
+    distanciaKm: 55,
     // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
     title: 'Abogados en Choluteca | Consulta Gratuita · 15+ Años en el Sur',
     description:
@@ -167,7 +226,7 @@ export const landingsLocales: LandingLocal[] = [
       {
         pregunta: '¿Tienen oficina en Choluteca?',
         respuesta:
-          'Nuestra sede física está en Nacaome, a unos 50 km de Choluteca. Atendemos a clientes de Choluteca desde esa oficina y coordinamos las diligencias y audiencias necesarias en los juzgados de Choluteca.',
+          'Nuestra sede física está en Nacaome, a unos 55 km de Choluteca por la carretera Panamericana CA-1. Atendemos a clientes de Choluteca desde esa oficina y coordinamos las diligencias y audiencias necesarias en los juzgados de Choluteca.',
       },
       {
         pregunta: '¿Atienden casos penales en Choluteca?',
@@ -186,6 +245,21 @@ export const landingsLocales: LandingLocal[] = [
       },
     ],
     geo: { lat: 13.3, lng: -87.17 },
+    // FASE 4 (§5) — Territorial: Choluteca se atiende DESDE Nacaome, sin sede local.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    approximateTravelTime: 'aprox. 60–75 min por la CA-1',
+    distanceSource: 'Carretera Panamericana CA-1 (Rome2Rio/Travelmath)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Ciudad más poblada del sur de Honduras',
+      'Centro comercial y aduanero de la región',
+      'Cercanía con la frontera de Guasaule (Nicaragua)',
+    ],
+    institutions: [
+      { name: 'Juzgados de Letras de Choluteca', role: 'Sede judicial departamental con competencia en la zona' },
+      { name: 'Aduana de Guasaule', role: 'Paso fronterizo con Nicaragua; competencia en trámites aduaneros' },
+    ],
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-choluteca', titulo: 'Abogados en Choluteca: guía para elegir despacho' },
     ],
@@ -251,6 +325,22 @@ export const landingsLocales: LandingLocal[] = [
       },
     ],
     geo: { lat: 13.42, lng: -87.45 },
+    // FASE 4 (§5) — Territorial: San Lorenzo, principal puerto del sur, se
+    // atiende DESDE Nacaome. Sin sede local.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    approximateTravelTime: 'aprox. 20–30 min',
+    distanceSource: 'Carretera del Litoral Atlántico/CA-1 (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Principal puerto marítimo del sur de Honduras',
+      'Zona comercial dinámica del departamento de Valle',
+      'Actividad de importación, pesca y Zonas Libres',
+    ],
+    institutions: [
+      { name: 'Autoridad Marítima Portuaria', role: 'Competencia en operaciones del puerto de San Lorenzo' },
+      { name: 'Juzgados de Letras de Valle', role: 'Sede judicial con competencia en la zona' },
+    ],
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-san-lorenzo', titulo: 'Abogados en San Lorenzo: asesoría legal en el puerto' },
     ],
@@ -283,6 +373,22 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
     ],
     geo: { lat: 13.58, lng: -87.73 },
+    // FASE 4 (§5) — Territorial: Goascorán, zona fronteriza con El Salvador,
+    // se atiende DESDE Nacaome. Sin sede local.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    approximateTravelTime: 'aprox. 40–55 min',
+    distanceSource: 'Ruta por carretera departamental (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Municipio fronterizo con El Salvador (Puente La Amistad)',
+      'Tránsito comercial y familiar transfronterizo',
+      'Actividad agrícola y comercial de Valle',
+    ],
+    institutions: [
+      { name: 'Puente La Amistad', role: 'Paso fronterizo Honduras–El Salvador' },
+      { name: 'Juzgados de Letras de Valle', role: 'Sede judicial con competencia en la zona' },
+    ],
     // Posts de la región de Valle (Nacaome, sede) relevantes para Goascorán.
     // La ciudad no tiene post dedicado propio; estos slugs ya existen en DB y
     // son aplicables a toda la zona sur del departamento de Valle.
@@ -319,6 +425,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cuánto cuesta una consulta jurídica?', respuesta: 'La primera consulta de evaluación no tiene costo. Tras analizar su caso, le entregamos un presupuesto por escrito para que decida sin compromiso.' },
     ],
     geo: { lat: 13.59, lng: -87.36 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: 'Carretera departamental (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-pespire-choluteca', titulo: 'Abogados en Pespire: asesoría legal en 4 áreas' },
     ],
@@ -351,6 +461,22 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Qué áreas del derecho cubren?', respuesta: 'Derecho penal, de familia, laboral, civil, mercantil y aduanero. Somos un bufete multidisciplinario del sur de Honduras.' },
     ],
     geo: { lat: 13.43, lng: -86.82 },
+    // FASE 4 (§5) — Territorial: San Marcos de Colón, frontera con Nicaragua,
+    // se atiende DESDE Nacaome. Sin sede local.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    approximateTravelTime: 'aprox. 90 min por la CA-1',
+    distanceSource: 'Carretera Panamericana CA-1 (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Municipio fronterizo con Nicaragua (El Espino)',
+      'Actividad agrícola, ganadera y comercial',
+      'Tránsito y comercio transfronterizo',
+    ],
+    institutions: [
+      { name: 'Frontera de El Espino', role: 'Paso fronterizo con Nicaragua' },
+      { name: 'Juzgados de Letras de Choluteca', role: 'Sede judicial departamental con competencia en la zona' },
+    ],
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-san-marcos-de-colon-choluteca', titulo: 'Abogados en San Marcos de Colón: defensa y asesoría' },
     ],
@@ -383,6 +509,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Marcovia, Choluteca, Pespire, San Marcos de Colón y demás municipios del departamento desde nuestra sede en Nacaome.' },
     ],
     geo: { lat: 13.28, lng: -87.31 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: 'Carretera Panamericana CA-1 (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-marcovia-choluteca', titulo: 'Abogados en Marcovia: guía legal completa' },
     ],
@@ -415,6 +545,21 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cuánto cuesta una consulta jurídica?', respuesta: 'La primera consulta de evaluación no tiene costo. Tras analizar su caso, le entregamos un presupuesto por escrito para que decida sin compromiso.' },
     ],
     geo: { lat: 13.12, lng: -87.01 },
+    // FASE 4 (§5) — Territorial: El Triunfo, sur de Choluteca cercano a la
+    // frontera con Nicaragua, se atiende DESDE Nacaome. Sin sede local.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    approximateTravelTime: 'aprox. 75–90 min por la CA-1',
+    distanceSource: 'Carretera Panamericana CA-1 (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Sur del departamento de Choluteca',
+      'Cercano a la frontera con Nicaragua',
+      'Actividad agrícola y comercial',
+    ],
+    institutions: [
+      { name: 'Juzgados de Letras de Choluteca', role: 'Sede judicial departamental con competencia en la zona' },
+    ],
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
       { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
@@ -449,6 +594,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Ofrecen primera consulta sin costo?', respuesta: 'Sí. Realizamos una primera evaluación de su caso sin costo y le entregamos un presupuesto por escrito antes de iniciar cualquier gestión.' },
     ],
     geo: { lat: 13.26, lng: -87.14 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera departamental (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué Hacer Si Me Detienen en Honduras? Guía Legal Completa' },
       { categoria: 'derecho-laboral', slug: 'despido-laboral-honduras-derechos', titulo: 'Despido laboral en Honduras: derechos y cómo reclamar' },
@@ -483,6 +632,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Orocuina, Choluteca, Marcovia, El Triunfo, Namasigüe, Pespire, San Marcos de Colón y demás municipios del departamento.' },
     ],
     geo: { lat: 13.48, lng: -87.07 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera departamental (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
       { categoria: 'derecho-laboral', slug: 'derechos-laborales-basicos-honduras', titulo: 'Derechos laborales básicos en Honduras: guía para trabajadores' },
@@ -517,6 +670,22 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Cómo solicito una consulta desde Amapala?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Amapala. Evaluamos su caso y le damos un presupuesto por escrito sin compromiso.' },
     ],
     geo: { lat: 13.3, lng: -87.65 },
+    // FASE 4 (§5) — Territorial: Amapala (Isla del Tigre, Golfo de Fonseca),
+    // municipio insular de Valle. Se atiende DESDE Nacaome; el acceso combina
+    // carretera y vía marítima, por lo que la modalidad predominante es remota.
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    approximateTravelTime: 'varía: incluye tramo terrestre y acceso a la isla',
+    distanceSource: 'Distancia por carretera + acceso insular (Google Maps)',
+    distanceCheckedAt: '2026-07-25',
+    localContext: [
+      'Municipio insular (Isla del Tigre) en el Golfo de Fonseca',
+      'Puerto histórico y actividad pesquera y turística',
+      'Acceso combinado terrestre y marítimo',
+    ],
+    institutions: [
+      { name: 'Juzgados de Letras de Valle', role: 'Sede judicial con competencia en la zona' },
+    ],
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'abogados-en-amapala-valle', titulo: 'Abogados en Amapala: guía legal completa' },
     ],
@@ -549,6 +718,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden casos penales urgentes en Langue?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
     ],
     geo: { lat: 13.62, lng: -87.65 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera departamental de Valle (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
       { categoria: 'derecho-de-familia', slug: 'custodia-hijos-honduras-juez', titulo: 'Custodia de Hijos en Honduras: Requisitos, Tipos y Cómo solicitarla' },
@@ -587,6 +760,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la carretera del Litoral Pacífico o el casco urbano de Caridad, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.74, lng: -87.46 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera del Litoral Pacífico (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'cuando-necesito-abogado-penalista-honduras', titulo: '¿Cuándo necesito un abogado penalista en Honduras?' },
     ],
@@ -619,6 +796,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la zona fronteriza de Alianza o el paso hacia Goascorán, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.78, lng: -87.71 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera departamental de Valle (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué hacer si me detienen en Honduras?' },
     ],
@@ -651,6 +832,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en el sur de Choluteca o la ruta hacia San Marcos de Colón, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.20, lng: -87.15 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera departamental (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'defensa-penal-honduras', titulo: 'Defensa Penal en Honduras: Guía de las Primeras Horas' },
     ],
@@ -683,6 +868,10 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la zona oriental de Choluteca o la ruta a Pespiré, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.45, lng: -87.30 },
+    servedFrom: SEDE_CANONICA.descripcion,
+    serviceModes: ['remote', 'office', 'travel'],
+    distanceSource: "Carretera departamental (Google Maps)",
+    distanceCheckedAt: '2026-07-25',
     postsRelacionados: [
       { categoria: 'derecho-penal', slug: 'que-hacer-si-me-detienen-en-honduras', titulo: '¿Qué hacer si me detienen en Honduras?' },
     ],
