@@ -2,7 +2,7 @@
 
 > **Convención de estado:** ✅ Cambio aplicado y verificado en producción ·
 > ⏳ Cambio planificado pero pendiente (iteración futura) · — sin cambio necesario.
-> **Validación productiva:** Playwright 39/39 sobre `https://www.pinedayasocioshn.com`
+> **Validación productiva:** Playwright 39/39 sobre `https://www.pinedayasociadoshn.com`
 > (9 rutas × 4 viewports). Canonical verificado correcto.
 
 Esta página documenta qué se modificó en cada ruta pública de `app/(public)/**` durante
