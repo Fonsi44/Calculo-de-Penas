@@ -159,7 +159,7 @@ const legalConceptEntities: LinkableEntity[] = [
     pattern: /\bpensi[oó]n alimenticia\b/gi,
     href: '/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa',
     anchor: 'pensión alimenticia',
-    weight: 4,
+    weight: 8,
   },
   {
     pattern: /\bliquidaci[oó]n laboral\b/gi,
@@ -171,37 +171,37 @@ const legalConceptEntities: LinkableEntity[] = [
     pattern: /\bprescripci[oó]n de deudas\b/gi,
     href: '/blog/derecho-civil/prescripcion-deudas-plazos-honduras',
     anchor: 'prescripción de deudas',
-    weight: 4,
+    weight: 9,
   },
   {
     pattern: /\bcustodia de (hijos|menores)\b/gi,
     href: '/blog/derecho-de-familia/custodia-hijos-honduras-juez',
     anchor: 'custodia de hijos',
-    weight: 4,
+    weight: 9,
   },
   {
     pattern: /\bdivorcio\b/gi,
     href: '/blog/derecho-de-familia/divorcio-honduras-guia-completa',
     anchor: 'divorcio',
-    weight: 4,
+    weight: 9,
   },
   {
     pattern: /\bdaños y perjuicios\b/gi,
     href: '/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras',
     anchor: 'daños y perjuicios',
-    weight: 4,
+    weight: 9,
   },
   {
     pattern: /\bpoder notarial\b/gi,
     href: '/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita',
     anchor: 'poder notarial',
-    weight: 4,
+    weight: 9,
   },
   {
     pattern: /\bnaturalizaci[oó]n\b/gi,
     href: '/blog/extranjeria-migracion/naturalizacion-nacionalidad-hondurena',
     anchor: 'naturalización',
-    weight: 3,
+    weight: 8,
   },
 ];
 

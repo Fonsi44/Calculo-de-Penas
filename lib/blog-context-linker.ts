@@ -33,7 +33,7 @@ import {
  * Máximo total de enlaces contextuales a insertar en un post.
  * Anti-saturación: Google penaliza el exceso de enlaces internos.
  */
-const MAX_TOTAL_LINKS = 5;
+const MAX_TOTAL_LINKS = 8;
 
 /**
  * Tags HTML cuyo contenido NO debe ser enlazado.
@@ -134,7 +134,7 @@ export function injectContextLinks(html: string, options?: ContextLinkOptions): 
   const usedHrefs = new Set<string>();
 
   for (let i = 0; i < tokens.length && linksInserted < maxLinks; i++) {
-    const token = tokens[i];
+    let token = tokens[i];
 
     // Si es una etiqueta, actualizar el stack y continuar.
     if (token.startsWith('<')) {
@@ -164,9 +164,9 @@ export function injectContextLinks(html: string, options?: ContextLinkOptions): 
       const { result, linked } = linkFirstOccurrence(token, entity);
       if (linked) {
         tokens[i] = result;
+        token = result;
         usedHrefs.add(entity.href);
         linksInserted++;
-        break; // Un enlace por text node.
       }
     }
   }
