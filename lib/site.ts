@@ -91,6 +91,27 @@ export function normalizeSiteOrigin(raw: string | null | undefined): string {
   return CANONICAL_SITE_ORIGIN;
 }
 
+export function resolveAnalyticsProviderConfig(
+  rawGaId: string | null | undefined,
+  rawGtmId: string | null | undefined,
+): { gaId: string | null; gtmId: string | null } {
+  const gaId = rawGaId?.trim() || null;
+  const gtmId = rawGtmId?.trim() || null;
+
+  if (gaId && gtmId) {
+    throw new Error(
+      'NEXT_PUBLIC_GA_ID y NEXT_PUBLIC_GTM_ID son mutuamente excluyentes; configure solo uno.',
+    );
+  }
+
+  return { gaId, gtmId };
+}
+
+const analyticsProviderConfig = resolveAnalyticsProviderConfig(
+  process.env.NEXT_PUBLIC_GA_ID,
+  process.env.NEXT_PUBLIC_GTM_ID,
+);
+
 /**
  * Formatea un número E.164 (+50495363724) a display legible (+504 9536-3724).
  * Fuente única para phoneDisplay y whatsappDisplay → NAP coherente en todo el
@@ -194,9 +215,9 @@ export const site = {
   /** Si true, todo el sitio emite noindex,nofollow y bloquea rastreadores. */
   noindex: noindexActive,
   /** ID GA4 (opcional) — tracking frontend. Si se configura GTM, GA4 se carga vía GTM en su lugar. */
-  gaId: process.env.NEXT_PUBLIC_GA_ID ?? null,
+  gaId: analyticsProviderConfig.gaId,
   /** ID Google Tag Manager (opcional) — si está presente, reemplaza la carga directa de gtag.js. Formato GTM-XXXXXX. */
-  gtmId: process.env.NEXT_PUBLIC_GTM_ID ?? null,
+  gtmId: analyticsProviderConfig.gtmId,
   /** ID Facebook Pixel (opcional) — solo activar con consentimiento de cookies. Sin banner de consentimiento no se recomienda activar en tráfico UE. */
   fbPixelId: process.env.NEXT_PUBLIC_FB_PIXEL_ID ?? null,
   /** ID Microsoft Clarity (opcional). */

@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 import {
   isAnalyticsExcludedPath,
-  maskMeasurementId,
   debugAnalytics,
   isValidGaMeasurementId,
   isValidGtmId,
