@@ -20,6 +20,19 @@ import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
+// FASE 3 — bloques de detalle para el hub penal.
+import {
+  SituacionesHabituales,
+  DocumentChecklist,
+  ProcessList,
+  InstitutionsBlock,
+  FactorsThatVary,
+  CommonMistakes,
+  SourcesAndDisclaimer,
+  ContextualCta,
+  ViewServiceTracker,
+} from '@/components/marketing/service-detail-blocks';
+import { LegalReviewNotice } from '@/components/marketing/legal-review-notice';
 
 export const metadata: Metadata = buildMetadata({
   // 45 chars. Antes 63 (se truncaba).
@@ -204,7 +217,7 @@ const PRIORITY_PENAL_SLUGS = [
           <AnswerBlock
             eyebrow="Defensa penal en el sur de Honduras"
             question="¿Qué hace Pineda y Asociados en defensa penal?"
-            answer="Pineda y Asociados es un bufete jurídico en Nacaome, Valle (Honduras), especializado en defensa penal en el departamento de Valle, Choluteca y el sur de Honduras. Atiende detenciones, audiencias iniciales, medidas cautelares, juicio oral y recursos conforme al Código Penal Decreto 130-2017 y reformas vigentes. Atención de lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724. Contacte de inmediato si usted o un familiar están detenidos, han recibido citación judicial o enfrentan una investigación: la Constitución de Honduras garantiza el derecho a defensa técnica desde el primer momento y a ser presentado ante un juez en 24 horas."
+            answer={`Pineda y Asociados es un bufete jurídico en Nacaome, Valle (Honduras), especializado en defensa penal en el departamento de Valle, Choluteca y el sur de Honduras. Atiende detenciones, audiencias iniciales, medidas cautelares, juicio oral y recursos conforme al Código Penal Decreto 130-2017 y reformas vigentes. Atención de ${site.hoursShort}. Contacto: WhatsApp ${site.whatsappDisplay}. Contacte de inmediato si usted o un familiar están detenidos, han recibido citación judicial o enfrentan una investigación: la Constitución de Honduras garantiza el derecho a defensa técnica desde el primer momento y a ser presentado ante un juez en 24 horas.`}
           >
             <p className="text-sm text-text-secondary leading-relaxed text-pretty">
               ¿Quiere entender el proceso penal paso a paso? Consulte nuestra{' '}
@@ -271,6 +284,61 @@ const PRIORITY_PENAL_SLUGS = [
           </div>
         </div>
       </Section>
+
+      {/* FASE 3 — bloques de detalle del hub penal (datos en hubPenal).
+          El proceso penal detallado (etapas/riesgos) se mantiene en el bloque
+          existente más abajo; aquí añademos situaciones, documentos, factores
+          y errores que no estaban. */}
+      {hubPenal.situacionesHabituales && hubPenal.situacionesHabituales.length > 0 ? (
+        <SituacionesHabituales
+          items={hubPenal.situacionesHabituales}
+          eyebrow="Cuándo acudir"
+          title="Situaciones en las que intervenimos"
+        />
+      ) : null}
+
+      {hubPenal.documentosIniciales && hubPenal.documentosIniciales.items.length > 0 ? (
+        <DocumentChecklist
+          items={hubPenal.documentosIniciales.items}
+          nota={hubPenal.documentosIniciales.nota}
+          eyebrow="Prepárese"
+          title="Documentos útiles para una primera revisión penal"
+        />
+      ) : null}
+
+      {hubPenal.proceso && hubPenal.proceso.pasos.length > 0 ? (
+        <ProcessList
+          pasos={hubPenal.proceso.pasos}
+          intro={hubPenal.proceso.intro}
+          nota={hubPenal.proceso.nota}
+          eyebrow="Cómo trabajamos"
+          title="Recorrido habitual de la defensa penal"
+        />
+      ) : null}
+
+      {hubPenal.autoridades && hubPenal.autoridades.length > 0 ? (
+        <InstitutionsBlock
+          items={hubPenal.autoridades}
+          eyebrow="Autoridades e instituciones"
+          title="Ante quién puede actuar el despacho"
+        />
+      ) : null}
+
+      {hubPenal.factoresQueVarian && hubPenal.factoresQueVarian.length > 0 ? (
+        <FactorsThatVary
+          items={hubPenal.factoresQueVarian}
+          eyebrow="Factores que pueden variar"
+          title="Qué puede influir en su caso"
+        />
+      ) : null}
+
+      {hubPenal.erroresFrecuentes && hubPenal.erroresFrecuentes.length > 0 ? (
+        <CommonMistakes
+          items={hubPenal.erroresFrecuentes}
+          eyebrow="Errores frecuentes"
+          title="Qué conviene evitar"
+        />
+      ) : null}
 
       <Section background="muted" spacing="md">
         <SectionHeader
@@ -508,11 +576,34 @@ const PRIORITY_PENAL_SLUGS = [
         </div>
       </Section>
 
+      {/* FASE 3 — fuentes generales + aviso orientativo (§13). No "Revisado por". */}
+      <SourcesAndDisclaimer fuentes={hubPenal.fuentesGenerales} />
+
+      {/* FASE 3 — CTA contextual penal (§6/§15). */}
+      {hubPenal.ctaContextual ? (
+        <ContextualCta
+          href={hubPenal.ctaContextual.href}
+          label={hubPenal.ctaContextual.label}
+          eyebrow="Atención penal"
+          title="¿Necesita defensa penal? Cuéntenos su caso"
+          secondaryHref="/despacho"
+          secondaryLabel="Conozca el despacho"
+        />
+      ) : (
+        <ConsultationCTA />
+      )}
+
+      {/* FASE 3 — atribución de revisión (no renderiza en pending). */}
+      <Container>
+        <LegalReviewNotice path="/derecho-penal" />
+      </Container>
+
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
 
-      <ConsultationCTA />
+      {/* FASE 3 — view_service al montar (sin PII; excluido en preview/intranet). */}
+      <ViewServiceTracker serviceSlug="derecho-penal" />
     </>
   );
 }

@@ -30,7 +30,67 @@ export type FaqItem = {
   respuesta: string;
 };
 
-export type AreaBase = {
+/**
+ * Campos opcionales de detalle (FASE 3 — optimización de servicios prioritarios).
+ *
+ * Permiten enriquecer una página de área con bloques editoriales propios sin
+ * obligar a las áreas secundarias a aportarlos: si un campo no está, la página
+ * dinámica `[slug]/page.tsx` simplemente no renderiza el bloque asociado.
+ *
+ * Ningún campo aquí introducido publica afirmaciones jurídicas verificadas:
+ * los rangos/plazos/porcentajes pendientes (P01-P15) se conservan como están y
+ * las cifras se sustituyen por criterios generales prudentes cuando procede.
+ */
+export type FuenteGeneral = {
+  titulo: string;
+  institucion: string;
+  url?: string;
+};
+
+export type PasoProceso = {
+  titulo: string;
+  descripcion: string;
+};
+
+export type BloqueSeparacion = {
+  titulo: string;
+  items: string[];
+};
+
+export type AreaDetailFields = {
+  /** Respuesta directa ~50-100 palabras (citlabe GEO/AEO), post-H1. §5 */
+  respuestaDirecta?: string;
+  /** Situaciones habituales que atiende el área. §4.3 */
+  situacionesHabituales?: string[];
+  /** Separación por tipo de audiencia o figura (trabajador/empleador, civil/notarial/registral). §8/§9 */
+  separacionAudiencias?: BloqueSeparacion[];
+  /** Documentos iniciales orientativos + nota de privacidad. §4.5/§10 */
+  documentosIniciales?: {
+    items: string[];
+    nota?: string;
+  };
+  /** Proceso general del área (etapas prudentes, sin plazos cerrados). §4.6/§11 */
+  proceso?: {
+    intro?: string;
+    pasos: PasoProceso[];
+    nota?: string;
+  };
+  /** Autoridades o instituciones posiblemente involucradas (texto general). §4.7 */
+  autoridades?: string[];
+  /** Factores que pueden variar según el caso. §4.8 */
+  factoresQueVarian?: string[];
+  /** Errores frecuentes que conviene evitar. §4.9 */
+  erroresFrecuentes?: string[];
+  /** Fuentes oficiales generales consultadas (se muestran como "Fuentes generales"). §13 */
+  fuentesGenerales?: FuenteGeneral[];
+  /** CTA contextual del área (href con ?motivo=... y label). §15 */
+  ctaContextual?: {
+    href: string;
+    label: string;
+  };
+};
+
+export type AreaBase = AreaDetailFields & {
   slug: string;
   titulo: string;
   resumen: string;
@@ -44,7 +104,7 @@ export type AreaBase = {
   destacado?: string;
 };
 
-export type HubPenal = {
+export type HubPenal = AreaDetailFields & {
   slug: 'derecho-penal';
   titulo: string;
   resumen: string;
@@ -93,9 +153,81 @@ export const areasGenerales: AreaStandalone[] = [
     icono: 'users',
     color: 'primary',
     heroEyebrow: 'Área legal',
-    heroTitle: 'Derecho de Familia en Honduras',
+    heroTitle: 'Abogado de Familia en Nacaome',
     heroSubtitle:
-      'Le acompañamos en divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores en Nacaome, Valle, San Lorenzo y Choluteca. Atención humana, estrategia legal clara y defensa técnica ante Juzgados de Familia y Tribunales de Sentencia en la zona sur de Honduras.',
+      'Divorcio, custodia, régimen de comunicación, pensión de alimentos, reconocimiento, protección de menores y violencia intrafamiliar en Nacaome, Valle y el sur de Honduras. Atención humana, estrategia legal clara y defensa técnica ante Juzgados de Familia y Centros de Mediación. Cada caso se valora según sus circunstancias concretas.',
+    // §5 — respuesta directa citable (GEO/AEO). Sin cifras P01/P02: se describe
+    // el alcance y se remite el cálculo al análisis individual del caso.
+    respuestaDirecta:
+      'Pineda y Asociados asesora y representa en asuntos de derecho de familia desde su sede en Nacaome, Valle. Atiende divorcio (mutuo acuerdo y contencioso), custodia y régimen de comunicación, pensión de alimentos, reconocimiento o impugnación de filiación, protección de menores y violencia intrafamiliar, incluyendo medidas urgentes. La cuantificación de la pensión, la custodia y los plazos dependen de las circunstancias concretas del caso y de la decisión de la autoridad competente conforme a la legislación vigente.',
+    situacionesHabituales: [
+      'Divorcio de mutuo acuerdo o contencioso, con o sin bienes ni menores.',
+      'Fijación, modificación o incumplimiento de custodia y régimen de comunicación.',
+      'Demanda, cuantificación, revisión o ejecución de pensión de alimentos.',
+      'Reconocimiento o impugnación de paternidad y filiación.',
+      'Protección de menores y medidas urgentes frente a violencia intrafamiliar.',
+      'Sucesiones, declaratoria de herederos y liquidación de régimen patrimonial.',
+      'Mediación familiar y acuerdos reparatorios cuando conviene una salida pactada.',
+    ],
+    documentosIniciales: {
+      // §10 familia. No se piden públicamente datos completos de menores.
+      items: [
+        'Identidad de las personas adultas involucradas',
+        'Certificados pertinentes (matrimonio, nacimiento según el caso)',
+        'Resoluciones judiciales o actas previas, si las hubiera',
+        'Comprobantes de gastos (educación, salud, vivienda) cuando proceda',
+        'Documentos del asunto: actas, acuerdos, denuncias o escritos previos',
+      ],
+      nota:
+        'No envíe datos completos de menores ni documentos originales en el primer contacto. El despacho le indicará el medio adecuado y la documentación específica según su caso.',
+    },
+    proceso: {
+      intro:
+        'El recorrido varía según el tipo de asunto (mutuo acuerdo o contencioso) y la carga judicial. Estos pasos son orientativos.',
+      pasos: [
+        { titulo: 'Contacto inicial', descripcion: 'Conversación confidencial para entender su situación y prioridades, sin compromiso.' },
+        { titulo: 'Revisión preliminar', descripcion: 'Análisis de los hechos, la documentación disponible y las opciones viables.' },
+        { titulo: 'Solicitud de documentación', descripcion: 'Le indicamos qué documentos específicos necesitamos para evaluar el caso.' },
+        { titulo: 'Explicación de opciones', descripcion: 'Le exponemos las alternativas (acuerdo, mediación o litigio) con sus riesgos y beneficios.' },
+        { titulo: 'Presupuesto por escrito', descripcion: 'Honorarios y costos estimados, sin sorpresas, antes de iniciar actuaciones.' },
+        { titulo: 'Aceptación formal', descripcion: 'Confirmación del encargo y de la estrategia acordada por escrito.' },
+        { titulo: 'Actuación', descripcion: 'Representación y defensa ante la autoridad competente o negociación del acuerdo.' },
+        { titulo: 'Seguimiento', descripcion: 'Comunicación sobre avances, incidencias y ejecución de lo resuelto.' },
+      ],
+    },
+    autoridades: [
+      'Juzgados de Familia',
+      'Centro de Mediación del Poder Judicial',
+      'Juzgados de Paz (medidas urgentes)',
+      'Ministerio Público (violencia intrafamiliar)',
+      'DINAF (protección de menores)',
+    ],
+    // §7 — criterios generales en lugar de cifras pendientes (P01/P02 no se
+    // refuerzan: se describen los factores que valora la autoridad).
+    factoresQueVarian: [
+      'Necesidades de las personas beneficiarias (menores y otras).',
+      'Capacidad económica del obligado y de quien solicita.',
+      'Número de personas beneficiarias y su situación.',
+      'Salud, educación y vivienda de los involucrados.',
+      'Pruebas disponibles y su valoración por la autoridad.',
+      'Decisión final del juez o autoridad competente según la legislación vigente.',
+    ],
+    erroresFrecuentes: [
+      'Postergar la consulta hasta que el conflicto se agrava y se pierden opciones tempranas.',
+      'Firmar acuerdos sin revisión técnica, renunciando a derechos sin saberlo.',
+      'Presentar pruebas desordenadas o incompletas que debilitan la posición.',
+      'Confundir acuerdo privado con resolución con efectos jurídicos plenos.',
+      'Esperar a recopilar toda la documentación antes de buscar orientación.',
+    ],
+    fuentesGenerales: [
+      { titulo: 'Código de Familia de Honduras', institucion: 'Poder Judicial de Honduras / Tribunal Supremo de Justicia', url: 'https://www.poderjudicial.gob.hn' },
+      { titulo: 'Centro de Mediación del Poder Judicial', institucion: 'Poder Judicial de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+      { titulo: 'Convenio de La Haya de 1980 (sustracción internacional de menores)', institucion: 'Conferencia de La Haya de Derecho Internacional Privado', url: 'https://www.hcch.net' },
+    ],
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-de-familia#formulario',
+      label: 'Explicar mi situación familiar',
+    },
     subservicios: [
       { titulo: 'Divorcio por mutuo acuerdo', descripcion: 'Tramitación express ante el Juzgado de Familia cuando no hay menores ni bienes en disputa.' },
       { titulo: 'Divorcio contencioso', descripcion: 'Litigio por causales taxativas con estrategia probatoria robusta.' },
@@ -116,10 +248,15 @@ export const areasGenerales: AreaStandalone[] = [
       { titulo: 'Mediación familiar', descripcion: 'Centro de Mediación del Poder Judicial o mediación privada con efectos de cosa juzgada.' },
     ],
     faqs: [
-      { pregunta: '¿Cuánto tarda un divorcio en Honduras?', respuesta: 'Un divorcio por mutuo acuerdo se resuelve entre 2 y 6 meses si no hay menores ni bienes. Un contencioso puede durar de 1 a 3 años según la complejidad y la carga judicial.' },
-      { pregunta: '¿Cómo se calcula la pensión de alimentos en Honduras?', respuesta: 'El juez fija un porcentaje de los ingresos del obligado (entre 30% y 60% según el número de hijos) más el 50% de gastos educativos y de salud extraordinarios.' },
-      { pregunta: '¿Puedo pedir custodia compartida?', respuesta: 'Sí, el Código de Familia la contempla. El juez evalúa la capacidad de ambos progenitores, la opinión del menor y la cercanía de los domicilios.' },
-      { pregunta: '¿Qué pasa si el padre no paga la pensión de alimentos?', respuesta: 'Se ejecuta forzosamente con embargo de salario, cuentas bancarias o bienes. Puede configurarse el delito de incumplimiento de deberes familiares.' },
+      { pregunta: '¿Cuánto tarda un divorcio en Honduras?', respuesta: 'Un divorcio por mutuo acuerdo suele resolverse en varios meses cuando no hay menores ni bienes en disputa; un contencioso puede prolongarse según la complejidad y la carga judicial. El plazo concreto depende del caso y del juzgado.' },
+      // P01 preservada: NO se publica como verificada, NO se refuerza el rango.
+      // Se describe el procedimiento y se remite el cálculo a la decisión judicial.
+      { pregunta: '¿Cómo se fija la pensión de alimentos en Honduras?', respuesta: 'La pensión la determina la autoridad competente valorando las necesidades de las personas beneficiarias, la capacidad económica del obligado, el número de beneficiarios, la salud, la educación y otros gastos. No existe una fórmula única aplicable a todos los casos; el resultado depende de las circunstancias y de las pruebas.' },
+      { pregunta: '¿Puedo solicitar la custodia compartida?', respuesta: 'Sí. El Código de Familia la contempla y la autoridad valora la capacidad de cada progenitor, el interés superior del menor, su opinión según la edad y la cercanía de los domicilios, entre otros factores. Ningún progenitor tiene preferencia automática.' },
+      { pregunta: '¿Qué ocurre si no se paga la pensión de alimentos?', respuesta: 'La pensión puede ejecutarse forzosamente mediante embargo de salario, cuentas o bienes. El incumplimiento puede tener consecuencias legales adicionales según el caso. La vía concreta se define tras revisar las resoluciones aplicables.' },
+      { pregunta: '¿Necesito ir a juicio para divorciarme?', respuesta: 'No siempre. Si hay acuerdo sobre los términos, puede tramitarse por la vía del mutuo acuerdo. Cuando no hay acuerdo o existen menores o bienes en disputa, suele requerirse un proceso contencioso. Le explicamos ambas opciones antes de decidir.' },
+      { pregunta: '¿Puedo obtener medidas urgentes en un caso de violencia intrafamiliar?', respuesta: 'Sí. Pueden solicitarse medidas de protección urgentes ante la autoridad competente. La procedencia, el alcance y la duración dependen de los hechos y de la valoración que realice la autoridad conforme a la legislación vigente.' },
+      { pregunta: '¿Atienden a familias que residen fuera de Honduras?', respuesta: 'Sí, coordinamos asuntos familiares con elementos internacionales (restitución de menores, pensión entre países, reconocimiento de sentencias). Algunos trámites requieren intervenir autoridades o profesionales en el otro país; se lo indicamos con claridad tras revisar el caso.' },
     ],
     areasRelacionadas: ['derecho-civil-y-notarial', 'conciliacion-y-arbitraje', 'derecho-laboral'],
     keywords: [
@@ -130,7 +267,7 @@ export const areasGenerales: AreaStandalone[] = [
       'sucesiones Honduras',
       'violencia intrafamiliar Honduras',
     ],
-    destacado: 'Conocemos a los Juzgados de Familia de Nacaome, San Lorenzo y Choluteca.',
+    destacado: 'Cada caso de familia se valora según sus circunstancias concretas; los plazos y resultados dependen de la decisión de la autoridad competente.',
   },
   {
     slug: 'derecho-laboral',
@@ -141,9 +278,101 @@ export const areasGenerales: AreaStandalone[] = [
     icono: 'briefcase',
     color: 'primary',
     heroEyebrow: 'Área legal',
-    heroTitle: 'Derecho Laboral en Honduras',
+    heroTitle: 'Abogado Laboral en Nacaome',
     heroSubtitle:
-      'Defendemos sus derechos como trabajador o acompañamos a su empresa con cumplimiento normativo. Reclamamos prestaciones, despidos, aguinaldo, décimo tercer mes, riesgos profesionales, acoso laboral y negociación colectiva ante Juzgados del Trabajo, Tribunales de Conciliación y Corte Suprema de Justicia en la zona sur de Honduras.',
+      'Despidos, prestaciones, salario, vacaciones, riesgos profesionales y acoso laboral para trabajadores, y contratos, reglamentos y prevención de conflictos para empleadores. Defensa técnica ante Inspecciones del Trabajo, Tribunales de Conciliación y Juzgados del Trabajo en el sur de Honduras. Los importes y plazos dependen de cada relación laboral y de la documentación disponible.',
+    // §5 — respuesta directa citable. Diferencia décimo tercer mes (aguinaldo)
+    // de décimo cuarto mes SIN añadir fechas o reglas sustantivas nuevas.
+    respuestaDirecta:
+      'Pineda y Asociados asesora y representa en asuntos laborales desde su sede en Nacaome, Valle, tanto a trabajadores como a empleadores. Para trabajadores atiende despido y terminación, prestaciones (preaviso, cesantía, vacaciones), salario, jornada, horas extraordinarias, maternidad y riesgos profesionales. Para empleadores cuida contratos, reglamentos, terminaciones y prevención de conflictos. Los importes, recargos y plazos dependen de la relación laboral, la documentación y la legislación vigente; el análisis del caso es determinante.',
+    // §8 — separación explícita trabajador / empleador.
+    separacionAudiencias: [
+      {
+        titulo: 'Para trabajadores',
+        items: [
+          'Despido injustificado y despido indirecto',
+          'Terminación de la relación laboral',
+          'Prestaciones: preaviso, cesantía, vacaciones',
+          'Salario, jornada y horas extraordinarias',
+          'Maternidad y estabilidad laboral',
+          'Riesgos profesionales y accidentes de trabajo',
+          'Acoso laboral y discriminación',
+          'Revisión de documentación laboral',
+        ],
+      },
+      {
+        titulo: 'Para empleadores',
+        items: [
+          'Contratos individuales y colectivos',
+          'Reglamentos internos de trabajo',
+          'Terminaciones y gestión de bajas',
+          'Cumplimiento normativo laboral',
+          'Reclamaciones de trabajadores',
+          'Prevención de conflictos laborales',
+          'Conciliación prejudicial',
+          'Defensa ante Inspecciones y Juzgados del Trabajo',
+        ],
+      },
+    ],
+    documentosIniciales: {
+      items: [
+        'Contrato individual de trabajo (si existe)',
+        'Comprobantes de pago (planillas, recibos)',
+        'Fecha de ingreso y, en su caso, fecha de despido',
+        'Comunicaciones relacionadas con la relación o el despido',
+        'Carta de despido o constancia de terminación',
+        'Registros de jornada cuando existan',
+      ],
+      nota:
+        'La documentación exacta depende del asunto. No envíe documentos originales ni información especialmente sensible antes de que el despacho le indique un medio adecuado.',
+    },
+    proceso: {
+      intro:
+        'El recorrido varía según se actúe como trabajador o como empleador y según la vía (administrativa o judicial). Estos pasos son orientativos.',
+      pasos: [
+        { titulo: 'Contacto inicial', descripcion: 'Conversación confidencial para entender la relación laboral y el problema planteado.' },
+        { titulo: 'Revisión preliminar', descripcion: 'Análisis del contrato, los pagos y la documentación disponible.' },
+        { titulo: 'Solicitud de documentación', descripcion: 'Le indicamos qué documentos específicos necesitamos para evaluar el caso.' },
+        { titulo: 'Explicación de opciones', descripcion: 'Le exponemos las alternativas (conciliación o litigio) con sus riesgos y beneficios.' },
+        { titulo: 'Presupuesto por escrito', descripcion: 'Honorarios y costos estimados antes de iniciar actuaciones.' },
+        { titulo: 'Aceptación formal', descripcion: 'Confirmación del encargo y de la estrategia acordada por escrito.' },
+        { titulo: 'Actuación', descripcion: 'Representación ante Inspección, Tribunal de Conciliación o Juzgado del Trabajo.' },
+        { titulo: 'Seguimiento', descripcion: 'Comunicación sobre avances, incidentes y ejecución de lo resuelto.' },
+      ],
+    },
+    autoridades: [
+      'Secretaría del Trabajo y Seguridad Social',
+      'Inspección del Trabajo',
+      'Tribunales de Conciliación',
+      'Juzgados del Trabajo',
+      'Corte Suprema de Justicia (casación laboral)',
+      'Instituto Hondureño de Seguridad Social (IHSS)',
+    ],
+    // Sin calculadoras ni fórmulas. Criterios generales; P03/P04 preservados.
+    factoresQueVarian: [
+      'Antigüedad y modalidad del contrato de trabajo.',
+      'Causa y forma de terminación de la relación.',
+      'Salario devengado y conceptos no pagados.',
+      'Jornada, horas extraordinarias y recargos aplicables.',
+      'Existencia de fuero (maternidad, sindical, enfermedad).',
+      'Documentación disponible y pruebas del caso.',
+    ],
+    erroresFrecuentes: [
+      'Firmar la liquidación o renuncia sin revisión técnica previa.',
+      'Aceptar como definitivo un cálculo de prestaciones sin verificar conceptos.',
+      'No conservar comprobantes de pago ni constancias de la relación.',
+      'Demorar la reclamación hasta que se dificulta la prueba.',
+      'Para empleadores: no documentar adecuadamente la causa de una terminación.',
+    ],
+    fuentesGenerales: [
+      { titulo: 'Código del Trabajo de Honduras', institucion: 'Tribunal Supremo de Justicia / Secretaría del Trabajo', url: 'https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf' },
+      { titulo: 'Decreto 135-80 (Ley de Aguinaldos)', institucion: 'Secretaría de Trabajo y Seguridad Social', url: 'https://www.trabajo.gob.hn' },
+      { titulo: 'Reglamento del Seguro Social (IHSS)', institucion: 'Instituto Hondureño de Seguridad Social', url: 'https://www.ihss.hn' },
+    ],
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-laboral#formulario',
+      label: 'Solicitar revisión inicial de mi situación laboral',
+    },
     subservicios: [
       { titulo: 'Despido injustificado', descripcion: 'Cálculo y reclamación de prestaciones: preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes.' },
       { titulo: 'Despido indirecto por incumplimiento del empleador', descripcion: 'Artículo 113 del Código de Trabajo: reclamo por falta de condiciones dignas.' },
@@ -164,9 +393,16 @@ export const areasGenerales: AreaStandalone[] = [
       { titulo: 'Asesoría preventiva a empleadores', descripcion: 'Reglamento interno, contratos tipo, prevención de contingencias.' },
     ],
     faqs: [
-      { pregunta: '¿Cuánto me corresponde si me despiden sin justa causa?', respuesta: 'Preaviso (1 mes o 15 días según antigüedad), cesantía (1 mes por año o fracción máxima 25), vacaciones proporcionales, aguinaldo proporcional y décimo tercer mes proporcional.' },
-      { pregunta: '¿Cuándo se paga el aguinaldo en Honduras?', respuesta: 'El aguinaldo se paga en dos cuotas: 50% antes del 30 de junio y 50% antes del 30 de noviembre, o en un solo pago antes del 20 de diciembre.' },
-      { pregunta: '¿Qué hago si sufro un accidente laboral?', respuesta: 'Notificar al empleador de inmediato, recibir atención del IHSS y, si hay negligencia, demandar la indemnización complementaria ante el Juzgado del Trabajo.' },
+      // P04 preservada: no se refuerza el tope. Se describe el procedimiento.
+      { pregunta: '¿Qué conceptos pueden reclamarse en un despido sin justa causa?', respuesta: 'Dependiendo de la antigüedad y la modalidad del contrato, pueden reclamarse conceptos como preaviso, cesantía, vacaciones proporcionales, aguinaldo y décimo tercer mes (aguinaldo) proporcionales. El cálculo exacto depende de la relación laboral y de la documentación; se le entrega desglose por escrito tras la revisión.' },
+      // P03 preservada: no se confirman fechas. Se describe la figura y se
+      // remite a la legislación vigente y al análisis del caso.
+      { pregunta: '¿Qué es el aguinaldo y cómo se diferencia del décimo tercer mes?', respuesta: 'En Honduras, el aguinaldo equivale al décimo tercer mes: es una prestación a favor del trabajador. El décimo cuarto mes es una figura distinta. La forma y los plazos de pago se rigen por la legislación vigente; le confirmamos los detalles aplicables a su caso concreto tras la revisión.' },
+      { pregunta: '¿Qué debo hacer si sufro un accidente laboral?', respuesta: 'Conviene notificar al empleador de inmediato, recibir la atención que corresponda por el seguro social y reunir la documentación médica. Si existe responsabilidad del empleador, pueden reclamarse prestaciones complementarias. La vía y el importe dependen del caso y de la calificación del siniestro.' },
+      { pregunta: '¿Puedo reclamar aunque no tenga contrato escrito?', respuesta: 'La falta de contrato escrito no impide acreditar la relación laboral mediante otros medios (comprobantes de pago, testigos, constancias). La viabilidad de la reclamación y los conceptos exigibles se evalúan caso a caso.' },
+      { pregunta: '¿Atienden también a empresas y empleadores?', respuesta: 'Sí. Asesoramos a empleadores en contratos, reglamentos internos, terminaciones, cumplimiento normativo y defensa ante reclamaciones. El objetivo es prevenir conflictos y, cuando surgen, gestionarlos de forma ordenada.' },
+      { pregunta: '¿Cuánto tarda un reclamo laboral?', respuesta: 'Depende de la vía (conciliación, proceso administrativo o judicial) y de la carga de los tribunales. Algunos casos se resuelven por acuerdo en semanas; otros pueden prolongarse si llegan a juicio y recursos. Le informamos del horizonte temporal realista al evaluar su caso.' },
+      { pregunta: '¿Ofrecen calculadoras automáticas de prestaciones?', respuesta: 'No. Los recargos, topes y plazos pueden variar según la legislación vigente y las circunstancias del caso, por lo que un cálculo automático puede inducir a error. Realizamos el cálculo manual verificado tras revisar su documentación.' },
     ],
     areasRelacionadas: ['conciliacion-y-arbitraje', 'derecho-mercantil-empresarial', 'derecho-civil-y-notarial'],
     keywords: [
@@ -180,15 +416,111 @@ export const areasGenerales: AreaStandalone[] = [
   {
     slug: 'derecho-civil-y-notarial',
     titulo: 'Derecho Civil y Notarial',
-    resumen: 'Abogado civil y notario en Nacaome y Honduras: contratos, compraventas, arrendamientos, hipotecas, sucesiones, protocolización, cobros judiciales y derecho de daños.',
+    resumen: 'Abogado civil y servicios notariales en Nacaome y Honduras: contratos, compraventas, arrendamientos, hipotecas, sucesiones, protocolización, cobros judiciales y derecho de daños.',
     descripcion:
       `Brindamos <strong>asesoría civil y notarial</strong> para personas, empresas y familias en la zona sur de Honduras. Redactamos contratos de compraventa, arrendamiento, hipoteca y fideicomiso; tramitamos protocolizaciones, poderes notariales, testamentos y declaratorias de herederos ante el <strong><a href="https://www.ip.gob.hn" target="_blank" rel="noopener noreferrer">Instituto de la Propiedad</a></strong>. Litigamos acciones posesorias, prescripción adquisitiva, cobros judiciales por vía ejecutiva o monitoria, y reclamaciones por responsabilidad civil. Trabajamos con notarios en Nacaome, San Lorenzo y Choluteca, con presupuesto por escrito y trazabilidad de cada actuación.`,
     icono: 'file-text',
     color: 'primary',
     heroEyebrow: 'Área legal',
-    heroTitle: 'Derecho Civil y Notarial',
+    heroTitle: 'Derecho Civil y Servicios Notariales en Nacaome',
     heroSubtitle:
-      'Contratos sólidos, actos notariales seguros y litigio civil estratégico en Honduras. Le acompañamos en compraventas, arrendamientos, hipotecas, sucesiones, donaciones, mandatos, poderes, protocolización, cobros judiciales y responsabilidad civil, con estudio de títulos, registro de la propiedad y defensa ante Juzgados de Letras.',
+      'Asesoría y litigación civil, actuaciones notariales y actuaciones registrales para personas, familias y empresas en el sur de Honduras. Contratos, propiedad, sucesiones, poderes, cobros judiciales y daños y perjuicios. Algunos trámites requieren notario, tribunal y registro de forma coordinada; le explicamos el recorrido completo según su caso.',
+    // §5 — respuesta directa. No afirma capacidad notarial del despacho (no
+    // confirmada); se coordina con notarios cuando procede.
+    respuestaDirecta:
+      'Pineda y Asociados asesora en derecho civil y coordina servicios notariales y registrales desde su sede en Nacaome, Valle. En asesoría y litigación civil atiende contratos, incumplimientos, cobro, daños, propiedad, posesión y sucesiones. En lo notarial coordina poderes, autenticaciones, escrituras, declaraciones y protocolizaciones; y en lo registral, presentación, inscripción, subsanación y seguimiento. Cuando un trámite requiere notario, tribunal y registro, se gestiona de forma coordinada; la viabilidad y los plazos dependen del asunto.',
+    // §9 — separación visual y editorial: asesoría/litigación · notarial · registral.
+    separacionAudiencias: [
+      {
+        titulo: 'Asesoría y litigación civil',
+        items: [
+          'Contratos e incumplimientos',
+          'Cobro judicial de deudas',
+          'Daños y perjuicios',
+          'Propiedad, posesión y servidumbres',
+          'Conflictos patrimoniales',
+          'Sucesiones y herencias',
+        ],
+      },
+      {
+        titulo: 'Actuaciones notariales',
+        items: [
+          'Poderes y mandatos',
+          'Autenticaciones y legalizaciones',
+          'Escrituras públicas',
+          'Declaraciones juradas',
+          'Protocolizaciones',
+          'Otros actos confirmados según el caso',
+        ],
+      },
+      {
+        titulo: 'Actuaciones registrales',
+        items: [
+          'Presentación de documentos',
+          'Inscripción de actos y derechos',
+          'Subsanación de defectos',
+          'Seguimiento de expedientes',
+          'Coordinación documental con notaría y tribunal',
+        ],
+      },
+    ],
+    documentosIniciales: {
+      items: [
+        'Contratos, títulos o documentos relacionados',
+        'Escrituras públicas anteriores cuando existan',
+        'Certificaciones registrales o antecedentes',
+        'Documentos de identidad necesarios',
+        'Poderes vigentes, si los hubiera',
+        'Comprobantes o documentos del cobro o del daño, según el caso',
+      ],
+      nota:
+        'La documentación exacta depende del asunto. No envíe documentos originales ni información especialmente sensible antes de que el despacho le indique un medio adecuado.',
+    },
+    proceso: {
+      intro:
+        'El recorrido depende de si el asunto es de litigación, notarial o registral (o varios a la vez). Estos pasos son orientativos.',
+      pasos: [
+        { titulo: 'Contacto inicial', descripcion: 'Conversación confidencial para entender el asunto y el resultado que busca.' },
+        { titulo: 'Revisión preliminar', descripcion: 'Estudio de títulos, documentos y antecedentes según el caso.' },
+        { titulo: 'Solicitud de documentación', descripcion: 'Le indicamos qué documentos específicos necesitamos para evaluar el caso.' },
+        { titulo: 'Explicación de opciones', descripcion: 'Le exponemos las vías posibles (notarial, judicial o registral) con sus plazos y costos.' },
+        { titulo: 'Presupuesto por escrito', descripcion: 'Honorarios, aranceles y costos estimados antes de iniciar actuaciones.' },
+        { titulo: 'Aceptación formal', descripcion: 'Confirmación del encargo y de la estrategia acordada por escrito.' },
+        { titulo: 'Actuación', descripcion: 'Gestión notarial, representación judicial o trámite registral según corresponda.' },
+        { titulo: 'Seguimiento', descripcion: 'Comunicación sobre avances, incidencias y entrega final.' },
+      ],
+    },
+    autoridades: [
+      'Instituto de la Propiedad (IP)',
+      'Registro de la Propiedad y de Comercio',
+      'Juzgados de Letras (civil)',
+      'Notarías (actos notariales)',
+      'Catastro Municipal',
+    ],
+    factoresQueVarian: [
+      'Situación registral y antecedentes de título del bien.',
+      'Existencia de gravámenes, limitaciones o anotaciones.',
+      'Documentación disponible y su antigüedad.',
+      'Vía elegida (notarial, judicial o registral).',
+      'Plazos del registro y de los tribunales.',
+      'Intervención de varias autoridades cuando el trámite lo requiere.',
+    ],
+    erroresFrecuentes: [
+      'Comprar o recibir en garantía sin estudio previo de títulos.',
+      'Firmar contratos sin cláusulas clave ni revisión técnica.',
+      'Confundir un acto notarial con uno registral y omitir pasos.',
+      'No protocolizar documentos extranjeros cuando procede.',
+      'Dejar caducar plazos para reclamar un cobro o un daño.',
+    ],
+    fuentesGenerales: [
+      { titulo: 'Código Civil de Honduras', institucion: 'Tribunal Supremo de Justicia / Poder Judicial de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+      { titulo: 'Ley de Propiedad y sus reformas', institucion: 'Instituto de la Propiedad (IP)', url: 'https://www.ip.gob.hn' },
+      { titulo: 'Ley del Notariado de Honduras', institucion: 'Poder Judicial de Honduras / Colegio de Abogados de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+    ],
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-civil-y-notarial#formulario',
+      label: 'Consultar un contrato, propiedad, sucesión o trámite notarial',
+    },
     subservicios: [
       { titulo: 'Compraventa de inmuebles', descripcion: 'Estudio de títulos, redacción de contrato y protocolización.' },
       { titulo: 'Arrendamiento de vivienda y local comercial', descripcion: 'Contrato, garantía, cobro de rentas y desahucio.' },
@@ -209,15 +541,20 @@ export const areasGenerales: AreaStandalone[] = [
       { titulo: 'Protocolización de documentos', descripcion: 'Acto notarial de incorporación al protocolo.' },
     ],
     faqs: [
-      { pregunta: '¿Cómo saber si un vendedor de inmueble tiene derecho a vender?', respuesta: 'Solicitamos un estudio de títulos de 20 años al Instituto de la Propiedad, revisamos gravámenes, limitaciones y verificamos la identidad del titular registral.' },
-      { pregunta: '¿Se puede desahuciar al inquilino que no paga en Honduras?', respuesta: 'Sí, mediante juicio verbal de desahucio por falta de pago con plazo de 2 meses, y en casos urgentes juicio ejecutivo.' },
-      { pregunta: '¿Qué diferencia hay entre prescripción y usucapión?', respuesta: 'La prescripción adquisitiva es la figura general; la usucapión suele aplicarse a bienes inmuebles con posesión pacífica e ininterrumpida por el plazo legal (5, 10 o 20 años según el caso).' },
+      { pregunta: '¿Cómo sé si quien vende un inmueble está facultado para hacerlo?', respuesta: 'Se realiza un estudio de títulos y un examen de la situación registral del bien, revisando gravámenes, limitaciones y la titularidad de quien transfiere. El alcance del estudio se ajusta al caso concreto; le indicamos qué consultas son necesarias antes de comprometerse.' },
+      { pregunta: '¿Todo trámite civil puede resolverse por vía notarial?', respuesta: 'No. Algunos actos requieren notario, otros tribunal y otros registro; y en ocasiones los tres. Por ejemplo, una compraventa puede involucrar escritura notarial e inscripción registral, mientras que un cobro de deuda con oposición suele requerir vía judicial. Le explicamos qué autoridades intervienen en su caso.' },
+      // P06 preservada: no se confirman plazos. Se describe la figura.
+      { pregunta: '¿Qué son la prescripción y la usucapión?', respuesta: 'Son figuras relacionadas con la adquisición o pérdida de derechos por el paso del tiempo. La usucapión suele aplicarse a inmuebles tras una posesión pacífica e ininterrumpida durante el plazo que fije la ley. Los plazos y requisitos concretos dependen del supuesto y de la legislación vigente; se evalúan caso a caso.' },
+      { pregunta: '¿Pueden ocuparse de una sucesión o herencia?', respuesta: 'Sí. Acompañamos declaratorias, inventarios, avalúos y particiones, y la protocolización o inscripción que corresponda. Cuando existen varias autoridades implicadas (notaría, tribunal y registro), coordinamos el recorrido completo.' },
+      { pregunta: '¿Hacen cobros judiciales de deudas?', respuesta: 'Sí. Analizado el título y la documentación, seleccionamos la vía más adecuada (ejecutiva, monitoria o declarativa). La viabilidad y el plazo dependen del título ejecutivo disponible y de la situación del deudor.' },
+      { pregunta: '¿La capacidad notarial del despacho está confirmada?', respuesta: 'Para los actos que requieren notaría coordinamos con notario y le informamos del alcance en su caso. No publicamos como confirmada una condición que no ha sido verificada; lo que sí aseguramos es la coordinación de la totalidad del trámite.' },
+      { pregunta: '¿Cuánto cuesta un trámite civil o notarial?', respuesta: 'Depende del tipo de acto, la documentación, los aranceles registrales o notariales y la complejidad. Tras la revisión preliminar le entregamos un presupuesto por escrito con honorarios y costos estimados.' },
     ],
     areasRelacionadas: ['derecho-de-familia', 'derecho-mercantil-empresarial', 'conciliacion-y-arbitraje'],
     keywords: [
       'abogado civil Nacaome',
       'compraventa inmuebles Honduras',
-      'notario Nacaome',
+      'servicios notariales Nacaome',
       'protocolización de documentos Valle',
       'cobro judicial Honduras',
     ],
@@ -642,11 +979,87 @@ export const hubPenal: HubPenal = {
   heroTitle: 'Abogados Penalistas en Nacaome, Valle — Defensa Penal Técnica',
   heroSubtitle:
     'Atendemos casos penales en la zona sur de Honduras, desde nuestro despacho en Nacaome, Valle. Cubrimos San Lorenzo, Choluteca y municipios aledaños. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal, beneficios de ley, recursos de casación y cumplimiento de penas. Defensa técnica, comunicación directa y presupuesto por escrito.',
+  // §5 — respuesta directa. Sin plazos cerrados, sin tabla de prescripción/penas,
+  // sin reutilizar P09/P14/P15 (que viven en /derecho-penal/[slug]).
+  respuestaDirecta:
+    'Pineda y Asociados ejerce la defensa penal técnica desde su sede en Nacaome, Valle, en el sur de Honduras. Acompaña a personas detenidas, citadas o investigadas, y a sus familias, desde la primera actuación procesal hasta el juicio oral, los recursos y la ejecución penal. Puede actuar ante detención, citación, denuncia o querella, investigación, requerimiento fiscal, medidas cautelares, audiencias y recursos. La estrategia, los plazos y el resultado dependen de los hechos, la prueba disponible y las resoluciones de la autoridad competente conforme a la legislación vigente.',
+  situacionesHabituales: [
+    'Una persona ha sido detenida o está siendo buscada.',
+    'Se ha recibido una citación o una orden judicial conocida.',
+    'Hay una audiencia próxima (inicial, de medida cautelar o de juicio).',
+    'Se ha presentado o se quiere presentar una denuncia o querella.',
+    'Hay una investigación fiscal en curso o un requerimiento.',
+    'Se necesita revisar o sustituir una medida cautelar.',
+    'Se va a recurrir una resolución desfavorable.',
+    'Un familiar privado de libertad necesita asistencia o gestión de beneficios.',
+  ],
+  documentosIniciales: {
+    items: [
+      'Citación, resolución o acta de la audiencia',
+      'Denuncia, querella o requerimiento fiscal',
+      'Datos de la detención (fecha, lugar, autoridad)',
+      'Resoluciones judiciales previas',
+      'Documentos relacionados con el caso (mensajes, comprobantes, certificaciones)',
+    ],
+    nota:
+      'La documentación exacta depende del asunto. No envíe originales ni información especialmente sensible antes de que el despacho le indique un medio adecuado. Si hay una detención o audiencia inminente, contacte también por teléfono o WhatsApp.',
+    },
+  proceso: {
+    intro:
+      'Las etapas del proceso penal son generales y orientativas. No se publican tablas cerradas de penas, prescripción o duración; los plazos reales dependen del caso, la prueba y la autoridad.',
+    pasos: [
+      { titulo: 'Contacto inicial urgente', descripcion: 'Si hay detención, citación o audiencia próxima, le atendemos con prioridad por teléfono o WhatsApp.' },
+      { titulo: 'Revisión preliminar', descripcion: 'Análisis de la imputación, los hechos y la documentación disponible.' },
+      { titulo: 'Solicitud de documentación', descripcion: 'Le indicamos qué resoluciones o antecedentes necesitamos para evaluar el caso.' },
+      { titulo: 'Explicación de opciones', descripcion: 'Le exponemos la estrategia y las alternativas (sobreseimiento, mediación, juicio, recursos) con sus riesgos.' },
+      { titulo: 'Presupuesto por escrito', descripcion: 'Honorarios y costos estimados antes de asumir la defensa.' },
+      { titulo: 'Aceptación formal', descripcion: 'Confirmación del encargo y de la estrategia acordada por escrito.' },
+      { titulo: 'Actuación', descripcion: 'Asistencia a detenidos, defensa en audiencias, juicio oral, recursos y ejecución penal.' },
+      { titulo: 'Seguimiento', descripcion: 'Comunicación sobre avances, incidencias y próximos pasos.' },
+    ],
+  },
+  autoridades: [
+    'Ministerio Público (Fiscalía)',
+    'Juzgados de Letras penales',
+    'Tribunales de Sentencia',
+    'Cortes de Apelaciones',
+    'Sala de lo Penal de la Corte Suprema de Justicia',
+    'Juzgados de Ejecución Penal',
+    'Dirección Nacional de Investigación (DNI)',
+  ],
+  factoresQueVarian: [
+    'La etapa procesal en la que se interviene.',
+    'Los hechos imputados y su calificación jurídica.',
+    'La prueba disponible y su legalidad.',
+    'Las medidas cautelares dispuestas por la autoridad.',
+    'La existencia de víctimas y la posibilidad de acuerdo.',
+    'Las resoluciones de los tribunales en cada instancia.',
+  ],
+  erroresFrecuentes: [
+    'Declarar o firmar documentos sin asistencia letrada.',
+    'Esperar a buscar abogado hasta que la situación se agrava.',
+    'Eliminar o alterar información que puede ser prueba.',
+    'Discutir el caso en redes sociales o con terceros.',
+    'Ignorar una citación o una orden judicial conocida.',
+  ],
+  fuentesGenerales: [
+    { titulo: 'Código Penal de Honduras (Decreto 130-2017) y reformas', institucion: 'Poder Judicial de Honduras / Tribunal Supremo de Justicia', url: 'https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf' },
+    { titulo: 'Código Procesal Penal de Honduras', institucion: 'Poder Judicial de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+    { titulo: 'Constitución de la República de Honduras (defensa y debido proceso)', institucion: 'Congreso Nacional de Honduras', url: 'https://www.congresonacional.hn' },
+  ],
+  ctaContextual: {
+    href: '/solicitar-consulta?motivo=derecho-penal#formulario',
+    label: 'Solicitar atención por una detención, citación o audiencia',
+  },
   faqs: [
-    { pregunta: '¿Pueden defenderme si acabo de ser detenido?', respuesta: 'Sí. La asistencia letrada es un derecho irrenunciable desde el primer momento. Podemos acudir a la estación policial o al juzgado y ejercer defensa inmediata.' },
-    { pregunta: '¿Cuánto cuesta una defensa penal en Honduras?', respuesta: 'Depende de la complejidad. Ofrecemos consulta inicial confidencial para evaluar el caso y emitir un presupuesto claro por escrito.' },
+    { pregunta: '¿Pueden defenderme si acabo de ser detenido?', respuesta: 'Sí. La asistencia letrada es un derecho desde el primer momento. Podemos acudir a la estación policial o al juzgado y ejercer defensa inmediata, dentro del horario y la disponibilidad operativa del despacho.' },
+    { pregunta: '¿Cuánto cuesta una defensa penal en Honduras?', respuesta: 'Depende de la complejidad. Ofrecemos consulta inicial confidencial para evaluar el caso y emitir un presupuesto claro por escrito; no se garantiza un importe fijo sin conocer el asunto.' },
     { pregunta: '¿En qué zonas trabajan?', respuesta: 'Nuestra sede está en Nacaome, Valle, y cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca y municipios aledaños. Para casos que requieran desplazamiento fuera de esta zona, consúltenos y valoramos la viabilidad.' },
-    { pregunta: '¿Atienden casos graves (homicidio, narcotráfico, delitos sexuales)?', respuesta: 'Sí, con la misma dedicación y un equipo preparado. La gravedad no reduce la defensa: la aumenta.' },
+    { pregunta: '¿Atienden casos graves (homicidio, narcotráfico, delitos sexuales)?', respuesta: 'Sí, con la misma dedicación y un equipo preparado. La gravedad no reduce la defensa: la aumenta. El enfoque y la estrategia se adaptan al caso concreto.' },
+    { pregunta: '¿Pueden acturar si me citan a una audiencia?', respuesta: 'Sí. Tras revisar la citación y los antecedentes, preparamos la comparecencia y la estrategia de defensa para la audiencia. Conviene contactar con la mayor antelación posible.' },
+    { pregunta: '¿Qué pasa si hay una orden de captura o investigación en curso?', respuesta: 'Conviene actuar de forma planificada: revisar la situación, preparar la defensa y, cuando proceda, gestionar la comparecencia. Cada supuesto es distinto; le orientamos tras evaluar el caso.' },
+    { pregunta: '¿Atienden también a los familiares de la persona investigada o detenida?', respuesta: 'Sí. Acompañamos a las familias en la comprensión del proceso, la gestión de documentación y las decisiones que correspondan, respetando los límites de confidencialidad y de contratación formal del servicio.' },
+    { pregunta: '¿Garantizan un resultado determinado?', respuesta: 'No. Nadie puede garantizar un resultado en un proceso penal, que depende de hechos, pruebas y resoluciones de autoridad competente. Lo que sí ofrecemos es defensa técnica, estrategia documentada y comunicación clara.' },
   ],
   areasRelacionadas: [
     'mediacion-conflictos-penales-y-multas',
@@ -721,7 +1134,7 @@ export const hubPenal: HubPenal = {
         { titulo: 'Trata de personas', descripcion: 'Defensa técnica especializada con enfoque de derechos humanos.' },
       ],
       faqs: [
-        { pregunta: '¿Qué pasa si la acusación es débil?', respuesta: 'Trabajamos la estrategia procesal desde la primera audiencia para atacar la prueba de cargo y, si es posible, добиться absolución en juicio.' },
+        { pregunta: '¿Qué pasa si la acusación es débil?', respuesta: 'Trabajamos la estrategia procesal desde la primera audiencia para atacar la prueba de cargo y, si es posible, lograr la absolución en juicio.' },
       ],
       areasRelacionadas: ['estrategia-penal-y-litigio', 'recursos-y-defensa-avanzada'],
       keywords: [
@@ -945,6 +1358,7 @@ export const hubMigrantes: HubMigrantes = {
     { pregunta: '¿Pueden hacer poderes notariales en Honduras desde España?', respuesta: 'Sí. Coordinamos con notarios en Honduras para que usted firme en el Consulado o por poder especial, con apostilla y traducción cuando corresponda.' },
     { pregunta: '¿Cuánto tarda una legalización?', respuesta: 'La apostilla de La Haya en Honduras se obtiene en 1-3 días hábiles. Las traducciones juradas en España, según disponibilidad del traductor.' },
     { pregunta: '¿Pueden representarme en un juicio en Honduras si estoy en España?', respuesta: 'Sí, mediante poder especial para pleitos, otorgado ante notario español y traducido/apostillado, o firmado ante el Consulado.' },
+    { pregunta: '¿Qué trámites hacen ustedes y cuáles requieren un abogado en España o son personales?', respuesta: 'Como bufete colegiado en Honduras, asumimos directamente la actuación jurídica en territorio hondureño (juicios, notarías, registros, SAR, RNP, etc.) y la coordinación documental con España (apostilla, traducción jurada, poderes, exequátur). Los trámites que requieren actuación ante autoridades españolas —como solicitud de reagrupación familiar, arraigo, nacionalidad española por residencia o inscripción en el Registro Civil español— se realizan ante la Administración General del Estado, Policía Nacional o notaría española, y en algunos casos exigen intervenir un profesional habilitado en España o ser realizados personalmente por el interesado. En esos supuestos le orientamos sobre el procedimiento y la documentación hondureña que necesita, y le indicamos cuándo conviene contar con abogado en España; no le representamos en jurisdicción española salvo lo que expresamente podamos coordinar.' },
   ],
   areasRelacionadas: [
     'gestion-documental-y-legalizacion',

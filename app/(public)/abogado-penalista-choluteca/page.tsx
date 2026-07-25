@@ -17,7 +17,7 @@ import { RelatedCities } from '@/components/marketing/related-links';
  * propia con CTA, NAP coherente, FAQ local y enlaces hacia el hub penal.
  *
  * Datos verificables (R4 — no inventar):
- *   - Sede física única: Nacaome (a ~52 km de Choluteca).
+ *   - Sede física única: Nacaome (a ~55 km de Choluteca por la CA-1, FASE 1).
  *   - Cobertura declarada en areaServed (lib/site.ts): Choluteca.
  *   - Código Penal Decreto 130-2017 y reformas vigentes.
  *   - Sin sedes, colegiaciones ni reseñas inventadas.
@@ -208,7 +208,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
               align="left"
               eyebrow="Cobertura local"
               title="Atendemos Choluteca desde Nacaome"
-              subtitle="Sede física en Nacaome (Valle), a aproximadamente 52 km de Choluteca ciudad. Coordinamos presencia en audiencias y diligencias en los juzgados del departamento de Choluteca."
+              subtitle="Sede física en Nacaome (Valle), a aproximadamente 55 km de Choluteca ciudad por la carretera CA-1. Coordinamos presencia en audiencias y diligencias en los juzgados del departamento de Choluteca."
             />
             <div className="mt-5 flex items-start gap-3">
               <MapPin size={20} className="text-accent-dark shrink-0 mt-0.5" aria-hidden="true" />
@@ -259,7 +259,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
           {[
             {
               q: '¿Tienen oficina en Choluteca?',
-              a: 'Nuestra sede física está en Nacaome, Valle, a unos 52 km de Choluteca. Atendemos a clientes de Choluteca desde esa oficina y coordinamos las audiencias y diligencias necesarias en los juzgados del departamento de Choluteca.',
+              a: 'Nuestra sede física está en Nacaome, Valle, a unos 55 km de Choluteca por la carretera CA-1. Atendemos a clientes de Choluteca desde esa oficina y coordinamos las audiencias y diligencias necesarias en los juzgados del departamento de Choluteca.',
             },
             {
               q: '¿Qué hacer si me detienen en Choluteca?',
@@ -408,7 +408,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
                   name: '¿Tienen oficina en Choluteca?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'Nuestra sede física está en Nacaome, Valle, a unos 52 km de Choluteca. Atendemos a clientes de Choluteca desde esa oficina y coordinamos las audiencias y diligencias en los juzgados del departamento de Choluteca.',
+                    text: 'Nuestra sede física está en Nacaome, Valle, a unos 55 km de Choluteca por la carretera CA-1. Atendemos a clientes de Choluteca desde esa oficina y coordinamos las audiencias y diligencias en los juzgados del departamento de Choluteca.',
                   },
                 },
                 {

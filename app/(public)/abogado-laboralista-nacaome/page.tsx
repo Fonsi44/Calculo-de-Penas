@@ -84,7 +84,7 @@ export default async function AbogadoLaboralistaNacaomePage() {
         <div className="grid sm:grid-cols-2 gap-4 mt-6">
           {[
             { icon: Briefcase, title: 'Despidos injustificados', desc: 'Reclamación de indemnización por despido sin causa justificada. Cálculo de prestaciones e intereses conforme al Código de Trabajo.' },
-            { icon: FileText, title: 'Liquidaciones y finiquitos', desc: 'Revisión y cálculo de su liquidación laboral completa: preaviso, auxilio de cesantía, vacaciones y décimo cuarto mes proporcionales.' },
+            { icon: FileText, title: 'Liquidaciones y finiquitos', desc: 'Revisión y cálculo de su liquidación laboral completa: preaviso, auxilio de cesantía, vacaciones y décimo tercer mes (aguinaldo) proporcionales.' },
             { icon: ShieldCheck, title: 'Acoso laboral (mobbing)', desc: 'Denuncia y defensa en casos de acoso laboral, hostigamiento y discriminación en el lugar de trabajo.' },
             { icon: Scale, title: 'Demandas laborales', desc: 'Representación ante la Secretaría de Trabajo y los juzgados laborales de Nacaome, Choluteca y San Lorenzo.' },
           ].map((s) => (
@@ -112,7 +112,7 @@ export default async function AbogadoLaboralistaNacaomePage() {
         <div className="space-y-3 mt-6 max-w-3xl mx-auto">
           {[
             { q: '¿Me despidieron sin justa causa, qué hago?', a: 'Tiene derecho a una indemnización. Reúna su contrato, comprobantes de pago y cualquier comunicación con el empleador. Contáctenos para evaluar su caso y calcular cuánto le corresponde.' },
-            { q: '¿Cuánto me toca de liquidación?', a: 'La liquidación incluye: preaviso, auxilio de cesantía, vacaciones y décimo cuarto mes proporcionales, más salarios adeudados. Le ayudamos a calcular el monto exacto según su antigüedad y salario.' },
+            { q: '¿Cuánto me toca de liquidación?', a: 'La liquidación incluye: preaviso, auxilio de cesantía, vacaciones y décimo tercer mes (aguinaldo) proporcionales, más salarios adeudados. Le ayudamos a calcular el monto exacto según su antigüedad y salario.' },
             { q: '¿Cuánto tiempo tengo para demandar tras un despido?', a: 'Las acciones laborales prescriben en plazos cortos. Lo recomendable es actuar dentro de los 30 días posteriores al despido. No espere: cada día cuenta.' },
             { q: '¿Qué cubre el fuero maternal?', a: 'La trabajadora embarazada no puede ser despedida sin autorización judicial. Si fue despedida estando embarazada, tiene derecho a reintegro e indemnización. La ley protege también el período de lactancia.' },
             { q: '¿Atienden casos de empleadas domésticas?', a: 'Sí. Las empleadas domésticas tienen los mismos derechos laborales: salario mínimo, vacaciones, aguinaldo y prestaciones. Si no se los reconocen, podemos ayudarle a reclamarlos.' },
@@ -208,7 +208,7 @@ export default async function AbogadoLaboralistaNacaomePage() {
               '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Me despidieron sin justa causa, qué hago?', acceptedAnswer: { '@type': 'Answer', text: 'Tiene derecho a una indemnización. Reúna su contrato y comprobantes. Contáctenos para evaluar su caso.' } },
-                { '@type': 'Question', name: '¿Cuánto me toca de liquidación?', acceptedAnswer: { '@type': 'Answer', text: 'Incluye preaviso, auxilio de cesantía, vacaciones y décimo cuarto mes proporcionales, más salarios adeudados.' } },
+                { '@type': 'Question', name: '¿Cuánto me toca de liquidación?', acceptedAnswer: { '@type': 'Answer', text: 'Incluye preaviso, auxilio de cesantía, vacaciones y décimo tercer mes (aguinaldo) proporcionales, más salarios adeudados.' } },
                 { '@type': 'Question', name: '¿Cuánto tiempo tengo para demandar?', acceptedAnswer: { '@type': 'Answer', text: 'Lo recomendable es actuar dentro de los 30 días posteriores al despido. Cada día cuenta.' } },
                 { '@type': 'Question', name: '¿Qué cubre el fuero maternal?', acceptedAnswer: { '@type': 'Answer', text: 'La trabajadora embarazada no puede ser despedida sin autorización judicial. Tiene derecho a reintegro e indemnización.' } },
                 { '@type': 'Question', name: '¿Atienden casos de empleadas domésticas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Las empleadas domésticas tienen los mismos derechos laborales. Si no se los reconocen, podemos ayudarle.' } },

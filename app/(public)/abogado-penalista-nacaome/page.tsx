@@ -117,7 +117,7 @@ export default async function AbogadoPenalistaNacaomePage() {
         />
         <div className="space-y-3 mt-6 max-w-3xl mx-auto">
           {[
-            { q: '¿Qué hacer si me detienen en Nacaome?', a: 'Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al +504 9536-3724 y acudimos de inmediato.' },
+            { q: '¿Qué hacer si me detienen en Nacaome?', a: `Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al ${site.whatsappDisplay} y acudimos de inmediato.` },
             { q: '¿Cuánto cuesta un abogado penalista en Nacaome?', a: 'Ofrecemos una primera consulta sin costo para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito. Los honorarios dependen de la complejidad y etapa del proceso.' },
             { q: '¿Atienden emergencias penales 24 horas?', a: 'Sí. En caso de detención o urgencia penal, contáctenos por WhatsApp a cualquier hora. La defensa en las primeras horas es decisiva para el resultado del caso.' },
             { q: '¿Qué delitos defienden?', a: 'Defendemos todo tipo de delitos del Código Penal hondureño: homicidio, hurto, robo, estafa, lesiones, delitos sexuales, narcotráfico, lavado de activos, extorsión, portación ilegal de armas, violencia doméstica y más.' },
@@ -217,7 +217,7 @@ export default async function AbogadoPenalistaNacaomePage() {
               '@type': 'FAQPage',
               '@id': `${url}/#faqpage`,
               mainEntity: [
-                { '@type': 'Question', name: '¿Qué hacer si me detienen en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al +504 9536-3724 y acudimos de inmediato.' } },
+                { '@type': 'Question', name: '¿Qué hacer si me detienen en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: `Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al ${site.whatsappDisplay} y acudimos de inmediato.` } },
                 { '@type': 'Question', name: '¿Cuánto cuesta un abogado penalista en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Ofrecemos una primera consulta sin costo para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito.' } },
                 { '@type': 'Question', name: '¿Atienden emergencias penales 24 horas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. En caso de detención o urgencia penal, contáctenos por WhatsApp a cualquier hora.' } },
                 { '@type': 'Question', name: '¿Qué delitos defienden?', acceptedAnswer: { '@type': 'Answer', text: 'Defendemos todo tipo de delitos del Código Penal hondureño: homicidio, hurto, robo, estafa, lesiones, delitos sexuales, narcotráfico, lavado de activos, extorsión y más.' } },
