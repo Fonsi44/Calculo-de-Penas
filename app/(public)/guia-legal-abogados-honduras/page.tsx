@@ -51,7 +51,7 @@ const articleSchema = {
   headline: 'Guía legal para contratar abogado en Honduras',
   description:
     'Cómo elegir abogado en Honduras: colegiación, honorarios, documentos para la primera consulta y errores a evitar.',
-  author: { '@id': `${site.url}/#founder` },
+  author: { '@id': `${site.url}/#danilo-pineda-maradiaga` },
   publisher: {
     '@type': 'LegalService',
     '@id': `${site.url}/#legal-service`,
@@ -96,7 +96,7 @@ export default function GuiaLegalPage() {
           <AnswerBlock
             eyebrow="Datos del despacho"
             question="¿Quién es Pineda y Asociados?"
-            answer={`${site.name} es un bufete jurídico con sede en Nacaome, Valle (Honduras), fundado por Danilo Pineda Maradiaga. El equipo está integrado por Thania Marlene Paz (familia, civil y mercantil) y Emil Barahona (laboral). Dirección: ${site.address.line2}, ${site.address.city}, ${site.address.department}. Contacto: WhatsApp ${site.phoneDisplay} · ${site.email}. Atención de lunes a sábado.`}
+            answer={`${site.name} es un bufete jurídico con sede en Nacaome, Valle (Honduras). Su socio director es Danilo Pineda Maradiaga y el equipo incluye a Thania Marlene Paz (familia, civil y mercantil) y Emil Barahona (laboral). Dirección: ${site.address.line2}, ${site.address.city}, ${site.address.department}. Contacto: WhatsApp ${site.phoneDisplay} · ${site.email}. Atención de lunes a sábado.`}
           />
         </Container>
       </Section>

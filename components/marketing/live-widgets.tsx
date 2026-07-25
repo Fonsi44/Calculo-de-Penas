@@ -308,7 +308,7 @@ export function StatsCounter() {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {[
-        { value: '+15', label: 'Años de ejercicio', icon: Activity },
+        { value: '14', label: 'Áreas de práctica', icon: Activity },
         { value: '60h', label: 'Horario continuo', icon: Phone },
         { value: '100%', label: 'Privacidad legal', icon: MessageCircle },
       ].map((s, i) => (

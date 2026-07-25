@@ -26,8 +26,8 @@ const DEFAULT_ITEMS: TrustItem[] = [
   },
   {
     icon: Award,
-    title: '+15 años',
-    description: 'Experiencia jurídica en el sur de Honduras',
+    title: 'Enfoque técnico',
+    description: 'Análisis jurídico adaptado a cada asunto',
   },
 ];
 

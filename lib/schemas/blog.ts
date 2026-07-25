@@ -8,7 +8,7 @@ import type { Post } from '@/data/blog/types';
  * Person identificados en temas sensibles, y asociar cada categoría al
  * especialista correcto incrementa la autoridad temática percibida.
  *
- * Categorías no listadas → #founder (Danilo Pineda Maradiaga, socio director
+ * Categorías no listadas → #danilo-pineda-maradiaga (socio director
  * y firma por defecto del bufete). Los @id deben coincidir con los nodos
  * Person inyectados en app/(public)/layout.tsx.
  */
@@ -31,7 +31,7 @@ export function blogPostSchema(post: Post) {
   // Si un post tuviera un autor real distinto (post.author !== site.name),
   // se mantiene ese Person con su nombre.
   const isOrgAuthor = !post.author || post.author === site.name;
-  const authorId = CATEGORY_TO_AUTHOR_ID[post.category] ?? `${site.url}/#founder`;
+  const authorId = CATEGORY_TO_AUTHOR_ID[post.category] ?? `${site.url}/#danilo-pineda-maradiaga`;
   // Recuento de palabras del cuerpo (texto plano sin HTML) para Article schema.
   // Google recomienda `wordCount` en contenido YMYL; ayuda a clasificar depth.
   // stripHtml (sanitize-html) en vez de regex: maneja tags anidados y entidades.

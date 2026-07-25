@@ -87,14 +87,14 @@ export function PublicFooter() {
             </Link>
             <p className="text-sm text-text-inverse/80 leading-relaxed text-pretty">
               <strong className="font-semibold text-text-inverse">Bufete jurídico</strong> en {site.address.city}, {site.address.department},
-              con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
-              pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
+              con <strong className="font-semibold text-accent">defensa penal</strong> como área principal.
+              Atención directa y coordinación interna para asuntos en el sur de Honduras.
             </p>
             <p className="text-xs text-text-inverse/80 leading-relaxed mt-2 text-pretty">
               Aplicación rigurosa del {LEGAL_FRAME_BADGE}.
             </p>
             <p className="text-xs text-accent/80 leading-relaxed mt-1.5 text-pretty">
-              Abogado colegiado en Honduras · Registro profesional vigente.
+              Consulta sujeta a revisión profesional individual.
             </p>
             <p className="text-xs text-text-inverse/70 leading-relaxed mt-2 text-pretty">
               Referencia institucional:{' '}
@@ -268,5 +268,4 @@ export function PublicFooter() {
     </footer>
   );
 }
-
 

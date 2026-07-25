@@ -390,7 +390,7 @@ export function legalServiceSchema() {
       ],
     },
     employee: [
-      { '@id': `${site.url}/#founder` },
+      { '@id': `${site.url}/#danilo-pineda-maradiaga` },
       { '@id': `${site.url}/#thania` },
       { '@id': `${site.url}/#emil` },
     ],
@@ -462,9 +462,6 @@ export function organizationSchema() {
     // Imagen para Knowledge Graph de Google. Reutilizamos og-image.webp (1200x630)
     // como imagen representativa del sitio.
     image: `${site.url}/og-image.webp`,
-    // foundingDate: "~2010" refleja "más de 15 años de ejercicio profesional"
-    // declarado en la home (auditoría 2026). Reemplazar por año exacto si se conoce.
-    foundingDate: '2010',
     // slogan: frase corta sin duplicar la marca (name ya la incluye).
     slogan: 'Abogados en Nacaome, Valle',
     knowsAbout: KNOWS_ABOUT,
@@ -507,25 +504,16 @@ export function organizationSchema() {
       postalCode: site.address.postalCode,
       addressCountry: site.address.countryCode,
     },
-    // founder: array de @id — Danilo y Thania son socios fundadores.
-    // `founder` acepta Person o Person[] según Schema.org; usamos array para
-    // reflejar la codirección fundacional del bufete.
-    founder: [
-      { '@id': `${site.url}/#founder` },
-      { '@id': `${site.url}/#thania` },
-    ],
   };
 }
 
 /**
- * Datos del fundador y socio director del bufete.
+ * Datos del socio director del bufete.
  *
  * Identidad pública verificable: el handle de X (Danilo_Pineda_M) y la firma
  * «Pineda y Asociados» confirman a Danilo Pineda Maradiaga como socio director.
- * Claims verificables ya presentes en el sitio (R4 — no inventar):
- *   - «más de 15 años de ejercicio profesional» (/despacho)
- *   - «Abogado colegiado en Honduras» (/despacho)
- *   - «defensa penal como pilar histórico» (/despacho)
+ * Claims públicos conservados sin atribuir antigüedad ni vigencia registral:
+ *   - «defensa penal como área principal» (/despacho)
  *   - «asistencia a detenidos, audiencias iniciales, preliminares, de
  *      sobreseimiento, juicio oral y recursos de casación» (/despacho)
  *   - «departamento de Valle y zonas circunvecinas» (/despacho)
@@ -541,7 +529,7 @@ export const FOUNDER_PROFILE = {
   imagePenal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
   imageAltText: 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
   description:
-    'Abogado penalista en el sur de Honduras con más de 15 años de ejercicio profesional. Colegiado en Honduras. Defensa penal como pilar histórico del bufete: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
+    'Socio director con práctica enfocada en defensa penal en el sur de Honduras: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
   city: 'Nacaome',
   department: 'Valle',
   cah: process.env.NEXT_PUBLIC_CAH_DANILO || null,
@@ -550,19 +538,19 @@ export const FOUNDER_PROFILE = {
 } as const;
 
 /**
- * Schema.org Person para el fundador (Danilo Pineda Maradiaga).
+ * Schema.org Person para el socio director (Danilo Pineda Maradiaga).
  *
  * Refuerza E-E-A-T (Experience, Expertise, Authoritativeness,
  * Trustworthiness) para temas YMYL jurídicos: Google exige autor
- * identificable en derecho. Se vincula desde Organization.founder,
- * LegalService.employee y BlogPosting.author (vía @id) para alimentar el
+ * identificable en derecho. Se vincula desde LegalService.employee y
+ * BlogPosting.author (vía @id) para alimentar el
  * Knowledge Graph y posibilitar el panel de conocimiento de la entidad.
  */
 export function founderSchema() {
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
-    '@id': `${site.url}/#founder`,
+    '@id': `${site.url}/#danilo-pineda-maradiaga`,
     name: FOUNDER_PROFILE.name,
     honorificPrefix: 'Abogado',
     // knowsLanguage: coherente con LegalService y Organization.
@@ -631,22 +619,22 @@ export function founderSchema() {
 }
 
 /**
- * Datos de Thania Marlene Paz — socia fundadora del bufete.
+ * Datos de Thania Marlene Paz — socia del bufete.
  *
  * Especialidades verificables (aportadas por el despacho, R4 — no inventar):
  *   - Derecho Administrativo y Servicio Civil
  *   - Derecho de Familia
  *   - Derecho Civil y Notarial
  *   - Derecho Mercantil y Empresarial
- * Condición: socia fundadora (codirección fundacional junto a Danilo).
+ * Condición pública conservada: socia del bufete.
  */
 export const THANIA_PROFILE = {
   name: 'Thania Marlene Paz',
-  jobTitle: 'Abogada · Socia fundadora',
+  jobTitle: 'Abogada · Socia',
   image: '/images/equipo/thania-marlene-paz.webp',
-  imageAltText: 'Thania Marlene Paz, abogada socia fundadora de Pineda y Asociados en Nacaome, Valle (Honduras)',
+  imageAltText: 'Thania Marlene Paz, abogada socia de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
-    'Abogada socia fundadora de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+    'Abogada socia de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
   specialties: [
     'Derecho Administrativo y Servicio Civil',
     'Derecho de Familia',
@@ -661,10 +649,9 @@ export const THANIA_PROFILE = {
 } as const;
 
 /**
- * Schema.org Person para Thania Marlene Paz (socia fundadora).
+ * Schema.org Person para Thania Marlene Paz (socia).
  *
- * Se vincula desde Organization.founder (array junto a #founder),
- * LegalService.employee y BlogPosting.author (categorías de familia, civil,
+ * Se vincula desde LegalService.employee y BlogPosting.author (categorías de familia, civil,
  * mercantil, administrativo, propiedad intelectual) vía @id.
  */
 export function thaniaSchema() {

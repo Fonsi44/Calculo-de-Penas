@@ -261,8 +261,8 @@ const PRIORITY_PENAL_SLUGS = [
               Abogado penalista · Sur de Honduras
             </p>
             <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty max-w-xl">
-              Más de 15 años de ejercicio profesional. Colegiado en Honduras. Le atiendo
-              personalmente en audiencias iniciales, preliminares, de sobreseimiento,
+              Práctica enfocada en defensa penal en el sur de Honduras. Atención
+              personal en audiencias iniciales, preliminares, de sobreseimiento,
               juicio oral y recursos de casación en el departamento de Valle y la zona sur.
             </p>
             <div className="mt-6 flex flex-wrap gap-3 justify-center lg:justify-start">
@@ -607,4 +607,3 @@ const PRIORITY_PENAL_SLUGS = [
     </>
   );
 }
-

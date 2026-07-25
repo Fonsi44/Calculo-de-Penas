@@ -112,8 +112,8 @@ export default async function AbogadoPenalistaCholutecaPage() {
             Nacaome, Valle, que presta servicios de{' '}
             <strong>defensa penal en Choluteca</strong> y el sur de Honduras.
             Atendemos detenciones, audiencias iniciales, medidas cautelares,
-            juicio oral y recursos, con más de 15 años de ejercicio profesional
-            y presencia activa en los juzgados de la región.
+            juicio oral y recursos, con atención coordinada desde Nacaome
+            para los juzgados de la región.
           </p>
           <p className="text-text-secondary leading-relaxed">
             Enfrentar un proceso penal sin defensa técnica puede tener
