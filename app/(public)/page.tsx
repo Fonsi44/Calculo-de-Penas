@@ -14,14 +14,14 @@ import {
   Award,
   BriefcaseBusiness,
   Globe,
+  MessageCircle,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE, telHref } from '@/lib/site';
+import { site, FOUNDER_PROFILE, telHref, whatsappHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Card } from '@/components/ui/card';
 import { GoogleReviews } from '@/components/marketing/google-reviews';
-import { MapEmbedLazy as MapEmbed } from '@/components/marketing/map-embed-lazy';
 import { areasGenerales } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
@@ -347,6 +347,29 @@ export default async function HomePage() {
         <ProcessStepper steps={PROCESS} withConnector />
       </Section>
 
+      {/* EQUIPO Y DESPACHO — referencia al dueño canónico (Hito 9.7).
+          Bloque breve que conecta al /despacho sin duplicar su contenido. */}
+      <Section background="muted" spacing="sm" ariaLabel="El equipo">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="eyebrow-rule text-accent-dark text-xs font-bold uppercase tracking-eyebrow mb-2">
+            El despacho
+          </p>
+          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
+            Un bufete con más de 15 años de experiencia
+          </h2>
+          <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
+            Tres socios con especialidades complementarias, atención directa del abogado
+            responsable y coordinación interna cuando su caso cruza varias ramas del derecho.
+          </p>
+          <Link
+            href="/despacho"
+            className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            Conozca el despacho <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Section>
+
       {/* GOOGLE REVIEWS — reseñas reales verificadas del perfil de Google Business */}
       <GoogleReviews />
 
@@ -364,99 +387,51 @@ export default async function HomePage() {
         slugs={[...TOP_ORGANIC_GUIDE_SLUGS]}
       />
 
-      {/* ATENCIÓN PARA HONDUREÑOS EN ESPAÑA (FASE 2) — bloque breve que
-          conecta la portada con el módulo específico. No detalla trámites
-          (lo hace /hondurenos-en-espana); solo señala la línea de servicio
-          y delimita HN vs ES sin inventar colaboraciones. */}
-      <Section background="warm" spacing="md" ariaLabel="Hondureños en España">
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
-            <Globe size={20} aria-hidden="true" />
-          </span>
-          <p className="eyebrow-rule text-accent-dark text-xs font-bold uppercase tracking-eyebrow mb-2">
-            Hondureños en España
-          </p>
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary leading-tight text-balance">
-            ¿Reside en España y necesita gestionar algo en Honduras?
-          </h2>
-          <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed text-pretty">
-            Coordinamos poderes, divorcios, custodia, sucesiones, trámites
-            documentales y apostilla entre España y Honduras. Lo que requiere
-            autoridad hondureña lo gestionamos directamente; lo que corresponde a
-            la Administración española se orienta con claridad.
-          </p>
-          <Link
-            href="/hondurenos-en-espana"
-            className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-          >
-            Ver servicios para hondureños en España <ArrowRight size={14} />
-          </Link>
-        </div>
-      </Section>
-
-      {/* VISÍTENOS — bloque de cercanía con datos de contacto + mapa.
-          Conserva el rol de la sección original pero más compacto. */}
-      <Section spacing="md" ariaLabel="Visítenos">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
-          <div className="flex flex-col">
-            <p className="eyebrow-rule text-accent-dark mb-4">Visítenos</p>
-            <h2 className="font-serif font-extrabold text-2xl md:text-3xl lg:text-4xl text-primary leading-tight text-balance">
-              Prefiere vernos en persona
-            </h2>
-            <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed max-w-xl text-pretty">
-              Con cita previa, le recibimos en nuestro despacho de Nacaome con la confidencialidad
-              y el tiempo que su caso merece. Si prefiere no desplazarse, también le atendemos por
-              teléfono o WhatsApp en horario hábil.
-            </p>
-            <ul className="mt-6 space-y-2.5">
-              <li>
-                <Link
-                  href="/como-llegar"
-                  title="Dirección y mapa del bufete Pineda y Asociados en Nacaome, Valle"
-                  className="group flex items-start gap-3.5 rounded-lg p-2 -mx-2 hover:bg-surface transition-colors focus-visible:outline-none"
-                >
-                  <IconBadge icon={MapPin} variant="primary" />
-                  <div className="min-w-0">
-                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Dirección</p>
-                    <p className="text-sm font-semibold text-text leading-snug mt-0.5">{site.address.line1}</p>
-                    <p className="text-xs text-text-secondary mt-0.5">{site.address.line2}</p>
-                    <p className="text-xs text-text-secondary">{site.address.city}, {site.address.department}, {site.address.country}</p>
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <a
-                  href={telHref()}
-                  title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
-                  className="group flex items-start gap-3.5 rounded-lg p-2 -mx-2 hover:bg-surface transition-colors focus-visible:outline-none"
-                >
-                  <IconBadge icon={Phone} variant="primary" />
-                  <div className="min-w-0">
-                    <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Teléfono</p>
-                    <p className="text-sm font-semibold text-primary leading-snug mt-0.5 tabular-nums group-hover:text-accent-dark transition-colors">{site.phoneDisplay}</p>
-                  </div>
-                </a>
-              </li>
-              <li className="flex items-start gap-3.5 rounded-lg p-2 -mx-2">
-                <IconBadge icon={Clock} variant="primary" />
-                <div className="min-w-0">
-                  <p className="text-xxs font-bold uppercase tracking-wider text-text-muted">Horario</p>
-                  <p className="text-sm font-semibold text-text leading-snug mt-0.5">{site.hours}</p>
-                  <p className="text-xs text-text-secondary mt-0.5">Con cita previa</p>
-                </div>
-              </li>
-            </ul>
-            <div className="mt-7">
-              <CTAGroup variant="inline" />
-            </div>
-            <Link href="/como-llegar" title="Indicaciones para llegar al bufete Pineda y Asociados en Nacaome, Valle" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-primary hover:text-accent-dark transition-colors">
-              indicaciones para llegar al bufete <ArrowRight size={14} />
+      {/* COBERTURA TERRITORIAL, ESPAÑA Y VISITA — fusionado (Hito 9.7).
+          Combina Hondureños en España + Visítenos en una sección única con
+          tres columnas, evitando repetir la información de sede del hero. */}
+      <Section background="warm" spacing="md" ariaLabel="Cobertura y visita">
+        <SectionHeader
+          eyebrow="Cobertura y visita"
+          title="Le atendemos en Nacaome, en el sur de Honduras y desde España"
+          subtitle="Atención presencial en el despacho, coordinación remota para otros puntos del país y asistencia exprés desde España para trámites en Honduras."
+          align="center"
+        />
+        <div className="grid md:grid-cols-3 gap-4 mt-6">
+          <div className="text-center p-5 rounded-lg bg-surface border border-border/30">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
+              <MapPin size={20} aria-hidden="true" />
+            </span>
+            <h3 className="font-bold text-sm text-text">Presencial en Nacaome</h3>
+            <p className="text-xs text-text-secondary mt-1 leading-relaxed">Con cita previa. {site.address.line1}, {site.address.city}.</p>
+            <Link href="/como-llegar" className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark hover:text-primary transition-colors">
+              Cómo llegar <ArrowRight size={12} />
             </Link>
           </div>
-          <div className="flex flex-col">
-            <Card padding="none" className="overflow-hidden aspect-[4/3] lg:aspect-auto lg:flex-1 bg-surface-alt">
-              <MapEmbed />
-            </Card>
+          <div className="text-center p-5 rounded-lg bg-surface border border-border/30">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
+              <Globe size={20} aria-hidden="true" />
+            </span>
+            <h3 className="font-bold text-sm text-text">Hondureños en España</h3>
+            <p className="text-xs text-text-secondary mt-1 leading-relaxed">Poderes, divorcios, sucesiones y trámites documentales entre España y Honduras.</p>
+            <Link href="/hondurenos-en-espana" className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent-dark hover:text-primary transition-colors">
+              Ver servicios <ArrowRight size={12} />
+            </Link>
+          </div>
+          <div className="text-center p-5 rounded-lg bg-surface border border-border/30">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-accent/15 text-accent-dark border border-accent/30 mb-3">
+              <Phone size={20} aria-hidden="true" />
+            </span>
+            <h3 className="font-bold text-sm text-text">Contacto directo</h3>
+            <p className="text-xs text-text-secondary mt-1 leading-relaxed">{site.phoneDisplay} · {site.hours}</p>
+            <div className="flex gap-2 justify-center mt-3">
+              <a href={telHref()} className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-primary text-white text-xs font-bold hover:bg-primary-light transition-colors">
+                <Phone size={12} /> Llamar
+              </a>
+              <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-success text-white text-xs font-bold hover:opacity-90 transition-colors">
+                <MessageCircle size={12} /> WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </Section>
