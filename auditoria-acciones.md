@@ -770,13 +770,20 @@ DNS y redirección HTTP→HTTPS responden correctamente.
 
 **Notificación a buscadores:** IndexNow recibió 74 URLs canónicas en un único
 lote controlado; tanto `api.indexnow.org` como Bing respondieron HTTP 200. El
-reenvío del sitemap a Google Search Console por API fue rechazado con HTTP 403
-porque el refresh token local solo tiene alcance de lectura. La propiedad sí
-figura con permiso `siteOwner`; queda pendiente completar el envío desde la
-sesión web o renovar el token con alcance `webmasters`.
+intento previo por API fue rechazado porque el token local solo tiene alcance
+de lectura, pero el titular completó el reenvío desde la sesión web de Google
+Search Console el 25/7/26. El detalle de GSC confirma `El sitemap se ha procesado
+correctamente`, última lectura 25/7/26 y 212 páginas descubiertas.
 
-**Pendiente externo residual:** confirmar el sitemap en Google Search Console
-y vigilar su procesamiento. La antigüedad, el año de fundación, los fundadores
-y la colegiación quedan confirmados por el titular; la revisión jurídica de
-porcentajes, plazos y demás afirmaciones del registro legal continúa
-`NO VALIDADO`.
+**Cobertura GSC tras el envío:** el informe de indexación todavía conserva su
+última actualización del 10/7/26: 103 páginas indexadas, 107 descubiertas y
+pendientes, y 2 URLs con un `noindex` histórico. Las 107 figuran en validación
+desde el 20/6/26 con 0 errores. Las 2 URLs históricas se comprobaron en
+producción con `index, follow` y canonical propio; se inició la validación de la
+corrección el 25/7/26. No queda una corrección técnica adicional para esos
+grupos: corresponde esperar el nuevo rastreo y la actualización del informe.
+
+**Pendiente externo residual:** vigilar la validación y el reprocesamiento de
+Google. La antigüedad, el año de fundación, los fundadores y la colegiación
+quedan confirmados por el titular; la revisión jurídica de porcentajes, plazos
+y demás afirmaciones del registro legal continúa `NO VALIDADO`.
