@@ -6,6 +6,8 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { HubFaq } from '@/components/marketing/hub-faq';
+import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
 
@@ -92,17 +94,8 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
       provider: { '@id': `${site.url}/#legal-service` },
       url,
     },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      '@id': `${url}#faqpage`,
-      url,
-      mainEntity: landing.faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.pregunta,
-        acceptedAnswer: { '@type': 'Answer', text: f.respuesta },
-      })),
-    },
+    // FASE 5: el schema FAQPage (@id `${url}#faqpage`) lo emite ahora <HubFaq>
+    // más abajo en el JSX. Antes se duplicaba aquí y en el componente manual.
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
@@ -133,7 +126,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </div>
         <Container size="lg" className="relative py-6 md:py-10">
           <div className="max-w-3xl">
-            <p className="text-xxs font-bold uppercase tracking-widest text-accent mb-2.5">
+            <p className="eyebrow-rule text-accent mb-2.5">
               {landing.heroEyebrow}
             </p>
             <h1 className="font-serif font-extrabold text-xl md:text-2xl lg:text-3xl leading-tight">
@@ -210,9 +203,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             const servicioHref = SERVICIO_SLUG_MAP[s.titulo.trim().toLowerCase()];
             const inner = (
               <>
-                <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Scale size={20} className="text-accent-dark" aria-hidden="true" />
-                </span>
+                <IconBadge icon={Scale} variant="accent" className="mt-0.5" />
                 <div className="min-w-0 flex-1">
                   <h3 className="font-bold text-sm md:text-base text-primary leading-snug group-hover:text-accent-dark transition-colors">{s.titulo}</h3>
                   <p className="text-sm text-text-secondary leading-relaxed mt-1">{s.descripcion}</p>
@@ -247,22 +238,16 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </div>
       </Section>
 
-      {/* FAQ local */}
-      <Section spacing="md" id="preguntas-frecuentes">
-        <SectionHeader
-          eyebrow="Preguntas frecuentes"
-          title={`Dudas comunes sobre abogados en ${landing.ciudad}`}
-          align="center"
-        />
-        <div className="max-w-3xl mx-auto space-y-3">
-          {landing.faqs.map((faq, i) => (
-            <Card key={i} padding="md" className="border-l-4 border-l-accent">
-              <h3 className="font-bold text-sm text-text leading-tight mb-1.5">{faq.pregunta}</h3>
-              <p className="text-sm text-text-secondary leading-relaxed">{faq.respuesta}</p>
-            </Card>
-          ))}
-        </div>
-      </Section>
+      {/* FAQ local — FASE 5: delega en HubFaq canónico (acordeón + JSON-LD).
+          Antes eran Cards border-l-accent siempre abiertas + FAQPage manual
+          duplicado en ldSchemas. HubFaq emite el FAQPage con mismo @id. */}
+      <HubFaq
+        faqs={landing.faqs}
+        url={url}
+        id="preguntas-frecuentes"
+        eyebrow="Preguntas frecuentes"
+        title={`Dudas comunes sobre abogados en ${landing.ciudad}`}
+      />
 
       {/* Artículos relacionados (enlazado interno landing ↔ blog) */}
       {landing.postsRelacionados && landing.postsRelacionados.length > 0 && (
@@ -280,9 +265,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
                 className="group block focus-visible:outline-none"
               >
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
-                  <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3 border border-accent/20">
-                    <BookOpen size={20} aria-hidden="true" />
-                  </div>
+                  <IconBadge icon={BookOpen} variant="accent" className="mb-3" />
                   <h3 className="font-bold text-sm text-text leading-tight line-clamp-2 group-hover:text-primary transition-colors">
                     {p.titulo}
                   </h3>
