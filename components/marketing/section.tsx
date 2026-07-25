@@ -23,6 +23,17 @@ interface SectionProps {
   className?: string;
   containerSize?: 'sm' | 'md' | 'lg' | 'xl';
   background?: 'default' | 'muted' | 'primary' | 'accent' | 'warm';
+  /**
+   * FASE 5 — alias semántico de `background` alineado con el design-system.
+   * Mapea a los fondos ya existentes:
+   *   default  → background='default'  (surface)
+   *   subtle   → background='muted'    (bg-surface-alt, pausa visual)
+   *   contrast → background='warm'     (bg-page-warm, contraste cálido)
+   *   brand    → background='primary'  (navy, identidad de marca)
+   *   editorial→ background='default'  (prosa editorial, sin cambio de fondo)
+   * Si se pasa `background` explícito, tiene prioridad (compatibilidad).
+   */
+  variant?: 'default' | 'subtle' | 'contrast' | 'brand' | 'editorial';
   id?: string;
   ariaLabel?: string;
   spacing?: 'sm' | 'md' | 'lg';
@@ -36,6 +47,14 @@ const BG: Record<NonNullable<SectionProps['background']>, string> = {
   warm: 'bg-page-warm',
 };
 
+const VARIANT_TO_BG: Record<NonNullable<SectionProps['variant']>, NonNullable<SectionProps['background']>> = {
+  default: 'default',
+  subtle: 'muted',
+  contrast: 'warm',
+  brand: 'primary',
+  editorial: 'default',
+};
+
 const SPACING = {
   sm: 'py-4 md:py-6',
   md: 'py-6 md:py-8',
@@ -46,16 +65,19 @@ export function Section({
   children,
   className,
   containerSize = 'lg',
-  background = 'default',
+  background,
+  variant,
   id,
   ariaLabel,
   spacing = 'md',
 }: SectionProps) {
+  // FASE 5: `background` explícito tiene prioridad sobre `variant` (compat).
+  const resolvedBg = background ?? (variant ? VARIANT_TO_BG[variant] : 'default');
   return (
     <section
       id={id}
       aria-label={ariaLabel}
-      className={cn(BG[background], SPACING[spacing], className)}
+      className={cn(BG[resolvedBg], SPACING[spacing], className)}
     >
       <Container size={containerSize}>{children}</Container>
     </section>

@@ -160,10 +160,26 @@
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-2xl: 24px;
+  /* FASE 5: alias pill para chips/botones redondos (legibilidad del design-system) */
+  --radius-pill: 9999px;
 
   /* Easing & motion */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* FASE 5: duraciones de transición canónicas.
+     Antes había 7 valores dispersos hardcodeados en utilidades
+     (150/200/220/240/280/300/320 ms). Estos 3 tokens los consolidan. */
+  --duration-fast: 150ms;     /* micro: focus, links contextuales */
+  --duration-normal: 220ms;   /* estándar: hovers de tarjeta, chips, reveals */
+  --duration-slow: 320ms;     /* entrada: card-premium, faq-anim */
+
+  /* FASE 5: focus ring canónico.
+     Antes la utilidad .focus-ring usaba opacidad 0.40 mientras 21 sitios
+     inline usaban shadow-[0_0_0_3px_rgba(212,175,55,0.18)] (opacidad 0.18).
+     Estos tokens unifican ambas variantes bajo un mismo nombre. */
+  --shadow-focus-ring: 0 0 0 3px rgba(212, 175, 55, 0.40);
+  --shadow-focus-ring-subtle: 0 0 0 3px rgba(212, 175, 55, 0.18);
 
   /* Animaciones */
   --animate-fade-in-up: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -811,7 +827,7 @@ input[type="checkbox"] {
 .hero-card {
   position: relative;
   background: var(--color-surface);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.80) inset,
     0 2px 6px rgba(15, 29, 58, 0.06),
@@ -839,7 +855,7 @@ input[type="checkbox"] {
   position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.80) inset,
     0 2px 6px rgba(15, 29, 58, 0.06),
@@ -1277,11 +1293,11 @@ details.faq-anim:not([open]) > summary:hover {
 /* --- Focus ring consistente para targets interactivos ---
    Mejora navegación por teclado con anillo dorado visible. */
 .focus-ring {
-  transition: box-shadow 200ms var(--ease-soft);
+  transition: box-shadow var(--duration-fast) var(--ease-soft);
 }
 .focus-ring:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.40);
+  box-shadow: var(--shadow-focus-ring);
 }
 
 /* --- Input feedback: transición suave de estados ---
