@@ -33,7 +33,7 @@ import {
  * Máximo total de enlaces contextuales a insertar en un post.
  * Anti-saturación: Google penaliza el exceso de enlaces internos.
  */
-const MAX_TOTAL_LINKS = 8;
+const MAX_TOTAL_LINKS = 5;
 
 /**
  * Tags HTML cuyo contenido NO debe ser enlazado.
@@ -68,6 +68,29 @@ export function normalizeBlogInternalLinks(html: string): string {
       return `${prefix}${quote}/${href}${quote}`;
     },
   );
+}
+
+const INTERNAL_HREF_PATTERN =
+  /<a\b[^>]*\bhref\s*=\s*(["'])(\/[^"']*)\1/gi;
+
+/**
+ * Extrae destinos internos absolutos desde HTML editorial.
+ *
+ * Acepta comillas simples o dobles y conserva fragmentos/queries. No cuenta
+ * protocolos externos, mailto, tel ni hrefs relativos sin normalizar.
+ */
+export function extractBlogInternalHrefs(html: string): string[] {
+  const hrefs: string[] = [];
+  let match: RegExpExecArray | null;
+
+  INTERNAL_HREF_PATTERN.lastIndex = 0;
+  while ((match = INTERNAL_HREF_PATTERN.exec(html)) !== null) {
+    if (!match[2].startsWith('//')) {
+      hrefs.push(match[2]);
+    }
+  }
+
+  return hrefs;
 }
 
 /**
@@ -118,7 +141,7 @@ function linkFirstOccurrence(text: string, entity: LinkableEntity): { result: st
   const before = text.slice(0, match.index);
   const after = text.slice(match.index + matchedText.length);
   // El anchor usa el texto matched original (preserva mayúsculas/tildes).
-  const anchor = `<a href="${entity.href}" class="context-link">${matchedText}</a>`;
+  const anchor = `<a href="${entity.href}" class="context-link" data-internal-link="${entity.href}">${matchedText}</a>`;
   return { result: before + anchor + after, linked: true };
 }
 
@@ -200,6 +223,54 @@ export function injectContextLinks(html: string, options?: ContextLinkOptions): 
   }
 
   return tokens.join('');
+}
+
+export interface BlogBodyLinkAnalysis {
+  /** HTML tras normalizar hrefs editoriales relativos. */
+  normalizedHtml: string;
+  /** HTML que recibe finalmente el render tras el autoenlazado. */
+  effectiveHtml: string;
+  /** Enlaces persistidos en el body, después de normalizar sus rutas. */
+  persistedHrefs: string[];
+  /** Enlaces efectivos del body, incluidos los contextuales. */
+  effectiveHrefs: string[];
+  /** Destinos añadidos por el autoenlazado contextual. */
+  contextualHrefs: string[];
+}
+
+/**
+ * Reproduce la transformación de enlaces aplicada por la página de artículo.
+ * Permite que los auditores midan la salida efectiva y no solo el HTML crudo
+ * almacenado en la base de datos.
+ */
+export function analyzeBlogBodyLinks(
+  html: string,
+  options?: ContextLinkOptions,
+): BlogBodyLinkAnalysis {
+  const normalizedHtml = normalizeBlogInternalLinks(html);
+  const persistedHrefs = extractBlogInternalHrefs(normalizedHtml);
+  const effectiveHtml = injectContextLinks(normalizedHtml, options);
+  const effectiveHrefs = extractBlogInternalHrefs(effectiveHtml);
+
+  const persistedCounts = new Map<string, number>();
+  for (const href of persistedHrefs) {
+    persistedCounts.set(href, (persistedCounts.get(href) ?? 0) + 1);
+  }
+
+  const contextualHrefs = effectiveHrefs.filter((href) => {
+    const remaining = persistedCounts.get(href) ?? 0;
+    if (remaining === 0) return true;
+    persistedCounts.set(href, remaining - 1);
+    return false;
+  });
+
+  return {
+    normalizedHtml,
+    effectiveHtml,
+    persistedHrefs,
+    effectiveHrefs,
+    contextualHrefs,
+  };
 }
 
 /**

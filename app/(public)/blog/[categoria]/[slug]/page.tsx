@@ -237,7 +237,7 @@ function injectMidArticleCta(body: string, slug: string): string {
   <p class="text-xxs font-bold uppercase tracking-wider text-accent-dark mb-1">Consulta legal</p>
   <p class="text-sm font-semibold text-text mb-1">${cta.title}</p>
   <p class="text-sm text-text-secondary leading-relaxed mb-2">${cta.body}</p>
-  <a href="/solicitar-consulta#formulario" class="text-sm font-semibold text-primary hover:text-accent-dark">${cta.anchor}</a>
+  <a href="/solicitar-consulta#formulario" data-event-name="seo_blog_cta_click" data-cta-location="blog_inline" data-cta-topic="${slug}" class="text-sm font-semibold text-primary hover:text-accent-dark">${cta.anchor}</a>
 </aside>`;
 
   if (targetIndex >= 0) {
