@@ -156,6 +156,8 @@ function mapToPost(p: BlogPost): Post {
     reviewedBy: p.reviewedBy ?? undefined,
     reviewedAt: p.reviewedAt?.toISOString() ?? undefined,
     legalReviewNotes: p.legalReviewNotes ?? undefined,
+    aiReviewStatus: p.aiReviewStatus ?? undefined,
+    aiReviewedAt: p.aiReviewedAt,
     lastReviewedAt: p.lastReviewedAt?.toISOString() ?? undefined,
     nextReviewDueAt: p.nextReviewDueAt?.toISOString() ?? undefined,
   };

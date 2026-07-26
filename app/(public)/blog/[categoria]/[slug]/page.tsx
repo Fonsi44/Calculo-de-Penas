@@ -17,6 +17,7 @@ import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
+import { AiReviewNotice } from '@/components/blog/ai-review-notice';
 import { CANONICAL_REVIEWERS } from '@/lib/legal-review';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
@@ -496,6 +497,15 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 {/* Disclaimer legal único con fecha de revisión real del post (E-E-A-T).
                     El footer global NO repite este concepto (ver public-footer.tsx). */}
                 <LegalDisclaimer lastReviewedIso={post.updatedAt ?? post.publishedAt} />
+
+                {/* Aviso de revisión documental IA (Fase 3B).
+                    Semántica por estado: completed/source_checked/needs_human_review muestran
+                    mensaje; blocked/not_started/in_progress no renderizan (evita falsa confianza).
+                    No menciona proveedor ni modelo. */}
+                <AiReviewNotice
+                  aiReviewStatus={post.aiReviewStatus ?? null}
+                  aiReviewedAt={post.aiReviewedAt ?? null}
+                />
 
                 <RelatedService category={post.category} />
 

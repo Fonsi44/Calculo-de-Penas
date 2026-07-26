@@ -30,6 +30,10 @@ export type Post = {
   reviewedAt?: string;
   legalReviewNotes?: string;
 
+  // AI document review (Fase 3B)
+  aiReviewStatus?: string;
+  aiReviewedAt?: string | Date | null;
+
   // Content audit
   lastReviewedAt?: string;
   nextReviewDueAt?: string;
