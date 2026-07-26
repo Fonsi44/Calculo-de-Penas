@@ -367,3 +367,8 @@ auditoriablog_*.md
 # Los .md de docs/design/fase-5/ SÍ se commitean; los PNG no (artefactos pesados y volátiles).
 /docs/design/fase-5/baseline/
 /docs/design/fase-5/after/
+
+# Fase 4A — backups restaurables del Lote 2 (regenerables con scripts/fase4a-exportar-lote2.ts)
+# Contienen bodies y estados; se mantienen locales para rollback, no se versionan.
+/data/lote2-backup.json
+/data/lote*-backup.json
