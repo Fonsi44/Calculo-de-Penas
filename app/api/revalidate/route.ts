@@ -55,6 +55,9 @@ const ALLOWED_PATH_PREFIXES = [
   '/blog',
   '/preguntas-frecuentes',
   '/abogados-en-',
+  // Landings de abogados penalistas por ciudad (Lote 1 Penal, p.ej.
+  // /abogado-penalista-choluteca, /abogado-penalista-sur-honduras).
+  '/abogado-penalista-',
   '/servicios-juridicos',
   '/derecho-',
   '/solicitar-consulta',

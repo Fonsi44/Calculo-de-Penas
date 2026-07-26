@@ -26,12 +26,10 @@
  */
 import { test, expect, type Page } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..');
-const SHOTS_DIR = resolve(ROOT, '.tmp/fase3e-shots');
+// process.cwd() en Playwright es la raíz del proyecto (donde se ejecuta el CLI).
+const SHOTS_DIR = resolve(process.cwd(), '.tmp/fase3e-shots');
 mkdirSync(SHOTS_DIR, { recursive: true });
 
 const BASE = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3100';
@@ -83,7 +81,7 @@ function attachCollectors(page: Page) {
 }
 
 async function checkArticulo(page: Page, art: ArticuloCheck, viewport: 'desktop' | 'mobile') {
-  const url = `${BASE}/blog/penal/${art.slug}`;
+  const url = `${BASE}/blog/derecho-penal/${art.slug}`;
   const collectors = attachCollectors(page);
 
   const res = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30_000 });
@@ -92,23 +90,26 @@ async function checkArticulo(page: Page, art: ArticuloCheck, viewport: 'desktop'
   // Canonical presente y correcto.
   const canonical = await page.getAttribute('link[rel="canonical"]', 'href');
   expect(canonical, `canonical presente para ${art.slug}`).toBeTruthy();
-  expect(canonical).toContain(`/blog/penal/${art.slug}`);
+  expect(canonical).toContain(`/blog/derecho-penal/${art.slug}`);
 
   // h1 único (R15).
   const h1Count = await page.locator('h1').count();
   expect(h1Count, `un solo h1 en ${art.slug}`).toBe(1);
 
-  // Aviso AiReviewNotice coherente. Buscamos texto típico del aviso.
+  // Aviso AiReviewNotice coherente con el estado. El componente
+  // (components/blog/ai-review-notice.tsx) renderiza copy DISTINTO según estado:
+  //   completed: "Contenido contrastado documentalmente..."
+  //   needs_human_review: "...cuestiones pendientes de revisión jurídica..."
   const bodyText = await page.locator('body').innerText({ timeout: 10_000 }).catch(() => '');
-  const tieneAviso = /revisi[oó]n humana|pendiente de revisi[oó]n|no constituye consejo legal/i.test(bodyText);
+  const copyCompleted = /Contenido contrastado documentalmente/i.test(bodyText);
+  const copyNeedsReview = /cuestiones pendientes de revisi[oó]n jur[ií]dica/i.test(bodyText);
 
   if (art.estado === 'needs_human_review') {
-    expect(tieneAviso, `aviso AiReviewNotice debe estar presente en needs_human_review ${art.slug}`).toBe(true);
+    expect(copyNeedsReview, `aviso 'pendientes de revisión jurídica' en needs_human_review ${art.slug}`).toBe(true);
+    expect(copyCompleted, `NO debe decir 'contrastado documentalmente' en needs_human_review ${art.slug}`).toBe(false);
   } else {
-    // completed: idealmente sin aviso de revisión humana. Permitimos si hay
-    // un disclaimer legal genérico (<LegalDisclaimer>), pero no el aviso
-    // específico de needs_human_review.
-    expect(tieneAviso, `sin aviso de revisión humana en completed ${art.slug}`).toBe(false);
+    expect(copyCompleted, `aviso 'contrastado documentalmente' en completed ${art.slug}`).toBe(true);
+    expect(copyNeedsReview, `NO debe decir 'pendientes de revisión jurídica' en completed ${art.slug}`).toBe(false);
   }
 
   // Layout: sin overflow horizontal (scrollX == 0 en el viewport).
@@ -179,7 +180,7 @@ test.describe('Fase 3E — Service worker en producción', () => {
   });
 
   test('el service worker registra y activa una caché nueva', async ({ page }) => {
-    const url = `${BASE}/blog/penal/defensa-penal-honduras`;
+    const url = `${BASE}/blog/derecho-penal/defensa-penal-honduras`;
     await page.goto(url, { waitUntil: 'networkidle', timeout: 30_000 });
 
     // El SW se registra en production tras 'load'. Damos un margen.

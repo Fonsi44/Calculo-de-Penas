@@ -326,12 +326,21 @@ const nextConfig: NextConfig = {
   // rewrite hace que el navegador siga pidiendo /sw.js pero reciba el
   // artefacto con cache ID actualizado por deploy, SIN modificar la
   // plantilla versionada (que es lo que dejaba el árbol de Git sucio).
-  // La regla va antes que /:key.txt para no ser capturada por ella.
+  //
+  // IMPORTANTE: el rewrite del SW va en `beforeFiles` para que se aplique
+  // ANTES de que Next sirva el archivo estático public/sw.js (la plantilla).
+  // En `afterFiles` (default), los archivos de /public se sirven primero y el
+  // rewrite nunca actuaría. El rewrite de IndexNow sí puede ir en afterFiles.
   async rewrites() {
-    return [
-      { source: '/sw.js', destination: '/sw.generated.js' },
-      { source: '/:key.txt', destination: '/api/indexnow-key' },
-    ];
+    return {
+      beforeFiles: [
+        { source: '/sw.js', destination: '/sw.generated.js' },
+      ],
+      afterFiles: [
+        { source: '/:key.txt', destination: '/api/indexnow-key' },
+      ],
+      fallback: [],
+    };
   },
   async headers() {
     return [

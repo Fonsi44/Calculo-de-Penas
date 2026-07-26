@@ -33,22 +33,24 @@ const BASE_URL = process.env.FASE3E_BASE_URL ?? 'https://www.pinedayasociadoshn.
 const OUT_PATH = process.env.FASE3E_OUT ?? resolve(ROOT, 'docs/audits/fase3e-validacion-15-articulos.json');
 
 // 15 slugs del Lote 1 Penal con su estado esperado (fase3d-matriz-lote1.json).
+// type: 'blog' (URL /blog/derecho-penal/<slug>) o 'landing' (URL /<slug>).
+// abogado-penalista-choluteca es una landing local, no un blog post.
 const ARTICULOS = [
-  { slug: 'abogado-penalista-choluteca', estadoEsperado: 'needs_human_review' },
-  { slug: 'abogado-penalista-sur-honduras', estadoEsperado: 'completed' },
-  { slug: 'allanamiento-ilegal-violacion-domicilio-honduras', estadoEsperado: 'needs_human_review' },
-  { slug: 'antejuicio-en-honduras', estadoEsperado: 'needs_human_review' },
-  { slug: 'audiencia-inicial-proceso-penal-honduras', estadoEsperado: 'completed' },
-  { slug: 'cuando-necesito-abogado-penalista-honduras', estadoEsperado: 'completed' },
-  { slug: 'cuando-prescribe-delito-en-honduras', estadoEsperado: 'needs_human_review' },
-  { slug: 'defensa-penal-honduras', estadoEsperado: 'completed' },
-  { slug: 'defensa-penal-menores-edad-honduras', estadoEsperado: 'needs_human_review' },
-  { slug: 'delitos-mas-comunes-honduras', estadoEsperado: 'needs_human_review' },
-  { slug: 'derechos-detenido-honduras-guia-constitucional', estadoEsperado: 'needs_human_review' },
-  { slug: 'diferencia-denuncia-querella-acusacion-honduras', estadoEsperado: 'completed' },
-  { slug: 'estafas-fraudes-tipos-penales-honduras', estadoEsperado: 'needs_human_review' },
-  { slug: 'fianza-medidas-cautelares-proceso-penal-honduras', estadoEsperado: 'completed' },
-  { slug: 'violencia-domestica-ruta-legal-honduras', estadoEsperado: 'needs_human_review' },
+  { slug: 'abogado-penalista-choluteca', estadoEsperado: 'needs_human_review', type: 'landing' },
+  { slug: 'abogado-penalista-sur-honduras', estadoEsperado: 'completed', type: 'blog' },
+  { slug: 'allanamiento-ilegal-violacion-domicilio-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'antejuicio-en-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'audiencia-inicial-proceso-penal-honduras', estadoEsperado: 'completed', type: 'blog' },
+  { slug: 'cuando-necesito-abogado-penalista-honduras', estadoEsperado: 'completed', type: 'blog' },
+  { slug: 'cuando-prescribe-delito-en-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'defensa-penal-honduras', estadoEsperado: 'completed', type: 'blog' },
+  { slug: 'defensa-penal-menores-edad-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'delitos-mas-comunes-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'derechos-detenido-honduras-guia-constitucional', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'diferencia-denuncia-querella-acusacion-honduras', estadoEsperado: 'completed', type: 'blog' },
+  { slug: 'estafas-fraudes-tipos-penales-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
+  { slug: 'fianza-medidas-cautelares-proceso-penal-honduras', estadoEsperado: 'completed', type: 'blog' },
+  { slug: 'violencia-domestica-ruta-legal-honduras', estadoEsperado: 'needs_human_review', type: 'blog' },
 ];
 
 // Cargar las 9 correcciones canónicas.
@@ -113,26 +115,36 @@ function extractJsonLd(html) {
 }
 
 /**
- * El aviso AiReviewNotice se renderiza cuando ai_review_status = needs_human_review.
- * Detectamos una marca estable en el HTML. La marca canónica es el data-attribute
- * o clase del componente; buscamos texto humano típico del aviso.
+ * El componente AiReviewNotice (components/blog/ai-review-notice.tsx) renderiza
+ * copy DISTINTO según ai_review_status:
+ *   - completed:          "Contenido contrastado documentalmente con las fuentes oficiales..."
+ *   - source_checked:     "Parte de la información... puede requerir comprobación adicional..."
+ *   - needs_human_review: "Este contenido contiene cuestiones pendientes de revisión jurídica..."
+ *
+ * Esta función detecta el aviso y, si se pasa estadoEsperado, verifica que el
+ * copy mostrado sea COHERENTE con ese estado (no basta con que exista un aviso:
+ * debe ser el aviso CORRECTO para el estado).
+ *
+ * Devuelve { presente, coherente }.
  */
-function avisoPresente(html, estadoEsperado) {
-  // El componente AiReviewNotice emite un aviso visible. Buscamos pistas estables:
-  // "revisión humana", "pendiente de revisión", "no es consejo legal definitivo".
-  const pistas = [
-    /revisi[oó]n humana/i,
-    /pendiente de revisi[oó]n/i,
-    /ai[-_ ]?review/i,
-    /aiReviewNotice/i,
-    /data-ai-review/i,
-  ];
-  const encontrado = pistas.some((p) => p.test(html));
-  return encontrado;
+function analizarAviso(html, estadoEsperado) {
+  const copyCompleted = /Contenido contrastado documentalmente/i.test(html);
+  const copyNeedsReview = /cuestiones pendientes de revisi[oó]n jur[ií]dica/i.test(html);
+  const presente = copyCompleted || copyNeedsReview;
+  let coherente = true;
+  if (estadoEsperado === 'completed') {
+    coherente = copyCompleted && !copyNeedsReview;
+  } else if (estadoEsperado === 'needs_human_review') {
+    coherente = copyNeedsReview && !copyCompleted;
+  }
+  return { presente, coherente };
 }
 
 async function validarArticulo(art) {
-  const url = `${BASE_URL}/blog/penal/${art.slug}`;
+  const url =
+    art.type === 'landing'
+      ? `${BASE_URL}/${art.slug}`
+      : `${BASE_URL}/blog/derecho-penal/${art.slug}`;
   const resultado = {
     slug: art.slug,
     url,
@@ -141,6 +153,7 @@ async function validarArticulo(art) {
     cache: '',
     estadoEsperado: art.estadoEsperado,
     avisoEncontrado: false,
+    avisoCoherente: false,
     textosNuevosPresentes: [],
     textosAntiguosAusentes: [],
     canonicalCorrecto: false,
@@ -168,41 +181,74 @@ async function validarArticulo(art) {
   const html = res.html;
   const htmlNorm = norm(html);
 
-  // 1. Canonical apunta a la URL correcta (derecho-penal en la categoría).
+  // 1. Canonical apunta a la URL correcta.
   const canonical = extractCanonical(html);
-  resultado.canonicalCorrecto =
-    canonical.includes(`/blog/penal/${art.slug}`) || canonical.endsWith(`/blog/penal/${art.slug}`);
+  if (art.type === 'landing') {
+    resultado.canonicalCorrecto =
+      canonical.includes(`/${art.slug}`) && !canonical.includes('/blog/');
+  } else {
+    resultado.canonicalCorrecto =
+      canonical.includes(`/blog/derecho-penal/${art.slug}`) ||
+      canonical.endsWith(`/blog/derecho-penal/${art.slug}`);
+  }
 
   // 2. JSON-LD válido (al menos un bloque parseable, sin _invalid).
   const jsonLd = extractJsonLd(html);
   resultado.jsonLdValido = jsonLd.length > 0 && jsonLd.every((b) => !b._invalid);
 
   // 3. Aviso AiReviewNotice coherente con el estado esperado.
-  const aviso = avisoPresente(html, art.estadoEsperado);
-  resultado.avisoEncontrado = aviso;
-  // Coherencia: si needs_human_review → aviso debe estar; si completed → no.
-  // No marcamos fail estricto aquí si no coincide (puede haber variantes),
-  // pero lo reportamos para inspección.
+  // Las landings locales NO renderizan AiReviewNotice (es exclusivo de blog
+  // posts). Para ellas, el aviso es opcional: si no aparece, se considera
+  // coherente por defecto (no podemos exigir un componente que no aplica).
+  const aviso = analizarAviso(html, art.estadoEsperado);
+  resultado.avisoEncontrado = aviso.presente;
+  if (art.type === 'landing') {
+    // Landing: coherente si no hay aviso (esperado) o si lo hay y es correcto.
+    resultado.avisoCoherente = !aviso.presente || aviso.coherente;
+  } else {
+    resultado.avisoCoherente = aviso.coherente;
+  }
+  if (!resultado.avisoCoherente) {
+    resultado.errores.push(
+      `aviso AiReviewNotice NO coherente con estado ${art.estadoEsperado}`,
+    );
+  }
 
   // 4. Las 9 correcciones: para este slug, verificar pares buscar/reemplazar.
   const correccionesDelSlug = CORRECCIONES.filter((c) => c.slug === art.slug);
   for (const c of correccionesDelSlug) {
     const nuevoNorm = norm(c.reemplazar);
     const antiguoNorm = norm(c.buscar);
-    // El texto nuevo debe estar presente (buscamos una substring estable y
-    // discriminativa; usamos los primeros 60 chars normalizados para tolerar
-    // variaciones menores de formato).
-    const probeNuevo = nuevoNorm.slice(0, 80);
-    const probeAntiguo = antiguoNorm.slice(0, 80);
+    // Probes discriminatorios: NO usar prefijo común. Para el texto NUEVO,
+    // buscamos una substring larga y estable. Para el texto ANTIGUO,
+    // buscamos una substring que NO aparezca en el texto nuevo (parte
+    // específica que fue reemplazada).
+    const probeNuevo = nuevoNorm.slice(0, 100);
+    // Encontrar el primer punto de divergencia entre antiguo y nuevo.
+    let div = 0;
+    const minLen = Math.min(antiguoNorm.length, nuevoNorm.length);
+    while (div < minLen && antiguoNorm[div] === nuevoNorm[div]) div++;
+    // Probe antiguo: 60 chars desde la divergencia (parte que SÍ cambió).
+    const probeAntiguo = antiguoNorm.slice(div, div + 60);
+    const probeAntiguoValido =
+      probeAntiguo.length >= 10 && !nuevoNorm.includes(probeAntiguo);
+
     if (htmlNorm.includes(probeNuevo)) {
       resultado.textosNuevosPresentes.push(c.claimId);
     } else {
       resultado.errores.push(`texto NUEVO ausente: ${c.claimId} ("${probeNuevo.slice(0, 50)}...")`);
     }
-    if (!htmlNorm.includes(probeAntiguo)) {
-      resultado.textosAntiguosAusentes.push(c.claimId);
+    // El texto antiguo debe estar AUSENTE. Solo verificamos si el probe es
+    // discriminatorio válido (no aparece en el texto nuevo).
+    if (probeAntiguoValido) {
+      if (!htmlNorm.includes(probeAntiguo)) {
+        resultado.textosAntiguosAusentes.push(c.claimId);
+      } else {
+        resultado.errores.push(`texto ANTIGUO aún presente: ${c.claimId}`);
+      }
     } else {
-      resultado.errores.push(`texto ANTIGUO aún presente: ${c.claimId}`);
+      // Si no hay probe discriminatorio, asumimos correcto (no podemos falsear).
+      resultado.textosAntiguosAusentes.push(c.claimId);
     }
   }
 
@@ -211,23 +257,16 @@ async function validarArticulo(art) {
     correccionesDelSlug.length === 0 ||
     (resultado.textosNuevosPresentes.length === correccionesDelSlug.length &&
       resultado.textosAntiguosAusentes.length === correccionesDelSlug.length);
-  const avisoCoherente =
-    (art.estadoEsperado === 'needs_human_review' && aviso) ||
-    (art.estadoEsperado === 'completed' && !aviso);
 
   if (
     resultado.httpStatus === 200 &&
     resultado.canonicalCorrecto &&
     resultado.jsonLdValido &&
     correccionesOk &&
-    avisoCoherente
+    resultado.avisoCoherente
   ) {
     resultado.resultado = 'pass';
   }
-  // El aviso coherente es deseable pero no bloqueante si hay variaciones de
-  // copy: lo reportamos pero no forzamos fail solo por eso (puede haber
-  // refactor del componente). Descomentar la línea siguiente para ser estricto.
-  // if (!avisoCoherente) resultado.resultado = 'fail';
 
   return resultado;
 }
