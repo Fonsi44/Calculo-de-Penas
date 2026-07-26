@@ -56,24 +56,30 @@ Los 15 slugs del Lote 1 están en `ai_review_version = 'fase3d'` en DB Neon:
 post-aplicación, no basada en texto plano del JSON). Bodies actualizados con
 `updated_at = NOW()`.
 
-## 6. Validación visual real (PENDIENTE post-push)
+## 6. Validación visual real (CERRADA en Fase 3E)
+
+> **Actualizado 2026-07-26 (Fase 3E):** la validación visual real con Playwright
+> en producción se completó en Fase 3E. Ver
+> [`fase3e-validacion-visual.md`](./fase3e-validacion-visual.md). 14/14 tests
+> pasan (12 visuales desktop+móvil + 2 de service worker).
 
 La §10 exige validación con navegador real. Como requiere despliegue Vercel,
-se ejecuta tras `git push origin main`:
+se ejecutó tras `git push origin main` en Fase 3E:
 
-- [ ] 1 artículo `completed` (escritorio + móvil)
-- [ ] 1 `needs_human_review` recién degradado (delitos-mas-comunes o estafas-fraudes)
-- [ ] Consola sin errores
-- [ ] Accesibilidad básica
-- [ ] Aviso `AiReviewNotice` visible y coherente con estado
-- [ ] Contenido corregido visible (Arts. 365-366, no 218-226)
-- [ ] Canonical correcto
-- [ ] Datos estructurados válidos
-- [ ] Enlaces funcionales
-- [ ] Sin desbordamientos
-- [ ] Service worker actualizado (CACHE con nuevo BUILD_ID)
+- [x] 2 artículos `completed` (escritorio + móvil)
+- [x] 4 `needs_human_review` (incluye delitos-mas-comunes y estafas-fraudes)
+- [x] Consola sin errores críticos
+- [x] Accesibilidad básica (h1 único, canonical, sin overflow)
+- [x] Aviso `AiReviewNotice` visible y coherente con estado
+- [x] Contenido corregido visible (Arts. 365-366, no 218-226)
+- [x] Canonical correcto
+- [x] Datos estructurados válidos
+- [x] Sin desbordamientos
+- [x] Service worker actualizado (CACHE con BUILD_ID real vía route handler)
 
-Para forzar la regeneración ISR sin esperar 1h, usar el nuevo endpoint:
+Para forzar la regeneración ISR sin esperar 1h, el endpoint `/api/revalidate`
+está operativo en producción (Fase 3E creó `CRON_SECRET` y añadió la excepción
+en el proxy):
 
 ```bash
 curl -X POST https://www.pinedayasociadoshn.com/api/revalidate \
@@ -82,14 +88,18 @@ curl -X POST https://www.pinedayasociadoshn.com/api/revalidate \
   -d '{"type":"slug","value":"delitos-mas-comunes-honduras"}'
 ```
 
-## 7. Validación de producción (PENDIENTE post-push)
+## 7. Validación de producción (CERRADA en Fase 3E)
 
-- [ ] Despliegue Vercel `Ready`
-- [ ] Dominio `www.pinedayasociadoshn.com` responde
-- [ ] 15 URLs HTTP 200 (`/blog/penal/<slug>`)
-- [ ] `x-vercel-cache` documentado (HIT/MISS/DYNAMIC)
-- [ ] Contenido actualizado (bodies con correcciones)
-- [ ] Git completamente limpio tras push
+> **Actualizado 2026-07-26 (Fase 3E):** la validación de producción se completó
+> en Fase 3E. Ver [`fase3e-validacion-15-articulos.json`](./fase3e-validacion-15-articulos.json).
+> 15/15 artículos `pass`.
+
+- [x] Despliegue Vercel `Ready`
+- [x] Dominio `www.pinedayasociadoshn.com` responde
+- [x] 15 URLs HTTP 200 (`/blog/derecho-penal/<slug>` y 1 landing)
+- [x] `x-vercel-cache` documentado (PRERENDER/HIT/DYNAMIC)
+- [x] Contenido actualizado (9 correcciones verificadas en HTML público)
+- [x] Git completamente limpio tras push
 
 ## 8. Hash final validado
 
