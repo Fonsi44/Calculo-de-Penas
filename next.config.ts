@@ -95,6 +95,18 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   /**
+   * Timeout de generación de páginas estáticas (Fase 3B).
+   *
+   * El default de Next.js (60s) es insuficiente para las 349 páginas del blog
+   * con ISR que consultan Neon en build time: la latencia de cold-start de Neon
+   * hace que páginas complejas excedan el límite y revienten el build tras 3
+   * reintentos. 300s tolera esa latencia sin reventar memoria.
+   *
+   * Justificación técnica documentada en docs/audits/fase3b-lote1-validacion.md.
+   * No afecta al runtime (solo al build de páginas estáticas).
+   */
+  staticPageGenerationTimeout: 300,
+  /**
    * Optimización de imágenes activada vía /_next/image.
    *   - Convierte automáticamente a WebP/AVIF cuando el navegador lo soporta.
    *   - Genera srcset responsivo para cada deviceSize/imageSize configurado.
