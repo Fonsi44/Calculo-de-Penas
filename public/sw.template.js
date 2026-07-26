@@ -2,9 +2,8 @@
  * Service worker mínimo — PWA de Pineda y Asociados.
  *
  * Objetivo: reforzar la instalabilidad (Lighthouse PWA) y permitir offline
- * básico de la web pública. SIN dependencias ni build (vanilla JS servido
- * desde /public/sw.js). Cache versionada: para renovar estrategias o
- * blocklist, basta con cambiar CACHE y subir.
+ * básico de la web pública. SIN dependencias ni build (vanilla JS). Cache
+ * versionada: para renovar estrategias o blocklist, basta con cambiar CACHE.
  *
  * SEGURIDAD (R6, AGENTS.md): el fetch handler NUNCA intercepta ni cachea las
  * rutas privadas. Esas pasan siempre a red. Esta lista es la salvaguarda que
@@ -16,16 +15,18 @@
 // chunks obsoletos (stale-while-revalidate) cuyo HTML referenciaba assets que
 // ya no existían en el servidor → 404 "page has broken JavaScript".
 //
-// CONTRATO (fase3e): ESTE ARCHIVO ES UNA PLANTILLA VERSIONADA. Contiene el
-// placeholder `__BUILD_ID__` y NUNCA debe commitearse con un BUILD_ID real.
-// `scripts/build-sw.mjs` (postbuild) lee esta plantilla, reemplaza el
-// placeholder por el BUILD_ID real de `.next/BUILD_ID` y escribe el resultado
-// en `public/sw.generated.js` (artefacto gitignored). `next.config.ts` mapea
-// `/sw.js` → `/sw.generated.js` en producción. Así, dos builds consecutivos
-// dejan el árbol de Git limpio sin necesidad de `git restore`.
+// CONTRATO (fase3e): ESTE ARCHIVO ES UNA PLANTILLA VERSIONADA (no se sirve
+// directamente). Contiene el placeholder `__BUILD_ID__` y NUNCA debe
+// commitearse con un BUILD_ID real. La route handler app/sw.js/route.ts lee
+// esta plantilla en runtime, reemplaza el placeholder por el BUILD_ID real
+// (expuesto por Vercel como process.env.NEXT_PUBLIC_BUILD_ID o leído de
+// .next/BUILD_ID) y sirve el resultado en /sw.js. Así, dos builds consecutivos
+// dejan el árbol de Git limpio sin necesidad de `git restore`, y el SW servido
+// lleva un cache ID actualizado por deploy. scripts/build-sw.mjs se mantiene
+// para tests de determinismo local.
 //
 // El placeholder aparece en dos sitios: la comparación de fallback y el valor
-// devuelto. Si el BUILD_ID real falta (dev sin build), build-sw.mjs usa 'dev'.
+// devuelto. Si el BUILD_ID real falta (dev sin build), la route usa 'dev'.
 const CACHE = 'pineda-pwa-' + ('__BUILD_ID__' === '__BUILD_ID__'
   ? 'dev'
   : '__BUILD_ID__');

@@ -1,16 +1,16 @@
 /**
  * Fase 3E — Determinismo del service worker con arquitectura plantilla + artefacto.
  *
- * Cubre el CONTRATO fase3e documentado en `public/sw.js`:
+ * Cubre el CONTRATO fase3e documentado en `public/sw.template.js`:
  *
- *   1. `public/sw.js` es una PLANTILLA versionada: siempre contiene el
+ *   1. `public/sw.template.js` es una PLANTILLA versionada: siempre contiene el
  *      placeholder `'__BUILD_ID__'` y NUNCA un BUILD_ID real inyectado.
  *   2. `scripts/build-sw.mjs` lee la plantilla, reemplaza el placeholder por
- *      el BUILD_ID real y escribe `public/sw.generated.js` (artefacto).
+ *      el BUILD_ID real y escribe `public/sw.generated.js` (artefacto de test).
  *   3. Dos ejecuciones de build-sw con el mismo BUILD_ID producen artefactos
  *      idénticos (idempotencia del artefacto).
- *   4. La plantilla `public/sw.js` NUNCA es modificada por build-sw (la fuente
- *      versionada permanece intacta → árbol de Git limpio tras cada build).
+ *   4. La plantilla `public/sw.template.js` NUNCA es modificada por build-sw
+ *      (la fuente versionada permanece intacta → árbol de Git limpio).
  *   5. `--check` no escribe en disco.
  *   6. Si falta `.next/BUILD_ID`, usa el fallback `'dev'` (no falla, no congela).
  *
@@ -31,7 +31,7 @@ import { execFileSync } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
-const TEMPLATE_PATH = resolve(ROOT, 'public/sw.js');
+const TEMPLATE_PATH = resolve(ROOT, 'public/sw.template.js');
 const SCRIPT_PATH = resolve(ROOT, 'scripts/build-sw.mjs');
 
 const PLACEHOLDER_LINE =
@@ -112,7 +112,7 @@ describe('Fase 3E — Service worker determinista (plantilla + artefacto)', () =
   afterAll(() => cleanupTmp());
 
   // ─── Contrato 1: la plantilla commiteada lleva el placeholder ─────────────
-  it('public/sw.js (plantilla) contiene el placeholder __BUILD_ID__ puro', () => {
+  it('public/sw.template.js (plantilla) contiene el placeholder __BUILD_ID__ puro', () => {
     const sw = readTemplate();
     expect(sw).toContain(PLACEHOLDER_LINE);
     // No debe contener un BUILD_ID real ya inyectado: el patrón
@@ -154,7 +154,7 @@ describe('Fase 3E — Service worker determinista (plantilla + artefacto)', () =
   });
 
   // ─── Contrato 4: la plantilla NUNCA se modifica (clave del determinismo) ──
-  it('build-sw.mjs NO modifica la plantilla public/sw.js (fuente versionada intacta)', () => {
+  it('build-sw.mjs NO modifica la plantilla public/sw.template.js (fuente versionada intacta)', () => {
     const buildId = 'fase3e-intacto-003';
     const template = `// header canónico\n${PLACEHOLDER_LINE}\n  ? 'dev'\n  : '__BUILD_ID__');\n// fin\n`;
     const r = runBuildSwInTmpRepo({ template, buildId });
@@ -188,7 +188,7 @@ describe('Fase 3E — Service worker determinista (plantilla + artefacto)', () =
   });
 
   // ─── Contrato 7: la plantilla canónica del repo funciona end-to-end ──────
-  it('la plantilla real public/sw.js del repo genera un artefacto coherente', () => {
+  it('la plantilla real public/sw.template.js del repo genera un artefacto coherente', () => {
     const realTemplate = readTemplate();
     const buildId = 'fase3e-real-repo-005';
     const r = runBuildSwInTmpRepo({ template: realTemplate, buildId });

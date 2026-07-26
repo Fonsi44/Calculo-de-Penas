@@ -11,7 +11,7 @@
     "build": "next build",
     "build:ci": "next build",
     "analyze": "ANALYZE=true next build",
-    "postbuild": "node scripts/build-sw.mjs && node scripts/verify-chunks.mjs && node scripts/generate-llms-txt.mjs && node scripts/submit-indexnow.mjs",
+    "postbuild": "node scripts/verify-chunks.mjs && node scripts/generate-llms-txt.mjs && node scripts/submit-indexnow.mjs",
     "llms:generate": "node scripts/generate-llms-txt.mjs",
     "llms:dry": "node scripts/generate-llms-txt.mjs --dry-run",
     "start": "next start",

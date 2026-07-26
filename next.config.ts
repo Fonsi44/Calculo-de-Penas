@@ -320,27 +320,13 @@ const nextConfig: NextConfig = {
     ];
   },
   // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key.
-  // Fase 3E: /sw.js → /sw.generated.js. La plantilla versionada es
-  // public/sw.js (con placeholder __BUILD_ID__); build-sw.mjs (postbuild)
-  // genera public/sw.generated.js con el BUILD_ID real inyectado. Este
-  // rewrite hace que el navegador siga pidiendo /sw.js pero reciba el
-  // artefacto con cache ID actualizado por deploy, SIN modificar la
-  // plantilla versionada (que es lo que dejaba el árbol de Git sucio).
-  //
-  // IMPORTANTE: el rewrite del SW va en `beforeFiles` para que se aplique
-  // ANTES de que Next sirva el archivo estático public/sw.js (la plantilla).
-  // En `afterFiles` (default), los archivos de /public se sirven primero y el
-  // rewrite nunca actuaría. El rewrite de IndexNow sí puede ir en afterFiles.
+  // Fase 3E: /sw.js se sirve vía route handler (app/sw.js/route.ts) que lee
+  // public/sw.template.js e inyecta el BUILD_ID en runtime. No se necesita
+  // rewrite: la route handler tiene prioridad sobre los archivos estáticos.
   async rewrites() {
-    return {
-      beforeFiles: [
-        { source: '/sw.js', destination: '/sw.generated.js' },
-      ],
-      afterFiles: [
-        { source: '/:key.txt', destination: '/api/indexnow-key' },
-      ],
-      fallback: [],
-    };
+    return [
+      { source: '/:key.txt', destination: '/api/indexnow-key' },
+    ];
   },
   async headers() {
     return [

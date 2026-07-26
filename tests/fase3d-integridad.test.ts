@@ -63,12 +63,12 @@ interface Matriz {
 const matriz = loadJson('docs/audits/fase3d-matriz-lote1.json') as Matriz;
 
 describe('Fase 3D — Integridad del Lote 1 Penal (10 supuestos §11)', () => {
-  // ─── Supuesto 1: build determinista vs public/sw.js ───────────────────────
+  // ─── Supuesto 1: build determinista vs service worker ─────────────────────
   // Cubierto por tests/fase3e-sw-build-determinism.test.ts (7 tests).
-  // Fase 3E: public/sw.js es ahora una PLANTILLA versionada; el artefacto
-  // servido es public/sw.generated.js (gitignored, generado por build-sw.mjs).
-  it('Supuesto 1 — sw.js plantilla intacta (covered por fase3e-sw-build-determinism)', () => {
-    const sw = readFileSync(resolve(ROOT, 'public/sw.js'), 'utf8');
+  // Fase 3E: public/sw.template.js es la PLANTILLA versionada; /sw.js se sirve
+  // vía route handler (app/sw.js/route.ts) que inyecta el BUILD_ID en runtime.
+  it('Supuesto 1 — sw.template.js plantilla intacta (covered por fase3e-sw-build-determinism)', () => {
+    const sw = readFileSync(resolve(ROOT, 'public/sw.template.js'), 'utf8');
     expect(sw).toContain("const CACHE = 'pineda-pwa-'");
     expect(sw).not.toMatch(/const CACHE = 'pineda-pwa-[A-Za-z0-9_-]{8,}'/);
   });

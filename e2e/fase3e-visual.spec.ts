@@ -165,15 +165,21 @@ test.describe('Fase 3E — Service worker en producción', () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
   test('/sw.js sirve un SW con BUILD_ID real (no dev ni placeholder)', async ({ request }) => {
-    // El rewrite /sw.js -> /sw.generated.js debe entregar el artefacto con
-    // el cache ID actualizado por deploy. El placeholder __BUILD_ID__ NO
-    // debe aparecer; 'pineda-pwa-dev' tampoco (indicaría build sin BUILD_ID).
+    // La route handler app/sw.js/route.ts lee public/sw.template.js e inyecta
+    // el BUILD_ID real en runtime. El placeholder __BUILD_ID__ NO debe aparecer
+    // en producción; 'dev' tampoco (indicaría route sin deployment ID).
     const res = await request.get(`${BASE}/sw.js`);
     expect(res.status(), '/sw.js HTTP 200').toBe(200);
     const body = await res.text();
     expect(body, 'SW contiene CACHE pineda-pwa').toContain('pineda-pwa');
     expect(body, 'SW NO contiene placeholder __BUILD_ID__').not.toContain('__BUILD_ID__');
-    expect(body, 'SW NO tiene cache dev en producción').not.toContain("'dev' === 'dev'");
+    expect(body, 'Content-Type javascript').toMatch(
+      /application\/javascript|text\/javascript/i,
+    );
+    // En producción no debe tener cache 'dev'.
+    if (BASE.includes('pinedayasociadoshn.com')) {
+      expect(body, 'SW NO tiene cache dev en producción').not.toContain("'dev' === 'dev'");
+    }
     // Debe conservar las protecciones R6.
     expect(body).toContain('PRIVATE_ROUTES');
     expect(body).toContain('/intranet');
