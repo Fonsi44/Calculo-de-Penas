@@ -787,3 +787,49 @@ grupos: corresponde esperar el nuevo rastreo y la actualización del informe.
 Google. La antigüedad, el año de fundación, los fundadores y la colegiación
 quedan confirmados por el titular; la revisión jurídica de porcentajes, plazos
 y demás afirmaciones del registro legal continúa `NO VALIDADO`.
+
+---
+
+## 2026-07-26 — Implementación posterior a auditoría de GSC, Bing y GA4
+
+**Modo:** `IMPLEMENTACIÓN`, con autorización expresa del usuario. Trabajo
+directo sobre `main`, sin push ni despliegue de una nueva versión.
+
+**Medición y conversiones:**
+
+- el arranque de GA4 crea siempre la cola `dataLayer` antes del primer
+  `page_view`, aplica el consentimiento y configura la propiedad con
+  `send_page_view: false`; esto evita perder la primera página y reduce la
+  aparición de páginas de destino `(not set)`;
+- se añadieron parámetros uniformes de ubicación, ruta de origen y valor a los
+  eventos de formulario, WhatsApp y teléfono;
+- se cubrieron CTA antes no medidos en cabecera, menú móvil, variantes del
+  bloque de CTA y pie de página;
+- la configuración remota confirmó que `contact_form_submit`,
+  `whatsapp_click` y `phone_click` ya existen como eventos clave en GA4. No se
+  crearon duplicados.
+
+**Bing e indexación:**
+
+- Bing Webmaster Tools confirma un único sitemap correcto, rastreado el
+  24/7/2026, con 212 URLs; no se envió un sitemap duplicado;
+- la URL histórica eliminada
+  `/blog/derecho-civil/servidumbre-paso-honduras` devuelve 404, no está en la
+  base de datos ni en el sitemap. Se añadió un modo seguro para notificar una
+  URL eliminada y se envió a IndexNow; Bing e IndexNow respondieron HTTP 200;
+- se restauró desde `/servicios-juridicos` el enlace interno a la guía de
+  jornada laboral detectado por la auditoría prioritaria.
+
+**CTR editorial:**
+
+- se optimizaron `meta_title` y `meta_description` de 12 artículos con
+  impresiones y CTR mejorable en Google o Bing;
+- se corrigieron snippets truncados como “Consulta y”, “Cómo” y “Guía completa
+  para”; todos los títulos SEO quedan entre 44 y 54 caracteres y las
+  descripciones entre 112 y 142;
+- los títulos visibles, cuerpos y referencias jurídicas se conservaron
+  intactos. Se generó un backup previo a la escritura.
+
+**Pendiente externo residual:** Google y Bing deben volver a rastrear las URLs
+para reflejar snippets, cobertura y recomendación de enlace muerto. Los datos
+históricos de GA4 no se reescriben; la mejora se medirá con eventos nuevos.
