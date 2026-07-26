@@ -421,6 +421,23 @@ export const blogPosts = pgTable('blog_posts', {
   reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
   legalReviewNotes: text('legal_review_notes'),
 
+  // AI review workflow (Fase 3)
+  aiReviewStatus: varchar('ai_review_status', { length: 50 }).default('not_started'),
+  aiReviewedAt: timestamp('ai_reviewed_at', { withTimezone: true }),
+  aiReviewProvider: varchar('ai_review_provider', { length: 100 }),
+  aiReviewModel: varchar('ai_review_model', { length: 100 }),
+  aiReviewVersion: varchar('ai_review_version', { length: 100 }),
+  aiReviewConfidence: varchar('ai_review_confidence', { length: 50 }),
+  aiReviewSources: jsonb('ai_review_sources').default('[]'),
+  aiReviewClaimsCount: integer('ai_review_claims_count').default(0),
+  aiReviewConfirmedClaims: integer('ai_review_confirmed_claims').default(0),
+  aiReviewCorrectedClaims: integer('ai_review_corrected_claims').default(0),
+  aiReviewUnresolvedClaims: integer('ai_review_unresolved_claims').default(0),
+  aiReviewRequiresHuman: boolean('ai_review_requires_human').default(false),
+  aiResearchProvider: varchar('ai_research_provider', { length: 100 }),
+  aiSearchQueriesCount: integer('ai_search_queries_count').default(0),
+  aiOfficialSourcesCount: integer('ai_official_sources_count').default(0),
+
   // Content audit
   lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }),
   nextReviewDueAt: timestamp('next_review_due_at', { withTimezone: true }),
