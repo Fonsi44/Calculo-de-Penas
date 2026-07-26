@@ -363,3 +363,21 @@ describe('lib/schemas/legal-page.ts — structured data de áreas (auditoría Ju
     expect(String(answer.text)).not.toContain('&amp;');
   });
 });
+
+describe('lib/site.ts — compatibilidad Schema.org validada por Ahrefs', () => {
+  it('el negocio no mezcla Attorney ni serviceType con LegalService/LocalBusiness', () => {
+    const schema = legalServiceSchema() as Record<string, unknown>;
+    const types = schema['@type'] as string[];
+
+    expect(types).toEqual(['LegalService', 'LocalBusiness']);
+    expect(schema).not.toHaveProperty('serviceType');
+  });
+
+  it.each([
+    ['Danilo', founderSchema],
+    ['Thania', thaniaSchema],
+    ['Emil', emilSchema],
+  ])('%s no publica areaServed en Person', (_name, schemaFactory) => {
+    expect(schemaFactory()).not.toHaveProperty('areaServed');
+  });
+});
