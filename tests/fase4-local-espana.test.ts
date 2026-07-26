@@ -137,6 +137,26 @@ describe('FASE 4 §6 — areaServed en schema local', () => {
   });
 });
 
+describe('FASE 4 — enlaces editoriales de landings locales', () => {
+  it('no enlaza posts retirados que redirigen de vuelta a la propia landing', () => {
+    const slugsRedirigidos = new Set([
+      'abogados-en-nacaome',
+      'abogados-en-choluteca',
+      'abogados-en-san-lorenzo',
+      'abogados-en-pespire-choluteca',
+      'abogados-en-san-marcos-de-colon-choluteca',
+      'abogados-en-marcovia-choluteca',
+      'abogados-en-amapala-valle',
+    ]);
+
+    for (const landing of landingsLocales) {
+      for (const post of landing.postsRelacionados ?? []) {
+        expect(slugsRedirigidos.has(post.slug), `${landing.slug} enlaza al redirect ${post.slug}`).toBe(false);
+      }
+    }
+  });
+});
+
 // ---------------------------------------------------------------------------
 // §22.7–22.8 Distancias coherentes y aviso de aproximadas.
 // ---------------------------------------------------------------------------

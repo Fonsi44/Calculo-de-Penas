@@ -178,7 +178,6 @@ export const landingsLocales: LandingLocal[] = [
       { name: 'Municipalidad de Nacaome', role: 'Gobierno local' },
     ],
     postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-nacaome', titulo: 'Abogados en Nacaome: cómo elegir el despacho adecuado' },
       { categoria: 'practica-legal', slug: 'tramites-legales-nacaome', titulo: 'Trámites legales en Nacaome, Valle' },
     ],
   },
@@ -260,9 +259,6 @@ export const landingsLocales: LandingLocal[] = [
       { name: 'Juzgados de Letras de Choluteca', role: 'Sede judicial departamental con competencia en la zona' },
       { name: 'Aduana de Guasaule', role: 'Paso fronterizo con Nicaragua; competencia en trámites aduaneros' },
     ],
-    postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-choluteca', titulo: 'Abogados en Choluteca: guía para elegir despacho' },
-    ],
   },
   {
     slug: 'san-lorenzo',
@@ -341,9 +337,6 @@ export const landingsLocales: LandingLocal[] = [
       { name: 'Autoridad Marítima Portuaria', role: 'Competencia en operaciones del puerto de San Lorenzo' },
       { name: 'Juzgados de Letras de Valle', role: 'Sede judicial con competencia en la zona' },
     ],
-    postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-san-lorenzo', titulo: 'Abogados en San Lorenzo: asesoría legal en el puerto' },
-    ],
   },
   {
     slug: 'goascoran',
@@ -393,7 +386,6 @@ export const landingsLocales: LandingLocal[] = [
     // La ciudad no tiene post dedicado propio; estos slugs ya existen en DB y
     // son aplicables a toda la zona sur del departamento de Valle.
     postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-nacaome', titulo: 'Abogados en Nacaome: cómo elegir el despacho adecuado' },
       { categoria: 'practica-legal', slug: 'tramites-legales-nacaome', titulo: 'Trámites legales en Nacaome, Valle' },
     ],
   },
@@ -429,9 +421,6 @@ export const landingsLocales: LandingLocal[] = [
     serviceModes: ['remote', 'office', 'travel'],
     distanceSource: 'Carretera departamental (Google Maps)',
     distanceCheckedAt: '2026-07-25',
-    postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-pespire-choluteca', titulo: 'Abogados en Pespire: asesoría legal en 4 áreas' },
-    ],
   },
   {
     slug: 'san-marcos-de-colon',
@@ -477,9 +466,6 @@ export const landingsLocales: LandingLocal[] = [
       { name: 'Frontera de El Espino', role: 'Paso fronterizo con Nicaragua' },
       { name: 'Juzgados de Letras de Choluteca', role: 'Sede judicial departamental con competencia en la zona' },
     ],
-    postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-san-marcos-de-colon-choluteca', titulo: 'Abogados en San Marcos de Colón: defensa y asesoría' },
-    ],
   },
   {
     slug: 'marcovia',
@@ -513,9 +499,6 @@ export const landingsLocales: LandingLocal[] = [
     serviceModes: ['remote', 'office', 'travel'],
     distanceSource: 'Carretera Panamericana CA-1 (Google Maps)',
     distanceCheckedAt: '2026-07-25',
-    postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-marcovia-choluteca', titulo: 'Abogados en Marcovia: guía legal completa' },
-    ],
   },
   {
     slug: 'el-triunfo',
@@ -685,9 +668,6 @@ export const landingsLocales: LandingLocal[] = [
     ],
     institutions: [
       { name: 'Juzgados de Letras de Valle', role: 'Sede judicial con competencia en la zona' },
-    ],
-    postsRelacionados: [
-      { categoria: 'practica-legal', slug: 'abogados-en-amapala-valle', titulo: 'Abogados en Amapala: guía legal completa' },
     ],
   },
   {

@@ -348,6 +348,9 @@ describe('lib/schemas/legal-page.ts — structured data de áreas (auditoría Ju
     expect(types).toContain('Service');
     expect(types).toContain('FAQPage');
     expect(types, 'BreadcrumbList debe emitirlo solo el componente <Breadcrumbs>').not.toContain('BreadcrumbList');
+    const service = schemas.find((s: Record<string, unknown>) => s['@type'] === 'Service');
+    expect(service).not.toHaveProperty('keywords');
+    expect(service).not.toHaveProperty('inLanguage');
   });
 
   it('faqPageSchema sanitiza HTML en acceptedAnswer.text (Google exige texto plano)', () => {

@@ -46,9 +46,7 @@ export function serviceSchema(input: ServiceSchemaInput) {
       '@type': 'Place',
       name,
     })),
-    keywords: input.keywords?.join(', '),
     url: input.url,
-    inLanguage: 'es-HN',
   };
 }
 
