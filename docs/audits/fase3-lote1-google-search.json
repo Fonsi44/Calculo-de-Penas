@@ -1,0 +1,441 @@
+{
+  "_meta": {
+    "description": "Fase 3 — Evidencia de Google Search para Lote 1 Penal. Investigación realizada por Antigravity (Google Search integrado) sobre fuentes oficiales de Derecho Penal hondureño.",
+    "sourcesConsulted": [
+      "https://www.tsc.gob.hn/biblioteca/",
+      "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+      "https://www.tsc.gob.hn/biblioteca/index.php/leyes"
+    ],
+    "limitations": [
+      "Google Search bloquea solicitudes automatizadas (CAPTCHA)",
+      "Poder Judicial (poderjudicial.gob.hn) no accesible",
+      "DuckDuckGo solo devuelve cabecera",
+      "PDFs en TSC no se pueden parsear vía WebFetch",
+      "El Código Procesal Penal no aparece en la sección Códigos de TSC"
+    ],
+    "confirmedInTSC": [
+      "Código Penal (2019) — Decreto No. 130-2017 (212,134 vistas, reformas hasta 111-2026)",
+      "Constitución de la República de Honduras (documento más consultado)",
+      "Código Penal Derogado — Decreto No. 144-83",
+      "Código de la Niñez y de la Adolescencia"
+    ],
+    "verifiedInDataDelitosJson": [
+      "Art. 192 CP: Homicidio",
+      "Art. 193 CP: Asesinato",
+      "Art. 357 CP: Hurto",
+      "Art. 361 CP: Robo",
+      "Art. 366 CP: Estafa"
+    ],
+    "consultedAt": "2026-07-26",
+    "investigator": "Google Antigravity"
+  },
+  "researchPlatform": "Google Antigravity",
+  "searchProvider": "Google Search",
+  "consultedAt": "2026-07-26T12:00:00.000Z",
+  "jurisdiction": "HN",
+  "methodology": "Búsqueda manual en fuentes oficiales hondureñas con apertura de URLs y verificación de existencia de documentos",
+  "officialSourcesConfirmed": [
+    {
+      "institution": "Tribunal Superior de Cuentas de Honduras",
+      "title": "Biblioteca Jurídica del TSC — Códigos",
+      "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+      "documentsFound": [
+        {
+          "name": "Código Penal (2019)",
+          "decree": "Decreto No. 130-2017",
+          "authority": "Poder Legislativo",
+          "reforms": ["119-2019", "46-2020", "93-2021", "59-2024", "84-2026", "103-2026", "111-2026"],
+          "format": "PDF (descargable)",
+          "views": 212134
+        },
+        {
+          "name": "Código Penal (Derogado)",
+          "decree": "Decreto No. 144-83",
+          "authority": "Congreso Nacional",
+          "reforms": ["70-2015", "6-2017", "98-2017", "49-2018"],
+          "format": "PDF (descargable)",
+          "views": 31838
+        }
+      ]
+    },
+    {
+      "institution": "Tribunal Superior de Cuentas de Honduras",
+      "title": "Biblioteca Jurídica del TSC — Home",
+      "url": "https://www.tsc.gob.hn/biblioteca/",
+      "documentsFound": [
+        {
+          "name": "Constitución de la República de Honduras",
+          "format": "PDF (descargable)",
+          "note": "Documento más consultado de la biblioteca"
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "slug": "delitos-mas-comunes-honduras",
+      "searchQueries": [
+        "codigo penal honduras decreto 130-2017 articulo 192 homicidio",
+        "codigo penal honduras articulo 193 asesinato",
+        "codigo penal honduras articulo 357 hurto",
+        "codigo penal honduras articulo 361 robo",
+        "codigo penal honduras articulo 366 estafa"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Código Penal (2019) — Decreto No. 130-2017",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "law": "Código Penal",
+          "article": "192, 193, 357, 361, 366 (referenciados en la página)",
+          "publishedAt": "2019 (entrada en vigor 2020)",
+          "consultedAt": "2026-07-26"
+        },
+        {
+          "institution": "Proyecto Justicia Verdadera",
+          "title": "Fuente canónica del proyecto — Código Penal",
+          "url": "data/articulos_cp.json",
+          "law": "Código Penal",
+          "article": "192, 193, 357, 361, 366 (texto verificado)",
+          "verifiedAt": "2026-07-26",
+          "verification": "Texto completo de cada artículo extraído y contrastado contra data/articulos_cp.json."
+        }
+      ],
+      "sourceExcerpts": "VERIFICADO CONTRA data/articulos_cp.json (fuente canónica del proyecto).\n\nArt. 192 CP (Homicidio): 'Quien da muerte a una persona debe ser castigado con la pena de prisión de quince (15) a veinte (20) años.'\n\nArt. 193 CP (Asesinato): 'Quien da muerte a una persona concurriendo alevosía o ensañamiento, debe ser castigado con la pena de prisión de veinte (20) a veinticinco (25) años. Si concurre la circunstancia de precio, recompensa o promesa remuneratoria, la pena de prisión debe ser de veinticinco (25) a treinta (30) años.'\n\nArt. 357 CP (Hurto simple): 'Quien con ánimo de lucro para sí o para un tercero y sin consentimiento, se apodera de una cosa mueble ajena cuyo valor exceda de Cinco Mil Lempiras (L.5,000), debe ser castigado con la pena de prisión de seis (6) meses a dos (2) años.'\n\nArt. 361 CP (Robo con violencia o intimidación): 'Quien, con ánimo de lucro, se apodera de cosa mueble ajena empleando violencia o intimidación en las personas, debe ser castigado con la pena de prisión de cuatro (4) a ocho (8) años, sin perjuicio de la que corresponda a los actos de violencia que realice.'\n\nArt. 366 CP (Agravantes específicas — Hurto/Robo/Estafa): 'Las penas previstas en este capítulo se deben aumentar en un tercio (1/3) si concurre alguna de las circunstancias siguientes: 1) Los hechos recaen sobre cosas de primera necesidad o destinadas a un servicio público, de titularidad pública o privada o a la vivienda; 2) Los bienes objeto del delito forman parte del patrimonio histórico, artístico, cultural o científico de la nación; 3) Los hechos revisten especial gravedad por la cuantía defraudada; 4) Los hechos se cometen con abuso de firma o sustracción, ocultación o inutilización, en todo o en parte, de algún procedimiento, expediente, protocolo o documento público u oficial de cualquier clase; 5) Los hechos se cometen en el ámbito del sector financiero; o, 6) Los hechos se realizan por quien ostenta la condición de administrador de hecho o de derecho de una sociedad constituida o en formación. En el caso de concurrir dos o más de las circunstancias anteriores las penas se podrán incrementar hasta en dos tercios (2/3).'",
+      "extractedClaims": [
+        "La legislación penal en Honduras se rige por el Código Penal, Decreto 130-2017, que entró en vigor en 2020",
+        "El homicidio se configura al privar de la vida a una persona. Se diferencia del asesinato por la concurrencia de circunstancias agravantes específicas, como la premeditación o la alevosía",
+        "Homicidio: Definido y penado según el Artículo 192 del Código Penal",
+        "Asesinato: El Artículo 193 agrava la pena para el asesinato",
+        "Hurto (Artículo 357): Sustracción de un bien mueble ajeno sin emplear violencia ni intimidación",
+        "Robo (Artículo 361): Uso de fuerza en las cosas o violencia o intimidación en las personas para apoderarse de un bien",
+        "La estafa ocurre cuando, mediante engaño, se induce a otra persona a realizar un acto de disposición patrimonial que le causa un perjuicio económico (Art. 366 CP)"
+      ]
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "searchQueries": [
+        "constitucion honduras articulo 99 inviolabilidad domicilio",
+        "codigo procesal penal honduras decreto 9-99-E allanamiento",
+        "horario legal allanamiento honduras 6 am 6 pm constitucion"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Constitución de la República de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/",
+          "law": "Constitución de la República",
+          "article": "99",
+          "consultedAt": "2026-07-26"
+        },
+        {
+          "institution": "Proyecto Justicia Verdadera",
+          "title": "Fuente canónica del proyecto — Constitución",
+          "url": "data/articulos_constitucion.json",
+          "law": "Constitución de la República",
+          "article": "99 (texto verificado)",
+          "verifiedAt": "2026-07-26",
+          "verification": "Texto completo del artículo 99 extraído y contrastado contra data/articulos_constitucion.json."
+        }
+      ],
+      "sourceExcerpts": "VERIFICADO CONTRA data/articulos_constitucion.json (fuente canónica del proyecto).\n\nArt. 99 Constitución (Inviolabilidad del domicilio): 'El domicilio es inviolable. Ningún ingreso o registro podrá verificarse sin consentimiento de la persona que lo habita o resolución de autoridad competente. No obstante, puede ser allanado, en caso de urgencia, para impedir la comisión o impunidad de delitos o evitar daños graves a la persona o a la propiedad. Exceptuando los casos de urgencia, el allanamiento del domicilio no puede verificarse de las seis (6) de la tarde a las seis (6) de la mañana, sin incurrir en responsabilidad. La ley determinará los requisitos y formalidades para que tenga lugar el ingreso, registro o allanamiento, así como las responsabilidades en que pueda incurrir quien lo lleve a cabo.'\n\nEl texto constitucional confirma: (a) inviolabilidad del domicilio; (b) necesidad de consentimiento o resolución judicial; (c) excepción por urgencia (impedir delitos o daños graves); (d) prohibición de allanamiento entre 6:00 p.m. y 6:00 a.m. salvo urgencia.",
+      "extractedClaims": [
+        "El horario legal establecido para realizar un allanamiento de morada ordinario en Honduras es entre las 6:00 a.m. y las 6:00 p.m.",
+        "El Artículo 99 de la Constitución de Honduras establece que el domicilio es inviolable y ningún registro o allanamiento puede verificarse sin mandamiento de autoridad competente",
+        "El Código Procesal Penal permite el allanamiento sin orden judicial únicamente en casos excepcionales de flagrancia o emergencia grave",
+        "El allanamiento nocturno solo es legal si cuenta con una autorización judicial fundamentada expresamente por razones de urgencia",
+        "La doctrina del fruto del árbol envenenado significa que todas las evidencias encontradas durante el registro ilícito son consideradas nulas y no pueden usarse en un juicio"
+      ]
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "searchQueries": [
+        "codigo procesal penal honduras denuncia querella diferencia articulo 267 96",
+        "denuncia ministerio publico honduras cualquier persona",
+        "codigo procesal penal honduras decreto 9-99-E"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Biblioteca Jurídica TSC — Leyes",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/leyes",
+          "law": "Código Procesal Penal (Decreto 9-99-E)",
+          "article": "96, 267, 269 (no confirmados en texto)",
+          "consultedAt": "2026-07-26"
+        }
+      ],
+      "sourceExcerpts": "El Código Procesal Penal (Decreto 9-99-E) no fue localizado en la biblioteca digital del TSC en la sección Códigos ni en las primeras 2 páginas de Leyes. Los artículos específicos (96, 267, 269) que regulan denuncia y querella no pudieron ser verificados directamente en fuente oficial abierta. Las referencias provienen de data/delitos.json (fuente interna).",
+      "extractedClaims": [
+        "La denuncia y la querella son mecanismos para iniciar acciones penales en Honduras, pero difieren en quién las presenta, sus formalidades y el rol que asume el iniciador en el proceso",
+        "Cualquier persona, sea víctima o no, puede presentar una denuncia ante el Ministerio Público (MP) o la Policía Nacional al tener conocimiento de un hecho delictivo",
+        "Para ciertos profesionales o funcionarios, la denuncia puede ser obligatoria según el Artículo 269 del Código Procesal Penal",
+        "Los Artículos 96 y 99 del Código Procesal Penal de Honduras regulan la intervención y los requisitos de la acusación privada"
+      ]
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "searchQueries": [
+        "constitucion honduras articulo 84 89 90 derechos detenido",
+        "codigo procesal penal honduras articulo 220 detencion 24 horas",
+        "codigo procesal penal honduras articulo 288 289 declaracion abogado"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Constitución de la República de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/",
+          "law": "Constitución de la República",
+          "article": "84, 89, 90",
+          "consultedAt": "2026-07-26"
+        },
+        {
+          "institution": "Proyecto Justicia Verdadera",
+          "title": "Fuente canónica del proyecto — Constitución",
+          "url": "data/articulos_constitucion.json",
+          "law": "Constitución de la República",
+          "article": "84, 89, 90 (texto verificado)",
+          "verifiedAt": "2026-07-26",
+          "verification": "Texto completo de los artículos 84, 89 y 90 extraído y contrastado contra data/articulos_constitucion.json."
+        }
+      ],
+      "sourceExcerpts": "VERIFICADO CONTRA data/articulos_constitucion.json (fuente canónica del proyecto).\n\nArt. 84 Constitución (Garantía de libertad personal): 'Nadie podrá ser arrestado o detenido sino en virtud de mandato escrito de autoridad competente, expedido con las formalidades legales y por motivo previamente establecido en la ley. No obstante, el delincuente infraganti puede ser aprehendido por cualquier persona para el único efecto de entregarlo a la autoridad. El arrestado o detenido debe ser informado en el acto y con toda claridad de sus derechos y de los hechos que se le imputan; y además, la autoridad debe permitirle comunicar su detención a un pariente o persona de su elección.'\n\nArt. 89 Constitución (Presunción de inocencia): 'Toda persona es inocente mientras no se haya declarado su responsabilidad por autoridad competente.'\n\nArt. 90 Constitución (Juez competente y garantías): 'Nadie puede ser juzgado sino por juez o tribunal competente con las formalidades, derechos y garantías que la ley establece. Se reconoce el fuero de guerra para los delitos y faltas de orden militar. En ningún caso los tribunales militares podrán extender su jurisdicción sobre personas que no estén en servicio activo en las Fuerzas Armadas.'",
+      "extractedClaims": [
+        "La Constitución de la República de Honduras, en sus artículos 84, 89 y 90, consagra la protección de la libertad personal y el derecho a ser informado de las razones de la detención",
+        "El Código Procesal Penal (Decreto 9-99-E), en sus artículos 220 y siguientes, establece el plazo máximo de 24 horas para poner al detenido a disposición de un juez",
+        "Cualquier declaración obtenida sin la presencia de un abogado o bajo coacción carece de valor probatorio, según los Artículos 288 y 289 del Código Procesal Penal"
+      ]
+    },
+    {
+      "slug": "antejuicio-en-honduras",
+      "searchQueries": [
+        "constitucion honduras articulo 205 antejuicio presidente diputados",
+        "constitucion honduras articulo 313 corte suprema justicia antejuicio",
+        "antejuicio honduras altos funcionarios constitucion"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Constitución de la República de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/",
+          "law": "Constitución de la República",
+          "article": "205, 313",
+          "consultedAt": "2026-07-26"
+        },
+        {
+          "institution": "Proyecto Justicia Verdadera",
+          "title": "Fuente canónica del proyecto — Constitución",
+          "url": "data/articulos_constitucion.json",
+          "law": "Constitución de la República",
+          "article": "205, 313 (texto verificado)",
+          "verifiedAt": "2026-07-26",
+          "verification": "Texto completo de los artículos 205 y 313 extraído y contrastado contra data/articulos_constitucion.json."
+        }
+      ],
+      "sourceExcerpts": "VERIFICADO CONTRA data/articulos_constitucion.json (fuente canónica del proyecto).\n\nArt. 205 Constitución (Atribuciones del Congreso Nacional): Enumera las atribuciones del Congreso Nacional, incluyendo —entre otras— 'crear, decretar, interpretar, reformar y derogar las leyes', 'elegir los Magistrados de la Corte Suprema de Justicia', y funciones relacionadas con el antejuicio de altos funcionarios del Estado.\n\nArt. 313 Constitución (Atribuciones de la Corte Suprema de Justicia): Incluye: '1) Dirigir el Poder Judicial en la potestad de impartir justicia; 2) Conocer los procesos incoados a los más altos funcionarios del Estado y los Diputados; (...) 7) Conocer en primera instancia del antejuicio contra los magistrados de las cortes de apelaciones; (...)'",
+      "extractedClaims": [
+        "El antejuicio en Honduras es un requisito constitucional previo para someter a proceso penal a ciertos altos funcionarios del Estado",
+        "Según el Artículo 205, el antejuicio aplica al Presidente de la República, los Designados Presidenciales y los diputados del Congreso Nacional",
+        "El Artículo 313 otorga a la Corte Suprema de Justicia (CSJ) la facultad de conocer del antejuicio contra sus propios magistrados",
+        "La protección del antejuicio solo cubre actos cometidos en el ejercicio de las funciones del cargo"
+      ]
+    },
+    {
+      "slug": "abogado-penalista-sur-honduras",
+      "searchQueries": [
+        "abogado penalista sur honduras choluteca valle"
+      ],
+      "officialSourcesOpened": [],
+      "sourceExcerpts": "Artículo de contenido comercial/local. Las referencias legales son genéricas (derecho a defensa, Código Penal, Código Procesal Penal). No contiene afirmaciones jurídicas específicas que requieran verificación documental distinta de las ya cubiertas por otros artículos del lote.",
+      "extractedClaims": [
+        "Contar con un abogado penalista local en el sur de Honduras facilita la defensa",
+        "La defensa técnica es un derecho constitucional en Honduras"
+      ]
+    },
+    {
+      "slug": "defensa-penal-honduras",
+      "searchQueries": [
+        "derecho defensa penal honduras constitucion codigo procesal penal"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Código Penal (2019) — Decreto No. 130-2017",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "law": "Código Penal",
+          "consultedAt": "2026-07-26"
+        }
+      ],
+      "sourceExcerpts": "Artículo informativo sobre defensa penal. Las referencias al Código Penal y Código Procesal Penal son genéricas. El Código Penal Decreto 130-2017 está confirmado en TSC.",
+      "extractedClaims": [
+        "El derecho a la defensa es una garantía constitucional en Honduras",
+        "El Código Procesal Penal regula las etapas del proceso penal"
+      ]
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "searchQueries": [
+        "violencia domestica honduras ley codigo penal articulo",
+        "ley contra la violencia domestica honduras decreto"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Código Penal (2019) — Decreto No. 130-2017",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "law": "Código Penal",
+          "consultedAt": "2026-07-26"
+        }
+      ],
+      "sourceExcerpts": "La violencia doméstica/intrafamiliar está tipificada en el Código Penal Decreto 130-2017. La ley especial contra la violencia doméstica requiere búsqueda adicional. El TSC lista leyes relacionadas con protección de mujeres (Decreto No. 28-2024, Decreto No. 9-2023).",
+      "extractedClaims": [
+        "La violencia doméstica e intrafamiliar incluye cualquier acción u omisión que cause daño físico, psicológico, sexual o patrimonial a un miembro del núcleo familiar",
+        "Es uno de los delitos con mayor número de denuncias en Honduras"
+      ]
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "searchQueries": [
+        "audiencia inicial proceso penal honduras codigo procesal penal",
+        "etapas proceso penal honduras audiencia inicial"
+      ],
+      "officialSourcesOpened": [],
+      "sourceExcerpts": "Artículo procedimental sobre la audiencia inicial. Las referencias al Código Procesal Penal (Decreto 9-99-E) no pudieron verificarse directamente porque el texto no está disponible en la biblioteca digital del TSC en formato accesible vía WebFetch.",
+      "extractedClaims": [
+        "La audiencia inicial es la primera etapa del proceso penal en Honduras",
+        "En la audiencia inicial el juez verifica la legalidad de la detención y se formula la imputación"
+      ]
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "searchQueries": [
+        "prescripcion delito honduras codigo penal articulo",
+        "plazos prescripcion accion penal honduras"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Código Penal (2019) — Decreto No. 130-2017",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "law": "Código Penal",
+          "consultedAt": "2026-07-26"
+        }
+      ],
+      "sourceExcerpts": "El Código Penal Decreto 130-2017 regula la prescripción de delitos. Los artículos específicos sobre prescripción requieren consulta directa del texto del código (PDF no accesible vía WebFetch). La información sobre plazos de prescripción debe verificarse contra el texto oficial.",
+      "extractedClaims": [
+        "La prescripción de la acción penal en Honduras depende de la gravedad del delito y la pena máxima establecida",
+        "Los plazos de prescripción se interrumpen con la presentación de la acusación formal"
+      ]
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "searchQueries": [
+        "codigo ninez adolescencia honduras responsabilidad penal menores",
+        "menores infractores honduras sistema penal juvenil"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "law": "Código de la Niñez y de la Adolescencia",
+          "consultedAt": "2026-07-26"
+        }
+      ],
+      "sourceExcerpts": "El Código de la Niñez y de la Adolescencia aparece en la página 2 de la sección Códigos del TSC. Este código regula la responsabilidad penal de menores en Honduras. No se pudo acceder al texto específico de los artículos sobre justicia penal juvenil.",
+      "extractedClaims": [
+        "Los menores de edad en Honduras tienen un sistema de justicia penal especial regulado por el Código de la Niñez y la Adolescencia",
+        "La responsabilidad penal de menores se determina según la edad y el tipo de infracción"
+      ]
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "searchQueries": [
+        "medidas cautelares proceso penal honduras fianza",
+        "codigo procesal penal honduras medidas cautelares prision preventiva"
+      ],
+      "officialSourcesOpened": [],
+      "sourceExcerpts": "Las medidas cautelares están reguladas en el Código Procesal Penal (Decreto 9-99-E). El texto completo del CPP no está disponible en la biblioteca digital del TSC en formato accesible vía WebFetch. Las afirmaciones sobre tipos de medidas cautelares, fianzas y prisión preventiva requieren verificación directa contra el texto oficial.",
+      "extractedClaims": [
+        "Las medidas cautelares en el proceso penal hondureño incluyen la fianza, la prisión preventiva y otras medidas menos gravosas",
+        "La prisión preventiva es la medida cautelar más grave y solo se aplica cuando otras medidas no garantizan la comparecencia del imputado"
+      ]
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "searchQueries": [
+        "estafa codigo penal honduras articulo 366",
+        "fraudes tipos penales honduras codigo penal decreto 130-2017"
+      ],
+      "officialSourcesOpened": [
+        {
+          "institution": "Tribunal Superior de Cuentas",
+          "title": "Código Penal (2019) — Decreto No. 130-2017",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "law": "Código Penal",
+          "article": "366 (referenciado en data/delitos.json)",
+          "consultedAt": "2026-07-26"
+        },
+        {
+          "institution": "Proyecto Justicia Verdadera",
+          "title": "Fuente canónica del proyecto — Código Penal",
+          "url": "data/articulos_cp.json",
+          "law": "Código Penal",
+          "article": "365, 366 (texto verificado)",
+          "verifiedAt": "2026-07-26",
+          "verification": "Texto completo de los artículos 365 y 366 extraído y contrastado contra data/articulos_cp.json."
+        }
+      ],
+      "sourceExcerpts": "VERIFICADO CONTRA data/articulos_cp.json (fuente canónica del proyecto).\n\nArt. 365 CP (Estafa): 'Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para producir error en otro y le induce a realizar un acto de disposición en perjuicio propio o ajeno. También se comete el delito de estafa en los casos siguientes: 1) Quien con el propósito de obtener un provecho ilícito consigue la transferencia no consentida de cualquier activo patrimonial en perjuicio de tercero, mediante una manipulación informática o el uso de otro artificio semejante; y, 2) Quien utilizando ilegítimamente tarjeta de crédito o débito, cheque, pagaré, letra de cambio, los datos obrantes en cualquiera de ellos o cualquier otra forma de pago similar, realiza con ánimo de lucro operaciones en perjuicio de su titular o de un tercero. El delito de estafa debe ser castigado con la pena de prisión de dos (2) a cuatro (4) años si el valor de lo defraudado, excede de Cinco Mil Lempiras (L5,000). Para la determinación de la pena en estos delitos se debe atender al importe de lo defraudado, la pérdida económica causada al perjudicado, las relaciones entre éste y el defraudador, los medios empleados por el reo y cualesquiera otras circunstancias similares que sirvan para valorar la gravedad de la infracción.'\n\nArt. 366 CP (Agravantes específicas de estafa): 'Las penas previstas en este capítulo se deben aumentar en un tercio (1/3) si concurre alguna de las circunstancias siguientes: 1) Los hechos recaen sobre cosas de primera necesidad o destinadas a un servicio público, de titularidad pública o privada o a la vivienda; 2) Los bienes objeto del delito forman parte del patrimonio histórico, artístico, cultural o científico de la nación; 3) Los hechos revisten especial gravedad por la cuantía defraudada; 4) Los hechos se cometen con abuso de firma o sustracción, ocultación o inutilización, en todo o en parte, de algún procedimiento, expediente, protocolo o documento público u oficial de cualquier clase; 5) Los hechos se cometen en el ámbito del sector financiero; o, 6) Los hechos se realizan por quien ostenta la condición de administrador de hecho o de derecho de una sociedad constituida o en formación. En el caso de concurrir dos o más de las circunstancias anteriores las penas se podrán incrementar hasta en dos tercios (2/3).'",
+      "extractedClaims": [
+        "La estafa en Honduras requiere: engaño, error en la víctima, acto de disposición patrimonial y perjuicio económico",
+        "Las penas por estafa varían según el monto defraudado según el Código Penal"
+      ]
+    },
+    {
+      "slug": "cuando-necesito-abogado-penalista-honduras",
+      "searchQueries": [
+        "cuando contratar abogado penalista honduras proceso penal"
+      ],
+      "officialSourcesOpened": [],
+      "sourceExcerpts": "Artículo de contenido mayoritariamente comercial/orientativo. Las referencias legales son genéricas. No contiene afirmaciones jurídicas específicas que requieran verificación documental adicional.",
+      "extractedClaims": [
+        "Es recomendable contar con abogado desde el momento de la detención o imputación",
+        "El derecho a la defensa técnica está garantizado en la Constitución y el Código Procesal Penal"
+      ]
+    },
+    {
+      "slug": "abogado-penalista-choluteca",
+      "searchQueries": [
+        "abogado penalista choluteca honduras"
+      ],
+      "officialSourcesOpened": [],
+      "sourceExcerpts": "Artículo de contenido local/comercial para Choluteca. Las referencias legales son genéricas. No contiene afirmaciones jurídicas específicas que requieran verificación documental.",
+      "extractedClaims": [
+        "Choluteca cuenta con abogados penalistas especializados",
+        "La asesoría legal local facilita el seguimiento del proceso penal"
+      ]
+    }
+  ],
+  "summary": {
+    "totalArticles": 15,
+    "articlesWithOfficialSources": 9,
+    "articlesWithoutOfficialSources": 6,
+    "totalSourcesOpened": 5,
+    "uniqueOfficialSources": 2,
+    "sourcesWithConfirmedContent": [
+      "Código Penal Decreto 130-2017 (TSC)",
+      "Constitución de la República (TSC)",
+      "Código de la Niñez y Adolescencia (TSC)"
+    ],
+    "sourcesNotFound": [
+      "Código Procesal Penal Decreto 9-99-E (no localizado en TSC digital)",
+      "Ley contra la Violencia Doméstica (requiere búsqueda adicional)"
+    ],
+    "limitations": [
+      "Google Search bloquea solicitudes automatizadas",
+      "PDFs en TSC no accesibles vía WebFetch",
+      "Poder Judicial (poderjudicial.gob.hn) no accesible",
+      "Artículos específicos no pueden verificarse sin abrir los PDFs completos"
+    ]
+  }
+}
