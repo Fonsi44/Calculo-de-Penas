@@ -173,7 +173,9 @@ test.describe('Fase 3E — Service worker en producción', () => {
     const body = await res.text();
     expect(body, 'SW contiene CACHE pineda-pwa').toContain('pineda-pwa');
     expect(body, 'SW NO contiene placeholder __BUILD_ID__').not.toContain('__BUILD_ID__');
-    expect(body, 'Content-Type javascript').toMatch(
+    // Content-Type debe ser JavaScript.
+    const contentType = res.headers()['content-type'] ?? '';
+    expect(contentType, 'Content-Type javascript').toMatch(
       /application\/javascript|text\/javascript/i,
     );
     // En producción no debe tener cache 'dev'.
