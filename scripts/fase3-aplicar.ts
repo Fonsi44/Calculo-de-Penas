@@ -13,6 +13,8 @@ import { config } from 'dotenv';
 import { neon } from '@neondatabase/serverless';
 import * as fs from 'fs';
 import * as path from 'path';
+import { deriveReviewStatus } from '../lib/ai/review-status';
+import { DEEPSEEK_MODEL } from '../lib/ai/deepseek-blog-review';
 
 const envLocalPath = path.resolve(process.cwd(), '.env.local');
 if (fs.existsSync(envLocalPath)) {
@@ -118,16 +120,43 @@ async function main() {
       .filter((c: any) => c.officialSource?.url)
       .map((c: any) => c.officialSource.url);
 
+    // === Fase 3B: derivar estado honestamente (no hardcodear 'completed') ===
+    // Contar claims centrales (aproximación: todos los claims son centrales salvo
+    // que se indique lo contrario; fase3-reclasificar usa la clasificación con
+    // importancia para el recálculo fino).
+    const centralConfirmed = claims.filter((c: any) =>
+      String(c.classification || '').startsWith('confirmed'),
+    ).length;
+    const centralCorrected = corrected.length;
+    const centralUnresolved = claims.filter(
+      (c: any) =>
+        c.classification === 'unsupported' ||
+        c.classification === 'ambiguous' ||
+        c.classification === 'requires_human_judgment',
+    ).length;
+
+    const { status: derivedStatus, reason: derivedReason } = deriveReviewStatus({
+      centralConfirmed,
+      centralCorrected,
+      centralUnresolved,
+      officialSources: sources.length,
+      requiresHuman: requiresHuman > 0,
+    });
+
+    console.log(
+      `   📊 Estado derivado: ${derivedStatus} — ${derivedReason}`,
+    );
+
     if (!dryRun) {
       await sql`
         UPDATE blog_posts
         SET
           body = ${updatedBody},
           updated_at = NOW(),
-          ai_review_status = 'completed',
+          ai_review_status = ${derivedStatus},
           ai_reviewed_at = NOW(),
           ai_review_provider = ${result.provider || 'DeepSeek'},
-          ai_review_model = ${result.model || 'deepseek-chat'},
+          ai_review_model = ${result.model || DEEPSEEK_MODEL},
           ai_review_version = '1.0',
           ai_review_confidence = ${result.overallConfidence || 'medium'},
           ai_review_sources = ${JSON.stringify(sources)}::jsonb,
@@ -142,7 +171,7 @@ async function main() {
         WHERE slug = ${result.slug}
       `;
 
-      console.log(`   ✅ DB actualizada: ${appliedCount} correcciones.`);
+      console.log(`   ✅ DB actualizada: ${appliedCount} correcciones, estado=${derivedStatus}.`);
     }
 
     totalCorreccionesAplicadas += appliedCount;

@@ -197,14 +197,53 @@ function validateAndParseJSON(raw: string): DeepSeekReviewOutput {
     throw new Error('DeepSeek: respuesta no contiene array "claims"');
   }
 
-  for (let i = 0; i < obj.claims.length; i++) {
-    const c = obj.claims[i] as Record<string, unknown>;
+  // === Fase 3B: validación semántica de claims confirmados ===
+  // Un claim confirmado SIN officialSource.url no puede considerarse confirmado:
+  // se degrada a 'unsupported' para impedir marcado falso de confianza.
+  // Esto ataca el defecto "confirmed claim with empty url still passes".
+  const claims = obj.claims as Record<string, unknown>[];
+  for (let i = 0; i < claims.length; i++) {
+    const c = claims[i];
     if (!c.claim || !c.classification) {
-      throw new Error(`DeepSeek: claim ${i} incompleto (falta claim o classification)`);
+      throw new Error(
+        `DeepSeek: claim ${i} incompleto (falta claim o classification)`,
+      );
+    }
+    const classification = String(c.classification);
+    const isConfirmed =
+      classification === 'confirmed' ||
+      classification === 'confirmed_with_context';
+    const url = String(
+      (c.officialSource as Record<string, unknown> | undefined)?.url || '',
+    ).trim();
+    if (isConfirmed && !url) {
+      // Degradar: un confirmed sin URL verificable no es confirmable
+      c.classification = 'unsupported';
+      c.requiresHumanReview = true;
+      if (!c.correctionReason) {
+        c.correctionReason =
+          'Degradado a unsupported: confirmed sin officialSource.url verificable (validación semántica Fase 3B)';
+      }
     }
   }
 
   return obj as unknown as DeepSeekReviewOutput;
+}
+
+/**
+ * Cuenta fuentes oficiales ÚNICAS por URL (no repetidas) en el output.
+ * Fase 3B: evita inflar ai_official_sources_count cuando una misma fuente
+ * se cita en varios claims.
+ */
+export function countUniqueOfficialSources(
+  output: DeepSeekReviewOutput,
+): number {
+  const urls = new Set<string>();
+  for (const c of output.claims) {
+    const url = c.officialSource?.url?.trim();
+    if (url) urls.add(url);
+  }
+  return urls.size;
 }
 
 export interface ReviewArticleInput {

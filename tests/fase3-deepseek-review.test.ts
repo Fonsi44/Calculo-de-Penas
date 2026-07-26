@@ -316,10 +316,10 @@ describe('Fase 3 — DeepSeek Blog Review', () => {
   it('validateAndParseJSON acepta claim confirmado sin officialSource.url (validación estructural)', async () => {
     process.env.DEEPSEEK_API_KEY = 'test-key-nosource';
 
-    // La validación actual (validateAndParseJSON) solo verifica estructura JSON,
-    // no semántica. Un claim "confirmed" sin officialSource.url pasa la validación
-    // estructural. Esto documenta el comportamiento actual y la necesidad de una
-    // capa de validación semántica adicional.
+    // Fase 3B: validateAndParseJSON ahora incluye validación semántica.
+    // Un claim "confirmed" sin officialSource.url se DEGRADA a 'unsupported'
+    // (no puede marcarse confirmado sin fuente verificable). Esto corrige el
+    // defecto anterior donde el claim pasaba la validación estructural.
     const outputWithoutSource: DeepSeekReviewOutput = {
       claims: [
         {
@@ -358,9 +358,9 @@ describe('Fase 3 — DeepSeek Blog Review', () => {
     // Primer intento tiene éxito → sin sleeps
     const result = await reviewArticle(sampleInput);
     expect(result.claims).toHaveLength(1);
-    expect(result.claims[0].classification).toBe('confirmed');
-    // El claim pasa a pesar de no tener URL
-    expect(result.claims[0].officialSource?.url).toBe('');
+    // Fase 3B: el claim se degrada a 'unsupported' por validación semántica
+    expect(result.claims[0].classification).toBe('unsupported');
+    expect(result.claims[0].requiresHumanReview).toBe(true);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
