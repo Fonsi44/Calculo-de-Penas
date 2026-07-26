@@ -17,6 +17,7 @@ import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
+import { CANONICAL_REVIEWERS } from '@/lib/legal-review';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import {
@@ -327,6 +328,22 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
+
+  const LAWYER_SLUGS: Record<string, string> = {
+    'Danilo Pineda Maradiaga': 'danilo-pineda-maradiaga',
+    'Thania Marlene Paz': 'thania',
+    'Emil Barahona': 'emil',
+  };
+
+  const isReviewed =
+    post.reviewStatus === 'verified' &&
+    post.reviewedBy &&
+    CANONICAL_REVIEWERS.includes(post.reviewedBy) &&
+    post.reviewedAt;
+
+  const authorSlug = post.author ? LAWYER_SLUGS[post.author] : null;
+  const authorHref = authorSlug ? `/despacho#${authorSlug}` : '/despacho';
+
   // Inyecta CTA mid-article y luego asigna IDs estables a los H2/H3 del body
   // (server-side) para que el TOC y los fragment anchors (#section) existan en
   // el HTML servidor (SEO/GEO: crawlers y LLMs ven la estructura del doc).
@@ -382,12 +399,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-5 mt-6 text-sm text-text-muted">
               <span className="flex items-center gap-1.5">
                 <Calendar size={15} className="text-accent-dark" />
-                <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+                <span>Publicado: <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time></span>
               </span>
               {post.updatedAt && (
                 <span className="flex items-center gap-1.5" title="Última actualización">
                   <Clock size={15} className="text-accent-dark" />
-                  <time dateTime={post.updatedAt}>Actualizado: {formatDate(post.updatedAt)}</time>
+                  <span>Actualizado: <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time></span>
                 </span>
               )}
               <span className="flex items-center gap-1.5">
@@ -396,15 +413,19 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
               </span>
               <span className="flex items-center gap-1.5">
                 <User size={15} className="text-accent-dark" />
-                {post.author}
+                <span>Autor: <Link href={authorHref} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary">{post.author}</Link></span>
               </span>
-              {post.reviewedBy && (
+              {isReviewed && (
                 <span className="flex items-center gap-1.5">
                   <BadgeCheck size={15} className="text-accent-dark" />
-                  Revisión jurídica: {post.reviewedBy}
+                  <span>Revisión jurídica:{' '}
+                  <Link href={`/despacho#${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
+                    {post.reviewedBy}
+                  </Link>
                   {post.reviewedAt && (
                     <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
                   )}
+                  </span>
                 </span>
               )}
             </div>
@@ -442,6 +463,14 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
             <div className="min-w-0">
               <article>
+                {!isReviewed && (
+                  <div className="p-4 mb-6 rounded-lg bg-surface-alt border border-yellow-500/20 text-xs text-text-secondary leading-relaxed flex items-start gap-2.5 shadow-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 flex-shrink-0 mt-1.5" />
+                    <div>
+                      <span className="font-bold text-text">Aviso informativo:</span> Este contenido tiene fines exclusivamente de divulgación general. Está pendiente de revisión jurídica individual por un abogado colegiado. Para un análisis detallado de su caso, consulte directamente a nuestro despacho.
+                    </div>
+                  </div>
+                )}
                 <BlogTOC headings={headings} />
                 <div className="article-body" dangerouslySetInnerHTML={{ __html: articleHtml }} />
 
@@ -474,18 +503,27 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <div className="mt-10 pt-6 border-t border-border/30">
                   <p className="text-xs font-bold uppercase tracking-widest text-text-muted mb-4">Sobre el autor</p>
                   <div className="flex flex-col sm:flex-row gap-4 p-5 rounded-lg border border-border/30 bg-surface-alt">
-                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">PA</div>
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg flex-shrink-0">
+                      {post.author === 'Danilo Pineda Maradiaga' ? 'DP' : post.author === 'Thania Marlene Paz' ? 'TP' : post.author === 'Emil Barahona' ? 'EB' : 'PA'}
+                    </div>
                     <div className="min-w-0">
-                      <p className="font-semibold text-text">{post.author}</p>
+                      <p className="font-semibold text-text">
+                        <Link href={authorHref} className="hover:text-primary hover:underline transition-colors">
+                          {post.author}
+                        </Link>
+                      </p>
                       <p className="text-xs text-text-muted">Abogados en Nacaome, Valle, zona sur de Honduras</p>
                       <p className="text-sm text-text-secondary leading-relaxed mt-2">
                         Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
                         colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                       </p>
-                      {post.reviewedBy && (
+                      {isReviewed && (
                         <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-text-secondary">
                           <BadgeCheck size={14} className="text-accent-dark" />
-                          Revisión jurídica: {post.reviewedBy}
+                          Revisión jurídica:{' '}
+                          <Link href={`/despacho#${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-semibold">
+                            {post.reviewedBy}
+                          </Link>
                           {post.reviewedAt && (
                             <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
                           )}

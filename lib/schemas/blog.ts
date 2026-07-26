@@ -1,40 +1,48 @@
 import { site, absoluteUrl } from '../site';
 import { stripHtml } from '../strip-html';
 import type { Post } from '@/data/blog/types';
+import { CANONICAL_REVIEWERS } from '../legal-review';
 
-/**
- * Mapa de categoría de blog → @id del autor (Person) que firma los posts de
- * esa categoría. Refuerza E-E-A-T (YMYL jurídico): Google prioriza autores
- * Person identificados en temas sensibles, y asociar cada categoría al
- * especialista correcto incrementa la autoridad temática percibida.
- *
- * Categorías no listadas → #danilo-pineda-maradiaga (socio director
- * y firma por defecto del bufete). Los @id deben coincidir con los nodos
- * Person inyectados en app/(public)/layout.tsx.
- */
-const CATEGORY_TO_AUTHOR_ID: Record<string, string> = {
-  'derecho-de-familia': `${site.url}/#thania`,
-  'derecho-civil': `${site.url}/#thania`,
-  'derecho-mercantil': `${site.url}/#thania`,
-  'derecho-administrativo': `${site.url}/#thania`,
-  'propiedad-intelectual': `${site.url}/#thania`,
-  'derecho-laboral': `${site.url}/#emil`,
+const validLawyersMap: Record<string, string> = {
+  'Danilo Pineda Maradiaga': `${site.url}/#danilo-pineda-maradiaga`,
+  'Thania Marlene Paz': `${site.url}/#thania`,
+  'Emil Barahona': `${site.url}/#emil`,
 };
 
 export function blogPostSchema(post: Post) {
-  // E-E-A-T (YMYL jurídico): cuando el autor del post coincide con el nombre
-  // del bufete, atribuimos la autoría al especialista de la categoría (vía
-  // el mapa CATEGORY_TO_AUTHOR_ID) en lugar de a la Organization. Google
-  // prioriza autores Person identificados en temas sensibles (derecho, salud,
-  // finanzas). El nodo Person referenciado se define en el layout global y
-  // se vincula vía @id para alimentar el Knowledge Graph.
-  // Si un post tuviera un autor real distinto (post.author !== site.name),
-  // se mantiene ese Person con su nombre.
-  const isOrgAuthor = !post.author || post.author === site.name;
-  const authorId = CATEGORY_TO_AUTHOR_ID[post.category] ?? `${site.url}/#danilo-pineda-maradiaga`;
+  // E-E-A-T: Alinamos autor visible con schema. Si es la firma, se mapea a Organization.
+  // Si es un abogado humano canónico, se mapea a su respectivo nodo Person.
+  const isLawyer = post.author && post.author in validLawyersMap;
+  const authorSchema = isLawyer
+    ? {
+        '@type': 'Person',
+        '@id': validLawyersMap[post.author],
+        name: post.author,
+      }
+    : {
+        '@type': 'Organization',
+        '@id': `${site.url}/#organization`,
+        name: site.name,
+      };
+
+  // E-E-A-T: Añadimos reviewedBy si el post ha sido revisado jurídicamente por un humano canónico.
+  const isReviewed =
+    post.reviewStatus === 'verified' &&
+    post.reviewedBy &&
+    CANONICAL_REVIEWERS.includes(post.reviewedBy) &&
+    post.reviewedAt;
+
+  const reviewerSchema = isReviewed
+    ? {
+        reviewedBy: {
+          '@type': 'Person',
+          '@id': validLawyersMap[post.reviewedBy!],
+          name: post.reviewedBy,
+        },
+      }
+    : {};
+
   // Recuento de palabras del cuerpo (texto plano sin HTML) para Article schema.
-  // Google recomienda `wordCount` en contenido YMYL; ayuda a clasificar depth.
-  // stripHtml (sanitize-html) en vez de regex: maneja tags anidados y entidades.
   const plainBody = post.body ? stripHtml(post.body) : '';
   const wordCount = plainBody ? plainBody.trim().split(/\s+/).filter(Boolean).length : 0;
   return {
@@ -45,12 +53,8 @@ export function blogPostSchema(post: Post) {
     description: post.description,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
-    author: isOrgAuthor
-      ? { '@id': authorId }
-      : {
-          '@type': 'Person',
-          name: post.author,
-        },
+    author: authorSchema,
+    ...reviewerSchema,
     // Publisher = Organization (no LegalService) para que Google valide el
     // Article Rich Result. La especificación de Google requiere @type Organization
     // con logo ImageObject. @id apunta al nodo Organization del @graph global
