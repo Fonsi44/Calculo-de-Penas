@@ -1739,4 +1739,28 @@ describe('Modo --ctr-only (payload ligero): guardias reusadas', () => {
       expect(rT.nuevo.length).toBeLessThanOrEqual(60);
     }
   });
+
+  describe('verificarClaims — falsos negativos conocidos y limitaciones de análisis automático', () => {
+    it('ignora afirmaciones falsas en texto plano sin citas formales de artículos (falso negativo esperado)', () => {
+      // Un texto plano falso como "En Honduras la pensión de alimentos es obligatoriamente el 50% de los ingresos"
+      // no cita un artículo del Código de Familia (ej: "Art. X"), por lo que extraerClaims no lo captura.
+      const body = '<p>En Honduras la pensión de alimentos es obligatoriamente el 50% de los ingresos del padre.</p>';
+      const claims = extraerClaims(body);
+      const disc = verificarClaims(claims);
+      // Debe haber 0 claims y 0 discrepancias detectadas debido a limitaciones de patrón
+      expect(claims.length).toBe(0);
+      expect(disc.length).toBe(0);
+    });
+
+    it('ignora decretos existentes aplicados a temas erróneos (falso negativo de asociación contextual)', () => {
+      // Decreto 9-99-E es el Código Procesal Penal. Si un post afirma falsamente que es la Ley de Tránsito,
+      // el script solo valida que "Decreto 9-99-E" está en la whitelist de conocidos, pero no puede
+      // validar si la correspondencia temática es errónea.
+      const body = '<p>La Ley de Tránsito de Honduras está regulada por el Decreto 9-99-E y sus reformas.</p>';
+      const claims = extraerClaims(body);
+      const disc = verificarClaims(claims);
+      // Debe haber 0 discrepancias críticas porque el decreto existe en la base de conocidos
+      expect(disc.length).toBe(0);
+    });
+  });
 });

@@ -3935,7 +3935,7 @@ function generarReporteMD(resultados: ResultadoPost[], modo: string, iaActiva: b
   lines.push('| Métrica | Valor |');
   lines.push('|---|---|');
   lines.push(`| Posts OK (validadores pasan) | ${resultados.filter((r) => r.ok).length} |`);
-  lines.push(`| Posts con discrepancias fácticas | ${conDiscrepancias.length} |`);
+  lines.push(`| Posts con discrepancias fácticas (coincidencias de patrón) | ${conDiscrepancias.length} |`);
   lines.push(`| Posts corregidos por IA | ${conCorreccionIA.length} |`);
   lines.push(`| Posts con title optimizado (CTR) | ${resultados.filter((r) => r.sugerenciaIA?.titleOptimizado).length} |`);
   lines.push(`| Posts con meta optimizada (CTR) | ${resultados.filter((r) => r.sugerenciaIA?.metaDescriptionOptimizada).length} |`);
@@ -3945,7 +3945,7 @@ function generarReporteMD(resultados: ResultadoPost[], modo: string, iaActiva: b
   lines.push('');
 
   if (conDiscrepancias.length > 0) {
-    lines.push('## ⚠️ Posts con discrepancias fácticas');
+    lines.push('## ⚠️ Posts con discrepancias fácticas (coincidencias de patrón)');
     lines.push('');
     for (const r of conDiscrepancias) {
       lines.push(`### \`${r.post.slug}\``);
@@ -4731,7 +4731,7 @@ async function main() {
   console.log(`${'─'.repeat(72)}`);
   console.log(`  Posts analizados:              ${resumen.total}`);
   console.log(`  Posts OK (validadores pasan):   ${resumen.ok}`);
-  console.log(`  Con discrepancias fácticas:     ${resumen.conDiscrepancias}`);
+  console.log(`  Con discrepancias fácticas (coincidencias de patrón):     ${resumen.conDiscrepancias}`);
   console.log(`  Sin claims legales detectables: ${resumen.sinClaims}`);
   console.log(`  Con hallazgos SEO/GEO:          ${resumen.hallazgosSEO}`);
   if (IA_ENABLED) console.log(`  Corregidos por IA:              ${resumen.corrigioIA}`);
