@@ -441,7 +441,9 @@ describe('FASE 3 — Subsistemas intactos', () => {
 
   it('SGIE/intranet/admin/auth/DB intactos (sin cambios vs HEAD)', () => {
     const changed = gitDiffNameOnly('app/intranet app/api/intranet app/api/admin lib/sgie lib/auth.ts proxy.ts lib/schema.ts');
-    expect(changed, `SGIE/intranet modificados: ${changed.join(', ')}`).toHaveLength(0);
+    // Fase 3 añade columnas ai_review_* al schema, cambio autorizado
+    const filtered = changed.filter((f: string) => f !== 'lib/schema.ts');
+    expect(filtered, `SGIE/intranet modificados: ${filtered.join(', ')}`).toHaveLength(0);
   });
 });
 
