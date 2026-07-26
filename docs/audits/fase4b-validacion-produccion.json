@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-26T21:04:36.146Z",
+  "generatedAt": "2026-07-26T23:23:44.848Z",
   "fase": "4B",
   "lote": 2,
   "enunciadoSeccion": "§13",
   "produccion": "https://www.pinedayasociadoshn.com",
-  "headShaEsperado": "0dc703deb73df7fb80830f90868268f542cf6173",
+  "headShaEsperado": "88b18cb8b53932e1095555c262f137be2f56096d",
   "totalArticulos": 15,
   "passCount": 15,
   "failCount": 0,
@@ -50,7 +50,7 @@
       "enlacesInternos": 133,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=183275"
+        "bodyVisibleLen=183880"
       ],
       "errores": []
     },
@@ -72,7 +72,7 @@
       "enlacesInternos": 134,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=184589"
+        "bodyVisibleLen=185256"
       ],
       "errores": []
     },
@@ -94,7 +94,7 @@
       "enlacesInternos": 137,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=182049"
+        "bodyVisibleLen=182654"
       ],
       "errores": []
     },
@@ -116,7 +116,7 @@
       "enlacesInternos": 135,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=183574"
+        "bodyVisibleLen=184223"
       ],
       "errores": []
     },
@@ -138,7 +138,7 @@
       "enlacesInternos": 137,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=178840"
+        "bodyVisibleLen=179494"
       ],
       "errores": []
     },
@@ -160,7 +160,7 @@
       "enlacesInternos": 133,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=186428"
+        "bodyVisibleLen=187033"
       ],
       "errores": []
     },
@@ -182,7 +182,7 @@
       "enlacesInternos": 136,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=193624"
+        "bodyVisibleLen=194229"
       ],
       "errores": []
     },
@@ -204,7 +204,7 @@
       "enlacesInternos": 136,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=168421"
+        "bodyVisibleLen=168982"
       ],
       "errores": []
     },
@@ -226,7 +226,7 @@
       "enlacesInternos": 138,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=177299"
+        "bodyVisibleLen=177953"
       ],
       "errores": []
     },
@@ -248,7 +248,7 @@
       "enlacesInternos": 136,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=190677",
+        "bodyVisibleLen=191282",
         "textosNuevosPresentes=2/2",
         "textosAntiguosAusentes=3/3"
       ],
@@ -272,7 +272,7 @@
       "enlacesInternos": 137,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=186110"
+        "bodyVisibleLen=186785"
       ],
       "errores": []
     },
@@ -294,7 +294,7 @@
       "enlacesInternos": 134,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=182546"
+        "bodyVisibleLen=183080"
       ],
       "errores": []
     },
@@ -316,7 +316,7 @@
       "enlacesInternos": 131,
       "h1Count": 1,
       "checks": [
-        "bodyVisibleLen=168816"
+        "bodyVisibleLen=169470"
       ],
       "errores": []
     },

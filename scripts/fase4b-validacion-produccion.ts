@@ -17,11 +17,17 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 
 const ROOT = process.cwd();
 const AUDITS = path.join(ROOT, 'docs', 'audits');
 const PROD = 'https://www.pinedayasociadoshn.com';
-const HEAD_SHA = '0dc703deb73df7fb80830f90868268f542cf6173';
+
+// SHA real del HEAD de git (no hardcodeado). Fase 4C corrigió este valor: el
+// hash anterior estaba fijado a '0dc703de' y por ello el JSON declaraba un SHA
+// que ya no correspondía con el deployment en producción. Ahora se resuelve en
+// tiempo de ejecución desde `git rev-parse HEAD`, que es la fuente de verdad.
+const HEAD_SHA = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
 
 interface Articulo {
   slug: string;

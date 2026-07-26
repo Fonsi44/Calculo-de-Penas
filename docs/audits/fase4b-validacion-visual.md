@@ -3,7 +3,8 @@
 **Fecha:** 2026-07-26
 **Modo:** VERIFICACIÓN (contra producción)
 **Base URL:** `https://www.pinedayasociadoshn.com`
-**Deployment objetivo:** `f4e097d2eaf92aeb7f873862e84363320af7de7c` (READY, production)
+**Deployment objetivo (cierre Fase 4C):** `88b18cb8b53932e1095555c262f137be2f56096d` (READY, production, alias `www.pinedayasociadoshn.com`)
+**Deployment objetivo (Fase 4B previo):** `f4e097d2eaf92aeb7f873862e84363320af7de7c` (READY, production)
 **Spec:** `e2e/fase4b-visual.spec.ts`
 **Comando:**
 ```bash
@@ -106,7 +107,7 @@ Error: aviso 'contrastado documentalmente' en completed pension-alimenticia-hond
 1. `app/(public)/blog/[categoria]/[slug]/page.tsx:39` declara `export const revalidate = 3600;` y `generateStaticParams()` (línea 253): las páginas del blog son **estáticas prerenderizadas** en el build.
 2. El deploy `0dc703de` se construyó cuando la columna `ai_review_status` todavía era `not_started` en DB Neon para los 15 artículos.
 3. Por tanto, el HTML prerenderizado tiene `<AiReviewNotice aiReviewStatus="not_started">`, y el componente devuelve `null` para `not_started` (diseño correcto, R4/R11/R12: "no afirmar lo que no está verificado").
-4. Tras aplicar los estados a DB Neon (15/15 OK, 0 discrepancias) y revalidar con `CRON_SECRET` (45 paths, 0 errores), el HTML en producción **sigue sin el aviso** porque:
+4. Tras aplicar los estados a DB Neon (15/15 OK, 0 discrepancias) y revalidar con `CRON_SECRET` (45 invocaciones de `revalidatePath`, 0 errores), el HTML en producción **sigue sin el aviso** porque:
    - El `revalidatePath` marca la ruta como stale en la caché interna de Next.js.
    - Pero el edge cache del CDN (`x-vercel-cache: HIT`, `age: 351`) sigue sirviendo el prerender estático del build actual.
 5. Confirmado via `curl` con bypass de caché (`?nocache=...`, `Cache-Control: no-cache`): el HTML servido NO contiene ninguno de los textos esperados del aviso.
@@ -116,7 +117,7 @@ Error: aviso 'contrastado documentalmente' en completed pension-alimenticia-hond
 El bloqueo se resuelve con un **nuevo deploy** que regenere las páginas estáticas con los estados ya aplicados en DB:
 
 1. ✅ Estados aplicados a DB Neon (script `fase4b-aplicar-estados-db.ts`, 15/15 OK).
-2. ✅ Revalidación ejecutada (45 paths, 0 errores).
+2. ✅ Revalidación ejecutada (45 invocaciones de `revalidatePath`, 0 errores). **Desglose real (Fase 4C §4):** el endpoint `/api/revalidate` con `type: 'slug'` revalida, para cada uno de los 15 slugs, **3 rutas** (artículo + categoría + `/blog`), lo que da 15 × 3 = **45 invocaciones**. En paths **únicos** esto equivale a **22**: 15 artículos + 6 categorías (`derecho-civil`, `derecho-de-familia`, `derecho-laboral`, `proceso-penal`, `derecho-penal`, `extranjeria-migracion`) + 1 índice `/blog`. La cifra "45" refleja invocaciones (con duplicados por categoría compartida e índice repetido), no paths únicos.
 3. ⏳ **Commit + push de los artefactos Fase 4B** (incluido el script de aplicación): desencadena deploy nuevo en Vercel.
 4. ⏳ Esperar a que el nuevo deployment esté READY.
 5. ⏳ Re-ejecutar `e2e/fase4b-visual.spec.ts` contra el nuevo deployment: el aviso debería aparecer y los 12 tests deberían pasar.
@@ -146,8 +147,8 @@ Se generaron capturas en `.tmp/fase4b-shots/` (no se commitean, `.gitignore` cub
 
 ## 8. Conclusión
 
-- **Validación productiva automatizada (§13): 15/15 PASS.** HTTP, metadata, JSON-LD, canonical, breadcrumbs, contenido, correcciones aplicadas — todo verde.
-- **Validación visual (§14): 3/15 PASS.** Los 12 fallos son **todos por la misma causa raíz**: HTML prerenderizado en build time con `ai_review_status = not_started`, cacheado en edge. La causa NO es un defecto de Fase 4B; es la interacción natural de SSG + edge cache cuando se aplica un estado a DB **después** del último deploy.
-- **Resolución:** un nuevo deploy (desencadenado por el push de los artefactos Fase 4B) regenerará los estáticos con los estados ya aplicados. Tras eso, los 12 tests se re-ejecutan y deberían pasar.
+- **Validación productiva automatizada (§13): 15/15 PASS** contra el deployment `88b18cb8` (cierre Fase 4C, 2026-07-26). HTTP, metadata, JSON-LD, canonical, breadcrumbs, contenido, correcciones aplicadas — todo verde.
+- **Validación visual (§14): 15/15 PASS** contra el deployment `88b18cb8`. Re-ejecución del spec `e2e/fase4b-visual.spec.ts` en escritorio + móvil + service worker. Los 12 fallos históricos del deploy `0dc703de` quedaron resueltos al regenerarse los estáticos con los estados ya aplicados en DB Neon (deploys `f4e097d2` y posteriores).
+- **Resolución histórica (documentada):** la primera ejecución sobre `0dc703de` mostró 12 fallos por HTML prerenderizado con `ai_review_status = not_started` cacheado en edge. Tras aplicar estados a DB Neon y desencadenar nuevos deploys (`f4e097d2`, `88b18cb8`), los estáticos se regeneraron con los estados correctos y los 15 tests pasan.
 
-**No hay defectos visuales, ni de layout, ni de contenido, ni de SEO** en los 12 artículos: el único elemento pendiente es el aviso AiReviewNotice, cuya ausencia actual es técnicamente correcta dado el estado del cache.
+**No hay defectos visuales, ni de layout, ni de contenido, ni de SEO** en los artículos del Lote 2.
