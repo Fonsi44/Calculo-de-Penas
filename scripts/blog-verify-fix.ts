@@ -1129,11 +1129,19 @@ export function verificarClaims(claims: ClaimExtraido[]): Discrepancia[] {
       case 'decreto': {
         const conocidos = [
           '130-2017', '119-2019', '144-83', '132-2007', '9-99', '59-97', '189-87',
-          '189-1959', '189-59',    // Código de Trabajo
+          '189-1959', '189-59', '189', // Código de Trabajo
           '51-2003',                // Código Tributario
           '106-1972',               // Código de Comercio
           '84-2017',                // Código Civil (nuevo)
           '76-84',                  // Código de Familia
+          '356-1976', '08-2020',    // Ley de Zonas Libres / Apoyo
+          '12-99-E', '24-2008',     // Propiedad Industrial / Competencia
+          '170-2006',               // Transparencia / Datos Personales
+          '73-50', '73-1950',       // Código de Comercio anterior/común
+          '26-94', '104-93',        // Convenio OIT 169 / Ley del Ambiente
+          '25-1963', '118-2019', '59-2024', // SAR / Alivio de Deuda / D. 59-2024
+          '126', '126-1968',        // Ley de Servicio Civil
+          '211-2006',               // Código Procesal Civil
         ];
         const numDecreto = claim.textoOriginal.replace(/Decreto\s*/i, '').trim();
         if (!conocidos.some((c) => numDecreto.includes(c))) {
