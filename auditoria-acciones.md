@@ -793,7 +793,8 @@ y demás afirmaciones del registro legal continúa `NO VALIDADO`.
 ## 2026-07-26 — Implementación posterior a auditoría de GSC, Bing y GA4
 
 **Modo:** `IMPLEMENTACIÓN`, con autorización expresa del usuario. Trabajo
-directo sobre `main`, sin push ni despliegue de una nueva versión.
+directo sobre `main`, sin push; publicación controlada posterior a la
+validación local.
 
 **Medición y conversiones:**
 
@@ -829,6 +830,11 @@ directo sobre `main`, sin push ni despliegue de una nueva versión.
   descripciones entre 112 y 142;
 - los títulos visibles, cuerpos y referencias jurídicas se conservaron
   intactos. Se generó un backup previo a la escritura.
+
+**Producción:** despliegue `dpl_HPe68kjKthzDVmh6xBTR9ukYpeYj` publicado y
+asociado a `https://www.pinedayasociadoshn.com`. La auditoría posterior obtuvo
+30/30 probes correctos y confirmó en el HTML público el nuevo enlace laboral y
+los snippets editoriales actualizados.
 
 **Pendiente externo residual:** Google y Bing deben volver a rastrear las URLs
 para reflejar snippets, cobertura y recomendación de enlace muerto. Los datos
