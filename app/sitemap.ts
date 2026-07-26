@@ -112,6 +112,14 @@ const REDIRECT_SOURCE_PATHS = new Set<string>([
   // en next.config.ts:284). Si sigue publicado en DB, el sitemap lo listaría y
   // serviría un 308. Auditoría Ahrefs 2026-07-10: 1 enlace "Sitemap URL → 308".
   '/blog/derecho-penal/abogado-penalista-choluteca',
+  // Posts locales consolidados en landings comerciales
+  '/blog/practica-legal/abogados-en-nacaome',
+  '/blog/practica-legal/abogados-en-choluteca',
+  '/blog/practica-legal/abogados-en-san-lorenzo',
+  '/blog/practica-legal/abogados-en-pespire-choluteca',
+  '/blog/practica-legal/abogados-en-marcovia-choluteca',
+  '/blog/practica-legal/abogados-en-san-marcos-de-colon-choluteca',
+  '/blog/practica-legal/abogados-en-amapala-valle',
 ]);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

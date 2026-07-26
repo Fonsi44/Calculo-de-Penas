@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { site } from '@/lib/site';
 import { Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -109,6 +110,11 @@ export default async function BlogHubPage(props: Props) {
     ? monthFiltered.filter((p) => !featuredSlugs.has(p.slug))
     : monthFiltered;
   const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);
+
+  if (page < 1 || (gridSource.length > 0 && page > totalPages)) {
+    notFound();
+  }
+
   const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
 
   // Derivación para la navegación por categorías.

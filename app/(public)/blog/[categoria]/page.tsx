@@ -76,6 +76,11 @@ export default async function BlogCategoryPage(props: Props) {
 
   const categoryPosts = await getPostsByCategory(categoria);
   const totalPages = getTotalPages(categoryPosts, ITEMS_PER_PAGE);
+
+  if (page < 1 || (categoryPosts.length > 0 && page > totalPages)) {
+    notFound();
+  }
+
   const posts = getPostsByPage(categoryPosts, page, ITEMS_PER_PAGE);
 
   const buildPageUrl = (p: number) => {
