@@ -8,6 +8,9 @@
  * Modelo: deepseek-chat (DeepSeek V3/V4 Pro — endpoint unificado)
  */
 
+import type { SourceProvenanceCount } from './source-provenance';
+import { countSourcesByProvenance } from './source-provenance';
+
 const DEEPSEEK_BASE_URL =
   process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com/v1';
 
@@ -33,6 +36,13 @@ export interface OfficialSource {
   article?: string;
   publishedAt?: string;
   consultedAt: string;
+  /**
+   * Clasificación de procedencia (Fase 3C).
+   * Si no se especifica, se clasifica heurísticamente con
+   * classifySourceProvenance(url, institution).
+   * Ver lib/ai/source-provenance.ts.
+   */
+  provenance?: import('./source-provenance').SourceProvenance;
 }
 
 export interface GoogleEvidence {
@@ -61,6 +71,8 @@ export interface ClaimAnalysis {
     article?: string;
     publishedAt?: string;
     consultedAt: string;
+    /** Clasificación de procedencia (Fase 3C). */
+    provenance?: import('./source-provenance').SourceProvenance;
   };
   sourceExcerptSummary: string;
   analysisProvider: string;
@@ -234,6 +246,11 @@ function validateAndParseJSON(raw: string): DeepSeekReviewOutput {
  * Cuenta fuentes oficiales ÚNICAS por URL (no repetidas) en el output.
  * Fase 3B: evita inflar ai_official_sources_count cuando una misma fuente
  * se cita en varios claims.
+ *
+ * NOTA (Fase 3C): esta función cuenta TODAS las URLs únicas, sin distinguir
+ * procedencia. Para el conteo honesto que diferencia oficiales vs.
+ * institucionales/internas, usar countOfficialSourcesByProvenance().
+ * Esta se conserva por compatibilidad con tests y scripts existentes.
  */
 export function countUniqueOfficialSources(
   output: DeepSeekReviewOutput,
@@ -244,6 +261,30 @@ export function countUniqueOfficialSources(
     if (url) urls.add(url);
   }
   return urls.size;
+}
+
+/**
+ * Cuenta fuentes ÚNICAS por procedencia (Fase 3C).
+ *
+ * Devuelve el desglose completo y el total de fuentes oficiales reales
+ * (solo official_primary + official_secondary). Esto corrige la semántica
+ * de countUniqueOfficialSources, que contaba cualquier URL como oficial.
+ *
+ * Deduplica por URL normalizada (ver normalizeSourceForDedup).
+ * No realiza llamadas externas: solo clasifica heurísticamente.
+ */
+export function countOfficialSourcesByProvenance(
+  output: DeepSeekReviewOutput,
+): SourceProvenanceCount {
+  return countSourcesByProvenance(
+    output.claims
+      .filter((c) => c.officialSource?.url)
+      .map((c) => ({
+        url: c.officialSource!.url,
+        provenance: c.officialSource!.provenance,
+        institution: c.officialSource!.institution,
+      })),
+  );
 }
 
 export interface ReviewArticleInput {
