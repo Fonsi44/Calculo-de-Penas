@@ -1,0 +1,438 @@
+{
+  "generatedAt": "2026-07-26",
+  "total": 46,
+  "byClassification": {
+    "unsupported": 45,
+    "ambiguous": 1
+  },
+  "bySlug": {
+    "abogado-penalista-choluteca": 1,
+    "abogado-penalista-sur-honduras": 1,
+    "allanamiento-ilegal-violacion-domicilio-honduras": 1,
+    "antejuicio-en-honduras": 2,
+    "audiencia-inicial-proceso-penal-honduras": 3,
+    "cuando-necesito-abogado-penalista-honduras": 1,
+    "cuando-prescribe-delito-en-honduras": 10,
+    "defensa-penal-honduras": 2,
+    "defensa-penal-menores-edad-honduras": 11,
+    "derechos-detenido-honduras-guia-constitucional": 3,
+    "fianza-medidas-cautelares-proceso-penal-honduras": 3,
+    "violencia-domestica-ruta-legal-honduras": 8
+  },
+  "claims": [
+    {
+      "slug": "abogado-penalista-choluteca",
+      "claim": "Un proceso penal simplificado puede resolverse entre 6 y 12 meses. Casos de mayor complejidad, con múltiples recursos, pueden extenderse a 2 o 3 años o más.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Los plazos de duración del proceso son centrales para la propuesta de valor del artículo: responde directamente a cuánto tiempo puede durar la defensa penal en Choluteca.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "abogado-penalista-sur-honduras",
+      "claim": "Contar con un abogado penalista local en el sur de Honduras facilita la defensa",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Es la tesis principal del artículo: la ventaja de contratar un abogado penalista local en el sur de Honduras. Sin esta afirmación el artículo pierde su propósito.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "claim": "Fuera de este horario, el domicilio es inviolable y un allanamiento nocturno solo es legal si cuenta con una autorización judicial fundamentada expresamente por razones de urgencia.",
+      "classification": "ambiguous",
+      "importance": "central",
+      "reason": "Define la excepción al horario — cuándo un allanamiento nocturno es legal. Es parte del núcleo de la respuesta sobre legalidad del allanamiento.",
+      "requiresHumanReview": true,
+      "source": null
+    },
+    {
+      "slug": "antejuicio-en-honduras",
+      "claim": "Según el Artículo 205, el antejuicio aplica al Presidente de la República, los Designados Presidenciales y los diputados del Congreso Nacional",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Responde a la pregunta clave de a quiénes aplica el antejuicio — un elemento definitorio de la figura jurídica.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "antejuicio-en-honduras",
+      "claim": "La protección del antejuicio solo cubre actos cometidos en el ejercicio de las funciones del cargo",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece los límites de la protección del antejuicio — esencial para entender qué es y qué no es esta figura. Sin esta precisión la definición queda incompleta.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "claim": "En la audiencia inicial participan el Juez, el Ministerio Público (Fiscal), el Imputado, el Abogado Defensor y la Víctima (opcional).",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Responde a quiénes participan en la audiencia — una pregunta estructural sobre el proceso.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "claim": "Durante la audiencia inicial se realiza: control de legalidad de la detención, información de derechos, formulación de la imputación, declaración del imputado, y solicitud y decisión sobre medidas cautelares.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Describe qué sucede durante la audiencia — el desarrollo del acto procesal que es el tema central del artículo.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "claim": "Si el imputado no cuenta con un abogado privado, el juez le designará un defensor público. La audiencia no puede realizarse sin la asistencia legal del imputado.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "La garantía de defensa técnica es un derecho procesal fundamental sin el cual la audiencia inicial no es válida. Afecta directamente la validez del procedimiento.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-necesito-abogado-penalista-honduras",
+      "claim": "La intervención de un abogado penalista en Honduras es crucial desde las primeras etapas de un proceso, ya sea que usted sea investigado, detenido o víctima de un delito.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Responde directamente a la pregunta del título del artículo: cuándo se necesita un abogado penalista. Es la tesis central.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "La acción penal prescribe en un plazo igual al máximo de la pena de prisión del delito, con límites de tres a quince años.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define la regla general de prescripción — es la respuesta directa a la pregunta del título sobre cuándo prescribe un delito.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "Las faltas prescriben en seis meses según el Artículo 41 del Código Penal.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece el plazo de prescripción para faltas — una categoría específica dentro de la respuesta general sobre plazos de prescripción.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "El cómputo del plazo de prescripción inicia desde el día de la comisión del delito (Art. 39).",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define cuándo empieza a correr el plazo — dato indispensable para calcular la prescripción en un caso concreto.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "En delitos continuados, el plazo empieza al cesar la conducta; en permanentes, al eliminar la situación antijurídica; en delitos de resultado, desde la materialización de éste.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Especifica el inicio del cómputo para categorías especiales de delitos — esencial para aplicar correctamente la regla de prescripción a casos reales.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "La interrupción de la prescripción reinicia el plazo; causas: requerimiento fiscal, auto de formal procesamiento, citación para juicio (Art. 42).",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define las causas y efectos de la interrupción — un concepto fundamental de la prescripción que modifica el plazo.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "La suspensión detiene el cómputo; se reanuda al cesar la causa, como la fuga del imputado o cuestión prejudicial.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define la suspensión como figura distinta de la interrupción — concepto esencial para entender los plazos de prescripción.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "Si el plazo ha transcurrido completamente, la prescripción está consumada y no puede interrumpirse.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define la consecuencia jurídica de la prescripción consumada — el efecto final que el lector necesita conocer.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "La prescripción beneficia al imputado independientemente de su culpabilidad.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece que la prescripción opera objetivamente sin consideración de culpabilidad — característica esencial de la figura.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "El cómputo de prescripción no inicia con la denuncia sino con la comisión del delito.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Corrige una confusión común sobre si la denuncia inicia el cómputo. Es una aclaración esencial para entender cuándo prescribe realmente un delito.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "claim": "La prescripción de la acción penal extingue la responsabilidad penal y el juez debe declararla de oficio o a petición de parte.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define el efecto jurídico de la prescripción y cómo se hace valer procesalmente — información práctica fundamental sobre las consecuencias.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-honduras",
+      "claim": "Artículo 71 de la Constitución de la República de Honduras establece un plazo máximo e improrrogable de 24 horas para que el detenido sea puesto a la orden de un juez competente.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define el plazo constitucional de 24 horas que es el eje del artículo — el título menciona las primeras 24 horas. Es la base legal de toda la estrategia de defensa inicial.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-honduras",
+      "claim": "El recurso de apelación debe interponerse en un plazo de 3 días hábiles, conforme al Artículo 356 del Código Procesal Penal.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece un plazo perentorio para ejercer el derecho de apelación — un dato procesal crítico que afecta la estrategia de defensa.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "El sistema de defensa penal juvenil en Honduras se aplica a adolescentes entre 12 y 18 años que han cometido una conducta tipificada como delito.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define el ámbito de aplicación del sistema penal juvenil — responde a la pregunta fundamental de a quiénes se aplica esta justicia especializada.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "Los menores de 12 años son considerados inimputables y no pueden ser procesados penalmente, aplicándose en su lugar medidas de protección administrativas.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define quiénes están excluidos del sistema penal juvenil por inimputabilidad — establece el límite inferior de edad, esencial para el ámbito de aplicación.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "El objetivo principal de este régimen es la reinserción social del adolescente, no el castigo.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define el principio rector del sistema penal juvenil — la filosofía que lo distingue del sistema de adultos y que justifica todas las diferencias procesales y sustantivas.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "La Ley del Sistema Especial de Justicia para Menores, vigente desde 1997, rige los principios y procedimientos de la justicia penal juvenil en Honduras.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Identifica la ley principal que regula todo el sistema penal juvenil — sin esta referencia legal el artículo carece de base normativa.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "Establece la primacía del interés superior del menor, la excepcionalidad de la privación de libertad y la finalidad educativa de las medidas impuestas.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Enumera los principios fundamentales del sistema — son las directrices que gobiernan todas las decisiones judiciales y medidas aplicables a menores.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "El Artículo 5 de esta ley especifica que la privación de libertad debe ser el último recurso.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece una regla concreta sobre la excepcionalidad del internamiento — un límite legal expreso a la facultad punitiva del Estado frente a menores.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "Las medidas que puede imponer un juez de menores incluyen amonestación, libertad asistida, prestación de servicios a la comunidad, órdenes de orientación e internamiento en centro especializado (solo para delitos graves, limitado, educativo).",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Enumera el catálogo de sanciones y medidas disponibles en el sistema juvenil — información práctica fundamental sobre qué consecuencias puede enfrentar un menor.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "Las audiencias en el sistema juvenil son reservadas para proteger la identidad del menor, a diferencia del sistema de adultos que es público.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define una diferencia procesal fundamental entre el sistema juvenil y el de adultos — afecta directamente los derechos y la privacidad del menor.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "No existe la prisión preventiva como en el sistema de adultos; solo se contempla el internamiento cautelar de forma excepcional.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece una diferencia sustancial en las medidas cautelares — define que el menor no puede ser sometido a prisión preventiva, solo a internamiento cautelar excepcional.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "Los antecedentes penales generados en el sistema juvenil no generan reincidencia ni afectan al adolescente una vez que alcanza la mayoría de edad y es procesado bajo el sistema penal de adultos.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define el efecto de los antecedentes penales juveniles al alcanzar la mayoría de edad — una consecuencia práctica de enorme relevancia para el futuro del menor.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "claim": "El proceso juvenil es más flexible, permitiendo la aplicación de soluciones alternas y acuerdos reparatorios.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Describe una característica procesal distintiva del sistema juvenil — la flexibilidad y la disponibilidad de mecanismos alternativos de resolución.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "claim": "Cualquier declaración obtenida sin la presencia de un abogado o bajo coacción carece de valor probatorio, según los Artículos 288 y 289 del Código Procesal Penal.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Establece la nulidad probatoria de declaraciones obtenidas sin defensa técnica — una garantía procesal esencial del derecho de defensa del detenido.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "claim": "Si la persona no puede costear un abogado, el Estado tiene la obligación de proporcionarle un defensor público, conforme a los Artículos 101 y 119 del Código Procesal Penal.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Garantiza el acceso a defensa técnica gratuita para quien no puede pagarla — un derecho fundamental que hace efectivo el derecho de defensa.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "claim": "El recurso de hábeas corpus puede interponerse en cualquier momento mientras dure la detención ilegal. No existe un plazo de caducidad para su interposición.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define las condiciones de ejercicio del hábeas corpus — el principal mecanismo de protección contra detenciones ilegales y uno de los derechos más importantes del detenido.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "claim": "La regulación de las medidas cautelares y la fianza en Honduras se encuentra principalmente en el Código Procesal Penal (Decreto 130-2017), específicamente en los artículos 173 al 185.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Identifica la fuente normativa y los artículos específicos que regulan las medidas cautelares — base legal indispensable para el artículo.",
+      "requiresHumanReview": true,
+      "source": null
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "claim": "La fianza es una garantía económica que asegura la comparecencia del imputado, y su monto se determina considerando la gravedad del delito, capacidad económica y arraigo.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define qué es la fianza y los criterios para fijar su monto — contenido nuclear sobre uno de los dos temas del título del artículo.",
+      "requiresHumanReview": true,
+      "source": null
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "claim": "Las medidas cautelares incluyen presentación periódica, prohibición de salir del país, arraigo domiciliario, vigilancia electrónica, fianza y prisión preventiva como último recurso.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Enumera el catálogo completo de medidas cautelares disponibles — contenido nuclear sobre el otro tema del título del artículo.",
+      "requiresHumanReview": true,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "La violencia doméstica está contemplada en la Ley Contra la Violencia Doméstica (Decreto No. 130-2017) y en el Código Penal de Honduras (Decreto No. 130-2017).",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Identifica el marco legal aplicable a la violencia doméstica — base normativa indispensable para un artículo sobre cómo denunciar este delito.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "La ley protege a cualquier persona que sufra violencia en el ámbito familiar o de convivencia, abarcando agresiones físicas, psicológicas, sexuales y patrimoniales.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Define el ámbito de protección de la ley — a quiénes cubre y qué tipos de violencia incluye. Esencial para que la víctima sepa si su situación está amparada.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "No es necesario que exista un matrimonio formalizado ni que los convivientes estén separados para que se configure este tipo de violencia.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Aclara que la protección no depende del estado civil — una precisión fundamental sobre el ámbito de aplicación que disipa dudas comunes.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "En situaciones de emergencia, se puede llamar al 911. La policía tiene la facultad de detener al agresor en flagrancia y debe presentarlo ante la autoridad judicial en un plazo máximo de 24 horas.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Indica la vía de emergencia para denunciar y la actuación policial inmediata — parte esencial de la ruta legal para situaciones urgentes.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "Los jueces de violencia doméstica están facultados para dictar medidas de protección de forma expedita, incluso sin escuchar previamente al agresor si la urgencia lo amerita. Estas medidas pueden incluir: orden de alejamiento, prohibición de comunicación, desalojo, custodia provisional, pensión alimenticia provisional. El incumplimiento constituye delito de desacato.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Describe las medidas de protección disponibles y sus consecuencias — es el resultado práctico de denunciar y el mecanismo que protege a la víctima.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "No es indispensable contar con pruebas irrefutables para iniciar una denuncia. Son válidos como medios de prueba: certificados médicos, fotografías, registros de comunicaciones, testimonios, declaración de la víctima.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Informa sobre los requisitos probatorios para denunciar — elimina la barrera percibida de necesitar pruebas perfectas y orienta sobre qué evidencia es útil.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "No existe un plazo legal estricto para interponer la denuncia.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Informa sobre la inexistencia de un plazo de caducidad para denunciar — información crítica para que la víctima sepa que puede denunciar aunque haya pasado tiempo.",
+      "requiresHumanReview": false,
+      "source": null
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "claim": "La víctima puede solicitar el retiro de la denuncia. No obstante, si los hechos denunciados constituyen un delito de persecución de oficio, el Ministerio Público tiene la facultad de continuar con la investigación penal.",
+      "classification": "unsupported",
+      "importance": "central",
+      "reason": "Informa sobre la posibilidad y límites del retiro de la denuncia — información práctica esencial sobre el control que tiene la víctima sobre el proceso una vez iniciado.",
+      "requiresHumanReview": false,
+      "source": null
+    }
+  ]
+}
