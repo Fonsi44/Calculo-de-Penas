@@ -1,0 +1,72 @@
+[
+  {
+    "source": "/blog/practica-legal/abogados-en-nacaome",
+    "destination": "/abogados-en-nacaome",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia exacta: post local redundante unificado con landing comercial canónica de Nacaome, Valle (cabecera departamental y sede de la firma)."
+  },
+  {
+    "source": "/blog/practica-legal/abogados-en-choluteca",
+    "destination": "/abogados-en-choluteca",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia exacta: post local redundante unificado con landing comercial de Choluteca."
+  },
+  {
+    "source": "/blog/practica-legal/abogados-en-san-lorenzo",
+    "destination": "/abogados-en-san-lorenzo",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia exacta: post local redundante unificado con landing comercial de San Lorenzo, Valle."
+  },
+  {
+    "source": "/blog/practica-legal/abogados-en-pespire-choluteca",
+    "destination": "/abogados-en-pespire",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia semántica: post local de Pespire redirigido a la landing comercial regional de Pespire, Choluteca."
+  },
+  {
+    "source": "/blog/practica-legal/abogados-en-marcovia-choluteca",
+    "destination": "/abogados-en-marcovia",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia semántica: post local de Marcovia redirigido a la landing comercial de Marcovia, Choluteca."
+  },
+  {
+    "source": "/blog/practica-legal/abogados-en-san-marcos-de-colon-choluteca",
+    "destination": "/abogados-en-san-marcos-de-colon",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia semántica: post local de San Marcos de Colón unificado con la landing comercial canónica."
+  },
+  {
+    "source": "/blog/practica-legal/abogados-en-amapala-valle",
+    "destination": "/abogados-en-amapala",
+    "status": 301,
+    "verified": true,
+    "chain_redirect": false,
+    "circular_redirect": false,
+    "destination_status": 200,
+    "semantic_correspondence": "Coincidencia semántica: post local de Amapala unificado con la landing comercial de Amapala, Valle."
+  }
+]

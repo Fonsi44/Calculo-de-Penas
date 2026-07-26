@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "cuando-prescribe-delito-en-honduras",
+    "claim_type": "Plazo de prescripción de la acción penal",
+    "claim_details": "La acción penal para delitos con penas de prisión superiores a 15 años prescribe a los 15 años (techo legal máximo de prescripción).",
+    "source_code": "Código Penal de Honduras (Decreto 130-2017)",
+    "article": "Artículo 38, numeral 1",
+    "official_url": "https://www.poderjudicial.gob.hn",
+    "verification_date": "2026-07-26",
+    "jurisdiction": "Honduras",
+    "certainty_level": "Máxima (Texto legal vigente exacto)"
+  },
+  {
+    "slug": "cuando-necesito-abogado-penalista-honduras",
+    "claim_type": "Código Procesal Penal aplicable",
+    "claim_details": "La defensa penal técnica y las garantías del imputado se rigen bajo el Código Procesal Penal de Honduras promulgado mediante Decreto 9-99-E.",
+    "source_code": "Código Procesal Penal de Honduras (Decreto 9-99-E)",
+    "article": "Artículos 2, 4, 85",
+    "official_url": "https://www.poderjudicial.gob.hn",
+    "verification_date": "2026-07-26",
+    "jurisdiction": "Honduras",
+    "certainty_level": "Máxima (Decreto oficial canónico verificado)"
+  },
+  {
+    "slug": "como-preparar-demanda-guia-no-abogados-honduras",
+    "claim_type": "Decretos de Códigos Procesal Civil y Familia",
+    "claim_details": "El Código Procesal Civil de Honduras corresponde al Decreto 211-2006 y el Código de Familia de Honduras corresponde al Decreto 76-84.",
+    "source_code": "Código Procesal Civil (Decreto 211-2006) y Código de Familia (Decreto 76-84)",
+    "article": "Exordio y Disposiciones Generales",
+    "official_url": "https://www.poderjudicial.gob.hn",
+    "verification_date": "2026-07-26",
+    "jurisdiction": "Honduras",
+    "certainty_level": "Máxima (Identidad legislativa comprobada)"
+  },
+  {
+    "slug": "pension-alimenticia-porcentaje-honduras-2026",
+    "claim_type": "Porcentajes de pensión alimenticia",
+    "claim_details": "No existe un porcentaje fijo o escala universal del 20% al 40% fijado por ley. La cuota se estima caso por caso bajo el Principio de Proporcionalidad.",
+    "source_code": "Código de Familia de Honduras (Decreto 76-84)",
+    "article": "Artículos 206, 207, 211",
+    "official_url": "https://www.poderjudicial.gob.hn",
+    "verification_date": "2026-07-26",
+    "jurisdiction": "Honduras",
+    "certainty_level": "Máxima (Se eliminaron las alucinaciones numéricas fijas de la IA)"
+  },
+  {
+    "slug": "nacionalidad-espanola-para-hondurenos-residencia-plazos",
+    "claim_type": "Plazo de residencia para nacionalidad",
+    "claim_details": "Los ciudadanos hondureños pueden solicitar la nacionalidad española por residencia al cumplir un plazo reducido de 2 años de residencia legal y continuada en España.",
+    "source_code": "Código Civil de España",
+    "article": "Artículo 22.1",
+    "official_url": "https://www.boe.es",
+    "verification_date": "2026-07-26",
+    "jurisdiction": "España",
+    "certainty_level": "Máxima (Verificado en el Boletín Oficial del Estado)"
+  }
+]

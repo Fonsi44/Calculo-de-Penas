@@ -18,7 +18,7 @@
 // ya no existían en el servidor → 404 "page has broken JavaScript".
 // El placeholder `__BUILD_ID__` se reemplaza en CI; si no (dev), se usa un
 // valor por defecto para que el SW nunca quede con una versión congelada.
-const CACHE = 'pineda-pwa-SWEG9HKlXG4NZNMssahe4' + ('__BUILD_ID__' === '__BUILD_ID__'
+const CACHE = 'pineda-pwa-06RwCEzFWGJNOFIV4UFrN' + ('__BUILD_ID__' === '__BUILD_ID__'
   ? 'dev'
   : '__BUILD_ID__');
 const PRECACHE = ['/', '/manifest.json'];

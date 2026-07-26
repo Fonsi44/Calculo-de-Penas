@@ -53,7 +53,7 @@ Los 7 posts del blog que competían con las landings comerciales de municipios f
 
 ## 5. Artefactos y Reportes Generados
 
-- [blog-inventario.json](file:///Users/fonsi/Documents/Justicia%20Verdadera/docs/audits/blog-inventario.json): Detalle individualizado de los 134 artículos publicados.
-- [blog-canibalizacion.json](file:///Users/fonsi/Documents/Justicia%20Verdadera/docs/audits/blog-canibalizacion.json): Matriz de similitud y duplicidad semántica entre artículos.
-- [blog-fuentes-oficiales.md](file:///Users/fonsi/Documents/Justicia%20Verdadera/docs/audits/blog-fuentes-oficiales.md): Listado de artículos organizados por fuentes del derecho citadas.
-- [blog-revision-humana-pendiente.md](file:///Users/fonsi/Documents/Justicia%20Verdadera/docs/audits/blog-revision-humana-pendiente.md): Listado prioritario de artículos pendientes de firma por el despacho.
+- [blog-inventario.json](./blog-inventario.json): Detalle individualizado de los 134 artículos publicados.
+- [blog-canibalizacion.json](./blog-canibalizacion.json): Matriz de similitud y duplicidad semántica entre artículos.
+- [blog-fuentes-oficiales.md](./blog-fuentes-oficiales.md): Listado de artículos organizados por fuentes del derecho citadas.
+- [blog-revision-humana-pendiente.md](./blog-revision-humana-pendiente.md): Listado prioritario de artículos pendientes de firma por el despacho.
