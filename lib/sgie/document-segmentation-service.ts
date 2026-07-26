@@ -1,10 +1,8 @@
 import { db } from '@/lib/db';
-import { documentTextPages, documentSegmentationRuns, documentSegments, type DocumentSegmentationRunInsert, type DocumentSegmentInsert } from '@/lib/schema';
-import { sql, eq, desc, and } from 'drizzle-orm';
+import { documentTextPages, documentSegmentationRuns, documentSegments, type DocumentSegmentationRunInsert } from '@/lib/schema';
+import { eq } from 'drizzle-orm';
 
 export type SegmentType = 'portada' | 'indice' | 'clausulado' | 'anexo' | 'firma' | 'anexo_firma' | 'otro';
-
-const VALID_TYPES: SegmentType[] = ['portada', 'indice', 'clausulado', 'anexo', 'firma', 'anexo_firma', 'otro'];
 
 export interface SegmentResult {
   startPage: number;
@@ -64,7 +62,7 @@ export async function runDocumentSegmentation(
   let lastType: SegmentType = 'otro';
 
   for (let i = 0; i < pages.length; i++) {
-    const { signals, segmentType } = detectPage(pages, i);
+    const { segmentType } = detectPage(pages, i);
     if (segmentType !== lastType && i > 0) {
       segments.push({
         startPage: currentStart,

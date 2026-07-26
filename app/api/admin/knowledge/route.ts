@@ -2,7 +2,7 @@ import { requireAbogado } from '@/lib/auth';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
 import { z } from 'zod';
-import { createKnowledgeSource, submitForReview, approveVersion, publishVersion, withdrawSource } from '@/lib/sgie/knowledge-service';
+import { createKnowledgeSource } from '@/lib/sgie/knowledge-service';
 import { isFlagEnabled } from '@/lib/sgie/feature-flags';
 import { accessService } from '@/lib/access-service';
 import { db } from '@/lib/db';
@@ -17,11 +17,6 @@ const createSchema = z.object({
   officialId: z.string().optional(),
   tags: z.array(z.string()).optional(),
   sensitivity: z.enum(['public','internal','restricted']).optional(),
-});
-
-const versionSchema = z.object({
-  content: z.string().min(1).max(50000),
-  changeMotivo: z.string().min(10).max(500).optional(),
 });
 
 export async function GET(req: Request) {

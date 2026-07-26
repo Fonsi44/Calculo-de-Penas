@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { sql, eq, desc, and } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 
 export interface Baseline {
   id: string;
@@ -20,7 +20,7 @@ export interface Baseline {
 }
 
 export async function getBaselines(organizationId?: string): Promise<Baseline[]> {
-  const rows = await db.execute(sql`
+  await db.execute(sql`
     SELECT * FROM audit WHERE recurso='baseline' ${organizationId ? sql`AND recurso_id=${organizationId}` : sql``}
     ORDER BY creado_en DESC
   `);

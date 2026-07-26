@@ -23,7 +23,6 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/toast';
 import { useConfirm } from '@/components/ui/confirm';
 import { usePromptDialog } from '@/components/ui/prompt-dialog';
-import { cn } from '@/lib/ui';
 
 // ─── Tipos ──────────────────────────────────────────────────────────────────
 
@@ -77,7 +76,7 @@ const PRIVACY_LABELS: Record<PrivacyMode, string> = {
 
 // ─── Componente ─────────────────────────────────────────────────────────────
 
-export function CalendarExternalSection({ userId }: { userId: string }) {
+export function CalendarExternalSection({ userId: _userId }: { userId: string }) {
   const toast = useToast();
   const confirm = useConfirm();
   const prompt = usePromptDialog();
@@ -343,11 +342,6 @@ export function CalendarExternalSection({ userId }: { userId: string }) {
   // ─── Acciones Conflictos ─────────────────────────────────────────────────
 
   async function resolverConflicto(conflictId: string, resolution: 'accept_external' | 'keep_internal' | 'ignore') {
-    const labels = {
-      accept_external: 'Aceptando cambio externo…',
-      keep_internal: 'Restaurando versión SGIE…',
-      ignore: 'Ignorando conflicto…',
-    };
 
     setConflictAction(conflictId);
     try {

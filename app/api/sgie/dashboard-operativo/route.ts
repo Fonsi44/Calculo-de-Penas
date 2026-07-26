@@ -2,7 +2,6 @@ import { requireAbogado } from '@/lib/auth';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { assertCapability } from '@/lib/access-service';
 import { getDashboard } from '@/lib/sgie/dashboard-service';
-import { isFlagEnabled } from '@/lib/sgie/feature-flags';
 import { httpErrorResponse } from '@/lib/http-errors';
 import { NextResponse } from 'next/server';
 

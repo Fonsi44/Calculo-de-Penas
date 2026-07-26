@@ -20,7 +20,7 @@ export async function GET() {
 
   // DB check
   try {
-    const result = await db.execute(sql`SELECT 1 AS ok`);
+    await db.execute(sql`SELECT 1 AS ok`);
     checks.push({ name: 'database', status: 'healthy' });
   } catch (e) {
     const msg = e instanceof Error ? e.message : 'unknown';

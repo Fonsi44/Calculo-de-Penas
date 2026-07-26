@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { FileText, RefreshCw, Calendar, AlertTriangle, CheckSquare, Clock, Settings } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,15 +20,6 @@ export default function BriefPage() {
   const [showPrefs, setShowPrefs] = useState(false);
   const [timezone, setTimezone] = useState('Europe/Madrid');
   const [hour, setHour] = useState(8);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const resp = await fetch('/api/sgie/brief');
-      if (resp.ok) { const d = await resp.json(); setBrief(d.brief); setRecs(d.recommendations || []); }
-    } catch { toast.danger('Error al cargar'); }
-    finally { setLoading(false); }
-  }, [toast]);
 
   const generate = async () => {
     setLoading(true);

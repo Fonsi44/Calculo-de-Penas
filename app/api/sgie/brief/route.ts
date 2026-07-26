@@ -2,7 +2,7 @@ import { requireAbogado } from '@/lib/auth';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { assertCapability } from '@/lib/access-service';
-import { generateBrief, getBrief, getBriefHistory, upsertPreferences, getPreferences } from '@/lib/sgie/brief-service';
+import { generateBrief, getBrief, getBriefHistory, upsertPreferences } from '@/lib/sgie/brief-service';
 import { getRecommendations } from '@/lib/sgie/recommendation-service';
 import { isFlagEnabled } from '@/lib/sgie/feature-flags';
 import { httpErrorResponse } from '@/lib/http-errors';

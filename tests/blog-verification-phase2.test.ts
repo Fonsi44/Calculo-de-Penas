@@ -39,7 +39,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       ];
 
       for (const rule of localRedirects) {
-        const match = redirects.find((r: any) => r.source === rule.src);
+        const match = redirects.find((r: { source: string; destination: string; permanent: boolean }) => r.source === rule.src);
         expect(match).toBeDefined();
         expect(match?.destination).toBe(rule.dest);
         expect(match?.permanent).toBe(true);
@@ -48,7 +48,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
 
     it('no existen redirecciones circulares ni en cadena entre los 7 posts locales y sus destinos', async () => {
       const redirects = await nextConfig.redirects?.() || [];
-      const sources = new Set(redirects.map((r: any) => r.source));
+      const sources = new Set(redirects.map((r: { source: string }) => r.source));
       
       const localDestinations = [
         '/abogados-en-nacaome',

@@ -1,4 +1,4 @@
-import { encolarEvento, OUTBOX_EVENTS, completarEvento, despacharEventos } from '@/lib/sgie/outbox';
+import { encolarEvento, OUTBOX_EVENTS, completarEvento } from '@/lib/sgie/outbox';
 import { runDocumentSegmentation } from '@/lib/sgie/document-segmentation-service';
 import { compareDocuments } from '@/lib/sgie/document-comparison-service';
 

@@ -1,11 +1,9 @@
 import { requireAbogado } from '@/lib/auth';
-import { z } from 'zod';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { assertCapability } from '@/lib/access-service';
 import { runDocumentSegmentation, getSegmentationRun, reviewSegment, reviewAllSegments } from '@/lib/sgie/document-segmentation-service';
 import { isFlagEnabled } from '@/lib/sgie/feature-flags';
-import { requestSegmentation } from '@/lib/sgie/document-intelligence-jobs';
 import { httpErrorResponse } from '@/lib/http-errors';
 import { NextResponse } from 'next/server';
 

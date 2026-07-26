@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
-import { documentTextPages, documentComparisons, documentComparisonChanges, documentContradictionCandidates, type DocumentComparisonInsert, type DocumentComparisonChangeInsert } from '@/lib/schema';
-import { sql, eq, desc, and } from 'drizzle-orm';
+import { documentTextPages, documentComparisons, documentComparisonChanges, type DocumentComparisonInsert } from '@/lib/schema';
+import { eq } from 'drizzle-orm';
 
 export interface DeterministicDiff {
   pagesAdded: number[];

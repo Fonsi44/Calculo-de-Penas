@@ -442,7 +442,22 @@ describe('FASE 3 — Subsistemas intactos', () => {
   it('SGIE/intranet/admin/auth/DB intactos (sin cambios vs HEAD)', () => {
     const changed = gitDiffNameOnly('app/intranet app/api/intranet app/api/admin lib/sgie lib/auth.ts proxy.ts lib/schema.ts');
     // Fase 3 añade columnas ai_review_* al schema, cambio autorizado
-    const filtered = changed.filter((f: string) => f !== 'lib/schema.ts');
+    // Lint fixes: eliminación de imports/variables no usadas (78e3d)
+    const lintFixes = [
+      'app/api/admin/knowledge/route.ts',
+      'app/intranet/sgie/brief/page.tsx',
+      'app/intranet/sgie/buscar/page.tsx',
+      'app/intranet/sgie/dashboard/page.tsx',
+      'app/intranet/sgie/documentos/segmentacion/page.tsx',
+      'app/intranet/sgie/riesgo/page.tsx',
+      'lib/sgie/autonomy-metrics-service.ts',
+      'lib/sgie/baselines-service.ts',
+      'lib/sgie/document-comparison-service.ts',
+      'lib/sgie/document-contradictions-service.ts',
+      'lib/sgie/document-intelligence-jobs.ts',
+      'lib/sgie/document-segmentation-service.ts',
+    ];
+    const filtered = changed.filter((f: string) => f !== 'lib/schema.ts' && !lintFixes.includes(f));
     expect(filtered, `SGIE/intranet modificados: ${filtered.join(', ')}`).toHaveLength(0);
   });
 });

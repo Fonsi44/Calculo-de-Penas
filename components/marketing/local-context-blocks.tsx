@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Building2, FileText, MapPin } from 'lucide-react';
+import { FileText, MapPin } from 'lucide-react';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { InstitutionsBlock } from '@/components/marketing/institutions-block';
 import { Card } from '@/components/ui/card';

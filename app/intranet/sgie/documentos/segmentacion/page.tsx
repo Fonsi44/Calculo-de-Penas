@@ -1,6 +1,6 @@
 'use client';
 import { useState, useCallback } from 'react';
-import { Layers, RefreshCw, Check, X, Merge, SplitSquareHorizontal, AlertTriangle } from 'lucide-react';
+import { Layers, RefreshCw, Check, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -13,7 +13,7 @@ export default function SegmentacionPage() {
   const [docId, setDocId] = useState('');
   const [loading, setLoading] = useState(false);
   const [segments, setSegments] = useState<Array<{id:string;startPage:number;endPage:number;suggestedType:string;suggestedTitle:string;confidence:number;reviewStatus:string}>>([]);
-  const [runId, setRunId] = useState('');
+  const [_runId, setRunId] = useState('');
 
   const analyze = useCallback(async () => {
     if (!docId.trim()) return;

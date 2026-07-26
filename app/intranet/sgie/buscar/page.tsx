@@ -1,15 +1,13 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { Search, X, FileText, Users, Briefcase, ChevronRight } from 'lucide-react';
+import { Search, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { EmptyState } from '@/components/ui/empty-state';
-import { useToast } from '@/components/ui/toast';
-import { cn } from '@/lib/ui';
 
 interface SearchResult {
   id: string; resourceType: string; resourceId: string;
@@ -21,7 +19,6 @@ interface SearchResult {
 
 export default function SgieBuscarPage() {
   const router = useRouter();
-  const toast = useToast();
   const [query, setQuery] = useState('');
   const [resourceType, setResourceType] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);

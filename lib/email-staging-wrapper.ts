@@ -1,11 +1,10 @@
 import { Resend } from 'resend';
-import { isStagingEnvironment } from '@/lib/staging-guard';
 import {
   resolveStagingRecipients,
   buildStagingSubject,
   buildStagingHtml,
 } from '@/lib/email-allowlist';
-import { getClient, getFromAddress, getFromName } from '@/lib/email';
+import { getFromAddress, getFromName } from '@/lib/email';
 import { randomUUID } from 'crypto';
 
 let _client: Resend | null = null;
@@ -52,7 +51,7 @@ export async function sendStagingSafeEmail(
     };
   }
 
-  const { redirectedTo, isStaging, stagingTag } = resolveStagingRecipients(payload.to);
+  const { redirectedTo, isStaging } = resolveStagingRecipients(payload.to);
   const subject = isStaging ? buildStagingSubject(payload.subject) : payload.subject;
   const html = isStaging ? buildStagingHtml(payload.html, payload.to) : payload.html;
   const fromName = getFromName();

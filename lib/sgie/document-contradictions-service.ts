@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { documentContradictionCandidates, type DocumentContradictionCandidateInsert } from '@/lib/schema';
-import { sql, eq, desc, and } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 
 export async function createContradictionCandidate(input: {
   expedienteId?: string; organizationId?: string;

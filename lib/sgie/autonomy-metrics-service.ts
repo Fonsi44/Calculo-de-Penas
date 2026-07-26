@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { autonomyMetrics, type AutonomyMetricInsert } from '@/lib/schema';
-import { sql, eq, desc, and, between, gte, lte } from 'drizzle-orm';
+import { sql, eq, desc } from 'drizzle-orm';
 
 export type AutonomyLevel = 0 | 1 | 2 | 3 | 4;
 export type DataQuality = 'good' | 'partial' | 'insufficient';

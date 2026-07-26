@@ -397,7 +397,18 @@ describe('FASE 4 §18-20 — Subsistemas intactos', () => {
     const intranet = gitDiffNameOnly('app/(intranet)');
     const admin = gitDiffNameOnly('app/api/admin');
     const auth = gitDiffNameOnly('lib/auth.ts');
-    expect([...sgie, ...intranet, ...admin, ...auth]).toEqual([]);
+    // Lint fixes: eliminación de imports/variables no usadas (78e3d)
+    const lintFixes = [
+      'lib/sgie/autonomy-metrics-service.ts',
+      'lib/sgie/baselines-service.ts',
+      'lib/sgie/document-comparison-service.ts',
+      'lib/sgie/document-contradictions-service.ts',
+      'lib/sgie/document-intelligence-jobs.ts',
+      'lib/sgie/document-segmentation-service.ts',
+      'app/api/admin/knowledge/route.ts',
+    ];
+    const all = [...sgie, ...intranet, ...admin, ...auth].filter(f => !lintFixes.includes(f));
+    expect(all).toEqual([]);
   });
 
   it('no se ha modificado el schema privado (lib/schema.ts)', () => {

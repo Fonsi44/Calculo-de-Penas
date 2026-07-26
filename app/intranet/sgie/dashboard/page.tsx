@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { BarChart3, FolderKanban, FileText, AlertTriangle, CheckSquare, Calendar, Clock, TrendingUp } from 'lucide-react';
+import { BarChart3, FolderKanban, FileText, AlertTriangle, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 

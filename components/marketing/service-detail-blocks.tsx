@@ -22,15 +22,12 @@ import Link from 'next/link';
 import {
   AlertTriangle,
   ArrowRight,
-  Building2,
   CheckCircle2,
   FileText,
   Info,
-  ListChecks,
   Send,
   ShieldAlert,
   Scale,
-  type LucideIcon,
 } from 'lucide-react';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { ProcessStepper } from '@/components/marketing/process-stepper';

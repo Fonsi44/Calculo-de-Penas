@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { validateCsrf } from '@/lib/csrf';
 import { rateLimit, rateLimitResponse } from '@/lib/rate-limit';
 import { assertCapability } from '@/lib/access-service';
-import { compareDocuments, getComparison } from '@/lib/sgie/document-comparison-service';
+import { compareDocuments } from '@/lib/sgie/document-comparison-service';
 import { isFlagEnabled } from '@/lib/sgie/feature-flags';
 import { httpErrorResponse } from '@/lib/http-errors';
 import { NextResponse } from 'next/server';
