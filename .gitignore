@@ -126,6 +126,9 @@ cookies.txt
 auditoria-blog/
 docs/backups/
 
+# Fase 3B: PDFs oficiales de trabajo y venv de extracción (no se redistribuyen)
+.fase3b-fuentes/
+
 # reportes generados por scripts/auditar-cp.js y scripts/auditar-delitos.js
 # (regenerables con `npm run audit:cp` / `audit:delitos`; no deben versionarse)
 /data/auditoria-cp-report.json
@@ -282,6 +285,9 @@ cookies.txt
 # auditorias exportadas
 auditoria-blog/
 docs/backups/
+
+# Fase 3B: PDFs oficiales de trabajo y venv de extracción (no se redistribuyen)
+.fase3b-fuentes/
 
 # reportes generados por scripts/auditar-cp.js y scripts/auditar-delitos.js
 # (regenerables con `npm run audit:cp` / `audit:delitos`; no deben versionarse)
