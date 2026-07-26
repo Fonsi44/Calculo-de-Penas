@@ -1,12 +1,13 @@
-# Fase 4A — Paquetes de revisión humana del Lote 2
+# Fase 4A/4B — Paquetes de revisión humana del Lote 2
 
-**Fecha:** 2026-07-26T18:53:31.174Z
+**Fecha:** 2026-07-26T18:53:31.174Z (Fase 4A) · actualizado 2026-07-26 (Fase 4B)
 **Estado:** PENDIENTE de revisión jurídica humana. No marcar como realizada.
 
-Total de artículos que requieren revisión humana: **7**
+Total de artículos que requieren revisión humana: **8** (7 de Fase 4A + 1 añadido en Fase 4B)
 
 | Artículo | Claims pendientes | Archivo |
 |----------|-------------------|---------|
+| Custodia de Hijos en Honduras 2026 | 1 | [custodia-hijos-honduras-juez.md](./custodia-hijos-honduras-juez.md) |
 | Despido por Embarazo en Honduras | 3 | [derechos-trabajadora-embarazada-honduras.md](./derechos-trabajadora-embarazada-honduras.md) |
 | Despido Laboral en Honduras: Guia de | 4 | [despido-laboral-honduras-guia-completa.md](./despido-laboral-honduras-guia-completa.md) |
 | Hábeas Corpus en Honduras: Cómo Interponerlo y | 3 | [habeas-corpus-cuando-interponer-honduras.md](./habeas-corpus-cuando-interponer-honduras.md) |
