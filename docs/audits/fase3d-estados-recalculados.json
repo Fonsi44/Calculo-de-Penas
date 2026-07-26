@@ -1,0 +1,297 @@
+{
+  "generatedAt": "2026-07-26",
+  "fase": "3D",
+  "total": 15,
+  "estados": [
+    {
+      "slug": "abogado-penalista-choluteca",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "1 claims centrales pendientes de revisión jurídica humana; 2 fuentes",
+      "totalClaims": 3,
+      "centrales": 3,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 1,
+      "corrected": 1,
+      "unresolved": 1,
+      "officialSources": 2,
+      "totalSources": 2,
+      "sourcesByProvenance": {
+        "canonical_internal_verified": 1,
+        "official_primary": 1
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "abogado-penalista-sur-honduras",
+      "estadoAnterior": "completed",
+      "estadoRecalculado": "completed",
+      "razon": "0 claims sin resolver; 0 confirmados + 1 corregidos; 1 fuentes oficiales",
+      "totalClaims": 1,
+      "centrales": 1,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 0,
+      "corrected": 1,
+      "unresolved": 0,
+      "officialSources": 1,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "canonical_internal_verified": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "1 claims centrales pendientes de revisión jurídica humana; 0 fuentes",
+      "totalClaims": 1,
+      "centrales": 1,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 0,
+      "corrected": 0,
+      "unresolved": 1,
+      "officialSources": 0,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "institutional_academic": 1
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "antejuicio-en-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "2 claims centrales pendientes de revisión jurídica humana; 0 fuentes",
+      "totalClaims": 2,
+      "centrales": 2,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 0,
+      "corrected": 0,
+      "unresolved": 2,
+      "officialSources": 0,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "institutional_academic": 1
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "estadoAnterior": "completed",
+      "estadoRecalculado": "completed",
+      "razon": "0 claims sin resolver; 3 confirmados + 0 corregidos; 1 fuentes oficiales",
+      "totalClaims": 3,
+      "centrales": 3,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 3,
+      "corrected": 0,
+      "unresolved": 0,
+      "officialSources": 1,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "official_primary": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "cuando-necesito-abogado-penalista-honduras",
+      "estadoAnterior": "completed",
+      "estadoRecalculado": "completed",
+      "razon": "0 claims sin resolver; 0 confirmados + 1 corregidos; 1 fuentes oficiales",
+      "totalClaims": 1,
+      "centrales": 1,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 0,
+      "corrected": 1,
+      "unresolved": 0,
+      "officialSources": 1,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "canonical_internal_verified": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "3 claims centrales pendientes de revisión jurídica humana; 0 fuentes",
+      "totalClaims": 10,
+      "centrales": 10,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 2,
+      "corrected": 5,
+      "unresolved": 3,
+      "officialSources": 0,
+      "totalSources": 2,
+      "sourcesByProvenance": {
+        "canonical_internal_unverified": 2
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "defensa-penal-honduras",
+      "estadoAnterior": "completed",
+      "estadoRecalculado": "completed",
+      "razon": "0 claims sin resolver; 1 confirmados + 1 corregidos; 2 fuentes oficiales",
+      "totalClaims": 2,
+      "centrales": 2,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 1,
+      "corrected": 1,
+      "unresolved": 0,
+      "officialSources": 2,
+      "totalSources": 2,
+      "sourcesByProvenance": {
+        "canonical_internal_verified": 1,
+        "official_primary": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "0 claims sin resolver pero sin fuentes oficiales o sin claims resueltos",
+      "totalClaims": 11,
+      "centrales": 11,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 10,
+      "corrected": 1,
+      "unresolved": 0,
+      "officialSources": 0,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "institutional_academic": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "delitos-mas-comunes-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "0 claims sin resolver; 1 confirmados + 3 corregidos; 1 fuentes oficiales | DEGRADADO: No cumple: requiresHuman=true (algún claim marcado needs_human_review); 1 claim(s) en needs_human_review.",
+      "totalClaims": 7,
+      "centrales": 4,
+      "supporting": 3,
+      "contextuales": 0,
+      "confirmed": 3,
+      "corrected": 3,
+      "unresolved": 1,
+      "officialSources": 1,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "official_secondary": 1
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "2 claims centrales pendientes de revisión jurídica humana; 1 fuentes",
+      "totalClaims": 3,
+      "centrales": 3,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 0,
+      "corrected": 1,
+      "unresolved": 2,
+      "officialSources": 1,
+      "totalSources": 2,
+      "sourcesByProvenance": {
+        "official_primary": 1,
+        "institutional_academic": 1
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "estadoAnterior": "completed",
+      "estadoRecalculado": "completed",
+      "razon": "0 claims sin resolver; 2 confirmados + 3 corregidos; 1 fuentes oficiales",
+      "totalClaims": 5,
+      "centrales": 5,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 2,
+      "corrected": 3,
+      "unresolved": 0,
+      "officialSources": 1,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "official_primary": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "1 claims centrales pendientes de revisión jurídica humana; 2 fuentes",
+      "totalClaims": 9,
+      "centrales": 7,
+      "supporting": 2,
+      "contextuales": 0,
+      "confirmed": 4,
+      "corrected": 3,
+      "unresolved": 2,
+      "officialSources": 2,
+      "totalSources": 2,
+      "sourcesByProvenance": {
+        "official_secondary": 1,
+        "canonical_internal_verified": 1
+      },
+      "requiresHuman": true
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "estadoAnterior": "completed",
+      "estadoRecalculado": "completed",
+      "razon": "0 claims sin resolver; 1 confirmados + 2 corregidos; 1 fuentes oficiales",
+      "totalClaims": 3,
+      "centrales": 3,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 1,
+      "corrected": 2,
+      "unresolved": 0,
+      "officialSources": 1,
+      "totalSources": 1,
+      "sourcesByProvenance": {
+        "official_primary": 1
+      },
+      "requiresHuman": false
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "estadoAnterior": "needs_human_review",
+      "estadoRecalculado": "needs_human_review",
+      "razon": "1 claims centrales pendientes de revisión jurídica humana; 3 fuentes",
+      "totalClaims": 8,
+      "centrales": 8,
+      "supporting": 0,
+      "contextuales": 0,
+      "confirmed": 3,
+      "corrected": 4,
+      "unresolved": 1,
+      "officialSources": 3,
+      "totalSources": 3,
+      "sourcesByProvenance": {
+        "official_primary": 2,
+        "canonical_internal_verified": 1
+      },
+      "requiresHuman": true
+    }
+  ]
+}
