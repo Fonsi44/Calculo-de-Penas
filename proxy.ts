@@ -51,6 +51,13 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/og',
   // Chat asistente público (rate-limit + guardrails server-side en el handler).
   '/api/chat',
+  // Revalidación on-demand (Fase 3D/3E): el handler valida Authorization
+  // Bearer <CRON_SECRET> con crypto.timingSafeEqual + rate-limit por IP +
+  // allowlist de paths públicos. No requiere sesión JWT: es invocado por
+  // Vercel Cron o por un script administrativo con el secreto. Sin esta
+  // excepción, el proxy devuelve 401 (no hay token JWT) antes de que el
+  // handler pueda verificar CRON_SECRET, haciendo el endpoint inutilizable.
+  '/api/revalidate',
 ]);
 
 const PUBLIC_PAGE_EXACT = new Set<string>([
