@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-07-26",
+  "fase": "3D",
+  "totalReemplazos": 9,
+  "aplicados": 9,
+  "abortados": 0,
+  "modo": "aplicar",
+  "resultados": [
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "claimId": "3b-allanamiento-1",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "antejuicio-en-honduras",
+      "claimId": "3b-antejuicio-1",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "delitos-mas-comunes-honduras",
+      "claimId": "delitos-02",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "delitos-mas-comunes-honduras",
+      "claimId": "delitos-06",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "delitos-mas-comunes-honduras",
+      "claimId": "delitos-07",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "claimId": "3b-derechos-1",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "claimId": "estafas-02",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "claimId": "estafas-04",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "claimId": "estafas-09",
+      "aplicado": true,
+      "razon": "ya aplicado (idempotente)",
+      "ocurrencias": 0
+    }
+  ]
+}
