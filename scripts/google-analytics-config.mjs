@@ -23,6 +23,8 @@ const auth = new google.auth.OAuth2(clientId, clientSecret, 'http://localhost:30
 auth.setCredentials({ refresh_token: refreshToken });
 const admin = google.analyticsadmin({ version: 'v1beta', auth });
 const property = `properties/${propertyId}`;
+const APPLY_KEY_EVENTS = process.argv.includes('--apply-key-events');
+const REQUIRED_KEY_EVENTS = ['contact_form_submit', 'whatsapp_click', 'phone_click'];
 
 function mask(value) {
   if (!value) return '(ausente)';
@@ -49,6 +51,35 @@ const [propertyResult, streamsResult, filtersResult, retentionResult, keyEventsR
 const streams = streamsResult.data?.dataStreams || [];
 const webStreams = streams.filter((stream) => stream.type === 'WEB_DATA_STREAM');
 const matched = webStreams.find((stream) => stream.webStreamData?.measurementId === expectedMeasurementId);
+const existingKeyEvents = keyEventsResult.data?.keyEvents || [];
+
+const keyEventChanges = [];
+if (APPLY_KEY_EVENTS) {
+  if (!keyEventsResult.ok) {
+    console.error('ERROR: no se pudo leer la configuración de eventos clave; no se aplican cambios.');
+    process.exit(1);
+  }
+  const existingNames = new Set(existingKeyEvents.map((item) => item.eventName));
+  for (const eventName of REQUIRED_KEY_EVENTS) {
+    if (existingNames.has(eventName)) {
+      keyEventChanges.push({ eventName, status: 'existing' });
+      continue;
+    }
+    try {
+      await admin.properties.keyEvents.create({
+        parent: property,
+        requestBody: { eventName },
+      });
+      keyEventChanges.push({ eventName, status: 'created' });
+    } catch (error) {
+      keyEventChanges.push({
+        eventName,
+        status: 'error',
+        error: error.message?.slice(0, 160) || String(error),
+      });
+    }
+  }
+}
 
 console.log('GA4 Admin — configuración verificada');
 console.log(`Property: ${mask(propertyId)} | acceso: ${propertyResult.ok ? 'OK' : 'ERROR'}`);
@@ -64,5 +95,12 @@ console.log(`Correspondencia Property↔Measurement: ${matched ? 'VALIDADA' : 'N
 console.log(`Filtros: ${filtersResult.ok ? (filtersResult.data.dataFilters?.length || 0) : 'NO DISPONIBLE'}`);
 console.log(`Retención: ${retentionResult.ok ? (retentionResult.data.eventDataRetention || '(ausente)') : 'NO DISPONIBLE'}`);
 console.log(`Eventos clave: ${keyEventsResult.ok ? (keyEventsResult.data.keyEvents?.length || 0) : 'NO DISPONIBLE'}`);
+if (APPLY_KEY_EVENTS) {
+  for (const change of keyEventChanges) {
+    const label = change.status === 'created' ? 'CREADO' : change.status === 'existing' ? 'YA EXISTÍA' : 'ERROR';
+    console.log(`- Evento clave ${change.eventName}: ${label}${change.error ? ` (${change.error})` : ''}`);
+  }
+}
 
 if (!matched) process.exitCode = 2;
+if (keyEventChanges.some((change) => change.status === 'error')) process.exitCode = 1;

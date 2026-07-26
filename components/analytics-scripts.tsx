@@ -10,13 +10,18 @@ import {
   isValidGtmId,
   trackEvent
 } from '@/lib/analytics';
-import { getConsentSnapshot, parseConsentSnapshot, subscribeConsent } from '@/lib/cookie-consent';
+import {
+  getConsentSnapshot,
+  parseConsentSnapshot,
+  subscribeConsent,
+  updateGoogleConsent,
+} from '@/lib/cookie-consent';
 
 type ClarityFunction = ((...args: unknown[]) => void) & { q?: unknown[][] };
 
 declare global {
   interface Window {
-    gtag?: (type: string, action: string, params?: Record<string, unknown>) => void;
+    gtag?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
     clarity?: ClarityFunction;
     _fbq?: unknown;
@@ -25,6 +30,26 @@ declare global {
 
 const GTAG_DEFER_TIMEOUT_MS = 5000;
 const GTAG_INTERACTION_EVENTS = ['mousemove', 'scroll', 'click', 'keydown', 'touchstart'] as const;
+
+function ensureGtagQueue() {
+  const w = window;
+  w.dataLayer = w.dataLayer || [];
+  w.gtag = w.gtag || function (...args: unknown[]) {
+    w.dataLayer?.push(args);
+  };
+  return w.gtag;
+}
+
+function sendPageView(pagePath: string, referrer: string) {
+  const gtag = ensureGtagQueue();
+  if (!gtag) return;
+  gtag('event', 'page_view', {
+    page_path: pagePath,
+    page_location: window.location.href,
+    page_title: document.title,
+    page_referrer: referrer,
+  });
+}
 
 export function AnalyticsScripts({
   gaId,
@@ -42,6 +67,7 @@ export function AnalyticsScripts({
   const pathname = usePathname();
   const prevPath = useRef<string | null>(null);
   const initialised = useRef(false);
+  const gaConfigured = useRef(false);
   const consentSnapshot = useSyncExternalStore(subscribeConsent, getConsentSnapshot, () => null);
   const consent = useMemo(() => parseConsentSnapshot(consentSnapshot), [consentSnapshot]);
 
@@ -146,20 +172,22 @@ export function AnalyticsScripts({
   //   - Navegación SPA: se envía page_view manual con el pathname anterior como referrer
   //   - Re-render con misma ruta: cero eventos
   //   - El título se captura después de requestAnimationFrame para esperar a metadata
-  function sendPageView(pagePath: string, referrer: string) {
-    const w = window;
-    if (!w.gtag) return;
-    w.gtag('event', 'page_view', {
-      page_path: pagePath,
-      page_location: w.location.href,
-      page_title: document.title,
-      page_referrer: referrer,
-    });
-  }
-
   useEffect(() => {
     if (!effectiveGaId) return;
     if (!pathname || isAnalyticsExcludedPath(pathname)) return;
+
+    const gtag = ensureGtagQueue();
+    if (!gtag) return;
+
+    // La cola se inicializa antes del primer page_view. Así se evita que un
+    // efecto de React se ejecute antes que el Script de Next y pierda la
+    // landing page, que en GA4 termina apareciendo como "(not set)".
+    if (!gaConfigured.current) {
+      updateGoogleConsent({ analytics: true, functionality: consent?.functionality === true });
+      gtag('js', new Date());
+      gtag('config', effectiveGaId, { send_page_view: false });
+      gaConfigured.current = true;
+    }
 
     const prev = prevPath.current;
 
@@ -184,7 +212,7 @@ export function AnalyticsScripts({
     }
 
     prevPath.current = pathname;
-  }, [effectiveGaId, pathname]);
+  }, [consent?.functionality, effectiveGaId, pathname]);
 
   // Ruta excluida: no se monta nada
   if (!pathname || isAnalyticsExcludedPath(pathname)) {
@@ -211,12 +239,6 @@ export function AnalyticsScripts({
         </Script>
       )}
 
-      {/* GA4 directo — send_page_view: false para control manual completo */}
-      {effectiveGaId && (
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${effectiveGaId}',{send_page_view:false});`}
-        </Script>
-      )}
     </>
   );
 }

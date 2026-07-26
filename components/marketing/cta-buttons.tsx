@@ -71,6 +71,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         <a
           href="/solicitar-consulta#formulario"
           title="Solicitar consulta legal confidencial — Pineda y Asociados"
+          onClick={() => trackFormClick('cta_inverse')}
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={16} aria-hidden="true" />
@@ -93,6 +94,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <a
         href="/solicitar-consulta#formulario"
         title="Solicitar consulta legal con Pineda y Asociados en Nacaome"
+        onClick={() => trackFormClick('cta_primary')}
         className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={16} aria-hidden="true" />
@@ -218,5 +220,4 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
     </div>
   );
 }
-
 

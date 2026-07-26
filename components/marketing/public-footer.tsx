@@ -137,7 +137,14 @@ export function PublicFooter() {
             <ul className="space-y-1.5">
               {DESPACHO.map((d) => (
                 <li key={d.href}>
-                  <Link href={d.href} title={d.title} className="text-sm text-text-inverse/80 hover:text-accent transition-colors">
+                  <Link
+                    href={d.href}
+                    title={d.title}
+                    className="text-sm text-text-inverse/80 hover:text-accent transition-colors"
+                    {...(d.href.startsWith('/solicitar-consulta')
+                      ? { 'data-event-name': 'form_click', 'data-cta-location': 'footer' }
+                      : {})}
+                  >
                     {d.label}
                   </Link>
                 </li>
@@ -190,17 +197,39 @@ export function PublicFooter() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={14} className="text-accent flex-shrink-0" aria-hidden="true" />
-                <a href={telHref()} className="text-text-inverse/80 hover:text-accent tabular-nums">{site.phoneDisplay}</a>
+                <a
+                  href={telHref()}
+                  className="text-text-inverse/80 hover:text-accent tabular-nums"
+                  data-event-name="phone_click"
+                  data-cta-location="footer"
+                >
+                  {site.phoneDisplay}
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <MessageCircle size={14} className="text-accent flex-shrink-0" aria-hidden="true" />
-                <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className="text-text-inverse/80 hover:text-accent">WhatsApp</a>
+                <a
+                  href={whatsappHref()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-inverse/80 hover:text-accent"
+                  data-event-name="whatsapp_click"
+                  data-cta-location="footer"
+                >
+                  WhatsApp
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={14} className="text-accent flex-shrink-0" aria-hidden="true" />
                 {/* Email no expuesto en texto plano para reducir scraping de bots simples.
                     El mailto: abre el cliente de correo al hacer clic (UX preservada). */}
-                <a href={mailtoHref()} className="text-text-inverse/80 hover:text-accent" aria-label={`Enviar correo a ${site.name}`} data-internal-link="email_click">
+                <a
+                  href={mailtoHref()}
+                  className="text-text-inverse/80 hover:text-accent"
+                  aria-label={`Enviar correo a ${site.name}`}
+                  data-event-name="email_click"
+                  data-cta-location="footer"
+                >
                   Enviar correo
                 </a>
               </li>

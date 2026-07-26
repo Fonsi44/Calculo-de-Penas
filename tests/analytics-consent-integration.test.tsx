@@ -45,13 +45,13 @@ describe('Analytics consent integration', () => {
     expect(document.querySelector('script[src*="connect.facebook.net"]')).toBeNull();
   });
 
-  it('mounts one GA config with send_page_view:false and loads gtag.js once', async () => {
-    const view = render(<AnalyticsScripts {...props} />);
+  it('configures GA once with send_page_view:false and loads gtag.js once', async () => {
+    render(<AnalyticsScripts {...props} />);
     act(() => { persistConsent({ analytics: true, functionality: false }); });
-    expect(view.container.querySelectorAll('#ga4-init')).toHaveLength(1);
-    // Verify send_page_view is false
-    const script = view.container.querySelector('#ga4-init');
-    expect(script?.textContent).toContain('send_page_view:false');
+    const queuedConfig = (window.dataLayer || []).find((entry) =>
+      Array.isArray(entry) && entry[0] === 'config' && entry[1] === props.gaId,
+    );
+    expect(queuedConfig).toEqual(['config', props.gaId, { send_page_view: false }]);
     expect(document.querySelectorAll('script[src*="clarity.ms/tag/"]')).toHaveLength(1);
     expect(typeof window.clarity).toBe('function');
     await act(async () => { vi.advanceTimersByTime(5000); });
@@ -67,7 +67,6 @@ describe('Analytics consent integration', () => {
     document.title = 'Home Page';
     render(<AnalyticsScripts {...props} />);
     flushEffects();
-    expect(gtag).toHaveBeenCalledTimes(1);
     expect(gtag).toHaveBeenCalledWith('event', 'page_view', expect.objectContaining({
       page_path: '/',
       page_title: 'Home Page',
@@ -117,7 +116,19 @@ describe('Analytics consent integration', () => {
     render(<AnalyticsScripts {...props} />);
     flushEffects();
     expect(gtag).not.toHaveBeenCalled();
-    expect(document.querySelector('#ga4-init')).toBeNull();
+    expect(document.querySelector('script[src*="googletagmanager.com/gtag/js"]')).toBeNull();
+  });
+
+  it('queues the first page_view even when gtag did not exist before hydration', () => {
+    persistConsent({ analytics: true, functionality: false });
+    window.gtag = undefined;
+    render(<AnalyticsScripts {...props} />);
+    flushEffects();
+    const pageViews = (window.dataLayer || []).filter((entry) =>
+      Array.isArray(entry) && entry[0] === 'event' && entry[1] === 'page_view',
+    ) as unknown[][];
+    expect(pageViews).toHaveLength(1);
+    expect(pageViews[0]?.[2]).toEqual(expect.objectContaining({ page_path: '/' }));
   });
 
   it('stops sending analytics at all on excluded paths', () => {

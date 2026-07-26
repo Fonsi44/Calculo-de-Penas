@@ -80,20 +80,28 @@ export function trackEvent(action: string, params?: EventParams) {
   }
 }
 
-export function trackWhatsAppClick(..._args: unknown[]) {
-  trackEvent('whatsapp_click', { value: 1 });
+function conversionParams(ctaLocation?: string): EventParams {
+  return {
+    value: 1,
+    cta_location: ctaLocation?.slice(0, 60) || 'unknown',
+    source_path: typeof window !== 'undefined' ? window.location.pathname.slice(0, 120) : 'unknown',
+  };
 }
 
-export function trackPhoneClick(..._args: unknown[]) {
-  trackEvent('phone_click', { value: 1 });
+export function trackWhatsAppClick(ctaLocation?: string) {
+  trackEvent('whatsapp_click', conversionParams(ctaLocation));
 }
 
-export function trackFormClick(..._args: unknown[]) {
-  trackEvent('form_click', { value: 1 });
+export function trackPhoneClick(ctaLocation?: string) {
+  trackEvent('phone_click', conversionParams(ctaLocation));
 }
 
-export function trackLeadGenerated(..._args: unknown[]) {
-  trackEvent('lead_generated', { value: 1 });
+export function trackFormClick(ctaLocation?: string) {
+  trackEvent('form_click', conversionParams(ctaLocation));
+}
+
+export function trackLeadGenerated(ctaLocation?: string) {
+  trackEvent('lead_generated', conversionParams(ctaLocation));
 }
 
 /** Evento de conversión: formulario de consulta enviado con éxito.
@@ -103,7 +111,11 @@ export function trackLeadGenerated(..._args: unknown[]) {
  *  - motivo: categoría seleccionada en el formulario
  *  - ruta: página desde la que se envió */
 export function trackContactFormSubmit(params?: { motivo?: string; ruta?: string }) {
-  trackEvent('contact_form_submit', { value: 1, ...(params ? { motivo: params.motivo?.slice(0, 40), ruta: params.ruta?.slice(0, 100) } : {}) });
+  trackEvent('contact_form_submit', {
+    value: 1,
+    ...(params?.motivo ? { motivo: params.motivo.slice(0, 40) } : {}),
+    ...(params?.ruta ? { ruta: params.ruta.slice(0, 100) } : {}),
+  });
 }
 
 export function trackEmailClick(..._args: unknown[]) {
