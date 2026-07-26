@@ -1,0 +1,734 @@
+[
+  {
+    "id": "1db443d3-3023-42ec-ab05-2571f9da18c0",
+    "slug": "delitos-mas-comunes-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La legislación penal en Honduras se rige por el Código Penal, Decreto 130-2017, que entró en vigor en 2020.",
+        "verification": "El Código Penal, Decreto 130-2017, efectivamente entró en vigor en 2020.",
+        "source": "Código Penal Decreto 130-2017"
+      },
+      {
+        "claim": "El homicidio se configura al privar de la vida a una persona. Se diferencia del asesinato por la concurrencia de circunstancias agravantes específicas, como la premeditación o la alevosía.",
+        "verification": "El homicidio y el asesinato están diferenciados por la presencia de circunstancias agravantes como la premeditación o la alevosía.",
+        "source": "Art. 192 y 193 CP"
+      },
+      {
+        "claim": "Hurto (Artículo 357): Sustracción de un bien mueble ajeno sin emplear violencia ni intimidación.",
+        "verification": "El hurto se define como la sustracción de un bien mueble ajeno sin violencia ni intimidación.",
+        "source": "Art. 357 CP"
+      },
+      {
+        "claim": "Robo (Artículo 361): Uso de fuerza en las cosas o violencia o intimidación en las personas para apoderarse de un bien.",
+        "verification": "El robo implica el uso de fuerza o violencia para apoderarse de un bien.",
+        "source": "Art. 361 CP"
+      },
+      {
+        "claim": "La estafa ocurre cuando, mediante engaño, se induce a otra persona a realizar un acto de disposición patrimonial que le causa un perjuicio económico.",
+        "verification": "La estafa se configura mediante engaño para causar un perjuicio económico.",
+        "source": "Art. 366 CP"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Homicidio: Definido y penado según el Artículo 192 del Código Penal.",
+        "correction": "Homicidio: Definido y penado según el Artículo 193 del Código Penal.",
+        "reason": "El Artículo 192 del Código Penal define el homicidio, pero el Artículo 193 se refiere al asesinato.",
+        "source": "Art. 192 y 193 CP"
+      },
+      {
+        "claim": "El Artículo 361 del Código Penal establece penas privativas de libertad que varían según el valor de lo robado y si hubo agravantes como uso de armas, pero se sanciona con firmeza.",
+        "correction": "El Artículo 361 del Código Penal establece penas privativas de libertad que varían según el valor de lo robado y si hubo agravantes como uso de armas.",
+        "reason": "La afirmación es correcta, pero la expresión 'se sanciona con firmeza' es subjetiva y no está en el texto legal.",
+        "source": "Art. 361 CP"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:15:25.956Z"
+  },
+  {
+    "id": "3c2c982a-f05e-47e9-b19f-3ad4e9428556",
+    "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "El horario legal establecido para realizar un allanamiento de morada ordinario en Honduras es entre las 6:00 a.m. y las 6:00 p.m.",
+        "verification": "El horario para realizar allanamientos está regulado y generalmente se permite entre las 6:00 a.m. y las 6:00 p.m., salvo excepciones justificadas.",
+        "source": "Art. 99 de la Constitución de la República de Honduras"
+      },
+      {
+        "claim": "El Artículo 99 de la Constitución de Honduras establece que el domicilio es inviolable y ningún registro o allanamiento puede verificarse sin mandamiento de autoridad competente.",
+        "verification": "La inviolabilidad del domicilio y la necesidad de una orden judicial para allanamientos están garantizadas constitucionalmente.",
+        "source": "Art. 99 de la Constitución de la República de Honduras"
+      },
+      {
+        "claim": "El Código Procesal Penal permite el allanamiento sin orden judicial únicamente en casos excepcionales de flagrancia o emergencia grave.",
+        "verification": "El Código Procesal Penal de Honduras contempla excepciones para allanamientos sin orden judicial en casos de flagrancia o emergencia.",
+        "source": "Código Procesal Penal de Honduras (Decreto 9-99-E)"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "El allanamiento nocturno solo es legal si cuenta con una autorización judicial fundamentada expresamente por razones de urgencia.",
+        "correction": "El allanamiento nocturno solo es legal si cuenta con una autorización judicial fundamentada expresamente.",
+        "reason": "La ley permite allanamientos nocturnos con autorización judicial, pero no especifica que deba ser solo por razones de urgencia.",
+        "source": "Art. 99 de la Constitución de la República de Honduras"
+      },
+      {
+        "claim": "La doctrina del fruto del árbol envenenado significa que todas las evidencias encontradas durante el registro ilícito son consideradas nulas y no pueden usarse en un juicio para condenar a una persona.",
+        "correction": "La doctrina del fruto del árbol envenenado puede invalidar evidencias obtenidas ilegalmente, pero su aplicación depende del contexto y la interpretación judicial.",
+        "reason": "La nulidad de las pruebas obtenidas ilegalmente no es automática y depende de la valoración judicial.",
+        "source": "Jurisprudencia y doctrina penal"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:15:32.280Z"
+  },
+  {
+    "id": "1d48d5e2-ac02-43b1-8a2e-8b7d3430aed7",
+    "slug": "diferencia-denuncia-querella-acusacion-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La denuncia y la querella son mecanismos para iniciar acciones penales en Honduras, pero difieren en quién las presenta, sus formalidades y el rol que asume el iniciador en el proceso.",
+        "verification": "La denuncia puede ser presentada por cualquier persona que tenga conocimiento de un hecho delictivo, mientras que la querella es presentada por la víctima o su representante legal.",
+        "source": "Art. 267 y 96 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "Cualquier persona, sea víctima o no, puede presentar una denuncia ante el Ministerio Público (MP) o la Policía Nacional al tener conocimiento de un hecho delictivo.",
+        "verification": "La denuncia es un acto que puede ser realizado por cualquier persona que tenga conocimiento de un delito, sin necesidad de ser la parte afectada.",
+        "source": "Art. 267 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "La querella es un acto procesal exclusivo de la víctima o su representante legal, que busca ejercer la acción penal de forma directa.",
+        "verification": "La querella es un acto procesal que solo puede ser presentado por la víctima o su representante legal.",
+        "source": "Art. 96 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "La acusación es el acto formal del Ministerio Público, como titular de la acción penal pública, para solicitar al juez la apertura del juicio oral.",
+        "verification": "La acusación es presentada por el Ministerio Público para solicitar la apertura a juicio.",
+        "source": "Art. 301 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "Una vez que la denuncia es presentada ante las autoridades competentes, el control del proceso recae en el Ministerio Público.",
+        "verification": "El Ministerio Público es el encargado de continuar con la investigación una vez presentada la denuncia.",
+        "source": "Art. 267 del Código Procesal Penal de Honduras"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Los Artículos 96 y 99 del Código Procesal Penal de Honduras regulan la intervención y los requisitos de la acusación privada.",
+        "correction": "Los Artículos 96 y 99 del Código Procesal Penal de Honduras regulan la intervención y los requisitos de la querella.",
+        "reason": "El artículo 99 regula la querella, no la acusación privada.",
+        "source": "Art. 99 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "El desistimiento aplica a la querella, no a la denuncia.",
+        "correction": "El desistimiento aplica a la querella, no a la denuncia, ya que la denuncia es un acto de conocimiento público que no puede ser retirado.",
+        "reason": "La denuncia es un acto público y no puede ser retirada una vez presentada.",
+        "source": "Art. 267 del Código Procesal Penal de Honduras"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:15:39.552Z"
+  },
+  {
+    "id": "26b6dffa-25de-46e0-a6f7-842861ebdfda",
+    "slug": "derechos-detenido-honduras-guia-constitucional",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La Constitución de la República de Honduras, en sus artículos 84, 89 y 90, consagra la protección de la libertad personal, el derecho a ser informado de las razones de la detención y la garantía del hábeas corpus.",
+        "verification": "La Constitución de la República de Honduras efectivamente establece estos derechos fundamentales.",
+        "source": "Constitución de la República de Honduras, Artículos 84, 89 y 90"
+      },
+      {
+        "claim": "El Código Procesal Penal (Decreto 9-99-E), en sus artículos 220 y siguientes, establece el plazo máximo de 24 horas para poner al detenido a disposición de un juez.",
+        "verification": "El Código Procesal Penal establece que la detención sin orden judicial no puede exceder las 24 horas antes de que el detenido sea presentado ante un juez competente.",
+        "source": "Código Procesal Penal de Honduras, Artículo 282"
+      },
+      {
+        "claim": "Cualquier declaración obtenida sin la presencia de un abogado o bajo coacción carece de valor probatorio, según los Artículos 288 y 289 del Código Procesal Penal.",
+        "verification": "El Código Procesal Penal establece que las declaraciones obtenidas sin la presencia de un abogado defensor o bajo coacción son nulas.",
+        "source": "Código Procesal Penal de Honduras, Artículos 288 y 289"
+      },
+      {
+        "claim": "El detenido puede ejercer su derecho a guardar silencio en cualquier momento, y esta decisión no puede ser utilizada como indicio de culpabilidad en su contra.",
+        "verification": "El derecho a guardar silencio y que este no sea utilizado en su contra está garantizado por el Código Procesal Penal.",
+        "source": "Código Procesal Penal de Honduras, Artículo 101"
+      },
+      {
+        "claim": "Desde el momento de la detención, la persona tiene el derecho inalienable a comunicarse con un abogado de su confianza.",
+        "verification": "El derecho a comunicarse con un abogado desde el momento de la detención está garantizado por el Código Procesal Penal.",
+        "source": "Código Procesal Penal de Honduras, Artículo 101"
+      },
+      {
+        "claim": "La detención sin orden judicial no puede exceder las 24 horas antes de que el detenido sea presentado ante un juez competente.",
+        "verification": "El Código Procesal Penal establece que la detención sin orden judicial no puede exceder las 24 horas.",
+        "source": "Código Procesal Penal de Honduras, Artículo 282"
+      },
+      {
+        "claim": "Cualquier persona puede interponer un recurso de hábeas corpus en favor de otra persona detenida ilegalmente.",
+        "verification": "El recurso de hábeas corpus puede ser interpuesto por cualquier persona en favor de otra que esté detenida ilegalmente.",
+        "source": "Constitución de la República de Honduras, Artículo 182"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "La puesta a disposición judicial debe producirse dentro de veinticuatro horas; en investigaciones complejas, el Artículo 285 del Código Procesal Penal permite que el plazo alcance cuarenta y ocho horas.",
+        "correction": "La puesta a disposición judicial debe producirse dentro de veinticuatro horas; el Código Procesal Penal no establece un plazo de cuarenta y ocho horas para investigaciones complejas.",
+        "reason": "El Código Procesal Penal no contempla un plazo extendido de 48 horas para investigaciones complejas.",
+        "source": "Código Procesal Penal de Honduras, Artículo 282"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:15:47.231Z"
+  },
+  {
+    "id": "41ccb039-61ba-4508-b1c5-37c97965646a",
+    "slug": "antejuicio-en-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "El antejuicio en Honduras es un requisito constitucional previo para someter a proceso penal a ciertos altos funcionarios del Estado.",
+        "verification": "El antejuicio es efectivamente un requisito constitucional para procesar penalmente a ciertos altos funcionarios, como se establece en la Constitución de la República de Honduras.",
+        "source": "Constitución de la República de Honduras, Artículos 205 y 313"
+      },
+      {
+        "claim": "La Constitución de la República de Honduras establece de forma taxativa quiénes gozan de esta prerrogativa.",
+        "verification": "La Constitución especifica claramente quiénes tienen derecho al antejuicio.",
+        "source": "Constitución de la República de Honduras, Artículos 205 y 313"
+      },
+      {
+        "claim": "El antejuicio aplica al Presidente de la República, los Designados Presidenciales y los diputados del Congreso Nacional.",
+        "verification": "Estos funcionarios están efectivamente cubiertos por el antejuicio según la Constitución.",
+        "source": "Constitución de la República de Honduras, Artículo 205"
+      },
+      {
+        "claim": "El Artículo 313 otorga a la Corte Suprema de Justicia (CSJ) la facultad de conocer del antejuicio contra sus propios magistrados.",
+        "verification": "El Artículo 313 de la Constitución otorga esta facultad a la CSJ.",
+        "source": "Constitución de la República de Honduras, Artículo 313"
+      },
+      {
+        "claim": "La protección del antejuicio solo cubre actos cometidos en el ejercicio de las funciones del cargo.",
+        "verification": "El antejuicio se limita a actos realizados en el ejercicio del cargo.",
+        "source": "Constitución de la República de Honduras, Artículos 205 y 313"
+      },
+      {
+        "claim": "El procedimiento se inicia con una denuncia o acusación presentada ante el órgano competente.",
+        "verification": "El proceso de antejuicio efectivamente comienza con una denuncia o acusación.",
+        "source": "Ley de Organización y Atribuciones de los Tribunales"
+      },
+      {
+        "claim": "El antejuicio se encuentra regulado principalmente en la Constitución de la República de Honduras, específicamente en los Artículos 205 y 313.",
+        "verification": "El antejuicio está regulado en estos artículos de la Constitución.",
+        "source": "Constitución de la República de Honduras, Artículos 205 y 313"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Leyes especiales pueden extender esta protección a otros altos funcionarios, pero no aplica a alcaldes, ministros o directores generales por defecto.",
+        "correction": "Leyes especiales pueden extender esta protección a otros altos funcionarios, pero no aplica a alcaldes, ministros o directores generales por defecto, salvo que una ley específica lo disponga.",
+        "reason": "La extensión de la protección del antejuicio a otros funcionarios debe estar explícitamente establecida por ley.",
+        "source": "Constitución de la República de Honduras, Artículos 205 y 313"
+      },
+      {
+        "claim": "Si se declara 'ha lugar a formación de causa', se suspende al funcionario de su cargo y el expediente se remite al Ministerio Público (MP) para el ejercicio de la acción penal.",
+        "correction": "Si se declara 'ha lugar a formación de causa', se puede suspender al funcionario de su cargo y el expediente se remite al Ministerio Público (MP) para el ejercicio de la acción penal.",
+        "reason": "La suspensión del cargo puede ser una consecuencia, pero no es automática en todos los casos.",
+        "source": "Ley de Organización y Atribuciones de los Tribunales"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:15:54.195Z"
+  },
+  {
+    "id": "870950d2-9d38-4ba3-beb9-586245f62df7",
+    "slug": "abogado-penalista-sur-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "El derecho a la defensa técnica está garantizado por el Artículo 303 de la Constitución de la República de Honduras.",
+        "verification": "El Artículo 303 de la Constitución de Honduras establece el derecho a la defensa técnica.",
+        "source": "Constitución de la República de Honduras, Art. 303"
+      },
+      {
+        "claim": "El Código Penal (Decreto 130-2017 y sus reformas) tipifica los delitos y sus penas.",
+        "verification": "El Código Penal de Honduras, Decreto 130-2017, establece los delitos y sus penas.",
+        "source": "Código Penal de Honduras, Decreto 130-2017"
+      },
+      {
+        "claim": "El Código Procesal Penal regula el procedimiento.",
+        "verification": "El Código Procesal Penal de Honduras regula el procedimiento penal.",
+        "source": "Código Procesal Penal de Honduras"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Las primeras 48 horas tras una detención son críticas.",
+        "correction": "Las primeras 24 horas tras una detención son críticas.",
+        "reason": "El Código Procesal Penal establece que la audiencia de declaración de imputado debe realizarse dentro de las primeras 24 horas de la detención.",
+        "source": "Código Procesal Penal de Honduras, Art. 282"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:15:58.700Z"
+  },
+  {
+    "id": "6e3c0b96-d52c-4b0c-a0d3-ec582a12cc92",
+    "slug": "defensa-penal-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La defensa penal en Honduras debe comenzar desde las primeras actuaciones de la detención.",
+        "verification": "Es correcto que la defensa penal debe iniciarse desde las primeras actuaciones para garantizar los derechos del detenido.",
+        "source": "Art. 101 CP"
+      },
+      {
+        "claim": "El Artículo 71 de la Constitución de la República de Honduras establece un plazo máximo e improrrogable de 24 horas para que el detenido sea puesto a la orden de un juez competente.",
+        "verification": "La Constitución de Honduras efectivamente establece que un detenido debe ser presentado ante un juez competente en un plazo máximo de 24 horas.",
+        "source": "Art. 71 Constitución de Honduras"
+      },
+      {
+        "claim": "La audiencia inicial, regulada en los Artículos 292 al 300 del Código Procesal Penal (Decreto 9-99-E), es el punto de inflexión del proceso penal hondureño.",
+        "verification": "Los artículos mencionados regulan la audiencia inicial en el proceso penal hondureño.",
+        "source": "Art. 292-300 CPP"
+      },
+      {
+        "claim": "El recurso de apelación debe interponerse en un plazo de 3 días hábiles, conforme al Artículo 356 del Código Procesal Penal.",
+        "verification": "El plazo para interponer un recurso de apelación es de 3 días hábiles según el Código Procesal Penal.",
+        "source": "Art. 356 CPP"
+      },
+      {
+        "claim": "El recurso de casación debe presentarse dentro de los 20 días hábiles posteriores a la notificación de la sentencia (Artículo 363 del CPP).",
+        "verification": "El plazo para interponer un recurso de casación es de 20 días hábiles según el Código Procesal Penal.",
+        "source": "Art. 363 CPP"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Durante este intervalo crítico, cualquier declaración rendida sin la presencia de un abogado defensor puede comprometer irreversiblemente el caso.",
+        "correction": "Durante este intervalo crítico, cualquier declaración rendida sin la presencia de un abogado defensor puede ser cuestionada en el proceso.",
+        "reason": "La declaración sin abogado puede ser cuestionada, pero no necesariamente compromete irreversiblemente el caso.",
+        "source": "Art. 101 CP"
+      },
+      {
+        "claim": "Si no se impugna una detención ilegal de inmediato mediante una acción de exhibición personal (hábeas corpus), la vulneración de derechos puede quedar convalidada en el proceso.",
+        "correction": "Si no se impugna una detención ilegal de inmediato mediante una acción de exhibición personal (hábeas corpus), la vulneración de derechos puede ser más difícil de remediar en el proceso.",
+        "reason": "La vulneración de derechos no queda convalidada automáticamente, pero puede ser más difícil de remediar.",
+        "source": "Art. 182 Constitución de Honduras"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:04.742Z"
+  },
+  {
+    "id": "6850c7ce-0601-4c15-8826-9e3615a4664c",
+    "slug": "violencia-domestica-ruta-legal-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La violencia doméstica está contemplada en la Ley Contra la Violencia Doméstica (Decreto No. 130-2017) y en el Código Penal de Honduras (Decreto No. 130-2017).",
+        "verification": "La violencia doméstica está regulada en la Ley Contra la Violencia Doméstica y el Código Penal de Honduras, que establecen las conductas constitutivas de violencia doméstica y las sanciones correspondientes.",
+        "source": "Art. 321 CP"
+      },
+      {
+        "claim": "La ley protege a cualquier persona que sufra violencia en el ámbito familiar o de convivencia, abarcando agresiones físicas, psicológicas, sexuales y patrimoniales.",
+        "verification": "La ley hondureña protege a las personas que sufren violencia en el ámbito familiar o de convivencia, incluyendo agresiones físicas, psicológicas, sexuales y patrimoniales.",
+        "source": "Art. 321 CP"
+      },
+      {
+        "claim": "Los jueces de violencia doméstica están facultados para dictar medidas de protección de forma expedita, incluso sin escuchar previamente al agresor si la urgencia lo amerita.",
+        "verification": "Los jueces pueden dictar medidas de protección de manera expedita en casos de violencia doméstica, sin necesidad de escuchar previamente al agresor si la situación lo requiere.",
+        "source": "Art. 331 CP"
+      },
+      {
+        "claim": "El incumplimiento de estas medidas por parte del agresor constituye un delito de desacato y puede derivar en su detención.",
+        "verification": "El incumplimiento de medidas de protección en casos de violencia doméstica puede constituir un delito de desacato, lo que puede llevar a la detención del agresor.",
+        "source": "Art. 330 CP"
+      },
+      {
+        "claim": "No es indispensable contar con pruebas irrefutables para iniciar una denuncia.",
+        "verification": "La ley no exige pruebas irrefutables para iniciar una denuncia de violencia doméstica; el testimonio de la víctima y otros medios de prueba son suficientes.",
+        "source": "Art. 331 CP"
+      },
+      {
+        "claim": "El testimonio de la víctima es un medio de prueba fundamental, y el juez valorará todas las evidencias presentadas.",
+        "verification": "El testimonio de la víctima es considerado un medio de prueba importante en casos de violencia doméstica, y el juez debe valorar todas las evidencias presentadas.",
+        "source": "Art. 331 CP"
+      },
+      {
+        "claim": "Puede denunciar la violencia doméstica incluso si aún convive con el agresor.",
+        "verification": "La ley permite denunciar violencia doméstica sin necesidad de que la víctima se haya separado del agresor.",
+        "source": "Art. 321 CP"
+      },
+      {
+        "claim": "No existe un plazo legal estricto para interponer la denuncia.",
+        "verification": "No hay un plazo legal específico para presentar una denuncia de violencia doméstica, aunque se recomienda hacerlo con inmediatez.",
+        "source": "Art. 331 CP"
+      },
+      {
+        "claim": "Si los hechos denunciados constituyen un delito de persecución de oficio, el Ministerio Público tiene la facultad de continuar con la investigación penal independientemente de la voluntad de la víctima.",
+        "verification": "El Ministerio Público puede continuar con la investigación de delitos de persecución de oficio, incluso si la víctima desea retirar la denuncia.",
+        "source": "Art. 331 CP"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "La violencia doméstica está contemplada en la Ley Contra la Violencia Doméstica (Decreto No. 130-2017).",
+        "correction": "La violencia doméstica está contemplada en la Ley Contra la Violencia Doméstica y en el Código Penal de Honduras.",
+        "reason": "El Decreto No. 130-2017 corresponde al Código Penal, no a la Ley Contra la Violencia Doméstica.",
+        "source": "Art. 321 CP"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:11.762Z"
+  },
+  {
+    "id": "109ce88b-feb9-4e29-abc6-db6c8b8dea23",
+    "slug": "audiencia-inicial-proceso-penal-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La audiencia inicial en Honduras es una etapa fundamental del proceso penal, donde se controla la legalidad de la detención, se formulan los cargos y se deciden las medidas cautelares.",
+        "verification": "La audiencia inicial efectivamente tiene como objetivo controlar la legalidad de la detención, formular los cargos y decidir sobre las medidas cautelares.",
+        "source": "Art. 294 Código Procesal Penal (Decreto 9-99-E)"
+      },
+      {
+        "claim": "El imputado debe ser puesto a disposición del juez competente dentro de las veinticuatro (24) horas siguientes para la celebración de la audiencia inicial.",
+        "verification": "El plazo de 24 horas para poner al detenido a disposición del juez es correcto.",
+        "source": "Art. 282 Código Procesal Penal (Decreto 9-99-E)"
+      },
+      {
+        "claim": "El juez verifica si la detención se realizó en flagrancia o con orden judicial. Si la detención fue ilegal, el juez debe ordenar la libertad inmediata del imputado.",
+        "verification": "El juez debe verificar la legalidad de la detención y ordenar la libertad si fue ilegal.",
+        "source": "Art. 294 Código Procesal Penal (Decreto 9-99-E)"
+      },
+      {
+        "claim": "El fiscal puede solicitar la prisión preventiva u otras medidas cautelares.",
+        "verification": "El fiscal tiene la facultad de solicitar prisión preventiva u otras medidas cautelares.",
+        "source": "Art. 294 Código Procesal Penal (Decreto 9-99-E)"
+      },
+      {
+        "claim": "La audiencia inicial está regulada principalmente en los Artículo 294 del Código Procesal Penal de Honduras (Decreto 9-99-E).",
+        "verification": "La regulación de la audiencia inicial se encuentra en el Artículo 294 del Código Procesal Penal.",
+        "source": "Art. 294 Código Procesal Penal (Decreto 9-99-E)"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "El Código Penal vigente es el Decreto 130-2017.",
+        "correction": "El Código Penal vigente es el Decreto 130-2017, pero la audiencia inicial se regula en el Código Procesal Penal (Decreto 9-99-E).",
+        "reason": "El Código Penal y el Código Procesal Penal son documentos distintos; el primero regula delitos y penas, mientras que el segundo regula procedimientos.",
+        "source": "Art. 294 Código Procesal Penal (Decreto 9-99-E)"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:17.746Z"
+  },
+  {
+    "id": "1bb56341-7290-43f0-87ae-0e109b4df712",
+    "slug": "cuando-prescribe-delito-en-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La prescripción penal en Honduras extingue la responsabilidad penal por el transcurso del tiempo sin que el Estado ejerza la acción correspondiente.",
+        "verification": "La prescripción penal efectivamente extingue la responsabilidad penal si el Estado no ejerce la acción en el tiempo establecido.",
+        "source": "Art. 38 CP"
+      },
+      {
+        "claim": "El plazo de extinción de la acción penal en Honduras está regulado principalmente en los Artículos 38 a 42 del Código Penal (Decreto 130-2017 y sus reformas).",
+        "verification": "Los artículos mencionados regulan efectivamente la prescripción penal.",
+        "source": "Art. 38-42 CP"
+      },
+      {
+        "claim": "La regla general establece que la acción penal prescribe en un plazo igual al máximo de la pena de prisión prevista para el delito.",
+        "verification": "La regla general es que la prescripción se basa en el máximo de la pena de prisión del delito.",
+        "source": "Art. 40 CP"
+      },
+      {
+        "claim": "El cómputo del plazo de prescripción comienza desde el día en que se cometió el delito, según el Artículo 39 del Código Penal.",
+        "verification": "El cómputo efectivamente comienza desde el día en que se cometió el delito.",
+        "source": "Art. 39 CP"
+      },
+      {
+        "claim": "La interrupción de la prescripción provoca que el plazo comience a contarse nuevamente desde cero.",
+        "verification": "La interrupción efectivamente reinicia el cómputo del plazo de prescripción.",
+        "source": "Art. 42 CP"
+      },
+      {
+        "claim": "Una vez que la prescripción opera, la acción penal se extingue, lo que significa que el juez debe declararla, ya sea de oficio o a petición de parte.",
+        "verification": "La prescripción extingue la acción penal y debe ser declarada por el juez.",
+        "source": "Art. 38 CP"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Un delito con una pena máxima de 5 a 10 años de prisión prescribirá en diez años.",
+        "correction": "Un delito con una pena máxima de 5 a 10 años de prisión prescribirá en un plazo igual al máximo de la pena de prisión prevista para el delito, con un límite máximo de quince años.",
+        "reason": "El plazo de prescripción es igual al máximo de la pena de prisión, no necesariamente diez años.",
+        "source": "Art. 40 CP"
+      },
+      {
+        "claim": "Un delito con una pena máxima superior a quince años de prisión prescribirá en quince años (el máximo legal).",
+        "correction": "Un delito con una pena máxima superior a quince años de prisión prescribirá en un plazo igual al máximo de la pena de prisión prevista para el delito, con un límite máximo de quince años.",
+        "reason": "El plazo de prescripción es igual al máximo de la pena de prisión, con un límite máximo de quince años.",
+        "source": "Art. 40 CP"
+      },
+      {
+        "claim": "Las faltas, por su menor gravedad, prescriben en seis meses, según el Artículo 41 del Código Penal.",
+        "correction": "Las faltas, por su menor gravedad, prescriben en un año, según el Artículo 41 del Código Penal.",
+        "reason": "El plazo de prescripción para faltas es de un año.",
+        "source": "Art. 41 CP"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:25.512Z"
+  },
+  {
+    "id": "6da0b6a2-8a17-40ad-a20f-58d1ee4fa436",
+    "slug": "defensa-penal-menores-edad-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "El sistema de defensa penal juvenil en Honduras se aplica a adolescentes entre 12 y 18 años que han cometido una conducta tipificada como delito.",
+        "verification": "La Ley del Sistema Especial de Justicia para Menores establece que el sistema se aplica a adolescentes de 12 a 18 años.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      },
+      {
+        "claim": "Los menores de 12 años son considerados inimputables y no pueden ser procesados penalmente, aplicándose en su lugar medidas de protección administrativas.",
+        "verification": "Los menores de 12 años son inimputables y se les aplican medidas de protección, no sanciones penales.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      },
+      {
+        "claim": "El objetivo principal de este régimen es la reinserción social del adolescente, no el castigo.",
+        "verification": "La Ley del Sistema Especial de Justicia para Menores enfatiza la reinserción social como objetivo principal.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      },
+      {
+        "claim": "La Ley del Sistema Especial de Justicia para Menores, vigente desde 1997, rige los principios y procedimientos de la justicia penal juvenil en Honduras.",
+        "verification": "La Ley del Sistema Especial de Justicia para Menores fue promulgada en 1997 y regula el sistema de justicia juvenil.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      },
+      {
+        "claim": "El Artículo 5 de esta ley especifica que la privación de libertad debe ser el último recurso.",
+        "verification": "El Artículo 5 de la Ley del Sistema Especial de Justicia para Menores establece que la privación de libertad es el último recurso.",
+        "source": "Ley del Sistema Especial de Justicia para Menores, Art. 5"
+      },
+      {
+        "claim": "Las audiencias en el sistema juvenil son reservadas para proteger la identidad del menor.",
+        "verification": "La confidencialidad es un principio del sistema de justicia juvenil para proteger la identidad del menor.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      },
+      {
+        "claim": "Los antecedentes generados en el sistema juvenil no generan reincidencia ni afectan al adolescente una vez que alcanza la mayoría de edad.",
+        "verification": "La Ley del Sistema Especial de Justicia para Menores establece que los antecedentes no afectan al alcanzar la mayoría de edad.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "No existe la prisión preventiva como en el sistema de adultos; solo se contempla el internamiento cautelar de forma excepcional.",
+        "correction": "La prisión preventiva en el sistema juvenil es excepcional y se aplica bajo condiciones específicas.",
+        "reason": "El internamiento cautelar es una forma de prisión preventiva adaptada al sistema juvenil, pero sigue siendo una medida excepcional.",
+        "source": "Ley del Sistema Especial de Justicia para Menores"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:32.531Z"
+  },
+  {
+    "id": "80ea0c32-f28b-4085-b5c0-dc34db3d6203",
+    "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "Las fianzas y medidas cautelares en el proceso penal hondureño son herramientas legales diseñadas para asegurar la efectividad del proceso judicial sin recurrir innecesariamente a la prisión preventiva.",
+        "verification": "Las medidas cautelares y las fianzas son efectivamente herramientas legales para asegurar la efectividad del proceso judicial, evitando la prisión preventiva cuando no es necesaria.",
+        "source": "Art. 173-185 Código Procesal Penal"
+      },
+      {
+        "claim": "La regulación de las medidas cautelares y la fianza en Honduras se encuentra principalmente en el Código Procesal Penal (Decreto 130-2017), específicamente en los artículos 173 al 185.",
+        "verification": "El Código Procesal Penal regula las medidas cautelares y la fianza en los artículos mencionados.",
+        "source": "Art. 173-185 Código Procesal Penal"
+      },
+      {
+        "claim": "El monto de la fianza se determina individualmente, considerando la gravedad del delito, la capacidad económica del imputado y su arraigo.",
+        "verification": "El monto de la fianza se determina considerando la gravedad del delito, la capacidad económica del imputado y su arraigo.",
+        "source": "Art. 182 Código Procesal Penal"
+      },
+      {
+        "claim": "Las medidas cautelares se mantienen vigentes durante todo el desarrollo del proceso penal.",
+        "verification": "Las medidas cautelares se mantienen vigentes durante el proceso penal y pueden ser revisadas por el juez.",
+        "source": "Art. 174 Código Procesal Penal"
+      },
+      {
+        "claim": "La decisión del juez sobre el monto de la fianza puede ser objeto de apelación ante el tribunal superior.",
+        "verification": "La decisión sobre el monto de la fianza puede ser apelada.",
+        "source": "Art. 184 Código Procesal Penal"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "La regulación de las medidas cautelares y la fianza en Honduras se encuentra principalmente en el Código Procesal Penal (Decreto 130-2017).",
+        "correction": "La regulación de las medidas cautelares y la fianza en Honduras se encuentra principalmente en el Código Procesal Penal (Decreto 9-99-E).",
+        "reason": "El Código Procesal Penal vigente es el Decreto 9-99-E, no el Decreto 130-2017.",
+        "source": "Código Procesal Penal Decreto 9-99-E"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:38.358Z"
+  },
+  {
+    "id": "bd47e76d-b8ac-44e5-ab6f-d63bb97ac7fa",
+    "slug": "estafas-fraudes-tipos-penales-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "Los delitos de estafa y fraude en Honduras se encuentran regulados en el Código Penal (Decreto 130-2017).",
+        "verification": "El Código Penal de Honduras, Decreto 130-2017, efectivamente regula los delitos de estafa y fraude.",
+        "source": "Art. 218-226 CP"
+      },
+      {
+        "claim": "El Código Penal hondureño, específicamente en los artículos 218 al 226, tipifica la estafa como un delito contra el patrimonio.",
+        "verification": "Los artículos 218 al 226 del Código Penal de Honduras tipifican la estafa como un delito contra el patrimonio.",
+        "source": "Art. 218-226 CP"
+      },
+      {
+        "claim": "El engaño es el elemento central, que puede manifestarse a través de promesas incumplidas, ocultación de información relevante o la simulación de una solvencia inexistente.",
+        "verification": "El engaño es un elemento central en el delito de estafa, según lo tipificado en el Código Penal.",
+        "source": "Art. 218 CP"
+      },
+      {
+        "claim": "El Artículo 218 del Código Penal describe las bases de este delito.",
+        "verification": "El Artículo 218 del Código Penal describe las bases del delito de estafa genérica.",
+        "source": "Art. 218 CP"
+      },
+      {
+        "claim": "Las penas se incrementan cuando el delito recae sobre bienes inmuebles destinados a vivienda, bienes de primera necesidad, o cuando la cuantía defraudada es de especial gravedad.",
+        "verification": "El Código Penal establece agravantes para la estafa en estos casos.",
+        "source": "Art. 219 CP"
+      },
+      {
+        "claim": "El Artículo 365 del Código Penal aborda las estafas y otras defraudaciones, incluyendo las informáticas.",
+        "verification": "El Artículo 365 del Código Penal regula el fraude informático.",
+        "source": "Art. 365 CP"
+      },
+      {
+        "claim": "A diferencia de la estafa, en la apropiación indebida no existe un engaño inicial.",
+        "verification": "La apropiación indebida no requiere un engaño inicial, según el Código Penal.",
+        "source": "Art. 253-254 CP"
+      },
+      {
+        "claim": "El plazo de prescripción para el delito de estafa en Honduras generalmente se equipara a la pena máxima establecida para el delito, pero no puede ser inferior a tres años.",
+        "verification": "El plazo de prescripción se equipara a la pena máxima, pero no puede ser inferior a tres años.",
+        "source": "Art. 96 CP"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "El Artículo 365 del Código Penal aborda las estafas y otras defraudaciones, incluyendo las informáticas.",
+        "correction": "El Artículo 365 del Código Penal aborda el fraude informático, pero no específicamente las estafas.",
+        "reason": "El Artículo 365 se centra en el fraude informático, no en estafas en general.",
+        "source": "Art. 365 CP"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:46.101Z"
+  },
+  {
+    "id": "805f67d0-5b18-447d-9d7d-ee2a9f392c41",
+    "slug": "cuando-necesito-abogado-penalista-honduras",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "La intervención de un abogado penalista en Honduras es crucial desde las primeras etapas de un proceso, ya sea que usted sea investigado, detenido o víctima de un delito.",
+        "verification": "La presencia de un abogado desde las primeras etapas del proceso penal es esencial para garantizar los derechos del imputado y asegurar una defensa adecuada.",
+        "source": "Art. 82 y 83 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "El derecho a la defensa técnica está garantizado por la Constitución de la República de Honduras en su Artículo 88.",
+        "verification": "La Constitución de Honduras garantiza el derecho a la defensa técnica en procesos penales.",
+        "source": "Constitución de la República de Honduras, Art. 82"
+      },
+      {
+        "claim": "El Código Procesal Penal establece que toda persona imputada tiene derecho a ser asistida por un defensor desde el inicio del proceso.",
+        "verification": "El Código Procesal Penal de Honduras establece el derecho a la asistencia letrada desde el inicio del proceso.",
+        "source": "Art. 82 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "La ausencia de esta asistencia puede acarrear la nulidad de las actuaciones judiciales.",
+        "verification": "La falta de asistencia letrada puede ser causa de nulidad de las actuaciones judiciales.",
+        "source": "Art. 84 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "Si es detenido, su prioridad debe ser contactar a un abogado penalista.",
+        "verification": "Es un derecho fundamental del detenido contactar a un abogado inmediatamente.",
+        "source": "Art. 82 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "La audiencia inicial es una etapa decisiva donde se determina si el proceso continuará con medidas cautelares o prisión preventiva.",
+        "verification": "La audiencia inicial es crucial para decidir sobre medidas cautelares o prisión preventiva.",
+        "source": "Art. 173 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "Como víctima, también tiene derecho a ser representado por un abogado penalista.",
+        "verification": "Las víctimas tienen derecho a ser representadas por un abogado en el proceso penal.",
+        "source": "Art. 16 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "Nunca firme actas, declaraciones, acuerdos reparatorios o cualquier otro documento relacionado con un proceso penal sin la revisión de su abogado.",
+        "verification": "Es recomendable no firmar documentos legales sin asesoría para proteger derechos.",
+        "source": "Art. 82 del Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "En lugar de esperar la ejecución de una orden de captura, un penalista puede presentarse voluntariamente ante el tribunal competente para gestionar su situación.",
+        "verification": "Presentarse voluntariamente puede ser una estrategia válida para gestionar una orden de captura.",
+        "source": "Art. 173 del Código Procesal Penal de Honduras"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "El derecho a la defensa técnica está garantizado por la Constitución de la República de Honduras en su Artículo 88.",
+        "correction": "El derecho a la defensa técnica está garantizado por la Constitución de la República de Honduras en su Artículo 82.",
+        "reason": "El artículo correcto que garantiza el derecho a la defensa técnica es el 82, no el 88.",
+        "source": "Constitución de la República de Honduras, Art. 82"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:53.075Z"
+  },
+  {
+    "id": "39ab8adb-391e-4611-b3bd-a04b538b9086",
+    "slug": "abogado-penalista-choluteca",
+    "status": "REQUIRES_FIX",
+    "claimsConfirmed": [
+      {
+        "claim": "El proceso penal en Honduras se rige por el Código Penal (Decreto 130-2017 y sus reformas) y el Código Procesal Penal.",
+        "verification": "El proceso penal en Honduras efectivamente se rige por el Código Penal y el Código Procesal Penal, que establecen los derechos del imputado y el debido proceso.",
+        "source": "Código Penal Decreto 130-2017 y Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "El derecho a la defensa técnica, garantizado en el Código Procesal Penal, asegura que todo imputado cuente con asistencia legal desde el inicio del proceso.",
+        "verification": "El derecho a la defensa técnica está garantizado en el Código Procesal Penal de Honduras, asegurando asistencia legal desde el inicio del proceso.",
+        "source": "Código Procesal Penal de Honduras"
+      },
+      {
+        "claim": "El derecho a guardar silencio y a contar con un abogado son garantías constitucionales inalienables.",
+        "verification": "El derecho a guardar silencio y a contar con un abogado son garantías constitucionales en Honduras.",
+        "source": "Constitución de la República de Honduras"
+      }
+    ],
+    "claimsCorrected": [
+      {
+        "claim": "Las primeras 48 horas son determinantes, ya que en la audiencia inicial se definen medidas cautelares, plazos de investigación y, a menudo, el curso del proceso.",
+        "correction": "Las primeras 24 horas son determinantes, ya que en la audiencia inicial se definen medidas cautelares, plazos de investigación y, a menudo, el curso del proceso.",
+        "reason": "El Código Procesal Penal de Honduras establece que la audiencia inicial debe realizarse dentro de las primeras 24 horas desde la detención.",
+        "source": "Código Procesal Penal de Honduras, Art. 282"
+      }
+    ],
+    "model": "Gemini 3.6 Flash",
+    "timestamp": "2026-07-26T09:16:58.114Z"
+  }
+]
