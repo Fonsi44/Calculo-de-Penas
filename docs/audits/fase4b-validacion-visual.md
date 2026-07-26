@@ -3,13 +3,37 @@
 **Fecha:** 2026-07-26
 **Modo:** VERIFICACIÓN (contra producción)
 **Base URL:** `https://www.pinedayasociadoshn.com`
-**Deployment objetivo:** `0dc703deb73df7fb80830f90868268f542cf6173` (READY, production)
+**Deployment objetivo:** `f4e097d2eaf92aeb7f873862e84363320af7de7c` (READY, production)
 **Spec:** `e2e/fase4b-visual.spec.ts`
 **Comando:**
 ```bash
 PLAYWRIGHT_BASE_URL=https://www.pinedayasociadoshn.com \
   npx playwright test e2e/fase4b-visual.spec.ts --reporter=list
 ```
+
+## 0. Resultado final: ✅ 15/15 PASS
+
+```
+Running 15 tests using 9 workers
+  ✓ desktop — pension-alimenticia-honduras-guia-completa (completed)
+  ✓ desktop — prescripcion-deudas-plazos-honduras (completed)
+  ✓ desktop — pension-alimenticia-porcentaje-honduras-2026 (needs_human_review)
+  ✓ desktop — custodia-hijos-honduras-juez (needs_human_review)
+  ✓ desktop — juicio-oral-etapas-que-esperar-honduras (needs_human_review)
+  ✓ desktop — despido-laboral-honduras-guia-completa (needs_human_review)
+  ✓ desktop — contratos-arrendamiento-derechos-obligaciones-honduras (blocked)
+  ✓ mobile — pension-alimenticia-honduras-guia-completa (completed)
+  ✓ mobile — prescripcion-deudas-plazos-honduras (completed)
+  ✓ mobile — pension-alimenticia-porcentaje-honduras-2026 (needs_human_review)
+  ✓ mobile — custodia-hijos-honduras-juez (needs_human_review)
+  ✓ mobile — juicio-oral-etapas-que-esperar-honduras (needs_human_review)
+  ✓ mobile — despido-laboral-honduras-guia-completa (needs_human_review)
+  ✓ mobile — contratos-arrendamiento-derechos-obligaciones-honduras (blocked)
+  ✓ /sw.js sirve SW con BUILD_ID real
+  15 passed (3.3s)
+```
+
+**Histórico:** la primera ejecución mostró 12 fallos en la verificación del aviso AiReviewNotice porque el deployment inicial (`0dc703de`) tenía prerenderizado el HTML con `ai_review_status = 'not_started'`. Tras aplicar los estados a DB Neon y desencadenar un nuevo deploy (`f4e097d2`), los estáticos se regeneraron con los estados correctos y los 15 tests pasan. El detalle del diagnóstico histórico se conserva en §3-§5 a continuación.
 
 ## 1. Cobertura
 
