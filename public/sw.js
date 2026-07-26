@@ -11,18 +11,21 @@
  * impide filtraciones de la intranet a través del service worker.
  */
 
-// CACHE se versiona por build (postbuild inyecta el BUILD_ID de Next.js vía
-// scripts/bump-sw-cache.mjs). Esto fuerza `install→activate` en cada deploy y
+// CACHE se versiona por build. Esto fuerza `install→activate` en cada deploy y
 // purga los chunks `/_next/*` de builds anteriores: sin esto, el SW sirvió
 // chunks obsoletos (stale-while-revalidate) cuyo HTML referenciaba assets que
 // ya no existían en el servidor → 404 "page has broken JavaScript".
-// El placeholder `__BUILD_ID__` se reemplaza en CI; si no (dev), se usa un
-// valor por defecto para que el SW nunca quede con una versión congelada.
 //
-// CONTRATO (fase3d): el archivo commiteado SIEMPRE debe llevar el placeholder
-// `'pineda-pwa-'` (nunca un BUILD_ID real). Si se commitea un BUILD_ID inyectado,
-// el árbol aparece "sucio" tras cada build porque `bump-sw-cache.mjs` reescribe
-// la línea. El valor real solo vive en el artefacto de build desplegado.
+// CONTRATO (fase3e): ESTE ARCHIVO ES UNA PLANTILLA VERSIONADA. Contiene el
+// placeholder `__BUILD_ID__` y NUNCA debe commitearse con un BUILD_ID real.
+// `scripts/build-sw.mjs` (postbuild) lee esta plantilla, reemplaza el
+// placeholder por el BUILD_ID real de `.next/BUILD_ID` y escribe el resultado
+// en `public/sw.generated.js` (artefacto gitignored). `next.config.ts` mapea
+// `/sw.js` → `/sw.generated.js` en producción. Así, dos builds consecutivos
+// dejan el árbol de Git limpio sin necesidad de `git restore`.
+//
+// El placeholder aparece en dos sitios: la comparación de fallback y el valor
+// devuelto. Si el BUILD_ID real falta (dev sin build), build-sw.mjs usa 'dev'.
 const CACHE = 'pineda-pwa-' + ('__BUILD_ID__' === '__BUILD_ID__'
   ? 'dev'
   : '__BUILD_ID__');

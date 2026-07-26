@@ -319,9 +319,17 @@ const nextConfig: NextConfig = {
       { source: '/blog/practica-legal/abogados-en-amapala-valle', destination: '/abogados-en-amapala', permanent: true },
     ];
   },
-  // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key
+  // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key.
+  // Fase 3E: /sw.js → /sw.generated.js. La plantilla versionada es
+  // public/sw.js (con placeholder __BUILD_ID__); build-sw.mjs (postbuild)
+  // genera public/sw.generated.js con el BUILD_ID real inyectado. Este
+  // rewrite hace que el navegador siga pidiendo /sw.js pero reciba el
+  // artefacto con cache ID actualizado por deploy, SIN modificar la
+  // plantilla versionada (que es lo que dejaba el árbol de Git sucio).
+  // La regla va antes que /:key.txt para no ser capturada por ella.
   async rewrites() {
     return [
+      { source: '/sw.js', destination: '/sw.generated.js' },
       { source: '/:key.txt', destination: '/api/indexnow-key' },
     ];
   },

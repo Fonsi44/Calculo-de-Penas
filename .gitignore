@@ -17,6 +17,11 @@
 /.next/
 /out/
 
+# Fase 3E: service worker generado (artefacto con BUILD_ID inyectado).
+# La plantilla versionada es public/sw.js; build-sw.mjs (postbuild) escribe
+# este artefacto y next.config.ts lo sirve vía rewrite /sw.js -> /sw.generated.js.
+/public/sw.generated.js
+
 # production
 /build
 
