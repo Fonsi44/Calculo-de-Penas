@@ -1,6 +1,6 @@
 {
-  "id": "b1fdd4a0-8df4-4feb-b6ca-fe01454de047",
-  "prevId": "f51ff877-c7e3-4e0c-a3f5-bc154f72c394",
+  "id": "a3089b0a-3a24-46a0-8f7f-51ba698a725e",
+  "prevId": "b1fdd4a0-8df4-4feb-b6ca-fe01454de047",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -1711,6 +1711,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "ai_review_provider": {
+          "name": "ai_review_provider",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "ai_review_model": {
           "name": "ai_review_model",
           "type": "varchar(100)",
@@ -1759,6 +1765,33 @@
         },
         "ai_review_unresolved_claims": {
           "name": "ai_review_unresolved_claims",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "ai_review_requires_human": {
+          "name": "ai_review_requires_human",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "ai_research_provider": {
+          "name": "ai_research_provider",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ai_search_queries_count": {
+          "name": "ai_search_queries_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "ai_official_sources_count": {
+          "name": "ai_official_sources_count",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,

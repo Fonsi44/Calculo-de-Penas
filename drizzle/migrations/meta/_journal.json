@@ -267,6 +267,13 @@
       "when": 1784408400000,
       "tag": "0037_fase3_experiencia_cliente_portal",
       "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1785062945453,
+      "tag": "0038_lively_silvermane",
+      "breakpoints": true
     }
   ]
 }
