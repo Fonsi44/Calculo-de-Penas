@@ -126,7 +126,7 @@ humana futura).
 
 ## 9. Porcentaje completado
 
-**Fase 3D: 100% del alcance definido en el enunciado.** 8 commits atómicos,
+**Fase 3D: 100% del alcance definido en el enunciado.** 9 commits atómicos,
 4 comandos de validación verde, 208 tests, 15 artículos con estados honestos,
 trazabilidad documentada. Pendiente: verificación visual real post-despliegue
 (se ejecuta tras `git push origin main`).
