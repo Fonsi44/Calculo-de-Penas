@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import type { BlogPost } from '@/lib/schema';
 
 /**
@@ -30,7 +31,8 @@ import type { BlogPost } from '@/lib/schema';
  */
 interface AiReviewNoticeProps {
   aiReviewStatus: BlogPost['aiReviewStatus'];
-  aiReviewedAt: BlogPost['aiReviewedAt'];
+  /** Fecha de revisión IA. Acepta Date (de Drizzle) o string ISO (serializado). */
+  aiReviewedAt: Date | string | null;
   className?: string;
 }
 
@@ -53,10 +55,10 @@ function getNoticeCopy(status: ReviewStatus | null | undefined): string | null {
   return COPY[status] ?? null;
 }
 
-function formatDate(iso: string | null | undefined): string | null {
-  if (!iso) return null;
+function formatDate(value: string | Date | null | undefined): string | null {
+  if (!value) return null;
   try {
-    const d = new Date(iso);
+    const d = typeof value === 'string' ? new Date(value) : value;
     if (Number.isNaN(d.getTime())) return null;
     return d.toLocaleDateString('es-HN', {
       year: 'numeric',
@@ -72,7 +74,7 @@ export function AiReviewNotice({
   aiReviewStatus,
   aiReviewedAt,
   className = '',
-}: AiReviewNoticeProps): JSX.Element | null {
+}: AiReviewNoticeProps): ReactElement | null {
   const copy = getNoticeCopy(aiReviewStatus);
   if (!copy) return null;
 
