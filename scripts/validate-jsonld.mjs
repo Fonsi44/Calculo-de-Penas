@@ -11,6 +11,8 @@
  *      Service → provider presente.
  *      BlogPosting → author y publisher presentes.
  *      FAQPage → mainEntity no vacío.
+ *      Person → no usa areaServed (propiedad no admitida por Schema.org).
+ *      serviceType → solo aparece en nodos Service.
  *      AggregateRating → warning (política Google self-serving reviews).
  *
  * Sin librerías externas. Parsea el HTML prerenderizado de `.next/server/app/`
@@ -151,6 +153,12 @@ async function validateRoute(route) {
     const idStr = node['@id'] ? ` (${node['@id']})` : '';
     if (types.includes('Service') && !node.provider) {
       issues.push(`ERROR: Service sin 'provider'${idStr}`);
+    }
+    if (node.serviceType !== undefined && !types.includes('Service')) {
+      issues.push(`ERROR: 'serviceType' fuera de un nodo Service${idStr}`);
+    }
+    if (types.includes('Person') && node.areaServed !== undefined) {
+      issues.push(`ERROR: Person contiene 'areaServed', propiedad no admitida por Schema.org${idStr}`);
     }
     if (types.includes('BlogPosting')) {
       if (!node.author) issues.push(`ERROR: BlogPosting sin 'author'${idStr}`);

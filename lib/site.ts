@@ -302,7 +302,7 @@ export function legalServiceSchema() {
     // Sin @context aquí: el wrapper @graph de app/(public)/layout.tsx lo aporta
     // una sola vez. Duplicar @context en cada nodo del @graph es un error de
     // validación Schema.org (causa raíz del CSV structured-data de Ahrefs).
-    '@type': ['LegalService', 'LocalBusiness', 'Attorney'],
+    '@type': ['LegalService', 'LocalBusiness'],
     '@id': `${site.url}/#legal-service`,
     name: site.name,
     legalName: site.name,
@@ -351,8 +351,6 @@ export function legalServiceSchema() {
       closes: h.closes,
     })),
     knowsLanguage: ['es-HN', 'es-ES'],
-    serviceType:
-      'Bufete jurídico — defensa penal, familia, laboral, civil, mercantil, tributario, bancario, administrativo, aduanero, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje',
     knowsAbout: KNOWS_ABOUT,
     contactPoint: [
       {
@@ -605,21 +603,6 @@ export function founderSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    areaServed: [
-      { '@type': 'City', name: 'Nacaome' },
-      { '@type': 'City', name: 'San Lorenzo' },
-      { '@type': 'City', name: 'Choluteca' },
-      { '@type': 'City', name: 'Goascorán' },
-      { '@type': 'City', name: 'San Marcos de Colón' },
-      { '@type': 'City', name: 'El Triunfo' },
-      { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
-      { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Amapala' },
-      { '@type': 'AdministrativeArea', name: site.address.department },
-    ],
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
     // es claramente personal (Danilo_Pineda_M). Se añade googleBusiness
     // (perfil del bufete en Google Maps que lo representa como abogado).
@@ -696,21 +679,6 @@ export function thaniaSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    areaServed: [
-      { '@type': 'City', name: 'Nacaome' },
-      { '@type': 'City', name: 'San Lorenzo' },
-      { '@type': 'City', name: 'Choluteca' },
-      { '@type': 'City', name: 'Goascorán' },
-      { '@type': 'City', name: 'San Marcos de Colón' },
-      { '@type': 'City', name: 'El Triunfo' },
-      { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
-      { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Amapala' },
-      { '@type': 'AdministrativeArea', name: site.address.department },
-    ],
     ...(validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]).length > 0
       ? { sameAs: validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]) }
       : {}),
@@ -781,21 +749,6 @@ export function emilSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    areaServed: [
-      { '@type': 'City', name: 'Nacaome' },
-      { '@type': 'City', name: 'San Lorenzo' },
-      { '@type': 'City', name: 'Choluteca' },
-      { '@type': 'City', name: 'Goascorán' },
-      { '@type': 'City', name: 'San Marcos de Colón' },
-      { '@type': 'City', name: 'El Triunfo' },
-      { '@type': 'City', name: 'Marcovia' },
-      { '@type': 'City', name: 'Pespire' },
-      { '@type': 'City', name: 'Namasigüe' },
-      { '@type': 'City', name: 'Orocuina' },
-      { '@type': 'City', name: 'Langue' },
-      { '@type': 'City', name: 'Amapala' },
-      { '@type': 'AdministrativeArea', name: site.address.department },
-    ],
     ...(validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]).length > 0
       ? { sameAs: validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
       : {}),
