@@ -11,7 +11,6 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { hubMigrantes } from '@/data/areas-juridicas';
 import { migrantesHubHref, areaSchemas } from '@/lib/schemas/legal-page';
-import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
@@ -281,8 +280,6 @@ export default async function MigrantesPage() {
 
       {/* FASE 4 (§14) — CTA contextual España con motivo preseleccionado seguro. */}
       <CtaSpain />
-
-      <ConsultationCTA />
     </>
   );
 }

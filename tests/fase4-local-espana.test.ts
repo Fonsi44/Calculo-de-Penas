@@ -343,6 +343,12 @@ describe('FASE 4 §16 — Whitelist MOTIVO_FROM_QUERY', () => {
     const src = readRoot('components/marketing/cta-spain.tsx');
     expect(src).toContain('motivo=hondurenos-en-espana');
   });
+
+  it('el hub España termina con una sola llamada a la acción', () => {
+    const src = readRoot('app/(public)/hondurenos-en-espana/page.tsx');
+    expect(src.match(/<CtaSpain\s*\/>/g)).toHaveLength(1);
+    expect(src).not.toContain('<ConsultationCTA');
+  });
 });
 
 // ---------------------------------------------------------------------------
