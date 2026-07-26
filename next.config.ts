@@ -297,6 +297,14 @@ const nextConfig: NextConfig = {
       // pero el slug canónico publicado es naturalizacion-nacionalidad-hondurena.
       // 301 conserva link equity hacia el post publicado.
       { source: '/blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena', destination: '/blog/extranjeria-migracion/naturalizacion-nacionalidad-hondurena', permanent: true },
+      // === CONSOLIDACIÓN DE POSTS LOCALES POST-AUDITORÍA (Jul 2026) ===
+      { source: '/blog/practica-legal/abogados-en-nacaome', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/blog/practica-legal/abogados-en-choluteca', destination: '/abogados-en-choluteca', permanent: true },
+      { source: '/blog/practica-legal/abogados-en-san-lorenzo', destination: '/abogados-en-san-lorenzo', permanent: true },
+      { source: '/blog/practica-legal/abogados-en-pespire-choluteca', destination: '/abogados-en-pespire', permanent: true },
+      { source: '/blog/practica-legal/abogados-en-marcovia-choluteca', destination: '/abogados-en-marcovia', permanent: true },
+      { source: '/blog/practica-legal/abogados-en-san-marcos-de-colon-choluteca', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
+      { source: '/blog/practica-legal/abogados-en-amapala-valle', destination: '/abogados-en-amapala', permanent: true },
     ];
   },
   // IndexNow key: sirve KEY.txt desde la raíz via /api/indexnow-key

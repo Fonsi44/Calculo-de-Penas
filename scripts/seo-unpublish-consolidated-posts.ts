@@ -78,6 +78,48 @@ const TARGETS: Target[] = [
     urlFinal: '/blog/practica-legal/como-elegir-abogado-honduras',
     motivo: 'Cluster elegir abogado (next.config.ts:209).',
   },
+  {
+    slug: 'abogados-en-nacaome',
+    rutaVieja: '/blog/practica-legal/abogados-en-nacaome',
+    urlFinal: '/abogados-en-nacaome',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
+  {
+    slug: 'abogados-en-choluteca',
+    rutaVieja: '/blog/practica-legal/abogados-en-choluteca',
+    urlFinal: '/abogados-en-choluteca',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
+  {
+    slug: 'abogados-en-san-lorenzo',
+    rutaVieja: '/blog/practica-legal/abogados-en-san-lorenzo',
+    urlFinal: '/abogados-en-san-lorenzo',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
+  {
+    slug: 'abogados-en-pespire-choluteca',
+    rutaVieja: '/blog/practica-legal/abogados-en-pespire-choluteca',
+    urlFinal: '/abogados-en-pespire',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
+  {
+    slug: 'abogados-en-marcovia-choluteca',
+    rutaVieja: '/blog/practica-legal/abogados-en-marcovia-choluteca',
+    urlFinal: '/abogados-en-marcovia',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
+  {
+    slug: 'abogados-en-san-marcos-de-colon-choluteca',
+    rutaVieja: '/blog/practica-legal/abogados-en-san-marcos-de-colon-choluteca',
+    urlFinal: '/abogados-en-san-marcos-de-colon',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
+  {
+    slug: 'abogados-en-amapala-valle',
+    rutaVieja: '/blog/practica-legal/abogados-en-amapala-valle',
+    urlFinal: '/abogados-en-amapala',
+    motivo: 'Consolidación de post local con landing comercial principal.',
+  },
 ];
 
 function checkRecentBackup(): boolean {
