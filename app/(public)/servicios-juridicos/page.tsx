@@ -149,6 +149,7 @@ export default async function AreasJuridicasPage() {
         slugs={[
           TOP_ORGANIC_GUIDE_SLUGS[2],
           TOP_ORGANIC_GUIDE_SLUGS[3],
+          'jornada-laboral-horas-extra-descansos-honduras',
           'pension-alimenticia-honduras-guia-completa',
           'prescripcion-deudas-plazos-honduras',
         ]}

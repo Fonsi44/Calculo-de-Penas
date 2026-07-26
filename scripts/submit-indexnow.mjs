@@ -35,6 +35,7 @@
  *   --incremental   Compara con .indexnow-cache.json y envía solo novedades.
  *   --limit N        Limita a N URLs (tras dedup/filtro).
  *   --sample         Alias de --limit 5 con la lista de prueba definida.
+ *   --deleted-url U  Notifica una única URL eliminada del host canónico.
  *   --key <key>      Override de INDEXNOW_KEY (poco habitual).
  *   --host <host>    Override de host (para staging; usar con cuidado).
  *
@@ -114,6 +115,7 @@ const limitArg = isSample
 
 const overrideKey = getArg('--key');
 const overrideHost = getArg('--host');
+const deletedUrlArg = getArg('--deleted-url');
 
 // Host canónico (sin protocolo ni trailing slash).
 function resolveHost() {
@@ -277,6 +279,20 @@ function buildSampleList() {
     '/abogados-en-choluteca',
     '/como-llegar',
   ];
+}
+
+function buildDeletedUrlList(rawUrl) {
+  if (!rawUrl) return null;
+  try {
+    const parsed = new URL(rawUrl);
+    if (parsed.protocol !== 'https:' || parsed.hostname !== HOST || parsed.search || parsed.hash) {
+      throw new Error('La URL eliminada debe usar HTTPS, el host canónico y no incluir query ni hash.');
+    }
+    return [parsed.pathname];
+  } catch (error) {
+    console.log(`⛔ URL eliminada inválida: ${error.message}`);
+    process.exit(1);
+  }
 }
 
 function isExcluded(pathname) {
@@ -468,7 +484,7 @@ async function main() {
   console.log(`Techo de seguridad:      ${INDEXNOW_SAFETY_CAP} URLs (abortar si se supera)`);
   console.log(
     `Modo:                    ${
-      isSample ? 'SAMPLE (5)' : isFull ? 'FULL (catálogo + categorías)' : isIncremental ? 'INCREMENTAL' : 'MÍNIMO (core)'
+      deletedUrlArg ? 'URL ELIMINADA (1)' : isSample ? 'SAMPLE (5)' : isFull ? 'FULL (catálogo + categorías)' : isIncremental ? 'INCREMENTAL' : 'MÍNIMO (core)'
     }`,
   );
   console.log(`Ejecución:               ${isDryRun ? 'DRY-RUN (simulación)' : 'REAL'}`);
@@ -495,7 +511,8 @@ async function main() {
 
   // Construcción de la lista base -----------------------------------------
   let basePaths;
-  if (isSample) basePaths = buildSampleList();
+  if (deletedUrlArg) basePaths = buildDeletedUrlList(deletedUrlArg);
+  else if (isSample) basePaths = buildSampleList();
   else if (isFull) basePaths = buildFullUrlList();
   else basePaths = buildCoreUrlList();
 
