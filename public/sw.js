@@ -18,7 +18,12 @@
 // ya no existían en el servidor → 404 "page has broken JavaScript".
 // El placeholder `__BUILD_ID__` se reemplaza en CI; si no (dev), se usa un
 // valor por defecto para que el SW nunca quede con una versión congelada.
-const CACHE = 'pineda-pwa-7xs1j0HAJVMcwuob-T3l4' + ('__BUILD_ID__' === '__BUILD_ID__'
+//
+// CONTRATO (fase3d): el archivo commiteado SIEMPRE debe llevar el placeholder
+// `'pineda-pwa-'` (nunca un BUILD_ID real). Si se commitea un BUILD_ID inyectado,
+// el árbol aparece "sucio" tras cada build porque `bump-sw-cache.mjs` reescribe
+// la línea. El valor real solo vive en el artefacto de build desplegado.
+const CACHE = 'pineda-pwa-' + ('__BUILD_ID__' === '__BUILD_ID__'
   ? 'dev'
   : '__BUILD_ID__');
 const PRECACHE = ['/', '/manifest.json'];
