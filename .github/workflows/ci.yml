@@ -41,8 +41,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
+      - name: Setup npm version
+        run: npm install -g npm@12
+
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Repo hygiene
         run: node tools/ci/repo-hygiene.mjs
