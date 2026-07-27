@@ -1,14 +1,21 @@
 {
   "slug": "como-elegir-abogado-honduras",
   "article_id": "7e718c4d-2626-4c7e-aa1b-5eb9d36a3d40",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
-  "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
-  "claims_totales_a": 0,
+  "sha256_original": "d8f88f0a11ee07f4ced5d03702ae534bc545488633e46403539f69ae266b7b07",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
+  "estado_final": "corrected",
+  "razon": "Pasada-A detecta errores concretos: (a) Decreto 76-84 NO corresponde al Codigo Civil sino al Codigo de Familia — el Codigo Civil es Decreto No. 76 de 1906; (b) los articulos 1551-1564 CC NO son especificos de 'servicios profesionales' sino normas generales de contratos (requisitos esenciales: consentimiento, objeto, causa); (c) el contrato de servicios profesionales entre abogado y cliente no esta definido en ese rango del CC. Pasada-B confirma estos hallazgos.",
+  "claims_totales_a": 6,
   "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
+  "errores_detectados": [
+    "Decreto 76-84 atribuido incorrectamente al Codigo Civil (es el Codigo de Familia)",
+    "Articulos 1551-1564 CC presentados como regulacion especifica de servicios profesionales cuando son normas generales de contratos",
+    "El contrato abogado-cliente no esta regulado especificamente en los arts. 1551-1564 CC"
+  ],
+  "correcciones_pendientes": [
+    "Corregir referencia: Codigo Civil = Decreto No. 76 de 1906",
+    "Aclarar que arts. 1551-1564 CC son normas generales de validez de contratos, no especificas de servicios profesionales"
+  ],
   "requiere_abogado": true,
   "version_esquema": "1.0"
 }

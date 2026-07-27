@@ -1,14 +1,21 @@
 {
   "slug": "problemas-legales-familiares-honduras",
   "article_id": "35d04632-58e0-43b4-8301-f3d358954bfc",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "sha256_original": "646eb7d668f064f311e0acc6ed9bd0027925f5781a787a3de8440c248553c488",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
   "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
+  "razon": "20 claims en pasada-A: 11 (55%) NO VERIFICABLES porque las fuentes necesarias (Ley contra la Violencia Domestica, Codigo Procesal de Familia, Codigo de la Ninez) no estan en el corpus local. Hallazgos menores: uso de terminos 'legitimas'/'herederos forzosos' (derecho espanol) en lugar de 'asignaciones forzosas' (CC hondureno Art. 1147), y omision del requisito de 2 anos de matrimonio para divorcio por mutuo consentimiento (Art. 243 CF). Sin refutaciones directas pero con imprecisiones que requieren revision.",
   "claims_totales_a": 20,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
+  "claims_totales_b": 10,
+  "errores_detectados": [
+    "Terminologia: 'legitimas' y 'herederos forzosos' son terminos del derecho espanol; el CC hondureno usa 'asignaciones forzosas' (Art. 1147)",
+    "Omision: no se menciona el requisito de 2 anos de matrimonio para divorcio por mutuo consentimiento (Art. 243 CF)"
+  ],
+  "correcciones_pendientes": [
+    "Revisar terminologia de derecho sucesorio (usar 'asignaciones forzosas')",
+    "Agregar requisito de 2 anos de matrimonio para divorcio por mutuo consentimiento",
+    "Verificar claims no verificables contra Ley contra Violencia Domestica y Codigo Procesal de Familia"
+  ],
   "requiere_abogado": true,
   "version_esquema": "1.0"
 }

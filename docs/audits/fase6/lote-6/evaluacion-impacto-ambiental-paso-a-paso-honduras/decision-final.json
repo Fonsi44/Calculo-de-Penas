@@ -1,14 +1,16 @@
 {
   "slug": "evaluacion-impacto-ambiental-paso-a-paso-honduras",
   "article_id": "6c82244c-ee95-4c27-bd32-7130ffdc7b3e",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "sha256_original": "2b10e21630390c58d47bcf73ae303fb850c802d0c672cd9810b68cafa5ed176d",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
   "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
-  "claims_totales_a": 0,
+  "razon": "11 claims en pasada-A: la mayoria plausibles no verificables porque las fuentes primarias (leyes ambientales, reglamentos de la SERNA/MiAmbiente) no estan en los archivos JSON locales. Ningun error detectado. Solo 2 claims parcialmente confirmados. Pasada-B sin resultados. Requiere verificacion externa con fuentes oficiales.",
+  "claims_totales_a": 11,
   "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
+  "errores_detectados": [],
+  "correcciones_pendientes": [
+    "Verificar normativa ambiental hondurena contra fuentes oficiales"
+  ],
+  "requiere_abogado": false,
   "version_esquema": "1.0"
 }

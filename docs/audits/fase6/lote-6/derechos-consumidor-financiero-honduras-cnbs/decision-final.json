@@ -1,14 +1,16 @@
 {
   "slug": "derechos-consumidor-financiero-honduras-cnbs",
   "article_id": "0bcd20a7-0b04-405b-8367-bf20ab018c33",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "sha256_original": "b548dc6fb8da8314c629fcef4f9fa8907e17cb01354db53602f7311c1725ec83",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
   "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
+  "razon": "18 claims en ambas pasadas. Ningun error detectado. La mayoria son PARCIALMENTE VERIFICADOS o NO VERIFICABLES porque las fuentes regulatorias de la CNBS no estan en los archivos JSON locales. Sin fuente primaria no es posible confirmar ni refutar las afirmaciones sobre normativa financiera.",
   "claims_totales_a": 18,
   "claims_totales_b": 18,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
+  "errores_detectados": [],
+  "correcciones_pendientes": [
+    "Verificar normativa CNBS contra fuentes oficiales"
+  ],
+  "requiere_abogado": false,
   "version_esquema": "1.0"
 }

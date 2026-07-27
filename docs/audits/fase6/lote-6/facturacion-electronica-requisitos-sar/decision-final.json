@@ -1,14 +1,16 @@
 {
   "slug": "facturacion-electronica-requisitos-sar",
   "article_id": "8b84c13e-1210-4aca-9c62-3991e185a2c3",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "sha256_original": "15b6948454848b0f21c239b740f32192c05ec58ec545b7cfab33b77288e06849",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
   "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
+  "razon": "16 claims en ambas pasadas: mezcla de PARCIALMENTE VERIFICADOS, VERIFICADOS y NO VERIFICABLES. Ningun error detectado. Las afirmaciones no verificables dependen de resoluciones del SAR que no estan en fuentes locales. Sin fuente primaria no es posible confirmar ni refutar.",
   "claims_totales_a": 16,
   "claims_totales_b": 16,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
+  "errores_detectados": [],
+  "correcciones_pendientes": [
+    "Verificar resoluciones SAR contra fuentes oficiales"
+  ],
+  "requiere_abogado": false,
   "version_esquema": "1.0"
 }

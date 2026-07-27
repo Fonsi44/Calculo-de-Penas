@@ -1,14 +1,16 @@
 {
   "slug": "isv-impuesto-venta-tasas-obligaciones-honduras",
   "article_id": "f0fa945a-f863-4b25-a7cd-d1cbb99485d8",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "sha256_original": "bab53911d73f86a7234cd216f6a13ffd295f3cb15a6d82946c292704223dd1d3",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
   "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
+  "razon": "18 claims en ambas pasadas: mezcla de VERIFICADOS, PARCIALMENTE VERIFICADOS y NO VERIFICABLES. Ningun error detectado. Los claims no verificables dependen de la Ley del ISV y sus reglamentos que no estan en fuentes locales. Sin fuente primaria no es posible confirmar ni refutar.",
   "claims_totales_a": 18,
   "claims_totales_b": 18,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
+  "errores_detectados": [],
+  "correcciones_pendientes": [
+    "Verificar Ley del ISV y reglamentos contra fuentes oficiales"
+  ],
+  "requiere_abogado": false,
   "version_esquema": "1.0"
 }

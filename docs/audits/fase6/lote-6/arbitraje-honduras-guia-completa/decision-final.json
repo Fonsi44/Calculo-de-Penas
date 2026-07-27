@@ -1,14 +1,16 @@
 {
   "slug": "arbitraje-honduras-guia-completa",
   "article_id": "e4e50b5e-be89-4383-8a9b-52ee0539326d",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "sha256_original": "57e7bed5446de8f24e00f2a39d272f95c15c9e17f737bfc7dc09aa8b2614eb31",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
   "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
-  "claims_totales_a": 0,
+  "razon": "La Ley de Conciliacion y Arbitraje (Decreto 161-2000) no esta en fuentes locales. 6 claims en pasada-A: todos plausibles o parcialmente confirmados, ningun error detectado. Pasada-B sin resultados. Sin fuente primaria no es posible confirmar ni refutar. Requiere verificacion externa con la ley original.",
+  "claims_totales_a": 6,
   "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
+  "errores_detectados": [],
+  "correcciones_pendientes": [
+    "Verificar Decreto 161-2000 contra fuente oficial"
+  ],
+  "requiere_abogado": false,
   "version_esquema": "1.0"
 }

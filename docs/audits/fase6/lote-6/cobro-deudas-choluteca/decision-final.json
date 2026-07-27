@@ -1,14 +1,25 @@
 {
   "slug": "cobro-deudas-choluteca",
   "article_id": "f85fc7d9-14bc-4a5a-896b-b0a83e638466",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
-  "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
+  "sha256_original": "d468c0c0b802b92424b34b92272155fb5ac5a1d1f6bf9d4d15200b5231afc3c1",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
+  "estado_final": "corrected",
+  "razon": "5 de 10 claims REFUTADOS por pasada-A con correcciones concretas: (a) interes legal es 6% anual, no 1% mensual (el articulo duplica la tasa); (b) acciones cambiarias del cheque prescriben en 6 meses, no 1 ano; (c) protesto del cheque debe hacerse en 2 dias habiles, no 8; (d) embargo de salarios hasta 50% solo aplica para pensiones alimenticias, regla general es 25% del excedente de L.100; (e) salario minimo es inembargable. Errores verificados contra Codigo Civil y Codigo de Comercio.",
   "claims_totales_a": 10,
-  "claims_totales_b": 10,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
+  "claims_totales_b": 0,
+  "errores_detectados": [
+    "Interes legal: el articulo dice 1% mensual, la ley establece 6% anual",
+    "Prescripcion cambiaria del cheque: 1 ano segun articulo, 6 meses segun Codigo de Comercio",
+    "Plazo de protesto: 8 dias segun articulo, 2 dias habiles segun ley",
+    "Embargo salarial: 50% segun articulo (solo para alimentos), regla general es 25% del excedente",
+    "Inembargabilidad del salario minimo no fue mencionada en el articulo"
+  ],
+  "correcciones_pendientes": [
+    "Corregir tasa de interes legal a 6% anual",
+    "Corregir prescripcion cambiaria a 6 meses",
+    "Corregir plazo de protesto a 2 dias habiles",
+    "Corregir reglas de embargo salarial: 25% del excedente, salario minimo inembargable"
+  ],
   "requiere_abogado": true,
   "version_esquema": "1.0"
 }

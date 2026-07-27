@@ -1,14 +1,22 @@
 {
   "slug": "derechos-laborales-basicos-honduras",
   "article_id": "4acf8111-5f12-49fd-a56c-669898d862ac",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
-  "estado_final": "needs_human_review",
-  "razon": "Claims no verificables contra fuentes disponibles",
-  "claims_totales_a": 0,
+  "sha256_original": "2a8051a6ed3c30910031390a00b444e1e5a6b32dc1ad077c653546adfb5f3c2c",
+  "fecha_consolidacion": "2026-07-27T12:00:00Z",
+  "estado_final": "corrected",
+  "razon": "Pasada-A detecta errores concretos: (a) la autorizacion para despedir a trabajadora embarazada corresponde al Inspector de Trabajo (o Alcalde Municipal), NO autorizacion judicial como afirma el articulo — es una via administrativa, no judicial; (b) la fecha '20 de diciembre' como limite de pago del aguinaldo no aparece en el CT (dice 'primera quincena de diciembre'); (c) el CT no menciona 'reinstalacion con salarios caidos' sino indemnizacion tarifada. Pasada-B confirma.",
+  "claims_totales_a": 6,
   "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
+  "errores_detectados": [
+    "Despido de embarazada: requiere autorizacion del Inspector de Trabajo (administrativa), no 'autorizacion judicial previa'",
+    "Fecha limite de aguinaldo: el CT dice 'primera quincena de diciembre' (1-15 dic), no '20 de diciembre'",
+    "El CT establece indemnizacion tarifada para despido de embarazada, no 'reinstalacion con salarios caidos'"
+  ],
+  "correcciones_pendientes": [
+    "Corregir: autoridad competente es Inspector de Trabajo, no Juez",
+    "Corregir fecha de aguinaldo a 'primera quincena de diciembre'",
+    "Aclarar que la reparacion es indemnizacion tarifada, no necesariamente reinstalacion"
+  ],
   "requiere_abogado": true,
   "version_esquema": "1.0"
 }
