@@ -92,3 +92,45 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return authFailureResponse(error);
   }
 }
+
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const auth = await requireAbogado(request);
+    validateCsrf(request);
+    const rl = await rateLimit(`sgie:agenda:delete:${auth.userId}`, { max: 20, windowMs: 60_000, keyPrefix: 'sgie' });
+    if (!rl.ok) return rateLimitResponse(rl);
+    const { id } = await params;
+
+    const access = await assertSgieAccess(auth.userId, 'calendar.write');
+    const [event] = await db.select().from(eventosAgenda).where(eq(eventosAgenda.id, id));
+    if (!event) throw new NotFoundError('Evento no encontrado');
+
+    if (event.propietarioId !== auth.userId && !access.capabilities.has('calendar.manage_team')) {
+      if (event.visibilidad === 'expediente' && event.expedienteId) {
+        await accessService.assertCaseAccess({ userId: auth.userId, caseId: event.expedienteId, capability: 'calendar.write' });
+      } else {
+        throw new ForbiddenError('Sin acceso al evento');
+      }
+    }
+
+    await db.delete(eventosAgenda).where(eq(eventosAgenda.id, id));
+
+    await logSgie({
+      usuarioId: auth.userId,
+      accion: 'evento_deleted',
+      recurso: 'evento_agenda',
+      recursoId: id,
+      metadata: {
+        titulo: event.titulo,
+        estado: event.estado,
+        expedienteId: event.expedienteId,
+        propietarioId: event.propietarioId,
+      },
+      request,
+    });
+
+    return Response.json({ ok: true });
+  } catch (error) {
+    return authFailureResponse(error);
+  }
+}
