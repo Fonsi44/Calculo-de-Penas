@@ -1,0 +1,96 @@
+{
+  "lote": 4,
+  "candidatos_evaluados": 133,
+  "seleccionados": [
+    {
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "score": 0.7350000000000001,
+      "riesgo_jurídico": 0.9,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "pension-alimenticia-honduras-guia-completa",
+      "score": 0.615,
+      "riesgo_jurídico": 0.5,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "pension-alimenticia-porcentaje-honduras-2026",
+      "score": 0.615,
+      "riesgo_jurídico": 0.5,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "prescripcion-deudas-plazos-honduras",
+      "score": 0.615,
+      "riesgo_jurídico": 0.5,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "danos-perjuicios-indemnizacion-honduras",
+      "score": 0.615,
+      "riesgo_jurídico": 0.5,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "score": 0.6072500000000001,
+      "riesgo_jurídico": 0.9,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+      "score": 0.5827500000000001,
+      "riesgo_jurídico": 0.7,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "score": 0.5682499999999999,
+      "riesgo_jurídico": 0.9,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "custodia-hijos-honduras-juez",
+      "score": 0.5627500000000001,
+      "riesgo_jurídico": 0.5,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "que-hacer-si-me-detienen-en-honduras",
+      "score": 0.5575000000000001,
+      "riesgo_jurídico": 0.9,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "divorcio-honduras-guia-completa",
+      "score": 0.5235000000000001,
+      "riesgo_jurídico": 0.5,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "score": 0.51775,
+      "riesgo_jurídico": 0.9,
+      "estado_actual": "completed"
+    },
+    {
+      "slug": "derechos-trabajadora-embarazada-honduras",
+      "score": 0.5185,
+      "riesgo_jurídico": 0.7,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "score": 0.50475,
+      "riesgo_jurídico": 0.9,
+      "estado_actual": "needs_human_review"
+    },
+    {
+      "slug": "competencia-desleal-como-denunciar-honduras",
+      "score": 0.5002500000000001,
+      "riesgo_jurídico": 0.7,
+      "estado_actual": "not_started"
+    }
+  ]
+}
