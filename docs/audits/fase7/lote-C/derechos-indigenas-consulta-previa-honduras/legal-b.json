@@ -1,0 +1,71 @@
+{
+  "slug": "derechos-indigenas-consulta-previa-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derechos-indigenas-consulta-previa-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:02:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "El Convenio 169 de la OIT fue ratificado por Honduras mediante Decreto 26-94 y posee rango constitucional",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Honduras efectivamente ratificó el Convenio 169 de la OIT. La afirmación de 'rango constitucional' es significativa. En Honduras, los tratados internacionales en materia de derechos humanos tienen rango constitucional según jurisprudencia de la Sala Constitucional. El número de decreto de ratificación (26-94) es específico. Requiere verificación.",
+      "fuentes": []
+    },
+    {
+      "claim": "Artículo 346 de la Constitución reconoce el deber del Estado de preservar las culturas nativas",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La Constitución hondureña contiene disposiciones sobre pueblos indígenas. El número de artículo (346) es específico pero no verificable independientemente.",
+      "fuentes": []
+    },
+    {
+      "claim": "Artículo 95 de la Ley de Propiedad establece el deber de consultar a pueblos indígenas para explotar recursos naturales",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Referencia específica a artículo de la Ley de Propiedad. Esta disposición sería fundamental para el derecho de consulta. Requiere verificación.",
+      "fuentes": []
+    },
+    {
+      "claim": "La omisión de consulta previa acarrea nulidad administrativa de licencias y autorizaciones. Las comunidades pueden interponer recursos de amparo",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La nulidad de actos administrativos por omisión de consulta previa es un principio que ha sido desarrollado por la Corte Interamericana de Derechos Humanos. En Honduras, su aplicación depende de la recepción de esta jurisprudencia por los tribunales nacionales.",
+      "fuentes": []
+    },
+    {
+      "claim": "Honduras tiene más de 600,000 personas pertenecientes a nueve pueblos indígenas: Lenca, Miskito, Garífuna, Tolupán, Chortí, Pech, Tawahka, Maya-Chortí y Nahua",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La enumeración de nueve pueblos es específica. El censo de población indígena varía según fuentes. Requiere verificación con datos oficiales del INE.",
+      "fuentes": []
+    },
+    {
+      "claim": "Honduras suscribe la Declaración de las Naciones Unidas sobre los Derechos de los Pueblos Indígenas (2007)",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Honduras votó a favor de la Declaración de la ONU sobre Pueblos Indígenas en 2007. Es un instrumento de soft law pero relevante.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 5,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "Verificar Decreto 26-94 de ratificación del Convenio 169 OIT",
+    "Confirmar Artículo 346 constitucional y Artículo 95 Ley de Propiedad",
+    "Verificar cifra de 600,000 personas y nueve pueblos con INE"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños inaccesibles"
+  ],
+  "discrepancias_con_auditor_a": []
+}

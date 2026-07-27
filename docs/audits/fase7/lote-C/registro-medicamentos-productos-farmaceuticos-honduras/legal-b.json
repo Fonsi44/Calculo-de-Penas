@@ -1,0 +1,59 @@
+{
+  "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-sanitario/registro-medicamentos-productos-farmaceuticos-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "La ARSA fue creada por Decreto PCM-032-2017",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Referencia específica a un decreto de creación de la ARSA. No verificable independientemente por inaccesibilidad de sitios oficiales hondureños.",
+      "fuentes": []
+    },
+    {
+      "claim": "El registro sanitario tiene vigencia de 5 años y es renovable (renovación 10 días hábiles antes del vencimiento)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Afirmación cuantitativa precisa: 5 años de vigencia y 10 días hábiles para renovación. Requiere verificación con la normativa de ARSA.",
+      "fuentes": []
+    },
+    {
+      "claim": "Costo total aproximado L. 45,000 incluyendo tasas ARSA y honorarios. Tiempo total 4-8 meses. Evaluación hasta 60 días hábiles",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Cifras monetarias y plazos concretos. Los costos de registro sanitario varían por tipo de producto y pueden cambiar con resoluciones administrativas.",
+      "fuentes": []
+    },
+    {
+      "claim": "Se requieren estudios de estabilidad para zona climática IV (cálido y húmedo)",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Honduras efectivamente corresponde a zona climática IV para estabilidad de medicamentos. Plausible pero requiere confirmación con normativa ARSA.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "Verificar costo de registro sanitario y plazos con tarifario ARSA vigente",
+    "Confirmar vigencia de 5 años y plazo de renovación de 10 días hábiles",
+    "Verificar Decreto PCM-032-2017"
+  ],
+  "acciones_obligatorias": [
+    "Confirmar costos y plazos con fuente ARSA"
+  ],
+  "bloqueos": [
+    "Sitios ARSA y gobierno inaccesibles"
+  ],
+  "discrepancias_con_auditor_a": []
+}
