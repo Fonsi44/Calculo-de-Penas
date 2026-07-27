@@ -1,0 +1,39 @@
+{
+  "slug": "mediacion-familiar-cuando-funciona-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje/mediacion-familiar-cuando-funciona-honduras",
+  "body_hash": "bbf819a1912d0e4f4d10514effbf74015bc2609f1b9dea9e9e9f84925ccfd5ea",
+  "fecha_auditoria": "2026-07-27T07:45:33.796Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Mediación familiar regulada por Código de Familia y Ley de Conciliación y Arbitraje",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La mediación familiar en Honduras tiene base en el Código de Familia y la Ley de Conciliación y Arbitraje (Decreto 161-2000). Los detalles sobre materias mediables (alimentos, custodia, régimen de visitas) y las exclusiones (violencia doméstica) deben verificarse.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia / Ley de Conciliación",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto 76-1984 / 161-2000",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Revisar con abogado de familia si hay exclusiones específicas (ej. violencia doméstica no es mediable)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

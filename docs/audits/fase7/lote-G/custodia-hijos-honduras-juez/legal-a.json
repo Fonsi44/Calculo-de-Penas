@@ -1,0 +1,97 @@
+{
+  "slug": "custodia-hijos-honduras-juez",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/custodia-hijos-honduras-juez",
+  "body_hash": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El interés superior del menor está consagrado en el Artículo 65 de la Constitución de la República de Honduras",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La Constitución de Honduras protege a la niñez. El Artículo 65 se encuentra en el Capítulo IV (De los Derechos del Niño). Es plausible que este artículo consagre la protección especial de la niñez, pero el artículo específico del 'interés superior' como principio rector suele desarrollarse en el Código de Familia y la Ley de la Niñez. Requiere verificación del texto constitucional exacto.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Constitución de la República de Honduras",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 131-1982",
+          "articulo": "Art. 65",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "No existe preferencia legal automática por la madre o el padre en la custodia; cada caso se evalúa individualmente",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El Código de Familia hondureño (Decreto 76-84) establece el interés superior del menor como principio rector y no asigna preferencia automática de género para la custodia. El juez evalúa caso por caso.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "A partir de los doce años, el juez escuchará al menor en entrevista confidencial",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La Convención sobre los Derechos del Niño (ratificada por Honduras) y el Código de Familia establecen el derecho del menor a ser oído. La edad de 12 años es un umbral común en legislaciones latinoamericanas. Requiere confirmación de la edad exacta en el ordenamiento hondureño.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La Convención Internacional sobre los Derechos del Niño es vinculante en Honduras",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Honduras ratificó la Convención sobre los Derechos del Niño el 10 de agosto de 1990. Es un tratado internacional vinculante.",
+      "fuentes": [
+        {
+          "institucion": "ONU",
+          "titulo": "Convención sobre los Derechos del Niño",
+          "url": "https://www.ohchr.org/es/instruments-mechanisms/instruments/convention-rights-child",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Un proceso de custodia puede durar entre seis meses y un año",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Plazo estimado razonable para procesos de familia en Honduras, pero no es un plazo legal fijo sino una estimación práctica basada en la carga de los juzgados y la complejidad del caso.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar Artículo 65 de la Constitución (posiblemente la referencia exacta es el Art. 119 para niños o el Art. 65 para protección de la familia)",
+    "Confirmar edad exacta (12 años) para derecho del menor a ser oído en procesos de custodia"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

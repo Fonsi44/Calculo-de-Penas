@@ -1,0 +1,50 @@
+{
+  "slug": "arbitraje-honduras-guia-completa",
+  "url": "https://pinedayasociados.hn/blog/conciliacion-arbitraje/arbitraje-honduras-guia-completa",
+  "fecha_auditoria": "2026-07-27T07:43:37.074Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Arbitraje en Honduras: ¿Cuándo Conviene? Todo lo",
+    "title_longitud": 48,
+    "title_evaluacion": "bueno",
+    "title_sugerencia": "Longitud adecuada.",
+    "description_actual": "Descubra cuándo el arbitraje comercial en Honduras es la mejor opción. Conozca la Ley, los centros de arbitraje como la CCIT, ventajas, costos y la",
+    "description_longitud": 147,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "Longitud adecuada.",
+    "h1_actual": "Renderizado desde el template (title)",
+    "h1_evaluacion": "bueno: El H1 se renderiza dinamicamente desde el titulo en el template de Next.js. No se requiere H1 en el body.",
+    "h2_count": 6,
+    "h3_count": 1,
+    "intencion_principal": "Informativa — Aprender un proceso o requisitos legales",
+    "intencion_secundaria": "Informativa — Comparar opciones",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "regular",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": false,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "Ley de Conciliación",
+      "CCIC"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [
+    "Agregar respuesta directa/resumen en el primer párrafo (<200 chars)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

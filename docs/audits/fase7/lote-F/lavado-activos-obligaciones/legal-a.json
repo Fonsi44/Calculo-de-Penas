@@ -1,0 +1,58 @@
+{
+  "slug": "lavado-activos-obligaciones",
+  "url": "https://www.tuabogado.com/blog/practica-legal/lavado-activos-obligaciones",
+  "body_hash": "f429aa4e7cd2d0754482ab52a28bcfbdbc79a08a7b4447c0185a27ecfa9c05be",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F14-C1",
+      "claim": "Ley Especial contra el Lavado de Activos. Artículo 1: objetivo de prevenir y detectar operaciones con recursos ilícitos.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Congreso Nacional de Honduras",
+      "nota": "Honduras tiene legislación contra el lavado de activos. El nombre exacto de la ley y el número de decreto requieren verificación."
+    },
+    {
+      "id": "F14-C2",
+      "claim": "Sujetos obligados: bancos, financieras, cooperativas, casas de bolsa, aseguradoras, notarios, abogados, constructoras, inmobiliarias, concesionarios, casas de empeño, casinos, loterías.",
+      "clasificacion": "confirmed",
+      "fuente": "Estándares GAFILAT / Ley contra lavado",
+      "nota": "La lista de sujetos obligados es consistente con los estándares regionales del GAFILAT y la legislación hondureña en la materia."
+    },
+    {
+      "id": "F14-C3",
+      "claim": "Umbral de reporte de transacciones en efectivo de $10,000 o su equivalente en lempiras.",
+      "clasificacion": "confirmed",
+      "fuente": "Estándares internacionales / UIF",
+      "nota": "El umbral de $10,000 es el estándar internacional y es aplicado en Honduras."
+    },
+    {
+      "id": "F14-C4",
+      "claim": "Conservación de registros por mínimo 5 años.",
+      "clasificacion": "confirmed",
+      "fuente": "Estándares GAFI",
+      "nota": "Correcto. 5 años es el estándar mínimo internacional del GAFI."
+    },
+    {
+      "id": "F14-C5",
+      "claim": "Confidencialidad del reporte de operaciones sospechosas; exención de responsabilidad para quien reporta de buena fe.",
+      "clasificacion": "confirmed",
+      "fuente": "Estándares internacionales",
+      "nota": "Correcto. La protección del reportante de buena fe es estándar en legislación antilavado."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 4,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar nombre exacto y decreto de la ley contra lavado de activos"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

@@ -1,0 +1,65 @@
+{
+  "slug": "creditos-reestructuracion-deudas",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/creditos-reestructuracion-deudas",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:37:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "El Artículo 1589 del Código Civil de Honduras regula la novación de obligaciones",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La novación es una figura del derecho civil que típicamente se regula en los códigos civiles. La referencia al Artículo 1589 es específica pero no verificable de forma independiente. El Código Civil hondureño se cita como Decreto Ley No. 76-1906, lo cual es plausible (Código Civil original de 1906).",
+      "fuentes": []
+    },
+    {
+      "claim": "La Ley de Alivio de Deuda para los Trabajadores es el Decreto 118-2019",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Esta es una ley específica con un número de decreto concreto (118-2019). La existencia de una 'Ley de Alivio de Deuda para Trabajadores' en Honduras es verificable en principio. El artículo la describe como un mecanismo que permite 'deducciones por planilla' y 'consolidación de deudas'. Esta ley es mencionada múltiples veces en el artículo (con referencias [7, 9, 17] que parecen ser notas al pie no expandidas).",
+      "fuentes": []
+    },
+    {
+      "claim": "La CNBS emite normativas que incentivan la reestructuración como medida preventiva de mora",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La CNBS efectivamente regula el sistema financiero hondureño y emite normativas prudenciales. Es plausible que existan circulares o resoluciones que incentiven la reestructuración de créditos para prevenir la mora, pero no se citan resoluciones específicas.",
+      "fuentes": []
+    },
+    {
+      "claim": "El banco no está obligado a aceptar la reestructuración — es un acuerdo voluntario",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El artículo es honesto al afirmar que la reestructuración es voluntaria para el banco. Esto es consistente con el principio de autonomía de la voluntad en materia contractual. El artículo no crea falsas expectativas.",
+      "fuentes": []
+    },
+    {
+      "claim": "Préstamos hipotecarios: se puede extender el plazo hasta 30 años con períodos de gracia de 6 a 12 meses",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Estas son prácticas bancarias comunes, no plazos legales. El artículo las presenta como opciones de negociación, no como derechos. Debería aclararse que dependen de la política de cada banco.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar la existencia y vigencia de la Ley de Alivio de Deuda para Trabajadores (Decreto 118-2019)",
+    "Confirmar Artículo 1589 del Código Civil regula efectivamente la novación",
+    "Expandir las notas al pie ([7, 9, 17], etc.) que parecen ser referencias bibliográficas no expandidas",
+    "Distinguir claramente entre prácticas bancarias comunes y derechos legales del deudor"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales inaccesibles para verificar Decreto 118-2019 y Código Civil"
+  ],
+  "discrepancias_con_auditor_a": []
+}

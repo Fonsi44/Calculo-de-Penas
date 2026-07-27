@@ -1,0 +1,46 @@
+{
+  "slug": "abogado-familia-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/abogado-familia-choluteca",
+  "body_hash": "48af80af896197380f906cf55a161ee55d5bac4f77ede879e0ed09ec335c931a",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El Derecho de Familia se rige por el Código de Familia (Decreto 76-84 y sus reformas)",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Es la ley marco del derecho familiar hondureño.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Los Juzgados de Letras de Familia son los tribunales competentes en Choluteca",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Los juzgados de familia existen en las cabeceras departamentales como Choluteca.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

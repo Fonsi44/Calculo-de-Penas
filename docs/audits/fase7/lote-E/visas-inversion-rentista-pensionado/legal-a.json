@@ -1,0 +1,66 @@
+{
+  "slug": "visas-inversion-rentista-pensionado",
+  "url": "https://www.tuabogado.com/blog/extranjeria-migracion/visas-inversion-rentista-pensionado",
+  "body_hash": "31dca718f3fb7e3bedd480ae315c3ebcbecebbe9f6ea85e5f835439c174ffd31",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E01-C1",
+      "claim": "La Ley de Migración y Extranjería (Decreto No. 208-2003) es el marco normativo principal para las visas de inversionista, rentista y pensionado.",
+      "clasificacion": "confirmed",
+      "fuente": "https://www.tsc.gob.hn/biblioteca/index.php/leyes/103-ley-de-migracion-y-extranjeria",
+      "nota": "El Decreto 208-2003 es la Ley de Migración y Extranjería de Honduras correcta. La DGME existe como entidad. Sin embargo, el artículo no proporciona artículos específicos de la ley."
+    },
+    {
+      "id": "E01-C2",
+      "claim": "Inversión mínima de $50,000 USD para la visa de inversionista.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Dirección General de Migración y Extranjería (DGME)",
+      "nota": "Los montos de inversión los fija la DGME mediante acuerdos y pueden variar. No se pudo verificar el monto exacto actual porque la DGME no publica sus acuerdos en línea de manera accesible. Se requiere verificación humana consultando la DGME directamente."
+    },
+    {
+      "id": "E01-C3",
+      "claim": "Ingresos mensuales mínimos de $2,500 USD para visa de rentista y $1,500 USD para pensionado.",
+      "clasificacion": "needs_human_review",
+      "fuente": "DGME",
+      "nota": "Al igual que con el monto de inversión, los umbrales de ingresos los establece la DGME y pueden modificarse. Requiere verificación directa."
+    },
+    {
+      "id": "E01-C4",
+      "claim": "El procedimiento general se presenta ante la DGME o la Secretaría de Gobernación y Justicia; tiempo de 3 a 6 meses.",
+      "clasificacion": "needs_human_review",
+      "fuente": "DGME",
+      "nota": "La descripción del procedimiento es genérica. Los plazos exactos varían. La referencia a la Secretaría de Gobernación y Justicia puede ser correcta dependiendo del tipo de residencia. Requiere verificación con la autoridad."
+    },
+    {
+      "id": "E01-C5",
+      "claim": "Estas visas permiten residir pero no trabajar como empleado local; se necesita permiso de trabajo adicional de la Secretaría de Trabajo.",
+      "clasificacion": "confirmed",
+      "fuente": "Principios generales del derecho migratorio hondureño",
+      "nota": "Es correcto que las visas de rentista y pensionado no autorizan el trabajo local. La visa de inversionista puede permitir trabajar en la propia empresa."
+    },
+    {
+      "id": "E01-C6",
+      "claim": "Posible vía hacia la ciudadanía tras 3 años de residencia.",
+      "clasificacion": "corrected",
+      "fuente": "Constitución de Honduras, Ley de Migración y Extranjería",
+      "nota": "La naturalización en Honduras requiere típicamente de 1 a 3 años de residencia dependiendo de la nacionalidad de origen. Para iberoamericanos y españoles es 1 año; para otros, 2-3 años según la Constitución, Artículo 28 reformado. El artículo menciona \"3 años\" sin distinguir nacionalidades, lo cual es impreciso."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 2,
+    "corrected": 1,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar montos exactos ante DGME",
+    "Revisar plazos de ciudadanía según nacionalidad"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

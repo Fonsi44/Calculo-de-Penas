@@ -1,0 +1,53 @@
+{
+  "slug": "contratacion-publica-licitaciones",
+  "slug_db": "contratacion-publica-licitaciones",
+  "title_db": "Contratación Pública en Honduras",
+  "category_db": "derecho-administrativo",
+  "url": "/blog/derecho-administrativo/contratacion-publica-licitaciones",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "enlazado",
+  "estado_db": "ENCONTRADO",
+  "enlaces_salientes": {
+    "total": 0,
+    "a_posts": 0,
+    "a_servicios": 0,
+    "a_categorias": 0,
+    "a_externos": 0,
+    "a_redirects": 0,
+    "rotos": 0,
+    "detalle": []
+  },
+  "enlaces_entrantes": {
+    "total": 0,
+    "desde": []
+  },
+  "huerfano": true,
+  "calidad_anchors": "n/a",
+  "calidad_anchors_justificacion": "El artículo no tiene ningún enlace saliente. No se puede evaluar la calidad de anchors.",
+  "sobreoptimizacion_detectada": false,
+  "enlaces_a_servicios": {
+    "tiene": false,
+    "relevantes": false,
+    "sugeridos": [
+      "/servicios-juridicos/derecho-administrativo-y-servicio-civil"
+    ],
+    "justificacion": "El artículo cubre la Ley de Contratación del Estado, licitaciones, ONCAE, HonduCompras y recursos de impugnación. Es imperativo enlazar al servicio de Derecho Administrativo y Servicio Civil. También tiene un CTA box con enlace a /solicitar-consulta pero NO se detectó porque el HTML usa single quotes ('') en vez de dobles (\"\"), lo que rompe el parseo estándar de regex HTML. Este es un bug de formato que debe corregirse."
+  },
+  "profundidad_desde_blog": 2,
+  "profundidad_justificacion": "/blog -> /blog/derecho-administrativo -> este artículo = 2 clics si se indexa en el hub de categoría.",
+  "acciones_propuestas": [
+    "Corregir el HTML del CTA box: usa comillas simples en href='...' en vez de dobles, lo que puede romper parsers estándar.",
+    "Añadir enlace al servicio de Derecho Administrativo y Servicio Civil.",
+    "Añadir enlaces contextuales a otros artículos relevantes del blog (ej: artículos sobre recursos de impugnación, procedimiento contencioso-administrativo).",
+    "Añadir enlace externo oficial a la ONCAE o al portal HonduCompras."
+  ],
+  "acciones_obligatorias": [
+    "Corregir las comillas simples en los atributos href del HTML (usar comillas dobles estándar).",
+    "Añadir al menos 3 enlaces contextuales a otros artículos del blog en materia administrativa o de contratación.",
+    "Añadir enlace a /servicios-juridicos/derecho-administrativo-y-servicio-civil desde el CTA box."
+  ],
+  "bloqueos": [
+    "HTML con formato no estándar (comillas simples en href): el CTA actual no fue capturado por el parser de enlaces. Debe normalizarse antes de re-auditar."
+  ]
+}

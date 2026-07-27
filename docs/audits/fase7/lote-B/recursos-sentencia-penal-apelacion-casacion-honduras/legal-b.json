@@ -1,0 +1,84 @@
+{
+  "slug": "recursos-sentencia-penal-apelacion-casacion-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/recursos-sentencia-penal-apelacion-casacion-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:20:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "El Código Procesal Penal de Honduras es el Decreto 9-99-E",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "El Decreto 9-99-E corresponde al Código Procesal Penal de Honduras, confirmado mediante búsqueda en catálogos jurídicos.",
+      "fuentes": []
+    },
+    {
+      "claim": "La apelación contra sentencias definitivas solo procede cuando provienen de un Procedimiento Abreviado, dictadas por el Juez de Letras",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Esta es una afirmación técnica procesal importante que distingue el recurso de apelación (para procedimiento abreviado) de la casación (para juicio oral y público). La distinción es doctrinalmente correcta en sistemas procesales acusatorios. Sin embargo, requiere confirmación con el texto vigente del CPP hondureño, ya que reformas procesales pueden haber modificado el régimen de recursos.",
+      "fuentes": []
+    },
+    {
+      "claim": "El recurso de casación procede según el Artículo 360 del CPP por infracción de ley y quebrantamiento de forma",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La referencia al Artículo 360 del CPP como base de la casación es específica. Las dos causales (infracción de ley/fondo y quebrantamiento de forma/proceso) son las causales clásicas de casación en la tradición jurídica continental. Sin embargo, no se pudo verificar de forma independiente si el Artículo 360 es el correcto. La búsqueda en catálogos jurídicos confirmó la existencia del Decreto 9-99-E pero no el texto del Artículo 360.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Procesal Penal — Recurso de Casación",
+          "url": "https://search.brave.com/search?q=Honduras+Código+Procesal+Penal+artículo+360+casación",
+          "decreto": "9-99-E",
+          "articulo": "Art. 360",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Plazo para interponer casación: 20 días hábiles desde la notificación de la sentencia escrita",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El plazo de 20 días hábiles es una afirmación cuantitativa precisa. Un error en este plazo tiene consecuencias fatales para el justiciable (inadmisibilidad). Requiere verificación con el texto oficial del CPP. Los plazos procesales son frecuentemente reformados.",
+      "fuentes": []
+    },
+    {
+      "claim": "La Sala de lo Penal de la Corte Suprema de Justicia resuelve en exclusiva la casación",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Es correcto que la Sala de lo Penal de la CSJ es el tribunal de casación en materia penal en Honduras. Esto es consistente con la estructura del Poder Judicial hondureño.",
+      "fuentes": []
+    },
+    {
+      "claim": "Plazo para apelación: generalmente de 3 días hábiles",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El plazo de 3 días hábiles para apelación de autos es estándar en muchos códigos procesales, pero el artículo admite que 'generalmente' es así 'según el tipo de resolución', lo cual es una ambigüedad. Debería especificar los plazos según el tipo de resolución que se impugna.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "Verificar Artículo 360 del CPP — confirmar que regula la casación y las causales",
+    "Confirmar plazo de 20 días hábiles para casación con el texto oficial vigente",
+    "Verificar que la apelación solo procede contra sentencias de procedimiento abreviado (no de juicio oral)",
+    "Especificar plazos de apelación según tipo de resolución, no solo 'generalmente 3 días'"
+  ],
+  "acciones_obligatorias": [
+    "Verificar el número de artículo correcto (360) para la casación en el CPP vigente",
+    "Confirmar plazo exacto de casación — un error aquí es fatal para el justiciable"
+  ],
+  "bloqueos": [
+    "Texto completo del CPP hondureño inaccesible en línea para verificación de artículos específicos"
+  ],
+  "discrepancias_con_auditor_a": []
+}

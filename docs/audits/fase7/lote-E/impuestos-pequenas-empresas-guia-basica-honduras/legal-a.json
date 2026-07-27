@@ -1,0 +1,56 @@
+{
+  "slug": "impuestos-pequenas-empresas-guia-basica-honduras",
+  "url": "https://www.tuabogado.com/blog/tributario/impuestos-pequenas-empresas-guia-basica-honduras",
+  "body_hash": "8a6e55f005358ca9e245d6fa1b7ce678cfd5dbd1bb06fad297a6bdca3972bce6",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E07-C1",
+      "claim": "ISV tarifa general del 15%.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del Impuesto Sobre Ventas de Honduras",
+      "nota": "Correcto. La tasa general del ISV en Honduras es del 15%."
+    },
+    {
+      "id": "E07-C2",
+      "claim": "ISR tarifas progresivas hasta el 25% para personas jurídicas.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del Impuesto Sobre la Renta",
+      "nota": "La tasa del 25% para personas jurídicas es correcta según la Ley del ISR hondureña. Pequeñas empresas pueden estar en tramos inferiores."
+    },
+    {
+      "id": "E07-C3",
+      "claim": "Retenciones a terceros entre 10% y 12.5%.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del ISR y Código Tributario",
+      "nota": "Las tasas de retención del 10% (servicios profesionales) y 12.5% (alquileres a no facturadores) son correctas."
+    },
+    {
+      "id": "E07-C4",
+      "claim": "Obligación de inscribirse en IHSS, RAP, y RTN.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del Seguro Social, Ley del RAP, Código Tributario",
+      "nota": "Correcto. Son obligaciones reales para empresas con empleados."
+    },
+    {
+      "id": "E07-C5",
+      "claim": "Las normativas fiscales están vigentes.",
+      "clasificacion": "confirmed",
+      "fuente": "SAR",
+      "nota": "Las leyes del ISV, ISR y el Código Tributario están vigentes."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 5,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

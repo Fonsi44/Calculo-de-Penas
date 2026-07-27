@@ -1,0 +1,64 @@
+{
+  "slug": "cuando-necesito-abogado-penalista-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras",
+  "body_hash": "cb4a495154c3cf26df9c6c3fbbb0b1cc0e7a9876694d588901ec41e1254e52b2",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 88 de la Constitución reconoce el derecho de defensa",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "INCONSISTENCIA: servicios-legales-empresas-sur-honduras cita Art. 82 para el derecho de defensa. Este artículo cita Art. 88. Ambos no pueden ser correctos simultáneamente. Requiere verificación del artículo constitucional exacto.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Constitución de la República",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 131-1982",
+          "articulo": "Arts. 82, 88",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 289 del CPP: la declaración del imputado se presta siempre en presencia del defensor, bajo pena de nulidad",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Plausible. El CPP establece la presencia del defensor como requisito de validez de la declaración. Requiere verificación del número de artículo.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "9-99-E",
+          "articulo": "Art. 289",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículos 96 y 99 del CPP: acusador privado y querellante",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Consistente con lo indicado en diferencia-denuncia-querella-acusacion-honduras.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Resolver inconsistencia sobre artículo constitucional del derecho de defensa: ¿Art. 82, Art. 88, o ambos?"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "codigo-aduanero-centroamericano",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/codigo-aduanero-centroamericano",
+  "body_hash": "41e1adf554e7bac0219fd2ecd56048148a9909cceac0297a7244066f5b7d4143",
+  "fecha_auditoria": "2026-07-27T07:43:59.003Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "CAUCA y RECAUCA en Honduras: Ley Aduanera y",
+    "title_longitud": 43,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable (ideal 50-65 chars).",
+    "description_actual": "Conozca la aplicación del CAUCA en Honduras por la Administración Aduanera. Guía de importación, DUA, aranceles e infracciones tributarias aduaneras.",
+    "description_longitud": 149,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-aduanero"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "adecuado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

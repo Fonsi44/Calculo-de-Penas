@@ -1,0 +1,48 @@
+{
+  "slug": "reformas-legales-recientes-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/noticias-legales/reformas-legales-recientes-honduras",
+  "body_hash": "60ff872763e8a45dde466e0410a4bfa12001c261aada146eea462790f72638a9",
+  "fecha_auditoria": "2026-07-27T07:43:59.007Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Reformas Legales Honduras 2024",
+    "title_longitud": 30,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable (ideal 50-65 chars).",
+    "description_actual": "Guía completa sobre las reformas legales en Honduras 2024: Código Penal, Código de Familia, Ley Contra Violencia Doméstica y el Nuevo Régimen de",
+    "description_longitud": 144,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "noticias-legales"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "adecuado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "audiencia-inicial-proceso-penal-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras",
+  "body_hash": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+  "fecha_auditoria": "2026-07-27T07:43:09.435Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Audiencia inicial en Honduras: proceso y decisiones",
+    "title_longitud": 51,
+    "title_evaluacion": "bueno",
+    "title_sugerencia": "",
+    "description_actual": "Qué ocurre en la audiencia inicial penal, quiénes participan y qué resoluciones puede adoptar el juez después de examinar el caso.",
+    "description_longitud": 130,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Description aceptable. Ideal 140-160 chars para SERP completa.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-penal"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

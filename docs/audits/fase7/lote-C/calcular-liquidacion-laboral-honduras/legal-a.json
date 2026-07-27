@@ -1,0 +1,39 @@
+{
+  "slug": "calcular-liquidacion-laboral-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras",
+  "body_hash": "04cc41ef0cb2c28142a8237afcd7b6666b26d0f9657d91739318dce0ab2ed281",
+  "fecha_auditoria": "2026-07-27T07:45:33.796Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Cálculo de liquidación laboral según Código de Trabajo de Honduras (preaviso, cesantía, vacaciones, aguinaldo, decimocuarto)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Los rubros de liquidación laboral están establecidos en el Código de Trabajo. Las fórmulas de cálculo (cesantía por años de servicio, aguinaldo proporcional, etc.) deben verificarse contra la legislación vigente y la jurisprudencia de la Sala Laboral.",
+      "fuentes": [
+        {
+          "institucion": "Secretaría de Trabajo",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.trabajo.gob.hn/",
+          "decreto": "Decreto No. 189-1959",
+          "articulo": "Arts. 112-123",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Revisión por abogado laboralista de todas las fórmulas y montos"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

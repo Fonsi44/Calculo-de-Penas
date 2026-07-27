@@ -1,0 +1,21 @@
+{
+  "slug": "accidentes-transito-responsabilidad-legal",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/accidentes-transito-responsabilidad-legal",
+  "body_hash": null,
+  "fecha_auditoria": "2026-07-27T10:05:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [],
+  "resumen": {
+    "total_claims": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "estado_especial": "NO VERIFICABLE",
+  "motivo": "El slug 'accidentes-transito-responsabilidad-legal' NO existe en la base de datos Neon (blog_posts). NOTA: Existe un artículo con slug 'accidente-transito-choluteca' que cubre un tema similar pero con enfoque local. Posible duplicación.",
+  "slug_similar_existente": "accidente-transito-choluteca",
+  "recomendacion": "Si se publica, diferenciar claramente del artículo existente sobre accidentes de tránsito en Choluteca. Citar Ley de Tránsito de Honduras y artículos del Código Penal sobre lesiones y homicidio culposo por accidentes de tránsito."
+}

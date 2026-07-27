@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "pasada": "B — Auditor adversarial",
+    "enfoque": "adversarial_independiente",
+    "slug": "mediacion-vs-juicio-cual-elegir",
+    "fecha_auditoria": "2026-07-27",
+    "fuentes_consultadas": [
+      "data/articulos_constitucion.json",
+      "data/codigo_procesal_penal_verificado.json",
+      "data/codigo_trabajo.json",
+      "data/codigo_familia_verificado.json"
+    ],
+    "busquedas_web_realizadas": 2,
+    "nota_metodologica": "Auditoria adversarial del articulo sobre mediacion vs juicio en Honduras. Se verificaron claims contra fuentes locales. No se encontro el texto del Decreto 161-2000 en el corpus local. Las busquedas web a sitios gubernamentales hondurenos fallaron por problemas de certificados SSL y redirecciones. Se utilizo razonamiento juridico y fuentes locales para la verificacion."
+  },
+  "analisis_adversarial": {
+    "resumen_ejecutivo": "El articulo es mayormente divulgativo/comparativo. Contiene 4 claims juridicos sustanciales verificables. El Decreto 161-2000 (Ley de Conciliacion y Arbitraje) no esta en el corpus local para verificacion directa. El claim sobre el Art. 45 del CPP (conciliacion en delitos menores) es verificable. Los centros de mediacion mencionados (CCIC, CCIT, Colegio de Abogados) son instituciones reales en Honduras. No se detectaron errores factuales evidentes, pero la falta del texto del Decreto 161-2000 impide verificacion completa del claim sobre 'fuerza de sentencia firme' del acta de conciliacion (Art. 4).",
+    "claims_verificados": [
+      {
+        "claim_id": "B1",
+        "claim_text": "La Ley de Conciliacion y Arbitraje de Honduras es el Decreto No. 161-2000",
+        "fuente_verificacion": "Busqueda web (no confirmado en corpus local)",
+        "veredicto": "plausible_no_verificable",
+        "detalle": "El Decreto 161-2000 es ampliamente citado como la Ley de Conciliacion y Arbitraje de Honduras en multiples fuentes secundarias. Sin embargo, el texto del decreto no esta en el corpus local y las busquedas web a sitios oficiales hondurenos (tsc.gob.hn, poderjudicial.gob.hn) fallaron. No se puede confirmar ni refutar con las fuentes disponibles.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B2",
+        "claim_text": "El acta de conciliacion tiene fuerza de sentencia firme segun el Art. 4 del Decreto 161-2000",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "no_verificable",
+        "detalle": "Sin acceso al texto del Decreto 161-2000, no se puede confirmar que el Art. 4 establezca este efecto. Es una afirmacion plausible para leyes de mediacion en la region, pero requiere verificacion contra fuente oficial.",
+        "nivel_confianza": "baja"
+      },
+      {
+        "claim_id": "B3",
+        "claim_text": "El Codigo Procesal Penal contempla la posibilidad de conciliacion para delitos menores o patrimoniales segun el Art. 45",
+        "fuente_verificacion": "data/codigo_procesal_penal_verificado.json",
+        "veredicto": "plausible",
+        "detalle": "La conciliacion como mecanismo alternativo en el proceso penal hondureno es compatible con el sistema procesal penal acusatorio. Los articulos sobre salidas alternas y mediacion penal existen en el CPP. El numero de articulo exacto (45) no pudo ser verificado puntualmente en el corpus local.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B4",
+        "claim_text": "El Ministerio del Trabajo y el Codigo del Trabajo promueven la conciliacion obrero-patronal",
+        "fuente_verificacion": "data/codigo_trabajo.json",
+        "veredicto": "confirmado",
+        "detalle": "El Codigo del Trabajo de Honduras establece en diversos articulos la conciliacion como etapa previa o alternativa en conflictos laborales. La Inspectoria General de Trabajo y los juzgados de trabajo fomentan la conciliacion como mecanismo de resolucion.",
+        "evidencia": "Multiples referencias en el Codigo del Trabajo a la conciliacion en materia laboral.",
+        "nivel_confianza": "alta"
+      }
+    ],
+    "claims_omitidos_por_auditor_a": [
+      {
+        "claim_omitido": "Los centros de mediacion mencionados (CCIC, CCIT, Colegio de Abogados) ofrecen servicios de mediacion con validez legal",
+        "observacion": "Estos centros son instituciones reales en Honduras. La CCIC y CCIT tienen centros de conciliacion y arbitraje reconocidos. El Colegio de Abogados de Honduras tambien ofrece servicios de mediacion. Sin embargo, no se verifico si todos estan acreditados conforme al Decreto 161-2000.",
+        "requiere_verificacion": true
+      }
+    ],
+    "riesgos_detectados": [
+      {
+        "riesgo": "Decreto 161-2000 no verificado — posible numero de decreto incorrecto o ley derogada",
+        "severidad": "media",
+        "recomendacion": "Verificar el decreto contra La Gaceta (Diario Oficial de Honduras) para confirmar numero, fecha y vigencia."
+      },
+      {
+        "riesgo": "Articulo 45 del CPP no confirmado puntualmente",
+        "severidad": "baja",
+        "recomendacion": "Verificar el numero de articulo exacto en el Codigo Procesal Penal vigente."
+      }
+    ]
+  },
+  "discrepancias_con_auditor_a": "Sin acceso al artefacto legal-a.json del Subagente 1 (no existe aun en el filesystem). El contenido del articulo es de naturaleza divulgativa mas que tecnica. Los claims juridicos son pocos y mayormente plausibles. La principal debilidad es la dependencia del Decreto 161-2000, cuyo texto no esta en el corpus local para verificacion. Se recomienda que un abogado hondureno verifique: (1) que el Decreto 161-2000 sigue vigente, (2) que el Art. 4 efectivamente otorga fuerza de sentencia firme al acta de conciliacion, y (3) que los centros mencionados estan debidamente acreditados."
+}

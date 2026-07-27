@@ -1,0 +1,56 @@
+{
+  "slug": "como-obtener-rtn-personas-empresas-honduras",
+  "url": "https://www.tuabogado.com/blog/practica-legal/como-obtener-rtn-personas-empresas-honduras",
+  "body_hash": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F04-C1",
+      "claim": "El RTN es administrado por el SAR; obligatorio para toda persona natural o jurídica con actividad económica.",
+      "clasificacion": "confirmed",
+      "fuente": "SAR / Código Tributario",
+      "nota": "Correcto. El RTN es el registro fiscal básico en Honduras."
+    },
+    {
+      "id": "F04-C2",
+      "claim": "Trámite gratuito para personas naturales; permanente, solo se actualiza.",
+      "clasificacion": "confirmed",
+      "fuente": "SAR",
+      "nota": "Correcto. El RTN es gratuito y permanente."
+    },
+    {
+      "id": "F04-C3",
+      "claim": "Requisitos para persona natural: DNI, formulario SAR, código CIIU.",
+      "clasificacion": "confirmed",
+      "fuente": "SAR",
+      "nota": "Correcto. Son los requisitos estándar del SAR."
+    },
+    {
+      "id": "F04-C4",
+      "claim": "Requisitos para persona jurídica: escritura inscrita en Registro Mercantil, RTN del representante legal.",
+      "clasificacion": "confirmed",
+      "fuente": "SAR",
+      "nota": "Correcto. La escritura de constitución debe estar inscrita."
+    },
+    {
+      "id": "F04-C5",
+      "claim": "La obligación está en el Código Tributario y Reglamento del SAR.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Tributario de Honduras",
+      "nota": "Correcto."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 5,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

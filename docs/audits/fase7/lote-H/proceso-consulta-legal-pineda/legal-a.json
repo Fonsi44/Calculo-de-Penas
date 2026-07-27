@@ -1,0 +1,30 @@
+{
+  "slug": "proceso-consulta-legal-pineda",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/proceso-consulta-legal-pineda",
+  "body_hash": "cff41c29688ec8b5372a78d09c62bfc35c6699d8916ae3988945e5d486f159ba",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Una consulta legal permite exponer una situación jurídica y recibir orientación profesional",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Es la descripción estándar de una consulta legal inicial. No hay claims jurídicos sustantivos que verificar.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

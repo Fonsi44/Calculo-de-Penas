@@ -1,0 +1,66 @@
+{
+  "slug": "derechos-trabajadora-embarazada-honduras",
+  "url": "https://www.tuabogado.com/blog/derecho-laboral/derechos-trabajadora-embarazada-honduras",
+  "body_hash": "002e65b1654391e109f189de37b832464b6b2e25d121c53e0d38ef5ddd4aed8c",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E14-C1",
+      "claim": "Código del Trabajo (Decreto 189-1959 y sus reformas), Constitución (Artículo 127), Convenio 183 de la OIT.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código del Trabajo de Honduras",
+      "nota": "El Decreto 189-1959 es plausible como número del Código del Trabajo, pero requiere verificación. El Artículo 127 de la Constitución protege a la maternidad. Honduras ha ratificado el Convenio 183 de la OIT."
+    },
+    {
+      "id": "E14-C2",
+      "claim": "Licencia de maternidad: 12 semanas (84 días). Artículo 140 del Código del Trabajo.",
+      "clasificacion": "confirmed",
+      "fuente": "Código del Trabajo de Honduras",
+      "nota": "La licencia de maternidad de 12 semanas es correcta para Honduras. La OIT reporta esta duración."
+    },
+    {
+      "id": "E14-C3",
+      "claim": "Fuero maternal: despido nulo sin autorización judicial previa. Artículo 143 del Código del Trabajo.",
+      "clasificacion": "confirmed",
+      "fuente": "Código del Trabajo de Honduras",
+      "nota": "El fuero maternal es una protección real en Honduras. El despido sin autorización judicial es nulo."
+    },
+    {
+      "id": "E14-C4",
+      "claim": "Dos descansos de 30 minutos diarios para lactancia. Artículo 142 del Código del Trabajo.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código del Trabajo",
+      "nota": "Los descansos de lactancia existen en la legislación hondureña, pero la duración exacta (30 min cada uno) requiere verificación."
+    },
+    {
+      "id": "E14-C5",
+      "claim": "Prohibición de exigir pruebas de embarazo para contratación.",
+      "clasificacion": "confirmed",
+      "fuente": "Código del Trabajo / Ley de Igualdad de Oportunidades",
+      "nota": "Correcto. La discriminación por embarazo está prohibida en Honduras."
+    },
+    {
+      "id": "E14-C6",
+      "claim": "Si no está afiliada al IHSS, el empleador cubre el 100% del salario. Artículo 141.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código del Trabajo",
+      "nota": "La obligación del empleador de cubrir el salario si no hay afiliación al IHSS es lógica, pero el artículo exacto requiere verificación."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar número de decreto del Código del Trabajo",
+    "Confirmar duración exacta de descansos de lactancia"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "recurso-de-amparo-honduras-guia-completa",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/recurso-de-amparo-honduras-guia-completa",
+  "body_hash": "41f05b4d6818ed3a00873c41667100308dbc50106cd7a9f0b62c08c34bb739ae",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 182 de la Constitución regula el amparo",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Artículo 182 constitucional está dentro del capítulo de garantías constitucionales. La numeración y alcance deben verificarse contra el texto constitucional consolidado.",
+      "fuentes": [
+        {
+          "institucion": "Constitución de la República",
+          "titulo": "Artículo 182",
+          "url": "https://pdba.georgetown.edu/Constitutions/Honduras/honduras.html",
+          "decreto": "Decreto No. 131-1982",
+          "articulo": "182",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Plazo de 2 meses para interponer amparo desde notificación o conocimiento del acto",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La Ley de Justicia Constitucional establece plazos para el amparo. El plazo de 2 meses es consistente con la doctrina, pero debe verificarse contra el texto vigente de la Ley de Justicia Constitucional.",
+      "fuentes": [
+        {
+          "institucion": "CSJ Honduras",
+          "titulo": "Ley de Justicia Constitucional",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto No. 244-2003",
+          "articulo": "Arts. 40-65",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El amparo se interpone directamente ante la Sala de lo Constitucional de la CSJ",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "La Sala de lo Constitucional de la CSJ es el tribunal competente para conocer del recurso de amparo en Honduras.",
+      "fuentes": [
+        {
+          "institucion": "CSJ Honduras",
+          "titulo": "Ley de Justicia Constitucional",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto No. 244-2003",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar Art. 182 constitucional contra texto oficial",
+    "Verificar plazo de 2 meses en Ley de Justicia Constitucional"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

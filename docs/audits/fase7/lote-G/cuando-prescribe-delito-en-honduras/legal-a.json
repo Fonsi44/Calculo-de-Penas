@@ -1,0 +1,106 @@
+{
+  "slug": "cuando-prescribe-delito-en-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-prescribe-delito-en-honduras",
+  "body_hash": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 109 del Código Penal (Decreto 130-2017): prescripción a los 20 años cuando la pena máxima más la mitad sea de 15 o más años",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Decreto 130-2017 es el Código Penal vigente en Honduras desde 2020. Los artículos 107-116 regulan la prescripción. Los plazos descritos (5, 10, 15, 20 años) son consistentes con la doctrina penal de proporcionalidad. Sin embargo, sin acceso al texto oficial no se puede confirmar la escala exacta ni que corresponda al Art. 109 (podría ser Art. 97 u otro según la edición).",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Art. 109",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Las faltas prescriben en seis meses, según el Artículo 109 del Código Penal",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Es plausible que las faltas tengan un plazo de prescripción reducido de 6 meses. Requiere confirmación con el texto oficial.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Art. 109",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 110: el cómputo comienza desde el día en que se cometió el delito",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La regla general de cómputo de prescripción desde la comisión del delito es estándar en derecho penal comparado. Requiere confirmación del número de artículo exacto en el CP 130-2017.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Art. 110",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 111: causas de interrupción incluyen requerimiento fiscal, auto de formal procesamiento, citación para juicio",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Plausible. Las causas de interrupción descritas son estándar (actos procesales que reactivan la persecución penal). Requiere verificación del número de artículo y causas exactas en el CP 130-2017.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Art. 111",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Ejemplo de hurto con pena de 1-3 años: prescribe a los 3 años (no 5)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "IMPORTANTE: Según el propio artículo, delitos con pena de hasta 5 años prescriben a los 5 años. Si el hurto tiene pena máxima de 3 años, la pena máxima más la mitad sería 4.5 años, lo cual no supera los 5 años, por lo que prescribiría a los 5 años (NO a los 3). El ejemplo dado en el artículo (3 años) es matemáticamente inconsistente con su propia explicación de la escala. POSIBLE ERROR GRAVE.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Art. 109",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 5,
+    "unsupported": 0,
+    "riesgo_alto": 3
+  },
+  "acciones_propuestas": [
+    "URGENTE: Revisar y corregir el ejemplo de hurto (dice 3 años pero según la escala descrita deberían ser 5 años)",
+    "Verificar todos los números de artículo (107-116) contra el texto oficial del CP 130-2017"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "diferencia-denuncia-querella-acusacion-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/diferencia-denuncia-querella-acusacion-honduras",
+  "body_hash": "0102707b9d88b5d107744281d6dfff7152831a9592c4d280a8dc4111a15027a2",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 269 del CPP (Decreto 9-99-E): denuncia obligatoria para funcionarios públicos, profesionales de la salud y quienes tengan bajo su cuidado bienes ajenos",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El CPP hondureño establece la obligación de denunciar para ciertos sujetos. El Art. 269 es plausible. Requiere verificación del número de artículo y de las categorías de denunciantes obligatorios.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "9-99-E",
+          "articulo": "Art. 269",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículos 96 y 99 del CPP: la querella exige patrocinio de abogado y formaliza la intervención de la víctima como acusador privado",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El CPP regula la querella y el acusador privado. La numeración Arts. 96 y 99 es plausible. Requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "9-99-E",
+          "articulo": "Arts. 96-99",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La acusación es el acto formal del Ministerio Público para solicitar la apertura a juicio",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La acusación fiscal es el acto procesal mediante el cual el MP formaliza su pretensión punitiva y solicita la apertura a juicio oral.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar numeración exacta de artículos del CPP: 269 (denuncia obligatoria), 96/99 (querella)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

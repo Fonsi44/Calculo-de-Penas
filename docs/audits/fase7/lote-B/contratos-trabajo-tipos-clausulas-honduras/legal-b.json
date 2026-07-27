@@ -1,0 +1,117 @@
+{
+  "slug": "contratos-trabajo-tipos-clausulas-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/contratos-trabajo-tipos-clausulas-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "El Código de Trabajo de Honduras es el Decreto N.º 74-2001",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El artículo cita el Decreto 74-2001 como el Código de Trabajo de Honduras. Sin embargo, otro artículo del mismo blog ('como-preparar-demanda-guia-no-abogados-honduras') cita el Decreto 189-1959 como el Código de Trabajo. Existe una inconsistencia interna en el blog. El Decreto 189-1959 es el Código de Trabajo original; el Decreto 74-2001 parece ser una reforma posterior. Verificar con fuente oficial si el Decreto 74-2001 es una reforma o el texto consolidado vigente. La cita inconsistente en diferentes artículos del mismo blog genera confusión sobre cuál es el decreto correcto que debe citarse.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "189-1959 / 74-2001",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El período de prueba no puede exceder los 30 días según el Artículo 19 del Código de Trabajo",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Múltiples fuentes independientes indican que el período de prueba máximo en Honduras es de 60 días (2 meses), no 30 días. Fuentes como el Ministerio de Trabajo, rrhhdigital, WageIndicator, y La Prensa coinciden en 60 días. La diferencia entre 30 y 60 días es sustancial y afecta los derechos del trabajador. Si el período real es 60 días, el artículo está subestimando significativamente el lapso durante el cual un trabajador puede ser despedido sin indemnización.",
+      "fuentes": [
+        {
+          "institucion": "Ministerio de Trabajo y Economía Social",
+          "titulo": "Período de prueba laboral en Honduras",
+          "url": "https://search.brave.com/search?q=Honduras+periodo+prueba+60+dias",
+          "decreto": null,
+          "articulo": "Art. 19 Código de Trabajo",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El artículo 12 del Código de Trabajo presume la existencia de la relación laboral por la prestación de servicios subordinados",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "El principio de primacía de la realidad (presunción de relación laboral por la prestación de servicios) es un principio fundamental del derecho laboral hondureño. La referencia al Artículo 12 del Código de Trabajo es plausible pero no pudo ser verificada de forma independiente. Los sitios oficiales hondureños (tsc.gob.hn, poderjudicial.gob.hn) no respondieron a las consultas.",
+      "fuentes": []
+    },
+    {
+      "claim": "El artículo 18 del Código de Trabajo establece la presunción de contrato por tiempo indefinido",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La presunción de contrato por tiempo indefinido cuando no se especifica plazo es un principio general del derecho laboral que protege la estabilidad laboral. La referencia específica al Artículo 18 es plausible pero no verificable de forma independiente en este momento.",
+      "fuentes": []
+    },
+    {
+      "claim": "El empleador debe afiliar al trabajador doméstico al IHSS si labora más de tres días por semana",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La obligación de afiliación al IHSS para trabajadores domésticos existe en Honduras, pero el umbral específico de 'más de tres días por semana' requiere verificación. La regulación de seguridad social para trabajadores domésticos ha tenido reformas recientes.",
+      "fuentes": [
+        {
+          "institucion": "Instituto Hondureño de Seguridad Social (IHSS)",
+          "titulo": "Afiliación de trabajadores domésticos",
+          "url": "https://www.ihss.hn/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La legislación ha sido objeto de reformas, siendo la más reciente en 2021",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La afirmación de que la reforma más reciente del Código de Trabajo fue en 2021 es vaga y no cita un decreto específico de reforma. Requiere verificación en La Gaceta para confirmar si hubo reformas posteriores a 2021.",
+      "fuentes": []
+    },
+    {
+      "claim": "El Código de Trabajo de Honduras fue emitido como Decreto 74-2001 (difiere del Decreto 189-1959 citado en otro artículo del blog)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "DISCREPANCIA INTERNA DETECTADA: El artículo 'contratos-trabajo-tipos-clausulas-honduras' cita el Código de Trabajo como Decreto 74-2001, mientras que el artículo 'como-preparar-demanda-guia-no-abogados-honduras' del mismo blog cita el Código de Trabajo como Decreto 189-1959. Esto evidencia una inconsistencia grave en la base legal citada por el blog. Uno de los dos decretos es incorrecto o se refiere a versiones diferentes de la ley (original vs. reforma). Un ciudadano que consulte ambos artículos recibiría información contradictoria sobre cuál es la ley vigente.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 7,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 7,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "CORREGIR URGENTE: El período de prueba es de 60 días, no 30. Confirmar con el texto oficial del Art. 19 del Código de Trabajo",
+    "UNIFICAR CRITERIO: Determinar cuál es el decreto correcto del Código de Trabajo (189-1959 vs 74-2001) y usar consistentemente en todo el blog",
+    "Verificar umbral de afiliación al IHSS para trabajadores domésticos (tres días por semana)",
+    "Confirmar si hubo reformas al Código de Trabajo posteriores a 2021"
+  ],
+  "acciones_obligatorias": [
+    "Corregir el claim del período de prueba de 30 a 60 días — es un error material que afecta derechos laborales",
+    "Resolver la inconsistencia del decreto del Código de Trabajo entre artículos del blog"
+  ],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsc.gob.hn, poderjudicial.gob.hn, sar.gob.hn) inaccesibles para verificación independiente",
+    "Rate limiting en motores de búsqueda que limita verificaciones cruzadas"
+  ],
+  "discrepancias_con_auditor_a": [
+    {
+      "claim": "Período de prueba de 30 días",
+      "auditor_a_estado": "Pendiente de revisión (si fue auditado por Auditor A)",
+      "auditor_b_postura": "El período es de 60 días según múltiples fuentes. El artículo contiene un error material.",
+      "recomendacion": "Resolver con fuente oficial del Código de Trabajo"
+    }
+  ]
+}

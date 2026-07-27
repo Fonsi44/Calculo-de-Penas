@@ -1,0 +1,65 @@
+{
+  "slug": "demanda-laboral-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/demanda-laboral-choluteca",
+  "body_hash": "cdc19f66d72a7c0d47487282d42bf218ff7488775db2bfc1536d959cf1442e21",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 114 del CT: distingue entre despido justificado e injustificado",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Requiere verificación del número de artículo. El artículo despido-laboral-honduras-guia-completa cita el Art. 112 para las causales. INCONSISTENCIA MENOR: 112 vs 114.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": "Arts. 112-115",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 115 del CT: indemnización de un mes de salario por cada año de servicio o fracción superior a seis meses",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La fórmula de indemnización (1 mes por año) es correcta. La 'fracción superior a seis meses' como generadora de un año adicional es una regla común. Requiere verificación del texto exacto del Art. 115.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": "Art. 115",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Plazo de 2 meses para reclamar a partir de la fecha del despido o incumplimiento",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Consistente con lo indicado en abogado-laboral-choluteca. Requiere verificación del plazo de caducidad exacto en el CT.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Armonizar numeración de artículos del CT con otros artículos del sitio (Art. 112 vs 114 para despido)",
+    "Verificar Art. 115 sobre fórmula de indemnización"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

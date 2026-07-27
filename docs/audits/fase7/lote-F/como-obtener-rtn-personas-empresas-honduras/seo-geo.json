@@ -1,0 +1,48 @@
+{
+  "slug": "como-obtener-rtn-personas-empresas-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/como-obtener-rtn-personas-empresas-honduras",
+  "body_hash": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+  "fecha_auditoria": "2026-07-27T07:43:09.063Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "RTN en Honduras: requisitos y cómo obtenerlo",
+    "title_longitud": 44,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Requisitos y pasos para obtener el RTN de una persona natural o jurídica ante el SAR de Honduras, con documentos y obligaciones principales.",
+    "description_longitud": 140,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "practica-legal"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

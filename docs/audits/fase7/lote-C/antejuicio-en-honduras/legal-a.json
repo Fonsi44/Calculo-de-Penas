@@ -1,0 +1,71 @@
+{
+  "slug": "antejuicio-en-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/antejuicio-en-honduras",
+  "body_hash": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+  "fecha_auditoria": "2026-07-27T07:45:33.796Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 205 constitucional: antejuicio aplica a Presidente, Designados Presidenciales y diputados",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Artículo 205 de la Constitución hondureña regula el antejuicio para altos funcionarios. La lista de funcionarios y el alcance deben verificarse contra el texto constitucional consolidado con reformas. La afirmación de que 'no aplica a alcaldes, ministros o directores generales por defecto' es una conclusión que debe contrastarse con leyes especiales.",
+      "fuentes": [
+        {
+          "institucion": "Constitución de la República",
+          "titulo": "Artículo 205",
+          "url": "https://pdba.georgetown.edu/Constitutions/Honduras/honduras.html",
+          "decreto": "Decreto No. 131-1982",
+          "articulo": "205",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 313 constitucional: CSJ conoce antejuicio contra magistrados de cortes de apelaciones",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Artículo 313 constitucional establece atribuciones de la CSJ. La referencia específica al antejuicio de magistrados debe verificarse.",
+      "fuentes": [
+        {
+          "institucion": "Constitución de la República",
+          "titulo": "Artículo 313",
+          "url": "https://pdba.georgetown.edu/Constitutions/Honduras/honduras.html",
+          "decreto": "Decreto No. 131-1982",
+          "articulo": "313",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Código Procesal Penal Decreto 130-2017 contiene reglas de prejudicialidad y fuero constitucional",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El CPP contiene disposiciones sobre prejudicialidad. Verificar artículos específicos. NOTA: Este artículo sí cita el Decreto 130-2017 (correcto), a diferencia del artículo B9 que cita el derogado 9-99-E.",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Verificar artículos constitucionales 205 y 313 contra texto oficial con reformas. El antejuicio es una materia constitucionalmente sensible."
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

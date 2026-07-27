@@ -1,0 +1,48 @@
+{
+  "slug": "titulos-valores-cheques-sin-fondo-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras",
+  "body_hash": "8ca172f36f753dede183d08de774281eeed8b87856aff3362fd30fc58a81cfc9",
+  "fecha_auditoria": "2026-07-27T07:43:09.185Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Cheques sin Fondos en Honduras",
+    "title_longitud": 30,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Descubra c&oacute;mo actuar ante un cheque sin fondos en Honduras. Plazos, protesto notarial, acci&oacute;n cambiaria y denuncia penal. Proteja sus",
+    "description_longitud": 147,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-mercantil"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

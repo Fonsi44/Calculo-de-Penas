@@ -1,0 +1,48 @@
+{
+  "slug": "defensa-penal-menores-edad-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/defensa-penal-menores-edad-honduras",
+  "body_hash": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+  "fecha_auditoria": "2026-07-27T07:43:09.188Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Defensa Penal Juvenil Honduras",
+    "title_longitud": 30,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Conozca el sistema de defensa penal juvenil en Honduras para menores de 18 años. Principios, medidas y diferencias con el sistema de adultos.",
+    "description_longitud": 141,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-penal"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

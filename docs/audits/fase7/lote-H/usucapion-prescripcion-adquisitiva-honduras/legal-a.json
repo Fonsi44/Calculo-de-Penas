@@ -1,0 +1,65 @@
+{
+  "slug": "usucapion-prescripcion-adquisitiva-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/usucapion-prescripcion-adquisitiva-honduras",
+  "body_hash": "a2f2c667b1db9745d960078017b20741f275fead6df1beb335543863a744c100",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 717 al 724 del Código Civil regulan la usucapión",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código Civil hondureño (Decreto 76-84) regula la prescripción adquisitiva. La numeración 717-724 corresponde a ciertas ediciones. Requiere verificación contra la edición vigente.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Arts. 717-724",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Plazo de 10 años con justo título y buena fe, y 20 años en caso contrario",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "IMPORTANTE: La usucapión extraordinaria en Honduras tradicionalmente ha sido de 20 años, pero algunas reformas pueden haberla modificado a 30 años. El artículo del abogado-civil-choluteca menciona 30 años para la extraordinaria. Hay inconsistencia entre artículos del mismo sitio: este dice 20 años, otro dice 30 años. REQUIERE VERIFICACIÓN URGENTE.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 717: la propiedad se adquiere por prescripción mediante posesión continuada",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Plausible que el Art. 717 establezca el principio general de prescripción adquisitiva. Requiere verificación del texto exacto.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "URGENTE: Resolver inconsistencia entre usucapión extraordinaria de 20 años (este artículo) vs 30 años (abogado-civil-choluteca). Verificar texto vigente del Código Civil.",
+    "Verificar numeración exacta de artículos 717-724"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

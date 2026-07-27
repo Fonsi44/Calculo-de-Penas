@@ -1,0 +1,48 @@
+{
+  "slug": "registrar-marca-honduras-paso-a-paso",
+  "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/registrar-marca-honduras-paso-a-paso",
+  "body_hash": "7551901669631f46b8e31bf1560579d878c9b7178d3384b35a498d1925b5a83c",
+  "fecha_auditoria": "2026-07-27T07:43:09.181Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Registro de Marca en Honduras: Guía Paso a Paso",
+    "title_longitud": 47,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Aprenda cómo registrar su marca en Honduras. Conozca el proceso, costos, duración y riesgos de no hacerlo ante el Instituto de la Propiedad.",
+    "description_longitud": 140,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "propiedad-intelectual"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

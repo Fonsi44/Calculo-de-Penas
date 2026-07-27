@@ -1,0 +1,48 @@
+{
+  "slug": "preguntas-frecuentes-antes-contratar-abogado-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/preguntas-frecuentes-antes-contratar-abogado-honduras",
+  "body_hash": "895ef95c152d0221cbbc23416d254e8e5d3a6db0b5202b5e8caf1630e82f1169",
+  "fecha_auditoria": "2026-07-27T07:43:09.312Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Cómo Elegir Abogado en Honduras: Preguntas Clave",
+    "title_longitud": 48,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Descubra las preguntas esenciales antes de contratar un abogado en Honduras. Asegure experiencia, honorarios claros y la mejor estrategia legal.",
+    "description_longitud": 144,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "practica-legal"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "adecuado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

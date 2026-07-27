@@ -1,0 +1,65 @@
+{
+  "slug": "isv-impuesto-venta-tasas-obligaciones-honduras",
+  "url": "https://www.tuabogado.com/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras",
+  "body_hash": "7dba0b1c7c203905ce5bce4b3b28d0affa1067b934707b5d0274548ce4e0e6ff",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F06-C1",
+      "claim": "Tasa general del 15%, tasa reducida para ciertos productos, tasa 0% para exportaciones.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del Impuesto Sobre Ventas",
+      "nota": "Correcto. La tasa general es 15%. Existen tasas reducidas y tasa 0% para exportaciones."
+    },
+    {
+      "id": "F06-C2",
+      "claim": "Artículo 1 de la Ley del ISV define el hecho gravado.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Ley del ISV",
+      "nota": "La ubicación del hecho gravado en el Artículo 1 es común en leyes tributarias, pero requiere verificación con el texto oficial."
+    },
+    {
+      "id": "F06-C3",
+      "claim": "Mecánica débito/crédito fiscal; si crédito es mayor, se genera saldo a favor compensable.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del ISV",
+      "nota": "Correcto. Es el sistema estándar de IVA/ISV aplicado en Honduras."
+    },
+    {
+      "id": "F06-C4",
+      "claim": "Productos exentos: alimentos básicos, medicamentos, servicios educativos, intereses bancarios, seguros de vida/salud, transporte pasajeros, libros, agua potable.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley del ISV",
+      "nota": "La lista de exenciones es sustancialmente correcta para Honduras."
+    },
+    {
+      "id": "F06-C5",
+      "claim": "El CAI (Certificado de Autorización de Impresión) es obligatorio para facturar.",
+      "clasificacion": "confirmed",
+      "fuente": "SAR",
+      "nota": "Correcto. El sistema CAI es el régimen de facturación autorizado por SAR."
+    },
+    {
+      "id": "F06-C6",
+      "claim": "Obligación de declarar incluso con cero operaciones.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Tributario",
+      "nota": "Correcto. La declaración en cero es obligatoria."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 5,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar Artículo 1 de Ley del ISV"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

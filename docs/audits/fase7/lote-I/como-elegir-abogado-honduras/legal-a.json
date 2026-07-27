@@ -1,0 +1,48 @@
+{
+  "slug": "como-elegir-abogado-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/como-elegir-abogado-honduras",
+  "body_hash": "290031e7548c0a3608b82e209dc5f0d51e042e1be6e7be79071b820a5bb3d17a",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 1551 a 1564 del Código Civil regulan el contrato de servicios profesionales",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Mismo claim que en preguntas-frecuentes-antes-contratar-abogado-honduras. La numeración 1551-1564 es propia de ciertas ediciones del Código Civil (Decreto 76-84). Requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Arts. 1551-1564",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La Ley Orgánica del Colegio de Abogados de Honduras exige la colegiación para el ejercicio profesional",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La colegiación obligatoria es un requisito para el ejercicio de la abogacía en Honduras.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar numeración exacta de artículos del Código Civil (1551-1564) sobre servicios profesionales"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

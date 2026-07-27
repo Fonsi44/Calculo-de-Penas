@@ -1,0 +1,71 @@
+{
+  "slug": "hondurenos-espana-documentos",
+  "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/hondurenos-espana-documentos",
+  "body_hash": "a51e050713b368072c996d6d5e1da7d18db3a704c83a71a46319b8cecf36f0d6",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El Convenio de la Apostilla de La Haya facilita la gestión de documentos entre Honduras y España",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Tanto Honduras como España son parte del Convenio de La Haya sobre Apostilla (1961). Los documentos hondureños apostillados son válidos en España sin necesidad de legalización consular adicional.",
+      "fuentes": [
+        {
+          "institucion": "Conferencia de La Haya",
+          "titulo": "Convenio de la Apostilla",
+          "url": "https://www.hcch.net/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El RNP emite partidas de nacimiento, matrimonio y defunción",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El Registro Nacional de las Personas (RNP) es la entidad oficial para el registro civil en Honduras.",
+      "fuentes": []
+    },
+    {
+      "claim": "El certificado de antecedentes penales se tramita ante la Dirección General de Investigación de la Policía Nacional",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La DPI (Dirección Policial de Investigaciones) emite constancias de antecedentes penales. 'Dirección General de Investigación de la Policía Nacional' puede ser una denominación imprecisa. La entidad correcta es la DPI.",
+      "fuentes": [
+        {
+          "institucion": "Policía Nacional de Honduras",
+          "titulo": "DPI",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El poder otorgado ante el consulado hondureño en España tiene validez en Honduras",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Los cónsules hondureños ejercen funciones notariales y los documentos otorgados ante ellos son válidos en Honduras.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar nombre exacto de la entidad que emite antecedentes penales (DPI vs Dirección General de Investigación)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

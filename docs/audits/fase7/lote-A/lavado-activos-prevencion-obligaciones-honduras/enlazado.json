@@ -1,0 +1,51 @@
+{
+  "slug": "lavado-activos-prevencion-obligaciones-honduras",
+  "slug_db": "lavado-activos-obligaciones",
+  "title_db": "Lavado de Activos en Honduras: Obligaciones",
+  "category_db": "practica-legal",
+  "url": "/blog/practica-legal/lavado-activos-obligaciones",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "enlazado",
+  "estado_db": "ENCONTRADO",
+  "nota_slug": "El slug en la lista de auditoría es 'lavado-activos-prevencion-obligaciones-honduras', pero en DB se encuentra como 'lavado-activos-obligaciones'. Se auditó el artículo con el slug real de la DB.",
+  "enlaces_salientes": {
+    "total": 0,
+    "a_posts": 0,
+    "a_servicios": 0,
+    "a_categorias": 0,
+    "a_externos": 0,
+    "a_redirects": 0,
+    "rotos": 0,
+    "detalle": []
+  },
+  "enlaces_entrantes": {
+    "total": 0,
+    "desde": []
+  },
+  "huerfano": true,
+  "calidad_anchors": "n/a",
+  "calidad_anchors_justificacion": "El artículo no contiene enlaces salientes en el body HTML.",
+  "sobreoptimizacion_detectada": false,
+  "enlaces_a_servicios": {
+    "tiene": false,
+    "relevantes": false,
+    "sugeridos": [
+      "/servicios-juridicos/derecho-penal",
+      "/servicios-juridicos/derecho-bancario-y-financiero"
+    ],
+    "justificacion": "El lavado de activos es un delito penal con obligaciones de prevención para sujetos obligados financieros y no financieros. Los servicios de Derecho Penal y Derecho Bancario y Financiero son ambos relevantes."
+  },
+  "profundidad_desde_blog": 2,
+  "profundidad_justificacion": "/blog -> /blog/practica-legal -> este artículo = 2 clics.",
+  "acciones_propuestas": [
+    "Añadir enlaces a los servicios de Derecho Penal y Derecho Bancario.",
+    "Añadir enlaces contextuales a artículos sobre delitos penales financieros.",
+    "Añadir enlaces a artículos sobre la CNBS, UIF, y obligaciones de compliance."
+  ],
+  "acciones_obligatorias": [
+    "Añadir al menos 3 enlaces salientes (actualmente 0).",
+    "Enlazar a servicios pertinentes: /servicios-juridicos/derecho-penal y /servicios-juridicos/derecho-bancario-y-financiero."
+  ],
+  "bloqueos": []
+}

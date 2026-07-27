@@ -1,0 +1,60 @@
+{
+  "slug": "testamentos-sucesiones-herencia-honduras",
+  "url": "https://www.tuabogado.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras",
+  "body_hash": "263e0827683bf5c76be349ae0fd4d1c1cb12f0c5d8bf13f21cff4577aebe9187",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E12-C1",
+      "claim": "Código Civil de Honduras (Decreto 76-84). Tipos de testamento: abierto, cerrado, especiales.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Civil de Honduras",
+      "nota": "Los tipos de testamento mencionados existen en el Código Civil, pero el número de decreto (76-84) requiere verificación. El Código Civil hondureño original es de 1906 con múltiples reformas."
+    },
+    {
+      "id": "E12-C2",
+      "claim": "Herederos forzosos: descendientes, cónyuge y ascendientes; protección de la legítima.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Civil de Honduras",
+      "nota": "Correcto. El sistema de legítimas y herederos forzosos es parte del derecho sucesorio hondureño."
+    },
+    {
+      "id": "E12-C3",
+      "claim": "Orden sucesorio intestado: hijos y cónyuge, luego ascendientes, luego hermanos, luego Estado.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Civil de Honduras",
+      "nota": "Correcto. Es el orden sucesorio estándar en el derecho civil hondureño."
+    },
+    {
+      "id": "E12-C4",
+      "claim": "Los hijos heredan en igual proporción que el cónyuge en sucesión intestada.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Civil de Honduras",
+      "nota": "La proporción exacta entre cónyuge e hijos en sucesión intestada depende del Código Civil vigente. En muchos sistemas, el cónyuge recibe una porción igual a la de un hijo. Requiere verificación."
+    },
+    {
+      "id": "E12-C5",
+      "claim": "Las sucesiones se rigen por el Libro III, Títulos VII y siguientes del Código Civil.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Civil de Honduras",
+      "nota": "La ubicación exacta (Libro III, Títulos VII y ss.) requiere verificación contra el texto del Código Civil hondureño."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar número de decreto del Código Civil",
+    "Confirmar proporción cónyuge/hijos en intestada",
+    "Verificar ubicación exacta en el CC"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

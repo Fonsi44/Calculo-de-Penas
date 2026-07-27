@@ -1,0 +1,54 @@
+{
+  "slug": "despido-empleados-publicos-honduras",
+  "url": "https://www.tuabogado.com/blog/derecho-administrativo/despido-empleados-publicos-honduras",
+  "body_hash": "04982b73e6ee13b426f0378c5872e3121e196dd34a70f2cebf7257bdd9f791c3",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E08-C1",
+      "claim": "La Ley de Servicio Civil (Decreto Legislativo No. 126 del 28 de octubre de 1967 y sus reformas) es el cuerpo normativo principal.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Congreso Nacional de Honduras",
+      "nota": "El artículo menciona dos decretos diferentes (Decreto 126 de 1967 y Decreto 50-91). Hay inconsistencia interna. Requiere verificación del decreto correcto."
+    },
+    {
+      "id": "E08-C2",
+      "claim": "Diferencia entre empleados de carrera (estabilidad reforzada) y de libre nombramiento (removibles discrecionalmente).",
+      "clasificacion": "confirmed",
+      "fuente": "Ley de Servicio Civil",
+      "nota": "Es correcta la distinción. Es un principio general del derecho administrativo hondureño."
+    },
+    {
+      "id": "E08-C3",
+      "claim": "Recursos: reposición (10 días), apelación (10 días), contencioso-administrativo, amparo (2 meses).",
+      "clasificacion": "needs_human_review",
+      "fuente": "Ley de Procedimiento Administrativo, Ley Sobre Justicia Constitucional",
+      "nota": "Los plazos mencionados son plausibles pero requieren verificación con la legislación administrativa hondureña vigente."
+    },
+    {
+      "id": "E08-C4",
+      "claim": "El amparo procede ante la Sala de lo Constitucional sin agotar vía administrativa.",
+      "clasificacion": "confirmed",
+      "fuente": "Constitución de Honduras, Ley Sobre Justicia Constitucional",
+      "nota": "Correcto. El amparo en Honduras procede contra actos que violen derechos fundamentales sin necesidad de agotar vía previa."
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Resolver inconsistencia entre Decreto 126 (1967) y Decreto 50-91 para Ley de Servicio Civil",
+    "Verificar plazos de recursos administrativos"
+  ],
+  "acciones_obligatorias": [
+    "Corregir la inconsistencia de decretos para la Ley de Servicio Civil"
+  ],
+  "bloqueos": []
+}

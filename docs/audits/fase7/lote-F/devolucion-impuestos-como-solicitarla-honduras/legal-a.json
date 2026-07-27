@@ -1,0 +1,67 @@
+{
+  "slug": "devolucion-impuestos-como-solicitarla-honduras",
+  "url": "https://www.tuabogado.com/blog/tributario/devolucion-impuestos-como-solicitarla-honduras",
+  "body_hash": "98e7ace1e5ca5e5d16864bc1c86b081c038eaf5e2c59b0968f59e6913e9d3c0a",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F15-C1",
+      "claim": "Artículos 113 al 118 del Código Tributario regulan la devolución.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Tributario de Honduras",
+      "nota": "El rango de artículos 113-118 del Código Tributario para devoluciones requiere verificación."
+    },
+    {
+      "id": "F15-C2",
+      "claim": "Plazo de 60 días hábiles para que el SAR resuelva, prorrogable por 30 días.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Tributario",
+      "nota": "El plazo de resolución es plausible pero requiere verificación con la normativa vigente."
+    },
+    {
+      "id": "F15-C3",
+      "claim": "Tres años de plazo para solicitar la devolución desde el pago indebido o declaración anual.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Tributario",
+      "nota": "El plazo de prescripción de 3 años es estándar en materia tributaria hondureña."
+    },
+    {
+      "id": "F15-C4",
+      "claim": "Recurso de reposición en 15 días hábiles; vía contencioso-administrativa posterior.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Tributario",
+      "nota": "El plazo de 15 días para reposición es estándar pero requiere verificación específica para materia tributaria."
+    },
+    {
+      "id": "F15-C5",
+      "claim": "Código Tributario vigente desde 2010, reformado en 2023. Reglamento: Acuerdo Ejecutivo 001-2011.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Diario Oficial La Gaceta",
+      "nota": "Las fechas y números requieren verificación contra publicación oficial."
+    },
+    {
+      "id": "F15-C6",
+      "claim": "Si no se responde al requerimiento del SAR, la solicitud se tiene por desistida.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Tributario",
+      "nota": "El desistimiento por falta de respuesta a requerimientos es plausible pero requiere verificación."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 5,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar artículos 113-118 del Código Tributario",
+    "Confirmar plazos de resolución del SAR",
+    "Verificar fechas de vigencia y reformas"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

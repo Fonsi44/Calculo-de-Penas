@@ -1,0 +1,48 @@
+{
+  "slug": "nacionalidad-espanola-para-hondurenos-residencia-plazos",
+  "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/nacionalidad-espanola-para-hondurenos-residencia-plazos",
+  "body_hash": "070ad1686b503086f808bbcc0ed8883f65b3306516e7b2523ecf58fcd90910c6",
+  "fecha_auditoria": "2026-07-27T07:43:09.062Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Nacionalidad Española para Hondureños",
+    "title_longitud": 37,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Obtenga la nacionalidad española residiendo en España. Conozca los plazos reducidos (2 años) para hondureños, requisitos y proceso. ¡Consulte a expertos!",
+    "description_longitud": 153,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "hondurenos-en-espana"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

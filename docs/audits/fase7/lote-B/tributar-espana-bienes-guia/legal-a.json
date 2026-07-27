@@ -1,0 +1,47 @@
+{
+  "slug": "tributar-espana-bienes-guia",
+  "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/tributar-espana-bienes-guia",
+  "body_hash": "114ed581a0be7e257808b639ab9f2bd626fe4ce93a9b896a2491db4a1ee2fd20",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Obligaciones tributarias en España para residentes con bienes en Honduras",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La tributación transfronteriza España-Honduras involucra el Convenio de Doble Imposición (CDI) entre ambos países, el IRPF español, el Impuesto sobre el Patrimonio, y el Modelo 720 de declaración de bienes en el extranjero. Este es un tema altamente técnico que requiere revisión por un abogado especializado en fiscalidad internacional España-Honduras.",
+      "fuentes": [
+        {
+          "institucion": "AEAT España",
+          "titulo": "IRPF y bienes en el extranjero",
+          "url": "https://www.agenciatributaria.es/",
+          "decreto": "Ley IRPF",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        },
+        {
+          "institucion": "BOE",
+          "titulo": "Modelo 720",
+          "url": "https://www.boe.es/",
+          "decreto": "Ley 7/2012",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Revisión completa por abogado fiscalista España-Honduras"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "derecho-ambiental-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derecho-ambiental-honduras",
+  "body_hash": "06218f5ccf33f8bb79b44946dab417815bb5f7fc00a187225520538339da0e42",
+  "fecha_auditoria": "2026-07-27T07:43:08.845Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Derecho Ambiental Honduras: Licencias y Delitos",
+    "title_longitud": 47,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Conozca el derecho ambiental en Honduras: licencias, estudios de impacto, delitos y sanciones. Cumpla la normativa vigente.",
+    "description_longitud": 123,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Description aceptable. Ideal 140-160 chars para SERP completa.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-ambiental"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

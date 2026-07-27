@@ -1,0 +1,48 @@
+{
+  "slug": "abogado-aduanero-san-lorenzo",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/abogado-aduanero-san-lorenzo",
+  "body_hash": "b7f970e484b494b53cacfaa02815e0cd9615c54c3ea99fdc629ad75c13e0617c",
+  "fecha_auditoria": "2026-07-27T07:43:08.844Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Abogado Aduanero San Lorenzo",
+    "title_longitud": 28,
+    "title_evaluacion": "malo",
+    "title_sugerencia": "Title demasiado corto (< 30 chars). Añadir keywords relevantes.",
+    "description_actual": "Asesoría legal aduanera en San Lorenzo, Honduras. Evite multas y retenciones en importaciones/exportaciones. Contáctenos para su consulta.",
+    "description_longitud": 138,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Description aceptable. Ideal 140-160 chars para SERP completa.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-aduanero"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

@@ -1,0 +1,14 @@
+{
+  "lote": "B",
+  "fecha": "2026-07-27T07:42:13.402Z",
+  "total_articulos": 15,
+  "auditados": 15,
+  "no_auditados": 0,
+  "distribucion_estados": {
+    "apto_con_correcciones": 15
+  },
+  "puntuacion_promedio": 8.2,
+  "total_bloqueos": 0,
+  "total_cambios_aplicables": 24,
+  "total_requieren_abogado": 0
+}

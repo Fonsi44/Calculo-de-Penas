@@ -1,0 +1,39 @@
+{
+  "slug": "residencia-temporal-requisitos-plazos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/extranjeria-migracion/residencia-temporal-requisitos-plazos-honduras",
+  "body_hash": "39ec532f7d793e1d3e8826133e44d50c5bb5b923e363ada134dc4118a8df52e8",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Residencia temporal regulada por Ley de Migración y Extranjería",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Los requisitos de residencia temporal en Honduras cambian con frecuencia mediante acuerdos del Instituto Nacional de Migración (INM). Se recomienda verificar tasas, plazos y documentos requeridos contra la circular migratoria más reciente.",
+      "fuentes": [
+        {
+          "institucion": "INM/DGME",
+          "titulo": "Ley de Migración y Extranjería",
+          "url": "https://www.inm.gob.hn/",
+          "decreto": "Decreto No. 208-2003",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar requisitos actualizados con INM/DGME"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "divorcio-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/divorcio-choluteca",
+  "body_hash": "4546d4d3f7ffc1907723173806cd3f1c431b386674a71bbb20e29a782307283d",
+  "fecha_auditoria": "2026-07-27T07:43:09.314Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Divorcio en Choluteca",
+    "title_longitud": 21,
+    "title_evaluacion": "malo",
+    "title_sugerencia": "Title demasiado corto (< 30 chars). Añadir keywords relevantes.",
+    "description_actual": "Conozca los tipos de divorcio en Choluteca, Honduras: mutuo consentimiento, express y contencioso. Abogados de familia explican trámites y requisitos.",
+    "description_longitud": 150,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-de-familia"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

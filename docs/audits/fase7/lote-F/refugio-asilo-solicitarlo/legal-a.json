@@ -1,0 +1,59 @@
+{
+  "slug": "refugio-asilo-solicitarlo",
+  "url": "https://www.tuabogado.com/blog/extranjeria-migracion/refugio-asilo-solicitarlo",
+  "body_hash": "9390d0f2738c5c36071343bd19a67800ba54895a3d5d001216ab016902bab935",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F02-C1",
+      "claim": "Ley de Migración y Extranjería (Decreto No. 208-2003) y Convención de 1951 como base legal.",
+      "clasificacion": "confirmed",
+      "fuente": "ACNUR / Congreso Nacional",
+      "nota": "Correcto. El Decreto 208-2003 es la ley migratoria y Honduras es parte de la Convención de 1951 sobre Refugiados."
+    },
+    {
+      "id": "F02-C2",
+      "claim": "CONARE (Comisión Nacional de Refugiados) evalúa las solicitudes.",
+      "clasificacion": "needs_human_review",
+      "fuente": "ACNUR Honduras",
+      "nota": "La CONARE existe en Honduras pero su nombre exacto y funciones específicas requieren verificación. El acrónimo es plausible."
+    },
+    {
+      "id": "F02-C3",
+      "claim": "Diferencia entre refugio (persecución por raza, religión, nacionalidad, grupo social, opinión política, conflictos armados) y asilo (connotación política).",
+      "clasificacion": "corrected",
+      "fuente": "Derecho internacional de refugiados",
+      "nota": "La distinción tajante entre refugio y asilo que presenta el artículo no es técnicamente precisa. En Honduras, como en la mayoría de países latinoamericanos, se usa \"refugio\" como término general. La figura del \"asilo\" es más propia del sistema interamericano (asilo diplomático/territorial). La diferenciación del artículo es simplificada y puede inducir a error."
+    },
+    {
+      "id": "F02-C4",
+      "claim": "Solicitud se presenta dentro de Honduras o en puntos de entrada; principio de no devolución.",
+      "clasificacion": "confirmed",
+      "fuente": "Convención de 1951 y Ley de Migración",
+      "nota": "Correcto. El principio de non-refoulement es vinculante para Honduras."
+    },
+    {
+      "id": "F02-C5",
+      "claim": "Se puede trabajar con permiso temporal mientras se procesa la solicitud.",
+      "clasificacion": "needs_human_review",
+      "fuente": "DGME",
+      "nota": "La posibilidad de obtener permiso de trabajo durante el trámite es plausible pero requiere verificación con la práctica administrativa hondureña."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 2,
+    "corrected": 1,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Revisar distinción refugio/asilo para precisión técnica",
+    "Verificar existencia y nombre exacto de CONARE"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

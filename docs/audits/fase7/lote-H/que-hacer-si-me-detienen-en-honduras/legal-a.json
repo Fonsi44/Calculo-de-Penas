@@ -1,0 +1,79 @@
+{
+  "slug": "que-hacer-si-me-detienen-en-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras",
+  "body_hash": "d8efc9d097068f385eb1022e4832115e44ffca10281eda682ce5f13294b8b9c3",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 84 de la Constitución garantiza el derecho a no autoincriminarse y a la asistencia de abogado",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La Constitución hondureña protege el derecho de defensa y la no autoincriminación. El Art. 84 es una ubicación plausible, pero otros artículos del mismo sitio citan el Art. 88 para el derecho de defensa y el Art. 101 para defensor público. INCONSISTENCIA entre artículos del mismo sitio.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Constitución de la República",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 131-1982",
+          "articulo": "Arts. 84, 88, 101",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 101 de la Constitución: el Estado debe proporcionar defensor público si no se dispone de recursos",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Plausible. Requiere verificación del número de artículo constitucional exacto sobre defensa pública.",
+      "fuentes": []
+    },
+    {
+      "claim": "Código Procesal Penal (Decreto 130-2017), artículos 279 al 292 regulan el procedimiento de detención",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "POSIBLE ERROR GRAVE: El Código Procesal Penal de Honduras es el Decreto 9-99-E, NO el 130-2017 (que es el Código Penal sustantivo). Esto es un error de decreto repetido en otros artículos del sitio.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "9-99-E",
+          "articulo": "Arts. 279-292",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Plazo máximo de 24 horas para presentar al detenido ante el juez",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El CPP hondureño establece 24 horas como plazo máximo para poner al detenido a disposición judicial. Excede este plazo habilita el hábeas corpus.",
+      "fuentes": []
+    },
+    {
+      "claim": "Si se excede el plazo de 24 horas procede el recurso de hábeas corpus",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El hábeas corpus es la garantía constitucional contra detenciones ilegales. Procede cuando se vence el plazo de 24h sin presentación judicial.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "URGENTE: Corregir Decreto del CPP de 130-2017 a 9-99-E",
+    "Resolver inconsistencia sobre artículos constitucionales de derechos del detenido (84 vs 88 vs 101)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

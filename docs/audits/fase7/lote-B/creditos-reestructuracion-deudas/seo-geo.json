@@ -1,0 +1,52 @@
+{
+  "slug": "creditos-reestructuracion-deudas",
+  "url": "https://pinedayasociados.hn/blog/derecho-bancario/creditos-reestructuracion-deudas",
+  "fecha_auditoria": "2026-07-27T07:43:37.057Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Reestructuración de Deuda en Honduras",
+    "title_longitud": 37,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "MetaTitle corto (37 chars). Ampliar a 50-60 caracteres incluyendo keyword principal.",
+    "description_actual": "Aprenda cómo reestructurar su deuda en Honduras. Modifique plazos, tasas e intereses con la guía legal y pasos prácticos. Consulte a expertos.",
+    "description_longitud": 142,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "Longitud adecuada.",
+    "h1_actual": "Renderizado desde el template (title)",
+    "h1_evaluacion": "bueno: El H1 se renderiza dinamicamente desde el titulo en el template de Next.js. No se requiere H1 en el body.",
+    "h2_count": 12,
+    "h3_count": 3,
+    "intencion_principal": "Informativa — Aprender un proceso o requisitos legales",
+    "intencion_secundaria": "N/A (un solo intento predominante)",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "regular",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "Código Civil",
+      "Ley No",
+      "Ley de Instituciones de Seguros",
+      "Ley de Alivio de Deuda",
+      "CNBS",
+      "Decreto 118"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

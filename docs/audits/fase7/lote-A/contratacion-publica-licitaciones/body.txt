@@ -1,0 +1,45 @@
+<h2>¿Cómo funciona la Contratación Pública en Honduras para empresas?</h2>
+<p>La <strong>Contratación Pública</strong> en Honduras es el proceso formal mediante el cual el Estado, a través de sus diversas entidades como secretarías, municipalidades e instituciones descentralizadas, adquiere bienes, obras y servicios del sector privado. Este mercado ofrece significativas oportunidades de negocio, pero exige un estricto cumplimiento de la normativa técnica y jurídica vigente, principalmente la <strong>Ley de Contratación del Estado (Decreto No. 74-2001)</strong> y su Reglamento. La <strong>Oficina Normativa de Contratación y Adquisiciones del Estado (ONCAE)</strong> actúa como ente rector, administrando los registros de proveedores y estandarizando los pliegos de condiciones.</p>
+
+<h3>BITE-SIZED SUMMARY</h3>
+<p>El sistema de Contratación Pública en Honduras, regido por la Ley de Contratación del Estado (Decreto No. 74-2001) y administrado por la ONCAE, permite al Estado adquirir bienes, obras y servicios del sector privado mediante procedimientos como licitaciones y concursos, requiriendo el registro previo de los proveedores en el sistema HonduCompras.</p>
+
+<h2>¿Cuáles son las modalidades de contratación que utiliza el Estado hondureño?</h2>
+<p>La ley hondureña establece diversos métodos de contratación, adaptados al valor estimado y la complejidad de la adquisición:</p>
+<ul>
+<li><strong>Licitación Pública:</strong> Obligatoria para compras que superan los umbrales anuales definidos en el Presupuesto General de la República. Requiere publicación en medios nacionales y permite la participación de oferentes nacionales e internacionales.</li>
+<li><strong>Licitación Privada:</strong> Se aplica a montos inferiores a la Licitación Pública, invitando directamente a un número limitado de proveedores registrados (mínimo tres).</li>
+<li><strong>Concurso Público/Privado:</strong> Modalidad específica para la contratación de servicios de consultoría, ya sea para firmas o profesionales individuales.</li>
+<li><strong>Contratación Directa:</strong> Procedimiento excepcional, aplicable solo bajo causales taxativas como emergencias nacionales, existencia de un único proveedor o por razones de seguridad del Estado. Su uso indebido puede generar responsabilidad penal para los funcionarios públicos.</li>
+</ul>
+
+<h2>¿Qué requisitos se necesitan para inscribirse como proveedor del Estado en Honduras?</h2>
+<p>Para que una empresa o comerciante individual pueda venderle al Estado hondureño, es indispensable su inscripción en el sistema de registro de proveedores. El proceso se centraliza actualmente en el portal electrónico <strong>HonduCompras</strong> y el <strong>Módulo de Registro de Proveedores</strong> de la ONCAE. Los requisitos básicos incluyen:</p>
+<ul>
+<li>Presentar la escritura de constitución de comerciante individual o sociedad mercantil.</li>
+<li>Aportar el Registro Tributario Nacional (RTN) de la empresa y de su representante legal.</li>
+<li>Demostrar solvencia de la Procuraduría General de la República (PGR).</li>
+<li>Obtener solvencias fiscales del <strong>Servicio de Administración de Rentas (SAR)</strong> y solvencias municipales.</li>
+<li>No estar incurso en las inhabilidades establecidas en el <strong>Artículo 15 de la Ley de Contratación del Estado</strong>, como ser familiar de altos funcionarios públicos, haber incumplido contratos previos o estar inhabilitado judicialmente.</li>
+</ul>
+
+<h2>¿Qué son los Pliegos de Condiciones y cómo afecta la presentación de ofertas?</h2>
+<p>Cada proceso de licitación se rige por un <strong>Pliego de Condiciones</strong>, documento emitido por la institución compradora que detalla las especificaciones técnicas del bien, obra o servicio requerido, los plazos de entrega y los criterios de evaluación (calidad, precio, experiencia). La elaboración de la oferta debe ser sumamente precisa; un error formal, como la omisión de un timbre o una firma, o la entrega fuera del plazo establecido, puede llevar a la <strong>descalificación inmediata</strong> de una propuesta, incluso si esta fuera la más ventajosa económicamente. Generalmente, la oferta se estructura en sobres separados: credenciales legales, propuesta técnica y propuesta económica.</p>
+
+<h2>¿Qué garantías exige el Estado hondureño en los contratos públicos?</h2>
+<p>El Estado de Honduras requiere la presentación de fianzas, usualmente emitidas por bancos o aseguradoras, para salvaguardar sus intereses. Estas garantías incluyen:</p>
+<ul>
+<li><strong>Garantía de Mantenimiento de Oferta:</strong> Asegura que el oferente mantendrá su propuesta hasta la adjudicación, oscilando entre el 2% y 5% del valor de la oferta.</li>
+<li><strong>Garantía de Cumplimiento de Contrato:</strong> Exigida al adjudicatario, típicamente el 15% del valor total del contrato, para garantizar la ejecución según lo pactado.</li>
+<li><strong>Garantía de Anticipo:</strong> Si se otorga un anticipo financiero, el contratista debe presentar una garantía por el 100% de dicho monto.</li>
+<li><strong>Garantía de Calidad:</strong> Diseñada para proteger contra defectos de fabricación o vicios ocultos posteriores a la entrega.</li>
+</ul>
+
+<h2>¿Qué recursos existen en caso de inconformidad con un proceso de contratación pública en Honduras?</h2>
+<p>Las empresas que consideren que un proceso de evaluación ha sido injusto, que se ha favorecido irregularmente a un competidor o que su descalificación fue infundada, disponen de mecanismos de impugnación. Pueden interponer <strong>Recursos de Reposición y Apelación</strong> ante la misma administración contratante. Como instancia final, se puede recurrir a la vía judicial a través de la Jurisdicción de lo Contencioso-Administrativo, ante los tribunales competentes del Poder Judicial de Honduras, como los <strong>Juzgados de Letras</strong> o las <strong>Cortes de Apelaciones</strong>, dependiendo de la cuantía y naturaleza del litigio.</p>
+
+<div class='cta-box my-6 p-6 bg-slate-50 border border-slate-200 rounded-lg shadow-sm'>
+  <h3 class='text-xl font-bold text-slate-800 mb-2'>Asesoría Integral en Contratación del Estado</h3>
+  <p class='mb-4'>Evite la descalificación de sus ofertas por errores de forma. Asistimos a su empresa en el registro ante ONCAE, revisión legal de pliegos, estructuración de la oferta y recursos de impugnación administrativa contra adjudicaciones irregulares.</p>
+  <a href='/solicitar-consulta' class='btn-primary inline-block'>Consultoría para Proveedores del Estado</a>
+</div>

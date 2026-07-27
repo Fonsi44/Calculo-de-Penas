@@ -1,0 +1,90 @@
+{
+  "slug": "recursos-sentencia-penal-apelacion-casacion-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/proceso-penal/recursos-sentencia-penal-apelacion-casacion-honduras",
+  "body_hash": "288159a715628248e6089092e32cba2b3763d77d4896f4112f7b8c9050a18c47",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El recurso de casación procede contra sentencias del Tribunal de Sentencia; la apelación solo contra autos y sentencias de procedimiento abreviado",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Esta es una afirmación técnicamente compleja sobre el sistema de recursos en el CPP. La distinción entre apelación y casación en el proceso penal hondureño depende del tipo de resolución y del tribunal que la emite. Requiere verificación con el CPP vigente (Decreto 130-2017).",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "Arts. 358-380",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Plazo para casación: 20 días hábiles desde notificación de sentencia",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Los plazos para recurrir en casación son perentorios y fatales. La afirmación de 20 días hábiles debe verificarse contra el CPP vigente, ya que un error en el plazo podría hacer que un lector pierda su derecho al recurso.",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "Art. 361",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Motivos de casación: infracción de ley (fondo) y quebrantamiento de forma (proceso) — Artículo 360",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La clasificación dual de motivos de casación (fondo y forma) es correcta en la tradición jurídica continental. La numeración exacta del artículo en el CPP vigente debe verificarse.",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "360 (por verificar)",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La CSJ (Sala Penal) puede anular sentencia y ordenar repetición del juicio, o dictar ella misma la sentencia",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Las facultades de la Sala Penal de la CSJ en casación incluyen la anulación con reenvío y, en ciertos casos, la sentencia de reemplazo cuando no requiere nueva valoración probatoria.",
+      "fuentes": [
+        {
+          "institucion": "CSJ Honduras",
+          "titulo": "Sala de lo Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "Arts. 368-370",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Verificación completa de plazos, artículos, y procedencia de recursos contra el CPP Decreto 130-2017 vigente por abogado penalista"
+  ],
+  "acciones_obligatorias": [
+    "Verificar plazo de casación (20 días hábiles) contra texto oficial vigente",
+    "Verificar motivos de casación Art. 360 contra CPP vigente"
+  ],
+  "bloqueos": []
+}

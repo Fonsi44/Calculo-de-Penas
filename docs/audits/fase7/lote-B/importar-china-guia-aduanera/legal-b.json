@@ -1,0 +1,78 @@
+{
+  "slug": "importar-china-guia-aduanera",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/importar-china-guia-aduanera",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:32:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "La Ley de Aduanas es el Decreto No. 212-2013",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La cita del Decreto 212-2013 como Ley de Aduanas es específica pero no pudo verificarse de forma independiente. Los sitios de la Administración Aduanera de Honduras no respondieron.",
+      "fuentes": []
+    },
+    {
+      "claim": "El Sistema Arancelario Centroamericano (SAC) fue adoptado mediante Decreto No. 29-2006",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El SAC es efectivamente el sistema de clasificación arancelaria en Centroamérica. El Decreto 29-2006 como instrumento de adopción es plausible pero no verificable.",
+      "fuentes": []
+    },
+    {
+      "claim": "Los artículos 10 y 11 de la Ley de Aduanas exigen agente aduanero autorizado",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La exigencia de agente aduanero para importaciones es estándar. La referencia a artículos 10 y 11 es específica pero no verificable.",
+      "fuentes": []
+    },
+    {
+      "claim": "El ISV es del 15% sobre CIF + DAI (con excepciones)",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "La tasa general del ISV (Impuesto Sobre Ventas) en Honduras es del 15%. La base imponible CIF + DAI es la fórmula estándar de cálculo aduanero. El artículo incluye una advertencia sobre excepciones, lo cual es correcto.",
+      "fuentes": []
+    },
+    {
+      "claim": "El DAI varía entre 0% y más del 15%",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "El rango del DAI (Derecho Arancelario a la Importación) entre 0% y 15%+ es consistente con el arancel centroamericano. La mención de 'más del 15%' es prudente ya que existen sobretasas para ciertos productos.",
+      "fuentes": []
+    },
+    {
+      "claim": "No aplica preferencia arancelaria China-Honduras por ausencia de TLC bilateral",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Efectivamente, no existe un Tratado de Libre Comercio bilateral entre Honduras y China. La relación comercial se rige por las reglas generales de la OMC.",
+      "fuentes": []
+    },
+    {
+      "claim": "El despacho aduanero puede durar de 2 a 5 días hábiles con documentación completa",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Plazo estimado práctico, no legal. Es plausible pero variable según el puerto de entrada, tipo de mercancía y carga de trabajo de la aduana.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 7,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar Decreto 212-2013 como Ley de Aduanas vigente",
+    "Verificar Decreto 29-2006 como adopción del SAC",
+    "Confirmar referencias a artículos 10 y 11 de la Ley de Aduanas"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios de la Administración Aduanera de Honduras inaccesibles"
+  ],
+  "discrepancias_con_auditor_a": []
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "tramites-legales-nacaome",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/tramites-legales-nacaome",
+  "body_hash": "4311324f6aa65cebc12da1e0ae7c78f7db86aa154630c5bf0fa335eeda9ee9a7",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "La Ley del Notariado (Decreto 141-2005) es fundamental para escrituras públicas y poderes notariales",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La Ley del Notariado regula la función notarial en Honduras. El Decreto 141-2005 es plausible. Requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Ley del Notariado",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "141-2005",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El Código Civil es el Decreto 116-87 y sus reformas",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "POSIBLE ERROR: Otros artículos del sitio citan el Código Civil como Decreto 76-84. El Decreto 116-87 podría ser una reforma o una edición diferente. INCONSISTENCIA entre artículos del mismo sitio: ¿76-84 o 116-87?",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84 o 116-87",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El Código de Comercio regula sociedades mercantiles en su Libro Primero, Título II",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Consistente con tipos-sociedad-mercantil-honduras.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "URGENTE: Resolver inconsistencia sobre decreto del Código Civil: ¿76-84 o 116-87?"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

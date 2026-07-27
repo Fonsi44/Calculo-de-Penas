@@ -1,0 +1,51 @@
+{
+  "slug": "contratos-franquicia-aspectos",
+  "url": "https://www.tuabogado.com/blog/derecho-mercantil/contratos-franquicia-aspectos",
+  "body_hash": "155d76544c53a84c55cf9241322f60b3f610d45146ab4f47c274a862bf659441",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F11-C1",
+      "claim": "No existe ley específica de franquicias en Honduras. Se rigen por el Código de Comercio y principios generales de contratos mercantiles.",
+      "clasificacion": "confirmed",
+      "fuente": "Marco legal hondureño",
+      "nota": "Correcto. Honduras no tiene ley de franquicias. Se aplica el Código de Comercio."
+    },
+    {
+      "id": "F11-C2",
+      "claim": "Código de Comercio, Artículo 1 (actos de comercio), Artículos 2 y 3 (aplicabilidad de contratos mercantiles).",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código de Comercio de Honduras",
+      "nota": "La ubicación de los actos de comercio en Art. 1 es típica, pero requiere verificación contra el Código de Comercio hondureño vigente."
+    },
+    {
+      "id": "F11-C3",
+      "claim": "Cláusulas esenciales: canon de entrada, regalías, exclusividad territorial, formación y asistencia, uso de marca, no competencia, causales de terminación.",
+      "clasificacion": "confirmed",
+      "fuente": "Práctica mercantil internacional",
+      "nota": "Correcto. Son las cláusulas estándar en franquicias a nivel internacional y aplicables en Honduras."
+    },
+    {
+      "id": "F11-C4",
+      "claim": "Cláusula de no competencia debe ser limitada en tiempo y territorio para ser válida.",
+      "clasificacion": "confirmed",
+      "fuente": "Principios generales del derecho mercantil",
+      "nota": "Correcto. Las cláusulas de no competencia deben ser razonables en tiempo y territorio."
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar artículos 1-3 del Código de Comercio hondureño"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

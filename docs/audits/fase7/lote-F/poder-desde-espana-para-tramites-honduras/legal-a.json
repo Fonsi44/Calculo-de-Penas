@@ -1,0 +1,66 @@
+{
+  "slug": "poder-desde-espana-para-tramites-honduras",
+  "url": "https://www.tuabogado.com/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras",
+  "body_hash": "db5ec85e0ae0e16c19b75462c6e543b235bbfd97f48e1841d3566d50d621926e",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F13-C1",
+      "claim": "Convenio de La Haya de 5 de octubre de 1961 sobre Apostilla. Ambos países signatarios.",
+      "clasificacion": "confirmed",
+      "fuente": "HCCH (Conferencia de La Haya)",
+      "nota": "Correcto. Tanto España como Honduras son parte del Convenio de la Apostilla."
+    },
+    {
+      "id": "F13-C2",
+      "claim": "Código Civil hondureño, artículos 1539-1552 regulan el mandato y la representación voluntaria.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Civil de Honduras",
+      "nota": "El rango de artículos 1539-1552 para el mandato es plausible pero requiere verificación contra el Código Civil hondureño."
+    },
+    {
+      "id": "F13-C3",
+      "claim": "Tipos de poder: general, especial, para pleitos.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Civil de Honduras",
+      "nota": "Correcto. Son las categorías estándar de poderes en el derecho civil hondureño."
+    },
+    {
+      "id": "F13-C4",
+      "claim": "Opción de poder consular hondureño en Madrid o Barcelona sin necesidad de apostilla.",
+      "clasificacion": "confirmed",
+      "fuente": "Consulado de Honduras en España",
+      "nota": "Correcto. Los cónsules hondureños actúan como fedatarios públicos y sus documentos no requieren apostilla para Honduras."
+    },
+    {
+      "id": "F13-C5",
+      "claim": "Costos: poder notarial 30-60 euros, apostilla 15-30 euros.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Colegios Notariales de España",
+      "nota": "Los costos son estimaciones razonables pero varían por notario y comunidad autónoma. Son aproximados."
+    },
+    {
+      "id": "F13-C6",
+      "claim": "El poder no caduca a menos que tenga plazo o sea revocado.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Civil de Honduras",
+      "nota": "Correcto. El poder es válido hasta su revocación o cumplimiento del plazo."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 4,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar artículos 1539-1552 del CC hondureño",
+    "Actualizar costos de notaría si es posible"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

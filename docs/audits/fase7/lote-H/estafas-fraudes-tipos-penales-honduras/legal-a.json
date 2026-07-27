@@ -1,0 +1,53 @@
+{
+  "slug": "estafas-fraudes-tipos-penales-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/estafas-fraudes-tipos-penales-honduras",
+  "body_hash": "3830925c724c34e3c83ff9914743f0fae780383e6a2809507af536186aaf4fd5",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 365 y 366 del Código Penal tipifican la estafa",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Requiere verificación de numeración exacta en el CP 130-2017. El artículo mismo reconoce que el Art. 366 enumera agravantes, no define la estafa.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Arts. 365-366",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Fraude informático está contemplado en el Artículo 365 del Código Penal",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El CP 130-2017 tipifica delitos informáticos. Requiere verificación de que el Art. 365 abarque específicamente el fraude informático.",
+      "fuentes": []
+    },
+    {
+      "claim": "Elementos de la estafa: engaño, disposición patrimonial y perjuicio",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Los elementos del tipo penal de estafa (engaño bastante, acto de disposición, perjuicio patrimonial y nexo causal) son estándar en la dogmática penal.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

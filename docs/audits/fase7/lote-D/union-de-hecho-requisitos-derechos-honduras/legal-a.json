@@ -1,0 +1,74 @@
+{
+  "slug": "union-de-hecho-requisitos-derechos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/union-de-hecho-requisitos-derechos-honduras",
+  "body_hash": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 112 de la Constitución reconoce la unión de hecho",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Artículo 112 de la Constitución hondureña reconoce la unión de hecho. Verificar la redacción exacta: 'singular y estable' como requisitos constitucionales.",
+      "fuentes": [
+        {
+          "institucion": "Constitución de la República",
+          "titulo": "Artículo 112",
+          "url": "https://pdba.georgetown.edu/Constitutions/Honduras/honduras.html",
+          "decreto": "Decreto No. 131-1982",
+          "articulo": "112",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Requisito de 3 años de convivencia estable y notoria (salvo si hay hijos)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código de Familia establece el plazo de convivencia para unión de hecho. El plazo de 3 años y la excepción por hijos debe verificarse contra el texto oficial del Código de Familia.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto No. 76-1984",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Prescripción de la acción de declaración judicial: 2 años desde la separación",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El artículo menciona 'dos años' de prescripción y también una referencia ambigua a 'un año' en jurisprudencia. Esta inconsistencia es preocupante. AMBIGUO: El propio artículo contiene una redacción confusa sobre el plazo de prescripción. Requiere urgente aclaración.",
+      "fuentes": [
+        {
+          "institucion": "CSJ Honduras",
+          "titulo": "Jurisprudencia Sala Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "N/A",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Resolver ambigüedad sobre plazo de prescripción (1 año vs 2 años). Esto puede inducir a error a lectores que podrían perder su derecho a reclamar unión de hecho.",
+    "Verificar Art. 112 constitucional y plazo de 3 años en Código de Familia"
+  ],
+  "acciones_obligatorias": [
+    "Aclarar el plazo de prescripción de la acción de declaración de unión de hecho con fuente oficial"
+  ],
+  "bloqueos": []
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "impuesto-renta-personas-fisicas-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/tributario/impuesto-renta-personas-fisicas-honduras",
+  "body_hash": "d98e61973001cc2e7f57ced1542052ea147d4c0d2cdf462d9c31ca0d2e6096bf",
+  "fecha_auditoria": "2026-07-27T07:43:09.186Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "ISR Personas Físicas Honduras: Declaración y",
+    "title_longitud": 44,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Conozca quién debe declarar el ISR en Honduras, cómo calcularlo, gastos deducibles y las consecuencias de no cumplir.",
+    "description_longitud": 117,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Description aceptable. Ideal 140-160 chars para SERP completa.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "tributario"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

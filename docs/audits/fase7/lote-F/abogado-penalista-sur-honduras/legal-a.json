@@ -1,0 +1,62 @@
+{
+  "slug": "abogado-penalista-sur-honduras",
+  "url": "https://www.tuabogado.com/blog/derecho-penal/abogado-penalista-sur-honduras",
+  "body_hash": "cbdf1d00abc41be5eb7a37215bf32d6c9fdf2830f65b4f091e8d6b23e21cb4ba",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F12-C1",
+      "claim": "Derecho a la defensa técnica garantizado por la Constitución (Art. 88) y Código Procesal Penal (Art. 289).",
+      "clasificacion": "needs_human_review",
+      "fuente": "Constitución de Honduras, CPP",
+      "nota": "El Artículo 88 constitucional sobre defensa y el Artículo 289 del CPP requieren verificación. Existe el riesgo de confusión entre Código Penal y CPP."
+    },
+    {
+      "id": "F12-C2",
+      "claim": "También menciona Artículo 303 de la Constitución para el derecho a la defensa técnica.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Constitución de Honduras",
+      "nota": "El artículo cita dos artículos constitucionales diferentes (88 y 303) para el mismo derecho. Esto es inconsistente. Requiere verificación de cuál es el correcto."
+    },
+    {
+      "id": "F12-C3",
+      "claim": "Código Penal (Decreto 130-2017 y sus reformas) y Ley 59-2024.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Penal de Honduras",
+      "nota": "La mención de la Ley 59-2024 como reforma al Código Penal requiere verificación. Siendo 2024, podría ser una reforma muy reciente que necesite confirmación."
+    },
+    {
+      "id": "F12-C4",
+      "claim": "Las primeras 48 horas tras la detención son críticas para la audiencia inicial.",
+      "clasificacion": "confirmed",
+      "fuente": "Código Procesal Penal",
+      "nota": "Correcto como orientación práctica. La audiencia inicial debe realizarse dentro de plazos breves tras la detención."
+    },
+    {
+      "id": "F12-C5",
+      "claim": "Artículo 289 del CPP exige presencia del defensor bajo pena de nulidad.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Procesal Penal",
+      "nota": "El principio es correcto, pero el número de artículo requiere verificación."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Resolver inconsistencia entre Arts. 88 y 303 de la Constitución",
+    "Verificar Ley 59-2024",
+    "Verificar Art. 289 del CPP"
+  ],
+  "acciones_obligatorias": [
+    "Resolver inconsistencia de artículos constitucionales sobre defensa técnica"
+  ],
+  "bloqueos": []
+}

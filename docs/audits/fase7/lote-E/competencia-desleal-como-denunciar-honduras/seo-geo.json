@@ -1,0 +1,48 @@
+{
+  "slug": "competencia-desleal-como-denunciar-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras",
+  "body_hash": "e49e658c3a01c355885390fc6167ac333ca7123abb6ab0e948e1e228bce438b1",
+  "fecha_auditoria": "2026-07-27T07:43:08.847Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Competencia Desleal Honduras: Denuncia y Leyes",
+    "title_longitud": 46,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Descubra qué es la competencia desleal en Honduras, las conductas sancionables y las vías legales para denunciar.",
+    "description_longitud": 113,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Description aceptable. Ideal 140-160 chars para SERP completa.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-mercantil"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

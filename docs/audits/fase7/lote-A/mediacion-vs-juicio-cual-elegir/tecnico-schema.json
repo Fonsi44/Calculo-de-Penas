@@ -1,0 +1,89 @@
+{
+  "slug": "mediacion-vs-juicio-cual-elegir",
+  "url": "https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje/mediacion-vs-juicio-cual-elegir",
+  "fecha_auditoria": "2026-07-27T12:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "tecnico-schema",
+  "canonical": {
+    "actual": "https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje/mediacion-vs-juicio-cual-elegir",
+    "esperada": "https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje/mediacion-vs-juicio-cual-elegir",
+    "coincide": true,
+    "evaluacion": "correcta"
+  },
+  "jsonld": {
+    "blogposting_count": 1,
+    "headline_coincide": true,
+    "headline_db": "Mediación vs juicio en Honduras",
+    "headline_ld": "Mediación vs juicio en Honduras",
+    "description_coincide": true,
+    "description_nota": "La description en el JSON-LD es el resumen editorial (description del post), no la metaDescription SEO. Esto es intencional: el schema usa post.description. La metaDescription (más corta, optimizada para SERP) va en <meta name=description> y og:description.",
+    "fechas_coherentes": true,
+    "datePublished": "2025-12-01T12:00:00.000Z",
+    "dateModified": "2026-07-07T18:39:19.558Z",
+    "author_presente": true,
+    "author_tipo": "Organization",
+    "author_nota": "El author es Organization (Pineda y Asociados) en lugar de Person. Esto es correcto segun el codigo: cuando el autor no es un abogado canonico (Danilo, Thania, Emil), se mapea a Organization.",
+    "publisher_correcto": true,
+    "publisher_nombre": "Pineda y Asociados",
+    "publisher_logo_accesible": true,
+    "imagen_accesible": true,
+    "imagen_url": "https://www.pinedayasociadoshn.com/images/blog/mediacion-vs-juicio-que-conviene-mas-honduras.webp",
+    "inLanguage": "es-HN",
+    "articleSection": "conciliacion-arbitraje",
+    "wordCount": 699,
+    "errores": [],
+    "advertencias": [
+      "El headline del JSON-LD (post.title: 'Mediación vs juicio en Honduras') difiere del <title> HTML (metaTitle + brand: 'Mediación vs Juicio en Honduras | Pineda y Asociados'). La diferencia de capitalización 'vs' y 'Juicio' puede afectar señales de relevancia semántica. Recomendación: unificar title y headline JSON-LD con el mismo texto base (preferiblemente el metaTitle).",
+      "og:title y twitter:title usan el metaTitle con brand suffix. JSON-LD headline usa post.title sin brand. Esta inconsistencia es estructural (afecta a todos los posts). Ver analysis en docs/audits/fase7/lote-A/_hallazgo-transversal-headline-inconsistency.md."
+    ],
+    "schemas_duplicados": [],
+    "faqpage_indebido": false,
+    "faqpage_nota": "FAQPage con 2 preguntas extraidas de H3+patron <p> en el body. Las preguntas ('Centros de Conciliacion y Mediacion en Honduras', 'Resolucion Alternativa de Conflictos (RAC) en Honduras') son visibles en la pagina. FAQPage es valido."
+  },
+  "opengraph": {
+    "title_coincide": true,
+    "title": "Mediación vs Juicio en Honduras | Pineda y Asociados",
+    "description_coincide": true,
+    "description": "Descubra las diferencias clave entre mediación y juicio en Honduras. Conozca cuándo usar cada método para resolver sus conflictos legales de forma",
+    "url_canonica": true,
+    "type": "article",
+    "imagen_accesible": true,
+    "imagen_dimensiones": "1200x630",
+    "errores": [],
+    "advertencias": [
+      "og:description no coincide con la description del JSON-LD (usan fuentes distintas: metaDescription vs description editorial). Esto es intencional por el codigo (buildBlogMetaDescription prioriza metaDescription cuando esta en rango 120-155 chars), pero crea una señal mixta: el crawler ve una descripcion en <meta> y otra en schema."
+    ]
+  },
+  "twitter": {
+    "card_tipo": "summary_large_image",
+    "title_coincide": true,
+    "description_coincide": true,
+    "description_nota": "twitter:description = og:description = metaDescription. Twitter usa la misma fuente que OG.",
+    "errores": []
+  },
+  "headings": {
+    "h1_count": 1,
+    "h2_count": 13,
+    "h3_count": 12,
+    "jerarquia_correcta": true,
+    "errores": [],
+    "nota": "Jerarquia H1 -> H2 -> H3 correcta. No hay H4."
+  },
+  "breadcrumbs": {
+    "presente": true,
+    "jsonld_items": ["Inicio", "Blog Jurídico", "Conciliación y Arbitraje", "Mediación vs juicio en Honduras"],
+    "items_correctos": true,
+    "errores": []
+  },
+  "indexacion": {
+    "noindex": false,
+    "robots_meta": "index, follow",
+    "en_sitemap": true,
+    "errores": []
+  },
+  "acciones_propuestas": [
+    "UNIFICAR headline: establecer una politica clara sobre si el JSON-LD headline debe coincidir con el <title> HTML (metaTitle) o con post.title. Actualmente divergen en capitalizacion y presencia de sufijo de marca."
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

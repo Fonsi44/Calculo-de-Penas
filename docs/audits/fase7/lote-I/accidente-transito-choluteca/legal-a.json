@@ -1,0 +1,46 @@
+{
+  "slug": "accidente-transito-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/accidente-transito-choluteca",
+  "body_hash": "f5a1ba2c43475394c1776c03b572932d651b26e9589df037f3f4af2e1486be65",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Accidentes de tránsito con lesiones se tipifican como lesiones culposas desde el Artículo 139 del Código Penal (Decreto 130-2017)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El CP 130-2017 tipifica las lesiones culposas. El Art. 139 es plausible pero requiere verificación de la numeración exacta en el CP vigente.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "130-2017",
+          "articulo": "Art. 139",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La responsabilidad civil se rige por el Código Civil, artículos 2245 y siguientes",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Mismo claim que danos-perjuicios-indemnizacion-honduras (2245-2270). Requiere verificación de la numeración exacta.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

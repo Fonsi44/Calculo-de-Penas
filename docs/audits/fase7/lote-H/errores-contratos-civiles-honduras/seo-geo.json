@@ -1,0 +1,48 @@
+{
+  "slug": "errores-contratos-civiles-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/errores-contratos-civiles-honduras",
+  "body_hash": "63ccb992523514d637c3348fbede46450af759fe22c9e365b5af0db77a950932",
+  "fecha_auditoria": "2026-07-27T07:43:09.310Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Errores Comunes al Redactar Contratos en Honduras",
+    "title_longitud": 49,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Evite litigios costosos. Conozca los 8 errores clave al redactar contratos civiles y mercantiles en Honduras y cómo prevenirlos.",
+    "description_longitud": 128,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Description aceptable. Ideal 140-160 chars para SERP completa.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-civil"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

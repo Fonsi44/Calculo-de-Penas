@@ -1,0 +1,48 @@
+{
+  "slug": "contratacion-publica-licitaciones",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/contratacion-publica-licitaciones",
+  "body_hash": "6c597aa9631b97e33834b545c30b240bf76660281498c478b415bd681d172581",
+  "fecha_auditoria": "2026-07-27T07:43:59.002Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Contratación Pública Honduras: Guía Empresas y",
+    "title_longitud": 46,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable (ideal 50-65 chars).",
+    "description_actual": "Descubra el proceso de Contratación Pública en Honduras. Requisitos, modalidades y garantías para empresas proveedoras del Estado.",
+    "description_longitud": 130,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Ideal 140-160 chars.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-administrativo"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

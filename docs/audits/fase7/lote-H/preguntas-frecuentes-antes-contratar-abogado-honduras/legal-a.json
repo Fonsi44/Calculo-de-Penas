@@ -1,0 +1,62 @@
+{
+  "slug": "preguntas-frecuentes-antes-contratar-abogado-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/preguntas-frecuentes-antes-contratar-abogado-honduras",
+  "body_hash": "895ef95c152d0221cbbc23416d254e8e5d3a6db0b5202b5e8caf1630e82f1169",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 1551 a 1564 del Código Civil regulan el contrato de servicios profesionales",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código Civil hondureño regula el arrendamiento de servicios profesionales. La numeración 1551-1564 es específica de ciertas ediciones del Código Civil (Decreto 76-84). Requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Arts. 1551-1564",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La Ley Orgánica del Colegio de Abogados de Honduras exige la colegiación para el ejercicio profesional",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La colegiación es obligatoria para ejercer la abogacía en Honduras.",
+      "fuentes": []
+    },
+    {
+      "claim": "El cliente conserva el derecho irrestricto de revocar el poder en cualquier etapa del proceso",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La revocabilidad del mandato es un principio del derecho civil. El poderdante puede revocar el poder en cualquier momento.",
+      "fuentes": []
+    },
+    {
+      "claim": "Modalidades de honorarios: fijo, por hora, cuota litis o combinación",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Son las modalidades estándar de honorarios profesionales en Honduras.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar numeración de artículos 1551-1564 en la edición vigente del Código Civil"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

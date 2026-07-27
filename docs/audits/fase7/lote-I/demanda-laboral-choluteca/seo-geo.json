@@ -1,0 +1,48 @@
+{
+  "slug": "demanda-laboral-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/demanda-laboral-choluteca",
+  "body_hash": "cdc19f66d72a7c0d47487282d42bf218ff7488775db2bfc1536d959cf1442e21",
+  "fecha_auditoria": "2026-07-27T07:43:09.435Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Demanda Laboral Choluteca: Pasos",
+    "title_longitud": 32,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Sepa cómo presentar una demanda laboral en Choluteca, Honduras. Conozca plazos, artículos del Código de Trabajo y pasos a seguir para reclamar sus",
+    "description_longitud": 146,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-laboral"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

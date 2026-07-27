@@ -1,0 +1,49 @@
+{
+  "slug": "poder-legal-honduras-cuando-se-necesita",
+  "url": "https://pinedayasociados.hn/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita",
+  "fecha_auditoria": "2026-07-27T07:43:37.059Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Poder notarial Honduras: tipos, requisitos y duración",
+    "title_longitud": 53,
+    "title_evaluacion": "bueno",
+    "title_sugerencia": "Longitud adecuada.",
+    "description_actual": "Conozca cuándo necesita un poder notarial en Honduras, qué tipos existen, cómo se otorgan y qué debe revisar antes de firmar.",
+    "description_longitud": 125,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "Longitud adecuada.",
+    "h1_actual": "Renderizado desde el template (title)",
+    "h1_evaluacion": "bueno: El H1 se renderiza dinamicamente desde el titulo en el template de Next.js. No se requiere H1 en el body.",
+    "h2_count": 8,
+    "h3_count": 7,
+    "intencion_principal": "Informativa — Aprender un proceso o requisitos legales",
+    "intencion_secundaria": "N/A (un solo intento predominante)",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "regular",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "Código Civil",
+      "SAR",
+      "Corte Suprema de Justicia"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "pasada": "B — Auditor adversarial",
+    "enfoque": "adversarial_independiente",
+    "slug": "contratacion-publica-licitaciones",
+    "fecha_auditoria": "2026-07-27",
+    "fuentes_consultadas": [
+      "data/codigo_tributario.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 2,
+    "nota_metodologica": "Auditoria adversarial. La Ley de Contratacion del Estado (Decreto 74-2001) y su reglamento no estan en el corpus local. Las busquedas web a sitios gubernamentales hondurenos fallaron (problemas de SSL, redirecciones). Verificacion parcial mediante Codigo Tributario y Codigo de Comercio para claims relacionados con RTN, solvencias y registro de proveedores."
+  },
+  "analisis_adversarial": {
+    "resumen_ejecutivo": "El articulo es de naturaleza tecnica y practica sobre contratacion publica. Contiene claims sobre leyes (Decreto 74-2001), procedimientos (licitacion publica/privada, concurso, contratacion directa), requisitos (RTN, solvencias, inhabilidades Art. 15), y garantias (porcentajes de 2-5%, 15%, 100%). La mayoria de los claims dependen de la Ley de Contratacion del Estado, no disponible en el corpus local. Los claims relacionados con RTN y documentacion mercantil son verificables parcialmente.",
+    "claims_verificados": [
+      {
+        "claim_id": "B1",
+        "claim_text": "La Ley de Contratacion del Estado es el Decreto No. 74-2001",
+        "fuente_verificacion": "Busqueda web (no confirmado en corpus local)",
+        "veredicto": "plausible_no_verificable",
+        "detalle": "El Decreto 74-2001 es ampliamente citado como la Ley de Contratacion del Estado. Sin embargo, no esta en el corpus local. Honduras ha tenido reformas a su regimen de contratacion publica, y existe tambien el Decreto 36-2013 mencionado en algunas fuentes. Se debe verificar cual es el texto vigente.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B2",
+        "claim_text": "La ONCAE administra los registros de proveedores y HonduCompras es el portal electronico",
+        "fuente_verificacion": "Conocimiento general de la administracion publica hondurena",
+        "veredicto": "plausible",
+        "detalle": "La ONCAE (Oficina Normativa de Contratacion y Adquisiciones del Estado) y HonduCompras son entidades reales del sistema de contratacion publica hondureno. HonduCompras 2.0 es la plataforma actual. No verificable contra corpus local pero es conocimiento publico.",
+        "nivel_confianza": "alta"
+      },
+      {
+        "claim_id": "B3",
+        "claim_text": "Se requiere RTN y solvencias del SAR para ser proveedor del Estado",
+        "fuente_verificacion": "data/codigo_tributario.json",
+        "veredicto": "confirmado",
+        "detalle": "El Codigo Tributario (Art. 164) establece el RTN como requisito obligatorio. Las solvencias fiscales son requisitos administrativos estandar para contratar con el Estado. Compatible con el marco tributario hondureno.",
+        "evidencia": "Art. 164 CTrib y marco general de obligaciones tributarias.",
+        "nivel_confianza": "alta"
+      },
+      {
+        "claim_id": "B4",
+        "claim_text": "Se requiere escritura de constitucion y RTN del representante legal",
+        "fuente_verificacion": "data/codigo_comercio.json",
+        "veredicto": "confirmado",
+        "detalle": "El Codigo de Comercio exige la constitucion mediante escritura publica e inscripcion en el Registro Mercantil para sociedades mercantiles. El RTN del representante legal es requerido por el CTrib. Ambos requisitos son estandar.",
+        "nivel_confianza": "alta"
+      },
+      {
+        "claim_id": "B5",
+        "claim_text": "Inhabilidades del Art. 15: familiares de altos funcionarios, incumplimiento previo, inhabilitacion judicial",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "no_verificable",
+        "detalle": "La Ley de Contratacion del Estado tipicamente contiene inhabilidades en sus articulos iniciales. El contenido descrito es plausible pero no verificable sin el texto de la ley. El numero de articulo (15) podria ser incorrecto.",
+        "nivel_confianza": "baja"
+      },
+      {
+        "claim_id": "B6",
+        "claim_text": "Garantia de mantenimiento de oferta: 2% a 5% del valor de la oferta",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "plausible_no_verificable",
+        "detalle": "Los porcentajes del 2-5% son comunes en regímenes de contratacion publica latinoamericanos. Sin embargo, sin acceso a la ley, no se pueden confirmar los porcentajes exactos para Honduras.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B7",
+        "claim_text": "Garantia de cumplimiento: 15% del valor del contrato",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "plausible_no_verificable",
+        "detalle": "El 15% es un porcentaje estandar en contratacion publica. Requiere verificacion contra la ley y su reglamento.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B8",
+        "claim_text": "Recursos de Reposicion y Apelacion, y via contencioso-administrativa",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "plausible",
+        "detalle": "La existencia de recursos administrativos (reposicion, apelacion) y la via contencioso-administrativa es estandar en el derecho administrativo hondureno. La Ley de la Jurisdiccion de lo Contencioso-Administrativo existe en Honduras.",
+        "nivel_confianza": "alta"
+      }
+    ],
+    "claims_omitidos_por_auditor_a": [
+      {
+        "claim_omitido": "El Art. 360 de la Constitucion se menciona en los tags como fuente",
+        "observacion": "El articulo menciona Constitucion Art. 360 en los tags pero no en el cuerpo. El Art. 360 constitucional trata sobre el Presupuesto General de la Republica, relevante para los umbrales de licitacion.",
+        "requiere_verificacion": false
+      }
+    ],
+    "riesgos_detectados": [
+      {
+        "riesgo": "Posible norma derogada o reformada: Decreto 74-2001 vs Decreto 36-2013",
+        "severidad": "alta",
+        "recomendacion": "Verificar cual es el decreto vigente de la Ley de Contratacion del Estado. Existen referencias al Decreto 36-2013 en fuentes recientes."
+      },
+      {
+        "riesgo": "Porcentajes de garantias no verificados contra fuente oficial",
+        "severidad": "media",
+        "recomendacion": "Los porcentajes del 2-5%, 15% y 100% deben verificarse contra el reglamento vigente."
+      },
+      {
+        "riesgo": "Articulo 15 de inhabilidades podria estar derogado o modificado",
+        "severidad": "baja",
+        "recomendacion": "Confirmar el numero de articulo en la ley vigente."
+      }
+    ]
+  },
+  "discrepancias_con_auditor_a": "Sin acceso al artefacto legal-a.json del Subagente 1. El articulo es sustancialmente plausible pero depende en gran medida de la Ley de Contratacion del Estado (Decreto 74-2001), que no esta en el corpus local. Los claims sobre RTN y documentacion mercantil son confirmables. Se detecto un riesgo alto: posible sustitucion del Decreto 74-2001 por el Decreto 36-2013. Se recomienda que un abogado hondureno verifique: (1) la vigencia del Decreto 74-2001, (2) los porcentajes exactos de garantias, y (3) el numero correcto del articulo de inhabilidades."
+}

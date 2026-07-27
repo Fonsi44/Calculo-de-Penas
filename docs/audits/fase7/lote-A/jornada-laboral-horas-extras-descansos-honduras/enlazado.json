@@ -1,0 +1,52 @@
+{
+  "slug": "jornada-laboral-horas-extras-descansos-honduras",
+  "slug_db": "jornada-laboral-horas-extra-descansos-honduras",
+  "title_db": "Jornada Laboral en Honduras: Horas Extra",
+  "category_db": "derecho-laboral",
+  "url": "/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "enlazado",
+  "estado_db": "ENCONTRADO",
+  "nota_slug": "El slug en DB es 'jornada-laboral-horas-extra-descansos-honduras' (extra singular, no extras), mientras que el directorio de auditoría usa 'jornada-laboral-horas-extras-descansos-honduras' (extras plural). Se auditó el artículo encontrado en DB.",
+  "enlaces_salientes": {
+    "total": 0,
+    "a_posts": 0,
+    "a_servicios": 0,
+    "a_categorias": 0,
+    "a_externos": 0,
+    "a_redirects": 0,
+    "rotos": 0,
+    "detalle": []
+  },
+  "enlaces_entrantes": {
+    "total": 1,
+    "desde": [
+      "demanda-laboral-choluteca"
+    ]
+  },
+  "huerfano": false,
+  "calidad_anchors": "n/a",
+  "calidad_anchors_justificacion": "El artículo no contiene ningún enlace saliente en el body.",
+  "sobreoptimizacion_detectada": false,
+  "enlaces_a_servicios": {
+    "tiene": false,
+    "relevantes": false,
+    "sugeridos": [
+      "/servicios-juridicos/derecho-laboral"
+    ],
+    "justificacion": "Artículo sobre jornada laboral, horas extra y descansos. Materia claramente de Derecho Laboral. Debe enlazar al servicio correspondiente."
+  },
+  "profundidad_desde_blog": 2,
+  "profundidad_justificacion": "/blog -> /blog/derecho-laboral -> este artículo = 2 clics desde el hub de categoría.",
+  "acciones_propuestas": [
+    "Añadir enlace al servicio de Derecho Laboral.",
+    "Añadir enlaces contextuales a artículos relacionados: despido-laboral-honduras-derechos, calcular-liquidacion-laboral-honduras, contratos-trabajo-tipos-clausulas-honduras, acoso-laboral-mobbing-honduras.",
+    "Vincular desde artículos complementarios de derecho laboral para aumentar enlaces entrantes."
+  ],
+  "acciones_obligatorias": [
+    "Añadir al menos 3 enlaces salientes contextuales (actualmente 0).",
+    "Enlazar al servicio /servicios-juridicos/derecho-laboral."
+  ],
+  "bloqueos": []
+}

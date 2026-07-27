@@ -1,0 +1,75 @@
+{
+  "slug": "expropiacion-forzosa-derechos-propietario-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/expropiacion-forzosa-derechos-propietario-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:10:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "La Constitución de Honduras, Artículo 106, garantiza el derecho a la propiedad privada y establece que nadie puede ser privado de ella sino por necesidad o interés público mediante justiprecio",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La existencia de una garantía constitucional de propiedad privada en Honduras y el requisito de justiprecio para la expropiación son principios constitucionales ampliamente reconocidos. Sin embargo, la verificación independiente del número de artículo (106) no fue posible — ni los sitios oficiales ni motores de búsqueda retornaron el texto constitucional. El Artículo 99 fue confirmado (domicilio inviolable), pero el 106 no pudo ser verificado. La numeración constitucional puede variar según reformas.",
+      "fuentes": []
+    },
+    {
+      "claim": "La Ley de Expropiación Forzosa es el Decreto No. 113 de 1914 y sus reformas",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Búsqueda en Brave confirma que el Decreto Número 113 es efectivamente la Ley de Expropiación Forzosa de Honduras. La ley aparece referenciada en portales legales hondureños y materiales educativos (Studocu, RedHonduras) sin indicación de que esté derogada. Una noticia de 2024 sobre expropiación para una carretera sugiere que los procedimientos expropiatorios siguen activos bajo este marco legal.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Ley de Expropiación Forzosa",
+          "url": "https://www.redhonduras.com/leyes/",
+          "decreto": "113",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La Constitución exige que la indemnización debe pagarse ANTES de que el Estado tome posesión de la propiedad",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El principio de pago previo a la ocupación es una garantía constitucional fundamental en materia expropiatoria. Sin embargo, el artículo también menciona que 'en casos urgentes (como guerra o calamidad pública), la ley permite la ocupación inmediata'. Esta excepción es relevante pero el artículo no especifica qué ley regula estas excepciones ni las garantías aplicables en esos casos. La afirmación de que 'el pago debe realizarse a la brevedad' en casos urgentes es vaga y no proporciona plazos concretos.",
+      "fuentes": []
+    },
+    {
+      "claim": "El justiprecio debe calcularse en base al valor comercial actual, incluyendo mejoras y daños y perjuicios",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El concepto de justiprecio basado en valor comercial y no en valor catastral es doctrinalmente correcto en derecho expropiatorio. Sin embargo, el artículo no cita jurisprudencia hondureña que haya establecido este criterio. La práctica de los tribunales hondureños en esta materia puede diferir de la doctrina. Sería prudente citar sentencias de la Corte Suprema que confirmen este criterio.",
+      "fuentes": []
+    },
+    {
+      "claim": "Se puede acudir a peritos de la CNBS o CHICO para elaborar un contra-avalúo técnico",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La CNBS (Comisión Nacional de Bancos y Seguros) regula peritos valuadores en Honduras. La CHICO (Cámara Hondureña de la Industria de la Construcción) también tiene registro de peritos. Sin embargo, la CNBS primordialmente regula avalúos para el sistema financiero, no necesariamente para expropiaciones. Verificar si la CNBS es la entidad correcta para peritos en procesos expropiatorios.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar número de artículo constitucional (106) para garantía de propiedad privada",
+    "Especificar marco legal para excepciones de pago previo en casos urgentes",
+    "Citar jurisprudencia que respalde el criterio de justiprecio a valor comercial",
+    "Confirmar que CNBS es la entidad correcta para peritos en expropiaciones (vs. peritos judiciales)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Texto constitucional completo de Honduras inaccesible para verificar Artículo 106",
+    "Sitios oficiales del gobierno hondureño no responden"
+  ],
+  "discrepancias_con_auditor_a": []
+}

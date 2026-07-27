@@ -1,0 +1,55 @@
+{
+  "slug": "medidas-sustitutivas-prision-preventiva-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/medidas-sustitutivas-prision-preventiva-honduras",
+  "body_hash": "fd32b1b2fb3d7138166a51d24ef85fc3025c1498856901939ff1db7698c15d03",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 173 al 179 del Código Procesal Penal regulan las medidas sustitutivas a la prisión preventiva",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El CPP hondureño (Decreto 9-99-E) regula las medidas cautelares alternativas a la prisión preventiva. La numeración 173-179 es plausible. Requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "9-99-E",
+          "articulo": "Arts. 173-179",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Medidas disponibles: presentación periódica, prohibición de salida del país, arraigo domiciliario, caución económica",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Son las medidas cautelares alternativas estándar en el sistema procesal penal hondureño.",
+      "fuentes": []
+    },
+    {
+      "claim": "La prisión preventiva es una medida cautelar excepcional según la Constitución y el CPP",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La prisión preventiva tiene carácter excepcional y solo procede cuando otras medidas resultan insuficientes.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar artículos exactos (173-179) del CPP sobre medidas cautelares"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "slug": "lavado-activos-prevencion-obligaciones-honduras",
+  "url": "https://pinedayasociados.hn/blog/derecho-penal/lavado-activos-prevencion-obligaciones-honduras",
+  "fecha_auditoria": "2026-07-27T12:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "ux-produccion",
+  "disclaimer": {
+    "en_body": false,
+    "en_componente": true,
+    "duplicado": false,
+    "ubicacion": "componente",
+    "accesible": true,
+    "texto_similar_en_footer": true,
+    "evaluacion": "correcto"
+  },
+  "accesibilidad": {
+    "jerarquia_headings": "no_aplica",
+    "alt_text_imagenes": false,
+    "contraste": "no_aplica",
+    "navegacion_teclado": "soportada",
+    "errores": [
+      "El slug exacto \"lavado-activos-prevencion-obligaciones-honduras\" NO existe en DB.",
+      "EXISTE un articulo similar: \"lavado-activos-obligaciones\" (6850 chars, categoria practica-legal).",
+      "Posible discrepancia de slug entre lo planificado y lo creado."
+    ]
+  },
+  "ux": {
+    "cta_visibles": false,
+    "tablas_responsive": false,
+    "listas_correctas": false,
+    "imagenes_optimizadas": false,
+    "mobile_legible": false,
+    "errores": [
+      "Si el articulo equivalente es lavado-activos-obligaciones: el body existe (6850 chars), primer heading es H2 (falta H1), tiene listas y sin imagenes en body."
+    ]
+  },
+  "produccion": {
+    "service_worker": true,
+    "imagenes_next_image": true,
+    "lazy_loading": true,
+    "ssr_ssg": true,
+    "errores": []
+  },
+  "acciones_propuestas": [
+    "El footer contiene un disclaimer corto (LEGAL_DISCLAIMER_SHORT). El componente <LegalDisclaimer> en el articulo contiene el disclaimer completo. No hay duplicacion porque son textos distintos (corto vs completo), pero verificar que no confundan al usuario."
+  ],
+  "acciones_obligatorias": [
+    "CREAR CONTENIDO — El articulo no existe en la base de datos. La URL responde 404. Es obligatorio crear el articulo antes de cualquier optimizacion UX/accesibilidad.",
+    "RESOLVER DISCREPANCIA DE SLUG — El slug planificado no existe. El articulo equivalente es \"lavado-activos-obligaciones\". Se debe: (a) renombrar el slug existente, o (b) crear un redirect 301, o (c) crear nuevo articulo con el slug planificado."
+  ],
+  "bloqueos": [
+    "Articulo inexistente — no se puede renderizar ni auditar completamente.",
+    "Discrepancia de slug: el articulo \"lavado-activos-obligaciones\" existe pero no coincide con el slug planificado."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "proteccion-marcas-competencia-desleal",
+  "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal",
+  "body_hash": "1d483684c120b27f1cd69886cae70f24fa4a6f63eb2491c654d7bc4eb384d263",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Protección de marcas bajo Ley de Propiedad Industrial de Honduras",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La Ley de Propiedad Industrial (Decreto 12-99-E) regula marcas en Honduras. Las acciones contra competencia desleal también tienen base en el Código de Comercio.",
+      "fuentes": [
+        {
+          "institucion": "IP Honduras",
+          "titulo": "Ley de Propiedad Industrial",
+          "url": "https://www.ip.gob.hn/",
+          "decreto": "Decreto No. 12-99-E",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Revisión por abogado de PI"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

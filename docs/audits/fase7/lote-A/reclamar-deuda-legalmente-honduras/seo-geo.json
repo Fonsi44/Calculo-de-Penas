@@ -1,0 +1,48 @@
+{
+  "slug": "reclamar-deuda-legalmente-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/reclamar-deuda-legalmente-honduras",
+  "body_hash": "8f4fe78855ae0f8ce2499c5c46a3f08653cb2ae3f4cb4572320486a636bf09e3",
+  "fecha_auditoria": "2026-07-27T07:43:59.004Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Cómo Cobrar una Deuda en Honduras",
+    "title_longitud": 33,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable (ideal 50-65 chars).",
+    "description_actual": "Descubra cómo reclamar una deuda legalmente en Honduras. Conozca el proceso monitorio, juicio ejecutivo, requisitos y plazos de prescripción según la ley.",
+    "description_longitud": 154,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-civil"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

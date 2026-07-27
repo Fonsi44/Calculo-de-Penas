@@ -1,0 +1,30 @@
+{
+  "slug": "mediacion-vs-juicio-cual-elegir",
+  "url": "https://www.pinedayasociadoshn.com/blog/??/mediacion-vs-juicio-cual-elegir",
+  "fecha_consolidacion": "2026-07-27T07:44:12.612Z",
+  "modelo": "DeepSeek V4 Pro",
+  "puntuaciones": {
+    "legal": 6,
+    "seo": 9,
+    "geo": 10,
+    "tecnica": 7,
+    "enlazado": 7,
+    "ux": 7
+  },
+  "puntuacion_ponderada": 7.6,
+  "bloqueos": [
+    "Claim alto riesgo no confirmado: La Ley de Conciliación y Arbitraje de Honduras es el Decreto No. 161-2000",
+    "Sitios oficiales tsj.hn, poderjudicial.gob.hn no accesibles para verificación independiente"
+  ],
+  "cambios_aplicables": [
+    "Title SEO mejorable",
+    "Agregar <h1> al artículo"
+  ],
+  "cambios_aplicados": [],
+  "cambios_requieren_abogado": [
+    "La Ley de Conciliación y Arbitraje de Honduras es el Decreto No. 161-2000",
+    "El Código Procesal Penal contempla conciliación para delitos menores o patrimoniales según Artículo 45"
+  ],
+  "estado_final": "bloqueado",
+  "resumen_hallazgos": "5 claims legales revisados. 2 requieren abogado. 1 bloqueos."
+}

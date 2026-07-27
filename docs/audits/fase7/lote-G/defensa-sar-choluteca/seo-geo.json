@@ -1,0 +1,48 @@
+{
+  "slug": "defensa-sar-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/tributario/defensa-sar-choluteca",
+  "body_hash": "031bf3ac73b27744792a854856937f7dc3de92f73299606ee63950f010756655",
+  "fecha_auditoria": "2026-07-27T07:43:09.190Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Defensa ante el SAR en Choluteca",
+    "title_longitud": 32,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Reciba asesoría legal experta para su defensa ante fiscalizaciones del SAR en Choluteca, Honduras. Conozca plazos, procedimientos y sus derechos.",
+    "description_longitud": 145,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "tributario"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

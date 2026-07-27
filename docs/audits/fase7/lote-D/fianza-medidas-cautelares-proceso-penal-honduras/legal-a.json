@@ -1,0 +1,57 @@
+{
+  "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras",
+  "body_hash": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Código Procesal Penal Decreto 9-99-E, Artículos 172 y siguientes",
+      "severidad": "alta",
+      "estado": "corrected",
+      "evidencia": "CRÍTICO: El artículo cita el Código Procesal Penal como Decreto 9-99-E y luego, en la sección final 'Marco Legal y Jurisdiccional', lo corrige citando el Decreto 130-2017. INCONSISTENCIA INTERNA DENTRO DEL MISMO ARTÍCULO: cita dos decretos diferentes para el CPP. El Decreto 9-99-E está DEROGADO. El CPP vigente es el Decreto 130-2017. La referencia inicial a 9-99-E debe ser corregida en todo el artículo.",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal vigente",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Tipos de medidas cautelares: presentación periódica, prohibición de salir del país, arraigo, vigilancia electrónica, fianza, prisión preventiva",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Las medidas cautelares enumeradas son consistentes con el sistema procesal penal hondureño. Verificar que la lista sea exhaustiva según el CPP vigente (Decreto 130-2017).",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "Arts. 172-190",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 0,
+    "corrected": 1,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "URGENTE: Corregir TODAS las referencias al CPP en este artículo. Eliminar referencia a Decreto 9-99-E. Usar exclusivamente Decreto 130-2017."
+  ],
+  "bloqueos": [
+    "Este artículo es un ejemplo de inconsistencia interna: cita ambos decretos del CPP. Requiere corrección inmediata."
+  ]
+}

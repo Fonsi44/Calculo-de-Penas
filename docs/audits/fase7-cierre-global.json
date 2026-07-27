@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "fecha": "2026-07-27T07:48:26.940Z",
+    "hash_inicial": "2fb4a2d3",
+    "hash_final": "2fb4a2d3",
+    "modelo": "DeepSeek V4 Pro",
+    "denominacion": "Auditoría jurídica y editorial exhaustiva asistida por DeepSeek V4 Pro"
+  },
+  "inventario": {
+    "total_registros": 175,
+    "elegibles": 134,
+    "excluidos": 41,
+    "lotes": 9,
+    "lotes_ejecutados": 9
+  },
+  "auditoria": {
+    "total_decisiones": 134,
+    "distribucion_estados": {
+      "bloqueado": 5,
+      "apto_con_correcciones": 129
+    },
+    "puntuacion_promedio": 8.1,
+    "total_bloqueos": 10,
+    "total_cambios_aplicables": 241,
+    "total_requieren_abogado": 13,
+    "artefactos_totales": 548,
+    "subagentes_ejecutados": 12
+  },
+  "correcciones": {
+    "metatitles_generados": 7,
+    "disclaimers_limpiados": 1,
+    "titles_truncados_detectados": 7,
+    "h1_faltantes_detectados": "múltiples — problema de template"
+  },
+  "hallazgos_juridicos_criticos": [
+    {
+      "articulo": "delitos-ambientales-como-denunciarlos-honduras",
+      "hallazgo": "Plazo de prescripción incorrecto (3-15 años vs 5-20 años del CP). Decreto 59-2024 no verificado.",
+      "severidad": "alta",
+      "accion": "needs_human_review"
+    },
+    {
+      "articulo": "jornada-laboral-horas-extra-descansos-honduras",
+      "hallazgo": "Recargo dominical 75% vs 100% (Art. 340 CT). Lista de feriados incompleta.",
+      "severidad": "alta",
+      "accion": "needs_human_review"
+    },
+    {
+      "articulo": "varios (allanamiento-ilegal, fianza-medidas-cautelares)",
+      "hallazgo": "CPP derogado (Decreto 9-99-E) citado en lugar del vigente (Decreto 130-2017)",
+      "severidad": "alta",
+      "accion": "needs_human_review"
+    },
+    {
+      "articulo": "proteccion-datos-personales-derechos-arco-honduras",
+      "hallazgo": "Honduras no tiene ley integral de protección de datos. El artículo debe aclararlo.",
+      "severidad": "media",
+      "accion": "needs_human_review"
+    }
+  ],
+  "validacion": {
+    "lint": "0 errores, 0 warnings",
+    "typescript": "0 errores",
+    "tests": "96 archivos, 1771 tests",
+    "build": "exitosa, 350 páginas"
+  }
+}

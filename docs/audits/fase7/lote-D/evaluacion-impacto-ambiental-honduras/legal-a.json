@@ -1,0 +1,39 @@
+{
+  "slug": "evaluacion-impacto-ambiental-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/evaluacion-impacto-ambiental-honduras",
+  "body_hash": "191d509168a5791e68e647d64ebf6fbdfdc1398a50635ae9f6eab1fffebfc402",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Evaluación de Impacto Ambiental bajo Ley General del Ambiente y SINEIA",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Similar a B5 (licencia-ambiental). Puede haber duplicación o inconsistencia entre ambos artículos. Verificar coherencia.",
+      "fuentes": [
+        {
+          "institucion": "MiAmbiente+",
+          "titulo": "SINEIA",
+          "url": "https://www.miambiente.gob.hn/",
+          "decreto": "Acuerdo Ejecutivo 008-2015",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar consistencia con artículo B5 (licencia-ambiental)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

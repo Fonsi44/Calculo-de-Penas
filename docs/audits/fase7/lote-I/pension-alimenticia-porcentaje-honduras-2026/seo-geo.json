@@ -1,0 +1,48 @@
+{
+  "slug": "pension-alimenticia-porcentaje-honduras-2026",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026",
+  "body_hash": "e0b2fbd4bc37e37595b6593262a215fd79409075818baa1c32152f7f73d501dd",
+  "fecha_auditoria": "2026-07-27T07:43:09.438Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Pensión Alimenticia en Honduras 2026: Porcentajes y Cálculo",
+    "title_longitud": 59,
+    "title_evaluacion": "bueno",
+    "title_sugerencia": "",
+    "description_actual": "Guía sobre la pensión alimenticia en Honduras para 2026: aprenda cómo el juez calcula la cuota según las necesidades del menor y los ingresos del progenitor sin",
+    "description_longitud": 160,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-de-familia"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

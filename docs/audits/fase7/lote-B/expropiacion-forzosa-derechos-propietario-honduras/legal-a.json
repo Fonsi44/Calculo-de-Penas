@@ -1,0 +1,71 @@
+{
+  "slug": "expropiacion-forzosa-derechos-propietario-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/expropiacion-forzosa-derechos-propietario-honduras",
+  "body_hash": "a151d64677474dc13734678dcdd20450703ff1fbd9ccfa0bf9aca6aebfbd706b",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 106 de la Constitución garantiza la propiedad privada y exige indemnización previa por expropiación",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "El Artículo 106 constitucional efectivamente establece que nadie puede ser privado de su propiedad sino por causa de necesidad o interés público y mediante pago de justiprecio. Es un principio constitucional consolidado.",
+      "fuentes": [
+        {
+          "institucion": "Constitución de la República de Honduras",
+          "titulo": "Artículo 106",
+          "url": "https://pdba.georgetown.edu/Constitutions/Honduras/honduras.html",
+          "decreto": "Decreto No. 131-1982",
+          "articulo": "106",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La expropiación forzosa se rige por el Decreto No. 113 de 1914 y sus reformas",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La Ley de Expropiación Forzosa data de 1914 (Decreto 113). Sin embargo, ha tenido múltiples reformas. Se recomienda verificar si hay una versión consolidada más reciente o si normas sectoriales (ej. Ley de Ordenamiento Territorial) han modificado aspectos del procedimiento.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Ley de Expropiación Forzosa",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto No. 113 de 1914",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El justiprecio debe basarse en valor comercial actual, no en avalúo catastral",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "La jurisprudencia hondureña y la doctrina constitucional respaldan que el justiprecio debe corresponder al valor real/ comercial del bien, no al valor catastral que suele ser inferior. La indemnización debe ser justa y previa.",
+      "fuentes": [
+        {
+          "institucion": "CSJ Honduras",
+          "titulo": "Jurisprudencia Sala Constitucional",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "N/A",
+          "articulo": "Art. 106 Constitucional",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar estado actual de reformas al Decreto 113 de 1914"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

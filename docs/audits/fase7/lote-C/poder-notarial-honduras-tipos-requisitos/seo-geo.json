@@ -1,0 +1,50 @@
+{
+  "slug": "poder-notarial-honduras-tipos-requisitos",
+  "url": "https://pinedayasociados.hn/blog/derecho-notarial/poder-notarial-honduras-tipos-requisitos",
+  "fecha_auditoria": "2026-07-27T07:43:37.070Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Poderes Notariales en Honduras",
+    "title_longitud": 30,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "MetaTitle corto (30 chars). Ampliar a 50-60 caracteres incluyendo keyword principal.",
+    "description_actual": "Descubra los 4 tipos de poderes notariales en Honduras, sus requisitos y cómo revocarlos. Asesoría legal experta para sus trámites.",
+    "description_longitud": 131,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "Longitud adecuada.",
+    "h1_actual": "Renderizado desde el template (title)",
+    "h1_evaluacion": "bueno: El H1 se renderiza dinamicamente desde el titulo en el template de Next.js. No se requiere H1 en el body.",
+    "h2_count": 8,
+    "h3_count": 6,
+    "intencion_principal": "Informativa — Aprender un proceso o requisitos legales",
+    "intencion_secundaria": "Informativa — Comparar opciones",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "regular",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": false,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "Código Civil",
+      "Ley de Notariado"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [
+    "Agregar respuesta directa/resumen en el primer párrafo (<200 chars)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

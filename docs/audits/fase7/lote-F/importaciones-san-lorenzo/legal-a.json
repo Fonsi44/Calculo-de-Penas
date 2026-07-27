@@ -1,0 +1,59 @@
+{
+  "slug": "importaciones-san-lorenzo",
+  "url": "https://www.tuabogado.com/blog/derecho-aduanero/importaciones-san-lorenzo",
+  "body_hash": "c8103187d4f1e95022499d730228253af36231eb8e51f0836ca0516656da4736",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F07-C1",
+      "claim": "Las importaciones se rigen por el Código Aduanero Uniforme Centroamericano (CAUCA) y RECAUCA.",
+      "clasificacion": "confirmed",
+      "fuente": "SIECA",
+      "nota": "Correcto. A diferencia del artículo abogado-aduanero-san-lorenzo (que usaba \"CAC\"), este artículo usa correctamente CAUCA."
+    },
+    {
+      "id": "F07-C2",
+      "claim": "Inscripción como importador en SAR, agente aduanero autorizado, DUA, factura comercial, conocimiento de embarque.",
+      "clasificacion": "confirmed",
+      "fuente": "CAUCA / RECAUCA",
+      "nota": "Correcto. Son los requisitos estándar para importación."
+    },
+    {
+      "id": "F07-C3",
+      "claim": "Plazo de despacho: 1-5 días hábiles; inspección física: 3-10 días adicionales.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Aduana de San Lorenzo / SAR",
+      "nota": "Los plazos son estimaciones razonables pero varían según la carga de trabajo de la aduana específica."
+    },
+    {
+      "id": "F07-C4",
+      "claim": "Sanción por subvaloración: 100% al 300% de tributos omitidos, posible decomiso.",
+      "clasificacion": "needs_human_review",
+      "fuente": "CAUCA / Código Tributario",
+      "nota": "Las sanciones por subvaloración existen pero los porcentajes exactos requieren verificación contra la normativa aduanera vigente."
+    },
+    {
+      "id": "F07-C5",
+      "claim": "ARSA para registro sanitario, SENASA para temas agropecuarios.",
+      "clasificacion": "confirmed",
+      "fuente": "ARSA / SENASA",
+      "nota": "Correcto. La ARSA (Agencia de Regulación Sanitaria) y SENASA (Servicio Nacional de Sanidad Agropecuaria) son las entidades correctas."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar plazos de despacho con la aduana de San Lorenzo",
+    "Confirmar porcentajes exactos de sanciones"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

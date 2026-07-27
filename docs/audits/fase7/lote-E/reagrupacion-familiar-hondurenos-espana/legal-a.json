@@ -1,0 +1,65 @@
+{
+  "slug": "reagrupacion-familiar-hondurenos-espana",
+  "url": "https://www.tuabogado.com/blog/hondurenos-en-espana/reagrupacion-familiar-hondurenos-espana",
+  "body_hash": "8a0940ea8b1335bbac0ac2ba46afd65c5b1b0694245001884ecca8c4675a7302",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E02-C1",
+      "claim": "El residente legal debe haber renovado la autorización de residencia al menos una vez.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley Orgánica 4/2000 (Ley de Extranjería española), Art. 17",
+      "nota": "Es correcto. El reagrupante debe haber residido legalmente en España durante al menos 1 año y tener autorización para residir al menos otro año."
+    },
+    {
+      "id": "E02-C2",
+      "claim": "Familiares reagrupables: cónyuge/pareja de hecho, hijos menores de 18 o con discapacidad, ascendientes dependientes.",
+      "clasificacion": "confirmed",
+      "fuente": "Art. 17 de la Ley Orgánica 4/2000",
+      "nota": "Correcto. El artículo enumera exactamente estos familiares."
+    },
+    {
+      "id": "E02-C3",
+      "claim": "El requisito económico es el 150% del IPREM para 2 miembros, más 50% por cada miembro adicional; ~1,100 euros mensuales para 1 persona, ~1,400 para cónyuge e hijo.",
+      "clasificacion": "confirmed",
+      "fuente": "Real Decreto 557/2011 (Reglamento de Extranjería)",
+      "nota": "Las proporciones respecto al IPREM son correctas. Los montos aproximados en euros coinciden sustancialmente con la realidad aunque varían con el IPREM anual."
+    },
+    {
+      "id": "E02-C4",
+      "claim": "Se requiere informe de adecuación de vivienda de los servicios sociales de la Comunidad Autónoma.",
+      "clasificacion": "confirmed",
+      "fuente": "Art. 55 del Real Decreto 557/2011",
+      "nota": "Correcto. El informe de vivienda es obligatorio."
+    },
+    {
+      "id": "E02-C5",
+      "claim": "La falta de respuesta se considera denegación por silencio administrativo.",
+      "clasificacion": "corrected",
+      "fuente": "Ley 39/2015 de Procedimiento Administrativo Común",
+      "nota": "En materia de extranjería, el silencio administrativo es negativo (denegatorio) por ley. Esto es correcto, pero el artículo no menciona los plazos específicos (3 meses para la resolución)."
+    },
+    {
+      "id": "E02-C6",
+      "claim": "Documentos de Honduras deben estar apostillados.",
+      "clasificacion": "confirmed",
+      "fuente": "Convenio de La Haya de 1961",
+      "nota": "Correcto. Honduras es signatario del Convenio de la Apostilla desde 1961."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 5,
+    "corrected": 1,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Especificar plazo de 3 meses para resolución administrativa"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

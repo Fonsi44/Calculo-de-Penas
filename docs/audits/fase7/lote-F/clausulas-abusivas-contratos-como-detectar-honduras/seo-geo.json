@@ -1,0 +1,48 @@
+{
+  "slug": "clausulas-abusivas-contratos-como-detectar-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/clausulas-abusivas-contratos-como-detectar-honduras",
+  "body_hash": "5fd4a6a8b4069757ed77f5552c43bced5f5b8da48c2a69fc25afde573a417524",
+  "fecha_auditoria": "2026-07-27T07:43:09.065Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Cláusulas Abusivas Honduras: Anulación y Defensa",
+    "title_longitud": 48,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Detecte y anule cláusulas abusivas en contratos en Honduras. Conozca sus derechos y los pasos legales para defenderse. ¡Consulte a nuestros abogados!",
+    "description_longitud": 149,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-civil"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

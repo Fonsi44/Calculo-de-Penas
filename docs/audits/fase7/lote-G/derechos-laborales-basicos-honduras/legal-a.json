@@ -1,0 +1,91 @@
+{
+  "slug": "derechos-laborales-basicos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/derechos-laborales-basicos-honduras",
+  "body_hash": "fd922acbd53f77ce7023cd9d1cc37d8e720173b56158528942dd7cc475875874",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "La jornada ordinaria diurna es de 8 horas diarias y 44 horas semanales",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código de Trabajo hondureño (Decreto 189-1959) establece la jornada diurna como la comprendida entre las 5:00 y 19:00 horas. Hay debate sobre si el límite es 8 horas diarias/44 semanales o 8/48. Varias fuentes indican que el estándar es 8/44 para trabajo diurno. Requiere verificación exacta del CT.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Horas extras diurnas: recargo del 25%; mixtas: 50%; nocturnas: 75%",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código de Trabajo hondureño establece recargos para horas extraordinarias. Los porcentajes de 25%, 50%, y 75% son ampliamente citados en la práctica laboral hondureña. Sin embargo, el artículo afirma que el máximo es 12 horas diarias, lo cual es consistente con el CT. Requiere verificación de los porcentajes exactos.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El aguinaldo (décimo tercer mes) equivale a un mes de salario por año completo",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El aguinaldo (décimo tercer mes) está regulado por el Código de Trabajo y la Ley del Séptimo Día y Décimo Tercer Mes. Corresponde a un salario mensual completo si se trabajó el año completo.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Las revisiones más recientes del salario mínimo para 2026 y 2027 indican aumentos entre el 6% y 7.5%",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Los aumentos al salario mínimo en Honduras se negocian anualmente entre el gobierno, patronos y trabajadores. Los porcentajes mencionados (6-7.5%) son plausibles para las negociaciones recientes, pero cambian cada año y deben verificarse contra la tabla oficial vigente publicada por la Secretaría de Trabajo.",
+      "fuentes": [
+        {
+          "institucion": "Secretaría de Trabajo y Previsión Social",
+          "titulo": "Tabla de Salario Mínimo Vigente",
+          "url": "https://www.trabajo.gob.hn/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "Verificar si la jornada diurna es 44h o 48h semanales en el CT vigente",
+    "Confirmar porcentajes exactos de recargo por horas extra",
+    "Verificar los porcentajes de aumento salarial 2026-2027 contra la tabla oficial"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

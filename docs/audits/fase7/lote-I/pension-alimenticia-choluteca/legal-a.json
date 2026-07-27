@@ -1,0 +1,65 @@
+{
+  "slug": "pension-alimenticia-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/pension-alimenticia-choluteca",
+  "body_hash": "01e580a195fc572e61857dd25d6cb10fceeaec43c28f1070d171f46648bd1f1c",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 206 al 226 del Código de Familia establecen la obligación alimentaria de ambos padres",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código de Familia (Decreto 76-84) regula la obligación alimentaria. La numeración 206-226 es plausible. Requiere verificación contra el texto oficial.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Arts. 206-226",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El embargo por pensión alimenticia puede alcanzar hasta el 50% del salario neto del demandado",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El porcentaje máximo de embargo por alimentos es un dato verificable en el Código de Familia y Código de Trabajo. El 50% es un límite común en legislaciones latinoamericanas. Requiere verificación del porcentaje exacto en la ley hondureña.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "No existe un porcentaje fijo universal; se aplica el Principio de Proporcionalidad",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La ley hondureña no establece un porcentaje fijo para la pensión alimenticia. El juez determina la cuantía según las necesidades y la capacidad económica.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar artículos exactos (206-226) sobre alimentos en el Código de Familia",
+    "Confirmar porcentaje máximo de embargo salarial por pensión alimenticia"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

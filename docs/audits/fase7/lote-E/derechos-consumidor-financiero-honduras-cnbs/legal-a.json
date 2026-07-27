@@ -1,0 +1,52 @@
+{
+  "slug": "derechos-consumidor-financiero-honduras-cnbs",
+  "url": "https://www.tuabogado.com/blog/derecho-bancario/derechos-consumidor-financiero-honduras-cnbs",
+  "body_hash": "9f6328adcd19f06aae53173f613a2cffb7b39576d0f8084c62fb34dde4d90f71",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E11-C1",
+      "claim": "La Ley de Protección al Consumidor Financiero y normativa CNBS constituyen el marco normativo.",
+      "clasificacion": "needs_human_review",
+      "fuente": "CNBS",
+      "nota": "Honduras tiene normativa de protección al consumidor financiero emitida por la CNBS bajo la Ley de la CNBS. No se pudo verificar si existe una \"Ley de Protección al Consumidor Financiero\" independiente o si es parte de la Ley de Protección al Consumidor general. Requiere verificación."
+    },
+    {
+      "id": "E11-C2",
+      "claim": "Plazo de 15 días hábiles para que el banco responda un reclamo.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Normativa CNBS",
+      "nota": "El plazo exacto debe verificarse contra la circular o resolución de CNBS aplicable."
+    },
+    {
+      "id": "E11-C3",
+      "claim": "Protección contra reportes indebidos en Central de Riesgos; notificación previa obligatoria.",
+      "clasificacion": "confirmed",
+      "fuente": "Normativa CNBS",
+      "nota": "La CNBS exige notificación previa antes del reporte a la Central de Riesgos. Es correcto."
+    },
+    {
+      "id": "E11-C4",
+      "claim": "Tres niveles de reclamación: banco, CNBS, demanda judicial.",
+      "clasificacion": "confirmed",
+      "fuente": "CNBS",
+      "nota": "El sistema escalonado es correcto y refleja el procedimiento real ante CNBS."
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Confirmar existencia y nombre exacto de la ley de protección al consumidor financiero",
+    "Verificar plazo exacto de respuesta bancaria"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

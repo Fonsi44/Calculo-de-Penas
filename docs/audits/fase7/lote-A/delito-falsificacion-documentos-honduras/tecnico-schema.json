@@ -1,0 +1,78 @@
+{
+  "slug": "delito-falsificacion-documentos-honduras",
+  "url": null,
+  "fecha_auditoria": "2026-07-27T12:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "tecnico-schema",
+  "estado": "NO_EXISTE",
+  "diagnostico": "El articulo con slug 'delito-falsificacion-documentos-honduras' no existe en la base de datos ni responde en produccion (HTTP 404). No se puede auditar. Se requiere crear el articulo primero (Fase de redaccion/importacion) antes de auditar sus metadatos.",
+  "canonical": {
+    "actual": null,
+    "esperada": "https://www.pinedayasociadoshn.com/blog/derecho-penal/delito-falsificacion-documentos-honduras",
+    "coincide": null,
+    "evaluacion": "pendiente_creacion"
+  },
+  "jsonld": {
+    "blogposting_count": 0,
+    "headline_coincide": null,
+    "description_coincide": null,
+    "fechas_coherentes": null,
+    "author_presente": null,
+    "publisher_correcto": null,
+    "imagen_accesible": null,
+    "errores": [
+      "Articulo no existe"
+    ],
+    "schemas_duplicados": [],
+    "faqpage_indebido": null
+  },
+  "opengraph": {
+    "title_coincide": null,
+    "description_coincide": null,
+    "url_canonica": null,
+    "imagen_accesible": null,
+    "errores": [
+      "Articulo no existe"
+    ]
+  },
+  "twitter": {
+    "card_tipo": null,
+    "title_coincide": null,
+    "description_coincide": null,
+    "errores": [
+      "Articulo no existe"
+    ]
+  },
+  "headings": {
+    "h1_count": null,
+    "jerarquia_correcta": null,
+    "errores": [
+      "Articulo no existe"
+    ]
+  },
+  "breadcrumbs": {
+    "presente": null,
+    "items_correctos": null,
+    "errores": [
+      "Articulo no existe"
+    ]
+  },
+  "indexacion": {
+    "noindex": null,
+    "en_sitemap": false,
+    "errores": [
+      "Articulo no existe — no indexado, no en sitemap"
+    ]
+  },
+  "acciones_propuestas": [
+    "CREAR el articulo en la base de datos con todos los metadatos requeridos (title, description, metaTitle, metaDescription, coverImage, category='derecho-penal', tags, author, body HTML).",
+    "GENERAR coverImage y ogImage antes de publicar.",
+    "Una vez creado, re-ejecutar esta auditoria para verificar metadatos tecnicos y schema."
+  ],
+  "acciones_obligatorias": [
+    "CREAR el articulo. Sin articulo no hay metadatos que auditar."
+  ],
+  "bloqueos": [
+    "El articulo no existe en la DB ni en produccion. Bloquea cualquier verificacion de schema/metadatos."
+  ]
+}

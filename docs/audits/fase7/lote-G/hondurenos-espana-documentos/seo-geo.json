@@ -1,0 +1,48 @@
+{
+  "slug": "hondurenos-espana-documentos",
+  "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/hondurenos-espana-documentos",
+  "body_hash": "a51e050713b368072c996d6d5e1da7d18db3a704c83a71a46319b8cecf36f0d6",
+  "fecha_auditoria": "2026-07-27T07:43:09.189Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Documentos Legales Hondureños desde España",
+    "title_longitud": 42,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Aprenda a tramitar documentos legales hondureños desde España. Guía sobre apostilla, RNP, antecedentes penales y consulados. ¡Evite errores!",
+    "description_longitud": 140,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "hondurenos-en-espana"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

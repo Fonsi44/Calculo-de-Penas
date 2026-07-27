@@ -1,0 +1,71 @@
+{
+  "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras",
+  "body_hash": "7aec743208b47dc08649164d81edfa6ca072bc5465ce5d1ff8d4bf330750728d",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos del Código de Comercio: 1 al 16 (actos de comercio), 763 (compraventa mercantil), 764, 793, 798, 717, 50",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El artículo cita numerosos artículos del Código de Comercio. La numeración exacta de cada artículo DEBE verificarse contra el texto oficial (Decreto 75-2000). Múltiples referencias numéricas aumentan el riesgo de error. ALTO RIESGO: Un artículo mal citado puede invalidar el argumento jurídico.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Comercio",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto No. 75-2000",
+          "articulo": "1-16, 717, 763-764, 793, 798 (por verificar)",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Ley de Representantes, Distribuidores y Agentes de Empresas Nacionales y Extranjeras regula contratos de agencia y distribución",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "Esta ley existe en Honduras y es de suma importancia para el derecho mercantil. Protege a distribuidores y agentes locales frente a terminaciones unilaterales de empresas extranjeras.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Ley de Representantes, Distribuidores y Agentes",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto No. 50-1997",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La franquicia no está regulada de forma específica en Honduras",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Honduras no tiene una ley específica de franquicias. Se rige por normas generales del Código de Comercio y el principio de autonomía de la voluntad.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Comercio",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto No. 75-2000",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Verificar TODOS los números de artículos del Código de Comercio citados (1-16, 717, 763, 764, 793, 798, 50) contra el texto oficial"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

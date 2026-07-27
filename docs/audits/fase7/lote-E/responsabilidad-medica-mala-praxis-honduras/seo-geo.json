@@ -1,0 +1,48 @@
+{
+  "slug": "responsabilidad-medica-mala-praxis-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/regulacion-sanitaria/responsabilidad-medica-mala-praxis-honduras",
+  "body_hash": "6032e08c08cbc561bbe15571d12b0dce4532d3ed08e8bea53260351fc7b9ff92",
+  "fecha_auditoria": "2026-07-27T07:43:08.843Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Mala Praxis Médica en Honduras",
+    "title_longitud": 30,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Conozca sus derechos y cómo reclamar indemnización por mala praxis médica en Honduras. Plazos, ley y pasos a seguir. Consulte a nuestros abogados.",
+    "description_longitud": 146,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "regulacion-sanitaria"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

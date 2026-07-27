@@ -1,0 +1,59 @@
+{
+  "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+  "slug_db": "banco-demanda-deuda-defensa-opciones-honduras",
+  "title_db": "Demanda bancaria en Honduras: 6 defensas y",
+  "category_db": "derecho-bancario",
+  "url": "/blog/derecho-bancario/banco-demanda-deuda-defensa-opciones-honduras",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "enlazado",
+  "estado_db": "ENCONTRADO",
+  "enlaces_salientes": {
+    "total": 1,
+    "a_posts": 0,
+    "a_servicios": 0,
+    "a_categorias": 0,
+    "a_externos": 0,
+    "a_redirects": 0,
+    "rotos": 0,
+    "detalle": [
+      {
+        "url": "/solicitar-consulta",
+        "tipo": "interno",
+        "anchor": "Solicitar Defensa Legal Urgente",
+        "status": "ok",
+        "observacion": "CTA hacia formulario de consulta. Anchor descriptivo y con urgencia apropiada para el contexto (demanda bancaria con plazo de 3 días)."
+      }
+    ]
+  },
+  "enlaces_entrantes": {
+    "total": 1,
+    "desde": [
+      "reclamar-deuda-legalmente-honduras"
+    ]
+  },
+  "huerfano": false,
+  "calidad_anchors": "buena",
+  "calidad_anchors_justificacion": "El único anchor ('Solicitar Defensa Legal Urgente') es descriptivo, contextual y apropiado para el tema tratado.",
+  "sobreoptimizacion_detectada": false,
+  "enlaces_a_servicios": {
+    "tiene": false,
+    "relevantes": false,
+    "sugeridos": [
+      "/servicios-juridicos/derecho-bancario-y-financiero"
+    ],
+    "justificacion": "El artículo trata sobre demandas bancarias, ejecución de títulos, defensas legales, CNBS, embargos. Es claramente materia de derecho bancario. El CTA genérico a /solicitar-consulta no es suficiente; debe enlazar al servicio especializado."
+  },
+  "profundidad_desde_blog": 2,
+  "profundidad_justificacion": "/blog -> /blog/derecho-bancario -> este artículo = 2 clics desde el hub de categoría.",
+  "acciones_propuestas": [
+    "Añadir enlace al servicio de Derecho Bancario y Financiero.",
+    "Añadir enlaces contextuales a artículos relacionados: prescripcion-deudas-plazos-honduras, central-riesgos-honduras-consultar-impugnar, derechos-consumidor-financiero-cnbs-honduras.",
+    "Añadir enlace contextual a usura-delito-intereses-abusivos-honduras si existiera ese artículo."
+  ],
+  "acciones_obligatorias": [
+    "Añadir al menos 3 enlaces contextuales a otros artículos del blog sobre derecho bancario/financiero.",
+    "Enlazar al servicio /servicios-juridicos/derecho-bancario-y-financiero."
+  ],
+  "bloqueos": []
+}

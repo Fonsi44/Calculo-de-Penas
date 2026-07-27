@@ -1,0 +1,60 @@
+{
+  "slug": "pension-alimenticia-porcentaje-honduras-2026",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026",
+  "body_hash": "e0b2fbd4bc37e37595b6593262a215fd79409075818baa1c32152f7f73d501dd",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El Código de Familia (Decreto 76-84) rige la obligación alimentaria",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Varios artículos del sitio citan consistentemente el Decreto 76-84 para el Código de Familia.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "No existe un porcentaje fijo obligatorio de pensión alimenticia en Honduras",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La ley hondureña no establece un porcentaje fijo. El juez determina la cuantía caso por caso basado en necesidades y capacidad económica.",
+      "fuentes": []
+    },
+    {
+      "claim": "El juez analiza tres variables: necesidades del menor, capacidad económica del obligado y proporcionalidad",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Es el estándar de determinación judicial de alimentos en Honduras.",
+      "fuentes": []
+    },
+    {
+      "claim": "Si el obligado tiene empleo formal, el juez puede ordenar el descuento directo de su salario",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El descuento directo o retención salarial es un mecanismo común de ejecución de pensiones alimenticias.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 4,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

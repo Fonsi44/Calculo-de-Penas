@@ -1,0 +1,20 @@
+{
+  "slug": "delito-falsificacion-documentos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/delito-falsificacion-documentos-honduras",
+  "body_hash": null,
+  "fecha_auditoria": "2026-07-27T10:05:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [],
+  "resumen": {
+    "total_claims": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "estado_especial": "NO VERIFICABLE",
+  "motivo": "El slug 'delito-falsificacion-documentos-honduras' NO existe en la base de datos Neon (blog_posts). El artículo nunca fue publicado en el CMS.",
+  "nota": "La falsificación de documentos está tipificada en el Código Penal de Honduras (Decreto 130-2017). Si se publica, debe citar: (a) artículos específicos del CP sobre falsificación documental (probablemente Arts. 270-280+), (b) diferencia entre falsificación material e ideológica, (c) penas aplicables según tipo de documento (público, privado, mercantil)."
+}

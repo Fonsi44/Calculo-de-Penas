@@ -1,0 +1,48 @@
+{
+  "slug": "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/regulacion-sanitaria/registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+  "body_hash": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+  "fecha_auditoria": "2026-07-27T07:43:59.008Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Registro sanitario ARSA Honduras: requisitos y pasos",
+    "title_longitud": 52,
+    "title_evaluacion": "bueno",
+    "title_sugerencia": "",
+    "description_actual": "Revise los requisitos y pasos para tramitar ante ARSA el registro sanitario de alimentos procesados en Honduras.",
+    "description_longitud": 112,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "Ideal 140-160 chars.",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "adecuada",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "regulacion-sanitaria"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "adecuado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

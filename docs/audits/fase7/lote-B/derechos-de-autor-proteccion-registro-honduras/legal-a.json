@@ -1,0 +1,39 @@
+{
+  "slug": "derechos-de-autor-proteccion-registro-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/derechos-de-autor-proteccion-registro-honduras",
+  "body_hash": "af64c5c2cf1919b1ae088193217e1a87f37da9f2c45c15e29e1842a9c85c1309",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Protección de derechos de autor bajo Ley de Derecho de Autor y Derechos Conexos de Honduras",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La Ley de Derecho de Autor de Honduras (Decreto 4-99-E) y sus reformas regulan esta materia. La información general es correcta, pero los detalles sobre registro (Dirección General de Propiedad Intelectual), plazos, y procedimientos requieren verificación contra la normativa actual.",
+      "fuentes": [
+        {
+          "institucion": "IP Honduras",
+          "titulo": "Ley de Derecho de Autor",
+          "url": "https://www.ip.gob.hn/",
+          "decreto": "Decreto No. 4-99-E",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar procedimiento de registro ante la Dirección General de Propiedad Intelectual"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

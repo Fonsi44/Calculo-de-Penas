@@ -1,0 +1,61 @@
+{
+  "slug": "etapa-investigacion-proceso-penal-honduras",
+  "url": "https://www.tuabogado.com/blog/proceso-penal/etapa-investigacion-proceso-penal-honduras",
+  "body_hash": "c992ed540ed54cf072bbd39719cbcd14a630a49aa8693716dd661f62f4e77d9e",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "E04-C1",
+      "claim": "Código Procesal Penal (Decreto 130-2017). Libro II, Título I. Artículo 56: MP como titular de la acción penal y director de la investigación.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Procesal Penal de Honduras",
+      "nota": "El Decreto 130-2017 es el Código Penal, NO el Código Procesal Penal. El CPP hondureño tiene un número de decreto diferente. Esto constituye un error de referencia normativa significativo que debe corregirse."
+    },
+    {
+      "id": "E04-C2",
+      "claim": "Artículo 58: obligación de investigar tanto lo perjudicial como lo favorable.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Procesal Penal",
+      "nota": "El principio de objetividad existe en el proceso penal hondureño, pero el artículo exacto depende del CPP correcto, no del Código Penal."
+    },
+    {
+      "id": "E04-C3",
+      "claim": "Plazo máximo de investigación preliminar de 6 meses, prorrogable.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Procesal Penal",
+      "nota": "El plazo de 6 meses es plausible bajo el sistema procesal penal hondureño, pero debe verificarse contra el CPP vigente."
+    },
+    {
+      "id": "E04-C4",
+      "claim": "Artículos 56 al 78 del CPP regulan la etapa de investigación.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Procesal Penal",
+      "nota": "El rango de artículos citados debe verificarse contra la numeración real del CPP hondureño vigente."
+    },
+    {
+      "id": "E04-C5",
+      "claim": "Derecho al silencio y a contar con abogado defensor.",
+      "clasificacion": "confirmed",
+      "fuente": "Constitución de Honduras, Art. 88; CPP",
+      "nota": "El derecho a la defensa técnica y a guardar silencio son garantías constitucionales y procesales confirmadas."
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Corregir Decreto 130-2017 (es el Código Penal, no el Procesal Penal)",
+    "Verificar número correcto del CPP hondureño y sus artículos"
+  ],
+  "acciones_obligatorias": [
+    "Corregir la referencia al Decreto 130-2017 como Código Procesal Penal (riesgo alto de error jurídico)"
+  ],
+  "bloqueos": []
+}

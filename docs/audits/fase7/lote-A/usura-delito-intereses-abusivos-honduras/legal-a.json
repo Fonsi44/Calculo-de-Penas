@@ -1,0 +1,20 @@
+{
+  "slug": "usura-delito-intereses-abusivos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/usura-delito-intereses-abusivos-honduras",
+  "body_hash": null,
+  "fecha_auditoria": "2026-07-27T10:05:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [],
+  "resumen": {
+    "total_claims": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "estado_especial": "NO VERIFICABLE",
+  "motivo": "El slug 'usura-delito-intereses-abusivos-honduras' NO existe en la base de datos Neon (blog_posts). El artículo nunca fue publicado en el CMS.",
+  "nota": "La usura como delito puede estar tipificada en el Código Penal de Honduras (Decreto 130-2017) y regulada por la CNBS en el ámbito financiero. Si se publica, debe verificar: (a) artículo exacto del CP que tipifica la usura, (b) límites de interés fijados por la CNBS, (c) diferencia entre usura civil y penal."
+}

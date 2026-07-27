@@ -1,0 +1,84 @@
+{
+  "slug": "derechos-de-autor-proteccion-registro-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/derechos-de-autor-proteccion-registro-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:25:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Ley del Derecho de Autor y de los Derechos Conexos es el Decreto No. 4-99-E, vigente desde el 1 de enero de 2000",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La referencia al Decreto 4-99-E como Ley de Derecho de Autor es específica y plausible. Honduras modernizó su legislación de propiedad intelectual a finales de los 90 para cumplir con tratados internacionales. Sin embargo, no se pudo verificar de forma independiente.",
+      "fuentes": []
+    },
+    {
+      "claim": "La ley ha sido reformada por el Decreto N° 16-2006",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La referencia a una reforma mediante Decreto 16-2006 es específica pero no verificable. El artículo menciona esta reforma pero no especifica qué aspectos de la ley fueron modificados, lo cual sería información útil para el lector.",
+      "fuentes": []
+    },
+    {
+      "claim": "Los derechos patrimoniales duran toda la vida del autor más 75 años después de su fallecimiento",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El plazo de protección de vida del autor + 75 años es una afirmación cuantitativa precisa. El estándar internacional común es vida + 50 años (Convenio de Berna) o vida + 70 años (estándar de muchos países desarrollados). El plazo de 75 años es inusual y requiere verificación. Honduras podría haber adoptado un plazo mayor por razones de política legislativa, pero debe confirmarse con el texto de la ley.",
+      "fuentes": [
+        {
+          "institucion": "Instituto de la Propiedad — DIGEPIH",
+          "titulo": "Ley del Derecho de Autor — Duración de la protección",
+          "url": "https://www.institutopropiedad.hn/",
+          "decreto": "4-99-E",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Para obras anónimas o seudónimas, la protección es de 75 años desde la fecha de su publicación legal",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Consistente con el claim anterior de 75 años. Misma observación: requiere verificación del plazo exacto.",
+      "fuentes": []
+    },
+    {
+      "claim": "El registro ante DIGEPIH es declarativo, no constitutivo de derechos",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "El principio de que el derecho de autor nace con la creación de la obra (no con el registro) es universal en el derecho de autor, derivado del Convenio de Berna. Honduras es parte del Convenio de Berna.",
+      "fuentes": []
+    },
+    {
+      "claim": "La Fiscalía Especial de Propiedad Intelectual del Ministerio Público interviene en ilícitos penales de derechos de autor",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "La existencia de una fiscalía especializada en propiedad intelectual dentro del Ministerio Público hondureño es plausible, dado que muchos países han creado unidades especializadas. No se pudo verificar de forma independiente.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 5,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar el plazo de protección (75 años) con el texto de la Ley 4-99-E — es un plazo inusual frente a los estándares internacionales",
+    "Confirmar la reforma por Decreto 16-2006 y detallar qué modificó",
+    "Verificar la existencia actual de la Fiscalía Especial de Propiedad Intelectual",
+    "Verificar el acceso al portal del Instituto de la Propiedad/DIGEPIH"
+  ],
+  "acciones_obligatorias": [
+    "Confirmar plazo de protección de 75 años vs. 50 o 70 años (estándares internacionales)"
+  ],
+  "bloqueos": [
+    "Portal institutopropiedad.hn inaccesible",
+    "Sitios oficiales hondureños no responden para verificación de la ley"
+  ],
+  "discrepancias_con_auditor_a": []
+}

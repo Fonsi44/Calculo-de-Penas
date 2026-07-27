@@ -1,0 +1,64 @@
+{
+  "slug": "danos-perjuicios-indemnizacion-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras",
+  "body_hash": "d278f3eb2cfad38935a5cfddd3471952838bceb837f90d143565e4c822695469",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 2245 al 2270 del Código Civil establecen las bases para reclamaciones por daños y perjuicios",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código Civil hondureño regula la responsabilidad civil extracontractual. La numeración 2245-2270 es específica de ciertas ediciones del Código Civil (Decreto 76-84). Requiere verificación de ubicación exacta.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Arts. 2245-2270",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 2245: todo hecho ilícito que cause daño obliga a repararlo",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Coincide con el principio general de responsabilidad civil extracontractual (neminem laedere) presente en la mayoría de códigos civiles latinoamericanos.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Art. 2245",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Tres categorías de daños: daño material/emergente, lucro cesante y daño moral",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La doctrina civil reconoce estas tres categorías de daños indemnizables, y el Código Civil hondureño las contempla.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar exactitud de la numeración de artículos 2245-2270 contra la edición vigente del Código Civil (Decreto 76-84)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

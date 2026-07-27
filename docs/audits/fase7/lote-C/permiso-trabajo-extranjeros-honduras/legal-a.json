@@ -1,0 +1,39 @@
+{
+  "slug": "permiso-trabajo-extranjeros-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/extranjeria-migracion/permiso-trabajo-extranjeros-honduras",
+  "body_hash": "7c33f7f67c31cf8d4f12a6292c057eda508723411385bd708c20a93881f31b6f",
+  "fecha_auditoria": "2026-07-27T07:45:33.796Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Permiso de trabajo para extranjeros regulado por Ley de Migración y Secretaría de Trabajo",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Los requisitos de permiso de trabajo para extranjeros son regulados por INM y Secretaría de Trabajo. Requieren verificación de requisitos actualizados (proporción de empleados hondureños vs extranjeros, etc.).",
+      "fuentes": [
+        {
+          "institucion": "INM",
+          "titulo": "Ley de Migración y Extranjería",
+          "url": "https://www.inm.gob.hn/",
+          "decreto": "Decreto No. 208-2003",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar requisitos actualizados de permiso de trabajo"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

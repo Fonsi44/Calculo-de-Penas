@@ -1,0 +1,46 @@
+{
+  "slug": "abogado-laboral-choluteca",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/abogado-laboral-choluteca",
+  "body_hash": "716c810fda1b65a7c1676545d426c432a1bb24e3003be5f18a23d47b0a9c2e6b",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Plazo de 2 meses para interponer reclamo por despido injustificado",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código de Trabajo hondureño establece plazos de caducidad para acciones laborales. 2 meses es un plazo comúnmente citado. Requiere verificación del plazo exacto en el CT vigente.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Los Juzgados de Letras del Trabajo en Choluteca son competentes para conflictos laborales en la zona sur",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Los juzgados de trabajo existen en las cabeceras departamentales.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

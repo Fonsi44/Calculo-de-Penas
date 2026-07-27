@@ -1,0 +1,20 @@
+{
+  "slug": "jubilaciones-pensiones-derechos-laborales-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/jubilaciones-pensiones-derechos-laborales-honduras",
+  "body_hash": null,
+  "fecha_auditoria": "2026-07-27T10:05:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [],
+  "resumen": {
+    "total_claims": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "estado_especial": "NO VERIFICABLE",
+  "motivo": "El slug 'jubilaciones-pensiones-derechos-laborales-honduras' NO existe en la base de datos Neon (blog_posts). El artículo nunca fue publicado en el CMS.",
+  "nota": "Si se publica, debe abordar: (a) sistema de pensiones del IHSS (Instituto Hondureño de Seguridad Social), (b) INJUPEMP (Instituto de Jubilaciones y Pensiones de los Empleados del Poder Ejecutivo), (c) IPM (Instituto de Previsión del Magisterio), (d) diferencias entre jubilación, pensión por vejez e invalidez, (e) edad y requisitos de cotización mínima."
+}

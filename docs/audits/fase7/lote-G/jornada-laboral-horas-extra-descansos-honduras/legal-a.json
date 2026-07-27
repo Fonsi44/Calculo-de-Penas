@@ -1,0 +1,81 @@
+{
+  "slug": "jornada-laboral-horas-extra-descansos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras",
+  "body_hash": "a51a669450a0a6efbff2f9b1f766298298a47ca4194717846da817d40a5884a3",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Jornada diurna: entre 5:00 a.m. y 7:00 p.m., máximo 8h diarias y 44h semanales",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código de Trabajo (Decreto 189-1959) define la jornada diurna. Hay debate doctrinal sobre si el límite es 44h o 48h semanales. Requiere verificación del texto oficial.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Jornada nocturna: entre 7:00 p.m. y 5:00 a.m., máximo 6h diarias y 36h semanales, recargo del 25%",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El CT establece jornada nocturna reducida. El recargo del 25% adicional al salario ordinario por trabajo nocturno es consistente con el CT, pero requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Horas extra diurnas: recargo del 25%; mixtas: 50%; nocturnas: 75%",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Los recargos por horas extra varían según el tipo de jornada. La escala 25/50/75 es comúnmente citada pero requiere verificación exacta en el CT.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Trabajo",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "189-1959",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Jornada mixta: máximo 7h diarias y 42h semanales",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La jornada mixta (diurna+nocturna) tiene un límite intermedio en el CT. Requiere verificación del límite exacto.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "Verificar límites exactos de jornada (44h vs 48h para diurna)",
+    "Confirmar porcentajes de recargo por horas extra según jornada"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

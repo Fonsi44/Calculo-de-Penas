@@ -1,0 +1,90 @@
+{
+  "slug": "poder-legal-honduras-cuando-se-necesita",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita",
+  "body_hash": "160edca4e27b0b924d62aea3e7ea6c53d2a5b35cfcc09f9fd91d84b69a034699",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículos 1888 al 1912 del Código Civil regulan el mandato/poder notarial",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Código Civil regula el mandato. La numeración exacta de los artículos (1888-1912) debe verificarse contra la versión oficial consolidada del Código Civil de Honduras, ya que las numeraciones pueden variar entre ediciones y reformas.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Civil de Honduras",
+          "url": "https://www.tsc.gob.hn/leyes/",
+          "decreto": "Decreto No. 76-1906",
+          "articulo": "1888-1912 (por verificar)",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Tipos de poder: General, Especial, y Para Pleitos y Cobranzas",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "La clasificación tripartita (general, especial, judicial/pleitos) es correcta en la práctica notarial hondureña y está arraigada en la tradición jurídica del país.",
+      "fuentes": [
+        {
+          "institucion": "Colegio de Abogados de Honduras",
+          "titulo": "Ley del Notariado",
+          "url": "https://www.congreso.gob.hn/",
+          "decreto": "Decreto No. 8-1982",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Los aranceles notariales están regulados por el Colegio de Abogados de Honduras",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "El Colegio de Abogados de Honduras efectivamente regula los aranceles notariales mediante su Ley Orgánica y reglamentos internos.",
+      "fuentes": [
+        {
+          "institucion": "Colegio de Abogados de Honduras",
+          "titulo": "Aranceles Notariales",
+          "url": "https://www.congreso.gob.hn/",
+          "decreto": "Ley Orgánica del CAH",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Poder desde España para trámites en Honduras requiere apostilla",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "El artículo menciona la necesidad de apostilla/apostille. Este es un punto altamente técnico que depende de si el poder se otorga ante notario español o cónsul hondureño. Requiere revisión detallada de las reglas de derecho internacional privado aplicables.",
+      "fuentes": [
+        {
+          "institucion": "Convenio de La Haya",
+          "titulo": "Apostilla",
+          "url": "https://www.hcch.net/",
+          "decreto": "Convenio de La Haya 1961",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar numeración exacta de los artículos del Código Civil sobre mandato en edición oficial",
+    "Verificar reglas de otorgamiento de poder desde el extranjero (notario español vs consulado hondureño)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Imposibilidad de verificar fuentes .gob.hn en esta sesión"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras",
+  "body_hash": "458cad4fdafe0a53d34d096a21700f66b46abff93efcec7ce5aa88a3039cc3a5",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Artículo 99 de la Constitución: horario de allanamiento de 6:00 a.m. a 6:00 p.m.",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "El Artículo 99 de la Constitución de Honduras de 1982 (con reformas) establece la inviolabilidad del domicilio. La doctrina constitucional hondureña reconoce que el allanamiento debe practicarse en horas diurnas, típicamente entre las 6:00 a.m. y 6:00 p.m. El texto constitucional no especifica horas exactas, pero la interpretación jurisprudencial y el Código Procesal Penal desarrollan este horario.",
+      "fuentes": [
+        {
+          "institucion": "Constitución de la República",
+          "titulo": "Artículo 99",
+          "url": "https://pdba.georgetown.edu/Constitutions/Honduras/honduras.html",
+          "decreto": "Decreto No. 131-1982",
+          "articulo": "99",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "El Código Procesal Penal es el Decreto 9-99-E",
+      "severidad": "alta",
+      "estado": "corrected",
+      "evidencia": "El CPP original fue el Decreto 9-99-E (1999). Sin embargo, en 2017 se emitió un nuevo Código Procesal Penal mediante Decreto 130-2017, que derogó al anterior. El artículo 'fianza-medidas-cautelares-proceso-penal-honduras' cita correctamente el Decreto 130-2017, pero este artículo cita el Decreto 9-99-E, creando inconsistencia interna entre artículos del mismo blog. CORRECCIÓN REQUERIDA: El CPP vigente es el Decreto 130-2017.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        },
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código Procesal Penal (derogado)",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 9-99-E (DEROGADO)",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La doctrina del fruto del árbol envenenado aplica a allanamientos ilegales",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "La doctrina del fruto del árbol envenenado (exclusión de prueba obtenida ilegalmente) está reconocida en el Código Procesal Penal hondureño como garantía del debido proceso.",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Penal",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 130-2017",
+          "articulo": "Arts. 16-18",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 2,
+    "corrected": 1,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "URGENTE: Corregir referencia al Código Procesal Penal. El Decreto 9-99-E está derogado. El CPP vigente es el Decreto 130-2017. Esto aplica a TODOS los artículos que citen el CPP."
+  ],
+  "bloqueos": []
+}

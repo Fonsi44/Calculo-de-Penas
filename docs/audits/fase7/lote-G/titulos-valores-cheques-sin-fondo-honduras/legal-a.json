@@ -1,0 +1,62 @@
+{
+  "slug": "titulos-valores-cheques-sin-fondo-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras",
+  "body_hash": "8ca172f36f753dede183d08de774281eeed8b87856aff3362fd30fc58a81cfc9",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El protesto notarial debe realizarse dentro de los 8 días siguientes a la presentación del cheque al banco",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La Ley de Títulos Valores de Honduras (parte del Código de Comercio) establece plazos para el protesto de cheques. El plazo de 8 días es comúnmente citado para cheques pagaderos en la misma plaza. Requiere confirmación del plazo exacto en la legislación vigente.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Comercio / Ley de Títulos Valores",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "La omisión del protesto conlleva la pérdida de la acción cambiaria contra el librador y los endosantes",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El protesto es un requisito esencial para conservar la acción cambiaria en los títulos valores. Su omisión dentro del plazo legal hace que el título pierda su carácter ejecutivo. Principio general de la legislación cambiaria.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional de Honduras",
+          "titulo": "Código de Comercio",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Sin protesto, la reclamación solo puede realizarse a través de un juicio civil ordinario",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Al perder la acción cambiaria (vía ejecutiva), el acreedor queda limitado a la acción causal u ordinaria, que es más lenta y onerosa.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

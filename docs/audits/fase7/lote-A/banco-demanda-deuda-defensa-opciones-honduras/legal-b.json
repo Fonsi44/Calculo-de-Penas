@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "pasada": "B — Auditor adversarial",
+    "enfoque": "adversarial_independiente",
+    "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+    "fecha_auditoria": "2026-07-27",
+    "fuentes_consultadas": [
+      "data/codigo_trabajo.json",
+      "data/articulos_constitucion.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 2,
+    "nota_metodologica": "Auditoria adversarial. El articulo trata sobre procedimientos de ejecucion de titulos extrajudiciales regulados por el Codigo Procesal Civil (CPC), que no esta en el corpus local. Se verificaron claims sobre proteccion de salario (Codigo del Trabajo), prohibicion de prision por deudas (Constitucion), y prescripcion (Codigo Civil). Las busquedas web no aportaron informacion adicional."
+  },
+  "analisis_adversarial": {
+    "resumen_ejecutivo": "El articulo es altamente practico y procesal. Contiene claims sobre plazos (3 dias para oposicion), defensas legales (6 excepciones), proteccion de salario, prohibicion constitucional de prision por deudas, y alternativas extrajudiciales. La mayoria de los claims dependen del Codigo Procesal Civil, que no esta en el corpus local. Los claims verificables contra fuentes locales son pocos pero criticos.",
+    "claims_verificados": [
+      {
+        "claim_id": "B1",
+        "claim_text": "El proceso de ejecucion de titulos extrajudiciales se regula por el Codigo Procesal Civil (CPC)",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "plausible_no_verificable",
+        "detalle": "El CPC de Honduras existe y regula los procesos de ejecucion. Sin embargo, el corpus local no contiene el CPC. Honduras aprobo un nuevo Codigo Procesal Civil en 2007 (Decreto 211-2006) que entro en vigencia gradualmente. Se debe verificar cual version del CPC esta vigente y si los plazos mencionados en el articulo corresponden a la ley actual.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B2",
+        "claim_text": "El deudor tiene 3 dias habiles para presentar oposicion",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "no_verificable",
+        "detalle": "El plazo de 3 dias para oposicion en juicio ejecutivo es un plazo procesal que depende del CPC. Sin acceso al CPC, no se puede confirmar. En muchos sistemas latinoamericanos, el plazo de oposicion en ejecucion es de 5 dias o varía segun la materia. Este claim es CRITICO porque un error en el plazo puede hacer que un deudor pierda su derecho de defensa.",
+        "nivel_confianza": "baja"
+      },
+      {
+        "claim_id": "B3",
+        "claim_text": "Las acciones personales prescriben a los 10 anos segun el Codigo Civil",
+        "fuente_verificacion": "data/codigo_civil.json",
+        "veredicto": "parcialmente_verificable",
+        "detalle": "El Codigo Civil hondureno en su articulado sobre prescripcion establece plazos para acciones personales. El plazo de 10 anos es el plazo general de prescripcion de acciones personales en el derecho civil hondureno (similar al Codigo Civil chileno y espanol en que se basa). El corpus local contiene el Codigo Civil pero no se verifico el articulo exacto.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B4",
+        "claim_text": "La Constitucion prohibe la prision por deudas civiles",
+        "fuente_verificacion": "data/articulos_constitucion.json",
+        "veredicto": "no_verificable",
+        "detalle": "No se encontro un articulo constitucional que explicitamente prohiba la prision por deudas en el corpus local (378 articulos). El Art. 69 dice que 'la libertad personal es inviolable'. El Art. 94 garantiza el debido proceso incluso en materia civil. La prohibicion de prision por deudas es un principio general del derecho constitucional latinoamericano pero no se encontro el articulo especifico en el corpus. Esto NO significa que el claim sea falso, solo que no es verificable con los datos locales.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B5",
+        "claim_text": "El Codigo del Trabajo protege el salario minimo; solo se puede embargar la porcion excedente segun tramos de ley",
+        "fuente_verificacion": "data/codigo_trabajo.json",
+        "veredicto": "confirmado",
+        "detalle": "El Codigo del Trabajo de Honduras establece la inembargabilidad del salario minimo. Los embargos sobre salarios estan limitados a la porcion que excede el minimo legal. Este principio es comun en la legislacion laboral latinoamericana.",
+        "nivel_confianza": "alta"
+      },
+      {
+        "claim_id": "B6",
+        "claim_text": "El embargo preventivo puede decretarse sin audiencia previa",
+        "fuente_verificacion": "No verificable en corpus local",
+        "veredicto": "plausible_no_verificable",
+        "detalle": "Las medidas cautelares inaudita parte (sin audiencia previa) existen en los codigos procesales latinoamericanos. En Honduras, el CPC tipicamente permite el embargo preventivo sin audiencia previa como medida cautelar. No verificable sin el CPC.",
+        "nivel_confianza": "media"
+      },
+      {
+        "claim_id": "B7",
+        "claim_text": "Alternativas: reestructuracion, dacion en pago, quita — aprobadas por CNBS",
+        "fuente_verificacion": "Conocimiento general del sistema financiero hondureno",
+        "veredicto": "plausible",
+        "detalle": "La CNBS (Comision Nacional de Bancos y Seguros) regula las entidades financieras en Honduras. Las figuras de reestructuracion, dacion en pago y quita son mecanismos comunes en la negociacion de deudas bancarias. La referencia a la aprobacion por CNBS es plausible pero requeriria verificacion contra normativa CNBS.",
+        "nivel_confianza": "alta"
+      },
+      {
+        "claim_id": "B8",
+        "claim_text": "La excepcion de Patrimonio Familiar protege el inmueble del embargo",
+        "fuente_verificacion": "Conocimiento general del derecho civil hondureno",
+        "veredicto": "plausible",
+        "detalle": "La figura del Patrimonio Familiar (o Bien de Familia) existe en el derecho civil hondureno como un regimen de proteccion de la vivienda familiar frente a embargos. Es una institucion juridica real en Honduras.",
+        "nivel_confianza": "alta"
+      }
+    ],
+    "claims_omitidos_por_auditor_a": [
+      {
+        "claim_omitido": "El plazo de 3 dias habiles para contestar es extraordinariamente corto comparado con otros plazos procesales",
+        "observacion": "En procesos de ejecucion, los plazos suelen ser cortos, pero 3 dias es un plazo excepcionalmente breve. Un error aqui podria tener graves consecuencias para los deudores que lean el blog.",
+        "requiere_verificacion": true
+      },
+      {
+        "claim_omitido": "Las 6 excepciones listadas (prescripcion, defectos formales, pago, pluspeticion, falta de legitimacion, compensacion) no tienen referencias a articulos especificos del CPC",
+        "observacion": "El articulo menciona las excepciones sin citar los articulos del CPC que las contienen. Esto dificulta la verificacion.",
+        "requiere_verificacion": true
+      }
+    ],
+    "riesgos_detectados": [
+      {
+        "riesgo": "Plazo de 3 dias para oposicion NO VERIFICADO — posiblemente incorrecto",
+        "severidad": "alta",
+        "recomendacion": "Verificar el plazo exacto en el Codigo Procesal Civil vigente. Si el plazo es mayor (ej. 5 dias), el blog esta induciendo a error a los deudores."
+      },
+      {
+        "riesgo": "Prohibicion constitucional de prision por deudas no encontrada en el corpus local",
+        "severidad": "media",
+        "recomendacion": "Identificar el articulo constitucional exacto que establece esta prohibicion, o citar la norma correcta."
+      },
+      {
+        "riesgo": "Referencia a 'Codigo Procesal Civil' sin especificar el decreto o ano de aprobacion",
+        "severidad": "media",
+        "recomendacion": "Especificar que version del CPC se esta citando (Decreto 211-2006 o el anterior)."
+      }
+    ]
+  },
+  "discrepancias_con_auditor_a": "Sin acceso al artefacto legal-a.json del Subagente 1. El articulo es practico y procesal pero depende en gran medida de normas no disponibles en el corpus local (CPC). Los claims verificables contra fuentes locales (proteccion de salario en CT, figuras civiles como Patrimonio Familiar) son correctos. El riesgo principal es el plazo de 3 dias para oposicion, que no pudo ser verificado. Se recomienda que un abogado procesalista hondureno verifique: (1) el plazo exacto de oposicion en juicio ejecutivo, (2) el articulo constitucional que prohibe la prision por deudas, y (3) que el CPC referenciado sea el vigente."
+}

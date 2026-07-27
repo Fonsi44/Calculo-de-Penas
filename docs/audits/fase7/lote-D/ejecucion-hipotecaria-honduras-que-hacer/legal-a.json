@@ -1,0 +1,39 @@
+{
+  "slug": "ejecucion-hipotecaria-honduras-que-hacer",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-bancario/ejecucion-hipotecaria-honduras-que-hacer",
+  "body_hash": "4813c9f1ff1327d84f387fda2ae248d1d5be6364292ebbe9bfe66c6746890722",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Ejecución hipotecaria regulada por Código Procesal Civil y Código Civil",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "La ejecución hipotecaria en Honduras se rige por el Código Procesal Civil y el Código Civil. Los plazos, defensas del deudor y procedimiento de remate deben verificarse. Tema de alto impacto para deudores.",
+      "fuentes": [
+        {
+          "institucion": "Poder Judicial",
+          "titulo": "Código Procesal Civil",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "Decreto 211-2006",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Revisión por abogado civil/bancario"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

@@ -1,0 +1,46 @@
+{
+  "slug": "pineda-asociados-bufete-multidisciplinario-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/pineda-asociados-bufete-multidisciplinario-honduras",
+  "body_hash": "4b7c9c10e9b8943ae8b0c4ebdc4bc474f536c55b5afd48f8085d1e3dd246a52b",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "La prestación de servicios legales está regida por la Ley de Abogados y Notarios y el Código de Ética del Colegio de Abogados",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La Ley Orgánica del Colegio de Abogados de Honduras y el Código de Ética regulan el ejercicio profesional de la abogacía.",
+      "fuentes": [
+        {
+          "institucion": "Colegio de Abogados de Honduras",
+          "titulo": "Ley Orgánica del CAH",
+          "url": "https://www.cah.hn/",
+          "decreto": null,
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Los bufetes deben constituirse bajo contrato de asociación civil o sociedad profesional",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. Los abogados pueden asociarse bajo figuras civiles o mercantiles para ejercer colectivamente. Los miembros responden solidariamente.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 2,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

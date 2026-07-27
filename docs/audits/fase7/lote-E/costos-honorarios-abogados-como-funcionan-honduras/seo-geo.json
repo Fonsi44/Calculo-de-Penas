@@ -1,0 +1,48 @@
+{
+  "slug": "costos-honorarios-abogados-como-funcionan-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/costos-honorarios-abogados-como-funcionan-honduras",
+  "body_hash": "940925f52ae0f2090d817d305b5dcfa2ce9cc1ef27296622b29b4e532c5aa504",
+  "fecha_auditoria": "2026-07-27T07:43:08.842Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Honorarios de Abogados en Honduras",
+    "title_longitud": 34,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Conozca cómo se fijan los honorarios de abogados en Honduras, modalidades de cobro, factores de costo y preguntas clave. Transparencia legal garantizada.",
+    "description_longitud": 153,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "practica-legal"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

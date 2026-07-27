@@ -1,0 +1,68 @@
+{
+  "slug": "habeas-corpus-cuando-interponer-honduras",
+  "url": "https://www.tuabogado.com/blog/proceso-penal/habeas-corpus-cuando-interponer-honduras",
+  "body_hash": "e150a6689804643205d01516c356a59e61f0cff1635a286c29ce0dd29a67480e",
+  "fecha_auditoria": "2026-07-27T20:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "id": "F05-C1",
+      "claim": "Consagrado en el Artículo 182 de la Constitución de Honduras.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Constitución de la República de Honduras",
+      "nota": "El Artículo 182 de la Constitución hondureña se refiere tradicionalmente a la Exhibición Personal (hábeas corpus). Sin embargo, la numeración constitucional puede haber cambiado con reformas. Requiere verificación."
+    },
+    {
+      "id": "F05-C2",
+      "claim": "Plazo máximo de 24 horas para que el juez resuelva.",
+      "clasificacion": "confirmed",
+      "fuente": "Constitución de Honduras, Ley Sobre Justicia Constitucional",
+      "nota": "Correcto. El hábeas corpus tiene tramitación urgentísima con plazo de 24 horas."
+    },
+    {
+      "id": "F05-C3",
+      "claim": "Procede contra: detención sin orden ni flagrancia, exceso del plazo constitucional de 24h, condiciones inhumanas, amenaza inminente, restricción de libertad ambulatoria, desaparición forzada.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley Sobre Justicia Constitucional",
+      "nota": "Correcto. Todos estos supuestos están contemplados en la legislación hondureña."
+    },
+    {
+      "id": "F05-C4",
+      "claim": "Cualquier persona puede interponerlo, verbalmente o por escrito, sin abogado.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley Sobre Justicia Constitucional",
+      "nota": "Correcto. Es una de las características del hábeas corpus: informalidad y accesibilidad."
+    },
+    {
+      "id": "F05-C5",
+      "claim": "Artículos 333 a 340 del Código Procesal Penal regulan el procedimiento.",
+      "clasificacion": "needs_human_review",
+      "fuente": "Código Procesal Penal de Honduras",
+      "nota": "La numeración exacta de los artículos del CPP que regulan el hábeas corpus debe verificarse. Si el artículo confunde el Código Penal con el CPP (como en etapa-investigacion), estos números también podrían ser incorrectos."
+    },
+    {
+      "id": "F05-C6",
+      "claim": "Tabla comparativa con amparo: amparo tiene plazo de 2 meses; hábeas corpus, sin plazo fijo.",
+      "clasificacion": "confirmed",
+      "fuente": "Ley Sobre Justicia Constitucional",
+      "nota": "Correcto. La tabla comparativa es útil y precisa en la mayoría de aspectos."
+    }
+  ],
+  "resumen": {
+    "total_claims": 6,
+    "confirmed": 4,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar número del Artículo constitucional del hábeas corpus",
+    "Confirmar artículos 333-340 del CPP"
+  ],
+  "acciones_obligatorias": [
+    "Verificar consistencia con el CPP (mismo problema que artículo etapa-investigacion)"
+  ],
+  "bloqueos": []
+}

@@ -1,0 +1,55 @@
+{
+  "slug": "facturacion-electronica-requisitos-sar",
+  "url": "https://www.pinedayasociadoshn.com/blog/tributario/facturacion-electronica-requisitos-sar",
+  "body_hash": "ed827aa2a56aa23bdbb4d380fc63195a4ccaec79d4fc4c2a103e391ead1cb792",
+  "fecha_auditoria": "2026-07-27T07:43:52.194Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "El régimen de facturación electrónica en Honduras es obligatorio según normativa SAR",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "La facturación electrónica es un régimen oficial emitido por el SAR (Servicio de Administración de Rentas) mediante acuerdos y disposiciones administrativas. Es de conocimiento público y obligatorio para ciertos contribuyentes.",
+      "fuentes": [
+        {
+          "institucion": "SAR",
+          "titulo": "Régimen de Facturación Electrónica",
+          "url": "https://www.sar.gob.hn/",
+          "decreto": "Disposiciones SAR",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Requisitos y procedimientos para facturación electrónica",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Los requisitos operativos (software, certificación, plazos) cambian con frecuencia mediante circulares SAR. Se recomienda verificar con fuente oficial actualizada.",
+      "fuentes": [
+        {
+          "institucion": "SAR",
+          "titulo": "Portal de Facturación Electrónica",
+          "url": "https://www.sar.gob.hn/",
+          "decreto": "N/A",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar requisitos actuales con circular SAR más reciente"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

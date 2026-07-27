@@ -1,0 +1,55 @@
+{
+  "slug": "habilitacion-clinicas-hospitales",
+  "url": "https://www.pinedayasociadoshn.com/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales",
+  "body_hash": "ec431f7c43b5c9f0b514510d4d4ffb7dab8fc473037f553713c647e0004f9c91",
+  "fecha_auditoria": "2026-07-27T07:47:14.561Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "Licencia sanitaria emitida por SESAL/ARSA bajo Acuerdo N° 06-2005",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El Acuerdo 06-2005 (Reglamento para el Control Sanitario) es un instrumento real. Debe verificarse su vigencia y si ha sido modificado o derogado por normativa ARSA posterior.",
+      "fuentes": [
+        {
+          "institucion": "ARSA/SESAL",
+          "titulo": "Reglamento Control Sanitario",
+          "url": "https://www.arsa.gob.hn/",
+          "decreto": "Acuerdo No. 06-2005",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Uso del Portal Digital de Inversiones (PDI) y Mi Empresa en Línea para trámites",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "El PDI y Mi Empresa en Línea son plataformas gubernamentales reales en Honduras para simplificar trámites empresariales.",
+      "fuentes": [
+        {
+          "institucion": "SDE Honduras",
+          "titulo": "Portal Digital de Inversiones",
+          "url": "https://www.pdi.gob.hn/",
+          "decreto": "N/A",
+          "articulo": "N/A",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    }
+  ],
+  "resumen": {
+    "total_claims": 2,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar vigencia del Acuerdo 06-2005"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

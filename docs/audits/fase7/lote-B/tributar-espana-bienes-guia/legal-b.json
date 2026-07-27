@@ -1,0 +1,65 @@
+{
+  "slug": "tributar-espana-bienes-guia",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-fiscal/tributar-espana-bienes-guia",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T12:43:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Existe un Convenio entre Honduras y España para evitar la doble imposición",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "La existencia de un convenio de doble imposición entre Honduras y España es verificable en principio a través del sitio del Ministerio de Hacienda español o la Secretaría de Relaciones Exteriores de Honduras. No se cita la fecha ni el número del convenio. Esta omisión dificulta la verificación por parte del lector.",
+      "fuentes": []
+    },
+    {
+      "claim": "Una persona es residente fiscal en España si permanece más de 183 días durante un año natural",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "El criterio de 183 días es el estándar de residencia fiscal en España según la Ley del IRPF. Información correcta.",
+      "fuentes": []
+    },
+    {
+      "claim": "El convenio permite deducir en España los impuestos pagados en Honduras",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Este es el propósito fundamental de los convenios de doble imposición (método de imputación o exención). La afirmación es doctrinalmente correcta pero debe verificarse con el texto del convenio Honduras-España para confirmar el método aplicable (imputación vs. exención).",
+      "fuentes": []
+    },
+    {
+      "claim": "El Modelo 720 debe presentarse si los bienes en el extranjero superan ciertos umbrales",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "El Modelo 720 es una declaración informativa real en España sobre bienes y derechos en el extranjero. Sin embargo, el artículo no especifica los umbrales concretos (50.000 euros por bloque de bienes), lo cual es una omisión relevante.",
+      "fuentes": []
+    },
+    {
+      "claim": "Las sanciones por no presentar el Modelo 720 pueden superar el costo de cumplir con la obligación informativa",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Las sanciones del Modelo 720 en España son notoriamente elevadas. El Tribunal de Justicia de la UE ha cuestionado su proporcionalidad (STJUE de 27 de enero de 2022), lo que llevó a España a modificar el régimen sancionador. El artículo no menciona esta reforma, que es relevante.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 5,
+    "confirmed": 3,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Citar fecha y número del Convenio de Doble Imposición Honduras-España",
+    "Especificar umbrales del Modelo 720 (50.000 euros por bloque)",
+    "Mencionar la STJUE de 2022 sobre proporcionalidad de sanciones del Modelo 720 y su reforma",
+    "Especificar si el método del convenio es imputación o exención"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales de hacienda española y Relaciones Exteriores de Honduras no consultados"
+  ],
+  "discrepancias_con_auditor_a": []
+}

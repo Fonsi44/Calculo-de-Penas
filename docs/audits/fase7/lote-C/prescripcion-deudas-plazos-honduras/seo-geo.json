@@ -1,0 +1,53 @@
+{
+  "slug": "prescripcion-deudas-plazos-honduras",
+  "url": "https://pinedayasociados.hn/blog/derecho-civil/prescripcion-deudas-plazos-honduras",
+  "fecha_auditoria": "2026-07-27T07:43:37.068Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Prescripción de Deudas Honduras: Plazos y ¿A los Cuántos Año",
+    "title_longitud": 60,
+    "title_evaluacion": "bueno",
+    "title_sugerencia": "Longitud adecuada.",
+    "description_actual": "¿En cuánto tiempo prescribe una deuda en Honduras? Plazos para deudas civiles, mercantiles y bancarias. Cómo interrumpir la prescripción y conservar tu derecho ",
+    "description_longitud": 160,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "Longitud adecuada.",
+    "h1_actual": "Renderizado desde el template (title)",
+    "h1_evaluacion": "bueno: El H1 se renderiza dinamicamente desde el titulo en el template de Next.js. No se requiere H1 en el body.",
+    "h2_count": 8,
+    "h3_count": 4,
+    "intencion_principal": "Informativa — Aprender un proceso o requisitos legales",
+    "intencion_secundaria": "Transaccional — Tomar acción legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "regular",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": false,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "Código Civil",
+      "Código de Comercio",
+      "Código Tributario",
+      "SAR",
+      "Corte Suprema de Justicia"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [
+    "Agregar respuesta directa/resumen en el primer párrafo (<200 chars)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": []
+}

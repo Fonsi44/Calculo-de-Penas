@@ -1,0 +1,25 @@
+{
+  "slug": "defensa-legal-detencion-flagrancia-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/defensa-legal-detencion-flagrancia-honduras",
+  "body_hash": null,
+  "fecha_auditoria": "2026-07-27T10:05:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [],
+  "resumen": {
+    "total_claims": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 0,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "estado_especial": "NO VERIFICABLE",
+  "motivo": "El slug 'defensa-legal-detencion-flagrancia-honduras' NO existe en la base de datos Neon (blog_posts). NOTA: Existen artículos relacionados: 'derechos-detenido-honduras-guia-constitucional', 'que-hacer-si-me-detienen-en-honduras', 'defensa-penal-honduras'. Posible duplicación de contenido.",
+  "slugs_similares_existentes": [
+    "derechos-detenido-honduras-guia-constitucional",
+    "que-hacer-si-me-detienen-en-honduras",
+    "defensa-penal-honduras"
+  ],
+  "recomendacion": "Evaluar si el contenido de este artículo sería redundante con los 3 artículos existentes sobre detención y defensa penal. Evitar canibalización SEO."
+}

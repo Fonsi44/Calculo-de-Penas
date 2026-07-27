@@ -1,0 +1,48 @@
+{
+  "slug": "despido-laboral-honduras-guia-completa",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-laboral-honduras-guia-completa",
+  "body_hash": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+  "fecha_auditoria": "2026-07-27T07:43:09.432Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Despido Injustificado Honduras",
+    "title_longitud": 30,
+    "title_evaluacion": "regular",
+    "title_sugerencia": "Title aceptable pero podría ser más descriptivo (ideal 50-65 chars).",
+    "description_actual": "Conozca sus derechos ante un despido injustificado en Honduras. Aprenda qué indemnización le corresponde y cómo reclamarla ante la Secretaría de Trabajo.",
+    "description_longitud": 153,
+    "description_evaluacion": "bueno",
+    "description_sugerencia": "",
+    "h1_actual": "NO ENCONTRADO",
+    "h1_evaluacion": "faltante — acción obligatoria",
+    "intencion_principal": "informativa",
+    "intencion_secundaria": "consulta legal",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "buena",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": true,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "derecho-laboral"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "articulos_similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [],
+  "acciones_obligatorias": [
+    "Agregar <h1> al artículo"
+  ],
+  "bloqueos": []
+}

@@ -1,0 +1,55 @@
+{
+  "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+  "url": "https://pinedayasociados.hn/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras",
+  "fecha_auditoria": "2026-07-27T07:43:37.060Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "seo-geo",
+  "seo": {
+    "title_actual": "Allanamiento Ilegal en Honduras - ¿Qué Hacer?",
+    "title_longitud": 45,
+    "title_evaluacion": "malo",
+    "title_sugerencia": "Falta metaTitle. Agregar un metaTitle de 50-60 caracteres con keyword principal al inicio.",
+    "description_actual": "Horario, orden judicial, urgencia y derechos ante un registro o allanamiento ilegal de una vivienda en Honduras.",
+    "description_longitud": 112,
+    "description_evaluacion": "regular",
+    "description_sugerencia": "MetaDescription corta (112 chars). Ampliar a 140-160 caracteres con beneficio claro y CTA.",
+    "h1_actual": "Renderizado desde el template (title)",
+    "h1_evaluacion": "bueno: El H1 se renderiza dinamicamente desde el titulo en el template de Next.js. No se requiere H1 en el body.",
+    "h2_count": 8,
+    "h3_count": 1,
+    "intencion_principal": "Informativa — Aprender un proceso o requisitos legales",
+    "intencion_secundaria": "N/A (un solo intento predominante)",
+    "satisface_intencion": true,
+    "profundidad": "profunda",
+    "legibilidad": "regular",
+    "keyword_stuffing": false,
+    "contenido_duplicado": false
+  },
+  "geo": {
+    "respuesta_directa_inicio": false,
+    "definiciones_claras": true,
+    "entidades_presentes": [
+      "Código Procesal Penal",
+      "Constitución de la República",
+      "Ministerio Público",
+      "Decreto 9"
+    ],
+    "fragmentos_autocontenidos": true,
+    "fuentes_visibles": true,
+    "estructura_citable": true,
+    "evaluacion_global": "optimizado"
+  },
+  "canibalizacion": {
+    "detectada": false,
+    "similares": [],
+    "accion": "ninguna"
+  },
+  "acciones_propuestas": [
+    "Agregar metaTitle (50-60 chars) con keyword principal",
+    "Agregar respuesta directa/resumen en el primer párrafo (<200 chars)"
+  ],
+  "acciones_obligatorias": [
+    "Agregar metaTitle"
+  ],
+  "bloqueos": []
+}

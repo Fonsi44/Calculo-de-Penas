@@ -1,0 +1,64 @@
+{
+  "slug": "pension-alimenticia-honduras-guia-completa",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa",
+  "body_hash": "554b65d2b762c393b94a0ccef55010ae6e999f5b13ace390b24145ecd1d670b8",
+  "fecha_auditoria": "2026-07-27T18:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-principal",
+  "hallazgos": [
+    {
+      "claim": "La pensión alimenticia está regulada en el Código de Familia (Decreto 76-84)",
+      "severidad": "alta",
+      "estado": "confirmed",
+      "evidencia": "Correcto. El Código de Familia hondureño regula la obligación alimentaria.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": null,
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "No existe un porcentaje fijo universal; la pensión se fija bajo el principio de proporcionalidad (Artículo 207)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "El principio de proporcionalidad es correcto. No hay porcentaje fijo en la ley hondureña. El Artículo 219 del Código de Familia atribuye al juez la determinación de la cuantía. La referencia al Art. 207 requiere verificación.",
+      "fuentes": [
+        {
+          "institucion": "Congreso Nacional",
+          "titulo": "Código de Familia",
+          "url": "https://www.poderjudicial.gob.hn/",
+          "decreto": "76-84",
+          "articulo": "Arts. 207, 219",
+          "fecha_consulta": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "claim": "Artículo 219 atribuye al juez la determinación de la cuantía y forma de pago",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Plausible. Requiere verificación del número de artículo exacto en el Código de Familia.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 2,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar artículos exactos del Código de Familia sobre pensión alimenticia (207, 219)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [
+    "Sitios oficiales hondureños (tsj.hn, poderjudicial.gob.hn, sar.gob.hn) no accesibles para verificación independiente"
+  ]
+}

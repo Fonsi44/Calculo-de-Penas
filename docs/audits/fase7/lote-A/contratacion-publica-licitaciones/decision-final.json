@@ -1,0 +1,32 @@
+{
+  "slug": "contratacion-publica-licitaciones",
+  "url": "https://www.pinedayasociadoshn.com/blog/??/contratacion-publica-licitaciones",
+  "fecha_consolidacion": "2026-07-27T07:44:12.613Z",
+  "modelo": "DeepSeek V4 Pro",
+  "puntuaciones": {
+    "legal": 5,
+    "seo": 8,
+    "geo": 10,
+    "tecnica": 7,
+    "enlazado": 7,
+    "ux": 7
+  },
+  "puntuacion_ponderada": 7.1,
+  "bloqueos": [
+    "Claim alto riesgo no confirmado: La Ley de Contratación del Estado es el Decreto No. 74-2001",
+    "Sitios oficiales tsc.gob.hn, oncae.gob.hn no accesibles o con información limitada"
+  ],
+  "cambios_aplicables": [
+    "Corregir o confirmar Decreto 74-2001 como número correcto de la LCE; si es incorrecto, actualizar inmediatamente",
+    "Title SEO mejorable",
+    "Agregar <h1> al artículo"
+  ],
+  "cambios_aplicados": [],
+  "cambios_requieren_abogado": [
+    "La Ley de Contratación del Estado es el Decreto No. 74-2001",
+    "Artículo 15 establece inhabilidades para contratar con el Estado",
+    "Garantías: Mantenimiento de Oferta (2-5%), Cumplimiento (15%), Anticipo (100%), Calidad"
+  ],
+  "estado_final": "bloqueado",
+  "resumen_hallazgos": "6 claims legales revisados. 3 requieren abogado. 1 bloqueos."
+}
