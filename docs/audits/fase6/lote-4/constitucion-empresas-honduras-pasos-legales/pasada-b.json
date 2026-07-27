@@ -41,5 +41,7 @@
     "Descartar la corrección sugerida por Pasada A respecto al capital mínimo de la S.A., manteniendo el texto original ('capital social mínimo que puede ser fijado libremente') pero idealmente aclarando que esto es gracias a las leyes de fomento empresarial.",
     "Corregir en el texto y tabla de datos el límite de socios de la S. de R.L. para que indique 25 en lugar de 20.",
     "Corregir en el texto y tabla de datos la fecha de la declaración anual del ISR para que indique 30 de abril en lugar de 31 de marzo."
-  ]
+  ],
+  "sha256_original": "4657cf87706ceb87ba6cc4f44cae0b9e7a38517a1cc53a2847a1926c1f3c9e0d",
+  "_sha_backfilled": true
 }

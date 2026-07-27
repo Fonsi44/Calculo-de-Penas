@@ -562,27 +562,44 @@
     "critical_findings": [
       {
         "finding": "Tabla impositiva completamente inventada (5 tramos con tasa máxima 30% vs 4 tramos oficiales con tasa máxima 25%)",
-        "claims_affected": ["C1", "C2", "C3", "C4", "C5"],
+        "claims_affected": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5"
+        ],
         "severity": "critical"
       },
       {
         "finding": "Plazo de declaración incorrecto (enero-marzo vs 30 de abril oficial)",
-        "claims_affected": ["C7"],
+        "claims_affected": [
+          "C7"
+        ],
         "severity": "high"
       },
       {
         "finding": "Mecanismo de actualización del umbral erróneo (Presupuesto General vs ajuste automático por IPC según Decreto 20-2016)",
-        "claims_affected": ["C14"],
+        "claims_affected": [
+          "C14"
+        ],
         "severity": "high"
       },
       {
         "finding": "Umbral de exención inexacto (L 250,000 vs L 228,324.32 oficial 2026)",
-        "claims_affected": ["C1", "C6"],
+        "claims_affected": [
+          "C1",
+          "C6"
+        ],
         "severity": "high"
       },
       {
         "finding": "Cuotas fijas (L 37,500, L 137,500, L 1,137,500) no aparecen en las tablas oficiales del SAR",
-        "claims_affected": ["C3", "C4", "C5"],
+        "claims_affected": [
+          "C3",
+          "C4",
+          "C5"
+        ],
         "severity": "high"
       }
     ],
@@ -590,5 +607,7 @@
   },
   "fecha_auditoria": "2026-07-27",
   "auditor": "Subagente de auditoría jurídica — Pasada A",
-  "version_esquema": "1.0.0"
+  "version_esquema": "1.0.0",
+  "sha256_original": "d266e59c523caad3ef8c0458f2224d08ccfb26db935c2b942021d0512e0e3376",
+  "_sha_backfilled": true
 }

@@ -119,5 +119,7 @@
     "error_critico_detectado": "Ninguno. El Art. 72 constitucional confirma la libertad de emisión del pensamiento sin censura previa y la responsabilidad por abuso. El artículo de divulgación es fiel al texto constitucional en su descripción del derecho fundamental, aunque las referencias al Código Penal y leyes especiales son materia de legislación secundaria.",
     "calidad_general": "sustancialmente_correcto_en_lo_verificable",
     "nota_limitacion": "La fuente constitucional confirma el núcleo del derecho (Art. 72) pero no permite verificar los artículos del Código Penal ni leyes especiales mencionados."
-  }
+  },
+  "sha256_original": "bd70ac76692753a570f4838148faf96c6c200fea4646f22be1e4a186c9210bfd",
+  "_sha_backfilled": true
 }

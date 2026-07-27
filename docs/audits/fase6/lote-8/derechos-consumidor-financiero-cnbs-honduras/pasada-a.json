@@ -184,5 +184,7 @@
     "errores_detectados": [],
     "calidad_general": "aceptable_con_limitaciones_de_corpus",
     "nota_limitacion": "La CNBS como entidad supervisora específica del sistema financiero no aparece en las fuentes locales disponibles (codigo_comercio.json y articulos_constitucion.json). La CNBS fue creada por legislación especial (Decreto No. 155-95) no incluida en el corpus. Las protecciones al consumidor financiero verificadas provienen del Código de Comercio (contratos mercantiles, operaciones bancarias, secreto bancario, seguros) y de la Constitución (libertades económicas, régimen monetario, vivienda). No se detectaron errores factuales en los claims verificables."
-  }
+  },
+  "sha256_original": "89965f0ce67c8a31cc8301eabaec142a156e76794b3cb6345fdb1d04a359d1f2",
+  "_sha_backfilled": true
 }

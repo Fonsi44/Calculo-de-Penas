@@ -94,5 +94,7 @@
     "error_critico": null,
     "nota_fuente_limitada": "El artículo opera en ámbito de derecho civil e internacional. La Constitución solo permite verificar aspectos institucionales generales.",
     "calidad_global_documento": "Artículo procedimental descriptivo. No verificable sustancialmente con la fuente constitucional asignada. Requiere verificación con Código Civil y tratados internacionales."
-  }
+  },
+  "sha256_original": "db5ec85e0ae0e16c19b75462c6e543b235bbfd97f48e1841d3566d50d621926e",
+  "_sha_backfilled": true
 }

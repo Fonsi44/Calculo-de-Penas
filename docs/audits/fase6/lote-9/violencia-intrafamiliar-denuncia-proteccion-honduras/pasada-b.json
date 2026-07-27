@@ -227,7 +227,12 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_DondeDenunciar", "B2_MedidasProteccion", "B3_Pruebas", "B4_ProcesoJudicial"],
+    "columnas": [
+      "B1_DondeDenunciar",
+      "B2_MedidasProteccion",
+      "B3_Pruebas",
+      "B4_ProcesoJudicial"
+    ],
     "cruces": [
       {
         "par": "B2+B4",
@@ -273,5 +278,7 @@
     "limitacion_corpus": "De 21 subclaims, 19 son NO VERIFICABLES o PLAUSIBLES NO VERIFICABLES con las fuentes proporcionadas. Las fuentes cubren derecho penal sustantivo y una fracción mínima del derecho de familia. El documento aborda principalmente derecho procesal especial de violencia doméstica, que requiere la Ley contra la Violencia Doméstica, el Código Procesal Penal y leyes orgánicas no disponibles en el corpus.",
     "calidad_global_documento": "El documento es informativo y cubre adecuadamente la ruta práctica para una víctima de violencia doméstica. Su núcleo penal es correcto (el maltrato familiar es delito, Art. 289 CP). La estructura procesal descrita es coherente con la existencia de medidas cautelares en violencia de género (Art. 526 CP). Sin embargo, la mayoría de sus afirmaciones institucionales, procedimentales y probatorias no son verificables con las fuentes disponibles. Se detecta una imprecisión terminológica ('desacato' vs. 'quebrantamiento'). No se detectan errores factuales graves, pero la imposibilidad de verificar el 90% del contenido impide emitir un juicio completo de calidad.",
     "recomendacion": "Para una verificación completa, ampliar el corpus con: (1) Ley contra la Violencia Doméstica (Decreto 132-97 o norma vigente), (2) Código Procesal Penal (para procedimiento y medidas cautelares), (3) Ley del CONADEH, (4) Ley del Ministerio Público o su ley orgánica."
-  }
+  },
+  "sha256_original": "af77a8f605ca1fb40a0a77457fb8a25930096391147a4e53ed03d5383719d3c7",
+  "_sha_backfilled": true
 }

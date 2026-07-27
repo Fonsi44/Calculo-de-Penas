@@ -57,5 +57,7 @@
     }
   ],
   "is_safe_to_publish": false,
-  "final_verdict": "El artículo es jurídicamente robusto y preciso en su mayor parte. Sin embargo, no es seguro para su publicación hasta que se corrija la imprecisión del porcentaje de la Garantía de Mantenimiento de Oferta, adecuándolo a la exigencia del Artículo 99 (al menos un 2%). Se requiere la intervención final de un abogado para aplicar esta corrección."
+  "final_verdict": "El artículo es jurídicamente robusto y preciso en su mayor parte. Sin embargo, no es seguro para su publicación hasta que se corrija la imprecisión del porcentaje de la Garantía de Mantenimiento de Oferta, adecuándolo a la exigencia del Artículo 99 (al menos un 2%). Se requiere la intervención final de un abogado para aplicar esta corrección.",
+  "sha256_original": "6c597aa9631b97e33834b545c30b240bf76660281498c478b415bd681d172581",
+  "_sha_backfilled": true
 }

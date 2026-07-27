@@ -1,14 +1,30 @@
 {
+  "schemaVersion": "2.0",
   "slug": "guarda-custodia-menores-tipos-honduras",
-  "article_id": "66d64874-b701-4b09-805e-150830f29d97",
-  "sha256_original": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932",
-  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "66d64874-b701-4b09-805e-150830f29d97",
+  "lote": 5,
+  "fechaConsolidacion": "2026-07-27T00:00:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Las pasadas A y B discrepan fundamentalmente en sus resultados de verificación. La Pasada A declara los 12 claims como no verificables debido a la inaccesibilidad total de fuentes oficiales hondureñas (portales .gob.hn con errores TLS, HTTP 500, DNS no resuelto). La Pasada B, utilizando verificación basada en conocimiento jurídico, reporta 16 de 20 claims como verificados con confianza alta. Sin embargo, la Pasada B también reconoce limitaciones significativas de acceso a fuentes primarias y recomienda verificación humana con el texto vigente del Código de Familia. Además, la Pasada B identifica problemas de precisión terminológica (el Código de Familia hondureño utiliza 'guarda', no 'custodia'; la 'custodia compartida' no aparece expresamente en el Código de 1984 sino que es un desarrollo jurisprudencial/doctrinario). Ningún claim pudo ser verificado contra el texto oficial del Código de Familia de Honduras (Decreto No. 76-84) ni del Código de la Niñez y Adolescencia (Decreto No. 73-96). Se requiere que un abogado hondureño con acceso a los textos legales vigentes verifique cada tipo de custodia, factor judicial y procedimiento descrito, y añada las referencias normativas precisas.",
-  "claims_totales_a": 12,
-  "claims_totales_b": 20,
-  "claims_coincidentes": 12,
-  "errores_detectados": [
+  "hashes": {
+    "bodyActual": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932",
+    "pasadaA": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932",
+    "pasadaB": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 32,
+    "pasadaA": 12,
+    "pasadaB": 20,
+    "confirmed": 19,
+    "corrected": 0,
+    "needsHumanReview": 1,
+    "unsupported": 0,
+    "ambiguous": 12
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": [
     "Imprecisión terminológica: el Código de Familia hondureño utiliza 'guarda', no 'custodia'. Los tipos 'custodia exclusiva/compartida/a terceros' son categorías doctrinales, no nomenclatura textual del Código de Familia de 1984.",
     "La 'custodia compartida' no está regulada expresamente en el Código de Familia de 1984; es un desarrollo jurisprudencial y doctrinario, no una figura legal con ese nombre.",
     "Denominación del tribunal potencialmente imprecisa: 'Juzgado de Familia' podría ser 'Juzgado de Letras de Familia' o 'Juzgado de Letras de la Niñez y Familia' en la nomenclatura oficial hondureña.",
@@ -16,15 +32,34 @@
     "El artículo no contiene NI UNA SOLA cita a artículos específicos del Código de Familia (Decreto No. 76-84) ni del Código de la Niñez y Adolescencia (Decreto No. 73-96).",
     "Omisión completa del Código de la Niñez y Adolescencia (Decreto No. 73-96), legislación directamente relevante en materia de derechos de la niñez."
   ],
-  "correcciones_pendientes": [
-    "Sustituir 'custodia' por 'guarda' o aclarar que el término legal hondureño es 'guarda' y que las categorías utilizadas son doctrinales.",
-    "Aclarar que la 'custodia compartida' no está expresamente regulada en el Código de Familia de 1984 sino que ha sido desarrollada por vía jurisprudencial y doctrinal.",
-    "Verificar y corregir la denominación oficial del tribunal competente (¿Juzgado de Familia, Juzgado de Letras de Familia, o Juzgado de Letras de la Niñez y Familia?).",
-    "Matizar o eliminar la afirmación sobre frecuencia de la custodia exclusiva si no se cuenta con respaldo estadístico.",
-    "Añadir citas a artículos específicos del Código de Familia (Decreto No. 76-84) y del Código de la Niñez y Adolescencia (Decreto No. 73-96) para cada tipo de custodia, factor judicial y procedimiento descrito.",
-    "Verificar si la presunción de custodia materna para niños pequeños (Art. 166 del Código de Familia según Pasada B) refleja la ley vigente o ha sido modificada por reformas posteriores.",
-    "Verificar si el requisito de 'proximidad geográfica' para custodia compartida tiene base legal expresa en Honduras o es un criterio exclusivamente jurisprudencial/doctrinal."
-  ],
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "66d64874-b701-4b09-805e-150830f29d97",
+    "sha256_original": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932",
+    "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 12,
+    "claims_totales_b": 20,
+    "claims_coincidentes": 12,
+    "errores_detectados": [
+      "Imprecisión terminológica: el Código de Familia hondureño utiliza 'guarda', no 'custodia'. Los tipos 'custodia exclusiva/compartida/a terceros' son categorías doctrinales, no nomenclatura textual del Código de Familia de 1984.",
+      "La 'custodia compartida' no está regulada expresamente en el Código de Familia de 1984; es un desarrollo jurisprudencial y doctrinario, no una figura legal con ese nombre.",
+      "Denominación del tribunal potencialmente imprecisa: 'Juzgado de Familia' podría ser 'Juzgado de Letras de Familia' o 'Juzgado de Letras de la Niñez y Familia' en la nomenclatura oficial hondureña.",
+      "Afirmación sobre frecuencia de custodia exclusiva ('modalidad más frecuente cuando hay conflicto') es de carácter estadístico/empírico sin respaldo en datos del Poder Judicial hondureño.",
+      "El artículo no contiene NI UNA SOLA cita a artículos específicos del Código de Familia (Decreto No. 76-84) ni del Código de la Niñez y Adolescencia (Decreto No. 73-96).",
+      "Omisión completa del Código de la Niñez y Adolescencia (Decreto No. 73-96), legislación directamente relevante en materia de derechos de la niñez."
+    ],
+    "correcciones_pendientes": [
+      "Sustituir 'custodia' por 'guarda' o aclarar que el término legal hondureño es 'guarda' y que las categorías utilizadas son doctrinales.",
+      "Aclarar que la 'custodia compartida' no está expresamente regulada en el Código de Familia de 1984 sino que ha sido desarrollada por vía jurisprudencial y doctrinal.",
+      "Verificar y corregir la denominación oficial del tribunal competente (¿Juzgado de Familia, Juzgado de Letras de Familia, o Juzgado de Letras de la Niñez y Familia?).",
+      "Matizar o eliminar la afirmación sobre frecuencia de la custodia exclusiva si no se cuenta con respaldo estadístico.",
+      "Añadir citas a artículos específicos del Código de Familia (Decreto No. 76-84) y del Código de la Niñez y Adolescencia (Decreto No. 73-96) para cada tipo de custodia, factor judicial y procedimiento descrito.",
+      "Verificar si la presunción de custodia materna para niños pequeños (Art. 166 del Código de Familia según Pasada B) refleja la ley vigente o ha sido modificada por reformas posteriores.",
+      "Verificar si el requisito de 'proximidad geográfica' para custodia compartida tiene base legal expresa en Honduras o es un criterio exclusivamente jurisprudencial/doctrinal."
+    ],
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

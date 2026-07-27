@@ -165,5 +165,7 @@
     "C05: El artículo afirma igualdad de derechos sucesorios entre hijos matrimoniales y extramatrimoniales, pero Art. 965 CC asigna 3/4 a hijos legítimos y 1/4 a hijos naturales, con limitación expresa de que un hijo natural no puede recibir más de la mitad de lo que recibe un hijo legítimo.",
     "C06: Afirmar que el cónyuge hereda 'porción igual a la de un hijo' contradice Art. 1150 CC (porción conyugal = cuarta parte) y Arts. 965-970 CC.",
     "C07: El artículo sugiere que el cónyuge puede heredar la totalidad si no hay descendientes ni ascendientes, lo cual es falso bajo el esquema de Arts. 966-973 CC."
-  ]
+  ],
+  "sha256_original": "c50434fa451cd57fd8fac97627bab0d00255042f86dcb16980dcc534248d70a5",
+  "_sha_backfilled": true
 }

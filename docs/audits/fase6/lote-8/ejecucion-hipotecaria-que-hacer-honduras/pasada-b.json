@@ -20,7 +20,9 @@
       "descripcion": "El artículo omite mencionar el Art. 2117 del Código Civil, que permite al deudor renunciar en la escritura de hipoteca a los trámites del juicio ejecutivo. Si dicha renuncia existe en la escritura, se procede directamente a la venta judicial sin los trámites del juicio ejecutivo, dejando sin efecto las defensas procesales que el artículo describe (contestación en 5-20 días, oposición de excepciones). Esto es especialmente relevante en contratos de adhesión con bancos, donde estas renuncias son frecuentes.",
       "impacto": "alto",
       "apariciones": 0,
-      "ubicaciones": ["El Art. 2117 CC no se menciona en ninguna parte del artículo. El artículo asume que siempre existe un juicio ejecutivo con sus trámites, lo cual no es necesariamente cierto."]
+      "ubicaciones": [
+        "El Art. 2117 CC no se menciona en ninguna parte del artículo. El artículo asume que siempre existe un juicio ejecutivo con sus trámites, lo cual no es necesariamente cierto."
+      ]
     },
     "fuente_ausente_critica": {
       "tipo": "codigo_procesal_no_disponible",
@@ -222,7 +224,19 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Hipoteca_Sustantiva", "B2_Incumplimiento", "B3_Plazo_Contestacion", "B4_Dacion_Pago", "B5_Reestructuracion", "B6_Excepciones", "B7_Terceria", "B8_Pago_Total", "B9_Derechos_Dueno", "B10_Impugnacion", "B11_Omision_Renuncia"],
+    "columnas": [
+      "B1_Hipoteca_Sustantiva",
+      "B2_Incumplimiento",
+      "B3_Plazo_Contestacion",
+      "B4_Dacion_Pago",
+      "B5_Reestructuracion",
+      "B6_Excepciones",
+      "B7_Terceria",
+      "B8_Pago_Total",
+      "B9_Derechos_Dueno",
+      "B10_Impugnacion",
+      "B11_Omision_Renuncia"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -279,5 +293,7 @@
     "conflictos_detectados": "Dos conflictos potenciales NO advertidos en el artículo: (a) entre las excepciones procesales (B6) y la renuncia a trámites del juicio ejecutivo (B11); (b) entre el plazo de contestación (B3) y la misma renuncia (B11). Ambos derivan del Art. 2117 CC omitido.",
     "observacion_critica": "El 70% del contenido procedimental del artículo no es verificable por ausencia del Código Procesal Civil en las fuentes locales. Las normas sustantivas del Código Civil sobre hipoteca (Arts. 2098-2118) confirman los principios generales. La omisión más grave es el Art. 2117 CC, que permitiría al lector verificar si su escritura de hipoteca contiene renuncia a los trámites del juicio ejecutivo, lo cual haría inaplicables las principales defensas que el artículo recomienda.",
     "calidad_global_documento": "Buena como guía práctica, con una omisión relevante. El artículo es sustancialmente correcto en sus afirmaciones verificables y ofrece información útil para un deudor hipotecario. La principal deficiencia es no advertir sobre la renuncia a trámites del juicio ejecutivo (Art. 2117 CC), que es una cláusula común en escrituras de hipoteca bancaria y que podría dejar sin efecto las defensas procesales descritas. Se recomienda añadir una advertencia al lector para que revise su escritura de hipoteca y verifique si renunció a los trámites del juicio ejecutivo."
-  }
+  },
+  "sha256_original": "506eeabd79c24ed9243180c2444bf9255a34d0fc4ea2b86ee9eb6932d3271200",
+  "_sha_backfilled": true
 }

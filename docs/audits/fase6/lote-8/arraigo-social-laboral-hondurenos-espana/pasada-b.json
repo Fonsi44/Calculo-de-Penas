@@ -149,7 +149,15 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Residencia3Anos", "B2_AntecedentesPenales", "B3_PasaporteNacionalidad", "B4_Apostilla", "B5_ArraigoFamiliar", "B6_NoTrabajarDuranteTramite", "B7_Recursos"],
+    "columnas": [
+      "B1_Residencia3Anos",
+      "B2_AntecedentesPenales",
+      "B3_PasaporteNacionalidad",
+      "B4_Apostilla",
+      "B5_ArraigoFamiliar",
+      "B6_NoTrabajarDuranteTramite",
+      "B7_Recursos"
+    ],
     "cruces": [
       {
         "par": "B1+B3",
@@ -199,5 +207,7 @@
     "error_critico": null,
     "hallazgo_clave": "El Art. 24 de la Constitución hondureña otorga reciprocidad migratoria favorable a españoles (2 años de residencia para naturalización). El Art. 28 garantiza que los hondureños por nacimiento no pierden su nacionalidad al adquirir la española. Ambos artículos son contexto jurídico valioso que el artículo omite.",
     "calidad_global_documento": "Sustancialmente correcto. Las afirmaciones sobre derecho español de extranjería son plausibles y coherentes con principios generales de derecho migratorio. No se detectan errores. La omisión del marco constitucional hondureño de reciprocidad (Art. 24) y doble nacionalidad (Art. 28) es una oportunidad de mejora para enriquecer el contenido dirigido a hondureños."
-  }
+  },
+  "sha256_original": "71af9b246cc0d941a7bac02829908a7e8c77f749d86c7e0aad50ca7081b9fcc1",
+  "_sha_backfilled": true
 }

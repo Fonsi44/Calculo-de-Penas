@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "sar-notifica-fiscalizacion-que-hacer-honduras",
-  "article_id": "c05f8c87-3d42-46c8-a437-f2b78134814d",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T07:45:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "c05f8c87-3d42-46c8-a437-f2b78134814d",
+  "lote": 8,
+  "fechaConsolidacion": "2026-07-27T07:45:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados; claims requieren verificación externa",
-  "claims_totales_a": 11,
-  "claims_totales_b": 11,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "3014ffe777d0384ef95d61b9612109b02c8bf1b032da0e13c837e19460ff1de5",
+    "pasadaA": "3014ffe777d0384ef95d61b9612109b02c8bf1b032da0e13c837e19460ff1de5",
+    "pasadaB": "3014ffe777d0384ef95d61b9612109b02c8bf1b032da0e13c837e19460ff1de5",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 22,
+    "pasadaA": 11,
+    "pasadaB": 11,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 22
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "c05f8c87-3d42-46c8-a437-f2b78134814d",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T07:45:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 11,
+    "claims_totales_b": 11,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

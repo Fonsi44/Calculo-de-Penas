@@ -125,7 +125,12 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_RegimenServicioCivil", "B2_ExclusionCT_Causales", "B3_ProcesoDisciplinario", "B4_Recursos"],
+    "columnas": [
+      "B1_RegimenServicioCivil",
+      "B2_ExclusionCT_Causales",
+      "B3_ProcesoDisciplinario",
+      "B4_Recursos"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -177,5 +182,7 @@
     "limitacion_corpus": "B1.3 (diferencia carrera vs. libre nombramiento), B2.3 (causales de despido), B3.1 (proceso disciplinario) y B3.2 (debido proceso en el procedimiento) no son verificables en su contenido específico porque la Ley de Servicio Civil y sus reglamentos no están disponibles en el corpus local. Las fuentes disponibles (Constitución y Código del Trabajo) proporcionan únicamente el marco constitucional y la exclusión del ámbito laboral común.",
     "calidad_global_documento": "Buena en su marco conceptual. Las afirmaciones del título y la descripción son consistentes con el diseño constitucional del Servicio Civil hondureño (Arts. 256 y 257) y con la exclusión de empleados públicos del Código del Trabajo (Art. 2 CT). No se detectan errores. El contenido sustantivo fue migrado a otra guía, por lo que la entrada actual funciona como redirect y no contiene afirmaciones detalladas que verificar. La limitación principal es la ausencia de la Ley de Servicio Civil en el corpus, que impide verificar los detalles específicos sobre causales de despido, proceso disciplinario y la distinción precisa entre empleados de carrera y de libre nombramiento.",
     "nota_fusion": "El body es exclusivamente un redirect. No hay errores que reportar porque no hay contenido sustantivo en el body más allá del enlace de fusión."
-  }
+  },
+  "sha256_original": "a7d04e1da4910032675844462fc893c08cf9754c412a47db40f00b00a218e4dc",
+  "_sha_backfilled": true
 }

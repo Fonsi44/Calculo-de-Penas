@@ -132,5 +132,7 @@
     "error_consistente_pero_falso": 1,
     "error_critico": "Los 4 números de artículo (33, 62, 71, 84) son incorrectos. Correctos: 360, 368, 867.",
     "calidad_global_documento": "Contenido conceptual correcto pero con error sistemático grave en la numeración de artículos. Requiere corrección urgente de los números."
-  }
+  },
+  "sha256_original": "39969bf23b321fcf023ec996c6379a3cbee02ed15e45276f27b8d5afc2f08e77",
+  "_sha_backfilled": true
 }

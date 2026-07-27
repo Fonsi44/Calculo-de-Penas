@@ -16,8 +16,84 @@
   "resumen_global": "Verificación cruzada contra tres fuentes. El Código Civil contradice directamente dos afirmaciones centrales del artículo: (1) la numeración de artículos es incorrecta (1618-1659 son compraventa, no mandato); (2) el poder general NO incluye actos de disposición (art. 1892 CC). El Código de Comercio complementa con normas sobre poderes mercantiles y su inscripción registral. La Constitución no contiene disposiciones relevantes sobre poderes notariales.",
   "analisis_cruzado": {
     "codigo_civil": {
-      "articulos_relevantes": ["1888", "1889", "1890", "1891", "1892", "1893", "1894", "1895", "1896", "1897", "1898", "1899", "1900", "1901", "1902", "1903", "1904", "1905", "1906", "1907", "1908", "1909", "1910", "1911", "1912", "1913", "1914", "1915", "1916", "1917", "1918", "2002"],
-      "articulos_incorrectamente_citados": ["1618", "1619", "1620", "1621", "1622", "1623", "1624", "1625", "1626", "1627", "1628", "1629", "1630", "1631", "1632", "1633", "1634", "1635", "1636", "1637", "1638", "1639", "1640", "1641", "1642", "1643", "1644", "1645", "1646", "1647", "1648", "1649", "1650", "1651", "1652", "1653", "1654", "1655", "1656", "1657", "1658", "1659"],
+      "articulos_relevantes": [
+        "1888",
+        "1889",
+        "1890",
+        "1891",
+        "1892",
+        "1893",
+        "1894",
+        "1895",
+        "1896",
+        "1897",
+        "1898",
+        "1899",
+        "1900",
+        "1901",
+        "1902",
+        "1903",
+        "1904",
+        "1905",
+        "1906",
+        "1907",
+        "1908",
+        "1909",
+        "1910",
+        "1911",
+        "1912",
+        "1913",
+        "1914",
+        "1915",
+        "1916",
+        "1917",
+        "1918",
+        "2002"
+      ],
+      "articulos_incorrectamente_citados": [
+        "1618",
+        "1619",
+        "1620",
+        "1621",
+        "1622",
+        "1623",
+        "1624",
+        "1625",
+        "1626",
+        "1627",
+        "1628",
+        "1629",
+        "1630",
+        "1631",
+        "1632",
+        "1633",
+        "1634",
+        "1635",
+        "1636",
+        "1637",
+        "1638",
+        "1639",
+        "1640",
+        "1641",
+        "1642",
+        "1643",
+        "1644",
+        "1645",
+        "1646",
+        "1647",
+        "1648",
+        "1649",
+        "1650",
+        "1651",
+        "1652",
+        "1653",
+        "1654",
+        "1655",
+        "1656",
+        "1657",
+        "1658",
+        "1659"
+      ],
       "tema_articulos_incorrectos": "Compraventa (perfección, entrega, saneamiento, evicción, vicios redhibitorios, pago del precio, resolución)",
       "concordancias": [
         {
@@ -53,7 +129,17 @@
       ]
     },
     "codigo_comercio": {
-      "articulos_relevantes": ["1524", "1530", "2476", "2496", "2497", "2567", "2735", "2749", "3253"],
+      "articulos_relevantes": [
+        "1524",
+        "1530",
+        "2476",
+        "2496",
+        "2497",
+        "2567",
+        "2735",
+        "2749",
+        "3253"
+      ],
       "hallazgos": [
         {
           "articulo": "1524",
@@ -153,33 +239,62 @@
     }
   ],
   "matriz_cobertura_fuentes": {
-    "codigo_civil_cubre": ["Definición de mandato", "Tipos general/especial", "Límites del mandato general", "Cláusula especial para disposición", "Revocación", "Causas de terminación", "Efectos frente a terceros"],
-    "codigo_comercio_cubre": ["Poderes en sociedades mercantiles", "Inscripción registral de poderes mercantiles", "Requisitos de apoderados mercantiles", "Revocación de poderes de factor", "Poder notarial para títulos-valores", "Remisión al Código Civil para terminación"],
+    "codigo_civil_cubre": [
+      "Definición de mandato",
+      "Tipos general/especial",
+      "Límites del mandato general",
+      "Cláusula especial para disposición",
+      "Revocación",
+      "Causas de terminación",
+      "Efectos frente a terceros"
+    ],
+    "codigo_comercio_cubre": [
+      "Poderes en sociedades mercantiles",
+      "Inscripción registral de poderes mercantiles",
+      "Requisitos de apoderados mercantiles",
+      "Revocación de poderes de factor",
+      "Poder notarial para títulos-valores",
+      "Remisión al Código Civil para terminación"
+    ],
     "constitucion_cubre": [],
-    "ley_notariado_cubre_pendiente": ["Requisitos formales de otorgamiento", "Comparecencia personal", "Presentación de DNI", "Apostilla y legalización consular", "Formalidades de la escritura pública de poder"]
+    "ley_notariado_cubre_pendiente": [
+      "Requisitos formales de otorgamiento",
+      "Comparecencia personal",
+      "Presentación de DNI",
+      "Apostilla y legalización consular",
+      "Formalidades de la escritura pública de poder"
+    ]
   },
   "hallazgos_cruzados_clave": [
     {
       "hallazgo": "Numeración de artículos invertida entre compraventa y mandato",
-      "fuentes_afectadas": ["codigo_civil.json"],
+      "fuentes_afectadas": [
+        "codigo_civil.json"
+      ],
       "detalle": "El artículo cita 1618-1659. En el Código Civil hondureño, el Título del Mandato está en los arts. 1888-1916, mientras que 1618-1659 corresponde al Título de la Compraventa. Es un error de numeración que invalida la referencia legal principal.",
       "severidad": "critico"
     },
     {
       "hallazgo": "Contradicción directa sobre alcance del poder general",
-      "fuentes_afectadas": ["codigo_civil.json"],
+      "fuentes_afectadas": [
+        "codigo_civil.json"
+      ],
       "detalle": "Artículo: poder general permite vender/hipotecar. Art. 1892 CC: poder general solo actos de administración. Esta contradicción es peligrosa porque afecta la comprensión de los límites legales del mandato.",
       "severidad": "critico"
     },
     {
       "hallazgo": "Omisión de la regulación mercantil de poderes",
-      "fuentes_afectadas": ["codigo_comercio.json"],
+      "fuentes_afectadas": [
+        "codigo_comercio.json"
+      ],
       "detalle": "El Código de Comercio contiene al menos 8 artículos relevantes sobre poderes mercantiles (inscripción, requisitos, revocación, títulos-valores) que el artículo omite por completo.",
       "severidad": "medio"
     },
     {
       "hallazgo": "La Constitución no regula el poder notarial",
-      "fuentes_afectadas": ["articulos_constitucion.json"],
+      "fuentes_afectadas": [
+        "articulos_constitucion.json"
+      ],
       "detalle": "Confirmación negativa: ninguna disposición constitucional aborda directamente el mandato civil o poder notarial. Esto es esperable y no constituye error del artículo.",
       "severidad": "informativo"
     }
@@ -198,5 +313,7 @@
   "metadatos": {
     "metodologia": "Verificación cruzada: cada claim del artículo se contrasta simultáneamente contra Código Civil, Código de Comercio y Constitución. Se identifican concordancias, contradicciones, omisiones y complementos entre fuentes.",
     "criterio_cruzado": "Se busca confirmación en múltiples fuentes. Donde las fuentes coinciden, el claim gana solidez. Donde divergen o una fuente añade información omitida, se señala la divergencia u omisión."
-  }
+  },
+  "sha256_original": "4831906635e2243caed2796d9e7321f41da63be62df4495dd53422a5b7d52500",
+  "_sha_backfilled": true
 }

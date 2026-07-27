@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "reformas-legales-recientes-honduras",
-  "articleHash": "",
+  "articleId": "96a6a3a2-73d6-4819-86e0-c087063678ad",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.319Z",
   "estadoFinal": "completed",
   "razon": "A y B coinciden plenamente",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "60ff872763e8a45dde466e0410a4bfa12001c261aada146eea462790f72638a9",
+    "pasadaA": "60ff872763e8a45dde466e0410a4bfa12001c261aada146eea462790f72638a9",
+    "pasadaB": "60ff872763e8a45dde466e0410a4bfa12001c261aada146eea462790f72638a9",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 5,
+    "pasadaA": 5,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 5
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

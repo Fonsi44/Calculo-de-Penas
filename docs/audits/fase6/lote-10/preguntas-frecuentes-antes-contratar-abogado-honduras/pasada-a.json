@@ -74,5 +74,7 @@
     "plausible_no_verificable": 2,
     "calidad_general": "buena_con_limitaciones_de_fuente",
     "nota": "La colegiación obligatoria está confirmada constitucionalmente (Art. 177). Las demás afirmaciones son de naturaleza ética o civil, no verificables completamente en la fuente constitucional asignada."
-  }
+  },
+  "sha256_original": "895ef95c152d0221cbbc23416d254e8e5d3a6db0b5202b5e8caf1630e82f1169",
+  "_sha_backfilled": true
 }

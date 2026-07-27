@@ -271,7 +271,18 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Tipos_Numerus_Clausus", "B2_Colectiva", "B3_Comandita_Simple", "B4_SRL", "B5_SA", "B6_Comandita_Acciones", "B7_Cooperativa", "B8_Capital_Variable", "B9_Escritura_Constitutiva", "B10_Calificacion_Judicial"],
+    "columnas": [
+      "B1_Tipos_Numerus_Clausus",
+      "B2_Colectiva",
+      "B3_Comandita_Simple",
+      "B4_SRL",
+      "B5_SA",
+      "B6_Comandita_Acciones",
+      "B7_Cooperativa",
+      "B8_Capital_Variable",
+      "B9_Escritura_Constitutiva",
+      "B10_Calificacion_Judicial"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -328,5 +339,7 @@
     "matiz_importante_detectado": "La cooperativa tiene capital variable por definición legal (Art. 278: 'será variable'), mientras que en los otros cinco tipos es potestativo (Art. 13: 'podrán ser de capital variable'). Esta distinción cualitativa debe reflejarse en cualquier artículo sobre el tema.",
     "sin_conflictos_detectados": true,
     "calidad_global_documento": "Excelente. Las 21 afirmaciones sustantivas verificadas contra el Código de Comercio son textualmente correctas. Los 6 cruces normativos no revelan contradicciones. La arquitectura del Código (Arts. 13-305 CM) es sistemática, coherente y exhaustiva. El único matiz relevante es la diferencia entre capital variable potestativo (tipos I-V) y esencial (tipo VI, cooperativa)."
-  }
+  },
+  "sha256_original": "020edfd75fc8bc48a6fa8e1c06aa59f4044df8c626a9bd461deade5e884014c4",
+  "_sha_backfilled": true
 }

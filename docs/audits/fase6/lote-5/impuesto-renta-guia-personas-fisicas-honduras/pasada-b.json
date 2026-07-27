@@ -479,5 +479,7 @@
         "detail": "Un abogado tributario hondureno debe revisar el articulo completo contra el texto vigente de la Ley del ISR (Decreto 25-1963 con todas sus reformas, incluyendo Decreto 278-2013 y reformas posteriores), el Codigo Tributario (Decreto 170-2016), y las disposiciones administrativas del SAR aplicables al ejercicio fiscal en cuestion."
       }
     ]
-  }
+  },
+  "sha256_original": "d266e59c523caad3ef8c0458f2224d08ccfb26db935c2b942021d0512e0e3376",
+  "_sha_backfilled": true
 }

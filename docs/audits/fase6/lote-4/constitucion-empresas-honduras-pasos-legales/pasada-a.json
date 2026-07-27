@@ -85,5 +85,7 @@
     "Corregir el texto sobre la S.A. indicando el capital mínimo de 25,000 Lempiras.",
     "Corregir el máximo de socios de la S. de R.L. a 25 en el texto y en la tabla de datos numéricos.",
     "Actualizar la fecha límite de la declaración anual del ISR al 30 de abril tanto en el cuerpo como en la tabla."
-  ]
+  ],
+  "sha256_original": "4657cf87706ceb87ba6cc4f44cae0b9e7a38517a1cc53a2847a1926c1f3c9e0d",
+  "_sha_backfilled": true
 }

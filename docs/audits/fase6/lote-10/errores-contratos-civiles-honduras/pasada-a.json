@@ -81,5 +81,7 @@
     "confirmados": 1,
     "error_critico_detectado": "Art. 1450 CC citado como definición de contrato cuando trata sobre cesión de bienes y embargo. El artículo correcto es 1539 CC.",
     "calidad_general": "buena_con_error_puntual_de_numeracion"
-  }
+  },
+  "sha256_original": "63ccb992523514d637c3348fbede46450af759fe22c9e365b5af0db77a950932",
+  "_sha_backfilled": true
 }

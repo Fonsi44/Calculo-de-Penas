@@ -71,5 +71,7 @@
     "data/codigo_civil.json (sin hallazgos relevantes)",
     "Web: Wikipedia (confirmación Decreto 104-93)"
   ],
-  "limitaciones": "Fallos en acceso a fuentes web gubernamentales hondureñas (FAOLEX 404, ILO NATLEX 403/redirect loops, poderjudicial.gob.hn TLS error). No se pudo verificar el texto exacto del Acuerdo 189-2004 ni de los artículos 45-60 de la Ley General del Ambiente."
+  "limitaciones": "Fallos en acceso a fuentes web gubernamentales hondureñas (FAOLEX 404, ILO NATLEX 403/redirect loops, poderjudicial.gob.hn TLS error). No se pudo verificar el texto exacto del Acuerdo 189-2004 ni de los artículos 45-60 de la Ley General del Ambiente.",
+  "sha256_original": "191d509168a5791e68e647d64ebf6fbdfdc1398a50635ae9f6eab1fffebfc402",
+  "_sha_backfilled": true
 }

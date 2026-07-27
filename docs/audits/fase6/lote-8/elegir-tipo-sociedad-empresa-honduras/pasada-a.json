@@ -285,5 +285,7 @@
     ],
     "hallazgo_critico": "La E.I.R.L. NO esta regulada en el Codigo de Comercio. El Art. 1 CM enumera seis tipos societarios y la E.I.R.L. no es uno de ellos. Si el articulo la presenta como derivada del Codigo de Comercio, incurre en error. Si la presenta como figura de ley especial, la afirmacion es plausible pero no verificable con las fuentes disponibles.",
     "calidad_general": "Buena. De 13 claims, 10 estan confirmadas (con o sin matices menores), 2 parcialmente confirmadas, y 1 no verificable (E.I.R.L.). Las imprecisiones detectadas son: (a) uso del termino 'junta directiva' en lugar de 'consejo de administracion', y (b) afirmacion sobre E.I.R.L. sin respaldo en el Codigo de Comercio. No se detectaron errores factuales graves en las afirmaciones sobre S.R.L., S.A., Comandita y Capital Variable."
-  }
+  },
+  "sha256_original": "3b6bb08bfc1631e5c617fca7da0fe12134a2adc8918d19389e18ce0d26ec2a54",
+  "_sha_backfilled": true
 }

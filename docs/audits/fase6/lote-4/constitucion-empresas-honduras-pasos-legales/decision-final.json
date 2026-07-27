@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "constitucion-empresas-honduras-pasos-legales",
-  "articleHash": "",
+  "articleId": "2f704e4a-67c8-42c3-868e-13f2d32f3dfa",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.320Z",
   "estadoFinal": "completed",
   "razon": "A y B coinciden plenamente",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "4657cf87706ceb87ba6cc4f44cae0b9e7a38517a1cc53a2847a1926c1f3c9e0d",
+    "pasadaA": "4657cf87706ceb87ba6cc4f44cae0b9e7a38517a1cc53a2847a1926c1f3c9e0d",
+    "pasadaB": "4657cf87706ceb87ba6cc4f44cae0b9e7a38517a1cc53a2847a1926c1f3c9e0d",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 5,
+    "pasadaA": 5,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 5
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

@@ -347,28 +347,59 @@
     "tasa_no_verificable": "46%",
     "tasa_parcial": "38%",
     "riesgo_alto": [],
-    "riesgo_medio": ["C04", "C05", "C09"],
-    "riesgo_bajo": ["C01", "C02", "C03", "C06", "C07", "C08", "C10", "C11", "C12", "C13"]
+    "riesgo_medio": [
+      "C04",
+      "C05",
+      "C09"
+    ],
+    "riesgo_bajo": [
+      "C01",
+      "C02",
+      "C03",
+      "C06",
+      "C07",
+      "C08",
+      "C10",
+      "C11",
+      "C12",
+      "C13"
+    ]
   },
   "recomendaciones": [
     {
       "severidad": "alta",
-      "afecta": ["C04", "C05"],
+      "afecta": [
+        "C04",
+        "C05"
+      ],
       "accion": "Verificar el plazo de seis meses de la investigacion preliminar y el regimen de prorrogas directamente contra el texto completo del CPP (Arts. 56-78). Estos plazos son informacion critica para el lector y actualmente NO son verificables con el corpus. Si el dato es correcto, debe mantenerse; si no, debe corregirse de inmediato. Incluir la referencia exacta al articulo del CPP que establece el plazo.",
       "plazo": "inmediato"
     },
     {
       "severidad": "media",
-      "afecta": ["C01", "C02", "C03", "C09"],
+      "afecta": [
+        "C01",
+        "C02",
+        "C03",
+        "C09"
+      ],
       "accion": "Las referencias a los articulos 56 y 58 del CPP no son verificables con el corpus. Se recomienda: (a) verificar que los numeros de articulo son correctos consultando el texto oficial del CPP; (b) considerar citar tambien el Art. 264 CPP —que SI esta verificado— como referencia complementaria para la etapa preparatoria; (c) ampliar el rango de articulos citados mas alla de 56-78 para incluir los articulos 264 y siguientes, que tambien regulan la etapa preparatoria.",
       "plazo": "antes de la siguiente publicacion"
     },
     {
       "severidad": "baja",
-      "afecta": ["C06", "C07", "C08", "C11", "C13"],
+      "afecta": [
+        "C06",
+        "C07",
+        "C08",
+        "C11",
+        "C13"
+      ],
       "accion": "Matizar las afirmaciones sobre derechos que son inferidos pero no estan expresamente formulados en el corpus (acceso al expediente, excepciones por reserva, referencia a Juzgados de Letras, facultades investigativas del fiscal). Donde el corpus no alcance, usar formulas como 'del derecho de defensa se deriva...' en lugar de presentar inferencias como derechos autonomos. Para C11, distinguir entre actos de investigacion y actos de prueba.",
       "plazo": "siguiente revision editorial"
     }
   ],
-  "nota_final": "El articulo sobre la etapa de investigacion penal en Honduras es sustancialmente correcto en su estructura general y en las garantias fundamentales que describe, pero presenta una debilidad estructural: sus afirmaciones nucleares (articulos 56 y 58 del CPP, plazo de seis meses, rol del Ministerio Publico como director de la investigacion) dependen de articulos del CPP que NO estan en el corpus verificado. De los 13 claims, solo 2 son plenamente verificables (15%), 5 son parcialmente verificables (38%), y 6 no son verificables (46%). Esto NO significa que el articulo contenga errores —no se detecto ninguna refutacion—, sino que la verificacion no puede completarse sin acceso al texto completo de los articulos 56 al 78 del CPP. Los aciertos mas solidos del articulo son la descripcion de los derechos del imputado (silencio, defensa, presencia del defensor al declarar, confirmados por Arts. 101, 287-289 CPP) y la estructura general de la etapa preparatoria (Arts. 264, 295-296, 301 CPP). Se recomienda completar la verificacion cuando los articulos faltantes del CPP esten disponibles en el corpus."
+  "nota_final": "El articulo sobre la etapa de investigacion penal en Honduras es sustancialmente correcto en su estructura general y en las garantias fundamentales que describe, pero presenta una debilidad estructural: sus afirmaciones nucleares (articulos 56 y 58 del CPP, plazo de seis meses, rol del Ministerio Publico como director de la investigacion) dependen de articulos del CPP que NO estan en el corpus verificado. De los 13 claims, solo 2 son plenamente verificables (15%), 5 son parcialmente verificables (38%), y 6 no son verificables (46%). Esto NO significa que el articulo contenga errores —no se detecto ninguna refutacion—, sino que la verificacion no puede completarse sin acceso al texto completo de los articulos 56 al 78 del CPP. Los aciertos mas solidos del articulo son la descripcion de los derechos del imputado (silencio, defensa, presencia del defensor al declarar, confirmados por Arts. 101, 287-289 CPP) y la estructura general de la etapa preparatoria (Arts. 264, 295-296, 301 CPP). Se recomienda completar la verificacion cuando los articulos faltantes del CPP esten disponibles en el corpus.",
+  "sha256_original": "c992ed540ed54cf072bbd39719cbcd14a630a49aa8693716dd661f62f4e77d9e",
+  "_sha_backfilled": true
 }

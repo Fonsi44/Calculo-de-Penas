@@ -106,5 +106,7 @@
     "inconsistentes": 1,
     "error_critico": "B1.2: Art. 47 CC no es sobre contratos, es sobre nacionalidad de hijos.",
     "calidad_global_documento": "Aceptable con un error de numeración corregible (Art. 47 → 1348 CC)."
-  }
+  },
+  "sha256_original": "cff41c29688ec8b5372a78d09c62bfc35c6699d8916ae3988945e5d486f159ba",
+  "_sha_backfilled": true
 }

@@ -16,5 +16,7 @@
   "claimsOmitidos": [],
   "correccionesConfirmadas": 0,
   "correccionesRechazadas": 2,
-  "estadoPropuesto": "validado"
+  "estadoPropuesto": "validado",
+  "sha256_original": "988408db629739fd53bc51886404fb44df8431c878940a3d1e68c2ea4633c48e",
+  "_sha_backfilled": true
 }

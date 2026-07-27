@@ -299,7 +299,20 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_LibertadesEconomicas", "B2_RegimenMonetarioBCH", "B3_RegulacionPrestamosDirectivos", "B4_DepositosExclusivos", "B5_SecretoBancario", "B6_ClausulasAbusivas", "B7_CNBS", "B8_PolizaSeguro", "B9_CambioCondiciones", "B10_CreditosVivienda", "B11_ClausulasLegalesImperativas", "B12_SuperintendenciaSociedades"],
+    "columnas": [
+      "B1_LibertadesEconomicas",
+      "B2_RegimenMonetarioBCH",
+      "B3_RegulacionPrestamosDirectivos",
+      "B4_DepositosExclusivos",
+      "B5_SecretoBancario",
+      "B6_ClausulasAbusivas",
+      "B7_CNBS",
+      "B8_PolizaSeguro",
+      "B9_CambioCondiciones",
+      "B10_CreditosVivienda",
+      "B11_ClausulasLegalesImperativas",
+      "B12_SuperintendenciaSociedades"
+    ],
     "cruces": [
       {
         "par": "B1+B4",
@@ -372,5 +385,7 @@
     "limitacion_principal": "La Ley de la CNBS (Decreto No. 155-95) y las leyes especiales del sistema financiero hondureño (Ley de Instituciones del Sistema Financiero, Ley de Seguros, etc.) no están disponibles en el corpus local. Esto impide verificar: (a) las atribuciones específicas de la CNBS en protección al consumidor financiero, (b) los procedimientos administrativos de reclamación, (c) el régimen sancionatorio, y (d) los derechos específicos que otorgan las leyes financieras especiales más allá del Código de Comercio.",
     "fortaleza_del_corpus": "El Código de Comercio proporciona una base sólida de protección contractual (Arts. 724, 727-728, 955, 956, 1116 CM) y regulación de operaciones bancarias (Arts. 952, 954 CM). La Constitución proporciona el fundamento de libertades económicas (Art. 331), régimen monetario (Art. 342), regulación de conflictos de interés (Art. 343), créditos de vivienda (Art. 180) y supervisión de sociedades (Art. 334). La combinación de ambas fuentes cubre adecuadamente los derechos fundamentales del consumidor financiero, aunque el nivel de detalle operativo y los mecanismos de reclamación ante la CNBS requieren fuentes adicionales.",
     "calidad_global_documento": "Bueno, sin errores factuales detectados. Las 12 afirmaciones principales del documento son verificables total o parcialmente contra las fuentes locales. La principal limitación es de cobertura del corpus, no de calidad del contenido."
-  }
+  },
+  "sha256_original": "89965f0ce67c8a31cc8301eabaec142a156e76794b3cb6345fdb1d04a359d1f2",
+  "_sha_backfilled": true
 }

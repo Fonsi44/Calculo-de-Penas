@@ -257,5 +257,7 @@
       "Las cláusulas de exclusión (claim_09) son estándar en derecho internacional pero no aparecen en las guías ACNUR consultadas.",
       "El dominio conapre.hn no resuelve; el dominio conapre.gob.hn tampoco. No se encontró presencia web oficial de CONARE."
     ]
-  }
+  },
+  "sha256_original": "9390d0f2738c5c36071343bd19a67800ba54895a3d5d001216ab016902bab935",
+  "_sha_backfilled": true
 }

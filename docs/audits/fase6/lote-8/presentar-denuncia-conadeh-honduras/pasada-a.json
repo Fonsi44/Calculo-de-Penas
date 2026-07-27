@@ -131,5 +131,7 @@
     "error_critico_detectado": "Ninguno. La fuente local principal (Art. 59 Constitución) confirma la existencia constitucional del CONADEH y su mandato de garantizar derechos, pero la ley especial que desarrolla sus atribuciones no está disponible en el corpus local. La mayoría de las afirmaciones operativas del documento (competencias, procedimiento, efectos de las resoluciones) son plausibles pero no verificables directamente contra la Constitución.",
     "limitacion_fuentes": "La Ley del Comisionado Nacional de los Derechos Humanos (ley especial a la que remite el Art. 59 constitucional) no se encuentra en las fuentes locales. Esto impide verificar la mayoría de las afirmaciones específicas sobre competencias, procedimiento y efectos jurídicos de las actuaciones del CONADEH.",
     "calidad_general": "plausible_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "7655c989774d9564664432dd6b3a844c2005c749ad44f58d9aa4a4a9c3368051",
+  "_sha_backfilled": true
 }

@@ -41,5 +41,7 @@
   ],
   "needs_human_review": true,
   "human_review_reason": "La Pasada A contuvo errores de citación (confundió el Art. 39 con el 22, y el Art. 325 con el 322) y una interpretación incorrecta de las tablas salariales de 2026, asignando el sueldo agrícola al servicio doméstico. Se debe reescribir el artículo original usando las citas correctas (Arts. 149-164, 39, 325, 120, 154) y aclarando cómo se determina el salario mínimo en el sector servicios.",
-  "status": "completado"
+  "status": "completado",
+  "sha256_original": "36b2608badb5e62b2434756a921f16fa6a3d963ea1c8fd1784c062487774a22d",
+  "_sha_backfilled": true
 }

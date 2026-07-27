@@ -54,5 +54,7 @@
       }
     ],
     "final_verdict": "Se aprueban las correcciones sugeridas en la Pasada A. Es esencial corregir la confusión conceptual entre la Licencia Sanitaria (para el establecimiento, requiere inspección) y el Registro Sanitario (para el producto, requiere análisis y revisión documental)."
-  }
+  },
+  "sha256_original": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+  "_sha_backfilled": true
 }

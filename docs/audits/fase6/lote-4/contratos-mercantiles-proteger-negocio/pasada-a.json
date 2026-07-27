@@ -30,5 +30,7 @@
       "requiere_abogado": false
     }
   ],
-  "notas_adicionales": "El documento no hace mención a la validez de las firmas electrónicas en contratos mercantiles. En Honduras, la Ley sobre Firmas Electrónicas (Decreto 149-2013) les otorga la misma validez que la firma autógrafa. Se recomienda a los abogados considerar incluir un párrafo al respecto, dado su alto uso en el comercio actual."
+  "notas_adicionales": "El documento no hace mención a la validez de las firmas electrónicas en contratos mercantiles. En Honduras, la Ley sobre Firmas Electrónicas (Decreto 149-2013) les otorga la misma validez que la firma autógrafa. Se recomienda a los abogados considerar incluir un párrafo al respecto, dado su alto uso en el comercio actual.",
+  "sha256_original": "983bf3c6643c6a77924e6d95d8e006db902b48fe241a8499b205fda1b133008e",
+  "_sha_backfilled": true
 }

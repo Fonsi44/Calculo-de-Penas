@@ -435,5 +435,7 @@
       "B1.2 y B1.3: El acrónimo DIGEPIH y el 'Instituto de la Propiedad' no aparecen en el texto legal."
     ],
     "calidad_global_documento": "Bueno con dos errores procedimentales corregibles (orden del examen de fondo y plazo de subsanación), una discrepancia en tasas posiblemente atribuible a actualización normativa, e imprecisiones menores sobre denominación institucional."
-  }
+  },
+  "sha256_original": "20ade41645505131f5070e0f19ac8809a314f2620827c9a42bb1b741ed56a10d",
+  "_sha_backfilled": true
 }

@@ -183,7 +183,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Definicion_Riesgo", "B2_Marco_106-113", "B3_Ley_Seguro_Social_IHSS", "B4_Aviso_24h", "B5_Responsabilidad_Patrono", "B6_Readmision_Inamovilidad"],
+    "columnas": [
+      "B1_Definicion_Riesgo",
+      "B2_Marco_106-113",
+      "B3_Ley_Seguro_Social_IHSS",
+      "B4_Aviso_24h",
+      "B5_Responsabilidad_Patrono",
+      "B6_Readmision_Inamovilidad"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -231,5 +238,7 @@
     "error_critico": "B2.1 y B1.1: El documento cita Arts. 106-113 CT como marco de riesgos profesionales. Dichos artículos regulan suspensión/terminación del contrato. El rango correcto es 391-459 CT.",
     "error_secundario": "B4.2: El aviso de accidente según el CT es a Inspección del Trabajo y Juzgado, no al IHSS.",
     "calidad_global_documento": "Contenido sustantivo correcto y útil, pero con un error grave de cita normativa (Arts. 106-113 en lugar de 391-459 CT) que debe ser corregido. Las afirmaciones sobre derechos, obligaciones, plazos y prestaciones son precisas y verificables."
-  }
+  },
+  "sha256_original": "f42af8b7c5443658b31711b8a474692f3226d1f7559073d619fb701c60fccf80",
+  "_sha_backfilled": true
 }

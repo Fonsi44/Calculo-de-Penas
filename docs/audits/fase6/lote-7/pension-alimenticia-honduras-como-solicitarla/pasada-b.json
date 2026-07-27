@@ -21,21 +21,30 @@
         "descripcion": "El artículo enumera como titulares del derecho de alimentos a: hijos menores, hijos mayores estudiando, cónyuge o conviviente, y ascendientes. El Art. 388 CC enumera: 1o. cónyuge; 2o. descendientes legítimos; 3o. hijo natural reconocido; 4o. ascendientes legítimos; 5o. madre y padre naturales que han reconocido al hijo. El artículo INCLUYE 'conviviente' (no en Art. 388 CC) y OMITE 'madre y padre naturales que han reconocido al hijo' (Art. 388 CC 5o.). Ambas discrepancias podrían explicarse por reformas del Código de Familia no disponibles.",
         "impacto": "medio",
         "apariciones": 1,
-        "ubicaciones": ["Sección introductoria: lista de quiénes pueden solicitar"]
+        "ubicaciones": [
+          "Sección introductoria: lista de quiénes pueden solicitar"
+        ]
       },
       {
         "tipo": "aspectos_procesales_no_verificables",
         "descripcion": "Cuatro bloques de afirmaciones procesales no tienen respaldo en las fuentes locales: (a) documentos requeridos, (b) mecanismos de ejecución (embargo, apremio, prohibición de salida, intereses), (c) gratuidad del proceso y no necesidad de abogado, (d) asistencia de la Defensa Pública. Ninguno de estos aspectos aparece en los Arts. 388-408 CC ni en los 5 artículos del CF disponibles.",
         "impacto": "alto",
         "apariciones": 4,
-        "ubicaciones": ["Sección 'Documentos que debe reunir'", "Sección 'Qué hacer si el alimentante no paga'", "Sección 'Ante quién se presenta la solicitud'"]
+        "ubicaciones": [
+          "Sección 'Documentos que debe reunir'",
+          "Sección 'Qué hacer si el alimentante no paga'",
+          "Sección 'Ante quién se presenta la solicitud'"
+        ]
       },
       {
         "tipo": "impresicion_en_contenido_de_la_obligacion",
         "descripcion": "El artículo enumera que la pensión cubre 'vivienda, vestido, asistencia médica, educación y esparcimiento'. El Art. 390 CC define alimentos congruos como los que habilitan 'para subsistir modestamente de un modo correspondiente a su posición social' y necesarios como 'lo que basta para sustentar la vida'. La enumeración específica de partidas no aparece en las fuentes disponibles, aunque puede ser una interpretación doctrinal o estar en el CF completo.",
         "impacto": "bajo",
         "apariciones": 2,
-        "ubicaciones": ["Resumen rápido", "Sección introductoria"]
+        "ubicaciones": [
+          "Resumen rápido",
+          "Sección introductoria"
+        ]
       }
     ],
     "fuente_ausente_critica": {
@@ -256,7 +265,16 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Definicion_Contenido", "B2_Titulares", "B3_Proceso_Competencia", "B4_Documentos", "B5_Fijacion_Monto", "B6_Modificabilidad", "B7_Ejecucion", "B8_Contexto_Normativo"],
+    "columnas": [
+      "B1_Definicion_Contenido",
+      "B2_Titulares",
+      "B3_Proceso_Competencia",
+      "B4_Documentos",
+      "B5_Fijacion_Monto",
+      "B6_Modificabilidad",
+      "B7_Ejecucion",
+      "B8_Contexto_Normativo"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -317,5 +335,7 @@
     "conflictos_detectados_flag": true,
     "observacion_critica": "El artículo es sólido en sus fundamentos normativos (existencia de la obligación, titulares principales, criterios de fijación del monto, modificabilidad). Estos están respaldados por Arts. 207, 219, 220 CF y Arts. 388-408 CC. Sin embargo, TODOS los aspectos procesales y de ejecución (documentos, gratuidad, Defensa Pública, embargo de salario, apremio corporal, prohibición de salida, intereses moratorios) NO son verificables con las fuentes locales. Se detectan dos problemas: (1) la inclusión del 'conviviente' como titular no está respaldada (Art. 388 CC solo menciona cónyuge); (2) omisión de los padres naturales que reconocieron al hijo (Art. 388 CC 5o.) y de la figura de alimentos provisionales (Art. 396 CC). El artículo omite mencionar el plazo de prescripción de 1 año (Art. 225 CF). La guía es útil como orientación práctica general, pero los lectores deben verificar los detalles procesales con un abogado especialista en derecho de familia hondureño.",
     "calidad_global_documento": "Buena en fundamentos normativos; no verificable en aspectos procesales y de ejecución. Se recomienda complementar con verificación externa del Código de Familia completo para los aspectos procesales, y añadir la figura de alimentos provisionales (Art. 396 CC) y los padres naturales como titulares (Art. 388 CC 5o.)."
-  }
+  },
+  "sha256_original": "e24e0b6b000fb9b8dbcd2d0596e0963c13c0af0aa74768656bca9d34c73d0bc4",
+  "_sha_backfilled": true
 }

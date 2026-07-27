@@ -19,5 +19,7 @@
       "conclusion": "Se confirma como Verdadero."
     }
   ],
-  "notas_adversariales": "Se confirma también la pertinencia de la nota adicional de la Pasada A respecto a la validez de las firmas electrónicas (Decreto 149-2013). Es una adición valiosa que mejora la aplicabilidad moderna del contenido sobre contratos mercantiles."
+  "notas_adversariales": "Se confirma también la pertinencia de la nota adicional de la Pasada A respecto a la validez de las firmas electrónicas (Decreto 149-2013). Es una adición valiosa que mejora la aplicabilidad moderna del contenido sobre contratos mercantiles.",
+  "sha256_original": "983bf3c6643c6a77924e6d95d8e006db902b48fe241a8499b205fda1b133008e",
+  "_sha_backfilled": true
 }

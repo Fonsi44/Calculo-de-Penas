@@ -19,7 +19,9 @@
       "descripcion": "El artículo no menciona que la Constitución de Honduras (Art. 24) reconoce la doble nacionalidad mediante tratado, y que España y Honduras tienen un Convenio de Doble Nacionalidad desde 1966. Esto es relevante porque los hondureños que adquieran la nacionalidad española no pierden la hondureña. Tampoco menciona que los hijos de hondureños nacidos en España son hondureños por nacimiento (Art. 23.2).",
       "impacto": "bajo",
       "apariciones": 0,
-      "ubicaciones": ["No se menciona en el artículo. Es información complementaria útil para el lector hondureño."]
+      "ubicaciones": [
+        "No se menciona en el artículo. Es información complementaria útil para el lector hondureño."
+      ]
     },
     "matiz_detectado": {
       "tipo": "traduccion_oficial_potencialmente_innecesaria",
@@ -248,7 +250,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Normativa_Espanola", "B2_Familiares_Reagrupables", "B3_Requisitos_Economicos", "B4_Vivienda", "B5_Procedimiento", "B6_Documentos_Hondurenos"],
+    "columnas": [
+      "B1_Normativa_Espanola",
+      "B2_Familiares_Reagrupables",
+      "B3_Requisitos_Economicos",
+      "B4_Vivienda",
+      "B5_Procedimiento",
+      "B6_Documentos_Hondurenos"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -305,5 +314,7 @@
     "sin_conflictos_detectados": true,
     "observacion_critica": "De 24 subclaims, solo 7 tienen verificabilidad parcial desde fuentes hondureñas (subclaims sobre documentos hondureños, apostilla, contexto constitucional, cruces). Los 17 restantes dependen enteramente de normativa española no disponible. No se detectan errores factuales en lo verificable. El artículo es internamente consistente y refleja correctamente la estructura del procedimiento español de reagrupación familiar, pero su verificabilidad con fuentes locales hondureñas es mínima por la naturaleza transfronteriza de la materia.",
     "calidad_global_documento": "Buena. El artículo presenta de forma correcta y completa el procedimiento de reagrupación familiar en España para hondureños. La estructura es lógica, los requisitos mencionados son los estándar de la legislación española de extranjería, y los consejos prácticos son pertinentes. La principal limitación es que el 100% del contenido normativo es derecho español, no verificable con las fuentes locales hondureñas disponibles. Se recomienda obtener fuentes de derecho español (LO 4/2000, RD 557/2011) para una verificación completa. El matiz sobre la traducción oficial es menor y no afecta la calidad general."
-  }
+  },
+  "sha256_original": "8a0940ea8b1335bbac0ac2ba46afd65c5b1b0694245001884ecca8c4675a7302",
+  "_sha_backfilled": true
 }

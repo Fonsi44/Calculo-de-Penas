@@ -212,5 +212,7 @@
   "metadatos": {
     "metodologia": "Verificación estricta contra fuentes locales (codigo_civil.json). Claims no confirmables por falta de fuentes se marcan como NO_VERIFICABLE. No se asume veracidad de información no contrastable.",
     "criterio_conservador": "Ante duda, se prefiere marcar como NO_VERIFICABLE o PARCIALMENTE_VERDADERO en vez de asumir veracidad."
-  }
+  },
+  "sha256_original": "4831906635e2243caed2796d9e7321f41da63be62df4495dd53422a5b7d52500",
+  "_sha_backfilled": true
 }

@@ -92,5 +92,7 @@
     "error_critico_detectado": "Ninguno. La Constitución no regula poderes notariales, apostilla, consulados ni mandato civil. Esta materia corresponde al Código Civil, tratados internacionales y legislación consular.",
     "calidad_general": "no_verificable_con_fuente_disponible",
     "nota_limitacion": "La fuente constitucional no contiene ninguna de las normas citadas (Código Civil, Convenio de La Haya, funciones consulares). Es materialmente imposible verificar las afirmaciones del artículo con esta fuente."
-  }
+  },
+  "sha256_original": "db5ec85e0ae0e16c19b75462c6e543b235bbfd97f48e1841d3566d50d621926e",
+  "_sha_backfilled": true
 }

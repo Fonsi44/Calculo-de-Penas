@@ -125,5 +125,7 @@
     "error_critico_detectado": "Ninguno. El artículo es sustancialmente correcto en sus afirmaciones verificables.",
     "observacion_principal": "La Ley de Conciliación y Arbitraje (Decreto 161-2000) no está disponible en las fuentes JSON locales. Esto limita significativamente la verificación: 5 de 6 claims dependen parcial o totalmente de esta ley. La verificación se realizó contra principios constitucionales (Arts. 15, 18, 139) y normas civiles supletorias. Se recomienda obtener el texto del Decreto 161-2000 para una verificación completa.",
     "calidad_general": "buena_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "2e81d4f233d052ca97c996398a94b90a419b4211b614b40a5feb6a30bec2520f",
+  "_sha_backfilled": true
 }

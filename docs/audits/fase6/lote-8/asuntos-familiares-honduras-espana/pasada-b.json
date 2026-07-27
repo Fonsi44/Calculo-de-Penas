@@ -20,14 +20,18 @@
       "descripcion": "El artículo omite mencionar que el divorcio por mutuo consentimiento requiere que los cónyuges lleven al menos dos años de matrimonio (Art. 243 CF). Esta omisión es relevante para el lector que evalúa sus opciones de divorcio desde España.",
       "impacto": "medio",
       "apariciones": 0,
-      "ubicaciones": ["Sección sobre divorcio desde España y FAQ sobre divorcio sin viajar a Honduras."]
+      "ubicaciones": [
+        "Sección sobre divorcio desde España y FAQ sobre divorcio sin viajar a Honduras."
+      ]
     },
     "posible_imprecision_detectada": {
       "tipo": "atribucion_normativa_inexacta",
       "descripcion": "El artículo afirma que el Código de Familia rige las sucesiones. En Honduras, las sucesiones se rigen por el Código Civil (Libro III), no por el Código de Familia. El CF regula divorcio, alimentos, custodia y patria potestad, pero no el derecho sucesorio.",
       "impacto": "medio",
       "apariciones": 1,
-      "ubicaciones": ["Sección inicial: 'El Código de Familia de Honduras... es la normativa principal que rige... las sucesiones.'"]
+      "ubicaciones": [
+        "Sección inicial: 'El Código de Familia de Honduras... es la normativa principal que rige... las sucesiones.'"
+      ]
     },
     "fuente_ausente_critica": {
       "tipo": "normas_procesales_e_internacionales_no_disponibles",
@@ -226,7 +230,19 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Normativa_CF", "B2_Divorcio_Exequatur", "B3_Poder_Especial", "B4_Mutuo_Acuerdo", "B5_Custodia_Internacional", "B6_Videoconferencia", "B7_Alimentos_Apoderado", "B9_Herencia_Poder", "B10_Apostilla", "B11_Documentos", "B12_Sucesiones_Independientes"],
+    "columnas": [
+      "B1_Normativa_CF",
+      "B2_Divorcio_Exequatur",
+      "B3_Poder_Especial",
+      "B4_Mutuo_Acuerdo",
+      "B5_Custodia_Internacional",
+      "B6_Videoconferencia",
+      "B7_Alimentos_Apoderado",
+      "B9_Herencia_Poder",
+      "B10_Apostilla",
+      "B11_Documentos",
+      "B12_Sucesiones_Independientes"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -284,5 +300,7 @@
     "sin_conflictos_detectados": false,
     "observacion_critica": "El 75% del contenido sustantivo del artículo depende de fuentes no disponibles: Código Procesal de Familia, Código Civil (sucesiones), Ley de Exequátur, Convenio de La Haya sobre Apostilla, y tratados bilaterales Honduras-España. Las afirmaciones verificables contra la Constitución (Arts. 15, 18, 111-122) y el Código de Familia verificado (12 artículos) son correctas en su mayoría. Se detecta UNA inconsistencia: atribución errónea de las sucesiones al Código de Familia (cuando corresponden al Código Civil). Se detecta UNA omisión: requisito de dos años de matrimonio para divorcio por mutuo consentimiento (Art. 243 CF).",
     "calidad_global_documento": "Buena en las áreas verificables. El artículo proporciona información práctica correcta y útil para hondureños en España, aunque: (1) atribuye incorrectamente las sucesiones al Código de Familia; (2) omite el requisito temporal de dos años de matrimonio para divorcio por mutuo consentimiento; (3) la mayoría de las afirmaciones procedimentales e internacionales no son verificables con las fuentes locales disponibles. La calidad práctica es aceptable, pero la precisión jurídica tiene margen de mejora."
-  }
+  },
+  "sha256_original": "23c41af3401e7334e7199e777f5d2606103ead533872afeb3e2d46223271e827",
+  "_sha_backfilled": true
 }

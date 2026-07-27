@@ -210,7 +210,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_LeyConsumidor", "B2_CNBS_Transparencia", "B3_Anatocismo", "B4_Membresias", "B5_Seguros", "B6_ProcedimientoReclamo"],
+    "columnas": [
+      "B1_LeyConsumidor",
+      "B2_CNBS_Transparencia",
+      "B3_Anatocismo",
+      "B4_Membresias",
+      "B5_Seguros",
+      "B6_ProcedimientoReclamo"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -257,5 +264,7 @@
     "limitacion_principal": "5 de 7 afirmaciones del artículo dependen de fuentes no disponibles localmente (Ley de Protección al Consumidor, Ley de Tarjetas de Crédito, normativa CNBS). Las verificaciones positivas se limitan al Código Civil y Código de Comercio.",
     "hallazgo_relevante": "El artículo simplifica el régimen del anatocismo al no distinguir entre el ámbito civil (Art. 1368 CC) y el mercantil (CCom). Las tarjetas de crédito, como operaciones mercantiles, se rigen por el CCom, que no contiene una limitación expresa equivalente al Art. 1368 CC.",
     "calidad_global_documento": "Bueno dentro de los límites de verificabilidad. No contiene errores factuales detectables con las fuentes disponibles. Las afirmaciones son plausibles y consistentes con los principios generales del derecho hondureño. La principal debilidad es la imposibilidad de verificar la mayoría de las afirmaciones con las fuentes locales actuales."
-  }
+  },
+  "sha256_original": "4f51b7e0c15977bb02bac119f1650b2a764b2bb48b0c0af0dc92f50a72ab507f",
+  "_sha_backfilled": true
 }

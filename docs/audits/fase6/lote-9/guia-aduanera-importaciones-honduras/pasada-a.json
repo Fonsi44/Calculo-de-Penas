@@ -151,5 +151,7 @@
     "error_critico_detectado": "Ninguno. El artículo es sustancialmente correcto en sus afirmaciones verificables contra el Código Tributario.",
     "observacion_principal": "El CAUCA, Arancel Centroamericano, Ley de Fortalecimiento de los Ingresos, leyes específicas de DAI/ISV/ISC, Código Penal (Decreto 130-2017) y normativa de ARSA/SENASA no están disponibles en las fuentes JSON locales. Esto limita significativamente la verificación: 6 de 9 claims dependen total o parcialmente de legislación aduanera especial no disponible. El Código Tributario proporciona el marco general (RTN, jerarquía de fuentes, principio de legalidad, régimen sancionatorio, figura del agente aduanero) que respalda la coherencia del artículo. El Código de Comercio no contiene disposiciones relevantes sobre importaciones o aduanas.",
     "calidad_general": "buena_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "d2a4ff40d96f20f9c963853dc48217e5a441efd17768c5aab51401ea13c59c66",
+  "_sha_backfilled": true
 }

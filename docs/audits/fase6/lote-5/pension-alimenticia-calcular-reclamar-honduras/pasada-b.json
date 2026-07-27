@@ -166,5 +166,7 @@
       "Ningún claim resultó refutado por las fuentes consultadas."
     ],
     "recomendacion": "El contenido es jurídicamente sólido en sus fundamentos sustantivos. Se recomienda añadir referencias expresas a los artículos del Código de Familia y Código Civil citados en esta auditoría, y matizar que el límite de 25 años y los rangos 20%-40% son práctica judicial, no texto legal."
-  }
+  },
+  "sha256_original": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
+  "_sha_backfilled": true
 }

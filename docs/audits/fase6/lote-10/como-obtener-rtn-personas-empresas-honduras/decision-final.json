@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "como-obtener-rtn-personas-empresas-honduras",
-  "article_id": "7e5cc1be-6234-44a5-89ce-6156300e0dff",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T08:45:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "7e5cc1be-6234-44a5-89ce-6156300e0dff",
+  "lote": 10,
+  "fechaConsolidacion": "2026-07-27T08:45:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+    "pasadaA": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+    "pasadaB": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "7e5cc1be-6234-44a5-89ce-6156300e0dff",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T08:45:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

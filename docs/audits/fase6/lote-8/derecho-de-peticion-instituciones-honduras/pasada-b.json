@@ -40,5 +40,7 @@
   "claimsOmitidos": [],
   "correccionesConfirmadas": 6,
   "correccionesRechazadas": 0,
-  "estadoPropuesto": "needs_human_review"
+  "estadoPropuesto": "needs_human_review",
+  "sha256_original": "837eac672aae94fb1da2027f0d36fab1d99e376a1c8d457ff00f4abbc1609c94",
+  "_sha_backfilled": true
 }

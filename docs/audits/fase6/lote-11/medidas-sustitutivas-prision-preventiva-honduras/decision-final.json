@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "medidas-sustitutivas-prision-preventiva-honduras",
-  "article_id": "7c6763ad-a925-48dc-a0c3-69d6a96b6b42",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T09:10:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "7c6763ad-a925-48dc-a0c3-69d6a96b6b42",
+  "lote": 11,
+  "fechaConsolidacion": "2026-07-27T09:10:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 7,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "fd32b1b2fb3d7138166a51d24ef85fc3025c1498856901939ff1db7698c15d03",
+    "pasadaA": "fd32b1b2fb3d7138166a51d24ef85fc3025c1498856901939ff1db7698c15d03",
+    "pasadaB": "fd32b1b2fb3d7138166a51d24ef85fc3025c1498856901939ff1db7698c15d03",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 7,
+    "pasadaA": 7,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 7
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "7c6763ad-a925-48dc-a0c3-69d6a96b6b42",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T09:10:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 7,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

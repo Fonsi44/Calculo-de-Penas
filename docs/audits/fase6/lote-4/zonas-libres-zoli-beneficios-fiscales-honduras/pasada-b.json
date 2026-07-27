@@ -15,5 +15,7 @@
       "explicacion": "La corrección de la Pasada A es correcta y refuta el límite del 20% mencionado en el texto original."
     }
   ],
-  "decision_final": "aprobar_pasada_a"
+  "decision_final": "aprobar_pasada_a",
+  "sha256_original": "16e1b846e2e5adb8b653a5613bbb09f2f9c9259d0eb1b6d2486c3775d0a06d89",
+  "_sha_backfilled": true
 }

@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "registrar-marca-honduras-paso-a-paso",
-  "article_id": "106acc18-20ed-4698-a572-f36484741445",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "106acc18-20ed-4698-a572-f36484741445",
+  "lote": 9,
+  "fechaConsolidacion": "2026-07-27T08:30:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "7551901669631f46b8e31bf1560579d878c9b7178d3384b35a498d1925b5a83c",
+    "pasadaA": "7551901669631f46b8e31bf1560579d878c9b7178d3384b35a498d1925b5a83c",
+    "pasadaB": "7551901669631f46b8e31bf1560579d878c9b7178d3384b35a498d1925b5a83c",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "106acc18-20ed-4698-a572-f36484741445",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "calcular-prestaciones-laborales-honduras",
-  "articleHash": "",
+  "articleId": "c4a7fe2b-7fee-4efa-b2db-a2a2be4a7132",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.318Z",
   "estadoFinal": "needs_human_review",
   "razon": "Uno o ambos subagentes indicaron que requiere revisión humana de abogado.",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6",
+    "pasadaA": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6",
+    "pasadaB": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 7,
+    "pasadaA": 7,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 7
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

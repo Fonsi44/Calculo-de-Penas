@@ -44,7 +44,10 @@
       "veredicto": "plausible_no_verificable",
       "detalle": "La Constitución establece en el Art. 257 que la ley regulará 'la garantía de permanencia' y 'los traslados, suspensiones y garantías'. Esto implica que existen causales y procedimientos específicos para la separación de empleados públicos. Sin embargo, las causales concretas de despido para empleados públicos no están en la Constitución ni en el Código del Trabajo. El Art. 2 del Código del Trabajo exceptúa expresamente a los empleados públicos de su ámbito de aplicación y remite a 'las leyes del Servicio Civil que se expidan'. Las causales específicas de despido para empleados públicos se encuentran en la Ley de Servicio Civil y sus reglamentos, no disponibles en el corpus local. La afirmación es plausible y consistente con el diseño constitucional, pero no es verificable directamente con las fuentes locales disponibles.",
       "evidencia_local": {
-        "archivos": ["data/articulos_constitucion.json", "data/codigo_trabajo.json"],
+        "archivos": [
+          "data/articulos_constitucion.json",
+          "data/codigo_trabajo.json"
+        ],
         "articulos": [
           {
             "articulo": "Art. 257 Constitución",
@@ -98,7 +101,10 @@
       "veredicto": "confirmado",
       "detalle": "El Art. 2 del Código del Trabajo exceptúa expresamente a 'los empleados públicos nacionales, departamentales y municipales' de la aplicación del CT y dispone que 'las relaciones entre el Estado, el Departamento y el Municipio y sus servidores, se regirán por las leyes del Servicio Civil que se expidan'. El Art. 256 constitucional crea el régimen de Servicio Civil como el marco regulador de 'las relaciones de empleo y función pública que se establecen entre el Estado y sus servidores'. En consecuencia, el despido de empleados públicos corresponde al régimen del Servicio Civil y no al derecho laboral común del Código del Trabajo.",
       "evidencia_local": {
-        "archivos": ["data/codigo_trabajo.json", "data/articulos_constitucion.json"],
+        "archivos": [
+          "data/codigo_trabajo.json",
+          "data/articulos_constitucion.json"
+        ],
         "articulos": [
           {
             "articulo": "Art. 2 CT",
@@ -123,5 +129,7 @@
     "limitacion_corpus": "La Ley de Servicio Civil y sus reglamentos no están disponibles en el corpus local. Las afirmaciones sobre causales de despido (A2) y proceso disciplinario (A3) son consistentes con el diseño constitucional pero no verificables en su contenido específico. Los Artículos 256 y 257 de la Constitución y el Art. 2 del Código del Trabajo proporcionan el marco constitucional y legal general del régimen de Servicio Civil.",
     "calidad_general": "buena_marco_constitucional_confirmado_contenido_especifico_no_verificable",
     "nota_fusion": "El body de la entrada es únicamente un redirect a otra guía. No hay contenido sustantivo que verificar más allá del título y la descripción."
-  }
+  },
+  "sha256_original": "a7d04e1da4910032675844462fc893c08cf9754c412a47db40f00b00a218e4dc",
+  "_sha_backfilled": true
 }

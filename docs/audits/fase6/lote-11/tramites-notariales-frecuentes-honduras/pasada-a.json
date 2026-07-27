@@ -118,5 +118,7 @@
     "no_verificables": 9,
     "refutados": 0
   },
-  "conclusion": "Se verificaron 10 claims contra data/codigo_civil.json. 0 verificados, 1 parcialmente verificados, 9 no verificables, 0 refutados. No se detectaron refutaciones."
+  "conclusion": "Se verificaron 10 claims contra data/codigo_civil.json. 0 verificados, 1 parcialmente verificados, 9 no verificables, 0 refutados. No se detectaron refutaciones.",
+  "sha256_original": "44826a584d9507af9a06588421d1ab79ae9273ae61e6d88161ccd519cc584fe5",
+  "_sha_backfilled": true
 }

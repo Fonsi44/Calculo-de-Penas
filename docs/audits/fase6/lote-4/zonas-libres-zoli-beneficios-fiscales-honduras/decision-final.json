@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "zonas-libres-zoli-beneficios-fiscales-honduras",
-  "articleHash": "",
+  "articleId": "d78c417c-a43d-47ca-90fa-8a143c149162",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.319Z",
   "estadoFinal": "completed",
   "razon": "A y B coinciden plenamente",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "16e1b846e2e5adb8b653a5613bbb09f2f9c9259d0eb1b6d2486c3775d0a06d89",
+    "pasadaA": "16e1b846e2e5adb8b653a5613bbb09f2f9c9259d0eb1b6d2486c3775d0a06d89",
+    "pasadaB": "16e1b846e2e5adb8b653a5613bbb09f2f9c9259d0eb1b6d2486c3775d0a06d89",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 5,
+    "pasadaA": 5,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 5
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

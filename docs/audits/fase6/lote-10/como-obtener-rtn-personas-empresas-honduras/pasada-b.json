@@ -120,5 +120,7 @@
     "coherentes": 1,
     "error_critico": null,
     "calidad_global_documento": "Artículo técnicamente correcto en lo verificable contra el Código Tributario. La obligación de inscripción, deberes formales y régimen sancionatorio están confirmados. Los detalles operativos requieren verificación reglamentaria."
-  }
+  },
+  "sha256_original": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+  "_sha_backfilled": true
 }

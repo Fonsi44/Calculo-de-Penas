@@ -129,5 +129,7 @@
     "nota_contextual": "El documento trata sobre legislación española de extranjería para ciudadanos hondureños. La fuente local disponible (Constitución de Honduras) NO contiene legislación española de extranjería. Las verificaciones se limitan a confirmar: (a) que los conceptos de derecho internacional y prácticas migratorias mencionados tienen fundamento o análogos en el ordenamiento constitucional hondureño, y (b) que no existen contradicciones entre lo afirmado y la Constitución de Honduras. Se detecta el principio de reciprocidad Honduras-España en el Art. 24 constitucional como dato relevante no mencionado en el artículo.",
     "recomendacion": "Para verificación completa se requeriría acceso a la Ley Orgánica 4/2000 de Extranjería (España) y su Reglamento (RD 557/2011), fuentes no disponibles en el repositorio local.",
     "calidad_general": "aceptable_sujeto_a_verificacion_con_fuentes_espanolas"
-  }
+  },
+  "sha256_original": "71af9b246cc0d941a7bac02829908a7e8c77f749d86c7e0aad50ca7081b9fcc1",
+  "_sha_backfilled": true
 }

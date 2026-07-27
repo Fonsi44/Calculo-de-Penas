@@ -24,24 +24,78 @@
   ],
   "nota_metodologica": "Se realizaron 15+ intentos de consulta a fuentes web oficiales y privadas (SAR, SEFIN, BCH, TSC, Deloitte, KPMG, EY, Grant Thornton, Wikipedia, Lexology, Santander Trade, Trade.gov, Lagaceta.hn, Expansion, BizLatinHub, Banpais, OffshoreCorporation). La mayoria de los sitios devolvieron HTTP 404 o redirigieron a paginas sin contenido fiscal. Solo PWC devolvio informacion util, confirmando unicamente la tasa general del 15%. Las fuentes oficiales hondurenas (SAR, SEFIN, TSC) no fueron accesibles via WebFetch en esta sesion.",
   "claims_extraidos": [
-    {"id": "C1", "claim": "El ISV en Honduras es administrado por el SAR (Servicio de Administracion de Rentas)."},
-    {"id": "C2", "claim": "La tasa general del ISV es del 15%."},
-    {"id": "C3", "claim": "Existe una tasa reducida para ciertos bienes y servicios como alimentos procesados, telecomunicaciones y energia electrica."},
-    {"id": "C4", "claim": "Las exportaciones tienen tasa del 0%, permitiendo acreditar el ISV pagado y solicitar devolucion."},
-    {"id": "C5", "claim": "El mecanismo del ISV se basa en debito fiscal (ISV cobrado a clientes) y credito fiscal (ISV pagado a proveedores), pagandose la diferencia."},
-    {"id": "C6", "claim": "Productos basicos de la canasta familiar (maiz, frijoles, arroz, leche, huevos, pan, tortillas) estan exentos del ISV."},
-    {"id": "C7", "claim": "Medicamentos e insumos medicos estan exentos del ISV."},
-    {"id": "C8", "claim": "Servicios educativos en todos los niveles estan exentos del ISV."},
-    {"id": "C9", "claim": "Intereses y comisiones bancarias, seguros de vida y salud, arrendamiento de viviendas (no comerciales), transporte de pasajeros, libros/periodicos/revistas, y suministro de agua potable estan exentos."},
-    {"id": "C10", "claim": "La declaracion del ISV es mensual y debe presentarse ante el SAR, usualmente en los primeros dias habiles del mes siguiente."},
-    {"id": "C11", "claim": "Es obligatorio presentar declaracion incluso sin operaciones (declaracion en cero)."},
-    {"id": "C12", "claim": "La declaracion se presenta via SAR en Linea y el pago se efectua en bancos autorizados."},
-    {"id": "C13", "claim": "Las facturas deben contar con un Certificado de Autorizacion de Impresion (CAI) vigente emitido por el SAR, incluir el RTN del emisor y cliente, y detallar el ISV por separado."},
-    {"id": "C14", "claim": "Facturar sin CAI valido es una infraccion grave sujeta a sanciones como el cierre temporal del establecimiento."},
-    {"id": "C15", "claim": "Las infracciones tributarias del ISV se sancionan con multas e intereses proporcionales a su gravedad."},
-    {"id": "C16", "claim": "El ISV se rige por la Ley del Impuesto Sobre Ventas y su reglamento, cuyo Articulo 1 define el hecho gravado."},
-    {"id": "C17", "claim": "Si el credito fiscal es mayor que el debito fiscal, se genera un saldo a favor compensable en meses posteriores o solicitable en devolucion."},
-    {"id": "C18", "claim": "Mezclar productos exentos y gravados sin registros contables separados puede resultar en sanciones del SAR."}
+    {
+      "id": "C1",
+      "claim": "El ISV en Honduras es administrado por el SAR (Servicio de Administracion de Rentas)."
+    },
+    {
+      "id": "C2",
+      "claim": "La tasa general del ISV es del 15%."
+    },
+    {
+      "id": "C3",
+      "claim": "Existe una tasa reducida para ciertos bienes y servicios como alimentos procesados, telecomunicaciones y energia electrica."
+    },
+    {
+      "id": "C4",
+      "claim": "Las exportaciones tienen tasa del 0%, permitiendo acreditar el ISV pagado y solicitar devolucion."
+    },
+    {
+      "id": "C5",
+      "claim": "El mecanismo del ISV se basa en debito fiscal (ISV cobrado a clientes) y credito fiscal (ISV pagado a proveedores), pagandose la diferencia."
+    },
+    {
+      "id": "C6",
+      "claim": "Productos basicos de la canasta familiar (maiz, frijoles, arroz, leche, huevos, pan, tortillas) estan exentos del ISV."
+    },
+    {
+      "id": "C7",
+      "claim": "Medicamentos e insumos medicos estan exentos del ISV."
+    },
+    {
+      "id": "C8",
+      "claim": "Servicios educativos en todos los niveles estan exentos del ISV."
+    },
+    {
+      "id": "C9",
+      "claim": "Intereses y comisiones bancarias, seguros de vida y salud, arrendamiento de viviendas (no comerciales), transporte de pasajeros, libros/periodicos/revistas, y suministro de agua potable estan exentos."
+    },
+    {
+      "id": "C10",
+      "claim": "La declaracion del ISV es mensual y debe presentarse ante el SAR, usualmente en los primeros dias habiles del mes siguiente."
+    },
+    {
+      "id": "C11",
+      "claim": "Es obligatorio presentar declaracion incluso sin operaciones (declaracion en cero)."
+    },
+    {
+      "id": "C12",
+      "claim": "La declaracion se presenta via SAR en Linea y el pago se efectua en bancos autorizados."
+    },
+    {
+      "id": "C13",
+      "claim": "Las facturas deben contar con un Certificado de Autorizacion de Impresion (CAI) vigente emitido por el SAR, incluir el RTN del emisor y cliente, y detallar el ISV por separado."
+    },
+    {
+      "id": "C14",
+      "claim": "Facturar sin CAI valido es una infraccion grave sujeta a sanciones como el cierre temporal del establecimiento."
+    },
+    {
+      "id": "C15",
+      "claim": "Las infracciones tributarias del ISV se sancionan con multas e intereses proporcionales a su gravedad."
+    },
+    {
+      "id": "C16",
+      "claim": "El ISV se rige por la Ley del Impuesto Sobre Ventas y su reglamento, cuyo Articulo 1 define el hecho gravado."
+    },
+    {
+      "id": "C17",
+      "claim": "Si el credito fiscal es mayor que el debito fiscal, se genera un saldo a favor compensable en meses posteriores o solicitable en devolucion."
+    },
+    {
+      "id": "C18",
+      "claim": "Mezclar productos exentos y gravados sin registros contables separados puede resultar en sanciones del SAR."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -160,5 +214,7 @@
     "no_verificables": 17,
     "refutados": 0
   },
-  "conclusion": "La verificacion web fue severamente limitada por la inaccesibilidad de fuentes oficiales hondurenas y de firmas consultoras. De 15+ URLs intentadas, solo PWC Worldwide Tax Summaries (W1) devolvio contenido util, confirmando unicamente la tasa general del ISV del 15% (C2: VERIFICADO). Las 17 claims restantes no pudieron ser verificadas ni refutadas por carencia de contenido web accesible. Las fuentes oficiales primarias (SAR, SEFIN, TSC) y secundarias (Deloitte, KPMG, EY, Grant Thornton) devolvieron errores HTTP 404, 403 o redirigieron a paginas sin contenido fiscal. Se recomienda realizar verificacion web con herramientas que permitan acceso a sitios con restricciones geograficas o de autenticacion (e.g., navegador humano, VPN de Honduras) para contrastar las claims restantes contra la Ley del Impuesto Sobre Ventas y normativa del SAR."
+  "conclusion": "La verificacion web fue severamente limitada por la inaccesibilidad de fuentes oficiales hondurenas y de firmas consultoras. De 15+ URLs intentadas, solo PWC Worldwide Tax Summaries (W1) devolvio contenido util, confirmando unicamente la tasa general del ISV del 15% (C2: VERIFICADO). Las 17 claims restantes no pudieron ser verificadas ni refutadas por carencia de contenido web accesible. Las fuentes oficiales primarias (SAR, SEFIN, TSC) y secundarias (Deloitte, KPMG, EY, Grant Thornton) devolvieron errores HTTP 404, 403 o redirigieron a paginas sin contenido fiscal. Se recomienda realizar verificacion web con herramientas que permitan acceso a sitios con restricciones geograficas o de autenticacion (e.g., navegador humano, VPN de Honduras) para contrastar las claims restantes contra la Ley del Impuesto Sobre Ventas y normativa del SAR.",
+  "sha256_original": "7dba0b1c7c203905ce5bce4b3b28d0affa1067b934707b5d0274548ce4e0e6ff",
+  "_sha_backfilled": true
 }

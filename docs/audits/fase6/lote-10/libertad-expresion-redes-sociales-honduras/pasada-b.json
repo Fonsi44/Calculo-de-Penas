@@ -119,5 +119,7 @@
     "coherentes": 1,
     "error_critico": null,
     "calidad_global_documento": "El artículo describe correctamente el marco constitucional de la libertad de expresión (Art. 72). La distinción opinión/calumnia es doctrinalmente sólida. Los artículos del Código Penal requieren verificación con fuente secundaria."
-  }
+  },
+  "sha256_original": "bd70ac76692753a570f4838148faf96c6c200fea4646f22be1e4a186c9210bfd",
+  "_sha_backfilled": true
 }

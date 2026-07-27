@@ -21,15 +21,42 @@
     "gravedad": "CRÍTICA PARA EL PROYECTO",
     "descripcion": "Las dos fuentes locales contienen numeración de artículos INCOMPATIBLE para los mismos números. En codigo_trabajo.json (856 arts.), los artículos 110-120 tratan sobre terminación del contrato y despido. En codigo_trabajo_verificado.json (18 arts.), los artículos 110-120 tratan sobre AGUINALDO y VACACIONES. Esto significa que cualquier verificación depende críticamente de cuál fuente se use como referencia. La entrada sigue la numeración de codigo_trabajo.json, que es la fuente más completa.",
     "tabla_comparativa": {
-      "Art. 110": { "principal": "Despido injustificado: indemnización o reintegro", "verificado": "Aguinaldo navideño (1 mes de salario)" },
-      "Art. 111": { "principal": "Causas de terminación del contrato", "verificado": "Aguinaldo proporcional" },
-      "Art. 112": { "principal": "Causas justas de despido del patrono", "verificado": "No presente en esta fuente" },
-      "Art. 114": { "principal": "Causas justas de separación del trabajador", "verificado": "No presente en esta fuente" },
-      "Art. 116": { "principal": "Preaviso según antigüedad", "verificado": "No presente en esta fuente" },
-      "Art. 117": { "principal": "Preaviso por escrito", "verificado": "No presente en esta fuente" },
-      "Art. 118": { "principal": "No coincide con vacaciones", "verificado": "Vacaciones anuales remuneradas" },
-      "Art. 119": { "principal": "Código de la Niñez", "verificado": "Vacaciones: prohibición de acumulación" },
-      "Art. 120": { "principal": "Conclusión por despido injustificado", "verificado": "Compensación de vacaciones en dinero" }
+      "Art. 110": {
+        "principal": "Despido injustificado: indemnización o reintegro",
+        "verificado": "Aguinaldo navideño (1 mes de salario)"
+      },
+      "Art. 111": {
+        "principal": "Causas de terminación del contrato",
+        "verificado": "Aguinaldo proporcional"
+      },
+      "Art. 112": {
+        "principal": "Causas justas de despido del patrono",
+        "verificado": "No presente en esta fuente"
+      },
+      "Art. 114": {
+        "principal": "Causas justas de separación del trabajador",
+        "verificado": "No presente en esta fuente"
+      },
+      "Art. 116": {
+        "principal": "Preaviso según antigüedad",
+        "verificado": "No presente en esta fuente"
+      },
+      "Art. 117": {
+        "principal": "Preaviso por escrito",
+        "verificado": "No presente en esta fuente"
+      },
+      "Art. 118": {
+        "principal": "No coincide con vacaciones",
+        "verificado": "Vacaciones anuales remuneradas"
+      },
+      "Art. 119": {
+        "principal": "Código de la Niñez",
+        "verificado": "Vacaciones: prohibición de acumulación"
+      },
+      "Art. 120": {
+        "principal": "Conclusión por despido injustificado",
+        "verificado": "Compensación de vacaciones en dinero"
+      }
     },
     "impacto": "La entrada es coherente con codigo_trabajo.json. El archivo codigo_trabajo_verificado.json usa una numeración diferente que NO coincide con la fuente principal. Esto debe resolverse a nivel de proyecto para evitar verificaciones contradictorias."
   },
@@ -391,5 +418,7 @@
     "2. [URGENTE] Cambiar 'Secretaría de Trabajo y Previsión Social' por 'Secretaría de Trabajo y Seguridad Social' (afecta 4+ ubicaciones en el body).",
     "3. [RECOMENDADO] Revisar 'abandono del cargo' como causal — no aparece textualmente en ninguna fuente. Considerar si es una interpretación correcta de 'grave indisciplina' o si debe ajustarse."
   ],
-  "nota_final": "El artículo es jurídicamente sólido en sustancia. Los dos errores principales (Art. 607 -> 864 y 'Previsión' -> 'Seguridad Social') son de precisión referencial, no de contenido jurídico. La narrativa, clasificación de tipos de despido, y consejos prácticos son correctos. La discrepancia estructural entre las dos fuentes de datos del proyecto debe resolverse para evitar verificaciones contradictorias en el futuro."
+  "nota_final": "El artículo es jurídicamente sólido en sustancia. Los dos errores principales (Art. 607 -> 864 y 'Previsión' -> 'Seguridad Social') son de precisión referencial, no de contenido jurídico. La narrativa, clasificación de tipos de despido, y consejos prácticos son correctos. La discrepancia estructural entre las dos fuentes de datos del proyecto debe resolverse para evitar verificaciones contradictorias en el futuro.",
+  "sha256_original": "c7bfc110cd283df8fa26beac3423cf11d3f1b1c3795db1d234b794f23f19e4ac",
+  "_sha_backfilled": true
 }

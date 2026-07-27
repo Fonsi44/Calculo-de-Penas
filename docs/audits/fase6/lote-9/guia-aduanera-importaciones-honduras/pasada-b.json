@@ -210,7 +210,13 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_RTN_y_marco", "B2_Agente_y_DUA", "B3_Impuestos", "B4_Procedimiento", "B5_Sanciones"],
+    "columnas": [
+      "B1_RTN_y_marco",
+      "B2_Agente_y_DUA",
+      "B3_Impuestos",
+      "B4_Procedimiento",
+      "B5_Sanciones"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -261,5 +267,7 @@
     "sin_conflictos_detectados": true,
     "observacion_critica": "Aproximadamente el 75% del contenido sustantivo del artículo depende de legislación aduanera especial (CAUCA, Arancel Centroamericano, leyes de DAI/ISV/ISC, Ley de Fortalecimiento de los Ingresos) y del Código Penal, todos NO disponibles en fuentes locales. Las afirmaciones verificables contra el Código Tributario (RTN, agente aduanero, principio de legalidad, régimen sancionatorio) son correctas. El Código de Comercio es completamente ajeno a la materia. No se detectan errores factuales ni contradicciones internas en lo verificable.",
     "calidad_global_documento": "Buena. El artículo es internamente consistente y sus afirmaciones verificables contra el Código Tributario son correctas. La estructura del artículo (requisitos, impuestos, procedimiento, sanciones) refleja adecuadamente la arquitectura del sistema aduanero hondureño en sus fundamentos jurídicos generales. La principal limitación es la ausencia de las fuentes primarias especializadas (CAUCA, leyes impositivas, Código Penal) en los archivos locales, lo que impide la verificación de datos específicos (tarifas, plazos, porcentajes de multas, canales)."
-  }
+  },
+  "sha256_original": "d2a4ff40d96f20f9c963853dc48217e5a441efd17768c5aab51401ea13c59c66",
+  "_sha_backfilled": true
 }

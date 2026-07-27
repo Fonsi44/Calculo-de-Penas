@@ -101,5 +101,7 @@
     "no_verificables": 6,
     "refutados": 0
   },
-  "conclusion": "Se verificaron 8 claims contra data/codigo_civil.json y data/codigo_comercio.json. 2 verificados, 0 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones."
+  "conclusion": "Se verificaron 8 claims contra data/codigo_civil.json y data/codigo_comercio.json. 2 verificados, 0 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones.",
+  "sha256_original": "7ecaf7761ad7277f32bbbdf65d1fa1c42bd8222016e1e888020c3f1d360d5a7f",
+  "_sha_backfilled": true
 }

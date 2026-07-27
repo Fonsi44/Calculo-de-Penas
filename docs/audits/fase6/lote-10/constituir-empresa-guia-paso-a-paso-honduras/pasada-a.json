@@ -76,5 +76,7 @@
     "parcialmente_confirmados": 1,
     "plausible_no_verificable": 1,
     "calidad_general": "buena_con_imprecisiones_menores"
-  }
+  },
+  "sha256_original": "0ca28b551e74081e332e1b1b6cc56e12fb361867943d0a70060c3d2615ad7e68",
+  "_sha_backfilled": true
 }

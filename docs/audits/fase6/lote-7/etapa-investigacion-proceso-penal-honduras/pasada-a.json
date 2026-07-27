@@ -15,19 +15,58 @@
     }
   ],
   "claims_extraidos": [
-    {"id": "C1", "claim": "El Libro II, Titulo I del Codigo Procesal Penal de Honduras designa al Ministerio Publico como titular de la accion penal y director de la investigacion (Articulo 56)."},
-    {"id": "C2", "claim": "La Policia Nacional actua como auxiliar, ejecutando las diligencias ordenadas por el fiscal."},
-    {"id": "C3", "claim": "El fiscal tiene la obligacion de investigar tanto los indicios perjudiciales como los favorables al investigado (Articulo 58)."},
-    {"id": "C4", "claim": "La investigacion preliminar tiene un plazo maximo de seis meses."},
-    {"id": "C5", "claim": "El plazo de seis meses puede ser prorrogado por el juez a solicitud justificada del fiscal, especialmente en casos de complejidad. La Corte Suprema de Justicia puede revisar estas prorrogas."},
-    {"id": "C6", "claim": "El abogado defensor tiene el derecho de acceder al contenido de la investigacion (expediente)."},
-    {"id": "C7", "claim": "Las unicas excepciones al acceso al expediente son aquellas diligencias que, por motivos de seguridad o para no obstaculizar la investigacion, sean declaradas reservadas por el juez competente."},
-    {"id": "C8", "claim": "Existen procedimientos legales para impugnar la orden de captura o solicitar medidas cautelares alternativas a la prision preventiva ante los Juzgados de Letras correspondientes."},
-    {"id": "C9", "claim": "La etapa de investigacion se rige principalmente por los articulos 56 al 78 del Codigo Procesal Penal de Honduras (Decreto 130-2017)."},
-    {"id": "C10", "claim": "La etapa preparatoria comprende la investigacion preliminar, donde se recopilan los elementos probatorios que determinaran si se formula una acusacion formal o se procede al sobreseimiento."},
-    {"id": "C11", "claim": "Durante la investigacion, el fiscal puede entrevistar testigos, obtener documentos, realizar peritajes y, con autorizacion judicial, ejecutar allanamientos o intervenciones de comunicaciones."},
-    {"id": "C12", "claim": "Si usted es citado a declarar como investigado, tiene derecho a guardar silencio y a contar con la asistencia de un abogado."},
-    {"id": "C13", "claim": "La normativa vigente garantiza derechos esenciales como el derecho a la defensa, el derecho al silencio y el derecho a conocer las actuaciones fiscales."}
+    {
+      "id": "C1",
+      "claim": "El Libro II, Titulo I del Codigo Procesal Penal de Honduras designa al Ministerio Publico como titular de la accion penal y director de la investigacion (Articulo 56)."
+    },
+    {
+      "id": "C2",
+      "claim": "La Policia Nacional actua como auxiliar, ejecutando las diligencias ordenadas por el fiscal."
+    },
+    {
+      "id": "C3",
+      "claim": "El fiscal tiene la obligacion de investigar tanto los indicios perjudiciales como los favorables al investigado (Articulo 58)."
+    },
+    {
+      "id": "C4",
+      "claim": "La investigacion preliminar tiene un plazo maximo de seis meses."
+    },
+    {
+      "id": "C5",
+      "claim": "El plazo de seis meses puede ser prorrogado por el juez a solicitud justificada del fiscal, especialmente en casos de complejidad. La Corte Suprema de Justicia puede revisar estas prorrogas."
+    },
+    {
+      "id": "C6",
+      "claim": "El abogado defensor tiene el derecho de acceder al contenido de la investigacion (expediente)."
+    },
+    {
+      "id": "C7",
+      "claim": "Las unicas excepciones al acceso al expediente son aquellas diligencias que, por motivos de seguridad o para no obstaculizar la investigacion, sean declaradas reservadas por el juez competente."
+    },
+    {
+      "id": "C8",
+      "claim": "Existen procedimientos legales para impugnar la orden de captura o solicitar medidas cautelares alternativas a la prision preventiva ante los Juzgados de Letras correspondientes."
+    },
+    {
+      "id": "C9",
+      "claim": "La etapa de investigacion se rige principalmente por los articulos 56 al 78 del Codigo Procesal Penal de Honduras (Decreto 130-2017)."
+    },
+    {
+      "id": "C10",
+      "claim": "La etapa preparatoria comprende la investigacion preliminar, donde se recopilan los elementos probatorios que determinaran si se formula una acusacion formal o se procede al sobreseimiento."
+    },
+    {
+      "id": "C11",
+      "claim": "Durante la investigacion, el fiscal puede entrevistar testigos, obtener documentos, realizar peritajes y, con autorizacion judicial, ejecutar allanamientos o intervenciones de comunicaciones."
+    },
+    {
+      "id": "C12",
+      "claim": "Si usted es citado a declarar como investigado, tiene derecho a guardar silencio y a contar con la asistencia de un abogado."
+    },
+    {
+      "id": "C13",
+      "claim": "La normativa vigente garantiza derechos esenciales como el derecho a la defensa, el derecho al silencio y el derecho a conocer las actuaciones fiscales."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -116,5 +155,7 @@
     "no_verificables": 6,
     "refutados": 0
   },
-  "conclusion": "El corpus documental disponible (Codigo Procesal Penal verificado con 46 articulos y Codigo Penal con 635 articulos) proporciona una base de verificacion limitada para el articulo sobre la etapa de investigacion penal en Honduras. La limitacion principal es que los articulos 56 al 78 del CPP —citados expresamente en el articulo como el nucleo normativo de la etapa de investigacion— NO estan en el corpus verificado. Esto impide verificar los claims centrales sobre el Ministerio Publico como director de la investigacion (Art. 56 CPP), la obligacion de investigar lo favorable y desfavorable (Art. 58 CPP), y el plazo de seis meses. De los 13 claims extraidos, solo 2 estan plenamente verificados (la estructura general de la etapa preparatoria que conduce a acusacion o sobreseimiento, confirmada por Arts. 264, 295, 296, 301 CPP; y los derechos al silencio y asistencia letrada del imputado, confirmados por Arts. 101, 287-289 CPP). Cinco claims estan parcialmente verificados, destacando la confirmacion de que los allanamientos requieren orden judicial (Art. 212 CPP) y que existen mecanismos de impugnacion (Arts. 354, 356 CPP). Seis claims resultan no verificables por ausencia de los articulos pertinentes en el corpus. No se detectaron refutaciones. La verificacion es consistente con el marco general del proceso penal hondureno en lo que el corpus alcanza a cubrir, pero la ausencia de los articulos 56-78 del CPP deja sin verificar el nucleo duro del contenido."
+  "conclusion": "El corpus documental disponible (Codigo Procesal Penal verificado con 46 articulos y Codigo Penal con 635 articulos) proporciona una base de verificacion limitada para el articulo sobre la etapa de investigacion penal en Honduras. La limitacion principal es que los articulos 56 al 78 del CPP —citados expresamente en el articulo como el nucleo normativo de la etapa de investigacion— NO estan en el corpus verificado. Esto impide verificar los claims centrales sobre el Ministerio Publico como director de la investigacion (Art. 56 CPP), la obligacion de investigar lo favorable y desfavorable (Art. 58 CPP), y el plazo de seis meses. De los 13 claims extraidos, solo 2 estan plenamente verificados (la estructura general de la etapa preparatoria que conduce a acusacion o sobreseimiento, confirmada por Arts. 264, 295, 296, 301 CPP; y los derechos al silencio y asistencia letrada del imputado, confirmados por Arts. 101, 287-289 CPP). Cinco claims estan parcialmente verificados, destacando la confirmacion de que los allanamientos requieren orden judicial (Art. 212 CPP) y que existen mecanismos de impugnacion (Arts. 354, 356 CPP). Seis claims resultan no verificables por ausencia de los articulos pertinentes en el corpus. No se detectaron refutaciones. La verificacion es consistente con el marco general del proceso penal hondureno en lo que el corpus alcanza a cubrir, pero la ausencia de los articulos 56-78 del CPP deja sin verificar el nucleo duro del contenido.",
+  "sha256_original": "c992ed540ed54cf072bbd39719cbcd14a630a49aa8693716dd661f62f4e77d9e",
+  "_sha_backfilled": true
 }

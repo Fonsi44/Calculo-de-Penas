@@ -36,5 +36,7 @@
       "correccion": "Sería prudente agregar una breve nota aclarando que, además del Decreto 113 de 1914, en la actualidad existen leyes especiales que establecen procedimientos más ágiles para proyectos específicos de infraestructura estatal."
     }
   ],
-  "requiere_abogado": false
+  "requiere_abogado": false,
+  "sha256_original": "a151d64677474dc13734678dcdd20450703ff1fbd9ccfa0bf9aca6aebfbd706b",
+  "_sha_backfilled": true
 }

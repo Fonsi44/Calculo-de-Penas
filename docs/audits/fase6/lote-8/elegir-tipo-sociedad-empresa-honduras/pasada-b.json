@@ -17,31 +17,52 @@
     "temas_verificables": [
       {
         "tema": "Sociedad de Responsabilidad Limitada (S. de R.L.)",
-        "claims_asociadas": ["A1", "A2", "A3", "A12", "A13"],
+        "claims_asociadas": [
+          "A1",
+          "A2",
+          "A3",
+          "A12",
+          "A13"
+        ],
         "fuente": "data/codigo_comercio.json",
         "conclusion": "VERIFICADO. Los Arts. 66/69, 70, 71, 78 y 82 CM confirman: responsabilidad limitada a las aportaciones, capital minimo de L 5,000.00, administracion por gerentes designados, y estructura de gobierno mas simple que la S.A. (comisario opcional, Art. 88 CM)."
       },
       {
         "tema": "Sociedad Anonima (S.A.)",
-        "claims_asociadas": ["A4", "A5", "A6", "A12", "A13"],
+        "claims_asociadas": [
+          "A4",
+          "A5",
+          "A6",
+          "A12",
+          "A13"
+        ],
         "fuente": "data/codigo_comercio.json",
         "conclusion": "VERIFICADO con imprecision terminologica. Los Arts. 90, 92, 165, 201, 218 y 233 CM confirman: capital dividido en acciones, minimo 5 socios, capital minimo L 25,000.00, estructura con asamblea, consejo de administracion y gerentes. El termino 'junta directiva' no es el termino legal (es 'consejo de administracion')."
       },
       {
         "tema": "Sociedad en Comandita Simple",
-        "claims_asociadas": ["A8", "A12"],
+        "claims_asociadas": [
+          "A8",
+          "A12"
+        ],
         "fuente": "data/codigo_comercio.json",
         "conclusion": "VERIFICADO. Arts. 59 y 61 CM confirman exactamente los dos tipos de socios y sus regimenes de responsabilidad y administracion."
       },
       {
         "tema": "Sociedad de Capital Variable",
-        "claims_asociadas": ["A9", "A10", "A11"],
+        "claims_asociadas": [
+          "A9",
+          "A10",
+          "A11"
+        ],
         "fuente": "data/codigo_comercio.json",
         "conclusion": "VERIFICADO. Arts. 1, 302, 303, 305 y 306 CM confirman la aplicabilidad transversal, el regimen de aumento/disminucion sin modificar escritura, y la existencia de capital minimo fijo. El matiz menor es que el minimo es el legal (Arts. 70/92), no necesariamente el capital suscrito inicialmente."
       },
       {
         "tema": "Empresa Individual de Responsabilidad Limitada (E.I.R.L.)",
-        "claims_asociadas": ["A7"],
+        "claims_asociadas": [
+          "A7"
+        ],
         "fuente": "data/codigo_comercio.json",
         "conclusion": "NO VERIFICABLE. La E.I.R.L. no consta en el Codigo de Comercio. El Art. 1 CM enumera seis tipos societarios sin incluir la E.I.R.L. Si existe, esta regulada en ley especial no disponible en las fuentes locales."
       }
@@ -277,7 +298,13 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["SRL", "SA", "Comandita_Simple", "Capital_Variable", "EIRL"],
+    "columnas": [
+      "SRL",
+      "SA",
+      "Comandita_Simple",
+      "Capital_Variable",
+      "EIRL"
+    ],
     "cruces": [
       {
         "par": "SRL + SA",
@@ -345,5 +372,7 @@
     "omision_detectada": "El articulo no menciona el limite maximo de 25 socios para la S. de R.L. (Art. 69 CM), lo cual es un criterio relevante para la eleccion del tipo societario.",
     "errores_factuales": "No se detectaron errores factuales en las afirmaciones verificables. La unica afirmacion no verificable en las fuentes locales es la relativa a la E.I.R.L.",
     "calidad_global_documento": "Buena. El articulo describe con precision los tipos societarios del Codigo de Comercio. Las afirmaciones sobre S.R.L., S.A., Comandita Simple y Capital Variable estan respaldadas por articulos especificos del Codigo. La E.I.R.L. es la unica figura mencionada que no encuentra respaldo en el Codigo de Comercio, lo cual no significa necesariamente que sea incorrecta (podria estar en ley especial), pero el lector debe saber que no es una figura del Codigo de Comercio. Se recomienda: (a) sustituir 'junta directiva' por 'consejo de administracion', (b) indicar que la S.R.L. tiene un maximo de 25 socios, y (c) aclarar si la E.I.R.L. esta regulada por el Codigo de Comercio o por ley especial."
-  }
+  },
+  "sha256_original": "3b6bb08bfc1631e5c617fca7da0fe12134a2adc8918d19389e18ce0d26ec2a54",
+  "_sha_backfilled": true
 }

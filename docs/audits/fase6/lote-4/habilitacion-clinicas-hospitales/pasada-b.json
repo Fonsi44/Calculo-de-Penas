@@ -54,5 +54,7 @@
       }
     ],
     "final_verdict": "Se validan y aprueban todas las correcciones propuestas por la Pasada A. La diferenciación entre Habilitación (SESAL) y Licencia Sanitaria (ARSA) es crucial legalmente, al igual que los plazos exactos de vigencia de ARSA (2, 4, 6 años) frente a la afirmación errónea de '2 a 5 años'."
-  }
+  },
+  "sha256_original": "ec431f7c43b5c9f0b514510d4d4ffb7dab8fc473037f553713c647e0004f9c91",
+  "_sha_backfilled": true
 }

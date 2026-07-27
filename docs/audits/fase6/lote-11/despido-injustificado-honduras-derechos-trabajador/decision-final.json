@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "despido-injustificado-honduras-derechos-trabajador",
-  "article_id": "6c89a04d-b184-447a-9db9-0d1e9f83338b",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T09:10:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "6c89a04d-b184-447a-9db9-0d1e9f83338b",
+  "lote": 11,
+  "fechaConsolidacion": "2026-07-27T09:10:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 11,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "c442bbf1368afdc1745889359b279e97eddff5dbee0f24d458786d805cd54b3e",
+    "pasadaA": "c442bbf1368afdc1745889359b279e97eddff5dbee0f24d458786d805cd54b3e",
+    "pasadaB": "c442bbf1368afdc1745889359b279e97eddff5dbee0f24d458786d805cd54b3e",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 11,
+    "pasadaA": 11,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 11
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "6c89a04d-b184-447a-9db9-0d1e9f83338b",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T09:10:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 11,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

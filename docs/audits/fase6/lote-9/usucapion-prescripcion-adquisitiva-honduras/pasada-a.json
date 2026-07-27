@@ -157,5 +157,7 @@
     "error_critico_detectado": "Claim A1: El artículo cita los arts. 717-724 CC como sede de la usucapión y atribuye al Art. 717 CC el texto 'la propiedad se adquiere por prescripción', cuando en realidad el Art. 717 CC define la posesión y la prescripción adquisitiva está regulada en los arts. 2263-2288 CC. Es un error de cita normativa.",
     "observacion_principal": "El contenido sustantivo sobre requisitos y plazos de la usucapión es CORRECTO y está directamente respaldado por los artículos 2273, 2286 y 2287 del Código Civil. El error principal es de técnica jurídica: el artículo cita los artículos equivocados (717-724 en lugar de 2263-2288). Las secciones procedimentales (proceso judicial, edictos) no son verificables sin el Código Procesal Civil. Se detecta una omisión relevante en la advertencia sobre arrendatarios: el Art. 733 CC permite la prescripción extraordinaria como excepción.",
     "calidad_general": "buena_en_fondo_con_error_de_cita_normativa"
-  }
+  },
+  "sha256_original": "a2f2c667b1db9745d960078017b20741f275fead6df1beb335543863a744c100",
+  "_sha_backfilled": true
 }

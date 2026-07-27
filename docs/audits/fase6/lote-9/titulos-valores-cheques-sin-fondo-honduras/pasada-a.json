@@ -165,5 +165,7 @@
     ],
     "matiz_relevante": "El artículo describe correctamente que se requiere intención de defraudar para el delito penal, pero omite que la carga de la prueba está invertida: el dolo se presume y es el librador quien debe probar su ausencia (Art. 615 CM).",
     "calidad_general": "regular_con_error_critico"
-  }
+  },
+  "sha256_original": "8ca172f36f753dede183d08de774281eeed8b87856aff3362fd30fc58a81cfc9",
+  "_sha_backfilled": true
 }

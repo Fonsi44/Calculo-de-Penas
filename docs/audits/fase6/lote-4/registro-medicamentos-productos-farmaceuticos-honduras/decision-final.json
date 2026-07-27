@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
-  "articleHash": "dcb9d10c48e8329bfecc9aa0ecd1123e58109021f06fde7ac6e4b2ed192b2bb0",
+  "articleId": "ad19fe36-743c-4c7a-97d6-e50136c01514",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.317Z",
   "estadoFinal": "completed",
   "razon": "A y B coinciden plenamente",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "988408db629739fd53bc51886404fb44df8431c878940a3d1e68c2ea4633c48e",
+    "pasadaA": "988408db629739fd53bc51886404fb44df8431c878940a3d1e68c2ea4633c48e",
+    "pasadaB": "988408db629739fd53bc51886404fb44df8431c878940a3d1e68c2ea4633c48e",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 8,
+    "pasadaA": 8,
+    "pasadaB": 0,
+    "confirmed": 6,
+    "corrected": 0,
+    "needsHumanReview": 2,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "dcb9d10c48e8329bfecc9aa0ecd1123e58109021f06fde7ac6e4b2ed192b2bb0",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

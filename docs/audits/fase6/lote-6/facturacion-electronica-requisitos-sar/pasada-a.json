@@ -7,22 +7,70 @@
     "descripcion": "Codigo Tributario de Honduras — texto consolidado con 218 articulos. Ley marco de la Administracion Tributaria hondurena, aplicable a todos los tributos, incluyendo el regimen de facturacion y documentos fiscales."
   },
   "claims_extraidos": [
-    {"id": "C1", "claim": "La facturacion electronica en Honduras es un sistema digital implementado por el SAR para la emision, transmision y almacenamiento de facturas."},
-    {"id": "C2", "claim": "El marco legal de la facturacion electronica se fundamenta en el Codigo Tributario y el Reglamento del Regimen de Facturacion (Acuerdo 481-2017 y sus reformas)."},
-    {"id": "C3", "claim": "La obligatoriedad de la facturacion electronica se ha implementado de manera progresiva, iniciando con grandes contribuyentes y extendiendose gradualmente a medianos y pequenos."},
-    {"id": "C4", "claim": "Los obligados incluyen grandes contribuyentes, instituciones del Estado, medianos contribuyentes, pequenos contribuyentes en sectores priorizados y contribuyentes voluntarios."},
-    {"id": "C5", "claim": "Se requiere un Registro Tributario Nacional (RTN) vigente y actualizado para facturar electronicamente."},
-    {"id": "C6", "claim": "Se requiere un certificado de firma electronica emitido por un proveedor autorizado que garantice autenticidad e integridad de cada factura."},
-    {"id": "C7", "claim": "Se requiere un software de facturacion electronica homologado por el SAR que cumpla con el formato XML especificado."},
-    {"id": "C8", "claim": "Se requiere conexion a internet para la transmision de facturas al SAR, ya sea en tiempo real o dentro de los plazos establecidos."},
-    {"id": "C9", "claim": "Se debe registrar el establecimiento y los equipos ante el SAR."},
-    {"id": "C10", "claim": "Modalidad de factura electronica en linea: transmision inmediata de la factura al SAR."},
-    {"id": "C11", "claim": "Modalidad de factura electronica fuera de linea: emision con transmision diferida dentro de un plazo establecido."},
-    {"id": "C12", "claim": "Documentos fiscales especiales para operaciones simplificadas o sectores especificos."},
-    {"id": "C13", "claim": "El incumplimiento de la facturacion electronica puede acarrear multas, suspension del RTN y cierre temporal del establecimiento."},
-    {"id": "C14", "claim": "Las facturas emitidas en papel cuando ya rige la obligacion electronica pueden no ser deducibles para el comprador."},
-    {"id": "C15", "claim": "En casos de reincidencia o defraudacion fiscal, las consecuencias pueden escalar a la via penal."},
-    {"id": "C16", "claim": "Costos de la firma electronica: L 350.00 pequenos contribuyentes, L 700.00 medianos, L 1,500.00 grandes contribuyentes; gratuito para instituciones publicas."}
+    {
+      "id": "C1",
+      "claim": "La facturacion electronica en Honduras es un sistema digital implementado por el SAR para la emision, transmision y almacenamiento de facturas."
+    },
+    {
+      "id": "C2",
+      "claim": "El marco legal de la facturacion electronica se fundamenta en el Codigo Tributario y el Reglamento del Regimen de Facturacion (Acuerdo 481-2017 y sus reformas)."
+    },
+    {
+      "id": "C3",
+      "claim": "La obligatoriedad de la facturacion electronica se ha implementado de manera progresiva, iniciando con grandes contribuyentes y extendiendose gradualmente a medianos y pequenos."
+    },
+    {
+      "id": "C4",
+      "claim": "Los obligados incluyen grandes contribuyentes, instituciones del Estado, medianos contribuyentes, pequenos contribuyentes en sectores priorizados y contribuyentes voluntarios."
+    },
+    {
+      "id": "C5",
+      "claim": "Se requiere un Registro Tributario Nacional (RTN) vigente y actualizado para facturar electronicamente."
+    },
+    {
+      "id": "C6",
+      "claim": "Se requiere un certificado de firma electronica emitido por un proveedor autorizado que garantice autenticidad e integridad de cada factura."
+    },
+    {
+      "id": "C7",
+      "claim": "Se requiere un software de facturacion electronica homologado por el SAR que cumpla con el formato XML especificado."
+    },
+    {
+      "id": "C8",
+      "claim": "Se requiere conexion a internet para la transmision de facturas al SAR, ya sea en tiempo real o dentro de los plazos establecidos."
+    },
+    {
+      "id": "C9",
+      "claim": "Se debe registrar el establecimiento y los equipos ante el SAR."
+    },
+    {
+      "id": "C10",
+      "claim": "Modalidad de factura electronica en linea: transmision inmediata de la factura al SAR."
+    },
+    {
+      "id": "C11",
+      "claim": "Modalidad de factura electronica fuera de linea: emision con transmision diferida dentro de un plazo establecido."
+    },
+    {
+      "id": "C12",
+      "claim": "Documentos fiscales especiales para operaciones simplificadas o sectores especificos."
+    },
+    {
+      "id": "C13",
+      "claim": "El incumplimiento de la facturacion electronica puede acarrear multas, suspension del RTN y cierre temporal del establecimiento."
+    },
+    {
+      "id": "C14",
+      "claim": "Las facturas emitidas en papel cuando ya rige la obligacion electronica pueden no ser deducibles para el comprador."
+    },
+    {
+      "id": "C15",
+      "claim": "En casos de reincidencia o defraudacion fiscal, las consecuencias pueden escalar a la via penal."
+    },
+    {
+      "id": "C16",
+      "claim": "Costos de la firma electronica: L 350.00 pequenos contribuyentes, L 700.00 medianos, L 1,500.00 grandes contribuyentes; gratuito para instituciones publicas."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -124,5 +172,7 @@
     "no_verificables": 6,
     "refutados": 0
   },
-  "conclusion": "El Codigo Tributario de Honduras (data/codigo_tributario.json) proporciona el marco juridico general para la facturacion electronica, pero NO contiene las disposiciones operativas especificas del sistema SAR. De 16 claims extraidos: 3 estan plenamente verificados (obligacion de RTN, sanciones de multa/suspension RTN/cierre temporal, y escalamiento a via penal); 7 estan parcialmente verificados porque el Codigo establece la base legal (sistema electronico, regimen de facturacion, categorizacion de contribuyentes, documentos fiscales, transmision electronica, registro de actividades) sin los detalles operativos; y 6 no son verificables porque corresponden exclusivamente a la normativa del SAR, al Reglamento del Regimen de Facturacion (Acuerdo 481-2017) o a la Ley de Firma Electronica, fuentes no incluidas en el corpus documental disponible."
+  "conclusion": "El Codigo Tributario de Honduras (data/codigo_tributario.json) proporciona el marco juridico general para la facturacion electronica, pero NO contiene las disposiciones operativas especificas del sistema SAR. De 16 claims extraidos: 3 estan plenamente verificados (obligacion de RTN, sanciones de multa/suspension RTN/cierre temporal, y escalamiento a via penal); 7 estan parcialmente verificados porque el Codigo establece la base legal (sistema electronico, regimen de facturacion, categorizacion de contribuyentes, documentos fiscales, transmision electronica, registro de actividades) sin los detalles operativos; y 6 no son verificables porque corresponden exclusivamente a la normativa del SAR, al Reglamento del Regimen de Facturacion (Acuerdo 481-2017) o a la Ley de Firma Electronica, fuentes no incluidas en el corpus documental disponible.",
+  "sha256_original": "ed827aa2a56aa23bdbb4d380fc63195a4ccaec79d4fc4c2a103e391ead1cb792",
+  "_sha_backfilled": true
 }

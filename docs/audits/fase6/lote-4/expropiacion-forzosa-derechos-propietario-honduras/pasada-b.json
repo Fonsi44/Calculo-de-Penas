@@ -16,5 +16,7 @@
     }
   ],
   "conclusion": "La Pasada A fue precisa al corregir el plazo de pago en estado de emergencia (dos años, Art. 106 de la Constitución) y en validar la vigencia de la Ley de 1914. No obstante, falló gravemente al no auditar el 'description', que contiene terminología de la ley española. Se debe corregir la metadescripción para evitar desinformación jurídica.",
-  "requiere_accion": true
+  "requiere_accion": true,
+  "sha256_original": "a151d64677474dc13734678dcdd20450703ff1fbd9ccfa0bf9aca6aebfbd706b",
+  "_sha_backfilled": true
 }

@@ -44,5 +44,7 @@
       "correccion_propuesta": "Es correcto. Se debe solicitar la renovación dentro de los 3 meses (90 días) previos a la fecha de expiración."
     }
   ],
-  "requiere_abogado": true
+  "requiere_abogado": true,
+  "sha256_original": "ec431f7c43b5c9f0b514510d4d4ffb7dab8fc473037f553713c647e0004f9c91",
+  "_sha_backfilled": true
 }

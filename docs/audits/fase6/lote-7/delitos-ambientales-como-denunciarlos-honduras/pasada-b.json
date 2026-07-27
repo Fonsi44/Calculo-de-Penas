@@ -20,7 +20,9 @@
       "tipo": "error_juridico_sustancial",
       "descripcion": "La entrada describe el Art. 109 CP como 'la acción penal prescribe en un plazo igual al máximo de la pena de prisión prevista para el delito, sin que pueda ser inferior a 3 años ni superior a 15 años'. El texto real NO funciona así. El Art. 109 CP establece tramos fijos según rangos de pena: 20 años (pena máxima + mitad >= 15 años), 15 años (pena máxima >10 y <15 años), 10 años (pena máxima >5 y <=10 años), 5 años (demás delitos). Errores: (a) mecanismo incorrecto — no es 'igual al máximo' sino tramos fijos; (b) mínimo incorrecto — es 5 años, no 3; (c) máximo incorrecto — es 20 años, no 15.",
       "impacto": "alto",
-      "ubicaciones": ["Sección '¿Cuánto tiempo hay para denunciar un delito ambiental en Honduras?'"],
+      "ubicaciones": [
+        "Sección '¿Cuánto tiempo hay para denunciar un delito ambiental en Honduras?'"
+      ],
       "apariciones": 1
     },
     "discrepancia_numeracion_detectada": {
@@ -308,7 +310,17 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_CP_130-2017", "B2_Art324_Contaminacion", "B3_Art325_Explotacion", "B4_Art327_Incendio", "B5_Art337_PersonasJuridicas", "B6_Art109_Prescripcion", "B7_Instituciones_FEMA_SERNA_ICF", "B8_Garantias_CONADEH_Amparo", "B9_Proteccion_Denunciante"],
+    "columnas": [
+      "B1_CP_130-2017",
+      "B2_Art324_Contaminacion",
+      "B3_Art325_Explotacion",
+      "B4_Art327_Incendio",
+      "B5_Art337_PersonasJuridicas",
+      "B6_Art109_Prescripcion",
+      "B7_Instituciones_FEMA_SERNA_ICF",
+      "B8_Garantias_CONADEH_Amparo",
+      "B9_Proteccion_Denunciante"
+    ],
     "cruces": [
       {
         "par": "B1+B2+B3+B4",
@@ -374,5 +386,7 @@
     "error_critico_detectado": "Subclaims B6.1, B6.2 y B6.3: la entrada describe erróneamente el Art. 109 CP. La prescripción NO es 'igual al máximo de la pena' sino un sistema de tramos fijos (20, 15, 10, 5 años). El mínimo es 5 años (no 3), el máximo es 20 años (no 15). Este error afecta la comprensión del régimen de prescripción penal.",
     "observacion_critica": "El 65% de los subclaims son verificables contra fuentes locales, con alta tasa de confirmación (12/27 confirmados). El núcleo duro del artículo (descripción de los 4 delitos ambientales, penas, garantías constitucionales) es sustancialmente correcto. El error principal está en la sección de prescripción (Art. 109 CP). Las secciones institucionales (FEMA, SERNA, ICF) y de protección al denunciante no son verificables con fuentes locales.",
     "calidad_global_documento": "Buena en la descripción de los delitos ambientales. Error crítico puntual en la explicación del Art. 109 CP (prescripción). Las referencias a Decreto 59-2024 y legislación institucional no son verificables con fuentes locales. Se recomienda: (1) corregir la sección de prescripción con el texto real del Art. 109 CP; (2) verificar la numeración 337-A contra el Decreto 59-2024; (3) obtener las leyes orgánicas de SERNA, ICF y FEMA para verificar competencias institucionales."
-  }
+  },
+  "sha256_original": "cf7b1dcf7394b63e88b846560e0519e41b35c34e476f033115472a318c5f506d",
+  "_sha_backfilled": true
 }

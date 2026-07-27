@@ -242,7 +242,17 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_BaseCC", "B2_CitasArt", "B3_LeyesEspeciales", "B4_Perfeccion", "B5_Proceso", "B6_Arras", "B7_Impuestos", "B8_Inscripcion", "B9_Gastos"],
+    "columnas": [
+      "B1_BaseCC",
+      "B2_CitasArt",
+      "B3_LeyesEspeciales",
+      "B4_Perfeccion",
+      "B5_Proceso",
+      "B6_Arras",
+      "B7_Impuestos",
+      "B8_Inscripcion",
+      "B9_Gastos"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -287,5 +297,7 @@
     "error_critico": "B1.2, B2.1, B2.2: Los artículos 1532 CC y 1600 CC están mal citados como base de la compraventa. 1532 CC = pruebas; 1600 CC = nulidad. La compraventa se define en 1605 CC.",
     "error_secundario": "B8.3: Plazo de 60 días para inscripción no está en el CC. Probablemente proviene de ley especial.",
     "calidad_global_documento": "Bueno con errores corregibles en citas de artículos. El contenido sustantivo es útil y mayormente correcto. Las referencias normativas (1532, 1600) deben corregirse a 1605-1670 CC para precisión técnica."
-  }
+  },
+  "sha256_original": "f0a92b563b22d021cdbe2f01556c0dfff985a1a51623f6395dfa1c55785ab1eb",
+  "_sha_backfilled": true
 }

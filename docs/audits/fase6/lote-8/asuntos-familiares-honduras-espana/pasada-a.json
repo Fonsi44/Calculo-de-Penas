@@ -200,5 +200,7 @@
     "error_critico_detectado": "Ninguno. Las afirmaciones verificables contra las fuentes locales son sustancialmente correctas.",
     "observacion_principal": "El artículo aborda principalmente aspectos procedimentales y de derecho internacional privado (poderes notariales, exequátur, apostilla, cooperación judicial internacional, videoconferencia) que NO están regulados en las fuentes locales disponibles (Constitución y 12 artículos del Código de Familia). Solo 3 de 12 claims pudieron verificarse parcialmente contra las fuentes. Se detecta una omisión relevante: el artículo no menciona el requisito de dos años de matrimonio para el divorcio por mutuo consentimiento (Art. 243 CF). La afirmación de que el Código de Familia rige las sucesiones es potencialmente imprecisa: en Honduras las sucesiones se rigen por el Código Civil. Para una verificación completa se requieren: Código de Familia completo, Código Procesal de Familia, Código Civil, Ley de Exequátur, tratados bilaterales Honduras-España y Convenio de La Haya sobre Apostilla.",
     "calidad_general": "buena_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "23c41af3401e7334e7199e777f5d2606103ead533872afeb3e2d46223271e827",
+  "_sha_backfilled": true
 }

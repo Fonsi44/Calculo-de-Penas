@@ -183,5 +183,7 @@
       "El plazo de prescripción de un (1) año para la acción civil no encuentra respaldo directo en el Código Civil; la regla general es de diez años (Art. 2292 CC)."
     ],
     "calidad_general": "requiere_correcciones_significativas"
-  }
+  },
+  "sha256_original": "6032e08c08cbc561bbe15571d12b0dce4532d3ed08e8bea53260351fc7b9ff92",
+  "_sha_backfilled": true
 }

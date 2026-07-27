@@ -217,7 +217,19 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Marco_Legal", "B2_Base_Constitucional", "B3_Institucionalidad_SERNA", "B4_Categorizacion", "B5_Instrumentos", "B6_Equipo_Consultor", "B7_Tramite_DECA", "B8_Licencia_Condiciones", "B9_Plazos", "B10_Sanciones", "B11_Financiamiento"],
+    "columnas": [
+      "B1_Marco_Legal",
+      "B2_Base_Constitucional",
+      "B3_Institucionalidad_SERNA",
+      "B4_Categorizacion",
+      "B5_Instrumentos",
+      "B6_Equipo_Consultor",
+      "B7_Tramite_DECA",
+      "B8_Licencia_Condiciones",
+      "B9_Plazos",
+      "B10_Sanciones",
+      "B11_Financiamiento"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -263,5 +275,7 @@
     "matiz_institucional": "B3.2: El nombre de la institución en el artículo ('Secretaría de Recursos Naturales y Ambiente') difiere del nombre oficial completo referenciado en fuentes locales ('Secretaría de Energía, Recursos Naturales, Ambiente y Minas'). Dependiendo de la temporalidad, puede ser correcto (post-2014 como MiAmbiente) o una simplificación.",
     "limitacion_principal": "La Ley General del Ambiente (Decreto 104-93) y el Reglamento de Evaluación de Impacto Ambiental no están disponibles como fuentes JSON estructuradas en el repositorio local. Esto impide la verificación directa de 9 de 22 subclaims, que se califican como plausibles-no-verificables en lugar de confirmados o refutados.",
     "calidad_global_documento": "Bueno. Todas las afirmaciones son sustancialmente plausibles, coherentes entre sí, y respaldadas por el marco constitucional y referencias institucionales disponibles. No se detectan errores factuales. La principal debilidad es la imposibilidad de verificar detalles procedimentales específicos (plazos exactos, número de categorías, estructura orgánica interna) por ausencia de las fuentes normativas primarias en el repositorio local."
-  }
+  },
+  "sha256_original": "25d3bd9d003d50a88005a95a9646b55097863a058b043a26d30185f0a34551f0",
+  "_sha_backfilled": true
 }

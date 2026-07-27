@@ -112,5 +112,7 @@
     "parcialmente_inconsistente": 1,
     "error_critico": "B1.2: Art. 1450 CC no define contrato. Artículo correcto: 1539 CC.",
     "calidad_global_documento": "Buena con un error de numeración corregible (Art. 1450 → 1539 CC)."
-  }
+  },
+  "sha256_original": "63ccb992523514d637c3348fbede46450af759fe22c9e365b5af0db77a950932",
+  "_sha_backfilled": true
 }

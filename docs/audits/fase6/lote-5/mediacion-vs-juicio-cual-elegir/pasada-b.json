@@ -54,7 +54,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar el numero de articulo exacto en el texto oficial del Decreto 161-2000. Podria ser el Articulo 8, 16 u otro. Confirmar si la redaccion exacta es 'fuerza de sentencia firme', 'fuerza ejecutiva', 'titulo ejecutivo', o 'caracter de cosa juzgada'.",
-      "cross_reference_claims": ["B-S8"]
+      "cross_reference_claims": [
+        "B-S8"
+      ]
     },
     {
       "id": "B-C3",
@@ -66,7 +68,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar la numeracion exacta del articulo en el CPP vigente. La referencia a 'Articulo 45' puede ser correcta en la version original del Decreto 9-99-E pero podria haber cambiado con reformas posteriores (2002, 2008, 2013, 2019). Confirmar el texto exacto y el alcance de delitos conciliables.",
-      "cross_reference_claims": ["B-S11"]
+      "cross_reference_claims": [
+        "B-S11"
+      ]
     },
     {
       "id": "B-C4",
@@ -118,7 +122,9 @@
       ],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S3"]
+      "cross_reference_claims": [
+        "B-S3"
+      ]
     },
     {
       "id": "B-S3",
@@ -130,7 +136,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": "Sugerir redaccion mas precisa: 'Estos centros operan bajo reglamentos que garantizan imparcialidad en el proceso. El acta de conciliacion emitida conforme a los requisitos del Decreto 161-2000 tiene plena validez legal, independientemente del centro donde se realice.'",
-      "cross_reference_claims": ["B-S2"]
+      "cross_reference_claims": [
+        "B-S2"
+      ]
     },
     {
       "id": "B-S4",
@@ -154,7 +162,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S4"]
+      "cross_reference_claims": [
+        "B-S4"
+      ]
     },
     {
       "id": "B-S6",
@@ -190,7 +200,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": "Sugerir precision: 'Acta de Conciliacion: Constituye titulo ejecutivo con caracter de cosa juzgada, equiparable en fuerza legal a una sentencia firme.' Esto es mas preciso que decir 'ejecutable como sentencia firme.'",
-      "cross_reference_claims": ["B-C2"]
+      "cross_reference_claims": [
+        "B-C2"
+      ]
     },
     {
       "id": "B-S9",
@@ -202,7 +214,10 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": "Considerar: '...con fuerza legal equiparable a una sentencia firme conforme al Decreto No. 161-2000.'",
-      "cross_reference_claims": ["B-C2", "B-S8"]
+      "cross_reference_claims": [
+        "B-C2",
+        "B-S8"
+      ]
     },
     {
       "id": "B-S10",
@@ -214,7 +229,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S11"]
+      "cross_reference_claims": [
+        "B-S11"
+      ]
     },
     {
       "id": "B-S11",
@@ -226,7 +243,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C3"]
+      "cross_reference_claims": [
+        "B-C3"
+      ]
     },
     {
       "id": "B-S12",
@@ -250,7 +269,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S10"]
+      "cross_reference_claims": [
+        "B-S10"
+      ]
     },
     {
       "id": "B-S14",
@@ -262,7 +283,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C4"]
+      "cross_reference_claims": [
+        "B-C4"
+      ]
     },
     {
       "id": "B-S15",
@@ -322,5 +345,7 @@
       "RECOMENDADO: Refinar la redaccion sobre el efecto legal del acta de conciliacion usando terminos tecnicamente precisos (titulo ejecutivo, cosa juzgada).",
       "RECOMENDADO: Ajustar la redaccion sobre el rol de los centros de mediacion para mayor precision juridica."
     ]
-  }
+  },
+  "sha256_original": "c19041c16fb636f9f158eb00f9645e795170f3f9b8d4d4fcb54bda556067710e",
+  "_sha_backfilled": true
 }

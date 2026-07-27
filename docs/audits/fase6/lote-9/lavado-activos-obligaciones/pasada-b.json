@@ -35,5 +35,7 @@
   "recommendedActions": [
     "Descartar la corrección sugerida por Pasada A sobre eliminar o reformular la cita del Artículo 1 de la Ley Especial. Mantener la referencia, pero se recomienda añadir una nota breve aclarando que dicha ley es el Decreto 144-2014, para mayor rigor académico.",
     "Verificar el umbral exacto de reporte de transacciones en efectivo según la resolución más reciente de la CNBS y sustituir la cifra de '$10,000' por el monto vigente en lempiras con cita expresa de la resolución aplicable."
-  ]
+  ],
+  "sha256_original": "f429aa4e7cd2d0754482ab52a28bcfbdbc79a08a7b4447c0185a27ecfa9c05be",
+  "_sha_backfilled": true
 }

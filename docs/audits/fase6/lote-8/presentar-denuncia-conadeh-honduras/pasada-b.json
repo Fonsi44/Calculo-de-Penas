@@ -209,7 +209,15 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_ExistenciaMision", "B2_FacultadesLegales", "B3_NaturalezaNoTribunal", "B4_CompetenciaMaterial", "B5_LimitacionesCompetencia", "B6_Procedimiento", "B7_EfectosYFAQ"],
+    "columnas": [
+      "B1_ExistenciaMision",
+      "B2_FacultadesLegales",
+      "B3_NaturalezaNoTribunal",
+      "B4_CompetenciaMaterial",
+      "B5_LimitacionesCompetencia",
+      "B6_Procedimiento",
+      "B7_EfectosYFAQ"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -265,5 +273,7 @@
     "limitacion_principal": "El Art. 59 constitucional confirma la creación y mandato del CONADEH pero remite toda la regulación operativa a una ley especial no disponible en el corpus local. De 22 subclaims, solo 3 son verificables directamente contra la Constitución. Las 19 restantes requieren la ley especial u otras fuentes no disponibles.",
     "hallazgo_positivo": "El documento es internamente coherente y no contradice el texto constitucional. El anclaje en el Art. 59 es correcto. Las afirmaciones sobre competencias, procedimiento y efectos son plausibles dentro del diseño institucional típico de un ombudsman de derechos humanos.",
     "calidad_global_documento": "Buena. El documento describe correctamente el fundamento constitucional del CONADEH (Art. 59). Las afirmaciones operativas son plausibles y no presentan errores detectables contra la Constitución. La principal debilidad es que la mayoría del contenido no es verificable sin la ley especial del CONADEH."
-  }
+  },
+  "sha256_original": "7655c989774d9564664432dd6b3a844c2005c749ad44f58d9aa4a4a9c3368051",
+  "_sha_backfilled": true
 }

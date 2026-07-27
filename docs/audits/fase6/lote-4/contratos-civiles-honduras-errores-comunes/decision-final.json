@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "contratos-civiles-honduras-errores-comunes",
-  "articleHash": "",
+  "articleId": "1e76e53c-9f85-4aa2-8227-013bb93d9a4c",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.319Z",
   "estadoFinal": "completed",
   "razon": "A y B coinciden plenamente",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "4b07635633b4efd6e7b47d5aed6a72a3e88ce32d3bc4a6a625d1431142e96abb",
+    "pasadaA": "4b07635633b4efd6e7b47d5aed6a72a3e88ce32d3bc4a6a625d1431142e96abb",
+    "pasadaB": "4b07635633b4efd6e7b47d5aed6a72a3e88ce32d3bc4a6a625d1431142e96abb",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 6,
+    "pasadaA": 6,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 6
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

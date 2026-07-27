@@ -99,5 +99,7 @@
     "no_verificables": 2,
     "error_critico": null,
     "calidad_global_documento": "El artículo opera en nivel de legislación secundaria. La Constitución provee los fundamentos del sistema (potestad legislativa, administración ejecutiva, principio de legalidad) pero no permite verificar los detalles migratorios y laborales. Se recomienda verificación con fuentes secundarias."
-  }
+  },
+  "sha256_original": "7c33f7f67c31cf8d4f12a6292c057eda508723411385bd708c20a93881f31b6f",
+  "_sha_backfilled": true
 }

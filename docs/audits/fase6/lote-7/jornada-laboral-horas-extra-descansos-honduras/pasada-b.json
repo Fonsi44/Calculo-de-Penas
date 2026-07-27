@@ -313,7 +313,15 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Jornada", "B2_HorasExtra", "B3_TiempoEfectivo", "B4_Descansos", "B5_Vacaciones", "B6_RegimenesEspeciales", "B7_Reclamacion"],
+    "columnas": [
+      "B1_Jornada",
+      "B2_HorasExtra",
+      "B3_TiempoEfectivo",
+      "B4_Descansos",
+      "B5_Vacaciones",
+      "B6_RegimenesEspeciales",
+      "B7_Reclamacion"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -382,5 +390,7 @@
     "error_secundario": "B4.2: Cita 'Articulo 330' para descanso semanal; el correcto es Art. 338 CT. B4.4: Lista de feriados incompleta (omite 3 oct, 12 oct, Semana Santa). B6.2: Afirma maximo 12h para domesticos; Art. 154 CT implica hasta 14h (10h de descanso).",
     "limitacion_corpus": "El Art. 330 CT esta TRUNCADO en codigo_trabajo.json, impidiendo verificar los recargos por horas extra (25%, 50%, 75%). Ademas, 11 de 28 subclaims (39%) caen en 'no_verificable_en_fuente_citada' porque los articulos del CT disponibles no cubren: criterios detallados de tiempo efectivo (cambio de ropa, capacitacion, esperas), procedimientos de reclamacion (Inspectoria, juzgados), plazos de prescripcion, ni regimenes de pilotos y personal de salud.",
     "calidad_global_documento": "Regular con errores puntuales significativos. La informacion basica sobre limites de jornada, definiciones, escala de vacaciones y feriados (estos ultimos con omisiones) es correcta. Sin embargo, el documento contiene un error grave en el computo del descanso intra-jornada como tiempo efectivo (afirma lo contrario de lo que dice la ley), un error en el recargo por trabajo dominical (75% vs 100%), una cita erronea de articulo (Art. 330 en vez de Art. 338), y una lista incompleta de feriados. Los recargos por horas extra no son verificables. Las secciones sobre procedimientos de reclamacion y regimenes especiales especificos no son verificables contra la fuente local."
-  }
+  },
+  "sha256_original": "a51a669450a0a6efbff2f9b1f766298298a47ca4194717846da817d40a5884a3",
+  "_sha_backfilled": true
 }

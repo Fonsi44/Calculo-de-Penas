@@ -274,29 +274,56 @@
     "tasa_acierto": "27%",
     "tasa_error": "36%",
     "tasa_parcial": "27%",
-    "riesgo_alto": ["C03", "C05", "C06", "C07"],
-    "riesgo_medio": ["C02", "C04", "C10"],
-    "riesgo_bajo": ["C01", "C08", "C09", "C11"]
+    "riesgo_alto": [
+      "C03",
+      "C05",
+      "C06",
+      "C07"
+    ],
+    "riesgo_medio": [
+      "C02",
+      "C04",
+      "C10"
+    ],
+    "riesgo_bajo": [
+      "C01",
+      "C08",
+      "C09",
+      "C11"
+    ]
   },
   "recomendaciones": [
     {
       "severidad": "critica",
-      "afecta": ["C03", "C05", "C06", "C07"],
+      "afecta": [
+        "C03",
+        "C05",
+        "C06",
+        "C07"
+      ],
       "accion": "Reescribir las secciones sobre orden de prelación (h2: ¿Qué pasa si no hay testamento?), igualdad de hijos (h3: ¿Los hijos extramatrimoniales tienen derecho a herencia?) y derechos del cónyuge (h3: ¿El cónyuge sobreviviente hereda todo?). Estas cuatro secciones contienen errores jurídicos graves que contradicen directamente el Código Civil hondureño.",
       "plazo": "inmediato"
     },
     {
       "severidad": "alta",
-      "afecta": ["C02", "C04", "C10"],
+      "afecta": [
+        "C02",
+        "C04",
+        "C10"
+      ],
       "accion": "Matizar las afirmaciones sobre formas testamentarias (incluir testamento menos solemne y verbal), sobre concurrencia del cónyuge (detallar escenarios de Arts. 965-970), y sobre responsabilidad por deudas (explicar beneficio de inventario vs aceptación pura).",
       "plazo": "antes de la siguiente publicación"
     },
     {
       "severidad": "baja",
-      "afecta": ["C09"],
+      "afecta": [
+        "C09"
+      ],
       "accion": "Aclarar que el plazo de un año es recomendación práctica, no exigencia legal. Idealmente citar que no existe plazo máximo en el Código Civil.",
       "plazo": "siguiente revisión editorial"
     }
   ],
-  "nota_final": "El artículo contiene 4 errores jurídicos graves (36% de los claims) que afectan el núcleo del contenido: el orden de prelación de herederos, la supuesta igualdad entre hijos legítimos y naturales, y los derechos del cónyuge sobreviviente. Estas imprecisiones podrían inducir a decisiones legales erróneas por parte de los lectores. Se recomienda revisión urgente con citación expresa de los artículos del Código Civil. Los aciertos del artículo (modalidades sucesorias, ausencia de plazo, derecho a renunciar) son correctos pero no compensan la gravedad de los errores detectados."
+  "nota_final": "El artículo contiene 4 errores jurídicos graves (36% de los claims) que afectan el núcleo del contenido: el orden de prelación de herederos, la supuesta igualdad entre hijos legítimos y naturales, y los derechos del cónyuge sobreviviente. Estas imprecisiones podrían inducir a decisiones legales erróneas por parte de los lectores. Se recomienda revisión urgente con citación expresa de los artículos del Código Civil. Los aciertos del artículo (modalidades sucesorias, ausencia de plazo, derecho a renunciar) son correctos pero no compensan la gravedad de los errores detectados.",
+  "sha256_original": "c50434fa451cd57fd8fac97627bab0d00255042f86dcb16980dcc534248d70a5",
+  "_sha_backfilled": true
 }

@@ -251,5 +251,7 @@
   "metadatos": {
     "metodologia": "Verificación conservadora contra fuentes locales (codigo_familia_verificado.json con 12 artículos y codigo_civil.json con artículos de sucesiones). Claims no confirmables por falta de fuentes se marcan como NO_VERIFICABLE. No se asume veracidad de información no contrastable. Se prefiere PARCIALMENTE_VERDADERO sobre VERDADERO cuando la evidencia es indiciaria pero no concluyente.",
     "criterio_conservador": "Ante duda o evidencia parcial, se marca PARCIALMENTE_VERDADERO o NO_VERIFICABLE. Solo se marca VERDADERO cuando el texto legal confirma directamente y sin ambigüedad la afirmación del artículo."
-  }
+  },
+  "sha256_original": "f29b985d4c0068c17ac7f63b92028f7a66562d68d07c6805d0ea609ad0d5f7bb",
+  "_sha_backfilled": true
 }

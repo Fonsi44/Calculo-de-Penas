@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "herencias-honduras-fallece-familiar",
-  "article_id": "62ef4cfe-0b17-47fd-8fea-e2969ce45d74",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T07:15:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "62ef4cfe-0b17-47fd-8fea-e2969ce45d74",
+  "lote": 7,
+  "fechaConsolidacion": "2026-07-27T07:15:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Claims no verificables contra fuentes disponibles",
-  "claims_totales_a": 11,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "c50434fa451cd57fd8fac97627bab0d00255042f86dcb16980dcc534248d70a5",
+    "pasadaA": "c50434fa451cd57fd8fac97627bab0d00255042f86dcb16980dcc534248d70a5",
+    "pasadaB": "c50434fa451cd57fd8fac97627bab0d00255042f86dcb16980dcc534248d70a5",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 11,
+    "pasadaA": 11,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 11
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "62ef4cfe-0b17-47fd-8fea-e2969ce45d74",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T07:15:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 11,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

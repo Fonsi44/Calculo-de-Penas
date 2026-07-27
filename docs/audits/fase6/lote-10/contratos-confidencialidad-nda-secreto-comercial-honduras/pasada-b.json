@@ -131,5 +131,7 @@
     "error_critico": null,
     "nota_fuente_limitada": "De 9 subclaims, 4 no son verificables contra el Código de Comercio por referirse a legislación civil o de propiedad industrial. No implica errores sino limitación de la fuente.",
     "calidad_global_documento": "El artículo describe correctamente los NDAs como instrumentos contractuales estándar. El Código de Comercio provee sustento tangencial mediante la protección de marcas/patentes (Art. 4) y la represión de competencia desleal (Arts. 425-429). Las referencias al Código Civil y Ley de Propiedad Industrial requieren verificación con fuentes adicionales."
-  }
+  },
+  "sha256_original": "c77cb6e49983c7d53a748545869a17f02c7c208c03e59d3bc280a3175d527818",
+  "_sha_backfilled": true
 }

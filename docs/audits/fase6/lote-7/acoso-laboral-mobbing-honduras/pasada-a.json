@@ -187,5 +187,7 @@
     "errores_y_discrepancias_detectados": [],
     "observacion_principal": "El Código de Trabajo respalda sólidamente dos pilares del artículo: el despido indirecto (Art. 114 CT) incluye expresamente actos de violencia, malos tratamientos y amenazas del patrono como causal, y el plazo de prescripción de 1 mes (Art. 865 CT) está confirmado textualmente. Sin embargo, TODAS las referencias al Código Penal (Arts. 294, 246, 245, 229) NO pueden ser verificadas porque el Decreto 130-2017 (Código Penal de Honduras) no está en los archivos JSON locales. Lo que existe es el Código Procesal Penal (CPP) donde el Art. 294 CPP regula la audiencia inicial, sin relación alguna con acoso laboral. El archivo 'lote-penal-1.json' no contiene datos legibles. Esta ausencia es crítica porque la tipificación penal del acoso laboral vertical es presentada como el ancla legal más novedosa del artículo. Sin el Código Penal en fuentes locales, no se puede confirmar ni la existencia del tipo penal, ni el número de artículo (294), ni la pena (6 meses a 1 año).",
     "calidad_general": "buena_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "038c7736619ea8e95628a3dbbf5d07f3d938862df13f2c7315d2b04ed87d348e",
+  "_sha_backfilled": true
 }

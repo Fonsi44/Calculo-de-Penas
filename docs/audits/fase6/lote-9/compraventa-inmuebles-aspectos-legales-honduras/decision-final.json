@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "compraventa-inmuebles-aspectos-legales-honduras",
-  "article_id": "51b89574-3a7a-4169-ac9b-b7e740fb6e42",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "51b89574-3a7a-4169-ac9b-b7e740fb6e42",
+  "lote": 9,
+  "fechaConsolidacion": "2026-07-27T08:30:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "f0a92b563b22d021cdbe2f01556c0dfff985a1a51623f6395dfa1c55785ab1eb",
+    "pasadaA": "f0a92b563b22d021cdbe2f01556c0dfff985a1a51623f6395dfa1c55785ab1eb",
+    "pasadaB": "f0a92b563b22d021cdbe2f01556c0dfff985a1a51623f6395dfa1c55785ab1eb",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "51b89574-3a7a-4169-ac9b-b7e740fb6e42",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

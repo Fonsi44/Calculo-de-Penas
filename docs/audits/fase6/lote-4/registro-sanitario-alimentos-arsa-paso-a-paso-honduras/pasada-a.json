@@ -54,5 +54,7 @@
       "proposed_text": "<li><strong>Emisión del registro:</strong> Si el producto cumple, se le asigna un número único.</li> (Nota: Asegúrese de aclarar que la inspección de instalaciones se realiza previamente al tramitar la Licencia Sanitaria del establecimiento, no como parte del registro del producto).",
       "reason": "Separar claramente los conceptos de Licencia Sanitaria (establecimiento) y Registro Sanitario (producto)."
     }
-  ]
+  ],
+  "sha256_original": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+  "_sha_backfilled": true
 }

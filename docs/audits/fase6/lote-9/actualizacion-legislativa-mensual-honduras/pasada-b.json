@@ -208,7 +208,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Penal", "B2_Tributario_SAR", "B3_Familia", "B4_Propiedad_Intelectual", "B5_CNBS_Financiero", "B6_Gaceta_y_PJ"],
+    "columnas": [
+      "B1_Penal",
+      "B2_Tributario_SAR",
+      "B3_Familia",
+      "B4_Propiedad_Intelectual",
+      "B5_CNBS_Financiero",
+      "B6_Gaceta_y_PJ"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -258,5 +265,7 @@
     "error_critico": null,
     "nota_fuente_limitada": "De 24 subclaims, 10 no son verificables contra la Constitución por referirse a decretos específicos o entidades administrativas de legislación secundaria. Esto no implica errores en el artículo, sino limitación de la fuente única disponible (data/articulos_constitucion.json).",
     "calidad_global_documento": "El artículo es un texto de divulgación periodística jurídica. Opera principalmente a nivel de legislación secundaria y entidades administrativas no verificables contra la Constitución. Los fundamentos constitucionales de todas las materias tratadas existen. No se detectan errores factuales en lo que es verificable contra la fuente. Se recomienda verificación cruzada con legislación secundaria (Código Penal, Código Tributario, Código de Familia) para validar los decretos y entidades específicas mencionados."
-  }
+  },
+  "sha256_original": "2d142a60a4968ff92b294bb854cfc1f1ee7b1dc097aaefda8cba527e2041b078",
+  "_sha_backfilled": true
 }

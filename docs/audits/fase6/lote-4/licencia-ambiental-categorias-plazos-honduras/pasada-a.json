@@ -38,5 +38,7 @@
       "correccion": "Ajustar la descripción para indicar que legalmente la Categoría 3 es 'Moderado - Alto impacto' y la Categoría 4 es 'Alto impacto o riesgo'. Se puede mantener la referencia a 'megaproyectos' como un ejemplo de la Categoría 4, en lugar de como el nombre de la categoría en sí."
     }
   ],
-  "requiere_abogado": false
+  "requiere_abogado": false,
+  "sha256_original": "e2853f59583b15de164bb3ff5fc15635f69cf8b3290dd9b099673117572e2590",
+  "_sha_backfilled": true
 }

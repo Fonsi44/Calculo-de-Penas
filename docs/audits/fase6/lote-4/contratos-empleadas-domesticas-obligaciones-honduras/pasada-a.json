@@ -48,5 +48,7 @@
   ],
   "needs_human_review": true,
   "human_review_reason": "El artículo contiene múltiples aseveraciones que contravienen directamente el Código del Trabajo (jornada máxima inexistente para este rubro, obligatoriedad del contrato escrito falsa, y límite de cesantía erróneo). Se recomienda una reescritura por parte de un abogado para evitar incurrir en mala praxis de asesoramiento legal público.",
-  "status": "completado"
+  "status": "completado",
+  "sha256_original": "36b2608badb5e62b2434756a921f16fa6a3d963ea1c8fd1784c062487774a22d",
+  "_sha_backfilled": true
 }

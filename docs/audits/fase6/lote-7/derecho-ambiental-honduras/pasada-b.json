@@ -218,7 +218,13 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_DelitosCP", "B2_MarcoLegal", "B3_Licencias", "B4_Denuncia", "B5_Sanciones"],
+    "columnas": [
+      "B1_DelitosCP",
+      "B2_MarcoLegal",
+      "B3_Licencias",
+      "B4_Denuncia",
+      "B5_Sanciones"
+    ],
     "cruces": [
       {
         "par": "B1+B5",
@@ -266,5 +272,7 @@
     "error_secundario": "B1.6: 'Tráfico ilegal de especies' mencionado sin número de artículo. Corresponde al Art. 330 CP.",
     "limitacion_corpus": "La mayoría de las afirmaciones sobre leyes especiales (Ley General del Ambiente, Ley de Evaluación de Impacto Ambiental, Ley Forestal, Ley de Aguas, Ley de Cambio Climático), procedimientos administrativos de SERNA, categorías de licencia, plazos, convenios internacionales, y mecanismos de denuncia NO son verificables contra el corpus local (solo delitos.json y articulos_constitucion.json). De 22 subclaims, 9 (41%) caen en categorías no verificables por esta limitación.",
     "calidad_global_documento": "Regular. Las descripciones sustantivas de los delitos ambientales son correctas (existen en el CP), pero la numeración de artículos está sistemáticamente errada en 3 de 4 casos. Esto sugiere que el documento utilizó una fuente con numeración antigua o incorrecta del Código Penal. La información sobre licencias, procedimientos y marco legal especial no puede ser verificada contra fuentes locales. Se recomienda corregir los números de artículo del CP y citar fuentes verificables para las afirmaciones sobre legislación especial."
-  }
+  },
+  "sha256_original": "06218f5ccf33f8bb79b44946dab417815bb5f7fc00a187225520538339da0e42",
+  "_sha_backfilled": true
 }

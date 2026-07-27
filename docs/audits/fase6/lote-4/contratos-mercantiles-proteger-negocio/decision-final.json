@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "contratos-mercantiles-proteger-negocio",
-  "articleHash": "",
+  "articleId": "fe88f4a7-5174-4439-956f-20deb66bc708",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.319Z",
   "estadoFinal": "completed",
   "razon": "A y B coinciden plenamente",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "983bf3c6643c6a77924e6d95d8e006db902b48fe241a8499b205fda1b133008e",
+    "pasadaA": "983bf3c6643c6a77924e6d95d8e006db902b48fe241a8499b205fda1b133008e",
+    "pasadaB": "983bf3c6643c6a77924e6d95d8e006db902b48fe241a8499b205fda1b133008e",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 4,
+    "pasadaA": 4,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 4
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

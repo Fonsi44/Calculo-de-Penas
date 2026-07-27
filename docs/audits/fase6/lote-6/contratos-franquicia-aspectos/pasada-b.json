@@ -148,7 +148,15 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Ausencia_Ley_Especial", "B2_Articulos_CM_1_2_3", "B3_No_Competencia", "B4_Clausulas_Operativas", "B5_Autonomia_Voluntad", "B6_Jurisprudencia_CSJ", "B7_Vigencia"],
+    "columnas": [
+      "B1_Ausencia_Ley_Especial",
+      "B2_Articulos_CM_1_2_3",
+      "B3_No_Competencia",
+      "B4_Clausulas_Operativas",
+      "B5_Autonomia_Voluntad",
+      "B6_Jurisprudencia_CSJ",
+      "B7_Vigencia"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -194,5 +202,7 @@
       "B2.2: Los Arts. 2 y 3 CM no establecen la aplicabilidad de los contratos mercantiles; los artículos clave son el 1 y el 715 CM."
     ],
     "calidad_global_documento": "Bueno con imprecisiones técnicas menores en la descripción de las funciones de los artículos del Código de Comercio. Sin errores factuales graves ni contradicciones internas."
-  }
+  },
+  "sha256_original": "155d76544c53a84c55cf9241322f60b3f610d45146ab4f47c274a862bf659441",
+  "_sha_backfilled": true
 }

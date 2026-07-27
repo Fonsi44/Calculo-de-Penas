@@ -26,7 +26,10 @@
       "id": "C02",
       "text": "Divorcio por mutuo consentimiento: 'Debe haber transcurrido al menos un año desde la celebración del matrimonio.'",
       "location": "Cuerpo, sección 1 (Mutuo consentimiento)",
-      "source_articles": ["Art. 243 CF", "Código Civil, Cap. XIV"],
+      "source_articles": [
+        "Art. 243 CF",
+        "Código Civil, Cap. XIV"
+      ],
       "verdict": "falso",
       "detail": "Art. 243 CF establece que los cónyuges pueden divorciarse por mutuo consentimiento 'después de dos años de matrimonio'. El Código Civil, Capítulo XIV (Disolución del matrimonio por mutuo consentimiento), también exige 'Transcurridos dos años desde que se celebró el matrimonio'. El texto dice 'un año'; la ley dice dos."
     },
@@ -34,7 +37,9 @@
       "id": "C03",
       "text": "Divorcio express (notarial): 'Se tramita ante notario público sin intervención judicial.'",
       "location": "Cuerpo, sección 2 (Divorcio express)",
-      "source_articles": ["Art. 237 CF"],
+      "source_articles": [
+        "Art. 237 CF"
+      ],
       "verdict": "falso",
       "detail": "Art. 237 CF establece que 'El divorcio debe declararse mediante sentencia judicial.' No existe en las fuentes verificadas ninguna disposición que habilite el divorcio por vía notarial. La figura del divorcio express ante notario no aparece en codigo_familia_verificado.json ni en codigo_civil.json."
     },
@@ -50,7 +55,9 @@
       "id": "C05",
       "text": "Divorcio contencioso: 'separación de hecho por más de un año' como causa legal.",
       "location": "Cuerpo, sección 3 (Divorcio contencioso)",
-      "source_articles": ["Art. 238 CF"],
+      "source_articles": [
+        "Art. 238 CF"
+      ],
       "verdict": "falso",
       "detail": "Art. 238 CF menciona 'la separación o abandono injustificado por más de dos años' como causa. El texto dice 'un año'; la ley dice dos."
     },
@@ -58,7 +65,9 @@
       "id": "C06",
       "text": "Divorcio contencioso: 'abandono del hogar por más de un año' como causa legal.",
       "location": "Cuerpo, sección 3 (Divorcio contencioso)",
-      "source_articles": ["Art. 238 CF"],
+      "source_articles": [
+        "Art. 238 CF"
+      ],
       "verdict": "falso",
       "detail": "Art. 238 CF establece el abandono injustificado por más de dos años. El texto dice 'un año'; la ley dice dos."
     },
@@ -66,7 +75,10 @@
       "id": "C07",
       "text": "Causas de divorcio contencioso: 'infidelidad, maltrato físico o psicológico, abandono del hogar, injurias graves que hagan imposible la convivencia, vicios como alcoholismo o drogadicción.'",
       "location": "Cuerpo, sección 3 (Divorcio contencioso)",
-      "source_articles": ["Art. 238 CF", "Código Civil, Cap. XII"],
+      "source_articles": [
+        "Art. 238 CF",
+        "Código Civil, Cap. XII"
+      ],
       "verdict": "parcialmente_verificable",
       "detail": "Art. 238 CF recoge separación o abandono injustificado por más de dos años y otras causas legales de divorcio (sin enumerarlas exhaustivamente en el extracto verificado). El Código Civil enumera: adulterio, concubinato con escándalo, malos tratamientos graves, atentado contra la vida, tentativa de prostituir o corromper hijos. Las 'injurias graves' y 'vicios como alcoholismo o drogadicción' no aparecen literalmente en los extractos verificados. El maltrato psicológico tampoco está formulado en esos términos."
     },
@@ -126,5 +138,7 @@
       "verdict": "no_verificable",
       "detail": "Los artículos verificados del código de familia no contienen disposiciones sobre medidas cautelares por violencia doméstica. Afirmación plausible pero no contrastable con las fuentes disponibles."
     }
-  ]
+  ],
+  "sha256_original": "e037ffc36b3bced46d364fd2be9d8c610c473033cbf511f4cb332f0f5ebed150",
+  "_sha_backfilled": true
 }

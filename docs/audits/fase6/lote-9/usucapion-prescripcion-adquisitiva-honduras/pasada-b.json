@@ -19,7 +19,9 @@
       "tipo": "cita_normativa_incorrecta",
       "descripcion": "El artículo cita los arts. 717-724 CC como sede normativa de la usucapión y atribuye al Art. 717 CC el texto sobre adquisición de propiedad por prescripción. En realidad: (a) Art. 717 CC define la posesión ('La posesión es la tenencia de una cosa...'); (b) la prescripción adquisitiva está en los arts. 2263-2288 CC (Título XVI); (c) el artículo que establece que por prescripción se adquiere el dominio es el Art. 2263 CC. Los arts. 717-724 pertenecen al Título VII 'De la Posesión' y contienen definiciones de posesión regular/irregular, justo título y buena fe que son REFERENCIADAS por el Art. 2281 CC para la prescripción, pero no son la sede principal.",
       "impacto": "medio",
-      "ubicaciones": ["Primer párrafo tras la definición: 'La usucapión está regulada principalmente en los artículos 717 al 724 del Código Civil'"]
+      "ubicaciones": [
+        "Primer párrafo tras la definición: 'La usucapión está regulada principalmente en los artículos 717 al 724 del Código Civil'"
+      ]
     },
     "omision_detectada": {
       "tipo": "excepcion_legal_omitida",
@@ -230,7 +232,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Sede_Normativa", "B2_Requisitos_Posesion", "B3_Plazos", "B4_Procedimiento", "B5_Arrendatario", "B6_Bienes_Estado"],
+    "columnas": [
+      "B1_Sede_Normativa",
+      "B2_Requisitos_Posesion",
+      "B3_Plazos",
+      "B4_Procedimiento",
+      "B5_Arrendatario",
+      "B6_Bienes_Estado"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -292,5 +301,7 @@
     ],
     "observacion_critica": "El artículo tiene un error de técnica jurídica significativo: cita los artículos equivocados (717-724 en lugar de 2263-2288) y atribuye al Art. 717 CC un contenido que no le corresponde. Sin embargo, el contenido SUSTANTIVO sobre requisitos y plazos es correcto y está respaldado por los arts. 2273, 2286 y 2287 CC. Es un caso de 'fondo correcto, cita incorrecta'. Adicionalmente, omite la excepción de prescripción extraordinaria del Art. 733 CC en la sección sobre arrendatarios. Las secciones procedimentales (30% del contenido) no son verificables sin el Código Procesal Civil.",
     "calidad_global_documento": "Buena en fondo sustantivo, con error de cita normativa. Los requisitos y plazos de la usucapión están correctamente expuestos y respaldados por el Código Civil hondureño. El error principal es de precisión jurídica en la identificación de los artículos aplicables, lo cual es relevante para un lector que quiera consultar directamente la ley. Se recomienda corregir las referencias normativas: sustituir 'artículos 717 al 724' por 'artículos 2263 al 2288, en relación con los artículos 717 al 724', y corregir la atribución del Art. 717 CC."
-  }
+  },
+  "sha256_original": "a2f2c667b1db9745d960078017b20741f275fead6df1beb335543863a744c100",
+  "_sha_backfilled": true
 }

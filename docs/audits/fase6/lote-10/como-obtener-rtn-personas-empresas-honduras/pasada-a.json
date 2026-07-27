@@ -135,5 +135,7 @@
     "error_critico_detectado": "Ninguno. El Código Tributario confirma: la obligación de inscripción en RTN (Art. 66), la obligación de declarar (Art. 62), el régimen sancionatorio por incumplimiento de obligaciones formales (Arts. 160, 164). Los detalles operativos (gratuidad, trámite en oficinas SAR) son materia reglamentaria.",
     "calidad_general": "sustancialmente_correcto",
     "nota_limitacion": "Los detalles procedimentales (oficinas, gratuidad, asignación en el acto) son materia administrativa/reglamentaria no contenida en el Código Tributario."
-  }
+  },
+  "sha256_original": "897d4feee2aebfdce629e397abee8fc6749fd647bd707d87e02f3b87768ad342",
+  "_sha_backfilled": true
 }

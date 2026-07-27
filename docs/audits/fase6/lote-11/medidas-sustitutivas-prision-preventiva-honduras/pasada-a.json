@@ -88,5 +88,7 @@
     "no_verificables": 7,
     "refutados": 0
   },
-  "conclusion": "Se verificaron 7 claims contra data/codigo_procesal_penal_verificado.json. 0 verificados, 0 parcialmente verificados, 7 no verificables, 0 refutados. No se detectaron refutaciones."
+  "conclusion": "Se verificaron 7 claims contra data/codigo_procesal_penal_verificado.json. 0 verificados, 0 parcialmente verificados, 7 no verificables, 0 refutados. No se detectaron refutaciones.",
+  "sha256_original": "fd32b1b2fb3d7138166a51d24ef85fc3025c1498856901939ff1db7698c15d03",
+  "_sha_backfilled": true
 }

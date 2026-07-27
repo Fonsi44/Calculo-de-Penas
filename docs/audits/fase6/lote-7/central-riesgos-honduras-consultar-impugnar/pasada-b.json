@@ -42,24 +42,78 @@
   ],
   "nota_metodologica": "Se realizaron consultas a fuentes web oficiales. Fueron exitosas: sitio oficial CNBS (cnbs.gob.hn), seccion de Reclamos/GPUF (cnbs.gob.hn/reclamos), Preguntas Frecuentes (cnbs.gob.hn/preguntas-frecuentes), y Wikipedia (Constitucion de Honduras). Fallo por HTTP 404: cnbs.gob.hn/como-presentar-un-reclamo. No se pudieron consultar: la Ley de Proteccion al Consumidor Financiero (no disponible en linea en fuente oficial accesible), el texto completo de las normativas de la CNBS, ni bases de datos de legislacion hondurena.",
   "claims_extraidos": [
-    {"id": "C1", "claim": "La Central de Riesgos en Honduras es un registro de informacion crediticia administrado por la Comision Nacional de Bancos y Seguros (CNBS)."},
-    {"id": "C2", "claim": "El sistema recopila datos sobre el comportamiento de pago de personas y empresas, incluyendo informacion de bancos, financieras, cooperativas y emisores de tarjetas de credito."},
-    {"id": "C3", "claim": "Todo ciudadano tiene derecho a solicitar su reporte de credito de forma gratuita una vez al ano."},
-    {"id": "C4", "claim": "El proceso de impugnacion de errores en la Central de Riesgos consta de 4 pasos: identificar el error, reclamar a la entidad reportadora, acudir a la CNBS, e interponer accion de habeas data."},
-    {"id": "C5", "claim": "La entidad financiera reportadora tiene un plazo de 10 dias habiles para verificar el reclamo y, de ser procedente, corregir la informacion y notificar a la Central de Riesgos."},
-    {"id": "C6", "claim": "Si la entidad no resuelve el reclamo, se puede presentar una queja formal ante la CNBS."},
-    {"id": "C7", "claim": "La CNBS tiene la facultad de ordenar la correccion y aplicar sanciones a la entidad infractora."},
-    {"id": "C8", "claim": "Como ultimo recurso, se puede interponer una accion de habeas data ante los tribunales competentes, requiriendo asistencia de abogado."},
-    {"id": "C9", "claim": "La accion de habeas data es un mecanismo constitucional para la proteccion de datos personales."},
-    {"id": "C10", "claim": "La Constitucion de la Republica de Honduras, en su Articulo 183, garantiza el derecho al habeas data."},
-    {"id": "C11", "claim": "La operacion de la Central de Riesgos se rige por la Ley de Proteccion al Consumidor y las disposiciones emitidas por la CNBS."},
-    {"id": "C12", "claim": "El Articulo 24 de la Ley de Proteccion al Consumidor reconoce el derecho de los consumidores a acceder y solicitar la correccion de su informacion crediticia."},
-    {"id": "C13", "claim": "La informacion negativa, como moras o impagos, permanece en la Central de Riesgos entre 3 y 5 anos tras la cancelacion de la deuda."},
-    {"id": "C14", "claim": "El habeas data permite acceder a la informacion sobre si misma o sus bienes en forma expedita y no onerosa, y actualizarla, rectificarla y/o suprimirla."},
-    {"id": "C15", "claim": "La Central de Riesgos no es una 'lista negra' sino una base de datos que refleja historial crediticio tanto positivo como negativo."},
-    {"id": "C16", "claim": "Las acciones de habeas data se ejercen sin necesidad de poder ni de formalidad alguna, verbalmente o por escrito, utilizando cualquier medio de comunicacion, en horas o dias habiles e inhabiles y libres de costas."},
-    {"id": "C17", "claim": "La CNBS opera bajo la Gerencia de Proteccion al Usuario Financiero (GPUF) para atender reclamos de ciudadanos."},
-    {"id": "C18", "claim": "Existen centrales de riesgo privadas (CRP) ademas de la Central de Informacion Crediticia (CIC) de la CNBS."}
+    {
+      "id": "C1",
+      "claim": "La Central de Riesgos en Honduras es un registro de informacion crediticia administrado por la Comision Nacional de Bancos y Seguros (CNBS)."
+    },
+    {
+      "id": "C2",
+      "claim": "El sistema recopila datos sobre el comportamiento de pago de personas y empresas, incluyendo informacion de bancos, financieras, cooperativas y emisores de tarjetas de credito."
+    },
+    {
+      "id": "C3",
+      "claim": "Todo ciudadano tiene derecho a solicitar su reporte de credito de forma gratuita una vez al ano."
+    },
+    {
+      "id": "C4",
+      "claim": "El proceso de impugnacion de errores en la Central de Riesgos consta de 4 pasos: identificar el error, reclamar a la entidad reportadora, acudir a la CNBS, e interponer accion de habeas data."
+    },
+    {
+      "id": "C5",
+      "claim": "La entidad financiera reportadora tiene un plazo de 10 dias habiles para verificar el reclamo y, de ser procedente, corregir la informacion y notificar a la Central de Riesgos."
+    },
+    {
+      "id": "C6",
+      "claim": "Si la entidad no resuelve el reclamo, se puede presentar una queja formal ante la CNBS."
+    },
+    {
+      "id": "C7",
+      "claim": "La CNBS tiene la facultad de ordenar la correccion y aplicar sanciones a la entidad infractora."
+    },
+    {
+      "id": "C8",
+      "claim": "Como ultimo recurso, se puede interponer una accion de habeas data ante los tribunales competentes, requiriendo asistencia de abogado."
+    },
+    {
+      "id": "C9",
+      "claim": "La accion de habeas data es un mecanismo constitucional para la proteccion de datos personales."
+    },
+    {
+      "id": "C10",
+      "claim": "La Constitucion de la Republica de Honduras, en su Articulo 183, garantiza el derecho al habeas data."
+    },
+    {
+      "id": "C11",
+      "claim": "La operacion de la Central de Riesgos se rige por la Ley de Proteccion al Consumidor y las disposiciones emitidas por la CNBS."
+    },
+    {
+      "id": "C12",
+      "claim": "El Articulo 24 de la Ley de Proteccion al Consumidor reconoce el derecho de los consumidores a acceder y solicitar la correccion de su informacion crediticia."
+    },
+    {
+      "id": "C13",
+      "claim": "La informacion negativa, como moras o impagos, permanece en la Central de Riesgos entre 3 y 5 anos tras la cancelacion de la deuda."
+    },
+    {
+      "id": "C14",
+      "claim": "El habeas data permite acceder a la informacion sobre si misma o sus bienes en forma expedita y no onerosa, y actualizarla, rectificarla y/o suprimirla."
+    },
+    {
+      "id": "C15",
+      "claim": "La Central de Riesgos no es una 'lista negra' sino una base de datos que refleja historial crediticio tanto positivo como negativo."
+    },
+    {
+      "id": "C16",
+      "claim": "Las acciones de habeas data se ejercen sin necesidad de poder ni de formalidad alguna, verbalmente o por escrito, utilizando cualquier medio de comunicacion, en horas o dias habiles e inhabiles y libres de costas."
+    },
+    {
+      "id": "C17",
+      "claim": "La CNBS opera bajo la Gerencia de Proteccion al Usuario Financiero (GPUF) para atender reclamos de ciudadanos."
+    },
+    {
+      "id": "C18",
+      "claim": "Existen centrales de riesgo privadas (CRP) ademas de la Central de Informacion Crediticia (CIC) de la CNBS."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -178,5 +232,7 @@
     "no_verificables": 6,
     "refutados": 1
   },
-  "conclusion": "La verificacion web confirma la existencia de la CNBS como ente regulador (W1), la Central de Informacion Crediticia (CIC) como sistema de registro crediticio (W1, W3), la Gerencia de Proteccion al Usuario Financiero (GPUF) como canal formal de reclamaciones con formulario y contactos (W2), y la existencia de centrales de riesgo privadas (CRP) adicionales a la CIC (W3). Wikipedia (W4) confirma que el habeas data esta en el Art. 182, no en el 183 como afirma el articulo — ERROR FACTUAL CONFIRMADO POR DOS FUENTES INDEPENDIENTES (PASADA A y PASADA B). De 18 claims: 4 verificadas (existencia de GPUF/Canal CNBS, habeas data como garantia constitucional, existencia de GPUF como ente operativo, y existencia de centrales de riesgo privadas); 7 parcialmente verificadas (existencia de la CIC como sistema, alcance de datos, solicitud de historial, proceso de 4 pasos, facultades CNBS, habeas data como via judicial, y marco regulatorio); 6 no verificables (plazo 10 dias, Ley de Proteccion al Consumidor/Art. 24, 3-5 anos de conservacion, caracterizacion lista negra, detalle procedimental del habeas data via web); y 1 refutada (numero de articulo: es 182, no 183). La terminologia del articulo es imprecisa: la CNBS utiliza 'Central de Informacion Crediticia (CIC)', no 'Central de Riesgos'; este ultimo termino se aplica a las 'Centrales de Riesgo Privadas (CRP)'. Se recomienda corregir el numero del articulo constitucional y verificar los plazos de 10 dias y 3-5 anos contra la normativa de la CNBS."
+  "conclusion": "La verificacion web confirma la existencia de la CNBS como ente regulador (W1), la Central de Informacion Crediticia (CIC) como sistema de registro crediticio (W1, W3), la Gerencia de Proteccion al Usuario Financiero (GPUF) como canal formal de reclamaciones con formulario y contactos (W2), y la existencia de centrales de riesgo privadas (CRP) adicionales a la CIC (W3). Wikipedia (W4) confirma que el habeas data esta en el Art. 182, no en el 183 como afirma el articulo — ERROR FACTUAL CONFIRMADO POR DOS FUENTES INDEPENDIENTES (PASADA A y PASADA B). De 18 claims: 4 verificadas (existencia de GPUF/Canal CNBS, habeas data como garantia constitucional, existencia de GPUF como ente operativo, y existencia de centrales de riesgo privadas); 7 parcialmente verificadas (existencia de la CIC como sistema, alcance de datos, solicitud de historial, proceso de 4 pasos, facultades CNBS, habeas data como via judicial, y marco regulatorio); 6 no verificables (plazo 10 dias, Ley de Proteccion al Consumidor/Art. 24, 3-5 anos de conservacion, caracterizacion lista negra, detalle procedimental del habeas data via web); y 1 refutada (numero de articulo: es 182, no 183). La terminologia del articulo es imprecisa: la CNBS utiliza 'Central de Informacion Crediticia (CIC)', no 'Central de Riesgos'; este ultimo termino se aplica a las 'Centrales de Riesgo Privadas (CRP)'. Se recomienda corregir el numero del articulo constitucional y verificar los plazos de 10 dias y 3-5 anos contra la normativa de la CNBS.",
+  "sha256_original": "2360140fcf23f97d5353df36bea24affae980965ac5f985a1558830da9202840",
+  "_sha_backfilled": true
 }

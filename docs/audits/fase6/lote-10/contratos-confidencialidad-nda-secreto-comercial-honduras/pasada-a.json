@@ -175,5 +175,7 @@
     "error_critico_detectado": "Ninguno detectado con esta fuente. El Código de Comercio regula materia mercantil (competencia desleal, cosas mercantiles, obligaciones de comerciantes) que tangencialmente sustenta la protección de información confidencial en el ámbito empresarial. Sin embargo, los NDAs y su regulación detallada (consentimiento, objeto lícito, cláusulas penales) son materia del Código Civil y la Ley de Propiedad Industrial, no disponibles en esta fuente.",
     "calidad_general": "aceptable_con_limitacion_de_fuente",
     "nota_limitacion": "La fuente única (codigo_comercio.json) solo permite verificar aspectos mercantiles generales (competencia desleal, cosas mercantiles como marcas y patentes). Las referencias al Código Civil, Ley de Propiedad Industrial, y los requisitos contractuales específicos no son verificables con esta fuente."
-  }
+  },
+  "sha256_original": "c77cb6e49983c7d53a748545869a17f02c7c208c03e59d3bc280a3175d527818",
+  "_sha_backfilled": true
 }

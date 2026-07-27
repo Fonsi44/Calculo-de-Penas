@@ -22,21 +22,30 @@
         "descripcion": "El artículo cita el 'Artículo 294 del Código Penal (Decreto 130-2017)' como el tipo penal de acoso laboral vertical. En las fuentes locales, el único Art. 294 disponible pertenece al Código Procesal Penal (CPP) y regula la audiencia inicial. No se puede confirmar que el Art. 294 del Código Penal efectivamente tipifique el acoso laboral, pero la coincidencia numérica con el Art. 294 CPP (código distinto) amerita verificación externa para descartar una confusión de fuentes por parte del autor.",
         "impacto": "alto",
         "apariciones": 1,
-        "ubicaciones": ["Sección '¿Cómo aplica el Artículo 294 del Código Penal sobre Acoso Laboral Vertical?'"]
+        "ubicaciones": [
+          "Sección '¿Cómo aplica el Artículo 294 del Código Penal sobre Acoso Laboral Vertical?'"
+        ]
       },
       {
         "tipo": "ausencia_total_de_fuente_primaria",
         "descripcion": "Todas las referencias al Código Penal (Arts. 294, 246, 245, 229) y al Decreto 130-2017 dependen de una fuente que no está disponible localmente. Esto afecta aproximadamente el 30% del contenido sustantivo del artículo. Sin acceso al Código Penal, no se puede verificar: (a) la existencia del tipo penal de acoso laboral vertical, (b) la pena de 6 meses a 1 año, (c) la existencia y contenido de los arts. 246, 245 y 229, (d) que el Decreto 130-2017 sea el Código Penal vigente.",
         "impacto": "alto",
         "apariciones": 4,
-        "ubicaciones": ["Sección Art. 294 CP", "Mención Arts. 246/245/229 CP", "Referencia al Decreto 130-2017", "Mención del Ministerio Público"]
+        "ubicaciones": [
+          "Sección Art. 294 CP",
+          "Mención Arts. 246/245/229 CP",
+          "Referencia al Decreto 130-2017",
+          "Mención del Ministerio Público"
+        ]
       },
       {
         "tipo": "matiz_textual_menor",
         "descripcion": "El artículo dice que el Art. 114 CT garantiza el '100% de sus prestaciones'. El texto del Art. 114 CT dice 'conservando el derecho a las prestaciones e indemnizaciones legales, como en el caso de despido injusto'. La palabra '100%' no aparece en el CT. La diferencia es menor en la práctica (el efecto jurídico es equivalente), pero la paráfrasis es ligeramente imprecisa.",
         "impacto": "bajo",
         "apariciones": 1,
-        "ubicaciones": ["Sección '¿Qué es el despido indirecto y cómo aplica el Artículo 114?'"]
+        "ubicaciones": [
+          "Sección '¿Qué es el despido indirecto y cómo aplica el Artículo 114?'"
+        ]
       }
     ],
     "fuente_ausente_critica": {
@@ -278,7 +287,18 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Definicion", "B2_Pilar_Penal", "B3_Pilar_Laboral", "B4_Procedimiento_Despido", "B5_Prescripcion", "B6_Via_Administrativa", "B7_Via_Civil", "B8_Prueba", "B9_Responsabilidad_Empleador", "B10_Cruces_Internos"],
+    "columnas": [
+      "B1_Definicion",
+      "B2_Pilar_Penal",
+      "B3_Pilar_Laboral",
+      "B4_Procedimiento_Despido",
+      "B5_Prescripcion",
+      "B6_Via_Administrativa",
+      "B7_Via_Civil",
+      "B8_Prueba",
+      "B9_Responsabilidad_Empleador",
+      "B10_Cruces_Internos"
+    ],
     "cruces": [
       {
         "par": "B2+B3",
@@ -331,5 +351,7 @@
     "conflictos_detectados_flag": false,
     "observacion_critica": "El articulo es sustancialmente correcto en su pilar laboral (despido indirecto, prescripcion). Los Arts. 114, 117 y 865 del Codigo de Trabajo respaldan las afirmaciones principales con precision textual. Sin embargo, el pilar penal —que incluye la afirmacion mas novedosa del articulo (tipificacion del acoso laboral vertical en el Art. 294 CP con pena de 6 meses a 1 ano)— NO puede ser verificado porque el Codigo Penal (Decreto 130-2017) no esta disponible en las fuentes locales. Existe una alerta: en las fuentes locales el Art. 294 pertenece al Codigo Procesal Penal (CPP, audiencia inicial), no al Codigo Penal. Sin acceso al CP, no se puede determinar si el autor consulto correctamente el Codigo Penal o si confundio el numero de articulo con el CPP. Las vias administrativa (STSS), civil (danos y perjuicios) y las recomendaciones probatorias son plausibles y consistentes con el sistema juridico hondureno, pero no tienen respaldo textual directo en las fuentes locales disponibles. Se recomienda: (a) verificacion externa de los Arts. 294, 246, 245 y 229 del Codigo Penal hondureno, (b) confirmacion de que el Decreto 130-2017 es el Codigo Penal vigente, y (c) incorporacion del Codigo Penal a las fuentes locales para futuras verificaciones.",
     "calidad_global_documento": "Buena en el pilar laboral verificable, no evaluable en el pilar penal por ausencia de fuente. El articulo es internamente coherente, bien estructurado y juridicamente plausible en todas sus secciones. La unica limitacion es la imposibilidad de verificar las referencias al Codigo Penal, que constituyen aproximadamente el 30% del contenido juridico sustantivo."
-  }
+  },
+  "sha256_original": "038c7736619ea8e95628a3dbbf5d07f3d938862df13f2c7315d2b04ed87d348e",
+  "_sha_backfilled": true
 }

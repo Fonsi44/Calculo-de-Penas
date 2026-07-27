@@ -70,5 +70,7 @@
       "reason": "El texto original menciona solo el objeto. Es prudente mencionar conjuntamente los tres requisitos de validez del Código Civil hondureño (consentimiento, objeto y causa) para mayor precisión jurídica."
     }
   ],
-  "requiresLawyer": false
+  "requiresLawyer": false,
+  "sha256_original": "4b07635633b4efd6e7b47d5aed6a72a3e88ce32d3bc4a6a625d1431142e96abb",
+  "_sha_backfilled": true
 }

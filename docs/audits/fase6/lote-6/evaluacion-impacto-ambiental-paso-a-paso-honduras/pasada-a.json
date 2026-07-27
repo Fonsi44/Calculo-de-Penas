@@ -168,5 +168,7 @@
     "error_critico_detectado": "Ninguno. Sin embargo, el nombre de SERNA en el artículo ('Secretaría de Recursos Naturales y Ambiente') difiere del nombre oficial completo referenciado en fuentes locales ('Secretaría de Energía, Recursos Naturales, Ambiente y Minas'). Esto puede reflejar una simplificación o la denominación actual tras reformas institucionales (MiAmbiente).",
     "calidad_general": "aceptable_con_verificacion_limitada",
     "nota_metodologica": "La Ley General del Ambiente y el Reglamento de Evaluación de Impacto Ambiental no están disponibles como JSON estructurado en el repositorio local, lo que limita la verificación directa de la mayoría de las afirmaciones procedimentales. Las verificaciones se apoyan en referencias cruzadas de otras fuentes locales (Constitución, lote3-backup, delitos.json) que confirman el marco institucional y constitucional."
-  }
+  },
+  "sha256_original": "25d3bd9d003d50a88005a95a9646b55097863a058b043a26d30185f0a34551f0",
+  "_sha_backfilled": true
 }

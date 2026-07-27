@@ -74,7 +74,9 @@
       ],
       "needs_human_review": true,
       "suggested_correction": "Verificar texto oficial del Decreto 208-2003: titulo exacto, vigencia, reformas. Confirmar que regula efectivamente visas de inversionista, rentista y pensionado.",
-      "cross_reference_claims": ["B-C2"]
+      "cross_reference_claims": [
+        "B-C2"
+      ]
     },
     {
       "id": "B-C2",
@@ -101,7 +103,10 @@
       ],
       "needs_human_review": true,
       "suggested_correction": "REEMPLAZAR todas las referencias a 'DGME' por 'Instituto Nacional de Migracion (INM)' (inm.gob.hn). Si la DGME aun existe como entidad subordinada o con nombre historico, aclararlo explicitamente. Esto afecta menciones en el texto y en los tags del articulo.",
-      "cross_reference_claims": ["B-C6", "B-S3"]
+      "cross_reference_claims": [
+        "B-C6",
+        "B-S3"
+      ]
     },
     {
       "id": "B-C3",
@@ -113,7 +118,11 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar monto exacto de inversion minima contra fuente oficial del INM o normativa migratoria vigente. Citar fuente (articulo de ley, reglamento, acuerdo, circular) y fecha de vigencia.",
-      "cross_reference_claims": ["B-C4", "B-C5", "B-S2"]
+      "cross_reference_claims": [
+        "B-C4",
+        "B-C5",
+        "B-S2"
+      ]
     },
     {
       "id": "B-C4",
@@ -125,7 +134,10 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar monto minimo de ingresos mensuales contra fuente oficial del INM. Confirmar que los ingresos deben ser 'del exterior', 'estables y permanentes', y que tipo de documentacion se acepta como prueba.",
-      "cross_reference_claims": ["B-C3", "B-C5"]
+      "cross_reference_claims": [
+        "B-C3",
+        "B-C5"
+      ]
     },
     {
       "id": "B-C5",
@@ -137,7 +149,10 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar monto minimo de pension contra fuente oficial. Confirmar si se requiere caracter vitalicio o si se aceptan pensiones temporales. Especificar si se aceptan pensiones privadas, estatales o ambas.",
-      "cross_reference_claims": ["B-C3", "B-C4"]
+      "cross_reference_claims": [
+        "B-C3",
+        "B-C4"
+      ]
     },
     {
       "id": "B-C6",
@@ -157,7 +172,10 @@
       ],
       "needs_human_review": true,
       "suggested_correction": "Corregir DGME por INM. Verificar si la Secretaria de Gobernacion y Justicia efectivamente recibe solicitudes de residencia como via alternativa, o si su rol es diferente (aprobacion, apelacion, ciertas categorias). Aclarar la diferencia entre ambas vias.",
-      "cross_reference_claims": ["B-C2", "B-C7"]
+      "cross_reference_claims": [
+        "B-C2",
+        "B-C7"
+      ]
     },
     {
       "id": "B-C7",
@@ -169,7 +187,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar plazos actuales de procesamiento con el INM. Si existen dos vias, indicar plazos de cada una con fuente. Si existe un plazo legal maximo, mencionarlo.",
-      "cross_reference_claims": ["B-C6"]
+      "cross_reference_claims": [
+        "B-C6"
+      ]
     },
     {
       "id": "B-C8",
@@ -181,7 +201,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar periodo exacto de residencia temporal inicial para cada categoria. Especificar si es 1 ano, 2 anos, o varia segun el tipo de visa. Confirmar condiciones de renovacion.",
-      "cross_reference_claims": ["B-C11"]
+      "cross_reference_claims": [
+        "B-C11"
+      ]
     },
     {
       "id": "B-C9",
@@ -201,7 +223,10 @@
       ],
       "needs_human_review": true,
       "suggested_correction": "Verificar con INM y/o SETRASS el tramite de permiso de trabajo para extranjeros con visa de residencia. Confirmar si la visa de inversionista incluye autorizacion para trabajar en la propia empresa.",
-      "cross_reference_claims": ["B-S4", "B-C12"]
+      "cross_reference_claims": [
+        "B-S4",
+        "B-C12"
+      ]
     },
     {
       "id": "B-C10",
@@ -225,7 +250,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "AMPLIAR para reflejar los plazos diferenciados del Art. 24 constitucional: 1 ano para centroamericanos, 2 anos para iberoamericanos/espanoles, 3 anos para demas extranjeros. Citar la Constitucion como fuente. Mencionar otras vias de naturalizacion (matrimonio, carta del Congreso). Eliminar la ambiguedad de 'en algunos casos'.",
-      "cross_reference_claims": ["B-C8"]
+      "cross_reference_claims": [
+        "B-C8"
+      ]
     },
     {
       "id": "B-C12",
@@ -237,7 +264,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar con el INM si la visa de inversionista incluye permiso de trabajo en la propia empresa. Eliminar 'puede permitir' y reemplazar con afirmacion verificada o advertencia de consultar.",
-      "cross_reference_claims": ["B-C9"]
+      "cross_reference_claims": [
+        "B-C9"
+      ]
     },
     {
       "id": "B-S1",
@@ -261,7 +290,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar si la normativa migratoria hondurena exige beneficios economicos o generacion de empleo como requisito adicional a la inversion minima.",
-      "cross_reference_claims": ["B-C3"]
+      "cross_reference_claims": [
+        "B-C3"
+      ]
     },
     {
       "id": "B-S3",
@@ -273,7 +304,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": "Cambiar DGME por INM. Considerar eliminar por no aportar informacion verificable.",
-      "cross_reference_claims": ["B-C2"]
+      "cross_reference_claims": [
+        "B-C2"
+      ]
     },
     {
       "id": "B-S4",
@@ -285,7 +318,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "URGENTE: Verificar posicion oficial del INM sobre trabajo remoto. Si no hay regulacion expresa, indicar que es zona gris legal y recomendar asesoria profesional. No usar 'se tolera' sin respaldo.",
-      "cross_reference_claims": ["B-C9"]
+      "cross_reference_claims": [
+        "B-C9"
+      ]
     },
     {
       "id": "B-S5",
@@ -309,7 +344,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C9"]
+      "cross_reference_claims": [
+        "B-C9"
+      ]
     },
     {
       "id": "B-X2",
@@ -321,7 +358,11 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C3", "B-C4", "B-C5"]
+      "cross_reference_claims": [
+        "B-C3",
+        "B-C4",
+        "B-C5"
+      ]
     },
     {
       "id": "B-X3",
@@ -333,7 +374,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C8"]
+      "cross_reference_claims": [
+        "B-C8"
+      ]
     }
   ],
   "summary": {
@@ -402,5 +445,7 @@
       "RECOMENDADO: Confirmar si la pension debe ser vitalicia y si se aceptan solo pensiones estatales o tambien privadas.",
       "RECOMENDADO: Especificar edad limite de hijos dependientes y otros familiares incluibles."
     ]
-  }
+  },
+  "sha256_original": "31dca718f3fb7e3bedd480ae315c3ebcbecebbe9f6ea85e5f835439c174ffd31",
+  "_sha_backfilled": true
 }

@@ -29,7 +29,11 @@
       "afirmacion": "Los plazos legales de un año se mencionan en tres lugares del artículo donde la ley exige dos años.",
       "afecta": "Sección de mutuo consentimiento, lista de causas del divorcio contencioso, FAQ sobre separación previa.",
       "impacto": "Art. 243 CF y Art. 155 CC exigen dos años desde la celebración del matrimonio para el divorcio por mutuo consentimiento. Art. 238 CF exige más de dos años de separación o abandono injustificado para el divorcio contencioso. El error aparece en tres afirmaciones distintas (C02, C03, C10). Un lector que actúe confiando en el plazo de un año verá su solicitud rechazada judicialmente, con la consiguiente pérdida de tiempo y dinero.",
-      "claims_asociados": ["C02", "C03", "C10"]
+      "claims_asociados": [
+        "C02",
+        "C03",
+        "C10"
+      ]
     },
     {
       "id": "H02",
@@ -37,7 +41,9 @@
       "afirmacion": "La lista de causas del divorcio contencioso presentada en el artículo difiere sustancialmente del catálogo legal del Art. 143 CC.",
       "afecta": "Toda la sección de Divorcio por causa determinada.",
       "impacto": "El artículo enumera: infidelidad, maltrato físico/psicológico, abandono (>1 año), injurias graves, separación de hecho (>1 año) y vicios. El Art. 143 CC establece: preñez por relaciones ilícitas anteriores al matrimonio, atentado contra la vida, malos tratamientos de obra graves y frecuentes, adulterio de la mujer, concubinato del marido con escándalo, tentativa de prostituir a la mujer, y conato de corromper a los hijos. Varias causas del artículo carecen de respaldo (injurias graves, maltrato psicológico, vicios), otras están formuladas de manera imprecisa (infidelidad vs. adulterio/concubinato diferenciados por género), y se omiten causas reales del CC (preñez prematrimonial, tentativa de prostitución, corrupción de hijos). Un lector podría intentar divorciarse por una causal inexistente o desconocer una que sí le ampara.",
-      "claims_asociados": ["C03"]
+      "claims_asociados": [
+        "C03"
+      ]
     },
     {
       "id": "H03",
@@ -45,7 +51,9 @@
       "afirmacion": "La patria potestad generalmente se mantiene compartida tras el divorcio.",
       "afecta": "Sección ¿Cómo afecta el divorcio a los hijos y los bienes?",
       "impacto": "Art. 152 CC #2-3 dispone que en el divorcio contencioso los hijos quedan bajo la potestad del cónyuge inocente y el culpable queda privado de la patria potestad mientras viva el inocente. La afirmación del artículo de que 'generalmente se mantiene compartida' contradice directamente esta norma para los casos contenciosos y puede generar expectativas jurídicamente incorrectas en lectores que enfrentan un divorcio de este tipo.",
-      "claims_asociados": ["C06"]
+      "claims_asociados": [
+        "C06"
+      ]
     }
   ],
   "hallazgos_menores": [
@@ -55,7 +63,9 @@
       "afirmacion": "El listado de requisitos documentales es más amplio que lo exigido en los artículos verificados.",
       "afecta": "Sección Requisitos generales para el divorcio.",
       "impacto": "Art. 156 CC exige para el mutuo consentimiento: certificación del Registro Civil (edad y estado civil) y testimonio de escritura de declaración de bienes. El artículo añade acta de matrimonio, documentos de identidad, partidas de nacimiento y propuesta de convenio, que si bien son habituales en la práctica, no están exigidos literalmente en los artículos verificados. La imprecisión no es grave pero puede inducir a confusión sobre qué documentos son legalmente obligatorios y cuáles son recomendaciones prácticas.",
-      "claims_asociados": ["C04"]
+      "claims_asociados": [
+        "C04"
+      ]
     },
     {
       "id": "H05",
@@ -63,7 +73,10 @@
       "afirmacion": "Plazos estimados de duración para cada tipo de divorcio.",
       "afecta": "FAQ sobre tiempos del proceso.",
       "impacto": "Las estimaciones de 'unos pocos meses' para mutuo consentimiento y 'un año o más' para contencioso no son verificables contra las fuentes legales, que no fijan plazos procesales. No son afirmaciones falsas, pero el lector debe saber que no provienen de la ley sino de la práctica forense.",
-      "claims_asociados": ["C07", "C08"]
+      "claims_asociados": [
+        "C07",
+        "C08"
+      ]
     },
     {
       "id": "H06",
@@ -71,7 +84,9 @@
       "afirmacion": "Los bienes de la sociedad conyugal se dividen 'por partes iguales'.",
       "afecta": "Sección ¿Cómo afecta el divorcio a los hijos y los bienes?",
       "impacto": "Art. 152 CC #1 habla de 'partición de los bienes comunes' y Art. 172 CC de distribución de bienes, pero la fórmula 'por partes iguales' no es textual de los artículos verificados. La imprecisión es menor porque la partición por mitades es la regla general supletoria en muchos ordenamientos, pero no está explícitamente respaldada por las fuentes disponibles.",
-      "claims_asociados": ["C05"]
+      "claims_asociados": [
+        "C05"
+      ]
     }
   ],
   "recomendaciones": [
@@ -112,5 +127,7 @@
       "justificacion": "Mejora de precisión jurídica sin alterar sustancialmente el mensaje para el lector."
     }
   ],
-  "nota_metodologica": "Las fuentes locales disponibles (codigo_familia_verificado.json con 11 artículos verificados de los cuales 6 son sobre divorcio, y codigo_civil.json completo) cubren los aspectos sustantivos del divorcio en Honduras. Sin embargo, el Código de Familia verificado contiene solo un subconjunto de sus artículos. Es posible que existan disposiciones adicionales en el Código de Familia completo, leyes especiales o reformas posteriores no incluidas en estas fuentes que regulen aspectos no verificables en esta auditoría. Los veredictos no_verificable reflejan esta limitación y no deben interpretarse como afirmación de falsedad."
+  "nota_metodologica": "Las fuentes locales disponibles (codigo_familia_verificado.json con 11 artículos verificados de los cuales 6 son sobre divorcio, y codigo_civil.json completo) cubren los aspectos sustantivos del divorcio en Honduras. Sin embargo, el Código de Familia verificado contiene solo un subconjunto de sus artículos. Es posible que existan disposiciones adicionales en el Código de Familia completo, leyes especiales o reformas posteriores no incluidas en estas fuentes que regulen aspectos no verificables en esta auditoría. Los veredictos no_verificable reflejan esta limitación y no deben interpretarse como afirmación de falsedad.",
+  "sha256_original": "d00ab52550b2da75d180dcc4fcf1e357a2d14dcb7b2723dab30f4f101b299b9d",
+  "_sha_backfilled": true
 }

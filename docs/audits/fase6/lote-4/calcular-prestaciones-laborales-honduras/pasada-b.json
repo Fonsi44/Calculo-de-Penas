@@ -21,5 +21,7 @@
       "explicacion": "La corrección de la Pasada A es precisa. El texto original cometió un error jurídico importante al confundir los 2 meses calendario (establecidos en el Art. 864) con '60 días hábiles'."
     }
   ],
-  "decision_final": "aprobar_pasada_a"
+  "decision_final": "aprobar_pasada_a",
+  "sha256_original": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6",
+  "_sha_backfilled": true
 }

@@ -138,5 +138,7 @@
     "no_verificables": 3,
     "refutados": 0
   },
-  "conclusion": "Se verificaron 12 claims contra data/codigo_trabajo.json. 8 verificados, 1 parcialmente verificados, 3 no verificables, 0 refutados. No se detectaron refutaciones."
+  "conclusion": "Se verificaron 12 claims contra data/codigo_trabajo.json. 8 verificados, 1 parcialmente verificados, 3 no verificables, 0 refutados. No se detectaron refutaciones.",
+  "sha256_original": "04cc41ef0cb2c28142a8237afcd7b6666b26d0f9657d91739318dce0ab2ed281",
+  "_sha_backfilled": true
 }

@@ -95,5 +95,7 @@
     "error_sistematico_de_numeracion": 1,
     "error_critico_detectado": "ERROR SISTEMATICO: Los 4 números de artículo del Código del Trabajo citados en el documento (33, 62, 71, 84) son incorrectos. Los artículos correctos son: 360 (salario), 368 (pago), 867 (prescripción 2 meses). El contenido descriptivo sobre salarios y plazos es sustancialmente correcto, pero la numeración está completamente errada.",
     "calidad_general": "contenido_correcto_numeracion_erronea"
-  }
+  },
+  "sha256_original": "39969bf23b321fcf023ec996c6379a3cbee02ed15e45276f27b8d5afc2f08e77",
+  "_sha_backfilled": true
 }

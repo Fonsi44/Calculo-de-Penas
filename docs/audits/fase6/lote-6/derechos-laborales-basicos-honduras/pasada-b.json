@@ -321,7 +321,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_SalarioMinimo", "B2_JornadaHorasExtras", "B3_AguinaldoVacaciones", "B4_DespidoInjustificado", "B5_ProteccionEmbarazo", "B6_Menores"],
+    "columnas": [
+      "B1_SalarioMinimo",
+      "B2_JornadaHorasExtras",
+      "B3_AguinaldoVacaciones",
+      "B4_DespidoInjustificado",
+      "B5_ProteccionEmbarazo",
+      "B6_Menores"
+    ],
     "cruces": [
       {
         "par": "B1+B3",
@@ -377,5 +384,7 @@
     "inconsistencia_entre_fuentes": "B3.6: codigo_trabajo.json (Art. 346) y codigo_trabajo_verificado.json (Art. 118) presentan esquemas de vacaciones diferentes. El documento sigue el esquema del Art. 346 CT.",
     "limitacion_corpus": "B6.2, B6.3, B6.4: Las restricciones horarias para menores de 14-16 años remiten al Código de la Niñez y la Adolescencia, no disponible en el corpus local.",
     "calidad_global_documento": "Buena con un error factual corregible (autorización judicial vs. administrativa para despido de embarazada), una imprecisión en fecha de aguinaldo, y una cita de artículo levemente desplazada (345 vs. 346 para días de vacaciones). Las afirmaciones sustantivas sobre jornada, despido, maternidad y vacaciones son correctas."
-  }
+  },
+  "sha256_original": "fd922acbd53f77ce7023cd9d1cc37d8e720173b56158528942dd7cc475875874",
+  "_sha_backfilled": true
 }

@@ -58,5 +58,7 @@
     "CORREGIR la fecha de vigencia del Código Tributario: la fuente indica publicación mediante Decreto 25-2017 (junio 2017), no 2010. Eliminar o corregir 'vigente desde 2010' y verificar si 'reformado parcialmente en 2023' tiene sustento.",
     "VERIFICAR el plazo de 60 días hábiles y la prórroga de 30 días: el Código Tributario fuente no contiene estos plazos. Citar la fuente normativa específica (Reglamento o resolución SAR) que los establece, o ajustar el texto si no son verificables.",
     "VERIFICAR la referencia al Acuerdo Ejecutivo 001-2011: podría corresponder a un reglamento anterior al Código vigente (Decreto 25-2017). Confirmar y actualizar la cita normativa."
-  ]
+  ],
+  "sha256_original": "98e7ace1e5ca5e5d16864bc1c86b081c038eaf5e2c59b0968f59e6913e9d3c0a",
+  "_sha_backfilled": true
 }

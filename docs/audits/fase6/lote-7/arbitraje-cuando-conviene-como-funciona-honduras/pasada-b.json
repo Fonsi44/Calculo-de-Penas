@@ -19,7 +19,12 @@
       "tipo": "laguna_normativa_local",
       "descripcion": "Las fuentes locales disponibles son insuficientes para una verificación completa de las afirmaciones del artículo sobre arbitraje. El Código de Comercio guarda silencio absoluto. El Código Civil solo tiene una regulación vestigial de dos artículos. La Ley de Arbitraje y el Código de Procedimientos —referenciados explícita o implícitamente en el artículo— no están en el repositorio.",
       "impacto": "alto",
-      "afecta_claims": ["A1", "A2", "A5", "A6"],
+      "afecta_claims": [
+        "A1",
+        "A2",
+        "A5",
+        "A6"
+      ],
       "recomendacion": "Incorporar data/ley_arbitraje.json y data/codigo_procedimientos.json para permitir verificación completa de futuros artículos sobre arbitraje."
     },
     "matiz_detectado": {
@@ -170,7 +175,15 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Ley_Arbitraje", "B2_Laudo_Definitivo", "B3_Mediacion_vs_Arbitraje", "B4_Laboral", "B5_Ejecucion", "B6_Nulidad", "B7_CoCom"],
+    "columnas": [
+      "B1_Ley_Arbitraje",
+      "B2_Laudo_Definitivo",
+      "B3_Mediacion_vs_Arbitraje",
+      "B4_Laboral",
+      "B5_Ejecucion",
+      "B6_Nulidad",
+      "B7_CoCom"
+    ],
     "cruces": [
       {
         "par": "B1+B7",
@@ -219,5 +232,7 @@
     "hallazgo_estructural": "El Código de Comercio hondureño (11,852 líneas) es completamente silente sobre arbitraje. El Código Civil solo dedica 2 artículos (2019-2020 CC). Esto contrasta con la importancia práctica del arbitraje comercial en Honduras.",
     "error_critico": "Ninguno.",
     "calidad_global_documento": "Buena. El artículo es preciso en sus afirmaciones conceptuales y evita incurrir en errores normativos. La principal limitación no es del artículo sino de las fuentes locales disponibles para verificarlo."
-  }
+  },
+  "sha256_original": "3dc531a7f21ea0944308a29dd54d092ee97396b80cd67f99ca1d00665b65acf0",
+  "_sha_backfilled": true
 }

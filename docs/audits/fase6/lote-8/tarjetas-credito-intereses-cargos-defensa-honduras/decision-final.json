@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "tarjetas-credito-intereses-cargos-defensa-honduras",
-  "article_id": "3ed521d4-73d4-4e5f-89b5-1febcc4f16cc",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T07:45:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "3ed521d4-73d4-4e5f-89b5-1febcc4f16cc",
+  "lote": 8,
+  "fechaConsolidacion": "2026-07-27T07:45:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados; claims requieren verificación externa",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "4f51b7e0c15977bb02bac119f1650b2a764b2bb48b0c0af0dc92f50a72ab507f",
+    "pasadaA": "4f51b7e0c15977bb02bac119f1650b2a764b2bb48b0c0af0dc92f50a72ab507f",
+    "pasadaB": "4f51b7e0c15977bb02bac119f1650b2a764b2bb48b0c0af0dc92f50a72ab507f",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "3ed521d4-73d4-4e5f-89b5-1febcc4f16cc",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T07:45:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

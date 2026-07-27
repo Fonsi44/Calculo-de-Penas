@@ -99,5 +99,7 @@
     "no_verificables": 6,
     "refutados": 0
   },
-  "conclusion": "Se verificaron 10 claims contra data/codigo_tributario.json. 4 verificados, 0 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones."
+  "conclusion": "Se verificaron 10 claims contra data/codigo_tributario.json. 4 verificados, 0 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones.",
+  "sha256_original": "69297044e11eac75cc53d247e439d084e75269b37bc1ff60995d98430a4587b6",
+  "_sha_backfilled": true
 }

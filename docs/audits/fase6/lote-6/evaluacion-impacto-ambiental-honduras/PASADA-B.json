@@ -139,5 +139,7 @@
     "data/articulos_cp.json — Código Penal Decreto 130-2017",
     "data/codigo_civil.json — Código Civil de Honduras (sin hallazgos relevantes para derecho ambiental)"
   ],
-  "nota_final": "Esta pasada B se realizó exclusivamente con fuentes locales. No se utilizaron fuentes web. Los hallazgos son consistentes con la Pasada A en cuanto a los claims confirmados y no verificables. La diferencia principal es que la Pasada A incluye la confirmación web (Wikipedia) del Decreto 104-93, mientras que la Pasada B obtiene la misma confirmación de una fuente local más robusta: el propio Código Penal hondureño."
+  "nota_final": "Esta pasada B se realizó exclusivamente con fuentes locales. No se utilizaron fuentes web. Los hallazgos son consistentes con la Pasada A en cuanto a los claims confirmados y no verificables. La diferencia principal es que la Pasada A incluye la confirmación web (Wikipedia) del Decreto 104-93, mientras que la Pasada B obtiene la misma confirmación de una fuente local más robusta: el propio Código Penal hondureño.",
+  "sha256_original": "191d509168a5791e68e647d64ebf6fbdfdc1398a50635ae9f6eab1fffebfc402",
+  "_sha_backfilled": true
 }

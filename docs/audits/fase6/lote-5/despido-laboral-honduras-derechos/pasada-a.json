@@ -150,5 +150,7 @@
     ]
   },
   "calificacion_global": "APROBADO_CON_CORRECCIONES_OBLIGATORIAS",
-  "observaciones": "El contenido es juridicamente solido en sustancia. Las correcciones obligatorias son: (1) cambiar Art. 607 por Art. 864 en las menciones del plazo de prescripcion (afecta al menos 2 lugares en el body), y (2) cambiar 'Secretaria de Trabajo y Prevision Social' por 'Secretaria de Trabajo y Seguridad Social' (afecta 4+ lugares). El tono divulgativo es apropiado para la audiencia objetivo. Las parafrasis de causales de despido son aceptables aunque 'abandono del cargo' no es una causal textual en ninguna fuente."
+  "observaciones": "El contenido es juridicamente solido en sustancia. Las correcciones obligatorias son: (1) cambiar Art. 607 por Art. 864 en las menciones del plazo de prescripcion (afecta al menos 2 lugares en el body), y (2) cambiar 'Secretaria de Trabajo y Prevision Social' por 'Secretaria de Trabajo y Seguridad Social' (afecta 4+ lugares). El tono divulgativo es apropiado para la audiencia objetivo. Las parafrasis de causales de despido son aceptables aunque 'abandono del cargo' no es una causal textual en ninguna fuente.",
+  "sha256_original": "c7bfc110cd283df8fa26beac3423cf11d3f1b1c3795db1d234b794f23f19e4ac",
+  "_sha_backfilled": true
 }

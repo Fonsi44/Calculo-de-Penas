@@ -62,7 +62,10 @@
       "veredicto": "parcialmente_confirmado_con_errores",
       "detalle": "AGUINALDO: Art. 110 CT (verificado) confirma 'equivalente a un mes de salario ordinario, como mínimo, el cual se pagará en la primera quincena de diciembre'. Art. 111 CT (verificado) confirma la proporcionalidad. SIN EMBARGO, la fecha específica '20 de diciembre' NO aparece en ninguna de las fuentes locales. La expresión 'primera quincena de diciembre' cubre del 1 al 15 de diciembre, no hasta el 20. VACACIONES: Art. 345 CT es el artículo introductorio ('El trabajador tendrá derecho a vacaciones anuales remuneradas, cuya extensión y oportunidad se regula en el presente Capítulo'), pero el detalle de los días está en el Art. 346 CT, no en el 345. Art. 346 CT confirma: 10 días tras 1 año, 12 tras 2, 15 tras 3, 20 tras 4 o más años. Este esquema difiere del Art. 118 CT del verificado.json que establece un esquema distinto (hasta 30 días tras 10 años). Existe inconsistencia entre las dos fuentes locales sobre los tramos de vacaciones. PAGO ANTES DE VACACIONES: Art. 348 CT confirma: 'Las sumas que deba recibir el trabajador por concepto de vacaciones, le serán liquidadas y pagadas con tres (3) días de anticipación respecto de la fecha en que comience a disfrutar de ellas.' Esto confirma el pago anticipado, pero con precisión de 3 días, no con la generalidad del documento.",
       "evidencia_local": {
-        "archivos": ["data/codigo_trabajo_verificado.json", "data/codigo_trabajo.json"],
+        "archivos": [
+          "data/codigo_trabajo_verificado.json",
+          "data/codigo_trabajo.json"
+        ],
         "articulos": [
           {
             "articulo": "Art. 110 CT (verificado)",
@@ -97,7 +100,10 @@
       "veredicto": "confirmado_con_matiz",
       "detalle": "ART. 112 CT: CONFIRMADO. Efectivamente enumera las causas justas de despido: 'Son causas justas que facultan al patrono para dar por terminado el contrato de trabajo, sin responsabilidad de su parte: a) El engaño del trabajador...' (se verificaron múltiples causales en el texto). ART. 864 CT: CONFIRMADO. 'Los derechos y acciones de los trabajadores para reclamar contra los despidos injustificados... prescriben en el término de dos (2) meses contados a partir de la terminación del contrato.' INDEMNIZACIÓN: CONFIRMADO. Art. 77 CT (verificado): 'un mes de salario por cada año de trabajo continuo, sin que dicha indemnización exceda de quince meses de salario.' MATIZ: El documento no menciona el límite de 15 meses de salario ni los escalafones por antigüedad del Art. 78 CT (verificado), que establecen indemnizaciones mayores para trabajadores con más de 5 años (2 a 6 meses por año según antigüedad). La afirmación 'un mes por año' es correcta como base pero omite los escalafones progresivos.",
       "evidencia_local": {
-        "archivos": ["data/codigo_trabajo.json", "data/codigo_trabajo_verificado.json"],
+        "archivos": [
+          "data/codigo_trabajo.json",
+          "data/codigo_trabajo_verificado.json"
+        ],
         "articulos": [
           {
             "articulo": "Art. 112 CT",
@@ -190,5 +196,7 @@
       "A6: Las restricciones horarias para menores de 14-16 años (6h/30h) no son verificables en el CT; remiten al Código de la Niñez y la Adolescencia."
     ],
     "calidad_general": "buena_con_correcciones_puntuales"
-  }
+  },
+  "sha256_original": "fd922acbd53f77ce7023cd9d1cc37d8e720173b56158528942dd7cc475875874",
+  "_sha_backfilled": true
 }

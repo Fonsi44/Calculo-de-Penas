@@ -40,7 +40,9 @@
       ],
       "needs_human_review": true,
       "suggested_correction": "Verificar el articulo exacto del Codigo Procesal Civil (Decreto No. 211-2006) que establece el plazo para contestar la demanda en ejecucion hipotecaria. Confirmar si los dias son habiles o corridos, si el rango 5-20 es correcto, y si aplican extensiones por distancia. Posible redaccion alternativa: '...un plazo que varia segun la ubicacion del juzgado y la distancia, pudiendo ser de 5 a 20 dias.'",
-      "cross_reference_claims": ["B-C8"]
+      "cross_reference_claims": [
+        "B-C8"
+      ]
     },
     {
       "id": "B-C2",
@@ -52,7 +54,10 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S1", "B-S2"]
+      "cross_reference_claims": [
+        "B-S1",
+        "B-S2"
+      ]
     },
     {
       "id": "B-C3",
@@ -64,7 +69,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C2"]
+      "cross_reference_claims": [
+        "B-C2"
+      ]
     },
     {
       "id": "B-C4",
@@ -76,7 +83,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S3"]
+      "cross_reference_claims": [
+        "B-S3"
+      ]
     },
     {
       "id": "B-C5",
@@ -96,7 +105,10 @@
       ],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C1", "B-C6"]
+      "cross_reference_claims": [
+        "B-C1",
+        "B-C6"
+      ]
     },
     {
       "id": "B-C6",
@@ -108,7 +120,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C5"]
+      "cross_reference_claims": [
+        "B-C5"
+      ]
     },
     {
       "id": "B-C7",
@@ -120,7 +134,9 @@
       "sources": [],
       "needs_human_review": true,
       "suggested_correction": "Verificar el termino legal exacto en el Codigo Procesal Civil de Honduras para la figura del tercero que ofrece precio superior antes del remate. Podria ser 'postura', 'licitacion', 'postura mejoradora', y no necesariamente 'terceria de mejor postor'. Ajustar la redaccion para usar la terminologia correcta del CPC.",
-      "cross_reference_claims": ["B-S5"]
+      "cross_reference_claims": [
+        "B-S5"
+      ]
     },
     {
       "id": "B-C8",
@@ -132,7 +148,10 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C9", "B-C10"]
+      "cross_reference_claims": [
+        "B-C9",
+        "B-C10"
+      ]
     },
     {
       "id": "B-C9",
@@ -144,7 +163,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C10"]
+      "cross_reference_claims": [
+        "B-C10"
+      ]
     },
     {
       "id": "B-C10",
@@ -156,7 +177,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C9"]
+      "cross_reference_claims": [
+        "B-C9"
+      ]
     },
     {
       "id": "B-C11",
@@ -168,7 +191,10 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C8", "B-C9"]
+      "cross_reference_claims": [
+        "B-C8",
+        "B-C9"
+      ]
     },
     {
       "id": "B-S1",
@@ -180,7 +206,10 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C2", "B-C4"]
+      "cross_reference_claims": [
+        "B-C2",
+        "B-C4"
+      ]
     },
     {
       "id": "B-S2",
@@ -204,7 +233,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C4"]
+      "cross_reference_claims": [
+        "B-C4"
+      ]
     },
     {
       "id": "B-S4",
@@ -216,7 +247,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C1"]
+      "cross_reference_claims": [
+        "B-C1"
+      ]
     },
     {
       "id": "B-S5",
@@ -228,7 +261,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": "Ajustar la terminologia al nombre legal exacto de la figura en el CPC hondureno una vez verificado.",
-      "cross_reference_claims": ["B-C7"]
+      "cross_reference_claims": [
+        "B-C7"
+      ]
     },
     {
       "id": "B-S6",
@@ -240,7 +275,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C9"]
+      "cross_reference_claims": [
+        "B-C9"
+      ]
     },
     {
       "id": "B-X1",
@@ -252,7 +289,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S4"]
+      "cross_reference_claims": [
+        "B-S4"
+      ]
     },
     {
       "id": "B-X2",
@@ -264,7 +303,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C8"]
+      "cross_reference_claims": [
+        "B-C8"
+      ]
     },
     {
       "id": "B-X3",
@@ -300,7 +341,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C1"]
+      "cross_reference_claims": [
+        "B-C1"
+      ]
     },
     {
       "id": "B-X6",
@@ -312,7 +355,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-S1"]
+      "cross_reference_claims": [
+        "B-S1"
+      ]
     },
     {
       "id": "B-X7",
@@ -324,7 +369,9 @@
       "sources": [],
       "needs_human_review": false,
       "suggested_correction": null,
-      "cross_reference_claims": ["B-C4"]
+      "cross_reference_claims": [
+        "B-C4"
+      ]
     }
   ],
   "summary": {
@@ -361,5 +408,7 @@
       "PRIORITARIO: Consultar el CPC para identificar el termino legal exacto del mecanismo de tercero que ofrece precio superior antes del remate. Reemplazar 'terceria de mejor postor' por el termino correcto si es distinto.",
       "RECOMENDADO: Verificar si Honduras cuenta con una Ley de Hipotecas especifica o si la materia esta regulada exclusivamente en el Codigo Civil y el CPC, para posibles referencias legales adicionales en el articulo."
     ]
-  }
+  },
+  "sha256_original": "4813c9f1ff1327d84f387fda2ae248d1d5be6364292ebbe9bfe66c6746890722",
+  "_sha_backfilled": true
 }

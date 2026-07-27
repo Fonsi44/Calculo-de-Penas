@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "violencia-intrafamiliar-denuncia-proteccion-honduras",
-  "article_id": "42335421-8f5a-4289-9297-e9e06e7721a4",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "42335421-8f5a-4289-9297-e9e06e7721a4",
+  "lote": 9,
+  "fechaConsolidacion": "2026-07-27T08:30:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "af77a8f605ca1fb40a0a77457fb8a25930096391147a4e53ed03d5383719d3c7",
+    "pasadaA": "af77a8f605ca1fb40a0a77457fb8a25930096391147a4e53ed03d5383719d3c7",
+    "pasadaB": "af77a8f605ca1fb40a0a77457fb8a25930096391147a4e53ed03d5383719d3c7",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "42335421-8f5a-4289-9297-e9e06e7721a4",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

@@ -177,5 +177,7 @@
     "total_claims": 14,
     "calidad_general": "El documento contiene DOS ERRORES FACTUALES GRAVES en la citacion del Codigo Penal: los articulos 281 y 282 NO existen en la version del CP contenida en las fuentes locales. Las penas citadas tampoco coinciden con el articulo equivalente real (394 CP: 1-4 anos, no 6 meses a 3 anos). Siete claims dependen de la Ley de Propiedad Industrial (no disponible localmente) y no pueden verificarse. El Codigo de Comercio y el Codigo Civil si proporcionan bases verificables para competencia desleal y responsabilidad civil, aunque la entrada no los destaca como fuentes principales. Se recomienda: (1) verificar contra el texto oficial de la LPI para los claims no verificables, (2) corregir las referencias a Arts. 281/282 CP por 394/453 CP respectivamente, (3) incorporar los Arts. 421-429 CM como fuente complementaria de competencia desleal.",
     "nota_metodologica": "Esta verificacion usa EXCLUSIVAMENTE fuentes locales (codigo_comercio.json, codigo_civil.json, articulos_cp.json). La version del Codigo Penal en estas fuentes difiere del Decreto 144-1983 citado en verificaciones anteriores basadas en WIPO Lex. Los numeros de articulo deben interpretarse en el contexto de esta version especifica del CP."
-  }
+  },
+  "sha256_original": "1d483684c120b27f1cd69886cae70f24fa4a6f63eb2491c654d7bc4eb384d263",
+  "_sha_backfilled": true
 }

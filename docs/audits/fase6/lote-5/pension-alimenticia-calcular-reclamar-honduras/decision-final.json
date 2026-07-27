@@ -1,13 +1,30 @@
 {
+  "schemaVersion": "2.0",
   "slug": "pension-alimenticia-calcular-reclamar-honduras",
-  "article_id": "645614bc-ff05-4f34-a5e0-72486e9ec316",
-  "sha256_original": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
-  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "645614bc-ff05-4f34-a5e0-72486e9ec316",
+  "lote": 5,
+  "fechaConsolidacion": "2026-07-27T00:00:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "SHA256 DISCREPANTE entre pasadas A y B. La pasada A registró sha256_original = '4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87' mientras que la pasada B registró entrada_sha256 = '8a94b7d7eee73802eda58bf8e058e10719661fe2fcc5e19ea6fe2b87867a22e5'. Esto significa que auditaron versiones diferentes del archivo entrada.json. Por protocolo, cuando el SHA256 difiere entre pasadas, el estado es automáticamente needs_human_review porque no se puede garantizar que ambas auditorías evaluaran el mismo contenido. Adicionalmente, la pasada A (búsquedas web) encontró 0 de 21 claims verificables por inaccesibilidad total de fuentes oficiales hondureñas (Poder Judicial SSL error, Ministerio Público 404, TSC timeout, Congreso SSL mismatch, OAS/ACNUR 403). La pasada B (fuentes locales: codigo_familia_verificado.json, codigo_civil.json, codigo_procesal_penal_verificado.json) verificó positivamente 12 de 17 claims contra los códigos, encontrando que los fundamentos sustantivos del derecho de alimentos son sólidos. Sin embargo, la discrepancia de SHA256 impide la consolidación. Se requiere determinar cuál versión de entrada.json es la canónica y posiblemente re-ejecutar la pasada A sobre la misma versión.",
-  "claims_totales_a": 21,
-  "claims_totales_b": 17,
-  "errores_detectados": [
+  "hashes": {
+    "bodyActual": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
+    "pasadaA": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
+    "pasadaB": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 38,
+    "pasadaA": 21,
+    "pasadaB": 17,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 38
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": [
     "SHA256 DISCREPANTE: Pasada A y Pasada B auditaron versiones diferentes del archivo entrada.json.",
     "Pasada B: El límite de 25 años para hijos mayores que estudian es práctica jurisprudencial, no texto legal expreso en los códigos consultados.",
     "Pasada B: Los rangos porcentuales 20%-40% y los ejemplos numéricos (L3,000-L5,000 para L15,000 de salario) son práctica judicial no verificable contra textos legales.",
@@ -15,14 +32,32 @@
     "Pasada B: La tipificación penal del incumplimiento de deberes familiares no aparece en el archivo codigo_procesal_penal_verificado.json.",
     "Pasada B: La pertenencia de Honduras a convenios internacionales sobre cobro transfronterizo de alimentos no es verificable con los códigos locales."
   ],
-  "correcciones_pendientes": [
-    "Resolver la discrepancia de SHA256: determinar cuál versión de entrada.json es la canónica.",
-    "Añadir referencias expresas a los artículos del Código de Familia y Código Civil citados en la pasada B como respaldo de los claims verificados.",
-    "Matizar que el límite de 25 años para hijos mayores y los rangos 20%-40% son práctica judicial, no texto legal expreso.",
-    "Verificar los mecanismos de ejecución (embargo salarial, embargo de bienes) contra el Código Procesal Civil hondureño.",
-    "Verificar la tipificación penal del incumplimiento de deberes familiares contra el Código Penal hondureño.",
-    "Confirmar la adhesión de Honduras a convenios internacionales sobre cobro transfronterizo de alimentos (Convenio de La Haya 2007 u otros)."
-  ],
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "645614bc-ff05-4f34-a5e0-72486e9ec316",
+    "sha256_original": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
+    "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 21,
+    "claims_totales_b": 17,
+    "errores_detectados": [
+      "SHA256 DISCREPANTE: Pasada A y Pasada B auditaron versiones diferentes del archivo entrada.json.",
+      "Pasada B: El límite de 25 años para hijos mayores que estudian es práctica jurisprudencial, no texto legal expreso en los códigos consultados.",
+      "Pasada B: Los rangos porcentuales 20%-40% y los ejemplos numéricos (L3,000-L5,000 para L15,000 de salario) son práctica judicial no verificable contra textos legales.",
+      "Pasada B: Los mecanismos de embargo salarial y de bienes pertenecen al derecho procesal civil, no incluido en los archivos de código sustantivo consultados.",
+      "Pasada B: La tipificación penal del incumplimiento de deberes familiares no aparece en el archivo codigo_procesal_penal_verificado.json.",
+      "Pasada B: La pertenencia de Honduras a convenios internacionales sobre cobro transfronterizo de alimentos no es verificable con los códigos locales."
+    ],
+    "correcciones_pendientes": [
+      "Resolver la discrepancia de SHA256: determinar cuál versión de entrada.json es la canónica.",
+      "Añadir referencias expresas a los artículos del Código de Familia y Código Civil citados en la pasada B como respaldo de los claims verificados.",
+      "Matizar que el límite de 25 años para hijos mayores y los rangos 20%-40% son práctica judicial, no texto legal expreso.",
+      "Verificar los mecanismos de ejecución (embargo salarial, embargo de bienes) contra el Código Procesal Civil hondureño.",
+      "Verificar la tipificación penal del incumplimiento de deberes familiares contra el Código Penal hondureño.",
+      "Confirmar la adhesión de Honduras a convenios internacionales sobre cobro transfronterizo de alimentos (Convenio de La Haya 2007 u otros)."
+    ],
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

@@ -88,5 +88,7 @@
     "no_verificables": 5,
     "refutados": 0
   },
-  "conclusion": "Se verificaron 7 claims contra data/articulos_constitucion.json. 1 verificados, 1 parcialmente verificados, 5 no verificables, 0 refutados. No se detectaron refutaciones."
+  "conclusion": "Se verificaron 7 claims contra data/articulos_constitucion.json. 1 verificados, 1 parcialmente verificados, 5 no verificables, 0 refutados. No se detectaron refutaciones.",
+  "sha256_original": "04982b73e6ee13b426f0378c5872e3121e196dd34a70f2cebf7257bdd9f791c3",
+  "_sha_backfilled": true
 }

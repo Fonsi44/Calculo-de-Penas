@@ -184,7 +184,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Base_Normativa_General", "B2_Regimen_Nulidad", "B3_Ley_Consumidor", "B4_CNBS_Sector_Financiero", "B5_Constitucion_Acceso_Justicia", "B6_Conservacion_Contrato"],
+    "columnas": [
+      "B1_Base_Normativa_General",
+      "B2_Regimen_Nulidad",
+      "B3_Ley_Consumidor",
+      "B4_CNBS_Sector_Financiero",
+      "B5_Constitucion_Acceso_Justicia",
+      "B6_Conservacion_Contrato"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -232,5 +239,7 @@
     "imprecision_principal": "B2.3: La afirmación de que la nulidad absoluta es imprescriptible no es consistente con el Art. 1589 CC, que indica que prescribe transcurrido el plazo de prescripción ordinaria.",
     "fuentes_no_verificables": "Ley de Protección al Consumidor, CNBS y Constitución de Honduras no están en las fuentes locales. Sus conclusiones son respaldadas por fundamentos alternativos del Código Civil.",
     "calidad_global_documento": "Buena. La base del Código Civil está correctamente identificada y verificada. Contiene una imprecisión doctrinal menor sobre imprescriptibilidad de la nulidad absoluta. Omite el Art. 713 CM como norma relevante complementaria."
-  }
+  },
+  "sha256_original": "5fd4a6a8b4069757ed77f5552c43bced5f5b8da48c2a69fc25afde573a417524",
+  "_sha_backfilled": true
 }

@@ -21,21 +21,30 @@
         "descripcion": "El artículo afirma que la 'separación de hecho por más de un año' es causal de divorcio contencioso. El Art. 238 CF establece 'separación o abandono injustificado por más de dos años'. Diferencia de 12 meses. Adicionalmente, el Art. 144 CC establece que la acción de divorcio prescribe tras 'un año contado desde que llegaron a su noticia los hechos' — esto es el plazo de prescripción de la acción, no el plazo de separación requerido. El artículo parece haber confundido el plazo de prescripción de la acción (1 año, Art. 144 CC) con el plazo de separación requerido (2 años, Art. 238 CF).",
         "impacto": "alto",
         "apariciones": 1,
-        "ubicaciones": ["Sección 'Divorcio contencioso: cuando no hay otra opción'"]
+        "ubicaciones": [
+          "Sección 'Divorcio contencioso: cuando no hay otra opción'"
+        ]
       },
       {
         "tipo": "tension_normativa_critica",
         "descripcion": "El artículo presenta el 'divorcio express (notarial)' como una tercera vía tramitada 'ante notario, no ante juez'. El Art. 237 CF establece textualmente: 'El divorcio debe declararse mediante sentencia judicial.' Esta disposición no admite excepciones en el texto disponible. Si el divorcio notarial existe, requiere una reforma legislativa posterior al Código de Familia que no está en las fuentes locales. Sin verificación externa, esta afirmación es inconsistente con la fuente primaria disponible.",
         "impacto": "alto",
         "apariciones": 4,
-        "ubicaciones": ["Resumen rápido", "Tabla comparativa", "Sección 'Divorcio express'", "Conclusión"]
+        "ubicaciones": [
+          "Resumen rápido",
+          "Tabla comparativa",
+          "Sección 'Divorcio express'",
+          "Conclusión"
+        ]
       },
       {
         "tipo": "omision_requisito_legal",
         "descripcion": "El artículo no menciona que el divorcio por mutuo consentimiento requiere que los cónyuges hayan estado casados 'después de dos años de matrimonio' (Art. 243 CF). Esta omisión es relevante para parejas con matrimonios recientes que podrían creer que califican para esta vía.",
         "impacto": "medio",
         "apariciones": 0,
-        "ubicaciones": ["Omisión en toda la sección de mutuo consentimiento y en la tabla comparativa"]
+        "ubicaciones": [
+          "Omisión en toda la sección de mutuo consentimiento y en la tabla comparativa"
+        ]
       }
     ],
     "fuente_ausente_critica": {
@@ -254,7 +263,16 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Tipos_Divorcio", "B2_Requisitos_Mutuo", "B3_Requisitos_Express", "B4_Requisitos_Contencioso", "B5_Causales", "B6_Omisiones", "B7_Cruces_Internos", "B8_Efectos"],
+    "columnas": [
+      "B1_Tipos_Divorcio",
+      "B2_Requisitos_Mutuo",
+      "B3_Requisitos_Express",
+      "B4_Requisitos_Contencioso",
+      "B5_Causales",
+      "B6_Omisiones",
+      "B7_Cruces_Internos",
+      "B8_Efectos"
+    ],
     "cruces": [
       {
         "par": "B1+B6",
@@ -305,5 +323,7 @@
     "conflictos_detectados_flag": true,
     "observacion_critica": "Se detectaron TRES problemas sustantivos: (1) El divorcio express notarial contradice el Art. 237 CF que exige sentencia judicial para todo divorcio; si esta figura existe, requiere verificación en legislación posterior no disponible. (2) El plazo de separacion para divorcio contencioso es 'dos anos' (Art. 238 CF), no 'un ano' como afirma el articulo — probable confusion con el plazo de prescripcion de la accion (Art. 144 CC). (3) Se omite el requisito de 2 anos de matrimonio previo para mutuo consentimiento (Art. 243 CF). El Codigo de Familia completo no esta disponible en fuentes locales (solo 12 articulos), lo que impide verificar detalles normativos especificos.",
     "calidad_global_documento": "Regular con discrepancias detectadas. El articulo contiene errores numericos y una afirmacion potencialmente incorrecta sobre el divorcio notarial. Las secciones sobre mutuo consentimiento y contencioso son sustancialmente correctas en su estructura general, aunque con omisiones y un error numerico relevante. Se recomienda revision por abogado especialista en derecho de familia hondureno para verificar: (a) la existencia y regulacion del divorcio express/notarial, (b) el plazo correcto de separacion como causal de divorcio, y (c) la inclusion del requisito de 2 anos de matrimonio para mutuo consentimiento."
-  }
+  },
+  "sha256_original": "f7d7903d43d0dd2d7958b1786a6fc855a883d2a06e82b60a2aba87d8d856e5b9",
+  "_sha_backfilled": true
 }

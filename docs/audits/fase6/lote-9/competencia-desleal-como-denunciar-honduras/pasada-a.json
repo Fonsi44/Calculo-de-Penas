@@ -285,5 +285,7 @@
       }
     ],
     "overall_assessment": "El artículo presenta un panorama general coherente con los principios del derecho de propiedad intelectual y competencia desleal. La estructura de tres vías (administrativa, judicial, penal) es correcta desde la perspectiva del sistema jurídico hondureño. La mención de la Ley de Propiedad Industrial (Decreto 12-99) y el Código de Comercio como fuentes es plausible. Sin embargo, NINGUNO de los datos normativos específicos (número de artículo 193 de la LPI, plazo de 1 año, nombre exacto del Instituto de la Propiedad vs. DIGEPIH, fiscalías especializadas) pudo ser verificado contra fuentes oficiales en línea, ya que todos los portales gubernamentales hondureños y las bases de datos internacionales resultaron inaccesibles. Se recomienda revisión prioritaria por un abogado especializado con acceso a los textos legales oficiales actualizados. Atención especial a: numeración del Art. 193 de la LPI, plazo de prescripción de 1 año (hábil vs. calendario, prescripción vs. caducidad), y denominación exacta de la autoridad administrativa competente."
-  }
+  },
+  "sha256_original": "e49e658c3a01c355885390fc6167ac333ca7123abb6ab0e948e1e228bce438b1",
+  "_sha_backfilled": true
 }

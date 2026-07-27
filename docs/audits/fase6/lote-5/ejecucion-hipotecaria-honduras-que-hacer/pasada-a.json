@@ -423,5 +423,7 @@
       }
     ],
     "overall_assessment": "El artículo es globalmente coherente con los principios generales del derecho procesal civil de tradición continental (civil law) al que pertenece Honduras. La estructura de etapas, las opciones legales descritas (dación en pago, excepciones, impugnación de remate) y las advertencias prácticas son razonables. Sin embargo, TODOS los datos normativos específicos (plazos, artículos, denominaciones exactas de figuras procesales) requieren verificación contra los textos legales hondureños oficiales, que no pudieron ser consultados en línea durante esta auditoría. Se identificaron tres afirmaciones con riesgo alto de imprecisión que deben ser revisadas prioritariamente por un abogado hondureño."
-  }
+  },
+  "sha256_original": "4813c9f1ff1327d84f387fda2ae248d1d5be6364292ebbe9bfe66c6746890722",
+  "_sha_backfilled": true
 }

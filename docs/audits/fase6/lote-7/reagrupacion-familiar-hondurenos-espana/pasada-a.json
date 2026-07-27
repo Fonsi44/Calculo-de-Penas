@@ -149,5 +149,7 @@
     "error_critico_detectado": "Ninguno. El artículo es sustancialmente correcto en lo que se puede evaluar. La afirmación sobre traducción oficial merece un matiz: los documentos hondureños están en español, mismo idioma oficial de España, por lo que normalmente no requieren traducción jurada.",
     "observacion_principal": "El 100% del contenido normativo del artículo versa sobre derecho de extranjería español (LO 4/2000, RD 557/2011). Las fuentes locales son exclusivamente de derecho hondureño. Esto impide la verificación directa de la práctica totalidad de las afirmaciones sustantivas del artículo. Solo dos elementos son verificables: (a) el contexto constitucional hondureño sobre familia, nacionalidad y doble nacionalidad (Arts. 23, 24, 111, 121), que respalda la realidad migratoria subyacente, y (b) la exigencia de apostilla para documentos hondureños, ya que Honduras es parte del Convenio de La Haya de 1961. Se recomienda encarecidamente obtener fuentes de derecho español (LO 4/2000, RD 557/2011) para una verificación completa.",
     "calidad_general": "buena_dentro_del_contexto_pero_no_verificable_con_fuentes_locales"
-  }
+  },
+  "sha256_original": "8a0940ea8b1335bbac0ac2ba46afd65c5b1b0694245001884ecca8c4675a7302",
+  "_sha_backfilled": true
 }

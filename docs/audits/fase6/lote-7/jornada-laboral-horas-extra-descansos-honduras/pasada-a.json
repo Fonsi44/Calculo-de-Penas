@@ -218,5 +218,7 @@
       "A6: MATIZ en jornada de domésticos. El documento dice 'máximo 12 horas diarias' pero el Art. 154 CT establece 10h de descanso (8 nocturnas + 2 comidas), implicando hasta 14h de trabajo."
     ],
     "calidad_general": "regular_con_errores_graves_en_descanso_intra_jornada_cita_de_articulo_y_recargo_dominical"
-  }
+  },
+  "sha256_original": "a51a669450a0a6efbff2f9b1f766298298a47ca4194717846da817d40a5884a3",
+  "_sha_backfilled": true
 }

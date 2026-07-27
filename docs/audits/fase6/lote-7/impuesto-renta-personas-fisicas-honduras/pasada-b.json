@@ -231,7 +231,16 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Ley_ISR", "B2_Progresividad", "B3_Renta_Neta", "B4_Retencion", "B5_Deducciones", "B6_Sanciones", "B7_Cruce_Info", "B8_Prescripcion"],
+    "columnas": [
+      "B1_Ley_ISR",
+      "B2_Progresividad",
+      "B3_Renta_Neta",
+      "B4_Retencion",
+      "B5_Deducciones",
+      "B6_Sanciones",
+      "B7_Cruce_Info",
+      "B8_Prescripcion"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -297,5 +306,7 @@
     "sin_errores_factuales_confirmables": true,
     "observacion_critica": "El ~80% del contenido normativo específico del artículo depende de la Ley del Impuesto Sobre la Renta, no disponible en fuentes locales. Las afirmaciones verificables contra el Código Tributario son sustancialmente correctas. La tensión principal (5 años de fiscalización vs 4 de prescripción) es significativa pero no resoluble sin la Ley ISR. Si la Ley ISR estableciera 5 años, el artículo sería correcto y el CTrib aplicaría supletoriamente. Si la Ley ISR guarda silencio, aplicarían los 4 años del CTrib y el artículo contendría un error.",
     "calidad_global_documento": "Buena en lo verificable contra el Código Tributario. El artículo demuestra comprensión del sistema tributario hondureño (progresividad, retención, fiscalización, sanciones). La estructura es pedagógica y cubre aspectos prácticos relevantes. La tensión del plazo de fiscalización (5 vs 4 años) es el punto más débil identificable con fuentes locales. Las omisiones de derechos del contribuyente (compensación, devolución, rectificación) restan balance al contenido, que enfatiza obligaciones y sanciones sobre derechos."
-  }
+  },
+  "sha256_original": "d98e61973001cc2e7f57ced1542052ea147d4c0d2cdf462d9c31ca0d2e6096bf",
+  "_sha_backfilled": true
 }

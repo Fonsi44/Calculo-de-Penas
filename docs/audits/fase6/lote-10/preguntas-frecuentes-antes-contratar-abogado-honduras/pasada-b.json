@@ -88,5 +88,7 @@
     "plausibles": 2,
     "no_verificables": 2,
     "calidad_global_documento": "Buena. Afirmaciones éticas y civiles no verificables en fuente constitucional, pero el núcleo constitucional (colegiación) está confirmado."
-  }
+  },
+  "sha256_original": "895ef95c152d0221cbbc23416d254e8e5d3a6db0b5202b5e8caf1630e82f1169",
+  "_sha_backfilled": true
 }

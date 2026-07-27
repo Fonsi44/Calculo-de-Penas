@@ -230,7 +230,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Protesto_Plazo", "B2_Caducidad_Accion", "B3_Accion_Ejecutiva", "B4_Delito_Estafa", "B5_Prescripcion", "B6_Omision_20pct"],
+    "columnas": [
+      "B1_Protesto_Plazo",
+      "B2_Caducidad_Accion",
+      "B3_Accion_Ejecutiva",
+      "B4_Delito_Estafa",
+      "B5_Prescripcion",
+      "B6_Omision_20pct"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -281,5 +288,7 @@
     "sin_conflictos_normativos_internos": true,
     "observacion_critica": "El error en el plazo de protesto (8 días en lugar de 2 días hábiles) es el hallazgo más grave. Se propaga a 7 ubicaciones del artículo, incluyendo el ejemplo práctico y la sección de 'errores comunes'. Un lector que siga esta guía podría perder su acción cambiaria por confiar en un plazo 4 veces mayor al real. Adicionalmente, el artículo omite: (a) la indemnización mínima del 20% (Art. 614 CM), (b) alternativas al protesto notarial (Art. 611 CM), y (c) la inversión de la carga probatoria en el delito de estafa (Art. 615 CM). Los demás bloques (naturaleza del protesto, caducidad, acción ejecutiva, prescripción, tipificación penal) son sustancialmente correctos.",
     "calidad_global_documento": "Regular. El artículo contiene información correcta en aspectos doctrinales (protesto, acción cambiaria, prescripción) pero falla en el dato más importante para el lector: el plazo para actuar. La propagación del error de 8 días al ejemplo práctico y a la sección de errores comunes agrava el problema. Se requiere corrección urgente del plazo y adición de las omisiones detectadas."
-  }
+  },
+  "sha256_original": "8ca172f36f753dede183d08de774281eeed8b87856aff3362fd30fc58a81cfc9",
+  "_sha_backfilled": true
 }

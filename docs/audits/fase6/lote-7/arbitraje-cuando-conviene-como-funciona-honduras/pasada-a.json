@@ -147,5 +147,7 @@
     "error_critico_detectado": "Ninguno. No se detectan errores factuales graves. El artículo es cuidadoso en sus afirmaciones normativas.",
     "matiz_importante": "La afirmación de que el arbitraje 'no conviene' para conflictos laborales debe matizarse: el Art. 139 constitucional establece la obligación estatal de promover arbitraje laboral. El artículo acierta en que existe una jurisdicción laboral protectora especializada, pero podría inducir a error sobre la existencia misma del arbitraje laboral.",
     "calidad_general": "buena_con_matices"
-  }
+  },
+  "sha256_original": "3dc531a7f21ea0944308a29dd54d092ee97396b80cd67f99ca1d00665b65acf0",
+  "_sha_backfilled": true
 }

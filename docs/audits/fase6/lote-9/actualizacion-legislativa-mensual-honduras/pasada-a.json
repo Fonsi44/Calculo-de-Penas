@@ -186,10 +186,22 @@
       "evidencia_local": {
         "archivo": "data/articulos_constitucion.json",
         "articulos": [
-          {"articulo": "Art. 95 Constitución", "texto": "Ninguna persona será sancionada con penas no establecidas previamente en la ley..."},
-          {"articulo": "Art. 108 Constitución", "texto": "Todo autor, inventor, productor o comerciante gozará de la propiedad exclusiva de su obra, invención, marca o nombre comercial, con arreglo a la ley."},
-          {"articulo": "Art. 109 Constitución", "texto": "Los impuestos no serán confiscatorios. Nadie está obligado al pago de impuestos y demás tributos que no hayan sido legalmente decretados por el Congreso Nacional..."},
-          {"articulo": "Art. 111 Constitución", "texto": "La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado."}
+          {
+            "articulo": "Art. 95 Constitución",
+            "texto": "Ninguna persona será sancionada con penas no establecidas previamente en la ley..."
+          },
+          {
+            "articulo": "Art. 108 Constitución",
+            "texto": "Todo autor, inventor, productor o comerciante gozará de la propiedad exclusiva de su obra, invención, marca o nombre comercial, con arreglo a la ley."
+          },
+          {
+            "articulo": "Art. 109 Constitución",
+            "texto": "Los impuestos no serán confiscatorios. Nadie está obligado al pago de impuestos y demás tributos que no hayan sido legalmente decretados por el Congreso Nacional..."
+          },
+          {
+            "articulo": "Art. 111 Constitución",
+            "texto": "La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado."
+          }
         ]
       },
       "nivel_confianza": "alta"
@@ -207,5 +219,7 @@
     "error_critico_detectado": "Ninguno detectado con esta fuente. El artículo opera a nivel de legislación secundaria (decretos específicos, entidades como SAR, CNBS, Instituto de la Propiedad) que no es verificable contra la Constitución, que es norma suprema. Los fundamentos constitucionales de todas las materias tratadas existen.",
     "calidad_general": "aceptable_con_limitacion_de_fuente",
     "nota_limitacion": "La fuente única (articulos_constitucion.json) solo permite verificar los fundamentos constitucionales, no los decretos específicos ni las afirmaciones sobre entidades administrativas mencionadas en el artículo."
-  }
+  },
+  "sha256_original": "2d142a60a4968ff92b294bb854cfc1f1ee7b1dc097aaefda8cba527e2041b078",
+  "_sha_backfilled": true
 }

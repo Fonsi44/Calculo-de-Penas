@@ -217,5 +217,7 @@
     "error_critico_detectado": "Ninguno. El artículo es sustancialmente correcto como guía práctica en sus afirmaciones verificables.",
     "observacion_principal": "El Código Procesal Civil de Honduras NO está disponible en las fuentes JSON locales. Esto limita significativamente la verificación: aproximadamente el 70% de las afirmaciones del artículo dependen de normas procesales (plazos, contestación, remate, notificaciones, tercería, impugnación). Las normas sustantivas del Código Civil sobre hipoteca (Arts. 2098-2118) confirman los principios generales. Se detectó una OMISIÓN RELEVANTE: el artículo no menciona la posibilidad de renuncia a los trámites del juicio ejecutivo (Art. 2117 CC), que dejaría sin efecto las opciones de defensa procesal descritas.",
     "calidad_general": "buena_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "506eeabd79c24ed9243180c2444bf9255a34d0fc4ea2b86ee9eb6932d3271200",
+  "_sha_backfilled": true
 }

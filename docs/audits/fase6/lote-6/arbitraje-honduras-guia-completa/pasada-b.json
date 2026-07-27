@@ -21,7 +21,9 @@
       "descripcion": "El artículo omite mencionar que el Art. 139 de la Constitución, que ordena al Estado promover conciliación y arbitraje, se refiere exclusivamente a conflictos de trabajo. El arbitraje comercial no tiene mención constitucional expresa; se fundamenta en ley ordinaria y tratados internacionales.",
       "impacto": "bajo",
       "apariciones": 0,
-      "ubicaciones": ["No se menciona el Art. 139 en el artículo. La omisión es de contexto, no de error."]
+      "ubicaciones": [
+        "No se menciona el Art. 139 en el artículo. La omisión es de contexto, no de error."
+      ]
     },
     "fuente_ausente_critica": {
       "tipo": "ley_primaria_no_disponible",
@@ -157,7 +159,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Ley_161-2000", "B2_Clausula_Compromisoria", "B3_Centros_Arbitraje", "B4_Plazos_Procesales", "B5_Fuerza_Laudo", "B6_Convencion_NY"],
+    "columnas": [
+      "B1_Ley_161-2000",
+      "B2_Clausula_Compromisoria",
+      "B3_Centros_Arbitraje",
+      "B4_Plazos_Procesales",
+      "B5_Fuerza_Laudo",
+      "B6_Convencion_NY"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -204,5 +213,7 @@
     "sin_conflictos_detectados": true,
     "observacion_critica": "El 80% del contenido sustantivo del artículo depende del Decreto 161-2000 (Ley de Conciliación y Arbitraje), que NO está en las fuentes locales. Las afirmaciones verificables contra la Constitución (Arts. 15, 18) son correctas. No se detectan errores factuales en lo que se pudo verificar.",
     "calidad_global_documento": "Buena. El artículo es consistente con los principios constitucionales verificables y con la doctrina estándar del derecho arbitral internacional. La principal limitación es la ausencia de la fuente primaria (Decreto 161-2000) en los archivos locales, lo que impide una verificación completa del contenido normativo específico."
-  }
+  },
+  "sha256_original": "2e81d4f233d052ca97c996398a94b90a419b4211b614b40a5feb6a30bec2520f",
+  "_sha_backfilled": true
 }

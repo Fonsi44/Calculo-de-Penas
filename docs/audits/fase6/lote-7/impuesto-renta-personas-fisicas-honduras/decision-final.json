@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "impuesto-renta-personas-fisicas-honduras",
-  "article_id": "67566dce-493d-4986-95d9-0dcd7d26a89d",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T07:15:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "67566dce-493d-4986-95d9-0dcd7d26a89d",
+  "lote": 7,
+  "fechaConsolidacion": "2026-07-27T07:15:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Claims no verificables contra fuentes disponibles",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "d98e61973001cc2e7f57ced1542052ea147d4c0d2cdf462d9c31ca0d2e6096bf",
+    "pasadaA": "d98e61973001cc2e7f57ced1542052ea147d4c0d2cdf462d9c31ca0d2e6096bf",
+    "pasadaB": "d98e61973001cc2e7f57ced1542052ea147d4c0d2cdf462d9c31ca0d2e6096bf",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "67566dce-493d-4986-95d9-0dcd7d26a89d",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T07:15:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

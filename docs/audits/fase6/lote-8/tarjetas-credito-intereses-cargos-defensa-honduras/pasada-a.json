@@ -122,5 +122,7 @@
     "error_critico_detectado": "Ninguno. El artículo es prudente y no contiene atribuciones normativas incorrectas verificables con las fuentes locales.",
     "limitacion_principal": "La mayoría de las normas específicas del artículo (Ley de Protección al Consumidor, Ley de Tarjetas de Crédito, normativa CNBS) no están disponibles en las fuentes locales estructuradas (codigo_civil.json y codigo_comercio.json). Las verificaciones se limitan a los fundamentos de derecho civil y comercial general.",
     "calidad_general": "aceptable — afirma hechos plausibles pero no verificables con las fuentes locales disponibles"
-  }
+  },
+  "sha256_original": "4f51b7e0c15977bb02bac119f1650b2a764b2bb48b0c0af0dc92f50a72ab507f",
+  "_sha_backfilled": true
 }

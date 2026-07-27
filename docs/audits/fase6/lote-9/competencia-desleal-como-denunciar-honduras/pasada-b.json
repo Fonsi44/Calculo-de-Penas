@@ -159,5 +159,7 @@
     "total_claims": 12,
     "calidad_general": "El documento es de calidad MEDIA-ALTA en lo verificable con fuentes locales. NO contiene errores factuales graves como numeros de articulo inventados (a diferencia de otros articulos del proyecto). La entrada acierta al NO citar numeros de articulo del Codigo Penal, evitando errores comunes. El Codigo de Comercio (Arts. 421-429 CM) y el Codigo Penal (Arts. 394-395 CP) proporcionan bases verificables solidas para las vias judicial mercantil y penal respectivamente. Cinco claims dependen de la Ley de Propiedad Industrial (no disponible localmente) y no pueden verificarse, incluyendo el dato critico del plazo de 1 año. La entrada tampoco cita los articulos especificos del Codigo de Comercio (421-429 CM) ni del Codigo Civil (2236 CC), perdiendo oportunidad de fundamentar mejor sus afirmaciones. Se recomienda: (1) verificar contra el texto oficial de la LPI para los claims no verificables (especialmente Art. 193 y plazo de 1 año), (2) incorporar los Arts. 421-429 CM como fuente complementaria explicita, (3) confirmar si 'publicacion de sentencia' es un remedio disponible en Honduras, (4) verificar si el Decreto correcto es 12-99 o 12-99-E.",
     "nota_metodologica": "Esta verificacion usa EXCLUSIVAMENTE fuentes locales (codigo_comercio.json, codigo_civil.json, articulos_cp.json). La Ley de Propiedad Industrial (Decreto 12-99) NO esta en las fuentes locales. El Instituto de la Propiedad (o DIGEPIH) y sus procedimientos administrativos tampoco estan en las fuentes locales. Los hallazgos deben complementarse con revision humana de la LPI."
-  }
+  },
+  "sha256_original": "e49e658c3a01c355885390fc6167ac333ca7123abb6ab0e948e1e228bce438b1",
+  "_sha_backfilled": true
 }

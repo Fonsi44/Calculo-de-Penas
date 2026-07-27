@@ -1,9 +1,35 @@
 {
+  "schemaVersion": "2.0",
   "slug": "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
-  "articleHash": "",
+  "articleId": "e9940c7b-1843-4cee-9629-fb4a9524e7fc",
+  "lote": 4,
   "fechaConsolidacion": "2026-07-27T03:25:07.318Z",
   "estadoFinal": "needs_human_review",
   "razon": "Uno o ambos subagentes indicaron que requiere revisión humana de abogado.",
-  "correcciones": [],
-  "versionEsquema": "1.0"
+  "hashes": {
+    "bodyActual": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+    "pasadaA": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+    "pasadaB": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 6,
+    "pasadaA": 6,
+    "pasadaB": 0,
+    "confirmed": 6,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "articleHash": "",
+    "correcciones": [],
+    "versionEsquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

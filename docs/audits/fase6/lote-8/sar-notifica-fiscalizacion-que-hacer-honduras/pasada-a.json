@@ -7,17 +7,50 @@
     "descripcion": "Codigo Tributario de Honduras — texto consolidado con 218 articulos. Ley marco de la Administracion Tributaria hondurena, aplicable a todos los tributos y al procedimiento de fiscalizacion, notificaciones, determinacion de oficio, sanciones, recursos y prescripcion."
   },
   "claims_extraidos": [
-    {"id": "C1", "claim": "La fiscalizacion del SAR en Honduras es un procedimiento de revision de las declaraciones tributarias de un contribuyente para asegurar la exactitud de los impuestos declarados, regulado por el Codigo Tributario de Honduras (Decreto Legislativo N 170-2016) y la Ley de Administracion Tributaria."},
-    {"id": "C2", "claim": "El SAR inicia una fiscalizacion mediante la notificacion formal al contribuyente, la cual debe especificar el alcance (integral o parcial), los tributos a revisar, los fundamentos legales, los periodos fiscales y los funcionarios encargados."},
-    {"id": "C3", "claim": "Existen tres tipos de fiscalizacion del SAR: fiscalizacion de escritorio, fiscalizacion de campo y cruce de informacion con datos de terceros (bancos, proveedores, clientes, IHSS)."},
-    {"id": "C4", "claim": "La notificacion del SAR otorga un plazo de 10 a 15 dias habiles para presentar la documentacion requerida. Si se necesita mas tiempo, se debe solicitar una prorroga fundamentada dentro del plazo inicial."},
-    {"id": "C5", "claim": "El contribuyente debe tener preparada documentacion que incluye: declaraciones de ISR, ISV y otros impuestos, estados financieros, facturas de compras y ventas, libros contables legalizados, contratos y documentacion que respalde gastos deducibles segun el Art. 11 de la Ley de ISR."},
-    {"id": "C6", "claim": "Ignorar la notificacion es un error grave, ya que la falta de respuesta puede llevar a una determinacion de oficio con posibles sanciones mayores."},
-    {"id": "C7", "claim": "Si el SAR determina un impuesto adicional que el contribuyente considera incorrecto, puede interponer un recurso de revision ante la Direccion Ejecutiva del SAR en un plazo de 10 dias habiles. Si es denegado, se puede acudir a la via contencioso-administrativa en un plazo de 2 meses."},
-    {"id": "C8", "claim": "Generalmente, el SAR no puede fiscalizar periodos ya prescritos (normalmente 4 anos). Existen excepciones como indicios de dolo o fraude que podrian extender los plazos de prescripcion."},
-    {"id": "C9", "claim": "La falta de respuesta dentro del plazo puede resultar en una determinacion de oficio por parte del SAR, la cual suele ser mas elevada y puede incluir sanciones por falta de colaboracion."},
-    {"id": "C10", "claim": "No es obligatorio contar con un abogado para una fiscalizacion, aunque es altamente recomendable contar con asesoria legal especializada en derecho tributario."},
-    {"id": "C11", "claim": "La normativa principal es el Codigo Tributario de Honduras (Decreto Legislativo N 170-2016 y sus reformas) y la Ley de Administracion Tributaria. El Codigo Tributario contempla el derecho a la defensa y los medios de impugnacion contra las actuaciones de la Administracion Tributaria."}
+    {
+      "id": "C1",
+      "claim": "La fiscalizacion del SAR en Honduras es un procedimiento de revision de las declaraciones tributarias de un contribuyente para asegurar la exactitud de los impuestos declarados, regulado por el Codigo Tributario de Honduras (Decreto Legislativo N 170-2016) y la Ley de Administracion Tributaria."
+    },
+    {
+      "id": "C2",
+      "claim": "El SAR inicia una fiscalizacion mediante la notificacion formal al contribuyente, la cual debe especificar el alcance (integral o parcial), los tributos a revisar, los fundamentos legales, los periodos fiscales y los funcionarios encargados."
+    },
+    {
+      "id": "C3",
+      "claim": "Existen tres tipos de fiscalizacion del SAR: fiscalizacion de escritorio, fiscalizacion de campo y cruce de informacion con datos de terceros (bancos, proveedores, clientes, IHSS)."
+    },
+    {
+      "id": "C4",
+      "claim": "La notificacion del SAR otorga un plazo de 10 a 15 dias habiles para presentar la documentacion requerida. Si se necesita mas tiempo, se debe solicitar una prorroga fundamentada dentro del plazo inicial."
+    },
+    {
+      "id": "C5",
+      "claim": "El contribuyente debe tener preparada documentacion que incluye: declaraciones de ISR, ISV y otros impuestos, estados financieros, facturas de compras y ventas, libros contables legalizados, contratos y documentacion que respalde gastos deducibles segun el Art. 11 de la Ley de ISR."
+    },
+    {
+      "id": "C6",
+      "claim": "Ignorar la notificacion es un error grave, ya que la falta de respuesta puede llevar a una determinacion de oficio con posibles sanciones mayores."
+    },
+    {
+      "id": "C7",
+      "claim": "Si el SAR determina un impuesto adicional que el contribuyente considera incorrecto, puede interponer un recurso de revision ante la Direccion Ejecutiva del SAR en un plazo de 10 dias habiles. Si es denegado, se puede acudir a la via contencioso-administrativa en un plazo de 2 meses."
+    },
+    {
+      "id": "C8",
+      "claim": "Generalmente, el SAR no puede fiscalizar periodos ya prescritos (normalmente 4 anos). Existen excepciones como indicios de dolo o fraude que podrian extender los plazos de prescripcion."
+    },
+    {
+      "id": "C9",
+      "claim": "La falta de respuesta dentro del plazo puede resultar en una determinacion de oficio por parte del SAR, la cual suele ser mas elevada y puede incluir sanciones por falta de colaboracion."
+    },
+    {
+      "id": "C10",
+      "claim": "No es obligatorio contar con un abogado para una fiscalizacion, aunque es altamente recomendable contar con asesoria legal especializada en derecho tributario."
+    },
+    {
+      "id": "C11",
+      "claim": "La normativa principal es el Codigo Tributario de Honduras (Decreto Legislativo N 170-2016 y sus reformas) y la Ley de Administracion Tributaria. El Codigo Tributario contempla el derecho a la defensa y los medios de impugnacion contra las actuaciones de la Administracion Tributaria."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -93,5 +126,7 @@
     "no_verificables": 1,
     "refutados": 0
   },
-  "conclusion": "El Codigo Tributario de Honduras (data/codigo_tributario.json) proporciona el marco juridico completo para el procedimiento de fiscalizacion del SAR. De 11 claims extraidos: 3 estan plenamente verificados (naturaleza de la fiscalizacion como revision, contenido de la notificacion de inicio segun Art. 125, y la determinacion de oficio con sanciones como consecuencia de la falta de respuesta); 7 estan parcialmente verificados porque el Codigo establece la base legal pero difiere en detalles especificos (los tipos de fiscalizacion no usan exactamente esos nombres, los plazos son 5-10 dias y no 10-15, la documentacion especifica pertenece a leyes especiales, el recurso de reposicion es de 15 dias y no 10, no se confirma extension de prescripcion por dolo/fraude, y el Decreto 170-2016 no se confirma desde el corpus); 1 claim no es verificable (obligatoriedad de abogado). No se encontro ninguna refutacion. El Codigo Tributario es la fuente primaria correcta y regula exhaustivamente la fiscalizacion, notificaciones, determinacion de oficio, sanciones y recursos administrativos."
+  "conclusion": "El Codigo Tributario de Honduras (data/codigo_tributario.json) proporciona el marco juridico completo para el procedimiento de fiscalizacion del SAR. De 11 claims extraidos: 3 estan plenamente verificados (naturaleza de la fiscalizacion como revision, contenido de la notificacion de inicio segun Art. 125, y la determinacion de oficio con sanciones como consecuencia de la falta de respuesta); 7 estan parcialmente verificados porque el Codigo establece la base legal pero difiere en detalles especificos (los tipos de fiscalizacion no usan exactamente esos nombres, los plazos son 5-10 dias y no 10-15, la documentacion especifica pertenece a leyes especiales, el recurso de reposicion es de 15 dias y no 10, no se confirma extension de prescripcion por dolo/fraude, y el Decreto 170-2016 no se confirma desde el corpus); 1 claim no es verificable (obligatoriedad de abogado). No se encontro ninguna refutacion. El Codigo Tributario es la fuente primaria correcta y regula exhaustivamente la fiscalizacion, notificaciones, determinacion de oficio, sanciones y recursos administrativos.",
+  "sha256_original": "3014ffe777d0384ef95d61b9612109b02c8bf1b032da0e13c837e19460ff1de5",
+  "_sha_backfilled": true
 }

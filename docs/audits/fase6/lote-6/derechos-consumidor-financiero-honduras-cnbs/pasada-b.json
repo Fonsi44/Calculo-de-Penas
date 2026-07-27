@@ -42,24 +42,78 @@
   ],
   "nota_metodologica": "Se realizaron 11+ intentos de consulta a fuentes web oficiales y privadas. Fueron exitosas las consultas al sitio oficial de la CNBS (cnbs.gob.hn, /reclamos, /preguntas-frecuentes) y PWC. Fallaron por HTTP 404 o no disponibles: Wikipedia (es.wikipedia.org CNBS), Lexology (403 Forbidden), Expansion, Banco Central de Honduras (bch.hn devolvio pagina sin contenido), consumidorfinanciero.hn (DNS no resuelto), Doing Business/World Bank (redireccion). Google Search redirigio a pagina de consentimiento no accesible.",
   "claims_extraidos": [
-    {"id": "C1", "claim": "La Ley de Proteccion al Consumidor Financiero y la normativa de la CNBS constituyen el marco normativo principal que ampara los derechos del consumidor financiero en Honduras."},
-    {"id": "C2", "claim": "Las entidades financieras deben proporcionar informacion clara y previa por escrito sobre tasas de interes, comisiones, plazos y costo total antes de contratar cualquier producto financiero."},
-    {"id": "C3", "claim": "Las instituciones financieras no pueden realizar debitos o cargos sin la aceptacion expresa del cliente."},
-    {"id": "C4", "claim": "El banco tiene un plazo de 15 dias habiles para responder por escrito a los reclamos de los usuarios."},
-    {"id": "C5", "claim": "Las entidades deben notificar previamente al usuario antes de reportarlo como deudor moroso en la Central de Riesgos."},
-    {"id": "C6", "claim": "Los clientes pueden solicitar la cancelacion de productos financieros en cualquier momento, siempre que no exista un saldo pendiente."},
-    {"id": "C7", "claim": "Existe un proceso de reclamacion en tres niveles: reclamo directo al banco, queja ante la CNBS, y demanda judicial."},
-    {"id": "C8", "claim": "La CNBS ofrece un canal gratuito para presentar quejas si el reclamo inicial ante el banco no fue resuelto."},
-    {"id": "C9", "claim": "La CNBS puede ordenar al banco la correccion de practicas abusivas y la restitucion de fondos."},
-    {"id": "C10", "claim": "En caso de no obtener resolucion favorable en la CNBS, se puede interponer una demanda judicial ante los tribunales competentes."},
-    {"id": "C11", "claim": "No se deben suspender pagos unilateralmente ante un cobro cuestionable, ya que esto podria generar reportes negativos en la Central de Riesgos."},
-    {"id": "C12", "claim": "Cualquier acuerdo con la entidad financiera debe formalizarse por escrito para tener validez."},
-    {"id": "C13", "claim": "Es importante revisar y responder por escrito a las notificaciones del banco sobre cambios en las condiciones de los productos."},
-    {"id": "C14", "claim": "Se recomienda presentar el reclamo dentro de los 30 dias posteriores al cobro indebido."},
-    {"id": "C15", "claim": "Si el banco no responde en 15 dias habiles, el silencio constituye un incumplimiento sancionable y el consumidor puede acudir directamente a la CNBS."},
-    {"id": "C16", "claim": "El procedimiento ante la CNBS es gratuito y puede ser gestionado directamente por el consumidor sin necesidad de abogado."},
-    {"id": "C17", "claim": "Los cargos por seguros no solicitados son indebidos cuando no fueron informados claramente al momento de la contratacion."},
-    {"id": "C18", "claim": "Las modificaciones de tasas de interes no pactadas o no notificadas son impugnables."}
+    {
+      "id": "C1",
+      "claim": "La Ley de Proteccion al Consumidor Financiero y la normativa de la CNBS constituyen el marco normativo principal que ampara los derechos del consumidor financiero en Honduras."
+    },
+    {
+      "id": "C2",
+      "claim": "Las entidades financieras deben proporcionar informacion clara y previa por escrito sobre tasas de interes, comisiones, plazos y costo total antes de contratar cualquier producto financiero."
+    },
+    {
+      "id": "C3",
+      "claim": "Las instituciones financieras no pueden realizar debitos o cargos sin la aceptacion expresa del cliente."
+    },
+    {
+      "id": "C4",
+      "claim": "El banco tiene un plazo de 15 dias habiles para responder por escrito a los reclamos de los usuarios."
+    },
+    {
+      "id": "C5",
+      "claim": "Las entidades deben notificar previamente al usuario antes de reportarlo como deudor moroso en la Central de Riesgos."
+    },
+    {
+      "id": "C6",
+      "claim": "Los clientes pueden solicitar la cancelacion de productos financieros en cualquier momento, siempre que no exista un saldo pendiente."
+    },
+    {
+      "id": "C7",
+      "claim": "Existe un proceso de reclamacion en tres niveles: reclamo directo al banco, queja ante la CNBS, y demanda judicial."
+    },
+    {
+      "id": "C8",
+      "claim": "La CNBS ofrece un canal gratuito para presentar quejas si el reclamo inicial ante el banco no fue resuelto."
+    },
+    {
+      "id": "C9",
+      "claim": "La CNBS puede ordenar al banco la correccion de practicas abusivas y la restitucion de fondos."
+    },
+    {
+      "id": "C10",
+      "claim": "En caso de no obtener resolucion favorable en la CNBS, se puede interponer una demanda judicial ante los tribunales competentes."
+    },
+    {
+      "id": "C11",
+      "claim": "No se deben suspender pagos unilateralmente ante un cobro cuestionable, ya que esto podria generar reportes negativos en la Central de Riesgos."
+    },
+    {
+      "id": "C12",
+      "claim": "Cualquier acuerdo con la entidad financiera debe formalizarse por escrito para tener validez."
+    },
+    {
+      "id": "C13",
+      "claim": "Es importante revisar y responder por escrito a las notificaciones del banco sobre cambios en las condiciones de los productos."
+    },
+    {
+      "id": "C14",
+      "claim": "Se recomienda presentar el reclamo dentro de los 30 dias posteriores al cobro indebido."
+    },
+    {
+      "id": "C15",
+      "claim": "Si el banco no responde en 15 dias habiles, el silencio constituye un incumplimiento sancionable y el consumidor puede acudir directamente a la CNBS."
+    },
+    {
+      "id": "C16",
+      "claim": "El procedimiento ante la CNBS es gratuito y puede ser gestionado directamente por el consumidor sin necesidad de abogado."
+    },
+    {
+      "id": "C17",
+      "claim": "Los cargos por seguros no solicitados son indebidos cuando no fueron informados claramente al momento de la contratacion."
+    },
+    {
+      "id": "C18",
+      "claim": "Las modificaciones de tasas de interes no pactadas o no notificadas son impugnables."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -178,5 +232,7 @@
     "no_verificables": 12,
     "refutados": 0
   },
-  "conclusion": "La verificacion web confirma que la CNBS mantiene una infraestructura institucional activa de proteccion al consumidor financiero, incluyendo la Gerencia de Proteccion al Usuario Financiero (GPUF) con canales formales de reclamacion (W1, W2), y la Central de Informacion Crediticia (CIC) como sistema de registro de historial crediticio (W3). De 18 claims: 1 esta verificada (existencia de canal gratuito de reclamacion ante la CNBS, W2); 5 estan parcialmente verificadas porque las fuentes confirman elementos institucionales (existencia de la GPUF, la CIC, facultades supervisoras de la CNBS) pero no los detalles normativos especificos (plazos, procedimientos, sanciones); y 12 no son verificables porque las fuentes web accesibles no contienen el texto de la Ley de Proteccion al Consumidor Financiero ni la normativa detallada de la CNBS. Se recomienda consultar el texto completo de la Ley de Proteccion al Consumidor Financiero y las resoluciones de la CNBS para verificar las claims de detalle."
+  "conclusion": "La verificacion web confirma que la CNBS mantiene una infraestructura institucional activa de proteccion al consumidor financiero, incluyendo la Gerencia de Proteccion al Usuario Financiero (GPUF) con canales formales de reclamacion (W1, W2), y la Central de Informacion Crediticia (CIC) como sistema de registro de historial crediticio (W3). De 18 claims: 1 esta verificada (existencia de canal gratuito de reclamacion ante la CNBS, W2); 5 estan parcialmente verificadas porque las fuentes confirman elementos institucionales (existencia de la GPUF, la CIC, facultades supervisoras de la CNBS) pero no los detalles normativos especificos (plazos, procedimientos, sanciones); y 12 no son verificables porque las fuentes web accesibles no contienen el texto de la Ley de Proteccion al Consumidor Financiero ni la normativa detallada de la CNBS. Se recomienda consultar el texto completo de la Ley de Proteccion al Consumidor Financiero y las resoluciones de la CNBS para verificar las claims de detalle.",
+  "sha256_original": "9f6328adcd19f06aae53173f613a2cffb7b39576d0f8084c62fb34dde4d90f71",
+  "_sha_backfilled": true
 }

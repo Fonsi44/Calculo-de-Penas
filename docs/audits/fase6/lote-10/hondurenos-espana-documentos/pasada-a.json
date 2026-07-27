@@ -71,5 +71,7 @@
     "plausible_no_verificable": 4,
     "calidad_general": "informativo_pero_no_verificable_en_fuente_constitucional",
     "nota": "El artículo versa sobre trámites consulares y administrativos regulados por tratados internacionales y leyes especiales, no por la Constitución. La fuente asignada (articulos_constitucion.json) no contiene el detalle normativo necesario para verificar estas afirmaciones."
-  }
+  },
+  "sha256_original": "a51e050713b368072c996d6d5e1da7d18db3a704c83a71a46319b8cecf36f0d6",
+  "_sha_backfilled": true
 }

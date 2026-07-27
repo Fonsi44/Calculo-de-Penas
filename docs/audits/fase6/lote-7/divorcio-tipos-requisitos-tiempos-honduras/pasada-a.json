@@ -149,5 +149,7 @@
     ],
     "observacion_principal": "El artículo presenta tres discrepancias relevantes con las fuentes locales: (1) el plazo de separación para divorcio contencioso es 'más de dos años' según el Art. 238 CF, no 'más de un año' como afirma el artículo; (2) la existencia del divorcio express notarial no está respaldada por las fuentes disponibles y contradice el Art. 237 CF que exige sentencia judicial; (3) se omite el requisito de 2 años de matrimonio previo para el mutuo consentimiento. El Código de Familia completo no está disponible en los archivos JSON locales (solo 12 artículos verificados), lo que limita la verificación del contenido normativo específico.",
     "calidad_general": "regular_con_discrepancias_detectadas"
-  }
+  },
+  "sha256_original": "f7d7903d43d0dd2d7958b1786a6fc855a883d2a06e82b60a2aba87d8d856e5b9",
+  "_sha_backfilled": true
 }

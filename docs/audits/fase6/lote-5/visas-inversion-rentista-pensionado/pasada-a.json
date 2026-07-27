@@ -88,7 +88,10 @@
       "buscas_realizadas": 2,
       "resultado": "PARCIALMENTE VERIFICADO",
       "detalle": "La existencia de una Ley de Migracion y Extranjeria en Honduras esta confirmada (NATLEX ISN 65784, catalogo TSC). No se pudo confirmar de manera definitiva el numero de decreto 208-2003 desde fuente primaria oficial. La referencia es plausible dado que proviene de un despacho juridico especializado.",
-      "fuentes": ["ILO NATLEX", "TSC Honduras"]
+      "fuentes": [
+        "ILO NATLEX",
+        "TSC Honduras"
+      ]
     },
     {
       "id": "C-2",
@@ -96,7 +99,10 @@
       "buscas_realizadas": 2,
       "resultado": "NO CONFIRMADO / NOMBRE INCORRECTO",
       "detalle": "El nombre oficial actual de la entidad es Instituto Nacional de Migracion (INM), no DGME. El dominio dgme.gob.hn no existe. El sitio oficial es inm.gob.hn.",
-      "fuentes": ["inm.gob.hn", "Verificacion DNS dgme.gob.hn"]
+      "fuentes": [
+        "inm.gob.hn",
+        "Verificacion DNS dgme.gob.hn"
+      ]
     },
     {
       "id": "C-3",
@@ -104,7 +110,10 @@
       "buscas_realizadas": 2,
       "resultado": "NO VERIFICADO",
       "detalle": "No se encontro fuente oficial o fiable que confirme el monto exacto de $50,000 USD. Las busquedas en el sitio del INM y fuentes gubernamentales no arrojaron la informacion de montos especificos. Dado que el articulo proviene de un bufete juridico hondureno y fue marcado como 'reviewed', el dato podria ser correcto, pero no se obtuvo verificacion independiente.",
-      "fuentes": ["inm.gob.hn/tramites/ (404)", "inm.gob.hn/servicios/ (404)"]
+      "fuentes": [
+        "inm.gob.hn/tramites/ (404)",
+        "inm.gob.hn/servicios/ (404)"
+      ]
     },
     {
       "id": "C-4",
@@ -112,7 +121,10 @@
       "buscas_realizadas": 2,
       "resultado": "NO VERIFICADO",
       "detalle": "No se encontro fuente oficial o fiable que confirme el monto exacto de $2,500 USD mensuales. Idem C-3.",
-      "fuentes": ["inm.gob.hn/tramites/ (404)", "inm.gob.hn/servicios/ (404)"]
+      "fuentes": [
+        "inm.gob.hn/tramites/ (404)",
+        "inm.gob.hn/servicios/ (404)"
+      ]
     },
     {
       "id": "C-5",
@@ -120,7 +132,10 @@
       "buscas_realizadas": 2,
       "resultado": "NO VERIFICADO",
       "detalle": "No se encontro fuente oficial o fiable que confirme el monto exacto de $1,500 USD mensuales. Idem C-3.",
-      "fuentes": ["inm.gob.hn/tramites/ (404)", "inm.gob.hn/servicios/ (404)"]
+      "fuentes": [
+        "inm.gob.hn/tramites/ (404)",
+        "inm.gob.hn/servicios/ (404)"
+      ]
     },
     {
       "id": "C-6",
@@ -128,7 +143,10 @@
       "buscas_realizadas": 1,
       "resultado": "PARCIALMENTE VERIFICADO / REQUIERE CORRECCION",
       "detalle": "La entidad correcta es el INM, no la DGME. La mencion de la Secretaria de Gobernacion y Justicia no pudo ser verificada independientemente. La SRECI tambien tiene rol (via consulados).",
-      "fuentes": ["inm.gob.hn", "sreci.gob.hn"]
+      "fuentes": [
+        "inm.gob.hn",
+        "sreci.gob.hn"
+      ]
     },
     {
       "id": "C-7",
@@ -205,5 +223,7 @@
     "conclusion": "El articulo contiene informacion sustantiva que es plausible y proviene de una fuente profesional (despacho juridico Pineda y Asociados). Sin embargo, se detectaron dos problemas de precision juridica significativos: (1) el nombre de la entidad migratoria es incorrecto (DGME vs. INM), y (2) se omite el rol de la Secretaria de Relaciones Exteriores en el proceso consular. Los montos minimos y la referencia exacta a la ley no pudieron ser verificados contra fuentes oficiales accesibles. Se recomienda correccion de los dos hallazgos de severidad alta antes de publicacion.",
     "fecha_auditoria": "2026-07-27",
     "auditor": "Subagente de auditoria juridica - Pasada A"
-  }
+  },
+  "sha256_original": "31dca718f3fb7e3bedd480ae315c3ebcbecebbe9f6ea85e5f835439c174ffd31",
+  "_sha_backfilled": true
 }

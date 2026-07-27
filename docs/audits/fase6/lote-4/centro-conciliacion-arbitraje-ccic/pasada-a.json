@@ -43,5 +43,7 @@
       "proposed": "Los tribunales arbitrales de la CCIC emiten laudos (sentencias) en plazos drásticamente menores que los tribunales estatales (la ley establece un plazo subsidiario de 5 meses, el cual puede ser prorrogado)."
     }
   ],
-  "requires_lawyer": false
+  "requires_lawyer": false,
+  "sha256_original": "66aa971fd8b03e2efd8608cb7944185a7b22bca4983fd7d8b1a86c3bddfde442",
+  "_sha_backfilled": true
 }

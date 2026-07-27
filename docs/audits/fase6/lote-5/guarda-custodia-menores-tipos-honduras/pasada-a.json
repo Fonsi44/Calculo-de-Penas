@@ -99,5 +99,7 @@
   ],
   "requiere_abogado": true,
   "listo_para_pasada_b": false,
-  "justificacion_pasada_b": "El artículo NO está listo para Pasada B. Motivos: (1) Ninguno de los claims sustantivos pudo ser verificado contra el Código de Familia de Honduras por inaccesibilidad de fuentes oficiales. (2) El artículo carece totalmente de citas a artículos específicos del Código de Familia (Decreto No. 76-84) o del Código de la Niñez y Adolescencia (Decreto No. 73-96). (3) Hay imprecisiones potenciales en la denominación del tribunal competente. (4) Se requiere que un abogado hondureño con acceso al texto vigente del Código de Familia verifique cada tipo de custodia, cada factor judicial, y el procedimiento descrito, y añada las referencias normativas precisas."
+  "justificacion_pasada_b": "El artículo NO está listo para Pasada B. Motivos: (1) Ninguno de los claims sustantivos pudo ser verificado contra el Código de Familia de Honduras por inaccesibilidad de fuentes oficiales. (2) El artículo carece totalmente de citas a artículos específicos del Código de Familia (Decreto No. 76-84) o del Código de la Niñez y Adolescencia (Decreto No. 73-96). (3) Hay imprecisiones potenciales en la denominación del tribunal competente. (4) Se requiere que un abogado hondureño con acceso al texto vigente del Código de Familia verifique cada tipo de custodia, cada factor judicial, y el procedimiento descrito, y añada las referencias normativas precisas.",
+  "sha256_original": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932",
+  "_sha_backfilled": true
 }

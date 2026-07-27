@@ -8,5 +8,7 @@
     "intentoRefutacionFacturacion2025": "Se intentó localizar una normativa del SAR que obligara a la facturación electrónica para medianas empresas a partir de 2025. La información oficial y técnica más reciente desmiente esta afirmación, confirmando que en Honduras prevalecen las modalidades de autoimpresor (CAI) e imprenta, y que la IA probablemente mezcló los plazos de la Ley Crea y Crece de España. La Pasada A es correcta."
   },
   "requiereReescritura": true,
-  "conclusion": "Las alucinaciones no pudieron ser refutadas. El artículo original no es recuperable mediante edición superficial por contener errores dogmáticos inaceptables (confusión hurto/robo) y mezcla de legislaciones extranjeras (fechas de facturación electrónica)."
+  "conclusion": "Las alucinaciones no pudieron ser refutadas. El artículo original no es recuperable mediante edición superficial por contener errores dogmáticos inaceptables (confusión hurto/robo) y mezcla de legislaciones extranjeras (fechas de facturación electrónica).",
+  "sha256_original": "60ff872763e8a45dde466e0410a4bfa12001c261aada146eea462790f72638a9",
+  "_sha_backfilled": true
 }

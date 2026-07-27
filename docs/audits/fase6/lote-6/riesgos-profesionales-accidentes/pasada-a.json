@@ -224,5 +224,7 @@
     "refutados": 2,
     "error_critico_detectado": "El documento cita los Artículos 106-113 CT como reguladores de riesgos profesionales, cuando en realidad esos artículos regulan suspensión y terminación del contrato de trabajo. El rango correcto es 391-459 CT. La definición de riesgo profesional está en el Art. 402 CT, no en el 106.",
     "calidad_general": "inconsistente_con_errores_de_cita"
-  }
+  },
+  "sha256_original": "f42af8b7c5443658b31711b8a474692f3226d1f7559073d619fb701c60fccf80",
+  "_sha_backfilled": true
 }

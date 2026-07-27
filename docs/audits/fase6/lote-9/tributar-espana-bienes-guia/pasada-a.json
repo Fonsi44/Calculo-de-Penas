@@ -137,5 +137,7 @@
     "error_critico_detectado": "Ninguno. El articulo es sustancialmente correcto en sus afirmaciones verificables contra el marco constitucional hondureno.",
     "observacion_principal": "La fuente primaria para la verificacion de este articulo seria el Convenio de doble imposicion Honduras-Espana, que NO esta disponible en las fuentes JSON locales. La unica fuente disponible es la Constitucion de Honduras, que proporciona el marco general para tratados internacionales (Arts. 15, 16, 17, 18, 21) y principios tributarios (Arts. 31, 109, 351). El 85% del contenido sustantivo del articulo depende del Convenio bilateral y de legislacion espanola (Ley del IRPF, Modelo 720), ninguno de los cuales esta en las fuentes locales. Las afirmaciones verificables son consistentes con el marco constitucional. No se detectan errores factuales en lo verificable.",
     "calidad_general": "buena_con_limitacion_de_fuentes"
-  }
+  },
+  "sha256_original": "114ed581a0be7e257808b639ab9f2bd626fe4ce93a9b896a2491db4a1ee2fd20",
+  "_sha_backfilled": true
 }

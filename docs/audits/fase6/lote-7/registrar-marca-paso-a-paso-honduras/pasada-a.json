@@ -158,5 +158,7 @@
       "Tasa oficial en la ley: L.700.00 por clase (Art. 174(4)(a) LPI) vs. 1,000-2,000 lempiras en el documento."
     ],
     "calidad_general": "aceptable_con_correcciones"
-  }
+  },
+  "sha256_original": "20ade41645505131f5070e0f19ac8809a314f2620827c9a42bb1b741ed56a10d",
+  "_sha_backfilled": true
 }

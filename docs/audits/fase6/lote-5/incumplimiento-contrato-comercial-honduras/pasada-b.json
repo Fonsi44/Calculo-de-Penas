@@ -9,13 +9,34 @@
       "nombre": "Código de Comercio de Honduras (Decreto 73-50)",
       "tipo": "PDF",
       "ruta_local": "docs/Articulos/codigo del comercio honduras.pdf",
-      "articulos_revisados": ["10", "17", "27", "453", "696", "708-709", "748-751", "773-774", "798-802", "1025-1045", "1156-1159", "1319", "1344-1346", "1684-1714"]
+      "articulos_revisados": [
+        "10",
+        "17",
+        "27",
+        "453",
+        "696",
+        "708-709",
+        "748-751",
+        "773-774",
+        "798-802",
+        "1025-1045",
+        "1156-1159",
+        "1319",
+        "1344-1346",
+        "1684-1714"
+      ]
     },
     {
       "nombre": "Código Civil de Honduras",
       "tipo": "PDF",
       "ruta_local": "docs/Articulos/codigo_civil_honduras.pdf",
-      "articulos_revisados": ["1360", "1365-1366", "1376", "1384-1386", "1398"]
+      "articulos_revisados": [
+        "1360",
+        "1365-1366",
+        "1376",
+        "1384-1386",
+        "1398"
+      ]
     },
     {
       "nombre": "Tribunal Superior de Cuentas de Honduras (tsc.gob.hn)",
@@ -75,5 +96,7 @@
     "La Cámara de Comercio e Industrias de Honduras es mencionada en el Código de Comercio (Art. 1344) como entidad que puede actuar como síndico en quiebras. No se pudo verificar su rol en mediación/arbitraje por indisponibilidad del sitio web.",
     "Se recomienda corregir CLAIM-1 citando los Artículos 748-751 del Código de Comercio y 1384-1386 del Código Civil como fuentes del derecho a elegir entre cumplimiento y resolución.",
     "Se recomienda corregir CLAIM-2 indicando que el plazo general de prescripción para acciones contractuales mercantiles es de 2 años (Art. 1707), con plazo residual de 5 años (Art. 1708)."
-  ]
+  ],
+  "sha256_original": "7e9bafaa77ac4286600a9bcba1c25737b0e6983d4c6dc7b0d0a9f3cb63e28dc0",
+  "_sha_backfilled": true
 }

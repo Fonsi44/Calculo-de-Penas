@@ -103,5 +103,7 @@
   "recommendedActions": [
     "Aclarar en el texto que la Ley Especial contra el Lavado de Activos es el Decreto 144-2014, una norma separada del Código Penal, y citar correctamente los artículos pertinentes de ambas normas.",
     "Verificar el umbral exacto de reporte de transacciones en efectivo vigente en Honduras mediante consulta de las resoluciones más recientes de la CNBS, y actualizar el monto si difiere de los $10,000 mencionados."
-  ]
+  ],
+  "sha256_original": "f429aa4e7cd2d0754482ab52a28bcfbdbc79a08a7b4447c0185a27ecfa9c05be",
+  "_sha_backfilled": true
 }

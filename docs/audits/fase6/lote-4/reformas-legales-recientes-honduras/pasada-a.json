@@ -38,5 +38,7 @@
       "requiereAbogado": true
     }
   ],
-  "conclusiones": "El artículo contiene fallos graves característicos de alucinaciones de IA: invención de figuras penales incompatibles ('hurto con violencia'), traslación de plazos regulatorios españoles a Honduras (facturación en 2025) y presentación de leyes antiguas como reformas recientes. Se requiere la intervención directa de un abogado para reestructurar y validar el contenido."
+  "conclusiones": "El artículo contiene fallos graves característicos de alucinaciones de IA: invención de figuras penales incompatibles ('hurto con violencia'), traslación de plazos regulatorios españoles a Honduras (facturación en 2025) y presentación de leyes antiguas como reformas recientes. Se requiere la intervención directa de un abogado para reestructurar y validar el contenido.",
+  "sha256_original": "60ff872763e8a45dde466e0410a4bfa12001c261aada146eea462790f72638a9",
+  "_sha_backfilled": true
 }

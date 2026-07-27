@@ -192,5 +192,7 @@
       "Las marcas sonoras no están explícitamente contempladas en la LPI ni en el CM como categoría registrable."
     ],
     "calidad_general": "aceptable_con_correcciones_importantes"
-  }
+  },
+  "sha256_original": "7551901669631f46b8e31bf1560579d878c9b7178d3384b35a498d1925b5a83c",
+  "_sha_backfilled": true
 }

@@ -1,14 +1,42 @@
 {
+  "schemaVersion": "2.0",
   "slug": "responsabilidad-medica-mala-praxis-honduras",
-  "article_id": "9af92e3b-5c1e-463d-9a21-ff3b99780a7d",
-  "sha256_original": "",
-  "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
-  "estado_final": "needs_human_review",
+  "articleId": "9af92e3b-5c1e-463d-9a21-ff3b99780a7d",
+  "lote": 9,
+  "fechaConsolidacion": "2026-07-27T08:30:00.000Z",
+  "estadoFinal": "needs_human_review",
   "razon": "Sin errores confirmados",
-  "claims_totales_a": 0,
-  "claims_totales_b": 0,
-  "errores_detectados": 0,
-  "correcciones_pendientes": 0,
-  "requiere_abogado": true,
-  "version_esquema": "1.0"
+  "hashes": {
+    "bodyActual": "6032e08c08cbc561bbe15571d12b0dce4532d3ed08e8bea53260351fc7b9ff92",
+    "pasadaA": "6032e08c08cbc561bbe15571d12b0dce4532d3ed08e8bea53260351fc7b9ff92",
+    "pasadaB": "6032e08c08cbc561bbe15571d12b0dce4532d3ed08e8bea53260351fc7b9ff92",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {
+    "article_id": "9af92e3b-5c1e-463d-9a21-ff3b99780a7d",
+    "sha256_original": "",
+    "fecha_consolidacion": "2026-07-27T08:30:00.000Z",
+    "estado_final": "needs_human_review",
+    "claims_totales_a": 0,
+    "claims_totales_b": 0,
+    "errores_detectados": 0,
+    "correcciones_pendientes": 0,
+    "requiere_abogado": true,
+    "version_esquema": "1.0"
+  },
+  "normalizationWarnings": []
 }

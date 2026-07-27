@@ -51,22 +51,70 @@
   ],
   "nota_metodologica": "Se realizaron 15+ intentos de consulta a fuentes web oficiales y privadas (SAR, SEFIN, BCH, TSC, PWC, Deloitte, KPMG, EY, Grant Thornton, Wikipedia, Lexology, Santander Trade, Trade.gov, Lagaceta.hn, Expansion, BizLatinHub, Banpais, OffshoreCorporation). Las fuentes oficiales hondurenas SAR devolvieron contenido util (portal principal, seccion facturacion y seccion firma electronica). La mayoria de fuentes de consultoria internacional (Deloitte HTTP 404, EY HTTP 404, PWC sin contenido de facturacion electronica, KPMG irrelevante, Grant Thornton irrelevante, Lexology HTTP 403, Santander Trade certificado expirado) no proporcionaron informacion sobre facturacion electronica hondurena. Las fuentes oficiales SEFIN, BCH, TSC y Lagaceta no contienen informacion de facturacion electronica en las paginas accesibles.",
   "claims_extraidos": [
-    {"id": "C1", "claim": "La facturacion electronica en Honduras es un sistema digital implementado por el SAR para la emision, transmision y almacenamiento de facturas."},
-    {"id": "C2", "claim": "El marco legal de la facturacion electronica se fundamenta en el Codigo Tributario y el Reglamento del Regimen de Facturacion (Acuerdo 481-2017 y sus reformas)."},
-    {"id": "C3", "claim": "La obligatoriedad de la facturacion electronica se ha implementado de manera progresiva, iniciando con grandes contribuyentes y extendiendose gradualmente a medianos y pequenos."},
-    {"id": "C4", "claim": "Los obligados incluyen grandes contribuyentes, instituciones del Estado, medianos contribuyentes, pequenos contribuyentes en sectores priorizados y contribuyentes voluntarios."},
-    {"id": "C5", "claim": "Se requiere un Registro Tributario Nacional (RTN) vigente y actualizado para facturar electronicamente."},
-    {"id": "C6", "claim": "Se requiere un certificado de firma electronica emitido por un proveedor autorizado que garantice autenticidad e integridad de cada factura."},
-    {"id": "C7", "claim": "Se requiere un software de facturacion electronica homologado por el SAR que cumpla con el formato XML especificado."},
-    {"id": "C8", "claim": "Se requiere conexion a internet para la transmision de facturas al SAR, ya sea en tiempo real o dentro de los plazos establecidos."},
-    {"id": "C9", "claim": "Se debe registrar el establecimiento y los equipos ante el SAR."},
-    {"id": "C10", "claim": "Modalidad de factura electronica en linea: transmision inmediata de la factura al SAR."},
-    {"id": "C11", "claim": "Modalidad de factura electronica fuera de linea: emision con transmision diferida dentro de un plazo establecido."},
-    {"id": "C12", "claim": "Documentos fiscales especiales para operaciones simplificadas o sectores especificos."},
-    {"id": "C13", "claim": "El incumplimiento de la facturacion electronica puede acarrear multas, suspension del RTN y cierre temporal del establecimiento."},
-    {"id": "C14", "claim": "Las facturas emitidas en papel cuando ya rige la obligacion electronica pueden no ser deducibles para el comprador."},
-    {"id": "C15", "claim": "En casos de reincidencia o defraudacion fiscal, las consecuencias pueden escalar a la via penal."},
-    {"id": "C16", "claim": "Costos de la firma electronica: L 350.00 pequenos contribuyentes, L 700.00 medianos, L 1,500.00 grandes contribuyentes; gratuito para instituciones publicas."}
+    {
+      "id": "C1",
+      "claim": "La facturacion electronica en Honduras es un sistema digital implementado por el SAR para la emision, transmision y almacenamiento de facturas."
+    },
+    {
+      "id": "C2",
+      "claim": "El marco legal de la facturacion electronica se fundamenta en el Codigo Tributario y el Reglamento del Regimen de Facturacion (Acuerdo 481-2017 y sus reformas)."
+    },
+    {
+      "id": "C3",
+      "claim": "La obligatoriedad de la facturacion electronica se ha implementado de manera progresiva, iniciando con grandes contribuyentes y extendiendose gradualmente a medianos y pequenos."
+    },
+    {
+      "id": "C4",
+      "claim": "Los obligados incluyen grandes contribuyentes, instituciones del Estado, medianos contribuyentes, pequenos contribuyentes en sectores priorizados y contribuyentes voluntarios."
+    },
+    {
+      "id": "C5",
+      "claim": "Se requiere un Registro Tributario Nacional (RTN) vigente y actualizado para facturar electronicamente."
+    },
+    {
+      "id": "C6",
+      "claim": "Se requiere un certificado de firma electronica emitido por un proveedor autorizado que garantice autenticidad e integridad de cada factura."
+    },
+    {
+      "id": "C7",
+      "claim": "Se requiere un software de facturacion electronica homologado por el SAR que cumpla con el formato XML especificado."
+    },
+    {
+      "id": "C8",
+      "claim": "Se requiere conexion a internet para la transmision de facturas al SAR, ya sea en tiempo real o dentro de los plazos establecidos."
+    },
+    {
+      "id": "C9",
+      "claim": "Se debe registrar el establecimiento y los equipos ante el SAR."
+    },
+    {
+      "id": "C10",
+      "claim": "Modalidad de factura electronica en linea: transmision inmediata de la factura al SAR."
+    },
+    {
+      "id": "C11",
+      "claim": "Modalidad de factura electronica fuera de linea: emision con transmision diferida dentro de un plazo establecido."
+    },
+    {
+      "id": "C12",
+      "claim": "Documentos fiscales especiales para operaciones simplificadas o sectores especificos."
+    },
+    {
+      "id": "C13",
+      "claim": "El incumplimiento de la facturacion electronica puede acarrear multas, suspension del RTN y cierre temporal del establecimiento."
+    },
+    {
+      "id": "C14",
+      "claim": "Las facturas emitidas en papel cuando ya rige la obligacion electronica pueden no ser deducibles para el comprador."
+    },
+    {
+      "id": "C15",
+      "claim": "En casos de reincidencia o defraudacion fiscal, las consecuencias pueden escalar a la via penal."
+    },
+    {
+      "id": "C16",
+      "claim": "Costos de la firma electronica: L 350.00 pequenos contribuyentes, L 700.00 medianos, L 1,500.00 grandes contribuyentes; gratuito para instituciones publicas."
+    }
   ],
   "resultados_verificacion": [
     {
@@ -173,5 +221,7 @@
     "no_verificables": 10,
     "refutados": 0
   },
-  "conclusion": "La verificacion web tuvo exito limitado. De 15+ URLs intentadas, el portal oficial del SAR (sar.gob.hn) fue la unica fuente con contenido directamente relevante. La pagina de Firma Electronica Avanzada (W3) permitio verificar de forma completa los costos de la firma electronica (C16: VERIFICADO) y confirmar la existencia y naturaleza del servicio de firma electronica (C6: VERIFICADO). Cuatro claims fueron parcialmente verificadas gracias al portal SAR: existencia del sistema de facturacion administrado por SAR (C1), existencia del Reglamento del Regimen de Facturacion (C2), categorizacion de contribuyentes por tamano (C4) y tipos de documentos fiscales (C12). Las 10 claims restantes no pudieron verificarse porque: (a) las paginas del SAR accesibles se enfocan en facturacion fisica tradicional, no en facturacion electronica; (b) fuentes internacionales de consultoria (PWC, Deloitte, KPMG, EY, Grant Thornton) no contienen informacion o devolvieron errores HTTP; y (c) Wikipedia no cubre el caso de Honduras. Se recomienda acceso a documentacion SAR mas especializada (manuales tecnicos, resoluciones) o consulta con navegador humano para verificar las claims sobre modalidades de emision, software homologado, formato XML y sanciones especificas."
+  "conclusion": "La verificacion web tuvo exito limitado. De 15+ URLs intentadas, el portal oficial del SAR (sar.gob.hn) fue la unica fuente con contenido directamente relevante. La pagina de Firma Electronica Avanzada (W3) permitio verificar de forma completa los costos de la firma electronica (C16: VERIFICADO) y confirmar la existencia y naturaleza del servicio de firma electronica (C6: VERIFICADO). Cuatro claims fueron parcialmente verificadas gracias al portal SAR: existencia del sistema de facturacion administrado por SAR (C1), existencia del Reglamento del Regimen de Facturacion (C2), categorizacion de contribuyentes por tamano (C4) y tipos de documentos fiscales (C12). Las 10 claims restantes no pudieron verificarse porque: (a) las paginas del SAR accesibles se enfocan en facturacion fisica tradicional, no en facturacion electronica; (b) fuentes internacionales de consultoria (PWC, Deloitte, KPMG, EY, Grant Thornton) no contienen informacion o devolvieron errores HTTP; y (c) Wikipedia no cubre el caso de Honduras. Se recomienda acceso a documentacion SAR mas especializada (manuales tecnicos, resoluciones) o consulta con navegador humano para verificar las claims sobre modalidades de emision, software homologado, formato XML y sanciones especificas.",
+  "sha256_original": "ed827aa2a56aa23bdbb4d380fc63195a4ccaec79d4fc4c2a103e391ead1cb792",
+  "_sha_backfilled": true
 }

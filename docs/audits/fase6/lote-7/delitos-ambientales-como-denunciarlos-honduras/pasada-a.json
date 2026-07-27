@@ -191,5 +191,7 @@
     "error_critico_detectado": "CLAIM A7 — El Art. 109 CP NO establece que la prescripción sea 'igual al máximo de la pena, mínimo 3 años, máximo 15 años'. El texto real utiliza tramos fijos: 20, 15, 10 y 5 años. Este error afecta la comprensión fundamental del régimen de prescripción penal en Honduras.",
     "observacion_principal": "El artículo es sustancialmente correcto en la descripción de los delitos ambientales (Arts. 324, 325, 327, 337 CP) y en las instituciones constitucionales (CONADEH, Sala de lo Constitucional, amparo). El Decreto 104-93 (Ley General del Ambiente) está confirmado. Sin embargo, se detecta un ERROR CRITICO en la explicación del Art. 109 CP (prescripción). Las referencias a FEMA, SERNA e ICF no son verificables con fuentes locales. El Decreto 59-2024 no está disponible, lo que impide verificar las afirmaciones sobre reformas recientes.",
     "calidad_general": "buena_con_error_critico_puntual"
-  }
+  },
+  "sha256_original": "cf7b1dcf7394b63e88b846560e0519e41b35c34e476f033115472a318c5f506d",
+  "_sha_backfilled": true
 }

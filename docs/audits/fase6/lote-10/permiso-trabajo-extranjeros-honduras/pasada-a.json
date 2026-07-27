@@ -119,5 +119,7 @@
     "error_critico_detectado": "Ninguno. La Constitución no regula detalles de permisos de trabajo para extranjeros. Esta materia corresponde a legislación secundaria (Ley de Migración, Código de Trabajo) no disponible en la fuente.",
     "calidad_general": "no_verificable_con_fuente_disponible",
     "nota_limitacion": "La fuente única (articulos_constitucion.json) no contiene legislación migratoria ni laboral. Solo permite verificar los fundamentos constitucionales de la potestad legislativa y administrativa del Estado."
-  }
+  },
+  "sha256_original": "7c33f7f67c31cf8d4f12a6292c057eda508723411385bd708c20a93881f31b6f",
+  "_sha_backfilled": true
 }

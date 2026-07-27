@@ -33,5 +33,7 @@
     "Actualizar las categorías de riesgo a la nomenclatura oficial de la CNBS (Categorías 1 a 5 o I a V).",
     "Actualizar los plazos de permanencia de la información negativa para reflejar las reformas recientes (2 años para deudas menores a $3,000 y actualización al mes siguiente por pago total).",
     "Precisar que el plazo de respuesta de la institución financiera ante reclamos es de 10 días hábiles según la normativa de la GPUF/CNBS."
-  ]
+  ],
+  "sha256_original": "bcd0e8e0480a5fca7fe1386903c255df9cd7a3391309d22a2050ea5191acc2a9",
+  "_sha_backfilled": true
 }

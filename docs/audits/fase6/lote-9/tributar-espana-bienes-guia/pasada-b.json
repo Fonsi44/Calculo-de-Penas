@@ -19,7 +19,9 @@
       "descripcion": "El articulo no menciona el fundamento constitucional hondureno que respalda la aplicacion de tratados internacionales en materia tributaria. Los Arts. 16 (los tratados forman parte del derecho interno), 18 (prevalencia del tratado sobre la ley) y 351 (principios de legalidad, proporcionalidad, generalidad y equidad) proporcionan el marco juridico que hace posible que un Convenio de doble imposicion tenga plena eficacia en Honduras. Su mencion daria solidez juridica al articulo.",
       "impacto": "bajo",
       "apariciones": 0,
-      "ubicaciones": ["El articulo no cita ninguna disposicion constitucional hondurena."]
+      "ubicaciones": [
+        "El articulo no cita ninguna disposicion constitucional hondurena."
+      ]
     },
     "fuente_ausente_critica": {
       "tipo": "convenio_bilateral_no_disponible",
@@ -187,7 +189,14 @@
     }
   ],
   "matriz_cruce": {
-    "columnas": ["B1_Convenio_Doble_Imposicion", "B2_Residencia_Fiscal", "B3_Renta_Mundial", "B4_Distribucion_Potestades", "B5_Modelo_720", "B6_Errores_Consecuencias"],
+    "columnas": [
+      "B1_Convenio_Doble_Imposicion",
+      "B2_Residencia_Fiscal",
+      "B3_Renta_Mundial",
+      "B4_Distribucion_Potestades",
+      "B5_Modelo_720",
+      "B6_Errores_Consecuencias"
+    ],
     "cruces": [
       {
         "par": "B1+B2",
@@ -242,5 +251,7 @@
     "sin_conflictos_detectados": true,
     "observacion_critica": "El 85% del contenido sustantivo del articulo depende del Convenio de doble imposicion Honduras-Espana y de legislacion espanola, NINGUNO de los cuales esta en las fuentes locales. De 18 subclaims, 6 son plausibles no verificables y 7 son plausibles por ser consistentes con el Modelo OCDE (estandar internacional). Las afirmaciones verificables contra la Constitucion (Arts. 16, 18, 31, 109, 351) son correctas y consistentes. No se detectan errores factuales ni contradicciones. La estructura logica del articulo (residencia > renta mundial > distribucion de potestades > deduccion > obligaciones formales) es correcta y sigue el flujo estandar de analisis en fiscalidad internacional.",
     "calidad_global_documento": "Buena. El articulo es consistente con los principios constitucionales hondurenos verificables y con el Modelo de Convenio OCDE (estandar internacional en la materia). La principal limitacion es la ausencia del Convenio bilateral Honduras-Espana y de la legislacion espanola en los archivos locales, lo que impide una verificacion completa del contenido normativo especifico. Se recomienda obtener el texto del Convenio para verificacion exhaustiva."
-  }
+  },
+  "sha256_original": "114ed581a0be7e257808b639ab9f2bd626fe4ce93a9b896a2491db4a1ee2fd20",
+  "_sha_backfilled": true
 }

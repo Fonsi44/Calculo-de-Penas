@@ -73,11 +73,26 @@
       "evidencia_local": {
         "archivo": "data/codigo_civil.json",
         "articulos": [
-          {"articulo": "Art. 1605 CC", "texto": "Por el contrato de compra y venta uno de los contratantes se obliga a entregar una cosa determinada y el otro a pagar por ella un precio cierto, en dinero o signo que lo represente."},
-          {"articulo": "Art. 1610 CC", "texto": "La venta se perfeccionara entre comprador y vendedor, y será obligatoria para ambos si hubieren convenido en la cosa objeto del contrato, y en el precio, aunque ni la una ni el otro se hayan entregado."},
-          {"articulo": "Art. 1620 CC", "texto": "El vendedor esta obligado a la entrega y saneamiento de la cosa objeto de la venta."},
-          {"articulo": "Art. 1630 CC", "texto": "Si fuere inmueble, la propiedad pertenecerá al adquiriente que antes la haya inscrito en el Registro."},
-          {"articulo": "Art. 706 CC", "texto": "Si la ley exige solemnidades especiales para la enajenación, no se transfiere el dominio sin ellas."}
+          {
+            "articulo": "Art. 1605 CC",
+            "texto": "Por el contrato de compra y venta uno de los contratantes se obliga a entregar una cosa determinada y el otro a pagar por ella un precio cierto, en dinero o signo que lo represente."
+          },
+          {
+            "articulo": "Art. 1610 CC",
+            "texto": "La venta se perfeccionara entre comprador y vendedor, y será obligatoria para ambos si hubieren convenido en la cosa objeto del contrato, y en el precio, aunque ni la una ni el otro se hayan entregado."
+          },
+          {
+            "articulo": "Art. 1620 CC",
+            "texto": "El vendedor esta obligado a la entrega y saneamiento de la cosa objeto de la venta."
+          },
+          {
+            "articulo": "Art. 1630 CC",
+            "texto": "Si fuere inmueble, la propiedad pertenecerá al adquiriente que antes la haya inscrito en el Registro."
+          },
+          {
+            "articulo": "Art. 706 CC",
+            "texto": "Si la ley exige solemnidades especiales para la enajenación, no se transfiere el dominio sin ellas."
+          }
         ]
       },
       "nivel_confianza": "alta"
@@ -210,5 +225,7 @@
     "no_verificable_localmente": 1,
     "error_critico_detectado": "El documento cita los artículos 1532 y siguientes como reguladores de la compraventa, cuando el Art. 1532 CC pertenece a la sección de PRUEBAS (testimonial). La compraventa está definida en el Art. 1605 CC y regulada en el TÍTULO III (Arts. 1605-1670 CC). También menciona '1600 y siguientes' para transmisión de propiedad, cuando 1600-1604 es NULIDAD de contratos.",
     "calidad_general": "aceptable_con_correcciones. Contenido sustantivo correcto pero citas de artículos imprecisas. La base legal principal (arts. 1532, 1600) está mal referenciada, lo que afecta la credibilidad técnica del documento."
-  }
+  },
+  "sha256_original": "f0a92b563b22d021cdbe2f01556c0dfff985a1a51623f6395dfa1c55785ab1eb",
+  "_sha_backfilled": true
 }

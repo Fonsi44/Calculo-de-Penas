@@ -82,5 +82,7 @@
     "Unificar 'Cesantía' e 'Indemnización por despido injustificado' como el mismo concepto en el caso de Honduras.",
     "Corregir el ejemplo numérico ya que actualmente suma erróneamente 'Cesantía' e 'Indemnización', duplicando el monto legal correspondiente a la terminación.",
     "Corregir el plazo de prescripción a 2 meses (Artículo 864) y aclarar que son meses calendario, no días hábiles."
-  ]
+  ],
+  "sha256_original": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6",
+  "_sha_backfilled": true
 }

@@ -15,5 +15,7 @@
     }
   ],
   "decision_final": "rechazar_pasada_a",
-  "requiere_abogado": true
+  "requiere_abogado": true,
+  "sha256_original": "66aa971fd8b03e2efd8608cb7944185a7b22bca4983fd7d8b1a86c3bddfde442",
+  "_sha_backfilled": true
 }

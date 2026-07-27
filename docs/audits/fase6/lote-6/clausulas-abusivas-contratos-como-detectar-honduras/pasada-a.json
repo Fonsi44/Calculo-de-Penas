@@ -121,5 +121,7 @@
     "plausible_no_verificable": 3,
     "error_detectado": "La afirmación de que la nulidad absoluta es imprescriptible no es consistente con el texto del Art. 1589 CC, que indica que sí prescribe (aunque requiere el plazo de prescripción ordinaria completo).",
     "calidad_general": "buena_con_matices_menores"
-  }
+  },
+  "sha256_original": "5fd4a6a8b4069757ed77f5552c43bced5f5b8da48c2a69fc25afde573a417524",
+  "_sha_backfilled": true
 }

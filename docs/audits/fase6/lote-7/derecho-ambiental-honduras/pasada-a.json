@@ -135,5 +135,7 @@
       "A1: La numeración de los artículos del CP en el documento parece corresponder a una versión anterior del Código Penal o a una fuente incorrecta. Los números de artículo en delitos.json (fuente local verificada) son consistentemente diferentes."
     ],
     "calidad_general": "regular_con_errores_graves_en_numeracion_de_articulos_del_codigo_penal"
-  }
+  },
+  "sha256_original": "06218f5ccf33f8bb79b44946dab417815bb5f7fc00a187225520538339da0e42",
+  "_sha_backfilled": true
 }

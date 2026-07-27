@@ -173,5 +173,7 @@
     ],
     "observacion_principal": "El artículo es sustancialmente correcto en sus afirmaciones normativas centrales: la obligación de alimentos existe (Art. 388 CC), el monto se fija por necesidad/capacidad (Arts. 207 CF y 394 CC), el juez determina la cuantía (Art. 219 CF), y la pensión es modificable por cambio de circunstancias (Art. 220 CF). Sin embargo, las secciones más prácticas y procesales del artículo (documentos, mecanismos de ejecución, gratuidad, Defensa Pública) NO son verificables con las fuentes locales disponibles, que son exclusivamente normativas y parciales. El Código de Familia completo no está disponible (solo 12 artículos). El Código Civil contiene un título completo sobre alimentos (Arts. 388-408 CC) pero puede estar parcialmente derogado por el Código de Familia. Se recomienda verificación externa para los aspectos procesales y de ejecución.",
     "calidad_general": "buena_en_lo_normativo_basico__no_verificable_en_lo_procesal"
-  }
+  },
+  "sha256_original": "e24e0b6b000fb9b8dbcd2d0596e0963c13c0af0aa74768656bca9d34c73d0bc4",
+  "_sha_backfilled": true
 }
