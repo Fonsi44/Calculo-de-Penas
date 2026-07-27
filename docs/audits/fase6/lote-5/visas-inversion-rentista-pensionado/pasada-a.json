@@ -1,0 +1,209 @@
+{
+  "metadata": {
+    "id": "e336f230-a15c-4862-9717-fda168dc307b",
+    "slug": "visas-inversion-rentista-pensionado",
+    "title": "Guía de Visas de Inversión, Rentista y Pensionado",
+    "category": "extranjeria-migracion",
+    "author": "Pineda y Asociados",
+    "reviewStatus": "reviewed",
+    "publishedAt": "2026-02-18T12:00:00.000Z",
+    "updatedAt": "2026-07-07T18:39:31.171Z"
+  },
+  "file": {
+    "path": "docs/audits/fase6/lote-5/visas-inversion-rentista-pensionado/entrada.json",
+    "sha256": "a380528ba9ac3fe4242c4c4448a1a27fb57f617b68c1b3dbd63f4114a741d2a9"
+  },
+  "verificaciones_focales": [
+    {
+      "id": "VF-1",
+      "topico": "Nombre oficial de la entidad migratoria hondurena",
+      "afirmacion_en_articulo": "El articulo menciona como entidad encargada a la 'Direccion General de Migracion y Extranjeria (DGME)'.",
+      "buscas": [
+        {
+          "numero": 1,
+          "url": "https://inm.gob.hn/",
+          "resultado": "El sitio inm.gob.hn es el portal oficial activo del Instituto Nacional de Migracion (INM). El nombre 'Instituto Nacional de Migracion' aparece en encabezados y en el pie de pagina. No se menciona 'Direccion General de Migracion y Extranjeria' ni 'DGME' en el sitio.",
+          "fuente": "Sitio oficial INM"
+        },
+        {
+          "numero": 2,
+          "url": "https://dgme.gob.hn/",
+          "resultado": "El dominio dgme.gob.hn no resuelve (error ENOTFOUND). No existe un sitio web activo bajo este dominio.",
+          "fuente": "DNS / verificacion directa de dominio"
+        }
+      ],
+      "veredicto": "NO CONFIRMADO / PARCIALMENTE INCORRECTO",
+      "detalle": "El articulo utiliza el nombre 'Direccion General de Migracion y Extranjeria (DGME)'. Sin embargo, la evidencia recabada indica que el nombre oficial actual de la entidad migratoria hondurena es 'Instituto Nacional de Migracion (INM)'. El dominio dgme.gob.hn no siquiera existe. El nombre 'DGME' podria ser una denominacion historica anterior o un error. Se recomienda corregir el articulo para usar 'Instituto Nacional de Migracion (INM)'.",
+      "nivel_riesgo": "alto"
+    },
+    {
+      "id": "VF-2",
+      "topico": "Ley de Migracion y Extranjeria (Decreto No. 208-2003)",
+      "afirmacion_en_articulo": "El marco normativo principal para estas visas se encuentra en la Ley de Migracion y Extranjeria (Decreto No. 208-2003) y su Reglamento.",
+      "buscas": [
+        {
+          "numero": 1,
+          "url": "https://webapps.ilo.org/dyn/natlex/natlex4.detail?p_lang=es&p_isn=65784 (redirigido a natlex.ilo.org)",
+          "resultado": "La base de datos NATLEX de la OIT contiene una entrada para la Ley de Migracion y Extranjeria de Honduras con el identificador ISN 65784 (lo que confirma la existencia de una ley con ese nombre). Sin embargo, el contenido detallado de la pagina no pudo ser accedido (HTTP 403). No se obtuvo confirmacion directa del numero de decreto.",
+          "fuente": "ILO NATLEX"
+        },
+        {
+          "numero": 2,
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/leyes/517-ley-de-migracion-y-extranjeria",
+          "resultado": "El Tribunal Superior de Cuentas de Honduras tiene catalogada la 'Ley de Migracion y Extranjeria' en su biblioteca de leyes. La solicitud excedio el tiempo de espera (timeout 60s), por lo que no se pudo extraer el contenido completo para confirmar el numero de decreto.",
+          "fuente": "Tribunal Superior de Cuentas de Honduras"
+        }
+      ],
+      "veredicto": "PROBABLEMENTE CORRECTO (no verificado en fuente primaria oficial)",
+      "detalle": "Existen multiples indicios de que la Ley de Migracion y Extranjeria existe y esta vigente. La base NATLEX de la OIT la registra (ISN 65784) y el TSC la cataloga. Sin embargo, no fue posible acceder al texto oficial de la ley para confirmar de manera definitiva el numero de decreto (208-2003). Dado que el articulo proviene de un despacho juridico hondureno (Pineda y Asociados), es razonable asumir que el dato es correcto, pero no se cuenta con confirmacion de fuente primaria oficial.",
+      "nivel_riesgo": "medio"
+    },
+    {
+      "id": "VF-3",
+      "topico": "Rol de la Secretaria de Relaciones Exteriores en tramites de visa",
+      "afirmacion_en_articulo": "El articulo NO menciona a la Secretaria de Relaciones Exteriores. Menciona como entidades tramitadoras a la DGME y a la Secretaria de Estado en los Despachos de Gobernacion y Justicia.",
+      "buscas": [
+        {
+          "numero": 1,
+          "url": "https://www.sreci.gob.hn/",
+          "resultado": "El sitio oficial de la Secretaria de Relaciones Exteriores y Cooperacion Internacional (SRECI) muestra que esta secretaria SI tiene competencias en materia migratoria: posee una 'Subsecretaria de Asuntos Consulares y Migratorios' con correo tuconsuladovirtual@sreci.gob.hn. Ademas, incluye un enlace directo al 'INM | Instituto Nacional de Migracion' y ofrece servicios de 'Cita Consulares' via citaconsular.sreci.gob.hn. Tambien maneja tramites de apostillas, autenticas y certificaciones de traduccion.",
+          "fuente": "Sitio oficial SRECI (sreci.gob.hn)"
+        },
+        {
+          "numero": 2,
+          "url": "https://www.cancilleria.gob.hn/servicios-consulares/",
+          "resultado": "El dominio cancilleria.gob.hn no resuelve (error ENOTFOUND). No se pudo acceder a una pagina complementaria de servicios consulares.",
+          "fuente": "DNS / verificacion directa de dominio"
+        }
+      ],
+      "veredicto": "OMISION RELEVANTE",
+      "detalle": "El articulo omite mencionar a la Secretaria de Relaciones Exteriores y Cooperacion Internacional (SRECI), la cual SI tiene competencias en materia migratoria a traves de su Subsecretaria de Asuntos Consulares y Migratorios. La SRECI gestiona citas consulares y sirve de enlace con el INM. Esta omision es significativa porque los ciudadanos extranjeros que residen en el exterior frecuentemente inician sus tramites a traves de consulados hondurenos, que dependen de la SRECI. Se recomienda anadir una mencion al rol de la SRECI en el proceso consular inicial.",
+      "nivel_riesgo": "alto"
+    }
+  ],
+  "claims_verificados": [
+    {
+      "id": "C-1",
+      "claim": "El marco normativo principal para estas visas se encuentra en la Ley de Migracion y Extranjeria (Decreto No. 208-2003) y su Reglamento.",
+      "buscas_realizadas": 2,
+      "resultado": "PARCIALMENTE VERIFICADO",
+      "detalle": "La existencia de una Ley de Migracion y Extranjeria en Honduras esta confirmada (NATLEX ISN 65784, catalogo TSC). No se pudo confirmar de manera definitiva el numero de decreto 208-2003 desde fuente primaria oficial. La referencia es plausible dado que proviene de un despacho juridico especializado.",
+      "fuentes": ["ILO NATLEX", "TSC Honduras"]
+    },
+    {
+      "id": "C-2",
+      "claim": "La Direccion General de Migracion y Extranjeria (DGME) es la entidad encargada de aplicar estas normativas y emitir las disposiciones pertinentes.",
+      "buscas_realizadas": 2,
+      "resultado": "NO CONFIRMADO / NOMBRE INCORRECTO",
+      "detalle": "El nombre oficial actual de la entidad es Instituto Nacional de Migracion (INM), no DGME. El dominio dgme.gob.hn no existe. El sitio oficial es inm.gob.hn.",
+      "fuentes": ["inm.gob.hn", "Verificacion DNS dgme.gob.hn"]
+    },
+    {
+      "id": "C-3",
+      "claim": "La visa de inversionista requiere demostrar una inversion minima de $50,000 USD en un negocio, empresa o proyecto licito en el pais.",
+      "buscas_realizadas": 2,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se encontro fuente oficial o fiable que confirme el monto exacto de $50,000 USD. Las busquedas en el sitio del INM y fuentes gubernamentales no arrojaron la informacion de montos especificos. Dado que el articulo proviene de un bufete juridico hondureno y fue marcado como 'reviewed', el dato podria ser correcto, pero no se obtuvo verificacion independiente.",
+      "fuentes": ["inm.gob.hn/tramites/ (404)", "inm.gob.hn/servicios/ (404)"]
+    },
+    {
+      "id": "C-4",
+      "claim": "La visa de rentista requiere acreditar ingresos mensuales estables y permanentes del exterior por un monto minimo de $2,500 USD mensuales.",
+      "buscas_realizadas": 2,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se encontro fuente oficial o fiable que confirme el monto exacto de $2,500 USD mensuales. Idem C-3.",
+      "fuentes": ["inm.gob.hn/tramites/ (404)", "inm.gob.hn/servicios/ (404)"]
+    },
+    {
+      "id": "C-5",
+      "claim": "La visa de pensionado requiere certificacion de pension que acredite un monto minimo de $1,500 USD mensuales de caracter vitalicio.",
+      "buscas_realizadas": 2,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se encontro fuente oficial o fiable que confirme el monto exacto de $1,500 USD mensuales. Idem C-3.",
+      "fuentes": ["inm.gob.hn/tramites/ (404)", "inm.gob.hn/servicios/ (404)"]
+    },
+    {
+      "id": "C-6",
+      "claim": "El procedimiento se presenta ante la DGME o la Secretaria de Estado en los Despachos de Gobernacion y Justicia.",
+      "buscas_realizadas": 1,
+      "resultado": "PARCIALMENTE VERIFICADO / REQUIERE CORRECCION",
+      "detalle": "La entidad correcta es el INM, no la DGME. La mencion de la Secretaria de Gobernacion y Justicia no pudo ser verificada independientemente. La SRECI tambien tiene rol (via consulados).",
+      "fuentes": ["inm.gob.hn", "sreci.gob.hn"]
+    },
+    {
+      "id": "C-7",
+      "claim": "El tiempo de procesamiento puede variar, pero generalmente oscila entre 3 a 6 meses.",
+      "buscas_realizadas": 0,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se realizaron busquedas especificas para este claim por ser de caracter operativo/procedimental y no focal. Sin verificacion independiente.",
+      "fuentes": []
+    },
+    {
+      "id": "C-8",
+      "claim": "Los dependientes economicos como el conyuge e hijos menores de edad pueden ser incluidos como beneficiarios de la residencia.",
+      "buscas_realizadas": 0,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se realizaron busquedas especificas para este claim. Es una practica comun en regímenes migratorios, pero sin verificacion independiente.",
+      "fuentes": []
+    },
+    {
+      "id": "C-9",
+      "claim": "La residencia temporal es renovable mientras se mantengan las condiciones que la originaron.",
+      "buscas_realizadas": 0,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se realizaron busquedas especificas para este claim. Es una caracteristica estandar de residencias temporales, pero sin verificacion independiente.",
+      "fuentes": []
+    },
+    {
+      "id": "C-10",
+      "claim": "Existe una via hacia la ciudadania tras 3 anos de residencia.",
+      "buscas_realizadas": 0,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se realizaron busquedas especificas para este claim. El plazo de 3 anos es un dato especifico que requeriria verificacion contra la legislacion de nacionalidad hondurena.",
+      "fuentes": []
+    },
+    {
+      "id": "C-11",
+      "claim": "Las visas de rentista y pensionado no permiten trabajar para empleadores hondurenos. Se necesita permiso de trabajo adicional tramitado ante la Secretaria de Trabajo y Seguridad Social.",
+      "buscas_realizadas": 0,
+      "resultado": "NO VERIFICADO",
+      "detalle": "No se realizaron busquedas especificas para este claim. Es una afirmacion plausible pero sin verificacion independiente.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 11,
+    "claims_verificados_satisfactoriamente": 0,
+    "claims_parcialmente_verificados": 2,
+    "claims_no_verificados": 9,
+    "hallazgos_criticos": [
+      {
+        "hallazgo": "NOMBRE DE ENTIDAD INCORRECTO",
+        "detalle": "El articulo se refiere a la entidad migratoria como 'Direccion General de Migracion y Extranjeria (DGME)'. La evidencia indica que el nombre oficial actual es 'Instituto Nacional de Migracion (INM)'. El dominio dgme.gob.hn no existe; el dominio activo es inm.gob.hn. Este error se repite a lo largo de todo el articulo.",
+        "severidad": "alta",
+        "recomendacion": "Reemplazar todas las ocurrencias de 'DGME' y 'Direccion General de Migracion y Extranjeria' por 'INM' e 'Instituto Nacional de Migracion' respectivamente."
+      },
+      {
+        "hallazgo": "OMISION DE LA SECRETARIA DE RELACIONES EXTERIORES",
+        "detalle": "El articulo no menciona a la Secretaria de Relaciones Exteriores y Cooperacion Internacional (SRECI), la cual tiene competencias en materia migratoria a traves de su Subsecretaria de Asuntos Consulares y Migratorios y gestiona las citas consulares. Los extranjeros frecuentemente inician tramites en consulados hondurenos en el exterior, que dependen de la SRECI.",
+        "severidad": "alta",
+        "recomendacion": "Incluir una seccion o mencion sobre el rol de la SRECI y los consulados hondurenos en el proceso de solicitud de estas visas, especialmente para solicitantes que residen en el extranjero."
+      },
+      {
+        "hallazgo": "MONTOS MINIMOS NO VERIFICADOS",
+        "detalle": "Los montos de inversion ($50,000 USD), ingresos de rentista ($2,500 USD/mes) y pension ($1,500 USD/mes) no pudieron ser verificados contra fuentes oficiales. Las paginas del INM que potencialmente contendrian esta informacion devolvieron error 404.",
+        "severidad": "media",
+        "recomendacion": "Verificar los montos contra el Acuerdo o Reglamento vigente del INM, o contra una fuente oficial actualizada. Considerar anadir una nota de que los montos estan sujetos a actualizacion periodica por la autoridad migratoria (el propio articulo ya lo menciona)."
+      },
+      {
+        "hallazgo": "LEY NO VERIFICADA EN FUENTE PRIMARIA",
+        "detalle": "La referencia al Decreto No. 208-2003 no pudo ser confirmada mediante acceso directo al texto oficial de la ley. Existen indicios de su existencia (NATLEX, TSC) pero sin confirmacion definitiva.",
+        "severidad": "media",
+        "recomendacion": "Verificar el numero de decreto contra el texto oficial publicado en La Gaceta (Diario Oficial de Honduras) o contra el sitio del Poder Judicial."
+      }
+    ],
+    "conclusion": "El articulo contiene informacion sustantiva que es plausible y proviene de una fuente profesional (despacho juridico Pineda y Asociados). Sin embargo, se detectaron dos problemas de precision juridica significativos: (1) el nombre de la entidad migratoria es incorrecto (DGME vs. INM), y (2) se omite el rol de la Secretaria de Relaciones Exteriores en el proceso consular. Los montos minimos y la referencia exacta a la ley no pudieron ser verificados contra fuentes oficiales accesibles. Se recomienda correccion de los dos hallazgos de severidad alta antes de publicacion.",
+    "fecha_auditoria": "2026-07-27",
+    "auditor": "Subagente de auditoria juridica - Pasada A"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "id": "7b5b2945-b269-40ce-a481-630107f4e35e",
+  "slug": "incumplimiento-contrato-comercial-honduras",
+  "pasada": "B",
+  "sha256_body": "7e9bafaa77ac4286600a9bcba1c25737b0e6983d4c6dc7b0d0a9f3cb63e28dc0",
+  "timestamp_verificacion": "2026-07-27T20:30:00.000Z",
+  "fuentes_consultadas": [
+    {
+      "nombre": "Código de Comercio de Honduras (Decreto 73-50)",
+      "tipo": "PDF",
+      "ruta_local": "docs/Articulos/codigo del comercio honduras.pdf",
+      "articulos_revisados": ["10", "17", "27", "453", "696", "708-709", "748-751", "773-774", "798-802", "1025-1045", "1156-1159", "1319", "1344-1346", "1684-1714"]
+    },
+    {
+      "nombre": "Código Civil de Honduras",
+      "tipo": "PDF",
+      "ruta_local": "docs/Articulos/codigo_civil_honduras.pdf",
+      "articulos_revisados": ["1360", "1365-1366", "1376", "1384-1386", "1398"]
+    },
+    {
+      "nombre": "Tribunal Superior de Cuentas de Honduras (tsc.gob.hn)",
+      "tipo": "web",
+      "url": "https://www.tsc.gob.hn/biblioteca/index.php/leyes",
+      "resultado": "Código de Comercio no disponible en el catálogo público de TSC."
+    }
+  ],
+  "metodo_verificacion": "Extracción de texto vía pdfplumber desde PDFs del proyecto. Búsqueda por palabras clave: incumplimiento, cumplimiento forzoso, resolución, daños y perjuicios, daño moral, prescripción. Cruce de artículos citados contra texto real del Código de Comercio y Código Civil.",
+  "claims": [
+    {
+      "id": "claim-1",
+      "texto_claim": "El Código de Comercio de Honduras, en sus Artículos 1025 al 1045, establece que ante el incumplimiento de una obligación mercantil, el acreedor tiene el derecho de exigir el cumplimiento forzoso o la resolución del contrato, con la correspondiente indemnización de daños y perjuicios en ambos escenarios.",
+      "veredicto": "FALSO",
+      "nivel_confianza": "ALTO",
+      "fundamento": "Los Artículos 1025 a 1045 del Código de Comercio de Honduras NO tratan sobre incumplimiento de obligaciones mercantiles. Su contenido real es: Art. 1025-1026 regulan títulos de capitalización (patrimonio de familia, prescripción de 5 años para cobro); Art. 1027-1030 regulan servicios bancarios de pagos y cobros; Art. 1031-1032 regulan servicios de custodia; Art. 1033-1045 regulan el fideicomiso (constitución, sujetos, bienes, extinción). Ninguno menciona cumplimiento forzoso, resolución contractual, ni indemnización por incumplimiento de obligaciones mercantiles.",
+      "correccion": "El derecho del acreedor a elegir entre cumplimiento forzoso y resolución del contrato con indemnización de daños y perjuicios en ambos casos se encuentra en el Código Civil de Honduras, no en el Código de Comercio. El Artículo 1384 (párrafo 4a) del Código Civil establece: 'Deteriorándose por culpa del deudor, el acreedor podrá optar entre la resolución de la obligación o su cumplimiento, con la indemnización de perjuicios en ambos casos.' El Artículo 1385 refuerza: 'El perjudicado podrá escoger entre exigir el cumplimiento o la resolución de la obligación, con el resarcimiento de daños y abono de intereses en ambos casos.' El Código de Comercio contiene disposiciones sobre resolución por incumplimiento en los Artículos 748-751, pero NO en los artículos 1025-1045.",
+      "evidencia_directa": "Texto extraído del PDF 'codigo del comercio honduras.pdf': Articulo 1025: 'Las cantidades amparadas por el título de capitalización en vigor por más de un año, serán consideradas para los efectos legales como patrimonio de familia hasta la suma de 2,000 lempiras...'. Articulo 1033: 'El fideicomiso es un negocio jurídico en virtud del cual se atribuye al banco autorizado para operar como fiduciario la titularidad dominical sobre ciertos bienes...'. Articulo 1045: 'El fideicomiso será válido aunque se constituya sin señalar fideicomisario, siempre que su fin sea lícito y determinado.'"
+    },
+    {
+      "id": "claim-2",
+      "texto_claim": "En materia mercantil, las acciones personales generalmente prescriben en un plazo de 3 a 5 años.",
+      "veredicto": "PARCIALMENTE FALSO",
+      "nivel_confianza": "ALTO",
+      "fundamento": "El Código de Comercio de Honduras, en su Título de Prescripciones (Artículos 1684-1714), establece plazos que NO incluyen 3 años. Artículo 1707: 'Prescribirán en dos años las acciones derivadas de los contratos de sociedad, compraventa, suministro, depósito, comisión, estimatorio, correduría, de las operaciones de crédito y bancarias, de los contratos de seguro, edición, hospedaje, participación y garantía y demás que no tuvieren plazos especiales.' Artículo 1708: 'Prescribirán en cinco años, salvo disposición especial de la ley, todos los demás derechos en materia mercantil.' Existen también plazos de 6 meses (Art. 1705) y 1 año (Art. 1706).",
+      "correccion": "El plazo general de prescripción para acciones derivadas de contratos mercantiles es de 2 años (Art. 1707 Código de Comercio), no de 3 a 5 años. El plazo de 5 años (Art. 1708) es residual para derechos mercantiles no cubiertos por plazos específicos. No existe plazo de 3 años en la regulación de prescripción mercantil hondureña.",
+      "evidencia_directa": "Texto extraído del PDF 'codigo del comercio honduras.pdf': Articulo 1707: 'Prescribirán en dos años las acciones derivadas de los contratos de sociedad, compraventa, suministro, depósito, comisión, estimatorio, correduría, de las operaciones de crédito y bancarias, de los contratos de seguro, edición, hospedaje, participación y garantía y demás que no tuvieren plazos especiales o distintos previstos en este Código o en leyes especiales.' Articulo 1708: 'Prescribirán en cinco años, salvo disposición especial de la ley, todos los demás derechos en materia mercantil.'"
+    },
+    {
+      "id": "claim-3",
+      "texto_claim": "En el ámbito mercantil hondureño, la reclamación de daños morales por incumplimiento contractual no es habitual. La indemnización se limita, por lo general, al daño emergente y al lucro cesante, a menos que el contrato establezca lo contrario.",
+      "veredicto": "SUSTANCIALMENTE VERDADERO",
+      "nivel_confianza": "ALTO",
+      "fundamento": "Ni el Código de Comercio ni el Código Civil de Honduras contienen mención alguna a 'daño moral' o 'daños morales' en el contexto de incumplimiento contractual. Artículo 1365 del Código Civil: 'La indemnización de daños y perjuicios comprende no solo el valor de la pérdida que haya sufrido, sino también el de la ganancia que haya dejado de obtener el acreedor.' Esto corresponde a daño emergente (pérdida) y lucro cesante (ganancia dejada de obtener). Artículo 1360: 'Quedan sujetos a la indemnización de los daños y perjuicios causados los que en el cumplimiento de sus obligaciones incurrieren en dolo, negligencia o morosidad.'",
+      "correccion": "Afirmación esencialmente correcta. La indemnización contractual en Honduras se limita al daño emergente y lucro cesante (Art. 1360 y 1365 Código Civil). El daño moral no está previsto para el incumplimiento contractual en la legislación mercantil o civil hondureña. La salvedad sobre pacto contractual es razonable bajo el principio de autonomía de la voluntad.",
+      "evidencia_directa": "Código Civil Art. 1365: 'La indemnización de daños y perjuicios comprende no solo el valor de la pérdida que haya sufrido, sino también el de la ganancia que haya dejado de obtener el acreedor.' Búsqueda de 'daño moral' en ambos códigos: 0 ocurrencias en contexto contractual."
+    }
+  ],
+  "resumen_ejecutivo": "De los 3 claims verificados: 1 FALSO (Art. 1025-1045 no tratan incumplimiento contractual, regulan operaciones bancarias y fideicomiso), 1 PARCIALMENTE FALSO (plazo general de prescripción mercantil es 2 años según Art. 1707, no 3-5 años), 1 SUSTANCIALMENTE VERDADERO (daños morales no previstos para incumplimiento contractual, indemnización limitada a daño emergente y lucro cesante según Art. 1365 Código Civil). El error más grave es CLAIM-1: atribuye al Código de Comercio artículos que regulan materia completamente distinta. La regulación correcta sobre cumplimiento/resolución con indemnización proviene del Código Civil (Art. 1384-1386) y de los Artículos 748-751 del propio Código de Comercio.",
+  "errores_criticos": [
+    {
+      "tipo": "ATRIBUCION_FALSA_DE_ARTICULOS",
+      "descripcion": "El documento afirma que los Artículos 1025-1045 del Código de Comercio regulan el incumplimiento contractual, cuando en realidad tratan de títulos de capitalización, servicios bancarios y fideicomiso.",
+      "severidad": "ALTA",
+      "impacto": "Un lector que busque estos artículos encontrará disposiciones sobre fideicomiso bancario, no sobre sus derechos ante un incumplimiento contractual."
+    },
+    {
+      "tipo": "PLAZO_DE_PRESCRIPCION_ERRONEO",
+      "descripcion": "El documento indica un plazo general de 3 a 5 años, cuando el plazo principal para acciones contractuales mercantiles es de 2 años (Art. 1707 Código de Comercio).",
+      "severidad": "MEDIA",
+      "impacto": "Un acreedor que confíe en un plazo de 3-5 años podría dejar prescribir su acción, ya que el plazo real para la mayoría de contratos mercantiles es de solo 2 años."
+    }
+  ],
+  "notas_adicionales": [
+    "El Código de Comercio consultado (PDF del proyecto) corresponde al Decreto 73-50 con 418 páginas y 1714 artículos.",
+    "El Código Civil consultado (PDF del proyecto) contiene disposiciones sobre obligaciones y contratos en los Artículos 1300-1800 aproximadamente.",
+    "La Cámara de Comercio e Industrias de Honduras es mencionada en el Código de Comercio (Art. 1344) como entidad que puede actuar como síndico en quiebras. No se pudo verificar su rol en mediación/arbitraje por indisponibilidad del sitio web.",
+    "Se recomienda corregir CLAIM-1 citando los Artículos 748-751 del Código de Comercio y 1384-1386 del Código Civil como fuentes del derecho a elegir entre cumplimiento y resolución.",
+    "Se recomienda corregir CLAIM-2 indicando que el plazo general de prescripción para acciones contractuales mercantiles es de 2 años (Art. 1707), con plazo residual de 5 años (Art. 1708)."
+  ]
+}

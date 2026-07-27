@@ -1,0 +1,23 @@
+{
+  "slug": "incumplimiento-contrato-comercial-honduras",
+  "article_id": "7b5b2945-b269-40ce-a481-630107f4e35e",
+  "sha256_original": "5e716fa785198c57e0e66b4f907f9b4004ee11bd4525423d9d1b63237684e615",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "SHA256 DISCREPANTE entre pasadas A y B. La pasada A registró sha256_original = '5e716fa785198c57e0e66b4f907f9b4004ee11bd4525423d9d1b63237684e615' mientras que la pasada B registró sha256_entrada = '9361b95ef4c157e07c5243355429823317d094049af32b172f93a20554809915'. Esto significa que auditaron versiones diferentes del archivo entrada.json. Por protocolo, cuando el SHA256 difiere entre pasadas, el estado es automáticamente needs_human_review porque no se puede garantizar que ambas auditorías evaluaran el mismo contenido. Adicionalmente, la pasada B (que usó fuentes locales data/codigo_comercio.json y data/codigo_civil.json) detectó un error grave: los artículos 1025-1045 del Código de Comercio NO tratan sobre incumplimiento contractual (tratan sobre títulos de capitalización, operaciones bancarias y fideicomiso). Los artículos correctos son 747-750 CM, complementados por el Código Civil (Art. 1386 CC, 1365 CC). La pasada A no pudo verificar ningún claim por inaccesibilidad total de fuentes (14 intentos, 0 exitosos). La divergencia de SHA256 impide la consolidación automática; se requiere determinar cuál versión de entrada.json es la canónica y re-ejecutar las pasadas sobre la misma versión.",
+  "claims_totales_a": 4,
+  "claims_totales_b": 5,
+  "errores_detectados": [
+    "SHA256 DISCREPANTE: Pasada A y Pasada B auditaron versiones diferentes del archivo entrada.json. No se puede consolidar.",
+    "Pasada B: Los artículos 1025-1045 del Código de Comercio NO regulan incumplimiento contractual. Regulan títulos de capitalización (1025-1026), operaciones bancarias (1027-1032) y fideicomiso (1033-1045). Los artículos correctos son 747-750 CM.",
+    "Pasada B: El plazo de prescripción '3 a 5 años' para acciones mercantiles es impreciso: el Código de Comercio establece plazos variables (6 meses, 1 año, 3 años, 5 años) según el tipo de contrato. La regla general del Código Civil es 10 años (Art. 2292 CC)."
+  ],
+  "correcciones_pendientes": [
+    "Resolver la discrepancia de SHA256: determinar cuál versión de entrada.json es la canónica.",
+    "Corregir referencia legal: sustituir 'Artículos 1025 al 1045 del Código de Comercio' por 'Artículos 747 al 750 del Código de Comercio' y mencionar aplicación supletoria del Código Civil (Art. 1386 CC).",
+    "Precisar que los plazos de prescripción varían según el tipo de contrato mercantil, sin afirmar una regla general única de 3 a 5 años.",
+    "Re-ejecutar ambas pasadas sobre la misma versión de entrada.json para permitir consolidación."
+  ],
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

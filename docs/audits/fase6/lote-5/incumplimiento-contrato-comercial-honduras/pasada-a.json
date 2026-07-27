@@ -1,0 +1,147 @@
+{
+  "audit": {
+    "pasada": "a",
+    "timestamp": "2026-07-27T00:00:00.000Z",
+    "documento_id": "7b5b2945-b269-40ce-a481-630107f4e35e",
+    "documento_slug": "incumplimiento-contrato-comercial-honduras",
+    "documento_sha256": "5e716fa785198c57e0e66b4f907f9b4004ee11bd4525423d9d1b63237684e615"
+  },
+  "claims": [
+    {
+      "id": "claim-a",
+      "texto_original": "El Código de Comercio de Honduras, en sus Artículos 1025 al 1045, establece que ante el incumplimiento de una obligación mercantil, el acreedor tiene el derecho de exigir el cumplimiento forzoso o la resolución del contrato, con la correspondiente indemnización de daños y perjuicios en ambos escenarios.",
+      "tipo": "normativo",
+      "fuente_alegada": "Código de Comercio de Honduras, Artículos 1025-1045",
+      "verificacion": {
+        "resultado": "no_verificable",
+        "nivel_confianza": "bajo",
+        "detalle": "No fue posible acceder al texto del Código de Comercio de Honduras para verificar el contenido exacto de los artículos 1025 al 1045. Se realizaron 8 intentos de búsqueda contra fuentes oficiales y alternativas. Todas fallaron por errores técnicos de los servidores remotos: timeout (tsc.gob.hn), error de certificado SSL (poderjudicial.gob.hn), DNS no resuelto (cedij.org.hn, leyes.honduras.com), HTTP 403 (oas.org), HTTP 404 (honduras.eregulations.org), HTTP 500 (tsc.gob.hn alternativo), y cadena de redirecciones sin resolución (ilo.org).",
+        "intentos": [
+          {
+            "fuente": "https://www.tsc.gob.hn/biblioteca/index.php/codigos/111-codigo-de-comercio",
+            "resultado": "timeout tras 60 segundos"
+          },
+          {
+            "fuente": "https://www.poderjudicial.gob.hn/CEDIJ/Leyes/Documents/CodigoComercio.pdf",
+            "resultado": "error de certificado SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+          },
+          {
+            "fuente": "https://www.cedij.org.hn/leyes/Codigo_de_Comercio.pdf",
+            "resultado": "DNS no resuelto (ENOTFOUND)"
+          },
+          {
+            "fuente": "https://www.oas.org/juridico/spanish/mesicic3_hnd_comercio.pdf",
+            "resultado": "HTTP 403 Forbidden"
+          },
+          {
+            "fuente": "https://leyes.honduras.com/codigo-de-comercio-honduras",
+            "resultado": "DNS no resuelto (ENOTFOUND)"
+          },
+          {
+            "fuente": "https://honduras.eregulations.org/media/Codigo%20de%20Comercio.pdf",
+            "resultado": "HTTP 404 Not Found"
+          },
+          {
+            "fuente": "https://www.tsc.gob.hn/biblioteca/index.php/codigos/111-codigo-de-comercio-de-honduras",
+            "resultado": "HTTP 500 Internal Server Error"
+          },
+          {
+            "fuente": "https://www.ilo.org/dyn/natlex/docs/ELECTRONIC/84085/93381/F190699347/HND84085.pdf",
+            "resultado": "cadena de redirecciones sin destino final accesible"
+          }
+        ]
+      },
+      "observaciones": "El rango de artículos citado (1025-1045) es plausible en estructura para el Código de Comercio hondureño (Decreto No. 73-1950), que en su Libro IV regula obligaciones y contratos mercantiles. Las figuras de cumplimiento forzoso, resolución e indemnización son remedios contractuales estándar en los códigos de comercio latinoamericanos. Sin embargo, no se pudo confirmar ni refutar el contenido textual de los artículos citados."
+    },
+    {
+      "id": "claim-b",
+      "texto_original": "En materia mercantil, las acciones personales generalmente prescriben en un plazo de 3 a 5 años.",
+      "tipo": "normativo",
+      "fuente_alegada": "Código de Comercio de Honduras (implícita)",
+      "verificacion": {
+        "resultado": "no_verificable",
+        "nivel_confianza": "bajo",
+        "detalle": "No fue posible acceder a fuentes oficiales hondureñas para verificar los plazos de prescripción de acciones personales en materia mercantil. Se realizaron 2 intentos de búsqueda. Ambos fallaron: HTTP 403 en oas.org y HTTP 500 en tsc.gob.hn.",
+        "intentos": [
+          {
+            "fuente": "https://www.oas.org/juridico/spanish/mesicic3_hnd_comercio.pdf",
+            "resultado": "HTTP 403 Forbidden"
+          },
+          {
+            "fuente": "https://www.tsc.gob.hn/biblioteca/index.php/codigos/111-codigo-de-comercio-de-honduras",
+            "resultado": "HTTP 500 Internal Server Error"
+          }
+        ]
+      },
+      "observaciones": "El documento califica la afirmación con el adverbio 'generalmente', lo cual introduce ambigüedad. Los plazos de prescripción de 3 a 5 años para acciones personales mercantiles son comunes en varios ordenamientos latinoamericanos, pero no se pudo verificar su vigencia exacta en Honduras. El propio documento recomienda 'consultar con un abogado para determinar el plazo exacto aplicable a su caso específico', reconociendo implícitamente que la afirmación es una generalización."
+    },
+    {
+      "id": "claim-c",
+      "texto_original": "La mediación no es obligatoria en todos los casos, aunque muchos juzgados la incentivan como conciliación previa. Si el contrato estipula una cláusula de mediación obligatoria, esta debe agotarse antes de presentar la demanda.",
+      "tipo": "procedimental",
+      "fuente_alegada": "Práctica judicial hondureña (implícita)",
+      "verificacion": {
+        "resultado": "no_verificable",
+        "nivel_confianza": "bajo",
+        "detalle": "No fue posible acceder a fuentes sobre mediación comercial en Honduras. Se realizaron 2 intentos de búsqueda. Ambos fallaron: DNS no resuelto en cemah.hn y HTTP 403 en oas.org.",
+        "intentos": [
+          {
+            "fuente": "https://www.cemah.hn/mediacion-comercial-honduras",
+            "resultado": "DNS no resuelto (ENOTFOUND)"
+          },
+          {
+            "fuente": "https://www.oas.org/es/sla/ddi/medios_alternativos_resolucion_conflictos_Honduras.asp",
+            "resultado": "HTTP 403 Forbidden"
+          }
+        ]
+      },
+      "observaciones": "La afirmación tiene dos partes: (a) la mediación no es obligatoria en todos los casos, lo cual es una declaración negativa amplia y difícil de verificar sin acceso a la legislación procesal hondureña; y (b) una cláusula contractual de mediación obligatoria debe agotarse antes de demandar, lo cual es un principio general de derecho contractual (pacta sunt servanda) aplicable en la mayoría de jurisdicciones. La segunda parte es jurídicamente sólida como principio general. La primera parte no pudo verificarse."
+    },
+    {
+      "id": "claim-d",
+      "texto_original": "En el ámbito mercantil hondureño, la reclamación de daños morales por incumplimiento contractual no es habitual. La indemnización se limita, por lo general, al daño emergente y al lucro cesante, a menos que el contrato establezca lo contrario.",
+      "tipo": "doctrinal/jurisprudencial",
+      "fuente_alegada": "Práctica mercantil hondureña (implícita)",
+      "verificacion": {
+        "resultado": "no_verificable",
+        "nivel_confianza": "bajo",
+        "detalle": "No fue posible acceder a fuentes oficiales hondureñas para verificar la práctica sobre reclamación de daños morales en el ámbito mercantil contractual. Se realizaron 2 intentos de búsqueda. Ambos fallaron: HTTP 403 en oas.org y HTTP 500 en tsc.gob.hn.",
+        "intentos": [
+          {
+            "fuente": "https://www.oas.org/juridico/spanish/mesicic3_hnd_comercio.pdf",
+            "resultado": "HTTP 403 Forbidden"
+          },
+          {
+            "fuente": "https://www.tsc.gob.hn/biblioteca/index.php/codigos/111-codigo-de-comercio",
+            "resultado": "HTTP 500 Internal Server Error"
+          }
+        ]
+      },
+      "observaciones": "La afirmación está matizada con 'no es habitual' y 'por lo general', lo cual reduce su carácter asertivo. En muchos ordenamientos de tradición continental, los daños morales tienen origen extracontractual (responsabilidad civil aquiliana) y su aplicación en sede contractual es excepcional. La distinción entre daño emergente y lucro cesante como componentes de la indemnización contractual es doctrina jurídica consolidada. La salvedad 'a menos que el contrato establezca lo contrario' refleja correctamente el principio de autonomía de la voluntad. Sin embargo, no se pudo verificar la realidad de la práctica hondureña específica."
+    }
+  ],
+  "analisis_transversal": {
+    "problema_sistemico": "Todas las fuentes oficiales hondureñas consultadas resultaron inaccesibles por fallos técnicos en los servidores remotos. Esto incluye sitios del Tribunal Superior de Cuentas (tsc.gob.hn), Poder Judicial (poderjudicial.gob.hn), OEA (oas.org), OIT (ilo.org), y diversos repositorios legales. La inaccesibilidad es sistemática y no atribuible a errores de búsqueda o URLs incorrectas.",
+    "calidad_redaccional_documento": "El documento utiliza lenguaje matizado con adverbios como 'generalmente', 'no es habitual' y 'por lo general', lo cual reduce el riesgo de afirmaciones falsas categóricas. Sin embargo, esta misma estrategia hace que muchas afirmaciones sean inherentemente difíciles de verificar o refutar.",
+    "ausencias_notables": "El documento no cita artículos específicos para los plazos de prescripción, ni menciona el Código Civil de Honduras como fuente supletoria (aplicable por remisión del artículo 1 del Código de Comercio). Tampoco referencia jurisprudencia de la Sala de lo Civil de la Corte Suprema de Justicia de Honduras.",
+    "recomendacion": "Se recomienda que en la Pasada B se intente la verificación mediante fuentes alternativas como bases de datos jurídicas comerciales (vLex, Tirant, Legal Noticias), contacto directo con bufetes hondureños, o consulta de textos físicos del Código de Comercio hondureño en bibliotecas jurídicas."
+  },
+  "metadata_verificacion": {
+    "total_claims_extraidos": 4,
+    "claims_verificados": 0,
+    "claims_no_verificables": 4,
+    "claims_refutados": 0,
+    "total_intentos_busqueda": 14,
+    "intentos_exitosos": 0,
+    "intentos_fallidos": 14,
+    "causas_fallo": {
+      "timeout": 1,
+      "ssl_error": 1,
+      "dns_not_found": 3,
+      "http_403": 5,
+      "http_404": 1,
+      "http_500": 2,
+      "redirect_chain": 1
+    }
+  }
+}

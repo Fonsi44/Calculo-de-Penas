@@ -1,0 +1,28 @@
+{
+  "slug": "refugio-asilo-solicitarlo",
+  "article_id": "225b4c7a-9330-4550-9c80-ca2ae57dab4e",
+  "sha256_original": "df01bd43778a4e33ac2a73fc12f6655f4b7e2e0921cb59e5c9a679e439189930",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "SHA256 coincidente entre pasadas A y B. Ambas pasadas convergen en hallazgos importantes pero los errores detectados requieren interpretación jurídica y verificación con fuentes que no fueron accesibles. Hallazgos convergentes: (1) ERROR FACTUAL confirmado por ambas: el artículo usa consistentemente 'DGME' (Dirección General de Migración y Extranjería) como autoridad migratoria, pero el nombre oficial actual es 'INM' (Instituto Nacional de Migración). La pasada B confirma que el dominio dgme.gob.hn ni siquiera existe y que inm.gob.hn es el portal activo. (2) ERROR CONCEPTUAL detectado por la pasada B: el artículo dedica una sección entera a diferenciar refugio y asilo como figuras jurídicas distintas, pero ACNUR afirma explícitamente que en Honduras son términos equivalentes ('La solicitud de asilo también es llamada solicitud de la condición de persona refugiada'). Esto requiere interpretación jurídica: ¿el artículo aplica una distinción doctrinal internacional que no se corresponde con la práctica hondureña? (3) Ambas pasadas detectan que 'CONARE' no aparece en fuentes ACNUR; la pasada B encuentra que ACNUR se refiere a 'Comisión de Refugio' sin el acrónimo CONARE. (4) OMISIONES RELEVANTES convergentes: el artículo no menciona a ACNUR ni al CONADEH como actores clave en protección de refugiados. (5) Claims no verificados por ambas pasadas: permiso de trabajo durante el trámite, vía contencioso administrativa, exclusiones de elegibilidad. La combinación de error conceptual (refugio vs asilo), nombre de entidad incorrecto (DGME vs INM), posible nombre desactualizado de la comisión evaluadora (CONARE vs Comisión de Refugio), y omisiones de actores clave (ACNUR, CONADEH) requiere revisión por experto en derecho migratorio hondureño.",
+  "claims_totales_a": 7,
+  "claims_totales_b": 9,
+  "errores_detectados": [
+    "ERROR FACTUAL: El artículo usa 'Dirección General de Migración y Extranjería (DGME)' como autoridad migratoria. El nombre oficial actual es 'Instituto Nacional de Migración (INM)'. El dominio dgme.gob.hn no existe; inm.gob.hn es el portal activo. Este error aparece en al menos 5 ocasiones en el body.",
+    "ERROR CONCEPTUAL: El artículo presenta refugio y asilo como figuras jurídicas distintas con diferentes bases legales. ACNUR afirma que son términos equivalentes en Honduras: 'La solicitud de asilo también es llamada solicitud de la condición de persona refugiada'. Requiere interpretación jurídica.",
+    "POSIBLE DESACTUALIZACIÓN: El artículo usa 'CONARE' (Comisión Nacional de Refugiados). ACNUR se refiere a 'Comisión de Refugio' sin el acrónimo CONARE. Dominios conapre.hn y conapre.gob.hn no existen.",
+    "OMISIÓN RELEVANTE: El artículo no menciona a ACNUR como agencia de la ONU que brinda protección y asistencia a refugiados en Honduras.",
+    "OMISIÓN RELEVANTE: El artículo no menciona al CONADEH (Comisionado Nacional de los Derechos Humanos), listado por ACNUR como punto de contacto para ayuda."
+  ],
+  "correcciones_pendientes": [
+    "URGENTE: Reemplazar todas las ocurrencias de 'DGME' y 'Dirección General de Migración y Extranjería' por 'INM' e 'Instituto Nacional de Migración'.",
+    "URGENTE: Revisar la sección sobre diferencia entre refugio y asilo a la luz de la posición de ACNUR que los considera equivalentes en Honduras. Determinar si la distinción doctrinal es aplicable o induce a error.",
+    "ALTO: Verificar si CONARE sigue siendo el nombre oficial de la comisión evaluadora o si ha sido reemplazada por 'Comisión de Refugio'.",
+    "ALTO: Añadir referencias a ACNUR (help.unhcr.org/honduras) y CONADEH como recursos para solicitantes de refugio.",
+    "MEDIO: Verificar derecho a permiso de trabajo temporal durante el trámite de solicitud de refugio.",
+    "MEDIO: Confirmar mecanismos de apelación específicos (recurso de reposición y plazo de 10 días confirmado por ACNUR; verificar vía contencioso administrativa).",
+    "MEDIO: Verificar cláusulas de exclusión (delitos graves, motivos económicos) contra la legislación hondureña."
+  ],
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

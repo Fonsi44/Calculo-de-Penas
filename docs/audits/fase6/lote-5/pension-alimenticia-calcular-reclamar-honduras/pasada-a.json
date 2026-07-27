@@ -1,0 +1,415 @@
+{
+  "article_id": "645614bc-ff05-4f34-a5e0-72486e9ec316",
+  "slug": "pension-alimenticia-calcular-reclamar-honduras",
+  "sha256_original": "4bea58b0f27c43d0a0d73b7c77a0fe0a9c4a9181180828e1c7b41a252c4b4c87",
+  "claims": [
+    {
+      "id": "claim-01",
+      "text": "La obligación de proporcionar alimentos a los hijos no depende del estado civil de los padres. Estén casados, separados, divorciados o nunca hayan convivido, ambos progenitores deben contribuir a la manutención.",
+      "category": "principio_juridico",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.mp.hn/",
+          "result": "no_relevant_content",
+          "error": "Ministerio Público homepage loaded but contained no information on pensión alimenticia or Código de Familia"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "El Código de Familia de Honduras no pudo ser accedido desde ninguna fuente oficial. El sitio del Poder Judicial (poderjudicial.gob.hn) presenta errores irresolubles de certificado SSL en todas las URLs intentadas. El Ministerio Público (mp.hn) carga pero sin contenido relevante. Otras fuentes internacionales (OAS, ACNUR, FAO, ILO) devuelven 403 Forbidden. Tras más de 20 intentos de acceso a fuentes oficiales hondureñas, ninguna ha sido accesible."
+    },
+    {
+      "id": "claim-02",
+      "text": "Hijos menores de edad: derecho irrenunciable. Ambos padres deben contribuir.",
+      "category": "derecho_sustantivo",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos/111-codigo-de-familia",
+          "result": "inaccessible",
+          "error": "HTTP 500 Internal Server Error"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "Todas las fuentes oficiales hondureñas inaccesibles. No fue posible verificar el carácter irrenunciable del derecho ni la obligación de ambos padres contra el texto del Código de Familia."
+    },
+    {
+      "id": "claim-03",
+      "text": "Hijos mayores de edad: si estudian y carecen de medios propios para sostenerse, generalmente hasta los 25 años.",
+      "category": "derecho_sustantivo",
+      "sources_checked": [
+        {
+          "url": "https://www.oas.org/dil/esp/codigo_de_familia_honduras.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 403 Forbidden"
+        },
+        {
+          "url": "https://www.acnur.org/fileadmin/Documentos/BDL/2001/0021.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 403 Forbidden"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "El límite de 25 años para hijos mayores que estudian es un detalle normativo específico que requiere confirmación directa del Código de Familia. Ninguna fuente oficial o internacional fue accesible."
+    },
+    {
+      "id": "claim-04",
+      "text": "Cónyuge o excónyuge: durante el proceso de divorcio y después de este, si carece de ingresos suficientes y no dio causa al divorcio.",
+      "category": "derecho_sustantivo",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/transparencia/Documents/Codigo-De-Familia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://honduras.eregulations.org/media/C%C3%B3digo%20de%20Familia.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 404 Not Found"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La extensión de la obligación alimentaria al cónyuge/excónyuge, incluyendo la condición de no haber dado causa al divorcio, requiere verificación del texto legal. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-05",
+      "text": "Padres adultos mayores: en situación de necesidad, pueden reclamar alimentos a sus hijos.",
+      "category": "derecho_sustantivo",
+      "sources_checked": [
+        {
+          "url": "https://siteal.iiep.unesco.org/bdnp/282/codigo-familia-1999",
+          "result": "inaccessible",
+          "error": "HTTP 404 Not Found"
+        },
+        {
+          "url": "https://webapps.ilo.org/dyn/natlex/natlex4.detail?p_lang=es&p_isn=55596",
+          "result": "inaccessible",
+          "error": "Redirected to natlex.ilo.org which returned HTTP 403 Forbidden"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La obligación alimentaria recíproca entre padres e hijos es un principio general del derecho de familia latinoamericano, pero requiere confirmación específica en el Código de Familia hondureño. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-06",
+      "text": "El concepto de 'alimentos' en derecho hondureño es más amplio que la comida. Incluye: alimentación, vivienda, vestuario, atención médica y medicamentos, educación (matrícula, útiles, transporte escolar) y recreación.",
+      "category": "definicion_legal",
+      "sources_checked": [
+        {
+          "url": "https://leyes-honduras.com/codigo-de-familia/",
+          "result": "inaccessible",
+          "error": "DNS resolution failed (ENOTFOUND)"
+        },
+        {
+          "url": "https://derechohonduras.com/pension-alimenticia-honduras/",
+          "result": "inaccessible",
+          "error": "DNS resolution failed (ENOTFOUND)"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La definición amplia de alimentos es típica en los códigos de familia latinoamericanos, pero la enumeración exacta de rubros cubiertos (incluyendo recreación y transporte escolar) debe verificarse contra el texto del Código de Familia hondureño. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-07",
+      "text": "El Código de Familia no establece un porcentaje automático [para calcular la pensión alimenticia].",
+      "category": "procedimiento_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.abogadoshonduras.com/pension-alimenticia/",
+          "result": "inaccessible",
+          "error": "Connection timeout after 10 seconds (UND_ERR_CONNECT_TIMEOUT)"
+        },
+        {
+          "url": "https://www.sipi.siteal.iipe.unesco.org/sites/default/files/sipi_normativa/honduras_codigo_de_familia_1999.pdf",
+          "result": "inaccessible",
+          "error": "SSL error: TLSV1_ALERT_UNRECOGNIZED_NAME"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La afirmación de que no existe porcentaje fijo es una caracterización negativa que solo puede confirmarse revisando el texto completo del Código. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-08",
+      "text": "El juez determina el monto evaluando tres factores: las necesidades del alimentario, la capacidad económica del obligado, y la proporcionalidad entre ambos.",
+      "category": "procedimiento_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.congresonacional.hn/biblioteca-virtual/",
+          "result": "inaccessible",
+          "error": "SSL certificate alt name mismatch (Host: www.congresonacional.hn not in cert altnames: congresonacional.hn)"
+        },
+        {
+          "url": "https://www.poderjudicial.gob.hn/",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "Los criterios judiciales para fijar la pensión deben constar en el Código de Familia. La enumeración de tres factores específicos requiere confirmación. Las fuentes oficiales hondureñas son sistemáticamente inaccesibles."
+    },
+    {
+      "id": "claim-09",
+      "text": "En la práctica judicial hondureña, los montos suelen situarse entre el 20% y el 40% de los ingresos del obligado.",
+      "category": "practica_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/transparencia/Pages/Leyes.aspx",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.csj.gob.hn/",
+          "result": "inaccessible",
+          "error": "DNS resolution failed (ENOTFOUND)"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "Esta es una afirmación sobre práctica judicial, no sobre texto legal. Requeriría acceso a jurisprudencia, estadísticas judiciales del Poder Judicial o estudios doctrinales. Ninguna fuente accesible. El rango 20-40% es común en varios países latinoamericanos, pero no puede confirmarse para Honduras sin acceso a fuentes."
+    },
+    {
+      "id": "claim-10",
+      "text": "Para un obligado con salario mensual de L. 15,000 y un hijo, una pensión típica se fija entre L. 3,000 y L. 5,000 mensuales. Para dos hijos, el rango podría estar entre L. 5,000 y L. 9,000.",
+      "category": "ejemplo_practico",
+      "sources_checked": [
+        {
+          "url": "https://www.elheraldo.hn/honduras/pension-alimenticia-honduras-calculo-procedimiento",
+          "result": "inaccessible",
+          "error": "HTTP 404 Not Found"
+        },
+        {
+          "url": "https://www.mp.hn/index.php/servicios-en-linea/pension-alimenticia",
+          "result": "inaccessible",
+          "error": "HTTP 404 Not Found"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "Estos montos son ejemplos ilustrativos basados en el rango 20-40% mencionado en el claim-09. No constituyen una afirmación legal sino una ejemplificación práctica. Su exactitud depende de la veracidad del rango 20-40%. No verificable sin acceso a datos judiciales hondureños."
+    },
+    {
+      "id": "claim-11",
+      "text": "Si el obligado no tiene ingresos fijos o trabaja por cuenta propia, el juez estima su capacidad económica con base en su nivel de vida, propiedades y otros indicios.",
+      "category": "procedimiento_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.mp.hn/index.php/fiscalias/fiscalia-de-la-ninez-y-la-familia",
+          "result": "inaccessible",
+          "error": "HTTP 404 Not Found"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La estimación judicial de ingresos por indicios es una práctica estándar, pero los criterios específicos (nivel de vida, propiedades, indicios) deben constar en norma. Las fuentes hondureñas permanecen inaccesibles."
+    },
+    {
+      "id": "claim-12",
+      "text": "Presentar la solicitud ante el Juzgado de Familia del domicilio del menor.",
+      "category": "procedimiento_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/leyes/111-codigo-de-familia",
+          "result": "inaccessible",
+          "error": "Connection timed out after 60 seconds"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La competencia territorial del Juzgado de Familia por el domicilio del menor es una regla procesal estándar, pero debe confirmarse en el Código de Familia o código procesal hondureño. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-13",
+      "text": "No se requiere abogado para iniciar el trámite [de pensión alimenticia], pero contar con uno agiliza el proceso y evita errores.",
+      "category": "procedimiento_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.mp.hn/",
+          "result": "inaccessible",
+          "error": "Ministerio Público homepage loaded but contained no information on pensión alimenticia or procedural requirements regarding legal representation"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La afirmación de que no se requiere abogado es una cuestión de derecho procesal específica. En muchos países los procesos de alimentos no requieren patrocinio letrado obligatorio, pero esto debe verificarse en la legislación hondureña. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-14",
+      "text": "Audiencia de conciliación: el juez cita a ambas partes para intentar un acuerdo. Si el obligado no comparece o no hay acuerdo, el juez fija una pensión provisional con base en la documentación presentada.",
+      "category": "procedimiento_judicial",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/transparencia/Documents/Codigo-De-Familia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.oas.org/dil/esp/codigo_de_familia_honduras.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 403 Forbidden"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La audiencia de conciliación y la fijación de pensión provisional son pasos procesales que deben estar regulados en el Código de Familia o ley procesal de familia. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-15",
+      "text": "Ejecución de sentencia vía embargo salarial: solicite al juez que ordene al empleador del obligado retener el monto de la pensión directamente de su salario y depositarlo en la cuenta que usted indique.",
+      "category": "ejecucion",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.acnur.org/fileadmin/Documentos/BDL/2001/0021.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 403 Forbidden"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "El embargo/descuento salarial directo por orden judicial es un mecanismo de ejecución común en derecho de familia latinoamericano, pero su existencia y procedimiento exacto en Honduras requieren verificación del Código de Familia. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-16",
+      "text": "Embargo de bienes: si no hay salario embargable, puede solicitar el embargo de cuentas bancarias, vehículos o inmuebles del obligado hasta cubrir los montos adeudados.",
+      "category": "ejecucion",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/transparencia/Documents/Codigo-De-Familia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://honduras.eregulations.org/media/C%C3%B3digo%20de%20Familia.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 404 Not Found"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "El embargo de bienes como mecanismo subsidiario de ejecución de pensiones requiere confirmación en el Código de Familia hondureño. La enumeración de bienes embargables (cuentas bancarias, vehículos, inmuebles) es específica. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-17",
+      "text": "Denuncia por incumplimiento de deberes familiares: la negativa reiterada a pagar pensión alimenticia puede constituir un delito y acarrear arresto por desacato.",
+      "category": "sancion_penal",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.mp.hn/",
+          "result": "inaccessible",
+          "error": "Ministerio Público homepage loaded but contained no information on penal consequences for non-payment of child support"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La tipificación penal del incumplimiento alimentario y la sanción de arresto por desacato deben constar en el Código Penal hondureño o en el propio Código de Familia. Es una afirmación con implicaciones penales que requiere verificación rigurosa. Ni el Poder Judicial ni el Ministerio Público son accesibles."
+    },
+    {
+      "id": "claim-18",
+      "text": "Si cambian las circunstancias —el obligado pierde el empleo o sus ingresos aumentan significativamente, o las necesidades del menor cambian— cualquiera de las partes puede solicitar al juez una modificación del monto.",
+      "category": "derecho_sustantivo",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos/111-codigo-de-familia",
+          "result": "inaccessible",
+          "error": "HTTP 500 Internal Server Error"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La modificabilidad de la pensión por cambio de circunstancias (rebus sic stantibus) es un principio general, pero el procedimiento específico y la titularidad de ambas partes para solicitarlo deben verificarse en el Código de Familia. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-19",
+      "text": "La obligación alimentaria no depende del régimen de visitas ni de la calidad de la relación entre el progenitor y el hijo. Son derechos independientes.",
+      "category": "principio_juridico",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/transparencia/Documents/Codigo-De-Familia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.oas.org/dil/esp/codigo_de_familia_honduras.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 403 Forbidden"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La independencia entre obligación alimentaria y régimen de visitas es un principio reconocido en instrumentos internacionales (Convención sobre los Derechos del Niño) y en la doctrina, pero su consagración expresa en el Código de Familia hondureño requiere verificación. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-20",
+      "text": "La obligación alimentaria nace del vínculo de filiación, no del matrimonio. Si el padre está reconocido legalmente (en la partida de nacimiento o por declaración judicial de paternidad), la obligación existe.",
+      "category": "principio_juridico",
+      "sources_checked": [
+        {
+          "url": "https://www.poderjudicial.gob.hn/CEDIJ/Documents/CodigoFamilia.pdf",
+          "result": "inaccessible",
+          "error": "SSL certificate verification failed (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+        },
+        {
+          "url": "https://www.acnur.org/fileadmin/Documentos/BDL/2001/0021.pdf",
+          "result": "inaccessible",
+          "error": "HTTP 403 Forbidden"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "El principio de que la obligación alimentaria deriva de la filiación y no del matrimonio es universal en el derecho de familia contemporáneo, pero la referencia específica a la partida de nacimiento y la declaración judicial de paternidad como medios de reconocimiento legal debe verificarse en la legislación hondureña. Fuentes inaccesibles."
+    },
+    {
+      "id": "claim-21",
+      "text": "Honduras es parte de convenios internacionales que facilitan el cobro transfronterizo [de pensiones alimenticias].",
+      "category": "derecho_internacional",
+      "sources_checked": [
+        {
+          "url": "https://www.hcch.net/en/states/hcch-members/details1/?sid=82",
+          "result": "no_relevant_content",
+          "error": "HCCH page loaded but contained information about Bahamas, not Honduras"
+        },
+        {
+          "url": "https://www.hcch.net/en/states/hcch-members/details1/?sid=44",
+          "result": "no_relevant_content",
+          "error": "HCCH page loaded but contained information about Ireland, not Honduras"
+        }
+      ],
+      "verdict": "unverifiable",
+      "notes": "La afirmación de que Honduras es parte de convenios internacionales sobre cobro transfronterizo de alimentos es genérica y no menciona convenios específicos. La HCCH (Conferencia de La Haya) administra el Convenio de La Haya de 2007 sobre Cobro Internacional de Alimentos, pero no se pudo acceder a la página de Honduras en el sitio de la HCCH para verificar su adhesión. La página de búsqueda de miembros de la HCCH no arrojó resultados para Honduras con los parámetros utilizados."
+    }
+  ],
+  "global_assessment": {
+    "verifiable_claims": 0,
+    "unverifiable_claims": 21,
+    "total_claims": 21,
+    "summary": "TODOS los 21 claims extraídos del body resultan unverifiable. Las fuentes oficiales hondureñas presentan fallas técnicas sistemáticas e irresolubles: el Poder Judicial (poderjudicial.gob.hn) arroja errores de certificado SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE) en todas sus URLs; el Ministerio Público (mp.hn) carga su homepage pero todas las páginas específicas sobre pensión alimenticia devuelven 404; el Tribunal Superior de Cuentas (tsc.gob.hn) timeoutea; la Corte Suprema de Justicia (csj.gob.hn) no resuelve DNS; el Congreso Nacional (congresonacional.hn) presenta mismatch de certificado SSL. Fuentes internacionales (OAS, ACNUR, FAO, ILO, UNICEF, UNESCO, OHCHR) devuelven sistemáticamente 403 Forbidden. Repositorios legales alternativos (leyes.co, honduraslegal.com, derechohonduras.com, abogadoshonduras.com) no son accesibles (429, timeout, DNS not found, o contenido vacío). Se realizaron más de 20 intentos de búsqueda usando múltiples URLs y enfoques. Ninguna fuente oficial hondureña pudo ser consultada exitosamente.",
+    "recommendation": "Se requiere acceso físico o por canales alternativos (VPN con IP hondureña, acceso a bases de datos jurídicas comerciales como vLex o Tirant, o consulta directa a bibliotecas jurídicas) al texto del Código de Familia de Honduras (Decreto 76-84) y normativa complementaria para poder verificar los claims. Alternativamente, si el cliente puede proporcionar una copia digital del Código de Familia, se podrá proceder a la verificación en Pasada B."
+  },
+  "ready_for_pasada_b": false,
+  "notes": "Pasada B no es viable en este momento porque ninguna fuente de verificación primaria (Código de Familia, jurisprudencia del Poder Judicial, guías del Ministerio Público) pudo ser accedida. Se requiere que el cliente proporcione acceso al texto legal o a fuentes alternativas antes de proceder."
+}

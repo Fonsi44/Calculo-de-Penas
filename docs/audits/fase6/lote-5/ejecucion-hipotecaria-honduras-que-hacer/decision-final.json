@@ -1,0 +1,25 @@
+{
+  "slug": "ejecucion-hipotecaria-honduras-que-hacer",
+  "article_id": "47d609eb-bf38-47f0-983e-14ebc4ce1fb8",
+  "sha256_original": "4813c9f1ff1327d84f387fda2ae248d1d5be6364292ebbe9bfe66c6746890722",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "Las pasadas A y B discrepan en sus resultados de verificación pero convergen en los issues críticos. La Pasada A reporta 21 claims, todos como 'pending_human_review' debido a inaccesibilidad de fuentes oficiales hondureñas (Poder Judicial con error TLS, TSC con HTTP 500, OAS con HTTP 403). La Pasada B reporta 24 claims: 21 verificados y 3 parcialmente verificados, pero determina que el artículo NO está listo para decisión final. Ambas pasadas coinciden en señalar dos issues de severidad media que requieren verificación humana contra el texto oficial del Código Procesal Civil de Honduras (Decreto No. 211-2006): (1) el plazo de '5 a 20 días hábiles' para contestar la demanda de ejecución hipotecaria — la Pasada A señala que los códigos procesales suelen fijar un plazo único, no un rango, y que esto podría ser una imprecisión; la Pasada B confirma que el rango es plausible (variación por distancia y tipo de juzgado) pero no pudo verificar el artículo exacto ni si los días son hábiles o corridos; (2) la denominación exacta de la figura del tercero que ofrece precio superior antes del remate — el artículo usa 'tercería de mejor postor', pero la Pasada B advierte que el CPC hondureño podría denominarla 'postura', 'licitación' o 'postura mejoradora'. Adicionalmente, la Pasada A detectó riesgo de imprecisión en la afirmación 'muchos procesos se suspenden si el deudor presenta una propuesta de pago viable', ya que la mera presentación de una propuesta NO suspende automáticamente el proceso; se requiere acuerdo formal entre partes u homologación judicial. El contenido general del artículo es sustancialmente correcto desde el punto de vista del derecho procesal civil de tradición continental, pero los dos datos normativos específicos (plazo procesal y nombre de la figura) requieren verificación contra el CPC hondureño antes de la publicación.",
+  "claims_totales_a": 21,
+  "claims_totales_b": 24,
+  "claims_coincidentes": 20,
+  "errores_detectados": [
+    "Plazo potencialmente impreciso: '5 a 20 días hábiles' para contestar la demanda de ejecución hipotecaria. Los códigos procesales suelen fijar un plazo único (ej. 5, 10 o 15 días), no un rango. El rango podría explicarse por variación según distancia y tipo de juzgado, pero no se pudo verificar contra el texto oficial del CPC (Decreto No. 211-2006).",
+    "Denominación potencialmente incorrecta: 'tercería de mejor postor'. La Pasada B advierte que el CPC hondureño podría utilizar 'postura', 'licitación' o 'postura mejoradora' en lugar de 'tercería de mejor postor'. El término 'tercería' en sentido estricto suele referirse a tercería de dominio o tercería de mejor derecho.",
+    "Riesgo de interpretación errónea: 'Muchos procesos se suspenden si el deudor presenta una propuesta de pago viable'. La mera presentación de una propuesta NO suspende automáticamente el proceso de ejecución. La suspensión requiere acuerdo formal entre partes homologado judicialmente (transacción) o solicitud conjunta aceptada por el juez."
+  ],
+  "correcciones_pendientes": [
+    "PRIORITARIO: Consultar el texto oficial del Código Procesal Civil de Honduras (Decreto No. 211-2006) para verificar el artículo exacto y el plazo para contestar la demanda en ejecución hipotecaria. Confirmar si los días son hábiles o corridos y si el rango 5-20 es correcto o debe reemplazarse por un número fijo.",
+    "PRIORITARIO: Verificar en el CPC el término legal exacto del mecanismo por el cual un tercero ofrece precio superior antes del remate. Reemplazar 'tercería de mejor postor' por el término correcto ('postura', 'licitación', 'postura mejoradora' u otro) según el CPC.",
+    "Reformular la afirmación sobre suspensión del proceso: aclarar que la mera presentación de una propuesta no suspende automáticamente la ejecución; se requiere acuerdo formal con el banco y, dependiendo de la etapa, homologación judicial.",
+    "Verificar si Honduras cuenta con legislación hipotecaria especial o si la materia está regulada exclusivamente en el Código Civil y el CPC, para posibles referencias legales adicionales.",
+    "Verificar si existe normativa de la CNBS sobre reestructuración de créditos hipotecarios que pueda citarse como respaldo normativo."
+  ],
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

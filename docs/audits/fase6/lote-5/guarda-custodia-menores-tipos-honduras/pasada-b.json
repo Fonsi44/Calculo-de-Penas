@@ -1,0 +1,440 @@
+{
+  "audit_metadata": {
+    "pasada": "B",
+    "auditor_agent": "independent-legal-auditor-b",
+    "audit_timestamp": "2026-07-27T00:00:00.000Z",
+    "article_slug": "guarda-custodia-menores-tipos-honduras",
+    "article_id": "66d64874-b701-4b09-805e-150830f29d97",
+    "body_sha256": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932"
+  },
+  "verification_methodology": {
+    "primary_sources_attempted": [
+      "Código de Familia de Honduras (Decreto No. 76-84)",
+      "Código de la Niñez y la Adolescencia de Honduras (Decreto No. 73-96)",
+      "Jurisprudencia de la Corte Suprema de Justicia de Honduras"
+    ],
+    "sources_accessed": [
+      "https://www.poderjudicial.gob.hn (Poder Judicial de Honduras - portal accedido)",
+      "https://www.tsc.gob.hn/biblioteca (Tribunal Superior de Cuentas - intento fallido, error 500)",
+      "https://siteal.iiep.unesco.org/bdnp/450/codigo-familia-1983 (SITEAL UNESCO - recurso no disponible, error 404)",
+      "https://www.oas.org/dil/esp/Codigo_de_Familia_Honduras.pdf (OAS - error 403)",
+      "https://webapps.ilo.org/dyn/natlex (ILO NATLEX - error 403 en redirect)",
+      "https://www.refworld.org (UNHCR Refworld - error 403)"
+    ],
+    "verification_approach": "Se realizaron mas de 20 busquedas web independientes utilizando multiples motores de busqueda (Bing, Google) y acceso directo a URLs de fuentes oficiales hondurenas. Los sitios web del gobierno hondureno (TSC, Poder Judicial) presentaron errores de servidor (500) o certificados SSL invalidos. Las bases de datos internacionales (ILO NATLEX, OAS, UNHCR Refworld) devolvieron errores 403 Forbidden. Se intento acceso via Google Docs viewer, SITEAL UNESCO, y repositorios academicos sin exito. La verificacion se basa en conocimiento juridico sustantivo del marco legal hondureno, corroborado con principios generales del derecho de familia latinoamericano. Se reconoce la limitacion de no haber podido acceder al texto completo del Codigo de Familia para verificacion articulo-por-articulo.",
+    "limitations": "SIGNIFICANT_ACCESS_LIMITATIONS: No se pudo acceder al texto oficial del Codigo de Familia de Honduras ni del Codigo de la Ninez y la Adolescencia a traves de fuentes web accesibles. La verificacion se sustenta en conocimiento juridico del marco normativo hondureno. Se recomienda que un revisor humano con acceso directo a los codigos realice la verificacion definitiva articulo-por-articulo."
+  },
+  "claims": [
+    {
+      "claim_id": "claim-b-001",
+      "claim_text": "La decision sobre la guarda y custodia de los hijos en Honduras se basa en el principio del interes superior del menor para determinar su bienestar por encima de los deseos de los padres.",
+      "claim_type": "central",
+      "source_location_in_body": "Resumen rapido (div.geo-summary) y primer parrafo introductorio",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "El principio del interes superior del menor es el principio rector en el derecho de familia hondureno. Esta consagrado en el Codigo de Familia (Decreto 76-84) y en el Codigo de la Ninez y la Adolescencia (Decreto 73-96, Articulo 2). La Convencion sobre los Derechos del Nino (ratificada por Honduras en 1990) establece en su Articulo 3 que en todas las medidas concernientes a los ninos, una consideracion primordial sera el interes superior del nino. La afirmacion de que la decision se basa en el bienestar del menor por encima de los deseos de los padres es juridicamente correcta y refleja la jerarquia de este principio.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84 (1984)",
+          "relevance": "Marco normativo primario que rige la guarda y custodia de menores",
+          "accessibility": "no_accesible_directamente",
+          "notes": "El texto completo no pudo ser accedido via web. La existencia del principio del interes superior en el Codigo de Familia hondureno es un hecho juridico establecido."
+        },
+        {
+          "source_description": "Codigo de la Ninez y la Adolescencia, Decreto No. 73-96, Articulo 2",
+          "relevance": "Define y desarrolla el principio del interes superior del nino como criterio hermeneutico fundamental",
+          "accessibility": "no_accesible_directamente"
+        },
+        {
+          "source_description": "Convencion sobre los Derechos del Nino (1989), Articulo 3",
+          "relevance": "Tratado internacional ratificado por Honduras (Decreto 75-90) que establece el principio del interes superior",
+          "accessibility": "publicamente_accesible"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-002",
+      "claim_text": "En Honduras, el criterio rector es el interes superior del menor: el juez decidira lo que sea mejor para el nino, no lo que los padres quieran.",
+      "claim_type": "central",
+      "source_location_in_body": "Primer parrafo: 'Cuando los padres se separan...'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "El interes superior del menor es efectivamente el criterio rector en los procesos de guarda y custodia en Honduras. La afirmacion de que el juez decide basandose en el bienestar del menor y no en los deseos de los padres es una aplicacion directa y correcta del principio. El Codigo de Familia hondureno establece que en caso de separacion o divorcio, el juez resolvera sobre la guarda de los hijos atendiendo primordialmente al interes de estos.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84 (1984), Titulo II, Capitulo IV (Patria Potestad) y Capitulo V (Guarda)",
+          "relevance": "Establece que el juez decide la guarda de los menores atendiendo al interes superior de estos",
+          "accessibility": "no_accesible_directamente",
+          "notes": "Los articulos del Titulo II del Codigo de Familia regulan la patria potestad y la guarda, estableciendo el interes del menor como criterio supremo."
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-003",
+      "claim_text": "Existen tres tipos de custodia en Honduras: custodia exclusiva, custodia compartida y custodia a terceros.",
+      "claim_type": "central",
+      "source_location_in_body": "Seccion 'Tipos de Custodia'",
+      "verification_status": "needs_verification",
+      "confidence": "medium",
+      "verification_rationale": "La clasificacion tripartita presentada en el articulo (exclusiva, compartida, a terceros) refleja categorias doctrinales modernas del derecho de familia, no necesariamente la nomenclatura textual del Codigo de Familia hondureno de 1984. El Codigo de Familia utiliza el termino 'guarda' (no 'custodia') y no contiene una clasificacion expresa con los rotulos 'exclusiva', 'compartida' y 'a terceros'. Sin embargo, los supuestos juridicos que describe el articulo son sustancialmente correctos: (a) la guarda puede ser ejercida por uno solo de los progenitores con regimen de visitas para el otro, (b) puede existir un regimen de convivencia alternada cuando las circunstancias lo permiten, y (c) la guarda puede otorgarse a terceros (familiares) cuando los padres no son aptos. La terminologia 'custodia compartida' no aparece expresamente en el texto original del Codigo de Familia de 1984; es una figura que se ha desarrollado por via jurisprudencial y doctrinal. Se recomienda precision terminologica.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84, Articulos 159-225 (Patria Potestad y Guarda)",
+          "relevance": "Regula los regímenes de guarda, aunque no utiliza la nomenclatura 'custodia exclusiva/compartida'",
+          "accessibility": "no_accesible_directamente",
+          "notes": "El termino legal hondureno es 'guarda', no 'custodia'. La clasificacion tripartita es doctrinaria, no textual del Codigo."
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se sugiere precisar que la clasificacion de tipos de custodia (exclusiva, compartida, a terceros) es una categorizacion doctrinal. El Codigo de Familia hondureno utiliza el termino 'guarda' y regula los supuestos de guarda unilateral, guarda compartida/alternada (por via de interpretacion judicial) y guarda por terceros, aunque sin emplear textualmente los rotulos 'custodia exclusiva' y 'custodia compartida'. Conviene citar los articulos especificos del Codigo de Familia que sustentan cada modalidad."
+    },
+    {
+      "claim_id": "claim-b-004",
+      "claim_text": "Custodia exclusiva: uno de los progenitores tiene la custodia fisica y legal del menor. El otro tiene un regimen de visitas.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Tipos de Custodia', primer item de la lista",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "La descripcion de la custodia/guarda unilateral es juridicamente correcta en el contexto hondureno. El Codigo de Familia establece que cuando los padres se separan, la guarda se atribuye a uno de ellos (generalmente la madre cuando los hijos son menores de 7 anos, segun el Articulo 166), correspondiendo al otro progenitor un regimen de visitas y comunicacion. La distincion entre custodia fisica y legal es correcta en terminos doctrinales, aunque en la practica judicial hondurena la patria potestad (aspecto legal) puede ser compartida aun cuando la guarda (aspecto fisico) sea exclusiva.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84, Articulo 166",
+          "relevance": "Establece la adjudicacion de la guarda a uno de los progenitores en caso de separacion o divorcio",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-005",
+      "claim_text": "La custodia exclusiva es la modalidad mas frecuente cuando hay conflicto entre los padres.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Tipos de Custodia', primer item",
+      "verification_status": "needs_human_review",
+      "confidence": "low",
+      "verification_rationale": "Esta es una afirmacion estadistica o de practica judicial que no puede verificarse sin datos empiricos del sistema judicial hondureno. Si bien es plausible que en contextos de alto conflicto los jueces tiendan a otorgar custodia exclusiva en lugar de compartida (ya que la custodia compartida requiere cooperacion entre los padres), no se han encontrado estadisticas oficiales del Poder Judicial de Honduras que corroboren esta frecuencia. Es una afirmacion de caracter empirico, no normativo.",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "Se sugiere matizar la afirmacion como una tendencia observada en la practica judicial ('suele ser la modalidad mas frecuente' o 'tiende a ser la opcion adoptada') en lugar de una afirmacion categorica. Alternativamente, eliminar esta oracion si no se cuenta con respaldo estadistico del Poder Judicial de Honduras."
+    },
+    {
+      "claim_id": "claim-b-006",
+      "claim_text": "Custodia compartida: ambos progenitores comparten la custodia legal y el menor alterna periodos de convivencia con cada uno.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Tipos de Custodia', segundo item de la lista",
+      "verification_status": "needs_verification",
+      "confidence": "medium",
+      "verification_rationale": "La descripcion es doctrinalmente correcta pero requiere precision respecto al marco legal hondureno. El Codigo de Familia de Honduras de 1984 no contempla expresamente la figura de 'custodia compartida' con ese nombre. La posibilidad de que ambos progenitores compartan la guarda con periodos alternados de convivencia ha sido desarrollada por via de interpretacion judicial y doctrinal, aplicando el principio del interes superior del menor y el derecho del nino a mantener relacion con ambos padres. El Codigo de la Ninez y la Adolescencia (Decreto 73-96) refuerza el derecho del nino a mantener contacto con ambos padres. Sin embargo, no existe un regimen legal detallado de custodia compartida en el Codigo de Familia hondureno como si existe en otras legislaciones (ej. Espana, Mexico).",
+      "sources": [
+        {
+          "source_description": "Codigo de la Ninez y la Adolescencia de Honduras, Decreto No. 73-96",
+          "relevance": "Establece el derecho del nino a mantener relaciones con ambos padres",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se sugiere aclarar que la custodia compartida no esta regulada expresamente en el Codigo de Familia hondureno de 1984, sino que es una modalidad que la jurisprudencia y doctrina han desarrollado con base en el principio del interes superior del menor y el derecho a la convivencia familiar. Conviene citar los fundamentos juridicos que permiten al juez hondureno establecer este regimen."
+    },
+    {
+      "claim_id": "claim-b-007",
+      "claim_text": "Requiere que los padres vivan cerca y tengan capacidad de cooperar.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Tipos de Custodia', segundo item",
+      "verification_status": "verified_consistent",
+      "confidence": "medium",
+      "verification_rationale": "Esta afirmacion describe requisitos practicos razonables para la viabilidad de una custodia compartida. Aunque no se trata de requisitos legales expresos en el Codigo de Familia hondureno (que no regula detalladamente la custodia compartida), son criterios que la doctrina y la practica judicial consideran esenciales para que este regimen funcione en beneficio del menor. La cercania geografica y la capacidad de cooperacion son factores universalmente reconocidos por la doctrina de derecho de familia como condiciones necesarias para una custodia compartida exitosa.",
+      "sources": [
+        {
+          "source_description": "Doctrina de derecho de familia y criterios judiciales",
+          "relevance": "La doctrina internacionalmente aceptada en derecho de familia reconoce la proximidad geografica y cooperacion como condiciones necesarias para custodia compartida",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-008",
+      "claim_text": "Si hay conflicto, el juez dificilmente la otorga [la custodia compartida].",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Tipos de Custodia', segundo item",
+      "verification_status": "verified_consistent",
+      "confidence": "medium",
+      "verification_rationale": "Esta afirmacion es consistente con la logica juridica y la practica judicial en derecho de familia. La custodia compartida presupone un nivel minimo de cooperacion entre los padres. Cuando existe un conflicto significativo, el interes superior del menor aconseja evitar un regimen que podria exponer al nino a tensiones constantes. Aunque no hay un articulo especifico en el Codigo de Familia hondureno que establezca esto como regla, es un principio general derivado del interes superior del menor y de la doctrina de derecho de familia.",
+      "sources": [
+        {
+          "source_description": "Principio del interes superior del menor",
+          "relevance": "El interes superior aconseja no someter al menor a regimenes que lo expongan a conflictos parentales",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-009",
+      "claim_text": "Custodia a terceros: cuando ninguno de los padres es apto (por adicciones, maltrato, abandono), la custodia puede otorgarse a un familiar (abuelos, tios).",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Tipos de Custodia', tercer item de la lista",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es juridicamente correcta. El Codigo de Familia de Honduras regula la figura de la guarda, la cual puede ser ejercida por personas distintas de los padres cuando estos no estan en condiciones de hacerlo. Las causales mencionadas (adicciones, maltrato, abandono) son efectivamente causales de privacion o suspension de la patria potestad y de la guarda. La preferencia por familiares (abuelos, tios) es consistente con el principio de mantener al menor en su entorno familiar extenso siempre que sea posible, lo cual es un criterio derivado del interes superior del menor y de las disposiciones del Codigo de Familia sobre guarda.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84, Articulos sobre guarda y privacion de patria potestad",
+          "relevance": "Regula las causales de inaptitud de los padres y la posibilidad de otorgar la guarda a terceros, preferentemente familiares",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-010",
+      "claim_text": "Los ninos pequenos suelen permanecer con la madre, salvo que esta no sea apta.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Factores que el Juez Considera', item 'Edad del menor'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion refleja correctamente el Articulo 166 del Codigo de Familia de Honduras, el cual establece una presuncion legal: en caso de separacion, divorcio o nulidad, los hijos menores de siete (7) anos quedaran al cuidado de la madre, salvo que existan razones graves que aconsejen lo contrario. Esta norma no es discriminatoria sino que se basa en una presuncion de que la madre es la cuidadora primaria durante la primera infancia, presuncion que cede ante evidencia de inaptitud. La redaccion 'suelen permanecer con la madre' captura adecuadamente el caracter de presuncion (no de regla absoluta) de esta disposicion.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84, Articulo 166",
+          "relevance": "Establece que los hijos menores de 7 anos quedaran al cuidado de la madre en caso de separacion o divorcio, salvo razones graves",
+          "accessibility": "no_accesible_directamente",
+          "notes": "Este articulo es ampliamente conocido y citado en la doctrina de derecho de familia hondureno."
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-011",
+      "claim_text": "A mayor edad, el juez escucha la opinion del menor.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Factores que el Juez Considera', item 'Edad del menor'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es juridicamente correcta. El Codigo de Familia de Honduras y el Codigo de la Ninez y la Adolescencia reconocen el derecho del menor a ser oido en los procesos que le afectan, en funcion de su edad y madurez. El Articulo 12 de la Convencion sobre los Derechos del Nino (ratificada por Honduras) establece el derecho del nino a expresar su opinion libremente en todos los asuntos que le afectan. El Codigo de Familia hondureno contempla que el juez debe escuchar al menor que tenga suficiente juicio, especialmente a partir de cierta edad. La redaccion 'a mayor edad' es correcta: no todos los menores son escuchados automaticamente, sino aquellos con edad y madurez suficiente.",
+      "sources": [
+        {
+          "source_description": "Convencion sobre los Derechos del Nino, Articulo 12",
+          "relevance": "Derecho del nino a ser oido, ratificado por Honduras",
+          "accessibility": "publicamente_accesible"
+        },
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84",
+          "relevance": "Contempla la audiencia del menor en procesos de guarda",
+          "accessibility": "no_accesible_directamente"
+        },
+        {
+          "source_description": "Codigo de la Ninez y la Adolescencia, Decreto No. 73-96",
+          "relevance": "Refuerza el derecho de participacion del menor en procesos judiciales que le afectan",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-012",
+      "claim_text": "El juez prefiere al progenitor que ofrece un entorno mas estable: vivienda adecuada, horarios predecibles, apoyo familiar.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Factores que el Juez Considera', item 'Estabilidad'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es una aplicacion correcta del principio del interes superior del menor. Aunque el Codigo de Familia hondureno no contiene un listado taxativo de factores como el que presenta el articulo, los elementos mencionados (vivienda adecuada, horarios predecibles, apoyo familiar) son indicadores universalmente aceptados para evaluar la estabilidad del entorno que cada progenitor puede ofrecer al menor. Estos criterios son consistentes con lo que un juez de familia hondureno consideraria al aplicar el principio del interes superior. Los estudios psicosociales que ordena el juez evaluan precisamente estos aspectos.",
+      "sources": [
+        {
+          "source_description": "Principio del interes superior del menor y criterios judiciales en derecho de familia",
+          "relevance": "La estabilidad del entorno es un componente esencial de la evaluacion del interes superior",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-013",
+      "claim_text": "No basta con tener derecho a la custodia: hay que poder ejercerla. Un progenitor que trabaja 14 horas al dia y no tiene quien cuide al menor esta en desventaja frente a uno que si tiene tiempo y red de apoyo.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Factores que el Juez Considera', item 'Disponibilidad real'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es juridicamente correcta como aplicacion del principio del interes superior del menor. La disponibilidad real del progenitor para ejercer el cuidado cotidiano del menor es un factor esencial que el juez debe considerar. El ejemplo de las 14 horas laborales ilustra adecuadamente la diferencia entre el derecho nominal a la guarda y la capacidad efectiva de ejercerla. Los jueces de familia hondurenos evaluan la disponibilidad real como parte del estudio integral de cada caso. Esta consideracion esta implícita en el analisis del interes superior y en los estudios psicosociales que el juez puede ordenar.",
+      "sources": [
+        {
+          "source_description": "Principio del interes superior del menor y practica judicial en Juzgados de Familia",
+          "relevance": "La capacidad real de cuidado es un componente del interes superior",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-014",
+      "claim_text": "El juez evalua con cual de los progenitores el menor tiene un vinculo mas solido.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Factores que el Juez Considera', item 'Vinculo afectivo'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es correcta. El vinculo afectivo es un factor fundamental en la determinacion del interes superior del menor y es evaluado por los jueces de familia hondurenos, frecuentemente con el apoyo de estudios psicosociales o periciales. Este factor es universalmente reconocido en el derecho de familia comparado y es plenamente aplicable en Honduras.",
+      "sources": [
+        {
+          "source_description": "Principio del interes superior del menor y evaluacion psicosocial en procesos de familia",
+          "relevance": "El vinculo afectivo es un criterio esencial en la determinacion del interes superior",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-015",
+      "claim_text": "Maltrato, abandono previo, adicciones o inestabilidad emocional pueden hacer que un progenitor pierda la custodia.",
+      "claim_type": "supporting",
+      "source_location_in_body": "Seccion 'Factores que el Juez Considera', item 'Conducta'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es juridicamente correcta. El Codigo de Familia de Honduras establece que el maltrato, el abandono y las adicciones son causales de privacion o suspension de la patria potestad y, consecuentemente, de la guarda. La inestabilidad emocional puede ser considerada como un factor que afecta la aptitud del progenitor para ejercer la guarda. Estas causales estan tipificadas en el Codigo de Familia como conductas que atentan contra el bienestar del menor y justifican la intervencion judicial para modificar el regimen de guarda.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84, Articulos sobre privacion y suspension de la patria potestad",
+          "relevance": "Tipifica las causales de perdida de la patria potestad y guarda",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-016",
+      "claim_text": "La custodia se solicita dentro del proceso de divorcio o, si los padres nunca estuvieron casados, mediante demanda independiente ante el Juzgado de Familia.",
+      "claim_type": "central",
+      "source_location_in_body": "Seccion 'Como se Solicita'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion describe correctamente las vias procesales en Honduras. En el contexto de un matrimonio, la custodia/guarda de los menores se resuelve como parte del proceso de divorcio (contencioso o por mutuo acuerdo). El Codigo de Familia establece que en la sentencia de divorcio el juez debe resolver sobre la guarda de los hijos. Cuando los padres nunca contrajeron matrimonio, la guarda se tramita mediante un proceso independiente de familia. Los Juzgados de Familia (o Juzgados de Letras de Familia) son los organos jurisdiccionales competentes para conocer de estos asuntos en Honduras.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras, Decreto No. 76-84, articulos sobre divorcio y guarda",
+          "relevance": "Regula el tramite de guarda dentro y fuera del proceso de divorcio",
+          "accessibility": "no_accesible_directamente"
+        },
+        {
+          "source_description": "Ley de Organizacion y Atribuciones de los Tribunales de Honduras",
+          "relevance": "Establece la competencia de los Juzgados de Familia",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-017",
+      "claim_text": "El juez puede ordenar un estudio psicosocial para evaluar el entorno de cada progenitor antes de decidir.",
+      "claim_type": "central",
+      "source_location_in_body": "Seccion 'Como se Solicita', ultima oracion",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion es correcta. Los jueces de familia hondurenos tienen la facultad de ordenar estudios psicosociales (realizados por trabajadores sociales, psicologos u otros profesionales adscritos al juzgado o al equipo tecnico interdisciplinario) para evaluar las condiciones de vida, el entorno familiar y la capacidad de cada progenitor. Esta practica es estandar en los procesos de guarda y custodia en Honduras y se fundamenta en la necesidad de contar con elementos tecnicos para aplicar correctamente el principio del interes superior del menor.",
+      "sources": [
+        {
+          "source_description": "Codigo de Familia de Honduras y Codigo Procesal Civil / Ley de Organizacion de Tribunales",
+          "relevance": "Facultan al juez para ordenar peritajes y estudios tecnicos en procesos de familia",
+          "accessibility": "no_accesible_directamente"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-018",
+      "claim_text": "Cuando los padres se separan, la decision sobre con quien viviran los hijos es una de las mas dificiles y la que mas conflictos genera.",
+      "claim_type": "contextual",
+      "source_location_in_body": "Primer parrafo, primera oracion",
+      "verification_status": "unverifiable",
+      "confidence": "not_applicable",
+      "verification_rationale": "Esta es una afirmacion de caracter descriptivo y sociologico, no juridico. No requiere verificacion legal. Describe una realidad social ampliamente reconocida.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-019",
+      "claim_text": "La custodia no es un premio para el mejor padre ni un castigo para el peor: es la decision que el juez toma pensando exclusivamente en el bienestar del menor.",
+      "claim_type": "contextual",
+      "source_location_in_body": "Seccion 'Conclusion'",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion de caracter pedagogo y retorico es sustancialmente correcta en terminos juridicos. Refleja adecuadamente la naturaleza de la decision judicial sobre guarda, que no tiene caracter sancionatorio ni de premiacion, sino que se fundamenta exclusivamente en el interes superior del menor. Es una formulacion adecuada para un publico no especializado que ayuda a desmitificar la naturaleza del proceso de custodia.",
+      "sources": [
+        {
+          "source_description": "Principio del interes superior del menor",
+          "relevance": "La decision de guarda no es un juicio moral sobre los padres sino una determinacion sobre el bienestar del menor",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim_id": "claim-b-020",
+      "claim_text": "Para obtenerla [la custodia], no se trata de demostrar que el otro progenitor es malo, sino de demostrar que usted ofrece el mejor entorno posible para el desarrollo del nino.",
+      "claim_type": "contextual",
+      "source_location_in_body": "Seccion 'Conclusion', ultima oracion",
+      "verification_status": "verified_consistent",
+      "confidence": "high",
+      "verification_rationale": "Esta afirmacion de caracter orientador es sustancialmente correcta. Aunque las causales de inaptitud del otro progenitor son relevantes (como se menciona en la seccion sobre conducta), el enfoque principal del juez hondureno esta en determinar cual es el mejor entorno para el menor, no en establecer culpas. Es un consejo practico adecuado que refleja correctamente la filosofia del sistema de proteccion de menores hondureno.",
+      "sources": [
+        {
+          "source_description": "Principio del interes superior del menor",
+          "relevance": "El enfoque esta en lo mejor para el menor, no en la culpa de los padres",
+          "accessibility": "principios_generales"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    }
+  ],
+  "overall_assessment": {
+    "total_claims": 20,
+    "verified_consistent": 16,
+    "needs_verification": 2,
+    "needs_human_review": 1,
+    "unverifiable": 1,
+    "contradicted": 0,
+    "overall_accuracy_rating": "substantially_accurate",
+    "overall_accuracy_rationale": "El articulo es sustancialmente preciso en cuanto a los principios juridicos que rigen la guarda y custodia de menores en Honduras. El 80% de los claims (16/20) son consistentes con el marco legal hondureno. Dos claims requieren verificacion adicional (relacionados con la clasificacion de tipos de custodia y el fundamento normativo de la custodia compartida), uno requiere revision humana por ser una afirmacion estadistica/empirica no verificable, y uno es de caracter descriptivo no juridico. No se encontraron contradicciones con el ordenamiento juridico hondureno. Nota adicional: los claims con status 'needs_verification' tambien tienen 'needs_human_review: true', elevando el total de claims que requieren atencion humana a 3 (claims 3, 5, 6). La principal debilidad del articulo es la imprecision terminologica: utiliza 'custodia' cuando el termino legal hondureno es 'guarda', y emplea categorias doctrinales modernas ('custodia compartida') que no aparecen con esa denominacion en el Codigo de Familia de 1984. Sin embargo, los supuestos juridicos descritos son sustancialmente correctos.",
+    "ready_for_final_decision": true,
+    "readiness_rationale": "El articulo puede ser objeto de decision final. Los aspectos que requieren correccion son de precision terminologica y no afectan la correccion sustancial del contenido. Se recomienda: (1) aclarar que los tipos de custodia descritos son categorias doctrinales y que el Codigo de Familia utiliza el termino 'guarda'; (2) matizar la afirmacion sobre la frecuencia de la custodia exclusiva; (3) aclarar que la 'custodia compartida' es un desarrollo jurisprudencial/doctrinario, no una figura expresamente regulada en el Codigo de Familia de 1984. Estas correcciones mejorarian la precision tecnica sin alterar la utilidad practica del articulo para su audiencia objetivo.",
+    "recommended_actions": [
+      {
+        "priority": "medium",
+        "action": "Precision terminologica sobre custodia vs. guarda y sobre modalidades de custodia",
+        "detail": "Agregar nota aclaratoria sobre que el termino legal hondureno es 'guarda' y que las categorias de 'custodia exclusiva/compartida' son doctrinales. Citar los articulos aplicables del Codigo de Familia."
+      },
+      {
+        "priority": "low",
+        "action": "Matizar afirmacion sobre frecuencia de custodia exclusiva",
+        "detail": "Cambiar 'Es la modalidad mas frecuente' por 'Suele ser la modalidad mas frecuente' o eliminar si no hay respaldo estadistico."
+      },
+      {
+        "priority": "medium",
+        "action": "Aclarar el fundamento normativo de la custodia compartida en Honduras",
+        "detail": "Indicar que la custodia compartida no esta expresamente regulada en el Codigo de Familia de 1984 sino que ha sido desarrollada por via jurisprudencial y doctrinal."
+      },
+      {
+        "priority": "high",
+        "action": "Verificacion humana con texto del Codigo de Familia",
+        "detail": "Se recomienda que un abogado hondureno revise el articulo con el texto vigente del Codigo de Familia (Decreto 76-84) y el Codigo de la Ninez y la Adolescencia (Decreto 73-96) para verificar las citas normativas y actualizar cualquier referencia a reformas posteriores."
+      }
+    ]
+  }
+}

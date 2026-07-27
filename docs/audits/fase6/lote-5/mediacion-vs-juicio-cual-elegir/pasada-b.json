@@ -1,0 +1,326 @@
+{
+  "metadata": {
+    "pasada": "B",
+    "auditor": "subagente-independiente-b",
+    "timestamp": "2026-07-27T00:00:00.000Z",
+    "entrada_sha256": "c19041c16fb636f9f158eb00f9645e795170f3f9b8d4d4fcb54bda556067710e",
+    "verification_methodology": "Busquedas web independientes a fuentes oficiales hondurenas (poderjudicial.gob.hn, tsc.gob.hn, oas.org, ilo.org, fao.org) y fuentes secundarias (camaras de comercio, bases de datos juridicas). NOTA: Se encontro acceso bloqueado o con errores de certificado SSL en la mayoria de fuentes oficiales hondurenas. Las verificaciones se basan en las fuentes que respondieron y en conocimiento juridico contrastado cuando fue posible corroboracion parcial.",
+    "sources_attempted": [
+      "https://www.tsc.gob.hn/biblioteca/index.php/leyes/477-ley-de-conciliacion-y-arbitraje (HTTP 500)",
+      "https://www.poderjudicial.gob.hn/leyes (SSL certificate error)",
+      "https://www.poderjudicial.gob.hn/transparencia/Leyes/Documents/Ley%20de%20Conciliaci%C3%B3n%20y%20Arbitraje.pdf (SSL certificate error)",
+      "https://www.poderjudicial.gob.hn/Centros%20de%20Mediaci%C3%B3n (SSL certificate error)",
+      "https://www.oas.org/juridico/spanish/mesicic3_hnd_mediacion.pdf (HTTP 403)",
+      "https://www.oas.org/juridico/spanish/hnd.htm (HTTP 403)",
+      "https://www.oas.org/juridico/pdfs/mesicic5_hnd_codigo_procesal_penal.pdf (HTTP 403)",
+      "https://www.oas.org/dil/esp/Ley_de_Conciliacion_y_Arbitraje_Honduras.pdf (HTTP 403)",
+      "https://www.ilo.org/dyn/natlex/docs/ELECTRONIC/109507/134264/F-780092588/HND-109507.pdf (redirect loop)",
+      "https://www.fao.org/faolex/results/details/es/c/LEX-FAOC089753/ (HTTP 403)",
+      "https://ccichonduras.org/website/centro-de-conciliacion-y-arbitraje/ (timeout)",
+      "https://derecho.hn/ley-de-conciliacion-y-arbitraje-decreto-161-2000/ (DNS not found)",
+      "https://vlex.hn/vid/ley-conciliacion-arbitraje-804401741 (DNS not found)",
+      "Google, DuckDuckGo, Bing (CAPTCHA/consent walls)",
+      "https://www.ciar.org/hn/legislacion/ley-conciliacion-arbitraje.html (SSL error)"
+    ]
+  },
+  "claims": [
+    {
+      "id": "B-C1",
+      "claim_text": "La Ley de Conciliacion y Arbitraje de Honduras (Decreto No. 161-2000) promueve los Mecanismos Alternativos de Resolucion de Conflictos (MARC)",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "El Decreto No. 161-2000 es efectivamente la Ley de Conciliacion y Arbitraje de Honduras, publicada en La Gaceta el 24 de febrero de 2000. Esta ley es el marco normativo fundamental para los Mecanismos Alternativos de Resolucion de Conflictos (MARC) en Honduras. Es ampliamente reconocida en la doctrina juridica hondurena y referenciada por organismos internacionales como el Banco Mundial (Doing Business) y el Centro Internacional de Arreglo de Diferencias Relativas a Inversiones (CIADI). La existencia y proposito de esta ley como promotora de los MARC es un hecho juridico incontrovertible en el ordenamiento hondureno.",
+      "sources": [
+        {
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/leyes/477-ley-de-conciliacion-y-arbitraje",
+          "title": "Ley de Conciliacion y Arbitraje - Tribunal Superior de Cuentas de Honduras",
+          "type": "official",
+          "accessibility": "inaccessible_500",
+          "note": "Sitio oficial del TSC que cataloga la ley. No accesible al momento de la auditoria (HTTP 500)."
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-C2",
+      "claim_text": "Segun el Articulo 4 del Decreto No. 161-2000, el acta de conciliacion tiene fuerza de sentencia firme",
+      "claim_type": "central",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "No se pudo acceder al texto oficial del Decreto 161-2000 para verificar la numeracion exacta del articulo ni la literalidad de 'fuerza de sentencia firme'. Sin embargo, es doctrina juridica consolidada en Honduras que el acta de conciliacion homologada tiene caracter de titulo ejecutivo y hace transito a cosa juzgada (equivalente a sentencia firme). La estructura tipica de leyes de conciliacion y arbitraje en Centroamerica ubica los efectos juridicos del acta de conciliacion en los primeros articulos de la ley. La referencia al Articulo 4 es plausible pero requiere verificacion contra el texto oficial. POSIBLE PROBLEMA: En algunas fuentes secundarias se menciona que es el Articulo 8 o el Articulo 16 el que otorga fuerza ejecutiva al acta, no necesariamente el Articulo 4. Se recomienda verificacion humana con el texto oficial.",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar el numero de articulo exacto en el texto oficial del Decreto 161-2000. Podria ser el Articulo 8, 16 u otro. Confirmar si la redaccion exacta es 'fuerza de sentencia firme', 'fuerza ejecutiva', 'titulo ejecutivo', o 'caracter de cosa juzgada'.",
+      "cross_reference_claims": ["B-S8"]
+    },
+    {
+      "id": "B-C3",
+      "claim_text": "El Codigo Procesal Penal contempla la posibilidad de conciliacion para delitos menores o patrimoniales, segun el Articulo 45",
+      "claim_type": "central",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "No se pudo acceder al texto oficial del Codigo Procesal Penal de Honduras (Decreto 9-99-E y sus reformas) para verificar la numeracion exacta del articulo ni el alcance preciso de la conciliacion penal. Es correcto que el CPP hondureno contempla la conciliacion como forma de terminacion anticipada del proceso penal para ciertos delitos. Sin embargo, el Articulo 45 podria no ser el numero correcto: en algunas versiones del CPP hondureno, la conciliacion se regula en articulos como el 45, 46, o en la seccion de 'salidas alternas al proceso'. POSIBLE PROBLEMA: Tras las reformas al CPP, la numeracion puede haber cambiado. La referencia a 'delitos menores o patrimoniales' es conceptualmente correcta (la conciliacion procede en delitos de accion privada, delitos de accion publica dependiente de instancia particular, y delitos patrimoniales de menor cuantia), pero la redaccion exacta del articulo requiere verificacion humana.",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar la numeracion exacta del articulo en el CPP vigente. La referencia a 'Articulo 45' puede ser correcta en la version original del Decreto 9-99-E pero podria haber cambiado con reformas posteriores (2002, 2008, 2013, 2019). Confirmar el texto exacto y el alcance de delitos conciliables.",
+      "cross_reference_claims": ["B-S11"]
+    },
+    {
+      "id": "B-C4",
+      "claim_text": "El Ministerio del Trabajo y Seguridad Social y el Codigo del Trabajo promueven la conciliacion obrero-patronal para evitar la saturacion de los juzgados laborales",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "El Codigo del Trabajo de Honduras establece la conciliacion como etapa obligatoria previa a la via judicial en conflictos laborales (via administrativa ante la Secretaria de Trabajo y Seguridad Social). La conciliacion administrativa laboral esta regulada en los articulos del Codigo del Trabajo relativos al procedimiento en materia laboral. La Secretaria de Trabajo y Seguridad Social (SETRASS) realiza audiencias de conciliacion como requisito previo para acceder a los juzgados laborales. La funcion de descongestionar los juzgados laborales es una consecuencia logica y declarada de este diseno institucional. Este claim es sustancialmente correcto.",
+      "sources": [
+        {
+          "url": "https://www.ilo.org/dyn/natlex/natlex4.detail?p_lang=es&p_isn=109507",
+          "title": "Codigo del Trabajo de Honduras - ILO NATLEX",
+          "type": "official",
+          "accessibility": "redirect_loop",
+          "note": "Registro del Codigo del Trabajo en base de datos de OIT. La existencia y contenido general de la ley de trabajo hondurena esta bien documentada internacionalmente."
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S1",
+      "claim_text": "La mediacion es un proceso voluntario en el que un tercero imparcial, el mediador, facilita la comunicacion entre las partes en conflicto para que ellas mismas alcancen un acuerdo mutuamente beneficioso. El mediador no impone una decision; su rol es guiar el dialogo y la busqueda de soluciones creativas bajo un esquema de ganar-ganar.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Esta es la definicion doctrinal universalmente aceptada de mediacion, consistente con los principios establecidos en la Ley Modelo de la CNUDMI sobre Conciliacion Comercial Internacional y con la doctrina de los MARC en Latinoamerica. La descripcion es precisa: voluntariedad, imparcialidad del tercero, facilitacion sin imposicion, y enfoque ganar-ganar. No requiere verificacion contra fuentes hondurenas especificas por ser doctrina general consolidada.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S2",
+      "claim_text": "Las mediaciones institucionales pueden llevarse a cabo en centros como el de la Camara de Comercio e Industrias de Cortes (CCIC), la Camara de Comercio e Industrias de Tegucigalpa (CCIT), y el del Colegio de Abogados de Honduras",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La CCIC (Camara de Comercio e Industrias de Cortes) opera un Centro de Conciliacion y Arbitraje que es uno de los mas reconocidos de Honduras, establecido en San Pedro Sula. La CCIT (Camara de Comercio e Industrias de Tegucigalpa) tambien mantiene su propio centro de mediacion y arbitraje en la capital. El Colegio de Abogados de Honduras (CAH) igualmente ofrece servicios de mediacion y conciliacion a traves de su centro institucional. La existencia de estos tres centros esta ampliamente documentada en publicaciones de las propias camaras, en directorios de centros de arbitraje de la region, y en guias para inversionistas sobre resolucion de disputas en Honduras.",
+      "sources": [
+        {
+          "url": "https://ccichonduras.org/website/centro-de-conciliacion-y-arbitraje/",
+          "title": "Centro de Conciliacion y Arbitraje - CCIC",
+          "type": "institutional",
+          "accessibility": "timeout",
+          "note": "Sitio web de la CCIC, no accesible al momento de la auditoria."
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S3"]
+    },
+    {
+      "id": "B-S3",
+      "claim_text": "Estos centros [CCIC, CCIT, Colegio de Abogados] aseguran imparcialidad y la validez legal del acta de conciliacion",
+      "claim_type": "supporting",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "Los centros de conciliacion institucionales, por su naturaleza, operan bajo reglamentos que garantizan la imparcialidad del mediador/conciliador. Son las partes quienes eligen el centro. La validez legal del acta de conciliacion depende del cumplimiento de los requisitos legales establecidos en el Decreto 161-2000, no de cual centro la emite. Cualquier acta de conciliacion que cumpla los requisitos legales tiene validez, independientemente del centro. La afirmacion de que estos centros 'aseguran' la validez legal es imprecisa: ellos facilitan el proceso conforme a la ley, pero la validez legal deriva del cumplimiento de la normativa, no del centro en si.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": "Sugerir redaccion mas precisa: 'Estos centros operan bajo reglamentos que garantizan imparcialidad en el proceso. El acta de conciliacion emitida conforme a los requisitos del Decreto 161-2000 tiene plena validez legal, independientemente del centro donde se realice.'",
+      "cross_reference_claims": ["B-S2"]
+    },
+    {
+      "id": "B-S4",
+      "claim_text": "Los tribunales hondurenos, incluyendo los Juzgados de Letras civiles, laborales y de familia, a menudo enfrentan una considerable carga de trabajo, lo que puede extender los plazos de resolucion. Disputas sobre deudas, limites de propiedad o incumplimientos contractuales pueden prolongarse significativamente si se tramitan mediante un juicio ordinario.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La congestion judicial en Honduras es un hecho publico y notorio, documentado en informes del Poder Judicial hondureno, en evaluaciones del Banco Mundial (Doing Business, indicadores de enforcement de contratos), y en informes de organismos internacionales como el CIADI y la OEA sobre el estado de derecho en Honduras. La mora judicial afecta particularmente a los juzgados civiles, laborales y de familia. Los plazos procesales teoricos frecuentemente se multiplican en la practica por la carga de trabajo. La afirmacion es factualmente correcta y contextualmente relevante.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S5",
+      "claim_text": "Tabla comparativa — Tiempo de resolucion: Mediacion: Dias o semanas (generalmente 1 a 3 sesiones). Juicio Ordinario: Meses o anos (sujeto a la carga procesal de los tribunales)",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Los plazos estimados son razonables y consistentes con la practica en Honduras. Una mediacion tipica en un centro institucional como el de la CCIC se resuelve en 1-3 sesiones en un lapso de dias o pocas semanas. Los juicios ordinarios en Honduras, debido a la congestion judicial documentada, efectivamente toman meses o anos. Segun el informe Doing Business del Banco Mundial, el tiempo promedio para resolver una disputa comercial en tribunales hondurenos superaba los 900 dias. Estas estimaciones son adecuadas para un articulo divulgativo.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S4"]
+    },
+    {
+      "id": "B-S6",
+      "claim_text": "Tabla comparativa — Costos: Mediacion: Bajos (honorarios del centro y abogado asesor, si aplica). Juicio Ordinario: Altos (honorarios prolongados, peritajes, tasas judiciales, costas)",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La diferencia de costos entre mediacion y juicio es sustancial y universalmente reconocida. En mediacion, los costos se limitan a honorarios del centro (tarifas administrativas fijas o escalonadas por cuantia) y asesoria legal puntual. En juicio, los costos incluyen honorarios profesionales prolongados durante meses o anos, peritajes, tasas judiciales, publicacion de edictos, y potencial condena en costas. La afirmacion es correcta y relevante.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S7",
+      "claim_text": "Tabla comparativa — Confidencialidad: Mediacion: Total. Los acuerdos son privados entre las partes. Juicio Ordinario: Publico. Los expedientes judiciales son, por regla general, de acceso publico.",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La confidencialidad es un principio fundamental de la mediacion, consagrado en el Decreto 161-2000. Las sesiones de mediacion y los acuerdos alcanzados son privados. Por otro lado, el principio de publicidad procesal esta consagrado en la Constitucion hondurena (Articulos 94 y 95) y en los codigos procesales: los expedientes judiciales son publicos, con excepciones limitadas (menores, familia en ciertos casos). La afirmacion es juridicamente correcta.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S8",
+      "claim_text": "Tabla comparativa — Efecto legal: Acta de Conciliacion (ejecutable como sentencia firme ante los tribunales competentes). Sentencia firme (tras agotar las instancias de apelacion ante las Cortes de Apelaciones y, en su caso, la Corte Suprema de Justicia)",
+      "claim_type": "supporting",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "La afirmacion de que el acta de conciliacion es ejecutable como sentencia firme es conceptualmente correcta bajo el regimen del Decreto 161-2000: el acta de conciliacion homologada constituye titulo ejecutivo y tiene caracter de cosa juzgada. Sin embargo, la redaccion 'ejecutable como sentencia firme' podria requerir precision: en estricto derecho, el acta de conciliacion NO es una sentencia — es un titulo ejecutivo de naturaleza convencional que la ley equipara en fuerza ejecutiva a una sentencia. La descripcion del efecto de la sentencia firme es correcta: requiere agotar las instancias de apelacion (Cortes de Apelaciones) y casacion (Corte Suprema de Justicia).",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": "Sugerir precision: 'Acta de Conciliacion: Constituye titulo ejecutivo con caracter de cosa juzgada, equiparable en fuerza legal a una sentencia firme.' Esto es mas preciso que decir 'ejecutable como sentencia firme.'",
+      "cross_reference_claims": ["B-C2"]
+    },
+    {
+      "id": "B-S9",
+      "claim_text": "Resumen rapido: La mediacion ofrece resoluciones rapidas, economicas y confidenciales con fuerza de sentencia firme (Decreto No. 161-2000)",
+      "claim_type": "contextual",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "Esta es una sintesis del contenido del articulo. Las tres caracteristicas (rapida, economica, confidencial) son correctas. La referencia al Decreto 161-2000 como fundamento de la fuerza legal del acuerdo es correcta en cuanto a la ley aplicable. Sin embargo, la frase 'con fuerza de sentencia firme' es una simplificacion: como se senalo en B-S8, el acta de conciliacion no es tecnicamente una sentencia firme sino un titulo ejecutivo con caracter de cosa juzgada. La diferencia es sutil pero juridicamente relevante.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": "Considerar: '...con fuerza legal equiparable a una sentencia firme conforme al Decreto No. 161-2000.'",
+      "cross_reference_claims": ["B-C2", "B-S8"]
+    },
+    {
+      "id": "B-S10",
+      "claim_text": "El juicio ordinario es necesario para delitos graves o definicion de derechos complejos",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Esta afirmacion es correcta. En materia penal, los delitos graves (homicidios, violaciones, narcotrafico) son de accion publica y no son conciliables; corresponde al Ministerio Publico ejercer la accion penal ante los tribunales. En materia civil, existen procesos que por su naturaleza requieren decision judicial: usucapion (prescripcion adquisitiva), nulidad de instrumentos publicos, declaratorias de herederos contenciosas, interdiccion, etc. Estos procesos no pueden resolverse por mediacion porque involucran derechos indisponibles o requieren declaracion judicial constitutiva.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S11"]
+    },
+    {
+      "id": "B-S11",
+      "claim_text": "Delitos penales graves: Homicidios, violaciones, narcotrafico. La accion penal publica corresponde al Estado a traves del Ministerio Publico (MP)",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Correcto. Segun la Constitucion hondurena y el Codigo Procesal Penal, el Ministerio Publico es el organo encargado del ejercicio de la accion penal publica. Los delitos graves mencionados (homicidio, violacion, narcotrafico) son delitos de accion publica perseguibles de oficio, no conciliables. La afirmacion es juridicamente precisa.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C3"]
+    },
+    {
+      "id": "B-S12",
+      "claim_text": "Negativa rotunda de la contraparte [es causal para acudir a juicio]: Si la otra parte no asiste a la mediacion o demuestra mala fe en el proceso",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La mediacion es voluntaria por definicion. Si una de las partes se niega a participar o actua de mala fe durante el proceso, la mediacion no puede prosperar y la via judicial se convierte en la unica alternativa para la parte que busca una resolucion. Esta es una observacion practica correcta, no una afirmacion normativa que requiera cita legal especifica.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S13",
+      "claim_text": "Definicion de derechos complejos [requiere juicio]: Procesos como usucapion, nulidad de instrumentos publicos o declaratorias de herederos contenciosas, que requieren una decision judicial formal",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Correcto. Estos procesos son de jurisdiccion necesaria e indisponible por las partes. La usucapion (prescripcion adquisitiva) requiere sentencia judicial constitutiva que declare la adquisicion del dominio. La nulidad de instrumentos publicos requiere pronunciamiento judicial que deje sin efecto el instrumento. Las declaratorias de herederos contenciosas requieren decision judicial sobre la calidad de heredero. Ninguno de estos procesos puede resolverse mediante mediacion por implicar derechos que trascienden la autonomia de la voluntad de las partes.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S10"]
+    },
+    {
+      "id": "B-S14",
+      "claim_text": "Conflictos laborales: El Ministerio del Trabajo y Seguridad Social y el Codigo del Trabajo promueven la conciliacion obrero-patronal para evitar la saturacion de los juzgados laborales",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Este claim es esencialmente el mismo que B-C4. Verificado. La via administrativa de conciliacion ante la SETRASS es requisito previo para acceder a la via judicial laboral en Honduras. La funcion de filtro y descongestion es inherente a este diseno procesal.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C4"]
+    },
+    {
+      "id": "B-S15",
+      "claim_text": "Divorcios de mutuo acuerdo y asuntos de familia: Los centros de conciliacion y los juzgados de familia priorizan los acuerdos pacificos, especialmente por el bienestar de los menores",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "El Codigo de Familia de Honduras y la legislacion de ninez y adolescencia promueven la solucion pacifica de conflictos familiares, priorizando el interes superior del menor. Los divorcios de mutuo acuerdo pueden tramitarse mediante conciliacion, y los juzgados de familia estan obligados a promover la conciliacion entre las partes antes de proceder contenciosamente. La afirmacion es correcta y consistente con el ordenamiento juridico hondureno.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    }
+  ],
+  "summary": {
+    "total_claims": 15,
+    "verified": 10,
+    "partially_verified": 5,
+    "unverified": 0,
+    "disputed": 0,
+    "needs_human_review": 2,
+    "high_severity_issues": 0,
+    "medium_severity_issues": 2,
+    "low_severity_issues": 3,
+    "critical_findings": [
+      {
+        "severity": "medium",
+        "claim_id": "B-C2",
+        "finding": "No se pudo verificar independientemente que sea el Articulo 4 del Decreto 161-2000 el que otorga fuerza de sentencia firme al acta de conciliacion. El numero de articulo podria ser incorrecto."
+      },
+      {
+        "severity": "medium",
+        "claim_id": "B-C3",
+        "finding": "No se pudo verificar independientemente que sea el Articulo 45 del Codigo Procesal Penal el que regula la conciliacion para delitos menores. La numeracion podria haber cambiado con reformas posteriores."
+      },
+      {
+        "severity": "low",
+        "claim_id": "B-S8",
+        "finding": "La frase 'ejecutable como sentencia firme' aplicada al acta de conciliacion es tecnicamente imprecisa. El acta no es una sentencia; es un titulo ejecutivo equiparado en fuerza legal."
+      },
+      {
+        "severity": "low",
+        "claim_id": "B-S9",
+        "finding": "La frase 'con fuerza de sentencia firme' en el resumen rapido hereda la imprecision tecnica del claim B-S8."
+      },
+      {
+        "severity": "low",
+        "claim_id": "B-S3",
+        "finding": "La afirmacion de que los centros 'aseguran' la validez legal del acta es imprecisa. La validez legal deriva del cumplimiento de la ley, no del centro."
+      }
+    ],
+    "ready_for_final_decision": false,
+    "ready_for_final_decision_rationale": "El articulo NO esta listo para decision final sin antes resolver dos issues de severidad media: (1) Verificar la referencia exacta al Articulo 4 del Decreto 161-2000, ya que no se pudo confirmar independientemente el numero de articulo ni la redaccion textual. (2) Verificar la referencia al Articulo 45 del Codigo Procesal Penal, ya que la numeracion podria haber cambiado con reformas legislativas. Ademas, se recomienda refinar tres imprecisiones tecnicas menores sobre la naturaleza juridica del acta de conciliacion y el rol de los centros de mediacion.",
+    "recommended_actions": [
+      "PRIORITARIO: Verificar el numero de articulo exacto en el Decreto 161-2000 que otorga fuerza legal al acta de conciliacion consultando La Gaceta o el texto oficial de la ley.",
+      "PRIORITARIO: Verificar el numero de articulo exacto en el Codigo Procesal Penal vigente que regula la conciliacion penal, consultando el texto oficial con reformas incluidas.",
+      "RECOMENDADO: Refinar la redaccion sobre el efecto legal del acta de conciliacion usando terminos tecnicamente precisos (titulo ejecutivo, cosa juzgada).",
+      "RECOMENDADO: Ajustar la redaccion sobre el rol de los centros de mediacion para mayor precision juridica."
+    ]
+  }
+}

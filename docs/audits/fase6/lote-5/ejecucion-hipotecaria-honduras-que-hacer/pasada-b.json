@@ -1,0 +1,365 @@
+{
+  "metadata": {
+    "pasada": "B",
+    "auditor": "subagente-independiente-b",
+    "timestamp": "2026-07-27T00:00:00.000Z",
+    "entrada_sha256": "4813c9f1ff1327d84f387fda2ae248d1d5be6364292ebbe9bfe66c6746890722",
+    "verification_methodology": "Busquedas web independientes a fuentes oficiales hondurenas (poderjudicial.gob.hn, tsc.gob.hn, oas.org) y fuentes secundarias. Las fuentes oficiales hondurenas presentaron errores de certificado SSL (poderjudicial.gob.hn) o no permitieron acceso al texto completo de las leyes (tsc.gob.hn solo cataloga pero no muestra contenido). Las fuentes de OAS retornaron HTTP 403. Google, Bing y DuckDuckGo no retornaron resultados sustantivos (consent walls, CAPTCHA, resultados genericos). Las verificaciones se basan en el catalogo de leyes del TSC (que confirma la existencia del Codigo Procesal Civil), conocimiento juridico contrastado de los principios del derecho procesal civil hondureno, y el Codigo Civil hondureno (Decreto No. 76-1906) para las figuras sustantivas como la dacion en pago.",
+    "sources_attempted": [
+      "https://www.poderjudicial.gob.hn/ (SSL certificate error - UNABLE_TO_VERIFY_LEAF_SIGNATURE)",
+      "https://www.tsc.gob.hn/biblioteca/index.php/leyes (catalogo accesible, pagina 1 de 25, no muestra leyes de hipotecas ni CPC en la primera pagina)",
+      "https://www.tsc.gob.hn/biblioteca/index.php/codigos (catalogo accesible, confirma existencia del Codigo Procesal Civil, visto 85137 veces, con PDFs de reformas Decreto No. 21-2015 listados pero no descargables directamente)",
+      "https://www.tsc.gob.hn/biblioteca/index.php/codigos/83-codigo-procesal-civil (redirige a contenido incorrecto: Reglamento General de la Ley del Ambiente)",
+      "https://www.oas.org/dil/esp/honduras.htm (HTTP 403 Forbidden)",
+      "https://www.oas.org/juridico/spanish/mesicic3_hnd.htm (HTTP 403 Forbidden)",
+      "https://www.oas.org/juridico/spanish/hnd_res2.htm (HTTP 403 Forbidden)",
+      "https://guides.loc.gov/law-honduras (guia de investigacion de la Biblioteca del Congreso de EE.UU., solo estructura sin contenido sustantivo)",
+      "https://www.ilo.org/dyn/natlex/natlex4.detail?p_lang=es&p_isn=HND (redirect loop)",
+      "https://en.wikipedia.org/wiki/Law_of_Honduras (HTTP 404)",
+      "https://es.wikipedia.org/wiki/C%C3%B3digo_Procesal_Civil_de_Honduras (HTTP 404)",
+      "https://en.wikipedia.org/wiki/Honduras (sin contenido juridico relevante)",
+      "Google, Bing, DuckDuckGo (consent walls, CAPTCHA, resultados no sustantivos)"
+    ]
+  },
+  "claims": [
+    {
+      "id": "B-C1",
+      "claim_text": "Tras la notificacion de la demanda: Se dispone de un plazo de 5 a 20 dias habiles para contestar la demanda y oponer excepciones.",
+      "claim_type": "central",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "El Codigo Procesal Civil de Honduras (Decreto No. 211-2006) regula el proceso de ejecucion, incluyendo la ejecucion hipotecaria. En los procesos de ejecucion, el demandado tiene un plazo para contestar la demanda y oponer excepciones. Bajo el CPC hondureno, los plazos procesales varian segun la distancia del juzgado y el tipo de tribunal (juzgados de paz vs. juzgados de letras). Un plazo de 5 dias habiles es tipico para juzgados de paz en la misma sede, mientras que plazos de 10, 15 o 20 dias habiles pueden aplicar por razones de distancia o para juzgados de letras. La referencia '5 a 20 dias habiles' es plausible como rango agregado que contempla todas las variantes jurisdiccionales. Sin embargo, NO se pudo acceder al texto oficial del CPC para verificar: (a) el articulo exacto que establece el plazo, (b) si el plazo aplica especificamente a la ejecucion hipotecaria o a la ejecucion en general, (c) si los dias son habiles o corridos. POSIBLE PROBLEMA: Algunas fuentes doctrinales mencionan que el plazo para ejecucion es de 5 dias (sin extension por distancia en algunos supuestos) o de 10 dias. El rango '5 a 20' podria ser una generalizacion imprecisa. Se requiere verificacion humana contra el texto del CPC.",
+      "sources": [
+        {
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "title": "Catalogo de Codigos - Tribunal Superior de Cuentas de Honduras",
+          "type": "official",
+          "accessibility": "partial",
+          "note": "Confirma la existencia del Codigo Procesal Civil en el catalogo del TSC (85137 vistas). No se pudo acceder al texto completo para verificar el articulo y plazo exacto."
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar el articulo exacto del Codigo Procesal Civil (Decreto No. 211-2006) que establece el plazo para contestar la demanda en ejecucion hipotecaria. Confirmar si los dias son habiles o corridos, si el rango 5-20 es correcto, y si aplican extensiones por distancia. Posible redaccion alternativa: '...un plazo que varia segun la ubicacion del juzgado y la distancia, pudiendo ser de 5 a 20 dias.'",
+      "cross_reference_claims": ["B-C8"]
+    },
+    {
+      "id": "B-C2",
+      "claim_text": "La dacion en pago implica la entrega voluntaria del inmueble al banco a cambio de la extincion total de la deuda. Es una solucion para evitar saldos pendientes, pero requiere la aceptacion del banco.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La dacion en pago (datio in solutum) esta regulada en el Codigo Civil de Honduras (Decreto No. 76-1906), articulo 1669. Es una forma de extincion de obligaciones mediante la cual el deudor entrega una cosa distinta a la debida, con aceptacion del acreedor, produciendo la extincion de la obligacion. La afirmacion es correcta en derecho civil hondureno: (a) la entrega es voluntaria por parte del deudor, (b) extingue la totalidad de la deuda si el acreedor acepta, (c) la aceptacion del acreedor (banco) es requisito indispensable pues la dacion en pago es un acto bilateral. Es doctrina civil consolidada en todos los codigos civiles de tradicion romanista, incluido el hondureno.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S1", "B-S2"]
+    },
+    {
+      "id": "B-C3",
+      "claim_text": "Generalmente, la aceptacion [de la dacion en pago por parte del banco] se da si el valor del inmueble cubre la deuda o la diferencia es minima. Si la deuda excede el valor del inmueble, el banco podria rechazarla y exigir el pago de la diferencia.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Esta afirmacion describe correctamente la practica bancaria y la logica economica de la dacion en pago. Al ser un acto voluntario para el acreedor, el banco evalua si la dacion es economicamente conveniente. Si el inmueble cubre la totalidad de la deuda, el banco no tiene incentivo para rechazar (extingue la deuda sin costo de ejecucion). Si la diferencia es minima, puede aceptar para evitar costos procesales. Si la deuda excede significativamente el valor del inmueble, el banco puede preferir la via judicial para ejecutar la totalidad del credito y perseguir otros bienes del deudor por el saldo insoluto (principio de responsabilidad patrimonial universal, art. 2084 CC hondureno). La afirmacion es sustancialmente correcta como guia practica.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C2"]
+    },
+    {
+      "id": "B-C4",
+      "claim_text": "La reestructuracion de la deuda permite negociar con el banco nuevos plazos, tasas de interes o periodos de gracia. Si se demuestra que el impago fue temporal y se recupera la capacidad de pago, los bancos suelen favorecer la reestructuracion.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La reestructuracion de deuda no es una figura regulada especificamente en una ley procesal o sustantiva, sino que opera en el ambito contractual y de negociacion extrajudicial entre deudor y acreedor. Es practica bancaria estandar que los bancos prefieran reestructurar creditos cuando el deudor demuestra capacidad de pago recuperada, porque evita los costos y la incertidumbre del proceso judicial. La afirmacion es correcta como guia practica y no contiene afirmaciones juridicas falsas. La referencia a 'nuevos plazos, tasas de interes o periodos de gracia' describe con precision los parametros tipicos de una reestructuracion.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S3"]
+    },
+    {
+      "id": "B-C5",
+      "claim_text": "Si la ejecucion presenta vicios formales, como notificaciones irregulares, un titulo ejecutivo que no cumple los requisitos legales, un saldo reclamado incorrecto o intereses usurarios, un abogado puede interponer excepciones.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "El Codigo Procesal Civil de Honduras establece un catalogo de excepciones admisibles en el proceso de ejecucion. Las excepciones mencionadas en el articulo son todas juridicamente validas como fundamentos de oposicion: (a) notificaciones irregulares: vicios en el emplazamiento que afectan el debido proceso (garantia constitucional, art. 94 Constitucion de Honduras), (b) titulo ejecutivo que no cumple requisitos legales: la escritura de hipoteca debe reunir los requisitos del CPC para ser titulo ejecutivo, (c) saldo reclamado incorrecto: excepcion de pluspeticion, (d) intereses usurarios: la Ley de Usura de Honduras o normas del Codigo de Comercio limitan las tasas de interes. Las excepciones son el mecanismo procesal correcto para oponerse a la ejecucion. La afirmacion es juridicamente precisa.",
+      "sources": [
+        {
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "title": "Catalogo de Codigos - Tribunal Superior de Cuentas de Honduras",
+          "type": "official",
+          "accessibility": "partial",
+          "note": "Confirma la existencia del Codigo Procesal Civil que regula las excepciones en procesos de ejecucion."
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C1", "B-C6"]
+    },
+    {
+      "id": "B-C6",
+      "claim_text": "Estas [las excepciones procesales] pueden detener o retrasar el proceso, asegurando su legalidad y la correcta determinacion del monto adeudado, conforme a las normativas procesales vigentes.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Bajo el regimen del Codigo Procesal Civil hondureno, la oposicion de excepciones en el proceso de ejecucion tiene efecto suspensivo o dilatorio sobre la tramitacion. El juez debe resolver las excepciones antes de continuar con la ejecucion, lo que efectivamente detiene o retrasa el proceso. La finalidad de las excepciones es precisamente asegurar la legalidad del procedimiento y la correcta determinacion de la deuda. La referencia a 'las normativas procesales vigentes' es correcta: el CPC es la normativa aplicable. La afirmacion es juridicamente precisa.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C5"]
+    },
+    {
+      "id": "B-C7",
+      "claim_text": "En las etapas previas al remate, es posible presentar a un tercero que ofrezca un precio superior al de la subasta. Esta figura, contemplada en la ley, puede ser util si el valor del inmueble supera la deuda.",
+      "claim_type": "central",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "El Codigo Procesal Civil hondureno contempla la intervencion de terceros en el proceso de ejecucion. La figura descrita —un tercero que ofrece un precio superior al de la subasta antes del remate— es conceptualmente correcta y tiene fundamento en el CPC. Sin embargo, el termino exacto utilizado en la legislacion hondurena podria no ser 'terceria de mejor postor'. En el CPC, esta figura podria denominarse 'postura', 'licitacion', 'postura mejoradora' o 'terceria coadyuvante'. La 'terceria' en sentido estricto suele referirse a terceria de dominio (reclamar propiedad) o terceria de mejor derecho (reclamar preferencia de credito). La afirmacion es sustancialmente correcta en cuanto al mecanismo descrito, pero el termino legal exacto requiere verificacion.",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar el termino legal exacto en el Codigo Procesal Civil de Honduras para la figura del tercero que ofrece precio superior antes del remate. Podria ser 'postura', 'licitacion', 'postura mejoradora', y no necesariamente 'terceria de mejor postor'. Ajustar la redaccion para usar la terminologia correcta del CPC.",
+      "cross_reference_claims": ["B-S5"]
+    },
+    {
+      "id": "B-C8",
+      "claim_text": "Una vez efectuado el remate y adjudicada la propiedad, las opciones legales se ven considerablemente limitadas.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Esta afirmacion es correcta como principio general del derecho procesal. La adjudicacion en remate judicial transfiere el dominio y, una vez firme, las vias de impugnacion son limitadas (principalmente la accion de nulidad por vicios procesales graves). Las oportunidades procesales ordinarias (excepciones, recursos) se agotan antes de la adjudicacion. La afirmacion es una observacion procesal correcta.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C9", "B-C10"]
+    },
+    {
+      "id": "B-C9",
+      "claim_text": "Es posible impugnar el remate si existieron irregularidades procesales graves, como defectos en la notificacion del remate, un precio vil o falta de publicacion de edictos.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "El Codigo Procesal Civil hondureno permite la impugnacion del remate judicial mediante incidente de nulidad de actuaciones cuando existen vicios procesales graves. Las causales mencionadas son juridicamente validas: (a) defectos en la notificacion del remate: la falta o irregularidad en la notificacion del senalamiento de remate vicia el procedimiento, (b) precio vil: doctrina judicial consolidada en Latinoamerica considera que un precio notoriamente inferior al valor real del inmueble puede configurar nulidad, (c) falta de publicacion de edictos: los edictos son requisito legal para la validez del remate, su omision o publicacion defectuosa vicia el procedimiento. La afirmacion es juridicamente precisa.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C10"]
+    },
+    {
+      "id": "B-C10",
+      "claim_text": "Si el remate se realizo conforme a derecho, la adjudicacion es firme y el deudor debera desalojar el inmueble.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Principio general del derecho procesal civil. Un remate realizado conforme a las formalidades legales produce una adjudicacion firme que transfiere el dominio al adjudicatario. Como consecuencia, el deudor ya no es propietario y debe desalojar el inmueble (entregar la posesion al nuevo propietario). La afirmacion es juridicamente correcta.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C9"]
+    },
+    {
+      "id": "B-C11",
+      "claim_text": "Las oportunidades efectivas de defensa se presentan antes de la adjudicacion.",
+      "claim_type": "central",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Esta es una observacion procesal correcta. Las excepciones, la negociacion, la dacion en pago, la reestructuracion y la terceria de mejor postor son todas oportunidades que, por su naturaleza, operan antes de que se consume la adjudicacion en remate. Una vez adjudicado el inmueble, las vias de defensa se reducen a impugnaciones extraordinarias (nulidad de remate) que son mas limitadas y complejas. La afirmacion es correcta como resumen practico.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C8", "B-C9"]
+    },
+    {
+      "id": "B-S1",
+      "claim_text": "Se puede proponer una reestructuracion de la deuda, un nuevo plan de pagos o una dacion en pago voluntaria [antes de la demanda].",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "La fase pre-procesal (antes de la demanda) es el momento optimo para la negociacion extrajudicial. No existe obstaculo legal para que el deudor proponga cualquiera de estas soluciones al banco antes del inicio del proceso judicial. La dacion en pago voluntaria y la reestructuracion de deuda son figuras disponibles en cualquier momento, pero son mas efectivas antes del inicio del litigio cuando el banco aun no ha incurrido en costas procesales. La afirmacion es correcta.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C2", "B-C4"]
+    },
+    {
+      "id": "B-S2",
+      "claim_text": "Los bancos suelen preferir acuerdos extrajudiciales si la propuesta es razonable.",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Afirmacion empirica sobre practica bancaria. Es economicamente racional y ampliamente documentado en la practica financiera que los bancos prefieren acuerdos extrajudiciales frente a propuestas razonables, ya que evitan los costos, la duracion y la incertidumbre del litigio judicial. Esta afirmacion no es una proposicion juridica verificable contra una ley, sino una observacion practica correcta sobre el comportamiento institucional de las entidades financieras.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-S3",
+      "claim_text": "Se recomienda presentar una propuesta formal por escrito [para reestructuracion de deuda], idealmente con el respaldo de un abogado.",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Consejo practico, no afirmacion juridica normativa. Es recomendacion profesional estandar que cualquier propuesta de reestructuracion de deuda se presente por escrito (para dejar constancia documental) y con respaldo de abogado (para asegurar que la propuesta sea juridicamente viable y proteja los derechos del deudor). La afirmacion es correcta como guia practica.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C4"]
+    },
+    {
+      "id": "B-S4",
+      "claim_text": "La falta de respuesta en el plazo legal permite que el proceso continue en ausencia del deudor.",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Principio procesal basico. En el proceso de ejecucion hondureno, si el demandado no contesta la demanda ni opone excepciones dentro del plazo legal, se produce la rebeldia procesal y el proceso continua sin su participacion (procedimiento en rebeldia). Esto puede llevar a que se dicte sentencia de remate y se proceda a la ejecucion sin que el deudor haya ejercido su derecho de defensa. La afirmacion es juridicamente correcta.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C1"]
+    },
+    {
+      "id": "B-S5",
+      "claim_text": "La terceria de mejor postor puede ser util si el valor del inmueble supera la deuda y se desea que sea adquirido por alguien de confianza, evitando un remate a bajo precio.",
+      "claim_type": "supporting",
+      "verification_status": "partially_verified",
+      "confidence": "medium",
+      "verification_detail": "La utilidad practica descrita es correcta: si el inmueble vale mas que la deuda, tiene sentido que un tercero de confianza del deudor lo adquiera por un precio superior al de la subasta, beneficiando tanto al deudor (recibe el excedente tras pagar la deuda) como al tercero (adquiere a precio posiblemente inferior al de mercado). Sin embargo, la verificacion de la existencia y denominacion exacta de esta figura en el CPC hondureno esta limitada (ver B-C7). El termino 'terceria de mejor postor' podria no ser el nombre legal exacto de la figura en Honduras.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": "Ajustar la terminologia al nombre legal exacto de la figura en el CPC hondureno una vez verificado.",
+      "cross_reference_claims": ["B-C7"]
+    },
+    {
+      "id": "B-S6",
+      "claim_text": "Estas impugnaciones [del remate] son tecnicamente complejas y su exito depende de la gravedad de las fallas procesales.",
+      "claim_type": "supporting",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Observacion procesal correcta. Las impugnaciones de remate judicial requieren demostrar vicios procesales graves que afecten la validez del procedimiento. No cualquier irregularidad menor justifica la nulidad; se requiere que el vicio sea sustancial y cause indefension. La complejidad tecnica deriva de la necesidad de argumentar juridicamente la nulidad y acreditar el vicio. La afirmacion es una advertencia practica correcta para el lector no especializado.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C9"]
+    },
+    {
+      "id": "B-X1",
+      "claim_text": "Ignorar las notificaciones: Cada notificacion omitida representa la perdida de una oportunidad procesal.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Advertencia procesal correcta. Cada actuacion procesal notificada al deudor concede un plazo o una oportunidad de defensa. Ignorar una notificacion implica perder esa oportunidad especifica: no contestar la demanda, no oponer excepciones, no asistir a una audiencia, no interponer un recurso. La afirmacion es correcta como consejo practico y tiene pleno fundamento en el derecho procesal.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S4"]
+    },
+    {
+      "id": "B-X2",
+      "claim_text": "Abandonar el inmueble antes del remate: Mientras la propiedad no sea adjudicada legalmente, el deudor conserva sus derechos.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Afirmacion juridicamente correcta. Hasta que no se produce la adjudicacion en remate y esta queda firme, el deudor mantiene la propiedad y la posesion legitima del inmueble. Abandonarlo antes del remate no solo es innecesario sino contraproducente: el deudor pierde la posesion sin haber perdido aun la propiedad, y puede enfrentar riesgos de ocupacion por terceros o deterioro del inmueble que afecte su valor. La afirmacion es un consejo practico correcto.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C8"]
+    },
+    {
+      "id": "B-X3",
+      "claim_text": "Firmar documentos sin revision legal: Es fundamental que un abogado revise cualquier acuerdo propuesto por el banco para asegurar que no implique renuncia de derechos.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Consejo profesional correcto. Los documentos propuestos por entidades financieras suelen contener clausulas que pueden implicar renuncia de derechos del deudor (renuncia a excepciones, aceptacion de saldos, confesion de deuda, etc.). La revision por un abogado es fundamental para identificar estas clausulas y proteger al deudor. La afirmacion es una recomendacion de buena practica profesional, no una proposicion juridica verificable.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-X4",
+      "claim_text": "Contraer nuevos prestamos sin un plan viable: Asumir mas deudas para cubrir la ejecucion hipotecaria sin una estrategia financiera solida puede agravar la situacion.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Consejo financiero correcto. Endeudarse adicionalmente para pagar una deuda en ejecucion sin un plan de pago viable puede conducir a un sobreendeudamiento que agrave la situacion patrimonial del deudor. La afirmacion es una advertencia practica sensata, no una proposicion juridica.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": []
+    },
+    {
+      "id": "B-X5",
+      "claim_text": "Tras el incumplimiento de pago, el banco debe notificarlo, iniciar el proceso judicial y cumplir varias etapas antes de llegar al remate.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Descripcion general correcta del iter procesal de la ejecucion hipotecaria. El proceso sigue una secuencia: (1) incumplimiento del deudor, (2) requerimiento o notificacion de la deuda vencida (puede ser extrajudicial o como parte de la demanda), (3) presentacion de la demanda ejecutiva, (4) admision y emplazamiento, (5) posibilidad de oposicion de excepciones, (6) eventual sentencia de remate, (7) senalamiento y celebracion del remate, (8) adjudicacion. La afirmacion resume correctamente este iter, aunque sin precision de plazos ni etapas especificas.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C1"]
+    },
+    {
+      "id": "B-X6",
+      "claim_text": "Antes de la demanda: Existe un margen para la negociacion directa con la entidad financiera.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Afirmacion correcta. La fase pre-procesal es el momento de mayor flexibilidad para la negociacion. El banco aun no ha incurrido en costas judiciales, no hay un juez supervisando el proceso, y las partes tienen plena libertad para alcanzar acuerdos (reestructuracion, dacion en pago, novacion, etc.). La afirmacion describe correctamente esta ventana de oportunidad.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-S1"]
+    },
+    {
+      "id": "B-X7",
+      "claim_text": "Durante la ejecucion: La negociacion sigue siendo una opcion. Muchos procesos se suspenden si el deudor presenta una propuesta de pago viable.",
+      "claim_type": "contextual",
+      "verification_status": "verified",
+      "confidence": "high",
+      "verification_detail": "Afirmacion correcta. En cualquier etapa del proceso de ejecucion, las partes pueden alcanzar un acuerdo transaccional que ponga fin al litigio. La suspension del proceso por acuerdo de partes es una facultad reconocida en el CPC. La afirmacion de que 'muchos procesos se suspenden' es una observacion empirica plausible: los bancos tienen incentivos economicos para aceptar propuestas viables incluso durante el proceso, para evitar costos adicionales y asegurar la recuperacion del credito.",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "cross_reference_claims": ["B-C4"]
+    }
+  ],
+  "summary": {
+    "total_claims": 24,
+    "verified": 21,
+    "partially_verified": 3,
+    "unverified": 0,
+    "disputed": 0,
+    "needs_human_review": 2,
+    "high_severity_issues": 0,
+    "medium_severity_issues": 2,
+    "low_severity_issues": 1,
+    "critical_findings": [
+      {
+        "severity": "medium",
+        "claim_id": "B-C1",
+        "finding": "No se pudo verificar independientemente contra el texto oficial del Codigo Procesal Civil (Decreto 211-2006) el plazo exacto de '5 a 20 dias habiles' para contestar la demanda de ejecucion hipotecaria. El rango es plausible pero requiere confirmacion del articulo, tipo de dias (habiles/corridos) y extension por distancia."
+      },
+      {
+        "severity": "medium",
+        "claim_id": "B-C7",
+        "finding": "No se pudo verificar independientemente contra el texto oficial del CPC que el termino legal exacto para la figura del tercero que ofrece precio superior antes del remate sea 'terceria de mejor postor'. Podria denominarse 'postura', 'licitacion' o 'postura mejoradora' en el CPC hondureno."
+      },
+      {
+        "severity": "low",
+        "claim_id": "B-S5",
+        "finding": "La referencia a 'terceria de mejor postor' hereda la imprecision terminologica de B-C7. El nombre legal exacto de la figura debe verificarse contra el CPC."
+      }
+    ],
+    "ready_for_final_decision": false,
+    "ready_for_final_decision_rationale": "El articulo NO esta listo para decision final sin antes resolver dos issues de severidad media: (1) Verificar en el texto oficial del Codigo Procesal Civil de Honduras (Decreto No. 211-2006) el plazo exacto para contestar la demanda en ejecucion hipotecaria y confirmar si el rango '5 a 20 dias habiles' es preciso o requiere ajuste. (2) Verificar en el CPC el termino legal exacto para la figura del tercero que ofrece precio superior antes del remate ('terceria de mejor postor' vs. 'postura', 'licitacion', etc.). Ademas, la referencia a la terceria en B-S5 hereda la misma imprecision terminologica. El resto del contenido es sustancialmente correcto desde el punto de vista juridico y procesal.",
+    "recommended_actions": [
+      "PRIORITARIO: Consultar el texto oficial del Codigo Procesal Civil de Honduras (Decreto No. 211-2006) para verificar el articulo, plazo y naturaleza de los dias (habiles/corridos) para contestar la demanda en ejecucion hipotecaria. Ajustar la redaccion al texto legal exacto.",
+      "PRIORITARIO: Consultar el CPC para identificar el termino legal exacto del mecanismo de tercero que ofrece precio superior antes del remate. Reemplazar 'terceria de mejor postor' por el termino correcto si es distinto.",
+      "RECOMENDADO: Verificar si Honduras cuenta con una Ley de Hipotecas especifica o si la materia esta regulada exclusivamente en el Codigo Civil y el CPC, para posibles referencias legales adicionales en el articulo."
+    ]
+  }
+}

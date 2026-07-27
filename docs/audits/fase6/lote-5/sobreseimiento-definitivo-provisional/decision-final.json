@@ -1,0 +1,33 @@
+{
+  "slug": "sobreseimiento-definitivo-provisional",
+  "article_id": "350ca6aa-1441-4689-904a-c1c085597cd5",
+  "sha256_original": "923dd4c9fab5d930b5effd22c4f997442701b410bd02a0e0b4182fca2fb00821",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "Las pasadas A y B discrepan de manera dramática. La Pasada A reporta 32 claims, todos como 'unverifiable' debido a inaccesibilidad de fuentes oficiales hondureñas (40+ intentos fallidos a portales .gob.hn, OAS, WIPO, UNHCR). La Pasada B, que logró acceder al texto del Código Procesal Penal de Honduras (Decreto 9-99-E) alojado en tsc.gob.hn, encontró 5 claims INCORRECTOS y 10 que requieren revisión, incluyendo un ERROR FACTUAL GRAVE: el artículo afirma que el CPP entró en vigor el '2 de febrero de 2018', pero el Artículo 447 del CPP establece que la vigencia es desde el 'veinte de febrero de 2002'. Tanto el día (2 vs. 20) como el año (2018 vs. 2002) son incorrectos. Adicionalmente, la Pasada B detectó: (a) confusión jurídica reiterada entre 'extinción de la acción penal' y 'extinción de la responsabilidad penal' — el Artículo 296.3 del CPP se refiere a la ACCIÓN penal, no a la responsabilidad; (b) interpolaciones textuales no presentes en la ley: frases como 'no es razonable esperar nuevas pruebas' y 'no hay perspectivas realistas de obtener pruebas concluyentes' no aparecen en el texto del Artículo 296; (c) simplificaciones imprecisas que omiten supuestos alternativos del Artículo 296 numeral 1; (d) caracterización parcialmente incorrecta del sobreseimiento provisional que omite el presupuesto legal de 'plena prueba de la comisión del delito' requerido por el Artículo 295. Debido a la gravedad y cantidad de errores detectados, el artículo requiere correcciones sustanciales por parte de un abogado hondureño antes de cualquier consideración de publicación.",
+  "claims_totales_a": 32,
+  "claims_totales_b": 29,
+  "claims_coincidentes": 28,
+  "errores_detectados": [
+    "ERROR FACTUAL GRAVE: Fecha de entrada en vigencia del CPP incorrecta. El artículo dice '2 de febrero de 2018'; el Artículo 447 del CPP establece 'veinte de febrero de 2002'. Difieren tanto el día (2 vs 20) como el año (2018 vs 2002).",
+    "ERROR JURÍDICO REITERADO: Confusión entre 'extinción de la acción penal' y 'extinción de la responsabilidad penal'. El Artículo 296.3 del CPP se refiere a la extinción de la ACCIÓN penal, no de la responsabilidad penal. Esta confusión aparece en múltiples secciones del artículo (causales de sobreseimiento definitivo).",
+    "INTERPOLACIÓN TEXTUAL: La frase 'no es razonable esperar nuevas pruebas' en la descripción del Artículo 296.2 NO aparece en el texto legal. El CPP dice: 'no hayan motivos para sospechar que el imputado tuvo participación en el delito'.",
+    "INTERPOLACIÓN TEXTUAL: La frase 'no hay perspectivas realistas de obtener pruebas concluyentes' en las causales del Artículo 296.2 NO aparece en el texto legal.",
+    "SIMPLIFICACIÓN IMPRECISA: El artículo reduce el Artículo 296.1 (tres supuestos alternativos) a uno solo ('el hecho no constituye delito'), omitiendo 'el hecho no ha existido' y 'el imputado no participó en su comisión'.",
+    "SIMPLIFICACIÓN IMPRECISA: El artículo reduce 'extinción de la acción penal' (Art. 296.3) a solo 'prescripción', cuando la prescripción es solo una de las causales de extinción.",
+    "CARACTERIZACIÓN INCORRECTA DEL SOBRESEIMIENTO PROVISIONAL: El artículo omite que el Artículo 295 requiere 'plena prueba de la comisión del delito' como presupuesto para dictar sobreseimiento provisional. La descripción actual sugiere que basta con 'no hay pruebas suficientes', lo cual es jurídicamente impreciso.",
+    "El artículo afirma que el sobreseimiento es una figura 'propia de la etapa intermedia', pero también puede dictarse en otros momentos procesales (conciliación en delitos de acción privada, desistimiento, perdón del ofendido)."
+  ],
+  "correcciones_pendientes": [
+    "URGENTE: Corregir la fecha de entrada en vigencia del CPP: cambiar '2 de febrero de 2018' por '20 de febrero de 2002'.",
+    "URGENTE: Corregir todas las referencias a 'extinción de la responsabilidad penal' por 'extinción de la acción penal' donde corresponda al Artículo 296.3 del CPP.",
+    "Eliminar o reformular las interpolaciones textuales no presentes en la ley: 'no es razonable esperar nuevas pruebas' y 'no hay perspectivas realistas de obtener pruebas concluyentes'. Usar el texto exacto del Artículo 296.2: 'no hayan motivos para sospechar que el imputado tuvo participación en el delito'.",
+    "Completar la enumeración de causales del Artículo 296.1 incluyendo los tres supuestos: (a) el hecho no ha existido, (b) no está tipificado como delito, (c) el imputado no participó en su comisión.",
+    "Ampliar la referencia a 'prescripción' para reflejar correctamente la causal más amplia de 'extinción de la acción penal' del Artículo 296.3.",
+    "Reformular la descripción del sobreseimiento provisional para incluir el presupuesto de 'plena prueba de la comisión del delito' que exige el Artículo 295.",
+    "Matizar la afirmación de que el sobreseimiento es 'propio de la etapa intermedia' para reflejar que también puede dictarse en otros momentos procesales.",
+    "Verificar y corregir otras posibles imprecisiones en las referencias a artículos del CPP contra la versión oficial actualizada con reformas."
+  ],
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

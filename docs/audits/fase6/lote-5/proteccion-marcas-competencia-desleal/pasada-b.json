@@ -1,0 +1,181 @@
+{
+  "metadata": {
+    "pasada": "B",
+    "slug": "proteccion-marcas-competencia-desleal",
+    "entrada_sha256": "216cbcd217ca3b6995a6a6179a3fabc12fe12ca2568609464c9a3e5cc8f4da3b",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_primarias": [
+      "data/codigo_comercio.json",
+      "data/codigo_civil.json",
+      "data/articulos_cp.json"
+    ],
+    "metodologia": "Extraccion de claims del texto HTML de entrada. Verificacion exclusiva contra las tres fuentes locales. Sin busquedas web. Sin fuentes externas (WIPO Lex, PDFs, etc.)."
+  },
+  "claims": [
+    {
+      "id": "C001",
+      "claim": "La competencia desleal marcaria en Honduras se rige principalmente por la Ley de Propiedad Industrial (Decreto 12-99-E) y su Reglamento, que establecen procedimientos ante la Direccion General de Propiedad Intelectual (DIGEPIH).",
+      "claimed_source": "Ley de Propiedad Industrial (Decreto 12-99-E)",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "La LPI no esta en las fuentes locales. El Codigo de Comercio (Arts. 421-429 CM) contiene disposiciones sobre competencia desleal aplicables en el ambito mercantil, aunque la entrada no las cita como fuente principal."
+    },
+    {
+      "id": "C002",
+      "claim": "Los Articulos 80 y siguientes de la Ley de Propiedad Industrial definen las conductas constitutivas de competencia desleal en materia de marcas.",
+      "claimed_source": "Ley de Propiedad Industrial, Arts. 80+",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "No verificable sin acceso a la LPI. En las fuentes locales, el Codigo de Comercio (Art. 425 CM) define la competencia desleal mercantil: engaño al publico, falsas indicaciones de origen/calidad, empleo de envases que contribuyan a dar apariencia de genuinos a productos falsificados, y propaganda de noticias falsas."
+    },
+    {
+      "id": "C003",
+      "claim": "El Articulo 168 de la Ley de Propiedad Industrial establece sanciones por el uso no autorizado de marcas registradas en el comercio.",
+      "claimed_source": "Ley de Propiedad Industrial, Art. 168",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "No verificable sin acceso a la LPI. En el Codigo Penal local (articulos_cp.json), el Art. 394 CP (Titulo XXI, Capitulo II: Delitos contra la propiedad industrial) sanciona el 'Uso ilegitimo de distintivos o marcas registradas' con prision de 1 a 4 anos y multa igual o hasta el triple del beneficio obtenido."
+    },
+    {
+      "id": "C004",
+      "claim": "La oposicion al registro de una marca infractora se presenta ante la DIGEPIH dentro de los 30 dias habiles siguientes a la publicacion del extracto de la solicitud en La Gaceta.",
+      "claimed_source": "Ley de Propiedad Industrial / practica DIGEPIH",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "No verificable sin acceso a la LPI."
+    },
+    {
+      "id": "C005",
+      "claim": "La accion de nulidad del registro prescribe a los cinco anos desde la concesion del registro, o es imprescriptible si hubo mala fe.",
+      "claimed_source": "Ley de Propiedad Industrial",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "No verificable sin acceso a la LPI."
+    },
+    {
+      "id": "C006",
+      "claim": "El Articulo 281 del Codigo Penal establece penas de reclusion de seis meses a tres anos para quien falsifique marcas o aplique sellos o marcas legitimas a objetos distintos de aquellos a los que debian ser aplicados.",
+      "claimed_source": "Codigo Penal, Art. 281",
+      "verification_status": "DISCREPANCIA",
+      "actual_source": "Codigo Penal, Art. 394 CP — 'Uso ilegitimo de distintivos o marcas registradas'",
+      "discrepancy": "El Art. 281 CP NO EXISTE en articulos_cp.json. No hay ningun articulo con ese numero en la fuente local. El articulo mas cercano en contenido es el Art. 394 CP (Titulo XXI, Capitulo II), que castiga con prision de 1 a 4 anos (no 6 meses a 3 anos) y multa. Ademas, el Art. 249 CP en la fuente local corresponde a 'Violacion' (delito sexual, Titulo IX, Capitulo I), no a delitos contra la propiedad industrial.",
+      "notes": "Estructura del Titulo XXI CP (Delitos contra la propiedad intelectual e industrial): Capitulo I — Arts. 389-392 (derecho de autor); Capitulo II — Arts. 393-397 (propiedad industrial). Art. 393 CP: Uso ilegitimo de patente (3-6 anos). Art. 394 CP: Uso ilegitimo de distintivos o marcas registradas (1-4 anos + multa). Art. 395 CP: Descubrimiento y revelacion de secreto industrial (2-4/2-5 anos). Art. 396 CP: Agravantes especificas (+1/3). Art. 397 CP: Responsabilidad de personas juridicas."
+    },
+    {
+      "id": "C007",
+      "claim": "El Articulo 282 del Codigo Penal contempla penas de dos a cinco anos de reclusion para quien altere o use indebidamente sellos, timbres o marcas oficiales.",
+      "claimed_source": "Codigo Penal, Art. 282",
+      "verification_status": "DISCREPANCIA",
+      "actual_source": "Codigo Penal, Art. 453 CP — 'Falsificacion de sellos y otros efectos timbrados'",
+      "discrepancy": "El Art. 282 CP NO EXISTE en articulos_cp.json. El articulo mas cercano es el Art. 453 CP (Titulo XXVI, Capitulo II), que sanciona con prision de 2 a 5 anos a quien 'altera o elabora fraudulentamente sellos y otros efectos timbrados o fabrica cualquier clase de efectos timbrados falsos'. El rango de penas (2-5 anos) coincide, pero el numero de articulo es completamente distinto. Ademas, el Art. 454 CP sanciona el trafico de sellos falsos con la misma pena.",
+      "notes": "El Art. 453 CP pertenece al Titulo XXVI (Falsificaciones), no al Titulo XXI (Propiedad intelectual e industrial). Trata sobre sellos oficiales/timbrados, no especificamente sobre marcas comerciales."
+    },
+    {
+      "id": "C008",
+      "claim": "La Ley de Proteccion al Consumidor (Decreto 24-2008) sanciona la publicidad enganosa y las practicas comerciales desleales. La Direccion General de Proteccion al Consumidor (DGPC) es la entidad encargada.",
+      "claimed_source": "Ley de Proteccion al Consumidor (Decreto 24-2008)",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "Ni la Ley de Proteccion al Consumidor ni la DGPC estan en las fuentes locales. No se puede verificar ni refutar."
+    },
+    {
+      "id": "C009",
+      "claim": "Se puede presentar denuncia penal ante el Ministerio Publico (MP) a traves de la Fiscalia Especial de Propiedad Intelectual y Seguridad Informatica (FE-PROSI).",
+      "claimed_source": "Practica institucional / legislacion organica del MP",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "FE-PROSI no aparece en las fuentes locales. No se puede verificar ni refutar su existencia."
+    },
+    {
+      "id": "C010",
+      "claim": "Los tribunales civiles pueden ordenar medidas cautelares como el secuestro de productos en el marco de una accion por infraccion marcaria.",
+      "claimed_source": "Tribunales civiles / Ley de Propiedad Industrial",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo de Comercio, Arts. 427 y 428 CM",
+      "discrepancy": null,
+      "notes": "El Art. 427 CM permite preparar la accion de competencia desleal mediante 'la exhibicion o el aseguramiento de todos los objetos que sean prueba de los actos de competencia desleal', siempre que se otorgue caucion. El Art. 428 CM dispone que la resolucion ordenara 'la cesacion, las medidas necesarias para impedir sus consecuencias y para evitar la repeticion de dichos actos, y el resarcimiento de danos y perjuicios'. Estas disposiciones del Codigo de Comercio respaldan la existencia de medidas cautelares en el ambito mercantil, aunque la entrada no cita esta fuente."
+    },
+    {
+      "id": "C011",
+      "claim": "Existe responsabilidad civil por danos y perjuicios derivados de actos de competencia desleal e infraccion marcaria, conforme al regimen de responsabilidad extracontractual del Codigo Civil.",
+      "claimed_source": "Codigo Civil — Responsabilidad extracontractual",
+      "verification_status": "VERIFICADO",
+      "actual_source": "Codigo Civil, Arts. 2236 y 2237 CC",
+      "discrepancy": null,
+      "notes": "Art. 2236 CC: 'El que por accion u omision causa dano a otro, interviniendo culpa o negligencia, esta obligado a reparar el dano causado.' Art. 2237 CC: extiende la obligacion a los actos de personas bajo responsabilidad de otro (hijos menores, dependientes, etc.). Estos articulos estan en el Capitulo II 'De las obligaciones que nacen de culpa o negligencia' del Codigo Civil. Proveen base juridica para la accion de resarcimiento por danos derivados de competencia desleal e infraccion marcaria."
+    },
+    {
+      "id": "C012",
+      "claim": "El Codigo de Comercio regula la competencia desleal en el ambito mercantil hondureno.",
+      "claimed_source": "Codigo de Comercio, Titulo II: De los limites y la actividad mercantil y de la competencia desleal",
+      "verification_status": "VERIFICADO",
+      "actual_source": "Codigo de Comercio, Arts. 421 a 429 CM",
+      "discrepancy": null,
+      "notes": "Titulo II (Arts. 421-429 CM) regula integramente la competencia desleal mercantil. Art. 425 CM: define los actos constitutivos (engano, falsas indicaciones de origen/calidad, empleo de envases falsificados, propaganda de noticias falsas). Art. 426 CM: legitimacion activa (afectados directos + asociaciones profesionales/Camaras de Comercio). Art. 427 CM: medidas preparatorias (exhibicion/aseguramiento + caucion). Art. 428 CM: remedios judiciales (cesacion + medidas + resarcimiento). Art. 429 CM: repeticion presumida dolosa sin prueba en contrario."
+    },
+    {
+      "id": "C013",
+      "claim": "Existe sancion penal para el uso no autorizado de marcas registradas en Honduras.",
+      "claimed_source": "Codigo Penal — Delitos contra la propiedad industrial",
+      "verification_status": "VERIFICADO",
+      "actual_source": "Codigo Penal, Art. 394 CP (Titulo XXI, Capitulo II: Delitos contra la propiedad industrial)",
+      "discrepancy": "La entrada cita los inexistentes Arts. 281 y 282 CP. El articulo correcto en la fuente local es el 394 CP.",
+      "notes": "Art. 394 CP castiga con prision de 1 a 4 anos y multa igual o hasta el triple del beneficio a quien, con fines industriales/comerciales, sin consentimiento del titular y con conocimiento del registro: 1) Fabrica/produce/importa/almacena productos con signo distintivo identico/similar/confundible; 2) Ofrece/distribuye/comercializa dichos productos. Venta ambulante u ocasional: 1 a 3 anos. Posibilidad de sustitucion por multa de 30 a 150 dias-multa segun circunstancias. Art. 396 CP: agravantes (+1/3) por trascendencia economica, grupo delictivo organizado o uso de menores. Art. 397 CP: responsabilidad penal de personas juridicas."
+    },
+    {
+      "id": "C014",
+      "claim": "El Codigo Penal tipifica la falsificacion de sellos y marcas oficiales con penas de 2 a 5 anos.",
+      "claimed_source": "Codigo Penal — Delitos contra la fe publica",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo Penal, Arts. 453 y 454 CP (Titulo XXVI, Capitulo II: Falsificacion de sellos y otros efectos timbrados)",
+      "discrepancy": "La entrada cita el inexistente Art. 282 CP. El articulo correcto es el 453 CP. Las penas (2-5 anos) coinciden.",
+      "notes": "Art. 453 CP: 'Quien altera o elabora fraudulentamente sellos y otros efectos timbrados o fabrica cualquier clase de efectos timbrados falsos, debe ser castigado con la pena de prision de dos (2) a cinco (5) anos.' Se equipara la reutilizacion de efectos timbrados originales. Art. 454 CP: sanciona con la misma pena el trafico de sellos falsos. Estos articulos tratan de sellos oficiales/timbrados, no de marcas comerciales, y pertenecen al Titulo XXVI (Falsificaciones), no al Titulo XXI (Propiedad intelectual e industrial). Adicionalmente, el principio real del CP (articulo 1) permite persecucion extraterritorial de 'falsificacion de sellos, signos y marcas'."
+    }
+  ],
+  "hallazgos_clave": [
+    {
+      "hallazgo": "Articulos 281 y 282 CP INEXISTENTES en la fuente local (articulos_cp.json). La entrada cita numeros de articulo que no existen en esta version del Codigo Penal. Posible confusion con el Decreto 144-1983 (CP antiguo) vs. la version actual contenida en las fuentes locales.",
+      "severidad": "error_factual_grave"
+    },
+    {
+      "hallazgo": "Las penas para uso ilegitimo de marcas NO son 6 meses a 3 anos como afirma la entrada (citando el inexistente Art. 281), sino 1 a 4 anos conforme al Art. 394 CP de la fuente local.",
+      "severidad": "error_factual"
+    },
+    {
+      "hallazgo": "El Art. 249 CP en la fuente local corresponde a 'Violacion' (delito sexual, Titulo IX), no a delitos contra la propiedad industrial. La entrada no cita este numero, pero es relevante porque la pasada-b anterior (basada en fuentes web/WIPO) afirmaba que Arts. 249 y 251 CP regulaban delitos contra propiedades especiales — lo cual es INCORRECTO en esta version del CP.",
+      "severidad": "informativo"
+    },
+    {
+      "hallazgo": "La mayoria de disposiciones sustantivas sobre marcas (oposicion, nulidad, plazos, procedimientos DIGEPIH) dependen de la Ley de Propiedad Industrial (Decreto 12-99-E), NO disponible en las fuentes locales. No se pueden verificar ni refutar.",
+      "severidad": "no_verificable"
+    },
+    {
+      "hallazgo": "El Codigo de Comercio (Arts. 421-429 CM) proporciona base legal solida y verificable para acciones de competencia desleal en el ambito mercantil, con medidas cautelares y resarcimiento. La entrada no lo cita como fuente principal.",
+      "severidad": "omision"
+    },
+    {
+      "hallazgo": "El Art. 2236 CC (Codigo Civil) proporciona base verificable para la responsabilidad civil extracontractual por danos, aplicable como fundamento supletorio a acciones por competencia desleal.",
+      "severidad": "informativo"
+    },
+    {
+      "hallazgo": "La Ley de Proteccion al Consumidor (Decreto 24-2008), la DGPC y FE-PROSI no pueden verificarse con las fuentes locales. Su existencia no se confirma ni se refuta desde estas fuentes.",
+      "severidad": "no_verificable"
+    }
+  ],
+  "resumen": {
+    "claims_verificados": 3,
+    "claims_parcialmente_verificados": 2,
+    "claims_con_discrepancia": 2,
+    "claims_no_verificables": 7,
+    "total_claims": 14,
+    "calidad_general": "El documento contiene DOS ERRORES FACTUALES GRAVES en la citacion del Codigo Penal: los articulos 281 y 282 NO existen en la version del CP contenida en las fuentes locales. Las penas citadas tampoco coinciden con el articulo equivalente real (394 CP: 1-4 anos, no 6 meses a 3 anos). Siete claims dependen de la Ley de Propiedad Industrial (no disponible localmente) y no pueden verificarse. El Codigo de Comercio y el Codigo Civil si proporcionan bases verificables para competencia desleal y responsabilidad civil, aunque la entrada no los destaca como fuentes principales. Se recomienda: (1) verificar contra el texto oficial de la LPI para los claims no verificables, (2) corregir las referencias a Arts. 281/282 CP por 394/453 CP respectivamente, (3) incorporar los Arts. 421-429 CM como fuente complementaria de competencia desleal.",
+    "nota_metodologica": "Esta verificacion usa EXCLUSIVAMENTE fuentes locales (codigo_comercio.json, codigo_civil.json, articulos_cp.json). La version del Codigo Penal en estas fuentes difiere del Decreto 144-1983 citado en verificaciones anteriores basadas en WIPO Lex. Los numeros de articulo deben interpretarse en el contexto de esta version especifica del CP."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "mediacion-vs-juicio-cual-elegir",
+  "article_id": "609bca6a-f8ff-4209-b233-e4b56c5ff05c",
+  "sha256_original": "c19041c16fb636f9f158eb00f9645e795170f3f9b8d4d4fcb54bda556067710e",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "Las pasadas A y B discrepan en los resultados de verificación. La Pasada A, tras más de 50 intentos de acceso a fuentes oficiales hondureñas (Poder Judicial, Congreso Nacional, OAS, ILO, UNODC, motores de búsqueda), reporta 17 claims: 0 verificados, 5 inverificables y 12 necesitando revisión, y determina que el artículo NO está listo para Pasada B. La Pasada B reporta 15 claims: 10 verificados y 5 parcialmente verificados, pero también determina que el artículo NO está listo para decisión final. Ambas pasadas convergen en dos issues de severidad media que requieren verificación humana obligatoria: (1) la numeración exacta del artículo del Decreto 161-2000 que otorga fuerza legal al acta de conciliación — la Pasada B advierte que podría ser el Artículo 8, 16 u otro, no necesariamente el Artículo 4 citado en el artículo; (2) la numeración exacta del artículo del Código Procesal Penal que regula la conciliación para delitos menores — la Pasada B advierte que el Artículo 45 podría haber cambiado con reformas posteriores al Decreto 9-99-E. Adicionalmente, la Pasada B detecta imprecisiones técnicas menores: la frase 'fuerza de sentencia firme' aplicada al acta de conciliación es técnicamente imprecisa (el acta es un título ejecutivo con carácter de cosa juzgada, no una sentencia), y la afirmación de que los centros 'aseguran' la validez legal es imprecisa (la validez deriva del cumplimiento de la ley, no del centro). Las fuentes oficiales hondureñas permanecen inaccesibles para verificación automatizada. Se requiere abogado hondureño con acceso a los textos oficiales del Decreto 161-2000 y el Código Procesal Penal vigente para verificar la numeración exacta de los artículos citados.",
+  "claims_totales_a": 17,
+  "claims_totales_b": 15,
+  "claims_coincidentes": 15,
+  "errores_detectados": [
+    "Numeración potencialmente incorrecta del artículo del Decreto 161-2000 que otorga fuerza legal al acta de conciliación. El artículo cita 'Artículo 4' pero la Pasada B advierte que podría ser el Artículo 8, 16 u otro. No se pudo verificar contra el texto oficial.",
+    "Numeración potencialmente incorrecta del artículo del Código Procesal Penal sobre conciliación. El artículo cita 'Artículo 45' pero la numeración podría haber cambiado con reformas posteriores al Decreto 9-99-E (2002, 2008, 2013, 2019).",
+    "Imprecisión técnica: 'fuerza de sentencia firme' aplicada al acta de conciliación. El acta no es técnicamente una sentencia; es un título ejecutivo con carácter de cosa juzgada equiparable en fuerza legal.",
+    "Imprecisión técnica: los centros de mediación 'aseguran' la validez legal del acta. La validez legal deriva del cumplimiento de los requisitos del Decreto 161-2000, no del centro donde se realice la mediación.",
+    "El resumen rápido hereda la imprecisión 'con fuerza de sentencia firme' mencionada arriba."
+  ],
+  "correcciones_pendientes": [
+    "PRIORITARIO: Verificar el número de artículo exacto en el Decreto 161-2000 que otorga fuerza legal al acta de conciliación, consultando La Gaceta o el texto oficial de la ley. Corregir la cita en el artículo.",
+    "PRIORITARIO: Verificar el número de artículo exacto en el Código Procesal Penal vigente que regula la conciliación penal, consultando el texto oficial con reformas incluidas. Corregir la cita en el artículo.",
+    "Refinar la redacción sobre el efecto legal del acta de conciliación: usar 'título ejecutivo con carácter de cosa juzgada, equiparable en fuerza legal a una sentencia firme' en lugar de 'fuerza de sentencia firme'.",
+    "Ajustar la redacción sobre el rol de los centros de mediación: 'Estos centros operan bajo reglamentos que garantizan imparcialidad en el proceso. El acta de conciliación emitida conforme a los requisitos del Decreto 161-2000 tiene plena validez legal.'"
+  ],
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

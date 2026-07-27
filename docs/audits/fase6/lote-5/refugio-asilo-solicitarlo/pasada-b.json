@@ -1,0 +1,261 @@
+{
+  "metadata": {
+    "id": "225b4c7a-9330-4550-9c80-ca2ae57dab4e",
+    "slug": "refugio-asilo-solicitarlo",
+    "sha256": "df01bd43778a4e33ac2a73fc12f6655f4b7e2e0921cb59e5c9a679e439189930",
+    "audit_timestamp": "2026-07-27",
+    "sources_checked": [
+      {
+        "name": "ACNUR Honduras – help.unhcr.org/honduras/",
+        "type": "official",
+        "pages_fetched": [
+          "https://help.unhcr.org/honduras/ (main page)",
+          "https://help.unhcr.org/honduras/como-solicitar-asilo/ (asylum procedure)",
+          "https://help.unhcr.org/honduras/quien-es-una-persona-refugiada/ (refugee definition)",
+          "https://help.unhcr.org/honduras/accesso-a-otros-derechos/ (rights)",
+          "https://help.unhcr.org/honduras/donde-encontrar-ayuda/instituto-nacional-de-migracion-inm/ (INM info)"
+        ],
+        "accessible": true,
+        "notes": "Fuente oficial del ACNUR para personas solicitantes de asilo en Honduras. Páginas obtenidas exitosamente."
+      },
+      {
+        "name": "INM Honduras – inm.gob.hn",
+        "type": "official",
+        "pages_fetched": [
+          "https://inm.gob.hn/ (portal principal)"
+        ],
+        "accessible": true,
+        "notes": "Portal oficial del Instituto Nacional de Migración. No contiene información específica sobre procedimiento de refugio. Información general de servicios migratorios."
+      },
+      {
+        "name": "Ley de Migración y Extranjería – texto legal",
+        "type": "legal",
+        "pages_attempted": [
+          "https://www.tsc.gob.hn/biblioteca/index.php/leyes/822-ley-de-migracion-y-extranjeria",
+          "https://www.poderjudicial.gob.hn/leyes/Ley%20de%20Migraci%C3%B3n%20y%20Extranjer%C3%ADa.pdf",
+          "https://www.oas.org/es/sla/ddi/docs/Honduras-Ley_Migracion_y_Extranjeria_2003.pdf",
+          "https://www.refworld.org/es/leg/natleg/hnd/2003/es/45760"
+        ],
+        "accessible": false,
+        "notes": "El texto completo de la ley no pudo ser consultado. Sitios bloquearon el acceso (HTTP 403/404/500) o el dominio no resolvió (conapre.hn, conapre.gob.hn). La referencia al Decreto 208-2003 no pudo ser verificada directamente contra el texto legal."
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "claim_01",
+      "description": "Base legal: Ley de Migración y Extranjería (Decreto No. 208-2003) y Convención de las Naciones Unidas sobre el Estatuto de los Refugiados de 1951",
+      "extracted_from": "body h2: ¿Quiénes califican para refugio o asilo en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Acceso a otros derechos",
+          "url": "https://help.unhcr.org/honduras/accesso-a-otros-derechos/",
+          "finding": "PARCIALMENTE VERIFICADO. La página menciona 'el Reglamento de la Ley de Migración y Extranjería de Honduras' como base legal, confirmando la existencia y vigencia de dicha ley. Sin embargo, NO menciona el número de decreto (208-2003) ni la Convención de 1951 por su nombre."
+        },
+        {
+          "source": "ACNUR – Quién es una persona refugiada",
+          "url": "https://help.unhcr.org/honduras/quien-es-una-persona-refugiada/",
+          "finding": "PARCIALMENTE VERIFICADO. La definición de persona refugiada en Honduras sigue los motivos de la Convención de 1951 (raza, religión, nacionalidad, opinión política, grupo social), lo cual es consistente. Pero la Convención no se cita explícitamente."
+        }
+      ],
+      "verdict": "PARCIALMENTE VERIFICADO",
+      "verdict_detail": "La Ley de Migración y Extranjería es citada por ACNUR como marco legal vigente, pero el número de decreto (208-2003) no fue confirmado por fuentes oficiales accesibles. La Convención de 1951 es implícitamente consistente con las definiciones usadas, pero no se cita por nombre en las fuentes ACNUR consultadas.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_02",
+      "description": "Autoridad receptora: DGME (Dirección General de Migración y Extranjería) recibe solicitudes y emite resolución final",
+      "extracted_from": "body h2: ¿Cómo es el proceso para solicitar refugio en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "NO VERIFICADO – DISCREPANCIA. ACNUR indica consistentemente que la autoridad es el INM (Instituto Nacional de Migración), NO la DGME. Texto ACNUR: 'En Honduras el proceso de reconocimiento de la condición de refugiado está a cargo del Instituto Nacional de Migración (INM).'"
+        },
+        {
+          "source": "INM Honduras – Portal oficial",
+          "url": "https://inm.gob.hn/",
+          "finding": "El portal oficial existe como INM (Instituto Nacional de Migración), no como DGME. La DGME parece haber sido reemplazada institucionalmente por el INM. El portal no contiene información específica sobre procedimiento de refugio."
+        }
+      ],
+      "verdict": "NO VERIFICADO – ERROR FACTUAL",
+      "verdict_detail": "Todas las fuentes oficiales ACNUR (2024-2026) se refieren exclusivamente al INM (Instituto Nacional de Migración), nunca a la DGME. El artículo usa 'DGME' de forma consistente en todo el texto, lo cual constituye un error institucional. La DGME fue aparentemente reemplazada por el INM en una reestructuración migratoria, aunque la fecha exacta del cambio no pudo ser confirmada por fuentes accesibles.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_03",
+      "description": "CONARE (Comisión Nacional de Refugiados) evalúa las solicitudes y emite recomendación",
+      "extracted_from": "body h2: ¿Cómo es el proceso para solicitar refugio en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "NO VERIFICADO – DISCREPANCIA. ACNUR menciona 'Comisión de Refugio', NO 'CONARE'. Texto ACNUR: 'La/El oficial de Derechos Humanos del INM realizará el análisis de tu caso y lo presentará a la Comisión de Refugio, que es responsable de emitir un dictamen de aprobación o denegación.' El acrónimo CONARE no aparece en ninguna página ACNUR consultada."
+        },
+        {
+          "source": "Dominios conapre.hn / conapre.gob.hn",
+          "url": "N/A – verificación DNS",
+          "finding": "Los dominios conapre.hn y conapre.gob.hn no resuelven (ENOTFOUND). No se pudo verificar la existencia actual de una entidad web bajo el nombre CONARE."
+        }
+      ],
+      "verdict": "NO VERIFICADO – POSIBLE DESACTUALIZACIÓN",
+      "verdict_detail": "El artículo usa consistentemente 'CONARE' (Comisión Nacional de Refugiados), pero ACNUR se refiere a 'Comisión de Refugio' sin el acrónimo CONARE. Es posible que CONARE haya sido renombrada o reestructurada. Los dominios web asociados a CONARE no existen. El rol descrito (evaluar y dictaminar) coincide funcionalmente con la Comisión de Refugio, pero el nombre institucional difiere.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_04",
+      "description": "Principio de no devolución (non-refoulement): impide el retorno del solicitante a su país de origen mientras el caso está en trámite",
+      "extracted_from": "body h2: ¿Cómo es el proceso para solicitar refugio en Honduras? paso 4",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Quién es una persona refugiada",
+          "url": "https://help.unhcr.org/honduras/quien-es-una-persona-refugiada/",
+          "finding": "VERIFICADO. Texto ACNUR: 'Los Estados tienen la obligación de no devolver a ninguna persona a un país o territorio donde su vida, integridad, libertad o seguridad están en peligro. A esto llamamos principio de no-devolución y significa que no puedes ser retornado/a tu país de origen sin antes tener el derecho de presentar tu solicitud de asilo y que sea analizada por el INM.'"
+        },
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "IMPLÍCITAMENTE VERIFICADO. El proceso descrito incluye la emisión de una 'Autorización de Permanencia Temporal' renovable hasta la resolución, lo cual operacionaliza el principio de no devolución sin nombrarlo explícitamente en esta página."
+        }
+      ],
+      "verdict": "VERIFICADO",
+      "verdict_detail": "El principio de no devolución está confirmado explícitamente por ACNUR como obligación del Estado hondureño. Coincide con lo afirmado en el artículo.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_05",
+      "description": "Permiso de trabajo: una vez admitida la solicitud, el solicitante puede pedir un permiso de trabajo temporal a la DGME",
+      "extracted_from": "body h3: ¿Se puede trabajar mientras se procesa la solicitud de refugio en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "NO VERIFICADO. La página describe el proceso paso a paso pero NO menciona en absoluto la posibilidad de obtener un permiso de trabajo durante el trámite."
+        },
+        {
+          "source": "ACNUR – Acceso a otros derechos",
+          "url": "https://help.unhcr.org/honduras/accesso-a-otros-derechos/",
+          "finding": "NO VERIFICADO. Esta página enumera derechos de personas refugiadas reconocidas (reunificación familiar, inserción local, documento de viaje, repatriación voluntaria) pero NO menciona permiso de trabajo para solicitantes en trámite."
+        }
+      ],
+      "verdict": "NO VERIFICADO",
+      "verdict_detail": "Ninguna fuente ACNUR consultada menciona la existencia de un permiso de trabajo temporal durante la fase de solicitud. El artículo afirma que 'se puede pedir un permiso de trabajo temporal a la DGME', pero (a) la autoridad correcta sería el INM, no la DGME, y (b) ACNUR no documenta este derecho en sus páginas de ayuda pública. Podría existir en la legislación pero no está reflejado en la guía oficial de ACNUR para solicitantes.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_06",
+      "description": "Recursos ante denegación: recurso de reposición ante la DGME o recurrir a la vía contencioso administrativa",
+      "extracted_from": "body h3: ¿Qué opciones existen si mi solicitud de refugio es denegada en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "PARCIALMENTE VERIFICADO. Texto ACNUR: 'En caso de resolución negativa, después de la notificación, tienes hasta 10 días para presentar un recurso de reposición para que tu caso sea analizado nuevamente.' Se confirma el recurso de reposición y el plazo de 10 días."
+        },
+        {
+          "source": "ACNUR – Acceso a otros derechos",
+          "url": "https://help.unhcr.org/honduras/accesso-a-otros-derechos/",
+          "finding": "NO VERIFICADO. La página no menciona recursos de apelación ni la vía contencioso administrativa."
+        }
+      ],
+      "verdict": "PARCIALMENTE VERIFICADO",
+      "verdict_detail": "El recurso de reposición está confirmado por ACNUR con plazo de 10 días. Sin embargo: (a) ACNUR no menciona la 'vía contencioso administrativa' como opción adicional; (b) el artículo dice 'ante la DGME' cuando debería decir 'ante el INM'. La existencia de la vía contencioso administrativa no pudo ser verificada con las fuentes accesibles.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_07",
+      "description": "Unidad familiar: el estatuto de refugiado cubre al cónyuge, hijos menores y dependientes",
+      "extracted_from": "body h3: ¿El estatuto de refugiado en Honduras cubre a la familia?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Acceso a otros derechos",
+          "url": "https://help.unhcr.org/honduras/accesso-a-otros-derechos/",
+          "finding": "VERIFICADO. Texto ACNUR: 'Toda persona refugiada tiene derecho a obtener la reunificación familiar con los parientes que conforman dicho grupo, la cual se sustentaría en criterios de consanguinidad, afinidad o dependencia, de acuerdo con lo establecido en el Reglamento de la Ley de Migración y Extranjería de Honduras.'"
+        },
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "NO VERIFICADO. La página no menciona la unidad familiar ni la reunificación en el procedimiento paso a paso."
+        }
+      ],
+      "verdict": "VERIFICADO",
+      "verdict_detail": "La reunificación/unidad familiar está confirmada por ACNUR. Los criterios de consanguinidad, afinidad o dependencia cubren el concepto de cónyuge, hijos menores y dependientes mencionado en el artículo. La fuente de ACNUR cita el Reglamento de la Ley de Migración y Extranjería como base legal.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_08",
+      "description": "Diferencia entre refugio y asilo: son figuras distintas. Refugio se rige por Convención de Ginebra 1951; asilo tiene connotación más política y humanitaria",
+      "extracted_from": "body h2: ¿Cuál es la diferencia entre refugio y asilo en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Quién es una persona refugiada",
+          "url": "https://help.unhcr.org/honduras/quien-es-una-persona-refugiada/",
+          "finding": "NO VERIFICADO – CONTRADICCIÓN DIRECTA. Texto ACNUR: 'La solicitud de asilo también es llamada solicitud de la condición de persona refugiada o solicitud de protección como persona refugiada. El INM de Honduras la llama solicitud de refugio.' ACNUR afirma explícitamente que asilo, refugio y condición de persona refugiada son términos equivalentes en Honduras, no figuras jurídicas distintas."
+        },
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "CONSISTENTE con la contradicción. Toda la página trata 'solicitar asilo' y 'solicitar la condición de persona refugiada' como un mismo procedimiento, sin distinguir entre refugio y asilo como figuras separadas."
+        }
+      ],
+      "verdict": "NO VERIFICADO – ERROR CONCEPTUAL",
+      "verdict_detail": "El artículo presenta refugio y asilo como figuras jurídicas distintas en Honduras, con diferentes bases legales y naturaleza. Sin embargo, ACNUR —la autoridad internacional en la materia— afirma explícitamente que en Honduras son términos equivalentes para el mismo procedimiento. Esta es una contradicción directa con la fuente oficial. El artículo podría estar aplicando una distinción doctrinal internacional que no se corresponde con la práctica hondureña actual.",
+      "searches_used": 2
+    },
+    {
+      "id": "claim_09",
+      "description": "Personas no elegibles: quienes buscan solo mejores condiciones económicas sin riesgo de persecución, ni quienes han cometido delitos graves o actos contrarios a principios de la ONU",
+      "extracted_from": "body h2: ¿Quiénes son elegibles para protección internacional en Honduras?",
+      "verification_sources": [
+        {
+          "source": "ACNUR – Quién es una persona refugiada",
+          "url": "https://help.unhcr.org/honduras/quien-es-una-persona-refugiada/",
+          "finding": "NO VERIFICADO. Esta página define quién SÍ califica, pero no menciona explícitamente exclusiones por motivos económicos o delitos graves."
+        },
+        {
+          "source": "ACNUR – Cómo solicitar asilo",
+          "url": "https://help.unhcr.org/honduras/como-solicitar-asilo/",
+          "finding": "NO VERIFICADO. La página no aborda causales de exclusión o no elegibilidad."
+        }
+      ],
+      "verdict": "NO VERIFICADO",
+      "verdict_detail": "Las cláusulas de exclusión (delitos graves, motivos puramente económicos) son estándar en el derecho internacional de refugiados (Convención de 1951, Art. 1F), pero no fueron encontradas explícitamente en las fuentes ACNUR Honduras consultadas. Es plausible que existan en la legislación hondureña, pero no se pudo verificar con las fuentes accesibles.",
+      "searches_used": 2
+    }
+  ],
+  "summary": {
+    "total_claims": 9,
+    "verified": 2,
+    "partially_verified": 2,
+    "not_verified": 5,
+    "errors_factuales": 2,
+    "errores_criticos": [
+      {
+        "claim": "claim_02",
+        "issue": "USO DE DGME EN LUGAR DE INM",
+        "detail": "El artículo menciona 'DGME' (Dirección General de Migración y Extranjería) como autoridad migratoria. Las fuentes ACNUR oficiales actuales (2024-2026) se refieren exclusivamente al INM (Instituto Nacional de Migración). Este error aparece múltiples veces en el texto.",
+        "severity": "alto"
+      },
+      {
+        "claim": "claim_08",
+        "issue": "REFUGIO Y ASILO PRESENTADOS COMO FIGURAS DISTINTAS",
+        "detail": "El artículo dedica una sección entera a diferenciar refugio y asilo como figuras jurídicas separadas en Honduras. ACNUR afirma explícitamente que son términos equivalentes: 'La solicitud de asilo también es llamada solicitud de la condición de persona refugiada'. Esto constituye un error conceptual significativo.",
+        "severity": "alto"
+      },
+      {
+        "claim": "claim_03",
+        "issue": "USO DE CONARE EN LUGAR DE COMISIÓN DE REFUGIO",
+        "detail": "El artículo usa 'CONARE' como acrónimo de la comisión evaluadora. ACNUR se refiere a 'Comisión de Refugio' sin usar el acrónimo CONARE. Posible desactualización o renombre institucional.",
+        "severity": "medio"
+      }
+    ],
+    "notas_verificador": [
+      "El texto completo del Decreto 208-2003 (Ley de Migración y Extranjería) no pudo ser consultado directamente. Múltiples fuentes oficiales (.gob.hn, OAS, Refworld) bloquearon el acceso o devolvieron errores.",
+      "La referencia a la Convención de 1951 es doctrinalmente correcta pero no se cita explícitamente en las guías ACNUR Honduras para solicitantes.",
+      "El permiso de trabajo durante el trámite (claim_05) es una afirmación que requiere verificación contra el texto legal o reglamentario, no disponible en esta auditoría.",
+      "La vía contencioso administrativa como recurso adicional (claim_06) no fue verificada.",
+      "Las cláusulas de exclusión (claim_09) son estándar en derecho internacional pero no aparecen en las guías ACNUR consultadas.",
+      "El dominio conapre.hn no resuelve; el dominio conapre.gob.hn tampoco. No se encontró presencia web oficial de CONARE."
+    ]
+  }
+}

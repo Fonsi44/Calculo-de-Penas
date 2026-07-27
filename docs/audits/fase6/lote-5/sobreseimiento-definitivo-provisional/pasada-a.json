@@ -1,0 +1,296 @@
+{
+  "article_id": "350ca6aa-1441-4689-904a-c1c085597cd5",
+  "sha256_original": "923dd4c9fab5d930b5effd22c4f997442701b410bd02a0e0b4182fca2fb00821",
+  "claims": [
+    {
+      "claim": "El sobreseimiento definitivo, regulado en el Artículo 296 del Código Procesal Penal de Honduras (Decreto 9-99-E), pone fin de manera irrevocable a un proceso penal.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando se determina que el hecho imputado no constituye delito.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando no existen pruebas suficientes de la participación del imputado y no es razonable esperar nuevas pruebas.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando la acción penal ha prescrito.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando concurre una causa de extinción de la responsabilidad penal.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento provisional, contemplado en el Artículo 295 del Código Procesal Penal, suspende temporalmente el proceso.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento provisional ocurre cuando no hay pruebas suficientes para formular una acusación formal, pero existe la posibilidad de que surjan nuevos elementos probatorios en el futuro.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento definitivo cierra el caso de forma absoluta, similar a una sentencia absolutoria, impidiendo un nuevo enjuiciamiento por los mismos hechos.",
+      "type": "legal_framework",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento provisional solo detiene el proceso, permitiendo su reactivación si la Fiscalía o la parte acusadora logran reunir pruebas adicionales que sustenten la imputación.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El hecho investigado no encuadra en ninguna figura delictiva según el Código Penal de Honduras [es una causal de sobreseimiento definitivo].",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La evidencia disponible no demuestra la participación del imputado, y no hay perspectivas realistas de obtener pruebas concluyentes [es una causal de sobreseimiento definitivo].",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Ha transcurrido el plazo legal para ejercer la acción penal, conforme a las reglas de prescripción establecidas en el Código Penal [es una causal de sobreseimiento definitivo].",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Se ha configurado una causa legal que extingue la responsabilidad penal, como la muerte del imputado, la concesión de amnistía o el perdón del ofendido en los delitos que lo permiten [es una causal de sobreseimiento definitivo].",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Un juez de garantía, a solicitud de la defensa o del Ministerio Público, puede dictar un sobreseimiento provisional si considera que las pruebas presentadas son insuficientes para sostener una acusación en la etapa intermedia del proceso.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Debe existir una expectativa razonable de que se puedan obtener pruebas determinantes en el futuro, lo cual debe ser debidamente justificado [para dictar sobreseimiento provisional].",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El juez decreta un sobreseimiento provisional, suspendiendo el proceso por un periodo determinado, con posibilidad de reapertura si aparecen nuevas pruebas dentro de cinco años según el Artículo 295 del Código Procesal Penal.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Confundir el sobreseimiento provisional con una absolución es un error común; el primero solo suspende el proceso, mientras que la segunda lo finaliza.",
+      "type": "definition",
+      "importance": "contextual",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento es una figura propia de la etapa intermedia [del proceso penal], no del final del juicio.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento no es automático; requiere una argumentación jurídica robusta y fundamentada en las debilidades del caso presentado por el Ministerio Público.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La solicitud de sobreseimiento se presenta por escrito ante el juez de garantía competente, durante la etapa intermedia del proceso penal.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El escrito [de solicitud de sobreseimiento] debe exponer detalladamente las razones de hecho y de derecho que fundamentan la petición, adjuntando las pruebas o argumentos que la sustentan.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La decisión del juez, ya sea de concederlo o denegarlo, puede ser objeto de recurso de apelación ante la Corte de Apelaciones correspondiente.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Tanto el Ministerio Público como el imputado tienen derecho a interponer recurso de apelación contra la resolución que concede o deniega el sobreseimiento.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El recurso de apelación se tramita ante la Corte de Apelaciones competente.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El proceso puede reabrirse si aparecen nuevas pruebas dentro de los cinco años previstos legalmente [tras sobreseimiento provisional].",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Vencido ese plazo [de cinco años] sin reapertura, deben aplicarse los efectos establecidos por el Código Procesal Penal.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento definitivo tiene la autoridad de cosa juzgada.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Por regla general, [el sobreseimiento definitivo] no permite la reapertura del caso por los mismos hechos.",
+      "type": "legal_framework",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Excepcionalmente, podría considerarse [la reapertura] en casos de revisión extraordinaria ante la Corte Suprema de Justicia, bajo supuestos muy específicos y limitados, como la demostración de fraude procesal.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento en Honduras está regulado principalmente en el Código Procesal Penal (Decreto 9-99-E).",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El Código Procesal Penal (Decreto 9-99-E) entró en vigor el 2 de febrero de 2018.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El Código Procesal Penal ha sido objeto de diversas reformas posteriores [a su entrada en vigor].",
+      "type": "contextual",
+      "importance": "contextual",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null
+    }
+  ],
+  "global_assessment": "PASADA A — VERIFICACION FALLIDA POR INACCESIBILIDAD DE FUENTES OFICIALES.\n\nSe intentó verificar los 32 claims extraídos del cuerpo del artículo contra fuentes oficiales hondureñas. Se realizaron más de 40 intentos de acceso a través de los siguientes dominios oficiales y repositorios internacionales:\n\n- tsuc.hn (Tribunal Superior de Cuentas / biblioteca): DNS no resuelve desde este entorno.\n- poderjudicial.gob.hn (Poder Judicial de Honduras): accesible pero es un SharePoint SPA; las rutas de normativa/leyes devuelven 404. No se encontró enlace a la legislación en el HTML estático.\n- congresonacional.hn (Congreso Nacional): accesible con flag TLS inseguro; sitio Next.js con contenido renderizado en cliente, no escrapeable. Páginas de leyes/decretos devuelven 404.\n- gaceta.gob.hn (La Gaceta oficial): DNS no resuelve.\n- tsc.gob.hn (Tribunal Superior de Cuentas): sitio Joomla accesible; biblioteca de códigos no contiene el Código Procesal Penal (solo Código Penal 2019 y Código Procesal Civil).\n- sgjd.gob.hn (Secretaría de Gobernación, Justicia y Descentralización): accesible pero sin resultados para 'codigo procesal penal'.\n- mp.hn (Ministerio Público): accesible pero sin normativa del CPP publicada.\n- oas.org (Organización de Estados Americanos): protección Cloudflare bloquea acceso (HTTP 403) a todos los PDF del CPP.\n- acnur.org (UNHCR): HTTP 403.\n- refworld.org: HTTP 403.\n- wipo.int (WIPO Lex): IDs de documento incorrectos; no se localizó el documento HN057 ni equivalente para el CPP.\n- Google Docs viewer: devolvió página de error 'OAS Page Not Found' para el PDF cacheado.\n- DuckDuckGo, Google, Brave Search: CAPTCHAs o SPAs JavaScript que impiden la extracción automatizada.\n\nResultado: CERO fuentes oficiales accesibles. Los 32 claims quedan en estado 'unverifiable'. Ningún claim pudo ser verificado ni refutado con fuentes primarias.\n\nRIESGOS IDENTIFICADOS (no verificados pero destacables):\n1. La asignación de artículos (295 para provisional, 296 para definitivo) y el decreto (9-99-E) no pudieron ser corroborados.\n2. La fecha de entrada en vigor (2 de febrero de 2018) no pudo ser comprobada — es una afirmación muy específica que requiere verificación documental.\n3. El plazo de cinco años para reapertura del sobreseimiento provisional no pudo ser verificado contra el texto legal.\n4. Las causales de sobreseimiento enumeradas pudieran estar incompletas o inexactas.\n5. La referencia a 'juez de garantía' debe verificarse contra la nomenclatura oficial del CPP hondureño.\n\nRECOMENDACION: Este artículo NO está listo para Pasada B. Requiere que un revisor humano con acceso a fuentes oficiales hondureñas (idealmente un abogado colegiado en Honduras con acceso a la versión actualizada del CPP) verifique cada claim contra el texto vigente del Código Procesal Penal, incluyendo reformas posteriores a 2018.",
+  "ready_for_pasada_b": false
+}

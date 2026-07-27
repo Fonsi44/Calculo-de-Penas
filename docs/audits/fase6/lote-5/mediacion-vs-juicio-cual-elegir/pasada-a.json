@@ -1,0 +1,307 @@
+{
+  "article_id": "609bca6a-f8ff-4209-b233-e4b56c5ff05c",
+  "sha256_original": "c19041c16fb636f9f158eb00f9645e795170f3f9b8d4d4fcb54bda556067710e",
+  "claims": [
+    {
+      "claim": "La Ley de Conciliación y Arbitraje de Honduras (Decreto No. 161-2000) promueve los Mecanismos Alternativos de Resolución de Conflictos (MARC).",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://www.poderjudicial.gob.hn/Cedij/SitePages/Leyes.aspx — Portal CEDIJ del Poder Judicial de Honduras; contiene enlaces a leyes por año (2009-2026). El Decreto 161-2000, por ser del año 2000, no aparece en el índice visible. El portal es una interfaz SharePoint que requiere JavaScript para renderizar resultados de búsqueda.",
+        "https://www.congresonacional.hn — Sitio del Congreso Nacional de Honduras; no dispone de buscador de legislación accesible. La API de búsqueda retorna 404."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "La existencia del Decreto 161-2000 es ampliamente documentada en fuentes secundarias y literatura jurídica hondureña. Sin embargo, no fue posible acceder al texto oficial de la ley debido a bloqueos técnicos en los portales oficiales hondureños. Se requiere verificación manual contra el texto publicado en La Gaceta o en el archivo del Congreso Nacional."
+    },
+    {
+      "claim": "La mediación y la conciliación se presentan como herramientas efectivas para solucionar disputas de manera pacífica, rápida y con efectos legalmente vinculantes.",
+      "type": "definition",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "Afirmación de carácter general y descriptivo que resume el espíritu de la ley. No es un claim jurídico específico verificable contra un artículo concreto, sino una caracterización de los MARC. Requiere validación editorial por parte de un abogado hondureño."
+    },
+    {
+      "claim": "Según el Artículo 4 del Decreto No. 161-2000, el acta de conciliación tiene fuerza de sentencia firme.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://www.poderjudicial.gob.hn — Poder Judicial de Honduras; búsqueda SharePoint retornó página de resultados vacía (requiere JavaScript). No se pudo acceder al texto del decreto para confirmar el texto exacto del Artículo 4.",
+        "https://www.oas.org/juridico/spanish/ — Portal jurídico de la OEA; múltiples intentos de acceso a PDFs de legislación hondureña retornaron HTTP 403 Forbidden."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "Este es un claim jurídico específico y de alto impacto. La atribución de 'fuerza de sentencia firme' al acta de conciliación es una afirmación recurrente en la doctrina hondureña sobre MARC, pero NO fue posible confirmar el texto exacto del Artículo 4 del Decreto 161-2000 en fuentes oficiales accesibles. Se requiere verificación directa del texto legal."
+    },
+    {
+      "claim": "Las mediaciones institucionales pueden llevarse a cabo en centros como el de la Cámara de Comercio e Industrias de Cortés (CCIC), la Cámara de Comercio e Industrias de Tegucigalpa (CCIT), y el del Colegio de Abogados de Honduras.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://www.ccichonduras.org/website/servicios/centro-de-conciliacion-y-arbitraje/ — Timeout de conexión (10s). No se pudo verificar si el centro está activo y reconocido oficialmente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "La CCIC, CCIT y el Colegio de Abogados de Honduras son instituciones conocidas en el ámbito jurídico hondureño. Sin embargo, no se pudo confirmar mediante fuente oficial si estas entidades están expresamente autorizadas por el Decreto 161-2000 o su reglamento para fungir como centros de conciliación/mediación."
+    },
+    {
+      "claim": "El Código Procesal Penal contempla la posibilidad de conciliación para delitos menores o patrimoniales, según el Artículo 45.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://www.poderjudicial.gob.hn — Búsqueda en SharePoint del Poder Judicial no retornó resultados accesibles sin JavaScript.",
+        "https://www.oas.org/juridico/spanish/mesicic3_hnd_procesal_penal.pdf — HTTP 403 Forbidden.",
+        "https://web.archive.org/web/2022/https://www.oas.org/juridico/spanish/mesicic3_hnd_procesal_penal.pdf — HTTP 429 Too Many Requests (rate limited).",
+        "https://www.unodc.org/cld/search.html?q=Honduras+codigo+procesal+penal+conciliacion — HTTP 404."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "ALERTA: El Código Procesal Penal de Honduras ha tenido múltiples reformas desde su promulgación (Decreto 9-99-E). La numeración de artículos puede haber cambiado. El artículo que regula la conciliación podría no ser el 45 en la versión vigente. Es indispensable verificar: (a) el número de artículo correcto en la versión actual del CPP; (b) si efectivamente aplica a 'delitos menores o patrimoniales' o utiliza otra clasificación (ej. delitos de acción privada, delitos culposos, etc.)."
+    },
+    {
+      "claim": "El Ministerio del Trabajo y Seguridad Social y el Código del Trabajo promueven la conciliación obrero-patronal para evitar la saturación de los juzgados laborales.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://www.trabajo.gob.hn — Sitio de la Secretaría de Trabajo y Seguridad Social; contiene mención general a la Dirección General del Trabajo y Procuraduría General del Trabajo. El enlace directo a 'Código del Trabajo' retornó 404. No se encontró texto específico sobre conciliación obrero-patronal.",
+        "https://www.trabajo.gob.hn/tramites/conciliacion-laboral/ — HTTP 404."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "La conciliación laboral es una institución reconocida en el derecho laboral hondureño, pero no se pudo verificar el fundamento normativo exacto ni la afirmación de que su propósito es 'evitar la saturación de los juzgados laborales' (esto último es más una justificación de política pública que un texto legal)."
+    },
+    {
+      "claim": "La acción penal pública corresponde al Estado a través del Ministerio Público (MP).",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.mp.hn — Sitio oficial del Ministerio Público de Honduras; no contiene referencia explícita al fundamento constitucional o legal de la acción penal pública en la página principal."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "Este es un principio general del derecho procesal penal hondureño, consagrado en la Constitución de la República y el Código Procesal Penal. Aunque es correcto en esencia, no se cita el fundamento normativo específico (ej. Artículo 232 de la Constitución, o el artículo pertinente del CPP)."
+    },
+    {
+      "claim": "Los expedientes judiciales son, por regla general, de acceso público.",
+      "type": "principle",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "El principio de publicidad de los procesos judiciales está reconocido en el ordenamiento hondureño. Sin embargo, existen excepciones (ej. procesos de familia, menores, ciertas etapas de la investigación penal). La afirmación como regla general es correcta en espíritu pero requiere precisión sobre las excepciones."
+    },
+    {
+      "claim": "Las Cortes de Apelaciones y, en su caso, la Corte Suprema de Justicia (como instancias de apelación de sentencias).",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.poderjudicial.gob.hn — Portal Oficial del Poder Judicial de Honduras; confirma la existencia de la Corte Suprema de Justicia como máximo tribunal."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "notes": "La estructura judicial descrita (Cortes de Apelaciones y Corte Suprema de Justicia) es correcta para Honduras. La Corte Suprema de Justicia conoce recursos de casación, no típicamente apelaciones ordinarias. La redacción 'en su caso' matiza adecuadamente esta distinción."
+    },
+    {
+      "claim": "El mediador no impone una decisión; su rol es guiar el diálogo y la búsqueda de soluciones creativas bajo un esquema de ganar-ganar.",
+      "type": "definition",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "notes": "Descripción conceptual de la mediación como método alternativo de resolución de conflictos. Es coherente con la doctrina general de los MARC. No constituye un claim jurídico verificable sino una definición pedagógica."
+    },
+    {
+      "claim": "Los Juzgados de Letras civiles, laborales y de familia a menudo enfrentan una considerable carga de trabajo, lo que puede extender los plazos de resolución.",
+      "type": "contextual",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.poderjudicial.gob.hn/Paginas/PLAN-NACIONAL-DE.aspx — Poder Judicial mantiene un 'Plan Nacional de Erradicación de la Mora Judicial', lo que sugiere que efectivamente existe congestión judicial."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "notes": "La existencia del 'Plan Nacional de Erradicación de la Mora Judicial' en el sitio del Poder Judicial es evidencia circunstancial de que la carga de trabajo judicial es un problema reconocido institucionalmente. La afirmación es plausible pero no está respaldada por datos estadísticos concretos en el artículo."
+    },
+    {
+      "claim": "La mediación es un proceso voluntario en el que un tercero imparcial, el mediador, facilita la comunicación entre las partes en conflicto para que ellas mismas alcancen un acuerdo mutuamente beneficioso.",
+      "type": "definition",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": false,
+      "suggested_correction": null,
+      "notes": "Definición estándar de mediación, consistente con la doctrina internacional de MARC. No es un claim verificable contra una norma específica."
+    },
+    {
+      "claim": "Comparación tabla: mediación toma 'días o semanas (generalmente 1 a 3 sesiones)' vs juicio 'meses o años'.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "Los plazos indicados son estimaciones generales. No se pudo verificar contra estadísticas oficiales del Poder Judicial hondureño sobre duración promedio de mediaciones y juicios. Las estadísticas judiciales existen en el portal CEDIJ pero no son accesibles sin JavaScript."
+    },
+    {
+      "claim": "Comparación tabla: costos de mediación 'bajos' vs juicio 'altos (honorarios prolongados, peritajes, tasas judiciales, costas)'.",
+      "type": "financial",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "Afirmación comparativa general sin cifras concretas ni referencia a aranceles oficiales de centros de mediación o tasas judiciales hondureñas. Requiere verificación contra tablas de honorarios y aranceles vigentes."
+    },
+    {
+      "claim": "Comparación tabla: confidencialidad 'total' en mediación vs 'público' en juicio (expedientes judiciales de acceso público por regla general).",
+      "type": "principle",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "La confidencialidad es un principio general de la mediación. La publicidad del proceso judicial es un principio general en Honduras. Ambas afirmaciones tienen excepciones que no se mencionan (ej. procesos de familia reservados, mediaciones con deber de denuncia). La afirmación 'total' para confidencialidad puede ser imprecisa."
+    },
+    {
+      "claim": "Delitos penales graves: Homicidios, violaciones, narcotráfico. La acción penal pública corresponde al Estado a través del Ministerio Público (MP).",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.mp.hn — Sitio del Ministerio Público de Honduras."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "La enumeración de delitos graves es ejemplificativa y correcta en esencia. La titularidad de la acción penal pública en el MP es correcta. Sin embargo, el artículo no cita el fundamento constitucional (Art. 232 Constitución) ni el artículo del CPP que establece qué delitos admiten conciliación y cuáles no."
+    },
+    {
+      "claim": "Procesos como usucapión, nulidad de instrumentos públicos o declaratorias de herederos contenciosas requieren una decisión judicial formal.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": null,
+      "notes": "La usucapión (prescripción adquisitiva) y la nulidad de instrumentos públicos efectivamente requieren declaración judicial por involucrar derechos reales o estado civil. La declaratoria de herederos puede ser voluntaria (notarial) o contenciosa (judicial). La afirmación es sustancialmente correcta pero requiere precisión sobre la distinción entre vía voluntaria y contenciosa."
+    }
+  ],
+  "global_assessment": "Se realizó una verificación exhaustiva de los claims legales del artículo contra fuentes oficiales hondureñas. Se intentaron más de 50 accesos a fuentes primarias incluyendo: Poder Judicial de Honduras (poderjudicial.gob.hn), Congreso Nacional (congresonacional.hn), Ministerio Público (mp.hn), Secretaría de Trabajo (trabajo.gob.hn), IAIP (portalunico.iaip.gob.hn), CCIC (ccichonduras.org), OAS Portal Jurídico (oas.org), WIPO Lex, ILO NATLEX, UNODC SHERLOC, SICA, Wayback Machine, Google, Bing, DuckDuckGo, y múltiples dominios .hn adicionales.\n\nRESULTADO: NINGÚN claim jurídico específico pudo ser verificado contra fuente oficial primaria. Las causas son múltiples y sistemáticas:\n- Poder Judicial: sitio SharePoint; búsqueda y visualización de documentos requieren JavaScript (no accesible vía automated fetch). El CEDIJ solo indexa leyes desde 2009; el Decreto 161-2000 (año 2000) no aparece.\n- Congreso Nacional: sitio NextJS sin API de búsqueda de legislación funcional.\n- OAS: HTTP 403 Forbidden en todos los PDFs de legislación hondureña.\n- La Gaceta (diario oficial): no se encontró portal digital accesible.\n- Motores de búsqueda (Google, Bing, DuckDuckGo): bloquean con CAPTCHAs el acceso automatizado.\n- Otros portales .gob.hn: Cloudflare, SSL inválido, o simplemente no resuelven.\n\nESTADO GENERAL: El artículo contiene afirmaciones jurídicas específicas (referencias a artículos y decretos) que NO pudieron ser verificadas en esta pasada automatizada. Los claims de tipo 'central' que citan números de artículo específicos (Art. 4 del Decreto 161-2000, Art. 45 del CPP) son los de mayor riesgo y requieren verificación humana obligatoria. Los claims contextuales y de definición son plausibles y consistentes con la doctrina general de MARC.\n\nRECOMENDACIÓN: No se recomienda pasar a Pasada B sin antes realizar una verificación humana de los claims centrales, particularmente la cita del Artículo 4 del Decreto 161-2000 y el Artículo 45 del Código Procesal Penal, cuya numeración podría haber cambiado con reformas posteriores.",
+  "ready_for_pasada_b": false,
+  "verification_metadata": {
+    "verification_date": "2026-07-27",
+    "total_sources_attempted": 50,
+    "official_sources_accessed": 4,
+    "official_sources_blocked": 12,
+    "search_engines_blocked": 3,
+    "claims_verified": 0,
+    "claims_unverifiable": 5,
+    "claims_needs_review": 12,
+    "claims_incorrect": 0,
+    "sources_accessed": [
+      {
+        "url": "https://www.poderjudicial.gob.hn",
+        "status": "accessed_partial",
+        "notes": "SharePoint site. Homepage and CEDIJ Leyes index accessible. Document search and viewing requires JavaScript."
+      },
+      {
+        "url": "https://www.poderjudicial.gob.hn/Cedij/SitePages/Leyes.aspx",
+        "status": "accessed_partial",
+        "notes": "Leyes index page loads. Shows links to years 2009-2026. Laws from 2000 not indexed in visible structure."
+      },
+      {
+        "url": "https://www.congresonacional.hn",
+        "status": "accessed_partial",
+        "notes": "NextJS site. Homepage loads. No legislation search API available."
+      },
+      {
+        "url": "https://www.trabajo.gob.hn",
+        "status": "accessed_partial",
+        "notes": "Homepage loads. Código del Trabajo link returns 404. No specific conciliation information found."
+      },
+      {
+        "url": "https://www.mp.hn",
+        "status": "accessed_partial",
+        "notes": "Homepage loads. No specific legal references found in main page."
+      },
+      {
+        "url": "https://www.tsc.gob.hn",
+        "status": "accessed_partial",
+        "notes": "Tribunal Superior de Cuentas (audit institution, not judiciary). No legislation content. /leyes/ returns 404."
+      }
+    ],
+    "sources_blocked": [
+      {
+        "url_pattern": "https://www.oas.org/juridico/*",
+        "status": "403_forbidden",
+        "notes": "All attempts to access PDFs and HTML pages of Honduran legislation on OAS juridical portal returned 403."
+      },
+      {
+        "url_pattern": "https://consent.google.com/*",
+        "status": "captcha_redirect",
+        "notes": "Google search redirects to consent.google.com requiring human interaction."
+      },
+      {
+        "url_pattern": "https://html.duckduckgo.com/*",
+        "status": "captcha_challenge",
+        "notes": "DuckDuckGo HTML search returns anti-bot challenge page."
+      },
+      {
+        "url_pattern": "https://www.bing.com/search*",
+        "status": "captcha_challenge",
+        "notes": "Bing returns CAPTCHA challenge."
+      },
+      {
+        "url_pattern": "https://portalunico.iaip.gob.hn",
+        "status": "cloudflare_challenge",
+        "notes": "IAIP Transparency Portal protected by Cloudflare."
+      },
+      {
+        "url_pattern": "https://web.archive.org/web/*",
+        "status": "429_rate_limited",
+        "notes": "Wayback Machine returned 429 Too Many Requests."
+      },
+      {
+        "url_pattern": "https://natlex.ilo.org/*",
+        "status": "403_forbidden",
+        "notes": "ILO NATLEX returned 403 after redirect from old URL."
+      },
+      {
+        "url_pattern": "https://www.sica.int/*",
+        "status": "403_forbidden",
+        "notes": "SICA search returned 403."
+      },
+      {
+        "url_pattern": "https://www.ccichonduras.org/*",
+        "status": "timeout",
+        "notes": "Connection timeout after 10 seconds."
+      },
+      {
+        "url_pattern": "https://www.scribd.com/*",
+        "status": "loading_error",
+        "notes": "Scribd returned loading error."
+      },
+      {
+        "url_pattern": "https://www.lexology.com/*",
+        "status": "403_forbidden",
+        "notes": "Lexology returned 403."
+      },
+      {
+        "url_pattern": "https://www.unodc.org/cld/*",
+        "status": "404_not_found",
+        "notes": "UNODC SHERLOC search returned 404."
+      }
+    ]
+  }
+}

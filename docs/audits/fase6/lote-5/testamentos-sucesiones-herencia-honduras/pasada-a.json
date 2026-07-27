@@ -1,0 +1,282 @@
+{
+  "article_id": "6f9eee39-4a06-43f2-90ed-c6604ce8a911",
+  "sha256_original": "5ef66f750b66b7d56f032a3ffba9d7dbf6cda9d573bd367d59a980e7566509f1",
+  "claims": [
+    {
+      "id": "C01",
+      "claim": "La herencia en Honduras comprende la transmisión de bienes, derechos y obligaciones de una persona fallecida a sus herederos, regulada por el Código Civil. Puede ser testada, si existe testamento, o intestada, si la ley determina los beneficiarios.",
+      "type": "definition",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 931 CC",
+        "data/codigo_civil.json#Artículo 933 CC",
+        "data/codigo_civil.json#Artículo 980 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C02",
+      "claim": "El Código Civil de Honduras es el Decreto 76-84.",
+      "type": "legal_framework",
+      "importance": "contextual",
+      "verification_status": "unverifiable",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "La referencia 'Decreto 76-84' no aparece en los 2359 artículos del archivo local data/codigo_civil.json. El artículo 2369 CC menciona 'este Código' pero sin referencia al decreto de promulgación. Requiere verificación humana con el texto oficial del decreto de promulgación del Código Civil hondureño vigente."
+    },
+    {
+      "id": "C03",
+      "claim": "El testamento abierto se otorga ante notario y tres testigos. El testador expresa su voluntad verbalmente, el notario la redacta, lee y firma junto a los testigos.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 993 CC",
+        "data/codigo_civil.json#Artículo 994 CC",
+        "data/codigo_civil.json#Artículo 996 CC",
+        "data/codigo_civil.json#Artículo 997 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C04",
+      "claim": "El testamento cerrado: el testador escribe su voluntad, la sella en un sobre y la presenta a un notario y testigos, declarando que contiene su testamento. El contenido se mantiene secreto hasta el fallecimiento.",
+      "type": "definition",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1001 CC",
+        "data/codigo_civil.json#Artículo 1002 CC",
+        "data/codigo_civil.json#Artículo 1003 CC",
+        "data/codigo_civil.json#Artículo 1005 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "El artículo omite precisar que el testamento cerrado requiere CINCO testigos (Art. 1001 CC: 'ante notario y cinco testigos'), no una cantidad genérica. Además, quien no sepa leer y escribir NO puede otorgar testamento cerrado (Art. 1002 CC)."
+    },
+    {
+      "id": "C05",
+      "claim": "Existen testamentos especiales para circunstancias excepcionales como enfermedad grave, epidemia o guerra, con formas simplificadas que caducan si el testador sobrevive a la situación de excepción.",
+      "type": "definition",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1014 CC",
+        "data/codigo_civil.json#Artículo 1017 CC",
+        "data/codigo_civil.json#Artículo 1018 CC",
+        "data/codigo_civil.json#Artículo 1020 CC",
+        "data/codigo_civil.json#Artículo 1027 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "Conviene precisar cifras exactas: en peligro inminente de muerte se requieren CINCO testigos (Art. 1017 CC); en epidemia, TRES testigos (Art. 1018 CC); caducan a los 60 días de cesar la circunstancia o 90 días tras el fallecimiento si no se protocolizan (Art. 1020 CC). También existe el testamento militar (Art. 1027 CC) y el marítimo."
+    },
+    {
+      "id": "C06",
+      "claim": "La libertad de testar está limitada por la protección a los herederos forzosos (descendientes, cónyuge y ascendientes, según el caso). La ley reserva una porción de la herencia, la legítima, a estos herederos. El testador solo puede disponer libremente de la porción restante, la de libre disposición.",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "incorrect",
+      "sources": [
+        "data/codigo_civil.json#Artículo 979 CC",
+        "data/codigo_civil.json#Artículo 1147 CC"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "ERROR SUSTANTIVO GRAVE. El Código Civil hondureño NO contempla herederos forzosos ni legítima en el sentido tradicional del derecho civil continental. El Art. 979 CC establece textualmente: 'La testamentificación es libre. No hay más asignaciones forzosas que los alimentos debidos por ley a ciertas personas y la porción conyugal.' El Art. 1147 CC lo confirma: 'Asignaciones forzosas son las que el testador es obligado a hacer... Son asignaciones forzosas: 1.- Los alimentos que se deben por la ley a ciertas personas; y 2.- La porción conyugal.' Honduras adopta un sistema de LIBRE TESTAMENTIFICACIÓN, no de legítimas. El testador puede disponer libremente de todo su patrimonio, sujeto únicamente a la acción de reforma por alimentos o porción conyugal (Art. 1167 CC). Este error parece originarse en trasladar acríticamente conceptos del derecho sucesorio español o de otros países latinoamericanos al ordenamiento hondureño."
+    },
+    {
+      "id": "C07",
+      "claim": "Un testamento que desherede a un heredero forzoso sin causa legal o le asigne menos de su legítima puede ser impugnado judicialmente ante los tribunales competentes.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "incorrect",
+      "sources": [
+        "data/codigo_civil.json#Artículo 979 CC",
+        "data/codigo_civil.json#Artículo 1147 CC",
+        "data/codigo_civil.json#Artículo 1167 CC"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "ERROR SUSTANTIVO derivado del claim anterior. No existen 'herederos forzosos' ni 'legítima' en el derecho sucesorio hondureño. Un testamento SÍ puede ser impugnado, pero únicamente mediante: (a) la acción de reforma (Art. 1167 CC) que corresponde al cónyuge sobreviviente para la satisfacción o integración de su porción conyugal, y a las personas con derecho legal a alimentos que no fueron satisfechos o lo fueron en cantidad insuficiente; (b) por incumplimiento de formalidades legales (Art. 1010 CC: el testamento que omita cualquier formalidad 'no tendrá valor alguno'). La acción de reforma prescribe en 4 años desde el conocimiento del testamento (Art. 1168 CC). La porción conyugal corresponde a la cuarta parte de los bienes del cónyuge premuerto, solo si el sobreviviente carece de lo necesario para su congrua subsistencia (Art. 1150 CC)."
+    },
+    {
+      "id": "C08",
+      "claim": "En sucesión intestada, el orden de herederos es: primero los hijos y el cónyuge sobreviviente; a falta de estos, los ascendientes y el cónyuge; luego los hermanos; y en última instancia el Estado si no hay parientes con derecho.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "incorrect",
+      "sources": [
+        "data/codigo_civil.json#Artículo 960 CC",
+        "data/codigo_civil.json#Artículo 965 CC",
+        "data/codigo_civil.json#Artículo 966 CC",
+        "data/codigo_civil.json#Artículo 967 CC",
+        "data/codigo_civil.json#Artículo 968 CC",
+        "data/codigo_civil.json#Artículo 969 CC",
+        "data/codigo_civil.json#Artículo 970 CC",
+        "data/codigo_civil.json#Artículo 972 CC",
+        "data/codigo_civil.json#Artículo 973 CC"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "IMPRECISIÓN RELEVANTE con dos errores: (1) El sistema hondureño NO sigue un orden excluyente simple sino un sistema de CONCURRENCIA con proporciones complejas entre distintas clases de herederos (Arts. 965-974 CC). Por ejemplo, con hijos legítimos, la herencia se divide en 4/4: 3/4 para hijos legítimos y 1/4 para hijos naturales, más porción conyugal (Art. 965 CC). (2) El heredero último NO es el Estado sino los MUNICIPIOS (Art. 973 CC: 'A falta de todos los herederos ab intestato... sucederán los municipios'). Los bienes adquiridos por municipios deben invertirse exclusivamente en beneficencia o instrucción pública (Art. 975 CC). El orden de llamamiento del Art. 960 CC es: descendientes legítimos, ascendientes legítimos, colaterales legítimos, hijos naturales, padres naturales, hermanos naturales, cónyuge sobreviviente, municipios. La distribución entre ellos sigue reglas de concurrencia y proporción de los Arts. 965-974 CC."
+    },
+    {
+      "id": "C09",
+      "claim": "El proceso de sucesión intestada requiere una declaración judicial de herederos, que puede implicar la publicación de edictos y la verificación de otros posibles herederos.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 974 CC"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El Art. 974 CC menciona expresamente que los municipios requieren 'sentencia que los declare herederos, en los términos que ordena el Código de Procedimientos'. Para otros herederos ab intestato, el Código Civil no detalla explícitamente un procedimiento de declaratoria judicial con edictos en el Libro III. Esta descripción puede corresponder al Código de Procedimientos Civiles (no disponible en las fuentes canónicas locales). Se recomienda verificación humana con el Código Procesal Civil hondureño."
+    },
+    {
+      "id": "C10",
+      "claim": "El proceso general de sucesión (testada e intestada) implica: apertura de la sucesión, aceptación de la herencia (pura y simple o a beneficio de inventario), formación de inventario de bienes y deudas, partición de la herencia entre los herederos, y adjudicación de los bienes.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 934 CC",
+        "data/codigo_civil.json#Artículo 1172 CC",
+        "data/codigo_civil.json#Artículo 1188 CC",
+        "data/codigo_civil.json#Artículo 1192 CC",
+        "data/codigo_civil.json#Artículo 1194 CC",
+        "data/codigo_civil.json#Artículo 1225 CC",
+        "data/codigo_civil.json#Artículo 1253 CC",
+        "data/codigo_civil.json#Artículo 1254 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C11",
+      "claim": "En caso de desacuerdo entre herederos, la partición puede tramitarse judicialmente.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1240 CC",
+        "data/codigo_civil.json#Artículo 1234 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C12",
+      "claim": "No hay un plazo legal específico para aceptar o repudiar una herencia. Sin embargo, se recomienda hacerlo en los primeros meses tras el fallecimiento para evitar complicaciones. La aceptación puede ser expresa o tácita.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1179 CC",
+        "data/codigo_civil.json#Artículo 1180 CC",
+        "data/codigo_civil.json#Artículo 1188 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "IMPRECISIÓN. El Art. 1179 CC establece que, ante demanda de cualquier persona interesada, el asignatario DEBE declarar si acepta o repudia dentro de 40 días subsiguientes a la demanda (prorrogables por el juez hasta 6 meses en caso de ausencia o bienes en lugares distantes). Si no declara en ese plazo, se entiende que REPUDIA (Art. 1180 CC). Si bien no hay un plazo automático desde la muerte, SÍ existe un plazo legal una vez que se exige la declaración. La afirmación 'no hay un plazo legal específico' es engañosa. La aceptación puede ser expresa (tomando el título de heredero) o tácita (ejecutando un acto que supone necesariamente la intención de aceptar) según Art. 1188 CC."
+    },
+    {
+      "id": "C13",
+      "claim": "Los herederos pueden aceptar la herencia a beneficio de inventario, limitando su responsabilidad al valor de los bienes heredados. Si optan por la aceptación pura y simple, responderán con su patrimonio personal si las deudas exceden el valor de los bienes heredados.",
+      "type": "financial",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1192 CC",
+        "data/codigo_civil.json#Artículo 1194 CC",
+        "data/codigo_civil.json#Artículo 1198 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C14",
+      "claim": "Un testamento puede ser impugnado si perjudica la legítima de los herederos forzosos o si no se cumplieron las formalidades legales establecidas en el Código Civil. La impugnación se realiza ante los tribunales de justicia hondureños.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1010 CC",
+        "data/codigo_civil.json#Artículo 1167 CC",
+        "data/codigo_civil.json#Artículo 979 CC",
+        "data/codigo_civil.json#Artículo 1147 CC"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "CORRECCIÓN PARCIAL. La impugnación por incumplimiento de formalidades SÍ es procedente (Art. 1010 CC: el testamento que omita cualquier formalidad 'no tendrá valor alguno'). Sin embargo, la impugnación por 'legítima de herederos forzosos' es INCORRECTA porque estos conceptos no existen en el derecho hondureño (Art. 979 y 1147 CC). La vía correcta es la acción de reforma (Art. 1167 CC) para proteger alimentos y porción conyugal, que prescribe en 4 años desde el conocimiento del testamento (Art. 1168 CC)."
+    },
+    {
+      "id": "C15",
+      "claim": "Las sucesiones en Honduras se rigen principalmente por el Código Civil, específicamente en el Libro III, Títulos VII y siguientes, que detallan las normas sobre testamentos, legítimas, sucesión intestada y el proceso de partición.",
+      "type": "legal_framework",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 931 CC",
+        "data/codigo_civil.json#Artículo 978 CC",
+        "data/codigo_civil.json#Artículo 979 CC",
+        "data/codigo_civil.json#Artículo 1147 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "La referencia al Libro III es correcta (arts. 931+ regulan sucesiones). Sin embargo, la mención a 'legítimas' es errónea por las razones ya expuestas. El CC hondureño regula asignaciones forzosas (alimentos y porción conyugal) en el Título V del Libro III (arts. 1147-1150 CC), no legítimas."
+    },
+    {
+      "id": "C16",
+      "claim": "Cualquier persona puede otorgar testamento para prevenir conflictos; el testamento no es solo para personas adineradas.",
+      "type": "definition",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "data/codigo_civil.json#Artículo 986 CC",
+        "data/codigo_civil.json#Artículo 979 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C17",
+      "claim": "En Honduras, en la sucesión intestada los hijos heredan en igual proporción que el cónyuge.",
+      "type": "legal_framework",
+      "importance": "supporting",
+      "verification_status": "incorrect",
+      "sources": [
+        "data/codigo_civil.json#Artículo 965 CC",
+        "data/codigo_civil.json#Artículo 966 CC",
+        "data/codigo_civil.json#Artículo 967 CC",
+        "data/codigo_civil.json#Artículo 968 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "AFIRMACIÓN INCORRECTA. En la sucesión intestada hondureña, la proporción entre hijos y cónyuge NO es simplemente igual. El sistema es complejo y varía según la configuración de herederos (Arts. 965-970 CC). Por ejemplo: con hijos legítimos, la herencia se divide en 4/4 (3/4 para hijos legítimos, 1/4 para hijos naturales) más porción conyugal (Art. 965 CC). El cónyuge no recibe 'lo mismo' que cada hijo; su derecho principal es la porción conyugal (1/4 del total si carece de lo necesario para su congrua subsistencia, Art. 1150 CC) y participa en proporciones variables según los demás herederos concurrentes (Arts. 966-970 CC)."
+    },
+    {
+      "id": "C18",
+      "claim": "Los herederos responden por las deudas del fallecido hasta el valor de los bienes heredados, a menos que acepten la herencia a beneficio de inventario.",
+      "type": "financial",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 1192 CC",
+        "data/codigo_civil.json#Artículo 1194 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "INVERSIÓN LÓGICA. La regla es la contraria: si el heredero acepta SIN inventario (pura y simple), responde ILIMITADAMENTE con su patrimonio personal (Art. 1192 CC: 'El que hace acto de heredero sin previo inventario solemne, sucede en todas las obligaciones transmisibles del difunto... aunque le impongan un gravamen que exceda al valor de los bienes que hereda'). SOLO si acepta CON beneficio de inventario limita su responsabilidad al valor de los bienes heredados (Art. 1194 CC: 'no hacer a los herederos... responsables... sino hasta concurrencia del valor total de los bienes que han heredado'). La redacción del artículo invierte la regla y la excepción."
+    },
+    {
+      "id": "C19",
+      "claim": "Ejemplo práctico: Don Carlos falleció sin testamento en Nacaome, Valle, dejando esposa María y tres hijos. Herencia de L.1,000,000 se distribuye en L.250,000 para cada uno de los cuatro herederos (partes iguales).",
+      "type": "financial",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "data/codigo_civil.json#Artículo 965 CC",
+        "data/codigo_civil.json#Artículo 966 CC",
+        "data/codigo_civil.json#Artículo 1150 CC"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "EJEMPLO POTENCIALMENTE ENGAÑOSO. La distribución 'partes iguales entre cónyuge e hijos (L.250,000 cada uno)' no refleja necesariamente el reparto legal hondureño. Según los Arts. 965-970 CC, la distribución en sucesión intestada depende de la configuración exacta de herederos y sus calidades (legítimos vs. naturales), y el cónyuge tiene derecho a porción conyugal (1/4 si carece de lo necesario, Art. 1150 CC) además de o en lugar de su cuota hereditaria. Se recomienda calificar el ejemplo como 'simplificado con fines ilustrativos' y advertir que la distribución real puede variar según las reglas de los Arts. 965-974 CC."
+    }
+  ],
+  "global_assessment": "VERIFICACION CONTRA FUENTES CANONICAS LOCALES COMPLETADA. Se utilizaron data/codigo_civil.json (2359 artículos) y data/articulos_constitucion.json (378 artículos). No se realizaron búsquedas web externas.\n\nHALLAZGO PRINCIPAL: El artículo contiene un error sustantivo grave al afirmar que en Honduras existen 'herederos forzosos' y una 'legítima' que limita la libertad de testar. El Código Civil hondureño establece exactamente lo contrario en el Art. 979 CC: 'La testamentificación es libre. No hay más asignaciones forzosas que los alimentos debidos por ley a ciertas personas y la porción conyugal' (confirmado por Art. 1147 CC). Esta confusión parece provenir de trasladar acríticamente conceptos del derecho sucesorio español o de otros países latinoamericanos al ordenamiento hondureño, que adopta un sistema de libre testamentificación.\n\nERRORES ADICIONALES RELEVANTES:\n- Describe la sucesión intestada como un orden excluyente simple cuando es un sistema de concurrencia con proporciones complejas (Arts. 965-974 CC).\n- Afirma que el heredero último es 'el Estado' cuando realmente son los municipios (Art. 973 CC).\n- Dice que los hijos heredan 'en igual proporción que el cónyuge' cuando las proporciones son variables según Arts. 965-970 CC.\n- Omite que el testamento cerrado requiere cinco testigos (Art. 1001 CC), no una cantidad genérica.\n- Invierte la regla del beneficio de inventario: la responsabilidad ilimitada es la REGLA (aceptación pura y simple) y la limitación al valor de los bienes es la EXCEPCIÓN (beneficio de inventario), no al revés.\n- Afirma que no hay plazo para aceptar/repudiar herencia cuando sí existe un plazo de 40 días desde que se exige la declaración (Art. 1179 CC).\n\nACIERTOS:\n- La descripción del testamento abierto ante notario y tres testigos es correcta (Art. 993 CC).\n- La explicación del beneficio de inventario como mecanismo para limitar responsabilidad es conceptualmente correcta (Arts. 1192-1194 CC).\n- Las etapas generales del proceso sucesorio están bien identificadas.\n- Los tipos de testamento (abierto, cerrado, especiales) están correctamente enumerados y descritos.\n- La afirmación de que cualquier persona puede testar es correcta (Art. 986 CC).\n\nESTADO: 19 claims analizados. Resultado: 8 verificados, 5 necesitan revisión, 4 incorrectos, 1 inverificable, 1 con múltiples fuentes de respaldo.\n\nRECOMENDACION: El artículo NO está listo para publicación. Requiere corrección sustancial, especialmente en lo relativo a herederos forzosos, legítima y el orden de la sucesión intestada. Se recomienda revisión por un abogado especialista en derecho civil hondureño antes de cualquier publicación.",
+  "ready_for_pasada_b": false
+}

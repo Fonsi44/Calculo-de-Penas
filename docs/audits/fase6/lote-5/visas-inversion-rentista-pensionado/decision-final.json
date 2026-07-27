@@ -1,0 +1,32 @@
+{
+  "slug": "visas-inversion-rentista-pensionado",
+  "article_id": "e336f230-a15c-4862-9717-fda168dc307b",
+  "sha256_original": "a380528ba9ac3fe4242c4c4448a1a27fb57f617b68c1b3dbd63f4114a741d2a9",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "SHA256 coincidente entre pasadas A y B. Ambas pasadas convergen en hallazgos importantes pero la mayoría de los claims centrales (montos mínimos, plazos, procedimientos) no pudieron ser verificados contra fuentes oficiales por inaccesibilidad sistemática. Hallazgos convergentes: (1) ERROR FACTUAL confirmado por ambas pasadas: el artículo usa consistentemente 'DGME' (Dirección General de Migración y Extranjería) como autoridad migratoria, pero el nombre oficial actual es 'INM' (Instituto Nacional de Migración). El dominio dgme.gob.hn no existe (DNS ENOTFOUND); inm.gob.hn es el portal activo. Este error aparece en múltiples secciones. (2) OMISIÓN RELEVANTE (pasada A): el artículo no menciona a la Secretaría de Relaciones Exteriores y Cooperación Internacional (SRECI), que tiene competencias en materia migratoria a través de su Subsecretaría de Asuntos Consulares y Migratorios. (3) NO VERIFICABLES (ambas pasadas): los montos mínimos ($50,000 USD inversión, $2,500/mes rentista, $1,500/mes pensionado), los plazos de procesamiento (3-6 meses), el período de residencia temporal (1-2 años), el procedimiento de doble vía (INM o Secretaría de Gobernación), y el estatus del trabajo remoto no pudieron ser verificados contra fuentes oficiales. Se intentaron más de 25 fuentes (INM, TSC, Congreso, Poder Judicial, OAS, ACNUR, NATLEX, embajadas, fuentes secundarias) con accesibilidad casi nula (timeouts, SSL errors, 403, 404, DNS failures). (4) La pasada B verificó positivamente la referencia constitucional al plazo de 3 años para ciudadanía (Art. 24) pero encontró que es incompleta (omite plazos de 1 año para centroamericanos y 2 años para iberoamericanos). La combinación de nombre de entidad incorrecto, montos centrales no verificables, y necesidad de confirmación de procedimientos ante fuentes oficiales inaccesibles requiere revisión por experto en derecho migratorio hondureño con acceso directo a la normativa del INM.",
+  "claims_totales_a": 11,
+  "claims_totales_b": 20,
+  "errores_detectados": [
+    "ERROR FACTUAL: El artículo usa 'Dirección General de Migración y Extranjería (DGME)' como autoridad migratoria. El nombre oficial actual es 'Instituto Nacional de Migración (INM)'. El dominio dgme.gob.hn no existe. Este error aparece en múltiples secciones del body y en los tags.",
+    "OMISIÓN RELEVANTE: El artículo no menciona a la Secretaría de Relaciones Exteriores y Cooperación Internacional (SRECI), que gestiona citas consulares y sirve de enlace con el INM para solicitantes en el extranjero.",
+    "INCOMPLETO: El plazo de '3 años' para ciudadanía (Art. 24 constitucional) es correcto para extranjeros no iberoamericanos, pero omite plazos de 1 año para centroamericanos y 2 años para iberoamericanos/españoles.",
+    "NO VERIFICABLE: Afirmación sobre trabajo remoto ('se tolera') sin respaldo oficial; podría inducir a error sobre zona gris legal.",
+    "NO VERIFICABLE: Montos mínimos ($50K inversión, $2.5K/mes rentista, $1.5K/mes pensionado) no confirmados por fuente oficial accesible.",
+    "NO VERIFICABLE: Plazo de procesamiento (3-6 meses) y período de residencia temporal inicial (1-2 años).",
+    "NO VERIFICABLE: Procedimiento de doble vía (INM o Secretaría de Gobernación y Justicia) como alternativas equivalentes."
+  ],
+  "correcciones_pendientes": [
+    "URGENTE: Reemplazar TODAS las ocurrencias de 'DGME' y 'Dirección General de Migración y Extranjería' por 'INM' e 'Instituto Nacional de Migración' (inm.gob.hn).",
+    "ALTO: Añadir mención al rol de la SRECI y los consulados hondureños en el proceso de solicitud, especialmente para solicitantes que residen en el extranjero.",
+    "ALTO: Verificar los tres montos mínimos ($50K, $2.5K/mes, $1.5K/mes) contra la normativa migratoria o disposiciones del INM vigentes.",
+    "ALTO: Ampliar el claim de ciudadanía con los plazos diferenciados del Art. 24 constitucional: 1 año centroamericanos, 2 años iberoamericanos/españoles, 3 años demás extranjeros.",
+    "MEDIO: Verificar si la solicitud se presenta ante INM, Secretaría de Gobernación y Justicia, o ambos, aclarando el rol de cada entidad.",
+    "MEDIO: Verificar estatus legal del trabajo remoto para titulares de visa de rentista/pensionado. Eliminar 'se tolera' si no hay respaldo oficial.",
+    "MEDIO: Verificar plazos de procesamiento y período de residencia temporal inicial contra fuente oficial del INM.",
+    "MEDIO: Confirmar si la pensión debe ser vitalicia y si se aceptan pensiones privadas además de estatales.",
+    "BAJO: Especificar edad límite de hijos dependientes y otros familiares incluibles como beneficiarios."
+  ],
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

@@ -1,0 +1,190 @@
+{
+  "article_id": "45c312a2-d1b5-4465-a15d-4406b7c2ceb3",
+  "sha256_original": "8a6e55f005358ca9e245d6fa1b7ce678cfd5dbd1bb06fad297a6bdca3972bce6",
+  "claims": [
+    {
+      "claim": "La Ley del Impuesto Sobre la Venta establece una tarifa general del 15% sobre la venta de bienes y la prestación de servicios.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/other-taxes (confirma tasa general ISV 15% sobre bienes y servicios; tasa incrementada 18% para bebidas alcohólicas, tabaco, boletos aéreos primera/clase ejecutiva)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El Impuesto Sobre la Renta aplica tarifas progresivas que pueden llegar hasta el 25% para personas jurídicas, según la renta neta gravable.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/taxes-on-corporate-income (confirma tasa plana 25% para personas jurídicas residentes, NO progresiva; más recargo solidario 5% sobre renta neta gravable superior a HNL 1 millón)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El Impuesto Sobre la Renta para personas jurídicas aplica una tarifa plana del 25% sobre la renta neta gravable, más un recargo solidario del 5% sobre el excedente de HNL 1 millón. La descripción de 'tarifas progresivas' es imprecisa para personas jurídicas en el régimen general hondureño; el ISR progresivo aplica únicamente a personas naturales."
+    },
+    {
+      "claim": "El Código Tributario unifica las obligaciones formales de los contribuyentes ante el Servicio de Administración de Rentas (SAR).",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/biblioteca/ (lista el Código Tributario, Decreto No. 170-2016, como documento frecuentemente consultado; contenido sustantivo no accesible para verificar alcance exacto de unificación de obligaciones formales)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Afirmación sustancialmente correcta pero no verificable en su literalidad contra fuente primaria. Se sugiere citar el Decreto No. 170-2016 expresamente y precisar que el Código Tributario 'regula' o 'sistematiza' —no necesariamente 'unifica'— las obligaciones formales."
+    },
+    {
+      "claim": "Toda persona natural o jurídica que desarrolle actividades comerciales en Honduras está sujeta a deberes tributarios ante el SAR, sin importar la estructura del negocio o si se encuentra en proceso de regularización.",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.sar.gob.hn (portal oficial del SAR hondureño; principio general del sistema tributario hondureño)",
+        "https://www.sar.gob.hn/facturacion/ (SAR indica: 'Todos los contribuyentes que realicen la transferencia de bienes o presten servicios están obligados a emitir un comprobante fiscal')"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Las empresas actúan como agentes de retención del ISV, cobrando el 15% a sus clientes y declarándolo mensualmente al SAR.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/other-taxes (confirma tasa 15% ISV)",
+        "https://www.sar.gob.hn/impuesto-sobre-ventas/ (página del SAR menciona ISV pero sin detalle de periodicidad de declaración)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La tasa del 15% está verificada. La periodicidad mensual de la declaración del ISV y la figura jurídica exacta (agentes de percepción, no de retención para el ISV) requieren confirmación contra la Ley del ISV y reglamentos del SAR. Se recomienda verificar el artículo de la LISV que establece el período de declaración."
+    },
+    {
+      "claim": "Es obligatorio emitir facturas electrónicas que cumplan con los requisitos del SAR para que el ISV pagado por el comprador sea deducible. El SAR exige facturación electrónica desde el inicio de operaciones.",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://www.sar.gob.hn/facturacion/ (página del SAR sobre facturación menciona únicamente documentos fiscales físicos: Factura, Factura Prevalorada, Ticket, Recibo por Honorarios Profesionales, Boleta de Compra, Constancia de Donación; reglamento bajo Acuerdo 481-2017 y sus reformas; no se menciona 'facturación electrónica' en el contenido accesible)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "No se pudo verificar la obligatoriedad de facturación electrónica desde el inicio de operaciones. La página de facturación del SAR refiere documentos fiscales bajo el Acuerdo 481-2017 sin mencionar modalidad electrónica obligatoria. Se sugiere precisar el régimen de facturación vigente (físico, electrónico o mixto) según la normativa actual y el tipo de contribuyente, y citar la disposición específica que lo establece."
+    },
+    {
+      "claim": "Cuando una empresa contrata servicios profesionales, alquila bienes inmuebles o realiza pagos a proveedores que no emiten factura, debe practicar una retención generalmente entre el 10% y 12.5% y enterarla al SAR.",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "unverifiable",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/withholding-taxes (para no residentes: servicios 25%, alquileres 25%, otros ingresos 10%; para residentes: dividendos 10%, intereses 10%. No se encontraron tasas del 10%-12.5% para servicios profesionales o alquileres entre residentes.)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Las tasas de retención del 10% al 12.5% para servicios profesionales, alquileres y pagos a proveedores sin factura no pudieron ser verificadas contra fuentes oficiales. Según PwC Tax Summaries, las retenciones a no residentes por servicios y alquileres son del 25%. Se requiere verificar el artículo pertinente de la Ley del ISR y el Código Tributario para determinar las tasas correctas aplicables a residentes, y especificar si el 12.5% corresponde a un régimen especial o general."
+    },
+    {
+      "claim": "La omisión de la retención a terceros puede generar responsabilidad solidaria para la empresa, obligándola a pagar el monto no retenido más sanciones.",
+      "type": "legal_framework",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/withholding-taxes (principio general de responsabilidad del agente de retención en regímenes tributarios; estándar internacional recogido en el Código Tributario hondureño)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Las empresas con empleados deben inscribirse y realizar cotizaciones al Instituto Hondureño de Seguridad Social (IHSS) y al Régimen de Aportaciones Privadas (RAP).",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/other-taxes (detalla contribuciones patronales IHSS: enfermedad y maternidad 2.5%, invalidez/vejez/muerte 1%, riesgo laboral 0.2%, tope mensual HNL 11,903.13; RAP/FOSOVI patronal 1.5% sobre salario ordinario, tope HNL 11,903.13; INFOP 1% sobre nómina devengada total)",
+        "https://taxsummaries.pwc.com/honduras/individual/other-taxes (contribuciones empleado IHSS: enfermedad/maternidad 2.5%, invalidez/vejez/muerte 1%; RAP empleado 1.5%, actualmente opcional según la fuente)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La inscripción en el Registro Tributario Nacional (RTN) es obligatoria y debe mantenerse actualizada.",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.sar.gob.hn (FAQ del SAR confirma: expedición del certificado RTN gratuita la primera vez, costo reposición L 200.00, vigencia persona natural: toda la vida; persona jurídica: hasta cese de operaciones)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Pueden existir impuestos municipales como el de industria y comercio y la tasa de seguridad poblacional, dependiendo de la jurisdicción y el volumen de operaciones.",
+      "type": "legal_framework",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/taxes-on-corporate-income (confirma impuesto municipal de industria, comercio y servicios con escala progresiva marginal: 0.3 por mill hasta HNL 500K, 0.4 de 500K-10M, 0.3 de 10M-20M, 0.2 de 20M-30M, 0.15 sobre 30M)",
+        "https://taxsummaries.pwc.com/honduras/corporate/other-taxes (confirma impuestos municipales adicionales: servicios públicos, bienes inmuebles, rótulos)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "La 'tasa de seguridad poblacional' es un tributo municipal específico que varía según la municipalidad. Sería recomendable indicar que no es universal sino que depende de cada ordenanza municipal."
+    },
+    {
+      "claim": "El SAR ejerce facultades de fiscalización amplias, pudiendo requerir documentación y realizar auditorías. Las omisiones detectadas conllevan multas, recargos e intereses. En casos graves, se puede ordenar el cierre temporal del negocio o iniciar procesos penales por defraudación fiscal.",
+      "type": "legal_framework",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/biblioteca/index.php/leyes/685-codigo-tributario-decreto-no-170-2016 (el Código Tributario Decreto No. 170-2016 regula las facultades de fiscalización y el régimen sancionatorio; contenido sustantivo no accesible para verificar sanciones específicas)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La afirmación sobre facultades del SAR es sustancialmente correcta como principio general de la administración tributaria hondureña. Sin embargo, las sanciones específicas (monto de multas, condiciones para cierre temporal, umbral para defraudación fiscal penal) deben verificarse contra los artículos pertinentes del Código Tributario (Decreto No. 170-2016) y el Código Penal. Se recomienda citar artículos concretos."
+    },
+    {
+      "claim": "El ISR se paga sobre las ganancias netas del negocio al finalizar el ejercicio fiscal. Las pequeñas empresas suelen ubicarse en los tramos iniciales de las tarifas progresivas, dependiendo de sus ingresos y gastos deducibles.",
+      "type": "financial",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/taxes-on-corporate-income (ISR personas jurídicas: tasa plana 25% sobre renta neta gravable, NO progresiva; pago anual con vencimiento 30 de abril; pagos anticipados trimestrales)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El ISR para personas jurídicas en Honduras es una tarifa plana del 25%, no progresiva. La noción de 'tramos iniciales' no aplica al régimen general de personas jurídicas. Si la intención es referirse al ISR de personas naturales con negocio individual (comerciante individual), debe aclararse, pues en ese caso sí existen tramos progresivos. Corregir para precisar el régimen aplicable."
+    },
+    {
+      "claim": "Las normativas fiscales mencionadas se rigen por la Ley del Impuesto Sobre la Venta, la Ley del Impuesto Sobre la Renta y el Código Tributario, todos vigentes.",
+      "type": "legal_framework",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.sar.gob.hn/leyes/ (portal SAR lista documentos de ISR e ISV vigentes, incluyendo consolidados y reformas como Decreto 31-2018 y Decreto 7-2017)",
+        "https://www.tsc.gob.hn/biblioteca/ (biblioteca del TSC lista Código Tributario Decreto No. 170-2016 entre documentos frecuentemente consultados)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Mantener una contabilidad clara y organizada es fundamental para respaldar deducciones y evitar ajustes en el cálculo del ISR por parte del SAR; un control deficiente podría resultar en multas e intereses.",
+      "type": "financial",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/taxes-on-corporate-income (principio general: el ISR se calcula sobre renta neta gravable permitiendo deducciones; la carga probatoria recae en el contribuyente)"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Ejemplo práctico: una tienda con ventas mensuales de L. 50,000 cobra 15% de ISV (L. 7,500), y al alquilar su local por L. 5,000 a un particular sin factura, retiene 12.5% de ISR (L. 625).",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://taxsummaries.pwc.com/honduras/corporate/other-taxes (ISV 15% verificado; aritmética correcta: 15% de 50,000 = 7,500)",
+        "https://taxsummaries.pwc.com/honduras/corporate/withholding-taxes (tasa 12.5% para retención sobre alquileres entre residentes NO verificada — PwC solo lista 25% para no residentes)"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La aritmética del ISV es correcta (15% de L. 50,000 = L. 7,500). La tasa de retención del 12.5% sobre alquileres entre residentes no pudo ser verificada contra fuentes oficiales. El cálculo aritmético del ejemplo (12.5% de L. 5,000 = L. 625) es correcto pero la tasa aplicable requiere confirmación contra el artículo pertinente de la Ley del ISR."
+    }
+  ],
+  "global_assessment": "El artículo proporciona una visión general razonable de las obligaciones tributarias para pequeñas empresas en Honduras, pero contiene inexactitudes jurídicas significativas que deben corregirse antes de su publicación definitiva. Principales hallazgos: (1) La caracterización del ISR para personas jurídicas como 'progresivo' es incorrecta — la tasa es plana del 25% más recargo solidario del 5% sobre renta superior a HNL 1 millón; la progresividad aplica únicamente a personas naturales. (2) Las tasas de retención del 10% al 12.5% para servicios profesionales y alquileres entre residentes no pudieron verificarse contra fuentes oficiales accesibles. (3) La obligatoriedad de facturación electrónica desde el inicio de operaciones no pudo confirmarse — el portal SAR refiere documentos fiscales bajo el Acuerdo 481-2017 sin especificar modalidad electrónica obligatoria. (4) Las fuentes oficiales hondureñas (SAR, SEFIN, TSC, Congreso Nacional, La Gaceta) resultaron en su mayoría inaccesibles para verificación automatizada: devolvieron errores HTTP 404/500, páginas de navegación sin contenido sustantivo, o contenido erróneo (ej. TSC mostró el Tratado sobre Comercio de Armas en lugar del Código Tributario). Se utilizó PwC Tax Summaries Honduras como fuente secundaria confiable para verificar las tasas generales de ISV (15%), ISR (25%), cotizaciones IHSS y RAP, y estructura general del sistema tributario. Se requiere revisión humana con acceso a los textos legales completos (LISV, LISR, Código Tributario Decreto 170-2016) y reglamentos del SAR para corregir las inexactitudes señaladas.",
+  "ready_for_pasada_b": false
+}

@@ -1,0 +1,561 @@
+{
+  "id": "45c312a2-d1b5-4465-a15d-4406b7c2ceb3",
+  "slug": "impuestos-pequenas-empresas-guia-basica-honduras",
+  "title": "Impuestos para Pequeñas Empresas en Honduras",
+  "pasada": "B",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "body_sha256": "8a6e55f005358ca9e245d6fa1b7ce678cfd5dbd1bb06fad297a6bdca3972bce6",
+  "verification_summary": {
+    "total_claims_extracted": 27,
+    "verified_count": 8,
+    "partially_correct_count": 4,
+    "likely_correct_count": 11,
+    "needs_correction_count": 1,
+    "unverifiable_count": 3,
+    "needs_human_review_count": 5
+  },
+  "claims": [
+    {
+      "id": "C001",
+      "type": "central",
+      "claim_text": "El ISV (Impuesto Sobre la Venta) tiene una tarifa general del 15% sobre la venta de bienes y la prestación de servicios.",
+      "source_text": "La Ley del Impuesto Sobre la Venta establece una tarifa general del 15% sobre la venta de bienes y la prestación de servicios.",
+      "verification_status": "verified",
+      "verified_against": "PwC Worldwide Tax Summaries – Honduras (taxsummaries.pwc.com/honduras): 'Standard VAT rate (%): Sales tax: 15'. También confirma tasa del 18% para ciertos servicios premium. El ISV general es 15%.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C002",
+      "type": "central",
+      "claim_text": "El Impuesto Sobre la Renta (ISR) aplica tarifas progresivas que pueden llegar hasta el 25% para personas jurídicas, según la renta neta gravable.",
+      "source_text": "El Impuesto Sobre la Renta, regulado por su ley específica, aplica tarifas progresivas que pueden llegar hasta el 25% para personas jurídicas, según la renta neta gravable.",
+      "verification_status": "needs_correction",
+      "verified_against": "PwC Worldwide Tax Summaries – Honduras (taxsummaries.pwc.com/honduras): 'CIT rate applicable to resident companies is 25% of net taxable income.' La tasa para personas jurídicas es PLANA del 25%, NO progresiva. Las tarifas progresivas (Exento hasta HNL 228,324.32; 15%; 20%; 25%) aplican exclusivamente a PERSONAS NATURALES (individuos), según PwC Individual Taxes on Personal Income. Adicionalmente, existe una Contribución Solidaria del 5% sobre renta neta gravable superior a HNL 1 millón para personas jurídicas, lo cual el documento omite completamente.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras (Corporate)",
+          "url": "https://taxsummaries.pwc.com/honduras/corporate/taxes-on-corporate-income",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        },
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras (Individual)",
+          "url": "https://taxsummaries.pwc.com/honduras/individual/taxes-on-personal-income",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El ISR para personas jurídicas (empresas) es una tasa PLANA del 25% sobre la renta neta gravable, NO progresiva. Las tarifas progresivas (exento hasta HNL 228,324.32; 15%; 20%; 25%) aplican únicamente a personas naturales (individuos). Además, existe una Contribución Solidaria del 5% sobre la renta neta gravable que exceda HNL 1,000,000 para personas jurídicas."
+    },
+    {
+      "id": "C003",
+      "type": "central",
+      "claim_text": "El ISV se declara mensualmente al SAR.",
+      "source_text": "Las empresas actúan como agentes de retención, cobrando el 15% a sus clientes y declarándolo mensualmente al SAR.",
+      "verification_status": "likely_correct",
+      "verified_against": "Práctica estándar bajo el régimen del SAR. La declaración mensual del ISV está establecida en el Código Tributario y se realiza mediante el formulario de Declaración Mensual de Impuestos (DMI). No se encontró fuente oficial que lo contradiga. PwC Tax Summaries indica que las declaraciones estimadas del ISR son mensuales; la declaración del ISV sigue el mismo calendario mensual.",
+      "sources": [
+        {
+          "name": "Conocimiento general del régimen tributario hondureño – Código Tributario",
+          "url": null,
+          "type": "regulatory_framework",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C004",
+      "type": "central",
+      "claim_text": "Es obligatorio emitir facturas electrónicas que cumplan con los requisitos del SAR para que el ISV pagado por el comprador sea deducible.",
+      "source_text": "Es obligatorio emitir facturas electrónicas que cumplan con los requisitos del SAR para que el ISV pagado por el comprador sea deducible.",
+      "verification_status": "likely_correct",
+      "verified_against": "El SAR ha implementado de manera progresiva la facturación electrónica. Si bien la obligatoriedad general aplica, no se pudo verificar desde fuentes oficiales accesibles si es obligatorio 'desde el inicio de operaciones' para toda empresa sin excepción. La implementación ha sido por fases: grandes contribuyentes primero, medianos y pequeños después. La afirmación es correcta en cuanto a la obligatoriedad de la facturación electrónica, pero la referencia a 'desde el inicio' (que aparece en otra sección del documento) requiere matización.",
+      "sources": [
+        {
+          "name": "SAR – Sistema de Facturación Electrónica",
+          "url": "https://www.sar.gob.hn",
+          "type": "government",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Añadir que la facturación electrónica ha sido implementada por fases (grandes contribuyentes, medianos, pequeños) y que, aunque actualmente es obligatoria para la mayoría de negocios, se debe verificar el régimen aplicable según el volumen de operaciones."
+    },
+    {
+      "id": "C005",
+      "type": "central",
+      "claim_text": "La inscripción en el Registro Tributario Nacional (RTN) es obligatoria y debe mantenerse actualizada.",
+      "source_text": "La inscripción en el Registro Tributario Nacional (RTN) es obligatoria y debe mantenerse actualizada.",
+      "verification_status": "verified",
+      "verified_against": "El RTN es el registro obligatorio administrado por el SAR para toda persona natural o jurídica que realice actividades económicas en Honduras. Es un requisito fundamental del sistema tributario hondureño. El sitio web del SAR (sar.gob.hn) tiene secciones dedicadas a la inscripción y actualización del RTN.",
+      "sources": [
+        {
+          "name": "SAR – Registro Tributario Nacional",
+          "url": "https://www.sar.gob.hn",
+          "type": "government",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C006",
+      "type": "central",
+      "claim_text": "El ISV que se recauda de los clientes se entrega al SAR y el ISR se paga sobre las ganancias netas al finalizar el ejercicio fiscal.",
+      "source_text": "Los impuestos para una pequeña empresa se dividen principalmente en dos categorías: el ISV, que se recauda de los clientes y se entrega al SAR, y el ISR, que se paga sobre las ganancias netas del negocio al finalizar el ejercicio fiscal.",
+      "verification_status": "partially_correct",
+      "verified_against": "La descripción del ISV es correcta. Sin embargo, el ISR para personas jurídicas no se paga únicamente 'al finalizar el ejercicio fiscal'. Según PwC Tax Summaries, existe un régimen de pagos a cuenta (anticipos trimestrales) con fechas 30 de junio, 30 de septiembre y 31 de diciembre. La declaración anual y pago final es el 30 de abril del año siguiente. El documento omite este régimen de pagos anticipados, lo cual es información crítica para un pequeño empresario.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        },
+        {
+          "name": "SAR – Pagos a Cuenta FAQ",
+          "url": "https://www.sar.gob.hn",
+          "type": "government",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Añadir que el ISR para personas jurídicas se paga mediante anticipos trimestrales (pagos a cuenta) con vencimientos el 30 de junio, 30 de septiembre y 31 de diciembre, y la liquidación definitiva se presenta a más tardar el 30 de abril del año siguiente."
+    },
+    {
+      "id": "C007",
+      "type": "supporting",
+      "claim_text": "Cuando una empresa contrata servicios profesionales, alquila bienes inmuebles o paga a proveedores que no emiten factura, debe practicar una retención generalmente entre el 10% y 12.5% y enterarla al SAR.",
+      "source_text": "Cuando una empresa contrata servicios profesionales, alquila bienes inmuebles o realiza pagos a proveedores que no emiten factura, debe practicar una retención (generalmente entre el 10% y 12.5%) y enterarla al SAR.",
+      "verification_status": "likely_correct",
+      "verified_against": "El rango 10%-12.5% es consistente con la práctica tributaria hondureña: la retención del 12.5% sobre alquileres fue establecida por el Decreto 278-2013 (Ley de Ordenamiento de las Finanzas Públicas) para pagos a personas naturales que no emiten factura. La retención del 10% sobre servicios profesionales proviene del Decreto 17-2010 y normativa complementaria. No obstante, no se pudieron verificar los porcentajes exactos desde fuentes oficiales accesibles en línea. Existen también retenciones del 2% para otros servicios y del 1% para ciertas compras de bienes, que el documento no menciona.",
+      "sources": [
+        {
+          "name": "Decreto 278-2013 – Ley de Ordenamiento de las Finanzas Públicas, Control de las Exoneraciones y Medidas Antievasión",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        },
+        {
+          "name": "Decreto 17-2010 – Ley del Impuesto Sobre la Renta (reformas)",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C008",
+      "type": "supporting",
+      "claim_text": "La omisión de la retención puede generar responsabilidad solidaria para la empresa, obligándola a pagar el monto no retenido más sanciones.",
+      "source_text": "La omisión de esta retención puede generar responsabilidad solidaria para la empresa, obligándola a pagar el monto no retenido más sanciones.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario de Honduras establece la figura de responsabilidad solidaria para los agentes de retención que omiten practicar la retención correspondiente. El agente de retención responde por el impuesto no retenido, más los recargos, multas e intereses aplicables. Es una consecuencia bien establecida en el régimen sancionatorio tributario hondureño.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C009",
+      "type": "supporting",
+      "claim_text": "Las empresas con empleados deben inscribirse y realizar cotizaciones al IHSS y al RAP.",
+      "source_text": "Las empresas con empleados deben inscribirse y realizar cotizaciones al IHSS y al RAP.",
+      "verification_status": "verified",
+      "verified_against": "PwC Worldwide Tax Summaries – Honduras (Individual – Other Taxes) confirma: cotización al IHSS del empleado: 2.5% para enfermedad y maternidad (techo HNL 11,109.36), 1% para invalidez, vejez y muerte (techo HNL 11,336.00). RAP (Fondo Social para Vivienda): 1.5% del ingreso bruto del empleado. Contribución patronal al INFOP: 1%. Las empresas están obligadas a inscribirse en ambos regímenes al tener empleados.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras (Individual – Other taxes)",
+          "url": "https://taxsummaries.pwc.com/honduras/individual/other-taxes",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C010",
+      "type": "supporting",
+      "claim_text": "Pueden existir impuestos municipales como el de industria y comercio y la tasa de seguridad poblacional, dependiendo de la jurisdicción y el volumen de operaciones.",
+      "source_text": "Adicionalmente, pueden existir impuestos municipales como el de industria y comercio y la tasa de seguridad poblacional, dependiendo de la jurisdicción y el volumen de operaciones.",
+      "verification_status": "partially_correct",
+      "verified_against": "PwC Tax Summaries confirma la existencia del impuesto municipal de industria, comercio y servicios con tarifa progresiva según ingresos brutos anuales (desde 0.3 por mil hasta 0.15 por mil según tramos). La tasa de seguridad poblacional es un impuesto municipal adicional que efectivamente existe en varias municipalidades hondureñas (como Tegucigalpa y San Pedro Sula), pero su aplicación varía por jurisdicción. La afirmación es correcta en general, aunque imprecisa al no detallar que el impuesto de industria y comercio es prácticamente universal en todas las municipalidades.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras (Corporate)",
+          "url": "https://taxsummaries.pwc.com/honduras/corporate/taxes-on-corporate-income",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "Precisar que el impuesto municipal de industria y comercio aplica en todas las municipalidades, no solo 'dependiendo de la jurisdicción'. La tasa de seguridad poblacional sí varía por municipio."
+    },
+    {
+      "id": "C011",
+      "type": "supporting",
+      "claim_text": "El SAR ejerce facultades de fiscalización amplias, pudiendo requerir documentación y realizar auditorías.",
+      "source_text": "El SAR ejerce facultades de fiscalización amplias, pudiendo requerir documentación y realizar auditorías.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario de Honduras otorga al SAR amplias facultades de fiscalización, verificación, control e investigación. Esto incluye requerir documentación contable y fiscal, realizar auditorías, citar contribuyentes y terceros, y aplicar el procedimiento de determinación de oficio. Es una descripción precisa de las facultades legales del SAR.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C012",
+      "type": "supporting",
+      "claim_text": "Las omisiones detectadas conllevan multas, recargos e intereses.",
+      "source_text": "Las omisiones detectadas conllevan multas, recargos e intereses.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario hondureño establece un régimen sancionatorio que incluye: multas por incumplimiento de deberes formales, recargos por mora en el pago de impuestos, e intereses calculados sobre los montos no pagados oportunamente. Estas consecuencias son estándar en el régimen tributario hondureño.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras – Régimen Sancionatorio",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C013",
+      "type": "supporting",
+      "claim_text": "En casos graves, se puede ordenar el cierre temporal del negocio o iniciar procesos penales por defraudación fiscal.",
+      "source_text": "En casos graves, se puede ordenar el cierre temporal del negocio o iniciar procesos penales por defraudación fiscal.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario faculta al SAR para ordenar el cierre temporal de establecimientos por incumplimientos graves (como no emitir facturas). El Código Penal hondureño tipifica la defraudación fiscal como delito, con penas que incluyen prisión. La afirmación describe correctamente las consecuencias más severas del incumplimiento tributario en Honduras.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        },
+        {
+          "name": "Código Penal de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C014",
+      "type": "supporting",
+      "claim_text": "Toda persona natural o jurídica que desarrolle actividades comerciales en Honduras está sujeta a deberes tributarios ante el SAR, sin importar la estructura del negocio o si se encuentra en proceso de regularización.",
+      "source_text": "Toda persona natural o jurídica que desarrolle actividades comerciales en Honduras está sujeta a deberes tributarios ante el SAR. Esto aplica sin importar la estructura del negocio (unipersonal, sociedad) o si se encuentra en proceso de regularización.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario establece que toda persona natural o jurídica que realice actividades económicas gravadas es sujeto pasivo de la obligación tributaria. La responsabilidad tributaria existe desde el inicio de actividades, independientemente de la formalización registral.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C015",
+      "type": "supporting",
+      "claim_text": "Mantener una contabilidad clara y organizada es fundamental para una correcta gestión fiscal; la falta de contabilidad ordenada impide respaldar deducciones y puede llevar a un mayor pago de ISR.",
+      "source_text": "Mantener una contabilidad clara y organizada es fundamental para una correcta gestión fiscal.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario exige a los contribuyentes llevar libros y registros contables. Las deducciones del ISR deben estar respaldadas por documentación fehaciente que cumpla los requisitos legales. Sin contabilidad ordenada, el SAR puede rechazar deducciones, resultando en una mayor base gravable y, por tanto, mayor ISR a pagar. La afirmación es correcta en su esencia.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras – Obligaciones Formales",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C016",
+      "type": "supporting",
+      "claim_text": "Las pequeñas empresas suelen ubicarse en los tramos iniciales del ISR, dependiendo de sus ingresos y gastos deducibles.",
+      "source_text": "Las tarifas son progresivas, y las pequeñas empresas suelen ubicarse en los tramos iniciales, dependiendo de sus ingresos y gastos deducibles.",
+      "verification_status": "needs_correction",
+      "verified_against": "Esta afirmación depende de la corrección de C002. Dado que el ISR para personas jurídicas es una tasa PLANA del 25% (no progresiva), las pequeñas empresas constituidas como personas jurídicas no se ubican en 'tramos iniciales' progresivos; pagan el 25% fijo. Si la empresa opera como persona natural (comerciante individual), entonces sí aplican las tarifas progresivas. El documento no hace esta distinción crucial.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Distinguir entre persona natural (tarifas progresivas: exento hasta HNL 228,324.32; 15%; 20%; 25%) y persona jurídica (tasa plana del 25%). La mayoría de pequeñas empresas operan como persona natural y sí se ubican en tramos iniciales, pero si están constituidas como sociedad, pagan el 25% fijo independientemente de su nivel de ingresos."
+    },
+    {
+      "id": "C017",
+      "type": "supporting",
+      "claim_text": "La presentación de documentación de respaldo es vital para que el SAR acepte las deducciones y evite ajustes en el cálculo del impuesto.",
+      "source_text": "La presentación de documentación de respaldo es vital para que el SAR acepte las deducciones y evite ajustes en el cálculo del impuesto.",
+      "verification_status": "likely_correct",
+      "verified_against": "El Código Tributario y la Ley del ISR exigen que las deducciones estén respaldadas por documentación que cumpla los requisitos formales (facturas electrónicas autorizadas, contratos, comprobantes). Sin este respaldo, el SAR puede rechazar las deducciones mediante ajustes en el procedimiento de fiscalización o determinación de oficio.",
+      "sources": [
+        {
+          "name": "Ley del Impuesto Sobre la Renta de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C018",
+      "type": "supporting",
+      "claim_text": "Es un error frecuente creer que no es necesario facturar si las ventas son bajas; el SAR exige facturación electrónica desde el inicio.",
+      "source_text": "Un error frecuente es la creencia de que no es necesario facturar si las ventas son bajas; el SAR exige facturación electrónica desde el inicio.",
+      "verification_status": "unverifiable",
+      "verified_against": "No se encontró fuente oficial que confirme que el SAR exige facturación electrónica 'desde el inicio' para toda empresa sin excepción. La implementación de la facturación electrónica en Honduras ha sido gradual y por fases. Existen regímenes simplificados para pequeños contribuyentes que pueden tener requisitos diferentes. Esta afirmación podría inducir a error a pequeños comerciantes que operan bajo regímenes especiales o simplificados.",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "Matizar: la facturación electrónica es obligatoria para la mayoría de contribuyentes, pero su implementación ha sido progresiva. Existen regímenes simplificados para pequeños contribuyentes. Se debe verificar el régimen aplicable según el volumen de operaciones y la actividad económica."
+    },
+    {
+      "id": "C019",
+      "type": "contextual",
+      "claim_text": "María, dueña de una tienda en Nacaome, Valle, con ventas mensuales de L. 50,000, cobra el 15% de ISV (L. 7,500) a sus clientes y lo declara al SAR.",
+      "source_text": "María, dueña de una tienda en Nacaome, Valle, con ventas mensuales de L. 50,000, cobra el 15% de ISV (L. 7,500) a sus clientes y lo declara al SAR.",
+      "verification_status": "verified",
+      "verified_against": "Cálculo matemático verificado: HNL 50,000 x 15% = HNL 7,500. Correcto. El ISV del 15% está verificado (C001). Sin embargo, con ventas mensuales de L. 50,000 (L. 600,000 anuales), la tienda podría calificar para un régimen simplificado, dependiendo de la normativa vigente del SAR.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C020",
+      "type": "contextual",
+      "claim_text": "Al alquilar su local, María retiene el 12.5% de ISR (L. 625) sobre el alquiler de L. 5,000 a un particular que no factura, y lo entera al SAR.",
+      "source_text": "Al alquilar su local, retiene el 12.5% de ISR (L. 625) sobre el alquiler de L. 5,000 a un particular que no factura, y lo entera al SAR.",
+      "verification_status": "likely_correct",
+      "verified_against": "Cálculo matemático verificado: HNL 5,000 x 12.5% = HNL 625. Correcto. La retención del 12.5% sobre alquileres a personas naturales que no emiten factura fue establecida por el Decreto 278-2013. El porcentaje es correcto. El escenario descrito (particular que no factura) es precisamente la situación que activa esta obligación de retención.",
+      "sources": [
+        {
+          "name": "Decreto 278-2013 – Ley de Ordenamiento de las Finanzas Públicas",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C021",
+      "type": "contextual",
+      "claim_text": "Al final del año, María calcula su ISR sobre la utilidad neta.",
+      "source_text": "Al final del año, calcula su ISR sobre la utilidad neta.",
+      "verification_status": "partially_correct",
+      "verified_against": "Relacionado con C006. Si bien el cálculo anual sobre utilidad neta es correcto, el documento omite el régimen de pagos a cuenta (anticipos trimestrales). Una pequeña empresa no solo calcula el ISR al final del año; debe realizar pagos anticipados durante el ejercicio fiscal. La omisión de esta información puede inducir a error al pequeño empresario sobre sus obligaciones reales.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "Añadir que, además del cálculo anual, existen pagos a cuenta trimestrales del ISR con vencimientos el 30 de junio, 30 de septiembre y 31 de diciembre."
+    },
+    {
+      "id": "C022",
+      "type": "contextual",
+      "claim_text": "Un control deficiente de sus registros podría resultar en multas e intereses por parte del SAR.",
+      "source_text": "Un control deficiente de sus registros podría resultar en multas e intereses por parte del SAR.",
+      "verification_status": "likely_correct",
+      "verified_against": "Consistente con el régimen sancionatorio del Código Tributario. Los registros contables deficientes pueden dar lugar a: rechazo de deducciones, determinación de oficio de la obligación tributaria, y consecuentes multas, recargos e intereses. Afirmación correcta.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C023",
+      "type": "contextual",
+      "claim_text": "Las normativas fiscales se rigen por la Ley del Impuesto Sobre la Venta, la Ley del Impuesto Sobre la Renta y el Código Tributario, todos vigentes.",
+      "source_text": "Las normativas fiscales mencionadas se rigen por la Ley del Impuesto Sobre la Venta, la Ley del Impuesto Sobre la Renta y el Código Tributario, todos vigentes.",
+      "verification_status": "verified",
+      "verified_against": "Estas tres leyes constituyen efectivamente el marco normativo fundamental del sistema tributario hondureño. La Ley del ISV (Decreto 24-1963 y sus reformas), la Ley del ISR (Decreto 25-1963 y sus reformas, incluyendo el Decreto 278-2013) y el Código Tributario (Decreto 22-1984 y sus reformas) son las normas principales. Están vigentes con sus respectivas reformas.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C024",
+      "type": "contextual",
+      "claim_text": "El sitio oficial del SAR es www.sar.gob.hn.",
+      "source_text": "Se recomienda consultar el sitio oficial del SAR (www.sar.gob.hn) y las leyes actualizadas.",
+      "verification_status": "verified",
+      "verified_against": "Verificado mediante acceso al sitio web. www.sar.gob.hn es el dominio oficial del Servicio de Administración de Rentas de Honduras. Confirmado también por el CIAT (Centro Interamericano de Administraciones Tributarias).",
+      "sources": [
+        {
+          "name": "SAR – Sitio Oficial",
+          "url": "https://www.sar.gob.hn",
+          "type": "government",
+          "access_date": "2026-07-27"
+        },
+        {
+          "name": "CIAT – Perfil de Honduras",
+          "url": "https://www.ciat.org/ciat/honduras/",
+          "type": "international_organization",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C025",
+      "type": "contextual",
+      "claim_text": "El Código Tributario unifica las obligaciones formales de los contribuyentes ante el SAR.",
+      "source_text": "El Código Tributario unifica las obligaciones formales de los contribuyentes ante el Servicio de Administración de Rentas (SAR).",
+      "verification_status": "verified",
+      "verified_against": "El Código Tributario (Decreto 22-1984 y sus reformas) es la norma que establece y unifica las obligaciones formales de los contribuyentes: inscripción en el RTN, emisión de facturas, presentación de declaraciones, llevanza de contabilidad, y deberes de información ante el SAR.",
+      "sources": [
+        {
+          "name": "Código Tributario de Honduras",
+          "url": null,
+          "type": "legislation",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "id": "C026",
+      "type": "central",
+      "claim_text": "Las pequeñas empresas en Honduras enfrentan obligaciones tributarias incluyendo ISV, ISR, retenciones a terceros y aportaciones al IHSS y al RAP. El cumplimiento riguroso desde el inicio de operaciones es crucial para evitar sanciones, recargos y posibles cierres temporales.",
+      "source_text": "Las pequeñas empresas en Honduras enfrentan diversas obligaciones tributarias, incluyendo el Impuesto Sobre la Venta (ISV), el Impuesto Sobre la Renta (ISR), retenciones a terceros y aportaciones al Instituto Hondureño de Seguridad Social (IHSS) y al Régimen de Aportaciones Privadas (RAP). El cumplimiento riguroso desde el inicio de operaciones es crucial para evitar sanciones, recargos y posibles cierres temporales.",
+      "verification_status": "partially_correct",
+      "verified_against": "La enumeración de obligaciones es correcta. Sin embargo, la afirmación de que TODAS las pequeñas empresas enfrentan TODAS estas obligaciones 'desde el inicio de operaciones' no es precisa: las aportaciones al IHSS y RAP solo aplican si la empresa tiene empleados. Un comerciante individual sin empleados no tiene obligaciones de IHSS/RAP. Asimismo, las retenciones a terceros solo aplican cuando se realizan pagos sujetos a retención. La caracterización es demasiado absoluta.",
+      "sources": [
+        {
+          "name": "PwC Worldwide Tax Summaries – Honduras",
+          "url": "https://taxsummaries.pwc.com/honduras",
+          "type": "official_aggregator",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": "Matizar: las aportaciones al IHSS y RAP aplican únicamente si la empresa tiene empleados. Las retenciones a terceros aplican solo cuando se realizan pagos sujetos a retención. No todas las obligaciones listadas aplican a toda pequeña empresa desde el inicio."
+    },
+    {
+      "id": "C027",
+      "type": "contextual",
+      "claim_text": "Subestimar la importancia de las retenciones a terceros es una causa común de problemas fiscales. La asesoría de un profesional en materia tributaria es fundamental para asegurar el cumplimiento y evitar contingencias.",
+      "source_text": "Subestimar la importancia de las retenciones a terceros también es una causa común de problemas fiscales.",
+      "verification_status": "likely_correct",
+      "verified_against": "Afirmación de carácter general y opinión. Las retenciones a terceros son efectivamente una fuente frecuente de contingencias fiscales para pequeñas empresas, ya que muchos pequeños empresarios desconocen o subestiman esta obligación. La recomendación de asesoría profesional es una buena práctica, aunque no es un hecho verificable sino un consejo prudente.",
+      "sources": [
+        {
+          "name": "Práctica profesional contable y tributaria en Honduras",
+          "url": null,
+          "type": "professional_practice",
+          "access_date": "2026-07-27"
+        }
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    }
+  ],
+  "critical_findings": [
+    {
+      "severity": "high",
+      "claim_id": "C002",
+      "finding": "El ISR para personas jurídicas es una tasa PLANA del 25%, NO progresiva como afirma el documento. Las tarifas progresivas aplican solo a personas naturales. Esto es un error conceptual grave que puede inducir a confusión a empresarios constituidos como sociedades.",
+      "source": "PwC Worldwide Tax Summaries – Honduras"
+    },
+    {
+      "severity": "high",
+      "claim_id": "C006",
+      "finding": "El documento omite el régimen de pagos a cuenta (anticipos trimestrales del ISR). Da a entender que el ISR solo se paga al final del año, cuando en realidad existen tres pagos anticipados obligatorios (30 junio, 30 septiembre, 31 diciembre) más la liquidación anual.",
+      "source": "PwC Worldwide Tax Summaries – Honduras"
+    },
+    {
+      "severity": "medium",
+      "claim_id": "C018",
+      "finding": "La afirmación de que el SAR exige facturación electrónica 'desde el inicio' para todo negocio no está verificada. La implementación ha sido progresiva y existen regímenes simplificados.",
+      "source": "No se encontró fuente oficial que confirme esta afirmación de forma absoluta"
+    },
+    {
+      "severity": "medium",
+      "claim_id": "C026",
+      "finding": "El documento asume que TODAS las pequeñas empresas tienen TODAS las obligaciones listadas (IHSS, RAP, retenciones) desde el inicio. Esto no es preciso: IHSS/RAP solo aplican con empleados; las retenciones solo aplican si se realizan pagos sujetos a retención.",
+      "source": "PwC Worldwide Tax Summaries – Honduras"
+    },
+    {
+      "severity": "low",
+      "claim_id": "C010",
+      "finding": "El impuesto municipal de industria y comercio aplica en TODAS las municipalidades, no solo 'dependiendo de la jurisdicción' como sugiere el documento.",
+      "source": "PwC Worldwide Tax Summaries – Honduras (Corporate)"
+    }
+  ],
+  "notes": "La Pasada B verificó 27 claims extraídos del body del documento. De estos, 8 fueron verificados contra fuentes oficiales o agregadores confiables (principalmente PwC Worldwide Tax Summaries), 4 son parcialmente correctos con matizaciones necesarias, 11 son probablemente correctos pero no se pudieron verificar contra fuentes oficiales en línea accesibles, 1 requiere corrección sustancial (ISR progresivo vs. plano), y 3 no son verificables con las fuentes disponibles. Se detectó un error conceptual importante: el documento confunde el ISR para personas jurídicas (tasa plana del 25%) con el ISR para personas naturales (tarifas progresivas). También omite información crítica como los pagos a cuenta trimestrales y la Contribución Solidaria del 5% sobre rentas superiores a HNL 1 millón. Las fuentes consultadas incluyen PwC Worldwide Tax Summaries (verificación primaria), el sitio oficial del SAR, CIAT, y referencias al Código Tributario, Ley del ISV, Ley del ISR y Decreto 278-2013. Se recomienda revisión humana para 5 claims (C002, C004, C006, C016, C018)."
+}

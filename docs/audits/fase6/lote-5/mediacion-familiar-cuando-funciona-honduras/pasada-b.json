@@ -1,0 +1,296 @@
+{
+  "article_id": "4fad6177-7c32-4ecb-85c8-74a783321567",
+  "sha256_original": "bbf819a1912d0e4f4d10514effbf74015bc2609f1b9dea9e9e9f84925ccfd5ea",
+  "claims": [
+    {
+      "claim": "La mediación familiar en Honduras está regulada principalmente por la Ley de Mediación, Conciliación y Arbitraje (Decreto No. 260-2001) y el Código de Familia.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 (Ley de Mediación, Conciliación y Arbitraje) — identificado correctamente como ley vigente en Honduras para mediación y conciliación.",
+        "Código de Familia de Honduras (Decreto 76-84 y sus reformas) — contiene disposiciones sobre conciliación en procesos de familia.",
+        "NOTA: El artículo NO menciona el Decreto 161-2000. No se pudo verificar de forma independiente qué establece el Decreto 161-2000 ni si es relevante para la mediación familiar. Se requirió verificación contra esta norma pero las fuentes oficiales en línea del TSC (tsc.gob.hn) y Poder Judicial (poderjudicial.gob.hn) no fueron accesibles durante esta auditoría por restricciones SSL y errores de servidor."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La identificación del Decreto 260-2001 y del Código de Familia como fuentes principales es correcta en principio. Sin embargo: (1) Se necesita verificar si el Decreto 161-2000 es relevante para la mediación familiar y si debe ser mencionado en el artículo. (2) El Código de Familia no es un 'decreto' único con ese nombre sino el Decreto 76-84 con múltiples reformas; sería más preciso citar su número de decreto. (3) Se recomienda verificar los artículos específicos del Código de Familia que regulan la conciliación previa."
+    },
+    {
+      "claim": "El Artículo 1 de la Ley de Mediación establece que este mecanismo puede ser obligatorio en ciertos procesos familiares antes de acudir a la vía judicial.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — Artículo 1. No se pudo acceder al texto oficial completo del decreto para verificar el contenido exacto del Artículo 1."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "No se pudo verificar de forma independiente que el Artículo 1 del Decreto 260-2001 contenga exactamente esta disposición. Típicamente, el Artículo 1 de una ley define su ámbito de aplicación. La obligatoriedad de la mediación en procesos familiares suele derivarse de artículos posteriores o del Código de Familia, no necesariamente del Artículo 1. Se recomienda: (1) Verificar el texto exacto del Artículo 1 contra La Gaceta o el TSC. (2) Citar el artículo específico que establece la obligatoriedad, si es distinto del Artículo 1. (3) Distinguir entre mediación (Decreto 260-2001) y conciliación previa judicial (Código de Familia), que son mecanismos distintos."
+    },
+    {
+      "claim": "El Código de Familia dispone que en procesos de divorcio, custodia y pensión alimenticia, el juez debe convocar a una audiencia de conciliación previa.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "Código de Familia de Honduras — No se pudo acceder al texto oficial para verificar los artículos específicos sobre audiencia de conciliación previa. Los sitios del TSC y Poder Judicial presentaron errores de acceso (SSL, 500, 404)."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La afirmación es doctrinalmente plausible: en la mayoría de códigos de familia latinoamericanos existe una audiencia de conciliación previa en divorcio y asuntos de menores. Sin embargo: (1) Se debe verificar el artículo específico del Código de Familia que establece esta obligación. (2) Precisar si es 'conciliación' (judicial, ante el juez) o 'mediación' (extrajudicial, ante mediador), ya que el artículo usa ambos términos indistintamente pero son figuras jurídicas distintas en Honduras. (3) Confirmar si aplica a TODOS los procesos de divorcio o solo a aquellos con hijos menores."
+    },
+    {
+      "claim": "Debe intentarse la mediación familiar en procesos de divorcio, especialmente cuando existen hijos menores y se discuten aspectos como custodia, visitas o pensión alimenticia.",
+      "type": "requirement",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "Código de Familia de Honduras — No verificado independientemente por falta de acceso a fuente oficial."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se debe verificar contra el Código de Familia si la mediación/conciliación es obligatoria para TODOS los divorcios o solo aquellos con hijos menores. También verificar si la obligatoriedad aplica a divorcios de mutuo acuerdo, contenciosos, o ambos."
+    },
+    {
+      "claim": "Debe intentarse la mediación en solicitudes de custodia o régimen de visitas entre padres separados.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "Código de Familia de Honduras — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar contra el Código de Familia si la conciliación/mediación previa es requisito procesal en solicitudes autónomas de custodia y régimen de visitas (no vinculadas a un divorcio)."
+    },
+    {
+      "claim": "Debe intentarse la mediación en reclamaciones de pensión alimenticia cuando ambas partes son localizables.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "Código de Familia de Honduras — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar si la conciliación previa es obligatoria en reclamaciones de pensión alimenticia. Este es un punto crítico porque en muchos ordenamientos la pensión alimenticia se tramita por vía expedita sin requisito de conciliación previa, dado el carácter urgente y el interés superior del menor. Confirmar contra el Código de Familia."
+    },
+    {
+      "claim": "Debe intentarse la mediación en conflictos sobre el uso de la vivienda familiar tras la separación.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "Código de Familia de Honduras — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se debe verificar si el 'uso de la vivienda familiar' es una materia autónoma sujeta a mediación obligatoria o si típicamente se resuelve como parte accesoria del divorcio. La mediación sobre el uso de la vivienda rara vez es un proceso independiente."
+    },
+    {
+      "claim": "NO procede la mediación cuando existe violencia doméstica o intrafamiliar activa. En estos supuestos, la mediación pondría en riesgo a la víctima, por lo que el proceso debe ser estrictamente judicial ante los Juzgados de Familia o el Ministerio Público.",
+      "type": "exception",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "Decreto 260-2001 — La Ley de Mediación, Conciliación y Arbitraje típicamente excluye los casos de violencia doméstica del ámbito de la mediación. Esto es consistente con estándares internacionales (Convención de Belém do Pará, Ley contra la Violencia Doméstica de Honduras, Decreto 132-97)."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "NO procede la mediación cuando una de las partes se encuentra en paradero desconocido y no puede ser localizada.",
+      "type": "exception",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "Principio general del derecho procesal y de la mediación: la mediación requiere la comparecencia voluntaria de ambas partes. Si una parte no es localizable, es materialmente imposible realizar la mediación."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "NO procede la mediación cuando la urgencia del caso requiere una medida cautelar inmediata, que debe ser solicitada directamente al juez competente.",
+      "type": "exception",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "Principio general del derecho procesal: las medidas cautelares urgentes se tramitan directamente ante la autoridad judicial, sin necesidad de agotar vías alternativas previas. La mediación no es compatible con situaciones que requieren tutela judicial inmediata."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El proceso de mediación consta de 4 pasos: (1) Cita de mediación o audiencia de conciliación convocada por el juzgado o centro de mediación; (2) Sesión de mediación con mediador neutral; (3) Acuerdo parcial o total elevado a escrito con homologación judicial; (4) Acta de falta de acuerdo si no hay consenso.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — No se pudo verificar el procedimiento exacto contra el texto oficial del decreto."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La descripción es genéricamente razonable y consistente con procesos de mediación en general, pero se debe verificar contra el Decreto 260-2001 para confirmar: (1) Si el procedimiento tiene exactamente estos 4 pasos o si hay pasos intermedios (ej. sesión informativa previa). (2) Si el acuerdo requiere homologación judicial en todos los casos o solo cuando el centro de mediación es privado. (3) Si el 'centro de mediación autorizado' está efectivamente implementado en la práctica o si la conciliación se realiza principalmente ante el juez."
+    },
+    {
+      "claim": "Si las partes llegan a un acuerdo, este se eleva a escrito y, de ser aprobado por el juez, adquiere fuerza ejecutoria.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se debe verificar: (1) Si la homologación judicial es un requisito indispensable para que el acuerdo de mediación tenga fuerza ejecutoria, o si los acuerdos de centros de mediación autorizados tienen fuerza ejecutoria por sí mismos. (2) El artículo específico del Decreto 260-2001 que regula este efecto."
+    },
+    {
+      "claim": "Si solo hay acuerdo parcial, lo acordado se tiene por firme y lo no acordado se decide en juicio.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se debe verificar si el Decreto 260-2001 permite acuerdos parciales con este efecto vinculante. En muchas legislaciones, los acuerdos parciales en mediación son válidos y vinculantes para las materias acordadas. Confirmar el artículo específico."
+    },
+    {
+      "claim": "Si no se logra un acuerdo, el mediador levanta un acta y el proceso continúa por la vía judicial ante el Tribunal de Familia correspondiente.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar: (1) Si el acta de falta de acuerdo es requisito procesal para admitir la demanda judicial. (2) Si el término correcto es 'Tribunal de Familia' o 'Juzgado de Familia' en la estructura judicial hondureña."
+    },
+    {
+      "claim": "La mediación realizada en los centros de mediación adscritos a los Juzgados de Familia de Honduras es gratuita. Si se opta por un centro privado de mediación, el costo varía según la institución y los honorarios del mediador.",
+      "type": "fact",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — No verificado independientemente. Poder Judicial de Honduras — Los centros de mediación del Poder Judicial generalmente ofrecen servicios gratuitos, pero no se pudo confirmar mediante fuente oficial accesible (poderjudicial.gob.hn presenta error SSL)."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar: (1) Si los Centros de Mediación adscritos a los Juzgados de Familia efectivamente existen y operan en todo el territorio hondureño o solo en ciudades principales. (2) Si la gratuidad está garantizada por ley (Decreto 260-2001) o es una política administrativa del Poder Judicial. (3) Si existen centros de mediación privados autorizados y cómo se regulan sus honorarios."
+    },
+    {
+      "claim": "En cuanto a la duración, una mediación típica requiere de 1 a 3 sesiones, las cuales pueden completarse en semanas.",
+      "type": "fact",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "No se encontró fuente oficial que establezca la duración típica de 1 a 3 sesiones. Es una estimación práctica razonable pero no verificable contra norma legal."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La duración de 1 a 3 sesiones es una estimación práctica que debe presentarse como tal, no como un dato normativo. Se recomienda: (1) Indicar que es una estimación basada en la práctica. (2) Si el Decreto 260-2001 establece plazos máximos para la mediación, citarlos. (3) Considerar que la duración puede variar significativamente según la complejidad del caso y la disponibilidad de las partes."
+    },
+    {
+      "claim": "[Ejemplo práctico] María y José se separan y tienen un hijo de 5 años. María solicita la custodia y una pensión alimenticia. El Juzgado de Familia los convoca a mediación. Acuerdan régimen de visitas y pensión de L. 3,000 mensuales. El juez homologa el acuerdo.",
+      "type": "example",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "Ejemplo hipotético. No verificable contra fuente documental."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El ejemplo es didáctico pero contiene imprecisiones: (1) Sugiere que la mediación es el primer paso y que el juzgado 'convoca a mediación', lo cual mezcla 'conciliación judicial' con 'mediación'. (2) El monto de L. 3,000 como pensión alimenticia es arbitrario; no se relaciona con ninguna tabla o criterio legal de cálculo de pensión alimenticia en Honduras. Se recomienda: aclarar que el monto es ilustrativo y que la pensión se calcula según criterios legales (ingresos del alimentante, necesidades del menor, etc.)."
+    },
+    {
+      "claim": "En la práctica, los juzgados de familia suelen requerir el acta de mediación previa para admitir la demanda en la mayoría de los casos.",
+      "type": "fact",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "Práctica judicial hondureña — No verificable contra fuente documental pública. Es una afirmación sobre la praxis judicial que requeriría confirmación con operadores jurídicos hondureños."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Esta es una afirmación sobre la práctica judicial, no sobre la norma. Debe distinguirse claramente: (1) Lo que la ley exige (obligatoriedad normativa). (2) Lo que los juzgados hacen en la práctica (exigencia administrativa/judicial). Si la mediación NO es legalmente obligatoria en ciertos casos pero los juzgados la exigen de facto, esto debería señalarse explícitamente para no inducir a error al lector sobre el fundamento legal."
+    },
+    {
+      "claim": "El mediador no impone soluciones; solo facilita el diálogo. La decisión final siempre es de las partes.",
+      "type": "definition",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "Definición doctrinal universal de la mediación como método alternativo de resolución de conflictos. Consistente con el rol del mediador como tercero neutral facilitador, reconocido en la doctrina y legislación comparada."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La mediación es más flexible y el mediador no propone soluciones, a diferencia del conciliador que sí puede sugerir acuerdos.",
+      "type": "definition",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "No verificado contra el Decreto 260-2001. Se necesita confirmar si la ley hondureña distingue entre mediación y conciliación en estos términos."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La distinción entre mediación (el mediador no propone) y conciliación (el conciliador sí puede sugerir) es doctrinalmente aceptada en muchos ordenamientos, pero NO es universal. Se debe verificar contra el Decreto 260-2001: (1) Si la ley hondureña recoge esta distinción conceptual entre mediación y conciliación. (2) Si el conciliador judicial hondureño efectivamente puede 'proponer soluciones' o si su rol es más limitado. Si el Decreto 260-2001 trata ambos mecanismos de manera unificada, esta distinción podría ser doctrinal pero no normativa en Honduras."
+    },
+    {
+      "claim": "Si una de las partes se niega a participar en la mediación, el proceso continúa por la vía judicial. El juez tomará nota de la negativa, pero esto no perjudica a la parte que sí estaba dispuesta a mediar.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — No verificado independientemente."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar contra el Decreto 260-2001: (1) Si la negativa a mediar tiene consecuencias procesales (ej. costas, inversión de carga probatoria). (2) Si la ley establece que 'no perjudica' expresamente o si es una inferencia. (3) Si la mediación es obligatoria o voluntaria — si es obligatoria, la negativa podría tener consecuencias."
+    },
+    {
+      "claim": "Ambas [la Ley de Mediación, Conciliación y Arbitraje y el Código de Familia] se encuentran vigentes y son de observancia obligatoria.",
+      "type": "legal_framework",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "Decreto 260-2001 — Vigente. Código de Familia — Vigente con múltiples reformas. No se pudo verificar la fecha de última reforma de cada cuerpo legal para confirmar vigencia actual."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Si bien ambas leyes están vigentes, se recomienda: (1) Verificar si ha habido reformas recientes al Decreto 260-2001 o al Código de Familia que afecten la mediación familiar. (2) Indicar que se debe consultar la versión actualizada publicada en La Gaceta. (3) Mencionar si existe legislación complementaria relevante (ej. Ley contra la Violencia Doméstica, Código de la Niñez y Adolescencia) que pueda afectar la procedencia de la mediación en ciertos casos."
+    },
+    {
+      "claim": "La mediación es un mecanismo en el que un tercero imparcial facilita el diálogo entre las partes para alcanzar un acuerdo. Si se logra, se evita el litigio; si no, el caso puede llevarse a juicio.",
+      "type": "definition",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "Definición doctrinal estándar de la mediación. Consistente con el Decreto 260-2001 y con la doctrina internacional de métodos alternativos de resolución de conflictos (ADR)."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La mediación familiar está estrechamente vinculada con el divorcio, la custodia de menores, la pensión alimenticia y la violencia doméstica. Si el caso implica violencia, la mediación no procede y se debe acudir directamente a los tribunales competentes.",
+      "type": "contextual",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "Relación temática correcta. La exclusión de la mediación en casos de violencia doméstica es consistente con la Ley contra la Violencia Doméstica de Honduras (Decreto 132-97) y con estándares internacionales de protección a víctimas."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Se recomienda consultar las últimas reformas publicadas en La Gaceta para estar al día.",
+      "type": "recommendation",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "La Gaceta es el diario oficial de Honduras donde se publican todas las leyes, decretos y reformas. Es la fuente oficial para verificar la vigencia y texto actualizado de la legislación hondureña."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El artículo NO menciona el Decreto 161-2000 como parte del marco normativo aplicable a la mediación familiar en Honduras.",
+      "type": "omission",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "No se pudo determinar de forma independiente qué establece el Decreto 161-2000 ni si es relevante para la mediación familiar en Honduras. Las búsquedas en el sitio del Tribunal Superior de Cuentas (tsc.gob.hn), SITEAL (UNESCO), y múltiples motores de búsqueda no arrojaron resultados sobre este decreto. Posiblemente se trate de una ley relacionada con el Poder Judicial, conciliación o materia de familia, pero no se pudo confirmar."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Se requiere verificación humana del Decreto 161-2000 para determinar: (1) Su contenido y materia regulada. (2) Si es relevante para la mediación familiar en Honduras. (3) Si el artículo debe mencionarlo como parte del marco normativo. Si el Decreto 161-2000 es la Ley Orgánica del Poder Judicial o una ley de conciliación/arbitraje anterior, podría ser relevante como antecedente o complemento del Decreto 260-2001."
+    }
+  ],
+  "global_assessment": "La auditoría independiente de la Pasada B ha analizado el artículo 'Mediación Familiar en Honduras' extrayendo todos los claims e intentando verificarlos contra fuentes oficiales. Debido a limitaciones severas de acceso a las fuentes primarias en línea (el sitio del Tribunal Superior de Cuentas devuelve errores 500/404; el sitio del Poder Judicial presenta errores de certificado SSL que impiden la conexión; La Gaceta y otros repositorios legales no fueron accesibles), la mayoría de los claims no pudieron ser verificados de forma concluyente y requieren revisión humana con acceso directo a los textos legales.\n\nHALLAZGOS PRINCIPALES:\n\n1. MARCO NORMATIVO INCOMPLETO: El artículo menciona el Decreto 260-2001 y el Código de Familia, pero NO menciona el Decreto 161-2000, cuya relevancia para la mediación familiar no pudo determinarse en esta auditoría por falta de acceso a fuentes. Se requiere verificación humana.\n\n2. CONFUSIÓN TERMINOLÓGICA ENTRE MEDIACIÓN Y CONCILIACIÓN: El artículo utiliza 'mediación' y 'conciliación' de manera intercambiable, cuando doctrinal y posiblemente legalmente en Honduras (Decreto 260-2001) son figuras distintas. La 'audiencia de conciliación previa' del Código de Familia es un acto judicial ante el juez, mientras que la 'mediación' del Decreto 260-2001 es un proceso ante un mediador (tercero neutral). Esta confusión puede inducir a error al lector.\n\n3. CARENCIA DE CITAS LEGALES ESPECÍFICAS: El artículo menciona genéricamente 'el Artículo 1 de la Ley de Mediación' y 'el Código de Familia', pero no cita artículos específicos del Código de Familia que establezcan la obligatoriedad de la conciliación previa. Esto debilita la verificabilidad del contenido.\n\n4. AFIRMACIONES SOBRE LA PRÁCTICA JUDICIAL SIN RESPALDO: Varias afirmaciones ('los juzgados suelen requerir el acta de mediación previa', '1 a 3 sesiones', 'gratuito en centros adscritos') son aseveraciones sobre la práctica judicial que no están respaldadas por citas a fuentes verificables.\n\n5. PUNTOS CORRECTOS: La definición general de mediación, las exclusiones (violencia doméstica, paradero desconocido, medidas cautelares urgentes), la referencia a La Gaceta, y la caracterización del mediador como facilitador neutral son correctos.\n\n6. DECRETO 161-2000: No se encontró información sobre este decreto en las búsquedas realizadas. Se desconoce su contenido y relevancia para la mediación familiar.\n\nEn total: 6 claims verificados como correctos (definiciones generales y exclusiones), 20 claims requieren revisión humana con acceso a fuentes primarias. Se recomienda verificación por un abogado hondureño con acceso a los textos legales actualizados antes de la publicación.",
+  "ready_for_pasada_b": false
+}

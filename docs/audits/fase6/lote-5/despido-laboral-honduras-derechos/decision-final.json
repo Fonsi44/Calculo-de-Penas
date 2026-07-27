@@ -1,0 +1,24 @@
+{
+  "slug": "despido-laboral-honduras-derechos",
+  "article_id": "acb339a1-6ec7-493f-b29e-48a5df4c1faa",
+  "sha256_original": "c6627eacea4af9b71a64399ab1a11267bb39f9d0117664400ae705f1709a0c9a",
+  "fecha_consolidacion": "2026-07-27T00:00:00.000Z",
+  "estado_final": "corrected",
+  "razon": "SHA256 coincidente entre pasadas A y B. Ambas pasadas convergen en hallazgos y correcciones. La pasada A (búsquedas web) y la pasada B (fuentes locales: codigo_trabajo.json 856 arts. y codigo_trabajo_verificado.json 18 arts.) detectan errores concretos y coinciden en las correcciones. Hallazgos convergentes: (1) ERROR NORMATIVO GRAVE confirmado por ambas pasadas: el artículo cita Art. 607 del Código del Trabajo para la prescripción de 2 meses de la acción por despido injustificado, pero el Art. 607 regula inscripción de organizaciones sociales; el artículo correcto es Art. 864 CT. El plazo de 2 meses es correcto, solo el número de artículo está equivocado. (2) ERROR DE NOMBRE DE ENTIDAD confirmado por ambas: el artículo dice 'Secretaría de Trabajo y Previsión Social' cuando el nombre oficial es 'Secretaría de Trabajo y Seguridad Social' (STSS), verificado en trabajo.gob.hn y en el texto del código. Las correcciones son específicas y aplicables directamente al body del artículo. La pasada B también verificó positivamente 9 de 17 claims contra el texto del código (tipos de despido, preaviso, prestaciones, conciliación, advertencia sobre firmas) y confirmó 2 adicionales parcialmente. La discrepancia estructural entre las dos fuentes de datos del proyecto (codigo_trabajo.json vs codigo_trabajo_verificado.json con numeración incompatible de artículos) es un hallazgo informativo para el proyecto, no un bloqueo para este artículo.",
+  "claims_totales_a": 16,
+  "claims_totales_b": 17,
+  "errores_detectados": [
+    "Artículo 607 del Código del Trabajo citado como base de la prescripción de 2 meses: el Art. 607 regula inscripción de organizaciones sociales. El artículo correcto es Art. 864 CT. El plazo de 2 meses es correcto.",
+    "Nombre de la entidad: 'Secretaría de Trabajo y Previsión Social' debe ser 'Secretaría de Trabajo y Seguridad Social' (STSS). Fuente: trabajo.gob.hn y texto del Código del Trabajo.",
+    "Posible confusión en definición de aguinaldo: 'un salario mensual por cada año trabajado' describe el auxilio de cesantía, no el aguinaldo (que es 1/12 por mes trabajado). Requiere verificación adicional.",
+    "'Abandono del cargo' como causal de despido no aparece textualmente en ninguna fuente; es una interpretación divulgativa que podría no ser exacta."
+  ],
+  "correcciones_pendientes": [
+    "URGENTE: Reemplazar 'Artículo 607 del Código del Trabajo' por 'Artículo 864 del Código del Trabajo' en todas las menciones del body (sección 'Pasos para reclamar' y FAQ '¿En qué plazo prescribe?').",
+    "URGENTE: Reemplazar 'Secretaría de Trabajo y Previsión Social' por 'Secretaría de Trabajo y Seguridad Social' en todo el body (al menos 4 ocurrencias).",
+    "RECOMENDADO: Revisar 'abandono del cargo' como causal de despido — no aparece textualmente en el Art. 112 CT ni en el Art. 81 de la fuente secundaria.",
+    "RECOMENDADO: Revisar la fórmula del aguinaldo proporcional contra fuente primaria para evitar confusión con auxilio de cesantía."
+  ],
+  "requiere_abogado": false,
+  "version_esquema": "1.0"
+}

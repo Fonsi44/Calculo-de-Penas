@@ -1,0 +1,327 @@
+{
+  "article_id": "350ca6aa-1441-4689-904a-c1c085597cd5",
+  "sha256_original": "923dd4c9fab5d930b5effd22c4f997442701b410bd02a0e0b4182fca2fb00821",
+  "claims": [
+    {
+      "claim": "El sobreseimiento definitivo, regulado en el Artículo 296 del Código Procesal Penal de Honduras (Decreto 9-99-E), pone fin de manera irrevocable a un proceso penal.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Página 0: 'D E C R E T O No.9-99-E'; Páginas 101-102: 'Artículo 296. Sobreseimiento definitivo. Se dictará sobreseimiento definitivo cuando: 1) Resulte probado que el hecho no ha existido o que no está tipificado como delito o que el imputado no participó en su comisión; 2) No existan fundamentos suficientes para decretar auto de prisión o declaratoria de reo y no hayan motivos para sospechar que el imputado tuvo participación en el delito; y, 3) Se ha extinguido la acción penal.'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando se determina que el hecho imputado no constituye delito.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 1: 'Resulte probado que el hecho no ha existido o que no está tipificado como delito o que el imputado no participó en su comisión'."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El artículo simplifica el numeral 1 del Artículo 296, que en realidad contiene tres supuestos alternativos: a) el hecho no ha existido, b) no está tipificado como delito, o c) el imputado no participó en su comisión. Se recomienda mencionar los tres supuestos o al menos indicar que son alternativas y no un único supuesto."
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando no existen pruebas suficientes de la participación del imputado y no es razonable esperar nuevas pruebas.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "incorrect",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 2: 'No existan fundamentos suficientes para decretar auto de prisión o declaratoria de reo y no hayan motivos para sospechar que el imputado tuvo participación en el delito'."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La frase 'no es razonable esperar nuevas pruebas' NO aparece en el texto del Artículo 296. El texto legal habla de que 'no hayan motivos para sospechar que el imputado tuvo participación en el delito'. El concepto de 'razonable esperar nuevas pruebas' parece ser una interpolación o confusión con la naturaleza del sobreseimiento provisional. Se recomienda eliminar esa frase o reformular conforme al texto exacto de la ley: 'No existan fundamentos suficientes para decretar auto de prisión o declaratoria de reo y no hayan motivos para sospechar que el imputado tuvo participación en el delito'."
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando la acción penal ha prescrito.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 3: 'Se ha extinguido la acción penal'."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El artículo reduce 'extinción de la acción penal' a solo 'prescripción'. La prescripción es una de las causales de extinción de la acción penal, pero no la única. El texto del Artículo 296.3 es más amplio: abarca cualquier forma de extinción de la acción penal. Se recomienda usar el término legal exacto: 'se ha extinguido la acción penal' o aclarar que la prescripción es una de varias causales."
+    },
+    {
+      "claim": "Procede [el sobreseimiento definitivo] cuando concurre una causa de extinción de la responsabilidad penal.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "incorrect",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 3: 'Se ha extinguido la acción penal'."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Error jurídico significativo. El Artículo 296.3 se refiere a 'extinción de la ACCIÓN penal', no a 'extinción de la RESPONSABILIDAD penal'. Son conceptos jurídicos distintos: la extinción de la acción penal impide el inicio o continuación del proceso; la extinción de la responsabilidad penal extingue la pena o sus consecuencias. La confusión es relevante porque afecta la comprensión del fundamento legal. Se debe corregir a: 'se ha extinguido la acción penal'."
+    },
+    {
+      "claim": "El sobreseimiento provisional, contemplado en el Artículo 295 del Código Procesal Penal, suspende temporalmente el proceso.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295: 'El juez dictará sobreseimiento provisional si, no obstante haber plena prueba de la comisión del delito, no hay indicio racional de que el imputado haya tenido participación en el mismo, pero las pruebas presentadas dan margen para sospechar que si la tuvo y existe, además, la posibilidad de que en el futuro se incorporen nuevos elementos de prueba, lo cual deben señalarse de manera concreta en la resolución respectiva.'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "[El sobreseimiento provisional] ocurre cuando no hay pruebas suficientes para formular una acusación formal, pero existe la posibilidad de que surjan nuevos elementos probatorios en el futuro.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La descripción es imprecisa y potencialmente engañosa. El Artículo 295 REQUIERE como presupuesto que exista 'plena prueba de la comisión del delito' — no es que 'no hay pruebas suficientes' en general, sino que hay plena prueba del delito pero no hay indicio racional de participación del imputado. Esta distinción es jurídicamente relevante. Se recomienda reformular conforme al texto legal."
+    },
+    {
+      "claim": "El sobreseimiento definitivo cierra el caso de forma absoluta, similar a una sentencia absolutoria, impidiendo un nuevo enjuiciamiento por los mismos hechos.",
+      "type": "definition",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 11: 'Ninguna persona podrá ser nuevamente juzgada por los mismos hechos punibles que motivaron anteriores enjuiciamientos, aunque se modifique su calificación o se aleguen nuevas circunstancias.'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento provisional solo detiene el proceso, permitiendo su reactivación si la Fiscalía o la parte acusadora logran reunir pruebas adicionales que sustenten la imputación.",
+      "type": "definition",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295 párrafo segundo: 'Si dentro de los cinco (5) años siguientes a la fecha del sobreseimiento provisional surgen nuevos elementos de prueba que den base para decretar auto de prisión o declaratoria de reo, el juez, a petición del fiscal o del acusador privado, podrá ordenar la prosecución del proceso.'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Causales para el cierre definitivo: El hecho investigado no encuadra en ninguna figura delictiva según el Código Penal de Honduras.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 1."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Nuevamente se simplifica el numeral 1 omitiendo los otros dos supuestos: que el hecho no ha existido y que el imputado no participó en su comisión. Esta enumeración de 'causales' debería reflejar los tres supuestos del numeral 1 del Artículo 296."
+    },
+    {
+      "claim": "Causales: La evidencia disponible no demuestra la participación del imputado, y no hay perspectivas realistas de obtener pruebas concluyentes.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "incorrect",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 2."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La frase 'no hay perspectivas realistas de obtener pruebas concluyentes' no aparece en el texto legal. Es un añadido que cambia el estándar legal. El texto dice: 'No existan fundamentos suficientes para decretar auto de prisión o declaratoria de reo y no hayan motivos para sospechar que el imputado tuvo participación en el delito'. Corregir conforme al texto oficial."
+    },
+    {
+      "claim": "Causales: Ha transcurrido el plazo legal para ejercer la acción penal, conforme a las reglas de prescripción establecidas en el Código Penal.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 3: 'Se ha extinguido la acción penal'."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Nuevamente se reduce la extinción de la acción penal a solo prescripción. Si bien la prescripción es la causal más común, la causal legal es más amplia. Se recomienda usar el lenguaje del Código: 'Se ha extinguido la acción penal.'"
+    },
+    {
+      "claim": "Causales: Se ha configurado una causa legal que extingue la responsabilidad penal, como la muerte del imputado, la concesión de amnistía o el perdón del ofendido en los delitos que lo permiten.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "incorrect",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 296 numeral 3: 'Se ha extinguido la acción penal'."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Error jurídico: se confunde 'extinción de la acción penal' (Art. 296.3) con 'extinción de la responsabilidad penal'. Son instituciones distintas. La muerte del imputado extingue la acción penal (si ocurre antes de sentencia firme) o la responsabilidad penal/pena (si ocurre después). La amnistía extingue la acción penal. El perdón del ofendido extingue la acción penal en delitos de acción privada (Art. 412 CPP). Todos estos son supuestos de extinción de la ACCIÓN penal, no de la responsabilidad. Corregir la terminología."
+    },
+    {
+      "claim": "Un juez de garantía, a solicitud de la defensa o del Ministerio Público, puede dictar un sobreseimiento provisional si considera que las pruebas presentadas son insuficientes para sostener una acusación en la etapa intermedia del proceso.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La descripción es imprecisa. El Artículo 295 no habla de 'pruebas insuficientes para sostener una acusación' como estándar; requiere 'plena prueba de la comisión del delito' pero ausencia de 'indicio racional' de participación del imputado. Además, el CPP se refiere simplemente a 'juez' (no específicamente 'juez de garantía', aunque funcionalmente lo es). La referencia a 'etapa intermedia' es correcta como contexto general. Se recomienda precisar el estándar legal."
+    },
+    {
+      "claim": "Debe existir una expectativa razonable de que se puedan obtener pruebas determinantes en el futuro, lo cual debe ser debidamente justificado.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295: 'existe, además, la posibilidad de que en el futuro se incorporen nuevos elementos de prueba, lo cual deben señalarse de manera concreta en la resolución respectiva'."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El plazo de reapertura del sobreseimiento provisional es de cinco años según el Artículo 295 del Código Procesal Penal.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295 párrafo segundo: 'Si dentro de los cinco (5) años siguientes a la fecha del sobreseimiento provisional surgen nuevos elementos de prueba que den base para decretar auto de prisión o declaratoria de reo, el juez, a petición del fiscal o del acusador privado, podrá ordenar la prosecución del proceso. En caso contrario, se estará a lo prescrito en el artículo 42, numeral 5).'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "La solicitud de sobreseimiento se presenta por escrito ante el juez de garantía competente, durante la etapa intermedia del proceso penal. El escrito debe exponer detalladamente las razones de hecho y de derecho que fundamentan la petición.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Arts. 294-300 y concordantes."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La descripción del procedimiento es genéricamente correcta pero no se verificó artículo por artículo. El CPP prevé que el sobreseimiento puede ser solicitado tanto en la audiencia inicial como en la audiencia preliminar (etapa intermedia). La afirmación sobre presentación 'por escrito' y contenido de la fundamentación es una paráfrasis razonable de los requisitos generales, pero se recomienda verificar contra los artículos procedimentales específicos (Arts. 292-303)."
+    },
+    {
+      "claim": "La decisión del juez, ya sea de concederlo o denegarlo, puede ser objeto de recurso de apelación ante la Corte de Apelaciones correspondiente.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 354 numeral 1: 'El recurso de apelación procederá contra las resoluciones siguientes: 1) La de sobreseimiento provisional o definitivo'."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Tanto el Ministerio Público como el imputado tienen derecho a interponer recurso de apelación contra la resolución que concede o deniega el sobreseimiento. Este recurso se tramita ante la Corte de Apelaciones competente.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 354 y normas generales del recurso de apelación (Art. 353 y ss.)."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Vencido el plazo de cinco años sin reapertura del sobreseimiento provisional, deben aplicarse los efectos establecidos por el Código Procesal Penal.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295 in fine: 'En caso contrario, se estará a lo prescrito en el artículo 42, numeral 5).'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento definitivo tiene la autoridad de cosa juzgada. Por regla general, no permite la reapertura del caso por los mismos hechos.",
+      "type": "legal_framework",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 11 (Prohibición del doble juzgamiento)."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Excepcionalmente, [el sobreseimiento definitivo] podría considerarse en casos de revisión extraordinaria ante la Corte Suprema de Justicia, bajo supuestos muy específicos y limitados, como la demostración de fraude procesal.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Arts. 366 y siguientes (Recurso de Revisión)."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "La afirmación sobre el recurso de revisión es doctrinalmente correcta (el CPP prevé el recurso de revisión ante la Corte Suprema), pero no se verificó en detalle el catálogo completo de causales de revisión. Se recomienda verificar los artículos 366 y siguientes del CPP para confirmar que el fraude procesal está expresamente contemplado como causal y citar el artículo específico."
+    },
+    {
+      "claim": "El sobreseimiento en Honduras está regulado principalmente en el Código Procesal Penal (Decreto 9-99-E).",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Portada: 'D E C R E T O No.9-99-E'; Artículos 295 y 296."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El Código Procesal Penal (Decreto 9-99-E) entró en vigor el 2 de febrero de 2018.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "incorrect",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 447: 'El presente Código entrará en vigencia el veinte de febrero del 2002.'"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "ERROR FACTUAL GRAVE. La fecha de entrada en vigencia según el Artículo 447 del CPP es el 20 de febrero de 2002, no el 2 de febrero de 2018. Tanto el día (2 vs. 20) como el año (2018 vs. 2002) son incorrectos. Se debe corregir a: 'entró en vigor el 20 de febrero de 2002.' Nota: Este es el error más grave detectado en el artículo por su naturaleza factual verificable."
+    },
+    {
+      "claim": "Este cuerpo legal ha sido objeto de diversas reformas posteriores, por lo que es indispensable consultar la versión actualizada.",
+      "type": "legal_framework",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Múltiples reformas documentadas: Decreto 74-2013 (08/05/2013), Decreto 22-2015 (17/03/2015), Decreto 14-2006 (15/03/2006), entre otras."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Un error frecuente es confundir el sobreseimiento provisional con una absolución; el primero solo suspende el proceso, mientras que la segunda lo finaliza.",
+      "type": "definition",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículos 295 y 296, y principios generales del CPP."
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El sobreseimiento es una figura propia de la etapa intermedia.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículos 294-310 (etapa intermedia) y Arts. 406-413 (procedimiento por delitos de acción privada, donde también se dicta sobreseimiento)."
+      ],
+      "needs_human_review": true,
+      "suggested_correccion": "Si bien el sobreseimiento se decreta principalmente en la etapa intermedia, también puede dictarse en otros momentos procesales: en la audiencia de conciliación por delitos de acción privada (Art. 409), por desistimiento (Art. 413), por perdón del ofendido (Art. 412), entre otros. Sería más preciso decir que es una figura PRINCIPALMENTE asociada a la etapa intermedia, pero no exclusiva de ella."
+    },
+    {
+      "claim": "El sobreseimiento no es automático; requiere una argumentación jurídica robusta y fundamentada en las debilidades del caso presentado por el Ministerio Público.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "needs_review",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículos 295 y 296."
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "Afirmación de naturaleza práctica/doctrinal, no textual. El CPP no dice expresamente que se requiera 'argumentación jurídica robusta' ni que deba basarse en 'debilidades del caso del Ministerio Público'. Es una recomendación práctica razonable pero debe presentarse como tal, no como requisito legal."
+    },
+    {
+      "claim": "El juez decreta un sobreseimiento provisional en el ejemplo de Ana, suspendiendo el proceso por un periodo determinado, con posibilidad de reapertura si aparecen nuevas pruebas dentro de cinco años según el Artículo 295 del Código Procesal Penal.",
+      "type": "procedure",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "sources": [
+        "https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf — Artículo 295: 'Si dentro de los cinco (5) años siguientes a la fecha del sobreseimiento provisional surgen nuevos elementos de prueba...'"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    }
+  ],
+  "global_assessment": "La auditoría independiente de la Pasada B ha verificado los claims del artículo contra la fuente oficial del Código Procesal Penal de Honduras (Decreto 9-99-E) obtenida del Tribunal Superior de Cuentas (https://www.tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf). Se detectaron los siguientes hallazgos principales:\n\n1. ERROR CRÍTICO (fecha de vigencia): El artículo afirma que el CPP entró en vigor el '2 de febrero de 2018', pero el Artículo 447 del CPP establece claramente que la vigencia es desde el 'veinte de febrero del 2002'. Tanto el día como el año son incorrectos. Este es un error factual verificable que debe corregirse con urgencia.\n\n2. ERROR JURÍDICO (confusión conceptual): El artículo confunde reiteradamente 'extinción de la acción penal' con 'extinción de la responsabilidad penal'. El Artículo 296.3 del CPP se refiere a la extinción de la ACCIÓN penal, no de la responsabilidad penal. Esta distinción es jurídicamente relevante.\n\n3. INTERPOLACIONES NO TEXTUALES: El artículo añade frases que no aparecen en el texto legal, como 'no es razonable esperar nuevas pruebas' (Art. 296.2) y 'no hay perspectivas realistas de obtener pruebas concluyentes'. Estas adiciones modifican el estándar legal.\n\n4. SIMPLIFICACIONES IMPRECISAS: El artículo simplifica causales legales complejas, omitiendo supuestos alternativos del Artículo 296.1 y reduciendo la 'extinción de la acción penal' a solo 'prescripción'.\n\n5. CARACTERIZACIÓN PARCIALMENTE INCORRECTA DEL SOBRESEIMIENTO PROVISIONAL: El artículo omite mencionar que el Artículo 295 requiere 'plena prueba de la comisión del delito' como presupuesto.\n\n6. ASPECTOS CORRECTOS: La identificación del Decreto 9-99-E, la numeración de los artículos 295 y 296, el plazo de 5 años, la apelabilidad, y la caracterización general de ambas figuras son correctos.\n\nEn total: 6 claims verificados correctos, 12 claims requieren revisión, y 5 claims son incorrectos o contienen errores jurídicos significativos. El artículo NO está listo para publicación sin correcciones, especialmente por el error grave en la fecha de vigencia.",
+  "ready_for_pasada_b": false
+}
