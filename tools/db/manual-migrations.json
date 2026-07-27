@@ -188,6 +188,17 @@
       "checksum": "df1ebbc3fbdd727989d98748b63c98d16ba3dfbbb20c28b948d2db27435a5d63",
       "transactional": true,
       "applied": false
+    },
+    {
+      "id": "manual-0055",
+      "file": "drizzle/migrations/0055_fix_usuarios_token_version.sql",
+      "description": "Fix: re-add token_version column for bases where 0030 DOWN executed",
+      "dependsOn": [
+        "manual-0054"
+      ],
+      "checksum": "396752387b0a960b79eb0224ff53d326852861a6e5f430724d7d80bfec9db294",
+      "transactional": true,
+      "applied": false
     }
   ]
 }

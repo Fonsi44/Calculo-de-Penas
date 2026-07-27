@@ -44,7 +44,7 @@ describe('Migraciones — Runner unificado', () => {
     expect(r.exitCode).toBe(0);
     expect(r.stdout).toContain('Drizzle Journal');
     expect(r.stdout).toContain('Migraciones Manuales');
-    expect(r.stdout).toContain('39/56'); // 39 en journal de 56 total
+    expect(r.stdout).toContain('39/57'); // 39 en journal de 57 total
   });
 
   it('validate pasa con 0 errores', () => {
@@ -69,9 +69,9 @@ describe('Migraciones — Runner unificado', () => {
     expect(r.stdout).toContain('checksums actualizados');
   });
 
-  it('todos los SQL están cubiertos (journal + manifiesto = 56)', () => {
+  it('todos los SQL están cubiertos (journal + manifiesto = 57)', () => {
     const r = runRunner('status');
-    expect(r.stdout).toContain('Journal + Manifiesto: 56');
+    expect(r.stdout).toContain('Journal + Manifiesto: 57');
     expect(r.stdout).toContain('Sin tracking: 0');
   });
 

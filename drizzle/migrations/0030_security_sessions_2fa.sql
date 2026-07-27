@@ -14,7 +14,13 @@ ALTER TABLE "two_factor_challenges" ADD CONSTRAINT "two_factor_challenges_usuari
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "two_factor_challenges_expires_idx" ON "two_factor_challenges" ("expires_at");
 
--- Reversión documentada (NO ejecutable por Drizzle):
--- La reversión de esta migración requiere eliminar la tabla two_factor_challenges
--- y la columna token_version. Ver docs/security/runbook-rotacion-credenciales-fase1.md.
--- Nunca revertir en producción con datos.
+-- Reversión (DOWN). Revertir esta migración solo en pruebas/staging, nunca en
+-- producción con datos: eliminaría la tabla de challenges y la columna de
+-- versión de sesión. En producción se mantiene la corrección y no se revierte
+-- (ver docs/security/runbook-rotacion-credenciales-fase1.md).
+-- >><down>
+DROP INDEX IF EXISTS "two_factor_challenges_expires_idx";
+--> statement-breakpoint
+DROP TABLE IF EXISTS "two_factor_challenges";
+--> statement-breakpoint
+ALTER TABLE "usuarios" DROP COLUMN IF EXISTS "token_version";
