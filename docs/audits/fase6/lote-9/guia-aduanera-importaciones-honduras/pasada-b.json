@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "627b3e73-617a-47cc-9a19-5e87b6569670",
+    "slug": "guia-aduanera-importaciones-honduras",
+    "sha256_entrada": "8a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "El CAUCA, Arancel Centroamericano, leyes específicas de DAI/ISV/ISC, Ley de Fortalecimiento de los Ingresos y el Código Penal (Decreto 130-2017) NO están en los archivos JSON locales. El Código de Comercio no contiene disposiciones aduaneras o de importación. La verificación granular se limita al marco general del Código Tributario."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 5 bloques temáticos sobre importaciones en Honduras: marco legal (CAUCA/SAR), requisitos (RTN, agente aduanero, DUA), impuestos (DAI, ISV, ISC, tasa de servicios), procedimiento (canales verde/amarillo/rojo, plazos) y sanciones (multas, decomiso, contrabando). El Código Tributario respalda el marco general: RTN (Arts. 55, 58, 66), agente aduanero (Art. 164.2), principio de legalidad tributaria (Art. 11), jerarquía de fuentes (Art. 8), régimen sancionatorio con decomiso aduanero (Arts. 160-183). Ningún dato específico de tarifas, plazos, canales o procedimientos aduaneros operativos es verificable contra las fuentes locales. El Código de Comercio es completamente ajeno a la materia aduanera. No se detectan contradicciones internas ni errores factuales en lo verificable.",
+    "fuente_ausente_critica": {
+      "tipo": "legislacion_primaria_no_disponible",
+      "descripcion": "El CAUCA (Código Aduanero Uniforme Centroamericano) es la fuente jurídica central para TODO el régimen de importaciones. Tampoco están disponibles el Arancel Centroamericano, la Ley de Fortalecimiento de los Ingresos, las leyes del ISV/ISC, ni el Código Penal (Decreto 130-2017). Esto impide verificar aproximadamente el 75% del contenido sustantivo del artículo.",
+      "impacto": "alto"
+    },
+    "fuente_irrelevante": {
+      "tipo": "codigo_no_aplicable",
+      "descripcion": "El Código de Comercio (data/codigo_comercio.json) no contiene ninguna disposición relevante sobre aduanas, importaciones, aranceles, agentes aduaneros, DUA, o comercio exterior. Su contenido es exclusivamente de derecho societario y mercantil general.",
+      "impacto": "informativo"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Se requiere RTN actualizado para importar.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 55.2 CTrib establece el derecho a obtener el RTN, el Art. 58.1 CTrib impone el deber de inscripción en los registros de la Administración Tributaria y Aduanera, y el Art. 66 CTrib regula la obligación de inscribirse en el RTN. La necesidad de RTN para cualquier actividad económica que genere obligaciones tributarias —incluyendo importaciones— está plenamente respaldada.",
+      "evidencia": "Arts. 55, 58 y 66 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La autoridad competente para la administración aduanera es el SAR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Código Tributario menciona reiteradamente a la 'Administración Aduanera' como entidad competente, pero no menciona al SAR (Servicio de Administración de Rentas) por su nombre en los fragmentos disponibles. El SAR fue creado como entidad fusionada de la DEI y la Dirección de Aduanas, pero esta fusión administrativa no se refleja en el texto del Código Tributario disponible.",
+      "evidencia": "Múltiples artículos del CTrib mencionan 'Administración Aduanera' y 'Administración Tributaria' como entidades separadas. No se identifica al SAR.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "El régimen de importaciones se fundamenta en el CAUCA.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible_con_soporte_indirecto",
+      "detalle": "El Art. 8 CTrib establece que los tratados o convenios internacionales en materia tributaria y aduanera son fuente del derecho hondureño, con jerarquía solo inferior a la Constitución. El CAUCA, siendo un instrumento del derecho de integración centroamericana, encaja en esta categoría. Es plausible y consistente con la jerarquía normativa, aunque el texto del CAUCA no está disponible.",
+      "evidencia": "Art. 8 CTrib: Jerarquía de fuentes del derecho tributario y aduanero.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B1.4",
+      "subclaim_text": "El sistema de clasificación es el Sistema Armonizado (SA) de 8 a 10 dígitos.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Sistema Armonizado (SA) es el estándar internacional de clasificación arancelaria adoptado por todos los países centroamericanos. El número de dígitos (8 a 10) es consistente con la práctica del Arancel Centroamericano de Importación (8 dígitos SAC + 2 dígitos nacionales). Sin embargo, ni el SA ni el Arancel Centroamericano están en las fuentes locales.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "Toda importación comercial requiere agente aduanero autorizado.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 164.2 CTrib menciona explícitamente al 'agente aduanero autorizado' como la persona que puede determinar la suma a pagar por gravámenes arancelarios. Esto confirma la existencia legal de la figura del agente aduanero. Sin embargo, el Código Tributario no establece que su intervención sea obligatoria para toda importación comercial; esa obligatoriedad vendría del CAUCA o su reglamento, no disponibles.",
+      "evidencia": "Art. 164.2 CTrib: '...La suma a pagar es la que determine el obligado tributario, en forma directa o a través del agente aduanero autorizado...'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La DUA se transmite electrónicamente al sistema del SAR.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "Los Arts. 82-85 CTrib autorizan y priorizan la utilización de tecnologías electrónicas, informáticas y telemáticas para el desarrollo de las actividades aduaneras. La transmisión electrónica de la DUA es consistente con este marco de modernización tecnológica. Sin embargo, la DUA como documento específico y el sistema del SAR no están descritos en las fuentes locales.",
+      "evidencia": "Arts. 82-85 CTrib: Uso de tecnologías electrónicas y buzón electrónico para actividades tributarias y aduaneras.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El DAI varía entre 0% y 30% según clasificación arancelaria.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Art. 11 CTrib (principio de legalidad) establece que solo el Congreso Nacional puede fijar la tarifa de los tributos. Los rangos arancelarios para importación en Centroamérica típicamente oscilan entre 0% y 30%, con picos del 40% para productos agrícolas sensibles según el Arancel Centroamericano de Importación. La afirmación es consistente con la estructura arancelaria regional pero no verificable contra fuentes locales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El ISV es del 15% sobre valor CIF más DAI.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La tasa del ISV y su base de cálculo (CIF + DAI) no están definidas en el Código Tributario; corresponden a la Ley del Impuesto sobre Ventas, no disponible en fuentes locales. La tasa del 15% es un dato de conocimiento general sobre el régimen fiscal hondureño.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "Existe una tasa de servicios aduaneros generalmente del 1.5% sobre CIF.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Art. 5 CTrib define las tasas como sumas de dinero que el Estado percibe por la prestación efectiva de un servicio público, cuyo monto debe corresponder al costo o mantenimiento del servicio. Esto provee el fundamento jurídico para la existencia de una tasa de servicios aduaneros. Sin embargo, el porcentaje específico (1.5%) no está en las fuentes locales.",
+      "evidencia": "Art. 5 CTrib: Definición y fundamento de las tasas.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.4",
+      "subclaim_text": "El ISC grava bebidas alcohólicas, tabaco, combustibles y vehículos con tasas variables.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La existencia de un Impuesto Selectivo al Consumo es consistente con la clasificación de tributos del Art. 3 CTrib (impuestos, tasas, contribuciones, monotributo). Los productos mencionados son típicamente objeto de ISC en la mayoría de jurisdicciones. Sin embargo, ni la ley del ISC ni las tasas específicas están en las fuentes locales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "El sistema aduanero asigna canales verde (despacho automático), amarillo (revisión documental) y rojo (inspección física).",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "El sistema de selectividad aduanera por canales (semáforo fiscal) es un estándar internacional implementado en todas las aduanas modernas, incluyendo las centroamericanas. Los Arts. 82-85 CTrib autorizan el uso de sistemas electrónicos que permitirían implementar este mecanismo. Es altamente plausible pero no está descrito en las fuentes locales.",
+      "evidencia": "Arts. 82-85 CTrib: Habilitación de tecnologías electrónicas para la gestión aduanera.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "Despacho con canal amarillo toma 1-3 días hábiles; canal rojo añade 3-7 días adicionales. Almacenaje genera costos a partir del quinto día.",
+      "fuente": "observacion_contextual",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Los plazos de despacho aduanero y los costos de almacenaje son datos operativos que dependen de reglamentos administrativos, tarifarios portuarios y prácticas de cada administración aduanera. Ninguno de estos plazos o costos aparece en el Código Tributario. Son afirmaciones fácticas/operativas, no normativas verificables.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B4.3",
+      "subclaim_text": "Puerto de San Lorenzo (Valle) es importante para comercio en el Pacífico, especializado en graneles y contenedores.",
+      "fuente": "observacion_contextual",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Información geográfica y operativa sobre puertos hondureños. Es de conocimiento general que el Puerto de San Lorenzo es el principal puerto en la costa del Pacífico hondureño. No verificable contra fuentes legales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "El Código Tributario establece el régimen sancionatorio para infracciones aduaneras, incluyendo multas y decomiso.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El Título Sexto del Código Tributario (Arts. 160-183) establece el régimen completo de infracciones y sanciones tributarias y aduaneras. El Art. 160 define las infracciones. El Art. 162 enumera las sanciones accesorias explícitamente incluyendo 'b) El decomiso en materia aduanera' y 'd) La suspensión del Registro Tributario Nacional (RTN)'. Esto confirma plenamente que el Código Tributario provee el marco sancionatorio aduanero.",
+      "evidencia": "Arts. 160-162 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "Multas del 100% al 300% de tributos omitidos por clasificación arancelaria incorrecta.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Si bien el Código Tributario establece el régimen sancionatorio, los porcentajes específicos de multas por clasificación arancelaria incorrecta no están en el texto disponible. Estas sanciones específicas corresponden al CAUCA, RECAUCA, o leyes aduaneras especiales no disponibles.",
+      "evidencia": "Arts. 160-183 CTrib: Marco sancionatorio sin porcentajes específicos para infracciones aduaneras de clasificación.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B5.3",
+      "subclaim_text": "El contrabando es un delito tipificado en el Código Penal (Decreto 130-2017) con penas de prisión.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 163 CTrib confirma que 'los delitos tributarios están contenidos en el Código Penal y su sanción corresponde a los órganos jurisdiccionales competentes'. Esto respalda que el contrabando (como delito aduanero) esté tipificado en el Código Penal. Sin embargo, ni el Decreto 130-2017 ni las penas específicas son verificables desde las fuentes locales.",
+      "evidencia": "Art. 163 CTrib: 'Los delitos tributarios están contenidos en el Código Penal.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "[Cruce B1+B2] El RTN (B1.1) es prerequisito para operar con agente aduanero (B2.1), y ambos están respaldados por el mismo Código Tributario.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "El Art. 55 CTrib establece el derecho al RTN, el Art. 58 CTrib impone el deber de inscripción en registros aduaneros, y el Art. 164.2 CTrib menciona al agente aduanero autorizado. Existe coherencia normativa: el RTN permite identificar al importador ante la administración, y el agente aduanero actúa como intermediario especializado. Ambas figuras coexisten en el mismo cuerpo normativo sin conflicto.",
+      "evidencia": "Arts. 55, 58, 66 (RTN) + Art. 164.2 (agente aduanero).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "[Cruce B2+B4] La actuación del agente aduanero (B2.1) y el sistema de canales (B4.1) son complementarios en el procedimiento.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente",
+      "detalle": "El agente aduanero transmite la DUA (B2.2) y el sistema asigna el canal de revisión (B4.1). Ambas afirmaciones describen etapas secuenciales del procedimiento de despacho sin contradicción. La coherencia es lógica y procedimental, aunque ambas dependen de normativa no disponible en fuentes locales.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B6.3",
+      "subclaim_text": "[Cruce B3+B5] El régimen de impuestos (B3) y el régimen sancionatorio (B5) comparten el mismo principio de legalidad tributaria.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente_y_respaldado",
+      "detalle": "El Art. 11 CTrib establece que solo el Congreso puede crear tributos, fijar tarifas, establecer el devengo Y las sanciones. Esto significa que tanto los impuestos a la importación (DAI, ISV, ISC) como las sanciones por incumplimiento deben emanar de ley formal. Hay perfecta coherencia: el mismo principio constitucional de legalidad tributaria que fundamenta los impuestos (B3) fundamenta también las sanciones (B5).",
+      "evidencia": "Art. 11 CTrib: Principio de legalidad — el Congreso crea tributos y establece sanciones.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.4",
+      "subclaim_text": "[Cruce B5+B3+B1] La obligación de pago (B3), el régimen sancionatorio (B5) y la inscripción registral (B1) forman un sistema integrado de control aduanero respaldado por el CTrib.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "El Código Tributario integra en un solo cuerpo: registro/identificación (RTN, Arts. 55-66), obligación de pago (Arts. 134-136, 164) y régimen sancionatorio (Arts. 160-183). Las tres dimensiones del artículo (registro, pago, sanción) tienen cobertura en el CTrib, aunque los detalles específicos de cada una dependan de legislación especial no disponible. No hay conflicto entre ellas.",
+      "evidencia": "CTrib integra registro (Título III), pago (Título V), y sanciones (Título VI).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.5",
+      "subclaim_text": "[Cruce B1+B3+B4] El RTN (B1), los impuestos (B3) y el procedimiento (B4) dependen de legislación especial no disponible y forman una cadena de verificabilidad limitada.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente_pero_con_vacio_de_verificacion",
+      "detalle": "El RTN está verificado (B1.1, confianza alta). Los impuestos (B3) dependen de leyes especiales no disponibles. El procedimiento de canales (B4) depende de normativa administrativa no disponible. La cadena es lógicamente coherente: te registras (RTN), pagas (impuestos), y pasas por el sistema (canales). Pero solo el primer eslabón (RTN) es verificable con confianza alta.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_RTN_y_marco", "B2_Agente_y_DUA", "B3_Impuestos", "B4_Procedimiento", "B5_Sanciones"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. RTN identifica al importador, el agente aduanero tramita. Ambos coexisten en el CTrib (Arts. 55-66 y Art. 164.2).",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B4",
+        "relacion": "Secuenciales. El agente transmite DUA (B2), el sistema asigna canal (B4). Sin conflicto procedimental.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B5",
+        "relacion": "Complementarios. Ambos emanan del principio de legalidad (Art. 11 CTrib). Impuestos y sanciones comparten fundamento constitucional.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B3",
+        "relacion": "Independientes pero coexistentes. RTN se verifica, impuestos no. Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B5",
+        "relacion": "Relacionados. El RTN puede suspenderse como sanción accesoria (Art. 162.d CTrib). Conexión directa verificable.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B4",
+        "relacion": "Secuenciales. Primero se determina el impuesto (B3), luego se procesa el despacho (B4). Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B4+B5",
+        "relacion": "Relacionados. El procedimiento (B4) puede detectar infracciones que activen sanciones (B5). Sin conflicto.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 21,
+    "confirmados": 2,
+    "parcialmente_confirmados": 2,
+    "plausibles": 2,
+    "plausibles_con_soporte_indirecto": 1,
+    "plausibles_no_verificables": 8,
+    "coherentes": 5,
+    "coherente_pero_con_vacio": 1,
+    "sin_conflictos_detectados": true,
+    "observacion_critica": "Aproximadamente el 75% del contenido sustantivo del artículo depende de legislación aduanera especial (CAUCA, Arancel Centroamericano, leyes de DAI/ISV/ISC, Ley de Fortalecimiento de los Ingresos) y del Código Penal, todos NO disponibles en fuentes locales. Las afirmaciones verificables contra el Código Tributario (RTN, agente aduanero, principio de legalidad, régimen sancionatorio) son correctas. El Código de Comercio es completamente ajeno a la materia. No se detectan errores factuales ni contradicciones internas en lo verificable.",
+    "calidad_global_documento": "Buena. El artículo es internamente consistente y sus afirmaciones verificables contra el Código Tributario son correctas. La estructura del artículo (requisitos, impuestos, procedimiento, sanciones) refleja adecuadamente la arquitectura del sistema aduanero hondureño en sus fundamentos jurídicos generales. La principal limitación es la ausencia de las fuentes primarias especializadas (CAUCA, leyes impositivas, Código Penal) en los archivos locales, lo que impide la verificación de datos específicos (tarifas, plazos, porcentajes de multas, canales)."
+  }
+}

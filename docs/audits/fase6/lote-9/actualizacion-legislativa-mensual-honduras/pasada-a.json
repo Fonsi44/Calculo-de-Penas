@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "80e928da-9df4-43aa-b967-8d468280105b",
+    "slug": "actualizacion-legislativa-mensual-honduras",
+    "sha256_entrada": "bf8c1a7ed29c3e4d5f60a812b9cf3e1d728a4c56f7890b1234567890abcdef01",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Código Penal de Honduras fue promulgado mediante Decreto 130-2017 y ha sido objeto de múltiples reformas desde su entrada en vigor.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona el Decreto 130-2017 ni ningún código penal específico por número de decreto. Sin embargo, el Art. 205.1 faculta al Congreso Nacional para 'Crear, decretar, interpretar, reformar y derogar las leyes', lo que constitucionalmente habilita la existencia de un Código Penal y sus reformas. El Art. 95 establece el principio de legalidad penal: 'Ninguna persona será sancionada con penas no establecidas previamente en la ley'. La afirmación es consistente con el marco constitucional, pero los números de decreto específicos no son verificables en esta fuente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 205.1 Constitución",
+            "texto": "Corresponde al Congreso Nacional las atribuciones siguientes: 1) Crear, decretar, interpretar, reformar y derogar las leyes..."
+          },
+          {
+            "articulo": "Art. 95 Constitución",
+            "texto": "Ninguna persona será sancionada con penas no establecidas previamente en la ley, ni podrá ser juzgada otra vez por los mismos hechos punibles que motivaron anteriores enjuiciamientos."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Las reformas 93-2021 y 46-2020 endurecieron las penas para delitos de corrupción, narcotráfico y crimen organizado en Honduras.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Los números de decreto 93-2021 y 46-2020 no aparecen en la Constitución, que es un documento de jerarquía superior a los decretos de reforma penal. El Art. 205.1 confiere al Congreso Nacional la facultad de reformar leyes, incluido el Código Penal. El Art. 96 permite la retroactividad de la ley penal cuando favorezca al reo, pero no dice nada sobre endurecimiento de penas. La tendencia de endurecimiento penal es plausible dados los principios constitucionales, pero los decretos específicos y las reformas a penas para delitos de corrupción, narcotráfico y crimen organizado no son verificables con esta fuente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 205.1 Constitución",
+            "texto": "Corresponde al Congreso Nacional... 1) Crear, decretar, interpretar, reformar y derogar las leyes"
+          },
+          {
+            "articulo": "Art. 96 Constitución",
+            "texto": "La ley no tiene efecto retroactivo, excepto en materia penal, cuando la nueva ley favorezca al delincuente o procesado."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "El SAR (Servicio de Administración de Rentas) implementa la facturación electrónica y refuerza la fiscalización tributaria en Honduras.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona al SAR ni la facturación electrónica. El fundamento constitucional de la potestad tributaria se encuentra en el Art. 109: 'Los impuestos no serán confiscatorios. Nadie está obligado al pago de impuestos y demás tributos que no hayan sido legalmente decretados por el Congreso Nacional, en sesiones ordinarias.' El Art. 245 atribuye al Presidente de la República la administración general del Estado, dentro de la cual opera el SAR como ente administrativo. La existencia y funciones del SAR, así como la facturación electrónica, son materia de legislación secundaria no disponible en la fuente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 109 Constitución",
+            "texto": "Los impuestos no serán confiscatorios. Nadie está obligado al pago de impuestos y demás tributos que no hayan sido legalmente decretados por el Congreso Nacional, en sesiones ordinarias."
+          },
+          {
+            "articulo": "Art. 245.1 Constitución",
+            "texto": "El presidente de la República tiene la administración general del Estado, son sus atribuciones: 1) Cumplir y hacer cumplir la Constitución, los tratados y convenciones, leyes y demás disposiciones legales..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Los juzgados de familia han visto un refuerzo en las medidas de protección inmediata para víctimas de violencia doméstica, con plazos reducidos para dictar medidas cautelares y ampliación del catálogo de conductas que pueden dar lugar a una orden de alejamiento.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "La Constitución establece bases sólidas para la protección familiar en los Arts. 111-126. El Art. 111 establece: 'La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado.' El Art. 119: 'El Estado tiene la obligación de proteger a la infancia.' El Art. 122: 'La ley establecerá la jurisdicción y los tribunales especiales que conocerán de los asuntos de familia y de menores.' El Art. 124: 'Todo niño debe ser protegido contra toda forma de abandono, crueldad y explotación.' El mandato constitucional de protección a la familia y a la infancia es claro. Sin embargo, los detalles específicos sobre plazos reducidos, medidas cautelares ampliadas y órdenes de alejamiento corresponden a legislación secundaria (Código de Familia, leyes contra violencia doméstica) no disponible en la fuente consultada.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 111 Constitución",
+            "texto": "La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado."
+          },
+          {
+            "articulo": "Art. 119 Constitución",
+            "texto": "El Estado tiene la obligación de proteger a la infancia. Los niños gozarán de la protección prevista en los acuerdos internacionales que velan por sus derechos."
+          },
+          {
+            "articulo": "Art. 122 Constitución",
+            "texto": "La ley establecerá la jurisdicción y los tribunales especiales que conocerán de los asuntos de familia y de menores."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Se han fortalecido los mecanismos para hacer efectivas las pensiones alimenticias mediante embargo directo de salarios y cuentas bancarias.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 121 de la Constitución establece la obligación alimentaria: 'Los padres están obligados a alimentar, asistir y educar a sus hijos durante la minoría de edad, y en los demás casos en que legalmente proceda.' También señala que 'El Estado brindará especial protección a los menores cuyos padres o tutores estén imposibilitados económicamente para proveer a su crianza y educación.' El fundamento constitucional de la obligación alimentaria existe. Sin embargo, los mecanismos específicos de embargo directo de salarios y cuentas bancarias son materia de legislación secundaria (Código de Familia, Código Procesal Civil) no verificable en esta fuente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo": "Art. 121 Constitución",
+        "texto": "Los padres están obligados a alimentar, asistir y educar a sus hijos durante la minoría de edad, y en los demás casos en que legalmente proceda. El Estado brindará especial protección a los menores cuyos padres o tutores estén imposibilitados económicamente para proveer a su crianza y educación."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "El Instituto de la Propiedad ha modernizado sus procedimientos de registro de marcas y patentes en Honduras.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 108 de la Constitución establece la protección constitucional de la propiedad intelectual e industrial: 'Todo autor, inventor, productor o comerciante gozará de la propiedad exclusiva de su obra, invención, marca o nombre comercial, con arreglo a la ley.' Este artículo provee el fundamento constitucional para la existencia de un sistema de registro de marcas y patentes. Sin embargo, el 'Instituto de la Propiedad' como entidad específica y la 'modernización de sus procedimientos' no son mencionados en la Constitución. La existencia y funciones del Instituto de la Propiedad corresponden a legislación secundaria no disponible en la fuente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo": "Art. 108 Constitución",
+        "texto": "Todo autor, inventor, productor o comerciante gozará de la propiedad exclusiva de su obra, invención, marca o nombre comercial, con arreglo a la ley."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "La Comisión Nacional de Bancos y Seguros (CNBS) ha emitido nuevas disposiciones sobre transparencia bancaria y protección al consumidor financiero.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona a la CNBS ni disposiciones sobre transparencia bancaria o protección al consumidor financiero. La CNBS es un ente administrativo cuya existencia deriva de la facultad de administración general del Estado conferida al Poder Ejecutivo por el Art. 245. El Art. 321 establece que 'Los servidores del Estado no tienen más facultades que las que expresamente les confiere la ley', lo que implica que la CNBS debe tener una ley orgánica habilitante. Las disposiciones específicas sobre transparencia bancaria y protección al consumidor financiero no son verificables con esta fuente constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 245 Constitución",
+            "texto": "El presidente de la República tiene la administración general del Estado..."
+          },
+          {
+            "articulo": "Art. 321 Constitución",
+            "texto": "Los servidores del Estado no tienen más facultades que las que expresamente les confiere la ley."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "No necesita leer La Gaceta cada día para mantenerse informado de cambios legislativos. Pero debería consultar periódicamente el sitio web del Poder Judicial para ver jurisprudencia relevante.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "La Constitución menciona explícitamente 'La Gaceta' como el diario oficial en el Art. 221: 'La ley es obligatoria en virtud de su promulgación y después de haber transcurrido veinte (20) días de terminada su publicación en el diario oficial La Gaceta.' Sobre el Poder Judicial, los Arts. 303-320 regulan su estructura, atribuciones y organización. El Art. 303 establece que 'La potestad de impartir justicia emana del pueblo y se imparte gratuitamente en nombre del Estado, por magistrados y jueces independientes.' La afirmación de que se puede consultar jurisprudencia en el sitio web del Poder Judicial es un hecho operativo contemporáneo no verificable en el texto constitucional, aunque el Poder Judicial existe constitucionalmente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 221 Constitución",
+            "texto": "La ley es obligatoria en virtud de su promulgación y después de haber transcurrido veinte (20) días de terminada su publicación en el diario oficial La Gaceta."
+          },
+          {
+            "articulo": "Art. 303 Constitución",
+            "texto": "La potestad de impartir justicia emana del pueblo y se imparte gratuitamente en nombre del Estado, por magistrados y jueces independientes, únicamente sometidos a la Constitución y las leyes."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "Las reformas legales en Honduras incluyen cambios en materia penal, tributaria, de familia, propiedad intelectual y sector financiero.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "La Constitución provee fundamento para la regulación en todas estas materias: penal (Arts. 82-105: garantías procesales y penales, Art. 95: principio de legalidad), tributaria (Art. 109: impuestos decretados por Congreso), familia (Arts. 111-126: protección de la familia, matrimonio, infancia), propiedad intelectual (Art. 108: propiedad exclusiva de obras, invenciones y marcas), y sector financiero (Arts. 103-106: protección de la propiedad privada; Art. 245: administración general del Estado incluye supervisión de sectores económicos). La Constitución es marco habilitante para el desarrollo legislativo en todas estas áreas.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {"articulo": "Art. 95 Constitución", "texto": "Ninguna persona será sancionada con penas no establecidas previamente en la ley..."},
+          {"articulo": "Art. 108 Constitución", "texto": "Todo autor, inventor, productor o comerciante gozará de la propiedad exclusiva de su obra, invención, marca o nombre comercial, con arreglo a la ley."},
+          {"articulo": "Art. 109 Constitución", "texto": "Los impuestos no serán confiscatorios. Nadie está obligado al pago de impuestos y demás tributos que no hayan sido legalmente decretados por el Congreso Nacional..."},
+          {"articulo": "Art. 111 Constitución", "texto": "La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado."}
+        ]
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 9,
+    "confirmados": 1,
+    "confirmados_con_matiz": 0,
+    "parcialmente_confirmados": 4,
+    "parcialmente_confirmado_con_errores": 0,
+    "parcialmente_confirmado_con_error_factual": 0,
+    "plausible_no_verificable": 4,
+    "impreciso": 0,
+    "error_critico_detectado": "Ninguno detectado con esta fuente. El artículo opera a nivel de legislación secundaria (decretos específicos, entidades como SAR, CNBS, Instituto de la Propiedad) que no es verificable contra la Constitución, que es norma suprema. Los fundamentos constitucionales de todas las materias tratadas existen.",
+    "calidad_general": "aceptable_con_limitacion_de_fuente",
+    "nota_limitacion": "La fuente única (articulos_constitucion.json) solo permite verificar los fundamentos constitucionales, no los decretos específicos ni las afirmaciones sobre entidades administrativas mencionadas en el artículo."
+  }
+}

@@ -1,0 +1,440 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "slug": "defensa-sar-choluteca",
+    "sha256_entrada": "51e79ac1da095b0eaef4a484ab00c54afd60f47d0740cb6b2d6b65c575697b57",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_metodologica": "Verificacion cruzada local exclusivamente contra el Codigo Tributario de Honduras (data/codigo_tributario.json). No se realizaron busquedas web. La Ley del Impuesto Sobre la Renta, los reglamentos del SAR, las normas de procedimiento administrativo y las leyes especiales sancionatorias no forman parte del corpus documental disponible."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El articulo contiene 18 afirmaciones normativas sobre defensa ante fiscalizaciones del SAR en Choluteca. De ellas, 7 se verifican plenamente en el Codigo Tributario: naturaleza del SAR (Art. 195), facultades fiscalizadoras (Arts. 77, 198), obligatoriedad RTN (Art. 164), derecho a impugnar (Art. 169), principio de legalidad (Art. 11), deber de cooperacion (Art. 72), y efecto suspensivo del recurso de reposicion (Art. 174). Cuatro claims estan parcialmente verificados porque el CTrib proporciona el marco general compatible pero carece del detalle especifico. Siete claims no son verificables por corresponder a normativa administrativa, leyes especiales (ISR, ISV) o reglamentos internos del SAR no disponibles en el corpus. No se detectan errores factuales en las afirmaciones verificables. El contenido es sustancialmente plausible y compatible con el ordenamiento juridico hondureno.",
+    "temas_verificables": [
+      {
+        "tema": "Creacion y naturaleza del SAR como Administracion Tributaria",
+        "claims_asociadas": ["C1", "C12"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "VERIFICADO. Arts. 77, 195, 198 CTrib definen la Administracion Tributaria como entidad desconcentrada con facultades de fiscalizacion, verificacion y recaudacion."
+      },
+      {
+        "tema": "Registro Tributario Nacional (RTN)",
+        "claims_asociadas": ["C11"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "VERIFICADO. Art. 164 CTrib define el RTN como registro obligatorio de identificacion de los obligados tributarios."
+      },
+      {
+        "tema": "Recursos administrativos y derecho de impugnacion",
+        "claims_asociadas": ["C13", "C18"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "VERIFICADO. Arts. 169-187 CTrib establecen los recursos de reposicion, apelacion y revision extraordinaria. Arts. 174 y 177 confirman la suspension de la ejecucion del acto impugnado."
+      },
+      {
+        "tema": "Principio de legalidad tributaria",
+        "claims_asociadas": ["C16"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "VERIFICADO. Art. 11 CTrib consagra la reserva de ley: solo el Congreso Nacional puede crear, modificar o suprimir tributos."
+      },
+      {
+        "tema": "Deber de cooperacion del obligado tributario",
+        "claims_asociadas": ["C17"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "VERIFICADO. Art. 72 CTrib obliga a proporcionar toda clase de datos, informes y antecedentes con trascendencia tributaria."
+      },
+      {
+        "tema": "Marco legal de la fiscalizacion",
+        "claims_asociadas": ["C2"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. El CTrib es el marco general de la fiscalizacion, pero la Ley del ISR mencionada no esta en el corpus. La afirmacion es compatible con el ordenamiento."
+      },
+      {
+        "tema": "Documentacion requerida en fiscalizacion",
+        "claims_asociadas": ["C6"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. Arts. 62, 72 y 164 CTrib fundamentan la obligacion de documentar, pero la lista concreta de documentos proviene de leyes especiales y practica administrativa."
+      },
+      {
+        "tema": "Liquidacion de oficio",
+        "claims_asociadas": ["C8"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. Art. 164 CTrib menciona la liquidacion de oficio como presupuesto de sancion. Art. 144 CTrib refiere facultades de determinacion. El procedimiento detallado no esta en el corpus."
+      },
+      {
+        "tema": "Cierre de establecimiento como sancion",
+        "claims_asociadas": ["C15"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. Art. 161 CTrib establece el cierre temporal como sancion accesoria. La calificacion como 'medida extrema' por 'incumplimiento grave y reiterado' es valoracion no codificada."
+      },
+      {
+        "tema": "Plazos de fiscalizacion y recursos",
+        "claims_asociadas": ["C3", "C7"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "NO VERIFICABLE. Los plazos de 10-15 dias para responder a fiscalizacion no estan en el CTrib. El plazo de 20 dias del recurso de revision no coincide con los plazos del CTrib (15 dias reposicion, 2 anos revision extraordinaria). Probablemente provienen de leyes especiales o normativa administrativa."
+      },
+      {
+        "tema": "Sanciones y porcentajes de multa",
+        "claims_asociadas": ["C9"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "NO VERIFICABLE. Arts. 158, 160 CTrib establecen el marco sancionatorio general pero no contienen los porcentajes 100-300% del impuesto omitido, que probablemente estan en leyes especiales (ISR, ISV, Codigo Penal)."
+      },
+      {
+        "tema": "Embargo de cuentas y activos",
+        "claims_asociadas": ["C10"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "NO VERIFICABLE. Arts. 78 y 194 CTrib refieren mecanismos de cobro ejecutivo pero no detallan la facultad de embargo de cuentas bancarias. Esta facultad se regula en leyes de procedimiento administrativo y cobro coactivo no disponibles."
+      },
+      {
+        "tema": "Tipologia de fiscalizacion y notificaciones",
+        "claims_asociadas": ["C5", "C14"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "NO VERIFICABLE. La clasificacion de fiscalizacion (parcial, general, electronica, de campo) y los detalles de notificaciones por correo certificado en Choluteca son materia administrativa/operativa del SAR no codificada en el CTrib."
+      }
+    ]
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El SAR es la entidad encargada de fiscalizar el cumplimiento de obligaciones tributarias en Honduras.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Arts. 195 y 198 CTrib: la Administracion Tributaria (SAR) es la entidad responsable del control, verificacion, fiscalizacion y recaudacion de los tributos, con atribucion expresa de fiscalizar el cumplimiento de las obligaciones tributarias.",
+      "evidencia": "Arts. 77, 195, 198 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La fiscalizacion es un procedimiento administrativo.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 149 CTrib: las infracciones deben ser sancionadas administrativamente siguiendo el debido proceso y garantizando el derecho a la defensa. Art. 153 CTrib: la investigacion, determinacion y sancion de faltas corresponde a la Administracion Tributaria. La naturaleza administrativa del procedimiento fiscalizador es inherente al caracter de la Administracion Tributaria como ente administrativo.",
+      "evidencia": "Arts. 149, 153 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El Codigo Tributario (Decreto No. 22-97) es la ley marco que rige la fiscalizacion del SAR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El Codigo Tributario es efectivamente la norma que establece los principios basicos y las normas fundamentales del regimen juridico del sistema tributario hondureno. Arts. 77, 195, 198 regulan la fiscalizacion. Arts. 149-164 regulan infracciones y sanciones. Arts. 169-187 regulan los recursos. La referencia al Decreto No. 22-97 no es verificable en el texto del CTrib (que no incluye su propio numero de decreto), pero es un dato historico conocido.",
+      "evidencia": "Arts. 1, 77, 195, 198 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La Ley del Impuesto Sobre la Renta (Decreto 25-1963) tambien rige la fiscalizacion del SAR.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La Ley del ISR no esta en el corpus documental disponible. Es plausible que contenga disposiciones especificas sobre fiscalizacion del ISR, pero no puede verificarse con las fuentes locales. El CTrib es el marco general; las leyes especiales complementan.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El plazo para responder a una notificacion de fiscalizacion es de 10 a 15 dias habiles.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El CTrib no establece un plazo general para responder a notificaciones de fiscalizacion. Los plazos que contiene son: 15 dias para recurso de reposicion (Art. 172), 20 dias para resolucion de reposicion (Art. 175), 15/10 dias para apelacion (Art. 176). El plazo de 10-15 dias podria estar en la Ley del ISR, reglamentos del SAR o fijarse en cada acto administrativo concreto.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "El SAR tiene facultad expresa de fiscalizar, verificar y comprobar el cumplimiento de obligaciones tributarias.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 77 CTrib: verificacion, comprobacion o fiscalizacion de datos. Art. 195 CTrib: responsabilidad de control, verificacion, fiscalizacion y recaudacion. Art. 198 CTrib atribucion 2: fiscalizar el cumplimiento de obligaciones tributarias. Triangulacion confirmatoria.",
+      "evidencia": "Arts. 77, 195, 198 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "El SAR puede solicitar informacion y revisar libros contables y declaraciones.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 72 CTrib: los obligados tributarios deben proporcionar toda clase de datos, informes o antecedentes. Art. 62 CTrib regula las declaraciones. La facultad de solicitar y revisar documentacion es inherente a la funcion fiscalizadora definida en Arts. 77 y 198. La referencia a 'libros contables' se encuentra en la obligacion general de documentacion mercantil (Codigo de Comercio).",
+      "evidencia": "Arts. 62, 72, 77, 198 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "La fiscalizacion puede ser parcial, general, electronica o de campo.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "Esta clasificacion no existe en el CTrib. El Art. 82 CTrib menciona el uso de tecnologias electronicas, lo cual es compatible con la fiscalizacion electronica. La tipologia es probablemente de origen administrativo-operativo del SAR.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "El RTN actualizado es documento necesario en una fiscalizacion.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 164 CTrib define el RTN como el registro de identificacion de los obligados tributarios. Es el identificador fundamental del contribuyente y su presentacion es logica y necesaria en cualquier actuacion tributaria.",
+      "evidencia": "Art. 164 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "Las declaraciones de ISR e ISV de los periodos fiscalizados son documentos necesarios.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "Art. 62 CTrib regula la obligacion general de presentar declaraciones tributarias. El ISR y el ISV son tributos existentes en el ordenamiento hondureno. La necesidad de presentar estas declaraciones en una fiscalizacion es consecuencia logica del Art. 72 (deber de cooperacion) y de la facultad fiscalizadora (Art. 77). Sin embargo, las leyes especificas del ISR e ISV no estan en el corpus.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B6.3",
+      "subclaim_text": "Los libros contables, facturas, estados financieros y contratos son documentos necesarios en fiscalizacion.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "Art. 72 CTrib obliga a proporcionar toda clase de datos e informes. El Codigo de Comercio regula la obligacion de llevar libros contables y emitir facturas. Los estados financieros y contratos son documentacion estandar en cualquier verificacion fiscal. El CTrib proporciona el fundamento de la obligacion de cooperar, pero no la lista concreta de documentos.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "El plazo para interponer recurso contra una liquidacion del SAR es de 20 dias habiles.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "no_verificable_con_matiz",
+      "detalle": "El CTrib no establece un plazo unico de 20 dias habiles para interponer recursos. Los plazos son: 15 dias para recurso de reposicion (Art. 172), 15/10 dias para apelacion (Art. 176). El plazo de 20 dias aparece como plazo de resolucion (Art. 175), no de interposicion. La afirmacion del articulo confunde el plazo de resolucion con el de interposicion, o se refiere a un recurso no regulado en el CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "Existe un 'recurso de revision' contra liquidaciones del SAR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El CTrib contempla el Recurso Extraordinario de Revision (Art. 179) con plazo de 2 anos (Art. 180), pero este es contra resoluciones firmes, no contra liquidaciones iniciales. El recurso ordinario contra liquidaciones es el de reposicion (Art. 172). El articulo parece referirse al recurso de reposicion usando el termino generico 'recurso de revision'.",
+      "evidencia": "Arts. 169, 172, 179 CTrib.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "Si no se responde a la fiscalizacion, el SAR emite liquidacion de oficio.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "Art. 164 CTrib menciona la liquidacion de oficio como presupuesto para la sancion de suspension del RTN. Art. 144 CTrib habla de facultades del Estado para determinar el tributo. El CTrib reconoce la figura pero no detalla el procedimiento ni lo vincula expresamente a la falta de respuesta del contribuyente.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B8.2",
+      "subclaim_text": "La liquidacion de oficio se basa en presunciones y estimaciones y generalmente resulta en un monto mayor.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El CTrib no describe la metodologia de liquidacion de oficio (presunciones, estimaciones) ni hace juicios sobre si el monto resulta mayor. Estas son caracteristicas procedimentales que se encuentran en los reglamentos de cada impuesto o en la practica administrativa.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "Las sanciones por incumplimiento incluyen multas.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 158 CTrib: la multa es una sancion principal aplicable al incumplimiento de obligaciones formales. Art. 160 CTrib contiene la tabla de calculo de multas. La existencia de multas como sancion esta plenamente verificada.",
+      "evidencia": "Arts. 158, 160 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.2",
+      "subclaim_text": "Las multas van del 100% al 300% del impuesto omitido.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El CTrib no contiene estos porcentajes. La tabla del Art. 160 expresa las multas en porcentajes de salario minimo segun rangos de ingresos brutos. Los porcentajes 100-300% probablemente estan en leyes especiales (ISR, ISV) o en el Codigo Penal para defraudacion fiscal.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "El SAR tiene facultades para ejecutar el cobro de deudas tributarias.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 78 CTrib: las obligaciones tributarias son exigibles por via administrativa. Art. 194 CTrib: la Administracion Tributaria sigue mecanismos de cobro persuasivo o ejecutivo. La existencia de facultades de cobro ejecutivo esta verificada.",
+      "evidencia": "Arts. 78, 194 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.2",
+      "subclaim_text": "El SAR puede embargar cuentas bancarias y otros activos.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El embargo de cuentas bancarias y activos como medida concreta de ejecucion no esta detallado en el CTrib. El CTrib refiere mecanismos de cobro ejecutivo (Art. 194) pero no especifica el embargo. Esta facultad suele regularse en la Ley de Cobro Coactivo, el Codigo Procesal Civil o leyes administrativas especiales no disponibles.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.1",
+      "subclaim_text": "El RTN es obligatorio para todos los contribuyentes.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 164 CTrib: el RTN es el registro de identificacion, codificacion y control de los obligados tributarios. La obligatoriedad se infiere de su naturaleza como registro de identificacion fiscal y de la sancion de suspension prevista para quienes no esten solventes.",
+      "evidencia": "Art. 164 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B12.1",
+      "subclaim_text": "El SAR es una entidad desconcentrada de la Presidencia de la Republica con autonomia.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 195 CTrib: 'Crease la Administracion Tributaria [...] como entidades desconcentradas de la Presidencia de la Republica, con autonomia funcional, tecnica, administrativa y de seguridad nacional, con personalidad juridica propia'. Verificacion literal exacta.",
+      "evidencia": "Art. 195 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B13.1",
+      "subclaim_text": "El contribuyente tiene derecho a impugnar las decisiones del SAR mediante recursos administrativos.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 169 CTrib: 'Los obligados tributarios [...] tienen derecho a recurrirla en los terminos establecidos en este Codigo'. Se contemplan recurso de reposicion, apelacion y revision extraordinaria (Arts. 169-187). Art. 187 permite acudir a la via contencioso-administrativa.",
+      "evidencia": "Arts. 169, 172-187 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B14.1",
+      "subclaim_text": "Las notificaciones en Choluteca se envian por correo certificado.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El CTrib no regula el medio de notificacion para fiscalizaciones ni hace referencia a ciudades especificas. Los medios de notificacion son materia de la Ley de Procedimiento Administrativo y normativa interna del SAR.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B15.1",
+      "subclaim_text": "El SAR puede cerrar un establecimiento como sancion.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 161 CTrib establece la sancion de cierre temporal de establecimiento, oficina o sitio donde se ejerza actividad comercial. Es una sancion accesoria, aplicable adicionalmente a la multa que corresponda.",
+      "evidencia": "Art. 161 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B15.2",
+      "subclaim_text": "El cierre solo se aplica en casos de incumplimiento grave y reiterado, mediante resolucion administrativa firme.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "no_verificable",
+      "detalle": "El Art. 161 CTrib no incluye los calificativos 'grave', 'reiterado' ni el requisito de 'resolucion administrativa firme' como condiciones del cierre. Estos umbrales pueden estar en reglamentos del SAR, pero no en el texto del CTrib disponible.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B16.1",
+      "subclaim_text": "Solo el Congreso Nacional puede crear, modificar o suprimir tributos.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 11 CTrib: 'Compete exclusivamente al Congreso Nacional a traves de las leyes tributarias y aduaneras y, por consiguiente, no puede ser objeto de la potestad reglamentaria: 1) Crear, modificar o suprimir tributos...'. Principio de legalidad/reserva de ley verificado literalmente.",
+      "evidencia": "Art. 11 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B17.1",
+      "subclaim_text": "Los obligados tributarios deben cooperar proporcionando datos, informes y antecedentes.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 72 CTrib: obligacion de cooperar en funciones de verificacion, determinacion, investigacion, fiscalizacion y cobranza, proporcionando toda clase de datos, informes o antecedentes con trascendencia tributaria. Verificacion literal.",
+      "evidencia": "Art. 72 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B18.1",
+      "subclaim_text": "Interponer recurso de reposicion suspende la ejecucion del acto impugnado.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 174 CTrib: 'Interpuesto el Recurso de Reposicion se suspende la ejecucion del acto administrativo impugnado hasta que la resolucion del referido recurso adquiera el caracter de firme'. Art. 177 confirma el mismo efecto para apelacion. Verificacion literal.",
+      "evidencia": "Arts. 174, 177 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.1",
+      "subclaim_text": "[Cruce C1+C4+C12] La naturaleza del SAR y sus facultades fiscalizadoras son afirmaciones consistentes entre si.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "Las tres afirmaciones forman un triangulo coherente: el SAR es la Administracion Tributaria (C12, Art. 195), tiene facultades fiscalizadoras (C4, Arts. 77, 198), y la fiscalizacion es un procedimiento administrativo (C1, Arts. 149, 153). No hay contradiccion interna.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.2",
+      "subclaim_text": "[Cruce C13+C18] El derecho a impugnar y la suspension de la ejecucion son compatibles con el sistema de recursos del CTrib.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "El CTrib otorga el derecho a recurrir (Art. 169) y preve la suspension de la ejecucion como efecto de los recursos de reposicion (Art. 174) y apelacion (Art. 177). Ambas afirmaciones se refuerzan mutuamente y son consistentes con el diseno del sistema de recursos.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.3",
+      "subclaim_text": "[Cruce C3+C7+C8] La cadena plazos de fiscalizacion -> recurso -> liquidacion de oficio es internamente coherente.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente",
+      "detalle": "La secuencia logica (notificacion -> plazo para responder -> liquidacion de oficio si no se responde -> recurso contra liquidacion) es compatible con la estructura general del procedimiento tributario. Sin embargo, los plazos concretos (10-15 dias y 20 dias) no son verificables en el CTrib, aunque la logica procedimental es plausible.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "BX.4",
+      "subclaim_text": "[Cruce C9+C10+C15] El regimen sancionatorio (multas 100-300%, embargo, cierre) es compatible con el marco del CTrib.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "El CTrib establece un sistema de sanciones progresivo: multas (Art. 158), cierre temporal (Art. 161), suspension de RTN (Art. 164). La existencia de embargo como medida ejecutiva es compatible con Art. 194 (cobro ejecutivo). Las tres afirmaciones del articulo describen un regimen sancionatorio escalonado que es compatible con el marco del CTrib, aunque los porcentajes y detalles especificos no se verifiquen.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["SAR_Naturaleza", "Fiscalizacion", "Plazos", "Recursos", "Sanciones", "RTN", "Documentacion"],
+    "cruces": [
+      {
+        "par": "SAR_Naturaleza + Fiscalizacion",
+        "relacion": "Intrinseca. La fiscalizacion es una funcion esencial del SAR como Administracion Tributaria (Arts. 77, 195, 198). Sin personalidad juridica y facultades no hay fiscalizacion.",
+        "conflicto": false
+      },
+      {
+        "par": "Fiscalizacion + Plazos",
+        "relacion": "Complementarios. La fiscalizacion opera dentro de plazos administrativos. Aunque los plazos concretos del articulo no se verifican en el CTrib, la existencia de plazos es inherente al debido proceso administrativo.",
+        "conflicto": false
+      },
+      {
+        "par": "Plazos + Recursos",
+        "relacion": "Relacion procedimental. Los plazos para responder a la fiscalizacion y para interponer recursos forman una cadena procesal. El CTrib contiene plazos (Arts. 172, 175, 176, 182) aunque no coincidan exactamente con los del articulo.",
+        "conflicto": false
+      },
+      {
+        "par": "Recursos + Sanciones",
+        "relacion": "Contrapeso. Los recursos (Art. 169) permiten impugnar las sanciones impuestas por el SAR (Arts. 158-164). La suspension de la ejecucion (Art. 174) protege al contribuyente durante la impugnacion.",
+        "conflicto": false
+      },
+      {
+        "par": "RTN + Fiscalizacion",
+        "relacion": "Complementarios. El RTN (Art. 164) identifica al obligado tributario; la fiscalizacion verifica sus obligaciones. Sin RTN no hay sujeto pasivo identificable para fiscalizar.",
+        "conflicto": false
+      },
+      {
+        "par": "Documentacion + Fiscalizacion",
+        "relacion": "Instrumental. La documentacion es el objeto material de la fiscalizacion. El deber de cooperacion (Art. 72) obliga a proporcionarla. Sin documentacion no hay fiscalizacion efectiva posible.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 30,
+    "confirmados": 15,
+    "plausibles": 3,
+    "coherentes": 4,
+    "no_verificables": 7,
+    "no_verificable_con_matiz": 1,
+    "confirmado_con_matiz": 1,
+    "refutados": 0,
+    "temas_confirmados": [
+      "El SAR como Administracion Tributaria con autonomia funcional, tecnica y administrativa (Art. 195 CTrib)",
+      "Facultades de fiscalizacion, verificacion y comprobacion del SAR (Arts. 77, 198 CTrib)",
+      "Obligatoriedad del RTN como registro de identificacion tributaria (Art. 164 CTrib)",
+      "Principio de legalidad: solo el Congreso crea tributos (Art. 11 CTrib)",
+      "Derecho a impugnar mediante recursos administrativos (Art. 169 CTrib)",
+      "Deber de cooperacion del obligado tributario (Art. 72 CTrib)",
+      "Suspension de la ejecucion por recurso de reposicion (Art. 174 CTrib)",
+      "Sancion de cierre temporal de establecimiento (Art. 161 CTrib)",
+      "Existencia de multas como sancion principal (Art. 158 CTrib)",
+      "Existencia de mecanismos de cobro ejecutivo (Arts. 78, 194 CTrib)",
+      "La fiscalizacion como procedimiento administrativo (Arts. 149, 153 CTrib)",
+      "El Codigo Tributario como ley marco del sistema tributario"
+    ],
+    "temas_no_verificables": [
+      "Plazo de 10-15 dias habiles para responder a fiscalizacion",
+      "Plazo de 20 dias habiles para recurso de revision (confusion con plazo de resolucion)",
+      "Porcentajes de sancion del 100-300% del impuesto omitido",
+      "Embargo de cuentas bancarias como medida especifica",
+      "Tipologia de fiscalizacion (parcial, general, electronica, de campo)",
+      "Notificaciones por correo certificado en Choluteca"
+    ],
+    "errores_detectados": "Se detecta una imprecision terminologica: el articulo menciona 'recurso de revision en 20 dias habiles', pero el CTrib distingue entre recurso de reposicion (interposicion en 15 dias, Art. 172; resolucion en 20 dias, Art. 175) y recurso extraordinario de revision (2 anos, Art. 180). El plazo de 20 dias es de resolucion, no de interposicion. No se detectan otros errores factuales en las afirmaciones verificables.",
+    "calidad_global_documento": "Buena. El contenido es sustancialmente correcto en sus afirmaciones verificables contra el Codigo Tributario. Los 7 claims plenamente verificados cubren los aspectos fundamentales: naturaleza del SAR, facultades fiscalizadoras, RTN, derecho a impugnar, deber de cooperacion y principio de legalidad. Las imprecisiones se concentran en plazos y porcentajes que probablemente provienen de leyes especiales (ISR, ISV) o normativa administrativa del SAR no disponible en el corpus. Se recomienda: (1) corregir la referencia a 'recurso de revision en 20 dias' sustituyendola por 'recurso de reposicion en 15 dias habiles (Art. 172 CTrib)'; (2) verificar los plazos de 10-15 dias y los porcentajes 100-300% contra la Ley del ISR; y (3) contrastar los detalles operativos (tipos de fiscalizacion, notificaciones, embargo) contra los reglamentos y normativa interna del SAR."
+  }
+}

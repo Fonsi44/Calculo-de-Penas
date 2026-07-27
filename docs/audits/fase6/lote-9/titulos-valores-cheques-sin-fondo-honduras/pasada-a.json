@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "8fc0a76a-09f5-4098-b8de-3d41cb93a296",
+    "slug": "titulos-valores-cheques-sin-fondo-honduras",
+    "sha256_entrada": "8ca172f36f753dede183d08de774281eeed8b87856aff3362fd30fc58a81cfc9",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "El Código de Comercio (Decreto 73-50) contiene los artículos 595-631 que regulan el cheque. Verificación completa posible desde fuente local. No se requirió el Código Penal para el delito de estafa pues el Art. 615 CM tipifica directamente la conducta. Se detectó un error crítico en el plazo de protesto."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El protesto notarial debe realizarse dentro de los 8 días siguientes a la presentación del cheque al banco.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "error_critico",
+      "detalle": "El plazo de 8 días NO existe en el Código de Comercio para el protesto de un cheque ordinario. El Art. 611 CM establece: 'El cheque presentado en tiempo y no pagado por el librado, debe protestarse a más tardar el segundo día hábil que siga al plazo de su presentación, en la misma forma que la letra de cambio a la vista.' Además, el Art. 631 CM hace aplicable al cheque el Art. 559 párrafos segundo y tercero, que dispone: 'El protesto por falta de pago de las letras a la vista debe levantarse el día de su presentación, o dentro de los dos días hábiles siguientes.' El plazo real es de 2 días hábiles, no 8. El único plazo de 8 días que aparece en el capítulo de cheques es el del Art. 618 CM, que regula un caso específico: cheques entregados en pago de títulos-valores, donde la presentación debe hacerse 'dentro de los cuatro o de los ocho días siguientes a su entrega, según sean pagaderos en la misma plaza o en otra distinta.' Este es un plazo de presentación (no de protesto) para un supuesto especial. El artículo bajo verificación confunde o generaliza indebidamente este plazo especial, induciendo a error al lector sobre el plazo real de protesto.",
+      "evidencia_local": {
+        "articulo_611": "El cheque presentado en tiempo y no pagado por el librado, debe protestarse a más tardar el segundo día hábil que siga al plazo de su presentación, en la misma forma que la letra de cambio a la vista.",
+        "articulo_559_via_631": "El protesto por falta de pago de las letras a la vista debe levantarse el día de su presentación, o dentro de los dos días hábiles siguientes.",
+        "articulo_618_contexto_8_dias": "La presentación de estos cheques al pago se hará dentro de los cuatros o de los ocho días siguientes a su entrega, según sean pagaderos en la misma plaza o en otra distinta. [CASO ESPECIAL: cheque entregado en pago de título-valor]",
+        "plazo_correcto": "Máximo 2 días hábiles desde la presentación (Art. 559 vía 631) o 2 días hábiles desde el vencimiento del plazo de presentación (Art. 611).",
+        "plazo_erroneo_en_articulo": "8 días siguientes a la presentación del cheque al banco.",
+        "ausencia_en_codigo": "No existe ningún artículo que establezca un plazo de 8 días para protestar un cheque ordinario por falta de pago."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "El protesto notarial es el acto formal mediante el cual un notario deja constancia de que un cheque fue presentado al banco y no fue pagado por falta de fondos. El procedimiento implica presentar el cheque impago ante un notario, quien levantará un acta notarial.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "La afirmación es correcta. El Art. 555 CM (aplicable vía Art. 631) define el protesto: 'El protesto establece en forma auténtica que una letra fue presentada en tiempo, y que el obligado dejó total o parcialmente de aceptarla o pagarla. Salvo disposición legal expresa, ningún otro acto puede suplir al protesto.' El Art. 557 CM (aplicable vía Art. 631) establece: 'El protesto se hará por medio de notario.' El Art. 563 CM (aplicable vía Art. 631) detalla el contenido del acta notarial: reproducción literal del documento, requerimiento al obligado, motivos de la negativa, firma, y expresión de lugar, fecha y hora. El Art. 611 CM párrafo tercero también contempla alternativas: certificación de cámara de compensación o nota del librado en el cheque como equivalentes al protesto.",
+      "evidencia_local": {
+        "articulo_555": "El protesto establece en forma auténtica que una letra fue presentada en tiempo, y que el obligado dejó total o parcialmente de aceptarla o pagarla.",
+        "articulo_557": "El protesto se hará por medio de notario.",
+        "articulo_563": "El notario levantará acta del mismo, la cual contendrá: I.-La reproducción literal... II.-El requerimiento al obligado... III.-Los motivos de la negativa... IV.-La firma... V.-La expresión del lugar, fecha y hora...",
+        "articulo_611_alternativas": "La cámara certificará en el cheque dicha circunstancia... Esta anotación hará las veces del protesto. La nota que el librado ponga en el cheque mismo... surtirá los mismos efectos del protesto."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La omisión del protesto en el plazo conlleva la pérdida de la acción cambiaria contra el librador y los endosantes.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 612 CM confirma plenamente esta afirmación: 'Por no haberse presentado o protestado el cheque en la forma y plazos previstos en este Capítulo, caducan: I.-Las acciones de regreso del último tenedor contra los endosantes o avalistas; II.-Las acciones de regreso de los endosantes o avalistas entre sí; y III.-La acción contra el librador y contra sus avalistas.' La caducidad es total: se pierden tanto las acciones contra endosantes y avalistas como contra el propio librador.",
+      "evidencia_local": {
+        "articulo_612": "Por no haberse presentado o protestado el cheque en la forma y plazos previstos en este Capítulo, caducan: I.-Las acciones de regreso del último tenedor contra los endosantes o avalistas; II.-Las acciones de regreso de los endosantes o avalistas entre sí; y III.-La acción contra el librador y contra sus avalistas."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Si no se protesta a tiempo, el cheque deja de ser un título ejecutivo y la reclamación del importe solo podrá realizarse a través de un juicio civil ordinario.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 612 CM establece que caduca la acción cambiaria (incluida la acción contra el librador). Sin embargo, doctrinariamente la acción causal derivada de la obligación subyacente (el negocio jurídico que originó la emisión del cheque) NO caduca con la acción cambiaria. El cheque no protestado pierde su carácter de título ejecutivo para la vía cambiaria, pero puede servir como principio de prueba en un juicio ordinario civil para reclamar el pago de la deuda original. El Código de Comercio no regula expresamente esta acción causal (pertenece al derecho civil), por lo que la afirmación es doctrinalmente correcta aunque no se encuentre texto explícito en las fuentes locales verificadas. El Art. 575 CM (aplicable vía Art. 631) confirma que la acción cambiaria es ejecutiva: 'La acción cambiaria contra cualquiera de los signatarios de la letra es ejecutiva por el importe de ésta y por el de los intereses y gastos accesorios.' Al caducar la acción cambiaria, se pierde esta vía ejecutiva.",
+      "evidencia_local": {
+        "articulo_612": "Caducidad de la acción cambiaria por falta de protesto.",
+        "articulo_575": "La acción cambiaria es ejecutiva por el importe de ésta y por el de los intereses y gastos accesorios.",
+        "limitacion": "La acción causal (civil ordinaria) no está regulada en el Código de Comercio sino en el Código Civil. No verificable directamente desde las fuentes locales disponibles para esta pasada."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "La acción cambiaria permite interponer una demanda ejecutiva para reclamar el importe del cheque más los intereses moratorios y los gastos del protesto. El acta notarial de protesto sirve como título ejecutivo.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 575 CM (aplicable vía Art. 631) establece: 'La acción cambiaria contra cualquiera de los signatarios de la letra es ejecutiva por el importe de ésta y por el de los intereses y gastos accesorios, sin necesidad de que reconozca previamente su firma el demandado.' Esto confirma que la acción cambiaria cubre importe + intereses + gastos y es ejecutiva. El Art. 564 CM (aplicable vía Art. 631) menciona expresamente el pago del 'importe de la letra, más los intereses moratorios y los gastos de la diligencia' en el contexto del protesto. El acta de protesto (Art. 563) constituye el documento que acredita el incumplimiento y habilita la vía ejecutiva.",
+      "evidencia_local": {
+        "articulo_575": "La acción cambiaria contra cualquiera de los signatarios de la letra es ejecutiva por el importe de ésta y por el de los intereses y gastos accesorios.",
+        "articulo_564": "El girado [tiene] el derecho de presentarse a satisfacer el importe de la letra, más los intereses moratorios y los gastos de la diligencia.",
+        "articulo_563": "El notario que lo practique levantará acta del mismo."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Librar un cheque sin fondos puede constituir el delito de estafa, tipificado en el Código Penal de Honduras, si se demuestra que el librador actuó con intención de defraudar y conociendo la falta de fondos. No todo cheque sin fondos es automáticamente un delito penal; se requiere el elemento intencional.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_matiz_relevante",
+      "detalle": "El Art. 615 CM tipifica directamente la conducta: 'Comete el delito de estafa, a menos de probar que no tuvo intención dolosa, el librador de un cheque que no haya sido pagado a su presentación por cualquiera de las siguientes causas: I.-Ser insuficiente la provisión. II.-Falta de autorización necesaria para el giro; III.-Inexistencia de la institución girada o carencia de la autorización para recibir depósitos en cuenta y giros de cheques; y IV.-Haber sido revocado el cheque antes del transcurso del plazo de presentación. Este delito se castigará de conformidad con el Código Penal.' El matiz relevante es que el artículo afirma que 'se demuestra que el librador actuó con intención de defraudar', sugiriendo que la carga de la prueba recae en la acusación. Sin embargo, el Art. 615 CM INVIERTE la carga de la prueba: la conducta constituye estafa 'a menos de probar que no tuvo intención dolosa.' Es decir, el dolo se presume y corresponde al librador demostrar su ausencia. Además, la tipificación está en el propio Código de Comercio (no solo en el Código Penal), aunque la pena se remite al Código Penal.",
+      "evidencia_local": {
+        "articulo_615": "Comete el delito de estafa, a menos de probar que no tuvo intención dolosa, el librador de un cheque que no haya sido pagado... I.-Ser insuficiente la provisión... Este delito se castigará de conformidad con el Código Penal.",
+        "matiz_carga_probatoria": "El artículo dice 'si se demuestra que el librador actuó con intención de defraudar' (carga en la acusación), pero la ley dice 'a menos de probar que no tuvo intención dolosa' (carga invertida: presunción de dolo).",
+        "matiz_fuente_tipificacion": "El artículo menciona solo el Código Penal como fuente de la tipificación, pero el Art. 615 CM también es fuente directa de la tipificación de la conducta como estafa."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "La prescripción de la acción cambiaria es de 6 meses.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 613 CM establece: 'Las acciones cambiarias que resulten del cheque, prescriben en seis meses, contados: desde la presentación, la del último tenedor del documento; y desde el día siguiente a aquel en que paguen el cheque, las de los endosantes y las de los avalistas.' La afirmación del artículo es correcta en cuanto al plazo de 6 meses. El cómputo inicia desde la presentación para el último tenedor.",
+      "evidencia_local": {
+        "articulo_613": "Las acciones cambiarias que resulten del cheque, prescriben en seis meses, contados: desde la presentación, la del último tenedor del documento."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "La normativa principal es el Código de Comercio de Honduras (Decreto 73-50 y sus reformas), que regula los cheques en su Título III, Capítulo VII.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Código de Comercio efectivamente regula los cheques. Los artículos 595-631 CM corresponden al capítulo sobre el cheque. El Decreto 73-50 es el decreto histórico del Código de Comercio de Honduras (1950). Sin embargo, en las fuentes locales no se encontró mención explícita al Decreto 73-50 dentro del texto del código, por lo que no se puede verificar directamente el número de decreto ni confirmar que el capítulo VII sea exactamente el título III, capítulo VII en la numeración actual. La ubicación 'Título III, Capítulo VII' es plausible pero no verificable con precisión desde los archivos JSON estructurados (los artículos no incluyen la jerarquía completa de títulos y capítulos).",
+      "evidencia_local": {
+        "articulos_595_a_631": "Regulan exhaustivamente el cheque: requisitos (595-597), circulación (598-599), aval (600), presentación y pago (601-610), protesto (611), acciones cambiarias (612-614), delito de estafa por cheque sin fondo (615-616), cheque cruzado (619-620), cheque de viajero (625-627), normas supletorias (631).",
+        "limitacion": "El número de decreto (73-50) y la ubicación exacta (Título III, Capítulo VII) no se pudieron verificar directamente porque los archivos JSON no preservan esa metainformación estructural del código."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "Los intereses moratorios se calculan desde la fecha en que el cheque fue presentado al banco.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Los artículos 564 y 575 CM mencionan 'intereses moratorios' e 'intereses y gastos accesorios' como parte de lo reclamable, pero no especifican explícitamente la fecha desde la cual se computan los intereses moratorios. El Art. 564 CM menciona que el girado puede pagar 'el importe de la letra, más los intereses moratorios y los gastos de la diligencia' durante el día del protesto y el siguiente. Doctrinariamente, los intereses moratorios en títulos de crédito corren desde la presentación (fecha en que se constituye en mora al deudor). La afirmación es consistente con la doctrina comercial general, pero no se encuentra un artículo específico que establezca 'los intereses corren desde la presentación' en el texto del Código de Comercio.",
+      "evidencia_local": {
+        "articulo_564": "El girado [tiene] el derecho de presentarse a satisfacer el importe de la letra, más los intereses moratorios y los gastos de la diligencia.",
+        "articulo_575": "La acción cambiaria es ejecutiva por el importe de ésta y por el de los intereses y gastos accesorios.",
+        "limitacion": "Ningún artículo del capítulo de cheques especifica explícitamente que los intereses moratorios corren 'desde la presentación'. Es una inferencia doctrinal razonable pero no textualmente confirmada."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "El artículo omite mencionar la indemnización mínima del 20% del valor del cheque establecida en el Art. 614 CM para el librador que no paga por causa imputable.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "omision_relevante",
+      "detalle": "El Art. 614 CM establece: 'El librador de un cheque presentado en tiempo y no pagado por causa imputable al propio librador, resarcirá al tenedor los daños y perjuicios que con ello le ocasione. En ningún caso la indemnización será inferior al veinte por ciento del valor del cheque.' El artículo bajo verificación enumera los montos reclamables (importe, intereses moratorios, gastos de protesto, costas judiciales) pero OMITE esta indemnización mínima del 20%, que es una garantía legal relevante para el tenedor. Adicionalmente, el Art. 605 CM establece una indemnización similar del 20% para el caso en que el banco librado se niegue injustamente a pagar un cheque teniendo fondos.",
+      "evidencia_local": {
+        "articulo_614": "El librador de un cheque presentado en tiempo y no pagado por causa imputable al propio librador, resarcirá al tenedor los daños y perjuicios que con ello le ocasione. En ningún caso la indemnización será inferior al veinte por ciento del valor del cheque.",
+        "articulo_605": "Cuando sin justa causa se niegue el librado a pagar un cheque teniendo fondos suficientes del librador, resarcirá a éste los daños y perjuicios... En ningún caso la indemnización será inferior al veinte por ciento del valor del cheque."
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 10,
+    "confirmados": 4,
+    "parcialmente_confirmados": 2,
+    "plausible_con_soporte_parcial": 1,
+    "error_critico_detectado": "El plazo de 8 días para el protesto notarial es INCORRECTO. El Código de Comercio establece 2 días hábiles (Arts. 559 y 611 vía 631). Los 8 días del Art. 618 aplican únicamente a un caso especial (cheque en pago de título-valor). Este error se repite en el título, la descripción, y al menos 5 secciones del artículo, incluyendo el ejemplo práctico de Pedro y Juan.",
+    "omisiones_detectadas": [
+      "Indemnización mínima del 20% del valor del cheque (Art. 614 CM).",
+      "Alternativas al protesto notarial: certificación de cámara de compensación o nota del librado (Art. 611 CM).",
+      "Inversión de la carga de la prueba en el delito de estafa: el dolo se presume (Art. 615 CM)."
+    ],
+    "matiz_relevante": "El artículo describe correctamente que se requiere intención de defraudar para el delito penal, pero omite que la carga de la prueba está invertida: el dolo se presume y es el librador quien debe probar su ausencia (Art. 615 CM).",
+    "calidad_general": "regular_con_error_critico"
+  }
+}

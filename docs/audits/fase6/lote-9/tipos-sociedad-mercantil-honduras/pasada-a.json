@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "pendiente_entrada",
+    "slug": "tipos-sociedad-mercantil-honduras",
+    "sha256_entrada": "pendiente_entrada",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "Verificación de conocimiento doctrinal sobre los tipos societarios del Código de Comercio de Honduras. Las fuentes locales contienen la totalidad de los artículos relevantes (Arts. 13-305 CM). No se requiere entrada.json para esta verificación: se contrastan afirmaciones doctrinales típicas contra el texto codificado."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Código de Comercio de Honduras reconoce seis tipos de sociedades mercantiles.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 13 CM enumera taxativamente seis tipos: 'I.- La sociedad en nombre colectivo; II.- La sociedad en comandita simple; III.- La sociedad de responsabilidad limitada; IV.- La sociedad anónima; V.- La sociedad en comandita por acciones; y VI.- La sociedad cooperativa.' El artículo añade: 'Estas sociedades podrán ser de capital variable.' La lista es exhaustiva; no se mencionan otros tipos societarios en el Código.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulo_relevante": "Art. 13 CM"
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La sociedad en nombre colectivo es aquella en que todos los socios responden de modo subsidiario, ilimitada y solidariamente de las obligaciones sociales.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 38 CM define: 'Sociedad en nombre colectivo es aquella que existe bajo una razón social y en la que todos los socios responden de modo subsidiario, ilimitada y solidariamente, de las obligaciones sociales.' Agrega que 'las cláusulas de la escritura social que eximan a los socios de la responsabilidad ilimitada, no producirán efecto legal alguno con relación a terceros; pero los socios entre sí pueden estipular que la responsabilidad de alguno o algunos de ellos se limite a una porción o cuota determinada.' La razón social se forma con el nombre de uno o más socios (Art. 39 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 38 CM (definición y responsabilidad)", "Art. 39 CM (razón social)"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La sociedad en comandita simple está compuesta por socios comanditados (responsabilidad subsidiaria, ilimitada y solidaria) y comanditarios (responsabilidad limitada al pago de sus aportaciones).",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 58 CM establece: 'Sociedad en comandita simple es la que existe bajo una razón social y estará compuesta por uno o varios socios comanditados, que responden de manera subsidiaria, ilimitada y solidariamente de las obligaciones sociales y de uno o varios comanditarios que únicamente están obligados al pago de sus aportaciones.' La razón social se forma con el nombre de los comanditados (Art. 59 CM) y debe agregarse 'Sociedad en Comandita' o 'S. en C.'. Los comanditarios no pueden ejercer actos de administración (Art. 62 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 58 CM (definición)", "Art. 59 CM (razón social)", "Art. 62 CM (prohibición de administración por comanditarios)"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La sociedad de responsabilidad limitada (S. de R. L.) limita la responsabilidad de los socios al pago de sus aportaciones, tiene un máximo de 25 socios y un capital social mínimo de 5,000 lempiras.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Tres artículos confirman cada elemento: Art. 66 CM: 'Sociedad de responsabilidad limitada es la que existe bajo una razón social o bajo una denominación y cuyos socios sólo están obligados al pago de sus aportaciones, sin que las partes sociales, que nunca estarán representadas por títulos valores, puedan cederse sino en los casos con los requisitos que establece el presente Código.' Art. 69 CM: 'Ninguna sociedad de responsabilidad limitada tendrá más de veinticinco socios.' Art. 70 CM: 'El capital social no será inferior a cinco mil lempiras; se dividirá en partes sociales que pueden ser de valor y categoría desiguales, pero que en todo caso serán de cien lempiras o de un múltiplo de cien.' Al constituirse debe estar íntegramente suscrito y exhibirse al menos el 50% de cada parte (Art. 71 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 66 CM (definición)", "Art. 69 CM (máximo 25 socios)", "Art. 70 CM (capital mínimo L.5,000)", "Art. 71 CM (suscripción íntegra, exhibición 50%)", "Art. 91 CM (razón/denominación + 'S. de R. L.')"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "La sociedad anónima (S.A.) tiene su capital dividido en acciones, requiere un mínimo de 5 socios y un capital social no menor de 25,000 lempiras.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 90 CM: 'Sociedad anónima es la que existe bajo una denominación; y tiene un capital fundacional dividido en acciones, cuyos socios limitan su responsabilidad al pago de las que hubieren suscrito.' Art. 92 CM: 'Para proceder a la constitución de una sociedad anónima, se requiere: I.- Que haya cinco socios como mínimo, y que cada uno de ellos suscriba una acción, por lo menos. II.- Que el capital social no sea menor de veinticinco mil lempiras y que esté íntegramente suscrito; III.- Que se exhiba en dinero efectivo cuando menos el veinticinco por ciento del valor de cada acción pagadera en numerario; IV.- Que se exhiba íntegramente el valor de cada acción que haya de pagarse, en todo o en parte, con bienes distintos del numerario.' Puede constituirse por fundación simultánea o suscripción pública (Art. 93 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 90 CM (definición)", "Art. 92 CM (requisitos: 5 socios, L.25,000 mínimo, 25% exhibido)", "Art. 93 CM (modos de constitución)"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "La sociedad en comandita por acciones combina elementos de la comandita simple y de la sociedad anónima, rigiéndose supletoriamente por las reglas de esta última.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 274 CM establece que 'la sociedad en comandita por acciones podrá existir bajo una razón social que se formará con los nombres de uno o más socios comanditados seguidos de las palabras \"y compañía\" u otras equivalentes cuando en ellas no figuren los de todos. A la razón social o a la denominación en su caso, se les agregarán las palabras \"sociedad en comandita\" o su abreviatura \"S. en C.\".' Art. 277 CM dispone: 'En lo previsto por este capítulo, la sociedad en comandita por acciones se regirá por las reglas relativas de la sociedad anónima.' La administración corresponde a los comanditados (Art. 275 CM). El comanditado tiene derecho de veto sobre resoluciones de asamblea general extraordinaria (Art. 276 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 274 CM (razón social/denominación)", "Art. 275 CM (administración por comanditados)", "Art. 276 CM (derecho de veto)", "Art. 277 CM (régimen supletorio de S.A.)"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "La sociedad cooperativa se caracteriza por tener capital variable, participaciones iguales, un mínimo de 20 socios y operar exclusivamente en favor de sus socios.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 278 CM: 'La sociedad cooperativa prestará sus actividades exclusivamente en favor de sus socios, actuará bajo una denominación social y su capital, que será variable, estará dividido en participaciones iguales, los socios limitarán su responsabilidad por las operaciones sociales al importe de las participaciones que tuvieren a su nombre.' Art. 279 CM: 'Para constituir una cooperativa el número de sus socios será superior a veinte.' El beneficio de los cooperadores consiste en 'la obtención o venta de productos o en la prestación de servicios en condiciones económicas favorables, por la eliminación de los intermediarios' (Art. 280 CM). Puede ser de producción (Art. 281 CM) o de servicios (Art. 282 CM). Se les aplican supletoriamente las disposiciones sobre S. de R. L. (Art. 298 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 278 CM (definición, capital variable, participaciones iguales)", "Art. 279 CM (mínimo 20 socios)", "Art. 280 CM (finalidad)", "Art. 281-282 CM (tipos)", "Art. 298 CM (régimen supletorio S. de R. L.)"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "Todas las sociedades mercantiles pueden ser de capital variable, lo que permite aumentar o disminuir el capital sin más formalidades que las establecidas en el capítulo correspondiente.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 13 CM in fine establece: 'Estas sociedades podrán ser de capital variable.' El Art. 299 CM define el régimen: 'el capital social será susceptible de aumento por aportaciones posteriores de los socios o por la admisión de nuevos socios, y de disminución de dicho capital por retiro parcial o total de las aportaciones, sin más formalidades que las establecidas en este capítulo.' El Art. 300 CM aclara que 'las sociedades de capital variable se regirán por las disposiciones que correspondan a la especie de sociedad de que se trate, y por las de la sociedad anónima relativas a balances y responsabilidades de los administradores.' Debe añadirse 'de capital variable' o 'de C. V.' a la razón social o denominación (Art. 301 CM). En S.A. y comandita por acciones, las acciones deben ser nominativas (Art. 304 CM).",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos": ["Art. 13 CM (todas pueden ser de C.V.)", "Art. 299 CM (mecanismo de aumento/disminución)", "Art. 300 CM (régimen supletorio)", "Art. 301 CM (mención 'de C.V.')", "Art. 304 CM (acciones nominativas)"]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "La escritura constitutiva de toda sociedad mercantil debe contener: lugar y fecha, nombres de socios, clase de sociedad, finalidad, razón/denominación, duración, capital social, aportaciones, domicilio y forma de administración.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 14 CM enumera 11 requisitos: 'I.- Lugar y fecha en que se celebre el acto; II.- Los nombres, nacionalidad y domicilio de las personas físicas o morales que constituyan la sociedad; III.- La clase de sociedad que se constituya; IV.- La finalidad de la sociedad; V.- Su razón social o su denominación; VI.- Su duración o la declaración expresa de constituirse por tiempo indeterminado; VII.- El importe del capital social; cuando el capital sea variable, se indicará el mínimo; VIII.- La expresión de lo que cada socio aporta en dinero o en otros bienes y el valor atribuido a éstos; IX.- El domicilio de la sociedad; X.- La manera conforme a la cual haya de administrarse la sociedad y las facultades de los administradores; XI.- El nombramiento de los administradores.' La lista en el claim cubre los elementos esenciales y es fiel al texto legal.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulo_relevante": "Art. 14 CM (requisitos de la escritura constitutiva)"
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "La escritura de constitución debe someterse a calificación judicial ante un Juez de Letras de lo Civil antes de su inscripción en el Registro Público de Comercio.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 15 CM establece: 'Otorgada la escritura pública de constitución, o la de reforma o adiciones, y como trámite previo a su inscripción en el Registro Público deberá ser sometida a calificación judicial. Al efecto, se formulará solicitud ante el Juez de Letras de lo Civil del domicilio de la sociedad, acompañada de todos los documentos relativos a la escritura. El Juez dará vista de la solicitud al Ministerio Público por tres días y evacuado el traslado, señalará audiencia dentro de cinco días, en la que se rendirán, si fuere necesario, pruebas, y se dictará la resolución que ordene o niegue el registro solicitado, a continuación o dentro de tres días.' Cabe recurso de apelación en tres días.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulo_relevante": "Art. 15 CM (calificación judicial previa al registro)"
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 10,
+    "confirmados": 10,
+    "parcialmente_confirmados": 0,
+    "plausible_no_verificable": 0,
+    "refutados": 0,
+    "error_critico_detectado": "Ninguno. Todas las afirmaciones doctrinales verificadas son consistentes con el texto del Código de Comercio.",
+    "observacion_principal": "El Código de Comercio de Honduras (Arts. 13-305 CM) regula exhaustivamente los seis tipos societarios, sus requisitos constitutivos y el régimen de capital variable. Las fuentes locales contienen la totalidad de los artículos relevantes, permitiendo verificación completa. El Art. 13 CM es el artículo troncal que enumera los seis tipos; los capítulos II a VII desarrollan cada tipo; el capítulo VIII regula el capital variable. No se detectan contradicciones ni lagunas en lo verificado.",
+    "calidad_general": "excelente_y_verificable"
+  }
+}

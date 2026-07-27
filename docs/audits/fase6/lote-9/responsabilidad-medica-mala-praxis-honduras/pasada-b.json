@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "9af92e3b-5c1e-463d-9a21-ff3b99780a7d",
+    "slug": "responsabilidad-medica-mala-praxis-honduras",
+    "sha256_entrada": "8481a9bcd2fa87df7787ef02ed6f3723b569455010a5832e110a184ec045a459",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json",
+      "data/articulos_cp.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 9 afirmaciones normativas verificables contra las fuentes locales. Se detectan DOS errores factuales críticos de numeración de artículos: (1) atribución de la cláusula de responsabilidad extracontractual al Art. 2245 CC cuando corresponde al Art. 2236 CC, y (2) atribución de lesiones culposas y homicidio culposo a los Arts. 118 y 119 CP cuando corresponden a los Arts. 202 y 198 CP respectivamente. Además, el plazo de prescripción de un año para la acción civil no se verifica en las fuentes disponibles; la regla general del CC es de diez años. El resto de afirmaciones son doctrinalmente plausibles o no verificables con las fuentes limitadas proporcionadas.",
+    "error_critico_1": {
+      "tipo": "numeracion_incorrecta_articulo_CC",
+      "descripcion": "El documento atribuye al Art. 2245 CC la obligación de indemnizar por culpa o negligencia. El artículo correcto es el Art. 2236 CC. El Art. 2245 CC trata sobre quita y espera de deudas (materia concursal), completamente ajena a la responsabilidad extracontractual.",
+      "impacto": "alto",
+      "apariciones": 1,
+      "ubicaciones": [
+        "párrafo 1 del body: 'El Artículo 2245 del Código Civil hondureño estipula que quien cause daño a otro por culpa o negligencia está obligado a indemnizarlo.'"
+      ]
+    },
+    "error_critico_2": {
+      "tipo": "numeracion_incorrecta_articulos_CP",
+      "descripcion": "El documento atribuye a los Arts. 118 y 119 CP los delitos de lesiones culposas y homicidio culposo. Los Arts. 118 y 119 CP regulan la responsabilidad civil derivada del delito (reglas generales y contenido). Los artículos penales correctos son: Art. 198 CP (homicidio imprudente, 3-7 años por imprudencia grave) y Art. 202 CP (lesiones imprudentes, 1-4 años por imprudencia grave).",
+      "impacto": "alto",
+      "apariciones": 1,
+      "ubicaciones": [
+        "sección 'Marco legal y plazos': 'Artículos 118 (lesiones culposas) y 119 (homicidio culposo)'"
+      ]
+    },
+    "preocupacion_prescripcion": {
+      "tipo": "plazo_no_verificable",
+      "descripcion": "El documento afirma que el plazo de prescripción para la acción civil es de un año. El Código Civil establece como regla general para acciones personales diez años (Art. 2292 CC). El plazo de un año podría provenir de legislación especial no disponible en las fuentes, pero con las fuentes proporcionadas no se puede confirmar.",
+      "impacto": "medio"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El Código Civil hondureño contiene una disposición que obliga a indemnizar a quien cause daño a otro por culpa o negligencia.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 2236 CC dispone: 'El que por acción u omisión causa daño a otro, interviniendo culpa o negligencia, está obligado a reparar el daño causado.' Esta es la cláusula general de responsabilidad civil extracontractual. El capítulo correspondiente es el 'CAPITULO II DE LAS OBLIGACIONES QUE NACEN DE CULPA O NEGLIGENCIA' (Art. 2235 CC).",
+      "evidencia": "Art. 2236 CC: 'El que por acción u omisión causa daño a otro, interviniendo culpa o negligencia, está obligado a reparar el daño causado.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El número de artículo que contiene esta disposición es el 2245.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "refutado",
+      "detalle": "El artículo correcto es el 2236, no el 2245. El Art. 2245 CC regula: 'El deudor puede solicitar judicialmente de sus acreedores quita y espera de sus deudas, o cualquiera de las dos cosas...', materia de derecho concursal completamente ajena a la responsabilidad extracontractual.",
+      "evidencia": "Art. 2236 CC (responsabilidad extracontractual) vs Art. 2245 CC (quita y espera). Verificado en data/codigo_civil.json.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "La disposición del Art. 2236 CC es aplicable a médicos, cirujanos, hospitales y clínicas por su carácter general.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 2236 CC utiliza la fórmula genérica 'el que', sin limitación por profesión o actividad. Como principio general de responsabilidad extracontractual, es aplicable a cualquier persona natural o jurídica. El Art. 2237 CC refuerza esta interpretación al extender la responsabilidad por hechos de personas a cargo, cubriendo la responsabilidad de hospitales y clínicas por actos de su personal médico.",
+      "evidencia": "Art. 2236 CC: 'El que...' (fórmula genérica). Art. 2237 CC: extensión a responsabilidad por dependientes.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El Código de Salud hondureño existe como cuerpo normativo vigente.",
+      "fuente": "verificacion_cruzada",
+      "veredicto": "plausible",
+      "detalle": "La existencia del Código de Salud de Honduras es de conocimiento general en el ordenamiento jurídico hondureño. Sin embargo, no se encuentra en las fuentes locales estructuradas (data/codigo_civil.json, data/articulos_cp.json), por lo que no se puede verificar su contenido ni su número de decreto.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El Código de Salud establece obligaciones de diligencia y calidad en la prestación de servicios médicos.",
+      "fuente": "verificacion_cruzada",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Por la naturaleza y finalidad de un código de salud, es esperable que contenga disposiciones sobre diligencia y calidad. Pero el texto exacto del Código de Salud no está disponible en las fuentes locales para confirmar esta afirmación específica.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "Existe jurisprudencia de la Corte Suprema de Justicia de Honduras sobre consentimiento informado.",
+      "fuente": "verificacion_cruzada",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Las fuentes disponibles son textos normativos (CC y CP), no compilaciones jurisprudenciales. La existencia de jurisprudencia sobre consentimiento informado es plausible dado el desarrollo internacional de esta figura, pero no puede verificarse con las fuentes proporcionadas.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "La omisión del consentimiento informado puede constituir negligencia.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "plausible_doctrinalmente",
+      "detalle": "El Art. 2236 CC sanciona genéricamente la culpa o negligencia que causa daño. Doctrinalmente, la omisión del consentimiento informado puede constituir una forma de negligencia médica si causa un daño que el paciente no habría aceptado de haber sido informado. El código no menciona explícitamente el consentimiento informado, pero su cláusula general de responsabilidad es suficientemente amplia para abarcarlo.",
+      "evidencia": "Art. 2236 CC como fundamento general de la responsabilidad por culpa o negligencia.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "El Código Penal de Honduras tipifica el homicidio cometido por imprudencia (culposo).",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 198 CP 'Homicidio imprudente': 'Quien causa por imprudencia grave la muerte de otra persona, debe ser castigado con la pena de tres (3) a siete (7) años de prisión; si la imprudencia es leve la pena debe ser de un (1) año a tres (3) años de prisión.' El artículo menciona expresamente la 'imprudencia profesional' como agravante.",
+      "evidencia": "Art. 198 CP, data/articulos_cp.json.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "El Código Penal de Honduras tipifica las lesiones cometidas por imprudencia (culposas).",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 202 CP 'Lesiones imprudentes': 'Quien por imprudencia grave causa alguna de las lesiones definidas en los artículos anteriores, debe ser castigado [...] con la pena de prisión de uno (1) a cuatro (4) años.' También existe el Art. 598 CP para lesiones por imprudencia leve con pena de 1 a 3 meses.",
+      "evidencia": "Art. 202 CP y Art. 598 CP, data/articulos_cp.json.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.3",
+      "subclaim_text": "El artículo 118 del Código Penal regula las lesiones culposas.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "refutado",
+      "detalle": "El Art. 118 CP regula las 'Reglas generales' de la responsabilidad civil derivada del delito: 'La realización de un hecho tipificado por la Ley como delito o falta obliga a reparar los daños y perjuicios causados.' No regula ningún tipo penal. El artículo correcto para lesiones imprudentes es el Art. 202 CP.",
+      "evidencia": "Art. 118 CP (reglas generales de RC) vs Art. 202 CP (lesiones imprudentes).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.4",
+      "subclaim_text": "El artículo 119 del Código Penal regula el homicidio culposo.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "refutado",
+      "detalle": "El Art. 119 CP define el contenido de 'La responsabilidad civil' (restitución, reparación integral de daños materiales y morales, indemnización de perjuicios). No regula ningún tipo penal de homicidio. El artículo correcto para homicidio imprudente es el Art. 198 CP.",
+      "evidencia": "Art. 119 CP (contenido RC) vs Art. 198 CP (homicidio imprudente).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "El Código Civil establece un plazo de prescripción de un año para la acción de responsabilidad extracontractual.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "refutado",
+      "detalle": "El Código Civil NO establece un plazo de prescripción específico para las obligaciones del Capítulo II, Título XIV (Arts. 2235-2243 CC). Los plazos de prescripción de un año en el CC corresponden a: (a) Art. 929 CC — acciones de indemnización por daños en el título de posesión y relaciones de vecindad; (b) Art. 2296 CC — acciones de cobro de honorarios de abogados, jueces, notarios, etc. La regla general supletoria es el Art. 2292 CC: diez años para acciones personales sin término especial.",
+      "evidencia": "Art. 2292 CC (10 años), Arts. 929 y 2296 CC (1 año pero para materias distintas).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "Los elementos del reclamo por mala praxis incluyen: relación médico-paciente, actuación incorrecta, daño y nexo causal.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado_doctrinalmente",
+      "detalle": "Estos cuatro elementos se derivan de la estructura del Art. 2236 CC: 'acción u omisión' (actuación incorrecta), 'causa daño' (daño y nexo causal), 'interviniendo culpa o negligencia' (que se evalúa en el contexto de la relación médico-paciente). Aunque el CC no enumera estos elementos como lista expresa, son la interpretación doctrinal consolidada de la responsabilidad civil extracontractual.",
+      "evidencia": "Art. 2236 CC como fundamento de los cuatro elementos clásicos de la responsabilidad civil.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "El Código Penal hondureño fue promulgado mediante Decreto 130-2017.",
+      "fuente": "verificacion_cruzada",
+      "veredicto": "plausible",
+      "detalle": "El dato es coherente con el conocimiento general del ordenamiento hondureño. Sin embargo, data/articulos_cp.json no contiene metadatos sobre el decreto de promulgación, por lo que no se puede confirmar ni refutar con las fuentes disponibles.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "La vía civil permite obtener compensación económica por mala praxis médica.",
+      "fuente": "data/codigo_civil.json + data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 2236 CC establece la obligación de reparar el daño causado, lo que incluye compensación económica. El Art. 118 CP confirma que el perjudicado 'puede optar, en todo caso, por exigir la responsabilidad civil ante la Jurisdicción Civil', lo que permite reclamar exclusivamente por la vía civil sin necesidad de proceso penal.",
+      "evidencia": "Art. 2236 CC (obligación de reparar) + Art. 118 CP (opción de vía civil exclusiva).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.2",
+      "subclaim_text": "La vía penal exige un estándar probatorio superior a la vía civil.",
+      "fuente": "data/articulos_cp.json + principio general",
+      "veredicto": "confirmado",
+      "detalle": "Es un principio general del derecho que el proceso penal exige prueba más allá de toda duda razonable, mientras que el proceso civil se rige por el estándar de preponderancia de prueba o probabilidad prevalente. El propio CP en su Art. 4 consagra el principio de responsabilidad subjetiva ('sólo se puede castigar a una persona... si ha sido declarada culpable'), reflejando el mayor rigor probatorio penal.",
+      "evidencia": "Art. 4 CP (principio de responsabilidad subjetiva). Diferencia doctrinal entre estándares probatorios penal y civil.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_pasada_b": {
+    "total_subclaims": 16,
+    "confirmados": 5,
+    "confirmado_doctrinalmente": 1,
+    "plausibles": 3,
+    "plausible_no_verificable": 3,
+    "refutados": 4,
+    "acuerdo_con_pasada_a": "total",
+    "errores_confirmados_por_ambas_pasadas": [
+      "Art. 2245 CC citado erróneamente; el correcto es Art. 2236 CC",
+      "Arts. 118-119 CP no regulan lesiones/homicidio culposos; los correctos son Arts. 202 y 198 CP",
+      "Plazo de prescripción de 1 año no verificado en CC; regla general es 10 años (Art. 2292 CC)"
+    ],
+    "calidad_final": "requiere_correcciones_significativas"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "metadata": {
+    "pasada": "B",
+    "slug": "competencia-desleal-como-denunciar-honduras",
+    "entrada_sha256": "405dc3311643cdf091bd122440b98ff878c1e24bbb2dc96fc05a8042e2d436f8",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_primarias": [
+      "data/codigo_comercio.json",
+      "data/codigo_civil.json",
+      "data/articulos_cp.json"
+    ],
+    "metodologia": "Extraccion de claims del texto HTML de entrada. Verificacion exclusiva contra las tres fuentes locales. Sin busquedas web. Sin fuentes externas (WIPO Lex, PDFs, etc.)."
+  },
+  "claims": [
+    {
+      "id": "C001",
+      "claim": "La competencia desleal en Honduras se rige por la Ley de Propiedad Industrial (Decreto No. 12-99) y el Codigo de Comercio, que establecen el marco para sancionar estas conductas.",
+      "claimed_source": "Ley de Propiedad Industrial (Decreto 12-99) / Codigo de Comercio",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo de Comercio, Arts. 421 a 429 CM",
+      "discrepancy": "La LPI no esta en las fuentes locales, por lo que no se puede verificar. Sin embargo, el Codigo de Comercio SI contiene un titulo completo sobre competencia desleal mercantil.",
+      "notes": "El Titulo II del Codigo de Comercio (Arts. 421-429 CM) regula integramente los limites de la actividad mercantil y la competencia desleal. Art. 425 CM define las conductas constitutivas. Art. 426 CM establece la legitimacion activa. Arts. 427-428 CM regulan medidas preparatorias y remedios judiciales. La entrada menciona correctamente el Codigo de Comercio como fuente, aunque no especifica los articulos concretos (421-429 CM). La LPI (Decreto 12-99) no puede verificarse con las fuentes locales."
+    },
+    {
+      "id": "C002",
+      "claim": "El Articulo 193 de la Ley de Propiedad Industrial define la competencia desleal como todo acto contrario a los usos honestos en el comercio.",
+      "claimed_source": "Ley de Propiedad Industrial, Art. 193",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "No verificable sin acceso a la LPI. En las fuentes locales, el Codigo de Comercio (Art. 425 CM) define la competencia desleal mercantil como 'la realizacion por un comerciante de actos encaminados a atraerse indebidamente clientela', enumerando conductas especificas (engano, falsas indicaciones de origen/calidad, empleo de envases falsificados, propaganda de noticias falsas). La definicion de la LPI ('acto contrario a los usos honestos en el comercio') es mas generica y sigue el estandar del Convenio de Paris (Art. 10bis). No se puede confirmar ni refutar que este en el Art. 193."
+    },
+    {
+      "id": "C003",
+      "claim": "Las conductas que constituyen competencia desleal incluyen actos de confusion (imitar nombre, logotipo, presentacion o empaque), denigracion (difundir informacion falsa sobre un competidor), engaño (afirmaciones falsas sobre cualidades), aprovechamiento indebido de la reputacion ajena, venta a perdida, y violacion de secretos comerciales.",
+      "claimed_source": "Ley de Propiedad Industrial / Codigo de Comercio",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo de Comercio, Art. 425 CM",
+      "discrepancy": "El Art. 425 CM cubre algunas pero no todas las conductas listadas en la entrada. En particular, la 'venta a perdida' y la 'violacion de secretos comerciales' NO aparecen en el Art. 425 CM. La 'denigracion' podria encajar parcialmente en la 'propagacion de noticias falsas' del Art. 425 CM literal d).",
+      "notes": "Art. 425 CM enumera: a) soborno de empleados del cliente para confundirlo, b) falsas indicaciones acerca del origen o calidad de productos/servicios o de premios/distinciones, c) empleo de envases e inscripciones que contribuyan a dar apariencia de genuinos a productos falsificados, y d) propagar noticias falsas acerca de las causas para ofrecer condiciones especiales. Esto cubre: confusion (a, c), engaño (b), denigracion parcial (d). NO cubre: venta a perdida, violacion de secretos comerciales (estos estan en el Codigo Penal: Art. 395 CP). El aprovechamiento indebido de la reputacion ajena podria inferirse de los literales b) y c) pero no esta explicitamente mencionado."
+    },
+    {
+      "id": "C004",
+      "claim": "El plazo general para interponer una demanda judicial por competencia desleal en Honduras es de un año, contado a partir del momento en que el afectado tuvo conocimiento de la conducta.",
+      "claimed_source": "Ley de Propiedad Industrial / Codigo de Comercio",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "Ni el Codigo de Comercio ni las otras fuentes locales contienen un plazo de prescripcion especifico de 1 año para acciones de competencia desleal. Los Arts. 421-429 CM no mencionan plazos de prescripcion. Este plazo probablemente proviene de la LPI o de normas procesales generales no disponibles en las fuentes locales. ALERTA: el plazo de 1 año es informacion critica para el lector. No se puede verificar ni refutar con las fuentes locales."
+    },
+    {
+      "id": "C005",
+      "claim": "Existen tres vias de accion: (1) Denuncia administrativa ante el Instituto de la Propiedad, (2) Demanda judicial ante juzgados civiles o mercantiles solicitando cese, rectificacion, indemnizacion y publicacion de sentencia, (3) Denuncia penal ante el Ministerio Publico por violacion de secretos comerciales.",
+      "claimed_source": "Ley de Propiedad Industrial / Codigo de Comercio / Codigo Penal",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo de Comercio Arts. 426-428 CM (via judicial mercantil) + Codigo Penal Arts. 394-395 CP (via penal)",
+      "discrepancy": "La via administrativa (Instituto de la Propiedad) NO es verificable sin la LPI. Las otras dos vias SI tienen respaldo en las fuentes locales.",
+      "notes": "Via judicial mercantil: Art. 426 CM (legitimacion activa de afectados directos + asociaciones profesionales/Camaras de Comercio), Art. 427 CM (medidas preparatorias: exhibicion/aseguramiento de prueba + caucion), Art. 428 CM (remedios: cesacion + medidas para impedir consecuencias/repeticion + resarcimiento de danos y perjuicios). Via penal: Art. 394 CP (uso ilegitimo de distintivos o marcas registradas, 1-4 anos + multa), Art. 395 CP (descubrimiento y revelacion de secreto industrial o comercial, 2-4/2-5 anos + multa). La entrada menciona 'publicacion de sentencia' como remedio judicial — esto NO aparece en el Art. 428 CM. La via administrativa y el nombre 'Instituto de la Propiedad' no pueden verificarse."
+    },
+    {
+      "id": "C006",
+      "claim": "El Codigo Penal de Honduras sanciona ciertas conductas asociadas a la competencia desleal, como la revelacion ilegal de secretos comerciales, con penas de prision y multas.",
+      "claimed_source": "Codigo Penal de Honduras",
+      "verification_status": "VERIFICADO",
+      "actual_source": "Codigo Penal, Arts. 394, 395 y 396 CP (Titulo XXI: Delitos contra la propiedad intelectual e industrial)",
+      "discrepancy": null,
+      "notes": "Art. 394 CP (Capitulo II: Delitos contra la propiedad industrial): 'Uso ilegitimo de distintivos o marcas registradas' con penas de prision de 1 a 4 anos y multa igual o hasta el triple del beneficio. Art. 395 CP: 'Descubrimiento y revelacion de secreto industrial o comercial' — quien se apodera de datos/soportes para obtener un secreto de empresa: 2-4 anos + multa; quien revela/utiliza el secreto asi obtenido: pena incrementada en 1/3; quien revela/utiliza secreto al que accedio legitimamente pero con deber de reserva: 2-5 anos + multa. Art. 396 CP: agravantes (+1/3) por trascendencia economica, grupo delictivo organizado o uso de menores. Art. 397 CP: responsabilidad de personas juridicas."
+    },
+    {
+      "id": "C007",
+      "claim": "En el ambito administrativo ante el Instituto de la Propiedad, los plazos pueden variar, por lo que se recomienda actuar con celeridad.",
+      "claimed_source": "Practica administrativa",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "El Instituto de la Propiedad (o DIGEPIH) y sus plazos administrativos no pueden verificarse con las fuentes locales. No hay referencia a esta entidad en codigo_comercio.json, codigo_civil.json ni articulos_cp.json."
+    },
+    {
+      "id": "C008",
+      "claim": "Para demostrar la competencia desleal se requieren pruebas como fotografias de empaques, capturas de pantalla de contenido engañoso, facturas que acrediten ventas a perdida, testimonios de consumidores, o documentos que certifiquen la confidencialidad de secretos comerciales.",
+      "claimed_source": "Practica probatoria general",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo de Comercio, Art. 427 CM",
+      "discrepancy": null,
+      "notes": "El Art. 427 CM establece que 'la accion podra prepararse mediante la exhibicion o el aseguramiento de todos los objetos que sean prueba de los actos de competencia desleal, o de un numero suficiente de ellos, siempre que se otorgue la caucion correspondiente'. Esto respalda la existencia de medidas preparatorias de prueba. Los tipos de prueba mencionados en la entrada (fotografias, capturas de pantalla, facturas, testimonios, documentos de confidencialidad) son genericos y no contradicen las fuentes locales. Sin embargo, no hay una lista especifica de medios probatorios en las fuentes locales para competencia desleal."
+    },
+    {
+      "id": "C009",
+      "claim": "Ejemplo practico: si una empresa usa un empaque distintivo y otra lanza un producto con empaque casi identico provocando confusion, se configura un acto de confusion sancionable.",
+      "claimed_source": "Ley de Propiedad Industrial / Codigo de Comercio",
+      "verification_status": "PARCIALMENTE_VERIFICADO",
+      "actual_source": "Codigo de Comercio, Art. 425 CM literal c)",
+      "discrepancy": null,
+      "notes": "Art. 425 CM literal c) menciona expresamente el 'empleo de envases e inscripciones que contribuyan a dar apariencia de genuinos a productos falsificados o adulterados' como acto de competencia desleal. El ejemplo de los jugos (Jugos del Valle vs. Jugos del Sur) encaja en este supuesto. Sin embargo, la entrada menciona tambien la via administrativa (Instituto de la Propiedad) como opcion, lo cual no es verificable sin la LPI. La via judicial mercantil si esta respaldada por los Arts. 426-428 CM."
+    },
+    {
+      "id": "C010",
+      "claim": "El Codigo de Comercio contiene disposiciones aplicables a las practicas de competencia desleal.",
+      "claimed_source": "Codigo de Comercio de Honduras",
+      "verification_status": "VERIFICADO",
+      "actual_source": "Codigo de Comercio, Titulo II: De los limites y la actividad mercantil y de la competencia desleal, Arts. 421 a 429 CM",
+      "discrepancy": null,
+      "notes": "El Titulo II del Codigo de Comercio (Arts. 421-429 CM) regula la competencia desleal mercantil de manera integral: Art. 421 CM (comerciantes no inscritos), Art. 422 CM (obligaciones de comerciantes — ejercicio conforme a ley, usos y costumbres, sin perjudicar al publico ni a la economia nacional), Art. 423 CM (pactos restrictivos — validos hasta 10 anos), Art. 424 CM (pactos entre empresas sobre produccion/servicios), Art. 425 CM (definicion y conductas de competencia desleal — engaño, falsas indicaciones, envases falsificados, noticias falsas), Art. 426 CM (legitimacion activa — afectados + asociaciones/Camaras de Comercio), Art. 427 CM (medidas preparatorias — exhibicion/aseguramiento + caucion), Art. 428 CM (remedios judiciales — cesacion + medidas + resarcimiento), Art. 429 CM (repeticion dolosa presumida sin prueba en contrario)."
+    },
+    {
+      "id": "C011",
+      "claim": "La responsabilidad civil por daños y perjuicios derivados de actos de competencia desleal puede reclamarse conforme al regimen general de responsabilidad extracontractual.",
+      "claimed_source": "Codigo Civil — Responsabilidad extracontractual",
+      "verification_status": "VERIFICADO",
+      "actual_source": "Codigo Civil, Arts. 2236 y 2237 CC",
+      "discrepancy": null,
+      "notes": "Art. 2236 CC: 'El que por accion u omision causa daño a otro, interviniendo culpa o negligencia, esta obligado a reparar el daño causado.' Art. 2237 CC: extiende la obligacion a actos de personas bajo responsabilidad de otro (hijos menores, dependientes, etc.) y a duenos/directores de establecimientos respecto de perjuicios causados por sus dependientes. Estos articulos (Capitulo II: De las obligaciones que nacen de culpa o negligencia) proporcionan base juridica supletoria para el resarcimiento de daños por competencia desleal, complementando el Art. 428 CM que expresamente ordena 'el resarcimiento de daños y perjuicios cuando sea procedente'. La entrada no cita estos articulos, pero la afirmacion es correcta."
+    },
+    {
+      "id": "C012",
+      "claim": "El Decreto de la Ley de Propiedad Industrial es el No. 12-99.",
+      "claimed_source": "Ley de Propiedad Industrial de Honduras",
+      "verification_status": "NO_VERIFICABLE",
+      "actual_source": null,
+      "discrepancy": null,
+      "notes": "La LPI no esta en las fuentes locales. Otras referencias en el proyecto mencionan 'Decreto No. 12-99-E' (con la '-E'). No se puede verificar si la entrada usa el numero correcto. Posible omision de la '-E' o variante en la numeracion oficial."
+    }
+  ],
+  "hallazgos_clave": [
+    {
+      "hallazgo": "El Codigo de Comercio (Arts. 421-429 CM) proporciona base legal solida y verificable para acciones de competencia desleal en el ambito mercantil. La entrada menciona el Codigo de Comercio como fuente pero no cita los articulos especificos (421-429).",
+      "severidad": "omision"
+    },
+    {
+      "hallazgo": "La mayoria de disposiciones sustantivas sobre la LPI (Articulo 193, Instituto de la Propiedad, via administrativa, plazo de 1 año) dependen de la Ley de Propiedad Industrial (Decreto 12-99), NO disponible en las fuentes locales. No se pueden verificar ni refutar.",
+      "severidad": "no_verificable"
+    },
+    {
+      "hallazgo": "El Art. 425 CM NO menciona 'venta a perdida' ni 'violacion de secretos comerciales' como conductas de competencia desleal mercantil. La venta a perdida podria estar en la LPI o en legislacion de competencia. La violacion de secretos si esta en el Codigo Penal (Art. 395 CP).",
+      "severidad": "omision_parcial"
+    },
+    {
+      "hallazgo": "La entrada NO menciona el Art. 428 CM ni el concepto de 'repeticion dolosa presumida' del Art. 429 CM, que son disposiciones relevantes del Codigo de Comercio sobre remedios y reincidencia en competencia desleal.",
+      "severidad": "omision"
+    },
+    {
+      "hallazgo": "El Codigo Penal (Arts. 394-397 CP) respalda la via penal mencionada en la entrada, con penas verificables: uso ilegitimo de marcas (1-4 años), revelacion de secreto industrial/comercial (2-4/2-5 años). La entrada no cita los numeros de articulo, lo cual es positivo (evita errores de numeracion).",
+      "severidad": "informativo"
+    },
+    {
+      "hallazgo": "El Art. 2236 CC proporciona base verificable para la responsabilidad civil extracontractual aplicable como fundamento supletorio a acciones por competencia desleal.",
+      "severidad": "informativo"
+    },
+    {
+      "hallazgo": "La entrada menciona 'publicacion de sentencia' como remedio judicial. El Art. 428 CM NO menciona expresamente la publicacion de sentencia entre los remedios (cesacion + medidas + resarcimiento). Verificar si la LPI u otra norma la contempla.",
+      "severidad": "discrepancia_potencial"
+    }
+  ],
+  "resumen": {
+    "claims_verificados": 3,
+    "claims_parcialmente_verificados": 4,
+    "claims_con_discrepancia": 0,
+    "claims_no_verificables": 5,
+    "total_claims": 12,
+    "calidad_general": "El documento es de calidad MEDIA-ALTA en lo verificable con fuentes locales. NO contiene errores factuales graves como numeros de articulo inventados (a diferencia de otros articulos del proyecto). La entrada acierta al NO citar numeros de articulo del Codigo Penal, evitando errores comunes. El Codigo de Comercio (Arts. 421-429 CM) y el Codigo Penal (Arts. 394-395 CP) proporcionan bases verificables solidas para las vias judicial mercantil y penal respectivamente. Cinco claims dependen de la Ley de Propiedad Industrial (no disponible localmente) y no pueden verificarse, incluyendo el dato critico del plazo de 1 año. La entrada tampoco cita los articulos especificos del Codigo de Comercio (421-429 CM) ni del Codigo Civil (2236 CC), perdiendo oportunidad de fundamentar mejor sus afirmaciones. Se recomienda: (1) verificar contra el texto oficial de la LPI para los claims no verificables (especialmente Art. 193 y plazo de 1 año), (2) incorporar los Arts. 421-429 CM como fuente complementaria explicita, (3) confirmar si 'publicacion de sentencia' es un remedio disponible en Honduras, (4) verificar si el Decreto correcto es 12-99 o 12-99-E.",
+    "nota_metodologica": "Esta verificacion usa EXCLUSIVAMENTE fuentes locales (codigo_comercio.json, codigo_civil.json, articulos_cp.json). La Ley de Propiedad Industrial (Decreto 12-99) NO esta en las fuentes locales. El Instituto de la Propiedad (o DIGEPIH) y sus procedimientos administrativos tampoco estan en las fuentes locales. Los hallazgos deben complementarse con revision humana de la LPI."
+  }
+}

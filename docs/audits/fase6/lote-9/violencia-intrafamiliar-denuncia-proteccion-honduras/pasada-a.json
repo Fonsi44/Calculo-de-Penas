@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "42335421-8f5a-4289-9297-e9e06e7721a4",
+    "slug": "violencia-intrafamiliar-denuncia-proteccion-honduras",
+    "sha256_entrada": "af77a8f605ca1fb40a0a77457fb8a25930096391147a4e53ed03d5383719d3c7",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/delitos.json",
+      "data/codigo_familia_verificado.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "Dónde denunciar: (a) Juzgado de Letras de Violencia Doméstica es la vía principal; (b) No necesita abogado para iniciar el trámite; (c) El juzgado está obligado a recibir su denuncia y actuar de inmediato; (d) Ministerio Público — Fiscalía de la Mujer o fiscalía de turno; (e) Policía Nacional — llame al 911, puede detener al agresor si hay flagrancia y remitirlo en 24 horas; (f) CONADEH — si las autoridades no atienden, el Comisionado Nacional de Derechos Humanos puede intervenir.",
+      "fuente_verificacion": "data/delitos.json + data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "mayormente_no_verificable",
+      "detalle": "NINGUNA de las instituciones, procedimientos ni canales de denuncia mencionados aparece en las fuentes locales proporcionadas. data/delitos.json es un catálogo de tipos penales sustantivos (contiene Maltrato familiar en Art. 289 CP, Amenazas en Art. 246 CP, Quebrantamiento de medida cautelar en violencia de género en Art. 526 CP) pero no describe órganos jurisdiccionales especializados, fiscalías temáticas ni procedimientos de denuncia. data/codigo_familia_verificado.json solo contiene 12 artículos sobre alimentos, divorcio y divorcio por mutuo consentimiento; no regula violencia intrafamiliar ni medidas de protección. La existencia del 'Juzgado de Letras de Violencia Doméstica' como órgano especializado, la 'Fiscalía de la Mujer', el número 911, el CONADEH y la obligación de actuar de inmediato son afirmaciones institucionales y procedimentales que requieren fuentes normativas orgánicas o procesales (Ley contra la Violencia Doméstica, Código Procesal Penal, ley orgánica del MP, ley del CONADEH) no disponibles en el corpus local.",
+      "evidencia_local": {
+        "archivo": "data/delitos.json",
+        "articulos_relacionados": [
+          {
+            "articulo": "Art. 289 CP (Maltrato familiar)",
+            "texto": "Quien ejerce violencia física o psicológica sobre su cónyuge, persona con la que tiene una unión de hecho reconocida o persona con la que mantenga o haya mantenido una relación estable de análoga naturaleza a las anteriores aún sin convivencia..."
+          },
+          {
+            "articulo": "Art. 526 CP (Quebrantamiento de medida cautelar en violencia de género)",
+            "texto": "Quien quebranta su condena, medida de seguridad de internamiento, detención judicial, prisión preventiva o una medida cautelar, dictada en un procedimiento de violencia de género, debe ser castigado con la pena de prisión de dos (2) a cuatro (4) años."
+          }
+        ],
+        "nota": "El Art. 526 CP confirma la existencia de 'medidas cautelares' y 'procedimientos de violencia de género' en el ordenamiento hondureño, pero no describe cuáles son esas medidas, qué juzgado las dicta ni el procedimiento para obtenerlas. Esto da plausibilidad al documento pero no permite verificar sus afirmaciones específicas."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Medidas de protección inmediatas: (a) El juez de violencia doméstica puede dictar medidas cautelares en cuestión de horas, incluso sin oír previamente al agresor si la urgencia lo justifica; (b) Orden de alejamiento; (c) Prohibición de contacto por cualquier medio; (d) Desalojo del agresor del domicilio familiar aunque sea el propietario; (e) Custodia provisional de los hijos a favor de la víctima; (f) Fijación de una pensión alimenticia provisional; (g) Si el agresor viola estas medidas, puede ser detenido por desacato.",
+      "fuente_verificacion": "data/delitos.json + data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "QUEBRANTAMIENTO DE MEDIDAS: PARCIALMENTE CONFIRMADO. Art. 526 CP sanciona con prisión de 2 a 4 años a quien 'quebranta su condena, medida de seguridad de internamiento, detención judicial, prisión preventiva o una medida cautelar, dictada en un procedimiento de violencia de género'. Esto confirma que existen medidas cautelares en procedimientos de violencia de género y que su quebrantamiento es delito. Sin embargo, el CP lo tipifica como 'quebrantamiento de condena o medida', no como 'desacato', y la sanción es de 2-4 años de prisión, no 'detención' inmediata. MEDIDAS ESPECÍFICAS (alejamiento, desalojo, custodia, pensión alimenticia): NO VERIFICABLES. Ni delitos.json ni codigo_familia_verificado.json contienen el catálogo de medidas cautelares de protección. Art. 290 CP (Disposición común) permite al juez imponer prohibiciones del Art. 52 CP por hasta 5 años 'en sus sentencias' para delitos del capítulo de maltrato familiar, pero esto ocurre en sentencia, no como medida cautelar 'en cuestión de horas'. El codigo_familia_verificado.json (Arts. 207, 219, 220 CF) regula alimentos, su cuantía y modificación, pero no contempla 'pensión alimenticia provisional' como medida cautelar de violencia doméstica. PLAZO 'EN CUESTIÓN DE HORAS' Y 'SIN OÍR AL AGRESOR': NO VERIFICABLE. Ninguna fuente local describe plazos procesales ni la posibilidad de dictar medidas inaudita parte.",
+      "evidencia_local": {
+        "archivos": ["data/delitos.json", "data/codigo_familia_verificado.json"],
+        "articulos": [
+          {
+            "articulo": "Art. 526 CP",
+            "texto": "Quien quebranta su condena, medida de seguridad de internamiento, detención judicial, prisión preventiva o una medida cautelar, dictada en un procedimiento de violencia de género, debe ser castigado con la pena de prisión de dos (2) a cuatro (4) años."
+          },
+          {
+            "articulo": "Art. 290 CP (Disposición común)",
+            "texto": "El Órgano Jurisdiccional competente, en los delitos descritos en el presente capítulo, puede imponer en sus sentencias una o varias de las prohibiciones previstas en el Artículo 52 del presente Código por un tiempo que no debe exceder de cinco (5) años."
+          },
+          {
+            "articulo": "Art. 289 CP (Maltrato familiar)",
+            "texto": "Quien ejerce violencia física o psicológica sobre su cónyuge... debe ser castigado con la pena de prisión de seis (6) a doce (12) meses y multa de cien (100) a doscientos (200) días."
+          }
+        ]
+      },
+      "errores_detectados": [
+        "El documento usa el término 'desacato' para la violación de medidas, pero el CP tipifica 'quebrantamiento de condena o medida' (Art. 526 CP) con pena de 2-4 años de prisión, no detención inmediata por desacato.",
+        "Art. 290 CP permite prohibiciones solo 'en sus sentencias', no como medidas cautelares inmediatas."
+      ],
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Pruebas necesarias: (a) Certificados médicos de lesiones (acuda a un centro de salud o al forense); (b) Fotografías de lesiones o daños materiales; (c) Mensajes de texto, WhatsApp o redes sociales con amenazas o insultos; (d) Testigos que hayan presenciado los hechos; (e) Su propio testimonio detallado ante el juez; (f) No espere a tener 'pruebas perfectas' para denunciar, la ley facilita la prueba en estos casos.",
+      "fuente_verificacion": "data/delitos.json + data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Ninguna de las fuentes locales regula medios probatorios específicos ni estándares de prueba para procedimientos de violencia doméstica. data/delitos.json contiene los tipos penales sustantivos pero no reglas procesales de prueba. data/codigo_familia_verificado.json solo cubre alimentos y divorcio. La enumeración de medios probatorios (certificados médicos, fotografías, mensajes, testigos, testimonio de la víctima) es genérica y coherente con los principios generales del derecho probatorio penal y de familia, pero no es verificable contra las fuentes proporcionadas. La afirmación 'la ley facilita la prueba en estos casos' alude a un principio de facilitación probatoria que podría derivar de legislación especial (Ley contra la Violencia Doméstica) no disponible en el corpus.",
+      "evidencia_local": {
+        "archivos": ["data/delitos.json", "data/codigo_familia_verificado.json"],
+        "nota": "Las fuentes disponibles son sustantivas (tipos penales) y de derecho de familia limitado (alimentos/divorcio). No contienen reglas procesales ni probatorias."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El proceso judicial: (a) Audiencia de medidas: el juez la convoca en días y decide sobre las medidas de protección; (b) Investigación: si hay delito, el Ministerio Público investiga los hechos penales en paralelo; (c) Audiencia de juicio: el juez escucha a ambas partes, recibe pruebas y dicta sentencia.",
+      "fuente_verificacion": "data/delitos.json + data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La estructura procesal descrita (audiencia de medidas, investigación paralela del MP, audiencia de juicio) es genéricamente compatible con el sistema procesal penal acusatorio hondureño — el Art. 526 CP confirma que existen 'procedimientos de violencia de género' con medidas cautelares, y el Art. 289 CP tipifica el maltrato familiar como delito que el MP debe investigar. Sin embargo, ninguna fuente local describe el iter procesal específico: plazos ('en días'), existencia de una 'audiencia de medidas' diferenciada, el paralelismo entre la vía de protección y la penal, ni la estructura de la audiencia de juicio. Las afirmaciones sobre el proceso requieren el Código Procesal Penal o la ley especial de violencia doméstica, no disponibles en el corpus.",
+      "evidencia_local": {
+        "archivo": "data/delitos.json",
+        "articulos_relacionados": [
+          {
+            "articulo": "Art. 526 CP",
+            "texto": "Confirma la existencia de medidas cautelares en procedimientos de violencia de género."
+          },
+          {
+            "articulo": "Art. 289 CP",
+            "texto": "Tipifica el maltrato familiar como delito, lo que activa la competencia investigativa del MP."
+          },
+          {
+            "articulo": "Art. 290 CP",
+            "texto": "Permite al juez imponer prohibiciones del Art. 52 CP en sentencia."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 4,
+    "confirmados": 0,
+    "confirmados_con_matiz": 0,
+    "parcialmente_confirmados": 1,
+    "parcialmente_confirmado_con_matiz": 0,
+    "parcialmente_confirmado_con_errores": 0,
+    "parcialmente_confirmado_con_error_factual": 0,
+    "plausible_no_verificable": 2,
+    "mayormente_no_verificable": 1,
+    "impreciso": 0,
+    "errores_detectados": [
+      "A1: Ninguna de las instituciones de denuncia (Juzgado de Violencia Doméstica, Fiscalía de la Mujer, 911, CONADEH) es verificable en las fuentes locales proporcionadas (delitos.json y codigo_familia_verificado.json).",
+      "A2: El documento habla de 'desacato' para la violación de medidas; el CP tipifica 'quebrantamiento de condena o medida' (Art. 526), con pena de 2-4 años de prisión, no detención inmediata.",
+      "A2: Art. 290 CP permite prohibiciones 'en sus sentencias' (al final del juicio), no como medidas cautelares 'en cuestión de horas'."
+    ],
+    "limitacion_fundamental": "Las dos fuentes proporcionadas (delitos.json: catálogo de tipos penales sustantivos; codigo_familia_verificado.json: 12 artículos sobre alimentos y divorcio) son INSUFICIENTES para verificar la mayoría de las afirmaciones del documento, que son de naturaleza institucional (órganos competentes), procedimental (medidas cautelares, plazos, audiencias) y probatoria. El documento describe correctamente el núcleo penal (maltrato familiar como delito) pero sus afirmaciones sobre dónde, cómo y en qué plazos denunciar y obtener protección requieren legislación especial (Ley contra la Violencia Doméstica, Código Procesal Penal) no disponible en el corpus.",
+    "calidad_general": "imposible_evaluar_completamente_con_fuentes_disponibles"
+  }
+}

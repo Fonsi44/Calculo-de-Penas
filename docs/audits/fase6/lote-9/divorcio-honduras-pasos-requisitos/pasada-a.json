@@ -1,0 +1,114 @@
+{
+  "id": "7f88ae08-17f0-4583-b7f4-0e75df9d9b57",
+  "slug": "divorcio-honduras-pasos-requisitos",
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "sources": [
+    {
+      "file": "data/codigo_familia_verificado.json",
+      "sha256": "7af6f6d79ccec7ad38d9ba252d0aeeae13e4794ce69ce9c7ef01bad129d055aa"
+    },
+    {
+      "file": "data/codigo_civil.json",
+      "sha256": "6f5b7e553f8698af7f917ca0098b05700f834a78916e89cd98b902a69b74429c"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C01",
+      "text": "El Código de Familia regula dos tipos de divorcio: por mutuo consentimiento y por causa determinada (contencioso).",
+      "location": "Cuerpo, sección Tipos de divorcio en Honduras",
+      "source_articles": ["Art. 140 CC", "Art. 238 CF", "Art. 243 CF"],
+      "verdict": "verificable",
+      "detail": "Art. 140 CC #4 enumera como causal de disolución del matrimonio la 'sentencia firme en que se declare el divorcio contencioso o voluntario'. Art. 238 CF establece las causas del divorcio contencioso. Art. 243 CF regula el divorcio por mutuo consentimiento. La afirmación de que existen dos tipos es correcta, aunque la fuente que los enumera explícitamente es el Código Civil, no el de Familia."
+    },
+    {
+      "id": "C02",
+      "text": "Divorcio por mutuo consentimiento: 'Se requiere que hayan transcurrido al menos un año desde la celebración del matrimonio.'",
+      "location": "Cuerpo, sección Divorcio por mutuo consentimiento, párrafo 1",
+      "source_articles": ["Art. 243 CF", "Art. 155 CC"],
+      "verdict": "falso",
+      "detail": "Art. 243 CF establece que los cónyuges pueden divorciarse por mutuo consentimiento 'después de dos años de matrimonio'. Art. 155 CC exige 'Transcurridos dos años desde que se celebró el matrimonio'. El texto dice 'un año'; ambas fuentes dicen dos."
+    },
+    {
+      "id": "C03",
+      "text": "Divorcio contencioso: la lista de causas incluye 'infidelidad comprobada, maltrato físico o psicológico, abandono del hogar por más de un año, injurias graves o conducta que haga imposible la convivencia, separación de hecho por más de un año, vicios como alcoholismo o drogadicción.'",
+      "location": "Cuerpo, sección Divorcio por causa determinada, lista de causas",
+      "source_articles": ["Art. 238 CF", "Art. 143 CC"],
+      "verdict": "falso",
+      "detail": "Errores múltiples: (a) Art. 238 CF fija la separación o abandono injustificado en 'más de dos años', no uno; (b) las causas del Art. 143 CC son: preñez por relaciones ilícitas anteriores al matrimonio ignorada por el marido, atentado contra la vida del cónyuge, malos tratamientos de obra graves y frecuentes, adulterio de la mujer, concubinato del marido con escándalo, tentativa de prostituir a la mujer, y conato de corromper a los hijos — un catálogo distinto del que presenta el artículo; (c) 'injurias graves', 'maltrato psicológico' y 'vicios (alcoholismo, drogadicción)' no figuran como causales autónomas en los artículos verificados."
+    },
+    {
+      "id": "C04",
+      "text": "Requisitos documentales: 'acta de matrimonio original o copia certificada, documentos de identidad de ambos cónyuges, partidas de nacimiento de los hijos menores, propuesta de convenio en caso de mutuo consentimiento, pruebas de las causas invocadas en caso de divorcio contencioso.'",
+      "location": "Cuerpo, sección Requisitos generales para el divorcio",
+      "source_articles": ["Art. 156 CC", "Art. 244 CF"],
+      "verdict": "parcialmente_verificable",
+      "detail": "Art. 156 CC enumera para el divorcio por mutuo consentimiento: atestado del Registro Civil que acredite edad y calidad de casados, y testimonio de la escritura de declaración de bienes sociales. El listado del artículo es más amplio e incluye documentos razonables pero no exigidos literalmente por los artículos verificados. Art. 244 CF regula los requisitos de la solicitud pero su texto verificado no los detalla exhaustivamente."
+    },
+    {
+      "id": "C05",
+      "text": "En la sociedad conyugal, los bienes adquiridos durante el matrimonio se dividen por partes iguales, salvo acuerdo en contrario.",
+      "location": "Cuerpo, sección ¿Cómo afecta el divorcio a los hijos y los bienes?, último párrafo",
+      "source_articles": ["Art. 152 CC", "Art. 172 CC"],
+      "verdict": "no_verificable",
+      "detail": "Art. 152 CC #1 dispone 'la partición de los bienes comunes' como efecto de la sentencia de divorcio. Art. 172 CC indica que los bienes existentes al disolverse el matrimonio se considerarán comunes y se distribuirán si no se prueba pertenencia exclusiva. La fórmula 'por partes iguales' no aparece en los textos verificados."
+    },
+    {
+      "id": "C06",
+      "text": "La patria potestad generalmente se mantiene compartida, aunque la custodia pueda ser otorgada a uno de los padres.",
+      "location": "Cuerpo, sección ¿Cómo afecta el divorcio a los hijos y los bienes?, párrafo 1",
+      "source_articles": ["Art. 152 CC"],
+      "verdict": "falso",
+      "detail": "Art. 152 CC #2-3 establece que en el divorcio contencioso los hijos quedan bajo la potestad y protección del cónyuge inocente, y el cónyuge culpable queda privado de la patria potestad mientras viva el inocente. La afirmación de que 'generalmente se mantiene compartida' contradice directamente esta disposición legal para los casos contenciosos."
+    },
+    {
+      "id": "C07",
+      "text": "Divorcio por mutuo consentimiento: 'Puede resolverse en unos pocos meses si el convenio está completo y no hay objeciones del juez.'",
+      "location": "Cuerpo, FAQ ¿Cuánto tiempo dura el divorcio por mutuo consentimiento?",
+      "source_articles": [],
+      "verdict": "no_verificable",
+      "detail": "Los textos legales verificados no establecen plazos de duración del procedimiento. Es una estimación práctica no contrastable con las fuentes."
+    },
+    {
+      "id": "C08",
+      "text": "Divorcio contencioso: 'puede extenderse por un año o más.'",
+      "location": "Cuerpo, FAQ ¿Cuánto tiempo dura el divorcio por mutuo consentimiento?",
+      "source_articles": [],
+      "verdict": "no_verificable",
+      "detail": "Los textos legales no fijan plazos de duración del proceso contencioso. Es una estimación práctica no contrastable con las fuentes disponibles."
+    },
+    {
+      "id": "C09",
+      "text": "'En el divorcio por mutuo consentimiento no es necesario un período de separación previo.'",
+      "location": "Cuerpo, FAQ ¿Es necesario vivir separados para divorciarse?",
+      "source_articles": ["Art. 243 CF", "Art. 155 CC"],
+      "verdict": "verificable",
+      "detail": "Ni Art. 243 CF ni Art. 155 CC exigen separación previa; ambos requieren únicamente que hayan transcurrido dos años desde la celebración del matrimonio. La afirmación es correcta."
+    },
+    {
+      "id": "C10",
+      "text": "'En el divorcio por causa determinada, algunas causas requieren separación de hecho por más de un año.'",
+      "location": "Cuerpo, FAQ ¿Es necesario vivir separados para divorciarse?",
+      "source_articles": ["Art. 238 CF"],
+      "verdict": "falso",
+      "detail": "Art. 238 CF establece como causal 'la separación o abandono injustificado por más de dos años'. El texto dice 'un año'; la ley dice dos."
+    },
+    {
+      "id": "C11",
+      "text": "A la pregunta '¿Puedo divorciarme si mi cónyuge no está de acuerdo?': 'Sí, mediante el divorcio por causa determinada. Deberá invocar y probar una de las causas establecidas en el Código de Familia.'",
+      "location": "Cuerpo, FAQ correspondiente",
+      "source_articles": ["Art. 238 CF", "Art. 144 CC"],
+      "verdict": "verificable",
+      "detail": "Art. 238 CF establece las causas legales de divorcio. Art. 144 CC dispone que la acción de divorcio podrá establecerse por el cónyuge inocente. La respuesta del artículo es correcta."
+    },
+    {
+      "id": "C12",
+      "text": "A la pregunta sobre falta de acuerdo en hijos o bienes: 'El juez decidirá ambos aspectos en función del interés superior del menor y de las pruebas presentadas.'",
+      "location": "Cuerpo, FAQ ¿Qué pasa si no hay acuerdo sobre los hijos o los bienes?",
+      "source_articles": ["Art. 147 CC", "Art. 152 CC"],
+      "verdict": "parcialmente_verificable",
+      "detail": "Art. 147 CC prevé que el juez acuerde medidas provisionales sobre depósito de hijos, alimentos y protección de bienes. Art. 152 CC regula los efectos de la sentencia sobre los hijos (potestad del cónyuge inocente, tutor si ambos culpables). La expresión 'interés superior del menor' no aparece literalmente en los artículos verificados, pero la facultad judicial de decidir sobre hijos y bienes sí está respaldada."
+    }
+  ]
+}

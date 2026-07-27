@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "51b89574-3a7a-4169-ac9b-b7e740fb6e42",
+    "slug": "compraventa-inmuebles-aspectos-legales-honduras",
+    "sha256_entrada": "fe6a07cf12c6e5699e8041df7f7e7efd903b5e0f8c8a40c4bb4afde7c9de659e",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La compraventa de inmuebles en Honduras se rige primordialmente por el Código Civil, en sus artículos 1532 y siguientes, que definen el contrato de compraventa.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_errores",
+      "detalle": "El Código Civil efectivamente regula la compraventa en su TÍTULO III 'DEL CONTRATO DE COMPRA Y VENTA', pero la cita de artículos contiene dos errores: (1) El Art. 1532 CC NO define la compraventa — pertenece a la SECCIÓN de PRUEBAS (prueba testimonial): 'La fuerza probatoria de las declaraciones de los testigos será apreciada por los Tribunales conforme a lo establecido en el Código de Procedimientos.' (2) La definición genérica de contrato está en el Art. 1539 CC ('Contrato es una convención en virtud de la cual una o más personas se obligan...') y la definición específica de compraventa está en el Art. 1605 CC: 'Por el contrato de compra y venta uno de los contratantes se obliga a entregar una cosa determinada y el otro a pagar por ella un precio cierto, en dinero o signo que lo represente.' El Título III 'Del Contrato de Compra y Venta' comienza en Art. 1605 CC, no en 1532. El rango 1532-1538 CC corresponde a la sección de presunciones y pruebas, no a compraventa.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "art_1532_real": "Art. 1532 CC: 'La fuerza probatoria de las declaraciones de los testigos será apreciada por los Tribunales conforme a lo establecido en el Código de Procedimientos.' (sección PRUEBAS)",
+        "art_1539_real": "Art. 1539 CC: 'Contrato es una convención en virtud de la cual una o más personas se obligan para con otra u otras, o recíprocamente, a dar, hacer o no hacer alguna cosa.'",
+        "art_1605_real": "Art. 1605 CC: 'Por el contrato de compra y venta uno de los contratantes se obliga a entregar una cosa determinada y el otro a pagar por ella un precio cierto, en dinero o signo que lo represente.'",
+        "inicio_titulo_III": "TÍTULO III DEL CONTRATO DE COMPRA Y VENTA comienza en Art. 1604/1605 CC"
+      },
+      "errores_detectados": [
+        "Art. 1532 CC está en la sección de PRUEBAS (prueba testimonial), no define la compraventa.",
+        "La compraventa se define en el Art. 1605 CC, no en 1532 CC. El rango 1532-1538 CC corresponde a presunciones y pruebas."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Los artículos 1600 y siguientes versan sobre la transmisión de la propiedad.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "impreciso",
+      "detalle": "Los artículos 1600-1604 CC tratan sobre NULIDAD de los contratos (nulidad a favor de una parte, acciones rescisorias contra terceros, nulidad parcial, restitución de frutos). El TÍTULO III 'DEL CONTRATO DE COMPRA Y VENTA' comienza en el Art. 1605 CC con la definición del contrato. La 'transmisión de la propiedad' en contexto de compraventa de inmuebles se encuentra principalmente en: (a) Art. 1610 CC (la venta se perfecciona por el acuerdo en cosa y precio), (b) Art. 1630 CC (doble venta de inmueble: 'la propiedad pertenecerá al adquiriente que antes la haya inscrito en el Registro'), y (c) Art. 706 CC (solemnidades para la enajenación). Decir que 1600 y siguientes 'versan sobre la transmisión de la propiedad' es impreciso: el 1600 aún pertenece al capítulo de nulidad, y la compraventa como tal comienza en 1605.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "arts_1600_1604_contenido": "Nulidad de contratos: nulidad a favor de una parte, acciones rescisorias, nulidad parcial, restitución de frutos e intereses",
+        "art_1605": "Art. 1605 CC: Definición del contrato de compra y venta (inicio del TÍTULO III)",
+        "art_1630": "Art. 1630 CC: Regla de doble venta — inmueble pertenece al que primero inscribe en el Registro"
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La Ley de Propiedad Inmueble y el Reglamento del Instituto de la Propiedad (Acuerdo 09-2012) establecen los procedimientos y requisitos registrales.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Ley de Propiedad Inmueble y el Reglamento del Instituto de la Propiedad (Acuerdo 09-2012) no están disponibles como JSON estructurado en las fuentes locales de este repositorio. Sin embargo, el Código Civil mismo hace múltiples referencias al 'Registro' y al 'Registro de la Propiedad' (Art. 1630, 1666 CC), y los procedimientos registrales son materia de ley especial en Honduras. La existencia de estas normas es plausible y consistente con el sistema registral hondureño. La referencia al Acuerdo 09-2012 no puede verificarse localmente.",
+      "evidencia_local": {
+        "referencias_en_cc": [
+          "Art. 1630 CC menciona 'inscrito en el Registro'",
+          "Art. 1666 CC: 'desde la fecha de su inscripción en el Registro'",
+          "Art. 1599 CC: 'lo dispuesto en los títulos de la prescripción y del Registro de la propiedad'"
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El contrato de compraventa implica la obligación del vendedor de transferir la propiedad de un bien raíz al comprador, a cambio de un precio determinado. Para que esta transferencia sea plenamente válida y oponible a terceros, es indispensable cumplir con formalidades legales específicas.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "La definición es correcta en esencia. Art. 1605 CC: 'Por el contrato de compra y venta uno de los contratantes se obliga a entregar una cosa determinada y el otro a pagar por ella un precio cierto.' Art. 1620 CC: 'El vendedor está obligado a la entrega y saneamiento de la cosa objeto de la venta.' Art. 1610 CC establece que la venta se perfecciona por el acuerdo en cosa y precio. Sin embargo, la redacción del blog sugiere que la compraventa transfiere directamente la propiedad, lo cual requiere matiz: bajo el sistema hondureño (heredero del sistema romanista), el contrato de compraventa por sí solo no transfiere el dominio; la transferencia requiere tradición (entrega), y para inmuebles, además, inscripción registral para oponibilidad (Art. 1630 CC). Art. 706 CC: 'Si la ley exige solemnidades especiales para la enajenación, no se transfiere el dominio sin ellas.'",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos": [
+          {"articulo": "Art. 1605 CC", "texto": "Por el contrato de compra y venta uno de los contratantes se obliga a entregar una cosa determinada y el otro a pagar por ella un precio cierto, en dinero o signo que lo represente."},
+          {"articulo": "Art. 1610 CC", "texto": "La venta se perfeccionara entre comprador y vendedor, y será obligatoria para ambos si hubieren convenido en la cosa objeto del contrato, y en el precio, aunque ni la una ni el otro se hayan entregado."},
+          {"articulo": "Art. 1620 CC", "texto": "El vendedor esta obligado a la entrega y saneamiento de la cosa objeto de la venta."},
+          {"articulo": "Art. 1630 CC", "texto": "Si fuere inmueble, la propiedad pertenecerá al adquiriente que antes la haya inscrito en el Registro."},
+          {"articulo": "Art. 706 CC", "texto": "Si la ley exige solemnidades especiales para la enajenación, no se transfiere el dominio sin ellas."}
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "El proceso inicia con verificación de titularidad y gravámenes, luego contrato privado (opcional), escritura pública obligatoria ante notario, pago de impuestos, e inscripción en el Instituto de la Propiedad.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "La secuencia descrita es sustancialmente correcta para la práctica notarial hondureña. El Código Civil confirma varios elementos: (a) La escritura pública como formalidad: Art. 1615 CC menciona 'los gastos de la escritura y de cualesquiera otras solemnidades de la venta', y Art. 1544 CC define los contratos solemnes como aquellos sujetos a formalidades especiales. Art. 706 CC: 'Si la ley exige solemnidades especiales para la enajenación, no se transfiere el dominio sin ellas.' (b) Las arras/promesa: Art. 1613-1614 CC regulan las arras. (c) La inscripción registral para oponibilidad: Art. 1630 CC. Sin embargo, el requisito específico de escritura pública para inmuebles está más desarrollado en la Ley de Propiedad Inmueble (no disponible localmente). El Código Civil por sí solo no enumera este proceso paso a paso como lo hace el blog.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_soporte": [
+          "Art. 1544 CC: Contrato solemne requiere formalidades especiales",
+          "Art. 706 CC: Sin solemnidades no se transfiere el dominio",
+          "Art. 1613 CC: Arras o señal en compraventa",
+          "Art. 1615 CC: Gastos de escritura y solemnidades",
+          "Art. 1630 CC: Inscripción registral para inmuebles"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Si el vendedor se retracta [de la promesa de compraventa], el comprador puede demandar el cumplimiento forzoso o la devolución del doble de lo entregado como arras.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 1613 CC dispone: 'Si hubiesen mediado arras o señal en el contrato de compra y venta, podrá rescindirse el contrato allanándose el comprador a perderlas, o el vendedor a devolverlas duplicadas.' La afirmación del blog sobre la devolución del doble por parte del vendedor es textualmente correcta. Sin embargo, la 'promesa de compraventa' como contrato preparatorio autónomo no está regulada expresamente en los artículos locales verificados (Arts. 1613-1614 CC tratan las arras dentro del contrato de compraventa mismo, no de un contrato de promesa separado).",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulo": "Art. 1613 CC",
+        "texto": "Si hubiesen mediado arras o señal en el contrato de compra y venta, podrá rescindirse el contrato allanándose el comprador a perderlas, o el vendedor a devolverlas duplicadas."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "La transferencia de propiedad de inmuebles en Honduras requiere obligatoriamente una escritura pública otorgada ante notario.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_soporte_parcial",
+      "detalle": "El Código Civil proporciona soporte indirecto pero sólido: Art. 1544 CC define el contrato solemne como aquel 'sujeto a la observancia de ciertas formalidades especiales, de manera que sin ellas no produce ningún efecto civil.' Art. 706 CC: 'Si la ley exige solemnidades especiales para la enajenación, no se transfiere el dominio sin ellas.' Art. 1615 CC menciona 'los gastos de la escritura y de cualesquiera otras solemnidades de la venta', confirmando que la escritura es una solemnidad requerida. Art. 1614 CC remite a 'lo prevenido para la venta de bienes raíces', indicando que existen reglas especiales. Sin embargo, el requisito explícito de escritura pública para inmuebles está desarrollado en la Ley de Propiedad Inmueble, no disponible localmente. El Código Civil sienta la base pero no contiene una disposición que diga textualmente 'la compraventa de inmuebles requiere escritura pública.'",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos": [
+          "Art. 1544 CC: Contrato solemne requiere formalidades especiales",
+          "Art. 706 CC: Sin solemnidades no se transfiere dominio",
+          "Art. 1614 CC: 'sin perjuicio de lo prevenido para la venta de bienes raíces'",
+          "Art. 1615 CC: 'los gastos de la escritura y de cualesquiera otras solemnidades de la venta'"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "Impuesto sobre Ganancias de Capital: el vendedor debe pagar el 10% sobre la ganancia, y el comprador tiene la obligación de retenerlo y enterarlo al SAR.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Código Civil no regula materia tributaria. El Art. 1615 CC menciona que 'Los impuestos fiscales o Municipales, los gastos de la escritura y de cualesquiera otras solemnidades de la venta, serán de cuenta del vendedor', confirmando que existen impuestos asociados a la compraventa. Sin embargo, el Impuesto sobre Ganancias de Capital, su tasa del 10%, el mecanismo de retención por el comprador, y la entidad SAR (Servicio de Administración de Rentas) corresponden a legislación tributaria especial (Código Tributario, Ley del Impuesto sobre la Renta) no verificada en este análisis centrado en el Código Civil.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "art_1615": "Art. 1615 CC: 'Los impuestos fiscales o Municipales, los gastos de la escritura y de cualesquiera otras solemnidades de la venta, serán de cuenta del vendedor'"
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "La inscripción de la escritura pública en el Instituto de la Propiedad es indispensable para que la adquisición sea oponible a terceros. Sin ella, el inmueble sigue figurando a nombre del vendedor, exponiendo al comprador al riesgo de doble venta.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 1630 CC es concluyente: 'Si una misma cosa se hubiese vendido a diferentes compradores, la propiedad se transferirá a la persona que primero haya tomado posesión de ella con buena fe, si fuere mueble. Si fuere inmueble, la propiedad pertenecerá al adquiriente que antes la haya inscrito en el Registro. Cuando no haya inscripción, pertenecerá la propiedad a quien en buena fe sea primero en la posesión; y, faltando esta, a quien presente título de fecha más antigua, siempre que haya buena fe.' Esto confirma que la inscripción registral es el criterio principal de preferencia en caso de doble venta de inmuebles, y que sin inscripción el comprador queda expuesto a que otro adquirente que inscriba primero prevalezca.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulo": "Art. 1630 CC",
+        "texto": "Si una misma cosa se hubiese vendido a diferentes compradores, la propiedad se transferirá a la persona que primero haya tomado posesión de ella con buena fe, si fuere mueble. Si fuere inmueble, la propiedad pertenecerá al adquiriente que antes la haya inscrito en el Registro."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "La solicitud de inscripción debe realizarse dentro de los 60 días posteriores al otorgamiento de la escritura para evitar que derechos de terceros inscritos posteriormente prevalezcan.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_localmente",
+      "detalle": "El Código Civil no establece un plazo de 60 días para la inscripción de la escritura de compraventa. El Art. 1630 CC prioriza al que primero inscribe, sin fijar un plazo específico. El plazo de 60 días probablemente proviene de legislación registral especial (Ley de Propiedad Inmueble o su Reglamento), no disponible en las fuentes locales estructuradas. El Art. 1613 CC menciona un plazo de 2 meses para retractación en arras, que no debe confundirse con el plazo de inscripción.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "nota": "No se encontró un plazo de 60 días para inscripción de compraventa en el Código Civil.",
+        "art_1630": "Art. 1630 CC: Prioriza al que primero inscribe, sin fijar plazo"
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A11",
+      "claim_text": "Base legal: Código Civil de Honduras (Arts. 1532-1600 y 1600-1620), Ley de Propiedad Inmueble y Reglamento General del Instituto de la Propiedad (Acuerdo 09-2012).",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_errores",
+      "detalle": "La enumeración de fuentes normativas es sustancialmente correcta, pero la cita de artículos del Código Civil contiene imprecisiones: (1) El rango '1532-1600' es incorrecto como referencia a la compraventa. El Art. 1532 CC pertenece a la sección de pruebas, no a compraventa. La regulación de contratos en general comienza en 1539 CC y la compraventa específicamente en 1605 CC. (2) '1600-1620' mezcla artículos de nulidad (1600-1604) con los de compraventa (1605 en adelante). El rango correcto para la compraventa sería aproximadamente 1605-1670 CC (TÍTULO III completo). (3) La Ley de Propiedad Inmueble y el Acuerdo 09-2012 no se verifican localmente pero su existencia es plausible. La doble mención '1532-1600 y 1600-1620' es redundante y confusa.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "rangos_correctos": {
+          "contratos_general": "Art. 1539-1550 CC (TÍTULO II, definición y clasificación)",
+          "requisitos_contratos": "Art. 1551-1564 CC (consentimiento, objeto, causa)",
+          "compraventa": "Art. 1605-1670 CC (TÍTULO III completo)",
+          "nulidad": "Art. 1586-1604 CC (no es compraventa, es capítulo de nulidad)"
+        },
+        "errores_detectados": [
+          "1532 CC es de pruebas, no de compraventa",
+          "1600-1604 CC es de nulidad, no de compraventa",
+          "La cita '1532-1600' es incorrecta. El rango correcto de compraventa es 1605-1670 CC"
+        ]
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 11,
+    "confirmados": 2,
+    "confirmados_con_matiz": 1,
+    "confirmados_con_soporte_parcial": 1,
+    "parcialmente_confirmados": 1,
+    "parcialmente_confirmado_con_errores": 2,
+    "plausible_no_verificable": 2,
+    "impreciso": 1,
+    "no_verificable_localmente": 1,
+    "error_critico_detectado": "El documento cita los artículos 1532 y siguientes como reguladores de la compraventa, cuando el Art. 1532 CC pertenece a la sección de PRUEBAS (testimonial). La compraventa está definida en el Art. 1605 CC y regulada en el TÍTULO III (Arts. 1605-1670 CC). También menciona '1600 y siguientes' para transmisión de propiedad, cuando 1600-1604 es NULIDAD de contratos.",
+    "calidad_general": "aceptable_con_correcciones. Contenido sustantivo correcto pero citas de artículos imprecisas. La base legal principal (arts. 1532, 1600) está mal referenciada, lo que afecta la credibilidad técnica del documento."
+  }
+}

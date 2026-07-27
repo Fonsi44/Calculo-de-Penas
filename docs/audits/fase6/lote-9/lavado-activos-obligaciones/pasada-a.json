@@ -1,0 +1,107 @@
+{
+  "documentId": "b8ef67f9-1e10-4d1d-b1c6-a27f7f467bb5",
+  "auditor": "Auditor Jurídico Principal",
+  "pasada": "A",
+  "sha256Body": "f429aa4e7cd2d0754482ab52a28bcfbdbc79a08a7b4447c0185a27ecfa9c05be",
+  "claims": [
+    {
+      "claim": "El Artículo 1 de la Ley Especial contra el Lavado de Activos establece como objetivo prevenir y detectar operaciones con recursos de origen ilícito.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "isAccurate": false,
+        "sources": [
+          "Código Penal de Honduras (Art. 439–446 CP)",
+          "Ley Especial contra el Lavado de Activos (Decreto 144-2014)"
+        ],
+        "notes": "El blog cita 'Artículo 1 de la Ley Especial contra el Lavado de Activos' como si fuera parte del CP, pero dicha ley es una norma especial separada (Decreto 144-2014), no un artículo del Código Penal. El CP codifica el delito de lavado de activos en los artículos 439 a 446, no en un 'Artículo 1'. Si bien la Ley Especial existe y sí contiene un artículo 1 con objetivos de prevención, la redacción induce a confusión al no distinguir entre la ley especial y el Código Penal."
+      },
+      "correctionRequired": true,
+      "requiresLawyer": true
+    },
+    {
+      "claim": "La Comisión Nacional de Banca y Seguros (CNBS) y la Unidad de Inteligencia Financiera (UIF) supervisan el cumplimiento de esta normativa, imponiendo sanciones que pueden incluir multas significativas o responsabilidad penal en casos graves.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "isAccurate": true,
+        "sources": [
+          "Ley Especial contra el Lavado de Activos (Decreto 144-2014)",
+          "Legislación financiera hondureña"
+        ],
+        "notes": "La CNBS y la UIF son efectivamente las entidades supervisoras en materia de prevención de lavado de activos en Honduras. La CNBS supervisa al sector financiero y la UIF recibe y analiza los reportes de operaciones sospechosas. Las sanciones administrativas y penales están previstas en la legislación."
+      },
+      "correctionRequired": false,
+      "requiresLawyer": false
+    },
+    {
+      "claim": "La ley enumera taxativamente los sujetos obligados, incluyendo notarios y abogados en el ejercicio de ciertas operaciones, empresas constructoras e inmobiliarias, concesionarios de vehículos, casas de empeño, casinos y loterías.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "isAccurate": true,
+        "sources": [
+          "Art. 443 CP (sujetos obligados conforme a la legislación de prevención del lavado de activos)",
+          "Ley Especial contra el Lavado de Activos"
+        ],
+        "notes": "El Art. 443 CP hace referencia expresa a los 'sujetos obligados, conforme a la legislación de prevención del lavado de activos', confirmando la existencia de esta categoría. La lista de sectores mencionada (notarios, abogados, constructoras, concesionarios, casas de empeño, casinos, loterías) coincide con los sujetos obligados no financieros que tradicionalmente contempla la legislación hondureña e internacional (recomendaciones GAFI)."
+      },
+      "correctionRequired": false,
+      "requiresLawyer": false
+    },
+    {
+      "claim": "Reporte de transacciones en efectivo: Informar sobre transacciones en efectivo que superen ciertos umbrales establecidos, generalmente $10,000 o su equivalente en lempiras.",
+      "type": "legal",
+      "importance": "supporting",
+      "verification": {
+        "isAccurate": false,
+        "sources": [
+          "Ley Especial contra el Lavado de Activos",
+          "Resoluciones CNBS"
+        ],
+        "notes": "El umbral de $10,000 (aproximadamente L 250,000) es el estándar internacional del GAFI y del Bank Secrecy Act estadounidense, no necesariamente el umbral vigente en Honduras. La legislación hondureña y las resoluciones de la CNBS establecen umbrales propios que pueden variar. Además, el blog dice 'generalmente $10,000' sin citar la norma hondureña específica, lo cual es impreciso y potencialmente incorrecto para el contexto local."
+      },
+      "correctionRequired": true,
+      "requiresLawyer": true
+    },
+    {
+      "claim": "Conservación de documentos: Mantener registros de identificación de clientes y transacciones por un período mínimo de 5 años.",
+      "type": "legal",
+      "importance": "supporting",
+      "verification": {
+        "isAccurate": true,
+        "sources": [
+          "Ley Especial contra el Lavado de Activos",
+          "Estándares GAFI (Recomendación 11)"
+        ],
+        "notes": "El plazo de 5 años para la conservación de registros es el estándar internacional establecido por el GAFI (Recomendación 11) y es consistentemente adoptado por la legislación hondureña en materia de prevención de lavado de activos."
+      },
+      "correctionRequired": false,
+      "requiresLawyer": false
+    },
+    {
+      "claim": "La ley hondureña garantiza la confidencialidad del reporte y exime de responsabilidad al sujeto obligado que actúe de buena fe. Por el contrario, la omisión del reporte sí constituye un delito.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "isAccurate": true,
+        "sources": [
+          "Art. 443 CP (Delito de infidencia: revelar información de reportes es sancionado con 1 a 3 años de prisión)",
+          "Art. 439 CP (Lavado de activos, 5 a 8 años de prisión)"
+        ],
+        "notes": "El Art. 443 CP tipifica expresamente como delito de infidencia que los sujetos obligados revelen que una información ha sido solicitada o proporcionada a las autoridades, lo cual confirma la confidencialidad del reporte. La omisión del reporte ante la UIF puede constituir un delito conforme a la legislación penal y especial. La exención de responsabilidad por actuar de buena fe es un principio general del derecho penal hondureño."
+      },
+      "correctionRequired": false,
+      "requiresLawyer": false
+    }
+  ],
+  "overallAssessment": {
+    "isFactuallyAccurate": false,
+    "legalRiskLevel": "medium",
+    "summary": "El artículo contiene 2 inexactitudes jurídicas relevantes: 1) Cita 'Artículo 1 de la Ley Especial contra el Lavado de Activos' sin distinguir adecuadamente entre el Código Penal (que regula el delito en los arts. 439–446) y la Ley Especial (Decreto 144-2014), lo que puede confundir al lector sobre la fuente normativa. 2) El umbral de $10,000 para reporte de transacciones en efectivo es una referencia al estándar internacional (GAFI/BSA estadounidense), no necesariamente al umbral vigente en Honduras según las resoluciones de la CNBS, lo cual es impreciso y requiere verificación con la normativa local."
+  },
+  "recommendedActions": [
+    "Aclarar en el texto que la Ley Especial contra el Lavado de Activos es el Decreto 144-2014, una norma separada del Código Penal, y citar correctamente los artículos pertinentes de ambas normas.",
+    "Verificar el umbral exacto de reporte de transacciones en efectivo vigente en Honduras mediante consulta de las resoluciones más recientes de la CNBS, y actualizar el monto si difiere de los $10,000 mencionados."
+  ]
+}

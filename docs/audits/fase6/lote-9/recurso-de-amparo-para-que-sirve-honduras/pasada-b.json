@@ -1,0 +1,47 @@
+{
+  "pasada": "B",
+  "slug": "recurso-de-amparo-para-que-sirve-honduras",
+  "sha256_original": "1840174626180044ac0c9d8d79ccf658aa63e66999d70e26db785939bd1f5a4a",
+  "fecha_pasada": "2026-07-27",
+  "global_assessment": {
+    "accuracy_score": "ALTA_CON_ERROR_CRITICO",
+    "rating_numeric": 87,
+    "rating_label": "Confiable con reserva por error puntual grave",
+    "summary": "El artículo es sustancialmente preciso en su contenido jurídico: explica correctamente la naturaleza del amparo, sus diferencias con habeas corpus, inconstitucionalidad y apelación, los plazos, el procedimiento ante la Sala de lo Constitucional y ofrece ejemplos prácticos útiles. Sin embargo, contiene un error crítico: atribuye el amparo al Art. 182 constitucional cuando la norma correcta es el Art. 183. El Art. 182 regula el Hábeas Corpus y Hábeas Data. Este error, aunque puntual (una cifra), es grave porque induce a confusión sobre la ubicación normativa de la garantía de amparo y podría llevar a un lector a consultar un artículo equivocado."
+  },
+  "error_critico": {
+    "ubicacion": "Segundo párrafo del cuerpo del artículo, sección 'Qué protege el amparo'",
+    "texto_erroneo": "Art. 182 constitucional y Ley de Justicia Constitucional",
+    "correccion": "Art. 183 constitucional y Ley de Justicia Constitucional",
+    "explicacion": "El Art. 182 de la Constitución de Honduras regula el Hábeas Corpus (o Exhibición Personal) y el Hábeas Data. El amparo está regulado en el Art. 183 constitucional, que dispone: 'El Estado reconoce la garantía de amparo. En consecuencia toda persona agraviada o cualquier en nombre de ésta, tiene derecho a interponer recurso de amparo: 1) Para que se le mantenga o restituya en el goce y disfrute de los derechos o garantía que la Constitución, los tratados, convenciones y otros instrumentos internacionales establecen; y, 2) Para que se declare en casos concretos que un reglamento, hecho, acto o resolución de autoridad, no obliga al recurrente ni es aplicable por contravenir, disminuir o tergiversar cualesquiera de los derechos reconocidos por esta Constitución.'",
+    "severidad": "ALTA",
+    "impacto": "El lector que consulte el Art. 182 encontrará información sobre Hábeas Corpus y Hábeas Data, no sobre amparo. Esto genera confusión y desinformación sobre la base constitucional del recurso."
+  },
+  "fortalezas": [
+    "Explica correctamente la naturaleza del amparo como garantía constitucional, no como tercera instancia",
+    "Distingue con precisión el amparo del habeas corpus, la apelación y el recurso de inconstitucionalidad",
+    "Indica correctamente el plazo de dos meses y la excepción para actos continuados",
+    "Identifica correctamente que se interpone ante la Sala de lo Constitucional (Art. 316)",
+    "Ofrece ejemplos prácticos claros que ilustran cuándo procede y cuándo no el amparo",
+    "La referencia a la Ley de Justicia Constitucional como norma complementaria es correcta"
+  ],
+  "debilidades": [
+    "ERROR CRITICO: Atribuye el amparo al Art. 182 en lugar del Art. 183",
+    "La afirmación de que el amparo no procede contra actos de particulares es parcialmente cierta pero omite mencionar los supuestos excepcionales de la Ley de Justicia Constitucional donde sí procede (ej. particulares en ejercicio de funciones de autoridad)"
+  ],
+  "recomendacion": "CORREGIR el número de artículo antes de publicación o en la primera actualización disponible. Cambiar 'Art. 182 constitucional' por 'Art. 183 constitucional'. El resto del contenido es sólido y no requiere modificaciones sustanciales.",
+  "constitution_references_verified": {
+    "Art_182": {
+      "titulo": "Hábeas Corpus y Hábeas Data",
+      "relacion_con_articulo": "El artículo menciona erróneamente el 182 como base del amparo; el 182 regula el Hábeas Corpus"
+    },
+    "Art_183": {
+      "titulo": "Garantía de Amparo",
+      "relacion_con_articulo": "Es la base constitucional correcta del amparo que el artículo debió citar"
+    },
+    "Art_316": {
+      "titulo": "Sala de lo Constitucional",
+      "relacion_con_articulo": "Correctamente identificado como el órgano competente para conocer del amparo"
+    }
+  }
+}

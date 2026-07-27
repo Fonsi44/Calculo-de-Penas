@@ -1,0 +1,296 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "70c55050-7ad4-4367-b1e6-4736cbe23b94",
+    "slug": "usucapion-prescripcion-adquisitiva-honduras",
+    "sha256_entrada": "b66f437dbef0d6d88c7f4d6dd03203a6b094370fe68d6fe7392873aa743ae96a",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json",
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "El Código Procesal Civil no está disponible en fuentes JSON locales. Tampoco lo está el Decreto 76-84 (Código Civil). La verificación granular de los aspectos procedimentales es limitada."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 8 bloques de afirmaciones sobre usucapión/prescripción adquisitiva en Honduras. Se detecta UN ERROR FACTUAL SIGNIFICATIVO: el artículo afirma que la usucapión está regulada en los arts. 717-724 CC y que el Art. 717 CC establece que 'la propiedad se adquiere por prescripción'. En realidad, el Art. 717 CC define la posesión, y la prescripción adquisitiva se regula en los arts. 2263-2288 CC. Este error es de cita normativa, no de contenido sustantivo: los requisitos y plazos mencionados son correctos según los arts. 2273, 2286 y 2287 CC. El contenido sustantivo (requisitos, plazos, definiciones) es correcto y está respaldado directamente por el Código Civil. Las secciones procedimentales no son verificables sin el Código Procesal Civil. Se detecta una omisión: el artículo no menciona que la prescripción extraordinaria (Art. 2287 CC) puede operar como excepción a la regla de que la mera tenencia no se convierte en posesión (Art. 733 CC).",
+    "error_detectado": {
+      "tipo": "cita_normativa_incorrecta",
+      "descripcion": "El artículo cita los arts. 717-724 CC como sede normativa de la usucapión y atribuye al Art. 717 CC el texto sobre adquisición de propiedad por prescripción. En realidad: (a) Art. 717 CC define la posesión ('La posesión es la tenencia de una cosa...'); (b) la prescripción adquisitiva está en los arts. 2263-2288 CC (Título XVI); (c) el artículo que establece que por prescripción se adquiere el dominio es el Art. 2263 CC. Los arts. 717-724 pertenecen al Título VII 'De la Posesión' y contienen definiciones de posesión regular/irregular, justo título y buena fe que son REFERENCIADAS por el Art. 2281 CC para la prescripción, pero no son la sede principal.",
+      "impacto": "medio",
+      "ubicaciones": ["Primer párrafo tras la definición: 'La usucapión está regulada principalmente en los artículos 717 al 724 del Código Civil'"]
+    },
+    "omision_detectada": {
+      "tipo": "excepcion_legal_omitida",
+      "descripcion": "El artículo afirma categóricamente que 'un arrendatario no puede usucapir' y que 'reconocer dominio ajeno' impide la usucapión. Sin embargo, el Art. 733 CC establece: 'El simple lapso de tiempo no muda la mera tenencia en posesión; SALVO EL CASO DE PRESCRIPCIÓN EXTRAORDINARIA.' Esto significa que, bajo la prescripción extraordinaria de 20 años (Art. 2287 CC), incluso quien originalmente era mero tenedor podría llegar a usucapir si cambia su animus y posee en concepto de dueño por el plazo extraordinario. La afirmación del artículo es correcta como regla general pero omite esta excepción legal expresa.",
+      "impacto": "bajo"
+    },
+    "fuente_ausente_relevante": {
+      "tipo": "codigo_procesal_no_disponible",
+      "descripcion": "El Código Procesal Civil de Honduras, que regularía el procedimiento judicial de usucapión (demanda, pruebas, edictos, sentencia), NO está disponible en los archivos JSON locales. Esto impide verificar aproximadamente el 30% del contenido del artículo (toda la sección procedimental).",
+      "impacto": "medio"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "La usucapión/prescripción adquisitiva es un mecanismo legal que permite adquirir la propiedad de un bien inmueble mediante posesión calificada.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2263 CC: 'Por la prescripción se adquieren... el dominio y demás derechos reales.' La definición es correcta en esencia. El Código Civil usa el término 'prescripción' (no 'usucapión', que es el término doctrinal), y aplica tanto a muebles (Arts. 2284-2285) como a inmuebles (Arts. 2286-2287).",
+      "evidencia": "Art. 2263 CC: 'Por la prescripción se adquieren de la manera y con las condiciones determinadas en la ley, el dominio y demás derechos reales.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La usucapión está regulada principalmente en los artículos 717 al 724 del Código Civil de Honduras.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "error_factual",
+      "detalle": "ERROR. Los arts. 717-724 CC pertenecen al Título VII 'De la Posesión' (Libro II) y regulan: definición de posesión (717), posesión regular/irregular (719), justo título (720-722), buena fe (723-724). La prescripción adquisitiva del dominio se regula en el Título XVI (arts. 2263-2288 CC). Si bien el Art. 2281 CC remite a los requisitos de buena fe y justo título del Título VII, la sede normativa principal es el Título XVI. El artículo confunde la ubicación sistemática: los arts. 717-724 son presupuestos conceptuales (definen qué es posesión, justo título y buena fe), pero la regulación sustantiva de la prescripción adquisitiva (plazos, requisitos específicos, cómputo) está en los arts. 2263-2288.",
+      "evidencia": "Art. 717 CC define posesión. Arts. 2263-2288 CC regulan prescripción adquisitiva. Art. 2281 CC remite al Título VII para definiciones de buena fe y justo título.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "El artículo 717 del Código Civil establece que la propiedad se adquiere por prescripción.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "error_factual",
+      "detalle": "ERROR. El texto real del Art. 717 CC es: 'La posesión es la tenencia de una cosa o el goce de un derecho por nosotros mismos con ánimo de dueños, o por otro en nombre nuestro. El poseedor es reputado dueño, mientras otra persona no justifica serlo.' Este artículo define la POSESIÓN, no la prescripción adquisitiva. El artículo que establece la adquisición del dominio por prescripción es el Art. 2263 CC: 'Por la prescripción se adquieren de la manera y con las condiciones determinadas en la ley, el dominio y demás derechos reales.' El Art. 717 establece una presunción de dominio a favor del poseedor (presunción iuris tantum), no el mecanismo de prescripción adquisitiva.",
+      "evidencia": "Art. 717 CC real: 'La posesión es la tenencia de una cosa o el goce de un derecho...' vs. lo que el artículo le atribuye. Art. 2263 CC: el artículo correcto sobre prescripción adquisitiva.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.4",
+      "subclaim_text": "El Código Civil de Honduras es el Decreto 76-84.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El número de decreto del Código Civil hondureño no se menciona en el texto de los artículos almacenados en codigo_civil.json. El dato no es verificable desde las fuentes locales. La referencia 'Decreto 76-84' sigue el formato estándar de numeración legislativa hondureña (número-año). La doctrina jurídica hondureña frecuentemente cita el Código Civil como Decreto 76-1906, no 76-84. Esta discrepancia merece verificación externa.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "La posesión debe ser en concepto de dueño.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2273 CC: 'La posesión ha de ser en concepto de dueño, pública, pacífica y no interrumpida.' Confirmación textual directa.",
+      "evidencia": "Art. 2273 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La posesión debe ser pacífica (no obtenida mediante violencia).",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2273 CC exige posesión 'pacífica'. Arts. 726-729 CC definen la posesión violenta como viciosa. Art. 727 CC: 'Posesión violenta es la que se adquiere por la fuerza.' Consistente.",
+      "evidencia": "Arts. 2273, 726, 727 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "La posesión debe ser continua (no interrumpida). Un desalojo judicial sin reclamo oportuno interrumpe la posesión.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Art. 2273 CC exige posesión 'no interrumpida'. Arts. 2275-2279 CC regulan la interrupción natural (cese por más de un año, Art. 2276) y civil (citación judicial, Art. 2277). Sobre el desalojo judicial: es consistente con la interrupción natural (cese en la posesión). El matiz: la afirmación sobre 'sin reclamo oportuno' sugiere que reclamar tras el desalojo podría restaurar la posesión, pero el Art. 2276 CC es claro: cesar en la posesión por más de un año interrumpe. Si hay desalojo, la posesión cesa; el 'reclamo oportuno' sería más bien una acción para recuperar la posesión, no para evitar la interrupción.",
+      "evidencia": "Arts. 2273, 2275, 2276, 2277 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.4",
+      "subclaim_text": "La posesión debe ser pública (notoria, no clandestina).",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2273 CC exige posesión 'pública'. Art. 730 CC define la posesión clandestina como viciosa: 'Posesión clandestina es la que se ejerce ocultándola a los que tienen derecho para oponerse a ella.'",
+      "evidencia": "Arts. 2273, 726, 730 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El plazo de usucapión ordinaria es de 10 años con justo título y buena fe.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2286 CC: 'El dominio y demás derechos reales sobre bienes inmuebles, se prescriben por la posesión durante diez años con buena fe y justo título.' Confirmación textual directa. El Art. 2272 CC complementa: 'Para la prescripción ordinaria del dominio... se necesita poseer las cosas con buena fe y justo título por el tiempo determinado en la ley.'",
+      "evidencia": "Arts. 2286 y 2272 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El plazo de usucapión extraordinaria es de 20 años, sin necesidad de justo título ni buena fe.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2287 CC: 'Se prescriben, también, el dominio y demás derechos reales sobres los bienes inmuebles por su posesión no interrumpida durante veinte años, sin necesidad de título ni de buena fe.' Confirmación textual directa.",
+      "evidencia": "Art. 2287 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "El cómputo del plazo inicia desde el momento en que se ejerce la posesión.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2288 CC reglas de cómputo: '1o.- El poseedor actual puede completar el tiempo necesario para la prescripción, uniendo al suyo el de su causante. 2o.- Se presume que el poseedor actual, que lo hubiera sido en época anterior, ha continuado siéndolo durante el tiempo intermedio, salvo prueba en contrario. 3o.- El día en que comienza a contarse el tiempo se tiene por entero; pero el último debe cumplirse en su totalidad.' Esto respalda que el cómputo inicia desde el comienzo de la posesión, con posibilidad de accessio possessionis.",
+      "evidencia": "Art. 2288 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "El proceso requiere presentación de demanda ante el Juzgado de Letras Civil del departamento donde se encuentra el inmueble.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Código Procesal Civil no está disponible en fuentes locales. La competencia territorial (lugar del inmueble) es principio estándar de derecho procesal civil. El Art. 2309 CC sobre registro de propiedad establece que 'el registro se hará en la oficina a que correspondan por su situación los bienes', lo cual es un principio análogo pero no aplicable directamente a competencia judicial. No verificable sin el Código Procesal Civil.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "Se requiere sentencia judicial ejecutoriada para perfeccionar la usucapión.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 715 CC: 'Siempre que por una sentencia ejecutoriada se reconociere como adquirido por prescripción el dominio o cualquier otro de los derechos mencionados en los precedentes artículos de este Capítulo, servirá de título esta sentencia, después de su registro en la oficina u oficinas respectivas.' La necesidad de sentencia judicial está expresamente establecida. La usucapión no opera de pleno derecho; requiere declaración judicial.",
+      "evidencia": "Art. 715 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.3",
+      "subclaim_text": "La sentencia debe inscribirse en el Registro de la Propiedad a través del Instituto de la Propiedad (IP).",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "Art. 715 CC exige 'registro en la oficina u oficinas respectivas' de la sentencia. Arts. 2304-2310 CC regulan el Registro de la Propiedad. Sin embargo, el Código Civil menciona 'Registro de la Propiedad' como institución, no 'Instituto de la Propiedad (IP)'. El IP es la denominación moderna de la institución registral hondureña, creada por legislación posterior al Código Civil. La mención del IP es contextualmente correcta pero no verificable contra el texto del Código Civil de 1906.",
+      "evidencia": "Arts. 715, 2304-2310 CC mencionan 'Registro de la Propiedad'. El 'Instituto de la Propiedad (IP)' es la denominación actual de la institución.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.4",
+      "subclaim_text": "Se publican edictos para notificar a posibles interesados o propietarios que deseen oponerse.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El procedimiento de edictos es práctica procesal estándar en juicios sobre propiedad. El Art. 2277 CC establece que la citación judicial interrumpe civilmente la prescripción, lo que implica la necesidad de notificar al poseedor y potenciales interesados. Sin embargo, la figura específica de 'edictos' en el proceso de usucapión no está regulada en el Código Civil sino en el Código Procesal Civil, no disponible en fuentes locales.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "Un arrendatario no puede usucapir porque reconoce el dominio del arrendador.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado_con_matiz_relevante",
+      "detalle": "CORRECTO COMO REGLA GENERAL. Art. 731 CC define la mera tenencia (poseer reconociendo dominio ajeno). Art. 2273 CC exige posesión 'en concepto de dueño'. Art. 2274 CC: 'No aprovechan para la posesión los actos de carácter posesorio ejecutados en virtud de licencia o por mera tolerancia del dueño.' PERO: Art. 733 CC contiene una salvedad expresa: 'El simple lapso de tiempo no muda la mera tenencia en posesión; SALVO EL CASO DE PRESCRIPCIÓN EXTRAORDINARIA.' Esto significa que, bajo la prescripción extraordinaria de 20 años (Art. 2287 CC, que no requiere justo título ni buena fe), incluso un arrendatario que dejara de pagar renta, interrumpiera el reconocimiento del dominio ajeno y poseyera en concepto de dueño por 20 años, podría teóricamente usucapir. El artículo omite esta excepción legal expresa.",
+      "evidencia": "Arts. 731, 733, 2273, 2274 CC. La salvedad del Art. 733 CC ('salvo el caso de prescripción extraordinaria') es la omisión clave.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "Los bienes de dominio público son imprescriptibles; no se puede usucapir bienes del Estado.",
+      "fuente": "data/codigo_civil.json + data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Doble respaldo normativo. Art. 2269 CC: 'Son susceptibles de prescripción todas las cosas que están en el comercio de los hombres' (a contrario sensu, los bienes fuera del comercio —dominio público— no son prescriptibles). Art. 13 Constitución: 'En los casos a que se refieren los artículos anteriores, el dominio del Estado es inalienable e imprescriptible.' Art. 105 Constitución: 'El derecho de reivindicar los bienes confiscados es imprescriptible.' La afirmación del artículo es correcta.",
+      "evidencia": "Art. 2269 CC. Arts. 13 y 105 Constitución de Honduras.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "Confundir tiempo de posesión con propiedad automática es un error: la usucapión requiere proceso judicial.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 715 CC exige sentencia ejecutoriada + inscripción registral. La usucapión no es automática; requiere declaración judicial. La advertencia es correcta.",
+      "evidencia": "Art. 715 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "[Cruce B1.2+B2] La sede normativa citada (717-724) vs. los requisitos de posesión (2273): ¿son consistentes?",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "parcialmente_coherente_con_error_de_ubicacion",
+      "detalle": "Los arts. 717-724 CC efectivamente contienen definiciones de posesión, justo título (720-722) y buena fe (723-724) que son PRESUPUESTOS para la prescripción. El Art. 2281 CC remite expresamente a estos artículos: 'Las condiciones de la buena fe y justo título exigidas para la posesión en el Capítulo I, Título VII, Libro II de este Código, son igualmente necesarias para la determinación de aquel requisito en la prescripción del dominio.' Sin embargo, los requisitos específicos para la prescripción (concepto de dueño, pública, pacífica, no interrumpida) están en el Art. 2273 CC, y los plazos en los Arts. 2286-2287 CC, todos dentro del Título XVI. Los arts. 717-724 son normas de remisión, no la sede principal. El artículo yerra al identificarlos como la regulación 'principal'.",
+      "evidencia": "Art. 2281 CC crea el puente entre Título VII (717-724) y Título XVI (2263-2288). Arts. 2273, 2286-2287 CC contienen los requisitos y plazos específicos.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "[Cruce B3+B5] Los plazos (10/20 años) y la imposibilidad del arrendatario de usucapir: ¿son consistentes con la salvedad del Art. 733 CC?",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "tension_detectada",
+      "detalle": "El artículo afirma categóricamente que el arrendatario 'no puede usucapir' (B5.1). Pero los plazos (B3.1, B3.2) incluyen la prescripción extraordinaria de 20 años sin necesidad de título ni buena fe (Art. 2287 CC). El Art. 733 CC establece que la mera tenencia no se convierte en posesión 'salvo el caso de prescripción extraordinaria'. Existe una tensión interna: si la prescripción extraordinaria NO requiere justo título ni buena fe, y el Art. 733 CC expresamente exceptúa la prescripción extraordinaria de la regla de que la mera tenencia no muda en posesión, entonces TÉCNICAMENTE un arrendatario SÍ podría usucapir por la vía extraordinaria (20 años) si interrumpe el reconocimiento del dominio ajeno y posee en concepto de dueño. El artículo es demasiado categórico al decir 'no puede usucapir'; debería decir 'no puede usucapir por la vía ordinaria, y solo excepcionalmente por la vía extraordinaria'.",
+      "evidencia": "Arts. 733, 2287 CC. La salvedad del Art. 733 CC crea una excepción que el artículo no contempla.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.3",
+      "subclaim_text": "[Cruce B4.2+B6.1] La necesidad de sentencia judicial y la imprescriptibilidad de bienes del dominio público: ¿son consistentes?",
+      "fuente": "data/codigo_civil.json + data/articulos_constitucion.json",
+      "veredicto": "coherente_y_complementario",
+      "detalle": "No hay conflicto. La usucapión requiere sentencia judicial (Art. 715 CC), y los bienes de dominio público están excluidos de la prescripción (Art. 2269 CC y Art. 13 Constitución). Ambas afirmaciones son correctas y complementarias: el control judicial (sentencia) es precisamente el mecanismo que garantiza que no se usucapan bienes imprescriptibles.",
+      "evidencia": "Art. 715 CC (sentencia) + Art. 2269 CC + Art. 13 Constitución (imprescriptibilidad).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.4",
+      "subclaim_text": "[Cruce B1.3+B4.2] La atribución errónea al Art. 717 vs. la correcta necesidad de sentencia judicial: ¿genera inconsistencia?",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "inconsistencia_por_error_de_fuente",
+      "detalle": "El artículo dice que el Art. 717 CC establece que la propiedad se adquiere por prescripción, pero el Art. 717 CC realmente establece una presunción de dominio a favor del poseedor ('El poseedor es reputado dueño, mientras otra persona no justifica serlo'). Esta presunción del Art. 717 es iuris tantum (admite prueba en contrario) y NO equivale a la prescripción adquisitiva. El artículo genera confusión al mezclar: (a) la presunción de dominio del poseedor (Art. 717, que es provisional y cede ante prueba en contrario), con (b) la adquisición definitiva del dominio por prescripción (Art. 2263, que requiere sentencia judicial según Art. 715). Son instituciones jurídicas distintas.",
+      "evidencia": "Art. 717 CC: presunción iuris tantum de dominio. Art. 2263 CC: adquisición por prescripción. Art. 715 CC: necesidad de sentencia.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Sede_Normativa", "B2_Requisitos_Posesion", "B3_Plazos", "B4_Procedimiento", "B5_Arrendatario", "B6_Bienes_Estado"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Parcialmente coherente. Los arts. 717-724 citados contienen definiciones (posesión, justo título, buena fe) que son presupuestos para la prescripción (Art. 2281 CC remite a ellos). Pero los requisitos específicos están en el Art. 2273 CC (Título XVI). Error de ubicación, no de contenido.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B3",
+        "relacion": "Error detectado. El artículo ubica los plazos en los arts. 717-724, pero estos están en los arts. 2286-2287 CC (Título XVI). Error de cita normativa.",
+        "conflicto": true
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Coherentes. Los requisitos del Art. 2273 CC (dueño, pública, pacífica, no interrumpida) son consistentes con los plazos de los Arts. 2286-2287 CC. Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B5",
+        "relacion": "Tensión detectada. Los plazos incluyen la vía extraordinaria (20 años, Art. 2287), y el Art. 733 CC exceptúa la prescripción extraordinaria de la regla de que la mera tenencia no se convierte en posesión. La afirmación categórica de que el arrendatario 'no puede usucapir' ignora esta excepción.",
+        "conflicto": true
+      },
+      {
+        "par": "B4+B6",
+        "relacion": "Complementarios. Sentencia judicial (B4) + imprescriptibilidad de bienes públicos (B6). El control judicial previene la usucapión de bienes imprescriptibles.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B5",
+        "relacion": "Coherentes en regla general. Art. 2273 CC exige posesión en concepto de dueño; el arrendatario es mero tenedor (Art. 731 CC). La regla general es correcta. La excepción (prescripción extraordinaria) no fue contemplada por el artículo.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Independientes. La sede normativa (civil sustantiva) y el procedimiento (procesal civil) son materias distintas. Sin interdependencia directa verificable.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 22,
+    "confirmados": 10,
+    "confirmados_con_matiz": 1,
+    "confirmados_con_matiz_relevante": 1,
+    "parcialmente_confirmados": 1,
+    "plausibles_no_verificables": 4,
+    "error_factual": 2,
+    "parcialmente_coherente_con_error_de_ubicacion": 1,
+    "tension_detectada": 1,
+    "coherente_y_complementario": 1,
+    "inconsistencia_por_error_de_fuente": 1,
+    "sin_conflictos_detectados": false,
+    "errores_detectados": [
+      "B1.2: La usucapión NO está regulada 'principalmente' en los arts. 717-724 CC, sino en los arts. 2263-2288 CC. Los arts. 717-724 son normas de remisión sobre posesión, justo título y buena fe.",
+      "B1.3: El Art. 717 CC NO dice que 'la propiedad se adquiere por prescripción'. El Art. 717 define la posesión. El artículo correcto es el Art. 2263 CC."
+    ],
+    "tensiones_detectadas": [
+      "B7.2 + B5.1: La afirmación categórica de que el arrendatario 'no puede usucapir' ignora la salvedad del Art. 733 CC sobre prescripción extraordinaria y el Art. 2287 CC (20 años sin título ni buena fe).",
+      "B1+B3: El artículo cita los arts. 717-724 como fuente de los plazos (10/20 años), pero estos están en los arts. 2286-2287 CC."
+    ],
+    "observacion_critica": "El artículo tiene un error de técnica jurídica significativo: cita los artículos equivocados (717-724 en lugar de 2263-2288) y atribuye al Art. 717 CC un contenido que no le corresponde. Sin embargo, el contenido SUSTANTIVO sobre requisitos y plazos es correcto y está respaldado por los arts. 2273, 2286 y 2287 CC. Es un caso de 'fondo correcto, cita incorrecta'. Adicionalmente, omite la excepción de prescripción extraordinaria del Art. 733 CC en la sección sobre arrendatarios. Las secciones procedimentales (30% del contenido) no son verificables sin el Código Procesal Civil.",
+    "calidad_global_documento": "Buena en fondo sustantivo, con error de cita normativa. Los requisitos y plazos de la usucapión están correctamente expuestos y respaldados por el Código Civil hondureño. El error principal es de precisión jurídica en la identificación de los artículos aplicables, lo cual es relevante para un lector que quiera consultar directamente la ley. Se recomienda corregir las referencias normativas: sustituir 'artículos 717 al 724' por 'artículos 2263 al 2288, en relación con los artículos 717 al 724', y corregir la atribución del Art. 717 CC."
+  }
+}

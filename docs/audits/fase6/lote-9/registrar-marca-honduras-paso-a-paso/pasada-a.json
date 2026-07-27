@@ -1,0 +1,196 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "106acc18-20ed-4698-a572-f36484741445",
+    "slug": "registrar-marca-honduras-paso-a-paso",
+    "sha256_entrada": "2ca2029184642b4d65cfd8b07c9157a8562a60048b47bb63bdbb68b5954d560a",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La autoridad competente es el Instituto de la Propiedad (IP).",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 1 de la Ley de Propiedad Industrial (Decreto No. 12-99) establece: 'Su aplicación corresponde a la Secretaría de Estado en los Despachos de Industria y Comercio, a través de la Oficina de Registro de la Propiedad Industrial, dependencia de la Dirección General de Propiedad Intelectual.' La autoridad mencionada en la ley es la 'Dirección General de Propiedad Intelectual (DGPI)', no un 'Instituto de la Propiedad'. La denominación 'Instituto de la Propiedad' podría ser una reorganización administrativa o denominación posterior no reflejada en la ley de 1999/2006. El Código de Comercio (Art. 667 CM) menciona la 'Oficina de Patentes y Marcas de la Secretaría de Fomento', denominación histórica también diferente.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulo": "Art. 1 LPI",
+        "texto": "Su aplicación corresponde a la Secretaría de Estado en los Despachos de Industria y Comercio, a través de la Oficina de Registro de la Propiedad Industrial, dependencia de la Dirección General de Propiedad Intelectual."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La protección se otorga al primero que registra, no al primero que usa. Sin registro, terceros podrían copiar la marca e incluso obligar legalmente al usuario a dejar de usar su propio signo distintivo.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt + data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 80 LPI: 'El derecho al uso exclusivo de una marca se adquiere mediante su inscripción en el Registro de la Propiedad Industrial.' Art. 667 CM: 'El derecho al uso exclusivo de una marca... puede ser adquirido... mediante su registro en la Oficina de Patentes y Marcas.' Honduras sigue el sistema constitutivo/registral: el derecho nace del registro, no del uso. Art. 96 LPI permite al titular actuar contra terceros que usen signos idénticos o similares, incluyendo solicitar el cese del uso. Sin registro, un tercero que sí registre la marca puede legalmente exigir al usuario no registrado que cese el uso.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 80 LPI: 'El derecho al uso exclusivo de una marca se adquiere mediante su inscripción en el Registro de la Propiedad Industrial.'",
+          "Art. 667 CM (codigo_comercio.json): 'El derecho al uso exclusivo de una marca... puede ser adquirido por el que la usa o quiere usar, mediante su registro.'"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Son registrables como marca: palabras (denominativas), logotipos (figurativas), combinaciones (mixtas), formas tridimensionales (envases) y sonidos. No son registrables: signos genéricos o descriptivos, contrarios a la moral u orden público, símbolos patrios, o que induzcan a error, según el Artículo 83 LPI.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "Las prohibiciones listadas (genéricos, descriptivos, moral, orden público, engañosos) están confirmadas en Art. 83(3), 83(4), 83(7), 83(9) LPI. Los símbolos patrios están cubiertos por Art. 83(8) LPI (banderas, escudos, emblemas de Estados). Art. 671 CM define marca como 'cualquier medio material, signo, emblema o nombre que sea susceptible... de hacer distinguir los objetos.' Sobre los tipos registrables: palabras, logotipos, diseños, formas tridimensionales y signos mixtos son consistentes con la definición amplia del Art. 671 CM. Sin embargo, los sonidos (marcas sonoras/no tradicionales) no están explícitamente contemplados en la LPI ni en el CM. La ley hondureña no menciona las marcas sonoras como categoría registrable. Algunas jurisdicciones las aceptan bajo interpretación amplia, pero no hay base legal expresa en las fuentes disponibles.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 83(3), 83(4), 83(7), 83(8), 83(9) LPI sobre prohibiciones.",
+          "Art. 671 CM: 'Puede constituir una marca cualquier medio material, signo, emblema o nombre que sea susceptible... de hacer distinguir los objetos.'"
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Honduras aplica la Clasificación Internacional de Niza, que divide las actividades en 45 clases.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Art. 85 LPI exige que la solicitud indique 'la clase internacional' de los productos o servicios. Art. 88 LPI: el aviso de publicación debe contener 'la clase correspondiente'. La ley remite inequívocamente a la clasificación internacional sin nombrar explícitamente 'Niza'. El número de 45 clases es correcto según el Arreglo de Niza (34 para productos + 11 para servicios), del cual Honduras es parte. La ley no enumera las clases ni menciona el nombre 'Niza' en las fuentes disponibles.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 85 LPI: 'la clase internacional'",
+          "Art. 88 LPI: 'la clase correspondiente'"
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Secuencia procedimental: (1) Búsqueda de antecedentes, (2) Presentación de solicitud, (3) Examen de forma, (4) Publicación en La Gaceta con 30 días para oposición, (5) Examen de fondo si no hay oposiciones o se resuelven favorablemente, (6) Concesión y certificado con vigencia de 10 años.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_error",
+      "detalle": "La secuencia legal correcta según los Art. 85-91 LPI es: (1) solicitud (Art. 85), (2) examen de forma con subsanación en 30 días (Art. 86), (3) examen de fondo sobre prohibiciones de los Arts. 83 y 84 (Art. 87), (4) publicación en La Gaceta por 3 veces con intervalos de 10 días (Art. 88), (5) oposición dentro de 30 días desde la última publicación (Art. 89), (6) concesión/registro (Art. 91). El documento comete el error procedimental de colocar el examen de fondo DESPUÉS de la publicación y oposición, cuando la ley lo sitúa ANTES de la publicación (Art. 87: 'El Registro... examinará si la marca incurre en alguna de las prohibiciones'; Art. 88: 'Efectuados los exámenes... ordenará que se anuncie la solicitud mediante la publicación'). La búsqueda de antecedentes (paso 1) no es un requisito legal obligatorio, sino una práctica recomendada. La publicación en La Gaceta, el plazo de 30 días para oposición (Art. 89: 'treinta (30) días'), y la vigencia de 10 años (Art. 92) son correctos. El plazo de 30 días para oposición es correcto; el documento no añade 'hábiles' (a diferencia de otras versiones).",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 87 LPI: 'El Registro de la Propiedad Industrial examinará si la marca incurre en alguna de las prohibiciones previstas en los Artículos 83 y 84' — examen de fondo ANTES de publicación.",
+          "Art. 88 LPI: 'Efectuados los exámenes de conformidad con los Artículos 86 y 87 de la presente Ley, el Registro... ordenará que se anuncie la solicitud mediante la publicación de un aviso en el Diario Oficial La Gaceta, por tres (3) veces, con intervalos de diez (10) días cada una.'",
+          "Art. 89 LPI: 'Cualquier persona interesada podrá presentar oposición... dentro del período de publicación y hasta treinta (30) días contados desde la fecha de la última publicación.'",
+          "Art. 91 LPI: 'Si no se presentara oposición... procederá a registrar la marca.'",
+          "Art. 92 LPI: 'El registro de una marca caducará a los diez (10) años, contados desde la fecha de concesión del registro.'"
+        ]
+      },
+      "errores_detectados": [
+        "El documento describe el examen de fondo después de la oposición, pero la ley (Arts. 87-88 LPI) lo sitúa ANTES de la publicación. La secuencia legal es: solicitud → examen de forma → examen de fondo → publicación → oposición → concesión."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Un proceso de registro de marca sin oposiciones ni requerimientos de subsanación suele tardar entre 8 y 12 meses.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La LPI no establece un plazo total para el procedimiento completo. Los plazos legales parciales mínimos suman: 30 días subsanación (Art. 86) + 30 días publicación (3 avisos x 10 días, Art. 88) + 30 días oposición (Art. 89) = mínimo 90 días sin contar los tiempos administrativos de examen y resolución. A esto se suman tiempos operativos del Registro (revisión, emisión de resoluciones, notificaciones, emisión del certificado). El rango de 8 a 12 meses es plausible como estimación práctica del tiempo total, pero no es verificable en el texto legal.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "referencia": "Arts. 86, 88, 89 LPI establecen plazos parciales que suman un mínimo de 90 días."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "La protección de la marca tiene una duración de 10 años a partir de la fecha de concesión, y es renovable por periodos iguales.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 92 LPI: 'El registro de una marca caducará a los diez (10) años, contados desde la fecha de concesión del registro.' Art. 93 LPI: renovación por períodos sucesivos de 10 años. Art. 94 LPI regula el procedimiento de renovación. Totalmente confirmado.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 92 LPI: 'El registro de una marca caducará a los diez (10) años, contados desde la fecha de concesión del registro.'",
+          "Art. 93 LPI: 'El registro de una marca podrá renovarse por períodos sucesivos de diez (10) años.'",
+          "Art. 94 LPI: procedimiento de renovación (año anterior al vencimiento + 6 meses de gracia con sobretasa)."
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "El registro de una marca caduca si no se utiliza de forma efectiva durante 5 años consecutivos. El Artículo 120 de la Ley de Propiedad Industrial establece la acreditación de la existencia y uso de la empresa y su nombre comercial cada cinco años.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "refutado_con_error_critico",
+      "detalle": "ERROR CRÍTICO DOBLE: (1) El plazo correcto para cancelación de una marca por falta de uso es de 3 AÑOS, no 5 años. Art. 106 LPI: 'El Registro... podrá cancelar el registro de una marca, cuando ésta no se hubiese usado en el país... durante los tres (3) años ininterrumpidos precedentes a la fecha en que se inicie la acción de cancelación.' (2) El Art. 120 LPI NO regula la caducidad de marcas por falta de uso. El Art. 120 LPI se refiere a la acreditación de existencia del NOMBRE COMERCIAL cada cinco años: 'El titular de un nombre comercial deberá acreditar cada cinco (5) años, la existencia de la empresa ante la Oficina de Registro de la Propiedad Industrial.' El documento confunde el régimen de cancelación de marcas por no uso (3 años, Art. 106 LPI) con la acreditación quinquenal del nombre comercial (Art. 120 LPI). Son instituciones jurídicas diferentes con plazos diferentes.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 106 LPI: 'El Registro... podrá cancelar el registro de una marca, cuando ésta no se hubiese usado en el país... durante los tres (3) años ininterrumpidos precedentes.'",
+          "Art. 120 LPI: 'El titular de un nombre comercial deberá acreditar cada cinco (5) años, la existencia de la empresa ante la Oficina de Registro de la Propiedad Industrial.'"
+        ]
+      },
+      "errores_detectados": [
+        "El plazo de caducidad por falta de uso de una marca es de 3 años (Art. 106 LPI), no 5 años como indica el documento.",
+        "El Art. 120 LPI se refiere al nombre comercial, no a la caducidad de marcas por falta de uso. Es un artículo sobre acreditación de existencia del nombre comercial cada 5 años, no sobre cancelación de marcas."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "El Artículo 118 de la Ley de Propiedad Industrial protege el nombre comercial. El nombre comercial protege la denominación de la empresa, mientras que la marca protege el signo distintivo de los productos o servicios. Ambos deben registrarse por separado.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 118 LPI: 'El nombre comercial de una empresa y el derecho a su uso exclusivo gozará de protección mediante suscripción en el Registro de la Propiedad Industrial, sin perjuicio de lo establecido en el Código de Comercio.' La distinción entre nombre comercial (empresa/establecimiento) y marca (productos/servicios) es correcta. Ambos requieren registro separado para protección integral. El Art. 119 LPI establece limitaciones al nombre comercial. El Art. 120 LPI exige acreditación quinquenal del nombre comercial. El documento acierta en esta distinción conceptual.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 118 LPI: 'El nombre comercial de una empresa y el derecho a su uso exclusivo gozará de protección mediante suscripción en el Registro de la Propiedad Industrial.'",
+          "Art. 667 CM: define marca como derecho exclusivo sobre signos distintivos de productos."
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "El registro de marca en Honduras sólo otorga protección dentro del territorio hondureño. Para proteger la marca en otros países debe registrarse en cada país o considerar el Sistema de Madrid, del cual Honduras es parte.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El principio de territorialidad de la propiedad industrial es un principio general del derecho internacional (Convenio de París). La LPI regula la protección dentro de Honduras (Art. 1: aplicación en el territorio nacional). La pertenencia de Honduras al Sistema de Madrid (Protocolo de Madrid) es un dato verificable en fuentes internacionales, pero no está documentado en las fuentes locales disponibles (LPI y CM). El documento refleja correctamente la doctrina de territorialidad de la propiedad industrial.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "referencia": "Art. 1 LPI: aplicación de la ley en el ámbito nacional hondureño."
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 10,
+    "confirmados": 3,
+    "parcialmente_confirmados": 2,
+    "parcialmente_confirmado_con_error": 1,
+    "plausible_no_verificable": 3,
+    "refutado_con_error_critico": 1,
+    "errores_detectados": [
+      "ERROR CRÍTICO: El plazo de caducidad por falta de uso de una marca es de 3 años (Art. 106 LPI), no 5 años como indica el documento.",
+      "ERROR CRÍTICO: El Art. 120 LPI regula la acreditación quinquenal del NOMBRE COMERCIAL, no la caducidad de marcas por falta de uso.",
+      "ERROR PROCEDIMENTAL: El examen de fondo ocurre ANTES de la publicación (Arts. 87-88 LPI), no después de la oposición como describe el documento.",
+      "Denominación institucional: 'Instituto de la Propiedad' no aparece en la LPI, que refiere a 'Dirección General de Propiedad Intelectual'.",
+      "Las marcas sonoras no están explícitamente contempladas en la LPI ni en el CM como categoría registrable."
+    ],
+    "calidad_general": "aceptable_con_correcciones_importantes"
+  }
+}
